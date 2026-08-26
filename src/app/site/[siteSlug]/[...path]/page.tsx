@@ -193,6 +193,19 @@ function collectionRouteLookupSlug(path: string[]): string {
   return "";
 }
 
+function searchParamsSuffix(query: Record<string, string | string[] | undefined>): string {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(query)) {
+    if (Array.isArray(value)) {
+      for (const item of value) params.append(key, item);
+    } else if (typeof value === "string") {
+      params.set(key, value);
+    }
+  }
+  const serialized = params.toString();
+  return serialized ? `?${serialized}` : "";
+}
+
 function fallbackCollectionRootPathForPublicSlug(publicSlug: string): string {
   return (publicSlug === "grownstride" || isPrimaryMydreamshootsSlug(publicSlug))
     ? "/ai-image-generation"
@@ -343,6 +356,10 @@ export default async function SiteCatchAllPage({
       }
     }
     redirect(`${routePath("/cart")}${query.size ? `?${query.toString()}` : ""}`);
+  }
+  if (slug === "/workspace") {
+    const query = searchParams ? await searchParams : {};
+    redirect(`${routePath("/app/create")}${searchParamsSuffix(query)}`);
   }
   if (slug === "/tool") {
     if (isPrimaryMydreamshootsSlug(publicSlug)) notFound();

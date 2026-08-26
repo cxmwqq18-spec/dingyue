@@ -199,13 +199,14 @@ export function resolveStorefrontContext(
 ): StorefrontContext {
   const scope = options.scope;
   const primaryMydreamshoots = isPrimaryMydreamshootsSite(bundle.site);
-  const pageJson = mode === "draft" ? bundle.page.draftJson : bundle.page.publishedJson;
+  const currentPage = mode === "published" ? bundle.currentState?.payload.pages.find((candidate) => candidate.id === bundle.page.id || candidate.slug === bundle.page.slug) : undefined;
+  const pageJson = mode === "draft" ? bundle.page.draftJson : currentPage?.publishedJson ?? bundle.page.publishedJson;
   const settings = mode === "draft" && scope?.includeThemeSettings
     ? bundle.site.themeSettings.draftJson
-    : bundle.site.themeSettings.publishedJson;
+    : bundle.currentState?.payload.themeSettings ?? bundle.site.themeSettings.publishedJson;
   const profile = normalizedProfile(mode === "draft" && scope?.includeStorefrontProfile
     ? bundle.site.storefrontProfile?.draftJson
-    : bundle.site.storefrontProfile?.publishedJson);
+    : bundle.currentState?.payload.storefrontProfile ?? bundle.site.storefrontProfile?.publishedJson);
   const validPacks = bundle.creativePacks.filter((pack) => pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0);
   const invalidPacks = bundle.creativePacks.filter((pack) => pack.status === "active" && (pack.creditCost <= 0 || pack.outputCount <= 0));
   const seo = resolveSeo(bundle, pageJson, settings);
@@ -231,7 +232,7 @@ export function resolveStorefrontContext(
   if (!seo.description && seo.index) missingFacts.push(`page.${bundle.page.id}.seo.description`);
   const snapshotFailClosed = mode === "published" && primaryMydreamshoots &&
     (Boolean(pageCopySlug || videoTopicSlug) || MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(seo.canonicalPath)) &&
-    bundle.snapshotIntegrity !== "valid";
+    (!bundle.currentState || bundle.snapshotIntegrity !== "valid");
   const standardPageMedia = standardPageEntityPath ? bundle.publishedStandardPageMedia?.[standardPageEntityPath] : undefined;
   const standardPageEntityMissing = mode === "published" && Boolean(standardPageEntityPath) && !pageEntity;
   const standardPageMediaMissing = mode === "published" && Boolean(standardPageEntityPath) && standardPageMedia?.status !== "ready";
@@ -271,8 +272,8 @@ export function resolveStorefrontContext(
       activeImageWorkflowCount: validPacks.length
     },
     revisions: {
-      publicationId: bundle.publication?.id,
-      publicationVersion: bundle.publication?.version,
+      publicationId: undefined,
+      publicationVersion: undefined,
       factsRevision: mode === "published" && bundle.factsRevision
         ? bundle.factsRevision
         : revision(bundle, mode, pageJson, settings, profile),
@@ -280,13 +281,13 @@ export function resolveStorefrontContext(
       pageEntityId: pageCopy?.pageEntityId,
       copyRevision: pageCopy?.copyRevision,
       canonicalSlug: pageCopy ? pageCopySlug : undefined,
-      snapshotRevision: bundle.publication?.snapshot.revisions?.snapshotHash,
-      routeRevision: bundle.publication?.snapshot.revisions?.routeRevision,
+      snapshotRevision: bundle.currentState?.payload.revisions.snapshotHash,
+      routeRevision: bundle.currentState?.payload.revisions.routeRevision,
       pageRevision: pageEntity?.pageRevision,
-      offerRevision: bundle.publication?.snapshot.revisions?.offerRevision,
-      collectionRevision: bundle.publication?.snapshot.revisions?.collectionRevision,
-      linkRevision: bundle.publication?.snapshot.revisions?.linkRevision,
-      policyRevision: bundle.publication?.snapshot.revisions?.policyRevision
+      offerRevision: bundle.currentState?.payload.revisions.offerRevision,
+      collectionRevision: bundle.currentState?.payload.revisions.collectionRevision,
+      linkRevision: bundle.currentState?.payload.revisions.linkRevision,
+      policyRevision: bundle.currentState?.payload.revisions.policyRevision
     },
     capability: resolveSiteCapability(bundle.site),
     indexability: {
@@ -391,7 +392,7 @@ export function resolveStorefrontBindings(text: string, context: StorefrontConte
   // A valid PostgreSQL publication is the source of truth for published copy.
   // Apply the legacy hard-coded-claim guard to drafts and invalid snapshots,
   // while allowing the sealed publication payload to render unchanged.
-  const isSealedPublishedSnapshot = context.snapshotIntegrity === "valid" && Boolean(context.revisions.publicationId);
+  const isSealedPublishedSnapshot = context.snapshotIntegrity === "valid" && Boolean(context.revisions.snapshotRevision);
   const legacyClaims = legacyFactClaimRules
     .filter(() => !isSealedPublishedSnapshot)
     .filter((rule) => rule.pattern.test(text.split(rule.token).join("")))

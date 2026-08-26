@@ -172,6 +172,7 @@ model Site {
   pages                   ThemePage[]
   settings                ThemeSettings?
   storefrontProfile       StorefrontProfile?
+  currentPublishedState   SitePublishedState?
   publications            ThemePublication[]
   publishApprovals         ThemePublishApproval[]
   activePublication       ActiveThemePublication?
@@ -651,6 +652,24 @@ model StorefrontProfile {
   site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
 }
 
+/// The sole runtime owner for a site's public storefront projection.
+///
+/// This model is intentionally one row per site. Historical publication
+/// snapshots remain a migration concern only and must not be queried by the
+/// public runtime once this model is activated.
+model SitePublishedState {
+  siteId       String   @id
+  payload      Json
+  contentHash  String
+  revision     String
+  publishedAt  DateTime @updatedAt
+  publishedBy  String
+
+  site         Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([contentHash])
+}
+
 model ThemePublication {
   id            String                  @id
   siteId        String
@@ -678,11 +697,12 @@ model ThemePublication {
 model ThemePublishApproval {
   id                   String                     @id
   siteId               String
+  requestedBy          String?
   manifestHash         String
-  approvedBy           String
-  approvedAt           DateTime                   @default(now())
+  approvedBy           String?
+  approvedAt           DateTime?
   expiresAt            DateTime?
-  status               String                     @default("approved")
+  status               String                     @default("pending")
   consumedAt           DateTime?
   consumedPublicationId String?                   @unique
   site                 Site                       @relation(fields: [siteId], references: [id], onDelete: Cascade)

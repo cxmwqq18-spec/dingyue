@@ -15,6 +15,7 @@
     "start": "NEXT_DIST_DIR=.next-build node server.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --project tsconfig.typecheck.json --noEmit",
+    "smoke:current-state-contract": "node --experimental-strip-types scripts/smoke-current-state-contract.mjs",
     "audit:ai-wedding": "node scripts/audit-ai-wedding-goal.mjs",
     "audit:ai-wedding-journey": "node scripts/audit-ai-wedding-customer-journey.mjs",
     "audit:ai-wedding-visual": "node scripts/audit-ai-wedding-visual.mjs",

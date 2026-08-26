@@ -359,6 +359,7 @@ export interface Site {
     draftMeta?: ThemeDraftMeta;
   };
   storefrontProfile?: StorefrontProfile;
+  currentPublishedState?: SitePublishedState;
   activePublication?: ThemePublication;
   latestHistoricalPublication?: ThemePublication;
   /** @deprecated Public runtime must use activePublication. */
@@ -1252,6 +1253,31 @@ export interface ThemePublication {
   factsRevision?: string;
   publishedBy: string;
   publishedAt: string;
+}
+
+/**
+ * The only public runtime projection allowed after current-state migration.
+ * The payload is complete for the site; it is not an append-only snapshot.
+ */
+export interface SitePublishedState {
+  siteId: string;
+  payload: PublishedSeoSnapshot;
+  contentHash: string;
+  revision: string;
+  publishedAt: string;
+  publishedBy: string;
+}
+
+export interface VerifiedBackupReceipt {
+  target: string;
+  databaseIdentity: string;
+  backupPath: string;
+  byteSize: number;
+  sha256: string;
+  createdAt: string;
+  archiveListVerifiedAt: string;
+  isolatedRestoreVerifiedAt: string;
+  criticalReadbackHash: string;
 }
 
 export interface SiteTheme {

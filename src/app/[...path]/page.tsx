@@ -544,6 +544,14 @@ export default async function HostStorefrontCatchAllPage({
     if (videoMode === "text-to-video" || videoMode === "image-to-video") notFound();
   }
   const slug = `/${path.join("/")}`;
+  if (slug === "/workspace") {
+    const query = searchParams ? await searchParams : {};
+    const suffix = searchParamsSuffix(query);
+    if (!(await hasAnyCustomerSessionCookie())) {
+      redirect(`/login?next=${encodeURIComponent(`/app/create${suffix}`)}`);
+    }
+    redirect(`/app/create${suffix}`);
+  }
   if (slug === "/ai-image-generation/motion-generator") {
     permanentRedirect("/ai-video-generation/motion-generator");
   }

@@ -28,7 +28,7 @@ export async function metadataForPublishedStorefrontPage({
     products: products.filter((product) => product.siteId === site.id),
     creativePacks: creativePacks.filter((pack) => pack.siteId === site.id),
     mediaAssets: site.mediaAssets ?? [],
-    publications: site.activePublication ? [site.activePublication] : []
+    publications: []
   } as unknown as PlatformState, site);
   const snapshotPage = preferProvidedPageJson
     ? page
@@ -40,8 +40,7 @@ export async function metadataForPublishedStorefrontPage({
     ...metadata,
     other: {
       ...existingOther,
-      "storefront-publication": context.revisions.publicationId ?? "unpublished",
-      "storefront-publication-version": context.revisions.publicationVersion ?? "unpublished",
+      "storefront-current-revision": context.revisions.snapshotRevision ?? "unpublished",
       "storefront-facts-revision": context.revisions.factsRevision,
       "storefront-snapshot-hash": context.revisions.snapshotRevision ?? "unpublished",
       "storefront-build": context.revisions.buildId

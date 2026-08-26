@@ -99,6 +99,7 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
           pages: { orderBy: { slug: "asc" } },
           settings: true,
           storefrontProfile: true,
+          currentPublishedState: true,
           activePublication: { include: { publication: true } },
           connect: true
         }

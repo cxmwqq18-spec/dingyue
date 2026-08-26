@@ -687,6 +687,7 @@ export function toSite(record: {
   pages?: Array<Parameters<typeof toThemePage>[0]>;
   settings?: { draftJson: unknown; publishedJson: unknown } | null;
   storefrontProfile?: Parameters<typeof toStorefrontProfile>[0];
+  currentPublishedState?: Parameters<typeof toSitePublishedState>[0] | null;
   publications?: Array<Parameters<typeof toThemePublication>[0]>;
   activePublication?: { publication: Parameters<typeof toThemePublication>[0] } | null;
   mediaAssets?: Array<Parameters<typeof toMediaAsset>[0]>;
@@ -711,6 +712,9 @@ export function toSite(record: {
     },
     themeSettings: toThemeSettings(record.settings),
     storefrontProfile: toStorefrontProfile(record.storefrontProfile),
+    currentPublishedState: record.currentPublishedState
+      ? toSitePublishedState(record.currentPublishedState)
+      : undefined,
     activePublication: record.activePublication?.publication
       ? toThemePublication(record.activePublication.publication)
       : undefined,
@@ -719,6 +723,24 @@ export function toSite(record: {
       : undefined,
     pages: (record.pages ?? []).map(toThemePage),
     mediaAssets: (record.mediaAssets ?? []).map(toMediaAsset)
+  };
+}
+
+export function toSitePublishedState(record: {
+  siteId: string;
+  payload: unknown;
+  contentHash: string;
+  revision: string;
+  publishedAt: Date | string;
+  publishedBy: string;
+}): import("@/lib/types").SitePublishedState {
+  return {
+    siteId: record.siteId,
+    payload: cloneJson(record.payload) as import("@/lib/types").SitePublishedState["payload"],
+    contentHash: record.contentHash,
+    revision: record.revision,
+    publishedAt: toIsoString(record.publishedAt) ?? new Date().toISOString(),
+    publishedBy: record.publishedBy
   };
 }
 

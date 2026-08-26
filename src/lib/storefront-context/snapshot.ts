@@ -1,7 +1,7 @@
 import "server-only";
 
 import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storefront-state";
-import type { CreativePack, CreativePackCategory, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedStandardRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage, VideoTheme } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedStandardRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage, ThemePublication, VideoTheme } from "@/lib/types";
 import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
 import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
@@ -196,11 +196,20 @@ export function createPublishedSiteSnapshot(
   options: { source?: "postgres" | "platform-state" } = {}
 ): PublishedSiteSnapshot {
   const isMydreamshootsPublicationSite = isPrimaryMydreamshootsSite(site);
-  // Public rendering is intentionally fail-closed.  The active pointer is
-  // the only publication selector; latest/history and site row projections
-  // are not valid sources for HTML, metadata, schema, sitemap, or navigation.
-  const publication = site.activePublication;
-  if (!publication) throw new Error("published_snapshot_active_publication_required");
+  // Public rendering is intentionally fail-closed. CurrentPublishedState is
+  // the only public owner; historical publications and active pointers are
+  // never consulted.
+  const currentState = site.currentPublishedState;
+  if (!currentState) throw new Error("published_snapshot_current_state_required");
+  const publication = {
+    id: `current-state:${site.id}`,
+    siteId: site.id,
+    version: 0,
+    snapshot: currentState.payload,
+    publishedBy: currentState.publishedBy,
+    publishedAt: currentState.publishedAt,
+    factsRevision: currentState.payload.revisions.factsRevision
+  } as ThemePublication;
   const snapshotIntegrity = publicationSnapshotIntegrity(publication.snapshot);
   if (snapshotIntegrity !== "valid") throw new Error("published_snapshot_integrity_invalid");
   const currentPages = new Map(site.pages.map((page) => [page.id, page]));
@@ -312,22 +321,22 @@ export function createPublishedSiteSnapshot(
     ? snapshotRevisions.factsRevision ?? publishedFacts?.claimRevision ?? "published-facts-missing"
     : isMydreamshootsPublicationSite ? "publication-snapshot-invalid" : publication?.factsRevision ?? revision({
         siteId: site.id,
-        publicationId: publication?.id ?? null,
-        publicationVersion: publication?.version ?? null,
+      publicationId: undefined,
+      publicationVersion: undefined,
         profile: publishedProfile
       });
   return {
     boundary: {
       siteId: site.id,
       source: options.source ?? "platform-state",
-      publicationId: publication?.id ?? null,
-      publicationVersion: publication?.version ?? null
+      publicationId: null,
+      publicationVersion: null
     },
     site: publishedSite,
     themeSettings: publishedSettings.publishedJson,
-    publication,
-    publicationVersion: publication?.version,
-    publicationId: publication?.id,
+    publication: undefined,
+    publicationVersion: undefined,
+    publicationId: undefined,
     factsRevision,
     buildId: hasImmutableSeoProjection ? publication?.snapshot.buildId ?? "published-build-missing" : process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT_SHA || "local",
     pages,

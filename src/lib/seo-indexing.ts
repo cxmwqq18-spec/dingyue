@@ -15,7 +15,6 @@ import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storef
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
-import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import type { CreativePack, PlatformState, PublishedLeafRouteProjection, PublishedSeoSnapshot, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 
@@ -1034,8 +1033,8 @@ export async function getStorefrontSitemapUrlsForHost(hosts: string | null | und
 export type StorefrontSitemapPayload = {
   entries: SitemapEntry[];
   identity?: {
-    publicationId?: string;
-    publicationVersion?: number;
+    currentRevision?: string;
+    contentHash?: string;
     snapshotHash?: string;
     buildId?: string;
     routeRevision?: string;
@@ -1069,16 +1068,17 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
   const entries = isLocalHostRequest
     ? runtime.sites.flatMap((item) => sitemapEntriesForSite(runtime.state, item))
     : site ? sitemapEntriesForSite(runtime.state, site) : [];
-  const publication = site?.activePublication;
-  if (!publication || publicationSnapshotIntegrity(publication.snapshot) !== "valid") return { entries };
-  const revisions = (publication.snapshot as PublishedSeoSnapshot).revisions;
+  const currentState = site?.currentPublishedState;
+  if (!currentState) return { entries };
+  const snapshot = currentState.payload as PublishedSeoSnapshot;
+  const revisions = snapshot.revisions;
   return {
     entries,
     identity: {
-      publicationId: publication.id,
-      publicationVersion: publication.version,
-      snapshotHash: publication.snapshot.snapshotHash,
-      buildId: publication.snapshot.buildId,
+      currentRevision: currentState.revision,
+      contentHash: currentState.contentHash,
+      snapshotHash: snapshot.snapshotHash,
+      buildId: snapshot.buildId,
       routeRevision: revisions.routeRevision,
       pageRevision: revisions.pageRevision,
       copyRevision: revisions.copyRevision,
@@ -1099,8 +1099,8 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
 export async function getStorefrontPublicationIdentityForHost(
   hosts: string | null | undefined | Array<string | null | undefined>
 ): Promise<{
-  publicationId?: string;
-  publicationVersion?: number;
+  currentRevision?: string;
+  contentHash?: string;
   snapshotHash?: string;
   buildId?: string;
   routeRevision?: string;

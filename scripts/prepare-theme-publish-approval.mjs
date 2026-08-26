@@ -6,9 +6,9 @@ import Module from "node:module";
 import "./load-runtime-env.mjs";
 
 const siteId = process.env.SITE_ID?.trim() || process.argv[2]?.trim();
-const approvedBy = process.env.APPROVED_BY?.trim() || process.argv[3]?.trim();
+const requestedBy = process.env.REQUESTED_BY?.trim() || process.argv[3]?.trim();
 if (!siteId) throw new Error("SITE_ID is required");
-if (!approvedBy) throw new Error("APPROVED_BY is required");
+if (!requestedBy) throw new Error("REQUESTED_BY is required");
 
 const sourceRoot = path.resolve("src");
 const originalResolveFilename = Module._resolveFilename;
@@ -28,7 +28,7 @@ const manifest = await prepareDraftPublishManifestRelational(siteId);
 const approval = await createThemePublishApprovalRelational({
   siteId,
   manifest,
-  approvedBy,
+  requestedBy,
   expiresAt: process.env.APPROVAL_EXPIRES_AT ? new Date(process.env.APPROVAL_EXPIRES_AT) : undefined
 });
 
@@ -36,7 +36,8 @@ console.log(JSON.stringify({
   ok: true,
   siteId,
   approvalId: approval.id,
-  approvedBy,
+  requestedBy,
+  status: approval.status,
   manifestHash: manifest.manifestHash,
   itemCount: approval.items.length,
   expiresAt: approval.expiresAt

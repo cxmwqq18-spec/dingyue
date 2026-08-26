@@ -30,7 +30,7 @@ let approvalId;
 const cleanupApprovalIds = [];
 try {
   const manifest = await prepareDraftPublishManifestRelational(siteId);
-  const approval = await createThemePublishApprovalRelational({ siteId, manifest, approvedBy: "smoke:approval-contract", expiresAt: new Date(Date.now() + 60_000) });
+  const approval = await createThemePublishApprovalRelational({ siteId, manifest, requestedBy: "smoke:approval-contract", expiresAt: new Date(Date.now() + 60_000) });
   approvalId = approval.id;
   cleanupApprovalIds.push(approval.id);
   assert.equal(approval.status, "approved");
@@ -49,7 +49,7 @@ try {
   await prisma.themePublishApproval.update({ where: { id: approval.id }, data: { status: "approved" } });
 
   const driftManifest = await prepareDraftPublishManifestRelational(siteId);
-  const driftApproval = await createThemePublishApprovalRelational({ siteId, manifest: driftManifest, approvedBy: "smoke:approval-contract", expiresAt: new Date(Date.now() + 60_000) });
+  const driftApproval = await createThemePublishApprovalRelational({ siteId, manifest: driftManifest, requestedBy: "smoke:approval-contract", expiresAt: new Date(Date.now() + 60_000) });
   cleanupApprovalIds.push(driftApproval.id);
   const driftAsset = await prisma.mediaAsset.findFirst({ where: { siteId }, select: { id: true, notes: true } });
   assert.ok(driftAsset, "a media source is required for revision drift coverage");
@@ -58,7 +58,7 @@ try {
   await prisma.mediaAsset.update({ where: { id: driftAsset.id }, data: { notes: driftAsset.notes } });
 
   const expired = await prisma.themePublishApproval.create({
-    data: { id: `${approval.id}_expired`, siteId, manifestHash: manifest.manifestHash, approvedBy: "smoke:approval-contract", expiresAt: new Date(Date.now() - 1), items: { create: approval.items.map((item, index) => ({ id: `${approval.id}_expired_item_${index}`, objectType: item.objectType, objectId: item.objectId, ownerId: item.ownerId, revision: item.revision, etag: item.etag, valueHash: item.valueHash })) } }
+    data: { id: `${approval.id}_expired`, siteId, manifestHash: manifest.manifestHash, requestedBy: "smoke:approval-contract", approvedBy: null, approvedAt: null, status: "pending", expiresAt: new Date(Date.now() - 1), items: { create: approval.items.map((item, index) => ({ id: `${approval.id}_expired_item_${index}`, objectType: item.objectType, objectId: item.objectId, ownerId: item.ownerId, revision: item.revision, etag: item.etag, valueHash: item.valueHash })) } }
   });
   cleanupApprovalIds.push(expired.id);
   assert.ok(expired.expiresAt && expired.expiresAt < new Date());

@@ -11,7 +11,10 @@ import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/
 type RoutedSite = Site & { __storefrontBasePath?: string };
 
 const defaultObjectPosition = "50% 38%";
-const talkingPhotoImageSize = { width: 1672, height: 941 };
+// Generated topic-media files use a 4:3 canvas with a 16:9 scene and
+// letterbox bars baked into the pixels. They need a 16:9 cover frame so the
+// scene, rather than those baked bars, fills the media area.
+const talkingPhotoImageSize = { width: 1600, height: 1200 };
 
 type VideoTopicImage = {
   src: string;
@@ -205,6 +208,25 @@ function imageStyle(image: VideoTopicImage): { objectPosition: string } {
   return { objectPosition: image.height / image.width > 1.3 ? "50% 50%" : defaultObjectPosition };
 }
 
+/** Keep media frames aligned with the real asset or its embedded scene crop. */
+function intrinsicAspectRatio(image: VideoTopicImage): string {
+  const width = Number(image.width);
+  const height = Number(image.height);
+  return width > 0 && height > 0 ? `${width} / ${height}` : "16 / 9";
+}
+
+function hasEmbeddedVideoLetterbox(image: VideoTopicImage): boolean {
+  return image.src.includes("/assets/dreamshoot/generated/video-topic-media/");
+}
+
+function mediaAspectRatio(image: VideoTopicImage): string {
+  return hasEmbeddedVideoLetterbox(image) ? "16 / 9" : intrinsicAspectRatio(image);
+}
+
+function mediaObjectFit(image: VideoTopicImage): "object-cover" | "object-contain" {
+  return hasEmbeddedVideoLetterbox(image) ? "object-cover" : "object-contain";
+}
+
 function optimizedTopicImageSrc(src: string): string {
   if (!src.startsWith("/assets/dreamshoot/")) return src;
   return src.replace(/\.png(?=[?#]|$)/i, ".webp");
@@ -212,15 +234,50 @@ function optimizedTopicImageSrc(src: string): string {
 
 function DirectTopicHeroCards({ images }: { images: VideoTopicImage[] }) {
   const cards = images.slice(0, 3);
+  const hasThreeCards = cards.length >= 3;
   return (
-    <div className={`absolute inset-0 grid gap-2 bg-[#17151f] p-2 ${cards.length > 1 ? "grid-cols-3" : "grid-cols-1"}`}>
+    <div
+      className="grid gap-2 bg-[#17151f] p-2"
+      style={{ gridTemplateColumns: cards.length > 1 ? "repeat(2, minmax(0, 1fr))" : "1fr" }}
+      data-video-topic-hero-collage={hasThreeCards ? "stacked" : cards.length === 2 ? "split" : "single"}
+    >
       {cards.map((item, index) => (
-        <div className="relative min-w-0 overflow-hidden rounded-[6px] bg-[#292438]" key={item.src}>
+        <div
+          className="relative min-w-0 overflow-hidden rounded-[6px] bg-[#292438]"
+          key={item.src}
+          style={{
+            ...(hasThreeCards && index === 0 ? { gridColumn: "1 / -1" } : {}),
+            // The lead portrait is intentionally cropped to its upper two-thirds;
+            // the preview lightbox still exposes the complete source image.
+            aspectRatio:
+              hasThreeCards && index === 0
+                ? hasEmbeddedVideoLetterbox(item)
+                  ? "1 / 1"
+                  : `${item.width} / ${Math.round(item.height * (2 / 3))}`
+                : mediaAspectRatio(item)
+          }}
+          {...(hasThreeCards && index === 0
+            ? {
+                "data-dreamshoot-showcase-preview": "image",
+                "data-dreamshoot-preview-src": optimizedTopicImageSrc(item.src),
+                "data-dreamshoot-preview-title": item.alt,
+                "aria-label": `View ${item.alt} full image`,
+                role: "button",
+                tabIndex: 0
+              }
+            : {})}
+        >
           <img
             src={optimizedTopicImageSrc(item.src)}
             alt={item.alt}
-            className="absolute inset-0 h-full w-full object-contain object-center"
-            style={{ objectPosition: "50% 50%" }}
+            className={`absolute ${hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item) ? "top-0 left-1/2 h-auto max-w-none" : "inset-0 h-full w-full"} ${hasThreeCards && index === 0 && !hasEmbeddedVideoLetterbox(item) ? "object-cover object-top" : "object-contain object-center"}`}
+            style={
+              hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item)
+                ? { width: "200%", transform: "translateX(-50%)", objectPosition: "50% 0%" }
+                : hasThreeCards && index === 0
+                  ? { objectPosition: "50% 0%" }
+                  : imageStyle(item)
+            }
             width={item.width}
             height={item.height}
             loading={index === 0 ? "eager" : "lazy"}
@@ -240,11 +297,11 @@ function UseCaseCard({ item, index }: { item: VideoTopicUseCase; index: number }
   return (
     <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f] shadow-[0_28px_70px_-54px_rgba(0,0,0,0.92)]" data-video-topic-use-case-card>
       {item.image ? (
-        <div className="relative aspect-[16/9] overflow-hidden bg-[#292438]" data-video-topic-media>
+        <div className="relative overflow-hidden bg-[#292438]" data-video-topic-media style={{ aspectRatio: mediaAspectRatio(item.image) }}>
           <img
             src={optimizedTopicImageSrc(item.image.src)}
             alt={item.image.alt}
-            className="absolute inset-0 h-full w-full object-contain object-center"
+            className={`absolute inset-0 h-full w-full ${mediaObjectFit(item.image)} object-center`}
             style={{ objectPosition: "50% 50%" }}
             width={item.image.width}
             height={item.image.height}
@@ -277,11 +334,11 @@ function SupportingCard({ card, light = false, site }: { card: VideoTopicSupport
   return (
     <article className={`flex h-full flex-col rounded-[22px] border p-6 sm:p-7 ${light ? "border-[#d2c9ef] bg-white/55" : "border-white/10 bg-[#17151f]"}`}>
       {card.image ? (
-        <div className="relative mb-6 aspect-[16/9] overflow-hidden rounded-[16px] bg-[#292438]">
+        <div className="relative mb-6 overflow-hidden rounded-[16px] bg-[#292438]" style={{ aspectRatio: mediaAspectRatio(card.image) }}>
           <img
             src={optimizedTopicImageSrc(card.image.src)}
             alt={card.image.alt}
-            className="h-full w-full object-contain object-center"
+            className={`h-full w-full ${mediaObjectFit(card.image)} object-center`}
             style={imageStyle(card.image)}
             width={card.image.width}
             height={card.image.height}
@@ -300,8 +357,8 @@ function SupportingCard({ card, light = false, site }: { card: VideoTopicSupport
       ) : null}
       {card.details?.length ? (
         <dl className={`mt-5 space-y-3 border-t pt-4 ${light ? "border-[#d2c9ef]" : "border-white/10"}`}>
-          {card.details.map((detail) => (
-            <div className="grid grid-cols-[4.5rem_1fr] gap-3" key={detail.label}>
+          {card.details.map((detail, index) => (
+            <div className="grid grid-cols-[4.5rem_1fr] gap-3" key={`${detail.label}-${index}`}>
               <dt className={`text-[11px] font-semibold uppercase tracking-normal ${light ? "text-[#6652bd]" : "text-[#b8a7ff]"}`}>{detail.label}</dt>
               <dd className={`text-sm leading-6 ${light ? "text-[#625e6f]" : "text-white/68"}`}>{detail.body}</dd>
             </div>
@@ -323,7 +380,7 @@ function SupportingCard({ card, light = false, site }: { card: VideoTopicSupport
 function SectionCards({ cards, light = false, site }: { cards: VideoTopicSupportingCard[]; light?: boolean; site?: Site }) {
   return (
     <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3" data-video-topic-supporting-cards>
-      {cards.map((card) => <SupportingCard card={card} key={card.title} light={light} site={site} />)}
+      {cards.map((card, index) => <SupportingCard card={card} key={`${card.title}-${index}`} light={light} site={site} />)}
     </div>
   );
 }
@@ -336,8 +393,8 @@ function DirectionList({ title, items, tone }: { title: string; items: string[];
     <div className={`rounded-[22px] border p-6 sm:p-7 ${toneClass}`}>
       <h3 className="text-lg font-semibold text-white">{title}</h3>
       <ul className="mt-5 space-y-3">
-        {items.map((item) => (
-          <li className="flex items-start gap-3 text-sm leading-6 text-white/72" key={item}>
+        {items.map((item, index) => (
+          <li className="flex items-start gap-3 text-sm leading-6 text-white/72" key={`${item}-${index}`}>
             <Icon className={`mt-1 h-4 w-4 shrink-0 ${iconClass}`} strokeWidth={2} />
             <span>{item}</span>
           </li>
@@ -353,11 +410,11 @@ function ValueSection({ section, light = false }: { section: VideoTopicContent["
       <div className="mx-auto max-w-[var(--site-content-width)]">
         <SectionHeader eyebrow={section.eyebrow} title={section.title} body={section.intro} light={light} />
         {section.image ? (
-          <figure className="relative mt-12 aspect-[16/9] overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f]">
+          <figure className="relative mt-12 overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f]" style={{ aspectRatio: mediaAspectRatio(section.image) }}>
             <img
               src={optimizedTopicImageSrc(section.image.src)}
               alt={section.image.alt}
-              className="absolute inset-0 h-full w-full object-contain object-center"
+              className={`absolute inset-0 h-full w-full ${mediaObjectFit(section.image)} object-center`}
               style={imageStyle(section.image)}
               width={section.image.width}
               height={section.image.height}
@@ -367,8 +424,8 @@ function ValueSection({ section, light = false }: { section: VideoTopicContent["
           </figure>
         ) : null}
         <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2">
-          {section.items.map((item) => (
-            <article className={`h-full rounded-[22px] p-6 sm:p-7 ${light ? "border border-[#d2c9ef] bg-white/55" : "border border-white/10 bg-[#17151f]"}`} key={item.title}>
+          {section.items.map((item, index) => (
+            <article className={`h-full rounded-[22px] p-6 sm:p-7 ${light ? "border border-[#d2c9ef] bg-white/55" : "border border-white/10 bg-[#17151f]"}`} key={`${item.title}-${index}`}>
               <Sparkles className="h-5 w-5 text-[#c4b5fd]" strokeWidth={1.8} />
               <h3 className={`mt-5 text-xl font-semibold ${light ? "text-[#191622]" : "text-white"}`}>{item.title}</h3>
               <p className={`mt-3 text-sm leading-6 ${light ? "text-[#625e6f]" : "text-white/65"}`}>{item.body}</p>
@@ -412,7 +469,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
             ) : null}
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end" data-video-topic-hero-media>
-            <div className="relative aspect-[16/9] w-full max-w-[760px] overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
+            <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
               <DirectTopicHeroCards images={heroPreview.map((item) => item.image)} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
@@ -428,7 +485,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <SectionHeader eyebrow={content.quickAnswer.eyebrow} title={content.quickAnswer.title} body={content.quickAnswer.intro} />
             <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">
-              {content.quickAnswer.cards.map((card) => <SupportingCard card={card} key={card.title} site={site} />)}
+              {content.quickAnswer.cards.map((card, index) => <SupportingCard card={card} key={`${card.title}-${index}`} site={site} />)}
             </div>
           </div>
         </section>
@@ -453,7 +510,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
           <SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} />
           <div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">
             {content.steps.items.map((item, index) => (
-              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-video-ad-step key={item.title}>
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-video-ad-step key={`${item.title}-${index}`}>
                 <span className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">0{index + 1}</span>
                 <h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
@@ -471,10 +528,10 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <SectionHeader eyebrow={content.gallery.eyebrow} title={content.gallery.title} body={content.gallery.intro} light />
             <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {galleryItems.map((item) => (
-                <article className="flex h-full flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-video-ad-scene key={item.title}>
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[#d9d1f6]">
-                    <img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className="absolute inset-0 h-full w-full object-contain object-center" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+              {galleryItems.map((item, index) => (
+                <article className="flex h-full flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-video-ad-scene key={`${item.title}-${index}`}>
+                  <div className="relative overflow-hidden bg-[#d9d1f6]" style={{ aspectRatio: mediaAspectRatio(item.image) }}>
+                    <img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className={`absolute inset-0 h-full w-full ${mediaObjectFit(item.image)} object-center`} style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
@@ -491,8 +548,8 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} />
           <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-5">
-            {content.guidance.cards.map((card) => (
-              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-video-ad-guide-card key={card.title}>
+            {content.guidance.cards.map((card, index) => (
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-video-ad-guide-card key={`${card.title}-${index}`}>
                 <Sparkles className="h-5 w-5 text-[#c4b5fd]" strokeWidth={1.8} />
                 <h3 className="mt-5 text-lg font-semibold leading-tight text-white">{card.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-white/65">{card.body}</p>
@@ -513,8 +570,8 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
           <div className="rounded-[24px] border border-[#d2c9ef] bg-white/65 p-6 sm:p-7" data-video-ad-workspace>
             <p className="text-xs font-semibold uppercase tracking-normal text-[#6652bd]">Workspace evidence model</p>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {content.value.items.map((item) => (
-                <article className="rounded-[18px] border border-[#d2c9ef] bg-[#f7f4ff] p-5" key={item.title}>
+              {content.value.items.map((item, index) => (
+                <article className="rounded-[18px] border border-[#d2c9ef] bg-[#f7f4ff] p-5" key={`${item.title}-${index}`}>
                   <h3 className="text-base font-semibold text-[#191622]">{item.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-[#625e6f]">{item.body}</p>
                 </article>
@@ -546,7 +603,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <SectionHeader eyebrow={content.comparison.eyebrow} title={content.comparison.title} body={content.comparison.intro} light />
             <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-5">
-              {content.comparison.items.map((card) => <SupportingCard card={card} key={card.title} light site={site} />)}
+              {content.comparison.items.map((card, index) => <SupportingCard card={card} key={`${card.title}-${index}`} light site={site} />)}
             </div>
           </div>
         </section>
@@ -591,11 +648,11 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end">
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <div className="relative aspect-[16/9] overflow-hidden rounded-[21px]" data-video-topic-hero-media>
+              <div className="relative overflow-hidden rounded-[21px]" data-video-topic-hero-media style={{ aspectRatio: mediaAspectRatio(content.hero.image) }}>
                 <img
                   src={optimizedTopicImageSrc(content.hero.image.src)}
                   alt={content.hero.image.alt}
-                  className="absolute inset-0 h-full w-full object-contain object-center"
+                  className={`absolute inset-0 h-full w-full ${mediaObjectFit(content.hero.image)} object-center`}
                   style={imageStyle(content.hero.image)}
                   width={content.hero.image.width}
                   height={content.hero.image.height}
@@ -626,7 +683,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.useCases.eyebrow} title={content.useCases.title} body={content.useCases.intro} />
           <div className="mt-12 grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} key={item.title} />)}
+            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} key={`${item.title}-${index}`} />)}
           </div>
         </div>
       </section>
@@ -685,7 +742,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
           <SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} />
           <div className="mt-12 grid items-stretch gap-4 lg:grid-cols-5">
             {content.steps.items.map((item, index) => (
-              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" key={item.title}>
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" key={`${item.title}-${index}`}>
                 <span className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">0{index + 1}</span>
                 <h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
@@ -714,8 +771,8 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
           <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
             <SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} />
             <div className="grid items-stretch gap-4 sm:grid-cols-2">
-              {content.trust.items.map((item) => (
-                <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" key={item.title}>
+              {content.trust.items.map((item, index) => (
+                <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" key={`${item.title}-${index}`}>
                   <ShieldCheck className="h-5 w-5 text-[#c4b5fd]" strokeWidth={1.8} />
                   <h3 className="mt-5 text-lg font-semibold text-white">{item.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
@@ -782,11 +839,11 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end">
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <div className="relative aspect-[16/9] overflow-hidden rounded-[21px]" data-video-topic-hero-media>
+              <div className="relative overflow-hidden rounded-[21px]" data-video-topic-hero-media style={{ aspectRatio: mediaAspectRatio(content.hero.image) }}>
                 <img
                   src={content.hero.image.src}
                   alt={content.hero.image.alt}
-                  className="absolute inset-0 h-full w-full object-contain object-center"
+                  className={`absolute inset-0 h-full w-full ${mediaObjectFit(content.hero.image)} object-center`}
                   style={imageStyle(content.hero.image)}
                   width={content.hero.image.width}
                   height={content.hero.image.height}
@@ -817,7 +874,7 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.useCases.eyebrow} title={content.useCases.title} body={content.useCases.intro} />
           <div className="mt-12 grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} key={item.title} />)}
+            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} key={`${item.title}-${index}`} />)}
           </div>
         </div>
       </section>
@@ -885,7 +942,7 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
           <SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} />
           <div className="mt-12 grid items-stretch gap-4 lg:grid-cols-5">
             {content.steps.items.map((item, index) => (
-              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" key={item.title}>
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" key={`${item.title}-${index}`}>
                 <span className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">0{index + 1}</span>
                 <h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
@@ -912,8 +969,8 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
           <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
             <SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} />
             <div className="grid items-stretch gap-4 sm:grid-cols-2">
-              {content.trust.items.map((item) => (
-                <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" key={item.title}>
+              {content.trust.items.map((item, index) => (
+                <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" key={`${item.title}-${index}`}>
                   <ShieldCheck className="h-5 w-5 text-[#c4b5fd]" strokeWidth={1.8} />
                   <h3 className="mt-5 text-lg font-semibold text-white">{item.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
@@ -1093,7 +1150,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
             ) : null}
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end" data-video-topic-hero-media>
-            <div className="relative aspect-[16/9] w-full max-w-[760px] overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
+            <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
               <DirectTopicHeroCards images={heroPreview.map((item) => item.image)} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
@@ -1109,7 +1166,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <SectionHeader eyebrow={content.quickAnswer.eyebrow} title={content.quickAnswer.title} body={content.quickAnswer.intro} />
             <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">
-              {content.quickAnswer.cards.map((card) => <SupportingCard card={card} key={card.title} site={site} />)}
+              {content.quickAnswer.cards.map((card, index) => <SupportingCard card={card} key={`${card.title}-${index}`} site={site} />)}
             </div>
           </div>
         </section>
@@ -1150,7 +1207,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
           <SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} />
           <div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">
             {content.steps.items.map((item, index) => (
-              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-brand-video-step key={item.title}>
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-brand-video-step key={`${item.title}-${index}`}>
                 <span className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">0{index + 1}</span>
                 <h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
@@ -1169,9 +1226,9 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
             <SectionHeader eyebrow={content.gallery.eyebrow} title={content.gallery.title} body={content.gallery.intro} light />
             <div className="mt-12 grid auto-rows-[minmax(16rem,auto)] gap-5 sm:grid-cols-2 lg:grid-cols-4" data-brand-video-gallery>
               {galleryItems.map((item, index) => (
-                <article className={`flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65 ${index === 0 ? "sm:col-span-2 lg:row-span-2" : index === 3 ? "lg:col-span-2" : ""}`} data-brand-video-scene key={item.title}>
-                  <div className={`relative overflow-hidden bg-[#d9d1f6] ${index === 0 ? "aspect-[16/10] lg:h-full lg:aspect-auto" : index === 3 ? "aspect-[16/9]" : "aspect-[4/5]"}`}>
-                    <img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className="absolute inset-0 h-full w-full object-contain object-center" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                <article className={`flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65 ${index === 0 ? "sm:col-span-2 lg:row-span-2" : index === 3 ? "lg:col-span-2" : ""}`} data-brand-video-scene key={`${item.title}-${index}`}>
+                  <div className={`relative overflow-hidden bg-[#d9d1f6] ${index === 0 ? "lg:h-full" : ""}`} style={{ aspectRatio: mediaAspectRatio(item.image) }}>
+                    <img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className={`absolute inset-0 h-full w-full ${mediaObjectFit(item.image)} object-center`} style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
@@ -1188,8 +1245,8 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} />
           <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {content.guidance.cards.map((card) => (
-              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-brand-video-guide-card key={card.title}>
+            {content.guidance.cards.map((card, index) => (
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-brand-video-guide-card key={`${card.title}-${index}`}>
                 <Sparkles className="h-5 w-5 text-[#c4b5fd]" strokeWidth={1.8} />
                 <h3 className="mt-5 text-lg font-semibold leading-tight text-white">{card.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-white/65">{card.body}</p>
@@ -1204,8 +1261,8 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <SectionHeader eyebrow={content.evidence.eyebrow} title={content.evidence.title} body={content.evidence.intro} light />
             <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-5" data-brand-video-evidence>
-              {content.evidence.cards.map((card) => (
-                <article className="h-full rounded-[22px] border border-[#d2c9ef] bg-white/55 p-6" key={card.title}>
+              {content.evidence.cards.map((card, index) => (
+                <article className="h-full rounded-[22px] border border-[#d2c9ef] bg-white/55 p-6" key={`${card.title}-${index}`}>
                   <ShieldCheck className="h-5 w-5 text-[#6652bd]" strokeWidth={1.8} />
                   <h3 className="mt-5 text-lg font-semibold leading-tight text-[#191622]">{card.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-[#625e6f]">{card.body}</p>
@@ -1227,8 +1284,8 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
           <div className="rounded-[24px] border border-white/10 bg-[#17151f] p-6 sm:p-7" data-brand-video-workspace>
             <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">Workspace review model</p>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {content.value.items.map((item) => (
-                <article className="rounded-[18px] border border-white/10 bg-white/[0.035] p-5" key={item.title}>
+              {content.value.items.map((item, index) => (
+                <article className="rounded-[18px] border border-white/10 bg-white/[0.035] p-5" key={`${item.title}-${index}`}>
                   <h3 className="text-base font-semibold text-white">{item.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
                 </article>
@@ -1242,8 +1299,8 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} />
           <div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {content.trust.items.map((item) => (
-              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-brand-video-review-card key={item.title}>
+            {content.trust.items.map((item, index) => (
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-brand-video-review-card key={`${item.title}-${index}`}>
                 <Check className="h-5 w-5 text-[#c4b5fd]" strokeWidth={1.8} />
                 <h3 className="mt-5 text-lg font-semibold leading-tight text-white">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
@@ -1330,7 +1387,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
             {content.hero.highlights?.length ? <div className="mt-7 flex flex-wrap gap-x-4 gap-y-2 rounded-2xl border border-white/10 bg-white/[0.035] px-4 py-3 text-xs font-semibold text-white/62">{content.hero.highlights.map((highlight) => <span key={highlight}>{highlight}</span>)}</div> : null}
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end" data-video-topic-hero-media>
-            <div className={`relative aspect-[16/9] w-full max-w-[760px] overflow-hidden rounded-[8px] border ${accentBorder} bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]`}>
+            <div className={`relative w-full overflow-hidden rounded-[8px] border ${accentBorder} bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]`}>
               <DirectTopicHeroCards images={heroImages} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60"><Sparkles className={`mt-1 h-4 w-4 shrink-0 ${accentClass}`} strokeWidth={1.8} /><span>{content.hero.caption}</span></figcaption>
@@ -1338,23 +1395,23 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
         </div>
       </section>
 
-      {content.quickAnswer ? <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="what-this-creates" data-video-topic-section="what-this-creates"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.quickAnswer.eyebrow} title={content.quickAnswer.title} body={content.quickAnswer.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">{content.quickAnswer.cards.map((card) => <SupportingCard card={card} key={card.title} site={site} />)}</div></div></section> : null}
+      {content.quickAnswer ? <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="what-this-creates" data-video-topic-section="what-this-creates"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.quickAnswer.eyebrow} title={content.quickAnswer.title} body={content.quickAnswer.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">{content.quickAnswer.cards.map((card, index) => <SupportingCard card={card} key={`${card.title}-${index}`} site={site} />)}</div></div></section> : null}
 
-      {visualMap.length ? <section className={`border-b border-white/10 ${panelTone} px-5 py-16 sm:px-8 sm:py-24`} id="visual-map" data-video-topic-section="visual-map"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.platformExamples?.eyebrow ?? "VISUAL MAP"} title={content.platformExamples?.title ?? "Six Decisions Before You Generate"} body={content.platformExamples?.intro} /><ol className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-6">{visualMap.map((item, index) => <li className="min-w-0 rounded-[22px] border border-white/10 bg-[#17151f] p-5" data-scene-topic-map-item key={item.title}><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</p><h3 className="mt-4 text-lg font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></li>)}</ol></div></section> : null}
+      {visualMap.length ? <section className={`border-b border-white/10 ${panelTone} px-5 py-16 sm:px-8 sm:py-24`} id="visual-map" data-video-topic-section="visual-map"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.platformExamples?.eyebrow ?? "VISUAL MAP"} title={content.platformExamples?.title ?? "Six Decisions Before You Generate"} body={content.platformExamples?.intro} /><ol className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-6">{visualMap.map((item, index) => <li className="min-w-0 rounded-[22px] border border-white/10 bg-[#17151f] p-5" data-scene-topic-map-item key={`${item.title}-${index}`}><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</p><h3 className="mt-4 text-lg font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></li>)}</ol></div></section> : null}
 
-      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} /><div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">{content.steps.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-scene-topic-step key={item.title}><span className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</span><h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div><div className="mt-10"><ActionLink href={primaryHref} label={content.steps.cta} site={site} /></div></div></section>
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} /><div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">{content.steps.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-scene-topic-step key={`${item.title}-${index}`}><span className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</span><h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div><div className="mt-10"><ActionLink href={primaryHref} label={content.steps.cta} site={site} /></div></div></section>
 
-      {galleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? "SCENE REFERENCES"} title={content.gallery?.title ?? "Eight Directions for the Next Shot"} body={content.gallery?.intro} light /><div className="mt-12 grid auto-rows-[minmax(16rem,auto)] gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{galleryItems.map((item, index) => <article className={`flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65 ${index === 0 ? "sm:col-span-2 lg:row-span-2" : index === 3 ? "lg:col-span-2" : ""}`} data-scene-topic-scene key={item.title}><div className={`relative overflow-hidden bg-[#d9d1f6] ${index === 0 ? "aspect-[16/10] lg:h-full lg:aspect-auto" : index === 3 ? "aspect-[16/9]" : "aspect-[4/5]"}`}><img src={item.image.src} alt={item.image.alt} className="absolute inset-0 h-full w-full object-contain object-center" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
+      {galleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? "SCENE REFERENCES"} title={content.gallery?.title ?? "Eight Directions for the Next Shot"} body={content.gallery?.intro} light /><div className="mt-12 grid auto-rows-[minmax(16rem,auto)] gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{galleryItems.map((item, index) => <article className={`flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65 ${index === 0 ? "sm:col-span-2 lg:row-span-2" : index === 3 ? "lg:col-span-2" : ""}`} data-scene-topic-scene key={`${item.title}-${index}`}><div className={`relative overflow-hidden bg-[#d9d1f6] ${index === 0 ? "lg:h-full" : ""}`} style={{ aspectRatio: mediaAspectRatio(item.image) }}><img src={item.image.src} alt={item.image.alt} className={`absolute inset-0 h-full w-full ${mediaObjectFit(item.image)} object-center`} style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
 
-      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="sequence-guide" data-video-topic-section="sequence-guide"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.guidance.cards.map((card) => <SupportingCard card={card} key={card.title} site={site} />)}</div></div></section>
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="sequence-guide" data-video-topic-section="sequence-guide"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.guidance.cards.map((card, index) => <SupportingCard card={card} key={`${card.title}-${index}`} site={site} />)}</div></div></section>
 
       <section className={`border-b border-white/10 ${panelTone} px-5 py-16 sm:px-8 sm:py-24`} id="product-boundary" data-video-topic-section="product-boundary"><div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.74fr_1.26fr] lg:items-start lg:gap-16"><SectionHeader eyebrow={content.foundation.eyebrow} title={content.foundation.title} body={content.foundation.intro} /><div className="grid gap-5 sm:grid-cols-2"><DirectionList items={content.foundation.leftItems} title={content.foundation.leftTitle} tone="positive" /><DirectionList items={content.foundation.rightItems} title={content.foundation.rightTitle} tone={content.foundation.rightTone === "neutral" ? "neutral" : "avoid"} /><div className="sm:col-span-2 rounded-[22px] border border-white/10 bg-[#191525] p-6 sm:p-7"><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{content.foundation.expertLabel ?? "Expert tip"}</p><p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p></div></div></div></section>
 
       {content.evidence ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="product-evidence" data-video-topic-section="product-evidence"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.evidence.eyebrow} title={content.evidence.title} body={content.evidence.intro} light /><SectionCards cards={content.evidence.cards} light site={site} /></div></section> : null}
 
-      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="workflow" data-video-topic-section="workflow"><div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start lg:gap-16"><div><SectionHeader eyebrow={content.value.eyebrow} title={content.value.title} body={content.value.intro} /><div className="mt-8"><ActionLink href={primaryHref} label={content.finalCta.cta} site={site} /></div></div><div className="grid gap-4 sm:grid-cols-2">{content.value.items.map((item) => <article className="rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-scene-topic-workflow key={item.title}><Sparkles className={`h-5 w-5 ${accentClass}`} strokeWidth={1.8} /><h3 className="mt-5 text-lg font-semibold text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div></div></section>
+      <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="workflow" data-video-topic-section="workflow"><div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start lg:gap-16"><div><SectionHeader eyebrow={content.value.eyebrow} title={content.value.title} body={content.value.intro} /><div className="mt-8"><ActionLink href={primaryHref} label={content.finalCta.cta} site={site} /></div></div><div className="grid gap-4 sm:grid-cols-2">{content.value.items.map((item, index) => <article className="rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-scene-topic-workflow key={`${item.title}-${index}`}><Sparkles className={`h-5 w-5 ${accentClass}`} strokeWidth={1.8} /><h3 className="mt-5 text-lg font-semibold text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div></div></section>
 
-      <section className="border-b border-white/10 bg-[#191525] px-5 py-16 sm:px-8 sm:py-24" id="integrity-review" data-video-topic-section="integrity-review"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.trust.items.map((item) => <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" data-scene-topic-review-card key={item.title}><ShieldCheck className={`h-5 w-5 ${accentClass}`} strokeWidth={1.8} /><h3 className="mt-5 text-lg font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div></div></section>
+      <section className="border-b border-white/10 bg-[#191525] px-5 py-16 sm:px-8 sm:py-24" id="integrity-review" data-video-topic-section="integrity-review"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.trust.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" data-scene-topic-review-card key={`${item.title}-${index}`}><ShieldCheck className={`h-5 w-5 ${accentClass}`} strokeWidth={1.8} /><h3 className="mt-5 text-lg font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div></div></section>
 
       <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light /><div className="mt-10 grid gap-4 lg:grid-cols-2">{content.faq.items.map((item) => <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}><summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]"><span>{item.question}</span><ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} /></summary><p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p></details>)}</div></div></section>
       {content.comparison ? <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="related-pages" data-video-topic-section="related-pages"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.comparison.eyebrow} title={content.comparison.title} body={content.comparison.intro} /><SectionCards cards={content.comparison.items} site={site} /></div></section> : null}
@@ -1402,20 +1459,8 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
             ) : null}
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end">
-            <div className="relative aspect-[16/9] w-full max-w-[760px] overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]" data-video-topic-hero-media>
-              {heroImages.length === 1 ? heroImages.map((item, index) => <div className="absolute inset-0 overflow-hidden bg-[#292438]" key={item.src}>
-                <img
-                  src={optimizedTopicImageSrc(item.src)}
-                  alt={item.alt}
-                  className="absolute inset-0 h-full w-full object-contain object-center"
-                  style={{ objectPosition: "50% 50%" }}
-                  width={item.width}
-                  height={item.height}
-                  loading="eager"
-                  fetchPriority={index === 0 ? "high" : undefined}
-                  decoding="async"
-                />
-              </div>) : <div className="absolute inset-0 grid grid-cols-3 gap-2 bg-[#17151f] p-2">{heroImages.map((item, index) => <div className="relative min-w-0 overflow-hidden rounded-[6px] bg-[#292438]" key={`hero-card-${item.src}`}><img src={optimizedTopicImageSrc(item.src)} alt={item.alt} className="absolute inset-0 h-full w-full object-contain object-center" style={{ objectPosition: "50% 50%" }} width={item.width} height={item.height} loading={index === 0 ? "eager" : "lazy"} decoding="async" /></div>)}</div>}
+            <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]" data-video-topic-hero-media>
+              <DirectTopicHeroCards images={heroImages} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
               <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />
@@ -1438,7 +1483,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.useCases.eyebrow} title={content.useCases.title} body={content.useCases.intro} />
           <div className="mt-12 grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} key={item.title} />)}
+            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} key={`${item.title}-${index}`} />)}
           </div>
         </div>
       </section>
@@ -1519,7 +1564,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
           <SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} />
           <div className="mt-12 grid items-stretch gap-4 lg:grid-cols-4">
             {content.steps.items.map((item, index) => (
-              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" key={item.title}>
+              <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" key={`${item.title}-${index}`}>
                 <span className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">0{index + 1}</span>
                 <h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>
@@ -1539,8 +1584,8 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
           <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
             <SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} />
             <div className="grid items-stretch gap-4 sm:grid-cols-2">
-              {content.trust.items.map((item) => (
-                <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" key={item.title}>
+              {content.trust.items.map((item, index) => (
+                <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" key={`${item.title}-${index}`}>
                   <ShieldCheck className="h-5 w-5 text-[#c4b5fd]" strokeWidth={1.8} />
                   <h3 className="mt-5 text-lg font-semibold text-white">{item.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p>

@@ -15,6 +15,7 @@ import type {
   PublishedVideoNavigationProjection,
   PublishedHomepageShowcaseItem,
   Site,
+  SitePublishedState,
   StorefrontProfileJson,
   ThemePage,
   ThemePageJson,
@@ -168,6 +169,7 @@ export type StorefrontContextBundle = {
   products: Product[];
   creativePacks: CreativePack[];
   publication?: ThemePublication;
+  currentState?: SitePublishedState;
   factsRevision?: string;
   buildId?: string;
   publishedPageEntities?: Record<string, PublishedPageEntityProjection>;

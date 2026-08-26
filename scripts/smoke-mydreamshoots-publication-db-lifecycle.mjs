@@ -87,7 +87,7 @@ try {
     }
   };
   const firstManifest = await prepareDraftPublishManifestRelational(siteId);
-  const firstApproval = await createThemePublishApprovalRelational({ siteId, manifest: firstManifest, approvedBy: "smoke:publication-lifecycle" });
+  const firstApproval = await createThemePublishApprovalRelational({ siteId, manifest: firstManifest, requestedBy: "smoke:publication-lifecycle" });
   const first = await publishApprovedDraftSiteRelational({ siteId, approvalId: firstApproval.id, actor: "smoke:publication-lifecycle" });
   createdPublicationIds.push(first.publication.id);
   keepPublicationId = first.publication.id;
@@ -104,7 +104,7 @@ try {
   assert.equal(stableSnapshotJson(afterDrift?.snapshot), firstBytes, "draft drift must not mutate the first immutable publication");
 
   const secondManifest = await prepareDraftPublishManifestRelational(siteId);
-  const secondApproval = await createThemePublishApprovalRelational({ siteId, manifest: secondManifest, approvedBy: "smoke:publication-lifecycle" });
+  const secondApproval = await createThemePublishApprovalRelational({ siteId, manifest: secondManifest, requestedBy: "smoke:publication-lifecycle" });
   const second = await publishApprovedDraftSiteRelational({ siteId, approvalId: secondApproval.id, actor: "smoke:publication-lifecycle" });
   createdPublicationIds.push(second.publication.id);
   if (keepNewPublication) keepPublicationId = second.publication.id;

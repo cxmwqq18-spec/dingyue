@@ -966,6 +966,43 @@ function buildPublicationSnapshotStats(snapshot: ThemePublication["snapshot"]) {
   return { pageCount, sectionCount, snapshotBytes };
 }
 
+/**
+ * Compile the complete current-state candidate from a fresh database read.
+ * This is intentionally separate from the legacy publication writer so the
+ * future current-state owner cannot accept a caller-supplied public payload.
+ */
+export async function compileCurrentPublishedPayloadRelational(
+  siteId: string,
+  db: PrismaLike = prisma
+): Promise<PublishedSeoSnapshot> {
+  const siteRecord = await getSiteWithThemeRecords(db, siteId);
+  const site = toSite(siteRecord);
+  const [productRows, packRows] = await Promise.all([
+    db.product.findMany({ where: { siteId }, include: { prices: true }, orderBy: { id: "asc" } }),
+    db.creativePack.findMany({
+      where: { siteId },
+      select: {
+        id: true,
+        status: true,
+        creditCost: true,
+        outputCount: true,
+        category: true,
+        imageUrl: true,
+        galleryImages: true,
+        galleryImageAlts: true,
+        categoryRecord: { select: { slug: true } }
+      },
+      orderBy: { id: "asc" }
+    })
+  ]);
+  return buildPublicationSnapshot(
+    site,
+    undefined,
+    packRows.map((pack) => normalizedPublishPack(pack as PublishPreflightCreativePack)),
+    productRows.map(mapProduct)
+  );
+}
+
 type ImmutablePublicationScope = {
   type: "page" | "site";
   pageIds: string[];
@@ -2147,7 +2184,7 @@ export type StorefrontPublishManifest = {
 export type ThemePublishApprovalInput = {
   siteId: string;
   manifest: StorefrontPublishManifest;
-  approvedBy: string;
+  requestedBy: string;
   expiresAt?: Date;
 };
 
@@ -2244,7 +2281,7 @@ export async function prepareDraftPublishManifestRelational(siteId: string): Pro
 
 export async function createThemePublishApprovalRelational(input: ThemePublishApprovalInput) {
   if (!input.siteId.trim()) throw new RelationalStoreError("theme_publish_site_required", 400);
-  if (!input.approvedBy.trim()) throw new RelationalStoreError("theme_publish_approver_required", 400);
+  if (!input.requestedBy.trim()) throw new RelationalStoreError("theme_publish_requester_required", 400);
   if (input.expiresAt && input.expiresAt <= new Date()) throw new RelationalStoreError("theme_publish_approval_expired", 400);
   if (!input.manifest.sourceRevisions) throw new RelationalStoreError("theme_publish_source_revisions_required", 409);
   const manifest = input.manifest;
@@ -2256,8 +2293,11 @@ export async function createThemePublishApprovalRelational(input: ThemePublishAp
     data: {
       id: approvalId,
       siteId: input.siteId,
+      requestedBy: input.requestedBy,
       manifestHash: manifest.manifestHash,
-      approvedBy: input.approvedBy,
+      approvedBy: null,
+      approvedAt: null,
+      status: "pending",
       expiresAt: input.expiresAt,
       items: { create: items.map((item, index) => ({ id: `${approvalId}_item_${index}`, ...item })) }
     },
@@ -2283,6 +2323,8 @@ export async function publishDraftSiteRelational(
   actor = "site_admin_demo",
   approvalId?: string
 ): Promise<{ site: Site; publication: ThemePublication; publishedVersion: number }> {
+  throw new RelationalStoreError("legacy_publication_publish_retired", 410);
+  /* istanbul ignore next -- retained below only while the cleanup migration is staged */
   if (!approvalId) throw new RelationalStoreError("theme_publish_approval_required", 409);
   clearSiteThemeReadCache(siteId);
   const expectedHash = storefrontPublishManifestHash(manifest);
@@ -2433,8 +2475,8 @@ export async function publishApprovedDraftSiteRelational(params: {
   approvalId: string;
   actor?: string;
 }): Promise<{ site: Site; publication: ThemePublication; publishedVersion: number }> {
-  const manifest = await prepareDraftPublishManifestRelational(params.siteId);
-  return publishDraftSiteRelational(params.siteId, manifest, params.actor ?? "site_admin_demo", params.approvalId);
+  void params;
+  throw new RelationalStoreError("legacy_publication_publish_retired", 410);
 }
 
 export async function restoreDraftThemeFromPublicationRelational(
@@ -2442,6 +2484,11 @@ export async function restoreDraftThemeFromPublicationRelational(
   publicationId: string,
   actor = "site_admin_demo"
 ): Promise<{ site: Site; publication: ThemePublication }> {
+  void siteId;
+  void publicationId;
+  void actor;
+  throw new RelationalStoreError("legacy_publication_restore_retired", 410);
+  /* istanbul ignore next -- retained below only while the cleanup migration is staged */
   clearSiteThemeReadCache(siteId);
   return prisma.$transaction(async (tx) => {
     const publicationRecord = await tx.themePublication.findFirst({ where: { siteId, id: publicationId } });
@@ -2529,6 +2576,11 @@ export async function activateThemePublicationRelational(
   publicationId: string,
   actor = "site_admin_demo"
 ): Promise<{ publication: ThemePublication }> {
+  void siteId;
+  void publicationId;
+  void actor;
+  throw new RelationalStoreError("legacy_publication_activate_retired", 410);
+  /* istanbul ignore next -- retained below only while the cleanup migration is staged */
   const publication = await prisma.$transaction(async (tx) => {
     const publicationRecord = await tx.themePublication.findFirst({ where: { siteId, id: publicationId } });
     if (!publicationRecord) throw new RelationalStoreError("theme_publication_not_found", 404);

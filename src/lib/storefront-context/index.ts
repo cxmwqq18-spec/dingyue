@@ -1,7 +1,9 @@
 import "server-only";
 
 import { prisma } from "@/lib/prisma";
-import { toCreativePack, mapProduct, toSite, toThemePublication } from "@/lib/stores/prisma-mappers";
+import { toCreativePack, mapProduct, toSite } from "@/lib/stores/prisma-mappers";
+import { currentPublishedContentHash } from "@/lib/stores/site-published-state";
+import type { SitePublishedState } from "@/lib/types";
 import { resolveStorefrontContext } from "./core";
 import type { DraftStorefrontContextAdapter, PublishedStorefrontContextAdapter, StorefrontContext, StorefrontPublishScope } from "./types";
 
@@ -9,8 +11,8 @@ const publishedContextCache = new Map<string, { context: StorefrontContext; expi
 const siteContextKeys = new Map<string, Set<string>>();
 const PUBLISHED_CONTEXT_MAX_TTL_MS = 60_000;
 
-export function storefrontContextCacheKey(params: { siteId: string; pageId?: string; publicationId?: string; factsRevision: string; pageEntityId?: string; copyRevision?: string; pageMediaRevision?: string }): string {
-  return `${params.siteId}:${params.publicationId ?? "unpublished"}:${params.factsRevision}:${params.pageId ?? "site"}:${params.pageEntityId ?? "page"}:${params.copyRevision ?? "copy"}:${params.pageMediaRevision ?? "media"}`;
+export function storefrontContextCacheKey(params: { siteId: string; pageId?: string; currentRevision?: string; factsRevision: string; pageEntityId?: string; copyRevision?: string; pageMediaRevision?: string }): string {
+  return `${params.siteId}:${params.currentRevision ?? "missing-current-state"}:${params.factsRevision}:${params.pageId ?? "site"}:${params.pageEntityId ?? "page"}:${params.copyRevision ?? "copy"}:${params.pageMediaRevision ?? "media"}`;
 }
 
 export function clearStorefrontContextCache(siteId: string): void {
@@ -22,7 +24,7 @@ function cachePublishedContext(siteId: string, context: StorefrontContext, expir
   const key = storefrontContextCacheKey({
     siteId,
     pageId: context.page.id,
-    publicationId: context.revisions.publicationId,
+    currentRevision: context.revisions.snapshotRevision,
     factsRevision: context.revisions.factsRevision,
     pageEntityId: context.revisions.pageEntityId,
     copyRevision: context.revisions.copyRevision,
@@ -73,23 +75,45 @@ async function loadPrismaBundle(siteId: string) {
       connect: true,
       products: { include: { prices: true } },
       creativePacks: true,
-      activePublication: { include: { publication: true } },
-      publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }
+      currentPublishedState: true
     }
   });
   if (!siteRecord) throw new Error("site_not_found");
+  const rawCurrentState = siteRecord.currentPublishedState;
+  if (!rawCurrentState) throw new Error("current_published_state_missing");
+  if (currentPublishedContentHash(rawCurrentState.payload) !== rawCurrentState.contentHash) {
+    throw new Error("current_published_state_hash_mismatch");
+  }
   const release = await prisma.deploymentRelease.findFirst({
     where: { siteId, status: "applied" },
     orderBy: { appliedAt: "desc" }
   });
   const site = toSite(siteRecord);
+  const currentState = site.currentPublishedState as SitePublishedState;
+  const payload = currentState.payload;
+  const payloadPages = new Map(payload.pages.map((page) => [page.id, page]));
+  site.pages = site.pages.map((page) => {
+    const current = payloadPages.get(page.id) ?? payload.pages.find((candidate) => candidate.slug === page.slug);
+    return current ? { ...page, publishedJson: current.publishedJson, title: current.title ?? page.title } : page;
+  });
+  site.themeSettings = { ...site.themeSettings, publishedJson: payload.themeSettings };
+  if (site.storefrontProfile && payload.storefrontProfile) {
+    site.storefrontProfile = { ...site.storefrontProfile, publishedJson: payload.storefrontProfile };
+  }
   return {
     site,
     products: siteRecord.products.map(mapProduct),
     creativePacks: siteRecord.creativePacks.map(toCreativePack),
-    publication: site.activePublication,
-    factsRevision: site.activePublication?.factsRevision,
-    buildId: release?.codeCommit
+    currentState,
+    publication: undefined,
+    factsRevision: currentState.payload.revisions.factsRevision,
+    buildId: release?.codeCommit,
+    publishedPageEntities: Object.fromEntries(currentState.payload.publishedPageEntities.map((entity) => [entity.metadata.canonicalPath, entity])),
+    publishedFacts: currentState.payload.publishedFacts,
+    publishedPageMedia: Object.fromEntries(currentState.payload.publishedPageMedia.map((entity) => [entity.pageEntityId, entity])),
+    publishedStandardPageMedia: Object.fromEntries(currentState.payload.publishedStandardPageMedia.map((entity) => [entity.canonicalPath, entity])),
+    publishedLinkRefs: currentState.payload.publishedLinkRefs,
+    snapshotIntegrity: "valid" as const
   };
 }
 
