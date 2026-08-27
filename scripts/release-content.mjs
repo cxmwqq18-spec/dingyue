@@ -423,6 +423,14 @@ function remapCategoryId(row, sourceCategories, targetIds) {
 
 async function applySnapshot(tx, siteId, tables, replacements) {
   const replaceSet = new Set(replacements);
+  if (Array.isArray(tables.themePages)) {
+    const desiredIds = tables.themePages.map((row) => row.id).filter(Boolean);
+    // Keep the relational public page set exact. This also releases slugs
+    // held by retired rows before upserting a migrated page id.
+    await tx.themePage.deleteMany({
+      where: desiredIds.length ? { siteId, id: { notIn: desiredIds } } : { siteId }
+    });
+  }
   for (const table of ["toolMenuItems", "toolCategories", "videoThemes", "videoThemeCategories"]) {
     if (replaceSet.has(table)) await replaceRows(tx, table, siteId);
   }
