@@ -2,8 +2,8 @@ import "server-only";
 
 import { prisma } from "@/lib/prisma";
 import { toCreativePack, mapProduct, toSite } from "@/lib/stores/prisma-mappers";
-import { currentPublishedContentHash } from "@/lib/stores/site-published-state";
-import type { SitePublishedState } from "@/lib/types";
+import { currentPublishedContentHash, currentPublishedRevision } from "@/lib/current-state/hash";
+import type { SitePublishedState, ThemePageJson } from "@/lib/types";
 import { resolveStorefrontContext } from "./core";
 import type { DraftStorefrontContextAdapter, PublishedStorefrontContextAdapter, StorefrontContext, StorefrontPublishScope } from "./types";
 
@@ -84,13 +84,32 @@ async function loadPrismaBundle(siteId: string) {
   if (currentPublishedContentHash(rawCurrentState.payload) !== rawCurrentState.contentHash) {
     throw new Error("current_published_state_hash_mismatch");
   }
+  if (currentPublishedRevision(siteId, rawCurrentState.contentHash) !== rawCurrentState.revision) {
+    throw new Error("current_published_state_revision_mismatch");
+  }
   const release = await prisma.deploymentRelease.findFirst({
     where: { siteId, status: "applied" },
     orderBy: { appliedAt: "desc" }
   });
   const site = toSite(siteRecord);
-  const currentState = site.currentPublishedState as SitePublishedState;
-  const payload = currentState.payload;
+  const persistedCurrentState = site.currentPublishedState as SitePublishedState;
+  const instantDraftPreview = process.env.DINGYUE_ENV === "local" && process.env.STOREFRONT_INSTANT_DRAFT_PREVIEW !== "0";
+  const payload = instantDraftPreview
+    ? {
+        ...persistedCurrentState.payload,
+        pages: persistedCurrentState.payload.pages.map((publishedPage): SitePublishedState["payload"]["pages"][number] => {
+          const draftPage = siteRecord.pages.find((candidate) => candidate.id === publishedPage.id || candidate.slug === publishedPage.slug);
+          return draftPage
+            ? { ...publishedPage, title: draftPage.title ?? publishedPage.title, publishedJson: draftPage.draftJson as unknown as ThemePageJson }
+            : publishedPage;
+        }),
+        themeSettings: site.themeSettings.draftJson,
+        ...(site.storefrontProfile?.draftJson ? { storefrontProfile: site.storefrontProfile.draftJson } : {})
+      }
+    : persistedCurrentState.payload;
+  const currentState = instantDraftPreview
+    ? { ...persistedCurrentState, payload }
+    : persistedCurrentState;
   const payloadPages = new Map(payload.pages.map((page) => [page.id, page]));
   site.pages = site.pages.map((page) => {
     const current = payloadPages.get(page.id) ?? payload.pages.find((candidate) => candidate.slug === page.slug);
@@ -149,6 +168,7 @@ export async function loadPublishedStorefrontContext({
   const observedAt = now ?? new Date();
   const bundle = await adapter.loadPublishedBundle(siteId, path);
   const context = resolveStorefrontContext(bundle, "published", { now: observedAt });
+  if (process.env.DINGYUE_ENV === "local" && process.env.STOREFRONT_INSTANT_DRAFT_PREVIEW !== "0") return context;
   if (now) return context;
   const expiresAt = Math.min(Date.now() + PUBLISHED_CONTEXT_MAX_TTL_MS, nextPriceBoundary(bundle, observedAt.getTime()) ?? Number.POSITIVE_INFINITY);
   return cachePublishedContext(siteId, context, expiresAt);

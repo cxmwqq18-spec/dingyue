@@ -31,33 +31,33 @@ const prisma = new PrismaClient();
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const routeLabel = new Map([
   ["/ai-save-the-date/valentines-day", "Valentine's Day"],
-  ["/holidays-events/engagement", "Engagement"],
-  ["/holidays-events/proposal", "Proposal"],
-  ["/holidays-events/save-the-date", "Save the Date"],
-  ["/holidays-events/wedding-invitation", "Wedding Invitation"],
-  ["/ai-video-generation/wedding-ceremony", "Wedding Ceremony"],
-  ["/holidays-events/christmas", "Christmas"],
-  ["/holidays-events/thanksgiving", "Thanksgiving"],
-  ["/holidays-events/new-year", "New Year"],
-  ["/holidays-events/mothers-day", "Mother's Day"],
-  ["/holidays-events/fathers-day", "Father's Day"],
-  ["/holidays-events/halloween", "Halloween"]
+  ["/ai-save-the-date/engagement", "Engagement"],
+  ["/ai-save-the-date/proposal", "Proposal"],
+  ["/ai-save-the-date/save-the-date", "Save the Date"],
+  ["/ai-save-the-date/wedding-invitation", "Wedding Invitation"],
+  ["/ai-save-the-date/wedding-ceremony", "Wedding Ceremony"],
+  ["/ai-save-the-date/christmas", "Christmas"],
+  ["/ai-save-the-date/thanksgiving", "Thanksgiving"],
+  ["/ai-save-the-date/new-year", "New Year"],
+  ["/ai-save-the-date/mothers-day", "Mother's Day"],
+  ["/ai-save-the-date/fathers-day", "Father's Day"],
+  ["/ai-save-the-date/halloween", "Halloween"]
 ]);
 const lovePaths = [
   "/ai-save-the-date/valentines-day",
-  "/holidays-events/engagement",
-  "/holidays-events/proposal",
-  "/holidays-events/save-the-date",
-  "/holidays-events/wedding-invitation",
-  "/ai-video-generation/wedding-ceremony"
+  "/ai-save-the-date/engagement",
+  "/ai-save-the-date/proposal",
+  "/ai-save-the-date/save-the-date",
+  "/ai-save-the-date/wedding-invitation",
+  "/ai-save-the-date/wedding-ceremony"
 ];
 const seasonalPaths = [
-  "/holidays-events/christmas",
-  "/holidays-events/thanksgiving",
-  "/holidays-events/new-year",
-  "/holidays-events/mothers-day",
-  "/holidays-events/fathers-day",
-  "/holidays-events/halloween"
+  "/ai-save-the-date/christmas",
+  "/ai-save-the-date/thanksgiving",
+  "/ai-save-the-date/new-year",
+  "/ai-save-the-date/mothers-day",
+  "/ai-save-the-date/fathers-day",
+  "/ai-save-the-date/halloween"
 ];
 const validPathSet = new Set([...lovePaths, ...seasonalPaths]);
 
@@ -70,8 +70,8 @@ function normalizePageJson(pageJson, pathName, label) {
   json.pageType = "standard-content";
   json.version = 1;
   json.seo = { ...(json.seo || {}), canonicalPath: pathName, canonical: `https://www.mydreamshoots.com${pathName}`, index: true, follow: true, robots: { ...(json.seo?.robots || {}), index: true, follow: true, maxImagePreview: "large" }, title: json.seo?.title || `AI ${label} Photos and Videos | myDreamshoots`, description: json.seo?.description || `Create ${label} photos and videos with AI from approved source images.` };
-  json.relatedLinks = [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/holidays-events/save-the-date" }];
-  json.contentContract = { ...(json.contentContract || {}), schema: "editorial-page-v1", pageKey: pathName === "/holidays-events/halloween" ? "halloween" : "save_date", mediaCount: json.mediaManifest?.length || 11, faqCount: json.contentContract?.faqCount || 4, requiredSections: json.contentContract?.requiredSections || json.sectionsOrder.map((id) => json.sections[id]?.settings?.anchor || id), sectionTypes: json.contentContract?.sectionTypes || json.sectionsOrder.map((id) => json.sections[id]?.type) };
+  json.relatedLinks = [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/ai-save-the-date/save-the-date" }];
+  json.contentContract = { ...(json.contentContract || {}), schema: "editorial-page-v1", pageKey: pathName === "/ai-save-the-date/halloween" ? "halloween" : "save_date", mediaCount: json.mediaManifest?.length || 11, faqCount: json.contentContract?.faqCount || 4, requiredSections: json.contentContract?.requiredSections || json.sectionsOrder.map((id) => json.sections[id]?.settings?.anchor || id), sectionTypes: json.contentContract?.sectionTypes || json.sectionsOrder.map((id) => json.sections[id]?.type) };
   return json;
 }
 
@@ -82,7 +82,7 @@ try {
     ? await prisma.themePublication.findFirst({ where: { siteId, version: { lt: record.activePublication.publication.version } }, orderBy: { version: "desc" } })
     : undefined;
   const previousPages = new Map((previousPublication?.snapshot?.pages || []).map((page) => [page.slug, page.publishedJson]));
-  const sourcePage = record.pages.find((page) => page.slug === "/holidays-events/save-the-date") || record.pages.find((page) => page.slug === "/holidays-events/engagement");
+  const sourcePage = record.pages.find((page) => page.slug === "/ai-save-the-date/save-the-date") || record.pages.find((page) => page.slug === "/ai-save-the-date/engagement");
   if (!sourcePage) throw new Error("Missing source Save the Date page");
   const sourceJson = sourcePage.publishedJson?.sectionsOrder?.length ? sourcePage.publishedJson : sourcePage.draftJson;
   const pageWrites = new Map();
@@ -114,7 +114,7 @@ try {
     for (const page of allPages.filter((candidate) => validPathSet.has(candidate.slug))) {
       const nextJson = pageWrites.has(page.slug)
         ? pageWrites.get(page.slug).draftJson
-        : ["/holidays-events/wedding-invitation", "/holidays-events/halloween"].includes(page.slug)
+        : ["/ai-save-the-date/wedding-invitation", "/ai-save-the-date/halloween"].includes(page.slug)
           ? normalizePageJson(page.draftJson?.sectionsOrder?.length ? page.draftJson : page.publishedJson, page.slug, routeLabel.get(page.slug))
           : clone(previousPages.get(page.slug) || (page.draftJson?.sectionsOrder?.length ? page.draftJson : page.publishedJson));
       const contractSections = nextJson.sectionsOrder.map((id) => nextJson.sections[id]).filter(Boolean);
@@ -122,7 +122,7 @@ try {
       nextJson.contentContract = {
         ...(nextJson.contentContract || {}),
         schema: "editorial-page-v1",
-        pageKey: page.slug === "/holidays-events/halloween" ? "halloween" : (nextJson.contentContract?.pageKey || page.slug.slice(1).replace(/[^a-z0-9]+/gi, "_")),
+        pageKey: page.slug === "/ai-save-the-date/halloween" ? "halloween" : (nextJson.contentContract?.pageKey || page.slug.slice(1).replace(/[^a-z0-9]+/gi, "_")),
         requiredSections: contractSections.map((section) => section.settings?.anchor || "section"),
         sectionTypes: contractSections.map((section) => section.type),
         faqCount: faqSection?.blocks?.length || nextJson.contentContract?.faqCount || 4,
@@ -139,7 +139,7 @@ try {
       await tx.themePage.update({ where: { id: page.id }, data: { draftJson: json } });
     }
     await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: settings, publishedJson: {} }, update: { draftJson: settings } });
-  });
+  }, { maxWait: 15_000, timeout: 120_000 });
   const jiti = (await import("jiti")).default(import.meta.url);
   const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
   const manifest = await prepareDraftPublishManifestRelational(siteId);

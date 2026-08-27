@@ -135,7 +135,7 @@ function updateHomepage(page, homePageId) {
       saveTheDateIntro: SAVE_THE_DATE_INTRO,
       photoIntro: PHOTO_INTRO,
       videoAllHref: "/ai-video-generation",
-      saveTheDateAllHref: "/holidays-events/save-the-date",
+      saveTheDateAllHref: "/ai-save-the-date/save-the-date",
       saveTheDateItemLimit: 6,
       imageItemLimit: 8
     };
@@ -184,7 +184,7 @@ function updateSettings(json, homePageId) {
   const existingFooterLinks = Array.isArray(next.navigation.footerLinks) ? next.navigation.footerLinks : [];
   const productFooterLinks = [
     ["AI Video Generation", "/ai-video-generation"],
-    ["AI Save the Date", "/holidays-events/save-the-date"],
+    ["AI Save the Date", "/ai-save-the-date/save-the-date"],
     ["AI Image Generation", "/ai-image-generation"],
     ["AI Photo Packages", "/best-packages"],
     ["Pricing", "/pricing"]
@@ -199,18 +199,18 @@ function updateSettings(json, homePageId) {
     header.blocks = header.blocks
       .filter((block) => block.settings?.label !== "Best Packages")
       .map((block) => block.settings?.label === "Save the Date"
-        ? { ...block, settings: { ...(block.settings ?? {}), label: "AI Save the Date", href: "/holidays-events/save-the-date" } }
+        ? { ...block, settings: { ...(block.settings ?? {}), label: "AI Save the Date", href: "/ai-save-the-date/save-the-date" } }
         : block);
-    const saveDateHeaderIndex = header.blocks.findIndex((block) => block.settings?.href === "/holidays-events/save-the-date");
-    if (saveDateHeaderIndex < 0) header.blocks.splice(1, 0, { id: "dreamshoot_header_save_the_date", type: "menu_link", settings: { label: "AI Save the Date", href: "/holidays-events/save-the-date" } });
+    const saveDateHeaderIndex = header.blocks.findIndex((block) => block.settings?.href === "/ai-save-the-date/save-the-date");
+    if (saveDateHeaderIndex < 0) header.blocks.splice(1, 0, { id: "dreamshoot_header_save_the_date", type: "menu_link", settings: { label: "AI Save the Date", href: "/ai-save-the-date/save-the-date" } });
   }
   const footer = next.globalSections?.footer;
   if (footer?.blocks) {
     footer.blocks = footer.blocks.map((block) => block.settings?.label === "Best Packages"
       ? { ...block, settings: { ...(block.settings ?? {}), label: "AI Photo Packages", href: "/best-packages" } }
       : block);
-    const hasSaveTheDate = footer.blocks.some((block) => block.settings?.href === "/holidays-events/save-the-date");
-    if (!hasSaveTheDate) footer.blocks.splice(2, 0, { id: "dreamshoot_footer_save_the_date", type: "menu_link", settings: { label: "AI Save the Date", href: "/holidays-events/save-the-date", group: "product" } });
+    const hasSaveTheDate = footer.blocks.some((block) => block.settings?.href === "/ai-save-the-date/save-the-date");
+    if (!hasSaveTheDate) footer.blocks.splice(2, 0, { id: "dreamshoot_footer_save_the_date", type: "menu_link", settings: { label: "AI Save the Date", href: "/ai-save-the-date/save-the-date", group: "product" } });
   }
   const announce = next.saasSettingsCurrent?.sections?.header_plus;
   if (announce) announce.settings = { ...(announce.settings ?? {}), announce_title: "Turn your photos into AI videos, personalized Save the Date videos, professional headshots, and themed photo sets." };
@@ -247,7 +247,7 @@ function updateHomepageShowcases(snapshot, sourceSnapshot) {
     subtitle: photoPriority[index][2],
     sortOrder: index + 1
   }));
-  const saveDatePriority = ["/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date"];
+  const saveDatePriority = ["/ai-save-the-date/valentines-day", "/ai-save-the-date/engagement", "/ai-save-the-date/proposal", "/ai-save-the-date/save-the-date"];
   const saveDates = rows.filter((item) => item.kind === "save_the_date");
   const selectedSaveDates = saveDatePriority
     .map((path) => saveDates.find((item) => item.canonicalPath === path))

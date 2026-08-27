@@ -20,7 +20,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
-const pagePath = "/holidays-events/engagement";
+const pagePath = "/ai-save-the-date/engagement";
 const apply = process.argv.includes("--apply");
 const sceneImageFilenames = [
   "ai-engagement-proposal-moment.jpg",

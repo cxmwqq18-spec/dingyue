@@ -10,7 +10,7 @@ import { PrismaClient } from "@prisma/client";
 const repoRoot = process.cwd();
 const sourceDir = path.resolve(process.env.WEDDING_INVITATION_SOURCE_DIR || "docs/design-packages/ai-wedding-invitation-maker-final");
 const siteId = process.env.WEDDING_INVITATION_SITE_ID || "site_dreamshoot";
-const pagePath = "/holidays-events/wedding-invitation";
+const pagePath = "/ai-save-the-date/wedding-invitation";
 const apply = process.argv.includes("--apply");
 const sourceRoot = path.join(repoRoot, "src");
 const originalLoad = Module._load;
@@ -96,7 +96,7 @@ const sections = {
   wedding_invitation_final_cta: { type: "editorial_cta", settings: { anchor: "final-cta", title: "Create an Invitation That Feels Like the Wedding", intro: paragraphs(copySection("Final CTA"))[0], primaryCta: "Create Your Wedding Invitation", primaryHref: "/app/create", secondaryCta: "Explore Invitation Styles", secondaryHref: "#styles-use-cases", imageUrl: imageManifest[9].src, imageAlt: imageManifest[9].alt, imageWidth: 1600, imageHeight: 1000, themeTone: "wedding" } }
 };
 const sectionsOrder = Object.keys(sections);
-const pageJson = { pageType: "standard-content", version: 1, sectionsOrder, contentContract: { schema: "editorial-page-v1", pageKey: "wedding_invitation", requiredSections: ["hero", "what-is", "styles-use-cases", "what-works", "creation-flow", "information", "vs-save-date", "accuracy", "faq", "final-cta"], sectionTypes: sectionsOrder.map((id) => sections[id].type), faqCount: faqBlocks.length, mediaCount: imageManifest.length, sourceRevision: "wedding-invitation-package-20260824" }, relatedLinks: [{ href: "/holidays-events/save-the-date", label: "save the date ideas" }, { href: "/holidays-events/engagement", label: "engagement announcement ideas" }, { href: "/ai-video-generation/wedding-ceremony", label: "wedding ceremony ideas" }], mediaManifest: imageManifest, seo: { title: seoRows.title, description: seoRows.meta_description, keywords: seoRows.secondary_keywords, canonicalPath: pagePath, canonical: seoRows.canonical, ogImage: imageManifest[2].src, index: false, follow: true, robots: { index: false, follow: true, maxImagePreview: "large" } }, sections };
+const pageJson = { pageType: "standard-content", version: 1, sectionsOrder, contentContract: { schema: "editorial-page-v1", pageKey: "wedding_invitation", requiredSections: ["hero", "what-is", "styles-use-cases", "what-works", "creation-flow", "information", "vs-save-date", "accuracy", "faq", "final-cta"], sectionTypes: sectionsOrder.map((id) => sections[id].type), faqCount: faqBlocks.length, mediaCount: imageManifest.length, sourceRevision: "wedding-invitation-package-20260824" }, relatedLinks: [{ href: "/ai-save-the-date/save-the-date", label: "save the date ideas" }, { href: "/ai-save-the-date/engagement", label: "engagement announcement ideas" }, { href: "/ai-save-the-date/wedding-ceremony", label: "wedding ceremony ideas" }], mediaManifest: imageManifest, seo: { title: seoRows.title, description: seoRows.meta_description, keywords: seoRows.secondary_keywords, canonicalPath: pagePath, canonical: seoRows.canonical, ogImage: imageManifest[2].src, index: false, follow: true, robots: { index: false, follow: true, maxImagePreview: "large" } }, sections };
 
 const jiti = createJiti(import.meta.url);
 const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");

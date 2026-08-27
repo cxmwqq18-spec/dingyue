@@ -4,14 +4,14 @@ import { PrismaClient } from "@prisma/client";
 
 const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
 const wanted = [
-  "/holidays-events/engagement",
-  "/holidays-events/proposal",
-  "/holidays-events/save-the-date",
+  "/ai-save-the-date/engagement",
+  "/ai-save-the-date/proposal",
+  "/ai-save-the-date/save-the-date",
   "/ai-save-the-date/valentines-day",
-  "/ai-video-generation/wedding-ceremony",
-  "/holidays-events/mothers-day",
-  "/holidays-events/fathers-day",
-  "/holidays-events/halloween",
+  "/ai-save-the-date/wedding-ceremony",
+  "/ai-save-the-date/mothers-day",
+  "/ai-save-the-date/fathers-day",
+  "/ai-save-the-date/halloween",
 ];
 const image = (settings) => settings?.imageUrl || settings?.image?.src || settings?.src;
 const title = (settings) => settings?.title || settings?.heading || settings?.name || settings?.question || "";

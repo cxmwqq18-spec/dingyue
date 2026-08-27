@@ -76,6 +76,13 @@ ActiveThemePublication(siteId)
 - 只切换代码版本而不切换/验证 publication；
 - 用“最新一条记录”代替 active pointer。
 
+开发、测试、发布准备和上线过程中，未经站点负责人在当前任务中明确批准，
+禁止自动切换、恢复、导入或故障降级到历史 publication/snapshot。需要沿用历史
+版本中的某个字段时，必须以最新当前数据为基础生成新的 candidate publication，
+只应用已批准的字段变更；其余页面、路由、媒体、导航、SEO 和 facts 必须保持
+最新数据。历史版本回滚只能作为明确批准的例外操作，并记录批准依据、publication
+ID/version、snapshot hash 和线上读回结果。
+
 ### 2.4 一个 SEO owner
 
 目标链路固定为：

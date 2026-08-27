@@ -6,6 +6,7 @@ import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platfor
 
 const repoRoot = process.cwd();
 const homepageLockPath = path.join(repoRoot, "docs", "content-locks", "mydreamshoots-homepage-approved.json");
+const mydreamshootsHomepageCopy = JSON.parse(fs.readFileSync(path.join(repoRoot, "src", "lib", "mydreamshoots-homepage-copy.json"), "utf8"));
 const rawArgs = process.argv.slice(2);
 const flags = new Set();
 const args = new Map();
@@ -141,60 +142,78 @@ const homepageVideoSlugs = [
   "creator-intro-motion"
 ];
 
-const useCaseBlocks = [
-  block("use_case_sports_fan", "testimonial", {
-    quote: "Plan a sports fan photo set, compare the theme examples, review credits, and keep the delivered images in a private gallery.",
-    name: "",
-    role: "Sports fan photo workflow",
-    location: "Fan photos",
-    rating: "",
+const mydreamshootsReviewBlocks = [
+  block("review_ava", "testimonial", {
+    quote: mydreamshootsHomepageCopy.reviewQuotes.review_ava,
+    name: "Ava M.",
+    role: "Fan photos",
+    location: "Sports fan set",
+    rating: "5",
     avatarUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
     resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
   }),
-  block("use_case_vip_portrait", "testimonial", {
-    quote: "Use approved source photos to test a polished formal portrait direction before spending credits on additional profile images.",
-    name: "",
-    role: "Formal portrait workflow",
-    location: "Portrait photo",
-    rating: "",
+  block("review_lucas", "testimonial", {
+    quote: mydreamshootsHomepageCopy.reviewQuotes.review_lucas,
+    name: "Lucas R.",
+    role: "VIP-style set",
+    location: "Profile images",
+    rating: "5",
     avatarUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
     resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp"
   }),
-  block("use_case_holiday_cards", "testimonial", {
-    quote: "Create private holiday-card examples from approved photos, then review the finished images before downloading or sharing.",
-    name: "",
-    role: "Holiday card workflow",
-    location: "Christmas album",
-    rating: "",
+  block("review_mia", "testimonial", {
+    quote: mydreamshootsHomepageCopy.reviewQuotes.review_mia,
+    name: "Mia C.",
+    role: "Christmas album",
+    location: "Holiday cards",
+    rating: "5",
     avatarUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/review-mia-avatar.png",
     resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-02.webp"
   }),
-  block("use_case_private_gallery", "testimonial", {
-    quote: "Keep upload, credit review, generation status, delivered images, and downloads in the same signed-in account workspace.",
-    name: "",
-    role: "Private gallery workflow",
-    location: "Credit review",
-    rating: "",
+  block("review_noah", "testimonial", {
+    quote: mydreamshootsHomepageCopy.reviewQuotes.review_noah,
+    name: "Noah P.",
+    role: "Credit planning",
+    location: "Private gallery",
+    rating: "5",
     avatarUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
     resultImageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png"
   }),
-  block("use_case_creator_scene", "testimonial", {
-    quote: "Compare creator-scene examples for recording, profile, and social content, then generate only after checking the current credit cost.",
-    name: "",
-    role: "Creator scene workflow",
-    location: "Content photos",
-    rating: "",
+  block("review_chloe", "testimonial", {
+    quote: mydreamshootsHomepageCopy.reviewQuotes.review_chloe,
+    name: "Chloe S.",
+    role: "Creator workflow",
+    location: "Creator scenes",
+    rating: "5",
     avatarUrl: "/assets/dreamshoot/beauty-portrait-gpt2.png",
     resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp"
   }),
-  block("use_case_motion_preview", "testimonial", {
-    quote: "Turn an approved image or image set into a supported short video workflow and review the finished clip before publishing.",
-    name: "",
-    role: "Supported video workflow",
-    location: "Motion preview",
-    rating: "",
+  block("review_eli", "testimonial", {
+    quote: mydreamshootsHomepageCopy.reviewQuotes.review_eli,
+    name: "Eli T.",
+    role: "Clear credits",
+    location: "Headshots and cards",
+    rating: "5",
     avatarUrl: "/assets/dreamshoot/frames/faq-intro-portrait.png",
-    resultImageUrl: "/assets/dreamshoot/generated/homepage-showcase/videos/creator-scene-motion.mp4?v=20260807i2v"
+    resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp"
+  }),
+  block("review_jordan", "testimonial", {
+    quote: mydreamshootsHomepageCopy.reviewQuotes.review_jordan,
+    name: "Jordan K.",
+    role: "Team portraits",
+    location: "Profile refresh",
+    rating: "5",
+    avatarUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
+    resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp"
+  }),
+  block("review_riley", "testimonial", {
+    quote: mydreamshootsHomepageCopy.reviewQuotes.review_riley,
+    name: "Riley W.",
+    role: "Motion previews",
+    location: "Social content",
+    rating: "5",
+    avatarUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
+    resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp"
   })
 ];
 const issueGroupOrder = [
@@ -705,7 +724,7 @@ function syncKnownMydreamSections(pageJson, stats, source) {
 
   if (isHomepagePageJson) {
     for (const [key, value] of [
-      ["mode", "use_cases"],
+      ["mode", "reviews"],
       ["title", copyTargets.reviewTitle],
       ["subtitle", copyTargets.reviewSubtitle],
       ["summaryTitle", copyTargets.reviewSummaryTitle],
@@ -715,7 +734,7 @@ function syncKnownMydreamSections(pageJson, stats, source) {
     ]) {
       setSectionSetting(sections, "proof_1", key, value, stats, "08_reviews", source);
     }
-    replaceSectionBlocks(sections, "proof_1", useCaseBlocks, stats, "08_reviews", source);
+    replaceSectionBlocks(sections, "proof_1", mydreamshootsReviewBlocks, stats, "08_reviews", source);
   }
 
   for (const [key, value] of [

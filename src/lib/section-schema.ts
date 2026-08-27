@@ -1197,7 +1197,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         blocks: [
           block("pain_expensive", "sample", { label: "Too Expensive", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", meta: "Studio photo shoots cost a fortune." }),
           block("pain_time", "sample", { label: "Time-Consuming", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", meta: "Trips, visas, and schedules slow everything down." }),
-          block("pain_weather", "sample", { label: "Weather Unpredictable", imageUrl: "/assets/dreamshoot/frames/story-beauty-portrait.png", meta: "Rain, wind, and storms can ruin the perfect shot." }),
+          block("pain_weather", "sample", { label: "Weather Unpredictable", imageUrl: "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png", meta: "Rain, wind, and storms can ruin the perfect shot." }),
           block("pain_choices", "sample", { label: "Limited Choices", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", meta: "Customers cannot book every style, city, or studio they imagine." })
         ]
       },
@@ -1400,8 +1400,8 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           block("tool_headshot", "tool_card", { title: "Professional headshot maker", description: "Create clean profile portraits for resumes, teams, and founder pages. Not for IDs, impersonation, or people without permission.", category: "Photo AI", badge: "Profile", imageUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png", href: "/tools/headshot" }),
           block("tool_worldcup", "tool_card", { title: "World Cup fan photos", description: "Build stadium scenes, fan posters, and match-day profile images for personal fan use without official logos or player likenesses.", category: "Photo AI", badge: "Sports", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/stadium-portrait.png", href: "/tools/world-cup-fan-photos" }),
           block("tool_bg_changer", "tool_card", { title: "Background changer", description: "Replace a plain selfie background before ordering a full photo package.", category: "AI Photo Edit", badge: "Studio", imageUrl: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png", href: "/tools/background-changer" }),
-          block("tool_photo_enhancer", "tool_card", { title: "Photo enhancer", description: "Improve low-light uploads before using them for private model training.", category: "AI Photo Edit", badge: "Studio", imageUrl: "/assets/dreamshoot/frames/story-beauty-portrait.png", href: "/tools/photo-enhancer" }),
-          block("tool_image_to_video", "tool_card", { title: "Video workspace", description: "Turn a finished photo package image into a short motion concept.", category: "Video AI", badge: "Preview", imageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", href: "/app/create#step-video" }),
+          block("tool_photo_enhancer", "tool_card", { title: "Photo enhancer", description: "Improve low-light uploads before using them for private model training.", category: "AI Photo Edit", badge: "Studio", imageUrl: "/assets/dreamshoot/generated/20260618/upscaler-utility-v1.png", href: "/tools/photo-enhancer" }),
+          block("tool_image_to_video", "tool_card", { title: "Video workspace", description: "Turn a finished photo package image into a short motion concept.", category: "Video AI", badge: "Preview", imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png", href: "/app/create#step-video" }),
           block("tool_fan_motion", "tool_card", { title: "Fan poster motion", description: "Animate World Cup fan posters and match-day profile scenes.", category: "Video AI", badge: "Sports", imageUrl: "/assets/dreamshoot/generated/20260621-worldcup-pack/fan-poster.png", href: "/tools/fan-poster-motion" })
         ]
       }
@@ -1517,7 +1517,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("saveTheDateTitle", "Save the Date heading", mydreamshootsHomepageCopy.saveTheDateTitle),
       textarea("saveTheDateIntro", "Save the Date intro", mydreamshootsHomepageCopy.saveTheDateIntro),
       text("saveTheDateAllLabel", "Save the Date all link label", "VIEW ALL SAVE THE DATE"),
-      text("saveTheDateAllHref", "Save the Date directory link", "/holidays-events/save-the-date"),
+      text("saveTheDateAllHref", "Save the Date directory link", "/ai-save-the-date/save-the-date"),
       textarea("photoIntro", "Photo intro", mydreamshootsHomepageCopy.photoIntro),
       select("showcaseKind", "Homepage showcase kind", [["all", "All"], ["video", "Video"], ["save_the_date", "Save the Date"], ["photo", "Photo"]], "all"),
       text("videoAllLabel", "Video all link label", "VIEW ALL VIDEO"),

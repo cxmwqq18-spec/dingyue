@@ -8,6 +8,7 @@ const repoRoot = process.cwd();
 const envLocalPath = path.join(repoRoot, ".env.local");
 const composePath = path.join(repoRoot, "ops", "local-postgres.compose.yml");
 const tunnelScriptPath = path.join(repoRoot, "scripts", "start-remote-db-tunnel.mjs");
+const localDevScriptPath = path.join(repoRoot, "scripts", "dev-local.mjs");
 const packagePath = path.join(repoRoot, "package.json");
 
 function fail(message) {
@@ -30,6 +31,7 @@ function expectFailure(name, action) {
 const envLocal = readIfExists(envLocalPath);
 const compose = readIfExists(composePath);
 const tunnelScript = readIfExists(tunnelScriptPath);
+const localDevScript = readIfExists(localDevScriptPath);
 const packageJson = JSON.parse(readIfExists(packagePath));
 
 assertDatabaseTarget({ expectedTarget: "local" });
@@ -81,8 +83,14 @@ if (!tunnelScript.includes("--readonly")) {
 if (!tunnelScript.includes("--readwrite")) {
   fail("Remote database tunnel must support an explicit --readwrite flag.");
 }
-if (packageJson.scripts?.dev !== "node scripts/dev-remote-readonly.mjs" || packageJson.scripts?.["dev:3002"] !== "node scripts/dev-remote-readonly.mjs") {
-  fail("Default dev scripts must use the remote read-only database launcher.");
+if (packageJson.scripts?.dev !== "node scripts/dev-local.mjs" || packageJson.scripts?.["dev:3002"] !== "node scripts/dev-local.mjs") {
+  fail("Default dev scripts must use the local database launcher.");
+}
+if (!localDevScript.includes('docker", ["compose", "-f", composePath, "up", "-d"]')) {
+  fail("Local dev launcher must start the isolated PostgreSQL compose service.");
+}
+if (!localDevScript.includes('migrate", "deploy"')) {
+  fail("Local dev launcher must apply pending Prisma migrations before starting Next.js.");
 }
 if (process.env.PLATFORM_STATE_POSTGRES_STRICT !== "1") {
   fail("PLATFORM_STATE_POSTGRES_STRICT=1 is required for local MyDreamShoots development.");
@@ -99,7 +107,8 @@ console.log(JSON.stringify({
     ".env.local does not reference 15432",
     "remote target allows CRUD through 127.0.0.1:15432",
     "remote tunnel supports explicit --readonly and --readwrite modes",
-    "default dev scripts use the remote read-only launcher",
+    "default dev scripts use the local database launcher",
+    "local dev launcher starts PostgreSQL and applies pending migrations",
     "strict postgres storefront reads are enabled"
   ]
 }, null, 2));

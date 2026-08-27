@@ -19,7 +19,7 @@ const dbTunnelWatchScript = read("scripts/watch-remote-db-tunnel.mjs");
 const videoLatencyReport = read("scripts/report-video-generation-latency.mjs");
 const fetchTimeout = read("src/lib/fetch-timeout.ts");
 const videoProviderTimeouts = read("src/lib/video-provider-timeouts.ts");
-assert(packageJson.includes('"dev:3002": "node scripts/dev-fixed-port.mjs"'), "dev:3002 should use the fixed-port launcher");
+assert(packageJson.includes('"dev:3002": "node scripts/dev-local.mjs"'), "dev:3002 should use the local database launcher");
 assert(fixedPortDevScript.includes('port = String(Number(process.env.DEV_PORT || "3002") || 3002)'), "fixed-port launcher should default the storefront dev server to port 3002");
 assert(fixedPortDevScript.includes("Refusing to switch ports"), "fixed-port launcher should fail loudly instead of moving to another port");
 assert(dbTunnelScript.includes('localPort = Number(process.env.REMOTE_DB_LOCAL_PORT || "15432")'), "remote DB tunnel should default to fixed local port 15432");

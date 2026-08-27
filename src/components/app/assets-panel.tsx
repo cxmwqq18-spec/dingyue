@@ -6,7 +6,7 @@ import type { PublicCustomer, ThemeRuntimeAsset } from "@/lib/types";
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { customerImageUploadErrorMessage, prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
-import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
+import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
 
 const PAGE_SIZE = 8;
 

@@ -1,12 +1,12 @@
 # Data Isolation And Release Workflow
 
-This project keeps local, test, and production data separate. The default local development server uses the production database through an SSH read-write tunnel; local database development is explicit.
+This project keeps local, test, and production data separate. The default local development server uses the isolated local PostgreSQL database; remote database development is explicit.
 
 ## Environment Targets
 
-- `npm run dev`, `npm run dev:3002`, and `npm run dev:remote-readonly` use `DINGYUE_ENV=remote-readonly`, `DATABASE_TARGET=remote-readonly`, and the production database through `127.0.0.1:15432`. These default development paths are read-only.
+- `npm run dev`, `npm run dev:local`, and `npm run dev:3002` use `DINGYUE_ENV=local`, `DATABASE_TARGET=local`, and `127.0.0.1:15433/dingyue_local`. The launcher starts the local PostgreSQL compose service, waits for its health check, applies pending Prisma migrations, and then starts Next.js.
+- `npm run dev:remote-readonly` uses `DINGYUE_ENV=remote-readonly`, `DATABASE_TARGET=remote-readonly`, and the production database through `127.0.0.1:15432`. This remote read-only path is explicit.
 - `npm run dev:remote` is an explicit remote read-write mode and must only be used for approved operational work.
-- `npm run dev:local` uses `DINGYUE_ENV=local`, `DATABASE_TARGET=local`, and `127.0.0.1:15433/dingyue_local`.
 - Test releases must use `DINGYUE_ENV=test` and `DATABASE_TARGET=test` with a test-only database account.
 - Production releases must use `DINGYUE_ENV=production` and `DATABASE_TARGET=production` with the systemd production environment.
 - Remote production inspection remains explicit and read-only. Start the tunnel with `npm run db:tunnel -- --readonly` only after setting `REMOTE_DB_READONLY_DATABASE_URL`.
@@ -89,3 +89,4 @@ npm run release:content-apply -- --target=production --confirm-production --mani
 - Content apply writes a scoped backup under `releases/backups/` before the transaction.
 - Protected business tables are fingerprinted before and after content apply. Any count/hash change aborts the transaction.
 - Full JSON/platform-state imports are local/test initialization tools only; production must use scoped content manifests.
+- Development and release tooling must not select, restore, import, or fall back to a historical publication/snapshot without explicit approval for the current task. Reusing an approved historical field requires compiling a new publication from the latest current data; it must never reactivate the old snapshot in place.

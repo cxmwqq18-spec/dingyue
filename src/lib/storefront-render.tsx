@@ -49,7 +49,8 @@ import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, 
 import { isMydreamshootsCollectionItemSlug, isMydreamshootsPublicVideoGenerationSlug, isMydreamshootsVideoGenerationSlug, parsePublicCollectionRouteForSite, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
-import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
+import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
+import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, PublishedLeafRouteProjection, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
 const dreamshootPartnerTemplateSlugs = new Set([
@@ -71,7 +72,10 @@ function publishedLeafCopy(snapshot: ReturnType<typeof createPublishedSiteSnapsh
 
 function publishedVideoGenerationTopics(snapshot: ReturnType<typeof createPublishedSiteSnapshot>): HeaderVideoGenerationTopic[] | undefined {
   if (!isPrimaryMydreamshootsCapabilitySite(snapshot.site) || snapshot.snapshotIntegrity !== "valid") return undefined;
-  return snapshot.publishedVideoNavigation.map((item) => ({
+  const publishedVideoPaths = new Set(snapshot.publishedRoutes
+    .filter((route): route is PublishedLeafRouteProjection => route.routeKind === "ai-video-topic-leaf" && route.disposition === "render")
+    .map((route) => route.canonicalPath));
+  return snapshot.publishedVideoNavigation.filter((item) => publishedVideoPaths.has(item.canonicalPath)).map((item) => ({
     id: item.id,
     slug: item.slug,
     label: item.label,
@@ -83,6 +87,41 @@ function publishedVideoGenerationTopics(snapshot: ReturnType<typeof createPublis
     parentSortOrder: item.parentSortOrder,
     sortOrder: item.sortOrder
   }));
+}
+
+function canonicalizeSaveTheDateRoutes<T>(value: T): T {
+  if (typeof value === "string") {
+    if (value.startsWith("/")) return canonicalSaveTheDatePath(value) as T;
+    if (/^https?:\/\//i.test(value)) {
+      try {
+        const url = new URL(value);
+        const canonicalPath = canonicalSaveTheDatePath(url.pathname);
+        if (canonicalPath !== url.pathname) {
+          url.pathname = canonicalPath;
+          return url.toString() as T;
+        }
+      } catch {
+        return value;
+      }
+    }
+    return value;
+  }
+  if (Array.isArray(value)) return value.map((item) => canonicalizeSaveTheDateRoutes(item)) as T;
+  if (!value || typeof value !== "object") return value;
+  return Object.fromEntries(Object.entries(value as Record<string, unknown>).map(([key, child]) => [key, canonicalizeSaveTheDateRoutes(child)])) as T;
+}
+
+function publishedImagePackIds(snapshot: ReturnType<typeof createPublishedSiteSnapshot>): Set<string> {
+  const imagePageEntityIds = new Set(
+    snapshot.publishedRoutes
+      .filter((route): route is PublishedLeafRouteProjection => route.disposition === "render" && route.status === "published" && route.routeKind === "ai-image-theme-leaf")
+      .map((route) => route.pageEntityId)
+  );
+  return new Set(
+    snapshot.publishedPageMedia
+      .filter((media) => imagePageEntityIds.has(media.pageEntityId) && media.status === "ready")
+      .map((media) => media.packId)
+  );
 }
 
 type SiteRenderData = {
@@ -1061,6 +1100,22 @@ async function getStateForCustomerRuntimeRender(
     // Fall through to the legacy full-site state reader for local or migrating databases.
     return undefined;
   }
+}
+
+async function getPublishedHomepageShowcasesForHeader(
+  site: Site,
+  routeMode: "host" | "path",
+  state: PlatformState,
+  currentSite: Site
+): Promise<PublishedHomepageShowcaseItem[]> {
+  // Customer-runtime states intentionally omit the full publication payload.
+  // Load the public immutable state only when the private shell needs global nav.
+  if (!currentSite.currentPublishedState) {
+    const publicState = await getStateForStorefrontRender(site, routeMode);
+    const publicSite = publicState.sites.find((item) => item.id === site.id);
+    return publicSite ? createPublishedSiteSnapshot(publicState, publicSite).publishedHomepageShowcases ?? [] : [];
+  }
+  return createPublishedSiteSnapshot(state, currentSite).publishedHomepageShowcases ?? [];
 }
 
 function runtimeWithEmptyCollections(runtime: Partial<ThemeRuntimeData> = {}): ThemeRuntimeData {
@@ -2659,19 +2714,31 @@ export async function renderStorefrontPage({
         creativePackCategories: [],
         creativePacks: publishedSnapshot.creativePacks,
         mediaAssets: [],
-        products: publishedSnapshot.products
+        products: publishedSnapshot.products,
+        homepageShowcases: publishedSnapshot.publishedHomepageShowcases ?? []
       }
     : {
         ...currentRenderData,
         homepageShowcases: publishedSnapshot.publishedHomepageShowcases ?? []
       };
+  const imagePackIds = isPrimaryMydreamshootsStorefront(currentSite)
+    ? publishedImagePackIds(publishedSnapshot)
+    : undefined;
+  const publicDirectoryRenderData = imagePackIds && (slug === "/ai-image-generation" || isCollectionDirectoryPage)
+    ? {
+        ...renderData,
+        creativePacks: renderData.creativePacks.filter((pack) => imagePackIds.has(pack.id))
+      }
+    : renderData;
   const focusedCollectionRenderData = isFocusedCollectionPage ? trimFocusedCollectionRenderData(renderData, collectionCategory) : renderData;
   const useSharedNavigation = usesSharedDreamShootNavigation(currentSite);
   const navigationCreativePackCategories = useSharedNavigation
     ? trimCreativePackCategoriesForStorefront(renderData)
     : undefined;
   const navigationCreativePacks = useSharedNavigation
-    ? trimCreativePacksForNavigation(renderData)
+    ? trimCreativePacksForNavigation(imagePackIds
+      ? { ...renderData, creativePacks: renderData.creativePacks.filter((pack) => imagePackIds.has(pack.id)) }
+      : renderData)
     : undefined;
   const navigationToolMenuItems = useSharedNavigation
     ? renderData.toolMenuItems.map(lightweightToolMenuItem)
@@ -2701,7 +2768,7 @@ export async function renderStorefrontPage({
     slug === "/tools" &&
     (usesAiGenerationPublicRoutes(currentSite) || isAidreamcapesStorefront(currentSite));
   const usesDreamShootVideoGenerationDirectory = slug === "/ai-video-generation" && isPrimaryMydreamshootsStorefront(currentSite);
-  const pageJson = slug === "/account"
+  const basePageJson = slug === "/account"
     ? withAccountDashboardPage(page.publishedJson)
     : usesDreamShootVideoGenerationDirectory
     ? withDreamShootVideoGenerationDirectoryPage(page.publishedJson)
@@ -2716,7 +2783,20 @@ export async function renderStorefrontPage({
     : isCollectionDirectoryPage
     ? withDreamShootCollectionsDirectoryPage(page.publishedJson, currentSite)
     : page.publishedJson;
-  const renderDataForPage = isFocusedCollectionPage ? focusedCollectionRenderData : renderData;
+  const canonicalRenderPath = isPrimaryMydreamshootsStorefront(currentSite) && (renderPagePath.startsWith("/holidays-events/") || renderPagePath.startsWith("/ai-save-the-date/"))
+    ? canonicalSaveTheDatePath(renderPagePath)
+    : renderPagePath;
+  const pageJson = isPrimaryMydreamshootsStorefront(currentSite) && canonicalRenderPath.startsWith("/ai-save-the-date/")
+    ? {
+        ...canonicalizeSaveTheDateRoutes(basePageJson),
+        seo: {
+          ...basePageJson.seo,
+          canonicalPath: canonicalRenderPath,
+          canonical: `https://www.mydreamshoots.com${canonicalRenderPath}`
+        }
+      }
+    : basePageJson;
+  const renderDataForPage = isFocusedCollectionPage ? focusedCollectionRenderData : publicDirectoryRenderData;
   let pageRenderData = withPageMediaAssets(
     currentSite,
     pageJson,
@@ -2912,10 +2992,17 @@ export async function renderStorefrontSectionPayloads({
   const renderData = isFocusedCollectionPage && isPrimaryMydreamshootsStorefront(currentSite)
     ? { ...currentRenderData, creativePackCategories: [], creativePacks: publishedSnapshot.creativePacks, mediaAssets: [], products: publishedSnapshot.products }
     : currentRenderData;
-  currentSite.mediaAssets = renderData.mediaAssets;
+  const imagePackIds = isPrimaryMydreamshootsStorefront(currentSite)
+    ? publishedImagePackIds(publishedSnapshot)
+    : undefined;
+  const publicDirectoryRenderData = imagePackIds && (requestSlug === "/ai-image-generation" || internalSlug === "/collections")
+    ? { ...renderData, creativePacks: renderData.creativePacks.filter((pack) => imagePackIds.has(pack.id)) }
+    : renderData;
+  const effectiveRenderData = isFocusedCollectionPage ? renderData : publicDirectoryRenderData;
+  currentSite.mediaAssets = effectiveRenderData.mediaAssets;
   const toolDetailSlug = internalSlug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
   const resolvedToolDetail = toolDetailSlug
-    ? resolveToolPageForSite(state, currentSite, toolDetailSlug, renderData.siteAiApps, renderData.creativePacks)
+    ? resolveToolPageForSite(state, currentSite, toolDetailSlug, effectiveRenderData.siteAiApps, effectiveRenderData.creativePacks)
     : undefined;
   const directPage = resolvedToolDetail?.matched
     ? resolvedToolDetail.page
@@ -2983,9 +3070,9 @@ export async function renderStorefrontSectionPayloads({
       singleSectionPageJson,
       settings,
       trimRenderDataForSection(
-        toolDetailSlug
-          ? trimToolDetailRenderData(renderData)
-          : renderData,
+      toolDetailSlug
+        ? trimToolDetailRenderData(renderData)
+        : effectiveRenderData,
         pageJson,
         internalSlug,
         sectionId
@@ -3106,10 +3193,17 @@ export async function renderStorefrontSectionPayload({
   const renderData = isFocusedCollectionPage && isPrimaryMydreamshootsStorefront(currentSite)
     ? { ...currentRenderData, creativePackCategories: [], creativePacks: publishedSnapshot.creativePacks, mediaAssets: [], products: publishedSnapshot.products }
     : currentRenderData;
-  currentSite.mediaAssets = renderData.mediaAssets;
+  const imagePackIds = isPrimaryMydreamshootsStorefront(currentSite)
+    ? publishedImagePackIds(publishedSnapshot)
+    : undefined;
+  const publicDirectoryRenderData = imagePackIds && (requestSlug === "/ai-image-generation" || internalSlug === "/collections")
+    ? { ...renderData, creativePacks: renderData.creativePacks.filter((pack) => imagePackIds.has(pack.id)) }
+    : renderData;
+  const effectiveRenderData = isFocusedCollectionPage ? renderData : publicDirectoryRenderData;
+  currentSite.mediaAssets = effectiveRenderData.mediaAssets;
   const toolDetailSlug = internalSlug.match(/^\/tools\/([^/]+)$/)?.[1] ?? "";
   const resolvedToolDetail = toolDetailSlug
-    ? resolveToolPageForSite(state, currentSite, toolDetailSlug, renderData.siteAiApps, renderData.creativePacks)
+    ? resolveToolPageForSite(state, currentSite, toolDetailSlug, effectiveRenderData.siteAiApps, effectiveRenderData.creativePacks)
     : undefined;
   const directPage = resolvedToolDetail?.matched
     ? resolvedToolDetail.page
@@ -3264,6 +3358,7 @@ export async function renderStorefrontLoginPage({
   if (!currentSite) notFound();
   const page = getPage(currentSite, "/login");
   const renderData = getSiteRenderData(state, currentSite.id);
+  const publishedHomepageShowcases = await getPublishedHomepageShowcasesForHeader(site, routeMode, state, currentSite);
   const sessionId = await readCustomerSessionId(currentSite.id);
   const current = sessionId ? await getCustomerBySessionRelational({ siteId: currentSite.id, sessionId }) : undefined;
   currentSite.mediaAssets = [];
@@ -3278,7 +3373,8 @@ export async function renderStorefrontLoginPage({
       creativePackCategories: renderData.creativePackCategories,
       creativePacks: renderData.creativePacks,
       toolMenuItems: renderData.toolMenuItems,
-      videoThemeCategories: renderData.videoThemeCategories
+      videoThemeCategories: renderData.videoThemeCategories,
+      homepageShowcases: publishedHomepageShowcases
     },
     routeMode,
     runtime: runtimeWithEmptyCollections({
@@ -3328,10 +3424,12 @@ export async function renderCustomerWorkspacePage({
         initialToolMenuItems={bootstrap?.toolMenuItems ?? []}
         initialVideoThemeCategories={bootstrap?.videoThemeCategories ?? []}
         initialPublishedVideoGenerationTopics={bootstrap?.publishedVideoGenerationTopics ?? []}
+        initialPublishedSaveTheDateGroups={bootstrap?.publishedSaveTheDateGroups ?? []}
         siteSlug={publicSiteSlug(currentSite.slug)}
       />
     );
   }
+  const publishedHomepageShowcases = await getPublishedHomepageShowcasesForHeader(site, routeMode, state, currentSite);
   const page = getPage(currentSite, slug);
   const settings = currentSite.themeSettings.publishedJson;
   const adminAccess = await getCustomerAdminAccessForSite({ siteId: currentSite.id, customer: current.customer });
@@ -3345,7 +3443,10 @@ export async function renderCustomerWorkspacePage({
     : slug === "/app"
     ? withCustomerWorkspaceFlowPage(page.publishedJson)
     : page.publishedJson;
-  const pageRenderData = trimRenderDataForPage(renderData, pageJson, slug);
+  const pageRenderData = {
+    ...trimRenderDataForPage(renderData, pageJson, slug),
+    homepageShowcases: publishedHomepageShowcases
+  };
 
   return renderThemePage({
     currentSite,
@@ -3409,6 +3510,7 @@ export async function renderCustomerWorkspacePageBySlug({
         initialToolMenuItems={bootstrap?.toolMenuItems ?? []}
         initialVideoThemeCategories={bootstrap?.videoThemeCategories ?? []}
         initialPublishedVideoGenerationTopics={bootstrap?.publishedVideoGenerationTopics ?? []}
+        initialPublishedSaveTheDateGroups={bootstrap?.publishedSaveTheDateGroups ?? []}
         siteSlug={routeSlug}
       />
     );
@@ -3479,6 +3581,7 @@ export async function renderCustomerWorkspacePageBySlug({
   if (!current) redirect(loginPathWithNext);
 
   const renderData = getSiteRenderData(state, currentSite.id);
+  const publishedHomepageShowcases = await getPublishedHomepageShowcasesForHeader(currentSite, routeMode, state, currentSite);
   currentSite.mediaAssets = renderData.mediaAssets;
   const page = getPage(currentSite, slug);
   const settings = currentSite.themeSettings.publishedJson;
@@ -3493,7 +3596,10 @@ export async function renderCustomerWorkspacePageBySlug({
     : slug === "/app"
     ? withCustomerWorkspaceFlowPage(page.publishedJson)
     : page.publishedJson;
-  const pageRenderData = trimRenderDataForPage(renderData, pageJson, slug);
+  const pageRenderData = {
+    ...trimRenderDataForPage(renderData, pageJson, slug),
+    homepageShowcases: publishedHomepageShowcases
+  };
 
   return renderThemePage({
     currentSite,
@@ -3531,6 +3637,7 @@ export async function renderCustomerJobDetailPage({
   if (!job) notFound();
 
   const renderData = getSiteRenderData(state, currentSite.id);
+  const publishedHomepageShowcases = await getPublishedHomepageShowcasesForHeader(site, routeMode, state, currentSite);
   currentSite.mediaAssets = renderData.mediaAssets;
   const page = currentSite.pages.find((item) => item.slug === jobDetailSlug || item.pageType === "job_detail") ?? getPage(currentSite, "/app/jobs/progress");
   const settings = currentSite.themeSettings.publishedJson;
@@ -3550,7 +3657,10 @@ export async function renderCustomerJobDetailPage({
     page: page.publishedJson,
     pagePath: `/app/jobs/${job.id}`,
     query,
-    renderData: trimRenderDataForPage(renderData, page.publishedJson, `/app/jobs/${job.id}`),
+    renderData: {
+      ...trimRenderDataForPage(renderData, page.publishedJson, `/app/jobs/${job.id}`),
+      homepageShowcases: publishedHomepageShowcases
+    },
     routeMode,
     runtime,
     settings,
@@ -3587,7 +3697,12 @@ export async function renderToolPage({
   if (!candidate.matched || !candidate.page) notFound();
   const page = publishedSnapshot.pages.find((publishedPage) => publishedPage.id === candidate.page!.id);
   if (!page) notFound();
-  const toolRenderData = trimToolDetailRenderData(renderData);
+  const toolRenderData = {
+    ...trimToolDetailRenderData(renderData),
+    // Tool detail pages still render the shared public header. Keep the
+    // immutable Save the Date showcase projection available to that header.
+    homepageShowcases: publishedSnapshot.publishedHomepageShowcases ?? []
+  };
   currentSite.mediaAssets = toolRenderData.mediaAssets;
   const settings = currentSite.themeSettings.publishedJson;
   const normalizedToolSlug = normalizeToolLookup(toolSlug);

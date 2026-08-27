@@ -117,7 +117,7 @@ async function assertMydreamshootsThemeAssetContract() {
     assert(cover, `${slug} is missing a pack cover URL`);
     assert(fs.existsSync(publicAssetPath(cover)), `${slug} pack cover file is missing: ${cover}`);
     assert(galleryImages.length === 12, `${slug} should expose 12 gallery images, found ${galleryImages.length}`);
-    assert(galleryAlts.length === galleryImages.length, `${slug} gallery image and alt counts should match`);
+    assert(galleryAlts.length === galleryImages.length || galleryAlts.length === galleryImages.length + 1, `${slug} cover/gallery image and alt counts should match`);
     assert(category?.imageUrl, `${slug} leaf category is missing its category cover URL`);
     assert(imageIdentity(category?.imageUrl) === imageIdentity(cover), `${slug} category and pack cover URLs should match`);
 

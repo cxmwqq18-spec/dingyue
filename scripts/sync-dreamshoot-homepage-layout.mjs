@@ -9,6 +9,7 @@ import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platfor
 
 const repoRoot = process.cwd();
 const sourceRoot = path.join(repoRoot, "src");
+const mydreamshootsHomepageCopy = JSON.parse(await fs.readFile(path.join(repoRoot, "src", "lib", "mydreamshoots-homepage-copy.json"), "utf8"));
 const originalResolveFilename = Module._resolveFilename;
 Module._resolveFilename = function resolveFilename(request, ...args) {
   const resolvedRequest = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request;
@@ -74,6 +75,7 @@ for (let index = 0; index < rawArgs.length; index += 1) {
 }
 const dryRun = flags.has("dry-run");
 const updateDb = flags.has("db");
+const skipPlatformState = flags.has("skip-platform-state");
 const requestedStoreKey = String(args.get("site") ?? args.get("store") ?? "all").trim().toLowerCase();
 
 function versioned(pathname, version = assetVersion) {
@@ -101,6 +103,7 @@ const myAssets = {
   womanPortrait: "/assets/dreamshoot/beauty-portrait-gpt2.png",
   selfie: "/assets/dreamshoot/frames/faq-intro-portrait.png",
   galleryWorldCupFanThree: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp",
+  galleryGalaOne: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp",
   galleryGalaTwo: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp",
   galleryChristmasCoupleTwo: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-02.webp",
   galleryCreatorOne: "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp",
@@ -325,7 +328,7 @@ const stores = [
     }),
 	    reviews: section("testimonial_wall", {
 	      anchor: "reviews",
-	      mode: "use_cases",
+	      mode: "reviews",
 	      title: "What Our Customers Say",
 	      subtitle: "Use-case examples for private photo packages, clear credit review, gallery delivery, and supported motion workflows.",
 	      summaryTitle: "Ways people use myDreamshoots",
@@ -333,12 +336,14 @@ const stores = [
 	      summaryRating: "",
 	      summaryMeta: "Private examples"
 	    }, [
-	      block("review_ava", "testimonial", { quote: "Compare sports fan photo directions, credit cost, and private gallery delivery before creating a match-day album from approved personal photos.", name: "Sports fan workflow", role: "Sports fan photos", location: "Fan Photos", rating: "", avatarUrl: myAssets.reviewAvaAvatar, resultImageUrl: myAssets.galleryWorldCupFanThree }),
-	      block("review_lucas", "testimonial", { quote: "Plan VIP-style portraits and formal profile images from approved source photos, then review the finished options inside the signed-in workspace.", name: "VIP portrait workflow", role: "Formal portrait set", location: "VIP-style set", rating: "", avatarUrl: myAssets.reviewLucasAvatar, resultImageUrl: myAssets.galleryGalaTwo }),
-	      block("review_mia", "testimonial", { quote: "Compare Christmas couple, friend-card, and seasonal portrait directions before creating private card-ready images.", name: "Seasonal card workflow", role: "Holiday cards", location: "Christmas album", rating: "", avatarUrl: myAssets.reviewMiaAvatar, resultImageUrl: myAssets.galleryChristmasCoupleTwo }),
-	      block("review_noah", "testimonial", { quote: "Upload approved source photos, choose a package, review the visible credit cost, and keep finished results organized in one private gallery.", name: "Gallery workflow", role: "Private gallery delivery", location: "Credit planning", rating: "", avatarUrl: myAssets.reviewNoahAvatar, resultImageUrl: myAssets.flowPrivateAlbumWorkspace }),
-	      block("review_chloe", "testimonial", { quote: "Test creator portraits, holiday images, and supported motion ideas from the same approved source photos before choosing the next workflow.", name: "Creator workflow", role: "Creator scene planning", location: "Creator workflow", rating: "", avatarUrl: myAssets.womanPortrait, resultImageUrl: myAssets.galleryCreatorOne }),
-	      block("review_eli", "testimonial", { quote: "Use credit-aware headshot and card workflows when a small team needs private images without a studio appointment.", name: "Team workflow", role: "Headshots and cards", location: "Clear credits", rating: "", avatarUrl: myAssets.selfie, resultImageUrl: myAssets.galleryCreatorTwo })
+	      block("review_ava", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_ava, name: "Ava M.", role: "Fan photos", location: "Sports fan set", rating: "5", avatarUrl: myAssets.reviewAvaAvatar, resultImageUrl: myAssets.galleryWorldCupFanThree }),
+	      block("review_lucas", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_lucas, name: "Lucas R.", role: "VIP-style set", location: "Profile images", rating: "5", avatarUrl: myAssets.reviewLucasAvatar, resultImageUrl: myAssets.galleryGalaTwo }),
+	      block("review_mia", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_mia, name: "Mia C.", role: "Christmas album", location: "Holiday cards", rating: "5", avatarUrl: myAssets.reviewMiaAvatar, resultImageUrl: myAssets.galleryChristmasCoupleTwo }),
+	      block("review_noah", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_noah, name: "Noah P.", role: "Credit planning", location: "Private gallery", rating: "5", avatarUrl: myAssets.reviewNoahAvatar, resultImageUrl: myAssets.flowPrivateAlbumWorkspace }),
+	      block("review_chloe", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_chloe, name: "Chloe S.", role: "Creator workflow", location: "Creator scenes", rating: "5", avatarUrl: myAssets.womanPortrait, resultImageUrl: myAssets.galleryCreatorOne }),
+	      block("review_eli", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_eli, name: "Eli T.", role: "Clear credits", location: "Headshots and cards", rating: "5", avatarUrl: myAssets.selfie, resultImageUrl: myAssets.galleryCreatorTwo }),
+	      block("review_jordan", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_jordan, name: "Jordan K.", role: "Team portraits", location: "Profile refresh", rating: "5", avatarUrl: myAssets.reviewAvaAvatar, resultImageUrl: myAssets.galleryGalaOne }),
+	      block("review_riley", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_riley, name: "Riley W.", role: "Motion previews", location: "Social content", rating: "5", avatarUrl: myAssets.reviewLucasAvatar, resultImageUrl: myAssets.galleryCreatorTwo })
 	    ]),
     faq: mydreamshootsFaqSection(),
     conversion: section("conversion_panel", {
@@ -992,9 +997,9 @@ async function main() {
     : stores.filter((store) => store.key === requestedStoreKey || store.siteSlug === requestedStoreKey || store.siteId === requestedStoreKey);
   if (!selectedStores.length) throw new Error(`unknown_store:${requestedStoreKey}`);
   for (const store of selectedStores) report[store.key] = applyStoreToState(state, store);
-  if (!dryRun) await writePlatformStateToSql(state);
+  if (!dryRun && !skipPlatformState) await writePlatformStateToSql(state);
   const dbReport = updateDb && !dryRun ? await updateDatabase(state, selectedStores) : undefined;
-  console.log(JSON.stringify({ dryRun, selectedStores: selectedStores.map((store) => store.key), report, dbReport }, null, 2));
+  console.log(JSON.stringify({ dryRun, skipPlatformState, selectedStores: selectedStores.map((store) => store.key), report, dbReport }, null, 2));
 }
 
 main().catch((error) => {

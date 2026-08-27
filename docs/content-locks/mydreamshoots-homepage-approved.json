@@ -1,6 +1,6 @@
 {
   "lockVersion": 1,
-  "lockedAt": "2026-08-25T11:13:29.916+08:00",
+  "lockedAt": "2026-08-27T02:44:51.374+08:00",
   "policy": {
     "owner": "myDreamshoots site owner",
     "rule": "This homepage copy baseline is locked. Do not modify, switch versions, import old JSON, or roll back production copy unless the site owner explicitly requests a homepage copy change.",
@@ -19,9 +19,9 @@
     "pageType": "home"
   },
   "latestPublication": {
-    "id": "pub_site_dreamshoot_mt83bxcj_35828b77",
-    "version": 118,
-    "publishedAt": "2026-08-25T03:13:42.578Z"
+    "id": "pub_site_dreamshoot_mtag8129_2631c7f4",
+    "version": 179,
+    "publishedAt": "2026-08-26T18:50:08.133Z"
   },
   "seo": {
     "title": "AI Video & Photo Generator | myDreamshoots",
@@ -60,7 +60,7 @@
     "brand_strip_1"
   ],
   "fingerprints": {
-    "publishedJsonSha256": "75a34ad0f216cf05faffa534917a026715474af71c99a8e77bf034540d5aa7c0",
+    "publishedJsonSha256": "cd7adb0e9bd3eb78d51771783b903f2d446961d2e2d125e5a214cc04c9bb75c2",
     "visibleTextSha256": "a0a38114a3a2df8e3d76b669d46bc43a6c28a507d104f69f2c5291cc61d4405e",
     "visibleRecordCount": 225
   },

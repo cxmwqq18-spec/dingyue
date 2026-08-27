@@ -27,6 +27,8 @@ export async function GET(request: Request): Promise<Response> {
       "content-type": "text/plain; charset=utf-8",
       "cache-control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400",
       "vary": "Host, X-Forwarded-Host",
+      ...(identity?.publicationId ? { "x-storefront-publication": identity.publicationId } : {}),
+      ...(identity?.publicationVersion !== undefined ? { "x-storefront-publication-version": String(identity.publicationVersion) } : {}),
       ...(grownstride ? { "x-robots-tag": "noindex, nofollow" } : {}),
       ...(identity?.currentRevision ? { "x-storefront-current-revision": identity.currentRevision } : {}),
       ...(identity?.contentHash ? { "x-storefront-content-hash": identity.contentHash } : {}),

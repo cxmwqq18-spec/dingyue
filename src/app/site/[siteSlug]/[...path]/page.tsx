@@ -19,6 +19,7 @@ import { STOREFRONT_PUBLIC_HOST_HEADER, storefrontPathForRouteMode, storefrontRo
 import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
+import { canonicalSaveTheDatePath, legacySaveTheDatePath } from "@/lib/save-the-date-routes";
 
 
 type HeaderReader = {
@@ -251,12 +252,18 @@ async function readVideoGenerationRouteState(siteSlug: string, videoSlug: string
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; path: string[] }> }): Promise<Metadata> {
   const { siteSlug, path } = await params;
   const requestedSlug = `/${path.join("/")}`;
+  const canonicalRequestedSlug = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug))
+    ? canonicalSaveTheDatePath(requestedSlug)
+    : requestedSlug;
+  const legacyRequestedSlug = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug))
+    ? legacySaveTheDatePath(canonicalRequestedSlug)
+    : undefined;
   const isCollectionRequest = isCollectionRouteRequest(path);
   const isVideoGenerationRequest = isVideoGenerationRouteRequest(path);
   const collectionRootPageSlug = fallbackCollectionRootPathForPublicSlug(siteSlug);
   const collectionLookupSlug = collectionRouteLookupSlug(path);
   const videoLookupSlug = isVideoGenerationRequest ? path[1] || "" : "";
-  const slug = isCollectionRequest ? collectionRootPageSlug : isVideoGenerationRequest ? "/ai-video-generation" : publicContentPageSlug(requestedSlug);
+  const slug = isCollectionRequest ? collectionRootPageSlug : isVideoGenerationRequest ? "/ai-video-generation" : publicContentPageSlug(canonicalRequestedSlug);
   if (slug === "/account") {
     return { title: isSpanishStorefrontSite({ slug: siteSlug, name: siteSlug, branding: { logoText: siteSlug } }) ? "Cuenta" : "Account", robots: { index: false, follow: false } };
   }
@@ -274,7 +281,8 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
       ? routeMode === "host"
         ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, "/ai-image-generation")
         : await readPathModePublicRuntimeState(siteSlug, "/ai-image-generation")
-    : await readRoutePublicMetadataState(headerStore, routeMode, siteSlug, slug);
+    : await readRoutePublicMetadataState(headerStore, routeMode, siteSlug, slug)
+      || (legacyRequestedSlug ? await readRoutePublicMetadataState(headerStore, routeMode, siteSlug, legacyRequestedSlug) : undefined);
   const site = state?.sites[0];
   if (!site) return {};
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
@@ -321,9 +329,15 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
     }
     return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
   }
-  if (!canRenderPublishedPublicPath(snapshot, slug, requestedSlug, site)) return {};
-  const page = findPage(site, slug);
-  return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
+  const resolvedSlug = findPage(site, slug) ? slug : legacyRequestedSlug && findPage(site, legacyRequestedSlug) ? legacyRequestedSlug : slug;
+  if (!canRenderPublishedPublicPath(snapshot, resolvedSlug, requestedSlug, site)) return {};
+  const page = findPage(site, resolvedSlug);
+  if (!page) return {};
+  if (resolvedSlug !== slug && canonicalRequestedSlug !== requestedSlug) {
+    const canonicalPage = { ...page, publishedJson: { ...page.publishedJson, seo: { ...page.publishedJson.seo, canonicalPath: canonicalRequestedSlug, canonical: `https://www.mydreamshoots.com${canonicalRequestedSlug}` } } };
+    return metadataForPublishedStorefrontPage({ site, page: canonicalPage, products: state.products, creativePacks: state.creativePacks, snapshot });
+  }
+  return metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot });
 }
 
 export default async function SiteCatchAllPage({
@@ -339,6 +353,9 @@ export default async function SiteCatchAllPage({
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
+  if (isPrimaryMydreamshootsSlug(publicSlug) && (slug.startsWith("/holidays-events/") || slug === "/ai-video-generation/wedding-ceremony")) {
+    permanentRedirect(routePath(canonicalSaveTheDatePath(slug)));
+  }
   const legacyAliasTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForPublicSlug(publicSlug));
   if (legacyAliasTarget && (slug === "/collections/engagement-photo" || slug === "/collections/headshot")) {
     permanentRedirect(routePath(legacyAliasTarget));
@@ -390,12 +407,14 @@ export default async function SiteCatchAllPage({
     ...(searchParams ? await searchParams : {}),
   };
   const legacyPathTarget = legacyPublicPathTarget(slug, collectionRootPageSlug);
-  const pageSlug = isCollectionRequest ? collectionRootPageSlug : isVideoGenerationRequest ? "/ai-video-generation" : legacyPathTarget ? publicContentPageSlug(legacyPathTarget) : publicContentPageSlug(slug);
+  const pageSlug = isCollectionRequest ? collectionRootPageSlug : isVideoGenerationRequest ? "/ai-video-generation" : legacyPathTarget ? publicContentPageSlug(legacyPathTarget) : publicContentPageSlug(canonicalSaveTheDatePath(slug));
+  const legacySaveDateSlug = isPrimaryMydreamshootsSlug(publicSlug) ? legacySaveTheDatePath(pageSlug) : undefined;
   const state = isVideoGenerationRequest
     ? await readVideoGenerationRouteState(publicSlug, videoLookupSlug)
     : isCollectionRequest && collectionLookupSlug
     ? await readCollectionRouteState(publicSlug, collectionLookupSlug, headerStore, routeMode)
-    : await readPathModePublicRuntimeState(publicSlug, pageSlug);
+    : await readPathModePublicRuntimeState(publicSlug, pageSlug)
+      || (legacySaveDateSlug ? await readPathModePublicRuntimeState(publicSlug, legacySaveDateSlug) : undefined);
   const publicSite = state?.sites[0];
   if (!state || !publicSite) notFound();
   if (isPrimaryMydreamshootsSlug(publicSlug) && isVideoGenerationRequest && ["text-to-video", "image-to-video"].includes(path[1] ?? "")) {
@@ -446,8 +465,14 @@ export default async function SiteCatchAllPage({
     if (canonicalCollectionPath !== collectionRoute.canonicalPath) redirect(routePath(canonicalCollectionPath));
   }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, publicSite, collectionCategory)) notFound();
-  if (!isCollectionRequest && !canRenderPublishedPublicPath(snapshot, pageSlug, slug, publicSite)) notFound();
-  if (!isCollectionRequest && !findPage(publicSite, pageSlug) && resolvePublishedRouteDisposition(snapshot, pageSlug).kind !== "render") notFound();
+  // During the route migration the draft site may already have the canonical
+  // slug while the immutable publication still stores its legacy slug. Pick
+  // the published page that actually exists, then expose the canonical URL.
+  const resolvedPageSlug = !isCollectionRequest && !findPage(snapshot.site, pageSlug) && legacySaveDateSlug && findPage(snapshot.site, legacySaveDateSlug)
+    ? legacySaveDateSlug
+    : pageSlug;
+  if (!isCollectionRequest && !canRenderPublishedPublicPath(snapshot, resolvedPageSlug, slug, publicSite)) notFound();
+  if (!isCollectionRequest && !findPage(publicSite, resolvedPageSlug) && resolvePublishedRouteDisposition(snapshot, resolvedPageSlug).kind !== "render") notFound();
   const publicPath = collectionRoute?.canonicalPath ?? publicContentPageSlug(slug);
-  return renderStorefrontPage({ site: publicSite, slug: pageSlug, publicPath, query: storefrontQuery, routeMode, state, deferCustomerRuntime: pageSlug !== "/cart" });
+  return renderStorefrontPage({ site: publicSite, slug: resolvedPageSlug, publicPath: canonicalSaveTheDatePath(publicPath), query: storefrontQuery, routeMode, state, deferCustomerRuntime: resolvedPageSlug !== "/cart" });
 }

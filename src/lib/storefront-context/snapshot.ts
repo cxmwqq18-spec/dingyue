@@ -6,10 +6,12 @@ import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state"
 import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
 import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
+import { currentPublishedContentHash, currentPublishedRevision } from "@/lib/current-state/hash";
 import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
 import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
 import { canonicalPathForPage, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
+import { legacySaveTheDatePath } from "@/lib/save-the-date-routes";
 import type {
   EffectiveIndexability,
   EffectivePublishedPage,
@@ -196,11 +198,18 @@ export function createPublishedSiteSnapshot(
   options: { source?: "postgres" | "platform-state" } = {}
 ): PublishedSiteSnapshot {
   const isMydreamshootsPublicationSite = isPrimaryMydreamshootsSite(site);
+  const instantDraftPreview = process.env.DINGYUE_ENV === "local" && process.env.STOREFRONT_INSTANT_DRAFT_PREVIEW !== "0";
   // Public rendering is intentionally fail-closed. CurrentPublishedState is
   // the only public owner; historical publications and active pointers are
   // never consulted.
   const currentState = site.currentPublishedState;
   if (!currentState) throw new Error("published_snapshot_current_state_required");
+  if (currentPublishedContentHash(currentState.payload) !== currentState.contentHash) {
+    throw new Error("published_snapshot_current_state_hash_mismatch");
+  }
+  if (currentPublishedRevision(site.id, currentState.contentHash) !== currentState.revision) {
+    throw new Error("published_snapshot_current_state_revision_mismatch");
+  }
   const publication = {
     id: `current-state:${site.id}`,
     siteId: site.id,
@@ -211,9 +220,16 @@ export function createPublishedSiteSnapshot(
     factsRevision: currentState.payload.revisions.factsRevision
   } as ThemePublication;
   const snapshotIntegrity = publicationSnapshotIntegrity(publication.snapshot);
-  if (snapshotIntegrity !== "valid") throw new Error("published_snapshot_integrity_invalid");
+  if (snapshotIntegrity !== "valid") {
+    throw new Error("published_snapshot_integrity_invalid");
+  }
   const currentPages = new Map(site.pages.map((page) => [page.id, page]));
-  const snapshotPages = publication.snapshot.pages;
+  const snapshotPages = instantDraftPreview
+    ? publication.snapshot.pages.map((publishedPage) => {
+        const draftPage = currentPages.get(publishedPage.id) ?? site.pages.find((page) => page.slug === publishedPage.slug);
+        return draftPage ? { ...publishedPage, publishedJson: draftPage.draftJson } : publishedPage;
+      })
+    : publication.snapshot.pages;
   const pages = snapshotPages.map((publishedPage): ThemePage => {
     const currentPage = currentPages.get(publishedPage.id);
     return {
@@ -229,7 +245,9 @@ export function createPublishedSiteSnapshot(
       updatedAt: publishedPage.updatedAt ?? currentPage?.updatedAt
     };
   });
-  const publicationThemeSettings = publication?.snapshot?.themeSettings;
+  const publicationThemeSettings = instantDraftPreview
+    ? site.themeSettings.draftJson
+    : publication?.snapshot?.themeSettings;
   const publishedSettings = publicationThemeSettings
     ? {
         ...site.themeSettings,
@@ -422,7 +440,10 @@ export function resolveEffectivePublishedPage(snapshot: PublishedSiteSnapshot, p
   const requestedPath = normalizePath(path);
   const directPage = snapshot.pages.find((page) => normalizePath(page.slug) === requestedPath);
   const canonicalPage = snapshot.pages.find((page) => canonicalPathForPage(page) === requestedPath);
-  const page = directPage ?? canonicalPage;
+  const legacyPage = isPrimaryMydreamshootsSite(snapshot.site) && requestedPath.startsWith("/ai-save-the-date/")
+    ? snapshot.pages.find((candidate) => normalizePath(candidate.slug) === legacySaveTheDatePath(requestedPath))
+    : undefined;
+  const page = directPage ?? canonicalPage ?? legacyPage;
   if (!page) {
     const fallbackPage = snapshot.pages.find((candidate) => canonicalPathForPage(candidate) === normalizePath(candidate.slug));
     if (!fallbackPage) {
@@ -473,6 +494,16 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
   const exactPublishedRoute = snapshot.publishedRoutes.find((route) =>
     route.disposition === "redirect" ? route.aliasPath === requestedPath : route.canonicalPath === requestedPath
   );
+  if (!exactPublishedRoute && isPrimaryMydreamshootsSite(snapshot.site) && requestedPath.startsWith("/ai-save-the-date/")) {
+    const legacyPath = legacySaveTheDatePath(requestedPath);
+    const legacyRoute = legacyPath && snapshot.publishedRoutes.find((route) => route.disposition === "render" && route.canonicalPath === legacyPath);
+    if (legacyRoute) {
+      const pageId = "pageId" in legacyRoute
+        ? legacyRoute.pageId
+        : snapshot.pages.find((page) => normalizePath(page.slug) === legacyPath || canonicalPathForPage(page) === legacyPath)?.id;
+      if (pageId) return { kind: "render", status: 200, path: requestedPath, pageId };
+    }
+  }
   if (exactPublishedRoute?.disposition === "redirect") {
     return resolvePublishedRedirectDisposition(snapshot, requestedPath, exactPublishedRoute.targetPath, exactPublishedRoute.statusCode);
   }

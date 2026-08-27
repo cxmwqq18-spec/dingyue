@@ -192,13 +192,20 @@ function signatureFromItems(items, siteSlug) {
 }
 
 async function extractMenuSignature(page, siteSlug, route, menuCheck) {
-  const button = page.locator('nav button[aria-haspopup="dialog"]').filter({ hasText: menuCheck.buttonName }).first();
-  await button.waitFor({ state: "visible", timeout: 30000 });
-  const controlId = await button.getAttribute("aria-controls");
+  const trigger = page
+    .locator('nav button[aria-haspopup="dialog"], nav details[data-native-mega-menu] > summary')
+    .filter({ hasText: menuCheck.buttonName })
+    .first();
+  await trigger.waitFor({ state: "visible", timeout: 30000 });
+  const controlId = await trigger.getAttribute("aria-controls");
+  const nativeMenu = await trigger.evaluate((element) => Boolean(element.closest("details[data-native-mega-menu]")));
+  await trigger.click();
   const items = await page.evaluate(
-    ({ currentSiteSlug, currentMenuName, currentControlId }) => {
+    ({ currentSiteSlug, currentMenuName, currentControlId, isNativeMenu }) => {
       const panel = currentControlId
         ? document.getElementById(currentControlId)
+        : isNativeMenu
+          ? document.querySelector("details[data-native-mega-menu][open] > div")
         : document.querySelector('[data-storefront-mega-menu-panel][aria-hidden="false"]');
       if (!panel) return [];
       const toolCardAnchors = currentMenuName === "tools"
@@ -229,9 +236,10 @@ async function extractMenuSignature(page, siteSlug, route, menuCheck) {
       });
       return links;
     },
-    { currentSiteSlug: siteSlug, currentMenuName: menuCheck.name, currentControlId: controlId }
+    { currentSiteSlug: siteSlug, currentMenuName: menuCheck.name, currentControlId: controlId, isNativeMenu: nativeMenu }
   );
-  await page.keyboard.press("Escape").catch(() => undefined);
+  if (nativeMenu) await trigger.click().catch(() => undefined);
+  else await page.keyboard.press("Escape").catch(() => undefined);
   const signature = signatureFromItems(items, siteSlug);
   assert(signature.length > 0, `${siteSlug} ${route} ${menuCheck.name}: no menu item links were found`);
   return signature;

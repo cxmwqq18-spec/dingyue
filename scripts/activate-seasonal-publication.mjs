@@ -31,7 +31,7 @@ try {
   if (integrity !== "valid") {
     throw new Error(`Publication snapshot invalid: ${integrity}`);
   }
-  const pageIds = record.pages.filter((page) => ["/holidays-events/mothers-day", "/holidays-events/fathers-day"].includes(page.slug)).map((page) => page.id);
+  const pageIds = record.pages.filter((page) => ["/ai-save-the-date/mothers-day", "/ai-save-the-date/fathers-day"].includes(page.slug)).map((page) => page.id);
   const manifest = await prepareDraftPublishManifestRelational(siteId);
   console.log(JSON.stringify({ ok: true, siteId, mode: "draft-only", snapshotHash: snapshot.snapshotHash, pageIds, manifestHash: manifest.manifestHash, publicationRequired: true }, null, 2));
 } finally { await prisma.$disconnect(); }

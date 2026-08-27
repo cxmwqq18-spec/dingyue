@@ -1,6 +1,4 @@
-"use client";
-
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { ChevronDown } from "lucide-react";
 
 export function NativeMegaMenu({
@@ -18,41 +16,10 @@ export function NativeMegaMenu({
   panelClassName: string;
   prefetchPaths?: string[];
 }) {
-  const menuRef = useRef<HTMLDetailsElement>(null);
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (!open) return;
-
-    function handlePointerDown(event: PointerEvent) {
-      const menu = menuRef.current;
-      if (!menu || menu.contains(event.target as Node)) return;
-      menu.open = false;
-      setOpen(false);
-    }
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key !== "Escape") return;
-      const menu = menuRef.current;
-      if (!menu) return;
-      menu.open = false;
-      setOpen(false);
-    }
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [open]);
-
   return (
     <details
       className="group relative"
       data-native-mega-menu="true"
-      onToggle={(event) => setOpen(event.currentTarget.open)}
-      ref={menuRef}
       {...blockAttrs}
     >
       <summary className={`${buttonClassName} list-none [&::-webkit-details-marker]:hidden`}>

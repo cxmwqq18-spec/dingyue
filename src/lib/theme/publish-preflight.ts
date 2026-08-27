@@ -233,6 +233,29 @@ function hasBrokenCanonical(value: string | undefined): boolean {
   return !(href.startsWith("/") || href.startsWith("http://") || href.startsWith("https://"));
 }
 
+function saveTheDatePublicationFailures(settings: ThemeSettings): string[] {
+  const publishedItems = (settings.saveTheDateNavigation?.groups ?? [])
+    .flatMap((group) => group.items)
+    .filter((item) => item.status === "published");
+  const failures = publishedItems.flatMap((item) => {
+    const missing = [
+      !item.href.trim() ? "href" : "",
+      !item.description?.trim() ? "description" : "",
+      !item.imageUrl?.trim() ? "imageUrl" : "",
+      !item.imageAlt?.trim() ? "imageAlt" : ""
+    ].filter(Boolean);
+    return missing.length ? [`${item.href || item.slug}:${missing.join(",")}`] : [];
+  });
+  for (const [field, values] of [
+    ["imageUrl", publishedItems.map((item) => item.imageUrl?.trim() || "")],
+    ["description", publishedItems.map((item) => item.description?.trim() || "")]
+  ] as const) {
+    const duplicateValues = values.filter((value, index) => value && values.indexOf(value) !== index);
+    if (duplicateValues.length) failures.push(`duplicate_${field}:${Array.from(new Set(duplicateValues)).join("|")}`);
+  }
+  return failures;
+}
+
 function mediaReference(value: ThemeSettingValue | undefined): string {
   const stringValue = themeValueToString(value, "").trim();
   if (!stringValue.startsWith("media_")) return "";
@@ -334,6 +357,7 @@ export function runThemePublishPreflight({
   const footerLinks = site.themeSettings.draftJson.navigation.footerLinks;
   const globalVisualChanges = collectThemeGlobalVisualChanges(site);
   const seo = normalizeThemeSeo(site, site.themeSettings.draftJson);
+  const saveTheDateFailures = site.id === "site_dreamshoot" ? saveTheDatePublicationFailures(site.themeSettings.draftJson) : [];
   const brokenLinks = [...headerLinks, ...footerLinks].filter((link) => !link.label.trim() || hasBrokenLink(link.href));
   const mediaIds = new Set(mediaAssets.map((asset) => asset.id));
   const missingMediaRefs = collectMediaReferencesFromSections(sections).filter((ref) => !mediaIds.has(ref));
@@ -470,6 +494,12 @@ export function runThemePublishPreflight({
       ? block("empty_pages", "pages", "存在空页面", `${emptyPages.map((page) => page.title).join(", ")} 没有任何 section，发布后会形成空模板。`)
       : pass("empty_pages", "pages", "页面结构完整", "所有 draft 页面都有 section 顺序。")
   );
+
+  if (site.id === "site_dreamshoot") {
+    checks.push(saveTheDateFailures.length
+      ? block("save_the_date_published_card_data", "media", "Save the Date published card data is incomplete or duplicated", saveTheDateFailures.slice(0, 8).join("; "))
+      : pass("save_the_date_published_card_data", "media", "Save the Date published cards have unique media and descriptions", "Published cards include an owned cover, alt text, and theme-specific description; no renderer fallback is used."));
+  }
 
   if (site.id === "site_dreamshoot") {
     checks.push(mydreamshootsReviewSlugs.size

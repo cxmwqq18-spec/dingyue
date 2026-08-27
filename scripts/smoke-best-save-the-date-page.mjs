@@ -8,17 +8,17 @@ const SITE_ID = "site_dreamshoot";
 const PAGE_PATH = "/best-save-the-date";
 const expectedThemePaths = [
   "/ai-save-the-date/valentines-day",
-  "/holidays-events/engagement",
-  "/holidays-events/proposal",
-  "/holidays-events/save-the-date",
-  "/holidays-events/wedding-invitation",
-  "/ai-video-generation/wedding-ceremony",
-  "/holidays-events/christmas",
-  "/holidays-events/thanksgiving",
-  "/holidays-events/new-year",
-  "/holidays-events/mothers-day",
-  "/holidays-events/fathers-day",
-  "/holidays-events/halloween"
+  "/ai-save-the-date/engagement",
+  "/ai-save-the-date/proposal",
+  "/ai-save-the-date/save-the-date",
+  "/ai-save-the-date/wedding-invitation",
+  "/ai-save-the-date/wedding-ceremony",
+  "/ai-save-the-date/christmas",
+  "/ai-save-the-date/thanksgiving",
+  "/ai-save-the-date/new-year",
+  "/ai-save-the-date/mothers-day",
+  "/ai-save-the-date/fathers-day",
+  "/ai-save-the-date/halloween"
 ];
 
 const state = await readPlatformStateFromSql();
@@ -46,19 +46,19 @@ const items = navigation.groups.flatMap((group) => group.items.filter((item) => 
 const expectedNavigation = {
   "Love & Wedding": [
     ["Valentine's Day", "/ai-save-the-date/valentines-day"],
-    ["Engagement", "/holidays-events/engagement"],
-    ["Proposal", "/holidays-events/proposal"],
-    ["Save the Date", "/holidays-events/save-the-date"],
-    ["Wedding Invitation", "/holidays-events/wedding-invitation"],
-    ["Wedding Ceremony", "/ai-video-generation/wedding-ceremony"]
+    ["Engagement", "/ai-save-the-date/engagement"],
+    ["Proposal", "/ai-save-the-date/proposal"],
+    ["Save the Date", "/ai-save-the-date/save-the-date"],
+    ["Wedding Invitation", "/ai-save-the-date/wedding-invitation"],
+    ["Wedding Ceremony", "/ai-save-the-date/wedding-ceremony"]
   ],
   "Seasonal Holidays": [
-    ["Christmas", "/holidays-events/christmas"],
-    ["Halloween", "/holidays-events/halloween"],
-    ["Thanksgiving", "/holidays-events/thanksgiving"],
-    ["New Year", "/holidays-events/new-year"],
-    ["Mother's Day", "/holidays-events/mothers-day"],
-    ["Father's Day", "/holidays-events/fathers-day"]
+    ["Christmas", "/ai-save-the-date/christmas"],
+    ["Halloween", "/ai-save-the-date/halloween"],
+    ["Thanksgiving", "/ai-save-the-date/thanksgiving"],
+    ["New Year", "/ai-save-the-date/new-year"],
+    ["Mother's Day", "/ai-save-the-date/mothers-day"],
+    ["Father's Day", "/ai-save-the-date/fathers-day"]
   ]
 };
 for (const group of navigation.groups) {
@@ -74,6 +74,15 @@ for (const item of items) {
   assert(item.imageUrl?.trim(), `${item.href}: cover image required`);
   assert(item.imageAlt?.trim(), `${item.href}: image alt required`);
 }
+assert.equal(new Set(items.map((item) => item.imageUrl)).size, items.length, "published Save the Date cards must not reuse a cover image");
+assert.equal(new Set(items.map((item) => item.description)).size, items.length, "published Save the Date cards must not reuse a fallback description");
+const publishedShowcases = (site.activePublication?.snapshot?.publishedHomepageShowcases ?? [])
+  .filter((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
+assert.deepEqual(
+  new Set(items.map((item) => item.href)),
+  new Set(publishedShowcases.map((item) => item.canonicalPath)),
+  "Save the Date navigation and published homepage projection must expose the same theme set"
+);
 const renderer = fs.readFileSync(path.join(process.cwd(), "src/components/theme-renderer.tsx"), "utf8");
 const directory = fs.readFileSync(path.join(process.cwd(), "src/components/storefront/save-the-date-directory.tsx"), "utf8");
 assert.match(renderer, /dreamshoot_save_the_date_directory/);
@@ -82,6 +91,9 @@ assert.match(renderer, /isMydreamshootsRemovedLegacyRoute/);
 assert.match(directory, /data-save-the-date-card/);
 assert.match(directory, /loading=\{index === 0 \? "eager" : "lazy"\}/);
 assert.match(directory, /alt=\{imageAlt\}/);
-assert.match(directory, /status === "published"/);
+assert.match(directory, /PublishedSaveTheDateGroup/);
+assert.match(renderer, /resolvePublishedSaveTheDateGroups/);
+assert.doesNotMatch(directory, /headshot-lifestyle-v1\.png/);
+assert.doesNotMatch(directory, /Build a polished Save the Date story/);
 
   console.log(JSON.stringify({ ok: true, route: PAGE_PATH, categories: navigation.groups.length, themes: items.length }, null, 2));

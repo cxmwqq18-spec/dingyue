@@ -228,6 +228,9 @@ function isPrivateStorefrontHtmlRequest(request: NextRequest): boolean {
 
 function storefrontHtmlCacheControl(request: NextRequest, upstreamHeaders: Headers): string {
   if (isPrivateStorefrontHtmlRequest(request)) return PRIVATE_STOREFRONT_CACHE_CONTROL;
+  if (process.env.DINGYUE_ENV === "local" && process.env.STOREFRONT_INSTANT_DRAFT_PREVIEW !== "0") {
+    return "private, no-store, max-age=0, must-revalidate";
+  }
   const upstreamCache = upstreamHeaders.get("cache-control") ?? "";
   if (upstreamCache && !/(?:no-store|private)/i.test(upstreamCache)) return upstreamCache;
   return PUBLIC_STOREFRONT_CACHE_CONTROL;
@@ -507,6 +510,19 @@ function isGrownstrideRequest(request: NextRequest): boolean {
   );
 }
 
+function mydreamshootsWorkspaceRedirect(request: NextRequest): Response | undefined {
+  const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
+  const pathname = request.nextUrl.pathname;
+  const isPublicMydreamshootsWorkspace = pathname === "/workspace" && hostSlug === "mydreamshoots";
+  const isPathModeMydreamshootsWorkspace = pathname === "/site/mydreamshoots/workspace";
+  if (!isPublicMydreamshootsWorkspace && !isPathModeMydreamshootsWorkspace) return undefined;
+
+  const target = new URL(request.nextUrl);
+  target.pathname = isPathModeMydreamshootsWorkspace ? "/site/mydreamshoots/app/create" : "/app/create";
+  // This legacy public entry must be a real HTTP 301, not Next's 308 helper.
+  return NextResponse.redirect(publicRedirectUrlForRequest(request, `${target.pathname}${target.search}`), 301);
+}
+
 function applyGrownstrideNoindex(response: Response, request: NextRequest): Response {
   if (isGrownstrideRequest(request)) response.headers.set("X-Robots-Tag", "noindex, nofollow");
   return response;
@@ -564,6 +580,8 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 }
 
 export async function middleware(request: NextRequest) {
+  const workspaceRedirect = mydreamshootsWorkspaceRedirect(request);
+  if (workspaceRedirect) return finalizeStorefrontResponse(workspaceRedirect, request);
   if (request.nextUrl.pathname === "/ai-image-generation/motion-generator") {
     const target = publicRedirectUrlForRequest(request, "/ai-video-generation/motion-generator");
     return NextResponse.redirect(target, 308);

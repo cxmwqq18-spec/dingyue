@@ -1,5 +1,5 @@
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
-import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
+import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
 import { storefrontCardImageAlt } from "@/lib/storefront-media-alt";
 
 export type PackageTaxonomyCard = {

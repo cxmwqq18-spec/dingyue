@@ -9,6 +9,7 @@ import { assertDatabaseTarget } from "./lib/database-target.mjs";
 import "./load-runtime-env.mjs";
 
 const siteId = "site_dreamshoot";
+const copy = JSON.parse(fs.readFileSync(path.join(process.cwd(), "src/lib/mydreamshoots-homepage-copy.json"), "utf8"));
 const databaseUrl = process.env.DATABASE_URL?.trim();
 assert(databaseUrl, "DATABASE_URL is required");
 const parsed = new URL(databaseUrl);
@@ -73,7 +74,47 @@ try {
   const reviews = home.publishedJson?.sections?.proof_1;
   assert.equal(reviews?.type, "testimonial_wall", "homepage customer review wall must be present");
   assert.equal(reviews?.settings?.title, "What Our Customers Say", "homepage customer reviews must use the published title");
-  assert((reviews?.blocks ?? []).length >= 6, "homepage must include the published customer review set");
+  const draftReviews = home.draftJson?.sections?.proof_1;
+  assert.equal(draftReviews?.type, "testimonial_wall", "homepage draft customer review wall must be present");
+  const expectedReviewKeys = [
+    "review_ava",
+    "review_lucas",
+    "review_mia",
+    "review_noah",
+    "review_chloe",
+    "review_eli",
+    "review_jordan",
+    "review_riley"
+  ];
+  const expectedReviewMeta = {
+    review_ava: { name: "Ava M.", location: "Sports fan set" },
+    review_lucas: { name: "Lucas R.", location: "Profile images" },
+    review_mia: { name: "Mia C.", location: "Holiday cards" },
+    review_noah: { name: "Noah P.", location: "Private gallery" },
+    review_chloe: { name: "Chloe S.", location: "Creator scenes" },
+    review_eli: { name: "Eli T.", location: "Headshots and cards" },
+    review_jordan: { name: "Jordan K.", location: "Profile refresh" },
+    review_riley: { name: "Riley W.", location: "Social content" }
+  };
+  const publishedReviewBlocks = reviews?.blocks ?? [];
+  assert.deepEqual(publishedReviewBlocks.map((block) => block.id), expectedReviewKeys, "published homepage reviews must contain the approved eight-card order");
+  const draftReviewBlocks = draftReviews?.blocks ?? [];
+  assert.deepEqual(draftReviewBlocks.map((block) => block.id), expectedReviewKeys, "homepage draft reviews must contain the approved eight-card order");
+  for (const block of publishedReviewBlocks) {
+    const settings = block.settings ?? {};
+    assert.deepEqual({ name: settings.name, location: settings.location }, expectedReviewMeta[block.id], `${block.id} published name or theme drifted from the replacement sheet`);
+    assert.ok(settings.role, `${block.id} published review must retain role metadata`);
+    assert.equal(settings.rating, "5", `${block.id} published review must retain the approved five-star rating`);
+    assert.ok(settings.avatarUrl && settings.resultImageUrl, `${block.id} published review must retain avatar and result assets`);
+  }
+  for (const block of draftReviewBlocks) {
+    const settings = block.settings ?? {};
+    assert.equal(settings.quote, copy.reviewQuotes[block.id], `${block.id} quote drifted from the approved copy source`);
+    assert.deepEqual({ name: settings.name, location: settings.location }, expectedReviewMeta[block.id], `${block.id} name or theme drifted from the replacement sheet`);
+    assert.ok(settings.role, `${block.id} must retain role metadata`);
+    assert.equal(settings.rating, "5", `${block.id} must retain the approved five-star rating`);
+    assert.ok(settings.avatarUrl && settings.resultImageUrl, `${block.id} must retain avatar and result assets`);
+  }
 
   assert.equal(expectedVideoParents.size, 5, "video menu must define five parent categories");
   const currentThemes = themes.filter((theme) => currentVideoSlugs.has(theme.slug));

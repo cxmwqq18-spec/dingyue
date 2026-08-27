@@ -237,6 +237,7 @@ export const mydreamshootsCurrentVideoMenuSlugs = [
   "food-video",
   "pet-video",
   "explainer-video",
+  "how-to-video",
   "talking-head-video"
 ] as const;
 

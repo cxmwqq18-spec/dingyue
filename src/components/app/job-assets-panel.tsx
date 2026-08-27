@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Download, Trash2 } from "lucide-react";
 import type { ThemeRuntimeAsset } from "@/lib/types";
 import { customerJsonHeaders } from "@/lib/client-csrf";
-import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
+import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
 
 function reviewLabel(status: ThemeRuntimeAsset["reviewStatus"]) {
   if (status === "approved") return "Ready";

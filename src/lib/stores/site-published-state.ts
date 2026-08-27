@@ -1,30 +1,13 @@
-import crypto from "node:crypto";
 import type { Prisma } from "@prisma/client";
 import type { SitePublishedState, VerifiedBackupReceipt } from "@/lib/types";
+import { currentPublishedContentHash, currentPublishedRevision } from "@/lib/current-state/hash";
 import { prisma, runPrismaReadWithReconnect, runPrismaWriteWithReconnect } from "@/lib/prisma";
 import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import { compileCurrentPublishedPayloadRelational } from "@/lib/stores/theme-store";
 import { toSitePublishedState } from "@/lib/stores/prisma-mappers";
 import { assertVerifiedBackupReceipt } from "@/lib/current-state/backup-receipt";
 
-function stable(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map(stable);
-  if (!value || typeof value !== "object") return value;
-  return Object.fromEntries(
-    Object.entries(value as Record<string, unknown>)
-      .filter(([, item]) => item !== undefined)
-      .sort(([left], [right]) => left.localeCompare(right))
-      .map(([key, item]) => [key, stable(item)])
-  );
-}
-
-export function currentPublishedContentHash(payload: unknown): string {
-  return crypto.createHash("sha256").update(JSON.stringify(stable(payload))).digest("hex");
-}
-
-export function currentPublishedRevision(siteId: string, contentHash: string): string {
-  return crypto.createHash("sha256").update(`${siteId}:${contentHash}`).digest("hex").slice(0, 24);
-}
+export { currentPublishedContentHash, currentPublishedRevision } from "@/lib/current-state/hash";
 
 export async function getCurrentPublishedStateRelational(siteId: string): Promise<SitePublishedState> {
   const row = await runPrismaReadWithReconnect(
@@ -34,6 +17,9 @@ export async function getCurrentPublishedStateRelational(siteId: string): Promis
   if (!row) throw new Error("current_published_state_missing");
   if (currentPublishedContentHash(row.payload) !== row.contentHash) {
     throw new Error("current_published_state_hash_mismatch");
+  }
+  if (currentPublishedRevision(siteId, row.contentHash) !== row.revision) {
+    throw new Error("current_published_state_revision_mismatch");
   }
   return toSitePublishedState(row);
 }

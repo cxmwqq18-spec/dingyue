@@ -16,8 +16,9 @@ import { DreamshootToolDirectoryClient, type DreamshootToolDirectoryCard } from 
 import { SaveTheDateDirectory } from "@/components/storefront/save-the-date-directory";
 import { DreamShootMegaToolsPanel as SharedDreamShootMegaToolsPanel, getToolBlocksFromMenuItems as getSharedToolBlocksFromMenuItems } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderMobileVideoGenerationMenu, HeaderMobileSaveTheDateMenu, HeaderPhotoPackageMegaPanel, HeaderToolsMegaPanel, HeaderVideoGenerationMegaPanel, HeaderSaveTheDateMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderToolMegaItem, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
+import { resolvePublishedSaveTheDateGroups } from "@/lib/save-the-date-publication";
 import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
-import { NativeMegaMenu } from "@/components/storefront/native-mega-menu";
+import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
@@ -36,6 +37,7 @@ import {
 } from "@/lib/photo-package-use-case-profiles";
 import { shortPolicyPath } from "@/lib/site-route-canonical";
 import { isMydreamshootsRemovedLegacyRoute } from "@/lib/mydreamshoots-editorial-routes";
+import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { isSpanishStorefrontSite, SPANISH_XBY_COLLECTION_ALIASES } from "@/lib/spanish-storefronts";
 import {
   storefrontCardImageAlt,
@@ -961,7 +963,7 @@ function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic
 
 export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, publicStorefrontPage = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [], homepageShowcases = [], videoGenerationTopics }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; publicStorefrontPage?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[]; homepageShowcases?: PublishedHomepageShowcaseItem[]; videoGenerationTopics?: HeaderVideoGenerationTopic[] }) {
   const HeaderLink = StorefrontInstantLink;
-  const MegaMenu = NativeMegaMenu;
+  const MegaMenu = ClickMegaMenu;
   const header = settings.globalSections?.header;
   const saasHeader = saasGlobalSection(settings, "header_plus");
   const title = header ? setting(header, "title", site.branding.logoText) : site.branding.logoText;
@@ -1037,7 +1039,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const isWorkspaceNavLink = (label: string, href: string) => {
     const normalizedLabel = label.trim().toLowerCase();
     const normalizedHref = href.trim().replace(/\/+$/, "") || "/";
-    return normalizedLabel === "workspace" || normalizedLabel === "workbench" || normalizedLabel === "\u5de5\u4f5c\u53f0" || normalizedLabel === "\u5de5\u4f5c\u533a" || normalizedHref === "/app" || normalizedHref === "/app/create";
+    return normalizedLabel === "workspace" || normalizedLabel === "workbench" || normalizedLabel === "\u5de5\u4f5c\u53f0" || normalizedLabel === "\u5de5\u4f5c\u533a" || normalizedHref === "/workspace" || normalizedHref === "/app" || normalizedHref === "/app/create";
   };
   const workspaceLabel = spanishXby ? "Espacio privado" : "Workspace";
   const workspaceLink = { label: workspaceLabel, href: "/app/create", block: { id: "header_nav_workspace", type: "menu_link", settings: { label: workspaceLabel, href: "/app/create" } } as SectionBlockInstance };
@@ -1082,24 +1084,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   // Both sources are active-publication projections. The homepage projection is
   // a resilient recovery path for an older local snapshot that missed settings,
   // while still requiring a published route and media-backed showcase item.
-  const projectedSaveTheDateGroups: SaveTheDateNavigationGroup[] = publishedSaveTheDateShowcases.length
-    ? [{
-        label: publishedSaveTheDateShowcases[0]?.category?.trim() || "Save the Date",
-        slug: "published-save-the-date",
-        sortOrder: 0,
-        items: publishedSaveTheDateShowcases.map((item) => ({
-          label: item.title,
-          slug: item.canonicalPath.split("/").filter(Boolean).at(-1) || item.id,
-          href: item.canonicalPath,
-          description: item.subtitle,
-          imageUrl: item.imageUrl,
-          imageAlt: item.imageAlt,
-          status: "published" as const,
-          sortOrder: item.sortOrder
-        }))
-      }]
-    : [];
-  const saveTheDateGroups = saveTheDateConfig?.groups?.length ? saveTheDateConfig.groups : projectedSaveTheDateGroups;
+  const saveTheDateGroups = resolvePublishedSaveTheDateGroups(publishedSaveTheDateShowcases);
   const saveTheDateMenuLabel = isMyDreamShootsCom
     ? saveTheDateConfig?.menuLabel?.trim() || "Save the Date"
     : saveTheDateConfig?.menuLabel?.trim() ?? "";
@@ -1107,8 +1092,8 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const routedSaveTheDateGroups = saveTheDateGroups.map((group) => ({
     ...group,
     items: group.items
-      .filter((item) => !(isMyDreamShootsCom && isMydreamshootsRemovedLegacyRoute(item.href)))
-      .map((item) => ({ ...item, href: hrefForPage(site, item.href, pagePath) }))
+      .filter((item) => !(isMyDreamShootsCom && isMydreamshootsRemovedLegacyRoute(canonicalSaveTheDatePath(item.href))))
+      .map((item) => ({ ...item, href: hrefForPage(site, canonicalSaveTheDatePath(item.href), pagePath) }))
   }));
   const saveTheDateTarget = routedSaveTheDateGroups
     .flatMap((group) => group.items)
@@ -1177,13 +1162,15 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const dynamicPhotoPackageMegaGroups = lightweight ? [] : getPhotoPackageMegaGroups(creativePacks, creativePackCategories);
   const configuredPhotoPackageMegaGroups = isAidreamcapes ? getPhotoPackageMegaGroupsFromBlocks(header?.blocks) : [];
   const hasCatalogData = creativePacks.length > 0 || creativePackCategories.length > 0;
-  const rawPhotoPackageMegaGroups = dynamicPhotoPackageMegaGroups.length || lightweight || hasCatalogData
+  const rawPhotoPackageMegaGroups = isMyDreamShootsCom
+    ? dynamicPhotoPackageMegaGroups
+    : dynamicPhotoPackageMegaGroups.length || lightweight || hasCatalogData
     ? dynamicPhotoPackageMegaGroups
     : configuredPhotoPackageMegaGroups.length
       ? configuredPhotoPackageMegaGroups
       : dreamshootFallbackPhotoPackageGroups;
   const fullPhotoPackageMegaGroups = spanishXby ? spanishPhotoPackageMegaGroups(rawPhotoPackageMegaGroups, isAidreamcapes) : rawPhotoPackageMegaGroups;
-  const photoPackageMegaGroups = fullPhotoPackageMegaGroups;
+  const photoPackageMegaGroups = fullPhotoPackageMegaGroups.filter((group) => group.items.length > 0);
   const showPhotoPackageMega = !lightweight && (isDreamShoot || isAidreamcapes);
   const clientPhotoPackageMegaGroups = deferMegaMenuPanels ? headerPhotoPackageMegaGroupsForClient(site, photoPackageMegaGroups) : [];
   const clientToolMegaItems = deferMegaMenuPanels ? headerToolMegaItemsForClient(site, toolMegaBlocks, spanishXby) : [];
@@ -1400,10 +1387,11 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                 </Fragment>
               );
             }
-	            return (
+            return (
             <MegaMenu
 	                blockAttrs={xfcartBlockAttrs(link.block, index, "header_nav")}
 	                buttonClassName={navClass}
+	                disablePrefetch={disablePublicSeoPrefetch}
 	                key={`${link.label}_${link.href}`}
 	                label={link.label}
                   panelClassName={`fixed left-1/2 z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out ${announceEnabled && announceText ? "top-[126px]" : "top-[78px]"}`}
@@ -1761,7 +1749,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
       : isDreamShootFooter
         ? [
             { label: "AI Video Generation", href: "/ai-video-generation" },
-            ...(hasPublishedSaveTheDate ? [{ label: "AI Save the Date", href: "/holidays-events/save-the-date" }] : []),
+            ...(hasPublishedSaveTheDate ? [{ label: "AI Save the Date", href: "/best-save-the-date" }] : []),
             { label: "AI Image Generation", href: "/ai-image-generation" },
             { label: "AI Photo Packages", href: "/best-packages" },
             { label: "Pricing", href: "/pricing" }
@@ -1865,7 +1853,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
           ? [
               ["AI Video Generation", "/ai-video-generation", "product"],
               ["Best AI video", "/best-ai-video", "product"],
-              ...(hasPublishedSaveTheDate ? [["AI Save the Date", "/holidays-events/save-the-date", "product"] as const] : []),
+              ...(hasPublishedSaveTheDate ? [["AI Save the Date", "/best-save-the-date", "product"] as const] : []),
               ["AI Image Generation", "/ai-image-generation", "product"],
               ["AI Photo Packages", "/best-packages", "product"],
               ["How it works", "/workflow", "product"],
@@ -2255,44 +2243,45 @@ function runtimeGeneratedAssetAlt(
 function spanishXbyImageAlt(site: Site, value: string): string {
   if (!isSpanishXbySite(site)) return value;
   const aidreamcapes = isAidreamcapesSite(site);
+  const brand = aidreamcapes ? "AIdreamcapes" : "AIdreamshoots";
   if (/polished business headshot|business portrait|professional AI profile/i.test(value)) {
-    return "Retrato principal de hombre con estilo profesional y luz de estudio, usado para mostrar fotos de perfil con IA en AIdreamshoots";
+    return `Retrato principal de hombre con estilo profesional y luz de estudio, usado para mostrar fotos de perfil con IA en ${brand}`;
   }
   if (/beauty lighting|hairstyle styling|beauty portrait/i.test(value)) {
-    return "Retrato principal de mujer con iluminacion de belleza y peinado, usado para previsualizar fotos de estilo con IA en AIdreamshoots";
+    return `Retrato principal de mujer con iluminacion de belleza y peinado, usado para previsualizar fotos de estilo con IA en ${brand}`;
   }
   if (/cinematic noir|character photo/i.test(value)) {
-    return "Retrato principal con iluminacion noir cinematografica, usado para paquetes de personajes y escenas creativas con IA en AIdreamshoots";
+    return `Retrato principal con iluminacion noir cinematografica, usado para paquetes de personajes y escenas creativas con IA en ${brand}`;
   }
   if (/neon cyberpunk|cyberpunk city|cinematic noir|character photo/i.test(value)) {
-    return "Retrato creativo principal con luces cinematograficas y estilo cyberpunk, usado para paquetes de fotos tematicas con IA en AIdreamshoots";
+    return `Retrato creativo principal con luces cinematograficas y estilo cyberpunk, usado para paquetes de fotos tematicas con IA en ${brand}`;
   }
   if (/travel lifestyle|destination-style|travel-style portrait/i.test(value)) {
-    return "Retrato principal en escena de viaje y estilo de vida, usado para paquetes de fotos de destino con IA en AIdreamshoots";
+    return `Retrato principal en escena de viaje y estilo de vida, usado para paquetes de fotos de destino con IA en ${brand}`;
   }
   if (/football fan|stadium scene|sports AI/i.test(value)) {
-    return "Retrato principal de aficionado de futbol en ambiente de estadio, usado para paquetes deportivos de fotos con IA en AIdreamshoots";
+    return `Retrato principal de aficionado de futbol en ambiente de estadio, usado para paquetes deportivos de fotos con IA en ${brand}`;
   }
   if (/stylized avatar|social profile/i.test(value)) {
-    return "Retrato principal de avatar estilizado para perfiles sociales, usado como vista previa de paquete creativo con IA en AIdreamshoots";
+    return `Retrato principal de avatar estilizado para perfiles sociales, usado como vista previa de paquete creativo con IA en ${brand}`;
   }
   if (/Creator profile portrait for a personal-brand photo package/i.test(value)) {
-    return "Retrato de creadora para perfil personal y marca social, usado como vista previa de paquete creativo con IA en AIdreamshoots";
+    return `Retrato de creadora para perfil personal y marca social, usado como vista previa de paquete creativo con IA en ${brand}`;
   }
   if (/Noir character portrait in dramatic lighting for a cinematic photo package/i.test(value)) {
-    return "Retrato de personaje noir con iluminacion dramatica, usado para previsualizar paquetes cinematograficos de fotos con IA en AIdreamshoots";
+    return `Retrato de personaje noir con iluminacion dramatica, usado para previsualizar paquetes cinematograficos de fotos con IA en ${brand}`;
   }
   if (/Customer source-photo portrait beside the myDreamshoots FAQ/i.test(value)) {
-    return "Retrato de foto fuente de cliente junto a la guia FAQ, usado como ejemplo de subida clara para paquetes privados con IA en AIdreamshoots";
+    return `Retrato de foto fuente de cliente junto a la guia FAQ, usado como ejemplo de subida clara para paquetes privados con IA en ${brand}`;
   }
   if (/creator product-style|commerce-ready/i.test(value)) {
-    return "Imagen principal de producto para creador con composicion comercial, usada para paquetes de fotos listas para tienda en AIdreamshoots";
+    return `Imagen principal de producto para creador con composicion comercial, usada para paquetes de fotos listas para tienda en ${brand}`;
   }
   if (/motion-ready|video add-ons/i.test(value)) {
-    return "Vista principal de resultado de foto listo para movimiento, usada para mostrar complementos de video con IA en AIdreamshoots";
+    return `Vista principal de resultado de foto listo para movimiento, usada para mostrar complementos de video con IA en ${brand}`;
   }
   if (/social-ready creator profile|creator profile update/i.test(value)) {
-    return "Retrato principal para actualizacion de perfil de creador, usado en paquetes de contenido social con IA en AIdreamshoots";
+    return `Retrato principal para actualizacion de perfil de creador, usado en paquetes de contenido social con IA en ${brand}`;
   }
   if (/private album workspace|delivered AI photo results|private gallery workspace/i.test(value)) {
     return aidreamcapes
@@ -2300,19 +2289,19 @@ function spanishXbyImageAlt(site: Site, value: string): string {
       : "Espacio de album privado de AIdreamshoots con resultados de fotos IA organizados para revisar y descargar";
   }
   if (/Original source photo upload before AI photo generation/i.test(value)) {
-    return "Carga de foto fuente original antes de generar fotos con IA en AIdreamshoots";
+    return `Carga de foto fuente original antes de generar fotos con IA en ${brand}`;
   }
   if (/Professional headshot result inside a private AI photo album/i.test(value)) {
-    return "Resultado de retrato profesional dentro de un album privado de fotos IA en AIdreamshoots";
+    return `Resultado de retrato profesional dentro de un album privado de fotos IA en ${brand}`;
   }
   if (/Cyberpunk portrait result inside a private AI photo album/i.test(value)) {
-    return "Resultado de retrato cyberpunk dentro de un album privado de fotos IA en AIdreamshoots";
+    return `Resultado de retrato cyberpunk dentro de un album privado de fotos IA en ${brand}`;
   }
   if (/AI photo subscription pricing panel with credits and private album package options/i.test(value)) {
-    return "Panel de precios y creditos para suscripciones de fotos IA y albumes privados en AIdreamshoots";
+    return `Panel de precios y creditos para suscripciones de fotos IA y albumes privados en ${brand}`;
   }
   if (/AI-enhanced portrait|image upscaling/i.test(value)) {
-    return "Vista hero de retrato mejorado con IA, usada para mostrar herramientas de escalado y mejora de imagen en AIdreamshoots";
+    return `Vista hero de retrato mejorado con IA, usada para mostrar herramientas de escalado y mejora de imagen en ${brand}`;
   }
   if (/\b(?:AI photo|Photo AI|source photo|Scrolling hero|scrolling travel portrait preview|scrolling AI photo package preview|ready-to-download|profile photo|photo package|Business portrait|Beauty portrait|Couple posing|World Cup fan|professional AI headshot|profile preview|travel-style portrait|Cinematic neon)\b/i.test(value)) {
     return aidreamcapes
@@ -2625,7 +2614,7 @@ function shouldRenderStorefrontTrustedLogoImage(site: Site, src: string): boolea
 }
 
 function mediaAssetUrl(site: Site, value: string): string {
-  const resolved = cleanStorefrontImageSrc(resolveMediaAssetUrl(site, value));
+  const resolved = siteScopedFallbackImage(site, cleanStorefrontImageSrc(resolveMediaAssetUrl(site, value)));
   const preferred = isAidreamcapesSite(site) ? preferAidreamcapesPhotoAsset(resolved) : preferDreamshootOptimizedImage(resolved);
   const publicUrl = withStorefrontPublicWatermarkCacheVersion(spanishXbyPublicAssetUrl(site, preferred));
   if (isMyDreamShootsProfileSite(site) && /\/assets\/dreamshoot\/generated\/pack-galleries\//i.test(publicUrl)) {
@@ -3094,7 +3083,7 @@ const dreamshootManualImageAltByFile: Record<string, string> = {
   "cyberpunk-solo-city-v1": "Neon city cyberpunk portrait for a futuristic AI photo package",
   "catalog-gala-card": "Formal gala portrait with editorial lighting for a night-out photo package",
   "sample-professional-headshot": "Professional studio headshot sample",
-  "story-beauty-portrait": "Stylized beauty portrait for an anime avatar package",
+  "story-beauty-portrait": "Stylized portrait with beauty lighting and polished detail",
   "sample-wedding-trip": "Couple wedding-style portrait scene for a private AI photo album",
   "beauty-portrait-gpt2": "Soft studio beauty portrait for a boudoir-inspired photo package",
   "sample-christmas-couple": "Festive couple portrait for a Christmas card",
@@ -3105,8 +3094,8 @@ const dreamshootManualImageAltByFile: Record<string, string> = {
   "beauty-portrait": "Soft studio beauty portrait for consenting adult style previews",
   "avatar-nora-gpt2": "Creator profile portrait with personal-brand styling",
   "nature-adventure-solo-v1": "Outdoor adventure portrait in a natural landscape",
-  "holiday-portrait-v1": "Profile-card portrait designed for social and creator use",
-  "upscaler-utility-v1": "Product-style utility preview for polished AI image enhancement",
+  "holiday-portrait-v1": "Seasonal portrait with polished social styling",
+  "upscaler-utility-v1": "Enhanced image preview with crisp detail",
   "holiday-card-gpt2": "Holiday card style portrait",
   "story-wedding-look": "Traditional Indian wedding-style portrait with ornate celebration styling",
   "city-date-night-v1": "Romantic city date-night couple portrait for a Valentine photo package",
@@ -3767,6 +3756,8 @@ function hrefFor(site: Site, href: string): string {
   }
   if (href === "/collections" || href.startsWith("/collections/") || href === "/ai-image-generation" || href.startsWith("/ai-image-generation/")) return routedSitePath(site, canonicalCollectionHrefForSite(site, href));
   if (href.startsWith("/cart?")) return routedSitePath(site, href);
+  const canonicalSaveTheDateHref = canonicalSaveTheDatePath(href);
+  if (canonicalSaveTheDateHref !== href) return routedSitePath(site, canonicalSaveTheDateHref);
   if (primaryMyDreamShoots && (href === "/tools" || href.startsWith("/tools/"))) {
     const toolSlug = href.slice("/tools/".length).split(/[?#]/)[0] ?? "";
     if (!toolSlug || toolSlug === "video-ai") return routedSitePath(site, "/ai-video-generation");
@@ -4900,12 +4891,26 @@ function blogArticleRelatedLinks(section: SectionInstance): Array<{ label: strin
   }).slice(0, 3);
 }
 
+function publishedBlogContentIdentity(page: Site["pages"][number], article: SectionInstance): string {
+  const pageRecord = page.publishedJson as unknown as Record<string, unknown>;
+  const contentId = [pageRecord.contentId, article.settings.contentId]
+    .find((value): value is string => typeof value === "string" && value.trim().length > 0);
+  if (contentId) return `content:${contentId.trim()}`;
+  const canonicalPath = page.publishedJson.seo?.canonicalPath?.trim();
+  return `page:${canonicalPath || page.slug}`;
+}
+
 function blogArticleCardsForSite(site: Site, currentPath = ""): BlogArticleCard[] {
+  const seenContent = new Set<string>();
   return site.pages
     .filter((page) => page.slug.startsWith("/blog/") && page.slug !== currentPath)
+    .sort((left, right) => left.slug.localeCompare(right.slug))
     .map((page, index): BlogArticleCard | undefined => {
       const article = blogArticleSection(page);
       if (!article) return undefined;
+      const contentIdentity = publishedBlogContentIdentity(page, article);
+      if (seenContent.has(contentIdentity)) return undefined;
+      seenContent.add(contentIdentity);
       const title = setting(article, "title", page.title);
       const body = setting(article, "body", "");
       const description = setting(article, "summary", page.publishedJson.seo?.description ?? truncateText(body, 160));
@@ -5142,6 +5147,17 @@ const aidreamcapesFallbackHeroImages = [
   `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/game-day-group-photos.webp?v=${aidreamcapesFanHolidayAssetVersion}`,
   `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/christmas-holiday-albums.webp?v=${aidreamcapesFanHolidayAssetVersion}`
 ];
+
+function siteScopedFallbackImage(site: Site, src: string): string {
+  if (!isAidreamcapesSite(site)) return src;
+  const normalized = cleanStorefrontImageSrc(src).split("?")[0]?.split("#")[0] ?? "";
+  const fallbackIndex = fallbackHeroImages.findIndex((image) => image.split("?")[0] === normalized);
+  if (fallbackIndex >= 0) return aidreamcapesFallbackHeroImages[fallbackIndex] ?? src;
+  if (normalized.startsWith("/assets/dreamshoot/") && !normalized.includes("/brand/")) {
+    return aidreamcapesFallbackHeroImages[0] ?? src;
+  }
+  return src;
+}
 
 const myDreamShootsCatalogCategoryHrefOverrides: DreamshootCategoryHrefOverrides = {
   all: "/ai-image-generation",
@@ -5962,7 +5978,7 @@ const packImages: Record<string, string> = {
   seasonal: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1",
   beauty: "/assets/dreamshoot/beauty-portrait-gpt2.png",
   travel: "/assets/dreamshoot/generated/20260619/nature-adventure-solo-v1.png",
-  avatar: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
+  avatar: "/assets/dreamshoot/frames/story-beauty-portrait.png",
   copy: "/assets/dreamshoot/editorial-headshot-gpt2.png"
 };
 
@@ -5998,12 +6014,12 @@ const dreamshootPackHeroImages: Record<string, string> = {
 };
 
 const dreamshootToolSceneDefaults = {
-  banner: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png",
+  banner: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-package-wall.png",
   entry: "/assets/dreamshoot/generated/20260619/cyberpunk-solo-city-v1.png",
   upload: "/assets/dreamshoot/frames/faq-intro-portrait.png",
   form: "/assets/dreamshoot/generated/20260618/hairstyle-preview-v1.png",
-  progress: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
-  album: "/assets/dreamshoot/generated/20260619/mafia-noir-single-v1.png"
+  progress: "/assets/dreamshoot/generated/20260622-homepage-unique/hero-grid-video.png",
+  album: "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png"
 } as const;
 
 function dreamshootToolBlock(
@@ -6138,7 +6154,7 @@ function dreamshootDefaultMegaToolBlocks(): SectionBlockInstance[] {
     dreamshootToolBlock("mega_tool_gala", "Gala photo maker", "Create formal night-out portraits with polished editorial lighting.", "Photo AI", packImages.gala, "/tools/gala-photo", "Style"),
     dreamshootToolBlock("mega_tool_noir", "Noir character portraits", "Generate cinematic mafia, detective, and vintage city character looks.", "Photo AI", packImages.gala, "/tools/noir-portrait", "Noir"),
     dreamshootToolBlock("mega_tool_anime", "Anime avatar builder", "Create stylized profile avatars and character-inspired social images.", "Photo AI", packImages.avatar, "/tools/anime-avatar", "Avatar"),
-    dreamshootToolBlock("mega_tool_nature", "Nature adventure photos", "Place the customer in outdoor, hiking, fitness, and creator lifestyle scenes.", "Photo AI", packImages.sports, "/tools/nature-adventure", "Outdoor"),
+    dreamshootToolBlock("mega_tool_nature", "Nature adventure photos", "Place the customer in outdoor, hiking, fitness, and creator lifestyle scenes.", "Photo AI", packImages.travel, "/tools/nature-adventure", "Outdoor"),
     dreamshootToolBlock("mega_tool_fashion", "Fashion editorial set", "Create magazine-style outfit stories and polished personal-brand images. Try-on and boudoir-inspired looks are visual previews for consenting adults, not exact fit guarantees.", "Photo AI", packImages.fashion, "/tools/fashion-editorial", "Editorial"),
     dreamshootToolBlock("mega_tool_product", "Product lifestyle photos", "Preview creator product shots, social commerce visuals, and campaign scenes.", "Photo AI", packImages.copy, "/tools/product-lifestyle", "Commerce"),
     dreamshootToolBlock("mega_edit_background", "Background changer", "Replace a plain selfie background for cleaner personal images. Do not use edits for misleading claims or fake evidence.", "AI Photo Edit", dreamshootToolSceneDefaults.entry, "/tools/background-changer"),
@@ -6367,12 +6383,12 @@ function PhotoPackageMegaPanel({ groups, site, variant = "dark" }: { groups: Pho
       </div>
       <div className={warm ? "mt-4 grid min-h-0 flex-1 gap-3 overflow-y-auto border-t border-[#eadfce] pt-5 pr-1 lg:grid-cols-3" : "mt-4 grid min-h-0 flex-1 gap-3 overflow-y-auto border-t border-[#263247] pt-5 pr-1 lg:grid-cols-3"}>
         {columns.map((column, columnIndex) => (
-          <div className="grid content-start gap-3" key={`package_column_${columnIndex}`}>
+          <div className="grid min-w-0 content-start gap-3" key={`package_column_${columnIndex}`}>
             {column.map((group, groupIndex) => {
               const accent = photoPackageGroupAccent(group, columnIndex + groupIndex);
               const GroupIcon = photoPackageIcon(group.icon, `${group.slug} ${group.label}`);
               return (
-                <details className={warm ? "group/category rounded-[14px] border border-[#eadfce] bg-white p-3 open:border-[#d8b17e] open:bg-[#fff8ed]" : "group/category rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]"} key={group.slug} open>
+                <details className={warm ? "group/category min-w-0 rounded-[14px] border border-[#eadfce] bg-white p-3 open:border-[#d8b17e] open:bg-[#fff8ed]" : "group/category min-w-0 rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]"} key={group.slug} open>
                   <summary className={warm ? "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold marker:hidden group-open/category:border-b group-open/category:border-[#eadfce] group-open/category:pb-2" : "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold marker:hidden group-open/category:border-b group-open/category:border-white/10 group-open/category:pb-2"} style={{ color: warm ? aidreamcapesCopper : accent }}>
                     <span className={warm ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f6eadc]" : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06]"} style={{ color: warm ? aidreamcapesCopper : accent }}>
                       <GroupIcon className="h-4 w-4" strokeWidth={1.9} />
@@ -6386,12 +6402,12 @@ function PhotoPackageMegaPanel({ groups, site, variant = "dark" }: { groups: Pho
                       const ItemIcon = photoPackageIcon(item.icon, `${item.slug} ${item.label} ${group.slug}`);
                       return (
                         <Link
-                          className={warm ? "group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"}
+                          className={warm ? "group/package flex min-w-0 min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/package flex min-w-0 min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"}
                           href={hrefFor(site, item.href)}
                           key={item.slug}
                         >
                           <ItemIcon className={warm ? "mt-0.5 h-4.5 w-4.5 shrink-0 text-[#b86e36] transition group-hover/package:text-[#8f5327]" : "mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/package:text-white"} strokeWidth={1.8} />
-                          <span className="text-[0.94rem] font-semibold leading-6">{item.label}</span>
+                          <span className="min-w-0 flex-1 break-words text-[0.94rem] font-semibold leading-6">{item.label}</span>
                           <ChevronRight className={warm ? "ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-[#b99675] transition group-hover/package:translate-x-0.5 group-hover/package:text-[#8f5327]" : "ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56"} strokeWidth={2} />
                         </Link>
                       );
@@ -8696,9 +8712,10 @@ function SectionView({
     }
 
     if (["editorial_quality", "editorial_boundaries", "editorial_evidence"].includes(section.type)) {
+      const guidanceImage = imageFor(section);
       return (
         <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={sectionStyle}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}<div className="mt-10 grid gap-4 md:grid-cols-2">{blocks.map((block, index) => { const rawItems = block.settings?.items; const items: string[] | null = Array.isArray(rawItems) ? rawItems.map((item) => String(item)) : null; return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(block, index, "editorial_guidance")}><h3 className={`${headingClass} text-xl`}>{blockValue(block, "title")}</h3>{items ? <ul className="mt-3 space-y-2 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{items.map((item) => <li key={item}>{item}</li>)}</ul> : <p className="mt-3 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p>}</article>; })}</div></div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}<div className="mt-10 grid gap-4 md:grid-cols-2">{blocks.map((block, index) => { const rawItems = block.settings?.items; const items: string[] | null = Array.isArray(rawItems) ? rawItems.map((item) => String(item)) : null; return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(block, index, "editorial_guidance")}><h3 className={`${headingClass} text-xl`}>{blockValue(block, "title")}</h3>{items ? <ul className="mt-3 space-y-2 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{items.map((item) => <li key={item}>{item}</li>)}</ul> : <p className="mt-3 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p>}</article>; })}</div>{guidanceImage ? <div className="mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px]">{guidanceImage}</div> : null}</div>
         </section>
       );
     }
@@ -8711,9 +8728,10 @@ function SectionView({
       );
     }
 
+    const ctaImage = imageFor(section);
     return (
       <section className="relative overflow-hidden bg-[#7f343d] px-5 py-16 text-[#fffaf6] sm:px-8 lg:py-24" id={anchor} style={{ backgroundColor: editorialTheme.ctaBg, color: editorialTheme.heroText }}>
-        <div className="relative z-10 mx-auto max-w-[var(--site-content-width)] text-center"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-4xl sm:text-5xl`} style={{ color: editorialTheme.heroText }}>{title}</h2>{intro ? <p className="mx-auto mt-6 max-w-[70ch] text-base leading-8 text-[#f7ded3]" style={{ color: editorialTheme.heroMuted }}>{intro}</p> : null}<div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">{setting(section, "primaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#f0c3a4] px-6 text-sm font-semibold text-[#32171c]" href={hrefFor(site, setting(section, "primaryHref"))} style={{ backgroundColor: editorialTheme.accent, color: editorialTheme.accentText }}>{setting(section, "primaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}{setting(section, "secondaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#f0c3a4] px-6 text-sm font-semibold text-white" href={hrefFor(site, setting(section, "secondaryHref"))} style={{ borderColor: editorialTheme.ctaBorder, color: editorialTheme.heroText }}>{setting(section, "secondaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}</div><div className="mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#5c2930]" style={{ backgroundColor: editorialTheme.heroBg }}>{imageFor(section)}</div></div>
+        <div className="relative z-10 mx-auto max-w-[var(--site-content-width)] text-center"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-4xl sm:text-5xl`} style={{ color: editorialTheme.heroText }}>{title}</h2>{intro ? <p className="mx-auto mt-6 max-w-[70ch] text-base leading-8 text-[#f7ded3]" style={{ color: editorialTheme.heroMuted }}>{intro}</p> : null}<div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">{setting(section, "primaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#f0c3a4] px-6 text-sm font-semibold text-[#32171c]" href={hrefFor(site, setting(section, "primaryHref"))} style={{ backgroundColor: editorialTheme.accent, color: editorialTheme.accentText }}>{setting(section, "primaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}{setting(section, "secondaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#f0c3a4] px-6 text-sm font-semibold text-white" href={hrefFor(site, setting(section, "secondaryHref"))} style={{ borderColor: editorialTheme.ctaBorder, color: editorialTheme.heroText }}>{setting(section, "secondaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}</div>{ctaImage ? <div className="mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#5c2930]" style={{ backgroundColor: editorialTheme.heroBg }}>{ctaImage}</div> : null}</div>
       </section>
     );
   }
@@ -8735,7 +8753,7 @@ function SectionView({
       setting(section, "secondaryImageUrl", fallbackHeroImages[1]),
       setting(section, "tertiaryImageUrl", fallbackHeroImages[2])
     ].filter(Boolean).map((image) => mediaAssetUrl(site, image));
-    const legacyImages = listSetting(section, "heroImages", fallbackHeroImages);
+    const legacyImages = listSetting(section, "heroImages", fallbackHeroImages).map((image) => mediaAssetUrl(site, image));
     const displayImages = images.length ? images : legacyImages;
     const ctas = sectionBlocks(section, "cta");
     const stats = sectionBlocks(section, "stat");
@@ -12491,32 +12509,13 @@ function SectionView({
   }
 
   if (section.type === "dreamshoot_save_the_date_directory") {
-    const navigation = site.themeSettings?.publishedJson?.saveTheDateNavigation;
     const publishedSaveTheDateShowcases = homepageShowcases
       .filter((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible)
       .sort((left, right) => left.sortOrder - right.sortOrder);
-    const projectedGroups: SaveTheDateNavigationGroup[] = publishedSaveTheDateShowcases.length
-      ? [{
-          label: publishedSaveTheDateShowcases[0]?.category?.trim() || "Save the Date",
-          slug: "published-save-the-date",
-          sortOrder: 0,
-          items: publishedSaveTheDateShowcases.map((item) => ({
-            label: item.title,
-            slug: item.canonicalPath.split("/").filter(Boolean).at(-1) || item.id,
-            href: item.canonicalPath,
-            description: item.subtitle,
-            imageUrl: item.imageUrl,
-            imageAlt: item.imageAlt,
-            status: "published" as const,
-            sortOrder: item.sortOrder
-          }))
-        }]
-      : [];
-    const sourceGroups = navigation?.groups?.length ? navigation.groups : projectedGroups;
-    const groups = sourceGroups.map((group) => ({
+    const groups = resolvePublishedSaveTheDateGroups(publishedSaveTheDateShowcases).map((group) => ({
       ...group,
       items: group.items
-        .filter((item) => !(isPrimaryMydreamshootsCapabilitySite(site) && isMydreamshootsRemovedLegacyRoute(item.href)))
+        .filter((item) => !(isPrimaryMydreamshootsCapabilitySite(site) && isMydreamshootsRemovedLegacyRoute(canonicalSaveTheDatePath(item.href))))
         .map((item) => ({ ...item, href: hrefFor(site, item.href) }))
     }));
     return <SaveTheDateDirectory createHref={hrefFor(site, "/app/create")} groups={groups} />;
@@ -12917,7 +12916,7 @@ function SectionView({
           <div className="relative mx-auto max-w-[var(--site-content-width)]">
             {trustedProof}
             {renderPublishedSection(videoItems, videoTitle, mydreamProfileSite ? mydreamshootsHomepageCopy.videoIntro : setting(section, "videoIntro", ""), videoAllHref, videoAllLabel, "video")}
-            {renderPublishedSection(saveTheDateItems, mydreamProfileSite ? mydreamshootsHomepageCopy.saveTheDateTitle : setting(section, "saveTheDateTitle", "AI Save the Date Videos"), mydreamProfileSite ? mydreamshootsHomepageCopy.saveTheDateIntro : setting(section, "saveTheDateIntro", ""), setting(section, "saveTheDateAllHref", "/holidays-events/save-the-date"), setting(section, "saveTheDateAllLabel", "VIEW ALL SAVE THE DATE"), "save_the_date")}
+            {renderPublishedSection(saveTheDateItems, mydreamProfileSite ? mydreamshootsHomepageCopy.saveTheDateTitle : setting(section, "saveTheDateTitle", "AI Save the Date Videos"), mydreamProfileSite ? mydreamshootsHomepageCopy.saveTheDateIntro : setting(section, "saveTheDateIntro", ""), canonicalSaveTheDatePath(setting(section, "saveTheDateAllHref", "/ai-save-the-date/save-the-date")), setting(section, "saveTheDateAllLabel", "VIEW ALL SAVE THE DATE"), "save_the_date")}
             {renderPublishedSection(photoItems, imageTitle, setting(section, "photoIntro", ""), imageAllHref, imageAllLabel, "photo")}
             {embeddedPricing}
           </div>

@@ -40,9 +40,9 @@ const legacyRedirectChecks = [
   { host: "www.aidreamcapes.com", path: "/blog/holiday-memory-albums-guide", target: "/blog/christmas-group-album-photo-package-guide" }
 ];
 const legacyGoneChecks = [
-  { host: "www.mydreamshoots.com", path: "/holidays-events/christmas" },
-  { host: "www.mydreamshoots.com", path: "/holidays-events/new-year" },
-  { host: "www.mydreamshoots.com", path: "/holidays-events/thanksgiving" },
+  { host: "www.mydreamshoots.com", path: "/ai-save-the-date/christmas" },
+  { host: "www.mydreamshoots.com", path: "/ai-save-the-date/new-year" },
+  { host: "www.mydreamshoots.com", path: "/ai-save-the-date/thanksgiving" },
   { host: "www.mydreamshoots.com", path: "/tools" },
   { host: "www.mydreamshoots.com", path: "/collections/wedding-portraits" },
   { host: "www.mydreamshoots.com", path: "/collections/profile-cards" },

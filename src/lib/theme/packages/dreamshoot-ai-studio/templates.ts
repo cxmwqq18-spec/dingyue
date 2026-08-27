@@ -502,7 +502,7 @@ const homeSections: ThemePageJson["sections"] = {
       saveTheDateTitle: mydreamshootsHomepageCopy.saveTheDateTitle,
       saveTheDateIntro: mydreamshootsHomepageCopy.saveTheDateIntro,
       saveTheDateAllLabel: "VIEW ALL SAVE THE DATE",
-      saveTheDateAllHref: "/holidays-events/save-the-date",
+      saveTheDateAllHref: "/ai-save-the-date/save-the-date",
       videoItemLimit: 8,
       primaryCta: "Start with your photos",
       primaryHref: "/app/create"
@@ -604,14 +604,14 @@ const homeSections: ThemePageJson["sections"] = {
         label: "Photo packages",
         title: "Pick a finished outcome",
         description: "Start from a guided theme like headshot, soccer, cyberpunk, gala photo, travel, hairstyle generator, portrait photo, or photo-tool collections with credits shown before generation.",
-        imageUrl: assets.worldCupFan,
+        imageUrl: assets.heroPackageWall,
         href: "/ai-image-generation"
       }),
       block("tab_video", "feature_tab", {
         label: "AI video",
         title: "Turn package results into motion",
         description: "Convert favorite generated photos into short video ideas without leaving the same customer account.",
-        imageUrl: assets.travelScene,
+        imageUrl: assets.heroGridVideo,
         href: "/app/create#step-video"
       }),
       block("tab_tryon", "feature_tab", {
@@ -1230,14 +1230,14 @@ function mydreamshootsReviewSection(): SectionInstance {
       summaryMeta: "Positive reviews"
     },
     [
-      block("review_ava", "testimonial", { quote: "The package cards made it easy to pick a direction before I spent credits. My sports fan set looked polished and stayed organized in one private gallery.", name: "Ava M.", role: "Fan photos", location: "Sports fan set", rating: "5", avatarUrl: assets.reviewAvaAvatar, resultImageUrl: assets.galleryWorldCupFanThree }),
-      block("review_lucas", "testimonial", { quote: "I needed profile images for a launch week. The VIP-style portraits gave me several usable looks without arranging a shoot or chasing edits.", name: "Lucas R.", role: "VIP-style set", location: "Profile images", rating: "5", avatarUrl: assets.reviewLucasAvatar, resultImageUrl: assets.galleryGalaTwo }),
-      block("review_mia", "testimonial", { quote: "The Christmas couple pack saved a lot of time. We compared the theme first, checked credits, then downloaded card-ready images from the gallery.", name: "Mia C.", role: "Christmas album", location: "Holiday cards", rating: "5", avatarUrl: assets.reviewMiaAvatar, resultImageUrl: assets.galleryChristmasCoupleTwo }),
-      block("review_noah", "testimonial", { quote: "My favorite part is the workflow. Upload, choose a package, approve the cost, and the finished set is easy to review with the rest of my account history.", name: "Noah P.", role: "Credit planning", location: "Private gallery", rating: "5", avatarUrl: assets.reviewNoahAvatar, resultImageUrl: assets.flowPrivateAlbumWorkspace }),
-      block("review_chloe", "testimonial", { quote: "The creator examples helped me compare a few looks before I committed to a full set. Everything stayed clear and private while I reviewed the options.", name: "Chloe S.", role: "Creator workflow", location: "Creator scenes", rating: "5", avatarUrl: assets.womanPortrait, resultImageUrl: assets.galleryCreatorOne }),
-      block("review_eli", "testimonial", { quote: "I could see the credit cost before generating and keep the approved headshots, cards, and motion ideas in one workspace.", name: "Eli T.", role: "Clear credits", location: "Headshots and cards", rating: "5", avatarUrl: assets.selfie, resultImageUrl: assets.galleryCreatorTwo }),
-      block("review_jordan", "testimonial", { quote: "The themed previews made it easier to plan a consistent portrait set for a small team without booking a studio appointment.", name: "Jordan K.", role: "Team portraits", location: "Profile refresh", rating: "5", avatarUrl: assets.reviewAvaAvatar, resultImageUrl: assets.galleryGalaOne }),
-      block("review_riley", "testimonial", { quote: "The short motion references were useful for planning the next post. I reviewed the stills and the clip direction before spending credits.", name: "Riley W.", role: "Motion previews", location: "Social content", rating: "5", avatarUrl: assets.reviewLucasAvatar, resultImageUrl: assets.galleryCreatorTwo })
+      block("review_ava", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_ava, name: "Ava M.", role: "Fan photos", location: "Sports fan set", rating: "5", avatarUrl: assets.reviewAvaAvatar, resultImageUrl: assets.galleryWorldCupFanThree }),
+      block("review_lucas", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_lucas, name: "Lucas R.", role: "VIP-style set", location: "Profile images", rating: "5", avatarUrl: assets.reviewLucasAvatar, resultImageUrl: assets.galleryGalaTwo }),
+      block("review_mia", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_mia, name: "Mia C.", role: "Christmas album", location: "Holiday cards", rating: "5", avatarUrl: assets.reviewMiaAvatar, resultImageUrl: assets.galleryChristmasCoupleTwo }),
+      block("review_noah", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_noah, name: "Noah P.", role: "Credit planning", location: "Private gallery", rating: "5", avatarUrl: assets.reviewNoahAvatar, resultImageUrl: assets.flowPrivateAlbumWorkspace }),
+      block("review_chloe", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_chloe, name: "Chloe S.", role: "Creator workflow", location: "Creator scenes", rating: "5", avatarUrl: assets.womanPortrait, resultImageUrl: assets.galleryCreatorOne }),
+      block("review_eli", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_eli, name: "Eli T.", role: "Clear credits", location: "Headshots and cards", rating: "5", avatarUrl: assets.selfie, resultImageUrl: assets.galleryCreatorTwo }),
+      block("review_jordan", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_jordan, name: "Jordan K.", role: "Team portraits", location: "Profile refresh", rating: "5", avatarUrl: assets.reviewAvaAvatar, resultImageUrl: assets.galleryGalaOne }),
+      block("review_riley", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_riley, name: "Riley W.", role: "Motion previews", location: "Social content", rating: "5", avatarUrl: assets.reviewLucasAvatar, resultImageUrl: assets.galleryCreatorTwo })
     ]
   );
 }
@@ -2915,7 +2915,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
     navigation: {
       headerLinks: [
         { label: "AI Video Generation", href: "/ai-video-generation" },
-        { label: "AI Save the Date", href: "/holidays-events/save-the-date" },
+        { label: "AI Save the Date", href: "/ai-save-the-date/save-the-date" },
         { label: "AI Image Generation", href: "/ai-image-generation" },
         { label: "How it works", href: "/workflow" },
         { label: "Blog", href: "/blog" },
@@ -2925,7 +2925,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
       footerLinks: [
         { label: "AI Image Generation", href: "/ai-image-generation", group: "product" },
         { label: "AI Video Generation", href: "/ai-video-generation", group: "product" },
-        { label: "AI Save the Date", href: "/holidays-events/save-the-date", group: "product" },
+        { label: "AI Save the Date", href: "/ai-save-the-date/save-the-date", group: "product" },
         { label: "AI Photo Packages", href: "/best-packages", group: "product" },
         { label: "Pricing", href: "/pricing", group: "product" },
         { label: "Privacy Policy", href: "/privacy", group: "support" },
@@ -2956,7 +2956,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         },
         blocks: [
           { id: "dreamshoot_header_tools", type: "menu_link", settings: { label: "AI Video Generation", href: "/ai-video-generation" } },
-          { id: "dreamshoot_header_save_the_date", type: "menu_link", settings: { label: "AI Save the Date", href: "/holidays-events/save-the-date" } },
+          { id: "dreamshoot_header_save_the_date", type: "menu_link", settings: { label: "AI Save the Date", href: "/ai-save-the-date/save-the-date" } },
           { id: "dreamshoot_header_packs", type: "menu_link", settings: { label: "AI Image Generation", href: "/ai-image-generation" } },
           { id: "dreamshoot_header_workflow", type: "menu_link", settings: { label: "How it works", href: "/workflow" } },
           { id: "dreamshoot_header_blog", type: "menu_link", settings: { label: "Blog", href: "/blog" } },
@@ -2997,7 +2997,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         blocks: [
           { id: "dreamshoot_footer_ai_image_generation", type: "menu_link", settings: { label: "AI Image Generation", href: "/ai-image-generation", group: "product" } },
           { id: "dreamshoot_footer_ai_video_generation", type: "menu_link", settings: { label: "AI Video Generation", href: "/ai-video-generation", group: "product" } },
-          { id: "dreamshoot_footer_save_the_date", type: "menu_link", settings: { label: "AI Save the Date", href: "/holidays-events/save-the-date", group: "product" } },
+          { id: "dreamshoot_footer_save_the_date", type: "menu_link", settings: { label: "AI Save the Date", href: "/ai-save-the-date/save-the-date", group: "product" } },
           { id: "dreamshoot_footer_best_packages", type: "menu_link", settings: { label: "AI Photo Packages", href: "/best-packages", group: "product" } },
           { id: "dreamshoot_footer_pricing", type: "menu_link", settings: { label: "Pricing", href: "/pricing", group: "product" } },
           { id: "dreamshoot_footer_help", type: "menu_link", settings: { label: "FAQ", href: "/faq", group: "company" } },

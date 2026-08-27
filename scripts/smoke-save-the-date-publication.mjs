@@ -64,7 +64,7 @@ assert.equal(entity.metadata.canonicalPath, PAGE_PATH);
 assert.equal(`https://${site.primaryDomain}${entity.metadata.canonicalPath}`, pageSeo.canonical);
 assert.equal(state.mediaAssets.filter((asset) => asset.siteId === SITE_ID && asset.storageKey.startsWith("/assets/dreamshoot/save-the-date/valentines-day/")).length, 11);
 
-const coverPaths = ["/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date", PAGE_PATH]
+const coverPaths = ["/ai-save-the-date/engagement", "/ai-save-the-date/proposal", "/ai-save-the-date/save-the-date", PAGE_PATH]
   .map((slug) => state.sites.find((candidate) => candidate.id === SITE_ID)?.pages.find((candidate) => candidate.slug === slug)?.publishedJson?.mediaManifest?.[0]?.src)
   .filter(Boolean);
 assert.equal(new Set(coverPaths).size, coverPaths.length, "Save the Date directory covers must be unique across published themes");

@@ -11,6 +11,16 @@ const renderer = read("src/components/theme-renderer.tsx");
 const templates = read("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 const packageCatalog = read("src/components/storefront/dreamshoot-package-catalog-client.tsx");
 const homepageCopy = JSON.parse(read("src/lib/mydreamshoots-homepage-copy.json"));
+const expectedReviewKeys = [
+  "review_ava",
+  "review_lucas",
+  "review_mia",
+  "review_noah",
+  "review_chloe",
+  "review_eli",
+  "review_jordan",
+  "review_riley"
+];
 const trustedProofRenderer = renderer.match(/const trustedProof = showTrustedLogoIntro[\s\S]*?\n\s+const renderPublishedSection/)?.[0] ?? "";
 
 assert.match(types, /publishedHomepageShowcases:\s*PublishedHomepageShowcaseItem\[\]/, "publication snapshot must expose homepage showcases");
@@ -28,6 +38,14 @@ assert.doesNotMatch(packageCatalog, /<h2[^>]*>\{card\.title\}<\/h2>/, "package c
 assert.match(packageCatalog, /Want to bring your photos to life\? Explore AI Video Generation/, "photo package catalog must link to AI Video Generation");
 assert.equal(homepageCopy.reviewTitle, "What Our Customers Say", "homepage copy contract must use the approved review heading");
 assert.equal(homepageCopy.packageVideoLinkHref, "/ai-video-generation", "homepage copy contract must use the AI Video Generation route");
+assert.deepEqual(Object.keys(homepageCopy.reviewQuotes ?? {}), expectedReviewKeys, "homepage review copy must contain exactly eight ordered quote keys");
+for (const key of expectedReviewKeys) {
+  assert.equal(typeof homepageCopy.reviewQuotes[key], "string", `${key} must have a string quote`);
+  assert.ok(homepageCopy.reviewQuotes[key].trim(), `${key} quote must not be empty`);
+  assert.match(templates, new RegExp(`reviewQuotes\\.${key}\\b`), `template must read the approved ${key} quote`);
+  assert.match(read("scripts/sync-dreamshoot-homepage-layout.mjs"), new RegExp(`reviewQuotes\\.${key}\\b`), `layout sync must read the approved ${key} quote`);
+  assert.match(read("scripts/sync-mydreamshoots-public-content-local.mjs"), new RegExp(`reviewQuotes\\.${key}\\b`), `content sync must read the approved ${key} quote`);
+}
 assert.match(renderer, /projectedVideosByPath = new Map/, "homepage video showcase must use active-publication projection rows");
 assert.match(renderer, /MYDREAMSHOOTS_HOMEPAGE_VIDEO_ORDER/, "homepage video showcase must use the approved eight-item order");
 assert.match(renderer, /slice\(0, Math\.max\(1, Math\.min\(6, numberSetting\(section, "saveTheDateItemLimit", 6\)\)\)\)/, "MyDreamShoots Save the Date showcase must render up to six published cards");

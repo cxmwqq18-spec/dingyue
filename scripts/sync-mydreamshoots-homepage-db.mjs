@@ -194,7 +194,7 @@ function mergeFooter(settings) {
   next.navigation ??= {};
   next.navigation.footerLinks = [
     ["AI Video Generation", "/ai-video-generation", "product"],
-    ["AI Save the Date", "/holidays-events/save-the-date", "product"],
+    ["AI Save the Date", "/ai-save-the-date/save-the-date", "product"],
     ["AI Image Generation", "/ai-image-generation", "product"],
     ["AI Photo Packages", "/best-packages", "product"],
     ["Pricing", "/pricing", "product"],
@@ -229,7 +229,7 @@ function mergeFooter(settings) {
   };
   next.globalSections.footer.blocks = [
     ["AI Video Generation", "/ai-video-generation", "product"],
-    ["AI Save the Date", "/holidays-events/save-the-date", "product"],
+    ["AI Save the Date", "/ai-save-the-date/save-the-date", "product"],
     ["AI Image Generation", "/ai-image-generation", "product"],
     ["AI Photo Packages", "/best-packages", "product"],
     ["Pricing", "/pricing", "product"],

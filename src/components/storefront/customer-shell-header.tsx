@@ -11,7 +11,9 @@ import { isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationParentCa
 import { getPhotoPackageMegaGroups } from "@/lib/photo-package-taxonomy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isMydreamshootsRemovedLegacyRoute } from "@/lib/mydreamshoots-editorial-routes";
+import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
+import type { PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
 import type { CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, SaveTheDateNavigationGroup, Site, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
@@ -157,7 +159,8 @@ export function CustomerShellHeader({
   toolMenuItems = [],
   videoThemeCategories = [],
   videoThemes = [],
-  publishedVideoGenerationTopics
+  publishedVideoGenerationTopics,
+  publishedSaveTheDateGroups
 }: {
   site: CustomerShellHeaderSite;
   customer: PublicCustomer;
@@ -168,6 +171,7 @@ export function CustomerShellHeader({
   videoThemeCategories?: VideoThemeCategory[];
   videoThemes?: VideoTheme[];
   publishedVideoGenerationTopics?: PublishedVideoNavigationProjection[];
+  publishedSaveTheDateGroups?: PublishedSaveTheDateGroup[];
 }) {
   const pathname = usePathname();
   const pathModeBasePath = pathname.match(/^\/site\/[^/]+/)?.[0];
@@ -192,14 +196,16 @@ export function CustomerShellHeader({
   const dynamicPackageGroups = dynamicPackageGroupsFromPacks(creativePacks, creativePackCategories);
   const fallbackPackageGroups = isAidreamcapes ? aidreamcapesPackageGroups : packageGroups;
   const hasCatalogData = creativePacks.length > 0 || creativePackCategories.length > 0;
-  const activePackageGroups = hasCatalogData ? dynamicPackageGroups : fallbackPackageGroups;
+  const activePackageGroups = isMyDreamShoots && !isSpanishXby ? dynamicPackageGroups : hasCatalogData ? dynamicPackageGroups : fallbackPackageGroups;
   const saveTheDateConfig = site.themeSettings?.publishedJson?.saveTheDateNavigation;
-  const saveTheDateGroups: SaveTheDateNavigationGroup[] = saveTheDateConfig?.groups ?? [];
+  const saveTheDateGroups: SaveTheDateNavigationGroup[] = isMyDreamShoots
+    ? (publishedSaveTheDateGroups ?? [])
+    : (saveTheDateConfig?.groups ?? []);
   const saveTheDateMenuLabel = saveTheDateConfig?.menuLabel?.trim() ?? "";
   const routedSaveTheDateGroups = saveTheDateGroups.map((group) => ({
     ...group,
     items: group.items
-      .filter((item) => !(isMyDreamShoots && isMydreamshootsRemovedLegacyRoute(item.href)))
+      .filter((item) => !(isMyDreamShoots && isMydreamshootsRemovedLegacyRoute(canonicalSaveTheDatePath(item.href))))
       .map((item) => ({ ...item, href: `${basePath}${item.href}` }))
   }));
   const hasSaveTheDate = saveTheDateGroups.some((group) => group.items.some((item) => item.status === "published"));

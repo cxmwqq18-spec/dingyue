@@ -1,15 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, ChevronRight } from "lucide-react";
-import type { SaveTheDateNavigationGroup } from "@/lib/types";
+import type { PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
 
-const fallbackCover = "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png";
-
-export function SaveTheDateDirectory({ groups, createHref = "/app/create" }: { groups: SaveTheDateNavigationGroup[]; createHref?: string }) {
+export function SaveTheDateDirectory({ groups, createHref = "/app/create" }: { groups: PublishedSaveTheDateGroup[]; createHref?: string }) {
   const visibleGroups = groups
     .map((group) => ({
       ...group,
       items: group.items
-        .filter((item) => item.status === "published")
         .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label))
     }))
     .filter((group) => group.items.length)
@@ -44,8 +41,8 @@ export function SaveTheDateDirectory({ groups, createHref = "/app/create" }: { g
               </div>
               <div className="mt-6 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {group.items.map((item, index) => {
-                  const imageUrl = item.imageUrl?.trim() || fallbackCover;
-                  const imageAlt = item.imageAlt?.trim() || `${item.label} Save the Date theme preview`;
+                  const imageUrl = item.imageUrl.trim();
+                  const imageAlt = item.imageAlt.trim();
                   return (
                     <Link
                       className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-[8px] border border-white/12 bg-[#090B12] shadow-[0_28px_84px_-66px_rgba(0,0,0,0.92)] transition duration-300 hover:-translate-y-1 hover:border-[#8defff]/55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8defff]/80"
@@ -60,7 +57,7 @@ export function SaveTheDateDirectory({ groups, createHref = "/app/create" }: { g
                       </div>
                       <div className="flex flex-1 flex-col border-t border-white/10 p-5">
                         <h3 className="text-xl font-semibold leading-tight text-white">{item.label}</h3>
-                        <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/64">{item.description || "Build a polished Save the Date story from approved couple photos and a clear announcement direction."}</p>
+                        <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/64">{item.description}</p>
                         <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-semibold text-[#ddd7ff] transition group-hover:text-white">Open theme <ChevronRight className="h-4 w-4 shrink-0 transition group-hover:translate-x-0.5" strokeWidth={1.9} /></span>
                       </div>
                     </Link>

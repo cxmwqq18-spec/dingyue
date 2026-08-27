@@ -6,7 +6,7 @@ const base = new URL(baseUrl);
 const storefrontRoutes = [
   {
     host: "www.mydreamshoots.com",
-    paths: ["/", "/collections", "/tools", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/workflow", "/faq", "/blog", "/about-us", "/contact-us", "/ai-video-generation", "/ai-video-generation/motion-generator", "/holidays-events/save-the-date"]
+    paths: ["/", "/collections", "/tools", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/workflow", "/faq", "/blog", "/about-us", "/contact-us", "/ai-video-generation", "/ai-video-generation/motion-generator", "/ai-save-the-date/save-the-date"]
   },
   {
     host: "www.aidreamcapes.com",

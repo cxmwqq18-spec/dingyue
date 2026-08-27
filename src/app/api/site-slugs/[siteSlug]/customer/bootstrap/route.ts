@@ -65,7 +65,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           toolMenuItems: [],
           videoThemeCategories: [],
           videoThemes: [],
-          publishedVideoGenerationTopics: []
+          publishedVideoGenerationTopics: [],
+          publishedSaveTheDateGroups: []
         },
         { headers: { "Cache-Control": PUBLIC_EMPTY_SHELL_CACHE_CONTROL, Vary: "Cookie" } }
       );
@@ -94,7 +95,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           toolMenuItems: [],
           videoThemeCategories: [],
           videoThemes: [],
-          publishedVideoGenerationTopics: []
+          publishedVideoGenerationTopics: [],
+          publishedSaveTheDateGroups: []
         },
         { headers: { "Cache-Control": "private, max-age=8" } }
       );
@@ -125,7 +127,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         toolMenuItems: bootstrap?.toolMenuItems ?? [],
         videoThemeCategories: bootstrap?.videoThemeCategories ?? [],
         videoThemes: bootstrap?.videoThemes ?? [],
-        publishedVideoGenerationTopics: bootstrap?.publishedVideoGenerationTopics ?? []
+        publishedVideoGenerationTopics: bootstrap?.publishedVideoGenerationTopics ?? [],
+        publishedSaveTheDateGroups: bootstrap?.publishedSaveTheDateGroups ?? []
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
     ), request, siteId, current);
@@ -153,6 +156,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         videoThemeCategories: bootstrap?.videoThemeCategories ?? [],
         videoThemes: bootstrap?.videoThemes ?? [],
         publishedVideoGenerationTopics: bootstrap?.publishedVideoGenerationTopics ?? [],
+        publishedSaveTheDateGroups: bootstrap?.publishedSaveTheDateGroups ?? [],
         accountRuntime
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
@@ -197,6 +201,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       videoThemeCategories: bootstrap.videoThemeCategories,
       videoThemes: bootstrap.videoThemes,
       publishedVideoGenerationTopics: bootstrap.publishedVideoGenerationTopics,
+      publishedSaveTheDateGroups: bootstrap.publishedSaveTheDateGroups,
       ...(workspaceRuntime ? { workspaceRuntime: {
         ...workspaceRuntime,
         customer: current.customer,

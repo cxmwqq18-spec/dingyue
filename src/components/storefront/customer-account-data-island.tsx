@@ -29,6 +29,7 @@ import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { dispatchCustomerBootstrapInvalidation } from "@/components/storefront/customer-bootstrap-events";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import type { PublicCustomer, ThemeRuntimeAsset, ThemeRuntimeData, ThemeRuntimePagination } from "@/lib/types";
+import { storefrontAccessibleMediaAlt, storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
 import type { LucideIcon } from "lucide-react";
 
 export type AccountSection =
@@ -481,6 +482,15 @@ function isImageMime(mimeType?: string) {
   return !mimeType || mimeType.startsWith("image/");
 }
 
+function accountAssetAlt(asset: Pick<ThemeRuntimeAsset, "altText" | "label" | "mimeType" | "previewUrl">, siteSlug: string): string {
+  const locale = /(?:aidreamshoots|aidreamcapes)(?:-eu)?$/i.test(siteSlug) ? "es" : "en";
+  const label = asset.label.replace(/^mydreamshoots\s+/i, "").trim();
+  const fallback = locale === "es"
+    ? label ? `${label} en un album privado del cliente` : asset.mimeType.startsWith("video/") ? "Video entregado en un album privado del cliente" : "Imagen entregada en un album privado del cliente"
+    : label ? `${label} in a private customer album` : asset.mimeType.startsWith("video/") ? "Video delivered to a private customer album" : "Image delivered to a private customer album";
+  return storefrontAccessibleMediaAlt({ fallback, imageUrl: asset.previewUrl, locale, value: storefrontMeaningfulAlt(asset.altText) || undefined });
+}
+
 function MediaThumb({
   alt,
   className,
@@ -710,7 +720,7 @@ function ProfileCard({
           <div className="mt-4 grid grid-cols-4 gap-2">
             {profileAssets.length ? profileAssets.map((asset) => (
               <button className="aspect-square overflow-hidden rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] transition hover:border-[var(--account-accent)]" key={asset.id} onClick={() => void saveProfile(asset.id)} type="button">
-                <MediaThumb alt={asset.altText || asset.label} className="h-full w-full" mimeType={asset.mimeType} previewStatus={asset.previewStatus} previewUrl={asset.previewUrl} />
+                <MediaThumb alt={accountAssetAlt(asset, siteSlug)} className="h-full w-full" mimeType={asset.mimeType} previewStatus={asset.previewStatus} previewUrl={asset.previewUrl} />
               </button>
             )) : (
               <p className="col-span-4 text-sm leading-6 text-[var(--account-muted)]">Uploaded profile avatars will appear here for quick reuse.</p>
@@ -922,7 +932,7 @@ function DownloadsHistoryCard({ runtime }: { runtime: ThemeRuntimeData }) {
   );
 }
 
-function ReadyAssetsCard({ runtime }: { runtime: ThemeRuntimeData }) {
+function ReadyAssetsCard({ runtime, siteSlug }: { runtime: ThemeRuntimeData; siteSlug: string }) {
   const downloadableAssets = runtime.assets.filter((asset) => asset.role === "output");
   return (
     <div className="grid gap-5">
@@ -932,7 +942,7 @@ function ReadyAssetsCard({ runtime }: { runtime: ThemeRuntimeData }) {
           const fileAvailable = asset.previewStatus === "ready" && Boolean(asset.downloadUrl);
           const content = (
             <>
-              <MediaThumb alt={asset.altText || asset.label} className="aspect-[4/3] w-full" mimeType={asset.mimeType} previewStatus={asset.previewStatus} previewUrl={asset.previewUrl} />
+              <MediaThumb alt={accountAssetAlt(asset, siteSlug)} className="aspect-[4/3] w-full" mimeType={asset.mimeType} previewStatus={asset.previewStatus} previewUrl={asset.previewUrl} />
               <div className="flex items-center justify-between gap-2 p-3">
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold text-[var(--account-strong)]">{asset.label}</p>
@@ -1199,7 +1209,7 @@ export function CustomerAccountDataIsland({
             section="downloads"
             siteId={siteId}
           >
-            {(runtime) => <ReadyAssetsCard runtime={runtime} />}
+            {(runtime) => <ReadyAssetsCard runtime={runtime} siteSlug={siteSlug} />}
           </AccountCard>
         </>
       ) : null}

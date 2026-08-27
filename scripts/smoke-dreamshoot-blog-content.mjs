@@ -33,6 +33,12 @@ function sectionSetting(section, key) {
   return "";
 }
 
+function blogContentIdentity(page) {
+  const articleSettings = page.publishedJson?.sections?.blog_detail_1?.settings ?? {};
+  const value = page.publishedJson?.contentId ?? articleSettings.contentId;
+  return typeof value === "string" && value.trim() ? `content:${value.trim()}` : `page:${page.id}`;
+}
+
 function pageText(page) {
   return JSON.stringify({
     slug: page.slug,
@@ -88,10 +94,6 @@ function duplicateGroups(rows, keyFn) {
     grouped.get(key).push(row);
   }
   return Array.from(grouped.entries()).filter(([, group]) => group.length > 1);
-}
-
-function normalizedText(value) {
-  return String(value ?? "").toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/\s+/g, " ").trim();
 }
 
 const expectedSites = [
@@ -204,9 +206,8 @@ for (const expected of expectedSites) {
 
   const allSlugs = site.pages.map((page) => page.slug);
   assert(new Set(allSlugs).size === allSlugs.length, `${expected.slug}: page slugs are unique`);
-  const articleTitles = articlePages.map((article) => sectionSetting(article.publishedJson?.sections?.blog_detail_1, "title") || article.title);
-  const duplicateTitleGroups = duplicateGroups(articleTitles.map((title, index) => ({ title, slug: articlePages[index].slug })), (row) => normalizedText(row.title));
-  assert(duplicateTitleGroups.length === 0, `${expected.slug}: blog article titles are unique`, JSON.stringify(duplicateTitleGroups));
+  const duplicateContentGroups = duplicateGroups(articlePages.map((article) => ({ identity: blogContentIdentity(article), slug: article.slug })), (row) => row.identity);
+  assert(duplicateContentGroups.length === 0, `${expected.slug}: blog content identities are unique`, JSON.stringify(duplicateContentGroups));
   const imageRows = articlePages.map((article) => {
     const imageUrl = sectionSetting(article.publishedJson?.sections?.blog_detail_1, "imageUrl");
     return {

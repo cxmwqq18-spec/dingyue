@@ -20,7 +20,8 @@ import {
 
 export const readStorefrontPlatformState = cache(() => readStorefrontPlatformStateRelational());
 export const readStorefrontPlatformStateFromDatabase = cache(() => readStorefrontPlatformStateRelational());
-export const readStorefrontSiteByHostFromDatabase = getStorefrontSiteByHostRelational;
+export const readStorefrontSiteByHostFromDatabase = (host: string | null | undefined) =>
+  getStorefrontSiteByHostRelational(host);
 export const readStorefrontPublicRuntimeStateByHostFromDatabase = getStorefrontPublicRuntimeStateByHost;
 export const readStorefrontPublicCollectionDirectoryStateBySlugFromDatabase = getStorefrontPublicCollectionDirectoryStateBySlug;
 export const readStorefrontPublicCollectionDetailStateBySlugFromDatabase = getStorefrontPublicCollectionDetailStateBySlug;

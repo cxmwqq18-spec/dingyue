@@ -21,6 +21,16 @@
   "tutorialSubtitle": "Choose what you want to create, upload your photos, review examples and credit costs, then generate and download your AI video or photo.",
   "tutorialSupportingCopy": "Use the Upload Your Photos flow for supported AI Video, Save the Date, headshot, portrait, couple, seasonal, and creative photo workflows.",
   "reviewTitle": "What Our Customers Say",
+  "reviewQuotes": {
+    "review_ava": "I honestly didn’t expect the stadium shots to look this convincing. The football one is easily my favorite — it actually feels like I was there.",
+    "review_lucas": "I needed a new profile photo fast and didn’t have time to book a photographer. I ended up with several shots I’d actually use for LinkedIn and my website.",
+    "review_mia": "We made our Christmas photos from a couple of regular pictures on our phones. They turned out way better than I expected and we used one for our holiday card.",
+    "review_noah": "Super easy to use. I uploaded a few photos, picked the style I wanted, and everything was there when it was ready. No back-and-forth with a photographer.",
+    "review_chloe": "I wanted some new content without shooting the same boring setup again. A few of these looked good enough that I posted them the same week.",
+    "review_eli": "The headshots surprised me the most. They still looked like me, just much more polished than the selfies I was using before.",
+    "review_jordan": "We needed matching photos for our team page but didn’t want to organize a full studio day. This gave us a much more consistent look with way less effort.",
+    "review_riley": "I mainly tried it for Instagram content and ended up saving way more images than I expected. It’s nice having something different to post without setting up another shoot."
+  },
   "conversionEyebrow": "AI VIDEO + PHOTO CREATION",
   "conversionTitle": "Ready to create with myDreamshoots?",
   "conversionSubtitle": "Create AI videos, personalized Save the Date videos, and professional photo sets from your images—all in one private workspace.",

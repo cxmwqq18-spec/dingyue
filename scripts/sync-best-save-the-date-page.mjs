@@ -24,18 +24,18 @@ const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
 const pagePath = "/best-save-the-date";
 const navigationCatalogue = [
   { href: "/ai-save-the-date/valentines-day", label: "Valentine's Day", group: "love-wedding" },
-  { href: "/holidays-events/engagement", label: "Engagement", group: "love-wedding" },
-  { href: "/holidays-events/proposal", label: "Proposal", group: "love-wedding" },
-  { href: "/holidays-events/save-the-date", label: "Save the Date", group: "love-wedding" },
-  { href: "/holidays-events/wedding-invitation", label: "Wedding Invitation", group: "love-wedding" },
-  { href: "/ai-video-generation/wedding-ceremony", label: "Wedding Ceremony", group: "love-wedding" },
-  { href: "/holidays-events/christmas", label: "Christmas", group: "seasonal-holidays" },
-  { href: "/holidays-events/halloween", label: "Halloween", group: "seasonal-holidays" },
-  { href: "/holidays-events/thanksgiving", label: "Thanksgiving", group: "seasonal-holidays" },
-  { href: "/holidays-events/new-year", label: "New Year", group: "seasonal-holidays" },
-  { href: "/holidays-events/easter", label: "Easter", group: "seasonal-holidays" },
-  { href: "/holidays-events/mothers-day", label: "Mother's Day", group: "seasonal-holidays" },
-  { href: "/holidays-events/fathers-day", label: "Father's Day", group: "seasonal-holidays" }
+  { href: "/ai-save-the-date/engagement", label: "Engagement", group: "love-wedding" },
+  { href: "/ai-save-the-date/proposal", label: "Proposal", group: "love-wedding" },
+  { href: "/ai-save-the-date/save-the-date", label: "Save the Date", group: "love-wedding" },
+  { href: "/ai-save-the-date/wedding-invitation", label: "Wedding Invitation", group: "love-wedding" },
+  { href: "/ai-save-the-date/wedding-ceremony", label: "Wedding Ceremony", group: "love-wedding" },
+  { href: "/ai-save-the-date/christmas", label: "Christmas", group: "seasonal-holidays" },
+  { href: "/ai-save-the-date/halloween", label: "Halloween", group: "seasonal-holidays" },
+  { href: "/ai-save-the-date/thanksgiving", label: "Thanksgiving", group: "seasonal-holidays" },
+  { href: "/ai-save-the-date/new-year", label: "New Year", group: "seasonal-holidays" },
+  { href: "/ai-save-the-date/easter", label: "Easter", group: "seasonal-holidays" },
+  { href: "/ai-save-the-date/mothers-day", label: "Mother's Day", group: "seasonal-holidays" },
+  { href: "/ai-save-the-date/fathers-day", label: "Father's Day", group: "seasonal-holidays" }
 ];
 const sourcePaths = navigationCatalogue.map((item) => item.href);
 

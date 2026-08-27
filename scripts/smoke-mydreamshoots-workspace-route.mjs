@@ -16,6 +16,25 @@ async function request(path, headers = {}) {
 }
 
 async function smokeWorkspaceRoute() {
+  const legacyWorkspace = await request("/site/mydreamshoots/workspace?from=legacy");
+  assert(legacyWorkspace.status === 301, `legacy workspace must return an HTTP 301, received ${legacyWorkspace.status}`);
+  const pathModeLocation = new URL(legacyWorkspace.headers.get("location") || "", baseUrl);
+  assert(
+    `${pathModeLocation.pathname}${pathModeLocation.search}` === "/site/mydreamshoots/app/create?from=legacy",
+    `legacy workspace must preserve the query and target the real workspace, received ${legacyWorkspace.headers.get("location") || "none"}`
+  );
+  const publicLegacyWorkspace = await request("/workspace?from=legacy", { Host: "www.mydreamshoots.com", "x-forwarded-host": "www.mydreamshoots.com" });
+  assert(publicLegacyWorkspace.status === 301, `public legacy workspace must return an HTTP 301, received ${publicLegacyWorkspace.status}`);
+  assert(
+    publicLegacyWorkspace.headers.get("location") === "https://www.mydreamshoots.com/app/create?from=legacy",
+    `public legacy workspace must redirect to the canonical host, received ${publicLegacyWorkspace.headers.get("location") || "none"}`
+  );
+  const publicWorkspaceEntry = await request("/app/create?from=legacy", { Host: "www.mydreamshoots.com", "x-forwarded-host": "www.mydreamshoots.com" });
+  assert(publicWorkspaceEntry.status === 307, `public workspace target must enter the existing auth flow, received ${publicWorkspaceEntry.status}`);
+  assert(
+    (publicWorkspaceEntry.headers.get("location") || "").startsWith("/login?next=%2Fapp%2Fcreate"),
+    `public workspace target must redirect to login after the single legacy 301, received ${publicWorkspaceEntry.headers.get("location") || "none"}`
+  );
   for (const site of sites) {
     const workspacePath = `/site/${site.slug}/app/create#step-video`;
     if (site.publicPath) {

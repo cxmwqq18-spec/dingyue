@@ -350,7 +350,7 @@ const recordsBySite = Object.fromEntries(siteIds.map((siteId) => [siteId, collec
 const perceptualRecordsBySite = {};
 
 function detailPath(pathname) {
-  return pathname.startsWith("/ai-image-generation/") || pathname.startsWith("/ai-video-generation/") || pathname.startsWith("/holidays-events/");
+  return pathname.startsWith("/ai-image-generation/") || pathname.startsWith("/ai-video-generation/") || pathname.startsWith("/ai-save-the-date/") || pathname.startsWith("/holidays-events/");
 }
 
 function normalizedDetailUrl(value) {

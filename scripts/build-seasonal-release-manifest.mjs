@@ -48,7 +48,7 @@ try {
     const pageJson = item.pageJson;
     pageJson.relatedLinks = [
       { label: "How it works", href: availablePaths.has("/workflow") ? "/workflow" : "/best-save-the-date" },
-      { label: "Explore Save the Date themes", href: availablePaths.has("/holidays-events/save-the-date") ? "/holidays-events/save-the-date" : "/best-save-the-date" }
+      { label: "Explore Save the Date themes", href: availablePaths.has("/ai-save-the-date/save-the-date") ? "/ai-save-the-date/save-the-date" : "/best-save-the-date" }
     ].filter((link, index, links) => links.findIndex((candidate) => candidate.href === link.href) === index);
     const nextPage = { ...(page || { id: pageIdFor(pathname), siteId, pageType: "standard-content", templateKey: "seasonal-editorial", slug: pathname, createdAt: new Date().toISOString() }), pageType: "standard-content", templateKey: "seasonal-editorial", title: pageJson.seo?.h1 || pageJson.sections[pageJson.sectionsOrder[0]]?.settings?.title || item.key, draftJson: pageJson, publishedJson: pageJson, updatedAt: new Date().toISOString() };
     if (page) Object.assign(page, nextPage); else pages.push(nextPage);
@@ -64,8 +64,8 @@ try {
   const existingItems = navigation.groups.flatMap((group) => group.items || []);
   const additions = [...targetPages.values()].map((item) => ({ label: item.key === "mothers-day" ? "Mother's Day" : item.key === "fathers-day" ? "Father's Day" : "Halloween", slug: item.key, href: item.pagePath, status: "published", sortOrder: 20 }));
   const merged = [...existingItems, ...additions].filter((item, index, values) => values.findIndex((candidate) => candidate.href === item.href) === index);
-  const love = merged.filter((item) => ["/ai-save-the-date/valentines-day", "/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date", "/ai-video-generation/wedding-ceremony"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
-  const seasonal = merged.filter((item) => item.href.startsWith("/holidays-events/") && !["/holidays-events/engagement", "/holidays-events/proposal", "/holidays-events/save-the-date"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
+  const love = merged.filter((item) => ["/ai-save-the-date/valentines-day", "/ai-save-the-date/engagement", "/ai-save-the-date/proposal", "/ai-save-the-date/save-the-date", "/ai-save-the-date/wedding-ceremony"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
+  const seasonal = merged.filter((item) => item.href.startsWith("/ai-save-the-date/") && !["/ai-save-the-date/engagement", "/ai-save-the-date/proposal", "/ai-save-the-date/save-the-date"].includes(item.href)).map((item, index) => ({ ...item, sortOrder: index + 1 }));
   const nextSettings = { ...settings, draftJson: { ...current, saveTheDateNavigation: { menuLabel: "Save the Date", groups: [{ label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: love }, { label: "Seasonal Holidays", slug: "seasonal-holidays", sortOrder: 2, items: seasonal }] } }, publishedJson: { ...current, saveTheDateNavigation: { menuLabel: "Save the Date", groups: [{ label: "Love & Wedding", slug: "love-wedding", sortOrder: 1, items: love }, { label: "Seasonal Holidays", slug: "seasonal-holidays", sortOrder: 2, items: seasonal }] } }, updatedAt: new Date().toISOString() };
   if (themeSettings.length) Object.assign(themeSettings[0], nextSettings); else themeSettings.push(nextSettings);
   const snapshot = { themePages: normalizeRows(pages), themeSettings: normalizeRows(themeSettings), mediaAssets: normalizeRows(assets) };

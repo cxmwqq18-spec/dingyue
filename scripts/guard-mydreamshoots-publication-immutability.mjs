@@ -18,6 +18,7 @@ const allowedFixtureOrMigrationPaths = new Set([
   "scripts/migrate-dreamshoot-demo.mjs",
   "scripts/migrate-aidreamcapes-demo.mjs",
   "scripts/migrate-lumen-wedding-demo.mjs",
+  "scripts/migrate-save-the-date-route-prefix.mjs",
   "scripts/create-spanish-xby-stores.mjs",
   // The lifecycle smoke intentionally exercises pointer rollback and restores
   // the original row in its finally block. Keep this exception explicit so a

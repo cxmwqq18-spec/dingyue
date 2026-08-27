@@ -34,7 +34,17 @@ export async function metadataForPublishedStorefrontPage({
     ? page
     : snapshot.pages.find((candidate) => candidate.id === page.id) ?? page;
   const context = resolvePublishedStorefrontContext(snapshot, snapshotPage);
-  const metadata = metadataForSingleThemePage(snapshot.site, snapshotPage, context);
+  const approvedDirectoryImage = isPrimaryMydreamshootsSite(snapshot.site) && snapshotPage.slug === "/ai-image-generation" &&
+    context.publishedStandardPageMedia?.status === "ready"
+    ? context.publishedStandardPageMedia.ogImage?.trim()
+    : undefined;
+  const configuredOgImage = context.seo.ogImage?.trim();
+  const defaultOgImage = context.settings.seo?.defaultOgImage?.trim();
+  const useApprovedDirectoryImage = Boolean(approvedDirectoryImage && (!configuredOgImage || configuredOgImage === defaultOgImage));
+  const metadata = metadataForSingleThemePage(snapshot.site, snapshotPage, useApprovedDirectoryImage
+    ? { ...context, seo: { ...context.seo, ogImage: approvedDirectoryImage } }
+    : context
+  );
   const existingOther = (metadata.other ?? {}) as Record<string, string | number | (string | number)[]>;
   return {
     ...metadata,

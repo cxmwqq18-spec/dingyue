@@ -207,18 +207,18 @@ const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_M
   "/faq": "MyDreamShoots support questions for uploads credits generation and delivery",
   "/workflow": "MyDreamShoots approved upload generation review and private delivery workflow",
   "/ai-save-the-date/valentines-day": "Valentine's Day save the date visual story from approved couple photos",
-  "/holidays-events/engagement": "Engagement save the date video scenes from approved couple visuals",
-  "/holidays-events/proposal": "Proposal video scenes showing the planned story and reaction",
-  "/holidays-events/save-the-date": "Save the Date video scenes for a confirmed wedding date",
-  "/holidays-events/wedding-invitation": "Wedding invitation visuals for ceremony details and guest communication",
-  "/ai-video-generation/wedding-ceremony": "Wedding ceremony photo and video scenes for vows, rings, reactions, and the recessional",
-  "/holidays-events/wedding-anniversary": "Wedding anniversary photo and video scenes for shared memories and celebration",
-  "/holidays-events/christmas": "Christmas family, gifts, portraits, and seasonal celebration scenes",
-  "/holidays-events/thanksgiving": "Thanksgiving family dinner, gratitude, and seasonal gathering scenes",
-  "/holidays-events/new-year": "New Year fireworks, countdown, celebration, and fresh-start scenes",
-  "/holidays-events/mothers-day": "Mother's Day family, flowers, gifts, brunch, and spring celebration scenes",
-  "/holidays-events/fathers-day": "Father's Day family, gifts, outdoor activities, and celebration scenes",
-  "/holidays-events/halloween": "Halloween costume, couple, family, pet, pumpkin, party, and haunted-scene ideas"
+  "/ai-save-the-date/engagement": "Engagement save the date video scenes from approved couple visuals",
+  "/ai-save-the-date/proposal": "Proposal video scenes showing the planned story and reaction",
+  "/ai-save-the-date/save-the-date": "Save the Date video scenes for a confirmed wedding date",
+  "/ai-save-the-date/wedding-invitation": "Wedding invitation visuals for ceremony details and guest communication",
+  "/ai-save-the-date/wedding-ceremony": "Wedding ceremony photo and video scenes for vows, rings, reactions, and the recessional",
+  "/ai-save-the-date/wedding-anniversary": "Wedding anniversary photo and video scenes for shared memories and celebration",
+  "/ai-save-the-date/christmas": "Christmas family, gifts, portraits, and seasonal celebration scenes",
+  "/ai-save-the-date/thanksgiving": "Thanksgiving family dinner, gratitude, and seasonal gathering scenes",
+  "/ai-save-the-date/new-year": "New Year fireworks, countdown, celebration, and fresh-start scenes",
+  "/ai-save-the-date/mothers-day": "Mother's Day family, flowers, gifts, brunch, and spring celebration scenes",
+  "/ai-save-the-date/fathers-day": "Father's Day family, gifts, outdoor activities, and celebration scenes",
+  "/ai-save-the-date/halloween": "Halloween costume, couple, family, pet, pumpkin, party, and haunted-scene ideas"
 };
 function collectPublishedImageUrls(value: unknown, output: string[] = []): string[] {
   if (typeof value === "string" && /\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i.test(value.trim())) {
@@ -966,6 +966,40 @@ function buildPublicationSnapshotStats(snapshot: ThemePublication["snapshot"]) {
   return { pageCount, sectionCount, snapshotBytes };
 }
 
+function countBy<T>(items: T[], key: (item: T) => string): Record<string, number> {
+  return items.reduce<Record<string, number>>((counts, item) => {
+    const label = key(item).trim() || "Uncategorized";
+    counts[label] = (counts[label] ?? 0) + 1;
+    return counts;
+  }, {});
+}
+
+export function assertMydreamshootsPublicationCountContract(siteId: string, snapshot: ThemePublication["snapshot"]): void {
+  if (siteId !== "site_dreamshoot") return;
+  const videoTopics = snapshot.publishedVideoNavigation ?? [];
+  const videoRoutes = new Set((snapshot.publishedRoutes ?? [])
+    .filter((route) => route.routeKind === "ai-video-topic-leaf" && route.disposition === "render" && route.status === "published")
+    .map((route) => "canonicalPath" in route ? route.canonicalPath : ""));
+  const videoItems = videoTopics.filter((item) => videoRoutes.has(item.canonicalPath));
+  const videoCounts = countBy(videoItems, (item) => item.parentLabel || item.parentSlug);
+  const videoItemPaths = new Set(videoItems.map((item) => item.canonicalPath));
+  if (videoItems.length !== videoRoutes.size || videoItemPaths.size !== videoItems.length || Object.values(videoCounts).reduce((sum, count) => sum + count, 0) !== videoItems.length) {
+    throw new RelationalStoreError("mydreamshoots_ai_video_count_contract_failed", 409);
+  }
+  const saveTheDateItems = (snapshot.publishedHomepageShowcases ?? []).filter((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
+  const saveTheDateCounts = countBy(saveTheDateItems, (item) => item.category ?? "Uncategorized");
+  const saveTheDateIds = new Set(saveTheDateItems.map((item) => item.id));
+  if (saveTheDateIds.size !== saveTheDateItems.length || Object.values(saveTheDateCounts).reduce((sum, count) => sum + count, 0) !== saveTheDateItems.length) {
+    throw new RelationalStoreError("mydreamshoots_save_the_date_count_contract_failed", 409);
+  }
+
+  const imageRoutes = (snapshot.publishedRoutes ?? []).filter((route) => route.routeKind === "ai-image-theme-leaf" && route.disposition === "render" && route.status === "published");
+  const imageMedia = (snapshot.publishedPageMedia ?? []).filter((media) => media.routeKind === "ai-image-theme-leaf" && media.status === "ready");
+  if (imageRoutes.length !== imageMedia.length) {
+    throw new RelationalStoreError("mydreamshoots_ai_image_count_contract_failed", 409);
+  }
+}
+
 /**
  * Compile the complete current-state candidate from a fresh database read.
  * This is intentionally separate from the legacy publication writer so the
@@ -995,12 +1029,14 @@ export async function compileCurrentPublishedPayloadRelational(
       orderBy: { id: "asc" }
     })
   ]);
-  return buildPublicationSnapshot(
+  const snapshot = buildPublicationSnapshot(
     site,
     undefined,
     packRows.map((pack) => normalizedPublishPack(pack as PublishPreflightCreativePack)),
     productRows.map(mapProduct)
   );
+  assertMydreamshootsPublicationCountContract(siteId, snapshot);
+  return snapshot;
 }
 
 type ImmutablePublicationScope = {
@@ -1022,6 +1058,7 @@ async function createAndActivateImmutablePublication(
     approvalId?: string;
   }
 ) {
+  assertMydreamshootsPublicationCountContract(params.siteId, params.snapshot);
   if (publicationSnapshotIntegrity(params.snapshot) !== "valid") {
     throw new RelationalStoreError("theme_publish_snapshot_integrity_failed", 409);
   }

@@ -14,29 +14,29 @@ const apply = process.argv.includes("--apply");
 assertDatabaseTarget({ expectedTarget: target || "remote" });
 const siteId = "site_dreamshoot";
 const coverRepairs = new Map([
-  ["/holidays-events/save-the-date", {
+  ["/ai-save-the-date/save-the-date", {
     cover: "/assets/dreamshoot/save-the-date/save-the-date/hero-ai-save-the-date-couple-sunset.jpg",
     alt: "Couple embracing at sunset as the opening scene of an AI Save the Date video."
   }],
-  ["/holidays-events/wedding-invitation", {
+  ["/ai-save-the-date/wedding-invitation", {
     cover: "/assets/dreamshoot/save-the-date/save-the-date/save-the-date-couple-ring-announcement.jpg",
     alt: "Couple showing an engagement ring for a wedding invitation announcement scene."
   }],
-  ["/holidays-events/wedding-anniversary", {
+  ["/ai-save-the-date/wedding-anniversary", {
     cover: "/assets/dreamshoot/save-the-date/save-the-date/save-the-date-romantic-beach-walk.jpg",
     alt: "Couple holding hands on the beach at sunset for a wedding anniversary story."
   }],
-  ["/holidays-events/christmas", {
+  ["/ai-save-the-date/christmas", {
     cover: "/assets/dreamshoot/seasonal/christmas/hero-ai-christmas-family-gift.jpg",
     alt: "Family exchanging gifts together in a warm Christmas living room.",
     mediaAssetId: "media_site_dreamshoot_holidays_events_christmas_hero_family_gift"
   }],
-  ["/holidays-events/thanksgiving", {
+  ["/ai-save-the-date/thanksgiving", {
     cover: "/assets/dreamshoot/seasonal/thanksgiving/hero-ai-thanksgiving-family-dinner.jpg",
     alt: "Family gathering around a warm Thanksgiving dinner table.",
     mediaAssetId: "media_site_dreamshoot_holidays_events_thanksgiving_hero_family_dinner"
   }],
-  ["/holidays-events/new-year", {
+  ["/ai-save-the-date/new-year", {
     cover: "/assets/dreamshoot/seasonal/new-year/hero-ai-new-year-family-celebration.jpg",
     alt: "Family celebrating the New Year together with festive lights.",
     mediaAssetId: "media_site_dreamshoot_holidays_events_new_year_hero_family_celebration"

@@ -18,6 +18,7 @@ import type {
   PublishedSeoSnapshot
 } from "@/lib/types";
 import { MYDREAMSHOOTS_STANDARD_SEO_INVENTORY } from "@/lib/mydreamshoots-editorial-routes";
+import { legacySaveTheDatePath } from "@/lib/save-the-date-routes";
 
 export type SnapshotIntegrity = "valid" | "invalid" | "legacy";
 
@@ -221,6 +222,15 @@ function normalizeDetailMediaUrl(value: string): string {
   return value.trim().split(/[?#]/, 1)[0] ?? "";
 }
 
+// Current-state publications can straddle a route migration (for example,
+// Valentine's Day may already be canonical while the remaining catalogue is
+// still stored below /holidays-events). Accept only the known alias for each
+// canonical Save the Date path while the publication is being replaced.
+function publishedPathCandidates(canonicalPath: string): string[] {
+  const legacyPath = legacySaveTheDatePath(canonicalPath);
+  return legacyPath && legacyPath !== canonicalPath ? [canonicalPath, legacyPath] : [canonicalPath];
+}
+
 /**
  * Indexable detail routes own their cover/gallery URLs. Directory cards and
  * homepage showcases are intentionally excluded from this ownership check.
@@ -237,7 +247,7 @@ export function detailMediaUniqueness(snapshot: PublishedSeoSnapshot): {
   const detailRoutes = snapshot.publishedRoutes.filter((route) => route.disposition === "render").filter((route) => {
     const candidate = route as { status?: string; indexable?: boolean; sitemapEligible?: boolean; canonicalPath?: string; pageEntityId?: string };
     return candidate.status === "published" && candidate.indexable && candidate.sitemapEligible && typeof candidate.canonicalPath === "string" &&
-      (candidate.canonicalPath.startsWith("/ai-image-generation/") || candidate.canonicalPath.startsWith("/ai-video-generation/") || candidate.canonicalPath.startsWith("/holidays-events/"));
+      (candidate.canonicalPath.startsWith("/ai-image-generation/") || candidate.canonicalPath.startsWith("/ai-video-generation/") || candidate.canonicalPath.startsWith("/ai-save-the-date/") || candidate.canonicalPath.startsWith("/holidays-events/"));
   });
   const pageMediaByEntity = new Map(snapshot.publishedPageMedia.map((media) => [media.pageEntityId, media]));
   const standardMediaByPath = new Map(snapshot.publishedStandardPageMedia.map((media) => [media.canonicalPath, media]));
@@ -405,29 +415,30 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     redirectRoutes.every((item) => policyRoutes.some((routeItem) => routeItem.canonicalPath === item.targetPath));
   const standardRouteFailures: string[] = [];
   const standardRoutesAgree = MYDREAMSHOOTS_STANDARD_SEO_INVENTORY.every((expected) => {
-    const matchingRoutes = publishedRoutes.filter((candidate) => candidate.disposition === "render" && candidate.canonicalPath === expected.canonicalPath);
+    const acceptedPaths = new Set(publishedPathCandidates(expected.canonicalPath));
+    const matchingRoutes = publishedRoutes.filter((candidate) => candidate.disposition === "render" && acceptedPaths.has(candidate.canonicalPath));
     const candidate = matchingRoutes[0];
     if (matchingRoutes.length !== 1 || candidate.routeKind !== expected.routeKind || candidate.disposition !== expected.disposition) { standardRouteFailures.push(`${expected.canonicalPath}:route`); return false; }
     const page = snapshot.pages.find((item) => item.id === candidate.pageId);
     const copy = pageCopyRows.find((item) => item.pageEntityId === candidate.pageEntityId);
-    const media = publishedStandardPageMedia.find((item) => item.canonicalPath === expected.canonicalPath);
+    const media = publishedStandardPageMedia.find((item) => item.canonicalPath === candidate.canonicalPath);
     const links = v1.publishedLinkRefs.filter((item: PublishedLinkRef) => item.ownerPageEntityId === candidate.pageEntityId);
     const required = new Set(expected.requiredProjectionKinds);
     if (required.has("page") && (!page || page.id !== candidate.pageId)) { standardRouteFailures.push(`${expected.canonicalPath}:page`); return false; }
     // Inventory requirements are presence contracts, not merely shape checks:
     // a missing projection must fail closed just like a malformed one.
     if (required.has("copy") && (!copy || !text(copy.copyRevision))) { standardRouteFailures.push(`${expected.canonicalPath}:copy`); return false; }
-    if (required.has("media") && (!media || media.canonicalPath !== expected.canonicalPath)) { standardRouteFailures.push(`${expected.canonicalPath}:media`); return false; }
+    if (required.has("media") && (!media || media.canonicalPath !== candidate.canonicalPath)) { standardRouteFailures.push(`${expected.canonicalPath}:media`); return false; }
     if (required.has("links") && (!links.length || links.some((item) => !text(item.linkEntityId)))) { standardRouteFailures.push(`${expected.canonicalPath}:links`); return false; }
     return candidate.status === "published"
       ? candidate.indexable === expected.indexable && candidate.sitemapEligible === expected.sitemapEligible
       : candidate.status === "review_required" && candidate.indexable === false && candidate.sitemapEligible === false;
   });
   const standardMediaAgree = publishedStandardPageMedia.length === expectedStandardPaths.length &&
-    expectedStandardPaths.every((path) => publishedStandardPageMedia.some((item) => {
+    expectedStandardPaths.every((path) => publishedPathCandidates(path).some((acceptedPath) => publishedStandardPageMedia.some((item) => {
       const page = snapshot.pages.find((candidate) => candidate.id === item.pageId);
-      return item.canonicalPath === path && item.status === "ready" && page?.slug === path;
-    }));
+      return item.canonicalPath === acceptedPath && item.status === "ready" && page?.slug === acceptedPath;
+    })));
   const mediaOwnershipAgree = leafRoutes.every((item) => {
     const page = pages.get(item.pageEntityId);
     const pageMedia = mediaByPage.get(item.pageEntityId);

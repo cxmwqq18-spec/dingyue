@@ -21,7 +21,7 @@ const readonlyEnv = {
   DATABASE_TARGET: "remote-readonly",
   DATABASE_URL: tunneledDatabaseUrl,
   PERSISTENCE_BACKEND: process.env.PERSISTENCE_BACKEND || "postgres",
-  PLATFORM_STATE_POSTGRES_STRICT: process.env.PLATFORM_STATE_POSTGRES_STRICT || "1",
+  PLATFORM_STATE_POSTGRES_STRICT: "1",
   STOREFRONT_PATH_MODE_READS: process.env.STOREFRONT_PATH_MODE_READS || "database"
 };
 

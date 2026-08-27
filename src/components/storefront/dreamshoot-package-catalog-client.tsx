@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
+import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
 import { photoPackageLabel, photoPackageSlug } from "@/lib/photo-package-taxonomy";
 import { storefrontCardImageAlt } from "@/lib/storefront-media-alt";
 

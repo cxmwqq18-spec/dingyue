@@ -44,7 +44,7 @@ export type HeaderVideoGenerationTopic = {
 
 export function HeaderSaveTheDateMegaPanel({ groups, menuLabel, ctaHref, ctaLabel = "View all Save the Date themes", variantTone = "dark" }: { groups: SaveTheDateNavigationGroup[]; menuLabel: string; ctaHref?: string; ctaLabel?: string; variantTone?: "dark" | "warm" }) {
   const warm = variantTone === "warm";
-  const visibleGroups = groups.map((group) => ({ ...group, items: group.items.filter((item) => item.status === "published").sort((a, b) => a.sortOrder - b.sortOrder) })).filter((group) => group.items.length).sort((a, b) => a.sortOrder - b.sortOrder);
+  const visibleGroups = groups.map((group) => ({ ...group, items: group.items.filter((item) => item.status === "published" && Boolean(item.href.trim() && item.description?.trim() && item.imageUrl?.trim() && item.imageAlt?.trim())).sort((a, b) => a.sortOrder - b.sortOrder) })).filter((group) => group.items.length).sort((a, b) => a.sortOrder - b.sortOrder);
   const totalItems = visibleGroups.reduce((sum, group) => sum + group.items.length, 0);
   return (
     <div className={warm ? "overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffaf3]/[0.99] p-4 text-[#1e1712] shadow-[0_34px_110px_-62px_rgba(114,82,48,0.34)]" : "overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)]"}>
@@ -79,7 +79,7 @@ export function HeaderSaveTheDateMegaPanel({ groups, menuLabel, ctaHref, ctaLabe
 }
 
 export function HeaderMobileSaveTheDateMenu({ groups, menuLabel, ctaHref, ctaLabel = "View all Save the Date themes", dark }: { groups: SaveTheDateNavigationGroup[]; menuLabel: string; ctaHref?: string; ctaLabel?: string; dark: boolean }) {
-  const items = groups.flatMap((group) => group.items.filter((item) => item.status === "published").map((item) => ({ ...item, group: group.label })));
+  const items = groups.flatMap((group) => group.items.filter((item) => item.status === "published" && Boolean(item.href.trim() && item.description?.trim() && item.imageUrl?.trim() && item.imageAlt?.trim())).map((item) => ({ ...item, group: group.label })));
   return <details className={dark ? "rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
     <summary className={dark ? "flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-[16px] px-4 py-3 text-sm font-semibold text-white marker:hidden" : "flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-[16px] px-4 py-3 text-sm font-semibold text-[#171514] marker:hidden"}>{menuLabel}</summary>
     <div className="grid gap-1 px-2 pb-2">
@@ -165,11 +165,11 @@ export function HeaderPhotoPackageMegaPanel({
       </div>
       <div className={warm ? "mt-4 grid min-h-0 flex-1 gap-3 overflow-y-auto border-t border-[#eadfce] pt-5 pr-1 lg:grid-cols-3" : "mt-4 grid min-h-0 flex-1 gap-3 overflow-y-auto border-t border-[#263247] pt-5 pr-1 lg:grid-cols-3"}>
         {columns.map((column, columnIndex) => (
-          <div className="grid content-start gap-3" key={`package_column_${columnIndex}`}>
+          <div className="grid min-w-0 content-start gap-3" key={`package_column_${columnIndex}`}>
             {column.map((group, groupIndex) => {
               const { accent, Icon } = photoPackageGroupVisual(group, columnIndex + groupIndex);
               return (
-              <details className={warm ? "group/category rounded-[14px] border border-[#eadfce] bg-white p-3 open:border-[#d8b17e] open:bg-[#fff8ed]" : "group/category rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]"} key={group.slug} open>
+              <details className={warm ? "group/category min-w-0 rounded-[14px] border border-[#eadfce] bg-white p-3 open:border-[#d8b17e] open:bg-[#fff8ed]" : "group/category min-w-0 rounded-[14px] border border-[#2b374c] bg-[#090a0c] p-3 open:border-white/18 open:bg-white/[0.035]"} key={group.slug} open>
                 <summary className={warm ? "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold text-[#b86e36] marker:hidden group-open/category:border-b group-open/category:border-[#eadfce] group-open/category:pb-2" : "flex min-h-10 cursor-pointer list-none items-center gap-2 text-[0.94rem] font-semibold marker:hidden group-open/category:border-b group-open/category:border-white/10 group-open/category:pb-2"} style={{ color: warm ? "#b86e36" : accent }}>
                   <span className={warm ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f6eadc] text-[#b86e36]" : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06]"} style={{ color: warm ? "#b86e36" : accent }}>
                     <Icon className="h-4 w-4" strokeWidth={1.9} />
@@ -180,8 +180,8 @@ export function HeaderPhotoPackageMegaPanel({
                 </summary>
                 <div className="mt-3 grid gap-2">
                   {group.items.map((item) => (
-                    <Link className={warm ? "group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/package flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"} href={item.href} key={item.slug} prefetch={false}>
-                      <span className="text-[0.94rem] font-semibold leading-6">{item.label}</span>
+                    <Link className={warm ? "group/package flex min-w-0 min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/package flex min-w-0 min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"} href={item.href} key={item.slug} prefetch={false}>
+                      <span className="min-w-0 flex-1 break-words text-[0.94rem] font-semibold leading-6">{item.label}</span>
                       <ChevronRight className={warm ? "ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-[#b99675] transition group-hover/package:translate-x-0.5 group-hover/package:text-[#8f5327]" : "ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56"} strokeWidth={2} />
                     </Link>
                   ))}

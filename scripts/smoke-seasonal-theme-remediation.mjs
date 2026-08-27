@@ -8,15 +8,15 @@ execFileSync(process.execPath, ["scripts/sync-seasonal-theme-pages.mjs"], { env:
 const build = JSON.parse(fs.readFileSync(output, "utf8"));
 const expected = {
   "mothers-day": {
-    path: "/holidays-events/mothers-day", hero: "hero-ai-mothers-day-family-breakfast.jpg", sceneCount: 11, faq: 8,
+    path: "/ai-save-the-date/mothers-day", hero: "hero-ai-mothers-day-family-breakfast.jpg", sceneCount: 11, faq: 8,
     title: "AI Mother's Day Photo & Video Generator | Family Content"
   },
   "fathers-day": {
-    path: "/holidays-events/fathers-day", hero: "hero-ai-fathers-day-family-portrait.jpg", sceneCount: 9, faq: 6,
+    path: "/ai-save-the-date/fathers-day", hero: "hero-ai-fathers-day-family-portrait.jpg", sceneCount: 9, faq: 6,
     title: "AI Father's Day Photo & Video Maker | Family Visuals"
   },
   "halloween": {
-    path: "/holidays-events/halloween", hero: "hero-ai-halloween-costume-party.jpg", sceneCount: 9, faq: 6,
+    path: "/ai-save-the-date/halloween", hero: "hero-ai-halloween-costume-party.jpg", sceneCount: 9, faq: 6,
     title: "AI Halloween Photo and Video Maker | Spooky Visuals"
   }
 };

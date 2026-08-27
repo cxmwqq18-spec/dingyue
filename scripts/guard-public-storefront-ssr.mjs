@@ -20,13 +20,15 @@ const headerMegaPanels = read("src/components/storefront/header-mega-menu-panels
 const jsonLd = read("src/components/storefront/storefront-json-ld.tsx");
 const navigationFeedback = read("src/components/storefront/navigation-feedback.tsx");
 const nativeMegaMenu = read("src/components/storefront/native-mega-menu.tsx");
+const clickMegaMenu = read("src/components/storefront/click-mega-menu.tsx");
 const sectionApi = read("src/app/api/site-slugs/[siteSlug]/storefront-section/route.ts");
 const hostCatchAll = read("src/app/[...path]/page.tsx");
 const sectionPage = read("src/app/site/[siteSlug]/%5F%5Fsection/[sectionId]/page.tsx");
 
 assert.doesNotMatch(themeRenderer, /import .*LazyStorefrontSection|<LazyStorefrontSection\b/, "public renderer must not mount lazy section API fetches");
 assert.doesNotMatch(themeRenderer, /<CustomerRoutePrefetch/, "public renderer must not mount route prefetchers");
-assert.match(themeRenderer, /NativeMegaMenu/, "public navigation must have a native details menu");
+assert.match(themeRenderer, /ClickMegaMenu/, "public navigation must use the controlled mega menu");
+assert.match(themeRenderer, /disablePrefetch=\{disablePublicSeoPrefetch\}/, "public mega menus must disable route prefetching on public SEO pages");
 for (const route of [
   'pagePath === "/"',
   'pagePath === "/pricing"',
@@ -66,12 +68,14 @@ for (const route of [
   assert.ok(themeRenderer.includes(route), `public SSR inventory must include ${route}`);
 }
 assert.match(themeRenderer, /pagePath\.startsWith\("\/holidays-events\/"\)/, "holiday detail routes must be in the public SSR inventory");
+assert.match(themeRenderer, /pagePath\.startsWith\("\/ai-save-the-date\/"\)/, "Save the Date detail routes must be in the public SSR inventory");
 assert.doesNotMatch(instantLink, /useRouter|router\.prefetch|\bfetch\s*\(/, "public links must use ordinary document navigation");
 assert.doesNotMatch(routePrefetch, /useEffect|useRouter|\bfetch\s*\(/, "public route prefetch component must be inert");
 assert.doesNotMatch(showcasePreview, /use client|useEffect|document\.|window\./, "public media preview must be server-only");
 assert.match(themeRenderer, /<StorefrontNavigationFeedback\s*\//, "public renderer must show native navigation feedback");
 assert.doesNotMatch(navigationFeedback, /\bfetch\s*\(|useRouter|router\.prefetch|customer\/runtime|customer\/bootstrap/, "navigation feedback must remain presentation-only");
 assert.doesNotMatch(nativeMegaMenu, /use client|useEffect|document\.|window\./, "public mega menu must use native details behavior");
+assert.match(clickMegaMenu, /document\.addEventListener\("pointerdown", handlePointerDown, true\)/, "controlled mega menu must close when clicking outside");
 assert.doesNotMatch(layout, /HtmlLangSync/, "public root layout must not mount client language synchronization");
 assert.equal(existsSync(path.join(root, "src/components/storefront/html-lang-sync.tsx")), false, "legacy public language sync component must be removed");
 assert.doesNotMatch(pricingTable, /use client|useState|useMemo/, "public pricing must be server-rendered");

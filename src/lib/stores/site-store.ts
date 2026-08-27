@@ -31,6 +31,8 @@ import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit, isVideoPro
 import { DEFAULT_VIDEO_FRAME_LIMIT, defaultVideoModelPricing, normalizeVideoFrameLimit, normalizeVideoModelPricing, type VideoModelPricing } from "@/lib/video-frame-config";
 import { defaultVideoThemeExamplePrompt, validateVideoPrompt } from "@/lib/video-prompt-format";
 import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
+import { resolvePublishedSaveTheDateGroups, type PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
+import { currentPublishedContentHash, currentPublishedRevision } from "@/lib/current-state/hash";
 import type {
   AiGatewayGroup,
   AiProviderConfig,
@@ -46,6 +48,7 @@ import type {
   PublicSiteAdmin,
   PublicPlatformAdmin,
   Site,
+  SitePublishedState,
   SiteAdmin,
   SiteAdminSession,
   SiteAiApp,
@@ -86,6 +89,7 @@ import {
   mapGenerationJob,
   mapProduct,
   toSite,
+  toSitePublishedState,
   toSiteAdmin,
   toSiteAdminSessionRelational,
   toCustomerSessionRelational,
@@ -107,6 +111,7 @@ const siteRuntimeInclude = {
   pages: { orderBy: { slug: "asc" } },
   settings: true,
   storefrontProfile: true,
+  currentPublishedState: true,
   activePublication: { include: { publication: true } },
   publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 },
   connect: true
@@ -417,6 +422,7 @@ const collectionDetailSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
+      draftJson: true,
       publishedJson: true
     }
   },
@@ -430,10 +436,12 @@ const collectionDetailSiteSelect = {
   },
   settings: {
     select: {
+      draftJson: true,
       publishedJson: true
     }
   },
   storefrontProfile: true,
+  currentPublishedState: true,
   activePublication: { include: { publication: true } },
   publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
@@ -467,6 +475,7 @@ const publicRuntimeSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
+      draftJson: true,
       publishedJson: true
     }
   },
@@ -480,10 +489,12 @@ const publicRuntimeSiteSelect = {
   },
   settings: {
     select: {
+      draftJson: true,
       publishedJson: true
     }
   },
   storefrontProfile: true,
+  currentPublishedState: true,
   activePublication: { include: { publication: true } },
   publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
@@ -620,6 +631,7 @@ const publicMetadataSiteSelect = {
     }
   },
   storefrontProfile: true,
+  currentPublishedState: true,
   activePublication: { include: { publication: true } },
   publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
@@ -738,6 +750,9 @@ const emptyThemePageJson = {
   sections: {}
 } satisfies ThemePage["draftJson"];
 const siteReadCache = createServerTtlCache("site-store", Number(process.env.SITE_READ_CACHE_TTL_MS ?? 120_000));
+function instantDraftPreviewEnabled(): boolean {
+  return process.env.DINGYUE_ENV === "local" && process.env.STOREFRONT_INSTANT_DRAFT_PREVIEW !== "0";
+}
 const customerRuntimeLimits = {
   products: 60,
   siteAiApps: 40,
@@ -934,9 +949,17 @@ function toPublicSiteShell(
   record: CollectionDetailSiteRecord | CustomerRuntimeSiteRecord | PublicRuntimeSiteRecord | PublicMetadataSiteRecord,
   mediaAssets: MediaAsset[] = []
 ): Site {
+  const instantDraftPreview = process.env.DINGYUE_ENV === "local" && process.env.STOREFRONT_INSTANT_DRAFT_PREVIEW !== "0";
   const primaryDomain = record.domains.find((domain) => domain.isPrimary)?.domain ?? record.domains[0]?.domain ?? "";
   const settingsRecord = "settings" in record ? record.settings : undefined;
   const profileRecord = "storefrontProfile" in record ? record.storefrontProfile : undefined;
+  const currentStateRecord = "currentPublishedState" in record ? record.currentPublishedState : undefined;
+  const currentStatePages = currentStateRecord && typeof currentStateRecord.payload === "object" && currentStateRecord.payload && !Array.isArray(currentStateRecord.payload)
+    ? (currentStateRecord.payload as { pages?: Array<{ id?: string; slug?: string; publishedJson?: unknown }> }).pages ?? []
+    : [];
+  const activePublication = record.activePublication?.publication
+    ? toThemePublication(record.activePublication.publication)
+    : undefined;
   return {
     id: record.id,
     name: record.name,
@@ -955,18 +978,20 @@ function toPublicSiteShell(
     },
     themeSettings: toAdminShellThemeSettings(settingsRecord),
     storefrontProfile: toStorefrontProfile(profileRecord),
+    currentPublishedState: currentStateRecord
+      ? toSitePublishedState(currentStateRecord)
+      : undefined,
     // Public consumers must use the explicitly activated immutable snapshot.
     // Never substitute the newest historical publication when the active
     // pointer is absent; that would make the public result non-deterministic.
-    activePublication: record.activePublication?.publication
-      ? toThemePublication(record.activePublication.publication)
-      : undefined,
-    latestPublication: record.activePublication?.publication
-      ? toThemePublication(record.activePublication.publication)
-      : undefined,
+    activePublication,
+    latestPublication: activePublication,
     pages: record.pages.map((page) => toThemePage({
       ...page,
-      draftJson: page.publishedJson
+      draftJson: instantDraftPreview && "draftJson" in page ? page.draftJson : page.publishedJson,
+      publishedJson: instantDraftPreview && "draftJson" in page
+        ? page.draftJson
+        : currentStatePages.find((candidate) => candidate.id === page.id || candidate.slug === page.slug)?.publishedJson ?? page.publishedJson
     })),
     mediaAssets
   };
@@ -1404,6 +1429,7 @@ export const getStorefrontPublicCollectionDetailStateBySlug = cache(async (slug:
 
 export const getStorefrontPublicCollectionDirectoryStateBySlug = cache(async (slug: string): Promise<PlatformState | undefined> => {
   const canonicalSlug = canonicalSiteSlug(slug);
+  if (instantDraftPreviewEnabled()) return loadStorefrontPublicCollectionDirectoryState(slug);
   return siteReadCache.get(
     `public-collection-directory-shell:${canonicalSlug}`,
     async () => loadStorefrontPublicCollectionDirectoryState(slug),
@@ -1608,6 +1634,8 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
         select
       });
   if (!site) return undefined;
+  const currentStateRow = await prisma.sitePublishedState.findUnique({ where: { siteId: site.id } });
+  const currentPublishedState = currentStateRow ? toSitePublishedState(currentStateRow) : undefined;
   storefrontPerfMark("site", startedAt, { pageSlugs, profile: needs.profile });
   const siteId = site.id;
   const limits = publicRuntimeLimits(needs.profile);
@@ -1688,6 +1716,7 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
 
   const mappedMediaAssets = mediaAssets.map(toMediaAsset);
   const mappedSite = toPublicSiteShell(site, mappedMediaAssets);
+  if (currentPublishedState) mappedSite.currentPublishedState = currentPublishedState;
 
   const state = emptyPlatformState({
     sites: [mappedSite],
@@ -2103,6 +2132,10 @@ export const getStorefrontPublicRuntimeStateByHost = cache(async (host: string |
   const pageSlugs = publicRuntimePageSlugs(pageSlug);
   const pageKey = pageSlugs?.join("|") ?? "all";
   const contextKey = contextSlug ? slugify(contextSlug) : "none";
+  if (instantDraftPreviewEnabled()) {
+    const lookup = await getPublicRuntimeSiteLookupByHost(host);
+    return lookup ? loadStorefrontPublicRuntimeState(lookup, pageSlugs, contextSlug) : undefined;
+  }
   return siteReadCache.get(
     `public-runtime-host:${key}:${pageKey}:${contextKey}`,
     async () => {
@@ -2152,6 +2185,7 @@ export const getStorefrontPublicRuntimeStateBySlug = cache(async (slug: string, 
   const pageSlugs = publicRuntimePageSlugs(pageSlug);
   const pageKey = pageSlugs?.join("|") ?? "all";
   const contextKey = contextSlug ? slugify(contextSlug) : "none";
+  if (instantDraftPreviewEnabled()) return loadStorefrontPublicRuntimeState({ slugCandidates: legacySiteSlugCandidates(slug) }, pageSlugs, contextSlug);
   return siteReadCache.get(
     `public-runtime-slug:${canonicalSlug}:${pageKey}:${contextKey}`,
     () => loadStorefrontPublicRuntimeState({ slugCandidates: legacySiteSlugCandidates(slug) }, pageSlugs, contextSlug),
@@ -2515,15 +2549,18 @@ export type CustomerWorkspaceBootstrapRelational = {
   videoThemeCategories: VideoThemeCategory[];
   videoThemes: VideoTheme[];
   publishedVideoGenerationTopics: PublishedVideoNavigationProjection[];
+  publishedSaveTheDateGroups: PublishedSaveTheDateGroup[];
 };
 
 async function getPublishedVideoGenerationNavigationForSite(siteId: string): Promise<PublishedVideoNavigationProjection[]> {
   if (!isMydreamshootsVideoFrameworkSiteId(siteId)) return [];
   const site = await prisma.site.findUnique({
     where: { id: siteId },
-    select: { activePublication: { select: { publication: { select: { snapshot: true } } } } }
+    select: { currentPublishedState: { select: { payload: true, contentHash: true, revision: true } } }
   });
-  const snapshot = site?.activePublication?.publication?.snapshot as ThemePublicationSnapshot | undefined;
+  const current = site?.currentPublishedState;
+  if (!current || currentPublishedContentHash(current.payload) !== current.contentHash || currentPublishedRevision(siteId, current.contentHash) !== current.revision) return [];
+  const snapshot = current.payload as unknown as ThemePublicationSnapshot;
   if (publicationSnapshotIntegrity(snapshot) !== "valid") return [];
   return Array.isArray(snapshot?.publishedVideoNavigation) ? snapshot.publishedVideoNavigation : [];
 }
@@ -2613,7 +2650,7 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
     const site = await getCustomerWorkspaceSiteShellRelational(slug);
     if (!site) return undefined;
 
-    const [siteAiApps, navigationData, videoThemes, publishedVideoGenerationTopics] = await Promise.all([
+    const [siteAiApps, navigationData, videoThemes, publishedVideoGenerationTopics, publishedStateRow] = await Promise.all([
       prisma.siteAiApp.findMany({
         where: { siteId: site.id, enabled: true },
         include: { aiApp: true },
@@ -2626,8 +2663,12 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
       }),
       getStorefrontPublicNavigationDataForSite(site.id),
       getStorefrontPublicVideoThemesForSite(site.id),
-      getPublishedVideoGenerationNavigationForSite(site.id)
+      getPublishedVideoGenerationNavigationForSite(site.id),
+      prisma.sitePublishedState.findUnique({ where: { siteId: site.id }, select: { payload: true } })
     ]);
+    if (!publishedStateRow) throw new RelationalStoreError("current_published_state_missing", 503);
+    const publishedPayload = publishedStateRow.payload as unknown as ThemePublicationSnapshot;
+    if (publicationSnapshotIntegrity(publishedPayload) !== "valid") throw new RelationalStoreError("current_published_state_invalid", 503);
 
     return {
       site: {
@@ -2643,7 +2684,8 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
       toolMenuItems: navigationData.toolMenuItems.map(watermarkedToolMenuItemForWorkspace),
       videoThemeCategories: navigationData.videoThemeCategories.map((category) => watermarkedVideoThemeCategoryForWorkspace(category) ?? category),
       videoThemes: videoThemes.map(watermarkedVideoThemeForWorkspace),
-      publishedVideoGenerationTopics
+      publishedVideoGenerationTopics,
+      publishedSaveTheDateGroups: resolvePublishedSaveTheDateGroups(publishedPayload.publishedHomepageShowcases ?? [])
     };
   }, Number(process.env.STOREFRONT_WORKSPACE_BOOTSTRAP_CACHE_TTL_MS ?? 60_000));
 }

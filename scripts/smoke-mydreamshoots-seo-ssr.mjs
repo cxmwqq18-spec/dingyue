@@ -241,6 +241,8 @@ function renderedMarkup(html) {
 const homepage = await fetchHtml("/");
 const sitePathHomepage = await fetchHtml("/site/mydreamshoots/");
 const pricing = await fetchHtml("/pricing");
+const aiImageDirectory = await fetchHtml("/ai-image-generation");
+const aiVideoDirectory = await fetchHtml("/ai-video-generation");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
 const robotsResponse = await fetchStatusNoRedirect("/robots.txt", "text/plain");
 assert.equal(robotsResponse.status, 200, "robots.txt must return HTTP 200");
@@ -397,6 +399,13 @@ const promoVideoGenerationProducts = promoVideoGenerationGraph.filter((node) => 
 const videoAdGenerationProducts = videoAdGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const collectionProduct = collectionProducts[0];
 const collectionOffer = collectionProduct?.offers;
+const aiImageOgImage = firstMatch(aiImageDirectory, /<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i);
+const aiImageTwitterImage = firstMatch(aiImageDirectory, /<meta\s+name=["']twitter:image["']\s+content=["']([^"']+)["']/i);
+assert.ok(aiImageOgImage, "AI Image directory SSR must contain og:image");
+assert.equal(aiImageTwitterImage, aiImageOgImage, "AI Image directory Twitter image must match og:image");
+assert.doesNotMatch(aiImageOgImage, /cyberpunk-solo-city/i, "AI Image directory must not reuse the shared Cyberpunk default image");
+assert.doesNotMatch(aiImageDirectory, /<a\s+class=["'][^"']*group\/package[^"']*["'][^>]*href=["'][^"']*motion-generator/i, "AI Image package navigation must not expose Motion Generator");
+assert.doesNotMatch(aiVideoDirectory, /href=["'][^"']*how-to-video/i, "AI Video directory must not expose the review-required How-to Video route");
 const forbiddenLoadingCopy = [
   "Reviews and trust signals are loading now",
   "Preparing credits and plan options",

@@ -7,7 +7,7 @@ import type { AiWorkflowConfig, AiWorkflowField, AiWorkflowStep, CreativePack, C
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { customerImageUploadErrorMessage, prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import { invalidateCustomerAssets, loadCustomerAssets } from "@/components/app/customer-assets-client-cache";
-import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
+import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
 import { creativePackCollectionHref, creativePackMatchesCategory, getPhotoPackageMegaGroups, photoPackageSlug, type PhotoPackageMegaGroup } from "@/lib/photo-package-taxonomy";
 import { withStorefrontPublicWatermarkUrl } from "@/lib/storefront-public-watermark-url";
 import { themeValueToString } from "@/lib/theme-values";

@@ -17,6 +17,7 @@ import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilitie
 import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import type { CreativePack, PlatformState, PublishedLeafRouteProjection, PublishedSeoSnapshot, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
+import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
 export const MYDREAMSHOOTS_SITEMAP_URL = `${MYDREAMSHOOTS_ORIGIN}/sitemap.xml`;
@@ -641,6 +642,10 @@ function canonicalBlogPathForSite(site: Site, path: string): string {
 
 function canonicalDirectoryPathForSite(site: Site, path: string): string {
   const normalized = normalizePath(path);
+  if (isDreamshootSite(site)) {
+    const canonicalSaveDate = canonicalSaveTheDatePath(normalized);
+    if (canonicalSaveDate !== normalized) return canonicalSaveDate;
+  }
   if (isCollectionDirectoryPath(normalized)) return publicCollectionPathForSite(site, collectionSlugFromDirectoryPath(site, normalized));
   if (isVideoGenerationDirectoryPath(site, normalized)) return parsePublicVideoGenerationRouteForSite(site, normalized)?.canonicalPath ?? normalized;
   if (normalized.startsWith("/tools/")) return canonicalToolPathForSite(site, normalized);
@@ -1033,6 +1038,8 @@ export async function getStorefrontSitemapUrlsForHost(hosts: string | null | und
 export type StorefrontSitemapPayload = {
   entries: SitemapEntry[];
   identity?: {
+    publicationId?: string;
+    publicationVersion?: number;
     currentRevision?: string;
     contentHash?: string;
     snapshotHash?: string;
@@ -1075,6 +1082,8 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
   return {
     entries,
     identity: {
+      publicationId: site.activePublication?.id,
+      publicationVersion: site.activePublication?.version,
       currentRevision: currentState.revision,
       contentHash: currentState.contentHash,
       snapshotHash: snapshot.snapshotHash,
@@ -1099,6 +1108,8 @@ export async function getStorefrontSitemapEntriesForHost(hosts: string | null | 
 export async function getStorefrontPublicationIdentityForHost(
   hosts: string | null | undefined | Array<string | null | undefined>
 ): Promise<{
+  publicationId?: string;
+  publicationVersion?: number;
   currentRevision?: string;
   contentHash?: string;
   snapshotHash?: string;

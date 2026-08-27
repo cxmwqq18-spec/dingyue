@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const siteId = "site_dreamshoot";
-const pathName = "/holidays-events/wedding-invitation";
+const pathName = "/ai-save-the-date/wedding-invitation";
 const state = await readPlatformStateFromSql();
 const site = state.sites.find((candidate) => candidate.id === siteId);
 assert(site, `missing_site:${siteId}`);
@@ -32,8 +32,8 @@ assert.equal(json.sections?.wedding_invitation_faq?.blocks?.length, 8, `${pathNa
 assert.equal(json.mediaManifest?.length, 10, `${pathName}: media manifest`);
 assert.equal(new Set(json.mediaManifest.map((image) => image.src)).size, 10, `${pathName}: unique media`);
 assert(json.mediaManifest.every((image) => image.src.startsWith("/assets/dreamshoot/wedding-invitation/") && image.alt), `${pathName}: owned media`);
-assert(json.relatedLinks.some((link) => link.href === "/holidays-events/save-the-date"), `${pathName}: Save the Date separation link`);
-assert(json.relatedLinks.some((link) => link.href === "/ai-video-generation/wedding-ceremony"), `${pathName}: Wedding Ceremony link`);
+assert(json.relatedLinks.some((link) => link.href === "/ai-save-the-date/save-the-date"), `${pathName}: Save the Date separation link`);
+assert(json.relatedLinks.some((link) => link.href === "/ai-save-the-date/wedding-ceremony"), `${pathName}: Wedding Ceremony link`);
 
 const standardMedia = snapshot.publishedStandardPageMedia.find((candidate) => candidate.canonicalPath === pathName);
 assert.equal(standardMedia?.status, "ready", `${pathName}: media projection must be ready`);

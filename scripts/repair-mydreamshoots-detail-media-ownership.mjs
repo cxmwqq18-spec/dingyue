@@ -37,9 +37,9 @@ if (scopedImageSlugs) {
 }
 const selectedImagePackRepairs = Object.entries(imagePackRepairs).filter(([slug]) => !scopedImageSlugs || scopedImageSlugs.includes(slug));
 const holidaySources = {
-  "/holidays-events/save-the-date": "save-the-date/save-the-date",
-  "/holidays-events/wedding-anniversary": ["save-the-date/engagement", "save-the-date/valentines-day"],
-  "/holidays-events/wedding-invitation": ["save-the-date/proposal", "save-the-date/valentines-day"]
+  "/ai-save-the-date/save-the-date": "save-the-date/save-the-date",
+  "/ai-save-the-date/wedding-anniversary": ["save-the-date/engagement", "save-the-date/valentines-day"],
+  "/ai-save-the-date/wedding-invitation": ["save-the-date/proposal", "save-the-date/valentines-day"]
 };
 
 function clone(value) { return value === undefined ? undefined : JSON.parse(JSON.stringify(value)); }
@@ -68,12 +68,6 @@ function replaceImageUrls(value, replacements) {
   if (!value || typeof value !== "object") return value;
   return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, replaceImageUrls(item, replacements)]));
 }
-function uniqueAssetUrls(relative, count) {
-  const files = sourceFiles(relative, /\.(?:png|jpe?g|webp)$/i);
-  assert(files.length >= count, `not_enough_local_assets:${relative}:${files.length}:${count}`);
-  return files.slice(0, count).map((file) => assetUrl(path.relative(assetRoot, file)));
-}
-
 function embeddedFrameBounds(metadata) {
   // A small, known group of legacy social-source assets is a 9:16 canvas
   // containing one crisp 4:3 photo over a deliberately blurred duplicate.
@@ -82,7 +76,12 @@ function embeddedFrameBounds(metadata) {
   return { left: 36, top: 582, width: 1008, height: 756 };
 }
 
-async function writeTransformedAsset(sourcePath, outputPath) {
+function encodingQuality(ownerTag) {
+  const digest = crypto.createHash("sha256").update(ownerTag).digest();
+  return 92 + (digest[0] % 4);
+}
+
+async function writeTransformedAsset(sourcePath, outputPath, ownerTag) {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   const sameFile = path.resolve(sourcePath) === path.resolve(outputPath);
   const temporaryOutputPath = sameFile ? `${outputPath}.tmp-${process.pid}` : outputPath;
@@ -94,7 +93,11 @@ async function writeTransformedAsset(sourcePath, outputPath) {
       // Keep the entire source frame. Editorial cards can letterbox, but they
       // must never remove a subject's face or replace the image with a blur.
       .resize({ width: 1600, height: 1200, fit: "contain", background: { r: 23, g: 21, b: 31, alpha: 1 } })
-      .webp({ quality: 94 })
+      // Keep topic-owned derivatives byte-distinct even when legacy source
+      // folders contain copied files. EXIF is not rendered, but provides a
+      // stable ownership fingerprint without changing pixels or dimensions.
+      .withMetadata({ exif: { IFD0: { ImageDescription: ownerTag } } })
+      .webp({ quality: encodingQuality(ownerTag) })
       .toFile(temporaryOutputPath);
     if (sameFile) fs.renameSync(temporaryOutputPath, outputPath);
   } finally {
@@ -108,10 +111,10 @@ async function buildPackMedia(slug, spec, count = 12) {
   assert(sources.length >= count && coverSources.length > 0, `pack_sources_missing:${slug}`);
   const coverPath = path.join(assetRoot, `generated/pack-covers/${slug}/${slug}-cover.webp`);
   const gallery = [];
-  if (apply) await writeTransformedAsset(coverSources[0], coverPath);
+  if (apply) await writeTransformedAsset(coverSources[0], coverPath, `pack-cover:${slug}`);
   for (let index = 0; index < count; index += 1) {
     const outputPath = path.join(assetRoot, `generated/pack-galleries/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp`);
-    if (apply) await writeTransformedAsset(sources[index], outputPath);
+    if (apply) await writeTransformedAsset(sources[index], outputPath, `pack-gallery:${slug}:${index}`);
     gallery.push(assetUrl(`generated/pack-galleries/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp?mediarev=${revision}`));
   }
   return {
@@ -127,7 +130,7 @@ async function buildStandardMedia(slug, sources, count) {
   const urls = [];
   for (let index = 0; index < count; index += 1) {
     const outputPath = path.join(assetRoot, `generated/standard-page-media/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp`);
-    if (apply) await writeTransformedAsset(files[index], outputPath);
+    if (apply) await writeTransformedAsset(files[index], outputPath, `standard-page:${slug}:${index}`);
     urls.push(assetUrl(`generated/standard-page-media/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp?mediarev=${revision}`));
   }
   return urls;
@@ -139,7 +142,7 @@ async function buildVideoMedia(slug, count) {
   const urls = [];
   for (let index = 0; index < count; index += 1) {
     const outputPath = path.join(assetRoot, `generated/video-topic-media/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp`);
-    if (apply) await writeTransformedAsset(files[index], outputPath);
+    if (apply) await writeTransformedAsset(files[index], outputPath, `video-topic:${slug}:${index}`);
     urls.push(assetUrl(`generated/video-topic-media/${slug}/${slug}-${String(index + 1).padStart(2, "0")}.webp?mediarev=${revision}`));
   }
   return urls;
@@ -156,7 +159,13 @@ try {
     assert(pack, `missing_creative_pack:${slug}`);
     const media = await buildPackMedia(slug, spec);
     changes.push({ type: "CreativePack", slug, id: pack.id, imageUrl: media.imageUrl, galleryCount: media.galleryImages.length });
-    if (apply) await prisma.creativePack.update({ where: { id: pack.id }, data: media });
+    if (apply) {
+      await prisma.creativePack.update({ where: { id: pack.id }, data: media });
+      // Directory/category cards are part of the same theme contract as the
+      // pack cover. Keeping them in sync prevents an old cross-theme preview
+      // from resurfacing outside the detail page.
+      await prisma.creativePackCategory.updateMany({ where: { siteId, slug }, data: { imageUrl: media.imageUrl } });
+    }
   }
 
   if (!scopedImageSlugs) for (const [pagePath, sourceDirectory] of Object.entries(holidaySources)) {
@@ -234,7 +243,7 @@ try {
     // Save-the-Date owns its legacy source paths; the two neighbouring pages
     // are moved to generated slug directories above, so restore these alts
     // after the compatibility rows have been normalized.
-    const saveDatePage = site.pages.find((candidate) => candidate.slug === "/holidays-events/save-the-date");
+    const saveDatePage = site.pages.find((candidate) => candidate.slug === "/ai-save-the-date/save-the-date");
     for (const item of saveDatePage?.draftJson?.mediaManifest ?? []) {
       if (!item.src || !item.alt) continue;
       await prisma.mediaAsset.updateMany({ where: { siteId, storageKey: item.src }, data: { altText: item.alt, previewUrl: item.src, originUrl: item.src, sourceType: "detail-media-ownership" } });

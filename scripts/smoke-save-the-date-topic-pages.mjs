@@ -6,12 +6,12 @@ import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const SITE_ID = "site_dreamshoot";
 const pages = [
-  { path: "/holidays-events/engagement", key: "engagement", media: 11, faq: 8, sections: ["hero", "intent", "story-structures", "workflow", "scene-directions", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"] },
-  { path: "/holidays-events/proposal", key: "proposal", media: 10, faq: 8, sections: ["hero", "definition", "use-cases", "story-flow", "workflow", "source-media", "accuracy", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_flow", "editorial_steps", "editorial_quality", "editorial_quality", "faq", "editorial_cta"] },
-  { path: "/holidays-events/save-the-date", key: "save_date", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "workflow", "scene-ideas", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"] },
-  { path: "/ai-video-generation/wedding-ceremony", key: "wedding_ceremony", media: 11, faq: 9, sections: ["hero", "definition", "reasons", "sources", "workflow", "scene-ideas", "quality", "boundaries", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_quality", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_boundaries", "faq", "editorial_cta"] },
-  { path: "/holidays-events/mothers-day", key: "mothers_day", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "quality", "workflow", "scene-ideas", "formats", "family-match", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_quality", "editorial_steps", "editorial_scene_grid", "editorial_rich_text", "editorial_rich_text", "faq", "editorial_cta"] },
-  { path: "/holidays-events/fathers-day", key: "fathers_day", media: 11, faq: 6, sections: ["hero", "definition", "scene-ideas", "quality", "workflow", "use-cases", "gallery", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_quality", "editorial_steps", "editorial_story_grid", "editorial_scene_grid", "faq", "editorial_cta"] },
+  { path: "/ai-save-the-date/engagement", key: "engagement", media: 11, faq: 8, sections: ["hero", "intent", "story-structures", "workflow", "scene-directions", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"] },
+  { path: "/ai-save-the-date/proposal", key: "proposal", media: 10, faq: 8, sections: ["hero", "definition", "use-cases", "story-flow", "workflow", "source-media", "accuracy", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_flow", "editorial_steps", "editorial_quality", "editorial_quality", "faq", "editorial_cta"] },
+  { path: "/ai-save-the-date/save-the-date", key: "save_date", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "workflow", "scene-ideas", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"] },
+  { path: "/ai-save-the-date/wedding-ceremony", key: "wedding_ceremony", media: 11, faq: 9, sections: ["hero", "definition", "reasons", "sources", "workflow", "scene-ideas", "quality", "boundaries", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_quality", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_boundaries", "faq", "editorial_cta"] },
+  { path: "/ai-save-the-date/mothers-day", key: "mothers_day", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "quality", "workflow", "scene-ideas", "formats", "family-match", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_quality", "editorial_steps", "editorial_scene_grid", "editorial_rich_text", "editorial_rich_text", "faq", "editorial_cta"] },
+  { path: "/ai-save-the-date/fathers-day", key: "fathers_day", media: 11, faq: 6, sections: ["hero", "definition", "scene-ideas", "quality", "workflow", "use-cases", "gallery", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_quality", "editorial_steps", "editorial_story_grid", "editorial_scene_grid", "faq", "editorial_cta"] },
 ];
 const state = await readPlatformStateFromSql();
 const site = state.sites.find((candidate) => candidate.id === SITE_ID);
@@ -43,20 +43,21 @@ for (const expected of pages) {
   assert.equal(new Set(json.mediaManifest.map((item) => item.src)).size, expected.media, `${expected.path}: manifest uniqueness`);
   assert(json.mediaManifest.every((item) => item.alt && item.width === 1600 && item.height === 1000 && ["hero", "content"].includes(item.role)), `${expected.path}: manifest metadata`);
   assert(json.mediaManifest.every((item) => state.mediaAssets.some((asset) => asset.siteId === SITE_ID && asset.storageKey === item.src && asset.altText === item.alt)), `${expected.path}: media owner`);
-  if (expected.path === "/holidays-events/engagement") {
+  if (expected.path === "/ai-save-the-date/engagement") {
     const sceneSection = json.sections?.["engagement_scene_directions"];
     const sceneBlocks = sceneSection?.blocks?.slice(1) ?? [];
     assert.equal(sceneBlocks.length, 8, `${expected.path}: scene direction count`);
     assert(sceneBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: scene direction media`);
   }
-  if (expected.path === "/holidays-events/save-the-date") {
+  if (expected.path === "/ai-save-the-date/save-the-date") {
     const sceneBlocks = json.sections?.save_date_scene_ideas?.blocks ?? [];
     assert.equal(sceneBlocks.length, 11, `${expected.path}: scene idea count`);
     assert(sceneBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: scene idea media`);
     const formatBlocks = json.sections?.save_date_formats?.blocks ?? [];
     assert(formatBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: format media`);
+    assert(cta.settings?.imageUrl && cta.settings?.imageAlt, `${expected.path}: final CTA media`);
   }
-  if (expected.path === "/holidays-events/proposal") {
+  if (expected.path === "/ai-save-the-date/proposal") {
     const useCaseBlocks = json.sections?.proposal_use_cases?.blocks ?? [];
     const flowBlocks = json.sections?.proposal_story_flow?.blocks ?? [];
     assert.equal(useCaseBlocks.length, 7, `${expected.path}: use-case count`);
@@ -90,5 +91,5 @@ assert.equal(navigation.groups[0]?.label, "Love & Wedding");
 const sitemap = snapshot.publishedStandardPageMedia.map((media) => media.canonicalPath);
 for (const page of pages) assert(sitemap.includes(page.path), `${page.path}: missing sitemap media projection`);
 const renderer = fs.readFileSync(path.join(process.cwd(), "src/components/theme-renderer.tsx"), "utf8");
-for (const token of ["/holidays-events/engagement", "/holidays-events/proposal", "hero-ai-proposal-rooftop-surprise-night.jpg"]) assert(!renderer.includes(token), `renderer contains page-specific token: ${token}`);
+for (const token of ["/ai-save-the-date/engagement", "/ai-save-the-date/proposal", "hero-ai-proposal-rooftop-surprise-night.jpg"]) assert(!renderer.includes(token), `renderer contains page-specific token: ${token}`);
 console.log(JSON.stringify({ siteId: SITE_ID, publicationVersion: site.activePublication.version, pages: pages.map((page) => ({ path: page.path, media: page.media, faq: page.faq })) }, null, 2));

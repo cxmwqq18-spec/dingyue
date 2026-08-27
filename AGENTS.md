@@ -8,6 +8,23 @@ This is an active implementation contract. Before reporting a public storefront
 change as complete, verify the applicable data owner, active publication,
 snapshot/readback evidence, and regression checks required by that document.
 
+## Publication Snapshot Switching Rule
+
+During development, testing, release preparation, and production deployment,
+do not switch to, restore, import, or silently fall back to any historical
+publication or snapshot without the site owner's explicit approval in the
+current task. Scripts and runtime code must never choose an older snapshot just
+because it is available, newer code fails, or a current-state record is
+missing.
+
+When older copy or another historical field is required, create a new candidate
+publication from the latest current data and apply only the explicitly
+approved field changes. Keep all other pages, routes, media, navigation, SEO,
+and facts from the latest current source. Activate the new publication only
+after integrity checks and production readback pass. A rollback to an older
+publication is an exceptional, explicitly approved operation and must record
+the approval, publication ID/version, snapshot hash, and readback result.
+
 ## Public Storefront SSR Data Rule
 
 All public, indexable storefront pages, including MyDreamShoots home, catalog

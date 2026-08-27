@@ -9,10 +9,10 @@ const root = process.env.SEASONAL_SOURCE_ROOT || "/tmp/mydreamshoots-seasonal-pa
 const mothersFathersRoot = process.env.SEASONAL_MOTHERS_FATHERS_SOURCE_ROOT || "/tmp/mothers-fathers-packages.eaALdG";
 const halloweenRoot = process.env.SEASONAL_SOURCE_ROOT || "/tmp/mydreamshoots-seasonal-packages.83JYeu";
 const packages = [
-  ["wedding-ceremony", "ai-wedding-ceremony-photo-video", "/ai-video-generation/wedding-ceremony", root],
-  ["mothers-day", "ai-mothers-day-photo-and-video-final", "/holidays-events/mothers-day", mothersFathersRoot],
-  ["fathers-day", "ai-fathers-day-photo-and-video-final", "/holidays-events/fathers-day", mothersFathersRoot],
-  ["halloween", "ai-halloween-photo-and-video-final", "/holidays-events/halloween", halloweenRoot]
+  ["wedding-ceremony", "ai-wedding-ceremony-photo-video", "/ai-save-the-date/wedding-ceremony", root],
+  ["mothers-day", "ai-mothers-day-photo-and-video-final", "/ai-save-the-date/mothers-day", mothersFathersRoot],
+  ["fathers-day", "ai-fathers-day-photo-and-video-final", "/ai-save-the-date/fathers-day", mothersFathersRoot],
+  ["halloween", "ai-halloween-photo-and-video-final", "/ai-save-the-date/halloween", halloweenRoot]
 ];
 
 function csvRows(file) {

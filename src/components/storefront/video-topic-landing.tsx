@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import type { SectionInstance, Site } from "@/lib/types";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
-import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
+import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import { aiVideoTopicLandingContentFromSection, type AiVideoTopicLandingContent } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/talking-photo-content";
@@ -12,8 +12,9 @@ type RoutedSite = Site & { __storefrontBasePath?: string };
 
 const defaultObjectPosition = "50% 38%";
 // Generated topic-media files use a 4:3 canvas with a 16:9 scene and
-// letterbox bars baked into the pixels. They need a 16:9 cover frame so the
-// scene, rather than those baked bars, fills the media area.
+// letterbox bars baked into the pixels. Keep the source dimensions accurate;
+// embedded media uses a 16:9 cover frame to remove those bars without scaling
+// distortion.
 const talkingPhotoImageSize = { width: 1600, height: 1200 };
 
 type VideoTopicImage = {
@@ -232,7 +233,7 @@ function optimizedTopicImageSrc(src: string): string {
   return src.replace(/\.png(?=[?#]|$)/i, ".webp");
 }
 
-function DirectTopicHeroCards({ images }: { images: VideoTopicImage[] }) {
+function DirectTopicHeroCards({ images, cropPetHero = false }: { images: VideoTopicImage[]; cropPetHero?: boolean }) {
   const cards = images.slice(0, 3);
   const hasThreeCards = cards.length >= 3;
   return (
@@ -247,13 +248,15 @@ function DirectTopicHeroCards({ images }: { images: VideoTopicImage[] }) {
           key={item.src}
           style={{
             ...(hasThreeCards && index === 0 ? { gridColumn: "1 / -1" } : {}),
-            // The lead portrait is intentionally cropped to its upper two-thirds;
-            // the preview lightbox still exposes the complete source image.
+            // Lead cards use a cropped framing; the preview lightbox still exposes
+            // the complete source image.
             aspectRatio:
               hasThreeCards && index === 0
-                ? hasEmbeddedVideoLetterbox(item)
-                  ? "1 / 1"
-                  : `${item.width} / ${Math.round(item.height * (2 / 3))}`
+                ? cropPetHero && hasEmbeddedVideoLetterbox(item)
+                  ? "6 / 7"
+                  : hasEmbeddedVideoLetterbox(item)
+                    ? "1 / 1"
+                    : `${item.width} / ${Math.round(item.height * (2 / 3))}`
                 : mediaAspectRatio(item)
           }}
           {...(hasThreeCards && index === 0
@@ -270,10 +273,10 @@ function DirectTopicHeroCards({ images }: { images: VideoTopicImage[] }) {
           <img
             src={optimizedTopicImageSrc(item.src)}
             alt={item.alt}
-            className={`absolute ${hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item) ? "top-0 left-1/2 h-auto max-w-none" : "inset-0 h-full w-full"} ${hasThreeCards && index === 0 && !hasEmbeddedVideoLetterbox(item) ? "object-cover object-top" : "object-contain object-center"}`}
+            className={`absolute ${hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item) ? "top-0 left-1/2 h-auto max-w-none" : "inset-0 h-full w-full"} ${hasThreeCards && index === 0 && !hasEmbeddedVideoLetterbox(item) ? "object-cover object-top" : `${mediaObjectFit(item)} object-center`}`}
             style={
               hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item)
-                ? { width: "200%", transform: "translateX(-50%)", objectPosition: "50% 0%" }
+                ? { width: "200%", transform: cropPetHero ? "translate(-50%, -18%)" : "translateX(-50%)", objectPosition: cropPetHero ? "50% 50%" : "50% 0%" }
                 : hasThreeCards && index === 0
                   ? { objectPosition: "50% 0%" }
                   : imageStyle(item)
@@ -1388,7 +1391,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end" data-video-topic-hero-media>
             <div className={`relative w-full overflow-hidden rounded-[8px] border ${accentBorder} bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]`}>
-              <DirectTopicHeroCards images={heroImages} />
+              <DirectTopicHeroCards images={heroImages} cropPetHero={isPet} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60"><Sparkles className={`mt-1 h-4 w-4 shrink-0 ${accentClass}`} strokeWidth={1.8} /><span>{content.hero.caption}</span></figcaption>
           </figure>
