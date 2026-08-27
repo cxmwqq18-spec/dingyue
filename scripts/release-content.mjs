@@ -383,7 +383,18 @@ async function upsertRows(tx, table, rows, transform = (row) => row) {
     const row = transform(rawRow);
     const create = preparedData(row);
     const update = preparedData(row, { update: true });
-    await delegate.upsert({ where: uniqueWhere(table, row), create, update });
+    const where = uniqueWhere(table, row);
+    // Route slugs can migrate while their stable ThemePage id remains the
+    // same. Update that row by id instead of attempting a conflicting create.
+    if (table === "themePages") {
+      const existing = await delegate.findUnique({ where: { id: row.id }, select: { id: true, siteId: true } });
+      if (existing) {
+        if (existing.siteId !== row.siteId) fail(`ThemePage id ${row.id} belongs to another site.`);
+        await delegate.update({ where: { id: row.id }, data: update });
+        continue;
+      }
+    }
+    await delegate.upsert({ where, create, update });
   }
 }
 

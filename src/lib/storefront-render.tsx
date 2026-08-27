@@ -2732,13 +2732,18 @@ export async function renderStorefrontPage({
     : renderData;
   const focusedCollectionRenderData = isFocusedCollectionPage ? trimFocusedCollectionRenderData(renderData, collectionCategory) : renderData;
   const useSharedNavigation = usesSharedDreamShootNavigation(currentSite);
+  // Header menus are global storefront navigation. Focused collection routes
+  // intentionally narrow `renderData` to the selected collection for the page
+  // body, so build the menu projection from the complete site render data.
+  // Otherwise each pack on a detail route is treated as its own category.
+  const navigationRenderData = imagePackIds
+    ? { ...currentRenderData, creativePacks: currentRenderData.creativePacks.filter((pack) => imagePackIds.has(pack.id)) }
+    : currentRenderData;
   const navigationCreativePackCategories = useSharedNavigation
-    ? trimCreativePackCategoriesForStorefront(renderData)
+    ? trimCreativePackCategoriesForStorefront(navigationRenderData)
     : undefined;
   const navigationCreativePacks = useSharedNavigation
-    ? trimCreativePacksForNavigation(imagePackIds
-      ? { ...renderData, creativePacks: renderData.creativePacks.filter((pack) => imagePackIds.has(pack.id)) }
-      : renderData)
+    ? trimCreativePacksForNavigation(navigationRenderData)
     : undefined;
   const navigationToolMenuItems = useSharedNavigation
     ? renderData.toolMenuItems.map(lightweightToolMenuItem)
