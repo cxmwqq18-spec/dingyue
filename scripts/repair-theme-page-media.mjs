@@ -11,6 +11,7 @@ const image = (asset) => asset ? ({ imageUrl: asset.src, imageAlt: asset.alt || 
 const section = (json, id) => json.sections?.[id];
 const setBlockImage = (block, asset) => { if (block && asset) block.settings = { ...block.settings, ...image(asset) }; };
 const setListImages = (list, assets) => (list || []).forEach((block, index) => setBlockImage(block, assets[index % assets.length]));
+const removeImageSettings = (settings) => { if (!settings || typeof settings !== "object") return settings; const next = { ...settings }; for (const key of ["imageUrl", "imageAlt", "imageWidth", "imageHeight", "imageLoading", "imageFetchPriority"]) delete next[key]; return next; };
 
 const prisma = new PrismaClient();
 try {
@@ -58,10 +59,16 @@ try {
       const flowItems = [["Setup", "Open with the location, context, and couple details before the proposal moment."], ["Build-up", "Increase anticipation with a short sequence that stays believable."], ["Proposal", "Hold on the central question and ring reveal as the visual peak."], ["Reaction", "Give the answer and embrace enough time to read naturally."], ["Close", "Finish with a calm couple frame and editable message layer."]];
       if (flow) flow.blocks = flowItems.map(([title, text], index) => ({ id: `proposal-story-flow-${index + 1}`, type: "story_card", settings: { title, text, ...image([assets[0], assets[3], assets[4], assets[5], assets[6]][index]) } }));
       const workflow = section(json, "proposal_workflow");
-      setListImages(workflow?.blocks, [assets[8], assets[0], assets[4], assets[5], assets[8], assets[9]]);
-      if (workflow) workflow.settings = { ...workflow.settings, ...image(assets[8]) };
+      if (workflow) {
+        workflow.settings = removeImageSettings(workflow.settings);
+        workflow.blocks = (workflow.blocks || []).map((block) => ({ ...block, settings: removeImageSettings(block.settings) }));
+      }
       const source = section(json, "proposal_source_media");
-      if (source) source.settings = { ...source.settings, ...image(assets[9]) };
+      if (source) source.settings = { ...source.settings, ...image(assets[8]) };
+      const accuracy = section(json, "proposal_accuracy");
+      if (accuracy) accuracy.settings = { ...accuracy.settings, ...image(assets[9]) };
+      const cta = section(json, "proposal_final_cta");
+      if (cta) cta.settings = removeImageSettings(cta.settings);
     }
     if (page.slug === "/ai-save-the-date/valentines-day") {
       const positioning = section(json, "save_date_positioning"); if (positioning) positioning.settings = { ...positioning.settings, ...image(assets[1]) };

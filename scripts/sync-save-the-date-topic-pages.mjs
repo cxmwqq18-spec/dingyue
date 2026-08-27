@@ -236,11 +236,11 @@ function parsePackage(config) {
     }
     else if (id === "workflow") {
       const workflowBlocks = blocks(workflow.length ? workflow : listItems(find("How to make|How It Works")).map((text) => ({ title: text, text })), "step", (item, n) => ({ number: n + 1, title: item.title, text: item.text }), id);
-      const workflowAssets = config.key === "proposal" ? [manifest[8], manifest[0], manifest[4], manifest[5], manifest[8], manifest[9]] : config.key === "engagement" ? [manifest[5], manifest[5], manifest[6], manifest[3], manifest[10], manifest[10]] : [manifest[3], manifest[3], manifest[7], manifest[8], manifest[10], manifest[10]];
+      const workflowAssets = config.key === "engagement" ? [manifest[5], manifest[5], manifest[6], manifest[3], manifest[10], manifest[10]] : config.key === "save-the-date" ? [manifest[3], manifest[3], manifest[7], manifest[8], manifest[10], manifest[10]] : [];
       workflowBlocks.forEach((block, blockIndex) => { const asset = workflowAssets[blockIndex]; if (asset) block.settings = { ...block.settings, ...imageSettings(asset) }; });
-      sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "How it works"), ...imageSettings(workflowAssets[0] || allocateImage(id)) }, blocks: workflowBlocks };
+      sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "How it works"), ...(workflowAssets[0] ? imageSettings(workflowAssets[0]) : {}) }, blocks: workflowBlocks };
     }
-    else if (id === "quality" || id === "accuracy") sections[sectionId] = { type: "editorial_quality", settings: { anchor: id, title: titleFor(index, "Quality and responsibility") }, blocks: listItems(qualitySource).map((text, n) => ({ id: `${config.key}-quality-${n + 1}`, type: "quality_item", settings: { text } })) };
+    else if (id === "quality" || id === "accuracy") sections[sectionId] = { type: "editorial_quality", settings: { anchor: id, title: titleFor(index, "Quality and responsibility"), ...(config.key === "proposal" && id === "accuracy" ? imageSettings(manifest[9]) : {}) }, blocks: listItems(qualitySource).map((text, n) => ({ id: `${config.key}-quality-${n + 1}`, type: "quality_item", settings: { text } })) };
     else if (id === "formats") {
       const formatBlocks = blocks(formats, "format", undefined, id);
       const formatAssets = config.key === "engagement" ? [manifest[10], manifest[9], manifest[10]] : [manifest[10], manifest[6], manifest[9]];
@@ -248,10 +248,10 @@ function parsePackage(config) {
       sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Output formats"), ...imageSettings(formatAssets[0]) }, blocks: formatBlocks };
     }
     else if (id === "boundaries") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Page boundaries") }, blocks: listItems(boundariesSource).map((text, n) => ({ id: `${config.key}-boundary-${n + 1}`, type: "boundary", settings: { text } })) };
-    else if (id === "source-media") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Source media guidance") }, blocks: listItems(find("How It Works|Source-Media Guidance")).map((text, n) => ({ id: `${config.key}-source-${n + 1}`, type: "guidance", settings: { text } })) };
+    else if (id === "source-media") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Source media guidance"), ...(config.key === "proposal" ? imageSettings(manifest[8]) : {}) }, blocks: listItems(find("How It Works|Source-Media Guidance")).map((text, n) => ({ id: `${config.key}-source-${n + 1}`, type: "guidance", settings: { text } })) };
     else if (id === "evidence") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Evidence and review") }, blocks: [{ id: `${config.key}-evidence-1`, type: "evidence", settings: { text: paragraphs(evidenceSource).join(" ") || listItems(evidenceSource).join(" ") } }] };
     else if (id === "faq") sections[sectionId] = { type, settings: { anchor: id, title: "Frequently Asked Questions" }, blocks: faq.map((item) => ({ id: item.id, type: "faq_item", settings: item })) };
-    else if (id === "final-cta") sections[sectionId] = { type, settings: { anchor: id, title: finalCtaHeading, intro: finalCtaBody, primaryCta: finalCtaLabel, primaryHref: "/app/create", secondaryCta: heroSecondaryCta, secondaryHref: `#${config.sectionIds[Math.min(2, config.sectionIds.length - 1)]}`, ...imageSettings(allocateImage(id)) } };
+    else if (id === "final-cta") sections[sectionId] = { type, settings: { anchor: id, title: finalCtaHeading, intro: finalCtaBody, primaryCta: finalCtaLabel, primaryHref: "/app/create", secondaryCta: heroSecondaryCta, secondaryHref: `#${config.sectionIds[Math.min(2, config.sectionIds.length - 1)]}`, ...(config.key === "proposal" ? {} : imageSettings(allocateImage(id))) } };
   }
   const publishedLinkTargets = new Set([
     "/ai-save-the-date/valentines-day",

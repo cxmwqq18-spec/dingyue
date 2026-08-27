@@ -2746,13 +2746,13 @@ export async function renderStorefrontPage({
     ? trimCreativePacksForNavigation(navigationRenderData)
     : undefined;
   const navigationToolMenuItems = useSharedNavigation
-    ? renderData.toolMenuItems.map(lightweightToolMenuItem)
+    ? navigationRenderData.toolMenuItems.map(lightweightToolMenuItem)
     : undefined;
   const navigationVideoThemeCategories = useSharedNavigation
-    ? renderData.videoThemeCategories
+    ? navigationRenderData.videoThemeCategories
     : undefined;
   const navigationVideoThemes = useSharedNavigation
-    ? renderData.videoThemes
+    ? navigationRenderData.videoThemes
     : undefined;
   const navigationVideoGenerationTopics = publishedVideoGenerationTopics(publishedSnapshot);
   currentSite.mediaAssets = renderData.mediaAssets;
