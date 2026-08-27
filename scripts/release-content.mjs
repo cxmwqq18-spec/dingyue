@@ -380,7 +380,14 @@ async function upsertRows(tx, table, rows, transform = (row) => row) {
   const delegate = tx[modelByTable[table]];
   if (!delegate) fail(`Missing Prisma delegate for ${table}.`);
   for (const rawRow of asArray(rows)) {
-    const row = transform(rawRow);
+    let row = transform(rawRow);
+    if (table === "themePublications" && row.approvalId) {
+      const approval = await tx.themePublishApproval.findUnique({ where: { id: row.approvalId }, select: { id: true } });
+      // Historical snapshots may reference approvals that are not part of a
+      // public-content manifest. Keep the latest snapshot without inventing
+      // an approval record that was not supplied by the source data.
+      if (!approval) row = { ...row, approvalId: null };
+    }
     const create = preparedData(row);
     const update = preparedData(row, { update: true });
     const where = uniqueWhere(table, row);
