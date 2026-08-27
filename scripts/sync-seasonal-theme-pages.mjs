@@ -30,26 +30,26 @@ const siteId = process.env.SEASONAL_SITE_ID || "site_dreamshoot";
 // menu complete without manufacturing links to missing pages.
 const navigationCatalogue = [
   { href: "/ai-save-the-date/valentines-day", label: "Valentine's Day", group: "love-wedding" },
-  { href: "/holidays-events/engagement", label: "Engagement", group: "love-wedding" },
-  { href: "/holidays-events/proposal", label: "Proposal", group: "love-wedding" },
-  { href: "/holidays-events/save-the-date", label: "Save the Date", group: "love-wedding" },
-  { href: "/holidays-events/wedding-invitation", label: "Wedding Invitation", group: "love-wedding" },
-  { href: "/ai-video-generation/wedding-ceremony", label: "Wedding Ceremony", group: "love-wedding" },
-  { href: "/holidays-events/wedding-album", label: "Wedding Album", group: "love-wedding" },
-  { href: "/holidays-events/bridal-shower", label: "Bridal Shower", group: "love-wedding" },
-  { href: "/holidays-events/christmas", label: "Christmas", group: "seasonal-holidays" },
-  { href: "/holidays-events/halloween", label: "Halloween", group: "seasonal-holidays" },
-  { href: "/holidays-events/thanksgiving", label: "Thanksgiving", group: "seasonal-holidays" },
-  { href: "/holidays-events/new-year", label: "New Year", group: "seasonal-holidays" },
-  { href: "/holidays-events/easter", label: "Easter", group: "seasonal-holidays" },
-  { href: "/holidays-events/mothers-day", label: "Mother's Day", group: "seasonal-holidays" },
-  { href: "/holidays-events/fathers-day", label: "Father's Day", group: "seasonal-holidays" }
+  { href: "/ai-save-the-date/engagement", label: "Engagement", group: "love-wedding" },
+  { href: "/ai-save-the-date/proposal", label: "Proposal", group: "love-wedding" },
+  { href: "/ai-save-the-date/save-the-date", label: "Save the Date", group: "love-wedding" },
+  { href: "/ai-save-the-date/wedding-invitation", label: "Wedding Invitation", group: "love-wedding" },
+  { href: "/ai-save-the-date/wedding-ceremony", label: "Wedding Ceremony", group: "love-wedding" },
+  { href: "/ai-save-the-date/wedding-album", label: "Wedding Album", group: "love-wedding" },
+  { href: "/ai-save-the-date/bridal-shower", label: "Bridal Shower", group: "love-wedding" },
+  { href: "/ai-save-the-date/christmas", label: "Christmas", group: "seasonal-holidays" },
+  { href: "/ai-save-the-date/halloween", label: "Halloween", group: "seasonal-holidays" },
+  { href: "/ai-save-the-date/thanksgiving", label: "Thanksgiving", group: "seasonal-holidays" },
+  { href: "/ai-save-the-date/new-year", label: "New Year", group: "seasonal-holidays" },
+  { href: "/ai-save-the-date/easter", label: "Easter", group: "seasonal-holidays" },
+  { href: "/ai-save-the-date/mothers-day", label: "Mother's Day", group: "seasonal-holidays" },
+  { href: "/ai-save-the-date/fathers-day", label: "Father's Day", group: "seasonal-holidays" }
 ];
 const configs = [
   {
     key: "wedding-ceremony",
     sourceDir: process.env.SEASONAL_WEDDING_SOURCE_DIR || path.join(sourcePackageRoot, "ai-wedding-ceremony-photo-video"),
-    pagePath: "/ai-video-generation/wedding-ceremony",
+    pagePath: "/ai-save-the-date/wedding-ceremony",
     pageKey: "wedding_ceremony",
     tone: "wedding",
     heroImages: [
@@ -74,7 +74,7 @@ const configs = [
     key: "mothers-day",
     displayName: "Mother's Day",
     sourceDir: process.env.SEASONAL_MOTHERS_DAY_SOURCE_DIR || path.join(mothersFathersSourceRoot, "ai-mothers-day-photo-and-video-final"),
-    pagePath: "/holidays-events/mothers-day",
+    pagePath: "/ai-save-the-date/mothers-day",
     pageKey: "mothers_day",
     tone: "mothers-day",
     seoOverrides: {
@@ -121,7 +121,7 @@ const configs = [
     key: "fathers-day",
     displayName: "Father's Day",
     sourceDir: process.env.SEASONAL_FATHERS_DAY_SOURCE_DIR || path.join(mothersFathersSourceRoot, "ai-fathers-day-photo-and-video-final"),
-    pagePath: "/holidays-events/fathers-day",
+    pagePath: "/ai-save-the-date/fathers-day",
     pageKey: "fathers_day",
     tone: "fathers-day",
     seoOverrides: {
@@ -158,7 +158,7 @@ const configs = [
     key: "halloween",
     displayName: "Halloween",
     sourceDir: process.env.SEASONAL_HALLOWEEN_SOURCE_DIR || path.join(sourcePackageRoot, "ai-halloween-photo-and-video-final"),
-    pagePath: "/holidays-events/halloween",
+    pagePath: "/ai-save-the-date/halloween",
     pageKey: "halloween",
     tone: "halloween",
     indexable: false,
@@ -226,6 +226,20 @@ const clean = (value) => String(value ?? "")
   .replace(/\*([^*]+)\*/g, "$1")
   .replace(/\s+/g, " ")
   .trim();
+const customerText = (value) => clean(value)
+  .replace(/search intent/gi, "topic")
+  .replace(/primary keyword/gi, "main topic")
+  .replace(/indexation/gi, "publishing")
+  .replace(/Evidence Gate/gi, "review checklist")
+  .replace(/commercial permissions/gi, "commercial use terms")
+  .replace(/\b(?:The live page|The page|This page) should\b/gi, "This page")
+  .replace(/(?:the )?topic keyword and (?:search intent|topic) (?:are|is)/gi, "the topic is")
+  .replace(/the topic keyword and (?:search intent|topic) are AI Christmas Photo and Video rather than a Video-only page/gi, "the topic includes both Christmas photos and videos")
+  .replace(/This page state only the commercial use terms included in the current myDreamshoots plan and terms\. Do not infer commercial rights from a generic video-generation page\.?/gi, "Check the current plan terms before using the result commercially.")
+  .split(/(?<=[.!?])\s+/)
+  .map((sentence) => sentence.replace(/\bthe page should\b/gi, "the experience should"))
+  .filter((sentence) => !/\bsearch intent\b|\bprimary keyword\b|\bindexation\b|\bEvidence Gate\b/i.test(sentence))
+  .join(" ");
 
 function csvRows(file) {
   return read(file).trim().split(/\r?\n/).map((line) => {
@@ -478,22 +492,23 @@ function buildHalloweenPage(config, markdown, sections, seo, images) {
     primaryCta: "Create a Halloween look",
     primaryHref: "/app/create",
     secondaryCta: "Explore Seasonal Themes",
-    secondaryHref: "/holidays-events/save-the-date",
+    secondaryHref: "/ai-save-the-date/save-the-date",
     ...imageSettings(mappedImage(config, images, "Final CTA"))
   });
 
   const sectionIds = config.sections.map(([id]) => id);
   const sectionTypes = config.sections.map(([, type]) => type);
   const pageSeoIndexable = config.indexable !== false;
+  const customerData = JSON.parse(JSON.stringify(data, (_key, value) => typeof value === "string" ? customerText(value) : value));
   return {
     pageType: "standard-content",
     version: 1,
     sectionsOrder: sectionIds.map((id) => sectionId(config, id)),
     contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: sectionIds, sectionTypes, faqCount: faqItems.length, mediaCount: images.length, sourceRevision: `${config.key}-package-20260824` },
-    relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/holidays-events/save-the-date" }],
+    relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/ai-save-the-date/save-the-date" }],
     mediaManifest: images,
     seo: { title: config.seoOverrides?.title || seo.title, description: config.seoOverrides?.description || seo.meta_description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: seo.canonical || `https://www.mydreamshoots.com${config.pagePath}`, ogImage: images[0].src, index: pageSeoIndexable, follow: true, robots: { index: pageSeoIndexable, follow: true, maxImagePreview: "large" } },
-    sections: data
+    sections: customerData
   };
 }
 
@@ -529,7 +544,7 @@ function buildMothersOrFathersPage(config, markdown, sections, seo, images) {
       add(id, "editorial_rich_text", { ...base(id, title, "rich_text_image"), intro: firstParagraph(lines, ""), ...imageSettings(mappedImage(config, images, title)) });
     }
     add("faq", "faq", base("faq", "FAQ"), headingBlocks(sectionFor(sections, "FAQ")).map((item, index) => ({ id: `${config.key}-faq-${index + 1}`, type: "faq_item", settings: { question: item.title, answer: item.text } })));
-    add("final-cta", "editorial_cta", { ...base("final-cta", "Build Mother's Day Content Around Real Family Moments"), intro: firstParagraph(sectionFor(sections, "Final CTA"), "Create scenes for family celebration, flowers, brunch, gifts, or spring storytelling."), primaryCta: "Create Mother's Day Photos and Videos", primaryHref: "/app/create", secondaryCta: "Explore More Themes", secondaryHref: "/holidays-events/save-the-date", ...imageSettings(images[images.length - 1]) });
+    add("final-cta", "editorial_cta", { ...base("final-cta", "Build Mother's Day Content Around Real Family Moments"), intro: firstParagraph(sectionFor(sections, "Final CTA"), "Create scenes for family celebration, flowers, brunch, gifts, or spring storytelling."), primaryCta: "Create Mother's Day Photos and Videos", primaryHref: "/app/create", secondaryCta: "Explore More Themes", secondaryHref: "/ai-save-the-date/save-the-date", ...imageSettings(images[images.length - 1]) });
   } else {
     const definitionTitle = "What is an AI Father’s Day photo and video maker";
     const definitionLines = sectionFor(sections, definitionTitle);
@@ -559,7 +574,7 @@ function buildMothersOrFathersPage(config, markdown, sections, seo, images) {
     add("use-cases", "editorial_story_grid", { ...base("use-cases", "Use Cases", "text_cards") }, groupedUseCases.map(([title, items], index) => ({ id: `${config.key}-use-case-${index + 1}`, type: "text_card", settings: { title, text: items.join(" ") } })));
     add("gallery", "editorial_scene_grid", { ...base("gallery", "Gallery", "gallery") }, [{ id: `${config.key}-gallery-1`, type: "gallery_item", settings: { title: "Family dinner toast", text: "A warm shared-meal scene for Father’s Day celebration storytelling.", ...imageSettings(mappedImage(config, images, "Gallery dinner toast")) } }]);
     add("faq", "faq", base("faq", "FAQ"), headingBlocks(sectionFor(sections, "FAQ")).map((item, index) => ({ id: `${config.key}-faq-${index + 1}`, type: "faq_item", settings: { question: item.title, answer: item.text } })));
-    add("final-cta", "editorial_cta", { ...base("final-cta", "Build Father’s Day Visuals Around Real Family Moments"), intro: firstParagraph(sectionFor(sections, "Final CTA"), "Build Father’s Day visuals around real family moments, warmth, and believable scenes."), primaryCta: "Create Father's Day Photos & Videos", primaryHref: "/app/create", secondaryCta: "Explore More Themes", secondaryHref: "/holidays-events/save-the-date", ...imageSettings(images[images.length - 1]) });
+    add("final-cta", "editorial_cta", { ...base("final-cta", "Build Father’s Day Visuals Around Real Family Moments"), intro: firstParagraph(sectionFor(sections, "Final CTA"), "Build Father’s Day visuals around real family moments, warmth, and believable scenes."), primaryCta: "Create Father's Day Photos & Videos", primaryHref: "/app/create", secondaryCta: "Explore More Themes", secondaryHref: "/ai-save-the-date/save-the-date", ...imageSettings(images[images.length - 1]) });
   }
   const sectionRows = config.sections;
   const sectionIds = sectionRows.map(([id]) => id);
@@ -567,7 +582,8 @@ function buildMothersOrFathersPage(config, markdown, sections, seo, images) {
   const faq = data[sectionId(config, "faq")];
   if (!faq?.blocks?.length) throw new Error(`${config.key}: FAQ is required`);
   const pageSeo = { title: config.seoOverrides.title, description: config.seoOverrides.description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: seo.canonical || `https://www.mydreamshoots.com${config.pagePath}`, ogImage: images[0].src, index: true, follow: true, robots: { index: true, follow: true, maxImagePreview: "large" } };
-  return { pageType: "standard-content", version: 1, sectionsOrder: sectionIds.map((id) => sectionId(config, id)), contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: sectionIds, sectionTypes, faqCount: faq.blocks.length, mediaCount: images.length, sourceRevision: `${config.key}-package-20260824` }, relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/holidays-events/save-the-date" }], mediaManifest: images, seo: pageSeo, sections: data };
+  const customerData = JSON.parse(JSON.stringify(data, (_key, value) => typeof value === "string" ? customerText(value) : value));
+  return { pageType: "standard-content", version: 1, sectionsOrder: sectionIds.map((id) => sectionId(config, id)), contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: sectionIds, sectionTypes, faqCount: faq.blocks.length, mediaCount: images.length, sourceRevision: `${config.key}-package-20260824` }, relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/ai-save-the-date/save-the-date" }], mediaManifest: images, seo: pageSeo, sections: customerData };
 }
 
 function buildPage(config) {
@@ -615,7 +631,7 @@ function buildPage(config) {
       return;
     }
     if (id === "final-cta") {
-      sectionData[`${config.pageKey}_final_cta`] = { type, settings: { ...base, title: sourceTitle === "Final CTA" ? `Create ${themeLabel} visuals with AI` : sourceTitle, intro: firstParagraph(lines, seo.meta_description || "Start with a focused idea, review the result, and prepare the final crop for its intended channel."), primaryCta: config.key === "wedding-ceremony" ? "Open Video Workspace" : `Create ${themeLabel} content`, primaryHref: "/app/create", secondaryCta: "Explore More Themes", secondaryHref: "/holidays-events/save-the-date", ...imageSettings(imageFor(images.length - 1)) } };
+      sectionData[`${config.pageKey}_final_cta`] = { type, settings: { ...base, title: sourceTitle === "Final CTA" ? `Create ${themeLabel} visuals with AI` : sourceTitle, intro: firstParagraph(lines, seo.meta_description || "Start with a focused idea, review the result, and prepare the final crop for its intended channel."), primaryCta: config.key === "wedding-ceremony" ? "Open Video Workspace" : `Create ${themeLabel} content`, primaryHref: "/app/create", secondaryCta: "Explore More Themes", secondaryHref: "/ai-save-the-date/save-the-date", ...imageSettings(imageFor(images.length - 1)) } };
       return;
     }
     const h3 = headingBlocks(lines);
@@ -642,15 +658,16 @@ function buildPage(config) {
 
   const noRawMarkdown = JSON.stringify(sectionData);
   if (/---|```|`[^`]+`|\[[^\]]+\]\([^)]*\)/.test(noRawMarkdown)) throw new Error(`${config.key}: raw markdown remained in page JSON`);
+  const customerSectionData = JSON.parse(JSON.stringify(sectionData, (_key, value) => typeof value === "string" ? customerText(value) : value));
   return {
     pageType: "standard-content",
     version: 1,
     sectionsOrder: sectionIds.map((id) => `${config.pageKey}_${id.replace(/-/g, "_")}`),
     contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: sectionIds, sectionTypes, faqCount: safeFaqItems.length, mediaCount: images.length, sourceRevision: `${config.key}-package-20260824` },
-    relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/holidays-events/save-the-date" }],
+    relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/ai-save-the-date/save-the-date" }],
     mediaManifest: images,
-    seo: { title: config.seoOverrides?.title || seo.title, description: config.seoOverrides?.description || seo.meta_description || seo.meta_description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: seo.canonical || `https://www.mydreamshoots.com${config.pagePath}`, ogImage: images[0].src, index: true, follow: true, robots: { index: true, follow: true, maxImagePreview: "large" } },
-    sections: sectionData
+    seo: { title: config.seoOverrides?.title || seo.title, description: config.seoOverrides?.description || seo.meta_description || seo.meta_description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: seo.canonical || `https://www.mydreamshoots.com${config.pagePath}`, ogImage: images[0].src, index: config.indexable !== false ? true : false, follow: true, robots: { index: config.indexable !== false ? true : false, follow: true, maxImagePreview: "large" } },
+    sections: customerSectionData
   };
 }
 
@@ -683,12 +700,12 @@ try {
   const siteRecord = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
   if (!siteRecord) throw new Error(`Site not found: ${siteId}`);
   const standardPagePaths = siteRecord.pages.filter((page) => page.pageType === "standard-content").map((page) => page.slug);
-  const availablePaths = new Set([...standardPagePaths, ...activeConfigs.map((config) => config.pagePath), "/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", "/holidays-events/save-the-date"]);
+  const availablePaths = new Set([...standardPagePaths, ...activeConfigs.map((config) => config.pagePath), "/about-us", "/best-packages", "/best-ai-image", "/pricing", "/faq", "/workflow", "/ai-save-the-date/save-the-date"]);
   for (const item of pages) {
     const planned = packageInternalLinks(item, availablePaths);
     const fallback = [
       { label: "How it works", href: "/workflow" },
-      { label: "Explore Save the Date themes", href: "/holidays-events/save-the-date" }
+      { label: "Explore Save the Date themes", href: "/ai-save-the-date/save-the-date" }
     ];
     item.pageJson.relatedLinks = [...planned, ...fallback]
       .filter((link, index, links) => links.findIndex((candidate) => candidate.href === link.href) === index)

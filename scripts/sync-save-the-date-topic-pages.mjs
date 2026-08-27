@@ -22,13 +22,28 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
 const defaultSourceRoot = "/Users/a1/Downloads";
 const packages = [
-  { key: "engagement", sourceDir: process.env.SAVE_THE_DATE_ENGAGEMENT_SOURCE_DIR || path.join(defaultSourceRoot, "ai-save-the-date-engagement 3"), pagePath: "/holidays-events/engagement", pageKey: "engagement", structureLabels: ["hero", "intent clarification", "three video story structures", "how it works", "eight video scene directions", "video quality standards", "output formats", "page boundaries", "product evidence gate", "faq", "related video pages"], sectionIds: ["hero", "intent", "story-structures", "workflow", "scene-directions", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"], faqCount: 8, mediaCount: 11 },
-  { key: "proposal", sourceDir: process.env.SAVE_THE_DATE_PROPOSAL_SOURCE_DIR || path.join(defaultSourceRoot, "ai-proposal-video-final"), pagePath: "/holidays-events/proposal", pageKey: "proposal", structureLabels: ["hero", "what is an ai proposal video", "proposal use cases", "proposal story flow", "how it works", "source-media guidance", "accuracy & responsibility", "faq", "final cta"], sectionIds: ["hero", "definition", "use-cases", "story-flow", "workflow", "source-media", "accuracy", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_flow", "editorial_steps", "editorial_quality", "editorial_quality", "faq", "editorial_cta"], faqCount: 8, mediaCount: 10 },
-  { key: "save-the-date", sourceDir: process.env.SAVE_THE_DATE_GENERIC_SOURCE_DIR || path.join(repoRoot, "docs/design-packages/ai-save-the-date-video"), pagePath: "/holidays-events/save-the-date", pageKey: "save_date", structureLabels: ["hero", "what is an ai save the date video", "use cases", "how it works", "scene ideas", "quality standards", "output planning", "page boundaries", "evidence gate", "faq", "related pages"], sectionIds: ["hero", "definition", "use-cases", "workflow", "scene-ideas", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"], faqCount: 8, mediaCount: 11 }
+  { key: "engagement", sourceDir: process.env.SAVE_THE_DATE_ENGAGEMENT_SOURCE_DIR || path.join(defaultSourceRoot, "ai-save-the-date-engagement 3"), pagePath: "/ai-save-the-date/engagement", pageKey: "engagement", structureLabels: ["hero", "intent clarification", "three video story structures", "how it works", "eight video scene directions", "video quality standards", "output formats", "page boundaries", "product evidence gate", "faq", "related video pages"], sectionIds: ["hero", "intent", "story-structures", "workflow", "scene-directions", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"], faqCount: 8, mediaCount: 11 },
+  { key: "proposal", sourceDir: process.env.SAVE_THE_DATE_PROPOSAL_SOURCE_DIR || path.join(defaultSourceRoot, "ai-proposal-video-final"), pagePath: "/ai-save-the-date/proposal", pageKey: "proposal", structureLabels: ["hero", "what is an ai proposal video", "proposal use cases", "proposal story flow", "how it works", "source-media guidance", "accuracy & responsibility", "faq", "final cta"], sectionIds: ["hero", "definition", "use-cases", "story-flow", "workflow", "source-media", "accuracy", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_flow", "editorial_steps", "editorial_quality", "editorial_quality", "faq", "editorial_cta"], faqCount: 8, mediaCount: 10 },
+  { key: "save-the-date", sourceDir: process.env.SAVE_THE_DATE_GENERIC_SOURCE_DIR || path.join(repoRoot, "docs/design-packages/ai-save-the-date-video"), pagePath: "/ai-save-the-date/save-the-date", pageKey: "save_date", structureLabels: ["hero", "what is an ai save the date video", "use cases", "how it works", "scene ideas", "quality standards", "output planning", "page boundaries", "evidence gate", "faq", "related pages"], sectionIds: ["hero", "definition", "use-cases", "workflow", "scene-ideas", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"], faqCount: 8, mediaCount: 11 }
 ];
 
 const read = (file) => fs.readFileSync(file, "utf8").replace(/^\uFEFF/, "");
 const clean = (value) => String(value ?? "").replace(/`([^`]+)`/g, "$1").replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/\*\*([^*]+)\*\*/g, "$1").replace(/\*([^*]+)\*/g, "$1").replace(/\s+/g, " ").trim();
+const customerText = (value) => clean(value)
+  .replace(/The page should stay focused on video intent\. Couple photos are source material for the video, not the product being targeted by the SEO page\.?/gi, "This page focuses on creating an engagement video from couple photos. The photos are the starting point for the video, while formal invitation wording remains a separate step.")
+  .replace(/The page should stay focused on Save the Date video intent\. Couple photos are source material, not a competing photo-product target\.?/gi, "This page focuses on creating a Save the Date video from approved couple photos and a confirmed wedding date.")
+  .replace(/The page should stay focused on Save the Date video intent\.?/gi, "This page focuses on creating a Save the Date video from approved couple photos and a confirmed wedding date.")
+  .replace(/SEO page/gi, "page")
+  .replace(/SEO copy/gi, "text")
+  .replace(/search intent/gi, "topic")
+  .replace(/primary keyword/gi, "main topic")
+  .replace(/indexation/gi, "publishing")
+  .replace(/Evidence Gate/gi, "review checklist")
+  .replace(/\b(?:The live page|The page|This page) should\b/gi, "This page")
+  .replace(/\bSEO\/product goals\b/gi, "product goals")
+  .split(/(?<=[.!?])\s+/)
+  .filter((sentence) => !/current evidence|supplied taxonomy|publishing status|internally approved|\bpage should\b/i.test(sentence))
+  .join(" ");
 const csvRows = (file) => read(file).trim().split(/\r?\n/).slice(1).map((line) => {
   const values = []; let current = ""; let quoted = false;
   for (let index = 0; index < line.length; index += 1) {
@@ -240,9 +255,9 @@ function parsePackage(config) {
   }
   const publishedLinkTargets = new Set([
     "/ai-save-the-date/valentines-day",
-    "/holidays-events/engagement",
-    "/holidays-events/proposal",
-    "/holidays-events/save-the-date",
+    "/ai-save-the-date/engagement",
+    "/ai-save-the-date/proposal",
+    "/ai-save-the-date/save-the-date",
     "/workflow",
     "/best-packages",
     "/pricing"
@@ -252,7 +267,9 @@ function parsePackage(config) {
     .filter((item) => item.href && item.label && publishedLinkTargets.has(item.href))
     .filter((item) => item.href !== config.pagePath)
     .filter((item, index, items) => items.findIndex((candidate) => candidate.href === item.href) === index);
-  return { ...config, heading, seo, manifest, structurePlan, sections, relatedLinks, pageJson: { pageType: "standard-content", version: 1, sectionsOrder: config.sectionIds.map((id) => `${config.pageKey}_${id.replace(/-/g, "_")}`), contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: config.sectionIds, sectionTypes: config.sectionTypes, faqCount: config.faqCount, mediaCount: config.mediaCount, sourceRevision: `${config.key}-plan-20260824` }, relatedLinks, mediaManifest: manifest, seo: { title: seo.title || seo.title_tag || seo.title, description: seo.meta_description || seo.meta_description, keywords: seo.secondary_keyword || seo.secondary_keywords, canonicalPath: config.pagePath, canonical: seo.canonical || `https://www.mydreamshoots.com${config.pagePath}`, ogImage: manifest[0].src, index: true, follow: true, robots: { index: true, follow: true, maxImagePreview: "large" } }, sections } };
+  const customerSections = JSON.parse(JSON.stringify(sections, (_key, value) => typeof value === "string" ? customerText(value) : value));
+  const indexable = false;
+  return { ...config, heading, seo, manifest, structurePlan, sections: customerSections, relatedLinks, pageJson: { pageType: "standard-content", version: 1, sectionsOrder: config.sectionIds.map((id) => `${config.pageKey}_${id.replace(/-/g, "_")}`), contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: config.sectionIds, sectionTypes: config.sectionTypes, faqCount: config.faqCount, mediaCount: config.mediaCount, sourceRevision: `${config.key}-plan-20260824` }, relatedLinks, mediaManifest: manifest, seo: { title: seo.title || seo.title_tag || seo.title, description: seo.meta_description || seo.meta_description, keywords: seo.secondary_keyword || seo.secondary_keywords, canonicalPath: config.pagePath, canonical: seo.canonical || `https://www.mydreamshoots.com${config.pagePath}`, ogImage: manifest[0].src, index: indexable, follow: true, robots: { index: indexable, follow: true, maxImagePreview: "large" } }, sections: customerSections } };
 }
 
 const jiti = createJiti(import.meta.url);
@@ -280,16 +297,16 @@ try {
     const settings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
     const navigationPaths = [
       "/ai-save-the-date/valentines-day",
-      "/holidays-events/engagement",
-      "/holidays-events/proposal",
-      "/holidays-events/save-the-date",
-      "/holidays-events/wedding-invitation",
-      "/ai-video-generation/wedding-ceremony",
-      "/holidays-events/christmas",
-      "/holidays-events/thanksgiving",
-      "/holidays-events/new-year",
-      "/holidays-events/mothers-day",
-      "/holidays-events/fathers-day"
+      "/ai-save-the-date/engagement",
+      "/ai-save-the-date/proposal",
+      "/ai-save-the-date/save-the-date",
+      "/ai-save-the-date/wedding-invitation",
+      "/ai-save-the-date/wedding-ceremony",
+      "/ai-save-the-date/christmas",
+      "/ai-save-the-date/thanksgiving",
+      "/ai-save-the-date/new-year",
+      "/ai-save-the-date/mothers-day",
+      "/ai-save-the-date/fathers-day"
     ];
     const parsedByPath = new Map(parsed.map((item) => [item.pagePath, item]));
     const navigationItem = (href, sortOrder) => {

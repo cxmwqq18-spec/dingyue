@@ -31,7 +31,7 @@ Module._resolveFilename = function resolve(request, ...args) {
 };
 
 const prisma = new PrismaClient();
-const hiddenPath = "/holidays-events/wedding-anniversary";
+const hiddenPath = "/ai-save-the-date/wedding-anniversary";
 try {
   const settingsRecord = await prisma.themeSettings.findUnique({ where: { siteId } });
   if (!settingsRecord) throw new Error(`Missing theme settings for ${siteId}`);
@@ -52,6 +52,44 @@ try {
     index: false,
     follow: true,
     robots: { ...(pageJson.seo?.robots || {}), index: false, follow: true, maxImagePreview: "large" }
+  };
+  pageJson.contentContract = {
+    schema: "editorial-page-v1",
+    pageKey: "wedding_anniversary_hold",
+    requiredSections: ["hero", "final-cta"],
+    sectionTypes: ["editorial_hero", "editorial_cta"],
+    faqCount: 0,
+    mediaCount: 0,
+    sourceRevision: "wedding-anniversary-hold-20260827"
+  };
+  pageJson.sectionsOrder = ["wedding_anniversary_hold_hero", "wedding_anniversary_hold_final_cta"];
+  pageJson.sections = {
+    wedding_anniversary_hold_hero: {
+      type: "editorial_hero",
+      settings: {
+        anchor: "hero",
+        title: "Wedding Anniversary themes are being prepared",
+        intro: "This theme is not available yet. Please explore the published celebration themes while the anniversary experience is being prepared.",
+        primaryCta: "Explore Themes",
+        primaryHref: "/ai-save-the-date/save-the-date",
+        secondaryCta: "How it works",
+        secondaryHref: "/workflow"
+      },
+      blocks: []
+    },
+    wedding_anniversary_hold_final_cta: {
+      type: "editorial_cta",
+      settings: {
+        anchor: "final-cta",
+        title: "Explore published celebration themes",
+        intro: "Choose a published theme to start planning your next visual story.",
+        primaryCta: "Explore Themes",
+        primaryHref: "/ai-save-the-date/save-the-date",
+        secondaryCta: "How it works",
+        secondaryHref: "/workflow"
+      },
+      blocks: []
+    }
   };
   if (apply) {
     await prisma.$transaction(async (tx) => {
