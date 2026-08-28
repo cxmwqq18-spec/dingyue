@@ -1077,7 +1077,11 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
     products: isHome || isPricing || isCart || isCollectionDetail,
     siteAiApps: isTools || isWorkspace,
     creativePacks: isHome || (isTools && !isToolDetail) || isCollections || isBestPackagePage || isBestMediaPage || isWorkspace,
-    mediaAssets: isHome || isWorkspace,
+    // Public projections validate and render media manifests from the same
+    // live SQL bundle.  A truncated asset set makes otherwise valid pages
+    // look unpublished (and hides Save the Date navigation), so include the
+    // complete public media set for catalogue and editorial pages.
+    mediaAssets: isHome || isWorkspace || isBestSaveTheDatePage || isBestMediaPage,
     toolMenus: true,
     contextSlug: contextSlug ? slugify(contextSlug) : ""
   };
@@ -1088,7 +1092,9 @@ function publicRuntimeLimits(profile: ReturnType<typeof publicRuntimeNeeds>["pro
     products: profile === "pricing" ? 12 : 8,
     siteAiApps: profile === "tools" ? 96 : profile === "home" ? 24 : 48,
     creativePacks: profile === "collection-detail" ? 12 : profile === "best-media" ? undefined : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? 8 : 24,
-    mediaAssets: profile === "home" ? 12 : profile === "workspace" ? 40 : 0
+    mediaAssets: profile === "home" || profile === "save-the-date" || profile === "best-media"
+      ? undefined
+      : profile === "workspace" ? 40 : 0
   };
 }
 
