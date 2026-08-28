@@ -12,8 +12,8 @@ const GROWNSTRIDE_LEGACY_HOSTS = new Set(["grownstride.com", "www.grownstride.co
 const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const HOST_PRIVATE_STORE_PATH_RE = /^\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
-const PUBLIC_STOREFRONT_CACHE_CONTROL = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
-const PUBLIC_STOREFRONT_CDN_CACHE_CONTROL = "public, s-maxage=300, stale-while-revalidate=1800";
+const PUBLIC_STOREFRONT_CACHE_CONTROL = "no-store, max-age=0, must-revalidate";
+const PUBLIC_STOREFRONT_CDN_CACHE_CONTROL = "no-store";
 const PRIVATE_STOREFRONT_CACHE_CONTROL = "private, no-store, max-age=0, must-revalidate";
 const STOREFRONT_GUARD_COOKIE_NAME = "k";
 const STOREFRONT_GUARD_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 12;
