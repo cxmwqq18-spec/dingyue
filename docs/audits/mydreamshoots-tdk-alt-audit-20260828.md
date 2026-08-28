@@ -64,7 +64,7 @@
 - `node scripts/guard-mydreamshoots-tdk-uniqueness.mjs`：通过，检查活动快照 132 个页面的三字段唯一性。
 - `node scripts/rectify-mydreamshoots-media-alt.mjs`：通过，559 个图库 alt、714 个媒体资源通过唯一性与非空校验；幂等复跑页面清单更新为 0。
 - `npm run typecheck`：通过。
-- `node scripts/smoke-storefront-media-alt.mjs`：已更新断言以匹配当前资源级场景 alt 生成规则，待下一次执行确认。
+- `node scripts/smoke-storefront-media-alt.mjs`：通过；已更新断言以匹配当前资源级场景 alt 生成规则。
 
 ## 发布状态
 
