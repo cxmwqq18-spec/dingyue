@@ -231,8 +231,8 @@ function storefrontHtmlCacheControl(request: NextRequest, upstreamHeaders: Heade
   if (process.env.DINGYUE_ENV === "local" && process.env.STOREFRONT_INSTANT_DRAFT_PREVIEW !== "0") {
     return "private, no-store, max-age=0, must-revalidate";
   }
-  const upstreamCache = upstreamHeaders.get("cache-control") ?? "";
-  if (upstreamCache && !/(?:no-store|private)/i.test(upstreamCache)) return upstreamCache;
+  // Public storefront HTML is rendered from the live database on every
+  // request; never preserve a stale upstream/CDN cache directive.
   return PUBLIC_STOREFRONT_CACHE_CONTROL;
 }
 
