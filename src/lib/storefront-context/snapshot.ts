@@ -11,7 +11,7 @@ import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
 import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
 import { canonicalPathForPage, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
-import { legacySaveTheDatePath } from "@/lib/save-the-date-routes";
+import { canonicalSaveTheDatePath, legacySaveTheDatePath } from "@/lib/save-the-date-routes";
 import type {
   EffectiveIndexability,
   EffectivePublishedPage,
@@ -485,6 +485,14 @@ export function resolveEffectivePublishedPage(snapshot: PublishedSiteSnapshot, p
 export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot, path: string): RouteDisposition {
   const requestedPath = normalizePath(path);
   if (!snapshot.pages.length) return { kind: "not_found", status: 404, path: requestedPath };
+  // Resolve legacy Save the Date aliases before direct page lookup. Otherwise
+  // an old ThemePage row can render at 200 and split the page's SEO identity.
+  if (isPrimaryMydreamshootsSite(snapshot.site) && (requestedPath.startsWith("/holidays-events/") || requestedPath === "/ai-video-generation/wedding-ceremony")) {
+    const canonicalPath = normalizeCanonicalPath(canonicalSaveTheDatePath(requestedPath));
+    if (canonicalPath !== requestedPath && snapshot.publishedPaths.includes(canonicalPath)) {
+      return resolvePublishedRedirectDisposition(snapshot, requestedPath, canonicalPath, 308);
+    }
+  }
   if (isPrimaryMydreamshootsSite(snapshot.site) && requestedPath === "/ai-image-generation/motion-generator") {
     return resolvePublishedRedirectDisposition(snapshot, requestedPath, "/ai-video-generation/motion-generator", 308);
   }

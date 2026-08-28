@@ -36,14 +36,19 @@ export const MYDREAMSHOOTS_STANDARD_SEO_ROUTES = [
   ...MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES
 ] as const;
 
+// Detail pages remain directly reachable while design/evidence approval is pending.
+// Keep the catalogue directory and Valentine's page indexable; suppress the other
+// Save the Date detail routes consistently at the publication projection layer.
+const MYDREAMSHOOTS_SAVE_DATE_INDEXABLE_ROUTES = new Set([
+  "/ai-save-the-date/valentines-day"
+]);
+
 export const MYDREAMSHOOTS_STANDARD_SEO_INVENTORY = MYDREAMSHOOTS_STANDARD_SEO_ROUTES.map((canonicalPath) => ({
   canonicalPath,
   routeKind: "standard-content" as const,
   disposition: "render" as const,
-  // Wedding Invitation is a complete public page. Wedding Anniversary remains
-  // directly reachable but is temporarily excluded from indexing and sitemap.
-  indexable: canonicalPath !== "/ai-save-the-date/wedding-anniversary",
-  sitemapEligible: canonicalPath !== "/ai-save-the-date/wedding-anniversary",
+  indexable: !MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES.includes(canonicalPath as (typeof MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES)[number]) || MYDREAMSHOOTS_SAVE_DATE_INDEXABLE_ROUTES.has(canonicalPath),
+  sitemapEligible: !MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES.includes(canonicalPath as (typeof MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES)[number]) || MYDREAMSHOOTS_SAVE_DATE_INDEXABLE_ROUTES.has(canonicalPath),
   requiredProjectionKinds: ["page", "copy", "media", "links"] as const
 }));
 

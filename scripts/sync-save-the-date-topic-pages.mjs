@@ -245,7 +245,12 @@ function parsePackage(config) {
   };
   const blocks = (items, type, settings = (item) => ({ title: item.title, text: item.text }), sectionKey = type) => items.map((item, index) => ({ id: `${config.key}-${type}-${index + 1}`, type, settings: { ...settings(item, index), ...imageSettings(allocateImage(sectionKey)) } }));
   const listSection = (id, type, title, source, blockType = "item") => ({ type, settings: { anchor: id, title }, blocks: blocks(listItems(source).map((text) => ({ title: text, text })), blockType, undefined, id) });
-  const titleFor = (index, fallback) => structurePlan[index]?.title || h2[index] || fallback;
+  const titleFor = (index, fallback) => {
+    const sourceTitle = structurePlan[index]?.title || h2[index] || fallback;
+    if (config.key === "engagement") return [heading, "Announce the milestone before designing the invitation.", "What the workflow creates", "Choose one narrative before generating scenes.", "Build short scenes that are easy to review.", "Use concrete scenes instead of a generic romance montage.", "Keep the couple recognizable and the facts editable.", "Engagement is not the same query as every wedding page.", "Pre-publish review", "Product evidence required", "Questions couples ask before creating.", "Start with the couple, one clear message, and verified details."][index] || sourceTitle;
+    if (config.key === "proposal") return [heading, "What Is an AI Proposal Video?", "Proposal Video Stories Built Around the Moment", "Setup → Build-Up → Proposal → Reaction → Close", "Six Practical Steps", "Use Existing Memories Without Turning the Page Into a Slideshow", "Review the Details Before Sharing", "Frequently Asked Questions", "Build the Proposal Video Around the Real Moment"][index] || sourceTitle;
+    return sourceTitle;
+  };
   const labelledCopy = (lines, label) => lines.find((line) => line.trim().toLowerCase().startsWith(`**${label.toLowerCase()}:**`))?.replace(/^\*\*[^:]+:\*\*\s*/, "").trim() || "";
   const heroPrimaryCta = labelledCopy(heroSource, "Primary CTA") || config.heroPrimaryCta || `Create ${heading}`;
   const heroSecondaryCta = labelledCopy(heroSource, "Secondary CTA") || "Explore the story ideas";
