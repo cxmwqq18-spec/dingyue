@@ -27,11 +27,11 @@ const entitySpecs = {
   theme_settings: { model: "themeSettings", key: "siteId", lookup: ["siteId"], json: ["draftJson"], fields: ["id", "siteId", "draftJson"] },
   storefront_profile: { model: "storefrontProfile", key: "siteId", lookup: ["siteId"], json: ["draftJson"], fields: ["id", "siteId", "draftJson"] },
   creative_pack: { model: "creativePack", key: "id", lookup: ["id"], fields: ["id", "siteId", "name", "headline", "description", "category", "categoryId", "aiAppSlug", "status", "creditCost", "outputCount", "trainingRequired", "imageUrl", "galleryImages", "galleryImageAlts"] },
-  media_asset: { model: "mediaAsset", key: "storageKey", lookup: ["storageKey", "id"], fields: ["id", "siteId", "storageKey", "usageType", "altText", "previewUrl", "originUrl", "mimeType", "width", "height", "status"] },
+  media_asset: { model: "mediaAsset", key: "storageKey", lookup: ["storageKey", "id"], fields: ["id", "siteId", "label", "storageKey", "usageType", "sourceType", "altText", "previewUrl", "originUrl", "mimeType", "notes"] },
   tool_category: { model: "toolCategory", key: "slug", lookup: ["slug"], fields: ["id", "siteId", "slug", "label", "description", "icon", "sortOrder", "status"] },
   tool_menu_item: { model: "toolMenuItem", key: "slug", lookup: ["slug"], fields: ["id", "siteId", "slug", "title", "description", "href", "icon", "sortOrder", "status", "detailJson"] },
   video_theme_category: { model: "videoThemeCategory", key: "slug", lookup: ["slug"], fields: ["id", "siteId", "slug", "label", "description", "sortOrder", "status"] },
-  video_theme: { model: "videoTheme", key: "slug", lookup: ["slug"], fields: ["id", "siteId", "slug", "name", "title", "description", "status", "imageUrl", "galleryImages", "galleryImageAlts", "sortOrder"] },
+  video_theme: { model: "videoTheme", key: "slug", lookup: ["slug"], fields: ["id", "siteId", "categoryId", "slug", "name", "headline", "description", "prompt", "status", "creditCost", "modelPricing", "durationSeconds", "maxFrames", "generationCount", "sortOrder", "imageUrl", "galleryImages"] },
   product: { model: "product", key: "id", lookup: ["id"], fields: ["id", "siteId", "name", "type", "status", "metadata"] },
   price: { model: "price", key: "id", lookup: ["id"], fields: ["id", "siteId", "productId", "label", "amountCents", "currency", "interval", "creditsGranted", "metadata", "status", "effectiveFrom", "effectiveTo"] }
 };
