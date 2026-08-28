@@ -1087,7 +1087,26 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   // Both sources are active-publication projections. The homepage projection is
   // a resilient recovery path for an older local snapshot that missed settings,
   // while still requiring a published route and media-backed showcase item.
-  const saveTheDateGroups = resolvePublishedSaveTheDateGroups(publishedSaveTheDateShowcases);
+  // Path-scoped SSR queries may intentionally load only the current page, so
+  // the derived homepage showcase projection can be empty even when the live
+  // settings row contains a complete Save the Date catalogue. Use that live
+  // SQL configuration as the direct fallback instead of hiding valid nav.
+  const configuredSaveTheDateGroups = (saveTheDateConfig?.groups ?? [])
+    .map((group) => ({
+      ...group,
+      items: group.items
+        .filter((item) => item.status === "published" && Boolean(item.href?.trim()))
+        .map((item) => ({
+          ...item,
+          description: item.description ?? "",
+          imageUrl: item.imageUrl ?? "",
+          imageAlt: item.imageAlt ?? ""
+        }))
+    }))
+    .filter((group) => group.items.length > 0);
+  const saveTheDateGroups = publishedSaveTheDateShowcases.length
+    ? resolvePublishedSaveTheDateGroups(publishedSaveTheDateShowcases)
+    : configuredSaveTheDateGroups;
   const saveTheDateMenuLabel = isMyDreamShootsCom
     ? saveTheDateConfig?.menuLabel?.trim() || "Save the Date"
     : saveTheDateConfig?.menuLabel?.trim() ?? "";
