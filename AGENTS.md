@@ -4,11 +4,12 @@ All changes to public storefront data, pages, SEO, media, navigation, sitemap,
 robots, JSON-LD, preview, and publishing flows must comply with
 [`docs/standards/site-data-seo-single-publication-contract.md`](docs/standards/site-data-seo-single-publication-contract.md).
 
-This is an active implementation contract. Before reporting a public storefront
-change as complete, verify the applicable data owner, active publication,
-snapshot/readback evidence, and regression checks required by that document.
+The publication/snapshot portions of that historical contract are superseded by
+[`docs/no-snapshot-incremental-release.md`](docs/no-snapshot-incremental-release.md).
+Before reporting a public storefront change as complete, verify the relational
+data owner, derived-state revision, origin/public readback, and regression checks.
 
-## Publication Snapshot Switching Rule
+## No-Snapshot Publication Rule
 
 During development, testing, release preparation, and production deployment,
 do not switch to, restore, import, or silently fall back to any historical
@@ -17,13 +18,10 @@ current task. Scripts and runtime code must never choose an older snapshot just
 because it is available, newer code fails, or a current-state record is
 missing.
 
-When older copy or another historical field is required, create a new candidate
-publication from the latest current data and apply only the explicitly
-approved field changes. Keep all other pages, routes, media, navigation, SEO,
-and facts from the latest current source. Activate the new publication only
-after integrity checks and production readback pass. A rollback to an older
-publication is an exceptional, explicitly approved operation and must record
-the approval, publication ID/version, snapshot hash, and readback result.
+Historical publications and snapshots are audit-only and cannot be activated,
+restored, imported, or used as rollback sources. Copy/content rollback is an
+explicit field-level inverse manifest against current relational data. Online
+edits win conflicts unless a new operation explicitly targets that field.
 
 ## Public Storefront SSR Data Rule
 
@@ -34,9 +32,10 @@ and navigation directories, must be complete server-rendered HTML.
 - Browser JavaScript must not fetch, XHR, EventSource, prefetch, warm-fetch, or
   otherwise request page copy, navigation, catalog, SEO, media projections, or
   customer runtime data on public pages.
-- Editable content must flow through PostgreSQL draft data, the publication
-  compiler, and the active immutable publication snapshot before SSR HTML.
-  Never replace missing data with hardcoded copy or client fetches.
+- Editable content must flow through PostgreSQL relational source data. The
+  compiler may refresh `SitePublishedState` as a derived cache, but it is never
+  a deployment/import/rollback source. Never replace missing data with hardcoded
+  copy, historical snapshots, or client fetches.
 - `use client` is allowed only for explicitly reviewed, non-data presentation
   behavior and cannot become a public data source.
 - Private `/account`, `/app`, checkout, authentication, customer generation,

@@ -199,11 +199,30 @@ model Site {
   auditLogs               AuditLog[]
   partnerApplications     PartnerApplication[]
   emailConfigAssignment   SiteEmailConfigAssignment?
+  contentSyncBaselines     ContentSyncBaseline[]
 
   @@index([status])
   @@index([primaryDomain])
   @@index([status, createdAt])
   @@index([createdAt])
+}
+
+/// Hash-only field baselines used by the public-content incremental sync.
+/// Values are deliberately not stored here: the target database remains the
+/// source of truth and an online edit therefore wins a stale local operation.
+model ContentSyncBaseline {
+  id          String   @id
+  target      String
+  siteId      String
+  entityType  String
+  entityKey   String
+  fieldPath   String
+  valueHash   String
+  syncedAt    DateTime @updatedAt
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@unique([target, siteId, entityType, entityKey, fieldPath])
+  @@index([target, siteId, entityType])
 }
 
 model SiteDomain {

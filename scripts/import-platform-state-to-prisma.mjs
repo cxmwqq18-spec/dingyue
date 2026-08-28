@@ -4,6 +4,8 @@ import "./load-runtime-env.mjs";
 import { PrismaClient } from "@prisma/client";
 import { assertNonProductionWriteTarget } from "./lib/database-target.mjs";
 
+throw new Error("platform-state 快照导入已永久禁用。请使用关系表字段级增量同步。");
+
 const prisma = new PrismaClient();
 const documentId = "platform";
 

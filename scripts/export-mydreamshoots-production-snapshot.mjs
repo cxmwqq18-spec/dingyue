@@ -5,6 +5,8 @@ import { createHash } from "node:crypto";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 
+throw new Error("生产快照导出已禁用。备份仅用于灾难恢复演练，公开内容请使用字段级增量同步。");
+
 const siteId = process.env.MYDREAMSHOOTS_EXPORT_SITE_ID?.trim() || "site_dreamshoot";
 const args = new Map(process.argv.slice(2).filter((arg) => arg.startsWith("--")).map((arg) => {
   const [key, ...rest] = arg.slice(2).split("=");

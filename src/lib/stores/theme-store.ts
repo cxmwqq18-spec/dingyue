@@ -1933,9 +1933,12 @@ export async function saveThemePageDraftRelational(params: {
     where: { id: page.id },
     data: {
       title: page.title,
-      draftJson: draftJsonWithMeta(page)
+      draftJson: draftJsonWithMeta(page),
+      publishedJson: cloneJson(page.draftJson) as unknown as Prisma.InputJsonValue
     }
   });
+  const { refreshCurrentPublishedStateRelational } = await import("@/lib/stores/site-published-state");
+  await refreshCurrentPublishedStateRelational(params.siteId, params.actor ?? "site_admin");
   return { draftVersion: page.draftMeta };
 }
 
@@ -1953,7 +1956,7 @@ export async function saveThemeSettingsDraftRelational(params: {
   requireExpected?: boolean;
 }): Promise<{ draftVersion: ThemeDraftMeta }> {
   clearSiteThemeReadCache(params.siteId);
-  return prisma.$transaction(async (tx) => {
+  const result = await prisma.$transaction(async (tx) => {
     const current = await tx.themeSettings.findUnique({ where: { siteId: params.siteId } });
     const currentSettings = toThemeSettings(current);
     if (current && params.requireExpected && !hasDraftVersionExpectation(params.expected)) {
@@ -1974,11 +1977,15 @@ export async function saveThemeSettingsDraftRelational(params: {
         publishedJson: cloneJson(nextSettings.publishedJson) as unknown as Prisma.InputJsonValue
       },
       update: {
-        draftJson: themeSettingsDraftJsonWithMeta(nextSettings)
+        draftJson: themeSettingsDraftJsonWithMeta(nextSettings),
+        publishedJson: cloneJson(nextSettings.draftJson) as unknown as Prisma.InputJsonValue
       }
     });
     return { draftVersion: nextSettings.draftMeta };
   }, { timeout: 60000 });
+  const { refreshCurrentPublishedStateRelational } = await import("@/lib/stores/site-published-state");
+  await refreshCurrentPublishedStateRelational(params.siteId, params.actor ?? "site_admin");
+  return result;
 }
 
 export type ThemeFooterSocialLinks = {
@@ -2030,9 +2037,12 @@ export async function updateThemeFooterSocialLinksRelational(params: {
   await prisma.themeSettings.update({
     where: { siteId: params.siteId },
     data: {
-      draftJson: themeSettingsDraftJsonWithMeta(nextSettings)
+      draftJson: themeSettingsDraftJsonWithMeta(nextSettings),
+      publishedJson: cloneJson(draftJson) as unknown as Prisma.InputJsonValue
     }
   });
+  const { refreshCurrentPublishedStateRelational } = await import("@/lib/stores/site-published-state");
+  await refreshCurrentPublishedStateRelational(params.siteId, params.actor ?? "site_admin");
   return { site: toSite(await getSiteWithThemeRecords(prisma, params.siteId)) };
 }
 

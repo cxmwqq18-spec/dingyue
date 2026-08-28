@@ -100,11 +100,12 @@ export async function saveStorefrontProfileDraftRelational(params: {
         id: `profile_${params.siteId}`,
         siteId: params.siteId,
         draftJson: draftJson as unknown as Prisma.InputJsonValue,
-        publishedJson: { identity: { sameAs: [] }, policyFacts: {} },
+        publishedJson: draftJson as unknown as Prisma.InputJsonValue,
         draftMeta: draftMeta as unknown as Prisma.InputJsonValue
       },
       update: {
         draftJson: draftJson as unknown as Prisma.InputJsonValue,
+        publishedJson: draftJson as unknown as Prisma.InputJsonValue,
         draftMeta: draftMeta as unknown as Prisma.InputJsonValue
       }
     });
@@ -113,5 +114,7 @@ export async function saveStorefrontProfileDraftRelational(params: {
     return profile;
   });
   clearSiteReadCache();
+  const { refreshCurrentPublishedStateRelational } = await import("@/lib/stores/site-published-state");
+  await refreshCurrentPublishedStateRelational(params.siteId, "site_admin");
   return profile;
 }

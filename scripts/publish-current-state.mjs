@@ -5,6 +5,8 @@ import Module from "node:module";
 import createJiti from "jiti";
 import "./load-runtime-env.mjs";
 
+throw new Error("审批式 current-state 发布已停用。公开内容保存即生效，请使用字段级增量内容同步。");
+
 const target = process.env.DATABASE_TARGET?.trim() || "";
 if (target !== "production" || process.env.DINGYUE_ENV?.trim() !== "production" || process.env.CONFIRM_PRODUCTION !== "1") {
   throw new Error("Current-state production publish requires DATABASE_TARGET=DINGYUE_ENV=production and CONFIRM_PRODUCTION=1.");

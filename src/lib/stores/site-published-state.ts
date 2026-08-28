@@ -33,6 +33,49 @@ export async function compileCandidatePublishedStateRelational(siteId: string) {
   return { payload, contentHash, revision: currentPublishedRevision(siteId, contentHash) };
 }
 
+/**
+ * Save-immediately-live path for public content edits. This writes only the
+ * single derived current-state row compiled from relational source tables.
+ * It never reads or activates a historical publication and requires no
+ * approval record or caller-provided snapshot.
+ */
+export async function refreshCurrentPublishedStateRelational(siteId: string, actor = "site_admin") {
+  const candidate = await compileCandidatePublishedStateRelational(siteId);
+  const result = await runPrismaWriteWithReconnect(async () => prisma.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT "id" FROM "Site" WHERE "id" = ${siteId} FOR UPDATE`;
+    const current = await tx.sitePublishedState.findUnique({ where: { siteId } });
+    if (current?.contentHash === candidate.contentHash) return { row: current, noOp: true };
+    const row = await tx.sitePublishedState.upsert({
+      where: { siteId },
+      create: {
+        siteId,
+        payload: candidate.payload as unknown as Prisma.InputJsonValue,
+        contentHash: candidate.contentHash,
+        revision: candidate.revision,
+        publishedBy: actor
+      },
+      update: {
+        payload: candidate.payload as unknown as Prisma.InputJsonValue,
+        contentHash: candidate.contentHash,
+        revision: candidate.revision,
+        publishedBy: actor
+      }
+    });
+    return { row, noOp: false };
+  }, { timeout: 120000 }), { label: `refresh current state ${siteId}` });
+  const state = toSitePublishedState(result.row);
+  if (state.contentHash !== candidate.contentHash || state.revision !== candidate.revision) {
+    throw new Error("current_published_state_readback_mismatch");
+  }
+  const [{ clearSiteReadCache }, { clearStorefrontContextCache }] = await Promise.all([
+    import("@/lib/stores/site-store"),
+    import("@/lib/storefront-context")
+  ]);
+  clearSiteReadCache();
+  clearStorefrontContextCache(siteId);
+  return { state, noOp: result.noOp };
+}
+
 export type PublishCurrentStateParams = {
   siteId: string;
   actor: string;

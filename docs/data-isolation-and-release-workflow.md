@@ -40,6 +40,10 @@ Do not publish customer, order, payment, credit, generation job, customer model,
 
 ## SQL Public Content Promotion
 
+> This legacy section is retained for migration history only. The old full-table
+> manifest flow is disabled. Use `docs/no-snapshot-incremental-release.md` and
+> the `content:baseline`, `content:plan`, and `content:apply` commands.
+
 `data/platform-state.json` is retired and must not be used as a runtime or deployment source. Public storefront promotion reads PostgreSQL rows only and publishes a new immutable `ThemePublication` after the scoped update:
 
 ```sh
@@ -50,6 +54,9 @@ npm run sync:mydreamshoots-public-sql -- --target=test --apply --confirm=sync-my
 The default source is `site_dreamshoot`. The command never deletes or imports customers, orders, subscriptions, credits, generation jobs, uploads, albums, sessions, or payment rows. Test publication SEO is forced to `noindex`; production requires `--confirm-production` and remains opt-in.
 
 ## Release Manifest Flow
+
+> 本节旧的整表 release manifest 已停用。当前命令和安全规则见
+> [`no-snapshot-incremental-release.md`](no-snapshot-incremental-release.md)。
 
 Export from local:
 

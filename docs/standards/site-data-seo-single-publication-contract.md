@@ -1,6 +1,13 @@
-# 全站数据与 SEO 单一发布闭环规范
+# 全站数据与 SEO 单一发布闭环规范（历史）
 
-> 状态：`ACTIVE / IMPLEMENTATION CONTRACT`
+> 自 2026-08-28 起，本文件中有关 immutable `ThemePublication`、
+> `ActiveThemePublication`、snapshot 发布/回滚和审批的要求已由
+> [`../no-snapshot-incremental-release.md`](../no-snapshot-incremental-release.md)
+> 替代。仍有效的是 SSR、SEO、站点隔离、公开文案边界与 readback 要求。
+> 公开内容的当前合同是：线上 PostgreSQL 关系表为唯一事实源，
+> `SitePublishedState` 仅为派生缓存，跨环境内容只允许字段级增量 manifest。
+
+> 状态：`PARTIALLY SUPERSEDED / SSR + SEO CONTRACT`
 >
 > 适用范围：本仓库所有公开 storefront、站点主题、页面、SEO、媒体、套餐、导航、sitemap、robots、JSON-LD、后台预览和发布流程。
 >

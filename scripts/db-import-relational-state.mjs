@@ -5,6 +5,8 @@ import { PrismaClient } from "@prisma/client";
 import { assertNonProductionWriteTarget } from "./lib/database-target.mjs";
 import { assertRelationalReplaceSafety } from "./relational-import-safety.mjs";
 
+throw new Error("整库/整表状态导入已永久禁用。请使用字段级公开内容增量同步。");
+
 const prisma = new PrismaClient();
 const documentId = "platform";
 const batchSize = 50;

@@ -5,6 +5,8 @@ import path from "node:path";
 import Module from "node:module";
 import "./load-runtime-env.mjs";
 
+throw new Error("公开内容人工审批已停用。线上保存即生效，请使用字段级增量内容同步。");
+
 const siteId = process.env.SITE_ID?.trim() || process.argv[2]?.trim();
 const requestedBy = process.env.REQUESTED_BY?.trim() || process.argv[3]?.trim();
 if (!siteId) throw new Error("SITE_ID is required");

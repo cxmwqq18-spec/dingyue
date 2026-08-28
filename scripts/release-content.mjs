@@ -14,6 +14,7 @@ import {
 
 const repoRoot = process.cwd();
 const mode = argumentValue("--mode");
+throw new Error("整表内容快照发布已禁用。请使用 npm run content:baseline|content:plan|content:apply 的字段级增量流程。");
 const defaultSiteId = argumentValue("--site-id") || process.env.RELEASE_SITE_ID || "site_dreamshoot";
 const manifestPathArgument = argumentValue("--manifest");
 const manifestRoot = path.join(repoRoot, "releases", "manifests");

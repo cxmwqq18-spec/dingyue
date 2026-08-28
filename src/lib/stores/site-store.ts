@@ -354,7 +354,7 @@ export const getStorefrontPublicNavigationDataForSite = cache(async (siteId: str
         videoThemes
       };
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 0)
   );
 });
 
@@ -2142,7 +2142,7 @@ export const getStorefrontPublicRuntimeStateByHost = cache(async (host: string |
       const lookup = await getPublicRuntimeSiteLookupByHost(host);
       return lookup ? loadStorefrontPublicRuntimeState(lookup, pageSlugs, contextSlug) : undefined;
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 0)
   );
 });
 
@@ -2176,7 +2176,7 @@ export const getStorefrontPublicPageMetadataStateByHost = cache(async (host: str
         sites: [toPublicSiteShell(site)]
       });
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 0)
   );
 });
 
@@ -2189,7 +2189,7 @@ export const getStorefrontPublicRuntimeStateBySlug = cache(async (slug: string, 
   return siteReadCache.get(
     `public-runtime-slug:${canonicalSlug}:${pageKey}:${contextKey}`,
     () => loadStorefrontPublicRuntimeState({ slugCandidates: legacySiteSlugCandidates(slug) }, pageSlugs, contextSlug),
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 0)
   );
 });
 
@@ -2208,7 +2208,7 @@ export const getStorefrontPublicMetadataStateBySlug = cache(async (slug: string)
         sites: [toPublicSiteShell(site)]
       });
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 0)
   );
 });
 
