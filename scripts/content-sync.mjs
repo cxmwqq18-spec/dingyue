@@ -290,6 +290,7 @@ async function apply() {
           if (!value || (value.siteId !== siteId && value.siteId !== sourceSiteId)) fail("New public records must belong to the declared source or target site.");
           value.siteId = siteId;
           const create = Object.fromEntries(spec.fields.filter((field) => value[field] !== undefined).map((field) => [field, prepared(value[field], spec.model, field)]));
+          if (spec.json?.includes("draftJson") && create.draftJson !== undefined) create.publishedJson = clone(create.draftJson);
           const created = await delegate.create({ data: create });
           for (const field of baselineFields(operation.entityType, created, spec)) {
             await tx.contentSyncBaseline.upsert({
