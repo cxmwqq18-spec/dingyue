@@ -65,13 +65,17 @@ npm run content:baseline -- --target=local --site-id=site_dreamshoot
 npm run content:plan -- --target=production --site-id=site_dreamshoot \
   --source-site=site_dreamshoot --source-url="$LOCAL_DATABASE_URL" \
   --target-url="$PRODUCTION_DATABASE_URL" --bridge --confirm-production \
-  --out=releases/manifests/content-v2.json
+  --out=releases/manifests/content-v2.json \
+  --report=docs/releases/content-v2-plan.md
 npm run content:apply -- --target=production --site-id=site_dreamshoot \
   --manifest=releases/manifests/content-v2.json \
-  --deployed-commit=<full-40-char-sha> --apply --confirm-production
+  --deployed-commit=<full-40-char-sha> --apply --confirm-production \
+  --report=docs/releases/content-v2-apply.md
 ```
 
 `--deployed-commit` 必须是刚刚成功上线的同一个 SHA。先看 plan 输出，再 apply；apply 会锁定站点、校验 protected business table hash，并在结束时刷新派生公开状态和缓存。线上已经编辑过的同字段会报告 conflict 并跳过，不会覆盖线上。
+
+每次 plan 都会额外生成一个 Markdown 计划文档；每次 apply 都会生成一个 Markdown 执行报告。建议把报告放在 `docs/releases/` 或 `releases/reports/`，上线前由你查看字段差异并确认，上线后保留报告作为变更记录。报告只包含公开字段级值，不包含客户、订单、支付、私有素材或数据库快照。
 
 manifest 使用 JSON Pointer 字段路径和 `baseHash`。目标字段仍等于 baseline 时才写入；线上已经修改时跳过并返回 conflict。删除必须单独列在 `deletions`，并额外传入 `--confirm-deletions`。
 

@@ -19,6 +19,7 @@ const targetUrl = argumentValue("--target-url") || process.env.DATABASE_URL;
 const manifestTarget = argumentValue("--for-target") || target;
 const outPath = path.resolve(argumentValue("--out") || path.join("releases", "manifests", `${siteId}-content-${Date.now()}.json`));
 const manifestPath = argumentValue("--manifest");
+const reportArgument = argumentValue("--report");
 const codeCommit = process.env.GIT_COMMIT_SHA || execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
 
 const entitySpecs = {
@@ -51,6 +52,22 @@ function stable(value) {
   return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stable(value[key])}`).join(",")}}`;
 }
 function hash(value) { return crypto.createHash("sha256").update(stable(value)).digest("hex"); }
+function display(value) {
+  if (value === undefined) return "(不存在)";
+  const text = JSON.stringify(value);
+  return text.length > 1200 ? `${text.slice(0, 1197)}...` : text;
+}
+function markdownCell(value) { return display(value).replaceAll("|", "\\|").replaceAll("\n", " "); }
+function reportPathFor(file, suffix = "") {
+  return path.resolve(reportArgument || file.replace(/\.json$/i, `${suffix}.md`));
+}
+function writeReport(file, title, metadata, rows) {
+  const lines = [`# ${title}`, "", ...Object.entries(metadata).map(([key, value]) => `- **${key}**: ${markdownCell(value)}`), "", "| # | 实体 | 记录 | 字段路径 | 操作 | 旧值 | 新值 | baseHash | 结果 |", "|---:|---|---|---|---|---|---|---|---|"];
+  rows.forEach((row, index) => lines.push(`| ${index + 1} | ${markdownCell(row.entityType)} | ${markdownCell(row.entityKey)} | ${markdownCell(`${row.field ?? "record"}${row.fieldPath ?? "/"}`)} | ${markdownCell(row.operation ?? "delete")} | ${markdownCell(row.previousValue)} | ${markdownCell(row.value)} | ${markdownCell(row.baseHash || "") } | ${markdownCell(row.result || "planned")} |`));
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, `${lines.join("\n")}\n`);
+  return file;
+}
 function clean(value, key = "") {
   if (forbidden.test(key)) return undefined;
   if (value instanceof Date) return value.toISOString();
@@ -146,12 +163,12 @@ function rowOperations(sourceRow, targetRow, type, spec, baselineMap) {
         const currentValue = getPointer(targetRowPublic[field], fieldPath);
         if (hash(nextValue) === hash(currentValue)) continue;
         const baseline = baselineMap.get(`${type}|${identity(sourceRow, spec)}|${field}|${fieldPath}`);
-        operations.push({ entityType: type, entityKey: identity(sourceRow, spec), field, fieldPath, operation: nextValue === undefined ? "delete" : "upsert", baseHash: baseline?.valueHash ?? hash(nextValue), ...(nextValue === undefined ? {} : { value: nextValue }), ...(asset ? { asset } : {}) });
+        operations.push({ entityType: type, entityKey: identity(sourceRow, spec), field, fieldPath, operation: nextValue === undefined ? "delete" : "upsert", baseHash: baseline?.valueHash ?? hash(currentValue), previousValue: currentValue, ...(nextValue === undefined ? {} : { value: nextValue }), ...(asset ? { asset } : {}) });
       }
     } else if (hash(source[field]) !== hash(targetRowPublic[field])) {
       const fieldPath = `/${field}`;
       const baseline = baselineMap.get(`${type}|${identity(sourceRow, spec)}|record|${fieldPath}`);
-      operations.push({ entityType: type, entityKey: identity(sourceRow, spec), field: "record", fieldPath, operation: "upsert", baseHash: baseline?.valueHash ?? hash(source[field]), value: source[field], ...(asset ? { asset } : {}) });
+      operations.push({ entityType: type, entityKey: identity(sourceRow, spec), field: "record", fieldPath, operation: "upsert", baseHash: baseline?.valueHash ?? hash(targetRowPublic[field]), previousValue: targetRowPublic[field], value: source[field], ...(asset ? { asset } : {}) });
     }
   }
   return operations;
@@ -222,7 +239,8 @@ async function plan() {
     const manifest = { formatVersion: 2, releaseId: argumentValue("--release-id") || `content-${Date.now()}`, codeCommit, target: manifestTarget, sourceTarget: "local", sourceSiteId, siteId, createdAt: new Date().toISOString(), operations, deletions: [] };
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, `${JSON.stringify(manifest, null, 2)}\n`);
-    console.log(JSON.stringify({ ok: true, mode: "plan", target, siteId, outPath, operations: operations.length }, null, 2));
+    const reportPath = writeReport(reportPathFor(outPath), "公开内容字段增量计划", { 目标: target, 站点: siteId, 来源站点: sourceSiteId, codeCommit, 生成时间: manifest.createdAt, 字段操作数: operations.length }, operations);
+    console.log(JSON.stringify({ ok: true, mode: "plan", target, siteId, outPath, reportPath, operations: operations.length }, null, 2));
   } finally { await source.$disconnect(); await destination.$disconnect(); }
 }
 function readManifest() {
@@ -335,7 +353,15 @@ async function apply() {
       Module._load = originalLoad;
       process.env.DATABASE_URL = originalDatabaseUrl;
     }
-    console.log(JSON.stringify({ ok: true, mode: "apply", target, siteId, report }, null, 2));
+    const reportRows = [
+      ...report.applied.map((row) => ({ ...row, result: "applied" })),
+      ...report.conflicts.map((row) => ({ ...row, result: `conflict:${row.reason}` })),
+      ...report.skipped.map((row) => ({ ...row, result: `skipped:${row.reason}` })),
+      ...report.deletions.map((row) => ({ ...row, operation: "delete", result: "deleted" }))
+    ];
+    const manifestFile = path.resolve(manifestPath || outPath);
+    const reportFile = writeReport(reportPathFor(manifestFile, ".apply"), "公开内容字段增量执行报告", { 目标: target, 站点: siteId, manifest: manifestFile, codeCommit: manifest.codeCommit, 执行时间: new Date().toISOString(), 已应用: report.applied.length, 冲突: report.conflicts.length, 跳过: report.skipped.length, 删除: report.deletions.length }, reportRows);
+    console.log(JSON.stringify({ ok: true, mode: "apply", target, siteId, reportPath: reportFile, report }, null, 2));
   } finally { await client.$disconnect(); }
 }
 
