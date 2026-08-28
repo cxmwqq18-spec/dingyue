@@ -34,7 +34,7 @@ try {
   await page.getByRole("button", { name: "Choose a video theme" }).click();
   const dialog = page.getByRole("dialog", { name: /Choose a theme and reference case/i });
   await dialog.waitFor({ state: "visible" });
-  await dialog.getByRole("button", { name: /Save the Date\s+12/i }).click();
+  await dialog.getByRole("button", { name: /Save the Date\s*12/i }).click();
   await dialog.getByText("Love & Wedding", { exact: true }).waitFor({ state: "visible" });
   await dialog.getByText("Seasonal Holidays", { exact: true }).waitFor({ state: "visible" });
 
@@ -49,6 +49,7 @@ try {
   assert.match(prompt, /first-frame reference/i);
   assert.match(await dialog.locator("img").last().getAttribute("src"), /hero-ai-christmas-family-gift\.jpg/);
   await page.screenshot({ path: "/tmp/mydreamshoots-save-the-date-picker-desktop.png", fullPage: true });
+  await dialog.getByRole("button", { name: "Cancel" }).click();
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(`${baseUrl}/site/mydreamshoots/app/create#step-video`, { waitUntil: "domcontentloaded", timeout: 60_000 });
