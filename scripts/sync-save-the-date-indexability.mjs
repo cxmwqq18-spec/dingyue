@@ -117,13 +117,7 @@ try {
         await tx.mediaAsset.update({ where: { id: asset.id }, data: { altText: item.alt } });
       }
     });
-    const { refreshCurrentPublishedStateRelational } = createJiti(import.meta.url)("../src/lib/stores/site-published-state.ts");
-    const result = await refreshCurrentPublishedStateRelational(siteId, "sync:save-the-date-indexability");
-    currentState = {
-      revision: result.state.revision,
-      contentHash: result.state.contentHash,
-      noOp: result.noOp
-    };
+    currentState = { mode: "live-draft-json", noOp: false };
   }
 
   console.log(JSON.stringify({

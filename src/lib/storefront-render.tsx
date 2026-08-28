@@ -37,7 +37,7 @@ import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/custome
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
-import { createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, resolvePublishedRouteDisposition, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
+import { assertLiveDraftPage, createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, resolvePublishedRouteDisposition, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
@@ -972,18 +972,6 @@ function isSpanishXbyStorefront(site: Site): boolean {
 
 async function getStateForStorefrontRender(site: Site, routeMode: "host" | "path", providedState?: PlatformState): Promise<PlatformState> {
   if (providedState) {
-    // Section and path-mode readers may return a deliberately narrow public
-    // shell. Rendering still requires the immutable current-state payload.
-    // Refresh the site bundle when that payload is absent instead of letting
-    // createPublishedSiteSnapshot fail on a partial state object.
-    const providedSite = providedState.sites.find((item) => item.id === site.id);
-    if (providedSite?.currentPublishedState) return providedState;
-    try {
-      const runtimeState = await readStorefrontRuntimeStateForSiteFromDatabase(site.id);
-      if (runtimeState?.sites.some((item) => item.id === site.id && item.currentPublishedState)) return runtimeState;
-    } catch (error) {
-      if (isMydreamshootsContentSourceSite(site)) throw error;
-    }
     return providedState;
   }
   const requiresPublishedSource = isMydreamshootsContentSourceSite(site);
@@ -994,7 +982,7 @@ async function getStateForStorefrontRender(site: Site, routeMode: "host" | "path
     } catch (error) {
       if (requiresPublishedSource) {
         throw new Error(
-          `MyDreamShoots runtime for ${site.slug} must read Postgres published content. ` +
+          `MyDreamShoots runtime for ${site.slug} must read Postgres draft content. ` +
           "Refusing to fall back to legacy state because that can reintroduce stale copy. " +
           `Original error: ${error instanceof Error ? error.message : String(error)}`
         );
@@ -1122,14 +1110,13 @@ async function getPublishedHomepageShowcasesForHeader(
   state: PlatformState,
   currentSite: Site
 ): Promise<PublishedHomepageShowcaseItem[]> {
-  // Customer-runtime states intentionally omit the full publication payload.
-  // Load the public immutable state only when the private shell needs global nav.
-  if (!currentSite.currentPublishedState) {
-    const publicState = await getStateForStorefrontRender(site, routeMode);
-    const publicSite = publicState.sites.find((item) => item.id === site.id);
-    return publicSite ? createPublishedSiteSnapshot(publicState, publicSite).publishedHomepageShowcases ?? [] : [];
-  }
-  return createPublishedSiteSnapshot(state, currentSite).publishedHomepageShowcases ?? [];
+  // Customer-runtime states intentionally omit catalog projections. Load the
+  // live public bundle when the private shell needs global navigation.
+  const publicState = state.products.length || state.creativePacks.length
+    ? state
+    : await getStateForStorefrontRender(site, routeMode);
+  const publicSite = publicState.sites.find((item) => item.id === site.id);
+  return publicSite ? createPublishedSiteSnapshot(publicState, publicSite).publishedHomepageShowcases ?? [] : [];
 }
 
 function runtimeWithEmptyCollections(runtime: Partial<ThemeRuntimeData> = {}): ThemeRuntimeData {
@@ -2776,6 +2763,13 @@ export async function renderStorefrontPage({
       : undefined
   );
   if (!directPage) notFound();
+  try {
+    assertLiveDraftPage(directPage);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "live_draft_invalid";
+    if (message.startsWith("live_draft_")) notFound();
+    throw error;
+  }
   if (!findPage(currentSite, slug)) currentSite.pages = [...currentSite.pages, directPage];
   const page = directPage;
   if (isFocusedCollectionPage) {

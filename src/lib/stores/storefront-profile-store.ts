@@ -6,6 +6,7 @@ import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { RelationalStoreError, toStorefrontProfile } from "@/lib/stores/prisma-mappers";
 import { clearSiteReadCache } from "@/lib/stores/site-store";
+import { validatePublicDraftMediaReferences } from "@/lib/public-draft-validation";
 import type { StorefrontProfile, StorefrontProfileJson, ThemeDraftMeta } from "@/lib/types";
 
 function profileEtag(profile: StorefrontProfileJson, revision: number): string {
@@ -91,6 +92,11 @@ export async function saveStorefrontProfileDraftRelational(params: {
     const currentProfile = current ? toStorefrontProfile(current) : undefined;
     if (params.expectedRevision !== undefined && currentProfile?.draftMeta?.revision !== params.expectedRevision) throw new RelationalStoreError("storefront_profile_draft_conflict", 409);
     if (params.expectedEtag && currentProfile?.draftMeta?.etag !== params.expectedEtag) throw new RelationalStoreError("storefront_profile_draft_conflict", 409);
+    const [pages, settings] = await Promise.all([
+      tx.themePage.findMany({ where: { siteId: params.siteId }, select: { draftJson: true } }),
+      tx.themeSettings.findUnique({ where: { siteId: params.siteId }, select: { draftJson: true } })
+    ]);
+    await validatePublicDraftMediaReferences({ db: tx, siteId: params.siteId, values: [...pages.map((page) => page.draftJson), settings?.draftJson, draftJson] });
     const revision = (currentProfile?.draftMeta?.revision ?? 0) + 1;
     const now = new Date().toISOString();
     const draftMeta: ThemeDraftMeta = { revision, updatedAt: now, etag: profileEtag(draftJson, revision) };
@@ -114,7 +120,5 @@ export async function saveStorefrontProfileDraftRelational(params: {
     return profile;
   });
   clearSiteReadCache();
-  const { refreshCurrentPublishedStateRelational } = await import("@/lib/stores/site-published-state");
-  await refreshCurrentPublishedStateRelational(params.siteId, "site_admin");
   return profile;
 }

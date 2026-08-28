@@ -25,7 +25,7 @@ export async function GET(request: Request): Promise<Response> {
   return new Response(`${body.join("\n")}\n`, {
     headers: {
       "content-type": "text/plain; charset=utf-8",
-      "cache-control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400",
+      "cache-control": "no-store, max-age=0",
       "vary": "Host, X-Forwarded-Host",
       ...(identity?.publicationId ? { "x-storefront-publication": identity.publicationId } : {}),
       ...(identity?.publicationVersion !== undefined ? { "x-storefront-publication-version": String(identity.publicationVersion) } : {}),

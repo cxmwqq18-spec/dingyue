@@ -23,7 +23,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     });
     return NextResponse.json({ ok: true, siteId, pageId, action: "draft_saved", draftVersion: result.draftVersion });
   } catch (error) {
-    const status = error instanceof StoreError ? error.status : 404;
+    const status = error instanceof StoreError ? error.status : typeof error === "object" && error && "status" in error ? Number(error.status) || 422 : 404;
     return NextResponse.json({ error: error instanceof Error ? error.message : "draft_save_failed" }, { status });
   }
 }

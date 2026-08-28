@@ -1075,19 +1075,18 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
   const entries = isLocalHostRequest
     ? runtime.sites.flatMap((item) => sitemapEntriesForSite(runtime.state, item))
     : site ? sitemapEntriesForSite(runtime.state, site) : [];
-  const currentState = site?.currentPublishedState;
-  if (!currentState) return { entries };
-  const snapshot = currentState.payload as PublishedSeoSnapshot;
-  const revisions = snapshot.revisions;
+  if (!site) return { entries };
+  const live = createPublishedSiteSnapshot(runtime.state, site, { source: "postgres" });
+  const revisions = live.snapshotRevisions;
   return {
     entries,
     identity: {
-      publicationId: site.activePublication?.id,
-      publicationVersion: site.activePublication?.version,
-      currentRevision: currentState.revision,
-      contentHash: currentState.contentHash,
-      snapshotHash: snapshot.snapshotHash,
-      buildId: snapshot.buildId,
+      publicationId: undefined,
+      publicationVersion: undefined,
+      currentRevision: undefined,
+      contentHash: undefined,
+      snapshotHash: undefined,
+      buildId: live.buildId,
       routeRevision: revisions.routeRevision,
       pageRevision: revisions.pageRevision,
       copyRevision: revisions.copyRevision,

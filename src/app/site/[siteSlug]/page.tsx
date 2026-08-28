@@ -12,6 +12,9 @@ import { publicSiteSlug } from "@/lib/domain-routing";
 import { headers } from "next/headers";
 import { STOREFRONT_PUBLIC_HOST_HEADER, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 type HeaderReader = {
   get(name: string): string | null;
 };

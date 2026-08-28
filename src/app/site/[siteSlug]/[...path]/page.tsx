@@ -21,6 +21,8 @@ import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resol
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { canonicalSaveTheDatePath, legacySaveTheDatePath } from "@/lib/save-the-date-routes";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 type HeaderReader = {
   get(name: string): string | null;

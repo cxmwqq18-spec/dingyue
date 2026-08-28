@@ -22,6 +22,6 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const profile = await saveStorefrontProfileDraftRelational({ siteId, draftJson: body.draftJson, expectedRevision: body.expectedRevision, expectedEtag: body.expectedEtag });
     return NextResponse.json({ ok: true, profile });
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : "storefront_profile_save_failed" }, { status: error instanceof RelationalStoreError ? error.status : 500 });
+    return NextResponse.json({ error: error instanceof Error ? error.message : "storefront_profile_save_failed" }, { status: error instanceof RelationalStoreError ? error.status : typeof error === "object" && error && "status" in error ? Number(error.status) || 422 : 500 });
   }
 }

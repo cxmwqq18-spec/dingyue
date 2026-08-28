@@ -31,7 +31,6 @@ import {
   toSiteEmailConfigAssignment,
   toSiteTheme,
   toThemeCopy,
-  toThemePublication,
   toToolCategory,
   toToolMenuItem,
   toVideoTheme,
@@ -75,7 +74,6 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
       videoThemeCategories,
       videoThemes,
       mediaAssets,
-      themePublications,
       siteThemes,
       themeCopies,
       customerModels,
@@ -99,8 +97,6 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
           pages: { orderBy: { slug: "asc" } },
           settings: true,
           storefrontProfile: true,
-          currentPublishedState: true,
-          activePublication: { include: { publication: true } },
           connect: true
         }
       }),
@@ -123,7 +119,6 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
       () => prisma.videoThemeCategory.findMany({ orderBy: [{ siteId: "asc" }, { parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }], include: { parent: true } }),
       () => prisma.videoTheme.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }], include: { category: { include: { parent: true } } } }),
       () => prisma.mediaAsset.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
-      () => prisma.themePublication.findMany({ orderBy: [{ siteId: "asc" }, { version: "desc" }] }),
       () => prisma.siteTheme.findMany({ orderBy: [{ siteId: "asc" }, { updatedAt: "desc" }] }),
       () => prisma.themeCopy.findMany({ orderBy: [{ siteId: "asc" }, { updatedAt: "desc" }] }),
       () => prisma.customerModel.findMany({ orderBy: { updatedAt: "desc" } }),
@@ -195,7 +190,9 @@ export async function readStorefrontPlatformStateRelational(): Promise<PlatformS
       creativePackCategories: creativePackCategories.map(toCreativePackCategory),
       creativePacks: creativePacks.map(toCreativePack),
       mediaAssets: mappedMediaAssets,
-      themePublications: themePublications.map(toThemePublication),
+      // Publication snapshots were retired. Keep the state shape for private
+      // admin compatibility, but never read the removed tables.
+      themePublications: [],
       siteThemes: siteThemes.map(toSiteTheme),
       themeCopies: themeCopies.map(toThemeCopy),
       customerModels: customerModels.map(toCustomerModelRelational),

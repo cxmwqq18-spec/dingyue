@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { cache } from "react";
 
 import { canonicalSiteSlug, cleanHost, hostDomainCandidates, isPlatformHost, legacySiteSlugCandidates } from "@/lib/domain-routing";
@@ -30,9 +30,8 @@ import { runnableVideoProviderModelFamiliesForRequest } from "@/lib/video-provid
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit, isVideoProviderModel } from "@/lib/video-provider-limits";
 import { DEFAULT_VIDEO_FRAME_LIMIT, defaultVideoModelPricing, normalizeVideoFrameLimit, normalizeVideoModelPricing, type VideoModelPricing } from "@/lib/video-frame-config";
 import { defaultVideoThemeExamplePrompt, validateVideoPrompt } from "@/lib/video-prompt-format";
-import { publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
+import { compileMydreamshootsVideoTopicPublication } from "@/lib/mydreamshoots-video-topic-publication";
 import { resolvePublishedSaveTheDateGroups, type PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
-import { currentPublishedContentHash, currentPublishedRevision } from "@/lib/current-state/hash";
 import type {
   AiGatewayGroup,
   AiProviderConfig,
@@ -48,7 +47,6 @@ import type {
   PublicSiteAdmin,
   PublicPlatformAdmin,
   Site,
-  SitePublishedState,
   SiteAdmin,
   SiteAdminSession,
   SiteAiApp,
@@ -57,7 +55,6 @@ import type {
   ThemePage,
   ThemePublication,
   PublishedVideoNavigationProjection,
-  ThemePublicationSnapshot,
   ToolMenuItem,
   VideoTheme,
   VideoThemeCategory,
@@ -79,7 +76,6 @@ import {
   toCreativePack,
   toMediaAsset,
   toStorefrontProfile,
-  toThemePublication,
   toThemePage,
   toPublicSiteAdminRelational,
   toPublicPlatformAdminRelational,
@@ -89,7 +85,6 @@ import {
   mapGenerationJob,
   mapProduct,
   toSite,
-  toSitePublishedState,
   toSiteAdmin,
   toSiteAdminSessionRelational,
   toCustomerSessionRelational,
@@ -111,9 +106,6 @@ const siteRuntimeInclude = {
   pages: { orderBy: { slug: "asc" } },
   settings: true,
   storefrontProfile: true,
-  currentPublishedState: true,
-  activePublication: { include: { publication: true } },
-  publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 },
   connect: true
 } satisfies Prisma.SiteInclude;
 
@@ -265,7 +257,7 @@ async function loadToolCategoriesForSite(siteId: string, options: { activeOnly?:
         throw error;
       }
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    0
   );
 }
 
@@ -303,7 +295,7 @@ async function loadToolMenuItemsForSite(siteId: string, options: { activeOnly?: 
         throw error;
       }
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    0
   );
 }
 
@@ -389,7 +381,7 @@ export const getStorefrontPublicVideoThemeCategoriesForSite = cache(async (siteI
           .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label));
       }
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    0
   );
 });
 const collectionDetailSiteSelect = {
@@ -441,9 +433,6 @@ const collectionDetailSiteSelect = {
     }
   },
   storefrontProfile: true,
-  currentPublishedState: true,
-  activePublication: { include: { publication: true } },
-  publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
 type CollectionDetailSiteRecord = Prisma.SiteGetPayload<{ select: typeof collectionDetailSiteSelect }>;
 const publicRuntimeSiteSelect = {
@@ -494,9 +483,6 @@ const publicRuntimeSiteSelect = {
     }
   },
   storefrontProfile: true,
-  currentPublishedState: true,
-  activePublication: { include: { publication: true } },
-  publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
 type PublicRuntimeSiteRecord = Prisma.SiteGetPayload<{ select: typeof publicRuntimeSiteSelect }>;
 const customerRuntimeSiteSelect = {
@@ -547,9 +533,7 @@ const customerRuntimeSiteSelect = {
       payoutsEnabled: true
     }
   },
-  storefrontProfile: true,
-  activePublication: { include: { publication: true } },
-  publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
+  storefrontProfile: true
 } satisfies Prisma.SiteSelect;
 type CustomerRuntimeSiteRecord = Prisma.SiteGetPayload<{ select: typeof customerRuntimeSiteSelect }>;
 const adminLoginSiteSelect = {
@@ -613,6 +597,7 @@ const publicMetadataSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
+      draftJson: true,
       publishedJson: true
     }
   },
@@ -631,9 +616,6 @@ const publicMetadataSiteSelect = {
     }
   },
   storefrontProfile: true,
-  currentPublishedState: true,
-  activePublication: { include: { publication: true } },
-  publications: { orderBy: [{ version: "desc" as const }, { publishedAt: "desc" as const }], take: 1 }
 } satisfies Prisma.SiteSelect;
 type PublicMetadataSiteRecord = Prisma.SiteGetPayload<{ select: typeof publicMetadataSiteSelect }>;
 const collectionDetailCreativePackSelect = {
@@ -949,17 +931,9 @@ function toPublicSiteShell(
   record: CollectionDetailSiteRecord | CustomerRuntimeSiteRecord | PublicRuntimeSiteRecord | PublicMetadataSiteRecord,
   mediaAssets: MediaAsset[] = []
 ): Site {
-  const instantDraftPreview = process.env.DINGYUE_ENV === "local" && process.env.STOREFRONT_INSTANT_DRAFT_PREVIEW !== "0";
   const primaryDomain = record.domains.find((domain) => domain.isPrimary)?.domain ?? record.domains[0]?.domain ?? "";
   const settingsRecord = "settings" in record ? record.settings : undefined;
   const profileRecord = "storefrontProfile" in record ? record.storefrontProfile : undefined;
-  const currentStateRecord = "currentPublishedState" in record ? record.currentPublishedState : undefined;
-  const currentStatePages = currentStateRecord && typeof currentStateRecord.payload === "object" && currentStateRecord.payload && !Array.isArray(currentStateRecord.payload)
-    ? (currentStateRecord.payload as { pages?: Array<{ id?: string; slug?: string; publishedJson?: unknown }> }).pages ?? []
-    : [];
-  const activePublication = record.activePublication?.publication
-    ? toThemePublication(record.activePublication.publication)
-    : undefined;
   return {
     id: record.id,
     name: record.name,
@@ -978,20 +952,12 @@ function toPublicSiteShell(
     },
     themeSettings: toAdminShellThemeSettings(settingsRecord),
     storefrontProfile: toStorefrontProfile(profileRecord),
-    currentPublishedState: currentStateRecord
-      ? toSitePublishedState(currentStateRecord)
-      : undefined,
-    // Public consumers must use the explicitly activated immutable snapshot.
-    // Never substitute the newest historical publication when the active
-    // pointer is absent; that would make the public result non-deterministic.
-    activePublication,
-    latestPublication: activePublication,
     pages: record.pages.map((page) => toThemePage({
       ...page,
-      draftJson: instantDraftPreview && "draftJson" in page ? page.draftJson : page.publishedJson,
-      publishedJson: instantDraftPreview && "draftJson" in page
-        ? page.draftJson
-        : currentStatePages.find((candidate) => candidate.id === page.id || candidate.slug === page.slug)?.publishedJson ?? page.publishedJson
+      // Public SSR is deliberately sourced from the latest draft. The
+      // publishedJson column is retained only for backwards compatibility.
+      draftJson: (page as { draftJson?: unknown }).draftJson ?? (page as { publishedJson: unknown }).publishedJson,
+      publishedJson: (page as { draftJson?: unknown }).draftJson ?? (page as { publishedJson: unknown }).publishedJson
     })),
     mediaAssets
   };
@@ -1063,8 +1029,9 @@ async function getSiteByHostRelational(host: string | null | undefined): Promise
 }
 
 export const getStorefrontSiteByHostRelational = cache(async (host: string | null | undefined): Promise<Site | undefined> => {
-  const key = cleanHost(host) || "empty";
-  return siteReadCache.get(`host:${key}`, () => getSiteByHostRelational(host));
+  // Host resolution is part of the public SSR request. Keep only React's
+  // per-request memoization; never reuse a cross-request site shell.
+  return getSiteByHostRelational(host);
 });
 
 function publicRuntimePageSlugs(slug?: string): string[] | undefined {
@@ -1286,7 +1253,7 @@ export const getStorefrontPublicRuntimeStateForSite = cache(async (siteId: strin
   return siteReadCache.get(
     `public-runtime:${siteId}:${pageKey}:${contextKey}`,
     () => loadStorefrontPublicRuntimeState({ id: siteId }, pageSlugs, contextSlug),
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    0
   );
 });
 
@@ -1310,7 +1277,7 @@ export const getStorefrontPublicCreativePacksForSite = cache(async (siteId: stri
         return fallbackPublicCreativePacksForSite(siteId, take);
       }
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    0
   );
 });
 
@@ -1332,7 +1299,7 @@ export const getStorefrontPublicCreativePackCategoriesForSite = cache(async (sit
         return fallbackPublicCreativePackCategoriesForSite(siteId);
       }
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    0
   );
 });
 
@@ -1411,7 +1378,7 @@ export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string
         return fallbackPublicVideoThemesForSite(siteId, take);
       }
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    0
   );
 });
 
@@ -1423,7 +1390,7 @@ export const getStorefrontPublicCollectionDetailStateBySlug = cache(async (slug:
     async () => {
       return loadStorefrontPublicCollectionDetailState(slug, normalizedCollectionSlug);
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    0
   );
 });
 
@@ -1433,7 +1400,7 @@ export const getStorefrontPublicCollectionDirectoryStateBySlug = cache(async (sl
   return siteReadCache.get(
     `public-collection-directory-shell:${canonicalSlug}`,
     async () => loadStorefrontPublicCollectionDirectoryState(slug),
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    0
   );
 });
 
@@ -1450,7 +1417,7 @@ export const getStorefrontPublicCollectionMetadataStateBySlug = cache(async (slu
         siteDomains: site.domains.map(toSiteDomain)
       });
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    0
   );
 });
 
@@ -1466,7 +1433,7 @@ const getStorefrontPublicCollectionSiteShellBySlug = cache(async (slug: string):
       });
       return site ?? undefined;
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    0
   );
 });
 
@@ -1626,99 +1593,43 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
         ? { ...publicRuntimeSiteSelect.pages, where: pageWhere }
         : publicRuntimeSiteSelect.pages
     } satisfies Prisma.SiteSelect;
-  const site = "id" in lookup
-    ? await prisma.site.findUnique({ where: { id: lookup.id }, select })
-    : await prisma.site.findFirst({
-        where: { slug: { in: lookup.slugCandidates } },
-        orderBy: { updatedAt: "desc" },
-        select
-      });
-  if (!site) return undefined;
-  const currentStateRow = await prisma.sitePublishedState.findUnique({ where: { siteId: site.id } });
-  const currentPublishedState = currentStateRow ? toSitePublishedState(currentStateRow) : undefined;
-  storefrontPerfMark("site", startedAt, { pageSlugs, profile: needs.profile });
-  const siteId = site.id;
-  const limits = publicRuntimeLimits(needs.profile);
-  const useSharedNavigationData = isSynchronizedDreamshootNavigationSite(site);
-
-  const [
-    products,
-    siteAiApps,
-    creativePacks,
-    creativePackCategories,
-    mediaAssets,
-    toolCategories,
-    toolMenuItems,
-    navigationData
-  ] = await runDbTasks([
-    needs.products
-      ? () => prisma.product.findMany({
-          where: { siteId, status: "active" },
-          include: { prices: true },
-          orderBy: [{ type: "asc" }, { createdAt: "asc" }],
-          take: limits.products
-        })
-      : () => Promise.resolve([]),
-    needs.siteAiApps
-      ? () => prisma.siteAiApp.findMany({
-          where: { siteId, enabled: true },
-          select: publicRuntimeSiteAiAppSelect,
-          orderBy: [{ routeKey: "asc" }],
-          take: limits.siteAiApps
-        })
-      : () => Promise.resolve([]),
-    needs.creativePacks && !useSharedNavigationData
-      ? () => prisma.creativePack.findMany({
-          where: needs.contextSlug
-            ? {
-                siteId,
-                status: "active",
-                OR: [
-                  { categoryRecord: { is: { slug: needs.contextSlug } } },
-                  { name: { equals: needs.contextSlug, mode: "insensitive" } },
-                  { name: { contains: needs.contextSlug.replace(/-/g, " "), mode: "insensitive" } }
-                ]
-              }
-            : { siteId, status: "active" },
-          select: publicRuntimeCreativePackSelect,
-          orderBy: [{ status: "asc" }, { createdAt: "asc" }],
-          ...(typeof limits.creativePacks === "number" ? { take: limits.creativePacks } : {})
-        })
-      : () => Promise.resolve([]),
-    needs.creativePacks && !useSharedNavigationData ? () => getStorefrontPublicCreativePackCategoriesForSite(siteId) : () => Promise.resolve([]),
-    needs.mediaAssets
-      ? () => prisma.mediaAsset.findMany({
-          where: { siteId, usageType: { in: ["theme", "package", "sample"] } },
-          select: publicRuntimeMediaAssetSelect,
-          orderBy: [{ createdAt: "desc" }, { id: "asc" }],
-          take: limits.mediaAssets
-        })
-      : () => Promise.resolve([]),
-    needs.toolMenus && !useSharedNavigationData ? () => loadToolCategoriesForSite(siteId, { activeOnly: true, take: 80 }) : () => Promise.resolve([]),
-    needs.toolMenus && !useSharedNavigationData ? () => loadToolMenuItemsForSite(siteId, { activeOnly: true, take: 80 }) : () => Promise.resolve([]),
-    useSharedNavigationData ? () => getStorefrontPublicNavigationDataForSite(siteId)
-      : () => Promise.resolve(undefined)
-  ]);
-  const runtimeCreativePackCategories = navigationData?.creativePackCategories ?? creativePackCategories;
-  const runtimeCreativePacks = navigationData?.creativePacks ?? creativePacks.map(toPublicRuntimeCreativePack);
-  const runtimeToolCategories = navigationData?.toolCategories ?? toolCategories.map(toToolCategory);
-  const runtimeToolMenuItems = navigationData?.toolMenuItems ?? toolMenuItems.map(toToolMenuItem);
-  const runtimeVideoThemeCategories = navigationData?.videoThemeCategories ?? [];
-  const runtimeVideoThemes = navigationData?.videoThemes ?? [];
-  storefrontPerfMark("collections", startedAt, {
+  return prisma.$transaction(async (tx) => {
+    const site = "id" in lookup
+      ? await tx.site.findUnique({ where: { id: lookup.id }, select })
+      : await tx.site.findFirst({ where: { slug: { in: lookup.slugCandidates } }, orderBy: { updatedAt: "desc" }, select });
+    if (!site) return undefined;
+    storefrontPerfMark("site", startedAt, { pageSlugs, profile: needs.profile });
+    const siteId = site.id;
+    const limits = publicRuntimeLimits(needs.profile);
+    const [products, siteAiApps, creativePacks, creativePackCategories, mediaAssets, toolCategories, toolMenuItems, videoThemeCategories, videoThemes] = await Promise.all([
+      needs.products ? tx.product.findMany({ where: { siteId, status: "active" }, include: { prices: true }, orderBy: [{ type: "asc" }, { createdAt: "asc" }] }) : Promise.resolve([]),
+      needs.siteAiApps ? tx.siteAiApp.findMany({ where: { siteId, enabled: true }, select: publicRuntimeSiteAiAppSelect, orderBy: [{ routeKey: "asc" }], take: limits.siteAiApps }) : Promise.resolve([]),
+      needs.creativePacks ? tx.creativePack.findMany({ where: { siteId, status: "active" }, select: publicRuntimeCreativePackSelect, orderBy: [{ status: "asc" }, { createdAt: "asc" }] }) : Promise.resolve([]),
+      needs.creativePacks ? tx.creativePackCategory.findMany({ where: { siteId, status: "active" }, include: { parent: true }, orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }] }) : Promise.resolve([]),
+      needs.mediaAssets ? tx.mediaAsset.findMany({ where: { siteId, usageType: { in: ["theme", "package", "sample"] } }, select: publicRuntimeMediaAssetSelect, orderBy: [{ createdAt: "desc" }, { id: "asc" }], take: limits.mediaAssets }) : Promise.resolve([]),
+      needs.toolMenus ? tx.toolCategory.findMany({ where: { siteId, status: "active" }, include: { parent: true }, orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }], take: 80 }) : Promise.resolve([]),
+      needs.toolMenus ? tx.toolMenuItem.findMany({ where: { siteId, status: "active" }, include: { category: { include: { parent: true } } }, orderBy: [{ sortOrder: "asc" }, { title: "asc" }], take: 80 }) : Promise.resolve([]),
+      tx.videoThemeCategory.findMany({ where: { siteId, status: "active" }, include: { parent: true }, orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }] }),
+      tx.videoTheme.findMany({ where: { siteId, status: "active" }, include: { category: { include: { parent: true } }, examples: { where: { status: "active" }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] } }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] })
+    ]);
+    const runtimeCreativePackCategories = creativePackCategories.map(toCreativePackCategory);
+    const runtimeCreativePacks = creativePacks.map(toPublicRuntimeCreativePack);
+    const runtimeToolCategories = toolCategories.map(toToolCategory);
+    const runtimeToolMenuItems = toolMenuItems.map(toToolMenuItem);
+    const runtimeVideoThemeCategories = videoThemeCategories.map(toVideoThemeCategory);
+    const runtimeVideoThemes = videoThemes.map(toVideoTheme);
+    storefrontPerfMark("collections", startedAt, {
     products: products.length,
     siteAiApps: siteAiApps.length,
     creativePacks: runtimeCreativePacks.length,
     creativePackCategories: runtimeCreativePackCategories.length,
     mediaAssets: mediaAssets.length,
-    toolMenuItems: runtimeToolMenuItems.length
-  });
+      toolMenuItems: runtimeToolMenuItems.length
+    });
 
-  const mappedMediaAssets = mediaAssets.map(toMediaAsset);
-  const mappedSite = toPublicSiteShell(site, mappedMediaAssets);
-  if (currentPublishedState) mappedSite.currentPublishedState = currentPublishedState;
-
-  const state = emptyPlatformState({
+    const mappedMediaAssets = mediaAssets.map(toMediaAsset);
+    const mappedSite = toPublicSiteShell(site, mappedMediaAssets);
+    const state = emptyPlatformState({
     sites: [mappedSite],
     siteDomains: site.domains.map(toSiteDomain),
     products: products.map(mapProduct),
@@ -1730,9 +1641,10 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
     creativePackCategories: runtimeCreativePackCategories,
     creativePacks: runtimeCreativePacks,
     mediaAssets: mappedMediaAssets
-  });
-  storefrontPerfMark("done", startedAt);
-  return state;
+    });
+    storefrontPerfMark("done", startedAt);
+    return state;
+  }, { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead });
 }
 
 export const getStorefrontRuntimeStateForSite = cache(async (siteId: string): Promise<PlatformState | undefined> => {
@@ -2128,22 +2040,9 @@ export const getStorefrontRuntimeStateBySlug = cache(async (slug: string): Promi
 });
 
 export const getStorefrontPublicRuntimeStateByHost = cache(async (host: string | null | undefined, pageSlug?: string, contextSlug?: string): Promise<PlatformState | undefined> => {
-  const key = cleanHost(host) || "empty";
   const pageSlugs = publicRuntimePageSlugs(pageSlug);
-  const pageKey = pageSlugs?.join("|") ?? "all";
-  const contextKey = contextSlug ? slugify(contextSlug) : "none";
-  if (instantDraftPreviewEnabled()) {
-    const lookup = await getPublicRuntimeSiteLookupByHost(host);
-    return lookup ? loadStorefrontPublicRuntimeState(lookup, pageSlugs, contextSlug) : undefined;
-  }
-  return siteReadCache.get(
-    `public-runtime-host:${key}:${pageKey}:${contextKey}`,
-    async () => {
-      const lookup = await getPublicRuntimeSiteLookupByHost(host);
-      return lookup ? loadStorefrontPublicRuntimeState(lookup, pageSlugs, contextSlug) : undefined;
-    },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 0)
-  );
+  const lookup = await getPublicRuntimeSiteLookupByHost(host);
+  return lookup ? loadStorefrontPublicRuntimeState(lookup, pageSlugs, contextSlug) : undefined;
 });
 
 export const getStorefrontPublicPageMetadataStateByHost = cache(async (host: string | null | undefined, pageSlug?: string): Promise<PlatformState | undefined> => {
@@ -2236,7 +2135,7 @@ export const getStorefrontPublicPageMetadataStateBySlug = cache(async (slug: str
         sites: [toPublicSiteShell(site)]
       });
     },
-    Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 120_000)
+    0
   );
 });
 
@@ -2555,15 +2454,8 @@ export type CustomerWorkspaceBootstrapRelational = {
 
 async function getPublishedVideoGenerationNavigationForSite(siteId: string): Promise<PublishedVideoNavigationProjection[]> {
   if (!isMydreamshootsVideoFrameworkSiteId(siteId)) return [];
-  const site = await prisma.site.findUnique({
-    where: { id: siteId },
-    select: { currentPublishedState: { select: { payload: true, contentHash: true, revision: true } } }
-  });
-  const current = site?.currentPublishedState;
-  if (!current || currentPublishedContentHash(current.payload) !== current.contentHash || currentPublishedRevision(siteId, current.contentHash) !== current.revision) return [];
-  const snapshot = current.payload as unknown as ThemePublicationSnapshot;
-  if (publicationSnapshotIntegrity(snapshot) !== "valid") return [];
-  return Array.isArray(snapshot?.publishedVideoNavigation) ? snapshot.publishedVideoNavigation : [];
+  const pages = await prisma.themePage.findMany({ where: { siteId }, orderBy: { slug: "asc" } });
+  return compileMydreamshootsVideoTopicPublication(pages.map(toThemePage), siteId as "site_dreamshoot" | "site_grownstride_test").navigation;
 }
 
 function watermarkedCreativePackCategoryForWorkspace(category: CreativePackCategory | undefined): CreativePackCategory | undefined {
@@ -2651,7 +2543,7 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
     const site = await getCustomerWorkspaceSiteShellRelational(slug);
     if (!site) return undefined;
 
-    const [siteAiApps, navigationData, videoThemes, publishedVideoGenerationTopics, publishedStateRow] = await Promise.all([
+    const [siteAiApps, navigationData, videoThemes, publishedVideoGenerationTopics, livePublicState] = await Promise.all([
       prisma.siteAiApp.findMany({
         where: { siteId: site.id, enabled: true },
         include: { aiApp: true },
@@ -2665,11 +2557,10 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
       getStorefrontPublicNavigationDataForSite(site.id),
       getStorefrontPublicVideoThemesForSite(site.id),
       getPublishedVideoGenerationNavigationForSite(site.id),
-      prisma.sitePublishedState.findUnique({ where: { siteId: site.id }, select: { payload: true } })
+      getStorefrontPublicRuntimeStateForSite(site.id)
     ]);
-    if (!publishedStateRow) throw new RelationalStoreError("current_published_state_missing", 503);
-    const publishedPayload = publishedStateRow.payload as unknown as ThemePublicationSnapshot;
-    if (publicationSnapshotIntegrity(publishedPayload) !== "valid") throw new RelationalStoreError("current_published_state_invalid", 503);
+    const { createPublishedSiteSnapshot } = await import("@/lib/storefront-context");
+    const liveSnapshot = livePublicState ? createPublishedSiteSnapshot(livePublicState, livePublicState.sites[0], { source: "postgres" }) : undefined;
 
     return {
       site: {
@@ -2686,9 +2577,9 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
       videoThemeCategories: navigationData.videoThemeCategories.map((category) => watermarkedVideoThemeCategoryForWorkspace(category) ?? category),
       videoThemes: videoThemes.map(watermarkedVideoThemeForWorkspace),
       publishedVideoGenerationTopics,
-      publishedSaveTheDateGroups: resolvePublishedSaveTheDateGroups(publishedPayload.publishedHomepageShowcases ?? []),
+      publishedSaveTheDateGroups: resolvePublishedSaveTheDateGroups(liveSnapshot?.publishedHomepageShowcases ?? []),
       publishedSaveTheDateMenuLabel: String(
-        publishedPayload.themeSettings?.saveTheDateNavigation?.menuLabel || "Save the Date"
+        liveSnapshot?.themeSettings?.saveTheDateNavigation?.menuLabel || "Save the Date"
       ).trim() || "Save the Date"
     };
   }, Number(process.env.STOREFRONT_WORKSPACE_BOOTSTRAP_CACHE_TTL_MS ?? 60_000));
@@ -3506,9 +3397,7 @@ export async function getSiteAdminContextRelationalState(
           .then((rows) => rows.map(toMediaAsset))
       : Promise.resolve(undefined),
     include.publications
-      ? prisma.themePublication
-          .findMany({ where: { siteId }, orderBy: [{ publishedAt: "asc" }, { version: "asc" }], take: take.publications })
-          .then((rows) => rows.map(toThemePublication))
+      ? Promise.resolve([])
       : Promise.resolve(undefined),
     include.auditLogs
       ? prisma.auditLog
@@ -3706,9 +3595,7 @@ async function loadLightSiteAdminContextRelationalSummary(siteId: string): Promi
           WHERE "siteId" = ${siteId}
         ),
         publication_summary AS (
-          SELECT COUNT(*) AS "publicationCount"
-          FROM "ThemePublication"
-          WHERE "siteId" = ${siteId}
+          SELECT 0::bigint AS "publicationCount"
         ),
         customer_summary AS (
           SELECT COUNT(*) AS "customerCount"
@@ -3904,9 +3791,7 @@ async function loadSiteAdminContextRelationalSummary(siteId: string): Promise<Si
           WHERE "siteId" = ${siteId}
         ),
         publication_summary AS (
-          SELECT COUNT(*) AS "publicationCount"
-          FROM "ThemePublication"
-          WHERE "siteId" = ${siteId}
+          SELECT 0::bigint AS "publicationCount"
         ),
         customer_summary AS (
           SELECT COUNT(*) AS "customerCount"

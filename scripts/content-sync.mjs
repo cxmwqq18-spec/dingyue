@@ -2,9 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
-import Module from "node:module";
 import { execFileSync } from "node:child_process";
-import createJiti from "jiti";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { argumentValue, assertAllowedSite, assertDatabaseTarget, hasArgument, parseDatabaseUrl } from "./lib/database-target.mjs";
@@ -335,25 +333,7 @@ async function apply() {
       const after = await protectedFingerprint(tx);
       if (hash(before) !== hash(after)) fail("Protected business data changed during content apply; transaction rolled back.");
     }, { timeout: 180000, maxWait: 20000 });
-    const sourceRoot = path.resolve("src");
-    const originalResolveFilename = Module._resolveFilename;
-    const originalLoad = Module._load;
-    Module._load = function load(request, ...args) { if (request === "server-only") return {}; return originalLoad.call(this, request, ...args); };
-    Module._resolveFilename = function resolveFilename(request, ...args) {
-      if (request === "server-only") return path.join(sourceRoot, "lib/storefront-context/types.ts");
-      const resolved = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request;
-      return originalResolveFilename.call(this, request.startsWith("@/") && !path.extname(resolved) ? `${resolved}.ts` : resolved, ...args);
-    };
-    const originalDatabaseUrl = process.env.DATABASE_URL;
-    try {
-      process.env.DATABASE_URL = targetUrl;
-      const { refreshCurrentPublishedStateRelational } = createJiti(import.meta.url)("../src/lib/stores/site-published-state.ts");
-      await refreshCurrentPublishedStateRelational(siteId, "content-sync");
-    } finally {
-      Module._resolveFilename = originalResolveFilename;
-      Module._load = originalLoad;
-      process.env.DATABASE_URL = originalDatabaseUrl;
-    }
+    // Public SSR reads draftJson directly; there is no publication refresh step.
     const reportRows = [
       ...report.applied.map((row) => ({ ...row, result: "applied" })),
       ...report.conflicts.map((row) => ({ ...row, result: `conflict:${row.reason}` })),

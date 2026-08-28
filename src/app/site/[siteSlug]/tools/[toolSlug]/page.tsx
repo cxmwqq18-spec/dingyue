@@ -4,6 +4,9 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { cache } from "react";
 import { renderToolPage, resolveToolPageForSite } from "@/lib/storefront-render";
 import { readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { metadataForPublishedStorefrontDirectoryPage } from "@/lib/storefront-metadata";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";

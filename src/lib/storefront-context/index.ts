@@ -1,62 +1,32 @@
 import "server-only";
 
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import { toCreativePack, mapProduct, toSite } from "@/lib/stores/prisma-mappers";
-import { currentPublishedContentHash, currentPublishedRevision } from "@/lib/current-state/hash";
-import type { SitePublishedState, ThemePageJson } from "@/lib/types";
+import { toCreativePack, mapProduct, toSite, toMediaAsset, toVideoTheme, toVideoThemeCategory, toCreativePackCategory } from "@/lib/stores/prisma-mappers";
+import type { PlatformState } from "@/lib/types";
+import { createPublishedSiteSnapshot } from "./snapshot";
 import { resolveStorefrontContext } from "./core";
 import type { DraftStorefrontContextAdapter, PublishedStorefrontContextAdapter, StorefrontContext, StorefrontPublishScope } from "./types";
 
-const publishedContextCache = new Map<string, { context: StorefrontContext; expiresAt: number }>();
-const siteContextKeys = new Map<string, Set<string>>();
-const PUBLISHED_CONTEXT_MAX_TTL_MS = 60_000;
+export { assertLiveDraftPage } from "./snapshot";
 
 export function storefrontContextCacheKey(params: { siteId: string; pageId?: string; currentRevision?: string; factsRevision: string; pageEntityId?: string; copyRevision?: string; pageMediaRevision?: string }): string {
-  return `${params.siteId}:${params.currentRevision ?? "missing-current-state"}:${params.factsRevision}:${params.pageId ?? "site"}:${params.pageEntityId ?? "page"}:${params.copyRevision ?? "copy"}:${params.pageMediaRevision ?? "media"}`;
+  return `${params.siteId}:${params.factsRevision}:${params.pageId ?? "site"}:${params.pageEntityId ?? "page"}:${params.copyRevision ?? "copy"}:${params.pageMediaRevision ?? "media"}`;
 }
 
-export function clearStorefrontContextCache(siteId: string): void {
-  for (const key of siteContextKeys.get(siteId) ?? []) publishedContextCache.delete(key);
-  siteContextKeys.delete(siteId);
-}
-
-function cachePublishedContext(siteId: string, context: StorefrontContext, expiresAt: number): StorefrontContext {
-  const key = storefrontContextCacheKey({
-    siteId,
-    pageId: context.page.id,
-    currentRevision: context.revisions.snapshotRevision,
-    factsRevision: context.revisions.factsRevision,
-    pageEntityId: context.revisions.pageEntityId,
-    copyRevision: context.revisions.copyRevision,
-    pageMediaRevision: context.revisions.pageMediaRevision
-  });
-  const cached = publishedContextCache.get(key);
-  if (cached && cached.expiresAt > Date.now()) return cached.context;
-  if (cached) publishedContextCache.delete(key);
-  publishedContextCache.set(key, { context, expiresAt });
-  const keys = siteContextKeys.get(siteId) ?? new Set<string>();
-  keys.add(key);
-  siteContextKeys.set(siteId, keys);
-  if (publishedContextCache.size > 200) {
-    const oldest = publishedContextCache.keys().next().value as string | undefined;
-    if (oldest) {
-      publishedContextCache.delete(oldest);
-      for (const [cachedSiteId, cachedKeys] of siteContextKeys) {
-        cachedKeys.delete(oldest);
-        if (!cachedKeys.size) siteContextKeys.delete(cachedSiteId);
-      }
-    }
-  }
-  return context;
+export function clearStorefrontContextCache(_siteId: string): void {
+  // Public SSR has no cross-request content cache. Kept as a compatibility
+  // hook for admin mutations that used to invalidate the publication cache.
 }
 
 type PrismaContextBundle = Awaited<ReturnType<typeof loadPrismaBundle>>;
 
-function nextPriceBoundary(bundle: Pick<PrismaContextBundle, "products">, now: number): number | undefined {
-  const boundaries = bundle.products.flatMap((product) => product.prices.flatMap((price) => [price.effectiveFrom, price.effectiveTo]))
-    .map((value) => (value ? Date.parse(value) : Number.NaN))
-    .filter((value) => Number.isFinite(value) && value > now);
-  return boundaries.length ? Math.min(...boundaries) : undefined;
+/**
+ * Canonical public SSR data entrypoint. Every call reads the current draft
+ * records from PostgreSQL in a repeatable-read transaction.
+ */
+export async function loadLiveStorefrontBundle(siteId: string): Promise<PrismaContextBundle> {
+  return loadPrismaBundle(siteId);
 }
 
 function normalizedPath(value: string): string {
@@ -65,7 +35,7 @@ function normalizedPath(value: string): string {
 }
 
 async function loadPrismaBundle(siteId: string) {
-  const siteRecord = await prisma.site.findUnique({
+  const siteRecord = await prisma.$transaction((tx) => tx.site.findUnique({
     where: { id: siteId },
     include: {
       domains: true,
@@ -75,70 +45,41 @@ async function loadPrismaBundle(siteId: string) {
       connect: true,
       products: { include: { prices: true } },
       creativePacks: true,
-      currentPublishedState: true
+      creativePackCategories: true,
+      mediaAssets: true,
+      videoThemeCategories: true,
+      videoThemes: { include: { category: true, examples: true } }
     }
-  });
+  }), { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead });
   if (!siteRecord) throw new Error("site_not_found");
-  const rawCurrentState = siteRecord.currentPublishedState;
-  if (!rawCurrentState) throw new Error("current_published_state_missing");
-  if (currentPublishedContentHash(rawCurrentState.payload) !== rawCurrentState.contentHash) {
-    throw new Error("current_published_state_hash_mismatch");
-  }
-  if (currentPublishedRevision(siteId, rawCurrentState.contentHash) !== rawCurrentState.revision) {
-    throw new Error("current_published_state_revision_mismatch");
-  }
-  const release = await prisma.deploymentRelease.findFirst({
-    where: { siteId, status: "applied" },
-    orderBy: { appliedAt: "desc" }
-  });
   const site = toSite(siteRecord);
-  const persistedCurrentState = site.currentPublishedState as SitePublishedState;
-  const instantDraftPreview = process.env.DINGYUE_ENV === "local" && process.env.STOREFRONT_INSTANT_DRAFT_PREVIEW !== "0";
-  const payload = instantDraftPreview
-    ? {
-        ...persistedCurrentState.payload,
-        pages: persistedCurrentState.payload.pages.map((publishedPage): SitePublishedState["payload"]["pages"][number] => {
-          const draftPage = siteRecord.pages.find((candidate) => candidate.id === publishedPage.id || candidate.slug === publishedPage.slug);
-          return draftPage
-            ? { ...publishedPage, title: draftPage.title ?? publishedPage.title, publishedJson: draftPage.draftJson as unknown as ThemePageJson }
-            : publishedPage;
-        }),
-        themeSettings: site.themeSettings.draftJson,
-        ...(site.storefrontProfile?.draftJson ? { storefrontProfile: site.storefrontProfile.draftJson } : {})
-      }
-    : persistedCurrentState.payload;
-  const currentState = instantDraftPreview
-    ? { ...persistedCurrentState, payload }
-    : persistedCurrentState;
-  const payloadPages = new Map(payload.pages.map((page) => [page.id, page]));
-  site.pages = site.pages.map((page) => {
-    const current = payloadPages.get(page.id) ?? payload.pages.find((candidate) => candidate.slug === page.slug);
-    return current ? { ...page, publishedJson: current.publishedJson, title: current.title ?? page.title } : page;
-  });
-  site.themeSettings = { ...site.themeSettings, publishedJson: payload.themeSettings };
-  if (site.storefrontProfile && payload.storefrontProfile) {
-    site.storefrontProfile = { ...site.storefrontProfile, publishedJson: payload.storefrontProfile };
-  }
+  const products = siteRecord.products.map(mapProduct);
+  const creativePacks = siteRecord.creativePacks.map(toCreativePack);
+  const live = createPublishedSiteSnapshot({ sites: [site], products, creativePacks } as PlatformState, site, { source: "postgres" });
   return {
-    site,
-    products: siteRecord.products.map(mapProduct),
-    creativePacks: siteRecord.creativePacks.map(toCreativePack),
-    currentState,
+    site: live.site,
+    products: live.products,
+    creativePacks: live.creativePacks,
+    mediaAssets: siteRecord.mediaAssets.map(toMediaAsset),
+    creativePackCategories: siteRecord.creativePackCategories.map(toCreativePackCategory),
+    videoThemeCategories: siteRecord.videoThemeCategories.map(toVideoThemeCategory),
+    videoThemes: siteRecord.videoThemes.map(toVideoTheme),
+    currentState: undefined,
     publication: undefined,
-    factsRevision: currentState.payload.revisions.factsRevision,
-    buildId: release?.codeCommit,
-    publishedPageEntities: Object.fromEntries(currentState.payload.publishedPageEntities.map((entity) => [entity.metadata.canonicalPath, entity])),
-    publishedFacts: currentState.payload.publishedFacts,
-    publishedPageMedia: Object.fromEntries(currentState.payload.publishedPageMedia.map((entity) => [entity.pageEntityId, entity])),
-    publishedStandardPageMedia: Object.fromEntries(currentState.payload.publishedStandardPageMedia.map((entity) => [entity.canonicalPath, entity])),
-    publishedLinkRefs: currentState.payload.publishedLinkRefs,
+    factsRevision: live.factsRevision,
+    buildId: live.buildId,
+    publishedPageEntities: Object.fromEntries(live.publishedPageEntities.map((entity) => [entity.metadata.canonicalPath, entity])),
+    publishedFacts: live.publishedFacts,
+    publishedPageMedia: Object.fromEntries(live.publishedPageMedia.map((entity) => [entity.pageEntityId, entity])),
+    publishedStandardPageMedia: Object.fromEntries(live.publishedStandardPageMedia.map((entity) => [entity.canonicalPath, entity])),
+    publishedLinkRefs: live.publishedLinkRefs,
     snapshotIntegrity: "valid" as const
   };
 }
 
 const prismaPublishedAdapter: PublishedStorefrontContextAdapter = {
   async loadPublishedBundle(siteId, path) {
-    const bundle = await loadPrismaBundle(siteId);
+    const bundle = await loadLiveStorefrontBundle(siteId);
     const page = bundle.site.pages.find((candidate) => candidate.slug === normalizedPath(path));
     if (!page) throw new Error("theme_page_not_found");
     return { ...bundle, page };
@@ -147,7 +88,7 @@ const prismaPublishedAdapter: PublishedStorefrontContextAdapter = {
 
 const prismaDraftAdapter: DraftStorefrontContextAdapter = {
   async loadDraftBundle(siteId, pageId) {
-    const bundle = await loadPrismaBundle(siteId);
+    const bundle = await loadLiveStorefrontBundle(siteId);
     const page = bundle.site.pages.find((candidate) => candidate.id === pageId);
     if (!page) throw new Error("theme_page_not_found");
     return { ...bundle, page };
@@ -168,10 +109,7 @@ export async function loadPublishedStorefrontContext({
   const observedAt = now ?? new Date();
   const bundle = await adapter.loadPublishedBundle(siteId, path);
   const context = resolveStorefrontContext(bundle, "published", { now: observedAt });
-  if (process.env.DINGYUE_ENV === "local" && process.env.STOREFRONT_INSTANT_DRAFT_PREVIEW !== "0") return context;
-  if (now) return context;
-  const expiresAt = Math.min(Date.now() + PUBLISHED_CONTEXT_MAX_TTL_MS, nextPriceBoundary(bundle, observedAt.getTime()) ?? Number.POSITIVE_INFINITY);
-  return cachePublishedContext(siteId, context, expiresAt);
+  return context;
 }
 
 export async function loadDraftStorefrontContext({

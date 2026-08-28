@@ -3,6 +3,9 @@ import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { renderStorefrontPage } from "@/lib/storefront-render";
 import { readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
 import { storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";

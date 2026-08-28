@@ -271,10 +271,9 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
   };
 
   const loadPublicationSummary = async () => {
-    const publicationCount = await perf.measure("db", () => prisma.themePublication.count({ where: { siteId } }));
     return {
       ok: true,
-      publicationCount,
+      publicationCount: 0,
       publications: []
     };
   };

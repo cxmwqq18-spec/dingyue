@@ -12,7 +12,7 @@ import {
   getPlatformAdminBySessionFromState,
   readPlatformState
 } from "@/lib/server-store";
-import type { AiGatewayGroup, AuditLogEntry, Order, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailConfig, PlatformEmailSettings, PlatformEmailTestResult, PublicSiteAdmin, Site, SiteDomain, SiteEmailConfigAssignment, Subscription } from "@/lib/types";
+import type { AiGatewayGroup, AuditLogEntry, Order, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailConfig, PlatformEmailSettings, PlatformEmailTestResult, PublicSiteAdmin, Site, SiteDomain, SiteEmailConfigAssignment, Subscription, ThemePublication } from "@/lib/types";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
@@ -43,7 +43,6 @@ import {
   toSiteAiApp,
   toSite,
   toSiteDomain,
-  toThemePublication,
   uid,
   verifyRelationalPassword
 } from "./prisma-mappers";
@@ -1227,7 +1226,7 @@ export async function getPlatformDashboardAggregateRelational(): Promise<
       prisma.aiGatewayGroup.findMany({ orderBy: [{ siteId: "asc" }, { status: "asc" }, { name: "asc" }] }),
       prisma.creativePack.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
       prisma.mediaAsset.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
-      prisma.themePublication.findMany({ orderBy: [{ siteId: "asc" }, { publishedAt: "desc" }] }),
+      Promise.resolve([]),
       prisma.assetUpload.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "desc" }] }),
       prisma.customerModel.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "desc" }] }),
       prisma.album.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "desc" }] }),
@@ -1246,7 +1245,7 @@ export async function getPlatformDashboardAggregateRelational(): Promise<
     const mappedGatewayGroups = gatewayGroups.map(toGatewayGroup);
     const mappedCreativePacks = creativePacks.map(toCreativePack);
     const mappedMediaAssets = mediaAssets.map(toMediaAsset);
-    const mappedPublications = publications.map(toThemePublication);
+    const mappedPublications: ThemePublication[] = [];
     const mappedAssetUploads = assetUploads.map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>));
     const mappedCustomerModels = customerModels.map((model) => toCustomerModelRelational(model as unknown as Record<string, unknown>));
     const mappedAlbums = albums.map((album) => toAlbumRelational(album as unknown as Record<string, unknown>));

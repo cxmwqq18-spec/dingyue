@@ -10,10 +10,13 @@ import { assertVerifiedBackupReceipt } from "@/lib/current-state/backup-receipt"
 export { currentPublishedContentHash, currentPublishedRevision } from "@/lib/current-state/hash";
 
 export async function getCurrentPublishedStateRelational(siteId: string): Promise<SitePublishedState> {
-  const row = await runPrismaReadWithReconnect(
+  void siteId;
+  throw new Error("legacy_published_state_retired");
+  /* istanbul ignore next -- retained while the cleanup migration is staged */
+  const row = (await runPrismaReadWithReconnect(
     () => prisma.sitePublishedState.findUnique({ where: { siteId } }),
     { label: `current published state ${siteId}` }
-  );
+  )) as any;
   if (!row) throw new Error("current_published_state_missing");
   if (currentPublishedContentHash(row.payload) !== row.contentHash) {
     throw new Error("current_published_state_hash_mismatch");
@@ -40,6 +43,10 @@ export async function compileCandidatePublishedStateRelational(siteId: string) {
  * approval record or caller-provided snapshot.
  */
 export async function refreshCurrentPublishedStateRelational(siteId: string, actor = "site_admin") {
+  void siteId;
+  void actor;
+  throw new Error("legacy_published_state_retired");
+  /* istanbul ignore next -- retained while the cleanup migration is staged */
   const candidate = await compileCandidatePublishedStateRelational(siteId);
   const result = await runPrismaWriteWithReconnect(async () => prisma.$transaction(async (tx) => {
     await tx.$queryRaw`SELECT "id" FROM "Site" WHERE "id" = ${siteId} FOR UPDATE`;
@@ -90,6 +97,9 @@ export async function publishCurrentStateRelational(params: PublishCurrentStateP
   noOp: boolean;
   verifiedBackupReceipt: VerifiedBackupReceipt;
 }> {
+  void params;
+  throw new Error("legacy_published_state_retired");
+  /* istanbul ignore next -- retained while the cleanup migration is staged */
   const receipt = assertVerifiedBackupReceipt(params.verifiedBackupReceipt, {
     target: params.target,
     databaseIdentity: params.databaseIdentity

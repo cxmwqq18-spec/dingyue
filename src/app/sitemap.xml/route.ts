@@ -1,13 +1,6 @@
-import { unstable_cache } from "next/cache";
 import { getStorefrontSitemapPayloadForHost } from "@/lib/seo-indexing";
 
 export const dynamic = "force-dynamic";
-
-const getCachedSitemapPayload = unstable_cache(
-  async (host: string, forwardedHost: string) => getStorefrontSitemapPayloadForHost([forwardedHost, host]),
-  ["storefront-sitemap-payload"],
-  { revalidate: 300 }
-);
 
 function escapeXml(value: string): string {
   return value
@@ -54,17 +47,15 @@ function isGrownstrideHost(value: string | null | undefined): boolean {
 export async function GET(request: Request): Promise<Response> {
   const host = request.headers.get("host");
   const forwardedHost = request.headers.get("x-forwarded-host");
-  const cacheHost = host ?? "";
-  const cacheForwardedHost = forwardedHost ?? "";
   const startedAt = Date.now();
-  const { entries, identity } = await getCachedSitemapPayload(cacheHost, cacheForwardedHost);
+  const { entries, identity } = await getStorefrontSitemapPayloadForHost([forwardedHost, host]);
   const urlCount = entries.length;
   const imageCount = entries.reduce((total, entry) => total + entry.images.length, 0);
 
   return new Response(sitemapXml(entries), {
     headers: {
       "content-type": "application/xml; charset=utf-8",
-      "cache-control": "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400",
+      "cache-control": "no-store, max-age=0",
       "vary": "Host, X-Forwarded-Host, RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
       "x-sitemap-url-count": String(urlCount),
       "x-sitemap-image-count": String(imageCount),
