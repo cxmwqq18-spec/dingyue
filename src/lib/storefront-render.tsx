@@ -971,7 +971,21 @@ function isSpanishXbyStorefront(site: Site): boolean {
 }
 
 async function getStateForStorefrontRender(site: Site, routeMode: "host" | "path", providedState?: PlatformState): Promise<PlatformState> {
-  if (providedState) return providedState;
+  if (providedState) {
+    // Section and path-mode readers may return a deliberately narrow public
+    // shell. Rendering still requires the immutable current-state payload.
+    // Refresh the site bundle when that payload is absent instead of letting
+    // createPublishedSiteSnapshot fail on a partial state object.
+    const providedSite = providedState.sites.find((item) => item.id === site.id);
+    if (providedSite?.currentPublishedState) return providedState;
+    try {
+      const runtimeState = await readStorefrontRuntimeStateForSiteFromDatabase(site.id);
+      if (runtimeState?.sites.some((item) => item.id === site.id && item.currentPublishedState)) return runtimeState;
+    } catch (error) {
+      if (isMydreamshootsContentSourceSite(site)) throw error;
+    }
+    return providedState;
+  }
   const requiresPublishedSource = isMydreamshootsContentSourceSite(site);
   if (routeMode === "host" || requiresPublishedSource) {
     try {
