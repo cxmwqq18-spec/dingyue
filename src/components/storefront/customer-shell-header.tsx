@@ -1,6 +1,6 @@
 "use client";
 
-import { Camera, Coffee, Heart, ImageIcon, Map as MapIcon, Mountain, PlayCircle, Scissors, Sparkles, Sun, Users } from "lucide-react";
+import { Camera, Coffee, Heart, ImageIcon, Map as MapIcon, Menu as MenuIcon, Mountain, PlayCircle, Scissors, Sparkles, Sun, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { DreamShootMegaToolsPanel, getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
@@ -160,7 +160,8 @@ export function CustomerShellHeader({
   videoThemeCategories = [],
   videoThemes = [],
   publishedVideoGenerationTopics,
-  publishedSaveTheDateGroups
+  publishedSaveTheDateGroups,
+  publishedSaveTheDateMenuLabel
 }: {
   site: CustomerShellHeaderSite;
   customer: PublicCustomer;
@@ -172,6 +173,7 @@ export function CustomerShellHeader({
   videoThemes?: VideoTheme[];
   publishedVideoGenerationTopics?: PublishedVideoNavigationProjection[];
   publishedSaveTheDateGroups?: PublishedSaveTheDateGroup[];
+  publishedSaveTheDateMenuLabel?: string;
 }) {
   const pathname = usePathname();
   const pathModeBasePath = pathname.match(/^\/site\/[^/]+/)?.[0];
@@ -201,7 +203,7 @@ export function CustomerShellHeader({
   const saveTheDateGroups: SaveTheDateNavigationGroup[] = isMyDreamShoots
     ? (publishedSaveTheDateGroups ?? [])
     : (saveTheDateConfig?.groups ?? []);
-  const saveTheDateMenuLabel = saveTheDateConfig?.menuLabel?.trim() ?? "";
+  const saveTheDateMenuLabel = (publishedSaveTheDateMenuLabel?.trim() || saveTheDateConfig?.menuLabel?.trim() || "Save the Date");
   const routedSaveTheDateGroups = saveTheDateGroups.map((group) => ({
     ...group,
     items: group.items
@@ -340,6 +342,25 @@ export function CustomerShellHeader({
               </StorefrontInstantLink>
             ) : null}
           </nav>
+
+          <details className="group relative order-2 shrink-0 xl:hidden" data-storefront-mobile-menu="">
+            <summary
+              aria-label={isSpanishXby ? "Abrir navegacion" : "Open navigation"}
+              className={`grid h-10 w-10 cursor-pointer list-none place-items-center rounded-full border transition [&::-webkit-details-marker]:hidden ${dark ? "border-white/18 text-white hover:bg-white/10" : "border-[#d8cbbb] text-[#171514] hover:bg-[#efe5d7]"}`}
+              title={isSpanishXby ? "Navegacion" : "Navigation"}
+            >
+              <MenuIcon className="h-5 w-5" strokeWidth={1.8} />
+            </summary>
+            <nav className={`absolute right-0 top-12 z-[190] grid w-[min(19rem,calc(100vw-2rem))] gap-1 rounded-[8px] border p-2 shadow-2xl ${dark ? "border-white/12 bg-[#0b0f17] text-white" : "border-[#ded2c3] bg-[#fffaf3] text-[#171514]"}`}>
+              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}${packageRootHref}`}>{isSpanishXby ? "Imagenes con IA" : "AI Image Generation"}</StorefrontInstantLink>
+              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={videoGenerationMenuHref}>{isSpanishXby ? "Video con IA" : "AI Video Generation"}</StorefrontInstantLink>
+              {!isSpanishXby && hasSaveTheDate ? <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold text-[#ffb15c] hover:bg-white/10" href={`${basePath}/best-save-the-date`}>{saveTheDateMenuLabel}</StorefrontInstantLink> : null}
+              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={workflowHref}>{isSpanishXby ? "Como funciona" : "How it works"}</StorefrontInstantLink>
+              {!isSpanishXby ? <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}/blog`}>Blog</StorefrontInstantLink> : null}
+              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}/pricing`}>{isSpanishXby ? "Precios" : "Pricing"}</StorefrontInstantLink>
+              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}/app/create`}>{isSpanishXby ? "Espacio privado" : "Workspace"}</StorefrontInstantLink>
+            </nav>
+          </details>
 
           <div className="order-3 ml-auto min-w-0 shrink-0 min-[1800px]:ml-0" data-storefront-header-controls="">
             <div className={signedInClassName}>

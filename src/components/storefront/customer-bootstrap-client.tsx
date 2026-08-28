@@ -23,6 +23,7 @@ export type CustomerBootstrap = {
   videoThemes?: VideoTheme[];
   publishedVideoGenerationTopics?: PublishedVideoNavigationProjection[];
   publishedSaveTheDateGroups?: PublishedSaveTheDateGroup[];
+  publishedSaveTheDateMenuLabel?: string;
   accountRuntime?: ThemeRuntimeData;
   workspaceRuntime?: ThemeRuntimeData;
 };
@@ -127,6 +128,9 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
       const videoThemes = bootstrapArray(data.videoThemes);
       const publishedVideoGenerationTopics = bootstrapArray(data.publishedVideoGenerationTopics);
       const publishedSaveTheDateGroups = bootstrapArray(data.publishedSaveTheDateGroups);
+      const publishedSaveTheDateMenuLabel = typeof data.publishedSaveTheDateMenuLabel === "string" && data.publishedSaveTheDateMenuLabel.trim()
+        ? data.publishedSaveTheDateMenuLabel.trim()
+        : "Save the Date";
       if (mode === "shell" && isLoginRequiredBootstrapError(response, data)) {
         const bootstrap = {
           authenticated: false,
@@ -137,7 +141,8 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
           videoThemeCategories,
           videoThemes,
           publishedVideoGenerationTopics
-          , publishedSaveTheDateGroups
+          , publishedSaveTheDateGroups,
+          publishedSaveTheDateMenuLabel
         };
         bootstrapCache.set(cacheKey, bootstrap);
         return bootstrap;
@@ -160,6 +165,7 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
         videoThemes,
         publishedVideoGenerationTopics,
         publishedSaveTheDateGroups,
+        publishedSaveTheDateMenuLabel,
         accountRuntime: data.accountRuntime,
         workspaceRuntime: data.workspaceRuntime
       };
@@ -440,6 +446,7 @@ export function CustomerAccountClientPage({
   initialVideoThemeCategories = [],
   initialPublishedVideoGenerationTopics = [],
   initialPublishedSaveTheDateGroups = [],
+  initialPublishedSaveTheDateMenuLabel = "Save the Date",
   siteSlug
 }: {
   initialCustomer?: PublicCustomer;
@@ -451,16 +458,17 @@ export function CustomerAccountClientPage({
   initialVideoThemeCategories?: VideoThemeCategory[];
   initialPublishedVideoGenerationTopics?: PublishedVideoNavigationProjection[];
   initialPublishedSaveTheDateGroups?: PublishedSaveTheDateGroup[];
+  initialPublishedSaveTheDateMenuLabel?: string;
   siteSlug: string;
 }) {
   const hasInitialAccountData = Boolean(initialCustomer && initialSite);
   const state = useCustomerBootstrap(siteSlug, "account", !hasInitialAccountData);
-  if (initialCustomer && initialSite) return <CustomerAccountShell creativePackCategories={initialCreativePackCategories} creativePacks={initialCreativePacks} customer={initialCustomer} initialRuntime={initialRuntime} publishedSaveTheDateGroups={initialPublishedSaveTheDateGroups} publishedVideoGenerationTopics={initialPublishedVideoGenerationTopics} site={initialSite} toolMenuItems={initialToolMenuItems} videoThemeCategories={initialVideoThemeCategories} />;
+  if (initialCustomer && initialSite) return <CustomerAccountShell creativePackCategories={initialCreativePackCategories} creativePacks={initialCreativePacks} customer={initialCustomer} initialRuntime={initialRuntime} publishedSaveTheDateGroups={initialPublishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={initialPublishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={initialPublishedVideoGenerationTopics} site={initialSite} toolMenuItems={initialToolMenuItems} videoThemeCategories={initialVideoThemeCategories} />;
   if (state.status === "loading") return <CustomerPageLocalLoading title="Opening your account center." />;
   if (state.status === "error" && state.loginPath) return <CustomerPageRedirect loginPath={state.loginPath} />;
   if (state.status === "error") return <CustomerPageError message="Your account session could not be verified from this browser." />;
   if (!state.data.customer || !state.data.site) return <CustomerPageRedirect loginPath={`/site/${siteSlug}/login`} />;
-  return <CustomerAccountShell creativePackCategories={state.data.creativePackCategories} creativePacks={state.data.creativePacks} customer={state.data.customer} initialRuntime={state.data.accountRuntime} publishedSaveTheDateGroups={state.data.publishedSaveTheDateGroups} publishedVideoGenerationTopics={state.data.publishedVideoGenerationTopics} site={state.data.site} toolMenuItems={state.data.toolMenuItems} videoThemeCategories={state.data.videoThemeCategories} />;
+  return <CustomerAccountShell creativePackCategories={state.data.creativePackCategories} creativePacks={state.data.creativePacks} customer={state.data.customer} initialRuntime={state.data.accountRuntime} publishedSaveTheDateGroups={state.data.publishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={state.data.publishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={state.data.publishedVideoGenerationTopics} site={state.data.site} toolMenuItems={state.data.toolMenuItems} videoThemeCategories={state.data.videoThemeCategories} />;
 }
 
 export function CustomerWorkspaceClientPage({
@@ -495,6 +503,7 @@ export function CustomerWorkspaceClientPage({
         videoThemes={initialBootstrap.videoThemes}
         publishedVideoGenerationTopics={initialBootstrap.publishedVideoGenerationTopics}
         publishedSaveTheDateGroups={initialBootstrap.publishedSaveTheDateGroups}
+        publishedSaveTheDateMenuLabel={initialBootstrap.publishedSaveTheDateMenuLabel}
       />
     );
   }
@@ -519,6 +528,7 @@ export function CustomerWorkspaceClientPage({
       videoThemes={state.data.videoThemes}
       publishedVideoGenerationTopics={state.data.publishedVideoGenerationTopics}
       publishedSaveTheDateGroups={state.data.publishedSaveTheDateGroups}
+      publishedSaveTheDateMenuLabel={state.data.publishedSaveTheDateMenuLabel}
     />
   );
 }

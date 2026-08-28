@@ -3444,6 +3444,7 @@ export async function renderCustomerWorkspacePage({
         initialVideoThemeCategories={bootstrap?.videoThemeCategories ?? []}
         initialPublishedVideoGenerationTopics={bootstrap?.publishedVideoGenerationTopics ?? []}
         initialPublishedSaveTheDateGroups={bootstrap?.publishedSaveTheDateGroups ?? []}
+        initialPublishedSaveTheDateMenuLabel={bootstrap?.publishedSaveTheDateMenuLabel ?? "Save the Date"}
         siteSlug={publicSiteSlug(currentSite.slug)}
       />
     );
@@ -3530,6 +3531,7 @@ export async function renderCustomerWorkspacePageBySlug({
         initialVideoThemeCategories={bootstrap?.videoThemeCategories ?? []}
         initialPublishedVideoGenerationTopics={bootstrap?.publishedVideoGenerationTopics ?? []}
         initialPublishedSaveTheDateGroups={bootstrap?.publishedSaveTheDateGroups ?? []}
+        initialPublishedSaveTheDateMenuLabel={bootstrap?.publishedSaveTheDateMenuLabel ?? "Save the Date"}
         siteSlug={routeSlug}
       />
     );

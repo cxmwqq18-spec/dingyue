@@ -59,7 +59,8 @@ function searchWhere(query?: string): Prisma.VideoThemeWhereInput | undefined {
       { name: { contains: query, mode: "insensitive" } },
       { headline: { contains: query, mode: "insensitive" } },
       { description: { contains: query, mode: "insensitive" } },
-      { category: { is: { label: { contains: query, mode: "insensitive" } } } }
+      { category: { is: { label: { contains: query, mode: "insensitive" } } } },
+      { category: { is: { parent: { is: { label: { contains: query, mode: "insensitive" } } } } } }
     ]
   };
 }

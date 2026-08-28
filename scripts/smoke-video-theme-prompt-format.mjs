@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { defaultVideoThemeExamplePrompt, formatVideoPromptSections, validateVideoPrompt } from "../src/lib/video-prompt-format.ts";
+import { defaultVideoThemeExamplePrompt, formatVideoPromptSections, providerReadyVideoThemePrompt, validateVideoPrompt } from "../src/lib/video-prompt-format.ts";
 
 const complete = validateVideoPrompt(defaultVideoThemeExamplePrompt);
 assert.equal(complete.valid, true, complete.errors.join("; "));
@@ -28,5 +28,10 @@ const missingMicroAction = formatVideoPromptSections({
 });
 assert.equal(validateVideoPrompt(missingMicroAction).valid, false);
 assert.equal(validateVideoPrompt(`${defaultVideoThemeExamplePrompt}\nNo explicit sexual content or graphic gore.`).valid, false);
+
+const providerReady = providerReadyVideoThemePrompt("An adult couple opens a date card while soft window light moves across the paper.");
+assert.equal(validateVideoPrompt(providerReady).valid, true, validateVideoPrompt(providerReady).errors.join("; "));
+assert.match(providerReady, /15 seconds/i);
+assert.match(providerReady, /first-frame reference/i);
 
 console.log(JSON.stringify({ ok: true, sections: Object.keys(complete.sections), rejectedCases: 5 }, null, 2));

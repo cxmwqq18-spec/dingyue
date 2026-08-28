@@ -7,9 +7,12 @@ const siteId = "site_dreamshoot";
 const dryRun = process.argv.includes("--dry-run");
 const jiti = createJiti(import.meta.url);
 const {
-  mydreamshootsVideoGenerationCategories,
-  mydreamshootsVideoGenerationParentCategories
+  mydreamshootsVideoGenerationCategoriesForSite,
+  mydreamshootsVideoGenerationParentCategoriesForSite,
+  parentVideoGenerationCategorySlugForChild
 } = jiti("../src/lib/mydreamshoots-video-framework.ts");
+const mydreamshootsVideoGenerationCategories = mydreamshootsVideoGenerationCategoriesForSite(siteId);
+const mydreamshootsVideoGenerationParentCategories = mydreamshootsVideoGenerationParentCategoriesForSite(siteId);
 const { PrismaClient } = await import("@prisma/client");
 const prisma = new PrismaClient();
 
@@ -63,6 +66,10 @@ const parentSlugByChild = {
   "fashion-reel": "creative-lifestyle",
   "album-story-video": "creative-lifestyle"
 };
+for (const category of mydreamshootsVideoGenerationCategories) {
+  const parentSlug = parentVideoGenerationCategorySlugForChild(category.slug);
+  if (parentSlug) parentSlugByChild[category.slug] = parentSlug;
+}
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));

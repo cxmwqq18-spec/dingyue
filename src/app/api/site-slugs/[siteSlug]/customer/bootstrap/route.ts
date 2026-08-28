@@ -66,7 +66,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           videoThemeCategories: [],
           videoThemes: [],
           publishedVideoGenerationTopics: [],
-          publishedSaveTheDateGroups: []
+          publishedSaveTheDateGroups: [],
+          publishedSaveTheDateMenuLabel: "Save the Date"
         },
         { headers: { "Cache-Control": PUBLIC_EMPTY_SHELL_CACHE_CONTROL, Vary: "Cookie" } }
       );
@@ -96,7 +97,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           videoThemeCategories: [],
           videoThemes: [],
           publishedVideoGenerationTopics: [],
-          publishedSaveTheDateGroups: []
+          publishedSaveTheDateGroups: [],
+          publishedSaveTheDateMenuLabel: "Save the Date"
         },
         { headers: { "Cache-Control": "private, max-age=8" } }
       );
@@ -128,7 +130,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         videoThemeCategories: bootstrap?.videoThemeCategories ?? [],
         videoThemes: bootstrap?.videoThemes ?? [],
         publishedVideoGenerationTopics: bootstrap?.publishedVideoGenerationTopics ?? [],
-        publishedSaveTheDateGroups: bootstrap?.publishedSaveTheDateGroups ?? []
+        publishedSaveTheDateGroups: bootstrap?.publishedSaveTheDateGroups ?? [],
+        publishedSaveTheDateMenuLabel: bootstrap?.publishedSaveTheDateMenuLabel ?? "Save the Date"
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
     ), request, siteId, current);
@@ -157,6 +160,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         videoThemes: bootstrap?.videoThemes ?? [],
         publishedVideoGenerationTopics: bootstrap?.publishedVideoGenerationTopics ?? [],
         publishedSaveTheDateGroups: bootstrap?.publishedSaveTheDateGroups ?? [],
+        publishedSaveTheDateMenuLabel: bootstrap?.publishedSaveTheDateMenuLabel ?? "Save the Date",
         accountRuntime
       },
       { headers: { "Cache-Control": "private, max-age=8" } }
@@ -202,6 +206,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       videoThemes: bootstrap.videoThemes,
       publishedVideoGenerationTopics: bootstrap.publishedVideoGenerationTopics,
       publishedSaveTheDateGroups: bootstrap.publishedSaveTheDateGroups,
+      publishedSaveTheDateMenuLabel: bootstrap.publishedSaveTheDateMenuLabel,
       ...(workspaceRuntime ? { workspaceRuntime: {
         ...workspaceRuntime,
         customer: current.customer,

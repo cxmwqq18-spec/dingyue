@@ -1,7 +1,7 @@
 "use client";
 
-import { type Dispatch, type SetStateAction, useEffect, useRef, useState } from "react";
-import { AlertTriangle, Check, ChevronDown, Film, ImagePlus, Monitor, Send, Sparkles, X } from "lucide-react";
+import { type Dispatch, type SetStateAction, useEffect, useMemo, useRef, useState } from "react";
+import { AlertTriangle, Check, ChevronDown, ChevronRight, Film, ImagePlus, Monitor, Search, Send, Sparkles, X } from "lucide-react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
 import type { PublicCustomer, VideoTheme, VideoThemeCategory, VideoThemeExample } from "@/lib/types";
 import {
@@ -349,6 +349,8 @@ export function CustomerVideoWorkspace({
   const [themePickerThemeId, setThemePickerThemeId] = useState("");
   const [themePickerExampleId, setThemePickerExampleId] = useState("");
   const [themePickerPrompt, setThemePickerPrompt] = useState("");
+  const [themePickerSearch, setThemePickerSearch] = useState("");
+  const [expandedThemeCategoryIds, setExpandedThemeCategoryIds] = useState<string[]>([]);
   const [message, setMessage] = useState("");
   const [themeReloadKey, setThemeReloadKey] = useState(0);
   const [textToVideoConfirmArmed, setTextToVideoConfirmArmed] = useState(false);
@@ -399,22 +401,26 @@ export function CustomerVideoWorkspace({
 
   const selectedTheme = themes.find((theme) => theme.id === selectedThemeId) ?? defaultVideoTheme(themes);
   const configuredThemeCategories = videoThemeCategories.filter((category) => category.status === "active");
-  const rootThemeCategories = configuredThemeCategories.filter((category) => !category.parentId);
-  const themeCategories = rootThemeCategories.length
-    ? rootThemeCategories
-    : configuredThemeCategories.length
-      ? configuredThemeCategories
-      : Array.from(new Map(themes.filter((theme) => theme.category).map((theme) => [theme.category!.id, theme.category!])).values());
-  const themeCategoryById = new Map(themeCategories.map((category) => [category.id, category]));
+  const fallbackThemeCategories = Array.from(new Map(themes.filter((theme) => theme.category).map((theme) => [theme.category!.id, theme.category!])).values());
+  const allThemeCategories = configuredThemeCategories.length ? configuredThemeCategories : fallbackThemeCategories;
+  const themeCategoryById = useMemo(() => new Map(allThemeCategories.map((category) => [category.id, category])), [allThemeCategories]);
+  const rootThemeCategories = allThemeCategories.filter((category) => !category.parentId).sort((a, b) => a.sortOrder - b.sortOrder || a.label.localeCompare(b.label));
+  const childThemeCategories = allThemeCategories.filter((category) => Boolean(category.parentId)).sort((a, b) => a.sortOrder - b.sortOrder || a.label.localeCompare(b.label));
   const selectedThemeCategory = selectedTheme?.category
-    ? themeCategoryById.get(selectedTheme.category.parentId ?? selectedTheme.category.id) ?? selectedTheme.category
+    ? themeCategoryById.get(selectedTheme.category.id) ?? selectedTheme.category
     : undefined;
-  const pickerCategory = themeCategories.find((category) => category.id === themePickerCategoryId) ?? themeCategories[0];
-  const pickerThemes = themes.filter((theme) => {
-    if (!pickerCategory) return true;
-    return theme.category?.id === pickerCategory.id || theme.category?.parentId === pickerCategory.id;
-  });
-  const pickerTheme = pickerThemes.find((theme) => theme.id === themePickerThemeId) ?? pickerThemes[0];
+  const pickerCategory = themeCategoryById.get(themePickerCategoryId) ?? selectedThemeCategory ?? rootThemeCategories[0];
+  const pickerRootCategory = pickerCategory?.parentId ? themeCategoryById.get(pickerCategory.parentId) ?? pickerCategory : pickerCategory;
+  const pickerSearch = themePickerSearch.trim().toLowerCase();
+  const pickerThemes = useMemo(() => themes.filter((theme) => {
+    const category = theme.category;
+    const root = category?.parentId ? themeCategoryById.get(category.parentId) : category;
+    const haystack = [theme.name, theme.headline, theme.description, category?.label, root?.label].filter(Boolean).join(" ").toLowerCase();
+    // Searching is global across the taxonomy. Without a query, keep the selected root/child scope.
+    if (pickerSearch) return haystack.includes(pickerSearch);
+    return !pickerCategory || pickerCategory.id === root?.id || pickerCategory.id === category?.id;
+  }), [pickerCategory, pickerSearch, themeCategoryById, themes]);
+  const pickerTheme = pickerThemes.find((theme) => theme.id === themePickerThemeId) ?? (pickerSearch ? undefined : pickerThemes[0]);
   const pickerExamples = pickerTheme?.examples?.length ? pickerTheme.examples : pickerTheme ? [{
     id: `fallback-${pickerTheme.id}`,
     siteId: pickerTheme.siteId,
@@ -574,21 +580,38 @@ export function CustomerVideoWorkspace({
   }
 
   function openThemePicker() {
-    const category = selectedThemeCategory ?? themeCategories[0];
+    const category = selectedThemeCategory ?? rootThemeCategories[0];
     const theme = selectedTheme ?? themes[0];
     const example = selectedThemeExample ?? theme?.examples?.[0];
     setThemePickerCategoryId(category?.id ?? "");
     setThemePickerThemeId(theme?.id ?? "");
     setThemePickerExampleId(example?.id ?? "");
     setThemePickerPrompt(example?.prompt ?? theme?.prompt ?? "");
+    setThemePickerSearch("");
+    const rootId = category?.parentId ?? category?.id;
+    setExpandedThemeCategoryIds(rootId ? [rootId] : []);
     setThemePickerOpen(true);
   }
 
   function choosePickerTheme(theme: VideoTheme) {
     const example = theme.examples?.[0];
+    if (theme.category) {
+      setThemePickerCategoryId(theme.category.id);
+      const rootId = theme.category.parentId ?? theme.category.id;
+      setExpandedThemeCategoryIds((current) => current.includes(rootId) ? current : [...current, rootId]);
+    }
     setThemePickerThemeId(theme.id);
     setThemePickerExampleId(example?.id ?? "");
     setThemePickerPrompt(example?.prompt ?? theme.prompt);
+  }
+
+  function choosePickerCategory(category: VideoThemeCategory) {
+    setThemePickerCategoryId(category.id);
+    const firstTheme = themes.find((theme) => {
+      if (category.parentId) return theme.category?.id === category.id;
+      return theme.category?.id === category.id || theme.category?.parentId === category.id;
+    });
+    if (firstTheme) choosePickerTheme(firstTheme);
   }
 
   function choosePickerExample(example: VideoThemeExample) {
@@ -1105,15 +1128,30 @@ export function CustomerVideoWorkspace({
               <div className="self-start rounded-[16px] border border-white/10 bg-black/16 p-2">
                 <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Categories", "Categorias")}</p>
                 <div className="grid gap-1">
-                  {themeCategories.map((category) => (
-                    <button className={`flex items-center justify-between rounded-[10px] px-3 py-2.5 text-left text-sm font-semibold transition ${pickerCategory?.id === category.id ? "bg-[#31d4ff]/12 text-[#bcefff]" : "text-white/62 hover:bg-white/[0.06] hover:text-white"}`} key={category.id} onClick={() => { setThemePickerCategoryId(category.id); const first = themes.find((theme) => theme.category?.id === category.id || theme.category?.parentId === category.id); if (first) choosePickerTheme(first); }} type="button"><span>{category.label}</span><span className="text-xs text-white/35">{themes.filter((theme) => theme.category?.id === category.id || theme.category?.parentId === category.id).length}</span></button>
-                  ))}
+                  {rootThemeCategories.map((root) => {
+                    const children = childThemeCategories.filter((category) => category.parentId === root.id);
+                    const rootThemes = themes.filter((theme) => theme.category?.id === root.id || theme.category?.parentId === root.id);
+                    const expanded = expandedThemeCategoryIds.includes(root.id) || Boolean(pickerSearch);
+                    return <div key={root.id}>
+                      <button className={`flex w-full items-center justify-between rounded-[10px] px-3 py-2.5 text-left text-sm font-semibold transition ${pickerRootCategory?.id === root.id ? "bg-[#31d4ff]/12 text-[#bcefff]" : "text-white/62 hover:bg-white/[0.06] hover:text-white"}`} onClick={() => { choosePickerCategory(root); setExpandedThemeCategoryIds((current) => current.includes(root.id) ? current.filter((id) => id !== root.id) : [...current, root.id]); }} type="button">
+                        <span className="flex min-w-0 items-center gap-2"><ChevronRight className={`h-3.5 w-3.5 shrink-0 transition ${expanded ? "rotate-90" : ""}`} strokeWidth={2} /><span className="truncate">{root.label}</span></span><span className="text-xs text-white/35">{rootThemes.length}</span>
+                      </button>
+                      {expanded ? <div className="ml-5 grid gap-1 border-l border-white/10 pl-2">
+                        {children.map((child) => {
+                          const count = themes.filter((theme) => theme.category?.id === child.id).length;
+                          return <button className={`flex items-center justify-between rounded-[8px] px-2.5 py-2 text-left text-xs font-semibold transition ${pickerCategory?.id === child.id ? "bg-[#31d4ff]/10 text-[#bcefff]" : "text-white/52 hover:bg-white/[0.06] hover:text-white"}`} key={child.id} onClick={() => choosePickerCategory(child)} type="button"><span className="truncate">{child.label}</span><span className="text-[11px] text-white/30">{count}</span></button>;
+                        })}
+                      </div> : null}
+                    </div>;
+                  })}
                 </div>
               </div>
               <div className="self-start rounded-[16px] border border-white/10 bg-black/16 p-3">
-                <p className="px-2 pb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Themes", "Temas")}</p>
+                <div className="flex items-center gap-2 rounded-[10px] border border-white/10 bg-[#080b10] px-3 py-2"><Search className="h-4 w-4 shrink-0 text-white/35" strokeWidth={1.8} /><input aria-label={vt(spanish, "Search video themes", "Buscar temas de video")} className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/30" onChange={(event) => setThemePickerSearch(event.target.value)} placeholder={vt(spanish, "Search categories or themes", "Buscar categorias o temas")} value={themePickerSearch} /></div>
+                <p className="px-2 pb-2 pt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{pickerRootCategory?.label ?? vt(spanish, "Themes", "Temas")}{pickerCategory?.parentId && pickerCategory.id !== pickerRootCategory?.id ? ` / ${pickerCategory.label}` : ""}</p>
                 <div className="grid gap-2">
                   {pickerThemes.map((theme) => <button className={`flex items-center gap-3 rounded-[12px] border px-3 py-3 text-left transition ${pickerTheme?.id === theme.id ? "border-[#31d4ff]/45 bg-[#31d4ff]/10" : "border-white/8 bg-white/[0.025] hover:border-white/20"}`} key={theme.id} onClick={() => choosePickerTheme(theme)} type="button">{theme.imageUrl ? <img alt="" className="h-12 w-16 rounded-[8px] object-cover" src={theme.imageUrl} /> : <span className="grid h-12 w-16 place-items-center rounded-[8px] bg-white/[0.06]"><Film className="h-5 w-5 text-[#31d4ff]" /></span>}<span className="min-w-0"><span className="block truncate text-sm font-semibold">{theme.name}</span><span className="mt-1 block line-clamp-2 text-xs leading-5 text-white/45">{theme.description}</span></span></button>)}
+                  {!pickerThemes.length ? <p className="rounded-[10px] border border-dashed border-white/10 p-5 text-sm text-white/45">{vt(spanish, "No themes match this search.", "No hay temas que coincidan con la busqueda.")}</p> : null}
                 </div>
               </div>
               <div className="self-start rounded-[16px] border border-white/10 bg-black/16 p-4">

@@ -1,4 +1,5 @@
 import type { Site, VideoThemeCategory } from "@/lib/types";
+import { providerReadyVideoThemePrompt } from "./video-prompt-format";
 
 export const mydreamshootsVideoFrameworkSiteIds = ["site_dreamshoot", "site_grownstride_test"] as const;
 
@@ -210,6 +211,84 @@ export const mydreamshootsVideoGenerationParentCategories = [
   { slug: "creative-lifestyle", label: "Creative & Lifestyle", description: "Creative, travel, fashion, food, fitness, pet, and lifestyle video workflows.", sortOrder: 40 },
   { slug: "professional-business", label: "Professional & Business", description: "Explainers, tutorials, property, enterprise, and professional video workflows.", sortOrder: 50 }
 ] as const;
+
+const saveTheDateRootCategory = {
+  slug: "save-the-date",
+  label: "Save the Date",
+  description: "Save the Date, wedding, and seasonal announcement video themes.",
+  sortOrder: 60
+} as const;
+
+const saveTheDateChildCategories = [
+  { slug: "love-wedding", label: "Love & Wedding", description: "Engagement, proposal, invitation, and ceremony themes.", sortOrder: 10 },
+  { slug: "seasonal-holidays", label: "Seasonal Holidays", description: "Seasonal celebration and holiday announcement themes.", sortOrder: 20 }
+] as const;
+
+const saveTheDateLeafCategories = [
+  { slug: "valentines-day", label: "Valentine's Day", description: "A romantic Valentine's Day announcement or keepsake.", sortOrder: 10 },
+  { slug: "engagement", label: "Engagement", description: "An intimate engagement announcement with a personal reveal.", sortOrder: 20 },
+  { slug: "proposal", label: "Proposal", description: "A cinematic proposal moment with an emotional reveal.", sortOrder: 30 },
+  { slug: "save-the-date", label: "Save the Date", description: "A date announcement with a clear celebratory finish.", sortOrder: 40 },
+  { slug: "wedding-invitation", label: "Wedding Invitation", description: "A refined invitation reveal with legible event details.", sortOrder: 50 },
+  { slug: "wedding-ceremony", label: "Wedding Ceremony", description: "A warm ceremony memory with a graceful final frame.", sortOrder: 60 },
+  { slug: "christmas", label: "Christmas", description: "A warm Christmas greeting with seasonal texture and light.", sortOrder: 10 },
+  { slug: "halloween", label: "Halloween", description: "A playful Halloween announcement with controlled atmosphere.", sortOrder: 20 },
+  { slug: "thanksgiving", label: "Thanksgiving", description: "A welcoming Thanksgiving gathering and gratitude moment.", sortOrder: 30 },
+  { slug: "new-year", label: "New Year", description: "A celebratory New Year countdown and reveal.", sortOrder: 40 },
+  { slug: "mothers-day", label: "Mother's Day", description: "A tender Mother's Day tribute with a personal gesture.", sortOrder: 50 },
+  { slug: "fathers-day", label: "Father's Day", description: "A warm Father's Day tribute with an authentic family detail.", sortOrder: 60 }
+] as const;
+
+const saveTheDateParentByChild: Record<string, string> = {
+  "love-wedding": "save-the-date",
+  "seasonal-holidays": "save-the-date"
+};
+
+const saveTheDateDirections: Record<string, string> = {
+  "valentines-day": "An adult couple exchange a small red envelope at a candlelit cafe table, then lean closer as a heart-shaped reflection appears in the window.",
+  engagement: "An adult couple walks through a sunlit garden; one partner notices a ring box, covers their mouth, and reaches for the other hand as the reveal lands.",
+  proposal: "One adult partner kneels beside a quiet lakeside overlook, opens a ring box, and looks up while the other adult turns, gasps softly, and reaches forward.",
+  "save-the-date": "An adult couple pins a cream date card to a linen board, smooths its edge, and smiles as the camera reveals the announced date and paired rings.",
+  "wedding-invitation": "Adult hands open a textured wedding invitation, trace the embossed names, and place it beside two rings as the event date becomes the final visual anchor.",
+  "wedding-ceremony": "An adult couple stands beneath a floral ceremony arch, exchanges a gentle glance and hand squeeze, then turns toward warm aisle light as guests remain softly blurred.",
+  christmas: "An adult family hangs a paper ornament on a lit tree, hands pass a wrapped card forward, and warm window reflections shimmer across the room.",
+  halloween: "An adult host lights a carved pumpkin on a porch as a light wind moves the leaves, then lifts a small invitation card toward the camera with a playful pause.",
+  thanksgiving: "Adult family members pass a serving dish across a crowded Thanksgiving table, a hand rests on another shoulder, and steam rises into the amber dining-room light.",
+  "new-year": "Adults gather on a rooftop as a countdown card turns over, a hand raises a champagne glass, and distant fireworks bloom behind the final celebratory date reveal.",
+  "mothers-day": "An adult child places a handwritten card and flowers beside their mother, she touches the card and smiles, and petals shift in a soft window breeze.",
+  "fathers-day": "An adult child sets a small keepsake beside their father's coffee, he runs a thumb across its surface and looks up with a restrained smile as morning light settles."
+};
+
+const saveTheDateCoverImages: Record<string, string> = {
+  "valentines-day": "/assets/dreamshoot/save-the-date/valentines-day/hero-valentines-day-save-the-date-city-couple.jpg",
+  engagement: "/assets/dreamshoot/save-the-date/engagement/hero-ai-engagement-couple-sunset.jpg",
+  proposal: "/assets/dreamshoot/save-the-date/proposal/hero-ai-proposal-beach-sunset.jpg",
+  "save-the-date": "/assets/dreamshoot/save-the-date/save-the-date/hero-ai-save-the-date-couple-sunset.jpg",
+  "wedding-invitation": "/assets/dreamshoot/wedding-invitation/hero-ai-wedding-invitation-couple-reviewing.jpg",
+  "wedding-ceremony": "/assets/dreamshoot/seasonal/wedding-ceremony/hero-ai-wedding-ceremony-first-kiss.jpg",
+  christmas: "/assets/dreamshoot/seasonal/christmas/hero-ai-christmas-family-gift.jpg",
+  halloween: "/assets/dreamshoot/seasonal/halloween/hero-ai-halloween-costume-party.jpg",
+  thanksgiving: "/assets/dreamshoot/seasonal/thanksgiving/hero-ai-thanksgiving-family-dinner.jpg",
+  "new-year": "/assets/dreamshoot/seasonal/new-year/hero-ai-new-year-city-fireworks.jpg",
+  "mothers-day": "/assets/dreamshoot/seasonal/mothers-day/hero-ai-mothers-day-family-breakfast.jpg",
+  "fathers-day": "/assets/dreamshoot/seasonal/fathers-day/hero-ai-fathers-day-family-portrait.jpg"
+};
+
+const saveTheDateThemeSeeds = saveTheDateLeafCategories.map((category) => ({
+  slug: category.slug,
+  categorySlug: ["christmas", "halloween", "thanksgiving", "new-year", "mothers-day", "fathers-day"].includes(category.slug)
+    ? "seasonal-holidays"
+    : "love-wedding",
+  name: category.label,
+  headline: category.description,
+  description: category.description,
+  prompt: providerReadyVideoThemePrompt(saveTheDateDirections[category.slug] ?? `An adult subject creates a clear ${category.label} announcement with a tactile keepsake and a warm final reveal.`),
+  imageUrl: saveTheDateCoverImages[category.slug] ?? "",
+  creditCost: 24,
+  durationSeconds: 15,
+  maxFrames: 10,
+  sortOrder: category.sortOrder + (category.slug === "christmas" ? 100 : 0)
+}));
 
 /**
  * The public header menu exposes the current DB-backed topic slice.
@@ -597,22 +676,29 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
 
 export function mydreamshootsVideoGenerationCategoriesForSite(siteId: string) {
   return siteId === "site_dreamshoot"
-    ? mydreamshootsVideoGenerationCategories
+    ? [...mydreamshootsVideoGenerationCategories, saveTheDateChildCategories[0], saveTheDateChildCategories[1]]
     : mydreamshootsVideoGenerationCategories.slice(0, 2);
 }
 
 export function mydreamshootsVideoGenerationParentCategoriesForSite(siteId: string) {
-  return siteId === "site_dreamshoot" ? mydreamshootsVideoGenerationParentCategories : mydreamshootsVideoGenerationParentCategories.slice(0, 1);
+  return siteId === "site_dreamshoot"
+    ? [...mydreamshootsVideoGenerationParentCategories, saveTheDateRootCategory]
+    : mydreamshootsVideoGenerationParentCategories.slice(0, 1);
 }
 
 export function parentVideoGenerationCategorySlugForChild(slug: string): string | undefined {
-  return mydreamshootsVideoGenerationCategoryParentSlugBySlug[slug];
+  return saveTheDateParentByChild[slug] ?? mydreamshootsVideoGenerationCategoryParentSlugBySlug[slug];
 }
 
 export function mydreamshootsVideoGenerationThemeSeedsForSite(siteId: string) {
+  const frameworkSeeds = mydreamshootsVideoGenerationThemeSeeds.map((theme) => ({
+    ...theme,
+    prompt: providerReadyVideoThemePrompt(theme.prompt),
+    durationSeconds: 15
+  }));
   return siteId === "site_dreamshoot"
-    ? mydreamshootsVideoGenerationThemeSeeds
-    : mydreamshootsVideoGenerationThemeSeeds.slice(0, 2);
+    ? [...frameworkSeeds, ...saveTheDateThemeSeeds]
+    : frameworkSeeds.slice(0, 2);
 }
 
 export const mydreamshootsPublicVideoGenerationTopicSlugs = [

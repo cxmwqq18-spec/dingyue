@@ -2550,6 +2550,7 @@ export type CustomerWorkspaceBootstrapRelational = {
   videoThemes: VideoTheme[];
   publishedVideoGenerationTopics: PublishedVideoNavigationProjection[];
   publishedSaveTheDateGroups: PublishedSaveTheDateGroup[];
+  publishedSaveTheDateMenuLabel: string;
 };
 
 async function getPublishedVideoGenerationNavigationForSite(siteId: string): Promise<PublishedVideoNavigationProjection[]> {
@@ -2685,7 +2686,10 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
       videoThemeCategories: navigationData.videoThemeCategories.map((category) => watermarkedVideoThemeCategoryForWorkspace(category) ?? category),
       videoThemes: videoThemes.map(watermarkedVideoThemeForWorkspace),
       publishedVideoGenerationTopics,
-      publishedSaveTheDateGroups: resolvePublishedSaveTheDateGroups(publishedPayload.publishedHomepageShowcases ?? [])
+      publishedSaveTheDateGroups: resolvePublishedSaveTheDateGroups(publishedPayload.publishedHomepageShowcases ?? []),
+      publishedSaveTheDateMenuLabel: String(
+        publishedPayload.themeSettings?.saveTheDateNavigation?.menuLabel || "Save the Date"
+      ).trim() || "Save the Date"
     };
   }, Number(process.env.STOREFRONT_WORKSPACE_BOOTSTRAP_CACHE_TTL_MS ?? 60_000));
 }
@@ -4928,19 +4932,27 @@ async function ensureMydreamshootsVideoGenerationFrameworkRelational(siteId: str
         description: category.description,
         sortOrder: category.sortOrder,
         status: "active",
-        parentId: parentSlug ? parentIdBySlug.get(parentSlug) ?? null : null
+        parentId: parentSlug ? parentIdBySlug.get(parentSlug) ?? categoryIdBySlug.get(parentSlug) ?? null : null
       },
       update: {
         label: category.label,
         description: category.description,
         sortOrder: category.sortOrder,
         status: "active",
-        parentId: parentSlug ? parentIdBySlug.get(parentSlug) ?? null : null
+        parentId: parentSlug ? parentIdBySlug.get(parentSlug) ?? categoryIdBySlug.get(parentSlug) ?? null : null
       }
     });
     categoryIdBySlug.set(category.slug, row.id);
   }
   for (const theme of mydreamshootsVideoGenerationThemeSeedsForSite(siteId)) {
+    const seededPrompt = theme.prompt;
+    const existingTheme = await prisma.videoTheme.findUnique({
+      where: { siteId_slug: { siteId, slug: theme.slug } },
+      select: { prompt: true, imageUrl: true }
+    });
+    const shouldUpgradePrompt = !existingTheme
+      || !validateVideoPrompt(existingTheme.prompt).valid
+      || !/15\s*seconds?/i.test(existingTheme.prompt);
     const savedTheme = await prisma.videoTheme.upsert({
       where: { siteId_slug: { siteId, slug: theme.slug } },
       create: {
@@ -4951,7 +4963,7 @@ async function ensureMydreamshootsVideoGenerationFrameworkRelational(siteId: str
         name: theme.name,
         headline: theme.headline,
         description: theme.description,
-        prompt: `${defaultVideoThemeExamplePrompt}\n\nExisting theme direction: ${theme.prompt}`,
+        prompt: seededPrompt,
         status: "active",
         creditCost: theme.creditCost,
         modelPricing: defaultVideoModelPricing(theme.creditCost) as Prisma.InputJsonValue,
@@ -4961,7 +4973,17 @@ async function ensureMydreamshootsVideoGenerationFrameworkRelational(siteId: str
         imageUrl: theme.imageUrl || null,
         galleryImages: theme.imageUrl ? [theme.imageUrl] : []
       },
-      update: {}
+      update: {
+        categoryId: categoryIdBySlug.get(theme.categorySlug) ?? null,
+        name: theme.name,
+        headline: theme.headline,
+        description: theme.description,
+        ...(shouldUpgradePrompt && validateVideoPrompt(seededPrompt).valid
+          ? { prompt: seededPrompt, durationSeconds: theme.durationSeconds }
+          : {}),
+        imageUrl: !existingTheme?.imageUrl && theme.imageUrl ? theme.imageUrl : undefined,
+        galleryImages: !existingTheme?.imageUrl && theme.imageUrl ? [theme.imageUrl] : undefined
+      }
     });
     await ensureVideoThemePageRelational({
       siteId,
@@ -5147,12 +5169,31 @@ async function ensureVideoThemeExampleFallbacksRelational(siteId: string): Promi
     select: { id: true, name: true, description: true, prompt: true, imageUrl: true, galleryImages: true, status: true }
   });
   for (const theme of themes) {
-    const existing = await prisma.videoThemeExample.findFirst({ where: { siteId, themeId: theme.id }, select: { id: true } });
-    if (existing) continue;
+    const existing = await prisma.videoThemeExample.findFirst({
+      where: { siteId, themeId: theme.id },
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }]
+    });
     const promptValidation = validateVideoPrompt(theme.prompt);
     const prompt = promptValidation.valid
       ? theme.prompt
       : `${defaultVideoThemeExamplePrompt}\n\nExisting theme direction: ${theme.prompt.slice(0, 1200)}`;
+    if (existing) {
+      const isDefaultReference = existing.sortOrder === 0 && existing.name.toLowerCase().endsWith(" reference");
+      const needsCoverSync = isDefaultReference && (existing.imageUrl !== theme.imageUrl || JSON.stringify(existing.galleryImages ?? []) !== JSON.stringify(theme.imageUrl ? [theme.imageUrl] : []));
+      const needsPromptUpgrade = isDefaultReference && (!validateVideoPrompt(existing.prompt).valid || !/15\s*seconds?/i.test(existing.prompt));
+      if (needsCoverSync || needsPromptUpgrade) {
+        await prisma.videoThemeExample.update({
+          where: { id: existing.id },
+          data: {
+            imageUrl: theme.imageUrl,
+            galleryImages: theme.imageUrl ? [theme.imageUrl] : [],
+            prompt,
+            status: theme.status === "active" ? "active" : "draft"
+          }
+        });
+      }
+      continue;
+    }
     await prisma.videoThemeExample.create({
       data: {
         id: uid("video_example"),
@@ -5350,6 +5391,11 @@ export async function upsertVideoThemeRelational(params: {
   const prompt = params.prompt.trim();
   if (prompt.length < 12) throw new RelationalStoreError("video_theme_prompt_required", 400);
   if (prompt.length > 6000) throw new RelationalStoreError("video_theme_prompt_too_long", 400);
+  const status = videoThemeStatus(params.status);
+  const promptValidation = validateVideoPrompt(prompt);
+  if (status === "active" && !promptValidation.valid) {
+    throw new RelationalStoreError(`video_theme_prompt_invalid: ${promptValidation.errors.join(" ")}`, 400);
+  }
   const creditCost = clampInteger(Number(params.creditCost), 24, 0, 10000);
   const modelPricing = normalizeVideoModelPricing(params.modelPricing, creditCost);
   const durationSeconds = clampInteger(Number(params.durationSeconds), 6, 1, 15);
@@ -5388,7 +5434,7 @@ export async function upsertVideoThemeRelational(params: {
     headline: params.headline?.trim() || name,
     description,
     prompt,
-    status: videoThemeStatus(params.status),
+    status,
     creditCost,
     modelPricing: modelPricing as Prisma.InputJsonValue,
     durationSeconds,
@@ -5481,7 +5527,8 @@ export async function upsertVideoThemeExampleRelational(params: {
   if (name.length < 2) throw new RelationalStoreError("video_theme_example_name_required", 400);
   const prompt = params.prompt.trim();
   const validation = validateVideoPrompt(prompt);
-  if (!validation.valid) {
+  const status = videoThemeStatus(params.status);
+  if (status === "active" && !validation.valid) {
     throw new RelationalStoreError(`video_theme_example_prompt_invalid: ${validation.errors.join(" ")}`, 400);
   }
   const galleryImages = Array.isArray(params.galleryImages)
@@ -5497,7 +5544,7 @@ export async function upsertVideoThemeExampleRelational(params: {
     imageUrl: params.imageUrl?.trim() || galleryImages[0] || null,
     galleryImages: galleryImages as unknown as Prisma.InputJsonValue,
     prompt,
-    status: videoThemeStatus(params.status),
+    status,
     sortOrder: clampInteger(Number(params.sortOrder ?? 0), 0, -10000, 10000)
   };
   const row = existing

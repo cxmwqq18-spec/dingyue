@@ -93,6 +93,22 @@ export function formatVideoPromptSections(sections: Partial<Record<VideoPromptSe
     .join("\n\n");
 }
 
+export function providerReadyVideoThemePrompt(direction: string): string {
+  const sceneDirection = direction.trim();
+  return formatVideoPromptSections({
+    "Subject / Character": sceneDirection,
+    "Action / Motion": `${sceneDirection} The primary subject turns, reaches with one hand, shifts their gaze, and breathes naturally so every gesture remains physically grounded.`,
+    "Scene / Environment": "A specific lived-in environment with tactile surfaces, gentle environmental pressure, and a clear visual anchor; keep background people secondary.",
+    "Camera / Shot / Lens": "Motivated slow dolly push-in with a subtle tracking pan, medium-to-close coverage on a 35mm lens, shallow depth of field, no abrupt cuts.",
+    "Lighting / Atmosphere": "Soft motivated practical and natural light shape the faces and key object; atmosphere remains warm, believable, and physically consistent.",
+    "Style / Mood / Palette": "Cinematic naturalism with restrained celebratory color, realistic skin and material texture, intimate emotional pacing.",
+    "Sound / Audio": "Diegetic room tone, fabric and paper handling, one clear breath or hand contact, and a restrained musical swell as the audio anchor.",
+    "Duration / Aspect Ratio / Resolution": "15 seconds, 16:9 aspect ratio, 720p resolution; preserve the user's selected output settings when they differ.",
+    Continuity: "Use the supplied cover image as the first-frame reference; preserve identity, wardrobe, object placement, and light direction throughout, ending on the announced card, ring, gesture, or celebration detail in the final frame.",
+    "Negative Constraints": "No invented text, unreadable lettering, logos, watermarks, extra fingers, duplicated people, face drift, object morphing, abrupt cuts, unsafe behavior, or unrelated subjects."
+  });
+}
+
 export const defaultVideoThemeExamplePrompt = formatVideoPromptSections({
   "Subject / Character": "A single adult subject with clear wardrobe and grounded physical presence.",
   "Action / Motion": "The subject turns toward the window, raises one hand, and takes the first slow step into frame.",

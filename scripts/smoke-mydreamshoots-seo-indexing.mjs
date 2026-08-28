@@ -435,9 +435,9 @@ assert(
 
 assert(
   templates.includes('href: "/creators-circle"') &&
-    hostCatchAllPage.includes("!findPage(site, pageSlug)") &&
-    siteCatchAllPage.includes("resolvePublishedRouteDisposition(snapshot, pageSlug)") &&
-    siteCatchAllPage.includes("!findPage(publicSite, pageSlug)"),
+    (hostCatchAllPage.includes("!findPage(site, pageSlug)") || hostCatchAllPage.includes("resolvePublishedRouteDisposition(snapshot, publicPageSlug).kind === \"render\"")) &&
+    (siteCatchAllPage.includes("resolvePublishedRouteDisposition(snapshot, pageSlug)") || siteCatchAllPage.includes("resolvePublishedRouteDisposition(snapshot, internalPath)")) &&
+    (siteCatchAllPage.includes("!findPage(publicSite, pageSlug)") || siteCatchAllPage.includes("!findPage(publicSite, resolvedPageSlug)")),
   "Creators Circle must use its published route contract in both host and site routes"
 );
 assert(!storefrontRender.includes("syntheticDreamShootPartnerPage"), "public runtime must not synthesize partner pages");
