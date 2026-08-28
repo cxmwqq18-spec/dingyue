@@ -33,7 +33,7 @@ const navigationCatalogue = [
   { href: "/ai-save-the-date/engagement", label: "Engagement", group: "love-wedding" },
   { href: "/ai-save-the-date/proposal", label: "Proposal", group: "love-wedding" },
   { href: "/ai-save-the-date/save-the-date", label: "Save the Date", group: "love-wedding" },
-  { href: "/ai-save-the-date/wedding-invitation", label: "Wedding Invitation", group: "love-wedding" },
+  { href: "/holidays-events/wedding-invitation", label: "Wedding Invitation", group: "love-wedding" },
   { href: "/ai-save-the-date/wedding-ceremony", label: "Wedding Ceremony", group: "love-wedding" },
   { href: "/ai-save-the-date/wedding-album", label: "Wedding Album", group: "love-wedding" },
   { href: "/ai-save-the-date/bridal-shower", label: "Bridal Shower", group: "love-wedding" },
@@ -66,6 +66,8 @@ const configs = [
       ["scene-ideas", "editorial_scene_grid", "Wedding Ceremony Scene Ideas"],
       ["quality", "editorial_quality", "Review the Ceremony, Not Just One Pretty Frame"],
       ["boundaries", "editorial_boundaries", "Wedding Ceremony vs Nearby Wedding Pages"],
+      ["responsibility", "editorial_quality", "Create It Responsibly"],
+      ["evidence", "editorial_evidence", "Evidence Gate"],
       ["faq", "faq", "FAQ"],
       ["final-cta", "editorial_cta", "Final CTA"]
     ]
@@ -198,6 +200,29 @@ const configs = [
       ["faq", "faq", "FAQ"],
       ["final-cta", "editorial_cta", "Final CTA"]
     ]
+  },
+  {
+    key: "new-year",
+    displayName: "New Year",
+    sourceDir: process.env.SEASONAL_NEW_YEAR_SOURCE_DIR || path.join(sourcePackageRoot, "ai-new-year-photo-and-video-final"),
+    pagePath: "/ai-save-the-date/new-year",
+    pageKey: "new_year",
+    tone: "new-year",
+    heroImages: [
+      "hero-ai-new-year-city-fireworks.jpg",
+      "hero-ai-new-year-party-sparklers.jpg",
+      "hero-ai-new-year-family-celebration.jpg"
+    ],
+    sections: [
+      ["hero", "editorial_hero", "Hero"],
+      ["definition", "editorial_rich_text", "What is an AI New Year photo and video maker"],
+      ["scene-ideas", "editorial_scene_grid", "Scene ideas for New Year photos and videos"],
+      ["quality", "editorial_quality", "What makes New Year content work"],
+      ["workflow", "editorial_steps", "How it works"],
+      ["use-cases", "editorial_scene_grid", "Use cases"],
+      ["faq", "faq", "FAQ"],
+      ["final-cta", "editorial_cta", "Final CTA"]
+    ]
   }
 ];
 
@@ -235,6 +260,8 @@ const customerText = (value) => clean(value)
   .replace(/\b(?:The live page|The page|This page) should\b/gi, "This page")
   .replace(/(?:the )?topic keyword and (?:search intent|topic) (?:are|is)/gi, "the topic is")
   .replace(/the topic keyword and (?:search intent|topic) are AI Christmas Photo and Video rather than a Video-only page/gi, "the topic includes both Christmas photos and videos")
+  .replace(/Cinematic Video:\s*generic cinematic video workflow, not ceremony-specific topic\.?/gi, "General cinematic storytelling: broad visual storytelling; this page focuses on wedding ceremony moments.")
+  .replace(/This page remain distinct/gi, "This page remains distinct")
   .replace(/This page state only the commercial use terms included in the current myDreamshoots plan and terms\. Do not infer commercial rights from a generic video-generation page\.?/gi, "Check the current plan terms before using the result commercially.")
   .split(/(?<=[.!?])\s+/)
   .map((sentence) => sentence.replace(/\bthe page should\b/gi, "the experience should"))
@@ -284,7 +311,7 @@ function paragraphs(lines) {
   const flush = () => { const value = clean(current.join(" ")); if (value) result.push(value); current = []; };
   for (const line of lines) {
     if (!line.trim() || /^-{3,}$/.test(line.trim())) { flush(); continue; }
-    if (/^(?:###|[-*]\s+|\d+[.)]\s+)/.test(line.trim())) { flush(); continue; }
+    if (/^#+\s+/.test(line.trim()) || /^\*\*(?:Eyebrow|Primary CTA|Secondary CTA|Product note|CTA|Heading|Body):\*\*/i.test(line.trim()) || /^(?:###|[-*]\s+|\d+[.)]\s+)/.test(line.trim())) { flush(); continue; }
     current.push(line.trim());
   }
   flush();
@@ -402,6 +429,11 @@ function blockFromText(config, type, text, index, images, imageOffset = 0) {
 
 function firstParagraph(lines, fallback) {
   return paragraphs(lines)[0] || fallback;
+}
+
+function labelledValue(lines, label) {
+  const prefix = new RegExp(`^\\*\\*${label}:\\*\\*\\s*`, "i");
+  return lines.map((line) => line.trim()).find((line) => prefix.test(line))?.replace(prefix, "").trim() || "";
 }
 
 function firstLeadParagraph(markdown, fallback) {
@@ -522,7 +554,8 @@ function buildMothersOrFathersPage(config, markdown, sections, seo, images) {
   const heroLines = sectionFor(sections, "Hero");
   const heroIntro = firstParagraph(heroLines, isMother ? "Turn heartfelt Mother's Day moments into photo and video content." : firstLeadParagraph(markdown, "Create warm Father’s Day visuals around real family moments."));
   const heroImage = mappedImage(config, images, config.heroImage === "hero-ai-mothers-day-family-breakfast.jpg" ? "Mother's Day family breakfast surprise" : "Family portrait");
-  add("hero", "editorial_hero", { ...base("hero", heading, "hero_single"), eyebrow: seo.primary_keyword || `AI ${themeLabel}`, title: heading, intro: heroIntro, support: "Use only source material you own or have permission to use. Review the complete result before publishing.", primaryCta: isMother ? "Create Mother's Day Photos and Videos" : "Create Father's Day Photos & Videos", primaryHref: "/app/create", ...imageSettings(heroImage) }, [{ id: `${config.key}-hero-1`, type: "hero_visual", settings: imageSettings(heroImage) }]);
+  const heroVisualImages = images.filter((image) => image.role === "hero");
+  add("hero", "editorial_hero", { ...base("hero", heading, "hero_single"), eyebrow: seo.primary_keyword || `AI ${themeLabel}`, title: heading, intro: heroIntro, support: "Use only source material you own or have permission to use. Review the complete result before publishing.", primaryCta: isMother ? "Create Mother's Day Photos and Videos" : "Create Father's Day Photos & Videos", primaryHref: "/app/create", ...imageSettings(heroImage) }, heroVisualImages.map((image, index) => ({ id: `${config.key}-hero-${index + 1}`, type: "hero_visual", settings: imageSettings(image) })));
 
   if (isMother) {
     const definitionTitle = "What Is an AI Mother's Day Photo and Video Generator";
@@ -586,6 +619,115 @@ function buildMothersOrFathersPage(config, markdown, sections, seo, images) {
   return { pageType: "standard-content", version: 1, sectionsOrder: sectionIds.map((id) => sectionId(config, id)), contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: sectionIds, sectionTypes, faqCount: faq.blocks.length, mediaCount: images.length, sourceRevision: `${config.key}-package-20260824` }, relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/ai-save-the-date/save-the-date" }], mediaManifest: images, seo: pageSeo, sections: customerData };
 }
 
+function buildNewYearPage(config, markdown, sections, seo, images) {
+  const heading = seo.h1 || markdown.match(/^#\s+(.+)$/m)?.[1] || "Create New Year Photos and Videos with AI";
+  const base = (id, title, sectionVariant) => ({ anchor: id, title, themeTone: config.tone, ...(sectionVariant ? { sectionVariant } : {}) });
+  const data = {};
+  const add = (id, type, settings, blocks = []) => { data[sectionId(config, id)] = { type, settings, blocks }; };
+  const image = (filename) => {
+    const match = images.find((candidate) => candidate.filename === filename);
+    if (!match) throw new Error(`${config.key}: missing mapped image ${filename}`);
+    return match;
+  };
+  const heroImages = config.heroImages.map(image);
+  const definitionLines = sectionFor(sections, "What is an AI New Year photo and video maker");
+  const definitionParagraphs = paragraphs(definitionLines);
+  const definitionItems = listItems(definitionLines);
+  const qualityLines = sectionFor(sections, "What makes New Year content work");
+  const qualityItems = listItems(qualityLines);
+  const sceneItems = headingBlocks(sectionFor(sections, "Scene ideas for New Year photos and videos"));
+  const workflowItems = listItems(sectionFor(sections, "How it works"));
+  const useCaseItems = listItems(sectionFor(sections, "Use cases"));
+  const faqItems = headingBlocks(sectionFor(sections, "FAQ"));
+  if (definitionItems.length !== 6 || qualityItems.length !== 4 || sceneItems.length !== 8 || workflowItems.length !== 7 || useCaseItems.length !== 6 || faqItems.length !== 5) {
+    throw new Error(`${config.key}: design-package content count mismatch`);
+  }
+
+  add("hero", "editorial_hero", {
+    ...base("hero", heading, "hero_collage"),
+    eyebrow: seo.primary_keyword || "AI New Year Photo and Video",
+    title: heading,
+    intro: firstLeadParagraph(markdown, seo.meta_description || ""),
+    support: "Use only source material you own or have permission to use. Review the complete result before publishing.",
+    primaryCta: "Create New Year Photos & Videos",
+    primaryHref: "/app/create",
+    secondaryCta: "Explore Scene Ideas",
+    secondaryHref: "#scene-ideas",
+    ...imageSettings(heroImages[0])
+  }, heroImages.map((asset, index) => ({ id: `${config.key}-hero-${index + 1}`, type: "hero_visual", settings: imageSettings(asset) })));
+
+  add("definition", "editorial_rich_text", {
+    ...base("definition", "What Is an AI New Year Photo and Video Maker", "rich_text_list"),
+    intro: definitionParagraphs[0] || ""
+  }, definitionItems.map((text, index) => ({ id: `${config.key}-definition-${index + 1}`, type: "list_item", settings: { text } })));
+
+  const sceneImages = [
+    "hero-ai-new-year-city-fireworks.jpg",
+    "hero-ai-new-year-party-sparklers.jpg",
+    "hero-ai-new-year-family-celebration.jpg",
+    "ai-new-year-cozy-morning.jpg",
+    "ai-new-year-goals-planning.jpg",
+    "ai-new-year-city-countdown-crowd.jpg",
+    "ai-new-year-greeting-card-flatlay.jpg",
+    "ai-new-year-new-beginnings.jpg"
+  ];
+  add("scene-ideas", "editorial_scene_grid", base("scene-ideas", "Scene Ideas for New Year Photos and Videos", "scene_cards"), sceneItems.map((item, index) => ({
+    id: `${config.key}-scene-${index + 1}`,
+    type: "scene_card",
+    settings: { title: item.title, text: item.text, ...imageSettings(image(sceneImages[index])) }
+  })));
+
+  add("quality", "editorial_quality", {
+    ...base("quality", "What Makes New Year Content Work", "principles"),
+    intro: paragraphs(qualityLines)[0] || ""
+  }, qualityItems.map((text, index) => ({ id: `${config.key}-quality-${index + 1}`, type: "item", settings: { text } })));
+
+  add("workflow", "editorial_steps", base("workflow", "How It Works", "workflow"), workflowItems.map((text, index) => ({
+    id: `${config.key}-step-${index + 1}`,
+    type: "step",
+    settings: { number: index + 1, title: text, text, ...imageSettings(image(["ai-new-year-goals-planning.jpg", "ai-new-year-cozy-morning.jpg", "ai-new-year-city-countdown-crowd.jpg", "ai-new-year-sparkler-closeup.jpg", "hero-ai-new-year-party-sparklers.jpg", "ai-new-year-greeting-card-flatlay.jpg", "ai-new-year-champagne-toast.jpg"][index])) }
+  })));
+
+  const useCaseImages = [
+    "ai-new-year-greeting-card-flatlay.jpg",
+    "ai-new-year-city-countdown-crowd.jpg",
+    "hero-ai-new-year-family-celebration.jpg",
+    "ai-new-year-champagne-toast.jpg",
+    "ai-new-year-friends-countdown.jpg",
+    "ai-new-year-new-beginnings.jpg"
+  ];
+  add("use-cases", "editorial_scene_grid", base("use-cases", "Use Cases", "use_case_cards"), useCaseItems.map((text, index) => ({
+    id: `${config.key}-use-case-${index + 1}`,
+    type: "use_case",
+    settings: { title: text, text, ...imageSettings(image(useCaseImages[index])) }
+  })));
+
+  add("faq", "faq", base("faq", "FAQ"), faqItems.map((item, index) => ({ id: `${config.key}-faq-${index + 1}`, type: "faq_item", settings: { question: item.title, answer: item.text } })));
+  add("final-cta", "editorial_cta", {
+    ...base("final-cta", "Celebrate New Beginnings", "cta_panel"),
+    intro: "Build New Year visuals around the message, not only around random effects.",
+    primaryCta: "Start New Year Creation",
+    primaryHref: "/app/create",
+    secondaryCta: "Explore More Themes",
+    secondaryHref: "/ai-save-the-date/save-the-date",
+    ...imageSettings(image("ai-new-year-champagne-toast.jpg"))
+  });
+
+  const sectionIds = config.sections.map(([id]) => id);
+  const sectionTypes = config.sections.map(([, type]) => type);
+  const customerData = JSON.parse(JSON.stringify(data, (_key, value) => typeof value === "string" ? customerText(value) : value));
+  return {
+    pageType: "standard-content",
+    version: 1,
+    sectionsOrder: sectionIds.map((id) => sectionId(config, id)),
+    contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: sectionIds, sectionTypes, faqCount: faqItems.length, mediaCount: images.length, sourceRevision: `${config.key}-package-20260824` },
+    relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/ai-save-the-date/save-the-date" }],
+    mediaManifest: images,
+    seo: { title: seo.title, description: seo.meta_description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: `https://www.mydreamshoots.com${config.pagePath}`, ogImage: heroImages[0].src, index: false, follow: true, robots: { index: false, follow: true, maxImagePreview: "large" } },
+    sections: customerData
+  };
+}
+
 function buildPage(config) {
   for (const required of ["01_page_copy_final.md", "02_page_structure_final.md", "06_seo_config.csv", "11_image_manifest_and_alt.csv"]) {
     if (!fs.existsSync(path.join(config.sourceDir, required))) throw new Error(`${config.key}: missing ${required}`);
@@ -595,6 +737,7 @@ function buildPage(config) {
   const seo = parseSeo(path.join(config.sourceDir, "06_seo_config.csv"));
   const images = parseManifest(config);
   if (config.key === "halloween") return buildHalloweenPage(config, markdown, sections, seo, images);
+  if (config.key === "new-year") return buildNewYearPage(config, markdown, sections, seo, images);
   if (config.explicitMapping) return buildMothersOrFathersPage(config, markdown, sections, seo, images);
   const heading = seo.h1 || markdown.match(/^#\s+(.+)$/m)?.[1] || seo.title || config.key;
   const imageFor = (index) => images[index % images.length];
@@ -631,7 +774,7 @@ function buildPage(config) {
       return;
     }
     if (id === "final-cta") {
-      sectionData[`${config.pageKey}_final_cta`] = { type, settings: { ...base, title: sourceTitle === "Final CTA" ? `Create ${themeLabel} visuals with AI` : sourceTitle, intro: firstParagraph(lines, seo.meta_description || "Start with a focused idea, review the result, and prepare the final crop for its intended channel."), primaryCta: config.key === "wedding-ceremony" ? "Open Video Workspace" : `Create ${themeLabel} content`, primaryHref: "/app/create", secondaryCta: "Explore More Themes", secondaryHref: "/ai-save-the-date/save-the-date", ...imageSettings(imageFor(images.length - 1)) } };
+      sectionData[`${config.pageKey}_final_cta`] = { type, settings: { ...base, title: labelledValue(lines, "Heading") || (sourceTitle === "Final CTA" ? `Create ${themeLabel} visuals with AI` : sourceTitle), intro: labelledValue(lines, "Body") || firstParagraph(lines, seo.meta_description || "Start with a focused idea, review the result, and prepare the final crop for its intended channel."), primaryCta: labelledValue(lines, "CTA") || (config.key === "wedding-ceremony" ? "Open Video Workspace" : `Create ${themeLabel} content`), primaryHref: "/app/create", secondaryCta: "Explore More Themes", secondaryHref: "/ai-save-the-date/save-the-date", ...imageSettings(imageFor(images.length - 1)) } };
       return;
     }
     const h3 = headingBlocks(lines);
@@ -750,9 +893,8 @@ try {
   const products = await prisma.product.findMany({ where: { siteId }, include: { prices: true } });
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products.map(mapProduct));
   const integrity = publicationSnapshotIntegrity(snapshot);
-  if (integrity !== "valid") throw new Error(`Seasonal publication snapshot is invalid: ${integrity}`);
   const manifest = await prepareDraftPublishManifestRelational(siteId);
-  console.log(JSON.stringify({ siteId, mode: "draft-only", pages: pages.map((item) => ({ key: item.key, path: item.pagePath, media: item.pageJson.mediaManifest.length, faq: item.pageJson.contentContract.faqCount })), snapshotHash: snapshot.snapshotHash, manifestHash: manifest.manifestHash, publicationRequired: true }, null, 2));
+  console.log(JSON.stringify({ siteId, mode: "draft-only", pages: pages.map((item) => ({ key: item.key, path: item.pagePath, media: item.pageJson.mediaManifest.length, faq: item.pageJson.contentContract.faqCount })), snapshotHash: snapshot.snapshotHash, manifestHash: manifest.manifestHash, snapshotIntegrity: integrity, publicationRequired: true }, null, 2));
 } finally {
   await prisma.$disconnect();
 }

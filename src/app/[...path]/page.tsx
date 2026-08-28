@@ -31,6 +31,7 @@ import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
+import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -617,6 +618,9 @@ export default async function HostStorefrontCatchAllPage({
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
   if (site.id === "site_dreamshoot" && slug === "/ai-image-generation/motion-generator") {
     permanentRedirect("/ai-video-generation/motion-generator");
+  }
+  if (site.id === "site_dreamshoot" && (slug === "/ai-save-the-date/wedding-invitation" || slug.startsWith("/ai-save-the-date/wedding-invitation/"))) {
+    permanentRedirect(canonicalSaveTheDatePath(slug));
   }
   const publishedDisposition = resolvePublishedRouteDisposition(snapshot, slug);
   if (publishedDisposition.kind === "redirect" && publishedDisposition.targetPath) {

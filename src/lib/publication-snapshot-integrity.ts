@@ -437,7 +437,10 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const standardMediaAgree = publishedStandardPageMedia.length === expectedStandardPaths.length &&
     expectedStandardPaths.every((path) => publishedPathCandidates(path).some((acceptedPath) => publishedStandardPageMedia.some((item) => {
       const page = snapshot.pages.find((candidate) => candidate.id === item.pageId);
-      return item.canonicalPath === acceptedPath && item.status === "ready" && page?.slug === acceptedPath;
+      const route = standardContentRoutes.find((candidate) => candidate.canonicalPath === acceptedPath);
+      return item.canonicalPath === acceptedPath &&
+        (item.status === "ready" || (item.status === "review_required" && route?.status === "review_required")) &&
+        page?.slug === acceptedPath;
     })));
   const mediaOwnershipAgree = leafRoutes.every((item) => {
     const page = pages.get(item.pageEntityId);

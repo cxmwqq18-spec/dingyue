@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const siteId = "site_dreamshoot";
-const pathName = "/ai-save-the-date/wedding-invitation";
+const pathName = "/holidays-events/wedding-invitation";
 const state = await readPlatformStateFromSql();
 const site = state.sites.find((candidate) => candidate.id === siteId);
 assert(site, `missing_site:${siteId}`);
@@ -27,6 +27,12 @@ assert.equal(json.contentContract?.pageKey, "wedding_invitation", `${pathName}: 
 assert.equal(json.contentContract?.faqCount, 8, `${pathName}: FAQ count`);
 assert.equal(json.contentContract?.mediaCount, 10, `${pathName}: media count`);
 assert.equal(json.sections?.wedding_invitation_hero?.settings?.title, "Create a Personalized Wedding Invitation with AI", `${pathName}: H1`);
+assert.deepEqual(json.sections?.wedding_invitation_styles_use_cases?.blocks?.map((block) => block.settings?.title), [
+  "Elegant Formal Invitation", "Floral Garden Invitation", "Minimal Modern Invitation",
+  "Destination Wedding Invitation", "Digital Wedding Invitation", "Printed Invitation Suite"
+], `${pathName}: style copy`);
+assert.equal(json.sections?.wedding_invitation_information?.settings?.title, "What Information Should a Wedding Invitation Include?", `${pathName}: information section`);
+assert.equal(json.sections?.wedding_invitation_vs_save_date?.blocks?.length, 0, `${pathName}: boundary must not repeat intro block`);
 assert(!json.sectionsOrder.some((id) => id.startsWith("save_date_")), `${pathName}: must not reuse Save the Date sections`);
 assert.equal(json.sections?.wedding_invitation_faq?.blocks?.length, 8, `${pathName}: FAQ blocks`);
 assert.equal(json.mediaManifest?.length, 10, `${pathName}: media manifest`);

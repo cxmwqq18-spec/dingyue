@@ -18,9 +18,9 @@ try {
   assert.equal(response?.status(), 200, "MyDreamShoots homepage must render successfully");
   await page.waitForLoadState("networkidle", { timeout: 30_000 }).catch(() => undefined);
 
-  const trigger = page.locator('nav summary[aria-haspopup="dialog"]').filter({ hasText: /AI Video Generation|AI Image Generation|Save the Date/i }).first();
+  const trigger = page.locator('nav button[aria-haspopup="dialog"]').filter({ hasText: /AI Video Generation|AI Image Generation|Save the Date/i }).first();
   await trigger.waitFor({ state: "visible", timeout: 30_000 });
-  assert.equal(await trigger.evaluate((node) => node.parentElement?.tagName), "DETAILS", "mega menu trigger must keep the server-rendered details structure");
+  assert.equal(await trigger.evaluate((node) => node.parentElement?.getAttribute("data-native-mega-menu")), "true", "mega menu trigger must remain inside the storefront menu container");
   await trigger.click();
   const panel = page.locator('[data-storefront-mega-menu-panel][aria-hidden="false"]').first();
   await panel.waitFor({ state: "visible", timeout: 10_000 });

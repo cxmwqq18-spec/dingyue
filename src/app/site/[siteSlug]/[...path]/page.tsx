@@ -353,8 +353,12 @@ export default async function SiteCatchAllPage({
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
-  if (isPrimaryMydreamshootsSlug(publicSlug) && (slug.startsWith("/holidays-events/") || slug === "/ai-video-generation/wedding-ceremony")) {
+  if (isPrimaryMydreamshootsSlug(publicSlug) && (slug === "/ai-save-the-date/wedding-invitation" || slug.startsWith("/ai-save-the-date/wedding-invitation/"))) {
     permanentRedirect(routePath(canonicalSaveTheDatePath(slug)));
+  }
+  if (isPrimaryMydreamshootsSlug(publicSlug) && (slug.startsWith("/holidays-events/") || slug === "/ai-video-generation/wedding-ceremony")) {
+    const canonicalPath = canonicalSaveTheDatePath(slug);
+    if (canonicalPath !== slug) permanentRedirect(routePath(canonicalPath));
   }
   const legacyAliasTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForPublicSlug(publicSlug));
   if (legacyAliasTarget && (slug === "/collections/engagement-photo" || slug === "/collections/headshot")) {

@@ -210,7 +210,7 @@ const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_M
   "/ai-save-the-date/engagement": "Engagement save the date video scenes from approved couple visuals",
   "/ai-save-the-date/proposal": "Proposal video scenes showing the planned story and reaction",
   "/ai-save-the-date/save-the-date": "Save the Date video scenes for a confirmed wedding date",
-  "/ai-save-the-date/wedding-invitation": "Wedding invitation visuals for ceremony details and guest communication",
+  "/holidays-events/wedding-invitation": "Wedding invitation visuals for ceremony details and guest communication",
   "/ai-save-the-date/wedding-ceremony": "Wedding ceremony photo and video scenes for vows, rings, reactions, and the recessional",
   "/ai-save-the-date/wedding-anniversary": "Wedding anniversary photo and video scenes for shared memories and celebration",
   "/ai-save-the-date/christmas": "Christmas family, gifts, portraits, and seasonal celebration scenes",
@@ -386,7 +386,11 @@ function standardContentEntity(site: Site, page: ThemePage, route: PublishedStan
     return clean;
   };
   const finalTitle = sectionSetting("editorial_cta", "title") || "Continue with the published page";
-  const strictEditorial = SAVE_THE_DATE_EDITORIAL_PATHS.includes(route.canonicalPath as (typeof SAVE_THE_DATE_EDITORIAL_PATHS)[number]);
+  // A held route remains in the projection as review_required so the runtime
+  // can fail closed without treating its intentionally minimal holding copy as
+  // a complete published editorial page.
+  const strictEditorial = route.status === "published" &&
+    SAVE_THE_DATE_EDITORIAL_PATHS.includes(route.canonicalPath as (typeof SAVE_THE_DATE_EDITORIAL_PATHS)[number]);
   return {
     pageEntityId: route.pageEntityId,
     canonicalPath: route.canonicalPath,
@@ -556,6 +560,38 @@ async function getSiteWithThemeRecords(db: PrismaLike, siteId: string) {
   });
   if (!site) throw new RelationalStoreError("site_not_found", 404);
   return site;
+}
+
+/**
+ * Current-state candidates deliberately exclude legacy publication records.
+ * The draft/source records are the only content authority before the
+ * candidate is atomically written to SitePublishedState.
+ */
+async function getSiteWithCurrentStateSourceRecords(db: PrismaLike, siteId: string) {
+  const site = await db.site.findUnique({
+    where: { id: siteId },
+    include: {
+      domains: true,
+      pages: { orderBy: { slug: "asc" } },
+      settings: true,
+      storefrontProfile: true,
+      mediaAssets: true,
+      connect: true
+    }
+  });
+  if (!site) throw new RelationalStoreError("site_not_found", 404);
+  return site;
+}
+
+function currentStateSourceSite(site: Site): Site {
+  return {
+    ...site,
+    pages: site.pages.map((page) => ({ ...page, publishedJson: cloneJson(page.draftJson) })),
+    themeSettings: { ...site.themeSettings, publishedJson: cloneJson(site.themeSettings.draftJson) },
+    storefrontProfile: site.storefrontProfile
+      ? { ...site.storefrontProfile, publishedJson: cloneJson(site.storefrontProfile.draftJson) }
+      : undefined
+  };
 }
 
 export function buildPublicationSnapshot(
@@ -867,7 +903,7 @@ export function buildPublicationSnapshot(
       const href = candidate.href.trim();
       const label = candidate.label.trim();
       const target = standardContentEntities.find((candidate) => candidate.canonicalPath === href);
-      return target ? {
+      return target?.status === "published" && target.indexable && target.sitemapEligible ? {
         linkEntityId: `${entity.pageEntityId}:link:related:${index + 1}`,
         ownerPageEntityId: entity.pageEntityId,
         targetPageEntityId: target.pageEntityId,
@@ -1009,8 +1045,8 @@ export async function compileCurrentPublishedPayloadRelational(
   siteId: string,
   db: PrismaLike = prisma
 ): Promise<PublishedSeoSnapshot> {
-  const siteRecord = await getSiteWithThemeRecords(db, siteId);
-  const site = toSite(siteRecord);
+  const siteRecord = await getSiteWithCurrentStateSourceRecords(db, siteId);
+  const site = currentStateSourceSite(toSite(siteRecord));
   const [productRows, packRows] = await Promise.all([
     db.product.findMany({ where: { siteId }, include: { prices: true }, orderBy: { id: "asc" } }),
     db.creativePack.findMany({

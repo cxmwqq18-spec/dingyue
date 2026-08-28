@@ -43,3 +43,48 @@ and navigation directories, must be complete server-rendered HTML.
   and admin routes retain their authenticated client APIs.
 - New public routes default to SSR-only and must pass static and no-JavaScript
   storefront regression checks before release.
+
+## Public Frontend Copy Boundary
+
+### First Principle
+
+The sole purpose of a public frontend page is to communicate product
+information to end users, build understanding, support decisions, and enable
+interaction.
+
+Therefore, information that is not written for end users must never enter
+user-visible frontend content.
+
+### Required Distinction
+
+Strictly distinguish between the following:
+
+1. **Internal information**: product intent, page goals, SEO strategy, search
+   intent, content structure, design notes, development requirements, editing
+   notes, task descriptions, prompts, annotation requirements, and any other
+   information used to guide generation or implementation.
+2. **Public copy**: content that end users can naturally read on a production
+   page and that directly helps them understand the product, its features,
+   value, use, or a relevant decision.
+
+### Mandatory Constraints
+
+- Only public copy may be rendered in the frontend.
+- Internal information must not appear in any user-visible area directly, or
+  after rewriting, concatenation, summarization, transformation, or any other
+  variation.
+- If it is unclear whether content is internal information or public copy,
+  treat it as internal information by default.
+- SEO is a constraint for optimizing page content; it is not display content
+  itself.
+- Page-structure descriptions are generation inputs; they are not webpage
+  copy.
+- Do not store internal instructions that do not belong in production frontend
+  content in HTML comments, hidden DOM, frontend variables, or client-side
+  data.
+- Before completing any change to a public page, inspect every added or changed
+  visible string and confirm that it meets this standard: it is copy that a
+  formal website would directly write for its end users.
+
+This rule takes precedence over wording-reuse requirements in content
+generation tasks.

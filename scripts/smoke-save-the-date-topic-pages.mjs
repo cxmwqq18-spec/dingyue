@@ -51,7 +51,7 @@ for (const expected of pages) {
   }
   if (expected.path === "/ai-save-the-date/save-the-date") {
     const sceneBlocks = json.sections?.save_date_scene_ideas?.blocks ?? [];
-    assert.equal(sceneBlocks.length, 11, `${expected.path}: scene idea count`);
+    assert.equal(sceneBlocks.length, 8, `${expected.path}: scene idea count`);
     assert(sceneBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: scene idea media`);
     const formatBlocks = json.sections?.save_date_formats?.blocks ?? [];
     assert(formatBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: format media`);

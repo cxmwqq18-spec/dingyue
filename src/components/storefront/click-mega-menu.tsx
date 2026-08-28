@@ -31,7 +31,7 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, disablePr
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const menuRef = useRef<HTMLDetailsElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const prefetchedRef = useRef(false);
   const prefetchTimerRefs = useRef<number[]>([]);
   const warmFetchTimerRefs = useRef<number[]>([]);
@@ -170,10 +170,9 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, disablePr
   }, [cancelWarmFetches, routeKey]);
 
   return (
-    <details
+    <div
       className="group relative"
       data-native-mega-menu="true"
-      open={open}
       onClick={(event) => {
         const target = event.target instanceof Element ? event.target : null;
         const anchor = target?.closest<HTMLAnchorElement>("a[href]");
@@ -199,13 +198,13 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, disablePr
       }}
       ref={menuRef}
     >
-      <summary
+      <button
         aria-controls={panelId}
         aria-expanded={open}
         aria-haspopup="dialog"
+        type="button"
         className={`${buttonClassName} list-none [&::-webkit-details-marker]:hidden`}
         onClick={(event) => {
-          event.preventDefault();
           prefetchMenuPaths();
           if (!open) updatePanelMetrics();
           setOpen((current) => !current);
@@ -224,7 +223,7 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, disablePr
       >
         <span>{label}</span>
         <ChevronRight className={`h-3.5 w-3.5 text-white/72 transition ${open ? "-rotate-90" : "rotate-90"}`} data-mega-toggle="" strokeWidth={2} />
-      </summary>
+      </button>
       <div
         aria-hidden={!open}
         className={`${open ? "visible pointer-events-auto translate-y-0 opacity-100" : "invisible pointer-events-none translate-y-2 opacity-0"} ${panelClassName}`}
@@ -244,6 +243,6 @@ export function ClickMegaMenu({ blockAttrs, buttonClassName, children, disablePr
         </button>
         {children}
       </div>
-    </details>
+    </div>
   );
 }

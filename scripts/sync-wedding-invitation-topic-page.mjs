@@ -10,7 +10,8 @@ import { PrismaClient } from "@prisma/client";
 const repoRoot = process.cwd();
 const sourceDir = path.resolve(process.env.WEDDING_INVITATION_SOURCE_DIR || "docs/design-packages/ai-wedding-invitation-maker-final");
 const siteId = process.env.WEDDING_INVITATION_SITE_ID || "site_dreamshoot";
-const pagePath = "/ai-save-the-date/wedding-invitation";
+const pagePath = "/holidays-events/wedding-invitation";
+const legacyPagePath = "/ai-save-the-date/wedding-invitation";
 const apply = process.argv.includes("--apply");
 const sourceRoot = path.join(repoRoot, "src");
 const originalLoad = Module._load;
@@ -25,6 +26,16 @@ Module._resolveFilename = function resolve(request, ...args) {
 
 const read = (file) => fs.readFileSync(path.join(sourceDir, file), "utf8").replace(/^\uFEFF/, "");
 const clean = (value) => String(value ?? "").replace(/`([^`]+)`/g, "$1").replace(/\*\*([^*]+)\*\*/g, "$1").replace(/\s+/g, " ").trim();
+const customerText = (value) => clean(value)
+  .replace(/search intent/gi, "topic")
+  .replace(/primary keyword/gi, "main topic")
+  .replace(/indexation/gi, "publishing")
+  .replace(/Evidence Gate/gi, "review checklist")
+  .replace(/\b(?:The live page|The page|This page) should\b/gi, "This page")
+  .replace(/\bthese pages should target different topic and should not compete for the same main topic\b/gi, "These pages serve different guest communication needs")
+  .split(/(?<=[.!?])\s+/)
+  .filter((sentence) => !/\bsearch intent\b|\bprimary keyword\b|\bindexation\b|\bEvidence Gate\b/i.test(sentence))
+  .join(" ");
 function csvRows(file) {
   return read(file).trim().split(/\r?\n/).map((line) => {
     const values = []; let current = ""; let quoted = false;
@@ -90,13 +101,27 @@ const sections = {
   wedding_invitation_what_works: section("what_works", "editorial_quality", "What Makes a Wedding Invitation Work?", "Keep the event details clear, editable, and easy for guests to verify.", doAvoid),
   wedding_invitation_creation_flow: section("creation_flow", "editorial_steps", "Invitation Creation Flow", "Move from the wedding direction to a reviewed, shareable invitation.", flowBlocks),
   wedding_invitation_information: section("information", "editorial_rich_text", "What Information Should a Wedding Invitation Include?", paragraphs(copySection("What Information Should a Wedding Invitation Include?"))[0]),
-  wedding_invitation_vs_save_date: section("vs_save_date", "editorial_boundaries", "Wedding Invitation vs. Save the Date", paragraphs(copySection("Wedding Invitation vs. Save the Date"))[0], [{ id: "wedding-invitation-vs-save-date-1", type: "boundary", settings: { text: paragraphs(copySection("Wedding Invitation vs. Save the Date"))[0] } }]),
+  // The renderer presents the boundary copy as the section intro. Keeping the
+  // block list empty prevents the same paragraph from being rendered twice.
+  wedding_invitation_vs_save_date: section("vs_save_date", "editorial_boundaries", "Wedding Invitation vs. Save the Date", paragraphs(copySection("Wedding Invitation vs. Save the Date"))[0]),
   wedding_invitation_accuracy: section("accuracy", "editorial_quality", "Accuracy and Editable Details", "Names, dates, venues, RSVP instructions, URLs, and contact information stay editable so they can be checked independently from the artwork.", [{ id: "wedding-invitation-accuracy-1", type: "quality_item", settings: { text: "Keep all event-critical details in editable fields and proofread them before sharing or printing." } }]),
   wedding_invitation_faq: { type: "faq", settings: { anchor: "faq", title: "Frequently Asked Questions" }, blocks: faqBlocks },
   wedding_invitation_final_cta: { type: "editorial_cta", settings: { anchor: "final-cta", title: "Create an Invitation That Feels Like the Wedding", intro: paragraphs(copySection("Final CTA"))[0], primaryCta: "Create Your Wedding Invitation", primaryHref: "/app/create", secondaryCta: "Explore Invitation Styles", secondaryHref: "#styles-use-cases", imageUrl: imageManifest[9].src, imageAlt: imageManifest[9].alt, imageWidth: 1600, imageHeight: 1000, themeTone: "wedding" } }
 };
-const sectionsOrder = Object.keys(sections);
-const pageJson = { pageType: "standard-content", version: 1, sectionsOrder, contentContract: { schema: "editorial-page-v1", pageKey: "wedding_invitation", requiredSections: ["hero", "what-is", "styles-use-cases", "what-works", "creation-flow", "information", "vs-save-date", "accuracy", "faq", "final-cta"], sectionTypes: sectionsOrder.map((id) => sections[id].type), faqCount: faqBlocks.length, mediaCount: imageManifest.length, sourceRevision: "wedding-invitation-package-20260824" }, relatedLinks: [{ href: "/ai-save-the-date/save-the-date", label: "save the date ideas" }, { href: "/ai-save-the-date/engagement", label: "engagement announcement ideas" }, { href: "/ai-save-the-date/wedding-ceremony", label: "wedding ceremony ideas" }], mediaManifest: imageManifest, seo: { title: seoRows.title, description: seoRows.meta_description, keywords: seoRows.secondary_keywords, canonicalPath: pagePath, canonical: seoRows.canonical, ogImage: imageManifest[2].src, index: false, follow: true, robots: { index: false, follow: true, maxImagePreview: "large" } }, sections };
+const sectionsOrder = [
+  "wedding_invitation_hero",
+  "wedding_invitation_what_is",
+  "wedding_invitation_styles_use_cases",
+  "wedding_invitation_what_works",
+  "wedding_invitation_creation_flow",
+  "wedding_invitation_information",
+  "wedding_invitation_vs_save_date",
+  "wedding_invitation_accuracy",
+  "wedding_invitation_faq",
+  "wedding_invitation_final_cta"
+];
+const customerSections = JSON.parse(JSON.stringify(sections, (_key, value) => typeof value === "string" ? customerText(value) : value));
+const pageJson = { pageType: "standard-content", version: 1, sectionsOrder, contentContract: { schema: "editorial-page-v1", pageKey: "wedding_invitation", requiredSections: ["hero", "what-is", "styles-use-cases", "what-works", "creation-flow", "information", "vs-save-date", "accuracy", "faq", "final-cta"], sectionTypes: sectionsOrder.map((id) => sections[id].type), faqCount: faqBlocks.length, mediaCount: imageManifest.length, sourceRevision: "wedding-invitation-package-20260824" }, relatedLinks: [{ href: "/ai-save-the-date/save-the-date", label: "save the date ideas" }, { href: "/ai-save-the-date/engagement", label: "engagement announcement ideas" }, { href: "/ai-save-the-date/wedding-ceremony", label: "wedding ceremony ideas" }], mediaManifest: imageManifest, seo: { title: seoRows.title, description: seoRows.meta_description, keywords: seoRows.secondary_keywords, canonicalPath: pagePath, canonical: seoRows.canonical, ogImage: imageManifest[2].src, index: false, follow: true, robots: { index: false, follow: true, maxImagePreview: "large" } }, sections: customerSections };
 
 const jiti = createJiti(import.meta.url);
 const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
@@ -106,8 +131,24 @@ try {
   const settingsRecord = await prisma.themeSettings.findUnique({ where: { siteId } });
   const settings = structuredClone(settingsRecord?.draftJson || settingsRecord?.publishedJson || {});
   const navigation = settings.saveTheDateNavigation;
-  if (navigation?.groups) for (const group of navigation.groups) for (const item of group.items || []) if (item.href === pagePath) Object.assign(item, { label: "Wedding Invitation", description: heroIntro, imageUrl: imageManifest[2].src, imageAlt: imageManifest[2].alt, status: "published" });
+  if (navigation?.groups) {
+    const loveWedding = navigation.groups.find((group) => group.slug === "love-wedding" || group.label === "Love & Wedding") || navigation.groups[0];
+    for (const group of navigation.groups) {
+      group.items = (group.items || []).filter((item) => item.href !== legacyPagePath && item.href !== pagePath);
+    }
+    if (loveWedding) {
+      loveWedding.items = loveWedding.items || [];
+      loveWedding.items.push({ href: pagePath, slug: "wedding-invitation", group: loveWedding.slug || "love-wedding", label: "Wedding Invitation", description: heroIntro, imageUrl: imageManifest[2].src, imageAlt: imageManifest[2].alt, status: "published", sortOrder: loveWedding.items.length + 1 });
+    }
+  }
   if (apply) await prisma.$transaction(async (tx) => {
+    const legacyPage = await tx.themePage.findUnique({ where: { siteId_slug: { siteId, slug: legacyPagePath } }, select: { id: true } });
+    const canonicalPage = await tx.themePage.findUnique({ where: { siteId_slug: { siteId, slug: pagePath } }, select: { id: true } });
+    if (legacyPage && !canonicalPage && legacyPage.id !== pageId) {
+      await tx.themePage.update({ where: { id: legacyPage.id }, data: { slug: pagePath } });
+    } else if (legacyPage && !canonicalPage && legacyPage.id === pageId) {
+      await tx.themePage.update({ where: { id: pageId }, data: { slug: pagePath } });
+    }
     await tx.themePage.upsert({ where: { siteId_slug: { siteId, slug: pagePath } }, create: { id: pageId, siteId, pageType: "standard-content", templateKey: "wedding-invitation-editorial", slug: pagePath, title: heroHeading, draftJson: pageJson, publishedJson: {} }, update: { pageType: "standard-content", templateKey: "wedding-invitation-editorial", title: heroHeading, draftJson: pageJson } });
     for (const image of imageManifest) await tx.mediaAsset.upsert({ where: { siteId_storageKey: { siteId, storageKey: image.src } }, create: { id: `media_${siteId}_wedding_invitation_${crypto.createHash("sha1").update(image.src).digest("hex").slice(0, 16)}`, siteId, label: image.filename, storageKey: image.src, mimeType: "image/jpeg", usageType: "theme", sourceType: "wedding-invitation-package", previewUrl: image.src, originUrl: image.src, altText: image.alt, notes: image.caption }, update: { altText: image.alt, notes: image.caption, previewUrl: image.src, originUrl: image.src } });
     if (navigation) await tx.themeSettings.update({ where: { siteId }, data: { draftJson: settings } });

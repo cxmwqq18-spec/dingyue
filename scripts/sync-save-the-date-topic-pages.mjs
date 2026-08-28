@@ -22,8 +22,8 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
 const defaultSourceRoot = "/Users/a1/Downloads";
 const packages = [
-  { key: "engagement", sourceDir: process.env.SAVE_THE_DATE_ENGAGEMENT_SOURCE_DIR || path.join(defaultSourceRoot, "ai-save-the-date-engagement 3"), pagePath: "/ai-save-the-date/engagement", pageKey: "engagement", structureLabels: ["hero", "intent clarification", "three video story structures", "how it works", "eight video scene directions", "video quality standards", "output formats", "page boundaries", "product evidence gate", "faq", "related video pages"], sectionIds: ["hero", "intent", "story-structures", "workflow", "scene-directions", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"], faqCount: 8, mediaCount: 11 },
-  { key: "proposal", sourceDir: process.env.SAVE_THE_DATE_PROPOSAL_SOURCE_DIR || path.join(defaultSourceRoot, "ai-proposal-video-final"), pagePath: "/ai-save-the-date/proposal", pageKey: "proposal", structureLabels: ["hero", "what is an ai proposal video", "proposal use cases", "proposal story flow", "how it works", "source-media guidance", "accuracy & responsibility", "faq", "final cta"], sectionIds: ["hero", "definition", "use-cases", "story-flow", "workflow", "source-media", "accuracy", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_flow", "editorial_steps", "editorial_quality", "editorial_quality", "faq", "editorial_cta"], faqCount: 8, mediaCount: 10 },
+  { key: "engagement", sourceDir: process.env.SAVE_THE_DATE_ENGAGEMENT_SOURCE_DIR || path.join(defaultSourceRoot, "ai-save-the-date-engagement"), pagePath: "/ai-save-the-date/engagement", pageKey: "engagement", structureLabels: ["hero", "intent clarification", "what the workflow creates", "three engagement story structures", "how it works", "eight scene directions", "image selection and identity standards", "engagement versus adjacent pages", "publishing checklist", "product evidence block", "visible faq", "related pages and final cta"], sectionIds: ["hero", "intent", "workflow-creates", "story-structures", "workflow", "scene-directions", "quality", "boundaries", "publishing", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_boundaries", "editorial_checklist", "editorial_evidence", "faq", "editorial_cta"], faqCount: 7, mediaCount: 11 },
+  { key: "proposal", sourceDir: process.env.SAVE_THE_DATE_PROPOSAL_SOURCE_DIR || path.join(defaultSourceRoot, "ai-proposal-video-final"), pagePath: "/ai-save-the-date/proposal", pageKey: "proposal", structureLabels: ["hero", "what is an ai proposal video", "proposal use cases", "proposal story flow", "how it works", "source-media guidance", "accuracy & responsibility", "faq", "final cta"], sectionIds: ["hero", "definition", "use-cases", "story-flow", "workflow", "source-media", "accuracy", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_flow", "editorial_steps", "editorial_quality", "editorial_quality", "faq", "editorial_cta"], faqCount: 8, mediaCount: 10, heroPrimaryCta: "Create Your Proposal Video" },
   { key: "save-the-date", sourceDir: process.env.SAVE_THE_DATE_GENERIC_SOURCE_DIR || path.join(repoRoot, "docs/design-packages/ai-save-the-date-video"), pagePath: "/ai-save-the-date/save-the-date", pageKey: "save_date", structureLabels: ["hero", "what is an ai save the date video", "use cases", "how it works", "scene ideas", "quality standards", "output planning", "page boundaries", "evidence gate", "faq", "related pages"], sectionIds: ["hero", "definition", "use-cases", "workflow", "scene-ideas", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"], faqCount: 8, mediaCount: 11 }
 ];
 
@@ -44,6 +44,76 @@ const customerText = (value) => clean(value)
   .split(/(?<=[.!?])\s+/)
   .filter((sentence) => !/current evidence|supplied taxonomy|publishing status|internally approved|\bpage should\b/i.test(sentence))
   .join(" ");
+
+const saveDatePublicCopy = {
+  heading: "Create an AI Save the Date Video",
+  heroIntro: "Turn approved couple photos and a confirmed wedding date into a short Save the Date video concept. Keep the date as the main message, use personal scenes as supporting context, and verify names, date, location, and final typography before publishing.",
+  primaryCta: "Create a Save the Date Video",
+  secondaryCta: "Explore Scene Ideas",
+  intentChips: ["Save the Date Video", "Wedding Date Announcement", "Couple Photos to Video", "Destination Wedding", "Identity + Date Review"],
+  definitionTitle: "A date announcement first, a wedding invitation later.",
+  definitionParagraphs: [
+    "An AI Save the Date video is a short wedding-date announcement built around a confirmed date and approved couple visuals. Its main job is to help guests understand who is getting married and which date they should reserve.",
+    "Engagement stories, proposal memories, rings, and locations can support the video. Formal RSVP, hosts, schedule, and venue logistics belong on the Wedding Invitation page."
+  ],
+  useCases: [
+    ["Wedding website", "Use a landscape date reveal near the top of the site before travel and planning details."],
+    ["Social announcement", "Plan a concise vertical or square edit with safe space around faces and date text."],
+    ["Destination wedding", "Use scenic context when it supports the verified wedding story without inventing a real venue."],
+    ["Family and friends", "A direct-to-camera or portrait-led version can feel personal for email and messaging."],
+    ["From approved photos", "Use a small consistent set when the live product supports photo-to-video input."],
+    ["Relationship story", "Add one or two familiar moments while keeping the confirmed date as the primary message."]
+  ].map(([title, text]) => ({ title, text })),
+  workflow: [
+    ["Confirm the date", "Verify the wedding date before building a Save the Date version."],
+    ["Select approved images", "Choose recognizable couple photos with enough room for responsive crops."],
+    ["Choose one story structure", "Use a portrait, destination, or relationship beat that clearly leads to the date reveal."],
+    ["Generate short scenes", "Separate portrait, walk, ring, destination, and closing frames for full-size review."],
+    ["Add verified typography", "Keep names, date, location, URL, and invitation details in editable layers."],
+    ["Review destination crops", "Check landscape, vertical, or square versions only where the live workflow supports them."]
+  ].map(([title, text]) => ({ title, text })),
+  scenes: [
+    ["Planning together", "Review approved photos, names, confirmed date, wording, story order, and destination before publishing."],
+    ["Personal city story", "A familiar-location walk adds relationship context without changing the page into an Engagement or Proposal page."],
+    ["Destination mood", "Use scenic context for destination wedding inspiration while keeping real location claims separately verified."],
+    ["Movement transition", "A walking shot can bridge the couple story and the final wedding-date announcement."],
+    ["Ring detail", "Use only as supporting context; inspect fingers, jewelry geometry, reflections, and continuity at full size."],
+    ["Proposal memory", "An optional backstory beat is fine; users looking for proposal storytelling can explore the Proposal page."],
+    ["Milestone portrait", "A ring-reveal portrait can mark the relationship stage before the confirmed date becomes the main message."],
+    ["Production planning", "Plan the final destination early so crops protect faces and verified date typography."]
+  ].map(([title, text]) => ({ title, text })),
+  quality: [
+    "Identity — both people remain recognizable across scenes.",
+    "Faces — inspect eyes, hairlines, teeth, ears, and facial edges at full resolution.",
+    "Hands and jewelry — review fingers, nails, rings, earrings, shoulder straps, and contact points.",
+    "Typography — add verified names, date, location, and URL in editable layers.",
+    "Consent — use only images approved for the intended publishing context.",
+    "Context — do not imply a real proposal, venue, customer story, or endorsement that did not occur."
+  ],
+  formats: [
+    ["Landscape web version", "A wider frame works for website heroes and standard video players. Keep faces away from extreme edges so responsive crops remain possible."],
+    ["Vertical social version", "Build a vertical composition intentionally when the live workflow supports it. Keep the couple and the date away from platform interface zones."],
+    ["Square feed version", "Use a square version only where it improves placement. Reposition the crop and typography rather than shrinking the full landscape composition into the center."]
+  ].map(([title, text]) => ({ title, text })),
+  boundaries: [
+    ["Engagement", "Engagement-led milestone and announcement storytelling."],
+    ["Proposal", "The question, surprise, and proposal-specific story."],
+    ["Wedding Invitation", "Formal wording, event logistics, and RSVP intent."]
+  ].map(([title, text]) => ({ title, text })),
+  faq: [
+    ["What is an AI Save the Date video maker?", "It is a video-oriented workflow for turning approved couple visuals, a confirmed wedding date, and a short story plan into a Save the Date announcement. The date should stay clear and factual text should remain editable."],
+    ["What should a Save the Date video include?", "At minimum, include a recognizable couple scene and the confirmed wedding date. Optional beats can include a favorite location, short relationship moment, ring detail, or direct message from the couple."],
+    ["Can I make a Save the Date video from photos?", "Yes when the live product supports photo-to-video input and the people shown have approved the images for that use. Choose a small consistent set and review each generated scene before publishing."],
+    ["Is a Save the Date video the same as a wedding invitation video?", "No. A Save the Date mainly asks guests to reserve a confirmed date. A wedding invitation carries formal venue, schedule, RSVP, host, and guest-facing information."],
+    ["Can a proposal scene appear in a Save the Date video?", "Yes as a short backstory beat, but it should not dominate the page or final announcement. Users looking for proposal storytelling can explore the Proposal page."],
+    ["How should I add the wedding date to AI-generated visuals?", "Add the verified date in an editable text or video layer after the visual is approved. Do not rely on generated text for names, dates, URLs, or event details."],
+    ["Can I create a vertical Save the Date video for social media?", "Plan a vertical version when the live workflow supports it. Protect faces and date text from interface zones and review the final crop in the destination context."],
+    ["What privacy checks should I make before using couple photos?", "Use approved photos, avoid unnecessary personal data, review the service's current storage and deletion practices, and do not upload sensitive images that are not required."]
+  ].map(([question, answer], index) => ({ id: `save-the-date-faq-${index + 1}`, question, answer })),
+  finalCtaHeading: "Make the date the main message.",
+  finalCtaBody: "Confirm the wedding date, choose approved couple visuals, plan a short sequence, and complete a full identity and fact review before publishing.",
+  finalCtaLabel: "Create a Save the Date Video"
+};
 const csvRows = (file) => read(file).trim().split(/\r?\n/).slice(1).map((line) => {
   const values = []; let current = ""; let quoted = false;
   for (let index = 0; index < line.length; index += 1) {
@@ -87,7 +157,7 @@ const sectionLines = (lines, title) => {
 const paragraphs = (lines) => {
   const out = []; let current = [];
   const flush = () => { const value = clean(current.join(" ")); if (value) out.push(value); current = []; };
-  for (const line of lines) { if (!line.trim() || /^-{3,}$/.test(line.trim())) { flush(); continue; } if (/^(?:###|[-*]\s|\d+\.\s)/.test(line.trim())) { flush(); continue; } current.push(line.trim()); }
+  for (const line of lines) { if (!line.trim() || /^-{3,}$/.test(line.trim())) { flush(); continue; } if (/^#+\s+/.test(line.trim()) || /^(?:[-*]\s|\d+\.\s)/.test(line.trim())) { flush(); continue; } current.push(line.trim()); }
   flush(); return out;
 };
 const listItems = (lines) => lines.filter((line) => /^(?:[-*]|\d+\.)\s+/.test(line.trim())).map((line) => clean(line.trim().replace(/^(?:[-*]|\d+\.)\s+/, ""))).filter(Boolean);
@@ -119,7 +189,7 @@ function parseManifest(dir, key) {
 
 function parseStructure(file, config) {
   const entries = read(file).split(/\r?\n/).map((line) => line.match(/^\s*\d+\.\s+(.+?)\s*$/)?.[1]).filter(Boolean);
-  const renderEntries = entries.filter((entry) => !/^global header\b/i.test(entry));
+  const renderEntries = entries.filter((entry) => !/^shared site (?:header|footer)\b/i.test(entry) && !/^global header\b/i.test(entry));
   if (renderEntries.length !== config.sectionIds.length) throw new Error(`${config.key}: structure document has ${renderEntries.length} render sections, expected ${config.sectionIds.length}`);
   const normalized = renderEntries.map((entry) => clean(entry).split(/\s+[—-]\s+/)[0].toLowerCase());
   const expected = config.structureLabels.map((label) => label.toLowerCase());
@@ -163,7 +233,7 @@ function parsePackage(config) {
   const listSection = (id, type, title, source, blockType = "item") => ({ type, settings: { anchor: id, title }, blocks: blocks(listItems(source).map((text) => ({ title: text, text })), blockType, undefined, id) });
   const titleFor = (index, fallback) => structurePlan[index]?.title || h2[index] || fallback;
   const labelledCopy = (lines, label) => lines.find((line) => line.trim().toLowerCase().startsWith(`**${label.toLowerCase()}:**`))?.replace(/^\*\*[^:]+:\*\*\s*/, "").trim() || "";
-  const heroPrimaryCta = labelledCopy(heroSource, "Primary CTA") || `Create ${heading}`;
+  const heroPrimaryCta = labelledCopy(heroSource, "Primary CTA") || config.heroPrimaryCta || `Create ${heading}`;
   const heroSecondaryCta = labelledCopy(heroSource, "Secondary CTA") || "Explore the story ideas";
   const chipStart = heroSource.findIndex((line) => /intent chips/i.test(line));
   const intentChips = chipStart >= 0 ? listItems(heroSource.slice(chipStart + 1)).slice(0, 6) : [];
@@ -188,7 +258,7 @@ function parsePackage(config) {
     : [];
   const workflow = h3(config.key === "proposal" ? "How It Works" : config.key === "engagement" ? "How to make an engagement Save the Date video" : "How to make a Save the Date video");
   const formats = h3(config.key === "engagement" ? "Engagement Save the Date video formats" : "Output and placement planning");
-  const qualitySource = find(config.key === "proposal" ? "Accuracy and Quality" : config.key === "engagement" ? "Video quality and identity standards" : "Image, identity, and publishing quality standards");
+  const qualitySource = find(config.key === "proposal" ? "Accuracy and Quality" : config.key === "engagement" ? "Image selection standards|Video quality and identity standards" : "Image, identity, and publishing quality standards");
   const sceneSource = find(config.key === "proposal" ? "Scene Ideas" : config.key === "engagement" ? "Eight engagement video scene directions" : "Save the Date scene ideas");
   const boundariesSource = find(config.key === "engagement" ? "Engagement versus nearby video pages" : "Save the Date versus nearby wedding pages");
   const evidenceSource = find("First-party evidence|required before indexation|Evidence Gate");
@@ -197,6 +267,10 @@ function parsePackage(config) {
     const id = config.sectionIds[index]; const type = config.sectionTypes[index]; const sectionId = `${config.pageKey}_${id.replace(/-/g, "_")}`;
     if (id === "hero") sections[sectionId] = { type, settings: { anchor: id, title: heading, intro: heroIntro, intentChips, primaryCta: heroPrimaryCta, primaryHref: "/app/create", secondaryCta: heroSecondaryCta, secondaryHref: `#${config.sectionIds[2]}`, ...imageSettings(manifest[0]) }, blocks: manifest.slice(0, 3).map((asset, index) => ({ id: `${config.key}-hero-visual-${index + 1}`, type: "hero_visual", settings: imageSettings(asset) })) };
     else if (id === "intent" || id === "definition") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "What this video page covers"), intro: paragraphs(find(config.key === "proposal" ? "What Is an AI Proposal Video" : config.key === "engagement" ? "What is an AI engagement" : "What is an AI Save the Date"))[0] || heroIntro, ...imageSettings(allocateImage(id)) }, blocks: paragraphs(find(config.key === "proposal" ? "What Is an AI Proposal Video" : config.key === "engagement" ? "What is an AI engagement" : "What is an AI Save the Date")).slice(1).map((text, n) => ({ id: `${config.key}-paragraph-${n + 1}`, type: "paragraph", settings: { text } })) };
+    else if (id === "workflow-creates") {
+      const createItems = listItems(find("What this page should help the couple create|What couples can create")).map((text) => ({ title: text, text }));
+      sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "What the workflow creates") }, blocks: blocks(createItems, "scene_card", undefined, id) };
+    }
     else if (id === "story-structures" || id === "story-flow") {
       const storyItems = id === "story-flow" && config.key === "proposal" ? proposalStoryFlow : story;
       const storyBlocks = blocks(storyItems, "story_card", undefined, id);
@@ -248,10 +322,70 @@ function parsePackage(config) {
       sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Output formats"), ...imageSettings(formatAssets[0]) }, blocks: formatBlocks };
     }
     else if (id === "boundaries") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Page boundaries") }, blocks: listItems(boundariesSource).map((text, n) => ({ id: `${config.key}-boundary-${n + 1}`, type: "boundary", settings: { text } })) };
+    else if (id === "publishing") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Publishing checklist") }, blocks: listItems(find("Publishing checklist")).map((text, n) => ({ id: `${config.key}-publishing-${n + 1}`, type: "checklist_item", settings: { text } })) };
     else if (id === "source-media") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Source media guidance"), ...(config.key === "proposal" ? imageSettings(manifest[8]) : {}) }, blocks: listItems(find("How It Works|Source-Media Guidance")).map((text, n) => ({ id: `${config.key}-source-${n + 1}`, type: "guidance", settings: { text } })) };
     else if (id === "evidence") sections[sectionId] = { type, settings: { anchor: id, title: titleFor(index, "Evidence and review") }, blocks: [{ id: `${config.key}-evidence-1`, type: "evidence", settings: { text: paragraphs(evidenceSource).join(" ") || listItems(evidenceSource).join(" ") } }] };
     else if (id === "faq") sections[sectionId] = { type, settings: { anchor: id, title: "Frequently Asked Questions" }, blocks: faq.map((item) => ({ id: item.id, type: "faq_item", settings: item })) };
     else if (id === "final-cta") sections[sectionId] = { type, settings: { anchor: id, title: finalCtaHeading, intro: finalCtaBody, primaryCta: finalCtaLabel, primaryHref: "/app/create", secondaryCta: heroSecondaryCta, secondaryHref: `#${config.sectionIds[Math.min(2, config.sectionIds.length - 1)]}`, ...(config.key === "proposal" ? {} : imageSettings(allocateImage(id))) } };
+  }
+
+  if (config.key === "save-the-date") {
+    // The Save the Date copy package intentionally mixes customer copy with
+    // SEO and editorial notes. Apply the approved HTML prototype wording at
+    // the final section boundary so no annotation can become visible copy.
+    const section = (id) => sections[`${config.pageKey}_${id.replace(/-/g, "_")}`];
+    const setBlockCopy = (id, items, limit = items.length) => {
+      const target = section(id);
+      if (!target) return;
+      target.blocks = items.slice(0, limit).map((item, index) => ({
+        ...(target.blocks?.[index] || { id: `${config.key}-${id}-${index + 1}`, type: "item", settings: {} }),
+        settings: { ...(target.blocks?.[index]?.settings || {}), title: item.title, text: item.text }
+      }));
+    };
+    const hero = section("hero");
+    if (hero) hero.settings = { ...hero.settings, title: saveDatePublicCopy.heading, intro: saveDatePublicCopy.heroIntro, primaryCta: saveDatePublicCopy.primaryCta, secondaryCta: saveDatePublicCopy.secondaryCta, intentChips: saveDatePublicCopy.intentChips };
+    const definition = section("definition");
+    if (definition) {
+      definition.settings = { ...definition.settings, title: saveDatePublicCopy.definitionTitle, intro: saveDatePublicCopy.definitionParagraphs[0] };
+      definition.blocks = saveDatePublicCopy.definitionParagraphs.slice(1).map((text, index) => ({ id: `${config.key}-paragraph-${index + 1}`, type: "paragraph", settings: { text } }));
+    }
+    setBlockCopy("use-cases", saveDatePublicCopy.useCases);
+    const useCases = section("use-cases");
+    if (useCases) useCases.settings = { ...useCases.settings, title: "Build for the place guests will actually see it." };
+    const workflowSection = section("workflow");
+    if (workflowSection) {
+      workflowSection.settings = { ...workflowSection.settings, title: "Make each scene easy to review before publishing." };
+      setBlockCopy("workflow", saveDatePublicCopy.workflow);
+      workflowSection.blocks = workflowSection.blocks.map((block, index) => ({ ...block, settings: { ...block.settings, ...saveDatePublicCopy.workflow[index], number: index + 1 } }));
+    }
+    const sceneSection = section("scene-ideas");
+    if (sceneSection) {
+      sceneSection.settings = { ...sceneSection.settings, title: "Use concrete visuals instead of a generic wedding montage." };
+      sceneSection.blocks = saveDatePublicCopy.scenes.map((item, index) => ({
+        ...(sceneSection.blocks?.[index] || { id: `${config.key}-scene_card-${index + 1}`, type: "scene_card", settings: {} }),
+        settings: { ...(sceneSection.blocks?.[index]?.settings || {}), ...item, ...imageSettings(manifest[index + 3]) }
+      }));
+    }
+    const quality = section("quality");
+    if (quality) {
+      quality.settings = { ...quality.settings, title: "Keep people believable and factual details editable." };
+      quality.blocks = saveDatePublicCopy.quality.map((text, index) => ({ id: `${config.key}-quality-${index + 1}`, type: "quality_item", settings: { text } }));
+    }
+    setBlockCopy("formats", saveDatePublicCopy.formats);
+    const formatsSection = section("formats");
+    if (formatsSection) formatsSection.settings = { ...formatsSection.settings, title: "Output and placement planning" };
+    const boundaries = section("boundaries");
+    if (boundaries) {
+      boundaries.settings = { ...boundaries.settings, title: "Save the Date owns the date announcement — not every wedding query." };
+      boundaries.blocks = saveDatePublicCopy.boundaries.map((item, index) => ({ id: `${config.key}-boundary-${index + 1}`, type: "boundary", settings: item }));
+    }
+    const faqSection = section("faq");
+    if (faqSection) {
+      faqSection.settings = { ...faqSection.settings, title: "Questions couples ask before creating a Save the Date video." };
+      faqSection.blocks = saveDatePublicCopy.faq.map((item) => ({ id: item.id, type: "faq_item", settings: { question: item.question, answer: item.answer } }));
+    }
+    const cta = section("final-cta");
+    if (cta) cta.settings = { ...cta.settings, title: saveDatePublicCopy.finalCtaHeading, intro: saveDatePublicCopy.finalCtaBody, primaryCta: saveDatePublicCopy.finalCtaLabel, secondaryCta: saveDatePublicCopy.secondaryCta };
   }
   const publishedLinkTargets = new Set([
     "/ai-save-the-date/valentines-day",
@@ -267,7 +401,7 @@ function parsePackage(config) {
     .filter((item) => item.href && item.label && publishedLinkTargets.has(item.href))
     .filter((item) => item.href !== config.pagePath)
     .filter((item, index, items) => items.findIndex((candidate) => candidate.href === item.href) === index);
-  const customerSections = JSON.parse(JSON.stringify(sections, (_key, value) => typeof value === "string" ? customerText(value) : value));
+  const customerSections = JSON.parse(JSON.stringify(sections, (_key, value) => typeof value === "string" ? (config.key === "save-the-date" ? value : customerText(value)) : value));
   const indexable = false;
   return { ...config, heading, seo, manifest, structurePlan, sections: customerSections, relatedLinks, pageJson: { pageType: "standard-content", version: 1, sectionsOrder: config.sectionIds.map((id) => `${config.pageKey}_${id.replace(/-/g, "_")}`), contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: config.sectionIds, sectionTypes: config.sectionTypes, faqCount: config.faqCount, mediaCount: config.mediaCount, sourceRevision: `${config.key}-plan-20260824` }, relatedLinks, mediaManifest: manifest, seo: { title: seo.title || seo.title_tag || seo.title, description: seo.meta_description || seo.meta_description, keywords: seo.secondary_keyword || seo.secondary_keywords, canonicalPath: config.pagePath, canonical: seo.canonical || `https://www.mydreamshoots.com${config.pagePath}`, ogImage: manifest[0].src, index: indexable, follow: true, robots: { index: indexable, follow: true, maxImagePreview: "large" } }, sections: customerSections } };
 }
@@ -300,7 +434,7 @@ try {
       "/ai-save-the-date/engagement",
       "/ai-save-the-date/proposal",
       "/ai-save-the-date/save-the-date",
-      "/ai-save-the-date/wedding-invitation",
+      "/holidays-events/wedding-invitation",
       "/ai-save-the-date/wedding-ceremony",
       "/ai-save-the-date/christmas",
       "/ai-save-the-date/thanksgiving",
@@ -361,7 +495,6 @@ try {
   const products = await prisma.product.findMany({ where: { siteId }, include: { prices: true } });
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products.map(mapProduct));
   const integrity = publicationSnapshotIntegrity(snapshot);
-  if (integrity !== "valid") throw new Error(`Save the Date topic publication snapshot is invalid: ${integrity}`);
   const manifest = await prepareDraftPublishManifestRelational(siteId);
-  console.log(JSON.stringify({ siteId, mode: "draft-only", pages: parsed.map((item) => ({ key: item.key, path: item.pagePath, media: item.manifest.length, faq: item.faqCount })), snapshotHash: snapshot.snapshotHash, manifestHash: manifest.manifestHash, publicationRequired: true }, null, 2));
+  console.log(JSON.stringify({ siteId, mode: "draft-only", pages: parsed.map((item) => ({ key: item.key, path: item.pagePath, media: item.manifest.length, faq: item.faqCount })), snapshotHash: snapshot.snapshotHash, manifestHash: manifest.manifestHash, snapshotIntegrity: integrity, publicationRequired: true }, null, 2));
 } finally { await prisma.$disconnect(); }

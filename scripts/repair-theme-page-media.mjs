@@ -12,6 +12,17 @@ const section = (json, id) => json.sections?.[id];
 const setBlockImage = (block, asset) => { if (block && asset) block.settings = { ...block.settings, ...image(asset) }; };
 const setListImages = (list, assets) => (list || []).forEach((block, index) => setBlockImage(block, assets[index % assets.length]));
 const removeImageSettings = (settings) => { if (!settings || typeof settings !== "object") return settings; const next = { ...settings }; for (const key of ["imageUrl", "imageAlt", "imageWidth", "imageHeight", "imageLoading", "imageFetchPriority"]) delete next[key]; return next; };
+const removeSection = (json, sectionId, contractId) => {
+  if (Array.isArray(json.sectionsOrder)) json.sectionsOrder = json.sectionsOrder.filter((id) => id !== sectionId);
+  if (json.sections && sectionId in json.sections) delete json.sections[sectionId];
+  if (json.contentContract) {
+    const index = Array.isArray(json.contentContract.requiredSections) ? json.contentContract.requiredSections.indexOf(contractId) : -1;
+    if (Array.isArray(json.contentContract.requiredSections)) json.contentContract.requiredSections = json.contentContract.requiredSections.filter((id) => id !== contractId);
+    if (Array.isArray(json.contentContract.sectionTypes)) {
+      if (index >= 0) json.contentContract.sectionTypes.splice(index, 1);
+    }
+  }
+};
 
 const prisma = new PrismaClient();
 try {
@@ -22,11 +33,16 @@ try {
     "/ai-save-the-date/save-the-date",
     "/ai-save-the-date/mothers-day",
     "/ai-save-the-date/fathers-day",
+    "/ai-save-the-date/christmas",
+    "/ai-save-the-date/thanksgiving",
+    "/ai-save-the-date/halloween",
+    "/ai-save-the-date/wedding-ceremony",
+    "/ai-save-the-date/new-year",
   ];
   const pages = await prisma.themePage.findMany({ where: { siteId, slug: { in: paths } }, select: { id: true, slug: true, publishedJson: true, draftJson: true } });
   const reports = [];
   for (const page of pages) {
-    const json = clone(page.publishedJson || page.draftJson || {});
+    const json = clone(page.draftJson || page.publishedJson || {});
     const assets = Array.isArray(json.mediaManifest) ? json.mediaManifest : [];
     const byName = new Map(assets.map((asset) => [asset.filename, asset]));
     const before = JSON.stringify(json);
@@ -81,6 +97,16 @@ try {
     if (page.slug === "/ai-save-the-date/fathers-day") {
       const useCases = section(json, "fathers_day_use_cases");
       if (useCases) setListImages(useCases.blocks, assets.slice(1, 5));
+      removeSection(json, "fathers_day_gallery", "gallery");
+    }
+    if (page.slug === "/ai-save-the-date/christmas") {
+      const hero = section(json, "christmas_hero");
+      if (hero) hero.settings = { ...hero.settings, intro: "Turn family photos, winter landscapes, pet portraits, festive scenes, and holiday ideas into Christmas-themed visual content. Use Christmas styling to build cards, greetings, social posts, family memories, and short video concepts while keeping important names, dates, and greeting text editable when accuracy matters." };
+      if (json.mediaManifest?.[0]?.caption) json.mediaManifest[0].caption = json.mediaManifest[0].caption.replace(/the page should communicate/gi, "to communicate");
+    }
+    if (page.slug === "/ai-save-the-date/wedding-ceremony") {
+      const hero = section(json, "wedding_ceremony_hero");
+      if (hero) hero.settings = { ...hero.settings, intro: "Turn approved ceremony photos and short clips into a clear wedding ceremony story built around the moments guests actually experienced: arrival, processional, vows, rings, reactions, first kiss, and recessional." };
     }
     for (const asset of assets) {
         if (!asset?.src) continue;

@@ -49,7 +49,7 @@ try {
     "/ai-save-the-date/save-the-date",
     "/ai-save-the-date/thanksgiving",
     "/ai-save-the-date/wedding-anniversary",
-    "/ai-save-the-date/wedding-invitation",
+    "/holidays-events/wedding-invitation",
     "/pricing",
     "/workflow"
   ];
