@@ -95,7 +95,11 @@ function runRemote(config) {
     `SWITCHED=0; trap - EXIT`,
     `printf '%s\\n' "deployed_commit=$COMMIT" "service=$(systemctl is-active ${shellQuote(service)})" "current=$(readlink -f "$ROOT/current")"`
   ].join(" && ");
-  const result = spawnSync("ssh", ["-p", "11765", "root@204.77.130.125", command], { stdio: "inherit" });
+  const sshArgs = ["-p", process.env.AI_PROJECT_SSH_PORT || "11765"];
+  const keyPath = process.env.AI_PROJECT_SSH_KEY_PATH;
+  if (keyPath) sshArgs.push("-i", keyPath);
+  sshArgs.push(`${process.env.AI_PROJECT_SSH_USER || "root"}@${process.env.AI_PROJECT_SSH_HOST || "204.77.130.125"}`, command);
+  const result = spawnSync("ssh", sshArgs, { stdio: "inherit" });
   if (result.status !== 0) fail("Remote deployment failed; current release was not switched after the failing step.");
 }
 
