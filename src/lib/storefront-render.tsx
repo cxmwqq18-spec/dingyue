@@ -75,7 +75,7 @@ function publishedVideoGenerationTopics(snapshot: ReturnType<typeof createPublis
   const publishedVideoPaths = new Set(snapshot.publishedRoutes
     .filter((route): route is PublishedLeafRouteProjection => route.routeKind === "ai-video-topic-leaf" && route.disposition === "render")
     .map((route) => route.canonicalPath));
-  return snapshot.publishedVideoNavigation.filter((item) => publishedVideoPaths.has(item.canonicalPath)).map((item) => ({
+  const topics = snapshot.publishedVideoNavigation.filter((item) => publishedVideoPaths.has(item.canonicalPath)).map((item) => ({
     id: item.id,
     slug: item.slug,
     label: item.label,
@@ -87,6 +87,9 @@ function publishedVideoGenerationTopics(snapshot: ReturnType<typeof createPublis
     parentSortOrder: item.parentSortOrder,
     sortOrder: item.sortOrder
   }));
+  // The live relational runtime is the source of truth for the directory.
+  // An incomplete page projection must not hide active database themes.
+  return topics.length ? topics : undefined;
 }
 
 function canonicalizeSaveTheDateRoutes<T>(value: T): T {
@@ -683,7 +686,7 @@ function trimRenderDataForPage(
   const hasPricingTable = slug === "/pricing" || sectionTypes.has("pricing_table") || sectionTypes.has("dreamshoot_generation_showcase");
   const needsSiteAiApps = slug === "/tools" || slug.startsWith("/tools/") || Array.from(sectionTypes).some((type) => siteAiAppSectionTypes.has(type));
   const needsCreativePacks = slug === "/" || slug === "/collections" || slug === "/tools" || Array.from(sectionTypes).some((type) => creativePackSectionTypes.has(type));
-  const needsVideoThemes = Array.from(sectionTypes).some((type) => videoThemeSectionTypes.has(type));
+  const needsVideoThemes = slug === "/ai-video-generation" || Array.from(sectionTypes).some((type) => videoThemeSectionTypes.has(type));
   const packLimit = publicPackLimitForPage({
     slug,
     usesFullMediaGallery,

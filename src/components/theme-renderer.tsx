@@ -680,6 +680,7 @@ const sectionTypesUsingToolMenuItems = new Set([
 ]);
 
 const sectionTypesUsingVideoThemes = new Set([
+  "dreamshoot_tool_collection",
   "dreamshoot_generation_showcase",
   "dreamshoot_media_gallery"
 ]);
