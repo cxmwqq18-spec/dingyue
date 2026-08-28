@@ -34,7 +34,7 @@ vm.runInNewContext(compiled, {
   }
 });
 
-const { storefrontCardImageAlt, storefrontMeaningfulAlt, storefrontVideoPosterAlt } = mediaAltExports;
+const { storefrontCardImageAlt, storefrontMeaningfulAlt, storefrontSourceImageAlt, storefrontVideoPosterAlt } = mediaAltExports;
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -180,6 +180,17 @@ assert(
 assert(
   storefrontMeaningfulAlt("Beauty portrait with editorial lighting, virtual try on 08 gallery image 16 visual reference.") === "",
   "visual-reference and image-index suffixes should be rejected"
+);
+
+assert(
+  storefrontSourceImageAlt({ imageUrl: "/assets/dreamshoot/wedding-invitation/hero-ai-wedding-invitation-garden-couple.jpg" })
+    === "Bride and groom holding a floral wedding invitation in a garden at golden hour.",
+  "wedding invitation garden image must have its own canonical alt"
+);
+assert(
+  storefrontSourceImageAlt({ imageUrl: "/assets/dreamshoot/wedding-invitation/hero-ai-wedding-invitation-couple-reviewing.jpg" })
+    === "Bride and groom reviewing wedding invitation cards at a candlelit reception table.",
+  "wedding invitation review image must have its own canonical alt"
 );
 
 const prisma = new PrismaClient();

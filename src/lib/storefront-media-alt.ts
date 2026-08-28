@@ -77,6 +77,12 @@ const spanishImageVariantLighting = [
   "luz editorial brillante",
   "luz frontal equilibrada"
 ];
+const genericImageParentPattern = /^(?:assets|sites|theme|generated|frames|media|images|20260622-homepage-unique|\d{8}-.+)$/i;
+const stableSourceImagePattern = /\/assets\/dreamshoot\/(?:generated\/(?:video-topic-media|pack-covers|pack-galleries|20260622-homepage-unique)|frames\/|seasonal\/|save-the-date\/|wedding-invitation\/)/i;
+const canonicalSourceAltByPath: Record<string, string> = {
+  "/assets/dreamshoot/wedding-invitation/hero-ai-wedding-invitation-couple-reviewing.jpg": "Bride and groom reviewing wedding invitation cards at a candlelit reception table.",
+  "/assets/dreamshoot/wedding-invitation/hero-ai-wedding-invitation-garden-couple.jpg": "Bride and groom holding a floral wedding invitation in a garden at golden hour."
+};
 
 const spanishVideoAltTitles: Record<string, string> = {
   "cinematic-portrait-motion": "retrato cinematografico en movimiento",
@@ -172,7 +178,7 @@ function imageSequence(imageUrl: string | undefined): string {
 
 function imageTopicFromUrl(imageUrl: string | undefined): string {
   const [parent, basename] = imageSlugParts(imageUrl);
-  const topic = parent || basename;
+  const topic = parent && !genericImageParentPattern.test(parent) ? parent : basename;
   if (!topic) return "Storefront portrait";
   return topic
     .replace(/-/g, " ")
@@ -184,6 +190,8 @@ function sourceSpecificAlt(
   locale: StorefrontMediaAltLocale,
   theme: string | undefined
 ): string {
+  const canonical = canonicalSourceAltByPath[imageIdentity(imageUrl).toLowerCase()];
+  if (canonical && locale === "en") return canonical;
   const sourceTopic = imageTopicFromUrl(imageUrl);
   const subject = sourceTopic === "Storefront portrait" ? (theme || sourceTopic) : `${sourceTopic} portrait`;
   const detail = imageVariantDetail(imageUrl, locale);
@@ -585,7 +593,7 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
         ? "retrato estilizado para una galeria privada"
         : "Styled portrait prepared for a private gallery");
   const sourceAlt = sourceSpecificAlt(input.imageUrl, locale, imageScene ?? specificScene ?? contextScene);
-  if (/\/pack-(?:covers|galleries)\//i.test(imageIdentity(input.imageUrl))) return sourceAlt;
+  if (stableSourceImagePattern.test(imageIdentity(input.imageUrl))) return sourceAlt;
   if (templatedSceneAltPattern.test(explicit) || templatedSceneAltPattern.test(galleryAlt)) return sourceAlt;
   if (explicit) return compactMediaAltSentence(explicit, locale);
   if (galleryAlt) return compactMediaAltSentence(galleryAlt, locale);

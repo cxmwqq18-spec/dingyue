@@ -86,6 +86,10 @@ const imageManifest = manifestData.map((row) => {
   return { filename, src, alt: clean(alt), caption: clean(caption), role: /^hero/i.test(role) ? "hero" : "content", width: 1600, height: 1000, loading: /^hero/i.test(role) ? "eager" : "lazy", fetchPriority: /^hero/i.test(role) ? "high" : "auto" };
 });
 if (imageManifest.length !== 10 || new Set(imageManifest.map((item) => item.src)).size !== 10) throw new Error("Wedding Invitation image manifest must contain 10 unique images");
+const normalizedAlt = (value) => clean(value).toLowerCase();
+if (new Set(imageManifest.map((item) => normalizedAlt(item.alt))).size !== imageManifest.length) {
+  throw new Error("Wedding Invitation image manifest must contain one distinct alt per image");
+}
 for (const image of imageManifest) if (!fs.existsSync(path.join(repoRoot, "public", image.src.slice(1)))) throw new Error(`Missing image: ${image.src}`);
 
 const styleBlocks = headingBlocks(copySection("Invitation Styles and Use Cases"));

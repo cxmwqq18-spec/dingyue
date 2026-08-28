@@ -267,7 +267,13 @@ export function compileMydreamshootsVideoTopicPublication(
     const entityId = pageEntityId(source.slug);
     const images = topicImages(source.content);
     const hero = source.content.hero.image;
-    const orderedImages = [{ src: hero.src, alt: hero.alt }, ...images.filter((image) => image.src !== hero.src)];
+    const orderedImages = [
+      {
+        src: hero.src,
+        alt: storefrontSourceImageAlt({ imageUrl: hero.src, fallback: hero.alt })
+      },
+      ...images.filter((image) => image.src !== hero.src)
+    ];
     const content = pageEntityContent(source);
     const pageRevision = revision(source.page.draftJson);
     const copyRevision = revision(content);

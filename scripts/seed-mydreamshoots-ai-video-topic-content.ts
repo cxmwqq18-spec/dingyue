@@ -139,8 +139,21 @@ export type AiVideoTopicLandingContent = {
   };
 };
 
+function imageAlt(value: string): string {
+  let cleaned = value
+    .replace(/\s*,?\s*without (?:nutrition|diagnostic) claims\.?$/i, "")
+    .replace(/\s*,?\s*used as (?:the )?(?:dedicated )?(?:an? )?[^.]+(?:reference|frame)\.?$/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (cleaned.length > 118) {
+    const firstClause = cleaned.split(",")[0]?.trim();
+    cleaned = firstClause && firstClause.length >= 24 ? firstClause : `${cleaned.slice(0, 117).replace(/\s+\S*$/, "")}`;
+  }
+  return cleaned.replace(/[,.]+$/, "").trim();
+}
+
 function image(src: string, alt: string, width: number, height: number, objectPosition?: string): AiVideoTopicImage {
-  return { src, alt, width, height, ...(objectPosition ? { objectPosition } : {}) };
+  return { src, alt: imageAlt(alt), width, height, ...(objectPosition ? { objectPosition } : {}) };
 }
 
 function makeUseCaseCard(card: AiVideoTopicUseCase): AiVideoTopicUseCase {
