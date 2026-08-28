@@ -28,6 +28,7 @@ const brandPlacementAltPattern = /\b(?:on|for)\s+(?:mydreamshoots|mydreamshoots\
 const storefrontBrandNamePattern = /\b(?:mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes)\b/gi;
 const filenameLikeAltPattern = /^[a-z0-9][a-z0-9 -]{1,72}\s+image$/i;
 const urlLikePattern = /\bhttps?:\/\/\S+|(?:^|\s)\/assets\/\S+|(?:^|\s)[\w./-]+\.(?:png|jpe?g|webp|avif|svg)(?:\?\S+)?/gi;
+const templatedSceneAltPattern = /\b(?:portrait with polished|theme scene|representative cover image|enhanced portrait preview|ai video theme cover)\b/i;
 const englishImageVariantCompositions = [
   "close facial crop",
   "balanced half-body pose",
@@ -158,6 +159,49 @@ function imageSlugParts(imageUrl: string | undefined): string[] {
   return [parent, basename]
     .map((part) => normalizeSlug(part.replace(/(?:-\d+|-\d{8,}|-v\d+)$/i, "").replace(/-cover$/i, "")))
     .filter(Boolean);
+}
+
+function imageIdentity(value: string | undefined): string {
+  return String(value ?? "").trim().split("#")[0]?.split("?")[0] ?? "";
+}
+
+function imageSequence(imageUrl: string | undefined): string {
+  const filename = imageIdentity(imageUrl).split("/").filter(Boolean).at(-1) ?? "";
+  return filename.match(/-(\d+)(?:\.[a-z0-9]+)?$/i)?.[1] ?? "";
+}
+
+function imageTopicFromUrl(imageUrl: string | undefined): string {
+  const [parent, basename] = imageSlugParts(imageUrl);
+  const topic = parent || basename;
+  if (!topic) return "Storefront portrait";
+  return topic
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function sourceSpecificAlt(
+  imageUrl: string | undefined,
+  locale: StorefrontMediaAltLocale,
+  theme: string | undefined
+): string {
+  const sourceTopic = imageTopicFromUrl(imageUrl);
+  const subject = sourceTopic === "Storefront portrait" ? (theme || sourceTopic) : `${sourceTopic} portrait`;
+  const detail = imageVariantDetail(imageUrl, locale);
+  const sequence = imageSequence(imageUrl);
+  const frame = sequence ? (locale === "es" ? `escena ${sequence}` : `scene ${sequence}`) : "";
+  return compactMediaAltSentence([subject, detail, frame].filter(Boolean).join(", "), locale);
+}
+
+export function storefrontSourceImageAlt({
+  fallback,
+  imageUrl,
+  locale = "en"
+}: {
+  fallback?: string;
+  imageUrl?: string;
+  locale?: StorefrontMediaAltLocale;
+}): string {
+  return sourceSpecificAlt(imageUrl, locale, fallback);
 }
 
 function meaningfulAlt(value: string | undefined): string {
@@ -521,12 +565,10 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
   const locale = input.locale ?? "en";
   const brand = cleanAltText(input.brand) || (locale === "es" ? "AIdreamshoots" : "MyDreamShoots");
   const explicit = meaningfulThemeAlignedAltForStorefront(input.explicitAlt, locale, brand, input.imageUrl);
-  if (explicit) return compactMediaAltSentence(explicit, locale);
   const galleryAlt = (input.role === "gallery" || /\/pack-galleries\//i.test(String(input.imageUrl ?? "")))
     && typeof input.index === "number"
     ? meaningfulThemeAlignedAltForStorefront(input.galleryImageAlts?.[input.index], locale, brand, input.imageUrl)
     : "";
-  if (galleryAlt) return compactMediaAltSentence(galleryAlt, locale);
 
   const specificKey = themeKey(input);
   const imageKey = themeImageSlugParts(input.imageUrl).join(" ");
@@ -542,12 +584,30 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
       ?? (locale === "es"
         ? "retrato estilizado para una galeria privada"
         : "Styled portrait prepared for a private gallery");
+  const sourceAlt = sourceSpecificAlt(input.imageUrl, locale, imageScene ?? specificScene ?? contextScene);
+  if (/\/pack-(?:covers|galleries)\//i.test(imageIdentity(input.imageUrl))) return sourceAlt;
+  if (templatedSceneAltPattern.test(explicit) || templatedSceneAltPattern.test(galleryAlt)) return sourceAlt;
+  if (explicit) return compactMediaAltSentence(explicit, locale);
+  if (galleryAlt) return compactMediaAltSentence(galleryAlt, locale);
   const fallbackScene = locale === "es"
     ? "retrato estilizado para una galeria privada"
     : "Styled portrait prepared for a private gallery";
   const naturalScene = scene || fallbackScene;
   const detail = imageVariantDetail(input.imageUrl, locale);
   return compactMediaAltSentence([naturalScene, detail].filter(Boolean).join(", "), locale);
+}
+
+function storedAltForPackImage(pack: CreativePack, imageUrl: string | undefined): string | undefined {
+  const identity = imageIdentity(imageUrl);
+  if (!identity) return undefined;
+  const images = [pack.imageUrl, ...(pack.galleryImages ?? [])]
+    .filter((value): value is string => typeof value === "string" && Boolean(value.trim()));
+  const imageIndex = images.findIndex((candidate) => imageIdentity(candidate) === identity);
+  if (imageIndex < 0) return undefined;
+  const alts = pack.galleryImageAlts ?? [];
+  if (alts.length === images.length) return alts[imageIndex];
+  if (imageIndex > 0 && alts.length === images.length - 1) return alts[imageIndex - 1];
+  return undefined;
 }
 
 export function storefrontCreativePackImageAlt({
@@ -567,14 +627,14 @@ export function storefrontCreativePackImageAlt({
   pack: CreativePack;
   role?: StorefrontMediaAltRole;
 }): string {
-  const storedAlt = role === "gallery" && typeof index === "number"
-    ? pack.galleryImageAlts?.[index + (pack.galleryImageAlts?.length === (pack.galleryImages?.length ?? 0) + 1 ? 1 : 0)]
-    : undefined;
+  const storedAlt = storedAltForPackImage(pack, imageUrl);
   return storefrontPackMediaAlt({
     brand,
     category: pack.categoryRecord?.label || pack.category,
     description: pack.description || pack.headline,
-    explicitAlt: explicitAlt || storedAlt,
+    // A resource has one canonical description, even when it appears in a
+    // card, a gallery, or a related-package block.
+    explicitAlt: storedAlt || explicitAlt,
     galleryImageAlts: pack.galleryImageAlts,
     imageUrl,
     index,

@@ -46,6 +46,7 @@ import {
   storefrontMediaAltLocaleForSite,
   storefrontMediaBrandName,
   storefrontMeaningfulAlt,
+  storefrontSourceImageAlt,
   storefrontVideoPosterAlt
 } from "@/lib/storefront-media-alt";
 import {
@@ -955,9 +956,10 @@ function groupedVideoGenerationTopicsForServer(topics: HeaderVideoGenerationTopi
 const defaultMydreamshootsVideoThemeCover = "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp";
 
 function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic, fallbackImageUrl = defaultMydreamshootsVideoThemeCover) {
+  const src = topic.imageUrl || fallbackImageUrl;
   return {
-    alt: `${topic.label} AI video theme cover`,
-    src: topic.imageUrl || fallbackImageUrl
+    alt: storefrontSourceImageAlt({ imageUrl: src, fallback: topic.label }),
+    src
   };
 }
 

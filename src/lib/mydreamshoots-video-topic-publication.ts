@@ -9,6 +9,7 @@ import {
 } from "@/lib/mydreamshoots-video-framework";
 import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/talking-photo-content";
 import { mydreamshootsKeywordsForPath } from "@/lib/mydreamshoots-tdk";
+import { storefrontSourceImageAlt } from "@/lib/storefront-media-alt";
 import type {
   PublishedLinkRef,
   PublishedPageCopyProjection,
@@ -131,7 +132,9 @@ function topicImages(value: unknown, output: TopicImage[] = []): TopicImage[] {
   const record = value as Record<string, unknown>;
   const src = text(record.src);
   const alt = text(record.alt);
-  if (src && alt && !output.some((image) => image.src === src)) output.push({ src, alt });
+  if (src && alt && !output.some((image) => image.src === src)) {
+    output.push({ src, alt: storefrontSourceImageAlt({ imageUrl: src, fallback: alt }) });
+  }
   Object.values(record).forEach((item) => topicImages(item, output));
   return output;
 }

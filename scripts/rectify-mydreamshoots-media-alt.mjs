@@ -151,6 +151,14 @@ function imageIdentity(value) {
   return String(value ?? "").trim().split("#")[0].split("?")[0];
 }
 
+function generatedStandardPageAlt(src, fallback) {
+  const identity = imageIdentity(src);
+  const match = identity.match(/\/generated\/standard-page-media\/([^/]+)\/[^/]*?(\d+)(?:\.[a-z0-9]+)?$/i);
+  if (!match) return cleanAltText(fallback);
+  const topic = match[1].replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+  return `${topic} visual scene ${match[2]}.`;
+}
+
 function assertValidAlt(value, context) {
   const alt = cleanAltText(value);
   if (!alt) throw new Error(`Empty alt candidate for ${context}`);
@@ -273,11 +281,36 @@ function buildMediaAssetAlts(assets) {
   for (const asset of assets) {
     const fileName = fileNameFromStorageKey(asset.storageKey);
     const mapped = mediaAssetAltByFile[fileName];
-    if (!mapped) throw new Error(`No confirmed media alt mapping for ${asset.storageKey}`);
-    asset.altText = assertValidAlt(mapped, `media asset ${asset.id}`);
+    const existing = cleanAltText(asset.altText);
+    if (!mapped && !existing) throw new Error(`No confirmed media alt mapping for ${asset.storageKey}`);
+    asset.altText = assertValidAlt(mapped || generatedStandardPageAlt(asset.storageKey, existing), `media asset ${asset.id}`);
     total += 1;
   }
   return total;
+}
+
+function normalizePageMediaManifests(state, pages) {
+  let updated = 0;
+  for (const page of pages) {
+    for (const json of [page.draftJson, page.publishedJson]) {
+      if (!json || typeof json !== "object" || !Array.isArray(json.mediaManifest)) continue;
+      json.mediaManifest = json.mediaManifest.map((item) => {
+        if (!item || typeof item !== "object") return item;
+        const alt = generatedStandardPageAlt(item.src, item.alt);
+        if (alt !== item.alt) updated += 1;
+        return { ...item, alt };
+      });
+    }
+  }
+  const statePages = state.sites?.flatMap((site) => site.pages ?? []) ?? [];
+  for (const page of pages) {
+    const statePage = statePages.find((candidate) => candidate.id === page.id);
+    if (statePage) {
+      statePage.draftJson = page.draftJson;
+      statePage.publishedJson = page.publishedJson;
+    }
+  }
+  return updated;
 }
 
 function validateState(state) {
@@ -306,6 +339,22 @@ function validateState(state) {
   };
 }
 
+function validateMediaAssetAltUniqueness(assets) {
+  const altByImage = new Map();
+  const imageByAlt = new Map();
+  for (const asset of assets) {
+    const image = imageIdentity(asset.storageKey).replace(/^sites\/site_dreamshoot\//, "assets/dreamshoot/");
+    const alt = normalizeAlt(asset.altText);
+    const existingAlt = altByImage.get(image);
+    if (existingAlt && existingAlt !== alt) throw new Error(`Conflicting alts for media source ${image}`);
+    altByImage.set(image, alt);
+    const existingImage = imageByAlt.get(alt);
+    if (existingImage && existingImage !== image) throw new Error(`Duplicate alt across media sources: ${asset.altText}`);
+    imageByAlt.set(alt, image);
+  }
+  return { uniqueMediaImages: altByImage.size, uniqueMediaAlts: imageByAlt.size };
+}
+
 function clearPlatformStateCaches() {
   const cachePaths = [
     ".next/cache/platform-state-postgres.json",
@@ -319,7 +368,7 @@ function clearPlatformStateCaches() {
   });
 }
 
-async function updateDatabase(state, packs, assets) {
+async function updateDatabase(state, packs, assets, pages) {
   assertNonProductionWriteTarget();
   const prisma = new PrismaClient();
   try {
@@ -346,11 +395,12 @@ async function updateDatabase(state, packs, assets) {
           data: { altText: asset.altText }
         });
       }
-      await tx.platformStateDocument.upsert({
-        where: { id: "platform" },
-        create: { id: "platform", state },
-        update: { state }
-      });
+      for (const page of pages) {
+        await tx.themePage.update({
+          where: { id: page.id },
+          data: { draftJson: page.draftJson, publishedJson: page.publishedJson }
+        });
+      }
     }, { timeout: 180_000 });
   } finally {
     await prisma.$disconnect();
@@ -361,8 +411,9 @@ async function main() {
   const state = await readState();
   const packs = (state.creativePacks ?? []).filter((pack) => pack.siteId === SITE_ID);
   const assets = (state.mediaAssets ?? []).filter((asset) => asset.siteId === SITE_ID);
-  if (packs.length !== 38) throw new Error(`Expected 38 MyDreamShoots creative packs, found ${packs.length}`);
-  if (assets.length !== 23) throw new Error(`Expected 23 MyDreamShoots media assets, found ${assets.length}`);
+  const pages = state.sites?.find((site) => site.id === SITE_ID)?.pages ?? [];
+  if (!packs.length) throw new Error("No MyDreamShoots creative packs found");
+  if (!assets.length) throw new Error("No MyDreamShoots media assets found");
 
   const before = {
     packs: packs.length,
@@ -374,13 +425,15 @@ async function main() {
   };
   const gallerySummary = buildGalleryAlts(packs);
   const mediaAssetCount = buildMediaAssetAlts(assets);
+  const pageManifestUpdates = normalizePageMediaManifests(state, pages);
+  const mediaUniqueness = validateMediaAssetAltUniqueness(assets);
   const after = validateState(state);
-  if (after.galleryCount !== 494) throw new Error(`Expected 494 cover/gallery alts, found ${after.galleryCount}`);
-  if (after.mediaAssets !== 23) throw new Error(`Expected 23 media asset alts, found ${after.mediaAssets}`);
+  if (after.galleryCount !== before.mediaCount) throw new Error(`Expected ${before.mediaCount} cover/gallery alts, found ${after.galleryCount}`);
+  if (after.mediaAssets !== before.mediaAssets) throw new Error(`Expected ${before.mediaAssets} media asset alts, found ${after.mediaAssets}`);
 
   if (applyJson) await writeState(state);
   if (applyDb) {
-    await updateDatabase(state, packs, assets);
+    await updateDatabase(state, packs, assets, pages);
   }
   const cacheCleared = applyJson || applyDb ? clearPlatformStateCaches() : [];
   console.log(JSON.stringify({
@@ -393,6 +446,8 @@ async function main() {
     galleryAlts: after.galleryCount,
     uniqueGalleryImages: gallerySummary.uniqueImages,
     mediaAssets: mediaAssetCount,
+    mediaUniqueness,
+    pageManifestUpdates,
     cacheCleared,
     validation: after,
     baseline: before
