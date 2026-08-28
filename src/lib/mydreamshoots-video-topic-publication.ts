@@ -8,6 +8,7 @@ import {
   parentVideoGenerationCategorySlugForChild
 } from "@/lib/mydreamshoots-video-framework";
 import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/talking-photo-content";
+import { mydreamshootsKeywordsForPath } from "@/lib/mydreamshoots-tdk";
 import type {
   PublishedLinkRef,
   PublishedPageCopyProjection,
@@ -293,6 +294,7 @@ export function compileMydreamshootsVideoTopicPublication(
       metadata: {
         title: source.content.seo.title,
         description: source.content.seo.description,
+        keywords: mydreamshootsKeywordsForPath(canonicalPath, source.content.seo.title, source.content.seo.description),
         canonicalPath,
         robots: { index: sourceIndexable, follow: true }
       },

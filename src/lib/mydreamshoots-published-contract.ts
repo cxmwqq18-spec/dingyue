@@ -4,6 +4,7 @@ import {
   type MyDreamshootsPageCopy
 } from "@/lib/mydreamshoots-page-copy";
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
+import { mydreamshootsKeywordsForPath } from "@/lib/mydreamshoots-tdk";
 import type { CreativePack, PublishedLinkRef, PublishedPageEntityProjection } from "@/lib/types";
 
 export type MyDreamshootsSiteId = "site_dreamshoot" | "site_grownstride_test";
@@ -158,6 +159,7 @@ export function mydreamshootsPublishedPageEntities(siteId: MyDreamshootsSiteId =
       metadata: {
         title: copy.seoTitle,
         description: copy.cardDescription,
+        keywords: mydreamshootsKeywordsForPath(route.canonicalPath, copy.seoTitle, copy.cardDescription),
         canonicalPath: route.canonicalPath,
         robots: { index: route.indexable, follow: true }
       },

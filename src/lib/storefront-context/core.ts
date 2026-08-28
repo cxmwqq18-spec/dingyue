@@ -1,6 +1,7 @@
 import type { Price, StorefrontProfileJson, ThemePageJson, ThemeSettings } from "@/lib/types";
 import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
+import { resolveMydreamshootsPageTdk } from "@/lib/mydreamshoots-tdk";
 import type { ResolvedOffer, ResolvedPageSeo, StorefrontContext, StorefrontContextBundle, StorefrontContextMode, StorefrontPublishScope } from "./types";
 import { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
 import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
@@ -51,7 +52,9 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
   return {
     title: applyTitleTemplate(rawTitle, settings, brand),
     description,
-    keywords: clean(pageSeo?.keywords) || clean(settings.seo?.siteKeywords) || undefined,
+    // MyDreamshoots requires page-scoped keywords. Do not silently inherit the
+    // homepage list for an unrelated public route.
+    keywords: primaryMydreamshoots ? clean(pageSeo?.keywords) || undefined : clean(pageSeo?.keywords) || clean(settings.seo?.siteKeywords) || undefined,
     canonicalPath: path,
     canonicalUrl: canonicalUrlForSite(bundle.site, path),
     ogImage: standardMedia?.status === "ready"
@@ -251,10 +254,17 @@ export function resolveStorefrontContext(
     : snapshotFailClosed || entityFailClosed
       ? { ...seo, index: false, follow: true, sitemapEligible: false }
       : seo;
+  const resolvedTdk = resolveMydreamshootsPageTdk(bundle.site, resolvedSeo.canonicalPath, resolvedSeo);
+  const pageScopedSeo = {
+    ...resolvedSeo,
+    title: resolvedTdk.title,
+    description: resolvedTdk.description,
+    keywords: resolvedTdk.keywords
+  };
   if (snapshotFailClosed) missingFacts.push("published.seo.snapshot");
   if (standardPageEntityMissing) missingFacts.push("published.standard_page_entity");
   if (standardPageMediaMissing) missingFacts.push("published.standard_page_media");
-  if (mode === "published" && primaryMydreamshoots && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(resolvedSeo.canonicalPath) && !bundle.publishedStandardPageMedia?.[resolvedSeo.canonicalPath]) {
+  if (mode === "published" && primaryMydreamshoots && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(pageScopedSeo.canonicalPath) && !bundle.publishedStandardPageMedia?.[pageScopedSeo.canonicalPath]) {
     missingFacts.push("published.standard_page_media");
   }
   return {
@@ -263,7 +273,7 @@ export function resolveStorefrontContext(
     page: bundle.page,
     pageJson,
     settings,
-    seo: resolvedSeo,
+    seo: pageScopedSeo,
     profile,
     offers: resolvedOffers(bundle, pageJson, options.now ?? new Date()),
     catalog: {

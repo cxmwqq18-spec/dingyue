@@ -95,6 +95,7 @@ export async function metadataForPublishedStorefrontDirectoryPage({
           ...publishedBasePage.publishedJson.seo,
           title: pageEntity.metadata.title,
           description: pageEntity.metadata.description,
+          keywords: pageEntity.metadata.keywords,
           canonicalPath: pageEntity.canonicalPath,
           canonical: pageEntity.canonicalPath,
           index: pageEntity.indexable,

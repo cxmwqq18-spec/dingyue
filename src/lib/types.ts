@@ -942,6 +942,7 @@ export interface PublishedPageEntityProjection {
   metadata: {
     title: string;
     description: string;
+    keywords?: string;
     canonicalPath: string;
     robots: { index: boolean; follow: boolean; maxImagePreview?: "none" | "standard" | "large" };
   };
