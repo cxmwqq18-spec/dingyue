@@ -21,6 +21,20 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 
 const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
 const defaultSourceRoot = "/Users/a1/Downloads";
+const navigationLabels = new Map([
+  ["/ai-save-the-date/valentines-day", "Valentine's Day"],
+  ["/ai-save-the-date/engagement", "Engagement"],
+  ["/ai-save-the-date/proposal", "Proposal"],
+  ["/ai-save-the-date/save-the-date", "Save the Date"],
+  ["/holidays-events/wedding-invitation", "Wedding Invitation"],
+  ["/ai-save-the-date/wedding-ceremony", "Wedding Ceremony"],
+  ["/ai-save-the-date/christmas", "Christmas"],
+  ["/ai-save-the-date/halloween", "Halloween"],
+  ["/ai-save-the-date/thanksgiving", "Thanksgiving"],
+  ["/ai-save-the-date/new-year", "New Year"],
+  ["/ai-save-the-date/mothers-day", "Mother's Day"],
+  ["/ai-save-the-date/fathers-day", "Father's Day"]
+]);
 const packages = [
   { key: "engagement", sourceDir: process.env.SAVE_THE_DATE_ENGAGEMENT_SOURCE_DIR || path.join(defaultSourceRoot, "ai-save-the-date-engagement"), pagePath: "/ai-save-the-date/engagement", pageKey: "engagement", structureLabels: ["hero", "intent clarification", "what the workflow creates", "three engagement story structures", "how it works", "eight scene directions", "image selection and identity standards", "engagement versus adjacent pages", "publishing checklist", "product evidence block", "visible faq", "related pages and final cta"], sectionIds: ["hero", "intent", "workflow-creates", "story-structures", "workflow", "scene-directions", "quality", "boundaries", "publishing", "evidence", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_boundaries", "editorial_checklist", "editorial_evidence", "faq", "editorial_cta"], faqCount: 7, mediaCount: 11 },
   { key: "proposal", sourceDir: process.env.SAVE_THE_DATE_PROPOSAL_SOURCE_DIR || path.join(defaultSourceRoot, "ai-proposal-video-final"), pagePath: "/ai-save-the-date/proposal", pageKey: "proposal", structureLabels: ["hero", "what is an ai proposal video", "proposal use cases", "proposal story flow", "how it works", "source-media guidance", "accuracy & responsibility", "faq", "final cta"], sectionIds: ["hero", "definition", "use-cases", "story-flow", "workflow", "source-media", "accuracy", "faq", "final-cta"], sectionTypes: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_flow", "editorial_steps", "editorial_quality", "editorial_quality", "faq", "editorial_cta"], faqCount: 8, mediaCount: 10, heroPrimaryCta: "Create Your Proposal Video" },
@@ -429,19 +443,25 @@ try {
   if (!siteRecord) throw new Error(`Site not found: ${siteId}`);
   await prisma.$transaction(async (tx) => {
     const settings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
-    const navigationPaths = [
+    // Keep the public menu contract aligned with the current editorial
+    // catalogue: six Love & Wedding entries and six Seasonal Holidays entries.
+    const loveNavigationPaths = [
       "/ai-save-the-date/valentines-day",
       "/ai-save-the-date/engagement",
       "/ai-save-the-date/proposal",
       "/ai-save-the-date/save-the-date",
       "/holidays-events/wedding-invitation",
-      "/ai-save-the-date/wedding-ceremony",
+      "/ai-save-the-date/wedding-ceremony"
+    ];
+    const seasonalNavigationPaths = [
       "/ai-save-the-date/christmas",
+      "/ai-save-the-date/halloween",
       "/ai-save-the-date/thanksgiving",
       "/ai-save-the-date/new-year",
       "/ai-save-the-date/mothers-day",
       "/ai-save-the-date/fathers-day"
     ];
+    const navigationPaths = [...loveNavigationPaths, ...seasonalNavigationPaths];
     const parsedByPath = new Map(parsed.map((item) => [item.pagePath, item]));
     const navigationItem = (href, sortOrder) => {
       const parsedItem = parsedByPath.get(href);
@@ -449,13 +469,11 @@ try {
       const json = parsedItem?.pageJson || page?.draftJson || page?.publishedJson;
       const hero = json?.sections?.[json.sectionsOrder?.[0]]?.settings || {};
       const media = json?.mediaManifest?.[0];
-      const label = href === "/ai-save-the-date/valentines-day"
-        ? "Valentine's Day"
-        : parsedItem?.key === "save-the-date"
-        ? "Save the Date"
-        : parsedItem?.key
-          ? parsedItem.key[0].toUpperCase() + parsedItem.key.slice(1)
-          : page?.title || href.split("/").filter(Boolean).pop()?.replace(/-/g, " ") || href;
+      const label = navigationLabels.get(href)
+        || (parsedItem?.key === "save-the-date" ? "Save the Date" : undefined)
+        || page?.title
+        || href.split("/").filter(Boolean).pop()?.replace(/-/g, " ")
+        || href;
       return {
         label,
         slug: href.split("/").filter(Boolean).pop() || href,
@@ -471,12 +489,12 @@ try {
       label: "Love & Wedding",
       slug: "love-wedding",
       sortOrder: 1,
-      items: navigationPaths.slice(0, 4).map((href, index) => navigationItem(href, index + 1))
+      items: loveNavigationPaths.map((href, index) => navigationItem(href, index + 1))
     }, {
       label: "Seasonal Holidays",
       slug: "seasonal-holidays",
       sortOrder: 2,
-      items: navigationPaths.slice(4).map((href, index) => navigationItem(href, index + 1))
+      items: seasonalNavigationPaths.map((href, index) => navigationItem(href, index + 1))
     }];
     const nextSettings = { ...settings, saveTheDateNavigation: { menuLabel: settings.saveTheDateNavigation?.menuLabel || "Save the Date", groups } };
     await tx.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: {} }, update: { draftJson: nextSettings } });

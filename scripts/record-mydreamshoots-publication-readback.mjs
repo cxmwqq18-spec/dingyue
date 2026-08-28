@@ -111,7 +111,7 @@ const evidence = {
 };
 
 const expectedVideoCategories = { "Core AI Creation": 3, "Social & Creator": 6, "Marketing & Commerce": 6, "Creative & Lifestyle": 4, "Professional": 2 };
-const expectedSaveTheDateCategories = { "Love & Wedding": 5, "Seasonal Holidays": 6 };
+const expectedSaveTheDateCategories = { "Love & Wedding": 6, "Seasonal Holidays": 6 };
 const normalizedVideoCategories = Object.fromEntries(Object.entries(evidence.counts.aiVideo.categories).map(([key, value]) => [key.toLowerCase().includes("professional") ? "Professional" : key, value]));
 const sameCounts = (actual, expected) => JSON.stringify(Object.fromEntries(Object.entries(actual).sort())) === JSON.stringify(Object.fromEntries(Object.entries(expected).sort()));
 evidence.acceptance = {
@@ -122,7 +122,7 @@ evidence.acceptance = {
   aiImageSocialMetadata: Boolean(evidence.socialImage.approvedPublicationUrl && http.aiImage.ogImage === evidence.socialImage.approvedPublicationUrl && http.aiImage.twitterImage === evidence.socialImage.approvedPublicationUrl),
   sitemapWorkspaceExcluded: evidence.sitemap.workspaceExcluded,
   aiVideoCounts: evidence.counts.aiVideo.total === 21 && sameCounts(normalizedVideoCategories, expectedVideoCategories),
-  saveTheDateCounts: evidence.counts.saveTheDate.total === 11 && sameCounts(evidence.counts.saveTheDate.categories, expectedSaveTheDateCategories)
+  saveTheDateCounts: evidence.counts.saveTheDate.total === 12 && sameCounts(evidence.counts.saveTheDate.categories, expectedSaveTheDateCategories)
 };
 const acceptancePassed = Object.values(evidence.acceptance).every(Boolean);
 
