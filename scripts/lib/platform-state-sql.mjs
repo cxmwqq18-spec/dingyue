@@ -15,7 +15,7 @@ export async function readPlatformStateFromSql(existingPrisma) {
       throw new Error("missing_platform_state_document:platform");
     }
     const state = structuredClone(document.state);
-    const [siteRows, domains, pages, settings, profiles, packs, packCategories, mediaAssets, products, siteThemes, themePublications, toolCategories, toolMenuItems, videoCategories, videoThemes, siteAiApps] = await Promise.all([
+    const [siteRows, domains, pages, settings, profiles, packs, packCategories, mediaAssets, products, siteThemes, themePublications, toolCategories, toolMenuItems, videoCategories, videoThemes, siteAiApps, currentStates] = await Promise.all([
       prisma.site.findMany({
         orderBy: { createdAt: "asc" },
         include: { activePublication: { include: { publication: true } } }
@@ -35,6 +35,7 @@ export async function readPlatformStateFromSql(existingPrisma) {
       prisma.videoThemeCategory.findMany({ orderBy: [{ siteId: "asc" }, { sortOrder: "asc" }, { slug: "asc" }] }),
       prisma.videoTheme.findMany({ orderBy: [{ siteId: "asc" }, { sortOrder: "asc" }, { createdAt: "asc" }] }),
       prisma.siteAiApp.findMany({ orderBy: [{ siteId: "asc" }, { routeKey: "asc" }] })
+      ,prisma.sitePublishedState.findMany()
     ]);
     const plain = (value) => {
       if (value instanceof Date) return value.toISOString();
@@ -63,6 +64,7 @@ export async function readPlatformStateFromSql(existingPrisma) {
     state.siteDomains = domains.map(plain);
     const settingsBySiteId = new Map(settings.map((setting) => [setting.siteId, plain(setting)]));
     const profileBySiteId = new Map(profiles.map((profile) => [profile.siteId, plain(profile)]));
+    const currentStateBySiteId = new Map(currentStates.map((state) => [state.siteId, plain(state)]));
     const pagesBySiteId = new Map();
     for (const page of pages) {
       const list = pagesBySiteId.get(page.siteId) ?? [];
@@ -72,6 +74,8 @@ export async function readPlatformStateFromSql(existingPrisma) {
     state.sites = siteRows.map((siteRow) => {
       const existing = state.sites?.find((site) => site.id === siteRow.id) ?? {};
       const site = { ...existing, ...plain(siteRow) };
+      const currentPublishedState = currentStateBySiteId.get(siteRow.id);
+      if (currentPublishedState) site.currentPublishedState = currentPublishedState;
       const activePublication = siteRow.activePublication?.publication;
       const latestHistoricalPublication = themePublications.find((publication) => publication.siteId === siteRow.id);
       if (activePublication) {

@@ -421,7 +421,7 @@ function parsePackage(config) {
     .filter((item) => item.href !== config.pagePath)
     .filter((item, index, items) => items.findIndex((candidate) => candidate.href === item.href) === index);
   const customerSections = JSON.parse(JSON.stringify(sections, (_key, value) => typeof value === "string" ? (config.key === "save-the-date" ? value : customerText(value)) : value));
-  const indexable = false;
+  const indexable = true;
   return { ...config, heading, seo, manifest, structurePlan, sections: customerSections, relatedLinks, pageJson: { pageType: "standard-content", version: 1, sectionsOrder: config.sectionIds.map((id) => `${config.pageKey}_${id.replace(/-/g, "_")}`), contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: config.sectionIds, sectionTypes: config.sectionTypes, faqCount: config.faqCount, mediaCount: config.mediaCount, sourceRevision: `${config.key}-plan-20260824` }, relatedLinks, mediaManifest: manifest, seo: { title: seo.title || seo.title_tag || seo.title, description: seo.meta_description || seo.meta_description, keywords: seo.secondary_keyword || seo.secondary_keywords, canonicalPath: config.pagePath, canonical: seo.canonical || `https://www.mydreamshoots.com${config.pagePath}`, ogImage: manifest[0].src, index: indexable, follow: true, robots: { index: indexable, follow: true, maxImagePreview: "large" } }, sections: customerSections } };
 }
 

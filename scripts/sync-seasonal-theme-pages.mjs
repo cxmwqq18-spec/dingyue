@@ -163,7 +163,7 @@ const configs = [
     pagePath: "/ai-save-the-date/halloween",
     pageKey: "halloween",
     tone: "halloween",
-    indexable: false,
+    indexable: true,
     seoOverrides: {
       title: "AI Halloween Photo and Video Maker | Spooky Visuals",
       description: "Create Halloween photos and videos with AI-ready ideas for costumes, trick-or-treat moments, pets, pumpkins, haunted scenes, parties, and seasonal content."
@@ -530,10 +530,7 @@ function buildHalloweenPage(config, markdown, sections, seo, images) {
 
   const sectionIds = config.sections.map(([id]) => id);
   const sectionTypes = config.sections.map(([, type]) => type);
-  // All seasonal pages remain public review destinations until their
-  // first-party product evidence is approved. HOLD is reflected in both
-  // page SEO and the compiled route/sitemap projection.
-  const pageSeoIndexable = false;
+  const pageSeoIndexable = true;
   const customerData = JSON.parse(JSON.stringify(data, (_key, value) => typeof value === "string" ? customerText(value) : value));
   return {
     pageType: "standard-content",
@@ -617,7 +614,7 @@ function buildMothersOrFathersPage(config, markdown, sections, seo, images) {
   const sectionTypes = sectionRows.map(([, type]) => type);
   const faq = data[sectionId(config, "faq")];
   if (!faq?.blocks?.length) throw new Error(`${config.key}: FAQ is required`);
-  const pageSeo = { title: config.seoOverrides.title, description: config.seoOverrides.description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: `https://www.mydreamshoots.com${config.pagePath}`, ogImage: images[0].src, index: false, follow: true, robots: { index: false, follow: true, maxImagePreview: "large" } };
+  const pageSeo = { title: config.seoOverrides.title, description: config.seoOverrides.description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: `https://www.mydreamshoots.com${config.pagePath}`, ogImage: images[0].src, index: true, follow: true, robots: { index: true, follow: true, maxImagePreview: "large" } };
   const customerData = JSON.parse(JSON.stringify(data, (_key, value) => typeof value === "string" ? customerText(value) : value));
   return { pageType: "standard-content", version: 1, sectionsOrder: sectionIds.map((id) => sectionId(config, id)), contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: sectionIds, sectionTypes, faqCount: faq.blocks.length, mediaCount: images.length, sourceRevision: `${config.key}-package-20260824` }, relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/ai-save-the-date/save-the-date" }], mediaManifest: images, seo: pageSeo, sections: customerData };
 }
@@ -726,7 +723,7 @@ function buildNewYearPage(config, markdown, sections, seo, images) {
     contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: sectionIds, sectionTypes, faqCount: faqItems.length, mediaCount: images.length, sourceRevision: `${config.key}-package-20260824` },
     relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/ai-save-the-date/save-the-date" }],
     mediaManifest: images,
-    seo: { title: seo.title, description: seo.meta_description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: `https://www.mydreamshoots.com${config.pagePath}`, ogImage: heroImages[0].src, index: false, follow: true, robots: { index: false, follow: true, maxImagePreview: "large" } },
+    seo: { title: seo.title, description: seo.meta_description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: `https://www.mydreamshoots.com${config.pagePath}`, ogImage: heroImages[0].src, index: true, follow: true, robots: { index: true, follow: true, maxImagePreview: "large" } },
     sections: customerData
   };
 }
@@ -812,7 +809,7 @@ function buildPage(config) {
     contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: sectionIds, sectionTypes, faqCount: safeFaqItems.length, mediaCount: images.length, sourceRevision: `${config.key}-package-20260824` },
     relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/ai-save-the-date/save-the-date" }],
     mediaManifest: images,
-    seo: { title: config.seoOverrides?.title || seo.title, description: config.seoOverrides?.description || seo.meta_description || seo.meta_description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: `https://www.mydreamshoots.com${config.pagePath}`, ogImage: images[0].src, index: false, follow: true, robots: { index: false, follow: true, maxImagePreview: "large" } },
+    seo: { title: config.seoOverrides?.title || seo.title, description: config.seoOverrides?.description || seo.meta_description || seo.meta_description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: `https://www.mydreamshoots.com${config.pagePath}`, ogImage: images[0].src, index: true, follow: true, robots: { index: true, follow: true, maxImagePreview: "large" } },
     sections: customerSectionData
   };
 }

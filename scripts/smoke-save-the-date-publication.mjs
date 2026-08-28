@@ -22,9 +22,9 @@ const PAGE_PATH = "/ai-save-the-date/valentines-day";
 const state = await readPlatformStateFromSql();
 const site = state.sites.find((candidate) => candidate.id === SITE_ID);
 assert(site, `missing_site:${SITE_ID}`);
-const publication = site.activePublication;
-assert(publication?.snapshot, "missing_active_publication_snapshot");
-const snapshot = publication.snapshot;
+const publication = site.currentPublishedState;
+assert(publication?.payload, "missing_current_published_state");
+const snapshot = publication.payload;
 const route = snapshot.publishedRoutes.find((candidate) => candidate.canonicalPath === PAGE_PATH);
 assert.equal(route?.routeKind, "standard-content");
 assert.equal(route?.disposition, "render");
@@ -69,7 +69,7 @@ const coverPaths = ["/ai-save-the-date/engagement", "/ai-save-the-date/proposal"
   .filter(Boolean);
 assert.equal(new Set(coverPaths).size, coverPaths.length, "Save the Date directory covers must be unique across published themes");
 
-const navigationConfig = site.themeSettings?.publishedJson?.saveTheDateNavigation ?? { menuLabel: "", groups: [] };
+const navigationConfig = snapshot.themeSettings?.saveTheDateNavigation ?? { menuLabel: "", groups: [] };
 assert.equal(navigationConfig.menuLabel, "Save the Date");
 const navigation = navigationConfig.groups ?? [];
 const publishedItems = navigation.flatMap((group) => group.items.filter((item) => item.status === "published"));
@@ -104,8 +104,7 @@ for (const source of [themeRenderer, megaMenu]) {
 
 console.log(JSON.stringify({
   siteId: SITE_ID,
-  publicationId: publication.id,
-  publicationVersion: publication.version,
+  currentStateRevision: publication.revision,
   snapshotHash: snapshot.snapshotHash,
   pagePath: PAGE_PATH,
   mediaCount: page.publishedJson.mediaManifest.length,

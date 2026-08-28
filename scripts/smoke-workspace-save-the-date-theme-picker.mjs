@@ -27,7 +27,7 @@ try {
   assert.ok(root && love?.parentId === root.id && seasonal?.parentId === root.id, "Save the Date category hierarchy is invalid");
 
   const page = await context.newPage();
-  await page.goto(`${baseUrl}/site/mydreamshoots/app/create#step-video`, { waitUntil: "networkidle", timeout: 60_000 });
+  await page.goto(`${baseUrl}/site/mydreamshoots/app/create#step-video`, { waitUntil: "domcontentloaded", timeout: 60_000 });
   await page.getByRole("button", { name: "Choose a video theme" }).waitFor({ state: "visible", timeout: 30_000 });
   assert.match((await page.locator("header").innerText()).replace(/\s+/g, " "), /Save the Date/, "workspace desktop header is missing Save the Date");
 
@@ -51,7 +51,7 @@ try {
   await page.screenshot({ path: "/tmp/mydreamshoots-save-the-date-picker-desktop.png", fullPage: true });
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto(`${baseUrl}/site/mydreamshoots/app/create#step-video`, { waitUntil: "networkidle", timeout: 60_000 });
+  await page.goto(`${baseUrl}/site/mydreamshoots/app/create#step-video`, { waitUntil: "domcontentloaded", timeout: 60_000 });
   const mobileMenu = page.locator("details[data-storefront-mobile-menu]");
   await mobileMenu.locator("summary").click();
   await mobileMenu.getByRole("link", { name: "Save the Date" }).waitFor({ state: "visible" });

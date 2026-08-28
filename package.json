@@ -68,6 +68,7 @@
     "sync:dreamshoot-homepage-showcase": "node scripts/sync-dreamshoot-homepage-showcase.mjs",
     "sync:save-the-date-valentines-day": "node scripts/sync-save-the-date-valentines-day.mjs",
     "sync:save-the-date-topic-pages": "node scripts/sync-save-the-date-topic-pages.mjs",
+    "sync:save-the-date-indexability": "node scripts/sync-save-the-date-indexability.mjs",
     "migrate:save-the-date-route-prefix": "node scripts/migrate-save-the-date-route-prefix.mjs",
     "sync:best-save-the-date-page": "node scripts/sync-best-save-the-date-page.mjs",
     "smoke:best-save-the-date-page": "node scripts/smoke-best-save-the-date-page.mjs",

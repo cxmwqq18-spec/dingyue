@@ -36,12 +36,11 @@ export const MYDREAMSHOOTS_STANDARD_SEO_ROUTES = [
   ...MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES
 ] as const;
 
-// Detail pages remain directly reachable while design/evidence approval is pending.
-// Keep the catalogue directory and Valentine's page indexable; suppress the other
-// Save the Date detail routes consistently at the publication projection layer.
-const MYDREAMSHOOTS_SAVE_DATE_INDEXABLE_ROUTES = new Set([
-  "/ai-save-the-date/valentines-day"
-]);
+// Every formal Save the Date topic is part of the public catalogue. Only routes
+// explicitly retired from the catalogue remain reachable but non-indexable.
+const MYDREAMSHOOTS_SAVE_DATE_INDEXABLE_ROUTES = new Set<string>(
+  MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES.filter((canonicalPath) => !isMydreamshootsRemovedLegacyRoute(canonicalPath))
+);
 
 export const MYDREAMSHOOTS_STANDARD_SEO_INVENTORY = MYDREAMSHOOTS_STANDARD_SEO_ROUTES.map((canonicalPath) => ({
   canonicalPath,

@@ -24,7 +24,7 @@ try {
     for (const page of pages) {
       const target = targets[page.slug];
       const json = structuredClone(page.draftJson || {});
-      json.seo = { ...(json.seo || {}), title: target.title, description: target.description, canonicalPath: page.slug, canonical: `https://www.mydreamshoots.com${page.slug}`, index: false, follow: true, robots: { ...(json.seo?.robots || {}), index: false, follow: true, maxImagePreview: "large" } };
+      json.seo = { ...(json.seo || {}), title: target.title, description: target.description, canonicalPath: page.slug, canonical: `https://www.mydreamshoots.com${page.slug}`, index: true, follow: true, robots: { ...(json.seo?.robots || {}), index: true, follow: true, maxImagePreview: "large" } };
       const heroId = json.sectionsOrder?.[0];
       if (heroId && json.sections?.[heroId]?.settings) {
         json.sections[heroId].settings.title = target.h1;
@@ -33,7 +33,7 @@ try {
       await tx.themePage.update({ where: { id: page.id }, data: { title: target.h1, draftJson: json } });
     }
   });
-  console.log(JSON.stringify({ ok: true, siteId, mode: "draft-only", pages: Object.keys(targets), indexable: false, publicationRequired: true }, null, 2));
+  console.log(JSON.stringify({ ok: true, siteId, mode: "draft-only", pages: Object.keys(targets), indexable: true, publicationRequired: true }, null, 2));
 } finally {
   await prisma.$disconnect();
 }
