@@ -10,14 +10,37 @@
 
 ## 代码发布
 
-先在本地完成检查：
+以下顺序是唯一支持的上线顺序。任何一步失败都停止，不切换 `current`，不重启线上服务。
+
+### 1. 本地提交与上线前检查
+
+先确保代码已经提交并推送到 GitHub：
 
 ```sh
 npm run typecheck
-npm run deploy:precheck -- --target=production --commit=$(git rev-parse HEAD)
+git status --short
+git push origin main
+git rev-parse HEAD
+git rev-parse origin/main
+npm run deploy:precheck -- --target=test --commit=$(git rev-parse HEAD)
 ```
 
-生产部署必须显式确认：
+`deploy:precheck` 会执行 TypeScript、公开 SSR、SEO、生产文案和 SEO indexing 检查，并确认工作区没有未提交代码、目标 SHA 存在且等于 `origin/main`。`docs/`、`releases/` 等运维产物可以未跟踪，但源代码、配置、schema 和脚本不能未提交。
+
+生产上线前，把上述命令中的 `--target=test` 改为 `--target=production`，先完成同一套检查。没有通过 precheck 的 commit 不允许上线。
+
+### 2. 代码 release
+
+测试环境：
+
+```sh
+npm run deploy:release -- \
+  --target=test \
+  --commit=<full-40-char-sha> \
+  --apply
+```
+
+生产环境必须显式确认：
 
 ```sh
 npm run deploy:release -- \
@@ -27,11 +50,15 @@ npm run deploy:release -- \
   --confirm=deploy-production
 ```
 
-测试环境使用 `--target=test`，不会触碰生产服务。部署脚本会在服务器校验 `origin/main` 等于指定 SHA，再构建、执行迁移、切换 release 和重启对应 systemd 服务。
+测试 release 使用 `test.grownstride.com` / `grownstride-test.service` / `3011` / `site_grownstride_test`；生产 release 使用 `www.mydreamshoots.com` / `mydreamshoots.service` / `3010` / `site_dreamshoot`。服务器会再次 fetch 并校验 `origin/main` 等于指定 SHA，然后在独立候选端口构建、生成 Prisma client、执行 `prisma migrate deploy`，用 HTML `release-commit` 标记做候选验证。只有候选验证通过后才更新 systemd、切换 `current` 和重启服务；切换后的服务或域名 readback 失败会自动恢复旧 release。
+
+服务器永远不执行 `prisma db push`，不上传本地 `.env`，不导入数据库 dump，也不使用本地未提交代码。
 
 ## 内容同步
 
-内容同步从本地隔离 PostgreSQL 生成字段级 manifest。规划阶段必须同时提供目标数据库 URL；目标 URL 只用于读取当前线上关系表，绝不导入快照：
+### 3. 公开内容增量同步（可选）
+
+代码 release 成功后，如果本地有新的首页、详情页、SEO、导航、套餐、视频主题或公开媒体元数据，再执行内容同步。规划阶段只读取目标 PostgreSQL 关系表，不读取或导入 snapshot：
 
 ```sh
 npm run content:baseline -- --target=local --site-id=site_dreamshoot
@@ -43,6 +70,8 @@ npm run content:apply -- --target=production --site-id=site_dreamshoot \
   --manifest=releases/manifests/content-v2.json \
   --deployed-commit=<full-40-char-sha> --apply --confirm-production
 ```
+
+`--deployed-commit` 必须是刚刚成功上线的同一个 SHA。先看 plan 输出，再 apply；apply 会锁定站点、校验 protected business table hash，并在结束时刷新派生公开状态和缓存。线上已经编辑过的同字段会报告 conflict 并跳过，不会覆盖线上。
 
 manifest 使用 JSON Pointer 字段路径和 `baseHash`。目标字段仍等于 baseline 时才写入；线上已经修改时跳过并返回 conflict。删除必须单独列在 `deletions`，并额外传入 `--confirm-deletions`。
 
@@ -59,3 +88,7 @@ manifest 使用 JSON Pointer 字段路径和 `baseHash`。目标字段仍等于 
 - 代码回滚只能切换到已验证的旧 commit release。
 - 内容回滚只能生成字段级逆向 manifest。
 - 禁止通过 publication/version/active pointer、历史 JSON 或数据库快照回滚公开内容。
+
+## 上线记录
+
+每次上线至少记录以下信息：目标（test/production）、域名、commit SHA、GitHub `origin/main` SHA、release 路径、迁移结果、候选 HTML commit readback、systemd 状态、首页/关键路由 HTTP 结果，以及 content apply 的 applied/conflicts/skipped/deletions 报告。没有这些记录，不视为上线完成。

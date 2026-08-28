@@ -20,7 +20,7 @@ Start the isolated local Postgres with:
 ```sh
 docker compose -f ops/local-postgres.compose.yml up -d
 npm run db:target -- --target=local
-npm run prisma:push
+npm run prisma:migrate:deploy -- --target=local
 ```
 
 The guard fails if `DATABASE_URL` points at port `15432`, a production database name, or anything other than `127.0.0.1:15433/dingyue_local` for local work.
@@ -33,67 +33,26 @@ Release manifests may include only public storefront content:
 - `toolCategories` and `toolMenuItems`.
 - `videoThemeCategories` and `videoThemes`.
 - `creativePackCategories` and public `creativePacks`.
-- Published theme pages/settings/snapshots.
+- Theme page/settings/profile public fields (synced as field-level increments).
 - Public media asset indexes and metadata.
 
 Do not publish customer, order, payment, credit, generation job, customer model, album, upload, private asset, session, secret, or audit data from local.
 
 ## SQL Public Content Promotion
 
-> This legacy section is retained for migration history only. The old full-table
-> manifest flow is disabled. Use `docs/no-snapshot-incremental-release.md` and
-> the `content:baseline`, `content:plan`, and `content:apply` commands.
-
-`data/platform-state.json` is retired and must not be used as a runtime or deployment source. Public storefront promotion reads PostgreSQL rows only and publishes a new immutable `ThemePublication` after the scoped update:
-
-```sh
-npm run sync:mydreamshoots-public-sql -- --target=test --dry-run
-npm run sync:mydreamshoots-public-sql -- --target=test --apply --confirm=sync-mydreamshoots-public-sql
-```
-
-The default source is `site_dreamshoot`. The command never deletes or imports customers, orders, subscriptions, credits, generation jobs, uploads, albums, sessions, or payment rows. Test publication SEO is forced to `noindex`; production requires `--confirm-production` and remains opt-in.
+This project no longer supports SQL snapshot promotion, `platform-state.json`,
+full-table manifests, or historical publication activation. Use only the
+field-level workflow in [`no-snapshot-incremental-release.md`](no-snapshot-incremental-release.md).
 
 ## Release Manifest Flow
 
-> 本节旧的整表 release manifest 已停用。当前命令和安全规则见
-> [`no-snapshot-incremental-release.md`](no-snapshot-incremental-release.md)。
-
-Export from local:
-
-```sh
-npm run release:content-export -- --target=local --site-id=site_dreamshoot --release-id=<release-id>
-```
-
-Review the plan:
-
-```sh
-npm run release:content-plan -- --target=local --manifest=releases/manifests/<release-id>.json
-```
-
-Run the local gate after committing code and manifest:
-
-```sh
-npm run release:precheck -- --target=local --manifest=releases/manifests/<release-id>.json --skip-live
-```
-
-Apply to test or production only from a verified release checkout:
-
-```sh
-npm run prisma:migrate:deploy -- --target=test
-npm run release:content-apply -- --target=test --manifest=releases/manifests/<release-id>.json --apply --confirm=release-content-apply
-```
-
-Production requires an explicit confirmation flag for database target checks:
-
-```sh
-npm run prisma:migrate:deploy -- --target=production --confirm-production
-npm run release:content-apply -- --target=production --confirm-production --manifest=releases/manifests/<release-id>.json --apply --confirm=release-content-apply
-```
+The old `release:content-*` commands remain only as blocked compatibility
+entrypoints so an accidental invocation fails closed.
 
 ## Failure Rules
 
 - If precheck, migration, content plan, content apply, smoke, or route validation fails, do not switch the production release symlink and do not restart production services.
-- Content apply writes a scoped backup under `releases/backups/` before the transaction.
+- Content apply writes no database snapshot and does not replace or delete whole tables.
 - Protected business tables are fingerprinted before and after content apply. Any count/hash change aborts the transaction.
 - Full JSON/platform-state imports are local/test initialization tools only; production must use scoped content manifests.
-- Development and release tooling must not select, restore, import, or fall back to a historical publication/snapshot without explicit approval for the current task. Reusing an approved historical field requires compiling a new publication from the latest current data; it must never reactivate the old snapshot in place.
+- Development and release tooling must not select, restore, import, or fall back to a historical publication/snapshot. Content rollback is an explicit inverse field manifest.
