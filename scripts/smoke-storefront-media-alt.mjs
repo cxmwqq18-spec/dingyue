@@ -153,8 +153,8 @@ const virtualTryOnAlt = storefrontCardImageAlt({
   title: "Virtual Try-On"
 });
 assert(
-  /^Beauty portrait with editorial lighting(?:, .+)?\.$/.test(virtualTryOnAlt),
-  `Virtual Try-On fallback should keep the real scene description: ${virtualTryOnAlt}`
+  /^Virtual Try On portrait, .+, scene 08\.$/.test(virtualTryOnAlt),
+  `Virtual Try-On fallback should keep a source-specific scene description: ${virtualTryOnAlt}`
 );
 
 assert(
