@@ -59,6 +59,8 @@ function runRemote(config) {
   const candidateLogQ = shellQuote(`${release}/.candidate.log`);
   const command = [
     "set -eu",
+    `COMMIT=${commitQ}`,
+    `command -v git >/dev/null 2>&1 || { echo 'Remote deployment requires git on the app host.' >&2; exit 127; }`,
     `test -d ${appQ}/.git`,
     `git -C ${appQ} fetch --prune origin main`,
     `git -C ${appQ} cat-file -e ${commitQ}^{commit}`,
@@ -72,12 +74,14 @@ function runRemote(config) {
     `DINGYUE_ENV=${shellQuote(target)} DATABASE_TARGET=${shellQuote(target)} NEXT_PUBLIC_RELEASE_COMMIT="$COMMIT" npm run build`,
     `DINGYUE_ENV=${shellQuote(target)} DATABASE_TARGET=${shellQuote(target)} npx prisma migrate deploy`,
     `printf '%s\\n' ${commitQ} > ${releaseQ}/.deployed-commit`,
-    `DINGYUE_ENV=${shellQuote(target)} DATABASE_TARGET=${shellQuote(target)} NEXT_PUBLIC_RELEASE_COMMIT=${commitQ} ${releaseQ}/node_modules/.bin/next start -p ${config.validationPort} >${candidateLogQ} 2>&1 & CANDIDATE_PID=$!`,
+    `DINGYUE_ENV=${shellQuote(target)} DATABASE_TARGET=${shellQuote(target)} NEXT_PUBLIC_RELEASE_COMMIT="$COMMIT" NEXT_DIST_DIR=.next-build ${releaseQ}/node_modules/.bin/next start -p ${config.validationPort} >${candidateLogQ} 2>&1 & CANDIDATE_PID=$!`,
     `trap 'kill "$CANDIDATE_PID" 2>/dev/null || true' EXIT`,
     `READY=0; for ATTEMPT in $(seq 1 30); do if curl -fsS --max-time 3 -H ${shellQuote(`Host: ${config.domain}`)} "http://127.0.0.1:${config.validationPort}/" > ${candidateHtmlQ}; then READY=1; break; fi; sleep 1; done; test "$READY" = 1`,
     `grep -F ${shellQuote(`<meta name="release-commit" content="${commit}"`)} ${candidateHtmlQ}`,
     `kill "$CANDIDATE_PID" 2>/dev/null || true; wait "$CANDIDATE_PID" 2>/dev/null || true; trap - EXIT`,
     `SERVICE_FILE=${shellQuote(`/etc/systemd/system/${service}`)}`,
+    `SERVICE_DROPIN=${shellQuote(`/etc/systemd/system/${service}.d/release.conf`)}`,
+    `if [ -f "$SERVICE_DROPIN" ]; then SERVICE_FILE="$SERVICE_DROPIN"; fi`,
     `SERVICE_NEXT=${releaseQ}/${service}.next`,
     `cp "$SERVICE_FILE" "$SERVICE_NEXT"`,
     `sed -i -E "s#^WorkingDirectory=.*#WorkingDirectory=${config.root}/releases/${commit}#; s#^EnvironmentFile=.*#EnvironmentFile=${config.root}/releases/${commit}/.env.local#; s#^ExecStart=.*next start -p [0-9]+#ExecStart=${config.root}/releases/${commit}/node_modules/.bin/next start -p ${config.port}#" "$SERVICE_NEXT"`,
@@ -96,7 +100,7 @@ function runRemote(config) {
     `curl -fsS --max-time 20 https://${config.domain}/ | grep -F ${shellQuote(`<meta name="release-commit" content="${commit}"`)}`,
     `SWITCHED=0; trap - EXIT`,
     `printf '%s\\n' ${shellQuote(`deployed_commit=${commit}`)} ${shellQuote(`service=$(systemctl is-active ${service})`)} ${shellQuote(`current=$(readlink -f ${config.root}/current)`)}`
-  ].join(" && ");
+  ].join("\n");
   const sshArgs = ["-p", process.env.AI_PROJECT_SSH_PORT || "11765"];
   const keyPath = process.env.AI_PROJECT_SSH_KEY_PATH;
   if (keyPath) sshArgs.push("-i", keyPath);
