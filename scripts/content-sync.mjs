@@ -306,12 +306,19 @@ async function apply() {
     await client.$transaction(async (tx) => {
       await tx.$queryRaw`SELECT "id" FROM "Site" WHERE "id" = ${siteId} FOR UPDATE`;
       const before = await protectedFingerprint(tx);
+      const rowsByType = new Map();
+      const operationTypes = new Set([...manifest.operations, ...manifest.deletions].map((item) => item.entityType));
+      for (const entityType of operationTypes) {
+        const spec = entitySpecs[entityType];
+        if (!spec) fail(`Unsupported public content operation: ${entityType}`);
+        rowsByType.set(entityType, await modelDelegate(tx, spec).findMany({ where: { siteId } }));
+      }
       for (const operation of manifest.operations) {
         verifyAsset(operation);
         const spec = entitySpecs[operation.entityType];
         if (!spec || forbidden.test(`${operation.entityType}:${operation.field}:${operation.fieldPath}`)) fail(`Unsupported public content operation: ${operation.entityType}`);
         const delegate = modelDelegate(tx, spec);
-        const currentRows = await delegate.findMany({ where: { siteId } });
+        const currentRows = rowsByType.get(operation.entityType);
         const current = currentRows.find((row) => spec.lookup.some((key) => String(row[key] ?? "") === String(operation.entityKey)));
         if (operation.field === "record" && operation.fieldPath === "/" && !current) {
           const value = clean(operation.value);
@@ -327,6 +334,7 @@ async function apply() {
               update: { valueHash: field.valueHash }
             });
           }
+          currentRows.push(created);
           report.applied.push(operation);
           continue;
         }
@@ -337,13 +345,17 @@ async function apply() {
         if (operation.field === "record") {
           const field = operation.fieldPath.slice(1);
           if (!spec.fields.includes(field) || field === "id" || field === "siteId") fail(`Field is not writable: ${operation.entityType}.${field}`);
-          await delegate.update({ where: { id: current.id }, data: { [field]: prepared(operation.value, spec.model, field) } });
+          const nextValue = prepared(operation.value, spec.model, field);
+          await delegate.update({ where: { id: current.id }, data: { [field]: nextValue } });
+          current[field] = nextValue;
         } else {
           if (!spec.json?.includes(operation.field)) fail(`JSON field is not writable: ${operation.entityType}.${operation.field}`);
           const nextJson = setPointer(current[operation.field], operation.fieldPath, operation.value, operation.operation === "delete");
           const data = { [operation.field]: nextJson };
           if (spec.json.includes("draftJson")) data.publishedJson = nextJson;
           await delegate.update({ where: { id: current.id }, data });
+          current[operation.field] = nextJson;
+          if (data.publishedJson !== undefined) current.publishedJson = nextJson;
         }
         report.applied.push(operation);
         await tx.contentSyncBaseline.upsert({ where: { target_siteId_entityType_entityKey_fieldPath: { target, siteId, entityType: operation.entityType, entityKey: operation.entityKey, fieldPath: `${operation.field}${operation.fieldPath}` } }, create: { id: `baseline_${crypto.randomBytes(12).toString("hex")}`, target, siteId, entityType: operation.entityType, entityKey: operation.entityKey, fieldPath: `${operation.field}${operation.fieldPath}`, valueHash: hash(operation.value) }, update: { valueHash: hash(operation.value) } });
@@ -352,17 +364,19 @@ async function apply() {
         const spec = entitySpecs[deletion.entityType];
         if (!spec || !["creative_pack", "media_asset", "tool_category", "tool_menu_item", "video_theme_category", "video_theme"].includes(deletion.entityType)) fail(`Deletion is not allowed for ${deletion.entityType}.`);
         const delegate = modelDelegate(tx, spec);
-        const current = (await delegate.findMany({ where: { siteId } })).find((row) => spec.lookup.some((key) => String(row[key] ?? "") === String(deletion.entityKey)));
+        const currentRows = rowsByType.get(deletion.entityType);
+        const current = currentRows.find((row) => spec.lookup.some((key) => String(row[key] ?? "") === String(deletion.entityKey)));
         if (!current) continue;
         const currentHash = hash(publicRow(current, spec));
         if (deletion.baseHash && deletion.baseHash !== currentHash) { report.conflicts.push({ ...deletion, reason: "online_value_changed" }); continue; }
         await delegate.delete({ where: { id: current.id } });
+        currentRows.splice(currentRows.indexOf(current), 1);
         await tx.contentSyncBaseline.deleteMany({ where: { target, siteId, entityType: deletion.entityType, entityKey: deletion.entityKey } });
         report.deletions.push(deletion);
       }
       const after = await protectedFingerprint(tx);
       if (hash(before) !== hash(after)) fail("Protected business data changed during content apply; transaction rolled back.");
-    }, { timeout: 180000, maxWait: 20000 });
+    }, { timeout: 600000, maxWait: 20000 });
     // Public SSR reads draftJson directly; there is no publication refresh step.
     const reportRows = [
       ...report.applied.map((row) => ({ ...row, result: "applied" })),
