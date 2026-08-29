@@ -15,11 +15,8 @@ export async function readPlatformStateFromSql(existingPrisma) {
       throw new Error("missing_platform_state_document:platform");
     }
     const state = structuredClone(document.state);
-    const [siteRows, domains, pages, settings, profiles, packs, packCategories, mediaAssets, products, siteThemes, themePublications, toolCategories, toolMenuItems, videoCategories, videoThemes, siteAiApps, currentStates] = await Promise.all([
-      prisma.site.findMany({
-        orderBy: { createdAt: "asc" },
-        include: { activePublication: { include: { publication: true } } }
-      }),
+    const [siteRows, domains, pages, settings, profiles, packs, packCategories, mediaAssets, products, siteThemes, toolCategories, toolMenuItems, videoCategories, videoThemes, siteAiApps] = await Promise.all([
+      prisma.site.findMany({ orderBy: { createdAt: "asc" } }),
       prisma.siteDomain.findMany({ orderBy: [{ siteId: "asc" }, { isPrimary: "desc" }, { createdAt: "asc" }] }),
       prisma.themePage.findMany({ orderBy: [{ siteId: "asc" }, { slug: "asc" }] }),
       prisma.themeSettings.findMany(),
@@ -29,13 +26,11 @@ export async function readPlatformStateFromSql(existingPrisma) {
       prisma.mediaAsset.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
       prisma.product.findMany({ include: { prices: true }, orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
       prisma.siteTheme.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
-      prisma.themePublication.findMany({ orderBy: [{ siteId: "asc" }, { version: "desc" }] }),
       prisma.toolCategory.findMany({ orderBy: [{ siteId: "asc" }, { parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }] }),
       prisma.toolMenuItem.findMany({ orderBy: [{ siteId: "asc" }, { sortOrder: "asc" }, { title: "asc" }] }),
       prisma.videoThemeCategory.findMany({ orderBy: [{ siteId: "asc" }, { sortOrder: "asc" }, { slug: "asc" }] }),
       prisma.videoTheme.findMany({ orderBy: [{ siteId: "asc" }, { sortOrder: "asc" }, { createdAt: "asc" }] }),
       prisma.siteAiApp.findMany({ orderBy: [{ siteId: "asc" }, { routeKey: "asc" }] })
-      ,prisma.sitePublishedState.findMany()
     ]);
     const plain = (value) => {
       if (value instanceof Date) return value.toISOString();
@@ -55,7 +50,10 @@ export async function readPlatformStateFromSql(existingPrisma) {
     state.mediaAssets = mediaAssets.map(plain);
     state.products = products.map(plain);
     state.siteThemes = siteThemes.map(plain);
-    state.themePublications = themePublications.map(plain);
+    // Publication/current-state tables were retired by the live-draft SSR
+    // migration. Keep the aggregate compatibility field empty without
+    // querying tables that intentionally no longer exist.
+    state.themePublications = [];
     state.toolCategories = toolCategories.map(plain);
     state.toolMenuItems = toolMenuItems.map(plain);
     state.videoThemeCategories = videoCategories.map(plain);
@@ -64,7 +62,6 @@ export async function readPlatformStateFromSql(existingPrisma) {
     state.siteDomains = domains.map(plain);
     const settingsBySiteId = new Map(settings.map((setting) => [setting.siteId, plain(setting)]));
     const profileBySiteId = new Map(profiles.map((profile) => [profile.siteId, plain(profile)]));
-    const currentStateBySiteId = new Map(currentStates.map((state) => [state.siteId, plain(state)]));
     const pagesBySiteId = new Map();
     for (const page of pages) {
       const list = pagesBySiteId.get(page.siteId) ?? [];
@@ -74,17 +71,6 @@ export async function readPlatformStateFromSql(existingPrisma) {
     state.sites = siteRows.map((siteRow) => {
       const existing = state.sites?.find((site) => site.id === siteRow.id) ?? {};
       const site = { ...existing, ...plain(siteRow) };
-      const currentPublishedState = currentStateBySiteId.get(siteRow.id);
-      if (currentPublishedState) site.currentPublishedState = currentPublishedState;
-      const activePublication = siteRow.activePublication?.publication;
-      const latestHistoricalPublication = themePublications.find((publication) => publication.siteId === siteRow.id);
-      if (activePublication) {
-        site.activePublication = plain(activePublication);
-        // Transitional alias for non-public admin consumers. It is never
-        // populated from historical data when the active pointer is absent.
-        site.latestPublication = plain(activePublication);
-      }
-      if (latestHistoricalPublication) site.latestHistoricalPublication = plain(latestHistoricalPublication);
       const siteDomains = domains.filter((domain) => domain.siteId === siteRow.id);
       site.primaryDomain = siteDomains.find((domain) => domain.isPrimary)?.domain ?? siteDomains[0]?.domain ?? site.primaryDomain;
       site.pages = pagesBySiteId.get(siteRow.id) ?? existing.pages ?? [];

@@ -639,9 +639,10 @@ assert(
     sitemapRoute.includes('"cache-control"') &&
     sitemapRoute.includes('"x-sitemap-url-count"') &&
     sitemapRoute.includes('"x-sitemap-image-count"') &&
-    sitemapRoute.includes("unstable_cache") &&
+    !sitemapRoute.includes("unstable_cache") &&
+    sitemapRoute.includes('"cache-control": "no-store, max-age=0"') &&
     sitemapRoute.includes('"x-sitemap-generation-ms"'),
-  "sitemap route must select URLs using the request host, emit per-entry sitemap metadata, and avoid request-time lastmod"
+  "live-draft sitemap must select URLs using the request host, emit per-entry metadata, avoid request-time lastmod, and bypass cross-request caching"
 );
 assert(
   seoIndexing.includes("lastmod?: string") &&
@@ -700,7 +701,7 @@ console.log(JSON.stringify({
     forbiddenLegacyPolicyHrefs: badLegacyHrefHits.length
   },
   syntheticRoutes: ["/workflow", "/creators-circle", "/partner-registration"],
-  sitemapStrategy: "published snapshot pages only; renderable, indexable, canonical URLs per request host",
+  sitemapStrategy: "live draft projection only; renderable, indexable, canonical URLs per request host",
   hostAwareSitemaps: {
     mydreamshoots: "www.mydreamshoots.com only",
     aidreamcapes: "www.aidreamcapes.com only"

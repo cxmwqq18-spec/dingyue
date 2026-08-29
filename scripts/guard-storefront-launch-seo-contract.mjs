@@ -17,10 +17,11 @@ const storefrontSiteIds = ["site_dreamshoot", "site_aidreamcapes"];
 
 const requiredDeployPrecheckCommands = [
   "npm run typecheck",
+  "npm run guard:public-storefront-ssr",
+  "npm run guard:live-storefront-ssr",
   "npm run guard:storefront-launch-seo-contract",
   "npm run guard:mydreamshoots-production-release",
-  "npm run smoke:mydreamshoots-seo-indexing",
-  "npm run guard:mydreamshoots-content"
+  "npm run smoke:mydreamshoots-seo-indexing"
 ];
 const requiredLaunchPrecheckCommands = [
   ...requiredDeployPrecheckCommands,
@@ -73,22 +74,12 @@ function readJson(filePath) {
   return JSON.parse(readText(filePath));
 }
 
-async function readPlatformState() {
-  const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
-  if (!document?.state) throw new Error("missing_platform_state_document");
-  return document.state;
-}
-
 function normalizeText(value) {
   return String(value ?? "").replace(/\s+/g, " ").trim();
 }
 
-function homePageForSite(site) {
-  return (site.pages ?? []).find((page) => page.slug === "/" || page.pageType === "home");
-}
-
 function pageSeoValues(page) {
-  const seo = page?.publishedJson?.seo ?? {};
+  const seo = (page?.draftJson ?? page?.publishedJson)?.seo ?? {};
   return {
     title: normalizeText(seo.title),
     description: normalizeText(seo.description),
@@ -96,55 +87,18 @@ function pageSeoValues(page) {
   };
 }
 
-function assertPublishedHomeSeo(state) {
-  for (const siteId of storefrontSiteIds) {
-    const site = (state.sites ?? []).find((item) => item.id === siteId);
-    assert.ok(site, `${siteId} must exist in platform-state`);
-    const home = homePageForSite(site);
-    assert.ok(home, `${siteId} homepage must exist in platform-state`);
-    const seo = pageSeoValues(home);
-    assert.ok(seo.title, `${siteId} ThemePage.publishedJson.seo.title must be present`);
-    assert.ok(seo.description, `${siteId} ThemePage.publishedJson.seo.description must be present`);
-  }
-}
-
-function latestPublicationForSite(state, siteId) {
-  return (state.themePublications ?? [])
-    .filter((publication) => publication.siteId === siteId)
-    .sort((left, right) => Number(right.version ?? 0) - Number(left.version ?? 0))[0];
-}
-
-function assertPublicationHomeTdk(state) {
-  for (const siteId of storefrontSiteIds) {
-    if (siteId === "site_dreamshoot") continue;
-    const site = (state.sites ?? []).find((item) => item.id === siteId);
-    const currentHome = homePageForSite(site ?? {});
-    assert.ok(currentHome, `${siteId} current homepage must exist`);
-    const publication = latestPublicationForSite(state, siteId);
-    assert.ok(publication, `${siteId} latest ThemePublication snapshot must exist`);
-    const home = homePageForSite({ pages: publication.snapshot?.pages ?? [] });
-    assert.ok(home, `${siteId} latest ThemePublication snapshot must include homepage`);
-    assert.deepEqual(pageSeoValues(home), pageSeoValues(currentHome), `${siteId} latest publication SEO must match ThemePage.publishedJson.seo`);
-  }
-}
-
-async function assertRelationalMydreamshootsHomeTdk() {
-  const page = await prisma.themePage.findFirst({
-    where: { siteId: "site_dreamshoot", slug: "/" },
-    select: { publishedJson: true }
+async function assertRelationalLiveHomeTdk() {
+  const pages = await prisma.themePage.findMany({
+    where: { siteId: { in: storefrontSiteIds }, slug: "/" },
+    select: { siteId: true, draftJson: true }
   });
-  const active = await prisma.activeThemePublication.findUnique({
-    where: { siteId: "site_dreamshoot" },
-    include: { publication: { select: { snapshot: true } } }
-  });
-  const publishedHome = (active?.publication?.snapshot?.pages ?? []).find((item) => item.slug === "/");
-  assert.ok(page, "site_dreamshoot relational homepage must exist");
-  assert.ok(publishedHome, "site_dreamshoot active publication must include homepage");
-  assert.deepEqual(
-    pageSeoValues(publishedHome),
-    pageSeoValues({ publishedJson: page.publishedJson }),
-    "site_dreamshoot active publication SEO must match relational ThemePage.publishedJson.seo"
-  );
+  for (const siteId of storefrontSiteIds) {
+    const page = pages.find((item) => item.siteId === siteId);
+    assert.ok(page, `${siteId} relational live-draft homepage must exist`);
+    const seo = pageSeoValues(page);
+    assert.ok(seo.title, `${siteId} ThemePage.draftJson.seo.title must be present`);
+    assert.ok(seo.description, `${siteId} ThemePage.draftJson.seo.description must be present`);
+  }
 }
 
 function assertDeployPrecheck() {
@@ -174,18 +128,14 @@ function assertLegacyPolicyAliases() {
   assert.ok(!/legacyPublicPathRedirect|directoryCanonicalRedirect|aidreamcapesCollectionRedirect/.test(middlewareSource), "middleware must not bypass published snapshot redirect validation");
 }
 
-const state = await readPlatformState();
-assertPublishedHomeSeo(state);
-assertPublicationHomeTdk(state);
-await assertRelationalMydreamshootsHomeTdk();
+await assertRelationalLiveHomeTdk();
 assertDeployPrecheck();
 assertLegacyPolicyAliases();
 
 console.log(JSON.stringify({
   ok: true,
   checks: [
-    "theme-page-home-seo",
-    "publication-theme-page-seo",
+    "live-draft-theme-page-home-seo",
     "deploy-precheck-seo-commands",
     "legacy-policy-aliases"
   ]

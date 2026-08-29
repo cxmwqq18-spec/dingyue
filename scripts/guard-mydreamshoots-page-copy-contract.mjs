@@ -42,14 +42,27 @@ const mediaOwnerMismatches = (platformState.creativePacks ?? [])
     return [pack.imageUrl, ...(pack.galleryImages ?? [])].filter(Boolean).filter((image) => mediaSlugFromUrl(image) !== slug).map((image) => `${slug}:${image}`);
   });
 
-async function activePublicationStatus() {
+async function liveDraftStatus() {
   try {
-    const active = await prisma.activeThemePublication.findUnique({
+    const profile = await prisma.storefrontProfile.findUnique({
       where: { siteId: "site_dreamshoot" },
-      include: { publication: true }
+      select: { draftJson: true }
     });
-    const snapshot = active?.publication?.snapshot;
-    const facts = snapshot?.publishedFacts;
+    const draft = profile?.draftJson;
+    const facts = draft ? {
+      identity: draft.identity,
+      privacy: {
+        customerMediaTraining: draft.policyFacts?.usesCustomerMediaForTraining,
+        sourceMediaRetentionDays: draft.policyFacts?.sourceMediaRetentionDays
+      },
+      refund: {
+        reviewRequired: draft.policyFacts?.refundReviewRequired,
+        windowDays: draft.policyFacts?.refundWindowDays,
+        effectiveDate: draft.policyFacts?.effectiveDate
+      },
+      creditLifecycle: draft.policyFacts?.creditLifecycle,
+      security: draft.policyFacts?.security
+    } : undefined;
     const factText = [
       facts?.creditLifecycle?.reserve,
       facts?.creditLifecycle?.consume,
@@ -92,9 +105,6 @@ async function activePublicationStatus() {
       factText.every((value) => value && !/^(?:test|fixture)\b/i.test(value))
     );
     return {
-      activeProjectionRows: Array.isArray(snapshot?.publishedPageEntities)
-        ? snapshot.publishedPageEntities.filter((page) => page?.pageType === "ai-image-theme-leaf" && page?.status === "published" && page?.indexable === true).length
-        : 0,
       productionFactsReady,
       missingFacts,
       invalidFacts
@@ -252,11 +262,11 @@ assert.ok(blackFridayPack.imageUrl, "Black Friday pack must keep a cover image")
 assert.equal(mediaOwnerMismatches.length, 0, "dedicated MyDreamShoots theme media must be owned by its own slug", { mediaOwnerMismatches });
 
 const reviewIsolationFailures = routeRows.filter((route) => route.status === "review_required" && (route.indexable || route.sitemapEligible));
-const activePublication = await activePublicationStatus();
-const activeProjectionRows = activePublication?.activeProjectionRows ?? null;
-const productionFactsReady = activePublication?.productionFactsReady ?? false;
-const missingFacts = activePublication?.missingFacts ?? [];
-const invalidFacts = activePublication?.invalidFacts ?? [];
+const liveDraft = await liveDraftStatus();
+const liveProjectionRows = routeRows.filter((route) => route.status === "published" && route.indexable).length;
+const productionFactsReady = liveDraft?.productionFactsReady ?? false;
+const missingFacts = liveDraft?.missingFacts ?? [];
+const invalidFacts = liveDraft?.invalidFacts ?? [];
 const blockingReviewRows = reviewRows.filter((row) => !row.deferred);
 const deferredRows = reviewRows.filter((row) => row.deferred);
 const expectedIndexableRows = imageRequiredSlugs.length - deferredRows.length;
@@ -264,7 +274,7 @@ const reviewIsolationReady = fallbackRows.length === 0 && reviewIsolationFailure
 const productionReleaseReady = reviewIsolationReady &&
   blockingReviewRows.length === 0 &&
   mediaOwnerMismatches.length === 0 &&
-  activeProjectionRows === expectedIndexableRows &&
+  liveProjectionRows === expectedIndexableRows &&
   productionFactsReady;
 const report = {
   ok: reviewIsolationReady,
@@ -284,7 +294,7 @@ const report = {
   blockingRows: blockingReviewRows,
   deferredRows: deferredRows.length,
   prospectiveProjectionRows: routeRows.length,
-  activeProjectionRows,
+  liveProjectionRows,
   productionFactsReady,
   missingFacts,
   invalidFacts,
