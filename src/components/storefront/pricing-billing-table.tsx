@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 
@@ -15,11 +12,6 @@ type PricingPlanPrice = {
 type PricingPlan = { id: string; name: string; prices: Partial<Record<BillingCycle, PricingPlanPrice>> };
 type PricingSidePanel = { eyebrow: string; title: string; body: string; items: Array<readonly [string, string]> };
 
-function billingCycleFromLocation() {
-  const cycle = new URLSearchParams(window.location.search).get("billing");
-  return cycle === "quarter" || cycle === "half_year" ? cycle : "month";
-}
-
 function cycleLabel(cycle: BillingCycle, locale: "en" | "es") {
   if (cycle === "month") return locale === "es" ? "Mensual" : "Monthly";
   if (cycle === "quarter") return locale === "es" ? "Trimestral" : "Quarterly";
@@ -32,28 +24,7 @@ export function PricingBillingTable({
   canShowBillingSwitch: boolean; emphasizeBillingSwitch?: boolean; initialBillingCycle: BillingCycle;
   plans: PricingPlan[]; sidePanels: Record<BillingCycle, PricingSidePanel>; aidreamcapes: boolean; locale?: "en" | "es";
 }) {
-  const [activeBillingCycle, setActiveBillingCycle] = useState<BillingCycle>(initialBillingCycle);
-
-  useEffect(() => {
-    setActiveBillingCycle(initialBillingCycle);
-  }, [initialBillingCycle]);
-
-  useEffect(() => {
-    const handlePopState = () => {
-      setActiveBillingCycle(billingCycleFromLocation());
-    };
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, []);
-
-  const selectBillingCycle = (cycle: BillingCycle) => {
-    if (cycle === activeBillingCycle) return;
-    setActiveBillingCycle(cycle);
-    const url = new URL(window.location.href);
-    url.searchParams.set("billing", cycle);
-    url.hash = `pricing-${cycle}`;
-    window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
-  };
+  const activeBillingCycle = initialBillingCycle;
 
   const renderCycle = (billingCycle: BillingCycle) => {
     const activeSidePanel = sidePanels[billingCycle] ?? sidePanels.month;
@@ -75,7 +46,7 @@ export function PricingBillingTable({
     </div>;
   };
   return <div data-pricing-ssr="true">
-    {canShowBillingSwitch ? <nav aria-label="Billing periods" className={emphasizeBillingSwitch ? "mt-7 flex flex-col items-center gap-3" : "mt-7 flex flex-wrap gap-3"}><div className="inline-flex flex-wrap gap-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1" role="tablist">{billingCycles.map((cycle) => <a aria-selected={cycle === activeBillingCycle} className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold ${cycle === activeBillingCycle ? "bg-white text-[#171514]" : "text-white/80 hover:bg-white hover:text-[#171514]"}`} data-storefront-instant-filter="true" href={`?billing=${cycle}#pricing-${cycle}`} key={cycle} onClick={(event) => { event.preventDefault(); selectBillingCycle(cycle); }} role="tab">{cycleLabel(cycle, locale)}</a>)}</div></nav> : null}
+    {canShowBillingSwitch ? <nav aria-label="Billing periods" className={emphasizeBillingSwitch ? "mt-7 flex flex-col items-center gap-3" : "mt-7 flex flex-wrap gap-3"}><div className="inline-flex flex-wrap gap-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1" role="tablist">{billingCycles.map((cycle) => <a aria-selected={cycle === activeBillingCycle} className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold ${cycle === activeBillingCycle ? "bg-white text-[#171514]" : "text-white/80 hover:bg-white hover:text-[#171514]"}`} data-storefront-instant-filter="true" href={`?billing=${cycle}#pricing-${cycle}`} key={cycle} role="tab">{cycleLabel(cycle, locale)}</a>)}</div></nav> : null}
     <section className="scroll-mt-24" id={`pricing-${activeBillingCycle}`}><h3 className="sr-only">{cycleLabel(activeBillingCycle, locale)} pricing</h3>{renderCycle(activeBillingCycle)}</section>
     <span className="sr-only" data-initial-billing-cycle={initialBillingCycle} data-active-billing-cycle={activeBillingCycle} />
   </div>;

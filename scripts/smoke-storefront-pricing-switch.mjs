@@ -24,13 +24,23 @@ try {
   requestsAfterClick.length = 0;
   page.on("request", (request) => requestsAfterClick.push(request.url()));
 
-  await quarterlyTab.click();
-  await page.waitForFunction(() => document.querySelector('[data-active-billing-cycle="quarter"]') !== null, null, { timeout: 10_000 });
-  await page.waitForTimeout(500);
+  await Promise.all([
+    page.waitForURL(/[?&]billing=quarter#pricing-quarter$/, { timeout: 30_000 }),
+    quarterlyTab.click()
+  ]);
+  await page.waitForLoadState("domcontentloaded");
 
-  assert.match(page.url(), /[?&]billing=quarter(?:#|$)/, "billing switch must update the URL without navigation");
+  assert.match(page.url(), /[?&]billing=quarter(?:#|$)/, "billing switch must update the URL");
   assert.match(page.url(), /#pricing-quarter$/, "billing switch must preserve the pricing anchor");
-  assert.equal(requestsAfterClick.length, 0, `billing switch unexpectedly triggered requests: ${requestsAfterClick.join(" | ")}`);
+  assert(
+    requestsAfterClick.some((url) => /[?&]billing=quarter(?:#|$)/.test(url)),
+    `billing switch must request the server-rendered quarterly view: ${requestsAfterClick.join(" | ")}`
+  );
+  assert(
+    !requestsAfterClick.some((url) => /\/api\//.test(url)),
+    `billing switch must not fetch pricing from a browser API: ${requestsAfterClick.join(" | ")}`
+  );
+  assert.equal(await page.locator('[data-active-billing-cycle="quarter"]').count(), 1, "quarterly pricing must be rendered by the server");
   assert.equal(await page.locator('[aria-label="Loading page"]').count(), 0, "billing switch must not show the page loading indicator");
   assert(
     !browserErrors.some((message) => /hydration|didn.t match|Cannot access .* before initialization/i.test(message)),
@@ -41,6 +51,7 @@ try {
     ok: true,
     status: response.status(),
     url: page.url(),
+    documentNavigation: true,
     requestsAfterClick,
     loadingIndicatorVisible: false,
     browserErrors
