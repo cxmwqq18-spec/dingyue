@@ -974,7 +974,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       intro: "A better social video brief separates what must stay true from what can change.",
       cards: [
         guidanceCard({ title: "Master Story", body: "Define the core message, audience problem, proof, and desired outcome first." }),
-        guidanceCard({ title: "Platform Cut", body: "Decide what the destination needs from the first seconds, frame, cover, or content structure." }),
+        guidanceCard({ title: "Platform Cut", body: "Decide what the destination needs from the opening seconds, frame, cover, or sequence." }),
         guidanceCard({ title: "Safe Zone & Text", body: "Reposition important text, logos, faces, and product detail so platform UI does not cover the meaning." }),
         guidanceCard({ title: "Audio & Captions", body: "Use sound, voiceover, original audio, captions, or text based on the viewing context and rights you actually have." }),
         guidanceCard({ title: "CTA", body: "Change the next action to fit the platform and stage: watch more, save, comment, visit, compare, or learn." })
@@ -2441,7 +2441,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       )
     },
     quickAnswer: {
-      eyebrow: "SEARCH INTENT MATCH",
+      eyebrow: "WHAT TO MAKE CLEAR",
       title: "What Should an AI Promo Video Maker Help You Make Clear?",
       intro:
         "A promo video is usually tied to a moment that can expire: a launch, a sale, an event, a seasonal push, a feature release, or another announcement. The video therefore needs more than attractive footage. It needs a clear promotional fact pattern.",
@@ -3462,7 +3462,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { title: "AI Video Generation", body: "Browse all current MyDreamShoots video themes.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" },
         { title: "Brand Video", body: "Use for company or artist-brand identity, origin, values, and recognition.", href: "/ai-video-generation/brand-video", linkLabel: "Explore Brand Video" },
         { title: "Promo Video", body: "Use for a release announcement, event, launch date, offer, or verified promotion.", href: "/ai-video-generation/promo-video", linkLabel: "Explore Promo Video" },
-        { title: "Fashion Video", body: "Use when wardrobe, styling, collection, or garment motion is the primary search intent.", href: "/ai-video-generation/fashion-video", linkLabel: "Explore Fashion Video" }
+        { title: "Fashion Video", body: "Choose Fashion Video when wardrobe, styling, collection, or garment motion is the main focus.", href: "/ai-video-generation/fashion-video", linkLabel: "Explore Fashion Video" }
       ]
     },
     faq: {
@@ -4323,7 +4323,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       )
     },
     quickAnswer: {
-      eyebrow: "SEARCH INTENT MATCH",
+      eyebrow: "WHAT TO MAKE CLEAR",
       title: "What Should an AI UGC Video Generator Help You Decide?",
       intro:
         "A useful UGC generator should do more than make footage look like it came from a phone. Before generation, the brief needs to define who is speaking, why the opening matters, where the product appears, which details prove the claim, and what the viewer should do next.",

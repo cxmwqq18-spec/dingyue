@@ -16659,7 +16659,8 @@ function SectionView({
     const tone = setting(section, "tone", "warm");
     const layout = setting(section, "layout", "commerce_intro");
     const applicationForm = layout === "application_form";
-    const HeadingTag = normalizedHeadingLevel(setting(section, "headingLevel"), primaryRichTextFallbackHeadingLevel(id, renderContext.page, renderContext.pagePath)) === "h1" ? "h1" : "h2";
+    const policyPage = renderContext.page.pageType === "policy";
+    const HeadingTag = !policyPage && normalizedHeadingLevel(setting(section, "headingLevel"), primaryRichTextFallbackHeadingLevel(id, renderContext.page, renderContext.pagePath)) === "h1" ? "h1" : "h2";
     const dark = tone === "dark";
     const compact = layout === "compact";
     const rawHeading = sectionHeading(section, storefrontSectionLabel(section.type));
@@ -16935,8 +16936,9 @@ function SectionView({
     const bodyResolution = storefrontContext ? resolveStorefrontBindings(bodyTemplate, storefrontContext) : { value: bodyTemplate, missing: [] };
     if (!bodyResolution.value) return null;
     const body = bodyResolution.value;
+    const policyPage = renderContext.page.pageType === "policy";
     const fallbackHeadingLevel = pageHasMainHeadingBefore(id, renderContext) ? "h2" : "h1";
-    const HeadingTag = normalizedHeadingLevel(setting(section, "headingLevel"), fallbackHeadingLevel) === "h1" ? "h1" : "h2";
+    const HeadingTag = policyPage || normalizedHeadingLevel(setting(section, "headingLevel"), fallbackHeadingLevel) === "h1" ? "h1" : "h2";
     return (
       <section className="bg-[#f6f5f1] px-4 py-8 text-[#16181d] sm:px-5 md:py-12" id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">

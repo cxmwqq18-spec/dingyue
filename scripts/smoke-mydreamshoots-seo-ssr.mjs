@@ -241,6 +241,7 @@ function renderedMarkup(html) {
 const homepage = await fetchHtml("/");
 const sitePathHomepage = await fetchHtml("/site/mydreamshoots/");
 const pricing = await fetchHtml("/pricing");
+const policyPages = Object.fromEntries(await Promise.all(["/content", "/privacy", "/refunds", "/shipping", "/terms"].map(async (pathname) => [pathname, await fetchHtml(pathname)])));
 const aiImageDirectory = await fetchHtml("/ai-image-generation");
 const aiVideoDirectory = await fetchHtml("/ai-video-generation");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
@@ -432,6 +433,7 @@ const focusTopicNeedles = Object.fromEntries(
 const publicHtmlPages = {
   homepage,
   pricing,
+  ...policyPages,
   collection,
   ...focusCollections,
   talkingPhotoGeneration,
@@ -454,6 +456,14 @@ const publicHtmlPages = {
 for (const [pageName, html] of Object.entries(publicHtmlPages)) {
   for (const copy of forbiddenLoadingCopy) {
     assert.equal(html.includes(copy), false, `${pageName} must not SSR loading placeholder copy: ${copy}`);
+  }
+}
+for (const [pathname, html] of Object.entries(policyPages)) {
+  assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, `${pathname} must render exactly one H1`);
+}
+for (const [pageName, html] of Object.entries(publicHtmlPages)) {
+  for (const internalTerm of ["search intent", "content structure", "SEO strategy", "keyword layout", "review required", "TODO", "FIXME"]) {
+    assert.equal(html.toLowerCase().includes(internalTerm.toLowerCase()), false, `${pageName} must not expose internal term: ${internalTerm}`);
   }
 }
 for (const [pathname, html] of Object.entries(focusCollections)) {
@@ -616,7 +626,7 @@ if (ugcAdIsPublished) {
   const normalizedUgcAdVideoGeneration = ugcAdVideoGeneration.toLowerCase();
   for (const label of [
     "ai ugc video generator",
-    "search intent match",
+    "what to make clear",
     "v2 - first-party product evidence",
     "v2 - real examples",
     "brief model",
@@ -632,7 +642,7 @@ if (ugcAdIsPublished) {
   }
   const ugcRenderedMarkup = renderedMarkup(ugcAdVideoGeneration);
   const ugcSectionOrder = [
-    "SEARCH INTENT MATCH",
+    "WHAT TO MAKE CLEAR",
     "UGC JOBS",
     "V2 - FIRST-PARTY PRODUCT EVIDENCE",
     "V2 - REAL EXAMPLES",
@@ -681,7 +691,7 @@ if (promoIsPublished) {
   }
   const normalizedPromoVideoGeneration = promoVideoGeneration.toLowerCase();
   for (const label of [
-    "search intent match",
+    "what to make clear",
     "six promo video jobs",
     "prove the generator, not just the promo category",
     "real promo examples",
