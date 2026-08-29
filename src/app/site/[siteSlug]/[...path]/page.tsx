@@ -12,7 +12,7 @@ import { preferLocalPathModeState, readPathModePublicMetadataState, readPathMode
 import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
 import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSite } from "@/lib/photo-package-taxonomy";
-import { legacyPublicPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
+import { legacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { STOREFRONT_PUBLIC_HOST_HEADER, storefrontPathForRouteMode, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
@@ -355,6 +355,11 @@ export default async function SiteCatchAllPage({
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
+  const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
+  if (isPrimaryMydreamshootsSlug(publicSlug) && legacyVideoTarget) permanentRedirect(routePath(legacyVideoTarget));
+  if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/ai-image-generation/profile-cards") {
+    permanentRedirect(routePath("/ai-image-generation/avatar"));
+  }
   if (isPrimaryMydreamshootsSlug(publicSlug) && (slug === "/ai-save-the-date/wedding-invitation" || slug.startsWith("/ai-save-the-date/wedding-invitation/"))) {
     permanentRedirect(routePath(canonicalSaveTheDatePath(slug)));
   }

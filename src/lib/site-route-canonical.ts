@@ -107,8 +107,26 @@ const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   "/policies/california-privacy": "/state-privacy",
   "/policies/ccpa": "/state-privacy",
   "/collections/engagement-photo": "/ai-image-generation/engagement-photo",
-  "/collections/headshot": "/ai-image-generation/headshot"
+  "/collections/headshot": "/ai-image-generation/headshot",
+  "/ai-image-generation/profile-cards": "/ai-image-generation/avatar"
 };
+
+// These topic URLs belonged to an older video-theme taxonomy. The seasonal
+// Save the Date pages now own the content, so old links should remain
+// recoverable without re-publishing retired video records.
+const LEGACY_MYDREAMSHOOTS_VIDEO_PATH_REDIRECTS: Record<string, string> = {
+  "/ai-video-generation/mothers-day": "/ai-save-the-date/mothers-day",
+  "/ai-video-generation/new-year": "/ai-save-the-date/new-year",
+  "/ai-video-generation/proposal": "/ai-save-the-date/proposal",
+  "/ai-video-generation/save-the-date": "/ai-save-the-date/save-the-date",
+  "/ai-video-generation/thanksgiving": "/ai-save-the-date/thanksgiving",
+  "/ai-video-generation/valentines-day": "/ai-save-the-date/valentines-day",
+  "/ai-video-generation/wedding-invitation": "/holidays-events/wedding-invitation"
+};
+
+export function mydreamshootsLegacyVideoPathTarget(pathname: string): string | undefined {
+  return LEGACY_MYDREAMSHOOTS_VIDEO_PATH_REDIRECTS[normalizedPathname(pathname)];
+}
 
 export function legacyPublicPathTarget(pathname: string, fallbackCollectionPath = "/collections"): string | undefined {
   const normalized = normalizedPathname(pathname);

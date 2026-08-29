@@ -473,6 +473,27 @@ for (const pathName of ["/tools", "/tools/image-studio", "/tools/ai-image-studio
 for (const pathName of ["/ai-video-generation"]) {
   assert(seoIndexing.includes(`"${pathName}"`), "sitemap required video paths must use /ai-video-generation", { pathName });
 }
+for (const pathName of [
+  "/ai-video-generation/mothers-day",
+  "/ai-video-generation/new-year",
+  "/ai-video-generation/proposal",
+  "/ai-video-generation/save-the-date",
+  "/ai-video-generation/thanksgiving",
+  "/ai-video-generation/valentines-day",
+  "/ai-video-generation/wedding-invitation"
+]) {
+  assert(
+    seoIndexing.includes("canonicalPath.startsWith(\"/ai-video-generation/\")") &&
+      seoIndexing.includes("!isPublicVideoGenerationSitemapPath(site, canonicalPath)") &&
+      siteRouteCanonical.includes(pathName),
+    "legacy video topic paths must be excluded from sitemap output and mapped to canonical Save the Date routes",
+    { pathName }
+  );
+}
+assert(
+  siteRouteCanonical.includes('"/ai-image-generation/profile-cards": "/ai-image-generation/avatar"'),
+  "legacy profile-cards image path must redirect to the canonical avatar route"
+);
 for (const slug of [
   "talking-photo",
   "profile-clip",
@@ -562,7 +583,8 @@ for (const pathName of ["/policies/privacy", "/policies/terms", "/policies/refun
 assert(
   seoIndexing.includes("createPublishedSiteSnapshot(state, site)") &&
     (seoIndexing.includes("const canonicalPath = canonicalPathForSitemapPage(page)") ||
-      seoIndexing.includes("const canonicalPath = canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page))")) &&
+      seoIndexing.includes("const canonicalPath = canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page))") ||
+      seoIndexing.includes("const sitemapPath = pageSitemapPathForSite(site, page)")) &&
     seoIndexing.includes('resolvePublishedRouteDisposition(snapshot, canonicalPath).kind !== "render"') &&
     seoIndexing.includes("resolveEffectivePublishedPage(snapshot, canonicalPath)") &&
     seoIndexing.includes("page.publishedJson.seo?.canonical") &&

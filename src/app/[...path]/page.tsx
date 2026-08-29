@@ -22,7 +22,7 @@ import {
 import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
-import { legacyPublicPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
+import { legacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
 import { customerSessionCookie } from "@/lib/session";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
@@ -545,6 +545,12 @@ export default async function HostStorefrontCatchAllPage({
     if (videoMode === "text-to-video" || videoMode === "image-to-video") notFound();
   }
   const slug = `/${path.join("/")}`;
+  const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
+  const isMydreamshootsHost = isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]));
+  if (legacyVideoTarget && isMydreamshootsHost) permanentRedirect(legacyVideoTarget);
+  if (slug === "/ai-image-generation/profile-cards" && isMydreamshootsHost) {
+    permanentRedirect("/ai-image-generation/avatar");
+  }
   if (slug === "/workspace") {
     const query = searchParams ? await searchParams : {};
     const suffix = searchParamsSuffix(query);

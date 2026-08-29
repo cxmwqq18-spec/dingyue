@@ -455,6 +455,9 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   const pageSeo = page.publishedJson.seo;
   const canonicalValue = pageSeo?.canonical ?? pageSeo?.canonicalPath ?? page.slug;
   const canonicalPath = canonicalPublicPath(normalizePath(/^https?:\/\//i.test(canonicalValue) ? new URL(canonicalValue).pathname : canonicalValue));
+  // Legacy video ThemePage rows can remain in relational data during a route
+  // migration, but unsupported video slugs must not become sitemap URLs.
+  if (isDreamshootSite(site) && canonicalPath.startsWith("/ai-video-generation/") && !isPublicVideoGenerationSitemapPath(site, canonicalPath)) return "";
   const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug));
   return isIndexablePage(page) && !isLegacyDuplicate && !isBlockedPublicPathForSite(site, canonicalPath) && pageSeo?.robots?.index !== false && pageSeo?.index !== false
     ? canonicalDirectoryPathForSite(site, canonicalPath)
@@ -466,7 +469,9 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
   const collectionItems = resolvePublicCollectionItems(snapshot);
   const entries = new Map<string, SitemapEntry>();
   for (const page of snapshot.pages) {
-    const canonicalPath = canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page));
+    const sitemapPath = pageSitemapPathForSite(site, page);
+    if (!sitemapPath) continue;
+    const canonicalPath = canonicalDirectoryPathForSite(site, sitemapPath);
     if (resolvePublishedRouteDisposition(snapshot, canonicalPath).kind !== "render") continue;
     const effective = resolveEffectivePublishedPage(snapshot, canonicalPath);
     if (effective.routeDisposition.kind !== "render" || !effective.indexability.sitemapEligible) continue;
