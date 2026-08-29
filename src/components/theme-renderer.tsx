@@ -574,6 +574,10 @@ function primaryRichTextFallbackHeadingLevel(sectionId: string, page: ThemePageJ
   return (semanticH1Paths.has(pagePath) || page.pageType === "article") && firstRichTextId === sectionId ? "h1" : "h2";
 }
 
+function isPolicyPage(renderContext: RenderContext): boolean {
+  return renderContext.page.pageType === "policy" || new Set(["/content", "/privacy", "/refunds", "/shipping", "/terms"]).has(renderContext.pagePath);
+}
+
 function sectionRendersMainHeading(sectionId: string, section: SectionInstance, renderContext: RenderContext): boolean {
   const sectionType = canonicalSectionType(section.type);
   if (sectionType === "rich_text") {
@@ -16659,7 +16663,7 @@ function SectionView({
     const tone = setting(section, "tone", "warm");
     const layout = setting(section, "layout", "commerce_intro");
     const applicationForm = layout === "application_form";
-    const policyPage = renderContext.page.pageType === "policy";
+    const policyPage = isPolicyPage(renderContext);
     const HeadingTag = !policyPage && normalizedHeadingLevel(setting(section, "headingLevel"), primaryRichTextFallbackHeadingLevel(id, renderContext.page, renderContext.pagePath)) === "h1" ? "h1" : "h2";
     const dark = tone === "dark";
     const compact = layout === "compact";
@@ -16936,7 +16940,7 @@ function SectionView({
     const bodyResolution = storefrontContext ? resolveStorefrontBindings(bodyTemplate, storefrontContext) : { value: bodyTemplate, missing: [] };
     if (!bodyResolution.value) return null;
     const body = bodyResolution.value;
-    const policyPage = renderContext.page.pageType === "policy";
+    const policyPage = isPolicyPage(renderContext);
     const fallbackHeadingLevel = pageHasMainHeadingBefore(id, renderContext) ? "h2" : "h1";
     const HeadingTag = policyPage || normalizedHeadingLevel(setting(section, "headingLevel"), fallbackHeadingLevel) === "h1" ? "h1" : "h2";
     return (
