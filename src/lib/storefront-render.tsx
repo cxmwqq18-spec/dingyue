@@ -2714,6 +2714,14 @@ export async function renderStorefrontPage({
   if (!stateSite) notFound();
   const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
   const currentSite = publishedSnapshot.site;
+  // The Save the Date directory body needs the complete published showcase
+  // projection. Route-scoped public states may omit that global catalogue,
+  // especially when a signed-in request bypasses the anonymous CDN response.
+  // Read the same live published projection used by customer shells so the
+  // directory cannot render empty while its header still exposes 12 topics.
+  const publishedHomepageShowcases = slug === "/best-save-the-date"
+    ? await getPublishedHomepageShowcasesForHeader(site, routeMode, state, currentSite)
+    : publishedSnapshot.publishedHomepageShowcases ?? [];
   const liveSite = providedState?.sites.find((item) => item.id === site.id);
   const collectionCategory = typeof query.category === "string" ? query.category : "";
   const collectionRootPath = publicCollectionRootPathForSite(currentSite);
@@ -2734,11 +2742,11 @@ export async function renderStorefrontPage({
         creativePacks: publishedSnapshot.creativePacks,
         mediaAssets: [],
         products: publishedSnapshot.products,
-        homepageShowcases: publishedSnapshot.publishedHomepageShowcases ?? []
+        homepageShowcases: publishedHomepageShowcases
       }
     : {
         ...currentRenderData,
-        homepageShowcases: publishedSnapshot.publishedHomepageShowcases ?? []
+        homepageShowcases: publishedHomepageShowcases
       };
   const imagePackIds = isPrimaryMydreamshootsStorefront(currentSite)
     ? publishedImagePackIds(publishedSnapshot)

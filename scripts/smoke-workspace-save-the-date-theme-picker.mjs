@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { chromium } from "playwright";
 
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/\/$/, "");
+const storefrontPrefix = /^https:\/\/(?:www\.)?mydreamshoots\.com$/i.test(baseUrl) ? "" : "/site/mydreamshoots";
+const storefrontUrl = (path) => `${baseUrl}${storefrontPrefix}${path}`;
 const browser = await chromium.launch({ headless: true });
 
 async function saveTheDateMenuSignature(page, url) {
@@ -45,13 +47,17 @@ try {
   assert.ok(root && love?.parentId === root.id && seasonal?.parentId === root.id, "Save the Date category hierarchy is invalid");
 
   const page = await context.newPage();
-  const publicHeaderSignature = await saveTheDateMenuSignature(page, `${baseUrl}/site/mydreamshoots/ai-save-the-date/engagement`);
-  const accountHeaderSignature = await saveTheDateMenuSignature(page, `${baseUrl}/site/mydreamshoots/account`);
+  await page.goto(storefrontUrl("/best-save-the-date"), { waitUntil: "domcontentloaded", timeout: 60_000 });
+  const directory = page.locator("[data-save-the-date-directory]");
+  assert.equal(await directory.locator("[data-save-the-date-category]").count(), 2, "signed-in Save the Date directory must contain 2 published categories");
+  assert.equal(await directory.locator("[data-save-the-date-card]").count(), 12, "signed-in Save the Date directory must contain 12 published themes");
+  const publicHeaderSignature = await saveTheDateMenuSignature(page, storefrontUrl("/ai-save-the-date/engagement"));
+  const accountHeaderSignature = await saveTheDateMenuSignature(page, storefrontUrl("/account"));
   assert.deepEqual(accountHeaderSignature, publicHeaderSignature, "account and public Save the Date menus must be identical");
-  await page.goto(`${baseUrl}/site/mydreamshoots/app/create#step-video`, { waitUntil: "domcontentloaded", timeout: 60_000 });
+  await page.goto(storefrontUrl("/app/create#step-video"), { waitUntil: "domcontentloaded", timeout: 60_000 });
   await page.getByRole("button", { name: "Choose a video theme" }).waitFor({ state: "visible", timeout: 30_000 });
   assert.match((await page.locator("header").innerText()).replace(/\s+/g, " "), /Save the Date/, "workspace desktop header is missing Save the Date");
-  const workspaceHeaderSignature = await saveTheDateMenuSignature(page, `${baseUrl}/site/mydreamshoots/app/create#step-video`);
+  const workspaceHeaderSignature = await saveTheDateMenuSignature(page, storefrontUrl("/app/create#step-video"));
   assert.deepEqual(workspaceHeaderSignature, publicHeaderSignature, "workspace and public Save the Date menus must be identical");
 
   await page.getByRole("button", { name: "Choose a video theme" }).click();
@@ -77,14 +83,14 @@ try {
   await dialog.getByRole("button", { name: "Cancel" }).click();
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto(`${baseUrl}/site/mydreamshoots/app/create#step-video`, { waitUntil: "domcontentloaded", timeout: 60_000 });
+  await page.goto(storefrontUrl("/app/create#step-video"), { waitUntil: "domcontentloaded", timeout: 60_000 });
   const mobileMenu = page.locator("details[data-storefront-mobile-menu]");
   await mobileMenu.locator("summary").click();
   await mobileMenu.getByRole("link", { name: "Save the Date" }).waitFor({ state: "visible" });
   assert.ok(await mobileMenu.getByRole("link", { name: "Save the Date" }).isVisible(), "workspace mobile menu is missing Save the Date");
   await page.screenshot({ path: "/tmp/mydreamshoots-save-the-date-picker-mobile.png", fullPage: false });
 
-  console.log(JSON.stringify({ ok: true, apiThemes: apiPayload.themes.length, categories: [root.slug, love.slug, seasonal.slug], headerTopics: publicHeaderSignature.length, desktopPromptLength: prompt.length, mobileMenu: true }, null, 2));
+  console.log(JSON.stringify({ ok: true, apiThemes: apiPayload.themes.length, categories: [root.slug, love.slug, seasonal.slug], directoryThemes: 12, headerTopics: publicHeaderSignature.length, desktopPromptLength: prompt.length, mobileMenu: true }, null, 2));
   await context.close();
 } finally {
   await browser.close();
