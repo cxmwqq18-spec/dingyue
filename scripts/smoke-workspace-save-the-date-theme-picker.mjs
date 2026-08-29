@@ -18,6 +18,7 @@ async function saveTheDateMenuSignature(page, url) {
     return [...(panel?.querySelectorAll("a[href]") ?? [])]
       .map((anchor) => anchor.getAttribute("href") || "")
       .filter((href) => href.includes("/ai-save-the-date/") || href.includes("/holidays-events/wedding-invitation"))
+      .filter((href) => href !== "/best-save-the-date")
       .sort();
   }, controlId);
   assert.equal(signature.length, 12, `${url} Save the Date menu must contain 12 published topics`);
