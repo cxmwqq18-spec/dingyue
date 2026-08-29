@@ -80,7 +80,7 @@ function writeReport(file, title, metadata, rows) {
   return file;
 }
 function clean(value, key = "") {
-  if (forbidden.test(key) && key !== "creditCost") return undefined;
+  if (forbidden.test(key) && key !== "creditCost" && key !== "sectionsOrder") return undefined;
   if (value instanceof Date) return value.toISOString();
   if (Array.isArray(value)) return value.map((item) => clean(item)).filter((item) => item !== undefined);
   if (value && typeof value === "object") {
