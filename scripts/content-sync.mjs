@@ -249,7 +249,12 @@ async function plan() {
   const scope = readScope();
   const source = db(sourceUrl); const destination = db(targetUrl);
   try {
-    const [sourceRows, targetRows, baselines] = await Promise.all([readAll(source, sourceSiteId), readAll(destination, siteId), destination.contentSyncBaseline.findMany({ where: { target, siteId } })]);
+    // Keep tunnel-backed production reads sequential. A single SSH forward may
+    // reject multiple simultaneous Prisma connection handshakes even though
+    // each individual relational query is healthy.
+    const sourceRows = await readAll(source, sourceSiteId);
+    const targetRows = await readAll(destination, siteId);
+    const baselines = await destination.contentSyncBaseline.findMany({ where: { target, siteId } });
     const baselineMap = new Map(baselines.map((row) => [`${row.entityType}|${row.entityKey}|${row.fieldPath.split("/")[0]}|/${row.fieldPath.split("/").slice(1).join("/")}`, row]));
     const operations = [];
     for (const [type, spec] of Object.entries(entitySpecs)) {
