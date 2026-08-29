@@ -153,6 +153,10 @@ function repairPage(slug, source) {
       "hero-ai-proposal-beach-sunset.jpg", "ai-proposal-memory-photos-planning.jpg", "ai-proposal-after-yes-embrace.jpg",
       "ai-proposal-video-recording.jpg"
     ]);
+    json.sections.proposal_final_cta.settings = {
+      ...json.sections.proposal_final_cta.settings,
+      ...imageSettings(manifestMap(json).get("ai-proposal-garden-walk-after-yes.jpg"))
+    };
     json.sections.proposal_faq.blocks[6].settings.answer = "A proposal story centers on the question and immediate reaction. An engagement announcement focuses on sharing the news afterward.";
     json.sections.proposal_faq.blocks[7].settings.answer = "Use media and personal details you have permission to use, and review the current privacy policy before uploading.";
   }
@@ -162,6 +166,14 @@ function repairPage(slug, source) {
       "ai-wedding-invitation-design-selection.jpg", "ai-wedding-invitation-venue-display.jpg",
       "ai-wedding-invitation-digital-share.jpg", "ai-wedding-invitation-envelope-prep.jpg"
     ]);
+    json.sections.wedding_invitation_what_is.settings = {
+      ...json.sections.wedding_invitation_what_is.settings,
+      ...imageSettings(manifestMap(json).get("ai-wedding-invitation-reception-table.jpg"))
+    };
+    json.sections.wedding_invitation_accuracy.settings = {
+      ...json.sections.wedding_invitation_accuracy.settings,
+      ...imageSettings(manifestMap(json).get("ai-wedding-invitation-bridesmaid-review.jpg"))
+    };
   }
   if (slug === "/ai-save-the-date/save-the-date") {
     assignBlockImages(json, "save_date_use_cases", [
