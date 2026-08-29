@@ -11,7 +11,9 @@ import { isExplicitSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-conte
 import { prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
 import { mutateLocalPlatformStateFallback, readLocalPlatformStateFallback, readPlatformState } from "@/lib/server-store";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
+import { policyPageSlug } from "@/lib/site-route-canonical";
 import { storefrontGalleryMediaPairs } from "@/lib/storefront-media-alt";
+import { storefrontGlobalShellPageSlugs } from "@/lib/storefront-global-shell";
 import { withStorefrontPublicWatermarkUrl } from "@/lib/storefront-public-watermark-url";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
 import {
@@ -1039,12 +1041,13 @@ function publicRuntimePageSlugs(slug?: string): string[] | undefined {
   if (!slug) return undefined;
   const normalized = slug === "/" ? "/" : slug.startsWith("/") ? slug : `/${slug}`;
   const legacySlugs = normalized === "/faq" ? ["/help"] : [];
+  const internalPolicySlug = policyPageSlug(normalized);
   const policySourceSlugs = normalized === "/privacy"
     ? ["/privacy", "/privacy-policy", "/policies/privacy", "/policies/privacy-policy"]
     : normalized === "/terms"
       ? ["/terms", "/terms-of-service", "/policies/terms", "/policies/terms-of-service"]
       : [];
-  return Array.from(new Set([normalized, ...legacySlugs, ...policySourceSlugs, "/404"]));
+  return Array.from(new Set([normalized, internalPolicySlug, ...legacySlugs, ...policySourceSlugs, "/404"]));
 }
 
 function publicRuntimePageWhere(pageSlugs?: string[]): Prisma.ThemePageWhereInput | undefined {
@@ -1610,6 +1613,25 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
     if (!site) return undefined;
     storefrontPerfMark("site", startedAt, { pageSlugs, profile: needs.profile });
     const siteId = site.id;
+    const loadedPageSlugs = new Set(site.pages.map((page) => page.slug));
+    // Header and footer are site-global. Always hydrate the relational pages
+    // referenced by that shared shell before publishedPaths is compiled, so a
+    // route-specific body query cannot change global navigation visibility.
+    const missingNavigationPageSlugs = Array.from(new Set(
+      storefrontGlobalShellPageSlugs(site.settings?.draftJson)
+        .flatMap((slug) => publicRuntimePageSlugs(slug) ?? [slug])
+    ))
+      .filter((slug) => !loadedPageSlugs.has(slug));
+    const navigationPages = missingNavigationPageSlugs.length
+      ? await tx.themePage.findMany({
+          where: { siteId, slug: { in: missingNavigationPageSlugs } },
+          orderBy: { slug: "asc" },
+          select: publicRuntimeSiteSelect.pages.select
+        })
+      : [];
+    const siteWithNavigationPages = navigationPages.length
+      ? { ...site, pages: [...site.pages, ...navigationPages].sort((left, right) => left.slug.localeCompare(right.slug)) }
+      : site;
     const limits = publicRuntimeLimits(needs.profile);
     const [products, siteAiApps, creativePacks, creativePackCategories, mediaAssets, toolCategories, toolMenuItems, videoThemeCategories, videoThemes] = await Promise.all([
       needs.products ? tx.product.findMany({ where: { siteId, status: "active" }, include: { prices: true }, orderBy: [{ type: "asc" }, { createdAt: "asc" }] }) : Promise.resolve([]),
@@ -1638,7 +1660,7 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
     });
 
     const mappedMediaAssets = mediaAssets.map(toMediaAsset);
-    const mappedSite = toPublicSiteShell(site, mappedMediaAssets);
+    const mappedSite = toPublicSiteShell(siteWithNavigationPages, mappedMediaAssets);
     const state = emptyPlatformState({
     sites: [mappedSite],
     siteDomains: site.domains.map(toSiteDomain),

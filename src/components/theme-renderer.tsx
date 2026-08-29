@@ -49,6 +49,7 @@ import {
   storefrontSourceImageAlt,
   storefrontVideoPosterAlt
 } from "@/lib/storefront-media-alt";
+import { GUARDED_STOREFRONT_FOOTER_PATHS } from "@/lib/storefront-global-shell";
 import {
   AlertTriangle,
   ArrowRight,
@@ -1903,7 +1904,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
           }))
     : [];
   const links = pairedStoreFooterLinks.length ? pairedStoreFooterLinks : visibleBaseLinks;
-  const guardedPublishedFooterPaths = new Set(["/children-privacy", "/content", "/cookies", "/creators-circle", "/privacy", "/refunds", "/state-privacy", "/terms"]);
+  const guardedPublishedFooterPaths = new Set<string>(GUARDED_STOREFRONT_FOOTER_PATHS);
   const footerLinkIsPublished = (item: { href: string }) => {
     const path = item.href.split(/[?#]/)[0] || "/";
     return !guardedPublishedFooterPaths.has(path) || !storefrontContext?.publishedPaths || storefrontContext.publishedPaths.includes(path);
