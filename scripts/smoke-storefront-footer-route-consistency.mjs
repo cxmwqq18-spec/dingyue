@@ -55,7 +55,7 @@ async function readFooter(routePath) {
   }
   const internalSignature = Array.from(new Set(
     links
-      .filter((link) => link.href.startsWith("/"))
+      .filter((link) => link.href.startsWith("/") && !link.href.startsWith("/cdn-cgi/"))
       .map((link) => `${link.label}\t${link.href}`)
   )).sort();
   return { routePath, internalSignature };
