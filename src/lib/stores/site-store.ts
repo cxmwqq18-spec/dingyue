@@ -723,6 +723,7 @@ const publicRuntimeMediaAssetSelect = {
   sourceType: true,
   previewUrl: true,
   originUrl: true,
+  altText: true,
   createdAt: true
 } satisfies Prisma.MediaAssetSelect;
 const emptyThemePageJson = {
@@ -1592,7 +1593,10 @@ async function getPublicRuntimeSiteLookupByHost(host: string | null | undefined)
 async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup, pageSlugs?: string[], contextSlug?: string): Promise<PlatformState | undefined> {
   const startedAt = Date.now();
   const needs = publicRuntimeNeeds(pageSlugs, contextSlug);
-  const pageWhere = publicRuntimePageWhere(pageSlugs);
+  // The homepage projection is compiled from all current public topic pages.
+  // Restricting this read to `/` and `/404` silently removes the video and
+  // Save the Date showcase groups even though their relational rows exist.
+  const pageWhere = needs.profile === "home" ? undefined : publicRuntimePageWhere(pageSlugs);
   const select = {
       ...publicRuntimeSiteSelect,
       pages: pageWhere
@@ -1650,7 +1654,10 @@ async function loadStorefrontPublicRuntimeState(lookup: PublicRuntimeSiteLookup,
     });
     storefrontPerfMark("done", startedAt);
     return state;
-  }, { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead });
+  }, {
+    isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead,
+    timeout: 30_000
+  });
 }
 
 export const getStorefrontRuntimeStateForSite = cache(async (siteId: string): Promise<PlatformState | undefined> => {

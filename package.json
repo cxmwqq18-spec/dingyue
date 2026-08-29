@@ -92,6 +92,7 @@
     "generate:dreamshoot-homepage-videos": "node scripts/generate-dreamshoot-homepage-videos.mjs",
     "smoke:dreamshoot-homepage-showcase": "node scripts/smoke-dreamshoot-homepage-showcase.mjs",
     "smoke:homepage-showcase-publication": "node scripts/smoke-homepage-showcase-publication.mjs",
+    "smoke:mydreamshoots-homepage-showcase-runtime": "node scripts/smoke-mydreamshoots-homepage-showcase-runtime.mjs",
     "smoke:mydreamshoots-homepage-db": "node scripts/smoke-mydreamshoots-homepage-db.mjs",
     "report:mydreamshoots-homepage-diff": "node scripts/report-mydreamshoots-homepage-diff.mjs",
     "smoke:workflow-videos": "node scripts/smoke-workflow-video-sections.mjs",
