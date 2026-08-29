@@ -29,6 +29,7 @@ import {
   readStorefrontPlatformState,
   readStorefrontPublicPageMetadataStateBySlugFromDatabase,
   readStorefrontPublicRuntimeStateBySlugFromDatabase,
+  readStorefrontPublicRuntimeStateForSiteFromDatabase,
   readStorefrontRuntimeStateForSiteFromDatabase
 } from "@/lib/storefront-state";
 import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
@@ -1128,11 +1129,22 @@ async function getPublishedHomepageShowcasesForHeader(
   state: PlatformState,
   currentSite: Site
 ): Promise<PublishedHomepageShowcaseItem[]> {
-  // Customer-runtime states intentionally omit catalog projections. Load the
-  // live public bundle when the private shell needs global navigation.
-  const publicState = state.products.length || state.creativePacks.length
-    ? state
-    : await getStateForStorefrontRender(site, routeMode);
+  const scopedSnapshot = createPublishedSiteSnapshot(state, currentSite);
+  const scopedShowcases = scopedSnapshot.publishedHomepageShowcases ?? [];
+  const expectedSaveTheDateItems = currentSite.themeSettings.publishedJson.saveTheDateNavigation?.groups
+    ?.flatMap((group) => group.items)
+    .filter((item) => item.status === "published").length ?? 0;
+  const scopedSaveTheDateItems = scopedShowcases.filter(
+    (item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible
+  ).length;
+  if (!expectedSaveTheDateItems || scopedSaveTheDateItems >= expectedSaveTheDateItems) return scopedShowcases;
+
+  // Route-scoped public and customer states may contain one current-page
+  // showcase while omitting the rest of the global Save the Date catalogue.
+  // A non-empty partial projection is not complete navigation, so reload the
+  // lightweight site-wide public runtime before rendering any shared header.
+  const publicState = await readStorefrontPublicRuntimeStateForSiteFromDatabase(site.id)
+    ?? await getStateForStorefrontRender(site, routeMode);
   const publicSite = publicState.sites.find((item) => item.id === site.id);
   return publicSite ? createPublishedSiteSnapshot(publicState, publicSite).publishedHomepageShowcases ?? [] : [];
 }
@@ -2714,14 +2726,10 @@ export async function renderStorefrontPage({
   if (!stateSite) notFound();
   const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
   const currentSite = publishedSnapshot.site;
-  // The Save the Date directory body needs the complete published showcase
-  // projection. Route-scoped public states may omit that global catalogue,
-  // especially when a signed-in request bypasses the anonymous CDN response.
-  // Read the same live published projection used by customer shells so the
-  // directory cannot render empty while its header still exposes 12 topics.
-  const publishedHomepageShowcases = slug === "/best-save-the-date"
-    ? await getPublishedHomepageShowcasesForHeader(site, routeMode, state, currentSite)
-    : publishedSnapshot.publishedHomepageShowcases ?? [];
+  // Shared navigation and the Save the Date directory both require the full
+  // published catalogue, even when the current route loaded a scoped page
+  // projection for its body.
+  const publishedHomepageShowcases = await getPublishedHomepageShowcasesForHeader(site, routeMode, state, currentSite);
   const liveSite = providedState?.sites.find((item) => item.id === site.id);
   const collectionCategory = typeof query.category === "string" ? query.category : "";
   const collectionRootPath = publicCollectionRootPathForSite(currentSite);
