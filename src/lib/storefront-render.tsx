@@ -35,7 +35,7 @@ import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/customer-account-runtime";
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
-import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
+import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getPublishedVideoGenerationNavigationForSite, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicNavigationDataForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
 import { assertLiveDraftPage, createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, resolvePublishedRouteDisposition, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
 import type { StorefrontContext } from "@/lib/storefront-context/types";
@@ -50,7 +50,7 @@ import { isMydreamshootsCollectionItemSlug, isMydreamshootsPublicVideoGeneration
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
-import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, PublishedLeafRouteProjection, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
+import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, PublishedLeafRouteProjection, PublishedVideoNavigationProjection, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
 const dreamshootPartnerTemplateSlugs = new Set([
@@ -90,6 +90,21 @@ function publishedVideoGenerationTopics(snapshot: ReturnType<typeof createPublis
   // The live relational runtime is the source of truth for the directory.
   // An incomplete page projection must not hide active database themes.
   return topics.length ? topics : undefined;
+}
+
+function publishedVideoNavigationTopics(topics: PublishedVideoNavigationProjection[]): HeaderVideoGenerationTopic[] {
+  return topics.map((item) => ({
+    id: item.id,
+    slug: item.slug,
+    label: item.label,
+    description: item.description,
+    href: item.canonicalPath,
+    imageUrl: item.imageUrl,
+    parentSlug: item.parentSlug,
+    parentLabel: item.parentLabel,
+    parentSortOrder: item.parentSortOrder,
+    sortOrder: item.sortOrder
+  }));
 }
 
 function canonicalizeSaveTheDateRoutes<T>(value: T): T {
@@ -2740,8 +2755,21 @@ export async function renderStorefrontPage({
   // intentionally narrow `renderData` to the selected collection for the page
   // body, so build the menu projection from the complete site render data.
   // Otherwise each pack on a detail route is treated as its own category.
-  const navigationRenderData = imagePackIds
-    ? { ...currentRenderData, creativePacks: currentRenderData.creativePacks.filter((pack) => imagePackIds.has(pack.id)) }
+  const [sharedNavigationData, sharedPublishedVideoNavigation] = useSharedNavigation
+    ? await Promise.all([
+        getStorefrontPublicNavigationDataForSite(currentSite.id),
+        getPublishedVideoGenerationNavigationForSite(currentSite.id)
+      ])
+    : [undefined, undefined];
+  const navigationRenderData: SiteRenderData = sharedNavigationData
+    ? {
+        ...currentRenderData,
+        creativePackCategories: sharedNavigationData.creativePackCategories,
+        creativePacks: sharedNavigationData.creativePacks,
+        toolMenuItems: sharedNavigationData.toolMenuItems,
+        videoThemeCategories: sharedNavigationData.videoThemeCategories,
+        videoThemes: sharedNavigationData.videoThemes
+      }
     : currentRenderData;
   const navigationCreativePackCategories = useSharedNavigation
     ? trimCreativePackCategoriesForStorefront(navigationRenderData)
@@ -2758,7 +2786,9 @@ export async function renderStorefrontPage({
   const navigationVideoThemes = useSharedNavigation
     ? navigationRenderData.videoThemes
     : undefined;
-  const navigationVideoGenerationTopics = publishedVideoGenerationTopics(publishedSnapshot);
+  const navigationVideoGenerationTopics = sharedPublishedVideoNavigation
+    ? publishedVideoNavigationTopics(sharedPublishedVideoNavigation)
+    : publishedVideoGenerationTopics(publishedSnapshot);
   currentSite.mediaAssets = renderData.mediaAssets;
   const directPage = findPage(currentSite, slug) ?? (
     liveSite
@@ -3709,6 +3739,23 @@ export async function renderToolPage({
   const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
   const currentSite = publishedSnapshot.site;
   const renderData = getSiteRenderData(state, currentSite.id);
+  const useSharedNavigation = usesSharedDreamShootNavigation(currentSite);
+  const [sharedNavigationData, sharedPublishedVideoNavigation] = useSharedNavigation
+    ? await Promise.all([
+        getStorefrontPublicNavigationDataForSite(currentSite.id),
+        getPublishedVideoGenerationNavigationForSite(currentSite.id)
+      ])
+    : [undefined, undefined];
+  const navigationRenderData: SiteRenderData = sharedNavigationData
+    ? {
+        ...renderData,
+        creativePackCategories: sharedNavigationData.creativePackCategories,
+        creativePacks: sharedNavigationData.creativePacks,
+        toolMenuItems: sharedNavigationData.toolMenuItems,
+        videoThemeCategories: sharedNavigationData.videoThemeCategories,
+        videoThemes: sharedNavigationData.videoThemes
+      }
+    : renderData;
   const candidate = resolvedPage
     ? { page: resolvedPage, matched: true }
     : resolveToolPageForSite(state, currentSite, toolSlug, renderData.siteAiApps, renderData.creativePacks);
@@ -3748,12 +3795,14 @@ export async function renderToolPage({
     page: pageJson,
     pagePath: publicPath ?? page.slug,
     query,
-    navigationCreativePackCategories: trimCreativePackCategoriesForStorefront(renderData),
-    navigationCreativePacks: trimCreativePacksForNavigation(renderData),
-    navigationToolMenuItems: renderData.toolMenuItems.map(lightweightToolMenuItem),
-    navigationVideoThemeCategories: renderData.videoThemeCategories,
-    navigationVideoThemes: renderData.videoThemes,
-    navigationVideoGenerationTopics: publishedVideoGenerationTopics(publishedSnapshot),
+    navigationCreativePackCategories: trimCreativePackCategoriesForStorefront(navigationRenderData),
+    navigationCreativePacks: trimCreativePacksForNavigation(navigationRenderData),
+    navigationToolMenuItems: navigationRenderData.toolMenuItems.map(lightweightToolMenuItem),
+    navigationVideoThemeCategories: navigationRenderData.videoThemeCategories,
+    navigationVideoThemes: navigationRenderData.videoThemes,
+    navigationVideoGenerationTopics: sharedPublishedVideoNavigation
+      ? publishedVideoNavigationTopics(sharedPublishedVideoNavigation)
+      : publishedVideoGenerationTopics(publishedSnapshot),
     renderData: pageRenderData,
     routeMode,
     runtime: runtimeWithEmptyCollections(),

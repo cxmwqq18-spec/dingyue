@@ -31,7 +31,7 @@ import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit, isVideoPro
 import { DEFAULT_VIDEO_FRAME_LIMIT, defaultVideoModelPricing, normalizeVideoFrameLimit, normalizeVideoModelPricing, type VideoModelPricing } from "@/lib/video-frame-config";
 import { defaultVideoThemeExamplePrompt, validateVideoPrompt } from "@/lib/video-prompt-format";
 import { compileMydreamshootsVideoTopicPublication } from "@/lib/mydreamshoots-video-topic-publication";
-import { resolvePublishedSaveTheDateGroups, type PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
+import { resolvePublishedSaveTheDateGroups, resolvePublishedSaveTheDateNavigationGroups, type PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
 import type {
   AiGatewayGroup,
   AiProviderConfig,
@@ -2465,7 +2465,7 @@ export type CustomerWorkspaceBootstrapRelational = {
   publishedSaveTheDateMenuLabel: string;
 };
 
-async function getPublishedVideoGenerationNavigationForSite(siteId: string): Promise<PublishedVideoNavigationProjection[]> {
+export async function getPublishedVideoGenerationNavigationForSite(siteId: string): Promise<PublishedVideoNavigationProjection[]> {
   if (!isMydreamshootsVideoFrameworkSiteId(siteId)) return [];
   const pages = await prisma.themePage.findMany({ where: { siteId }, orderBy: { slug: "asc" } });
   return compileMydreamshootsVideoTopicPublication(pages.map(toThemePage), siteId as "site_dreamshoot" | "site_grownstride_test").navigation;
@@ -2574,6 +2574,19 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
     ]);
     const { createPublishedSiteSnapshot } = await import("@/lib/storefront-context");
     const liveSnapshot = livePublicState ? createPublishedSiteSnapshot(livePublicState, livePublicState.sites[0], { source: "postgres" }) : undefined;
+    const publishedSaveTheDateGroups = resolvePublishedSaveTheDateGroups(liveSnapshot?.publishedHomepageShowcases ?? []);
+    const configuredSaveTheDateGroups = resolvePublishedSaveTheDateNavigationGroups(
+      liveSnapshot?.themeSettings?.saveTheDateNavigation?.groups
+    );
+    const publishedSaveTheDateItemCount = publishedSaveTheDateGroups.reduce((total, group) => total + group.items.length, 0);
+    const configuredSaveTheDateItemCount = configuredSaveTheDateGroups.reduce((total, group) => total + group.items.length, 0);
+    // Both projections come from current live relational rows and include only
+    // published items. A partially compiled homepage showcase projection must
+    // not remove a valid published navigation entry from account/workspace
+    // headers, so prefer the complete projection by leaf count.
+    const completeSaveTheDateGroups = configuredSaveTheDateItemCount > publishedSaveTheDateItemCount
+      ? configuredSaveTheDateGroups
+      : publishedSaveTheDateGroups;
 
     return {
       site: {
@@ -2590,7 +2603,7 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
       videoThemeCategories: navigationData.videoThemeCategories.map((category) => watermarkedVideoThemeCategoryForWorkspace(category) ?? category),
       videoThemes: videoThemes.map(watermarkedVideoThemeForWorkspace),
       publishedVideoGenerationTopics,
-      publishedSaveTheDateGroups: resolvePublishedSaveTheDateGroups(liveSnapshot?.publishedHomepageShowcases ?? []),
+      publishedSaveTheDateGroups: completeSaveTheDateGroups,
       publishedSaveTheDateMenuLabel: String(
         liveSnapshot?.themeSettings?.saveTheDateNavigation?.menuLabel || "Save the Date"
       ).trim() || "Save the Date"

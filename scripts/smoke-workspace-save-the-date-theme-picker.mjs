@@ -5,6 +5,24 @@ import { chromium } from "playwright";
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/\/$/, "");
 const browser = await chromium.launch({ headless: true });
 
+async function saveTheDateMenuSignature(page, url) {
+  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60_000 });
+  const trigger = page.locator("header nav").getByRole("button", { name: "Save the Date", exact: true }).first();
+  await trigger.waitFor({ state: "visible", timeout: 30_000 });
+  await trigger.click();
+  const controlId = await trigger.getAttribute("aria-controls");
+  const signature = await page.evaluate((id) => {
+    const panel = id ? document.getElementById(id) : document.querySelector('[data-storefront-mega-menu-panel][aria-hidden="false"]');
+    return [...(panel?.querySelectorAll("a[href]") ?? [])]
+      .map((anchor) => anchor.getAttribute("href") || "")
+      .filter((href) => href.includes("/ai-save-the-date/") || href.includes("/holidays-events/wedding-invitation"))
+      .sort();
+  }, controlId);
+  assert.equal(signature.length, 12, `${url} Save the Date menu must contain 12 published topics`);
+  await page.keyboard.press("Escape").catch(() => undefined);
+  return signature;
+}
+
 try {
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   const login = await context.request.post(`${baseUrl}/api/sites/site_dreamshoot/auth/login`, {
@@ -27,9 +45,14 @@ try {
   assert.ok(root && love?.parentId === root.id && seasonal?.parentId === root.id, "Save the Date category hierarchy is invalid");
 
   const page = await context.newPage();
+  const publicHeaderSignature = await saveTheDateMenuSignature(page, `${baseUrl}/site/mydreamshoots/ai-save-the-date/engagement`);
+  const accountHeaderSignature = await saveTheDateMenuSignature(page, `${baseUrl}/site/mydreamshoots/account`);
+  assert.deepEqual(accountHeaderSignature, publicHeaderSignature, "account and public Save the Date menus must be identical");
   await page.goto(`${baseUrl}/site/mydreamshoots/app/create#step-video`, { waitUntil: "domcontentloaded", timeout: 60_000 });
   await page.getByRole("button", { name: "Choose a video theme" }).waitFor({ state: "visible", timeout: 30_000 });
   assert.match((await page.locator("header").innerText()).replace(/\s+/g, " "), /Save the Date/, "workspace desktop header is missing Save the Date");
+  const workspaceHeaderSignature = await saveTheDateMenuSignature(page, `${baseUrl}/site/mydreamshoots/app/create#step-video`);
+  assert.deepEqual(workspaceHeaderSignature, publicHeaderSignature, "workspace and public Save the Date menus must be identical");
 
   await page.getByRole("button", { name: "Choose a video theme" }).click();
   const dialog = page.getByRole("dialog", { name: /Choose a theme and reference case/i });
@@ -40,7 +63,7 @@ try {
   await dialog.getByRole("button", { name: /Save the Date\s*12/i }).click();
   await dialog.getByText("Love & Wedding", { exact: true }).waitFor({ state: "visible" });
   await dialog.getByText("Seasonal Holidays", { exact: true }).waitFor({ state: "visible" });
-  const seasonalRow = dialog.getByText("Seasonal Holidays", { exact: true }).locator("..");
+  const seasonalRow = dialog.getByText("Seasonal Holidays", { exact: true }).locator("../..");
   await seasonalRow.getByRole("button").first().click();
   const christmas = dialog.getByRole("button", { name: /^Christmas$/i });
   await christmas.waitFor({ state: "visible" });
@@ -61,7 +84,7 @@ try {
   assert.ok(await mobileMenu.getByRole("link", { name: "Save the Date" }).isVisible(), "workspace mobile menu is missing Save the Date");
   await page.screenshot({ path: "/tmp/mydreamshoots-save-the-date-picker-mobile.png", fullPage: false });
 
-  console.log(JSON.stringify({ ok: true, apiThemes: apiPayload.themes.length, categories: [root.slug, love.slug, seasonal.slug], desktopPromptLength: prompt.length, mobileMenu: true }, null, 2));
+  console.log(JSON.stringify({ ok: true, apiThemes: apiPayload.themes.length, categories: [root.slug, love.slug, seasonal.slug], headerTopics: publicHeaderSignature.length, desktopPromptLength: prompt.length, mobileMenu: true }, null, 2));
   await context.close();
 } finally {
   await browser.close();

@@ -40,3 +40,28 @@ export function resolvePublishedSaveTheDateGroups(showcases: PublishedHomepageSh
     .map(([label, items]) => ({ label, slug: groupSlug(label), sortOrder: items[0]?.sortOrder ?? 0, items }))
     .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label));
 }
+
+/**
+ * Resolve the published navigation rows stored in the current relational site
+ * settings. This is the live-data fallback when a route-scoped public bundle
+ * does not contain homepage showcase rows. It deliberately accepts published
+ * items only, so draft navigation can never leak into a customer shell.
+ */
+export function resolvePublishedSaveTheDateNavigationGroups(groups: SaveTheDateNavigationGroup[] = []): PublishedSaveTheDateGroup[] {
+  return groups
+    .map((group) => ({
+      ...group,
+      items: group.items
+        .filter((item) => item.status === "published" && Boolean(item.href?.trim()))
+        .map((item) => ({
+          ...item,
+          href: canonicalSaveTheDatePath(item.href),
+          description: item.description ?? "",
+          imageUrl: item.imageUrl ?? "",
+          imageAlt: item.imageAlt ?? ""
+        }))
+        .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label))
+    }))
+    .filter((group) => group.items.length > 0)
+    .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label));
+}

@@ -16,7 +16,7 @@ import { DreamshootToolDirectoryClient, type DreamshootToolDirectoryCard } from 
 import { SaveTheDateDirectory } from "@/components/storefront/save-the-date-directory";
 import { DreamShootMegaToolsPanel as SharedDreamShootMegaToolsPanel, getToolBlocksFromMenuItems as getSharedToolBlocksFromMenuItems } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderMobileVideoGenerationMenu, HeaderMobileSaveTheDateMenu, HeaderPhotoPackageMegaPanel, HeaderToolsMegaPanel, HeaderVideoGenerationMegaPanel, HeaderSaveTheDateMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderToolMegaItem, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
-import { resolvePublishedSaveTheDateGroups } from "@/lib/save-the-date-publication";
+import { resolvePublishedSaveTheDateGroups, resolvePublishedSaveTheDateNavigationGroups } from "@/lib/save-the-date-publication";
 import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
@@ -1091,19 +1091,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   // the derived homepage showcase projection can be empty even when the live
   // settings row contains a complete Save the Date catalogue. Use that live
   // SQL configuration as the direct fallback instead of hiding valid nav.
-  const configuredSaveTheDateGroups = (saveTheDateConfig?.groups ?? [])
-    .map((group) => ({
-      ...group,
-      items: group.items
-        .filter((item) => item.status === "published" && Boolean(item.href?.trim()))
-        .map((item) => ({
-          ...item,
-          description: item.description ?? "",
-          imageUrl: item.imageUrl ?? "",
-          imageAlt: item.imageAlt ?? ""
-        }))
-    }))
-    .filter((group) => group.items.length > 0);
+  const configuredSaveTheDateGroups = resolvePublishedSaveTheDateNavigationGroups(saveTheDateConfig?.groups);
   const saveTheDateGroups = publishedSaveTheDateShowcases.length
     ? resolvePublishedSaveTheDateGroups(publishedSaveTheDateShowcases)
     : configuredSaveTheDateGroups;

@@ -38,6 +38,7 @@ const siteChecks = [
       "/site/mydreamshoots",
       "/site/mydreamshoots/ai-image-generation",
       "/site/mydreamshoots/ai-image-generation/portrait-photo",
+      "/site/mydreamshoots/ai-save-the-date/engagement",
       "/site/mydreamshoots/ai-video-generation",
       "/site/mydreamshoots/ai-video-generation/talking-photo",
       "/site/mydreamshoots/ai-video-generation/cinematic-video",
@@ -70,6 +71,11 @@ const menuChecks = [
   {
     name: "tools",
     buttonName: /^(AI Video Generation|AI Tools|Tools|Herramientas)$/
+  },
+  {
+    name: "save-the-date",
+    buttonName: /^Save the Date$/,
+    sites: ["mydreamshoots"]
   }
 ];
 
@@ -224,6 +230,12 @@ async function extractMenuSignature(page, siteSlug, route, menuCheck) {
               item.href.includes(`/site/${currentSiteSlug}/ai-image-generation/`) ||
               item.href.startsWith("/collections/") ||
               item.href.startsWith("/ai-image-generation/");
+          }
+          if (currentMenuName === "save-the-date") {
+            return item.href.includes(`/site/${currentSiteSlug}/ai-save-the-date/`) ||
+              item.href.startsWith("/ai-save-the-date/") ||
+              item.href.includes(`/site/${currentSiteSlug}/holidays-events/wedding-invitation`) ||
+              item.href.startsWith("/holidays-events/wedding-invitation");
           }
           if (currentSiteSlug === "mydreamshoots") {
             return item.href.includes(`/site/${currentSiteSlug}/app/create#step-video`) ||
@@ -385,6 +397,9 @@ async function smokeWorkspaceOptionConsistency(context, failures, checks = works
       await page.waitForLoadState("networkidle", { timeout: networkIdleTimeoutMs }).catch(() => undefined);
       const packageMenuSignature = await extractMenuSignature(page, workspaceCheck.slug, `/site/${workspaceCheck.slug}`, menuChecks[0]);
       const toolMenuSignature = await extractMenuSignature(page, workspaceCheck.slug, `/site/${workspaceCheck.slug}`, menuChecks[1]);
+      const saveTheDateMenuSignature = workspaceCheck.slug === "mydreamshoots"
+        ? await extractMenuSignature(page, workspaceCheck.slug, `/site/${workspaceCheck.slug}`, menuChecks[2])
+        : [];
       const directoryPackageSignature = workspaceCheck.slug === "mydreamshoots"
         ? await extractDirectoryPackageSignature(page, workspaceCheck.slug)
         : [];
@@ -392,6 +407,9 @@ async function smokeWorkspaceOptionConsistency(context, failures, checks = works
       const workspacePackageAssetState = await extractWorkspacePackageAssetState(page, workspaceCheck.slug);
       const workspaceToolSignature = workspaceCheck.expectedToolCount > 0
         ? await extractWorkspaceToolSignature(page, workspaceCheck.slug)
+        : [];
+      const workspaceSaveTheDateMenuSignature = workspaceCheck.slug === "mydreamshoots"
+        ? await extractMenuSignature(page, workspaceCheck.slug, `/site/${workspaceCheck.slug}/app/create`, menuChecks[2])
         : [];
 
       if (workspacePackageSignature.length !== workspaceCheck.expectedPackageCount) {
@@ -462,7 +480,16 @@ async function smokeWorkspaceOptionConsistency(context, failures, checks = works
           normalizeItem: normalizeWorkspaceSignatureItem
         });
       }
-      console.log(`✓ ${workspaceCheck.slug} workspace packages/tools signatures checked`);
+      if (workspaceCheck.slug === "mydreamshoots") {
+        pushSignatureFailure(failures, {
+          site: workspaceCheck.slug,
+          surface: "workspace_save_the_date_header",
+          expected: saveTheDateMenuSignature,
+          actual: workspaceSaveTheDateMenuSignature,
+          requireOrder: true
+        });
+      }
+      console.log(`✓ ${workspaceCheck.slug} workspace packages/tools/header signatures checked`);
     }
   } finally {
     await page.close();
@@ -856,8 +883,9 @@ async function smokeNavigationDataConsistency() {
         await assertBestPackagesDirectLink(page, site.slug, route, failures);
       }
       for (const menuCheck of menuChecks) {
+        if (menuCheck.sites && !menuCheck.sites.includes(site.slug)) continue;
         let expected;
-        for (const route of site.routes.filter((candidate) => candidate === `/site/${site.slug}` || candidate.endsWith("/ai-image-generation") || candidate.endsWith("/ai-video-generation"))) {
+        for (const route of site.routes.filter((candidate) => candidate === `/site/${site.slug}` || candidate.endsWith("/ai-image-generation") || candidate.endsWith("/ai-video-generation") || candidate.includes("/ai-save-the-date/"))) {
           await gotoRoute(page, route);
           await page.waitForLoadState("networkidle", { timeout: networkIdleTimeoutMs }).catch(() => undefined);
           const signature = await extractMenuSignature(page, site.slug, route, menuCheck);
