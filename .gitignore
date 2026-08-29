@@ -31,3 +31,8 @@ docs/audits/**/*-evidence.json
 docs/audits/**/similarity-analysis.json
 releases/backups/
 releases/.tmp/
+releases/manifests/*
+!releases/manifests/.gitkeep
+releases/remote-snapshots/
+releases/*.conf
+docs/releases/

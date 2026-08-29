@@ -1,7 +1,7 @@
 import "server-only";
 
 import crypto from "crypto";
-import type { Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
 export type AsyncJobKind = "resend_domain_verify" | "cloudflare_dns" | "ai_provider_test" | (string & {});
@@ -44,8 +44,23 @@ type CreateAsyncJobParams<Result> = {
   idempotencyKey?: string;
   metadata?: Record<string, unknown>;
   ttlMs?: number;
+  rollingLimit?: {
+    windowMs: number;
+    maxJobs: number;
+    statuses?: AsyncJobStatus[];
+  };
   run: AsyncJobRunner<Result>;
 };
+
+export class AsyncJobRollingLimitError extends Error {
+  retryAfterSeconds: number;
+
+  constructor(retryAfterSeconds: number) {
+    super("async_job_rolling_limit_reached");
+    this.name = "AsyncJobRollingLimitError";
+    this.retryAfterSeconds = Math.max(1, Math.ceil(retryAfterSeconds));
+  }
+}
 
 type AsyncJobStore = {
   loaded: boolean;
@@ -150,6 +165,55 @@ async function createJobInDatabase(job: AsyncJobRecord): Promise<AsyncJobSnapsho
       })
       .then(rowToJob),
   );
+}
+
+async function createRateLimitedJobInDatabase(
+  job: AsyncJobRecord,
+  limit: NonNullable<CreateAsyncJobParams<unknown>["rollingLimit"]>
+): Promise<AsyncJobSnapshot | undefined> {
+  const createdAt = new Date(job.createdAt);
+  const windowStart = new Date(createdAt.getTime() - Math.max(1_000, limit.windowMs));
+  const statuses = limit.statuses ?? ["queued", "running", "succeeded"];
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      return await withDbTimeout(prisma.$transaction(async (transaction) => {
+        const where = {
+          kind: job.kind,
+          actorId: job.actorId,
+          status: { in: statuses },
+          createdAt: { gte: windowStart }
+        };
+        const count = await transaction.platformAsyncJob.count({ where });
+        if (count >= Math.max(1, limit.maxJobs)) {
+          const oldest = await transaction.platformAsyncJob.findFirst({
+            where,
+            orderBy: { createdAt: "asc" },
+            select: { createdAt: true }
+          });
+          const resetAt = (oldest?.createdAt.getTime() ?? createdAt.getTime()) + limit.windowMs;
+          throw new AsyncJobRollingLimitError((resetAt - createdAt.getTime()) / 1000);
+        }
+        const row = await transaction.platformAsyncJob.create({
+          data: {
+            id: job.id,
+            kind: job.kind,
+            status: job.status,
+            actorId: job.actorId,
+            idempotencyKey: job.idempotencyKey,
+            metadata: toPrismaJson(job.metadata),
+            createdAt,
+            updatedAt: new Date(job.updatedAt),
+            expiresAt: new Date(job.expiresAt)
+          }
+        });
+        return rowToJob(row);
+      }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable }));
+    } catch (error) {
+      if (error instanceof AsyncJobRollingLimitError) throw error;
+      if (!(typeof error === "object" && error && "code" in error && error.code === "P2034") || attempt === 2) throw error;
+    }
+  }
+  return undefined;
 }
 
 async function patchJobInDatabase<Result>(
@@ -272,7 +336,9 @@ export async function createAsyncJob<Result = unknown>(params: CreateAsyncJobPar
   currentStore.controllers.set(job.id, controller);
   let persistedJob: AsyncJobSnapshot | undefined;
   try {
-    persistedJob = await createJobInDatabase(job);
+    persistedJob = params.rollingLimit
+      ? await createRateLimitedJobInDatabase(job, params.rollingLimit)
+      : await createJobInDatabase(job);
   } catch (error) {
     // A concurrent request can win the unique idempotency index between the lookup and insert.
     if (params.idempotencyKey && typeof error === "object" && error && "code" in error && error.code === "P2002") {
@@ -282,13 +348,18 @@ export async function createAsyncJob<Result = unknown>(params: CreateAsyncJobPar
         }).then((row) => row ? rowToJob(row) : undefined)
       );
       if (existing) {
+        currentStore.controllers.delete(job.id);
         rememberJob(existing as AsyncJobRecord);
         return cloneJob(existing as AsyncJobSnapshot<Result>);
       }
     }
+    currentStore.controllers.delete(job.id);
     throw error;
   }
-  if (!persistedJob) throw new Error("postgres_async_job_not_created");
+  if (!persistedJob) {
+    currentStore.controllers.delete(job.id);
+    throw new Error("postgres_async_job_not_created");
+  }
   rememberJob(persistedJob as AsyncJobRecord<Result>, currentStore);
   queueMicrotask(() => {
     void runAsyncJob(job.id, params.run);
@@ -308,6 +379,28 @@ export async function getAsyncJob(jobId: string): Promise<AsyncJobSnapshot | und
     return dbJob;
   }
   return undefined;
+}
+
+export async function getAsyncJobByIdempotency(params: {
+  kind: AsyncJobKind;
+  actorId?: string;
+  idempotencyKey: string;
+}): Promise<AsyncJobSnapshot | undefined> {
+  pruneExpiredJobs();
+  const dbJob = await withDbTimeout(
+    prisma.platformAsyncJob
+      .findFirst({
+        where: {
+          kind: params.kind,
+          actorId: params.actorId,
+          idempotencyKey: params.idempotencyKey,
+          expiresAt: { gt: new Date() }
+        }
+      })
+      .then((row) => row ? rowToJob(row) : undefined)
+  );
+  if (dbJob) rememberJob(dbJob as AsyncJobRecord);
+  return dbJob;
 }
 
 export async function listAsyncJobs(filters: { actorId?: string; kind?: AsyncJobKind; limit?: number } = {}): Promise<AsyncJobSnapshot[]> {

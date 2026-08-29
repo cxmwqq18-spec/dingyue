@@ -104,6 +104,7 @@ export function AdminShell({
       <AdminRoutePrefetcher allow={lightweightAdminPrefetchAllow} hrefs={modulePrefetchHrefs} />
       <div
         className="min-h-[100dvh] bg-[var(--admin-bg)] text-[var(--admin-muted)]"
+        translate="no"
         data-admin-layout="saas-clean-admin-shell"
         data-admin-layout-compat="saas-advanced-admin-shell saas-command-workspace saas-premium-backoffice-grid xfcart-module-tree"
         data-admin-toolbar="xfcart-modern-topbar"

@@ -12,7 +12,7 @@ const {
   mydreamshootsVideoGenerationThemeSeedsForSite,
   parentVideoGenerationCategorySlugForChild
 } = jiti("../src/lib/mydreamshoots-video-framework.ts");
-const { validateVideoPrompt } = jiti("../src/lib/video-prompt-format.ts");
+const { validateVideoPrompt, videoThemePromptForEditor } = jiti("../src/lib/video-prompt-format.ts");
 
 const expectedLove = ["valentines-day", "engagement", "proposal", "save-the-date", "wedding-invitation", "wedding-ceremony"];
 const expectedSeasonal = ["christmas", "halloween", "thanksgiving", "new-year", "mothers-day", "fathers-day"];
@@ -47,6 +47,16 @@ for (const theme of themes) {
   const validation = validateVideoPrompt(theme.prompt);
   assert.equal(validation.valid, true, `${theme.slug}: ${validation.errors.join("; ")}`);
   assert.match(theme.prompt, /15 seconds/i, `${theme.slug} prompt must default to 15 seconds`);
+  assert.ok(theme.prompt.length < 2600, `${theme.slug} provider prompt should stay concise while retaining cover-specific people, objects, dialogue, and direction`);
+  const editorPrompt = videoThemePromptForEditor(theme.prompt);
+  assert.equal(editorPrompt.split("\n").length, 6, `${theme.slug} editor prompt should expose six focused fields`);
+  assert.ok(editorPrompt.length < 1450, `${theme.slug} editor prompt should stay focused while carrying visible cover details`);
+  assert.match(editorPrompt, /\[[^\]]+\]/, `${theme.slug} editor prompt should expose replaceable details`);
+  assert.match(editorPrompt, /Action: .*\b0-\d+s/, `${theme.slug} editor prompt should expose concrete time beats`);
+  assert.doesNotMatch(editorPrompt, /Duration \/ Aspect Ratio|Negative Constraints/i, `${theme.slug} editor prompt should hide output and safety boilerplate`);
 }
+
+const distinctScenes = new Set(themes.map((theme) => validateVideoPrompt(theme.prompt).sections["Scene / Environment"]));
+assert.equal(distinctScenes.size, themes.length, "each current theme must have its own scene direction");
 
 console.log(JSON.stringify({ ok: true, hierarchy: { roots: 1, groups: 2, themes: saveThemes.length }, validatedFrameworkThemes: themes.length }, null, 2));

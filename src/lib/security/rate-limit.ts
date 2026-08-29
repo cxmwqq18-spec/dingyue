@@ -21,6 +21,9 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   // 生成相关接口 - 每分钟10次
   generation: { windowMs: 60000, maxRequests: 10, keyPrefix: "gen" },
 
+  // 视频提示词优化短时防滥用；正式免费额度由 PlatformAsyncJob 的滚动窗口执行
+  videoPromptOptimizationBurst: { windowMs: 60000, maxRequests: 20, keyPrefix: "video_prompt_optimization_burst" },
+
   // 结账接口 - 每小时5次
   checkout: { windowMs: 3600000, maxRequests: 5, keyPrefix: "checkout" },
 

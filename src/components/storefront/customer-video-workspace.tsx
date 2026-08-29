@@ -1,9 +1,21 @@
 "use client";
 
 import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useMemo, useRef, useState } from "react";
-import { AlertTriangle, Check, ChevronDown, ChevronRight, Film, ImagePlus, Monitor, Send, Sparkles, X } from "lucide-react";
+import { AlertTriangle, Check, ChevronDown, ChevronRight, Film, ImagePlus, Monitor, RotateCcw, Send, Sparkles, X } from "lucide-react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
 import type { PublicCustomer, VideoTheme, VideoThemeCategory, VideoThemeExample } from "@/lib/types";
+import {
+  DEFAULT_VIDEO_PROMPT_PERSONA_ID,
+  VIDEO_PROMPT_PERSONAS,
+  type VideoPromptPersonaId
+} from "@/lib/video-prompt-personas";
+import {
+  VIDEO_PROMPT_OPTIMIZATION_ASPECT_RATIOS,
+  VIDEO_PROMPT_OPTIMIZATION_MAX_PROMPT_LENGTH,
+  type VideoPromptOptimizationAspectRatio
+} from "@/lib/video-prompt-optimization-contract";
+import { requestVideoPromptOptimization, type VideoPromptOptimizationRequestBody } from "@/lib/video-prompt-optimization-client";
+import type { VideoPromptOptimizationResult } from "@/lib/video-prompt-optimizer";
 import {
   AUTO_VIDEO_MODEL_FAMILY,
   DEFAULT_VIDEO_DURATION_SECONDS,
@@ -19,9 +31,10 @@ import {
 import {
   isGeminiVideoFrameMimeType
 } from "@/lib/video-provider-policy";
+import { videoThemePromptForEditor } from "@/lib/video-prompt-format";
 
 type SubscriptionStatus = "loading" | "active" | "required" | "admin";
-type VideoAspectRatio = "16:9" | "4:3" | "1:1" | "3:4" | "9:16";
+type VideoAspectRatio = VideoPromptOptimizationAspectRatio;
 type CreatedVideoJobFeedback = {
   customerBalance?: PublicCustomer["balance"];
 };
@@ -47,6 +60,17 @@ type VideoPromptRiskMessage = {
   severity: "block" | "warn";
   message: string;
 };
+type VideoPromptOptimizationPreview = {
+  sourcePrompt: string;
+  contextSignature: string;
+  result: VideoPromptOptimizationResult;
+};
+type PersistedVideoPromptOptimization = {
+  sourcePrompt: string;
+  contextSignature: string;
+  idempotencyKey: string;
+  body: VideoPromptOptimizationRequestBody;
+};
 
 function ThemeMedia({ src, className, alt = "" }: { src?: string; className: string; alt?: string }) {
   const [failed, setFailed] = useState(false);
@@ -57,13 +81,18 @@ function ThemeMedia({ src, className, alt = "" }: { src?: string; className: str
   return <img alt={alt} className={className} onError={() => setFailed(true)} src={normalizedSrc} />;
 }
 
-const VIDEO_ASPECT_OPTIONS: Array<{ id: VideoAspectRatio; label: string; shape: string }> = [
-  { id: "16:9", label: "16:9", shape: "aspect-[16/9] w-7" },
-  { id: "4:3", label: "4:3", shape: "aspect-[4/3] w-6" },
-  { id: "1:1", label: "1:1", shape: "aspect-square w-5" },
-  { id: "3:4", label: "3:4", shape: "aspect-[3/4] h-6" },
-  { id: "9:16", label: "9:16", shape: "aspect-[9/16] h-7" }
-];
+const VIDEO_ASPECT_SHAPES: Record<VideoAspectRatio, string> = {
+  "16:9": "aspect-[16/9] w-7",
+  "4:3": "aspect-[4/3] w-6",
+  "1:1": "aspect-square w-5",
+  "3:4": "aspect-[3/4] h-6",
+  "9:16": "aspect-[9/16] h-7"
+};
+const VIDEO_ASPECT_OPTIONS: Array<{ id: VideoAspectRatio; label: string; shape: string }> = VIDEO_PROMPT_OPTIMIZATION_ASPECT_RATIOS.map((id) => ({
+  id,
+  label: id,
+  shape: VIDEO_ASPECT_SHAPES[id]
+}));
 
 const VIDEO_RESOLUTION_OPTIONS: Array<{ id: VideoResolution; label: string }> = [
   { id: DEFAULT_VIDEO_RESOLUTION, label: "720P" }
@@ -77,7 +106,7 @@ const AI_VIDEO_PICKER_CATEGORY_SLUGS = new Set([
   "creative-lifestyle",
   "professional-business"
 ]);
-const VIDEO_PROMPT_MAX_LENGTH = 5000;
+const VIDEO_PROMPT_MAX_LENGTH = VIDEO_PROMPT_OPTIMIZATION_MAX_PROMPT_LENGTH;
 const VIDEO_PROMPT_TEMPLATE = [
   "Step 1: Describe the main subject or product. Include what should stay consistent from uploaded frame images.",
   "",
@@ -135,6 +164,57 @@ function videoDurationCostForCandidateFamilies(
 function newVideoSubmitIdempotencyKey() {
   if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return `video_${crypto.randomUUID()}`;
   return `video_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+}
+
+function newPromptOptimizationIdempotencyKey() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return `video_prompt_${crypto.randomUUID()}`;
+  return `video_prompt_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+}
+
+function promptOptimizationStorageKey(siteId: string, customerId: string) {
+  return `dingyue:video-prompt-optimization:${siteId}:${customerId}`;
+}
+
+function promptOptimizationErrorText(error: string | undefined, status: number, spanish: boolean, retryAfter?: number) {
+  if (status === 401 || error === "customer_login_required") {
+    return vt(spanish, "Please sign in again before optimizing the prompt.", "Vuelve a iniciar sesion antes de optimizar el prompt.");
+  }
+  if (status === 403 || error?.includes("csrf")) {
+    return vt(spanish, "Your secure session expired. Refresh the page, then try again.", "Tu sesion segura expiro. Actualiza la pagina e intentalo de nuevo.");
+  }
+  if (error === "video_prompt_optimization_limit_reached") {
+    const hours = retryAfter ? Math.max(1, Math.ceil(retryAfter / 3600)) : undefined;
+    return vt(
+      spanish,
+      hours ? `You have used the 10 free optimizations available in 24 hours. Try again in about ${hours} hour${hours === 1 ? "" : "s"}.` : "You have used the 10 free optimizations available in 24 hours. Try again later.",
+      hours ? `Has usado las 10 optimizaciones gratuitas disponibles en 24 horas. Intentalo de nuevo en unas ${hours} hora${hours === 1 ? "" : "s"}.` : "Has usado las 10 optimizaciones gratuitas disponibles en 24 horas. Intentalo de nuevo mas tarde."
+    );
+  }
+  if (status === 429 || error === "rate_limited") {
+    return vt(spanish, "Too many optimization requests were sent at once. Wait a moment, then try again.", "Se enviaron demasiadas solicitudes de optimizacion a la vez. Espera un momento e intentalo de nuevo.");
+  }
+  if (error === "text_provider_not_configured") {
+    return vt(spanish, "Prompt optimization is temporarily unavailable because no text AI provider is ready.", "La optimizacion de prompts no esta disponible temporalmente porque no hay un proveedor de IA de texto listo.");
+  }
+  if (error === "video_prompt_optimization_timeout") {
+    return vt(spanish, "Prompt optimization is taking longer than expected. Your original prompt is unchanged.", "La optimizacion esta tardando mas de lo esperado. Tu prompt original no ha cambiado.");
+  }
+  if (error === "video_prompt_optimization_wrong_language") {
+    return vt(spanish, "The provider returned the wrong language. Your original prompt is unchanged.", "El proveedor devolvio el idioma incorrecto. Tu prompt original no ha cambiado.");
+  }
+  if (error === "video_prompt_optimization_setting_conflict" || error === "video_prompt_optimization_settings_missing") {
+    return vt(spanish, "The provider returned conflicting video settings. Your original prompt is unchanged.", "El proveedor devolvio ajustes de video incompatibles. Tu prompt original no ha cambiado.");
+  }
+  if (error === "video_prompt_optimization_facts_missing") {
+    return vt(spanish, "The optimized prompt did not preserve all requested details. Your original prompt is unchanged.", "El prompt optimizado no conservo todos los detalles solicitados. Tu prompt original no ha cambiado.");
+  }
+  if (error === "video_prompt_optimization_unverified_claim" || error === "video_prompt_optimization_unverified_numeric_claim" || error === "video_prompt_optimization_unverified_reference_content" || error === "video_prompt_optimization_safety_failed") {
+    return vt(spanish, "The provider returned an unsafe or unverified claim. Your original prompt is unchanged.", "El proveedor devolvio una afirmacion insegura o no verificada. Tu prompt original no ha cambiado.");
+  }
+  if (error === "video_prompt_optimization_invalid_json" || error === "video_prompt_optimization_empty_response" || error === "video_prompt_optimization_invalid_result") {
+    return vt(spanish, "The text AI provider returned an invalid response. Your original prompt is unchanged.", "El proveedor de IA de texto devolvio una respuesta invalida. Tu prompt original no ha cambiado.");
+  }
+  return vt(spanish, "The prompt could not be optimized. Your original prompt is unchanged.", "No se pudo optimizar el prompt. Tu prompt original no ha cambiado.");
 }
 
 function isVideoAspectRatio(value: string | undefined): value is VideoAspectRatio {
@@ -372,6 +452,11 @@ export function CustomerVideoWorkspace({
   const [textToVideoConfirmArmed, setTextToVideoConfirmArmed] = useState(false);
   const [textToVideoConfirmOpen, setTextToVideoConfirmOpen] = useState(false);
   const [pending, setPending] = useState(false);
+  const [selectedPromptPersonaId, setSelectedPromptPersonaId] = useState<VideoPromptPersonaId>(DEFAULT_VIDEO_PROMPT_PERSONA_ID);
+  const [promptOptimizationPending, setPromptOptimizationPending] = useState(false);
+  const [promptOptimizationPreview, setPromptOptimizationPreview] = useState<VideoPromptOptimizationPreview | null>(null);
+  const [promptOptimizationError, setPromptOptimizationError] = useState("");
+  const [appliedPromptOptimization, setAppliedPromptOptimization] = useState<{ undoPrompt: string; contextSignature: string } | null>(null);
   const appliedRetryDraftKeyRef = useRef<string | null>(null);
   const retryDurationThemeIdRef = useRef<string | null>(null);
   const submitAttemptRef = useRef<{ fingerprint: string; idempotencyKey: string } | null>(null);
@@ -562,6 +647,13 @@ export function CustomerVideoWorkspace({
   const blockingPromptRisk = promptRiskMessages.find((risk) => risk.severity === "block");
   const blockingPromptRiskMessage = blockingPromptRisk?.message ?? "";
   const isSubmitting = pending || submissionPending;
+  const promptOptimizationContextSignature = `${selectedTheme?.id ?? ""}:${selectedFrameIds.length}:${effectiveDurationSeconds}:${selectedAspectRatio}:${selectedResolution}`;
+  const promptOptimizationContextChanged = Boolean(
+    appliedPromptOptimization && appliedPromptOptimization.contextSignature !== promptOptimizationContextSignature
+  );
+  const canOptimizePrompt = Boolean(
+    trimmedPromptNote && selectedTheme && !isSubmitting && !promptOptimizationPending && !hasPendingFrameUploads
+  );
   const generateButtonLabel = isSubmitting
     ? vt(spanish, "Starting", "Iniciando")
     : textToVideoConfirmArmed && needsTextToVideoConfirmation
@@ -589,6 +681,8 @@ export function CustomerVideoWorkspace({
     if (isVideoAspectRatio(retryDraft.aspectRatio)) setSelectedAspectRatio(retryDraft.aspectRatio);
     if (isVideoResolution(retryDraft.resolution)) setSelectedResolution(retryDraft.resolution);
     setPromptNote(retryDraft.promptNote ?? "");
+    setAppliedPromptOptimization(null);
+    setPromptOptimizationPreview(null);
     setFormatPanelOpen(false);
     setMessage(retryDraft.restoreMessage ?? vt(spanish, "Previous video request restored. Review it, then generate again.", "Solicitud de video anterior restaurada. Revisala y vuelve a generar."));
     appliedRetryDraftKeyRef.current = retryDraft.key;
@@ -640,9 +734,11 @@ export function CustomerVideoWorkspace({
 
   function applyVideoPromptTemplate() {
     setPromptNote(VIDEO_PROMPT_TEMPLATE);
+    setAppliedPromptOptimization(null);
+    setPromptOptimizationPreview(null);
     setTextToVideoConfirmArmed(false);
     setTextToVideoConfirmOpen(false);
-    setMessage("Template added. Edit each step, then generate your video.");
+    setMessage(vt(spanish, "Template added. Edit each step, then generate your video.", "Plantilla agregada. Edita cada paso y luego genera tu video."));
   }
 
   function openThemePicker() {
@@ -652,7 +748,7 @@ export function CustomerVideoWorkspace({
     setThemePickerCategoryId(category?.id ?? "");
     setThemePickerThemeId(theme?.id ?? "");
     setThemePickerExampleId(example?.id ?? "");
-    setThemePickerPrompt(example?.prompt ?? theme?.prompt ?? "");
+    setThemePickerPrompt(videoThemePromptForEditor(example?.prompt ?? theme?.prompt ?? ""));
     const expandedCategories = allThemeCategories
       .filter((item) => (categoryDepthById.get(item.id) ?? 0) <= 1)
       .map((item) => item.id);
@@ -676,7 +772,7 @@ export function CustomerVideoWorkspace({
     }
     setThemePickerThemeId(theme.id);
     setThemePickerExampleId(example?.id ?? "");
-    setThemePickerPrompt(example?.prompt ?? theme.prompt);
+    setThemePickerPrompt(videoThemePromptForEditor(example?.prompt ?? theme.prompt));
   }
 
   function choosePickerCategory(category: VideoThemeCategory) {
@@ -689,7 +785,7 @@ export function CustomerVideoWorkspace({
 
   function choosePickerExample(example: VideoThemeExample) {
     setThemePickerExampleId(example.id);
-    setThemePickerPrompt(example.prompt);
+    setThemePickerPrompt(videoThemePromptForEditor(example.prompt));
   }
 
   function confirmThemePicker() {
@@ -699,6 +795,8 @@ export function CustomerVideoWorkspace({
     // Synthetic compatibility cards are UI-only and must not be submitted as persisted IDs.
     setSelectedThemeExampleId(persistedExample?.id ?? "");
     setPromptNote(themePickerPrompt.trim());
+    setAppliedPromptOptimization(null);
+    setPromptOptimizationPreview(null);
     setThemePickerOpen(false);
     setMessage(vt(spanish, `Applied ${pickerTheme.name}${pickerExample ? ` / ${pickerExample.name}` : ""}. You can continue editing the prompt.`, `Se aplico ${pickerTheme.name}${pickerExample ? ` / ${pickerExample.name}` : ""}. Puedes seguir editando el prompt.`));
   }
@@ -746,34 +844,36 @@ export function CustomerVideoWorkspace({
     const hasChildren = children.length > 0;
     const contentExpanded = hasChildren ? categoryExpanded : themesExpanded;
     const categoryIsSelected = pickerCategory?.id === category.id;
+    const toggleCategoryContent = () => {
+      if (!hasExpandableContent) {
+        choosePickerCategory(category);
+        return;
+      }
+      if (hasChildren) {
+        setExpandedCategoryIds((current) => current.includes(category.id) ? current.filter((id) => id !== category.id) : [...current, category.id]);
+      } else {
+        setExpandedThemeCategoryIds((current) => current.includes(category.id) ? current.filter((id) => id !== category.id) : [...current, category.id]);
+      }
+    };
     return (
       <div key={category.id}>
-        <div className="flex items-center gap-1" style={{ paddingLeft: `${Math.min(depth, 5) * 12}px` }}>
+        <div style={{ paddingLeft: `${Math.min(depth, 5) * 12}px` }}>
           <button
+            aria-label={hasExpandableContent ? (contentExpanded ? `Collapse ${category.label}` : `Expand ${category.label}`) : `Select ${category.label}`}
             aria-expanded={hasExpandableContent ? contentExpanded : undefined}
-            className={`grid h-8 w-8 shrink-0 place-items-center rounded-[8px] text-white/45 transition hover:bg-white/[0.07] hover:text-white ${hasExpandableContent ? "" : "invisible"}`}
-            onClick={() => {
-              if (!hasExpandableContent) return;
-              if (hasChildren) {
-                setExpandedCategoryIds((current) => current.includes(category.id) ? current.filter((id) => id !== category.id) : [...current, category.id]);
-              } else {
-                setExpandedThemeCategoryIds((current) => current.includes(category.id) ? current.filter((id) => id !== category.id) : [...current, category.id]);
-              }
-            }}
+            className={`flex min-w-0 w-full items-center rounded-[10px] py-1 text-left text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#31d4ff]/45 ${categoryIsSelected ? "bg-[#31d4ff]/12 text-[#bcefff]" : "text-white/68 hover:bg-white/[0.06] hover:text-white"}`}
+            onClick={toggleCategoryContent}
             type="button"
           >
-            <ChevronRight className={`h-3.5 w-3.5 transition ${contentExpanded ? "rotate-90" : ""}`} strokeWidth={2} />
-          </button>
-          <button
-            className={`flex min-w-0 flex-1 items-center justify-between rounded-[10px] px-2 py-2.5 text-left text-sm font-semibold transition ${categoryIsSelected ? "bg-[#31d4ff]/12 text-[#bcefff]" : "text-white/68 hover:bg-white/[0.06] hover:text-white"}`}
-            onClick={() => choosePickerCategory(category)}
-            type="button"
-          >
-            <span className="truncate">{category.label}</span>
+            <span aria-hidden="true" className={`grid h-8 w-8 shrink-0 place-items-center text-white/45 ${hasExpandableContent ? "" : "invisible"}`}>
+              <ChevronRight className={`h-3.5 w-3.5 transition ${contentExpanded ? "rotate-90" : ""}`} strokeWidth={2} />
+            </span>
+            <span className="min-w-0 flex-1 truncate px-1">{category.label}</span>
             <span className="ml-2 shrink-0 text-xs text-white/35">{themeCountForCategory(category.id)}</span>
+            <span aria-hidden="true" className="w-2 shrink-0" />
           </button>
         </div>
-        {categoryExpanded ? (
+        {contentExpanded ? (
           <div className="grid gap-1 border-l border-white/10" style={{ marginLeft: `${Math.min(depth, 5) * 12 + 19}px` }}>
             {children.map((child) => renderThemeCategory(child, depth + 1))}
             {categoryThemes.length > 0 && themesExpanded ? (
@@ -797,8 +897,118 @@ export function CustomerVideoWorkspace({
     );
   }
 
+  async function optimizeCurrentVideoPrompt(
+    sourcePrompt = trimmedPromptNote,
+    persistedRequest?: PersistedVideoPromptOptimization
+  ) {
+    const normalizedSource = sourcePrompt.trim();
+    if (!normalizedSource || (!selectedTheme && !persistedRequest) || isSubmitting || promptOptimizationPending) return;
+    if (!persistedRequest && hasPendingFrameUploads) {
+      setPromptOptimizationError(vt(spanish, "Wait for the selected frame uploads to finish before optimizing.", "Espera a que terminen de subir los fotogramas seleccionados antes de optimizar."));
+      return;
+    }
+
+    const requestedPersonaId = persistedRequest?.body.personaId ?? selectedPromptPersonaId;
+    const requestedLocale: "en" | "es" = persistedRequest?.body.locale ?? (spanish ? "es" : "en");
+    const requestedContextSignature = persistedRequest?.contextSignature ?? promptOptimizationContextSignature;
+    const idempotencyKey = persistedRequest?.idempotencyKey ?? newPromptOptimizationIdempotencyKey();
+    const requestBody: VideoPromptOptimizationRequestBody = persistedRequest?.body ?? {
+      customerId: customer.id,
+      prompt: normalizedSource,
+      personaId: requestedPersonaId,
+      locale: requestedLocale,
+      videoThemeId: selectedTheme!.id,
+      frameAssetIds: selectedFrameIds,
+      durationSeconds: effectiveDurationSeconds,
+      aspectRatio: selectedAspectRatio,
+      resolution: selectedResolution
+    };
+    const storageKey = promptOptimizationStorageKey(siteId, customer.id);
+    if (!persistedRequest) {
+      try {
+        window.localStorage.setItem(storageKey, JSON.stringify({
+          sourcePrompt: normalizedSource,
+          contextSignature: requestedContextSignature,
+          idempotencyKey,
+          body: requestBody
+        } satisfies PersistedVideoPromptOptimization));
+      } catch {
+        // Storage can be disabled; the in-page overlay still prevents duplicate clicks.
+      }
+    }
+
+    setPromptOptimizationPending(true);
+    setPromptOptimizationError("");
+    setMessage("");
+    try {
+      const result = await requestVideoPromptOptimization({
+        siteId,
+        body: requestBody,
+        idempotencyKey,
+        headers: () => customerJsonHeaders(siteId),
+        refreshCsrf: async () => {
+          await fetch(`/api/sites/${siteId}/customer/runtime?profile=workspace&refresh=csrf-${Date.now()}`, { cache: "no-store" }).catch(() => null);
+        }
+      });
+      setPromptOptimizationPreview({ sourcePrompt: normalizedSource, contextSignature: requestedContextSignature, result });
+      setPromptOptimizationError("");
+    } catch (error) {
+      const failure = error as Error & { status?: number; retryAfter?: number };
+      const errorMessage = promptOptimizationErrorText(failure.message, failure.status ?? 0, spanish, failure.retryAfter);
+      setPromptOptimizationError(errorMessage);
+      setMessage(errorMessage);
+    } finally {
+      setPromptOptimizationPending(false);
+      try {
+        const stored = window.localStorage.getItem(storageKey);
+        if (!stored || (JSON.parse(stored) as Partial<PersistedVideoPromptOptimization>).idempotencyKey === idempotencyKey) {
+          window.localStorage.removeItem(storageKey);
+        }
+      } catch {
+        // Ignore storage cleanup failures.
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (!selectedTheme || promptOptimizationPending) return;
+    try {
+      const raw = window.localStorage.getItem(promptOptimizationStorageKey(siteId, customer.id));
+      if (!raw) return;
+      const persisted = JSON.parse(raw) as PersistedVideoPromptOptimization;
+      if (!persisted?.sourcePrompt || !persisted?.idempotencyKey || !persisted?.body) return;
+      void optimizeCurrentVideoPrompt(persisted.sourcePrompt, persisted);
+    } catch {
+      window.localStorage.removeItem(promptOptimizationStorageKey(siteId, customer.id));
+    }
+    // The function intentionally captures the current editor state; the persisted request supplies its own immutable payload.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customer.id, promptOptimizationPending, selectedTheme, siteId]);
+
+  function applyPromptOptimization() {
+    if (!promptOptimizationPreview) return;
+    setPromptNote(promptOptimizationPreview.result.optimizedPrompt);
+    setAppliedPromptOptimization({
+      undoPrompt: promptOptimizationPreview.sourcePrompt,
+      contextSignature: promptOptimizationPreview.contextSignature
+    });
+    setPromptOptimizationPreview(null);
+    setPromptOptimizationError("");
+    setTextToVideoConfirmArmed(false);
+    setTextToVideoConfirmOpen(false);
+    setMessage(vt(spanish, "Optimized prompt applied. Video generation has not started and no credits were used.", "Prompt optimizado aplicado. La generacion de video no ha comenzado y no se usaron creditos."));
+  }
+
+  function undoPromptOptimization() {
+    if (!appliedPromptOptimization) return;
+    setPromptNote(appliedPromptOptimization.undoPrompt);
+    setAppliedPromptOptimization(null);
+    setPromptOptimizationError("");
+    setMessage(vt(spanish, "The previous prompt has been restored.", "Se restauro el prompt anterior."));
+  }
+
   async function generateVideo(options: { confirmedTextToVideo?: boolean } = {}) {
-    if (isSubmitting) return;
+    if (isSubmitting || promptOptimizationPending) return;
     if (!selectedTheme) {
       setThemeReloadKey((current) => current + 1);
       setMessage(vt(spanish, "Video presets are still loading. Try again in a moment.", "Los ajustes de video aun se estan cargando. Intentalo en un momento."));
@@ -1038,6 +1248,46 @@ export function CustomerVideoWorkspace({
           </div>
 
           <div className="mt-5 rounded-[20px] border border-white/10 bg-[#1a1d24] p-3 sm:p-4">
+            <div className="mb-3 border-b border-white/10 pb-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/40">{vt(spanish, "Optimization role", "Rol de optimizacion")}</p>
+                  <p className="mt-1 text-xs text-white/42">{vt(spanish, "Choose a direction, then optimize. Selecting a role alone does not call AI.", "Elige una direccion y luego optimiza. Seleccionar un rol no llama a la IA.")}</p>
+                </div>
+                <button
+                  className="inline-flex min-h-9 items-center gap-2 rounded-full bg-[#7c4dff] px-4 text-xs font-semibold text-white transition hover:bg-[#8c63ff] disabled:cursor-not-allowed disabled:opacity-40"
+                  disabled={!canOptimizePrompt}
+                  onClick={() => void optimizeCurrentVideoPrompt()}
+                  type="button"
+                >
+                  <Sparkles className={`h-3.5 w-3.5 ${promptOptimizationPending ? "animate-pulse" : ""}`} strokeWidth={1.9} />
+                  {promptOptimizationPending
+                    ? vt(spanish, "Optimizing...", "Optimizando...")
+                    : vt(spanish, "Optimize prompt", "Optimizar prompt")}
+                </button>
+              </div>
+              <div className="mt-3 flex gap-2 overflow-x-auto pb-1" aria-label={vt(spanish, "Prompt optimization roles", "Roles de optimizacion del prompt")}>
+                {VIDEO_PROMPT_PERSONAS.map((persona) => {
+                  const selected = persona.id === selectedPromptPersonaId;
+                  return (
+                    <button
+                      aria-pressed={selected}
+                      className={`shrink-0 rounded-full border px-3 py-2 text-xs font-semibold transition ${selected ? "border-[#9b7bff]/65 bg-[#7c4dff]/22 text-[#e8e0ff]" : "border-white/10 bg-white/[0.035] text-white/58 hover:border-white/22 hover:text-white"}`}
+                      disabled={promptOptimizationPending}
+                      key={persona.id}
+                      onClick={() => setSelectedPromptPersonaId(persona.id)}
+                      type="button"
+                    >
+                      {persona.labels[spanish ? "es" : "en"]}
+                    </button>
+                  );
+                })}
+              </div>
+              {hasPendingFrameUploads && trimmedPromptNote ? (
+                <p className="mt-2 text-xs text-amber-200/80">{vt(spanish, "Prompt optimization will be available after the selected frame uploads finish.", "La optimizacion estara disponible cuando terminen de subir los fotogramas seleccionados.")}</p>
+              ) : null}
+              {promptOptimizationError ? <p className="mt-2 text-xs font-semibold leading-5 text-red-300" role="status">{promptOptimizationError}</p> : null}
+            </div>
             <label className="block">
               <span className="sr-only">{vt(spanish, "Video direction", "Direccion de video")}</span>
               <textarea
@@ -1045,6 +1295,8 @@ export function CustomerVideoWorkspace({
                 maxLength={VIDEO_PROMPT_MAX_LENGTH}
                 onChange={(event) => {
                   setPromptNote(event.target.value);
+                  setAppliedPromptOptimization(null);
+                  setPromptOptimizationError("");
                   setTextToVideoConfirmArmed(false);
                   setTextToVideoConfirmOpen(false);
                   setMessage((current) =>
@@ -1063,6 +1315,20 @@ export function CustomerVideoWorkspace({
                 value={promptNote}
               />
             </label>
+            <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <span className="text-white/36">{promptNote.length} / {VIDEO_PROMPT_MAX_LENGTH}</span>
+              {appliedPromptOptimization ? (
+                <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-semibold ${promptOptimizationContextChanged ? "border-amber-300/25 bg-amber-300/10 text-amber-100" : "border-emerald-300/25 bg-emerald-300/10 text-emerald-100"}`}>
+                  {promptOptimizationContextChanged
+                    ? vt(spanish, "Video settings changed — optimize again if needed", "La configuracion cambio; optimiza de nuevo si hace falta")
+                    : vt(spanish, "Optimized", "Optimizado")}
+                  <button className="inline-flex items-center gap-1 text-white underline decoration-white/35 underline-offset-2" onClick={undoPromptOptimization} type="button">
+                    <RotateCcw className="h-3 w-3" strokeWidth={2} />
+                    {vt(spanish, "Undo", "Deshacer")}
+                  </button>
+                </span>
+              ) : null}
+            </div>
             {selectedTheme && (selectedThemeExample || selectedThemeCategory) ? (
               <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-white/58">
                 <span className="font-semibold uppercase tracking-[0.13em] text-white/36">{vt(spanish, "Theme reference", "Referencia de tema")}</span>
@@ -1182,7 +1448,7 @@ export function CustomerVideoWorkspace({
                 </span>
                 <button
                   className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#2f6fed] px-5 text-sm font-semibold text-white transition hover:bg-[#4380ff] disabled:cursor-not-allowed disabled:opacity-45 sm:min-w-40"
-                  disabled={isSubmitting || !canGenerateCurrentVideo}
+                  disabled={isSubmitting || promptOptimizationPending || !canGenerateCurrentVideo}
                   onClick={() => void generateVideo()}
                   type="button"
                 >
@@ -1223,6 +1489,100 @@ export function CustomerVideoWorkspace({
           <p className="mt-3 min-h-5 text-xs font-semibold leading-5 text-red-400" role="status">{message}</p>
         </div>
       </div>
+      {promptOptimizationPending ? (
+        <div className="fixed inset-0 z-[140] grid place-items-center bg-black/72 px-4 py-6 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="prompt-optimization-progress-title">
+          <div className="w-full max-w-md rounded-[22px] border border-[#9b7bff]/35 bg-[#111720] p-7 text-center text-white shadow-[0_30px_100px_-36px_rgba(0,0,0,0.96)]">
+            <div className="mx-auto grid h-14 w-14 place-items-center rounded-full border border-[#9b7bff]/45 bg-[#7c4dff]/18">
+              <Sparkles className="h-7 w-7 animate-pulse text-[#d8ceff]" strokeWidth={1.7} />
+            </div>
+            <h3 className="mt-5 text-xl font-semibold" id="prompt-optimization-progress-title">{vt(spanish, "Optimizing your prompt", "Optimizando tu prompt")}</h3>
+            <p className="mt-2 text-sm leading-6 text-white/62">{vt(spanish, "The AI director is preparing a provider-ready version. This usually takes a few seconds; please keep this page open.", "El director de IA esta preparando una version lista para el proveedor. Normalmente tarda unos segundos; mantén esta pagina abierta.")}</p>
+            <div className="mt-5 flex items-center justify-center gap-2 text-xs font-semibold text-[#d8ceff]" role="status" aria-live="polite">
+              <span className="h-2 w-2 animate-bounce rounded-full bg-[#b8a5ff] [animation-delay:-0.2s]" />
+              <span className="h-2 w-2 animate-bounce rounded-full bg-[#b8a5ff] [animation-delay:-0.1s]" />
+              <span className="h-2 w-2 animate-bounce rounded-full bg-[#b8a5ff]" />
+              {vt(spanish, "Working...", "Generando...")}
+            </div>
+            <p className="mt-4 text-[11px] text-white/38">{vt(spanish, "The overlay stays active until the task finishes. Do not click Optimize again.", "La pantalla permanece activa hasta que termine la tarea. No pulses Optimizar de nuevo.")}</p>
+          </div>
+        </div>
+      ) : null}
+      {promptOptimizationPreview ? (
+        <div className="fixed inset-0 z-[130] grid place-items-center bg-black/78 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="prompt-optimization-preview-title">
+          <div className="flex max-h-[min(90dvh,880px)] w-full max-w-5xl flex-col overflow-hidden rounded-[22px] border border-white/14 bg-[#111720] text-white shadow-[0_30px_100px_-36px_rgba(0,0,0,0.96)]">
+            <div className="flex items-start justify-between gap-4 border-b border-white/10 p-5">
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#b8a5ff]">{vt(spanish, "AI prompt optimization", "Optimizacion de prompt con IA")}</p>
+                  <span className="rounded-full border border-emerald-300/20 bg-emerald-300/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-100">{vt(spanish, "Free", "Gratis")}</span>
+                </div>
+                <h3 className="mt-1 text-xl font-semibold" id="prompt-optimization-preview-title">{vt(spanish, "Review before applying", "Revisa antes de aplicar")}</h3>
+                <p className="mt-1 text-sm text-white/50">{vt(spanish, "Nothing changes until you apply this version. Video generation will not start.", "Nada cambia hasta que apliques esta version. La generacion de video no comenzara.")}</p>
+              </div>
+              <button
+                aria-label={vt(spanish, "Close optimization preview", "Cerrar vista previa de optimizacion")}
+                className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/12 text-white/62 transition hover:bg-white/[0.08] hover:text-white disabled:opacity-40"
+                disabled={promptOptimizationPending}
+                onClick={() => {
+                  setPromptOptimizationPreview(null);
+                  setPromptOptimizationError("");
+                }}
+                type="button"
+              >
+                <X className="h-4 w-4" strokeWidth={1.9} />
+              </button>
+            </div>
+            <div className="grid min-h-0 flex-1 gap-4 overflow-y-auto p-5 lg:grid-cols-2">
+              <div className="rounded-[16px] border border-white/10 bg-black/18 p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/44">{vt(spanish, "Original prompt", "Prompt original")}</p>
+                  <span className="text-[11px] text-white/32">{promptOptimizationPreview.sourcePrompt.length}</span>
+                </div>
+                <p className="mt-3 max-h-[46dvh] overflow-y-auto whitespace-pre-wrap text-sm leading-7 text-white/66">{promptOptimizationPreview.sourcePrompt}</p>
+              </div>
+              <div className="rounded-[16px] border border-[#9b7bff]/30 bg-[#7c4dff]/10 p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#d8ceff]">{vt(spanish, "Optimized prompt", "Prompt optimizado")}</p>
+                  <span className="text-[11px] text-white/40">{promptOptimizationPreview.result.optimizedPrompt.length}</span>
+                </div>
+                <p className="mt-3 max-h-[46dvh] overflow-y-auto whitespace-pre-wrap text-sm leading-7 text-white/82">{promptOptimizationPreview.result.optimizedPrompt}</p>
+              </div>
+              {promptOptimizationError ? <p className="lg:col-span-2 rounded-[12px] border border-red-300/20 bg-red-300/10 p-3 text-sm font-semibold text-red-100" role="status">{promptOptimizationError}</p> : null}
+            </div>
+            <div className="flex shrink-0 flex-col-reverse gap-3 border-t border-white/10 p-5 sm:flex-row sm:items-center sm:justify-end">
+              <button
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/14 px-5 text-sm font-semibold text-white/72 transition hover:bg-white/[0.08] hover:text-white disabled:opacity-40"
+                disabled={promptOptimizationPending}
+                onClick={() => {
+                  setPromptOptimizationPreview(null);
+                  setPromptOptimizationError("");
+                }}
+                type="button"
+              >
+                {vt(spanish, "Cancel", "Cancelar")}
+              </button>
+              <button
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#9b7bff]/45 bg-[#7c4dff]/12 px-5 text-sm font-semibold text-[#e5ddff] transition hover:bg-[#7c4dff]/22 disabled:opacity-40"
+                disabled={promptOptimizationPending}
+                onClick={() => void optimizeCurrentVideoPrompt(promptOptimizationPreview.sourcePrompt)}
+                type="button"
+              >
+                <RotateCcw className={`h-4 w-4 ${promptOptimizationPending ? "animate-spin" : ""}`} strokeWidth={1.9} />
+                {promptOptimizationPending ? vt(spanish, "Regenerating...", "Regenerando...") : vt(spanish, "Regenerate", "Regenerar")}
+              </button>
+              <button
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#7c4dff] px-5 text-sm font-semibold text-white transition hover:bg-[#8c63ff] disabled:opacity-40"
+                disabled={promptOptimizationPending}
+                onClick={applyPromptOptimization}
+                type="button"
+              >
+                <Check className="h-4 w-4" strokeWidth={2} />
+                {vt(spanish, "Apply optimization", "Aplicar optimizacion")}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
       {textToVideoConfirmOpen ? (
         <div className="fixed inset-0 z-[120] grid place-items-center bg-black/78 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="text-to-video-confirm-title">
           <div className="w-full max-w-lg overflow-hidden rounded-[22px] border border-white/14 bg-[#111720] text-white shadow-[0_30px_100px_-36px_rgba(0,0,0,0.96)]">
@@ -1264,7 +1624,7 @@ export function CustomerVideoWorkspace({
                 </button>
                 <button
                   className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#2f6fed] px-5 text-sm font-semibold text-white transition hover:bg-[#4380ff] disabled:cursor-not-allowed disabled:opacity-45"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || promptOptimizationPending}
                   onClick={() => {
                     setTextToVideoConfirmArmed(true);
                     setTextToVideoConfirmOpen(false);
@@ -1307,13 +1667,13 @@ export function CustomerVideoWorkspace({
                   </div>
                   <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(220px,0.44fr)_minmax(0,1fr)]">
                     <ThemeMedia className="aspect-[4/3] w-full max-h-[260px] rounded-[12px] object-cover" src={pickerTheme.imageUrl} />
-                    <div><p className="text-sm leading-7 text-white/72">{pickerTheme.description}</p><div className="mt-4 grid max-w-[520px] grid-cols-2 gap-2 text-xs">{[[vt(spanish, "Credits", "Creditos"), pickerTheme.creditCost], [vt(spanish, "Duration", "Duracion"), `${pickerTheme.durationSeconds}s`], [vt(spanish, "Frame limit", "Limite de fotogramas"), pickerTheme.effectiveMaxFrames ?? pickerTheme.maxFrames], [vt(spanish, "Generation", "Generacion"), pickerTheme.imageToVideoProviderModelFamilies?.length ? "Image + text" : "Text prompt"]].map(([label, value]) => <div className="rounded-[10px] border border-white/8 bg-white/[0.03] px-3 py-2.5 text-center" key={String(label)}><span className="block text-[11px] text-white/35">{label}</span><strong className="mt-1 block text-white">{value}</strong></div>)}</div></div>
+                    <div><p className="text-sm leading-7 text-white/72">{pickerTheme.description}</p><div className="mt-4 grid max-w-[520px] grid-cols-2 gap-2 text-xs">{[[vt(spanish, "Credits", "Creditos"), pickerTheme.creditCost], [vt(spanish, "Selected output", "Salida seleccionada"), `${effectiveDurationSeconds}s · ${selectedAspectRatio} · ${selectedResolution.toUpperCase()}`], [vt(spanish, "Frame limit", "Limite de fotogramas"), pickerTheme.effectiveMaxFrames ?? pickerTheme.maxFrames], [vt(spanish, "Generation", "Generacion"), pickerTheme.imageToVideoProviderModelFamilies?.length ? "Image + text" : "Text prompt"]].map(([label, value]) => <div className="rounded-[10px] border border-white/8 bg-white/[0.03] px-3 py-2.5 text-center" key={String(label)}><span className="block text-[11px] text-white/35">{label}</span><strong className="mt-1 block text-white">{value}</strong></div>)}</div></div>
                   </div>
                   <div className="mt-6 grid gap-4 lg:grid-cols-2"><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Best for", "Ideal para")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.headline} {vt(spanish, "Use a clear subject, one focal action, and a controlled camera move for the most consistent result.", "Usa un sujeto claro, una accion principal y un movimiento de camara controlado para obtener un resultado consistente.")}</p></div><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Production notes", "Notas de produccion")}</p><p className="mt-2 text-sm leading-6 text-white/65">{vt(spanish, "Keep the reference frame sharp and well lit. Avoid extra subjects, heavy text, logos, watermarks, or sudden scene changes.", "Mantén el fotograma de referencia nitido y bien iluminado. Evita sujetos adicionales, mucho texto, logotipos, marcas de agua o cambios bruscos de escena.")}</p></div></div>
-                  <div className="mt-4 grid gap-3 sm:grid-cols-3"><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Visual focus", "Enfoque visual")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.headline}</p></div><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Recommended input", "Entrada recomendada")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.imageToVideoProviderModelFamilies?.length ? vt(spanish, "A sharp JPG or PNG frame with one clear subject.", "Un fotograma JPG o PNG nitido con un sujeto claro.") : vt(spanish, "A concise written brief with one focal action.", "Un brief escrito conciso con una accion principal.")}</p></div><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Output profile", "Perfil de salida")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.durationSeconds}s · 16:9 · 720P · {pickerTheme.creditCost} {vt(spanish, "credits", "creditos")}</p></div></div>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-3"><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Visual focus", "Enfoque visual")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.headline}</p></div><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Recommended input", "Entrada recomendada")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.imageToVideoProviderModelFamilies?.length ? vt(spanish, "A sharp JPG or PNG frame with one clear subject.", "Un fotograma JPG o PNG nitido con un sujeto claro.") : vt(spanish, "A concise written brief with one focal action.", "Un brief escrito conciso con una accion principal.")}</p></div><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Output profile", "Perfil de salida")}</p><p className="mt-2 text-sm leading-6 text-white/65">{effectiveDurationSeconds}s · {selectedAspectRatio} · {selectedResolution.toUpperCase()}<span className="mt-1 block text-xs text-white/38">{vt(spanish, "The settings outside the prompt always take priority.", "La configuracion fuera del prompt siempre tiene prioridad.")}</span></p></div></div>
                   <div className="mt-6"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Reference cases", "Casos de referencia")}</p><div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{pickerExamples.map((example) => <button className={`rounded-[12px] border p-3 text-left transition ${pickerExample?.id === example.id ? "border-[#31d4ff]/45 bg-[#31d4ff]/10" : "border-white/8 bg-white/[0.025] hover:border-white/20"}`} key={example.id} onClick={() => choosePickerExample(example)} type="button"><ThemeMedia className="mb-2 aspect-video w-full rounded-[8px] object-cover" src={example.imageUrl} /><span className="block text-sm font-semibold">{example.name}</span><span className="mt-1 block line-clamp-2 text-xs leading-5 text-white/45">{example.description}</span></button>)}</div></div>
                   {pickerTheme.galleryImages?.length ? <div className="mt-6"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "More visual references", "Mas referencias visuales")}</p><div className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4">{pickerTheme.galleryImages.slice(0, 4).map((imageUrl) => <ThemeMedia alt={vt(spanish, "Visual reference", "Referencia visual")} className="aspect-video w-full rounded-[9px] object-cover" key={imageUrl} src={imageUrl} />)}</div></div> : null}
-                  <label className="mt-6 block border-t border-white/10 pt-5"><div className="flex items-center justify-between gap-3"><span className="text-xs font-semibold uppercase tracking-[0.13em] text-white/40">{vt(spanish, "Editable prompt", "Prompt editable")}</span><span className="text-[11px] text-white/35">{themePickerPrompt.length} / 5000</span></div><p className="mt-1 text-xs leading-5 text-white/38">{vt(spanish, "Fine-tune the provider-ready direction before applying this theme.", "Ajusta la direccion lista para el proveedor antes de aplicar este tema.")}</p><textarea className="mt-2 min-h-[180px] w-full resize-y rounded-[12px] border border-white/10 bg-[#080b10] p-3 text-sm leading-6 text-white/78 outline-none focus:border-[#31d4ff]/45" onChange={(event) => setThemePickerPrompt(event.target.value)} value={themePickerPrompt} /></label>
+                  <label className="mt-6 block border-t border-white/10 pt-5"><div className="flex items-center justify-between gap-3"><span className="text-xs font-semibold uppercase tracking-[0.13em] text-white/40">{pickerTheme.imageUrl ? vt(spanish, "Cover-based theme direction", "Direccion basada en la portada") : vt(spanish, "Source-based theme direction", "Direccion basada en la fuente")}</span><span className="text-[11px] text-white/35">{themePickerPrompt.length} / 5000</span></div><p className="mt-1 text-xs leading-5 text-white/38">{pickerTheme.imageUrl ? vt(spanish, "This ready-to-use scene follows the cover's real people, objects, setting, and light. Replace bracketed details only when needed.", "Esta escena lista para usar sigue las personas, objetos, entorno y luz reales de la portada. Sustituye los detalles entre corchetes solo cuando sea necesario.") : vt(spanish, "This theme has no cover. Its scene follows your uploaded frame or written brief without borrowing another theme's content.", "Este tema no tiene portada. La escena sigue tu fotograma subido o tu descripcion sin tomar contenido de otro tema.")}</p><textarea className="mt-2 min-h-[150px] w-full resize-y rounded-[12px] border border-white/10 bg-[#080b10] p-3 text-sm leading-6 text-white/78 outline-none focus:border-[#31d4ff]/45" onChange={(event) => setThemePickerPrompt(event.target.value)} value={themePickerPrompt} /></label>
                 </> : <div className="grid min-h-[520px] place-items-center text-center"><div><Film className="mx-auto h-10 w-10 text-white/25" /><p className="mt-3 text-sm font-semibold text-white/58">{vt(spanish, "Select a theme from the directory", "Selecciona un tema del directorio")}</p><p className="mt-1 text-xs text-white/38">{vt(spanish, "Expand a category, then open its themes.", "Expande una categoria y abre sus temas.")}</p></div></div>}
               </div>
             </div>

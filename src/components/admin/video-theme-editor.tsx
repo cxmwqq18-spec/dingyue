@@ -107,7 +107,7 @@ function newThemeDraft(categoryId?: string): Omit<VideoTheme, "id" | "siteId" | 
     status: "draft",
     creditCost: 24,
     modelPricing: defaultVideoModelPricing(24),
-    durationSeconds: 6,
+    durationSeconds: 15,
     maxFrames: DEFAULT_VIDEO_FRAME_LIMIT,
     sortOrder: 0,
     imageUrl: "",
@@ -362,7 +362,7 @@ export function VideoThemeEditor({ siteId }: { siteId: string }) {
       status: theme.status ?? "draft",
       creditCost: Math.max(1, Math.trunc(Number(theme.creditCost) || 1)),
       modelPricing: normalizeVideoModelPricing(theme.modelPricing, theme.creditCost),
-      durationSeconds: Math.min(15, Math.max(1, Math.trunc(Number(theme.durationSeconds) || 6))),
+      durationSeconds: Math.min(15, Math.max(1, Math.trunc(Number(theme.durationSeconds) || 15))),
       maxFrames: normalizeVideoFrameLimit(theme.maxFrames),
       sortOrder: Math.trunc(Number(theme.sortOrder) || 0),
       imageUrl: theme.imageUrl || "",
@@ -880,7 +880,7 @@ function ThemeForm<T extends Partial<VideoTheme>>({
           <ErpInput min={1} onChange={(event) => onChange("creditCost" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.creditCost ?? 24} />
         </ErpField>
         <ErpField label="视频时长（秒）">
-          <ErpInput max={15} min={1} onChange={(event) => onChange("durationSeconds" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.durationSeconds ?? 6} />
+          <ErpInput max={15} min={1} onChange={(event) => onChange("durationSeconds" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.durationSeconds ?? 15} />
         </ErpField>
         <ErpField label="排序">
           <ErpInput onChange={(event) => onChange("sortOrder" as keyof T, Number(event.target.value) as T[keyof T])} type="number" value={theme.sortOrder ?? 0} />

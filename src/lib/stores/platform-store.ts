@@ -12,7 +12,7 @@ import {
   getPlatformAdminBySessionFromState,
   readPlatformState
 } from "@/lib/server-store";
-import type { AiGatewayGroup, AuditLogEntry, Order, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailConfig, PlatformEmailSettings, PlatformEmailTestResult, PublicSiteAdmin, Site, SiteDomain, SiteEmailConfigAssignment, Subscription, ThemePublication } from "@/lib/types";
+import type { AiGatewayGroup, AuditLogEntry, Order, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailConfig, PlatformEmailSettings, PlatformEmailTestResult, PublicSiteAdmin, Site, SiteDomain, SiteEmailConfigAssignment, Subscription } from "@/lib/types";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
@@ -280,7 +280,6 @@ function mapSiteWithCounts(
       customers: number;
       products: number;
       aiApps: number;
-      publications: number;
       jobs: number;
     };
     admins?: Array<{ email?: string }>;
@@ -299,7 +298,8 @@ function mapSiteWithCounts(
   const gateway = site.gatewayGroups?.[0] ? toGatewayGroup(site.gatewayGroups[0]) : undefined;
   const customerCount = site._count.customers;
   const failedJobs = aggregates.failedJobsBySiteId.get(site.id) ?? 0;
-  const publicationCount = site._count.publications;
+  // Publication snapshots were retired by the no-snapshot migration.
+  const publicationCount = 0;
   const connectScore = mappedSite.connect.chargesEnabled ? 24 : 8;
   const customerScore = customerCount > 0 ? 18 : 6;
   const jobScore = site._count.jobs === 0 ? 12 : Math.max(8, 24 - failedJobs * 4);
@@ -360,7 +360,7 @@ function getPlatformSnapshotsJsonFallback(mode: "overview" | "sites" | "billing"
       gateway: mode === "billing" ? undefined : sortedGatewayGroupsForSite(state, siteId)[0],
       packs: state.creativePacks.filter((pack) => pack.siteId === siteId),
       media: state.mediaAssets.filter((asset) => asset.siteId === siteId),
-      publications: state.themePublications.filter((publication) => publication.siteId === siteId),
+      publications: [],
       assets: state.assetUploads.filter((asset) => asset.siteId === siteId),
       customerModels: state.customerModels.filter((model) => model.siteId === siteId),
       albums: state.albums.filter((album) => album.siteId === siteId)
@@ -391,7 +391,6 @@ async function getPlatformSnapshotsByModeRelational(mode: "overview" | "sites" |
               customers: true,
               products: true,
               aiApps: true,
-              publications: true,
               jobs: true
             }
           }
@@ -856,7 +855,6 @@ async function loadPlatformGatewaySummaryRelational() {
               customers: true,
               products: true,
               aiApps: true,
-              publications: true,
               jobs: true
             }
           }
@@ -1202,7 +1200,6 @@ export async function getPlatformDashboardAggregateRelational(): Promise<
       gatewayGroups,
       creativePacks,
       mediaAssets,
-      publications,
       assetUploads,
       customerModels,
       albums,
@@ -1226,7 +1223,6 @@ export async function getPlatformDashboardAggregateRelational(): Promise<
       prisma.aiGatewayGroup.findMany({ orderBy: [{ siteId: "asc" }, { status: "asc" }, { name: "asc" }] }),
       prisma.creativePack.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
       prisma.mediaAsset.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "asc" }] }),
-      Promise.resolve([]),
       prisma.assetUpload.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "desc" }] }),
       prisma.customerModel.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "desc" }] }),
       prisma.album.findMany({ orderBy: [{ siteId: "asc" }, { createdAt: "desc" }] }),
@@ -1245,7 +1241,6 @@ export async function getPlatformDashboardAggregateRelational(): Promise<
     const mappedGatewayGroups = gatewayGroups.map(toGatewayGroup);
     const mappedCreativePacks = creativePacks.map(toCreativePack);
     const mappedMediaAssets = mediaAssets.map(toMediaAsset);
-    const mappedPublications: ThemePublication[] = [];
     const mappedAssetUploads = assetUploads.map((asset) => toAssetUploadRelational(asset as unknown as Record<string, unknown>));
     const mappedCustomerModels = customerModels.map((model) => toCustomerModelRelational(model as unknown as Record<string, unknown>));
     const mappedAlbums = albums.map((album) => toAlbumRelational(album as unknown as Record<string, unknown>));
@@ -1267,7 +1262,7 @@ export async function getPlatformDashboardAggregateRelational(): Promise<
         gateway: mappedGatewayGroups.find((group) => group.siteId === siteId),
         packs: mappedCreativePacks.filter((pack) => pack.siteId === siteId),
         media: mappedMediaAssets.filter((asset) => asset.siteId === siteId),
-        publications: mappedPublications.filter((publication) => publication.siteId === siteId),
+        publications: [],
         assets: mappedAssetUploads.filter((asset) => asset.siteId === siteId),
         customerModels: mappedCustomerModels.filter((model) => model.siteId === siteId),
         albums: mappedAlbums.filter((album) => album.siteId === siteId)

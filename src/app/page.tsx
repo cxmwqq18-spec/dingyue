@@ -206,7 +206,7 @@ export default async function HomePage({
               </div>
               <div className="grid gap-0 divide-y divide-black/10">
                 {accessEntries.map((item) => (
-                  <Link className="group grid gap-3 px-6 py-5 transition hover:bg-zinc-50 md:grid-cols-[0.9fr_1.1fr_auto] md:items-center" href={item.href} key={item.label}>
+                  <Link className="group grid gap-3 px-6 py-5 transition hover:bg-zinc-50 md:grid-cols-[0.9fr_1.1fr_auto] md:items-center" href={item.href} key={`${item.role}:${item.href}`}>
                     <div>
                       <p className="font-medium text-zinc-900">{item.label}</p>
                       <p className="mt-1 text-xs uppercase tracking-[0.18em] text-zinc-500">{item.role}</p>

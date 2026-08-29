@@ -1,0 +1,95 @@
+import "server-only";
+
+import type { PlatformAiProvider } from "@/lib/types";
+
+export type PlatformTextMessage = {
+  role: "system" | "user" | "assistant";
+  content: string;
+};
+
+export type PlatformTextGenerationResult = {
+  text: string;
+  providerId: string;
+  providerLabel: string;
+};
+
+type PlatformTextGenerationParams = {
+  messages: PlatformTextMessage[];
+  temperature: number;
+  idempotencyKey: string;
+  mockText: string;
+};
+
+export function platformTextChatCompletionsUrl(aiUrl: string): string {
+  const url = new URL(aiUrl);
+  let path = url.pathname.replace(/\/+$/, "");
+  if (path.endsWith("/chat/completions")) return url.toString();
+  if (path.endsWith("/models")) path = path.slice(0, -"/models".length);
+  url.pathname = path.endsWith("/v1") ? `${path}/chat/completions` : `${path || "/v1"}/chat/completions`;
+  return url.toString();
+}
+
+function contentFromResponse(payload: unknown): string {
+  const content = (payload as { choices?: Array<{ message?: { content?: unknown }; text?: unknown }> })?.choices?.[0]?.message?.content
+    ?? (payload as { choices?: Array<{ text?: unknown }> })?.choices?.[0]?.text;
+  if (typeof content === "string") return content.trim();
+  if (Array.isArray(content)) {
+    return content
+      .map((item) => typeof item === "string" ? item : (item as { text?: string })?.text ?? "")
+      .join("\n")
+      .trim();
+  }
+  return "";
+}
+
+export async function callPlatformTextProvider(params: {
+  provider: PlatformAiProvider;
+  messages: PlatformTextMessage[];
+  temperature: number;
+  idempotencyKey: string;
+  fetcher?: typeof fetch;
+}): Promise<string> {
+  const response = await (params.fetcher ?? fetch)(platformTextChatCompletionsUrl(params.provider.aiUrl), {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${params.provider.apiKey}`,
+      "Content-Type": "application/json",
+      "Idempotency-Key": params.idempotencyKey
+    },
+    body: JSON.stringify({
+      model: params.provider.modelType,
+      temperature: params.temperature,
+      messages: params.messages
+    }),
+    cache: "no-store",
+    signal: AbortSignal.timeout(30_000)
+  });
+  if (!response.ok) throw new Error(`text_provider_http_${response.status}`);
+  const text = contentFromResponse(await response.json().catch(() => ({})));
+  if (!text) throw new Error("text_provider_empty_response");
+  return text;
+}
+
+export async function generatePlatformText(params: PlatformTextGenerationParams): Promise<PlatformTextGenerationResult> {
+  const testHook = (globalThis as typeof globalThis & {
+    __dingyuePlatformTextProviderTestHook?: (input: PlatformTextGenerationParams) => Promise<PlatformTextGenerationResult> | PlatformTextGenerationResult;
+  }).__dingyuePlatformTextProviderTestHook;
+  if (process.env.NODE_ENV === "test" && testHook) return testHook(params);
+  if (process.env.SMOKE_PROVIDER_MOCK === "1" || process.env.AI_TEXT_PROVIDER_MOCK === "1") {
+    return { text: params.mockText, providerId: "mock-text-provider", providerLabel: "Mock text provider" };
+  }
+  const [{ aiProviderStatus }, { listPlatformAiProvidersRelational }] = await Promise.all([
+    import("@/lib/ai-provider-config"),
+    import("@/lib/stores/platform-store")
+  ]);
+  const providers = await listPlatformAiProvidersRelational({ providerType: "text" });
+  const provider = providers.find((candidate) => aiProviderStatus(candidate).runnable);
+  if (!provider) throw new Error("text_provider_not_configured");
+  const text = await callPlatformTextProvider({
+    provider,
+    messages: params.messages,
+    temperature: params.temperature,
+    idempotencyKey: params.idempotencyKey
+  });
+  return { text, providerId: provider.id, providerLabel: provider.label };
+}

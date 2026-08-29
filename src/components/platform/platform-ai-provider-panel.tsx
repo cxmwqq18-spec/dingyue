@@ -660,7 +660,7 @@ export function PlatformAiProviderPanel({
                 <ErpInput className="font-mono" onChange={(event) => setForm((draft) => ({ ...draft, aiUrl: event.target.value }))} placeholder="https://api.example.com/v1/models" value={form.aiUrl} />
               </ErpField>
               <ErpField label="API Key">
-                <ErpInput autoComplete="off" className="font-mono" onChange={(event) => setForm((draft) => ({ ...draft, apiKey: event.target.value }))} placeholder={form.id ? "留空则保留当前 key" : "AI provider API key"} type="password" value={form.apiKey} />
+                <ErpInput autoComplete="new-password" className="font-mono" onChange={(event) => setForm((draft) => ({ ...draft, apiKey: event.target.value }))} placeholder={form.id ? "留空则保留当前 key" : "AI provider API key"} type="password" value={form.apiKey} />
               </ErpField>
               <ErpField label="调用优先级 P" hint="数字越小越先调用；例如 P0 会先于 P9。">
                 <ErpInput
@@ -825,7 +825,7 @@ export function PlatformAiProviderPanel({
                 </ErpField>
                 <ErpField label="API Key">
                   <div className="flex gap-2">
-                    <ErpInput autoComplete="off" className="font-mono" onChange={(event) => setEditForm((draft) => draft ? { ...draft, apiKey: event.target.value } : draft)} placeholder="留空则保留当前 key" type={editKeyVisible ? "text" : "password"} value={editForm.apiKey} />
+                    <ErpInput autoComplete="new-password" className="font-mono" onChange={(event) => setEditForm((draft) => draft ? { ...draft, apiKey: event.target.value } : draft)} placeholder="留空则保留当前 key" type={editKeyVisible ? "text" : "password"} value={editForm.apiKey} />
                     <button
                       aria-label={editKeyVisible ? "隐藏当前 API Key" : "显示当前 API Key"}
                       className="admin_btn inline-flex h-[38px] shrink-0 items-center justify-center gap-1 whitespace-nowrap px-3 disabled:opacity-55"
@@ -833,7 +833,8 @@ export function PlatformAiProviderPanel({
                       onClick={revealEditApiKey}
                       type="button"
                     >
-                      {editKeyVisible ? <EyeOff className="h-3.5 w-3.5" strokeWidth={1.8} /> : <Eye className="h-3.5 w-3.5" strokeWidth={1.8} />}
+                      <Eye className={`h-3.5 w-3.5 ${editKeyVisible ? "hidden" : ""}`} strokeWidth={1.8} />
+                      <EyeOff className={`h-3.5 w-3.5 ${editKeyVisible ? "" : "hidden"}`} strokeWidth={1.8} />
                       {revealingEditKey ? "读取中" : editKeyVisible ? "隐藏" : "显示"}
                     </button>
                   </div>

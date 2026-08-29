@@ -44,6 +44,11 @@ export function videoProviderUserPrompt(payload: VideoProviderPromptPayload) {
     promptText(payload.prompt);
 }
 
+export function videoProviderThemePrompt(payload: VideoProviderPromptPayload) {
+  const fields = recordValue(payload.params?.fields);
+  return textValue(fields?.videoThemePrompt) || textValue(payload.params?.videoThemePrompt);
+}
+
 export function minimalVideoReferenceInstruction(referenceCount: number) {
   if (referenceCount > 1) {
     return [
@@ -65,7 +70,7 @@ export function minimalVideoOutputFormatInstruction(params: {
   duration?: unknown;
   resolution?: unknown;
 }) {
-  const duration = textValue(params.duration);
+  const duration = textValue(params.duration) || (typeof params.duration === "number" && Number.isFinite(params.duration) ? String(params.duration) : "");
   const aspectRatio = textValue(params.aspectRatio);
   const resolution = textValue(params.resolution).toUpperCase();
   const details = [
@@ -88,16 +93,24 @@ export function buildMinimalVideoProviderPromptText(params: {
   aspectRatio?: unknown;
   duration?: unknown;
   resolution?: unknown;
+  themePrompt?: unknown;
   userPrompt?: unknown;
   referenceCount?: number;
 }) {
   const referenceCount = normalizedReferenceCount(params.referenceCount);
+  const themePrompt = textValue(params.themePrompt);
+  const userPrompt = textValue(params.userPrompt);
+  const userPromptCarriesThemeStructure = /(?:^|\n)\s*Subject\s*\/\s*Character\s*:/i.test(userPrompt)
+    && /(?:^|\n)\s*Sound\s*\/\s*Audio\s*:/i.test(userPrompt);
   return [
-    textValue(params.userPrompt),
+    userPrompt,
+    themePrompt && !userPromptCarriesThemeStructure
+      ? `Supporting selected-theme production direction (apply only where consistent with the mandatory user direction above):\n${themePrompt}`
+      : "",
     minimalVideoOutputFormatInstruction(params),
     minimalVideoReferenceInstruction(referenceCount),
-    minimalVideoStyleFidelityInstruction(params.userPrompt, referenceCount),
-    promptRequestsTextOutput(params.userPrompt)
+    minimalVideoStyleFidelityInstruction(`${themePrompt}\n${userPrompt}`, referenceCount),
+    promptRequestsTextOutput(`${themePrompt}\n${userPrompt}`)
       ? MINIMAL_VIDEO_EXPLICIT_TEXT_OUTPUT_CONSTRAINT
       : MINIMAL_VIDEO_CLEAN_OUTPUT_CONSTRAINT
   ].filter(Boolean).join("\n\n");

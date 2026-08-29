@@ -33,17 +33,20 @@ function promptNeedsUpgrade(prompt) {
   return !validateVideoPrompt(String(prompt ?? "")).valid || !/15\s*seconds?/i.test(String(prompt ?? ""));
 }
 
-function upgradePrompt(prompt, fallbackDirection) {
+function upgradePrompt(prompt, fallbackDirection, topicSlug, force = false) {
   const current = String(prompt ?? "").trim();
-  if (validateVideoPrompt(current).valid) {
+  const currentValidation = validateVideoPrompt(current);
+  if (!force && currentValidation.valid) {
     const upgraded = current.replace(
       /(Duration\s*\/\s*Aspect Ratio\s*\/\s*Resolution:\s*)[^\n]+/i,
       (_match, prefix) => `${prefix}15 seconds, 16:9 aspect ratio, 720p resolution; preserve the user's selected output settings when they differ.`
     );
     if (validateVideoPrompt(upgraded).valid && /15\s*seconds?/i.test(upgraded)) return upgraded;
   }
-  const direction = current && current.length <= 1800 ? current : fallbackDirection;
-  return providerReadyVideoThemePrompt(direction || "An adult subject completes one clear action in a grounded environment and holds on a deliberate final frame.");
+  const direction = force
+    ? fallbackDirection
+    : (current && current.length <= 1800 ? current : fallbackDirection);
+  return providerReadyVideoThemePrompt(direction || "An adult subject completes one clear action in a grounded environment and holds on a deliberate final frame.", topicSlug);
 }
 
 const report = { categoriesCreated: 0, categoriesUpdated: 0, themesCreated: 0, themesUpdated: 0, promptsRewritten: 0, examplesCreated: 0, examplesUpdated: 0 };
@@ -158,15 +161,15 @@ try {
   });
   const seededSlugs = new Set(themes.map((theme) => theme.slug));
   for (const theme of allThemes) {
-    if (!seededSlugs.has(theme.slug) && promptNeedsUpgrade(theme.prompt)) {
-      const prompt = upgradePrompt(theme.prompt, `${theme.name}. ${theme.description}`);
+    if (!seededSlugs.has(theme.slug) && (rewritePrompts || promptNeedsUpgrade(theme.prompt))) {
+      const prompt = upgradePrompt(theme.prompt, `${theme.name}. ${theme.description}`, theme.slug, rewritePrompts);
       if (!dryRun) await prisma.videoTheme.update({ where: { id: theme.id }, data: { prompt, durationSeconds: 15 } });
       report.promptsRewritten += 1;
       theme.prompt = prompt;
     }
     for (const example of theme.examples) {
-      if (!["active", "draft"].includes(example.status) || !promptNeedsUpgrade(example.prompt)) continue;
-      const prompt = upgradePrompt(example.prompt, `${example.name}. ${example.description || theme.description}`);
+      if (!["active", "draft"].includes(example.status) || (!rewritePrompts && !promptNeedsUpgrade(example.prompt))) continue;
+      const prompt = upgradePrompt(example.prompt, `${example.name}. ${example.description || theme.description}`, theme.slug, rewritePrompts);
       if (!dryRun) await prisma.videoThemeExample.update({ where: { id: example.id }, data: { prompt } });
       report.examplesUpdated += 1;
     }

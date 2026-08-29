@@ -17,7 +17,7 @@ export const VIDEO_DURATION_OPTIONS = [
   { seconds: 10, creditMultiplier: 10 / 6, modelFamilies: STANDARD_VIDEO_DURATION_MODEL_FAMILIES },
   { seconds: 15, creditMultiplier: 15 / 6, modelFamilies: STANDARD_VIDEO_DURATION_MODEL_FAMILIES }
 ] as const;
-export const DEFAULT_VIDEO_DURATION_SECONDS = VIDEO_DURATION_OPTIONS[0].seconds;
+export const DEFAULT_VIDEO_DURATION_SECONDS = VIDEO_DURATION_OPTIONS[2].seconds;
 export const MAX_MULTI_REFERENCE_VIDEO_DURATION_SECONDS = MAX_VIDEO_DURATION_SECONDS;
 
 export type VideoDurationSeconds = typeof VIDEO_DURATION_OPTIONS[number]["seconds"];

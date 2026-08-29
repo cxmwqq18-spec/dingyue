@@ -19,6 +19,7 @@ const dbTunnelWatchScript = read("scripts/watch-remote-db-tunnel.mjs");
 const videoLatencyReport = read("scripts/report-video-generation-latency.mjs");
 const fetchTimeout = read("src/lib/fetch-timeout.ts");
 const videoProviderTimeouts = read("src/lib/video-provider-timeouts.ts");
+const videoPromptOptimizationContract = read("src/lib/video-prompt-optimization-contract.ts");
 assert(packageJson.includes('"dev:3002": "node scripts/dev-local.mjs"'), "dev:3002 should use the local database launcher");
 assert(fixedPortDevScript.includes('port = String(Number(process.env.DEV_PORT || "3002") || 3002)'), "fixed-port launcher should default the storefront dev server to port 3002");
 assert(fixedPortDevScript.includes("Refusing to switch ports"), "fixed-port launcher should fail loudly instead of moving to another port");
@@ -95,6 +96,9 @@ assert(videoProviderPolicy.includes("videoProviderFailureCustomerMessage"), "pro
 assert(videoProviderPolicy.includes("isVideoProviderUpstreamUnavailableError"), "upstream video provider outages should not be normalized as reference-image policy rejections");
 
 const videoWorkspace = read("src/components/storefront/customer-video-workspace.tsx");
+assert(videoWorkspace.includes("const toggleCategoryContent = () =>"), "video theme categories should centralize their expand/collapse behavior");
+assert(videoWorkspace.includes("onClick={toggleCategoryContent}"), "the full video theme category row should toggle expanded content");
+assert(!videoWorkspace.includes("onClick={() => choosePickerCategory(category)}"), "video theme category text should not use a separate non-toggle click target");
 assert(videoWorkspace.includes("status === 403 || error?.includes(\"csrf\")"), "video workspace should identify CSRF failures instead of blaming frame images");
 assert(videoWorkspace.includes("Your secure session expired. Refresh the page, then try again."), "video workspace should show a secure-session message for CSRF failures");
 assert(videoWorkspace.includes("function isCsrfError"), "video workspace should centralize CSRF error detection");
@@ -128,7 +132,8 @@ assert(!videoWorkspace.includes('id="video-step-themes"'), "video theme selectio
 assert(videoWorkspace.includes("Agent video composer"), "video input should use the simplified composer module");
 assert(videoWorkspace.includes("VIDEO_PROMPT_TEMPLATE"), "video workspace should provide a reusable video prompt template");
 assert(videoWorkspace.includes("Use template"), "video workspace should expose a prompt template button beside the composer frame count");
-assert(videoWorkspace.includes("VIDEO_PROMPT_MAX_LENGTH = 5000"), "video prompt composer should allow long customer directions");
+assert(videoWorkspace.includes("VIDEO_PROMPT_MAX_LENGTH = VIDEO_PROMPT_OPTIMIZATION_MAX_PROMPT_LENGTH"), "video prompt composer should use the shared prompt limit");
+assert(videoPromptOptimizationContract.includes("VIDEO_PROMPT_OPTIMIZATION_MAX_PROMPT_LENGTH = 5000"), "shared video prompt limit should allow long customer directions");
 assert(videoWorkspace.includes("maxLength={VIDEO_PROMPT_MAX_LENGTH}"), "video prompt composer should use the shared long prompt limit");
 assert(!videoWorkspace.includes("maxLength={600}"), "video prompt composer should not keep the old short prompt limit");
 assert(videoWorkspace.includes("resize-y"), "video prompt composer should let customers expand the textarea for long prompts");

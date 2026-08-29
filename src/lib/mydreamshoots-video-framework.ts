@@ -282,7 +282,7 @@ const saveTheDateThemeSeeds = saveTheDateLeafCategories.map((category) => ({
   name: category.label,
   headline: category.description,
   description: category.description,
-  prompt: providerReadyVideoThemePrompt(saveTheDateDirections[category.slug] ?? `An adult subject creates a clear ${category.label} announcement with a tactile keepsake and a warm final reveal.`),
+  prompt: providerReadyVideoThemePrompt(saveTheDateDirections[category.slug] ?? `An adult subject creates a clear ${category.label} announcement with a tactile keepsake and a warm final reveal.`, category.slug),
   imageUrl: saveTheDateCoverImages[category.slug] ?? "",
   creditCost: 24,
   durationSeconds: 15,
@@ -693,7 +693,7 @@ export function parentVideoGenerationCategorySlugForChild(slug: string): string 
 export function mydreamshootsVideoGenerationThemeSeedsForSite(siteId: string) {
   const frameworkSeeds = mydreamshootsVideoGenerationThemeSeeds.map((theme) => ({
     ...theme,
-    prompt: providerReadyVideoThemePrompt(theme.prompt),
+    prompt: providerReadyVideoThemePrompt(theme.prompt, theme.slug),
     durationSeconds: 15
   }));
   return siteId === "site_dreamshoot"

@@ -31,7 +31,7 @@ import { videoProviderModelFamiliesForProviders } from "@/lib/video-provider-fam
 import { runnableVideoProviderModelFamiliesForRequest } from "@/lib/video-provider-availability";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit, isVideoProviderModel } from "@/lib/video-provider-limits";
 import { DEFAULT_VIDEO_FRAME_LIMIT, defaultVideoModelPricing, normalizeVideoFrameLimit, normalizeVideoModelPricing, type VideoModelPricing } from "@/lib/video-frame-config";
-import { defaultVideoThemeExamplePrompt, validateVideoPrompt } from "@/lib/video-prompt-format";
+import { defaultVideoThemeExamplePrompt, normalizeVideoThemePromptOutputSettings, validateVideoPrompt } from "@/lib/video-prompt-format";
 import { compileMydreamshootsVideoTopicPublication } from "@/lib/mydreamshoots-video-topic-publication";
 import { resolvePublishedSaveTheDateGroups, resolvePublishedSaveTheDateNavigationGroups, type PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
 import type {
@@ -4904,7 +4904,7 @@ async function ensureMydreamshootsVideoGenerationFrameworkRelational(siteId: str
     });
     const shouldUpgradePrompt = !existingTheme
       || !validateVideoPrompt(existingTheme.prompt).valid
-      || !/15\s*seconds?/i.test(existingTheme.prompt);
+      || !/highest-priority output settings/i.test(existingTheme.prompt);
     const savedTheme = await prisma.videoTheme.upsert({
       where: { siteId_slug: { siteId, slug: theme.slug } },
       create: {
@@ -5132,7 +5132,7 @@ async function ensureVideoThemeExampleFallbacksRelational(siteId: string): Promi
     if (existing) {
       const isDefaultReference = existing.sortOrder === 0 && existing.name.toLowerCase().endsWith(" reference");
       const needsCoverSync = isDefaultReference && (existing.imageUrl !== theme.imageUrl || JSON.stringify(existing.galleryImages ?? []) !== JSON.stringify(theme.imageUrl ? [theme.imageUrl] : []));
-      const needsPromptUpgrade = isDefaultReference && (!validateVideoPrompt(existing.prompt).valid || !/15\s*seconds?/i.test(existing.prompt));
+      const needsPromptUpgrade = isDefaultReference && existing.prompt !== prompt;
       if (needsCoverSync || needsPromptUpgrade) {
         await prisma.videoThemeExample.update({
           where: { id: existing.id },
@@ -5340,7 +5340,7 @@ export async function upsertVideoThemeRelational(params: {
   if (!slug) throw new RelationalStoreError("video_theme_slug_required", 400);
   const description = params.description.trim();
   if (description.length < 8) throw new RelationalStoreError("video_theme_description_required", 400);
-  const prompt = params.prompt.trim();
+  const prompt = normalizeVideoThemePromptOutputSettings(params.prompt);
   if (prompt.length < 12) throw new RelationalStoreError("video_theme_prompt_required", 400);
   if (prompt.length > 6000) throw new RelationalStoreError("video_theme_prompt_too_long", 400);
   const status = videoThemeStatus(params.status);

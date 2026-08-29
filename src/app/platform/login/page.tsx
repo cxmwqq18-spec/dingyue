@@ -50,7 +50,7 @@ export default async function PlatformLoginPage({
         { label: "首页", href: "/" },
         ...quickSites.flatMap((site) => [
           { label: `${site.branding.logoText} 前台`, href: `/site/${site.slug}` },
-          { label: `${site.branding.logoText} 后台`, href: `/platform/login` }
+          { label: `${site.branding.logoText} 后台`, href: `/site/${site.slug}/admin/login` }
         ]).slice(0, 4)
       ]}
       stats={[

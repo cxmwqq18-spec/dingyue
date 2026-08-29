@@ -63,6 +63,7 @@
     "smoke:aidreamcapes-admin-workspace": "node scripts/smoke-aidreamcapes-admin-workspace.mjs",
     "smoke:customer-job-events": "node scripts/smoke-customer-job-events.mjs",
     "smoke:video-workspace": "node scripts/smoke-video-provider-availability-runtime.mjs && node scripts/smoke-video-workspace-regression.mjs && node --no-warnings --experimental-strip-types scripts/smoke-video-provider-prompt-recompute.mjs",
+    "smoke:video-prompt-optimizer": "node scripts/smoke-video-prompt-optimizer.mjs && node scripts/smoke-video-prompt-optimization-client.mjs && node scripts/smoke-video-prompt-optimization-contract.mjs",
     "smoke:video-theme-prompt-format": "node --no-warnings --experimental-strip-types scripts/smoke-video-theme-prompt-format.mjs",
     "smoke:save-the-date-video-theme-library": "node scripts/smoke-save-the-date-video-theme-library.mjs",
     "smoke:workspace-save-the-date-theme-picker": "node scripts/smoke-workspace-save-the-date-theme-picker.mjs",

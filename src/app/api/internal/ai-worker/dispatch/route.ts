@@ -56,6 +56,7 @@ import {
 } from "@/lib/video-provider-policy";
 import {
   buildMinimalVideoProviderPromptText,
+  videoProviderThemePrompt,
   videoProviderUserPrompt
 } from "@/lib/video-provider-prompt";
 import {
@@ -919,6 +920,7 @@ function buildMinimalVideoProviderPrompt(
     aspectRatio: videoParams?.aspect_ratio,
     duration: videoParams?.duration,
     resolution: videoParams?.resolution,
+    themePrompt: videoProviderThemePrompt(payload),
     userPrompt: videoProviderUserPrompt(payload),
     referenceCount: referenceAssets.length
   });

@@ -179,7 +179,7 @@ export function previewVideoThemeImport(
         description: text(row.description),
         prompt: text(row.prompt),
         creditCost: Math.max(1, numberValue(row.creditcost, existing?.creditCost ?? 24)),
-        durationSeconds: Math.min(15, Math.max(1, numberValue(row.durationseconds, existing?.durationSeconds ?? 6))),
+        durationSeconds: Math.min(15, Math.max(1, numberValue(row.durationseconds, existing?.durationSeconds ?? 15))),
         maxFrames: Math.max(1, numberValue(row.maxframes, existing?.maxFrames ?? 10)),
         sortOrder: numberValue(row.sortorder, existing?.sortOrder ?? 0),
         status: statusValue(row.status, existing?.status ?? "draft"),
