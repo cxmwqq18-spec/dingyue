@@ -108,6 +108,10 @@ function repairPage(slug, source) {
       "ai-christmas-gift-wrapping.jpg", "ai-christmas-couple-market-lights.jpg", "ai-christmas-kids-baking-cookies.jpg",
       "ai-christmas-living-room-fireplace.jpg", "ai-christmas-friends-selfie.jpg"
     ]);
+    assignBlockImages(json, "christmas_video_ideas", [
+      "hero-ai-christmas-family-gift.jpg", "ai-christmas-photo-capture.jpg",
+      "ai-christmas-gift-wrapping.jpg", "ai-christmas-couple-market-lights.jpg"
+    ]);
   }
   if (slug === "/ai-save-the-date/thanksgiving") {
     assignBlockImages(json, "thanksgiving_use_cases", [
@@ -124,6 +128,15 @@ function repairPage(slug, source) {
     json.sections.thanksgiving_scene_ideas.settings.intro = "Use each scene as a distinct visual direction, then review people, hands, food, and seasonal details before sharing.";
   }
   if (slug === "/ai-save-the-date/wedding-ceremony") {
+    assignBlockImages(json, "wedding_ceremony_reasons", [
+      "hero-ai-wedding-ceremony-first-kiss.jpg", "hero-ai-wedding-ceremony-vows.jpg",
+      "wedding-ceremony-bride-aisle.jpg", "wedding-ceremony-beach-processional.jpg",
+      "wedding-ceremony-guests-reaction.jpg", "wedding-ceremony-venue-setup.jpg"
+    ]);
+    assignBlockImages(json, "wedding_ceremony_workflow", [
+      "wedding-ceremony-bride-aisle.jpg", "hero-ai-wedding-ceremony-vows.jpg",
+      "wedding-ceremony-ring-exchange.jpg", "wedding-ceremony-venue-setup.jpg"
+    ]);
     assignBlockImages(json, "wedding_ceremony_scene_ideas", [
       "hero-ai-wedding-ceremony-first-kiss.jpg", "hero-ai-wedding-ceremony-recessional.jpg", "hero-ai-wedding-ceremony-vows.jpg",
       "wedding-ceremony-ring-exchange.jpg", "wedding-ceremony-church-atmosphere.jpg", "wedding-ceremony-bride-aisle.jpg",
@@ -300,7 +313,7 @@ try {
   if (APPLY) {
     await prisma.$transaction(async (tx) => {
       for (const change of changes) {
-        await tx.themePage.update({ where: { id: change.id }, data: { draftJson: change.repaired } });
+        await tx.themePage.update({ where: { id: change.id }, data: { draftJson: change.repaired, publishedJson: change.repaired } });
       }
       await tx.themeSettings.update({ where: { siteId: SITE_ID }, data: { draftJson: nextSettings } });
       for (const asset of engagementAssets) {

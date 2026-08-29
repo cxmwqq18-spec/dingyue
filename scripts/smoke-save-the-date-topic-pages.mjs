@@ -35,7 +35,7 @@ const prisma = new PrismaClient();
 const [pageRows, mediaAssets] = await Promise.all([
   prisma.themePage.findMany({
     where: { siteId: SITE_ID, slug: { in: [...indexablePaths, retiredPath] } },
-    select: { id: true, slug: true, draftJson: true }
+    select: { id: true, slug: true, draftJson: true, publishedJson: true }
   }),
   prisma.mediaAsset.findMany({
     where: { siteId: SITE_ID },
@@ -56,6 +56,10 @@ for (const canonicalPath of indexablePaths) {
   assert.equal(json?.seo?.robots?.follow, true, `${canonicalPath}: robots follow`);
   assert(json?.seo?.title && json?.seo?.description && json?.seo?.keywords, `${canonicalPath}: complete TDK`);
   assert.doesNotMatch(JSON.stringify(json), internalCopyPattern, `${canonicalPath}: internal authoring copy`);
+}
+
+for (const page of pageRows) {
+  assert.deepEqual(page.draftJson, page.publishedJson, `${page.slug}: public draft/published projection drift`);
 }
 
 const retired = pageByPath.get(retiredPath)?.draftJson;
@@ -90,6 +94,17 @@ const engagementHashes = engagementManifest.map(binaryHash);
 const saveDateHashes = new Set(saveDateManifest.map(binaryHash));
 assert.equal(new Set(engagementHashes).size, engagementManifest.length, "engagement media must be byte-distinct");
 assert(engagementHashes.every((hash) => !saveDateHashes.has(hash)), "engagement media must not duplicate Save the Date media");
+
+const expectedImageMappings = [
+  ["/ai-save-the-date/christmas", "christmas_video_ideas", ["hero-ai-christmas-family-gift.jpg", "ai-christmas-photo-capture.jpg", "ai-christmas-gift-wrapping.jpg", "ai-christmas-couple-market-lights.jpg"]],
+  ["/ai-save-the-date/wedding-ceremony", "wedding_ceremony_reasons", ["hero-ai-wedding-ceremony-first-kiss.jpg", "hero-ai-wedding-ceremony-vows.jpg", "wedding-ceremony-bride-aisle.jpg", "wedding-ceremony-beach-processional.jpg", "wedding-ceremony-guests-reaction.jpg", "wedding-ceremony-venue-setup.jpg"]],
+  ["/ai-save-the-date/wedding-ceremony", "wedding_ceremony_workflow", ["wedding-ceremony-bride-aisle.jpg", "hero-ai-wedding-ceremony-vows.jpg", "wedding-ceremony-ring-exchange.jpg", "wedding-ceremony-venue-setup.jpg"]]
+];
+for (const [pagePath, sectionId, filenames] of expectedImageMappings) {
+  const section = pageByPath.get(pagePath).draftJson.sections[sectionId];
+  assert.equal(section.blocks.length, filenames.length, `${pagePath}: ${sectionId} block count`);
+  section.blocks.forEach((block, index) => assert.equal(block.settings?.imageUrl?.split("/").pop(), filenames[index], `${pagePath}: ${sectionId} image mapping ${index + 1}`));
+}
 
 console.log(JSON.stringify({
   siteId: SITE_ID,
