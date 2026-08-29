@@ -1,7 +1,7 @@
 "use client";
 
-import { type Dispatch, type SetStateAction, useEffect, useMemo, useRef, useState } from "react";
-import { AlertTriangle, Check, ChevronDown, ChevronRight, Film, ImagePlus, Monitor, Search, Send, Sparkles, X } from "lucide-react";
+import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useMemo, useRef, useState } from "react";
+import { AlertTriangle, Check, ChevronDown, ChevronRight, Film, ImagePlus, Monitor, Send, Sparkles, X } from "lucide-react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
 import type { PublicCustomer, VideoTheme, VideoThemeCategory, VideoThemeExample } from "@/lib/types";
 import {
@@ -48,6 +48,15 @@ type VideoPromptRiskMessage = {
   message: string;
 };
 
+function ThemeMedia({ src, className, alt = "" }: { src?: string; className: string; alt?: string }) {
+  const [failed, setFailed] = useState(false);
+  const normalizedSrc = typeof src === "string" ? src.trim() : "";
+  if (!normalizedSrc || failed) {
+    return <div className={`${className} grid place-items-center bg-white/[0.05]`} aria-hidden="true"><Film className="h-5 w-5 text-[#31d4ff]/65" /></div>;
+  }
+  return <img alt={alt} className={className} onError={() => setFailed(true)} src={normalizedSrc} />;
+}
+
 const VIDEO_ASPECT_OPTIONS: Array<{ id: VideoAspectRatio; label: string; shape: string }> = [
   { id: "16:9", label: "16:9", shape: "aspect-[16/9] w-7" },
   { id: "4:3", label: "4:3", shape: "aspect-[4/3] w-6" },
@@ -61,6 +70,13 @@ const VIDEO_RESOLUTION_OPTIONS: Array<{ id: VideoResolution; label: string }> = 
 ];
 
 const PROMPT_DIRECTED_VIDEO_THEME_SLUG = "prompt-directed-motion";
+const AI_VIDEO_PICKER_CATEGORY_SLUGS = new Set([
+  "core-ai-creation",
+  "social-creator",
+  "marketing-commerce",
+  "creative-lifestyle",
+  "professional-business"
+]);
 const VIDEO_PROMPT_MAX_LENGTH = 5000;
 const VIDEO_PROMPT_TEMPLATE = [
   "Step 1: Describe the main subject or product. Include what should stay consistent from uploaded frame images.",
@@ -349,7 +365,7 @@ export function CustomerVideoWorkspace({
   const [themePickerThemeId, setThemePickerThemeId] = useState("");
   const [themePickerExampleId, setThemePickerExampleId] = useState("");
   const [themePickerPrompt, setThemePickerPrompt] = useState("");
-  const [themePickerSearch, setThemePickerSearch] = useState("");
+  const [expandedCategoryIds, setExpandedCategoryIds] = useState<string[]>([]);
   const [expandedThemeCategoryIds, setExpandedThemeCategoryIds] = useState<string[]>([]);
   const [message, setMessage] = useState("");
   const [themeReloadKey, setThemeReloadKey] = useState(0);
@@ -404,23 +420,73 @@ export function CustomerVideoWorkspace({
   const fallbackThemeCategories = Array.from(new Map(themes.filter((theme) => theme.category).map((theme) => [theme.category!.id, theme.category!])).values());
   const allThemeCategories = configuredThemeCategories.length ? configuredThemeCategories : fallbackThemeCategories;
   const themeCategoryById = useMemo(() => new Map(allThemeCategories.map((category) => [category.id, category])), [allThemeCategories]);
-  const rootThemeCategories = allThemeCategories.filter((category) => !category.parentId).sort((a, b) => a.sortOrder - b.sortOrder || a.label.localeCompare(b.label));
-  const childThemeCategories = allThemeCategories.filter((category) => Boolean(category.parentId)).sort((a, b) => a.sortOrder - b.sortOrder || a.label.localeCompare(b.label));
+  const themeCategoriesByParent = useMemo(() => {
+    const grouped = new Map<string, VideoThemeCategory[]>();
+    for (const category of allThemeCategories) {
+      const parentId = category.parentId ?? "";
+      const current = grouped.get(parentId) ?? [];
+      current.push(category);
+      grouped.set(parentId, current);
+    }
+    for (const categories of grouped.values()) {
+      categories.sort((a, b) => a.sortOrder - b.sortOrder || a.label.localeCompare(b.label));
+    }
+    return grouped;
+  }, [allThemeCategories]);
+  const themesByCategory = useMemo(() => {
+    const grouped = new Map<string, VideoTheme[]>();
+    for (const theme of themes) {
+      if (!theme.category?.id) continue;
+      const current = grouped.get(theme.category.id) ?? [];
+      current.push(theme);
+      grouped.set(theme.category.id, current);
+    }
+    for (const categoryThemes of grouped.values()) {
+      categoryThemes.sort((a, b) => a.sortOrder - b.sortOrder || a.name.localeCompare(b.name));
+    }
+    return grouped;
+  }, [themes]);
+  const rootThemeCategories = themeCategoriesByParent.get("") ?? [];
+  const aiVideoGenerationRoot: VideoThemeCategory = {
+    id: "picker-ai-video-generation",
+    siteId,
+    slug: "ai-video-generation",
+    label: "AI Video Generation",
+    description: "Browse every AI video workflow and theme.",
+    sortOrder: -1,
+    status: "active",
+    createdAt: ""
+  };
+  const aiVideoPickerCategories = rootThemeCategories.filter((category) => AI_VIDEO_PICKER_CATEGORY_SLUGS.has(category.slug));
+  const pickerRootThemeCategories = [
+    aiVideoGenerationRoot,
+    ...rootThemeCategories.filter((category) => category.slug === "save-the-date")
+  ];
+  const aiVideoChildCategories = aiVideoPickerCategories;
+  const categoryDepthById = useMemo(() => {
+    const depths = new Map<string, number>();
+    const depthFor = (categoryId: string, seen = new Set<string>()): number => {
+      if (depths.has(categoryId)) return depths.get(categoryId)!;
+      if (seen.has(categoryId)) return 0;
+      const category = themeCategoryById.get(categoryId);
+      if (!category?.parentId || !themeCategoryById.has(category.parentId)) {
+        depths.set(categoryId, 0);
+        return 0;
+      }
+      const depth = depthFor(category.parentId, new Set([...seen, categoryId])) + 1;
+      depths.set(categoryId, depth);
+      return depth;
+    };
+    for (const category of allThemeCategories) depthFor(category.id);
+    return depths;
+  }, [allThemeCategories, themeCategoryById]);
   const selectedThemeCategory = selectedTheme?.category
     ? themeCategoryById.get(selectedTheme.category.id) ?? selectedTheme.category
     : undefined;
-  const pickerCategory = themeCategoryById.get(themePickerCategoryId) ?? selectedThemeCategory ?? rootThemeCategories[0];
-  const pickerRootCategory = pickerCategory?.parentId ? themeCategoryById.get(pickerCategory.parentId) ?? pickerCategory : pickerCategory;
-  const pickerSearch = themePickerSearch.trim().toLowerCase();
-  const pickerThemes = useMemo(() => themes.filter((theme) => {
-    const category = theme.category;
-    const root = category?.parentId ? themeCategoryById.get(category.parentId) : category;
-    const haystack = [theme.name, theme.headline, theme.description, category?.label, root?.label].filter(Boolean).join(" ").toLowerCase();
-    // Searching is global across the taxonomy. Without a query, keep the selected root/child scope.
-    if (pickerSearch) return haystack.includes(pickerSearch);
-    return !pickerCategory || pickerCategory.id === root?.id || pickerCategory.id === category?.id;
-  }), [pickerCategory, pickerSearch, themeCategoryById, themes]);
-  const pickerTheme = pickerThemes.find((theme) => theme.id === themePickerThemeId) ?? (pickerSearch ? undefined : pickerThemes[0]);
+  const pickerCategory = themePickerCategoryId === aiVideoGenerationRoot.id
+    ? aiVideoGenerationRoot
+    : themeCategoryById.get(themePickerCategoryId) ?? selectedThemeCategory ?? rootThemeCategories[0];
+  const pickerTheme = themes.find((theme) => theme.id === themePickerThemeId) ?? selectedTheme;
   const pickerExamples = pickerTheme?.examples?.length ? pickerTheme.examples : pickerTheme ? [{
     id: `fallback-${pickerTheme.id}`,
     siteId: pickerTheme.siteId,
@@ -587,9 +653,12 @@ export function CustomerVideoWorkspace({
     setThemePickerThemeId(theme?.id ?? "");
     setThemePickerExampleId(example?.id ?? "");
     setThemePickerPrompt(example?.prompt ?? theme?.prompt ?? "");
-    setThemePickerSearch("");
-    const rootId = category?.parentId ?? category?.id;
-    setExpandedThemeCategoryIds(rootId ? [rootId] : []);
+    const expandedCategories = allThemeCategories
+      .filter((item) => (categoryDepthById.get(item.id) ?? 0) <= 1)
+      .map((item) => item.id);
+    expandedCategories.push(aiVideoGenerationRoot.id);
+    setExpandedCategoryIds(expandedCategories);
+    setExpandedThemeCategoryIds([]);
     setThemePickerOpen(true);
   }
 
@@ -597,8 +666,13 @@ export function CustomerVideoWorkspace({
     const example = theme.examples?.[0];
     if (theme.category) {
       setThemePickerCategoryId(theme.category.id);
-      const rootId = theme.category.parentId ?? theme.category.id;
-      setExpandedThemeCategoryIds((current) => current.includes(rootId) ? current : [...current, rootId]);
+      const ancestors: string[] = [];
+      let current: VideoThemeCategory | undefined = theme.category;
+      while (current) {
+        ancestors.push(current.id);
+        current = current.parentId ? themeCategoryById.get(current.parentId) : undefined;
+      }
+      setExpandedCategoryIds((expanded) => Array.from(new Set([...expanded, ...ancestors])));
     }
     setThemePickerThemeId(theme.id);
     setThemePickerExampleId(example?.id ?? "");
@@ -607,11 +681,10 @@ export function CustomerVideoWorkspace({
 
   function choosePickerCategory(category: VideoThemeCategory) {
     setThemePickerCategoryId(category.id);
-    const firstTheme = themes.find((theme) => {
-      if (category.parentId) return theme.category?.id === category.id;
-      return theme.category?.id === category.id || theme.category?.parentId === category.id;
-    });
-    if (firstTheme) choosePickerTheme(firstTheme);
+    setThemePickerThemeId("");
+    setThemePickerExampleId("");
+    setThemePickerPrompt("");
+    setExpandedCategoryIds((current) => current.includes(category.id) ? current : [...current, category.id]);
   }
 
   function choosePickerExample(example: VideoThemeExample) {
@@ -628,6 +701,100 @@ export function CustomerVideoWorkspace({
     setPromptNote(themePickerPrompt.trim());
     setThemePickerOpen(false);
     setMessage(vt(spanish, `Applied ${pickerTheme.name}${pickerExample ? ` / ${pickerExample.name}` : ""}. You can continue editing the prompt.`, `Se aplico ${pickerTheme.name}${pickerExample ? ` / ${pickerExample.name}` : ""}. Puedes seguir editando el prompt.`));
+  }
+
+  function themeCountForCategory(categoryId: string, seen = new Set<string>()): number {
+    if (seen.has(categoryId)) return 0;
+    const nextSeen = new Set([...seen, categoryId]);
+    const directCount = themesByCategory.get(categoryId)?.length ?? 0;
+    const children = categoryId === aiVideoGenerationRoot.id ? aiVideoChildCategories : (themeCategoriesByParent.get(categoryId) ?? []);
+    const childCount = children.reduce((total, child) => total + themeCountForCategory(child.id, nextSeen), 0);
+    return directCount + childCount;
+  }
+
+  function themesForCategory(categoryId: string, seen = new Set<string>()): VideoTheme[] {
+    if (seen.has(categoryId)) return [];
+    const nextSeen = new Set([...seen, categoryId]);
+    const directThemes = themesByCategory.get(categoryId) ?? [];
+    const childThemes = (themeCategoriesByParent.get(categoryId) ?? []).flatMap((child) => themesForCategory(child.id, nextSeen));
+    return Array.from(new Map([...directThemes, ...childThemes].map((theme) => [theme.id, theme])).values()).sort((a, b) => a.sortOrder - b.sortOrder || a.name.localeCompare(b.name));
+  }
+
+  function themeCategoryPath(theme: VideoTheme): string[] {
+    const path: string[] = [];
+    let category = theme.category ? themeCategoryById.get(theme.category.id) ?? theme.category : undefined;
+    while (category) {
+      path.unshift(category.label);
+      category = category.parentId ? themeCategoryById.get(category.parentId) : undefined;
+    }
+    if (path.length && path[0] !== "AI Video Generation" && path[0] !== "Save the Date") {
+      path.unshift("AI Video Generation");
+    }
+    return path;
+  }
+
+  function renderThemeCategory(category: VideoThemeCategory, depth = 0): ReactNode {
+    const children = category.id === aiVideoGenerationRoot.id
+      ? aiVideoChildCategories
+      : category.slug === "save-the-date"
+        ? (themeCategoriesByParent.get(category.id) ?? [])
+        : [];
+    const categoryThemes = children.length ? [] : themesForCategory(category.id);
+    const hasExpandableContent = children.length > 0 || categoryThemes.length > 0;
+    const categoryExpanded = expandedCategoryIds.includes(category.id);
+    const themesExpanded = expandedThemeCategoryIds.includes(category.id);
+    const hasChildren = children.length > 0;
+    const contentExpanded = hasChildren ? categoryExpanded : themesExpanded;
+    const categoryIsSelected = pickerCategory?.id === category.id;
+    return (
+      <div key={category.id}>
+        <div className="flex items-center gap-1" style={{ paddingLeft: `${Math.min(depth, 5) * 12}px` }}>
+          <button
+            aria-expanded={hasExpandableContent ? contentExpanded : undefined}
+            className={`grid h-8 w-8 shrink-0 place-items-center rounded-[8px] text-white/45 transition hover:bg-white/[0.07] hover:text-white ${hasExpandableContent ? "" : "invisible"}`}
+            onClick={() => {
+              if (!hasExpandableContent) return;
+              if (hasChildren) {
+                setExpandedCategoryIds((current) => current.includes(category.id) ? current.filter((id) => id !== category.id) : [...current, category.id]);
+              } else {
+                setExpandedThemeCategoryIds((current) => current.includes(category.id) ? current.filter((id) => id !== category.id) : [...current, category.id]);
+              }
+            }}
+            type="button"
+          >
+            <ChevronRight className={`h-3.5 w-3.5 transition ${contentExpanded ? "rotate-90" : ""}`} strokeWidth={2} />
+          </button>
+          <button
+            className={`flex min-w-0 flex-1 items-center justify-between rounded-[10px] px-2 py-2.5 text-left text-sm font-semibold transition ${categoryIsSelected ? "bg-[#31d4ff]/12 text-[#bcefff]" : "text-white/68 hover:bg-white/[0.06] hover:text-white"}`}
+            onClick={() => choosePickerCategory(category)}
+            type="button"
+          >
+            <span className="truncate">{category.label}</span>
+            <span className="ml-2 shrink-0 text-xs text-white/35">{themeCountForCategory(category.id)}</span>
+          </button>
+        </div>
+        {categoryExpanded ? (
+          <div className="grid gap-1 border-l border-white/10" style={{ marginLeft: `${Math.min(depth, 5) * 12 + 19}px` }}>
+            {children.map((child) => renderThemeCategory(child, depth + 1))}
+            {categoryThemes.length > 0 && themesExpanded ? (
+              <div className="mt-1 grid gap-1 px-1">
+                {categoryThemes.map((theme) => (
+                  <button
+                    className={`flex items-center gap-2 rounded-[9px] px-2 py-2 text-left text-sm transition ${pickerTheme?.id === theme.id ? "bg-[#31d4ff]/14 text-[#d8f7ff]" : "text-white/58 hover:bg-white/[0.06] hover:text-white"}`}
+                    key={theme.id}
+                    onClick={() => choosePickerTheme(theme)}
+                    type="button"
+                  >
+                    <ThemeMedia className="h-8 w-11 shrink-0 rounded-[5px] object-cover" src={theme.imageUrl} />
+                    <span className="min-w-0 truncate">{theme.name}</span>
+                  </button>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+    );
   }
 
   async function generateVideo(options: { confirmedTextToVideo?: boolean } = {}) {
@@ -1115,7 +1282,7 @@ export function CustomerVideoWorkspace({
       ) : null}
       {themePickerOpen ? (
         <div className="fixed inset-0 z-[125] grid place-items-center bg-black/78 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="video-theme-picker-title">
-          <div className="flex max-h-[calc(100dvh-3rem)] w-full max-w-6xl flex-col overflow-hidden rounded-[22px] border border-white/14 bg-[#0d1118] text-white shadow-[0_30px_100px_-36px_rgba(0,0,0,0.96)]">
+          <div className="flex h-[min(92dvh,980px)] max-h-[calc(100dvh-2rem)] w-[min(96vw,1800px)] max-w-none flex-col overflow-hidden rounded-[22px] border border-white/14 bg-[#0d1118] text-white shadow-[0_30px_100px_-36px_rgba(0,0,0,0.96)]">
             <div className="flex shrink-0 items-start justify-between gap-4 border-b border-white/10 p-5">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#31d4ff]">{vt(spanish, "Video themes", "Temas de video")}</p>
@@ -1124,40 +1291,30 @@ export function CustomerVideoWorkspace({
               </div>
               <button aria-label={vt(spanish, "Close theme picker", "Cerrar selector de temas")} className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/12 text-white/62 transition hover:bg-white/[0.08] hover:text-white" onClick={() => setThemePickerOpen(false)} type="button"><X className="h-4 w-4" strokeWidth={1.9} /></button>
             </div>
-            <div className="grid min-h-0 flex-1 gap-4 overflow-y-auto p-5 lg:grid-cols-[220px_minmax(0,0.9fr)_minmax(320px,1.1fr)]">
-              <div className="self-start rounded-[16px] border border-white/10 bg-black/16 p-2">
+            <div className="grid min-h-0 flex-1 gap-4 overflow-hidden p-5 lg:grid-cols-[minmax(280px,0.34fr)_minmax(0,1fr)]">
+              <div className="min-h-0 overflow-y-auto rounded-[16px] border border-white/10 bg-black/16 p-3">
                 <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Categories", "Categorias")}</p>
                 <div className="grid gap-1">
-                  {rootThemeCategories.map((root) => {
-                    const children = childThemeCategories.filter((category) => category.parentId === root.id);
-                    const rootThemes = themes.filter((theme) => theme.category?.id === root.id || theme.category?.parentId === root.id);
-                    const expanded = expandedThemeCategoryIds.includes(root.id) || Boolean(pickerSearch);
-                    return <div key={root.id}>
-                      <button className={`flex w-full items-center justify-between rounded-[10px] px-3 py-2.5 text-left text-sm font-semibold transition ${pickerRootCategory?.id === root.id ? "bg-[#31d4ff]/12 text-[#bcefff]" : "text-white/62 hover:bg-white/[0.06] hover:text-white"}`} onClick={() => { const wasExpanded = expandedThemeCategoryIds.includes(root.id); choosePickerCategory(root); setExpandedThemeCategoryIds((current) => wasExpanded ? current.filter((id) => id !== root.id) : (current.includes(root.id) ? current : [...current, root.id])); }} type="button">
-                        <span className="flex min-w-0 items-center gap-2"><ChevronRight className={`h-3.5 w-3.5 shrink-0 transition ${expanded ? "rotate-90" : ""}`} strokeWidth={2} /><span className="truncate">{root.label}</span></span><span className="text-xs text-white/35">{rootThemes.length}</span>
-                      </button>
-                      {expanded ? <div className="ml-5 grid gap-1 border-l border-white/10 pl-2">
-                        {children.map((child) => {
-                          const count = themes.filter((theme) => theme.category?.id === child.id).length;
-                          return <button className={`flex items-center justify-between rounded-[8px] px-2.5 py-2 text-left text-xs font-semibold transition ${pickerCategory?.id === child.id ? "bg-[#31d4ff]/10 text-[#bcefff]" : "text-white/52 hover:bg-white/[0.06] hover:text-white"}`} key={child.id} onClick={() => choosePickerCategory(child)} type="button"><span className="truncate">{child.label}</span><span className="text-[11px] text-white/30">{count}</span></button>;
-                        })}
-                      </div> : null}
-                    </div>;
-                  })}
+                  {pickerRootThemeCategories.map((root) => renderThemeCategory(root))}
+                  {!rootThemeCategories.length ? <p className="rounded-[10px] border border-dashed border-white/10 p-5 text-sm text-white/45">{vt(spanish, "No active theme categories are available.", "No hay categorias de temas activas disponibles.")}</p> : null}
                 </div>
               </div>
-              <div className="self-start rounded-[16px] border border-white/10 bg-black/16 p-3">
-                <div className="flex items-center gap-2 rounded-[10px] border border-white/10 bg-[#080b10] px-3 py-2"><Search className="h-4 w-4 shrink-0 text-white/35" strokeWidth={1.8} /><input aria-label={vt(spanish, "Search video themes", "Buscar temas de video")} className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/30" onChange={(event) => setThemePickerSearch(event.target.value)} placeholder={vt(spanish, "Search categories or themes", "Buscar categorias o temas")} value={themePickerSearch} /></div>
-                <p className="px-2 pb-2 pt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{pickerRootCategory?.label ?? vt(spanish, "Themes", "Temas")}{pickerCategory?.parentId && pickerCategory.id !== pickerRootCategory?.id ? ` / ${pickerCategory.label}` : ""}</p>
-                <div className="grid gap-2">
-                  {pickerThemes.map((theme) => <button className={`flex items-center gap-3 rounded-[12px] border px-3 py-3 text-left transition ${pickerTheme?.id === theme.id ? "border-[#31d4ff]/45 bg-[#31d4ff]/10" : "border-white/8 bg-white/[0.025] hover:border-white/20"}`} key={theme.id} onClick={() => choosePickerTheme(theme)} type="button">{theme.imageUrl ? <img alt="" className="h-12 w-16 rounded-[8px] object-cover" src={theme.imageUrl} /> : <span className="grid h-12 w-16 place-items-center rounded-[8px] bg-white/[0.06]"><Film className="h-5 w-5 text-[#31d4ff]" /></span>}<span className="min-w-0"><span className="block truncate text-sm font-semibold">{theme.name}</span><span className="mt-1 block line-clamp-2 text-xs leading-5 text-white/45">{theme.description}</span></span></button>)}
-                  {!pickerThemes.length ? <p className="rounded-[10px] border border-dashed border-white/10 p-5 text-sm text-white/45">{vt(spanish, "No themes match this search.", "No hay temas que coincidan con la busqueda.")}</p> : null}
-                </div>
-              </div>
-              <div className="self-start rounded-[16px] border border-white/10 bg-black/16 p-4">
-                <div className="flex items-center justify-between gap-3"><div><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Reference cases", "Casos de referencia")}</p><h4 className="mt-1 text-lg font-semibold">{pickerTheme?.name ?? vt(spanish, "Select a theme", "Selecciona un tema")}</h4></div><span className="text-xs text-white/40">{pickerExamples.length} {vt(spanish, "cases", "casos")}</span></div>
-                <div className="mt-3 grid gap-2 sm:grid-cols-2">{pickerExamples.map((example) => <button className={`rounded-[12px] border p-3 text-left transition ${pickerExample?.id === example.id ? "border-[#31d4ff]/45 bg-[#31d4ff]/10" : "border-white/8 bg-white/[0.025] hover:border-white/20"}`} key={example.id} onClick={() => choosePickerExample(example)} type="button">{example.imageUrl ? <img alt="" className="mb-2 aspect-video w-full rounded-[8px] object-cover" src={example.imageUrl} /> : null}<span className="block text-sm font-semibold">{example.name}</span><span className="mt-1 block line-clamp-2 text-xs leading-5 text-white/45">{example.description}</span></button>)}</div>
-                <label className="mt-4 block"><span className="text-xs font-semibold uppercase tracking-[0.13em] text-white/40">{vt(spanish, "Editable prompt", "Prompt editable")}</span><textarea className="mt-2 min-h-[220px] w-full resize-y rounded-[12px] border border-white/10 bg-[#080b10] p-3 text-xs leading-6 text-white/78 outline-none focus:border-[#31d4ff]/45" onChange={(event) => setThemePickerPrompt(event.target.value)} value={themePickerPrompt} /></label>
+              <div className="min-h-0 overflow-y-auto rounded-[16px] border border-white/10 bg-black/16 p-5">
+                {pickerTheme ? <>
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Theme details", "Detalles del tema")}</p><h4 className="mt-1 text-2xl font-semibold">{pickerTheme.name}</h4><p className="mt-2 max-w-2xl text-sm leading-6 text-white/58">{pickerTheme.headline}</p><p className="mt-2 text-xs text-[#8bdfff]">{themeCategoryPath(pickerTheme).join(" / ")}</p></div>
+                    <span className="text-xs text-white/40">{pickerExamples.length} {vt(spanish, "reference cases", "casos de referencia")}</span>
+                  </div>
+                  <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(220px,0.44fr)_minmax(0,1fr)]">
+                    <ThemeMedia className="aspect-[4/3] w-full max-h-[260px] rounded-[12px] object-cover" src={pickerTheme.imageUrl} />
+                    <div><p className="text-sm leading-7 text-white/72">{pickerTheme.description}</p><div className="mt-4 grid max-w-[520px] grid-cols-2 gap-2 text-xs">{[[vt(spanish, "Credits", "Creditos"), pickerTheme.creditCost], [vt(spanish, "Duration", "Duracion"), `${pickerTheme.durationSeconds}s`], [vt(spanish, "Frame limit", "Limite de fotogramas"), pickerTheme.effectiveMaxFrames ?? pickerTheme.maxFrames], [vt(spanish, "Generation", "Generacion"), pickerTheme.imageToVideoProviderModelFamilies?.length ? "Image + text" : "Text prompt"]].map(([label, value]) => <div className="rounded-[10px] border border-white/8 bg-white/[0.03] px-3 py-2.5 text-center" key={String(label)}><span className="block text-[11px] text-white/35">{label}</span><strong className="mt-1 block text-white">{value}</strong></div>)}</div></div>
+                  </div>
+                  <div className="mt-6 grid gap-4 lg:grid-cols-2"><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Best for", "Ideal para")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.headline} {vt(spanish, "Use a clear subject, one focal action, and a controlled camera move for the most consistent result.", "Usa un sujeto claro, una accion principal y un movimiento de camara controlado para obtener un resultado consistente.")}</p></div><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Production notes", "Notas de produccion")}</p><p className="mt-2 text-sm leading-6 text-white/65">{vt(spanish, "Keep the reference frame sharp and well lit. Avoid extra subjects, heavy text, logos, watermarks, or sudden scene changes.", "Mantén el fotograma de referencia nitido y bien iluminado. Evita sujetos adicionales, mucho texto, logotipos, marcas de agua o cambios bruscos de escena.")}</p></div></div>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-3"><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Visual focus", "Enfoque visual")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.headline}</p></div><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Recommended input", "Entrada recomendada")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.imageToVideoProviderModelFamilies?.length ? vt(spanish, "A sharp JPG or PNG frame with one clear subject.", "Un fotograma JPG o PNG nitido con un sujeto claro.") : vt(spanish, "A concise written brief with one focal action.", "Un brief escrito conciso con una accion principal.")}</p></div><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Output profile", "Perfil de salida")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.durationSeconds}s · 16:9 · 720P · {pickerTheme.creditCost} {vt(spanish, "credits", "creditos")}</p></div></div>
+                  <div className="mt-6"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Reference cases", "Casos de referencia")}</p><div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{pickerExamples.map((example) => <button className={`rounded-[12px] border p-3 text-left transition ${pickerExample?.id === example.id ? "border-[#31d4ff]/45 bg-[#31d4ff]/10" : "border-white/8 bg-white/[0.025] hover:border-white/20"}`} key={example.id} onClick={() => choosePickerExample(example)} type="button"><ThemeMedia className="mb-2 aspect-video w-full rounded-[8px] object-cover" src={example.imageUrl} /><span className="block text-sm font-semibold">{example.name}</span><span className="mt-1 block line-clamp-2 text-xs leading-5 text-white/45">{example.description}</span></button>)}</div></div>
+                  {pickerTheme.galleryImages?.length ? <div className="mt-6"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "More visual references", "Mas referencias visuales")}</p><div className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4">{pickerTheme.galleryImages.slice(0, 4).map((imageUrl) => <ThemeMedia alt={vt(spanish, "Visual reference", "Referencia visual")} className="aspect-video w-full rounded-[9px] object-cover" key={imageUrl} src={imageUrl} />)}</div></div> : null}
+                  <label className="mt-6 block border-t border-white/10 pt-5"><div className="flex items-center justify-between gap-3"><span className="text-xs font-semibold uppercase tracking-[0.13em] text-white/40">{vt(spanish, "Editable prompt", "Prompt editable")}</span><span className="text-[11px] text-white/35">{themePickerPrompt.length} / 5000</span></div><p className="mt-1 text-xs leading-5 text-white/38">{vt(spanish, "Fine-tune the provider-ready direction before applying this theme.", "Ajusta la direccion lista para el proveedor antes de aplicar este tema.")}</p><textarea className="mt-2 min-h-[180px] w-full resize-y rounded-[12px] border border-white/10 bg-[#080b10] p-3 text-sm leading-6 text-white/78 outline-none focus:border-[#31d4ff]/45" onChange={(event) => setThemePickerPrompt(event.target.value)} value={themePickerPrompt} /></label>
+                </> : <div className="grid min-h-[520px] place-items-center text-center"><div><Film className="mx-auto h-10 w-10 text-white/25" /><p className="mt-3 text-sm font-semibold text-white/58">{vt(spanish, "Select a theme from the directory", "Selecciona un tema del directorio")}</p><p className="mt-1 text-xs text-white/38">{vt(spanish, "Expand a category, then open its themes.", "Expande una categoria y abre sus temas.")}</p></div></div>}
               </div>
             </div>
             <div className="flex shrink-0 flex-col-reverse gap-3 border-t border-white/10 p-5 sm:flex-row sm:justify-end"><button className="inline-flex min-h-10 items-center justify-center rounded-full border border-white/14 px-5 text-sm font-semibold text-white/72 hover:bg-white/[0.08] hover:text-white" onClick={() => setThemePickerOpen(false)} type="button">{vt(spanish, "Cancel", "Cancelar")}</button><button className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-[#2f6fed] px-5 text-sm font-semibold text-white hover:bg-[#4380ff] disabled:opacity-45" disabled={!pickerTheme || !themePickerPrompt.trim()} onClick={confirmThemePicker} type="button"><Check className="h-4 w-4" strokeWidth={2} />{vt(spanish, "Apply theme", "Aplicar tema")}</button></div>

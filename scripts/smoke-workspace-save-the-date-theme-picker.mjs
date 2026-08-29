@@ -34,13 +34,15 @@ try {
   await page.getByRole("button", { name: "Choose a video theme" }).click();
   const dialog = page.getByRole("dialog", { name: /Choose a theme and reference case/i });
   await dialog.waitFor({ state: "visible" });
+  const dialogBox = await dialog.locator("> div").boundingBox();
+  assert.ok(dialogBox && dialogBox.width >= 1300, `theme picker should use the enlarged desktop width: ${dialogBox?.width ?? "missing"}`);
+  assert.equal(await dialog.getByRole("textbox", { name: "Search video themes" }).count(), 0, "theme picker search should be removed");
   await dialog.getByRole("button", { name: /Save the Date\s*12/i }).click();
   await dialog.getByText("Love & Wedding", { exact: true }).waitFor({ state: "visible" });
   await dialog.getByText("Seasonal Holidays", { exact: true }).waitFor({ state: "visible" });
-
-  const search = dialog.getByRole("textbox", { name: "Search video themes" });
-  await search.fill("Christmas");
-  const christmas = dialog.getByRole("button", { name: /^Christmas/i });
+  const seasonalRow = dialog.getByText("Seasonal Holidays", { exact: true }).locator("..");
+  await seasonalRow.getByRole("button").first().click();
+  const christmas = dialog.getByRole("button", { name: /^Christmas$/i });
   await christmas.waitFor({ state: "visible" });
   await christmas.click();
   const prompt = await dialog.locator("textarea").inputValue();
