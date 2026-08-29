@@ -16938,8 +16938,7 @@ function SectionView({
     const contactEmail = storefrontContext?.profile?.identity.supportEmail ?? "";
     const bodyTemplate = setting(section, "body", "Private uploads, account activity, and delivered albums are handled according to this policy.");
     const bodyResolution = storefrontContext ? resolveStorefrontBindings(bodyTemplate, storefrontContext) : { value: bodyTemplate, missing: [] };
-    if (!bodyResolution.value) return null;
-    const body = bodyResolution.value;
+    const body = bodyResolution.value ?? "";
     const policyPage = isPolicyPage(renderContext);
     const fallbackHeadingLevel = pageHasMainHeadingBefore(id, renderContext) ? "h2" : "h1";
     const HeadingTag = policyPage || normalizedHeadingLevel(setting(section, "headingLevel"), fallbackHeadingLevel) === "h1" ? "h1" : "h2";
@@ -16961,12 +16960,12 @@ function SectionView({
               </span> : null}
             </div>
           </div>
-          <article className="mt-8 max-w-4xl rounded-[28px] border border-[#e5ddd1] bg-white p-6 shadow-[0_24px_80px_-64px_rgba(18,20,24,0.25)] md:p-8">
+          {body ? <article className="mt-8 max-w-4xl rounded-[28px] border border-[#e5ddd1] bg-white p-6 shadow-[0_24px_80px_-64px_rgba(18,20,24,0.25)] md:p-8">
             <div
               className="space-y-6 text-[0.97rem] leading-8 text-[#3d3a36] [&_h3]:mt-8 [&_h3]:text-[1.05rem] [&_h3]:font-semibold [&_h3]:tracking-[-0.02em] [&_p]:mt-3 [&_p]:leading-8 [&_a]:text-[#2f6fed] [&_a]:underline [&_a]:decoration-[#2f6fed]/30 [&_a]:underline-offset-4 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6 [&_ol]:mt-3 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6"
               dangerouslySetInnerHTML={{ __html: body }}
             />
-          </article>
+          </article> : null}
           <div className="mt-6 flex flex-wrap gap-3 text-sm">
             <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/privacy")}>
               {spanishXbyPolicy ? "Politica de privacidad" : "Privacy Policy"}
