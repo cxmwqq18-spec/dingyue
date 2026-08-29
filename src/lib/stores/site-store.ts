@@ -1076,8 +1076,9 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
   const isBestMediaPage = primary === "/best-ai-image" || primary === "/best-ai-video";
   const isBestSaveTheDatePage = primary === "/best-save-the-date";
   const isWorkspace = primary === "/app";
+  const isEditorialThemeDetail = /^\/(?:ai-save-the-date|holidays-events)\//.test(primary);
   return {
-    profile: isHome ? "home" : isPricing || isCart ? "pricing" : isTools ? "tools" : isCollectionDetail ? "collection-detail" : isBestMediaPage ? "best-media" : isBestSaveTheDatePage ? "save-the-date" : isCollections || isBestPackagePage ? "collections" : isWorkspace ? "workspace" : "page",
+    profile: isHome ? "home" : isPricing || isCart ? "pricing" : isTools ? "tools" : isCollectionDetail ? "collection-detail" : isBestMediaPage ? "best-media" : isBestSaveTheDatePage ? "save-the-date" : isCollections || isBestPackagePage ? "collections" : isWorkspace ? "workspace" : isEditorialThemeDetail ? "editorial" : "page",
     products: isHome || isPricing || isCart || isCollectionDetail,
     siteAiApps: isTools || isWorkspace,
     creativePacks: isHome || (isTools && !isToolDetail) || isCollections || isBestPackagePage || isBestMediaPage || isWorkspace,
@@ -1085,7 +1086,7 @@ function publicRuntimeNeeds(pageSlugs?: string[], contextSlug?: string) {
     // live SQL bundle.  A truncated asset set makes otherwise valid pages
     // look unpublished (and hides Save the Date navigation), so include the
     // complete public media set for catalogue and editorial pages.
-    mediaAssets: isHome || isWorkspace || isBestSaveTheDatePage || isBestMediaPage,
+    mediaAssets: isHome || isWorkspace || isBestSaveTheDatePage || isBestMediaPage || isEditorialThemeDetail,
     toolMenus: true,
     contextSlug: contextSlug ? slugify(contextSlug) : ""
   };
@@ -1096,7 +1097,7 @@ function publicRuntimeLimits(profile: ReturnType<typeof publicRuntimeNeeds>["pro
     products: profile === "pricing" ? 12 : 8,
     siteAiApps: profile === "tools" ? 96 : profile === "home" ? 24 : 48,
     creativePacks: profile === "collection-detail" ? 12 : profile === "best-media" ? undefined : profile === "collections" ? 128 : profile === "tools" ? 96 : profile === "home" ? 8 : 24,
-    mediaAssets: profile === "home" || profile === "save-the-date" || profile === "best-media"
+    mediaAssets: profile === "home" || profile === "save-the-date" || profile === "best-media" || profile === "editorial"
       ? undefined
       : profile === "workspace" ? 40 : 0
   };
@@ -2106,8 +2107,17 @@ export const getStorefrontPublicPageMetadataStateByHost = cache(async (host: str
             select
           });
       if (!site) return undefined;
+      const mediaAssets = /^\/(?:ai-save-the-date|holidays-events)\//.test(normalizedPageSlug)
+        ? await prisma.mediaAsset.findMany({
+            where: { siteId: site.id, usageType: { in: ["theme", "package", "sample"] } },
+            select: publicRuntimeMediaAssetSelect,
+            orderBy: [{ createdAt: "desc" }, { id: "asc" }]
+          })
+        : [];
+      const mappedMediaAssets = mediaAssets.map(toMediaAsset);
       return emptyPlatformState({
-        sites: [toPublicSiteShell(site)]
+        sites: [toPublicSiteShell(site, mappedMediaAssets)],
+        mediaAssets: mappedMediaAssets
       });
     },
     Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 0)
@@ -2166,8 +2176,17 @@ export const getStorefrontPublicPageMetadataStateBySlug = cache(async (slug: str
         }
       });
       if (!site) return undefined;
+      const mediaAssets = /^\/(?:ai-save-the-date|holidays-events)\//.test(normalizedPageSlug)
+        ? await prisma.mediaAsset.findMany({
+            where: { siteId: site.id, usageType: { in: ["theme", "package", "sample"] } },
+            select: publicRuntimeMediaAssetSelect,
+            orderBy: [{ createdAt: "desc" }, { id: "asc" }]
+          })
+        : [];
+      const mappedMediaAssets = mediaAssets.map(toMediaAsset);
       return emptyPlatformState({
-        sites: [toPublicSiteShell(site)]
+        sites: [toPublicSiteShell(site, mappedMediaAssets)],
+        mediaAssets: mappedMediaAssets
       });
     },
     0

@@ -57,6 +57,7 @@
     "smoke:public-seo-ssr": "node scripts/smoke-public-seo-ssr.mjs",
     "guard:public-storefront-ssr": "node scripts/guard-public-storefront-ssr.mjs",
     "guard:live-storefront-ssr": "node scripts/guard-live-storefront-ssr.mjs",
+    "guard:remote-readonly-database-role": "node scripts/guard-remote-readonly-database-role.mjs",
     "smoke:live-draft-validation": "node --experimental-strip-types scripts/smoke-live-draft-validation.mjs",
     "smoke:cart-translate-checkout": "node scripts/smoke-cart-translate-checkout.mjs",
     "smoke:aidreamcapes-admin-workspace": "node scripts/smoke-aidreamcapes-admin-workspace.mjs",

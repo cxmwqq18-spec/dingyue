@@ -113,10 +113,8 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
     },
     icons: siteIcons(site, context.settings),
     other: {
-      "storefront-publication": context.revisions.publicationId ?? "unpublished",
-      "storefront-publication-version": context.revisions.publicationVersion ?? "unpublished",
       "storefront-facts-revision": context.revisions.factsRevision,
-      "storefront-snapshot-hash": context.revisions.snapshotRevision ?? "unpublished",
+      "storefront-data-source": "postgres-relational",
       "storefront-build": context.revisions.buildId
     }
   };

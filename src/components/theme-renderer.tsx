@@ -8709,7 +8709,23 @@ function SectionView({
     if (section.type === "editorial_steps" || section.type === "editorial_story_flow") {
       return (
         <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={sectionStyle}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2><div className="mt-10 grid gap-x-6 gap-y-8 md:grid-cols-2 lg:grid-cols-3">{blocks.map((block, index) => <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(block, index, "step")}><p className="text-sm font-semibold" style={{ color: editorialTheme.accent }}>{blockValue(block, "number", String(index + 1).padStart(2, "0"))}</p><h3 className={`${headingClass} mt-3 text-xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p></article>)}</div>{setting(section, "imageUrl") ? <div className="mx-auto mt-12 aspect-[5/3] w-full max-w-4xl overflow-hidden rounded-[14px]">{imageFor(section)}</div> : null}</div>
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
+            {intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}
+            <div className="mt-10 grid gap-x-6 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
+              {blocks.map((block, index) => {
+                const stepTitle = blockValue(block, "title");
+                const stepImage = blockValue(block, "imageUrl") ? imageFor(block) : null;
+                return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(block, index, "step")}>
+                  {stepImage ? <div className="mb-5 aspect-[5/3] overflow-hidden rounded-[12px]">{stepImage}</div> : null}
+                  <p className="text-sm font-semibold" style={{ color: editorialTheme.accent }}>{blockValue(block, "number", String(index + 1).padStart(2, "0"))}</p>
+                  {stepTitle ? <h3 className={`${headingClass} mt-3 text-xl`}>{stepTitle}</h3> : null}
+                  {textBlock(block) ? <p className="mt-3 text-sm leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p> : null}
+                </article>;
+              })}
+            </div>
+            {setting(section, "imageUrl") ? <div className="mx-auto mt-12 aspect-[5/3] w-full max-w-4xl overflow-hidden rounded-[14px]">{imageFor(section)}</div> : null}
+          </div>
         </section>
       );
     }
@@ -8729,7 +8745,7 @@ function SectionView({
         : blocks;
       return (
         <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={sectionStyle}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}{renderedBlocks.length ? <div className="mt-10 grid gap-4 md:grid-cols-2">{renderedBlocks.map((block, index) => { const rawItems = block.settings?.items; const items: string[] | null = Array.isArray(rawItems) ? rawItems.map((item) => String(item)) : null; return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(block, index, "editorial_guidance")}><h3 className={`${headingClass} text-xl`}>{blockValue(block, "title")}</h3>{items ? <ul className="mt-3 space-y-2 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{items.map((item) => <li key={item}>{item}</li>)}</ul> : <p className="mt-3 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p>}</article>; })}</div> : null}{guidanceImage ? <div className="mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px]">{guidanceImage}</div> : null}</div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}{renderedBlocks.length ? <div className="mt-10 grid gap-4 md:grid-cols-2">{renderedBlocks.map((block, index) => { const rawItems = block.settings?.items; const items: string[] | null = Array.isArray(rawItems) ? rawItems.map((item) => String(item)) : null; const guidanceTitle = blockValue(block, "title"); return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(block, index, "editorial_guidance")}>{guidanceTitle ? <h3 className={`${headingClass} text-xl`}>{guidanceTitle}</h3> : null}{items ? <ul className="mt-3 space-y-2 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{items.map((item) => <li key={item}>{item}</li>)}</ul> : textBlock(block) ? <p className="mt-3 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p> : null}</article>; })}</div> : null}{guidanceImage ? <div className="mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px]">{guidanceImage}</div> : null}</div>
         </section>
       );
     }

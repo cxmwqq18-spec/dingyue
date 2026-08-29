@@ -46,6 +46,8 @@ export function buildTunneledReadonlyDatabaseUrl(remoteReadonlyDatabaseUrl, { ho
     throw new Error("REMOTE_DB_READONLY_DATABASE_URL is required to build the remote-readonly DATABASE_URL.");
   }
   const url = new URL(remoteReadonlyDatabaseUrl);
+  const readonlyUsername = String(process.env.REMOTE_DB_READONLY_DATABASE_USER || "").trim();
+  if (readonlyUsername) url.username = readonlyUsername;
   url.hostname = host;
   url.port = String(port);
   return url.toString();
@@ -55,7 +57,10 @@ export function buildTunneledDatabaseUrl(remoteDatabaseUrl, options = {}) {
   if (!remoteDatabaseUrl?.trim()) {
     throw new Error("REMOTE_DB_DATABASE_URL is required to build the remote DATABASE_URL.");
   }
-  return buildTunneledReadonlyDatabaseUrl(remoteDatabaseUrl, options);
+  const url = new URL(remoteDatabaseUrl);
+  url.hostname = options.host || LOCAL_DATABASE.host;
+  url.port = String(options.port || 15432);
+  return url.toString();
 }
 
 export function databaseTargetSummary(env = process.env) {

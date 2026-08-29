@@ -50,9 +50,8 @@ export async function metadataForPublishedStorefrontPage({
     ...metadata,
     other: {
       ...existingOther,
-      "storefront-current-revision": context.revisions.snapshotRevision ?? "unpublished",
       "storefront-facts-revision": context.revisions.factsRevision,
-      "storefront-snapshot-hash": context.revisions.snapshotRevision ?? "unpublished",
+      "storefront-data-source": "postgres-relational",
       "storefront-build": context.revisions.buildId
     }
   };

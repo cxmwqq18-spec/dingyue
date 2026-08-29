@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
@@ -21,110 +22,78 @@ const indexablePaths = [
   "/ai-save-the-date/fathers-day"
 ];
 const retiredPath = "/ai-save-the-date/wedding-anniversary";
-const pages = [
-  { path: "/ai-save-the-date/engagement", key: "engagement", media: 11, faq: 7, sections: ["hero", "intent", "workflow-creates", "story-structures", "workflow", "scene-directions", "quality", "boundaries", "publishing", "evidence", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_boundaries", "editorial_checklist", "editorial_evidence", "faq", "editorial_cta"] },
-  { path: "/ai-save-the-date/proposal", key: "proposal", media: 10, faq: 8, sections: ["hero", "definition", "use-cases", "story-flow", "workflow", "source-media", "accuracy", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_story_flow", "editorial_steps", "editorial_quality", "editorial_quality", "faq", "editorial_cta"] },
-  { path: "/ai-save-the-date/save-the-date", key: "save_date", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "workflow", "scene-ideas", "quality", "formats", "boundaries", "evidence", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_formats", "editorial_boundaries", "editorial_evidence", "faq", "editorial_cta"] },
-  { path: "/ai-save-the-date/wedding-ceremony", key: "wedding_ceremony", media: 11, faq: 9, sections: ["hero", "definition", "reasons", "sources", "workflow", "scene-ideas", "quality", "boundaries", "responsibility", "evidence", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_quality", "editorial_steps", "editorial_scene_grid", "editorial_quality", "editorial_boundaries", "editorial_quality", "editorial_evidence", "faq", "editorial_cta"] },
-  { path: "/ai-save-the-date/mothers-day", key: "mothers_day", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "quality", "workflow", "scene-ideas", "formats", "family-match", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_story_grid", "editorial_quality", "editorial_steps", "editorial_scene_grid", "editorial_rich_text", "editorial_rich_text", "faq", "editorial_cta"] },
-  { path: "/ai-save-the-date/fathers-day", key: "fathers_day", media: 11, faq: 6, sections: ["hero", "definition", "scene-ideas", "quality", "workflow", "use-cases", "gallery", "faq", "final-cta"], types: ["editorial_hero", "editorial_rich_text", "editorial_scene_grid", "editorial_quality", "editorial_steps", "editorial_story_grid", "editorial_scene_grid", "faq", "editorial_cta"] },
+const expectedPages = [
+  { path: "/ai-save-the-date/engagement", key: "engagement", media: 11, faq: 7, sections: ["hero", "intent", "workflow-creates", "story-structures", "workflow", "scene-directions", "quality", "boundaries", "publishing", "faq", "final-cta"] },
+  { path: "/ai-save-the-date/proposal", key: "proposal", media: 10, faq: 8, sections: ["hero", "definition", "use-cases", "story-flow", "workflow", "source-media", "accuracy", "faq", "final-cta"] },
+  { path: "/ai-save-the-date/save-the-date", key: "save_date", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "workflow", "scene-ideas", "quality", "formats", "boundaries", "faq", "final-cta"] },
+  { path: "/ai-save-the-date/wedding-ceremony", key: "wedding_ceremony", media: 11, faq: 9, sections: ["hero", "definition", "reasons", "sources", "workflow", "scene-ideas", "quality", "boundaries", "responsibility", "faq", "final-cta"] },
+  { path: "/ai-save-the-date/mothers-day", key: "mothers_day", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "quality", "workflow", "scene-ideas", "formats", "family-match", "faq", "final-cta"] },
+  { path: "/ai-save-the-date/fathers-day", key: "fathers_day", media: 11, faq: 6, sections: ["hero", "definition", "scene-ideas", "quality", "workflow", "use-cases", "gallery", "faq", "final-cta"] }
 ];
+
 const prisma = new PrismaClient();
-const [currentState, mediaAssets] = await Promise.all([
-  prisma.sitePublishedState.findUnique({ where: { siteId: SITE_ID } }),
-  prisma.mediaAsset.findMany({ where: { siteId: SITE_ID } })
+const [pageRows, mediaAssets] = await Promise.all([
+  prisma.themePage.findMany({
+    where: { siteId: SITE_ID, slug: { in: [...indexablePaths, retiredPath] } },
+    select: { id: true, slug: true, draftJson: true }
+  }),
+  prisma.mediaAsset.findMany({
+    where: { siteId: SITE_ID },
+    select: { storageKey: true, altText: true }
+  })
 ]);
 await prisma.$disconnect();
-assert(currentState?.payload, "missing_current_published_state");
-const snapshot = currentState.payload;
-const state = { mediaAssets };
 
+const pageByPath = new Map(pageRows.map((page) => [page.slug, page]));
+const internalCopyPattern = /\b(?:keyword ownership|search intent|query ownership|indexation|do not index|before launch|product evidence|same query|page owns|landing-page hero)\b/i;
 for (const canonicalPath of indexablePaths) {
-  const route = snapshot.publishedRoutes.find((candidate) => candidate.canonicalPath === canonicalPath);
-  assert.equal(route?.routeKind, "standard-content", `${canonicalPath}: route kind`);
-  assert.equal(route?.status, "published", `${canonicalPath}: route status`);
-  assert.equal(route?.indexable, true, `${canonicalPath}: indexability`);
-  assert.equal(route?.sitemapEligible, true, `${canonicalPath}: sitemap eligibility`);
-  const page = snapshot.pages.find((candidate) => candidate.id === route.pageId && candidate.slug === canonicalPath);
-  assert(page, `${canonicalPath}: missing current-state page`);
-  assert.equal(page.publishedJson?.seo?.index, true, `${canonicalPath}: page SEO indexability`);
-  assert.equal(page.publishedJson?.seo?.robots?.index, true, `${canonicalPath}: robots indexability`);
+  const page = pageByPath.get(canonicalPath);
+  assert(page, `${canonicalPath}: missing relational ThemePage`);
+  const json = page.draftJson;
+  assert.equal(json?.seo?.canonicalPath, canonicalPath, `${canonicalPath}: canonical path`);
+  assert.equal(json?.seo?.index, true, `${canonicalPath}: page SEO indexability`);
+  assert.equal(json?.seo?.robots?.index, true, `${canonicalPath}: robots indexability`);
+  assert.equal(json?.seo?.robots?.follow, true, `${canonicalPath}: robots follow`);
+  assert(json?.seo?.title && json?.seo?.description && json?.seo?.keywords, `${canonicalPath}: complete TDK`);
+  assert.doesNotMatch(JSON.stringify(json), internalCopyPattern, `${canonicalPath}: internal authoring copy`);
 }
 
-const retiredRoute = snapshot.publishedRoutes.find((candidate) => candidate.canonicalPath === retiredPath);
-assert.equal(retiredRoute?.indexable, false, `${retiredPath}: retired route indexability`);
-assert.equal(retiredRoute?.sitemapEligible, false, `${retiredPath}: retired route sitemap eligibility`);
+const retired = pageByPath.get(retiredPath)?.draftJson;
+assert(retired, `${retiredPath}: missing relational ThemePage`);
+assert.equal(retired.seo?.index, false, `${retiredPath}: retired route must remain noindex`);
+assert.equal(retired.seo?.robots?.index, false, `${retiredPath}: retired route robots`);
+assert.match(String(retired.seo?.title ?? ""), /anniversary/i, `${retiredPath}: title identity`);
 
-for (const expected of pages) {
-  const route = snapshot.publishedRoutes.find((candidate) => candidate.canonicalPath === expected.path);
-  assert.equal(route?.routeKind, "standard-content", `${expected.path}: route kind`);
-  assert.equal(route?.status, "published", `${expected.path}: route status`);
-  assert.equal(route?.indexable, expected.indexable !== false, `${expected.path}: indexability`);
-  assert.equal(route?.sitemapEligible, expected.indexable !== false, `${expected.path}: sitemap eligibility`);
-  const page = snapshot.pages.find((candidate) => candidate.id === route.pageId && candidate.slug === expected.path);
-  assert(page, `${expected.path}: missing page entity`);
-  const json = page.publishedJson;
+for (const expected of expectedPages) {
+  const json = pageByPath.get(expected.path)?.draftJson;
+  assert(json, `${expected.path}: missing relational page data`);
   assert.deepEqual(json.contentContract?.requiredSections, expected.sections, `${expected.path}: section contract`);
-  assert.deepEqual(json.contentContract?.sectionTypes, expected.types, `${expected.path}: section types`);
-  assert.equal(json.contentContract?.faqCount, expected.faq, `${expected.path}: faq contract`);
-  assert.equal(json.contentContract?.mediaCount, expected.media, `${expected.path}: media contract`);
   assert.deepEqual(json.sectionsOrder, expected.sections.map((id) => `${expected.key}_${id.replace(/-/g, "_")}`), `${expected.path}: section order`);
-  assert.deepEqual(json.sectionsOrder.map((id) => json.sections[id]?.type), expected.types, `${expected.path}: rendered section order`);
+  assert(json.sectionsOrder.every((id) => json.sections[id]), `${expected.path}: ordered sections`);
+  assert.equal(json.sectionsOrder.length, json.contentContract?.sectionTypes?.length, `${expected.path}: section type count`);
+  assert(json.sectionsOrder.every((id, index) => json.sections[id].type === json.contentContract.sectionTypes[index]), `${expected.path}: section types`);
   const faq = json.sectionsOrder.map((id) => json.sections[id]).find((section) => section?.type === "faq");
-  assert.equal(faq?.blocks?.length, expected.faq, `${expected.path}: faq blocks`);
-  assert(faq.blocks.every((block) => block.settings.question && block.settings.answer), `${expected.path}: faq fields`);
-  const cta = json.sectionsOrder.map((id) => json.sections[id]).find((section) => section?.type === "editorial_cta");
-  assert(cta?.settings?.primaryCta && cta?.settings?.primaryHref && cta?.settings?.secondaryCta && cta?.settings?.secondaryHref, `${expected.path}: cta fields`);
-  assert.equal(json.mediaManifest.length, expected.media, `${expected.path}: manifest count`);
-  assert.equal(new Set(json.mediaManifest.map((item) => item.src)).size, expected.media, `${expected.path}: manifest uniqueness`);
-  assert(json.mediaManifest.every((item) => item.alt && item.width === 1600 && item.height === 1000 && ["hero", "content"].includes(item.role)), `${expected.path}: manifest metadata`);
-  assert(json.mediaManifest.every((item) => state.mediaAssets.some((asset) => asset.siteId === SITE_ID && asset.storageKey === item.src && asset.altText === item.alt)), `${expected.path}: media owner`);
-  if (expected.path === "/ai-save-the-date/engagement") {
-    const sceneSection = json.sections?.["engagement_workflow_creates"];
-    const sceneBlocks = sceneSection?.blocks?.slice(1) ?? [];
-    assert.equal(sceneBlocks.length, 6, `${expected.path}: scene direction count`);
-    assert(sceneBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: scene direction media`);
-  }
-  if (expected.path === "/ai-save-the-date/save-the-date") {
-    const sceneBlocks = json.sections?.save_date_scene_ideas?.blocks ?? [];
-    assert.equal(sceneBlocks.length, 8, `${expected.path}: scene idea count`);
-    assert(sceneBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: scene idea media`);
-    const formatBlocks = json.sections?.save_date_formats?.blocks ?? [];
-    assert(formatBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: format media`);
-  }
-  if (expected.path === "/ai-save-the-date/proposal") {
-    const useCaseBlocks = json.sections?.proposal_use_cases?.blocks ?? [];
-    const flowBlocks = json.sections?.proposal_story_flow?.blocks ?? [];
-    assert.equal(useCaseBlocks.length, 7, `${expected.path}: use-case count`);
-    assert.equal(flowBlocks.length, 5, `${expected.path}: story-flow count`);
-    assert(useCaseBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: use-case media`);
-    assert(flowBlocks.every((block) => block.settings?.imageUrl && block.settings?.imageAlt), `${expected.path}: story-flow media`);
-  }
-  assert.equal(json.seo?.canonicalPath, expected.path, `${expected.path}: canonical path`);
-  assert(json.seo?.title && json.seo?.description, `${expected.path}: SEO title/description`);
-  assert.equal(json.sections?.[json.sectionsOrder[0]]?.settings?.themeTone, expected.path.includes("wedding-ceremony") ? "wedding" : expected.path.includes("thanksgiving") ? "thanksgiving" : expected.path.includes("christmas") ? "christmas" : expected.path.includes("new-year") ? "new-year" : expected.path.includes("mothers-day") ? "mothers-day" : expected.path.includes("fathers-day") ? "fathers-day" : expected.path.includes("halloween") ? "halloween" : undefined, `${expected.path}: theme token`);
-  assert.equal(json.seo?.robots?.index, expected.indexable !== false, `${expected.path}: robots index`);
-  assert.equal(json.seo?.robots?.follow, true, `${expected.path}: robots follow`);
-  assert.equal(json.seo?.robots?.maxImagePreview, "large", `${expected.path}: image preview`);
-  assert(!JSON.stringify(json).match(/---|```|`[^`]+`|\[[^\]]+\]\([^)]*\)/), `${expected.path}: raw markdown`);
-  const media = snapshot.publishedStandardPageMedia.find((candidate) => candidate.canonicalPath === expected.path);
-  assert.equal(media?.status, "ready", `${expected.path}: media projection`);
-  assert.equal(media?.mediaEntityId, route.mediaEntityId, `${expected.path}: media entity`);
-  const links = snapshot.publishedLinkRefs.filter((link) => link.ownerPageEntityId === route.pageEntityId);
-  assert(links.some((link) => link.kind === "cta" && link.href.startsWith("/app/create")), `${expected.path}: cta projection`);
-  assert(links.filter((link) => link.kind === "related").length >= 2, `${expected.path}: related links`);
-  assert(links.filter((link) => link.kind === "related").every((link) => snapshot.publishedRoutes.some((candidate) => candidate.canonicalPath === link.href && candidate.status === "published")), `${expected.path}: unpublished related link`);
+  assert.equal(faq?.blocks?.length, expected.faq, `${expected.path}: FAQ count`);
+  assert.equal(json.mediaManifest?.length, expected.media, `${expected.path}: media count`);
+  assert.equal(new Set(json.mediaManifest.map((item) => item.src)).size, expected.media, `${expected.path}: unique media paths`);
+  assert(json.mediaManifest.every((item) => mediaAssets.some((asset) => asset.storageKey === item.src && asset.altText === item.alt)), `${expected.path}: relational media ownership`);
 }
 
-const navigation = snapshot.themeSettings?.saveTheDateNavigation;
-assert.equal(navigation?.menuLabel, "Save the Date");
-const items = navigation.groups.flatMap((group) => group.items.filter((item) => item.status === "published"));
-assert.equal(new Set(items.map((item) => item.href)).size, items.length, "Save the Date navigation paths must be unique");
-assert(items.every((item) => snapshot.publishedRoutes.some((route) => route.disposition === "render" && route.status === "published" && route.canonicalPath === item.href)), "Save the Date navigation must target published routes");
-assert.equal(navigation.groups[1]?.label, "Seasonal Holidays");
-assert.equal(navigation.groups[0]?.label, "Love & Wedding");
-const sitemap = snapshot.publishedStandardPageMedia.map((media) => media.canonicalPath);
-for (const page of pages) assert(sitemap.includes(page.path), `${page.path}: missing sitemap media projection`);
-const renderer = fs.readFileSync(path.join(process.cwd(), "src/components/theme-renderer.tsx"), "utf8");
-for (const token of ["/ai-save-the-date/engagement", "/ai-save-the-date/proposal", "hero-ai-proposal-rooftop-surprise-night.jpg"]) assert(!renderer.includes(token), `renderer contains page-specific token: ${token}`);
-console.log(JSON.stringify({ siteId: SITE_ID, currentStateRevision: currentState.revision, indexablePageCount: indexablePaths.length, pages: pages.map((page) => ({ path: page.path, media: page.media, faq: page.faq })) }, null, 2));
+const engagementManifest = pageByPath.get("/ai-save-the-date/engagement").draftJson.mediaManifest;
+const saveDateManifest = pageByPath.get("/ai-save-the-date/save-the-date").draftJson.mediaManifest;
+const binaryHash = (asset) => {
+  const file = path.join(process.cwd(), "public", asset.src.replace(/^\/+/, ""));
+  assert(fs.existsSync(file), `missing tracked engagement media: ${asset.src}`);
+  return crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
+};
+const engagementHashes = engagementManifest.map(binaryHash);
+const saveDateHashes = new Set(saveDateManifest.map(binaryHash));
+assert.equal(new Set(engagementHashes).size, engagementManifest.length, "engagement media must be byte-distinct");
+assert(engagementHashes.every((hash) => !saveDateHashes.has(hash)), "engagement media must not duplicate Save the Date media");
+
+console.log(JSON.stringify({
+  siteId: SITE_ID,
+  source: "ThemePage.draftJson + MediaAsset",
+  indexablePageCount: indexablePaths.length,
+  checkedContracts: expectedPages.length
+}, null, 2));

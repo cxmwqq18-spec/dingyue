@@ -202,14 +202,13 @@ export function resolveStorefrontContext(
 ): StorefrontContext {
   const scope = options.scope;
   const primaryMydreamshoots = isPrimaryMydreamshootsSite(bundle.site);
-  const currentPage = mode === "published" ? bundle.currentState?.payload.pages.find((candidate) => candidate.id === bundle.page.id || candidate.slug === bundle.page.slug) : undefined;
-  const pageJson = mode === "draft" ? bundle.page.draftJson : currentPage?.publishedJson ?? bundle.page.publishedJson;
+  const pageJson = mode === "draft" ? bundle.page.draftJson : bundle.page.publishedJson;
   const settings = mode === "draft" && scope?.includeThemeSettings
     ? bundle.site.themeSettings.draftJson
-    : bundle.currentState?.payload.themeSettings ?? bundle.site.themeSettings.publishedJson;
+    : bundle.site.themeSettings.publishedJson;
   const profile = normalizedProfile(mode === "draft" && scope?.includeStorefrontProfile
     ? bundle.site.storefrontProfile?.draftJson
-    : bundle.currentState?.payload.storefrontProfile ?? bundle.site.storefrontProfile?.publishedJson);
+    : bundle.site.storefrontProfile?.publishedJson);
   const validPacks = bundle.creativePacks.filter((pack) => pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0);
   const invalidPacks = bundle.creativePacks.filter((pack) => pack.status === "active" && (pack.creditCost <= 0 || pack.outputCount <= 0));
   const seo = resolveSeo(bundle, pageJson, settings);
@@ -233,9 +232,6 @@ export function resolveStorefrontContext(
       })
     : undefined;
   if (!seo.description && seo.index) missingFacts.push(`page.${bundle.page.id}.seo.description`);
-  const snapshotFailClosed = mode === "published" && primaryMydreamshoots &&
-    (Boolean(pageCopySlug || videoTopicSlug) || MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(seo.canonicalPath)) &&
-    (!bundle.currentState || bundle.snapshotIntegrity !== "valid");
   const standardPageMedia = standardPageEntityPath ? bundle.publishedStandardPageMedia?.[standardPageEntityPath] : undefined;
   const standardPageEntityMissing = mode === "published" && Boolean(standardPageEntityPath) && !pageEntity;
   const standardPageMediaMissing = mode === "published" && Boolean(standardPageEntityPath) && standardPageMedia?.status !== "ready";
@@ -251,7 +247,7 @@ export function resolveStorefrontContext(
         follow: pageEntity.metadata.robots.follow,
         sitemapEligible: pageEntity.sitemapEligible
       }
-    : snapshotFailClosed || entityFailClosed
+    : entityFailClosed
       ? { ...seo, index: false, follow: true, sitemapEligible: false }
       : seo;
   const resolvedTdk = resolveMydreamshootsPageTdk(bundle.site, resolvedSeo.canonicalPath, resolvedSeo);
@@ -261,7 +257,6 @@ export function resolveStorefrontContext(
     description: resolvedTdk.description,
     keywords: resolvedTdk.keywords
   };
-  if (snapshotFailClosed) missingFacts.push("published.seo.snapshot");
   if (standardPageEntityMissing) missingFacts.push("published.standard_page_entity");
   if (standardPageMediaMissing) missingFacts.push("published.standard_page_media");
   if (mode === "published" && primaryMydreamshoots && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(pageScopedSeo.canonicalPath) && !bundle.publishedStandardPageMedia?.[pageScopedSeo.canonicalPath]) {

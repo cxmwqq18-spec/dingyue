@@ -118,14 +118,14 @@ export function resolveMydreamshootsPageTdk(
   const override = pathOverrides[canonicalPath];
   const topic = topicForPath(canonicalPath);
   const title =
-    clean(override?.title ?? tdk.title) ||
+    clean(tdk.title) || clean(override?.title) ||
     `${titleForTopic(topic)} | myDreamshoots`;
   const description =
-    clean(override?.description ?? tdk.description) ||
+    clean(tdk.description) || clean(override?.description) ||
     `Explore ${topic} with myDreamshoots AI photo and video tools.`;
   return {
     title,
     description,
-    keywords: mydreamshootsKeywordsForPath(canonicalPath, title, description),
+    keywords: clean(tdk.keywords) || mydreamshootsKeywordsForPath(canonicalPath, title, description),
   };
 }

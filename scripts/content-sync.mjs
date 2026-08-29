@@ -18,6 +18,7 @@ const manifestTarget = argumentValue("--for-target") || target;
 const outPath = path.resolve(argumentValue("--out") || path.join("releases", "manifests", `${siteId}-content-${Date.now()}.json`));
 const manifestPath = argumentValue("--manifest");
 const reportArgument = argumentValue("--report");
+const scopeArgument = argumentValue("--scope-file");
 const codeCommit = process.env.GIT_COMMIT_SHA || execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
 
 const entitySpecs = {
@@ -41,6 +42,18 @@ const protectedSpecs = [
 ];
 
 function fail(message) { throw new Error(message); }
+function readScope() {
+  if (!scopeArgument) return undefined;
+  const file = path.resolve(scopeArgument);
+  if (!fs.existsSync(file)) fail(`Content scope not found: ${file}`);
+  const scope = JSON.parse(fs.readFileSync(file, "utf8"));
+  if (scope?.formatVersion !== 1 || !scope.entities || typeof scope.entities !== "object") fail("Invalid content scope v1.");
+  for (const [type, entry] of Object.entries(scope.entities)) {
+    if (!entitySpecs[type] || !Array.isArray(entry?.keys) || !entry.keys.length) fail(`Invalid content scope entity: ${type}`);
+    if (entry.fieldPaths && (!Array.isArray(entry.fieldPaths) || entry.fieldPaths.some((value) => typeof value !== "string" || !value.includes("/")))) fail(`Invalid content scope field paths: ${type}`);
+  }
+  return scope;
+}
 function clone(value) { return value === undefined ? undefined : JSON.parse(JSON.stringify(value)); }
 function stable(value) {
   if (value === undefined) return "undefined";
@@ -171,6 +184,17 @@ function rowOperations(sourceRow, targetRow, type, spec, baselineMap) {
   }
   return operations;
 }
+function scopedRowOperations(sourceRow, targetRow, type, spec, baselineMap, scope) {
+  if (!scope) return rowOperations(sourceRow, targetRow, type, spec, baselineMap);
+  const entry = scope.entities[type];
+  if (!entry) return [];
+  const lookupValues = new Set([...spec.lookup, spec.key, "id", "slug", "siteId", "storageKey"].map((key) => String(sourceRow[key] ?? "")).filter(Boolean));
+  if (!entry.keys.some((key) => lookupValues.has(String(key)))) return [];
+  const operations = rowOperations(sourceRow, targetRow, type, spec, baselineMap);
+  if (!entry.fieldPaths?.length) return operations;
+  const allowed = new Set(entry.fieldPaths);
+  return operations.filter((operation) => allowed.has(`${operation.field}${operation.fieldPath}`));
+}
 function publicAssetDescriptor(row) {
   for (const value of [row.previewUrl, row.originUrl, row.storageKey]) {
     if (typeof value !== "string" || !value.startsWith("/")) continue;
@@ -222,6 +246,7 @@ async function baseline() {
 async function plan() {
   ensureTarget();
   ensureSource();
+  const scope = readScope();
   const source = db(sourceUrl); const destination = db(targetUrl);
   try {
     const [sourceRows, targetRows, baselines] = await Promise.all([readAll(source, sourceSiteId), readAll(destination, siteId), destination.contentSyncBaseline.findMany({ where: { target, siteId } })]);
@@ -231,10 +256,10 @@ async function plan() {
       const targetByLookup = new Map(targetRows[type].flatMap((row) => spec.lookup.map((key) => [String(row[key] ?? ""), row])).filter(([key]) => key));
       for (const sourceRow of sourceRows[type]) {
         const targetRow = spec.lookup.map((key) => targetByLookup.get(String(sourceRow[key] ?? ""))).find(Boolean);
-        operations.push(...rowOperations(sourceRow, targetRow, type, spec, baselineMap));
+        operations.push(...scopedRowOperations(sourceRow, targetRow, type, spec, baselineMap, scope));
       }
     }
-    const manifest = { formatVersion: 2, releaseId: argumentValue("--release-id") || `content-${Date.now()}`, codeCommit, target: manifestTarget, sourceTarget: "local", sourceSiteId, siteId, createdAt: new Date().toISOString(), operations, deletions: [] };
+    const manifest = { formatVersion: 2, releaseId: argumentValue("--release-id") || `content-${Date.now()}`, codeCommit, target: manifestTarget, sourceTarget: "local", sourceSiteId, siteId, createdAt: new Date().toISOString(), operations, deletions: [], ...(scopeArgument ? { scopeFile: path.relative(process.cwd(), path.resolve(scopeArgument)) } : {}) };
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, `${JSON.stringify(manifest, null, 2)}\n`);
     const reportPath = writeReport(reportPathFor(outPath), "公开内容字段增量计划", { 目标: target, 站点: siteId, 来源站点: sourceSiteId, codeCommit, 生成时间: manifest.createdAt, 字段操作数: operations.length }, operations);

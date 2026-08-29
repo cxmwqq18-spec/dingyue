@@ -52,7 +52,21 @@ async function loadPrismaBundle(siteId: string) {
     }
   }), { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead });
   if (!siteRecord) throw new Error("site_not_found");
-  const site = toSite(siteRecord);
+  const mappedSite = toSite(siteRecord);
+  // Public SSR reads the current relational draft directly. Keep the legacy
+  // published-shaped fields populated only as an in-memory compatibility
+  // projection; no publication or snapshot record participates in the read.
+  const site = {
+    ...mappedSite,
+    pages: mappedSite.pages.map((page) => ({ ...page, publishedJson: page.draftJson })),
+    themeSettings: {
+      ...mappedSite.themeSettings,
+      publishedJson: mappedSite.themeSettings.draftJson
+    },
+    storefrontProfile: mappedSite.storefrontProfile
+      ? { ...mappedSite.storefrontProfile, publishedJson: mappedSite.storefrontProfile.draftJson }
+      : undefined
+  };
   const products = siteRecord.products.map(mapProduct);
   const creativePacks = siteRecord.creativePacks.map(toCreativePack);
   const live = createPublishedSiteSnapshot({ sites: [site], products, creativePacks } as PlatformState, site, { source: "postgres" });

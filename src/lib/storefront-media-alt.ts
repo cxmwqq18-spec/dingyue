@@ -563,6 +563,7 @@ export function storefrontAccessibleMediaAlt({
   const imageThemeKey = themeImageSlugParts(imageUrl).join(" ");
   const themedAlt = locale === "es" ? spanishThemeSubject(imageThemeKey) : englishThemeSubject(imageThemeKey);
   const genericFileAlt = explicit && filenameLikeAltPattern.test(explicit);
+  if (explicit && !genericFileAlt) return explicit;
   const base = genericFileAlt
     ? themedAlt || explicit
     : explicit || fallbackAlt || themedAlt || (locale === "es" ? "imagen de escaparate" : "Storefront image");
