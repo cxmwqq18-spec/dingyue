@@ -14,6 +14,7 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 
 const jiti = createJiti(import.meta.url);
 const { projectPublicCreativePacks, projectPublicPricingOffers, resolveStorefrontBindings, resolveStorefrontContext, selectOfferPrice } = jiti("../src/lib/storefront-context/core.ts");
+const { canonicalUrlForSite, storefrontBaseUrl } = jiti("../src/lib/storefront-context/seo-projection.ts");
 const { metadataForSingleThemePage } = jiti("../src/lib/theme/seo.ts");
 const { buildStorefrontJsonLd } = jiti("../src/lib/theme/json-ld.ts");
 
@@ -139,6 +140,9 @@ const bundle = {
 };
 
 const context = resolveStorefrontContext(bundle, "published", { now: new Date("2026-08-18T12:00:00.000Z") });
+assert.equal(canonicalUrlForSite(bundle.site, "/"), "https://example.test/", "the canonical root URL must preserve the trailing slash");
+assert.equal(canonicalUrlForSite(bundle.site, "/pricing"), "https://example.test/pricing", "non-root canonical paths must remain slashless");
+assert.equal(storefrontBaseUrl(bundle.site), "https://example.test/", "the host storefront base URL must preserve the trailing slash");
 assert.equal(context.seo.title, "Page-owned title | Test Store", "page SEO should own the title");
 assert.equal(context.seo.description, "Page-owned description", "ThemeSettings page map must not override page SEO");
 assert.equal(context.offers.active.length, 1, "only verified active effective prices should be public");
@@ -159,6 +163,14 @@ assert.equal(metadata.description, context.seo.description);
 assert.equal(metadata.openGraph.description, context.seo.description);
 assert.equal(metadata.twitter.description, context.seo.description);
 const homeGraph = buildStorefrontJsonLd({ site: bundle.site, page: bundle.page, pageJson, pagePath: "/", routeMode: "host", context })[0]["@graph"];
+assert.equal(context.seo.canonicalUrl, "https://example.test/", "homepage context canonical URL must preserve the trailing slash");
+assert.equal(homeGraph.find((node) => node["@type"] === "Organization").url, "https://example.test/", "Organization URL must use the canonical root URL");
+assert.equal(homeGraph.find((node) => node["@type"] === "Organization")["@id"], "https://example.test/#organization", "Organization ID must use the canonical root URL");
+assert.equal(homeGraph.find((node) => node["@type"] === "WebSite").url, "https://example.test/", "WebSite URL must use the canonical root URL");
+assert.equal(homeGraph.find((node) => node["@type"] === "WebSite")["@id"], "https://example.test/#website", "WebSite ID must use the canonical root URL");
+assert.equal(homeGraph.find((node) => node["@type"] === "SoftwareApplication").url, "https://example.test/", "homepage SoftwareApplication URL must use the canonical root URL");
+assert.equal(homeGraph.find((node) => node["@type"] === "SoftwareApplication")["@id"], "https://example.test/#app", "homepage SoftwareApplication ID must use the canonical root URL");
+assert.equal(homeGraph.find((node) => node["@type"] === "BreadcrumbList").itemListElement[0].item, "https://example.test/", "homepage breadcrumb root must use the canonical root URL");
 assert.equal(homeGraph.find((node) => node["@type"] === "SoftwareApplication").description, context.seo.description, "JSON-LD page description must serialize the resolved context");
 assert.equal(homeGraph.find((node) => node["@type"] === "Organization").name, bundle.site.branding.logoText, "Organization JSON-LD must use the single display-brand source");
 assert.equal(homeGraph.find((node) => node["@type"] === "Organization").legalName, profile.identity.legalName, "Organization JSON-LD must serialize the resolved profile");
@@ -223,7 +235,7 @@ const stores = [
 for (const store of stores) {
   assert.equal(store.resolved.site.id, store.siteId);
   assert.equal(store.resolved.site.branding.logoText, store.brand);
-  assert.equal(store.resolved.seo.canonicalUrl, `https://${store.domain}`);
+  assert.equal(store.resolved.seo.canonicalUrl, `https://${store.domain}/`);
   assert.deepEqual(store.resolved.profile?.identity.sameAs, [store.social]);
   assert.equal(store.resolved.offers.lowestPublicMonthlySubscriptionPrice?.price.amountCents, store.amountCents);
 }

@@ -14,9 +14,9 @@ export function storefrontOrigin(site: Pick<Site, "primaryDomain">): string {
 
 export function storefrontBaseUrl(site: Pick<Site, "primaryDomain" | "slug">, routeMode: "host" | "path" = "host"): string {
   const origin = storefrontOrigin(site);
-  if (routeMode === "host") return origin;
+  if (routeMode === "host") return `${origin}/`;
   const domain = clean(site.primaryDomain);
-  return domain && !/localhost|127\.0\.0\.1/i.test(domain) ? origin : `${origin}/site/${site.slug}`;
+  return domain && !/localhost|127\.0\.0\.1/i.test(domain) ? `${origin}/` : `${origin}/site/${site.slug}/`;
 }
 
 export function normalizeCanonicalPath(value: unknown, fallback = "/"): string {
@@ -40,7 +40,7 @@ export function canonicalPathForPage(page: Pick<ThemePage, "slug" | "publishedJs
 
 export function canonicalUrlForSite(site: Pick<Site, "primaryDomain">, path: string): string {
   const canonicalPath = normalizeCanonicalPath(path);
-  return `${storefrontOrigin(site)}${canonicalPath === "/" ? "" : canonicalPath}`;
+  return `${storefrontOrigin(site)}${canonicalPath === "/" ? "/" : canonicalPath}`;
 }
 
 export function applyTitleTemplate(title: string, settings: Pick<ThemeSettings, "seo">, brand: string): string {

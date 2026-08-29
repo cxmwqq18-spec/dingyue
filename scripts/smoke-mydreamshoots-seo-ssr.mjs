@@ -526,7 +526,10 @@ for (const copy of homepageForbiddenCopy) {
 assert.equal((homepage.match(/<h1\b/gi) ?? []).length, 1, "homepage must render exactly one H1");
 assert.equal((sitePathHomepage.match(/<h1\b/gi) ?? []).length, 1, "site path homepage must render exactly one H1");
 assert.equal(metaDescription(homepage), "Create AI headshots, portraits, themed photo sets, editing workflows, and supported short video results from your own approved photos. Compare examples and credit costs before you generate.", "homepage meta description must match the V4 SEO copy");
-assert.equal(canonicalHref(homepage), "https://www.mydreamshoots.com", "homepage canonical must point to the root URL");
+assert.equal(canonicalHref(homepage), "https://www.mydreamshoots.com/", "homepage canonical must point to the slash-terminated root URL");
+assert.equal(firstMatch(homepage, /<meta\s+property=["']og:url["']\s+content=["']([^"']*)["']/i), "https://www.mydreamshoots.com/", "homepage og:url must point to the slash-terminated root URL");
+assert.equal(sitemapHasLoc("https://www.mydreamshoots.com/"), true, "sitemap must contain the slash-terminated homepage URL");
+assert.equal(sitemapHasLoc("https://www.mydreamshoots.com"), false, "sitemap must not contain a duplicate slashless homepage URL");
 assert.equal(homepage.includes('href="/pricing"'), true, "homepage header must link Pricing to /pricing");
 assert.equal(homepage.includes('href="#plans"'), false, "homepage header must not link Pricing to the embedded plans anchor");
 assert.ok(homepage.includes('data-dreamshoot-embedded-pricing="true"'), "homepage HTML must contain the embedded pricing section");

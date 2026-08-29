@@ -218,8 +218,8 @@ for (const video of videoObjects) {
   assert.match(video.uploadDate, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/, "VideoObject uploadDate should be ISO timestamp");
   assert.equal(video.encodingFormat, "video/mp4", "VideoObject should declare an MP4 encodingFormat");
   assert.equal(video.mainEntityOfPage, "https://www.mydreamshoots.com/", "VideoObject should link back to the visible homepage");
-  assert.equal(video.isPartOf?.["@id"], "https://www.mydreamshoots.com#website", "VideoObject should connect to the WebSite entity");
-  assert.equal(video.publisher?.["@id"], "https://www.mydreamshoots.com#organization", "VideoObject should connect to the Organization publisher");
+  assert.equal(video.isPartOf?.["@id"], "https://www.mydreamshoots.com/#website", "VideoObject should connect to the WebSite entity");
+  assert.equal(video.publisher?.["@id"], "https://www.mydreamshoots.com/#organization", "VideoObject should connect to the Organization publisher");
   assert.equal(video.potentialAction?.["@type"], "WatchAction", "VideoObject should expose a WatchAction");
   assertAbsoluteUrl(video.potentialAction?.target, "VideoObject WatchAction target");
   assert.ok(Array.isArray(video.thumbnailUrl) && video.thumbnailUrl.length === 1, "VideoObject should include one thumbnail URL");

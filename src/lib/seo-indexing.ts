@@ -225,7 +225,7 @@ function originHost(origin: string): string {
 
 function sitemapUrl(site: Site, path: string): string {
   const origin = siteOrigin(site) || MYDREAMSHOOTS_ORIGIN;
-  return path === "/" ? origin : `${origin}${path}`;
+  return path === "/" ? `${origin}/` : `${origin}${path}`;
 }
 
 type SitemapImageEntry = {
