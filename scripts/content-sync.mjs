@@ -214,6 +214,10 @@ function verifyAsset(operation) {
   const checksum = crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
   if (checksum !== operation.asset.checksum) fail(`Public asset checksum mismatch: ${operation.asset.path}`);
 }
+function forbiddenOperation(operation) {
+  if (operation.entityType === "theme_page" && operation.field === "draftJson" && operation.fieldPath === "/sectionsOrder") return false;
+  return forbidden.test(`${operation.entityType}:${operation.field}:${operation.fieldPath}`);
+}
 function baselineFields(type, row, spec) {
   const value = publicRow(row, spec);
   const entityKey = identity(row, spec);
@@ -316,7 +320,7 @@ async function apply() {
       for (const operation of manifest.operations) {
         verifyAsset(operation);
         const spec = entitySpecs[operation.entityType];
-        if (!spec || forbidden.test(`${operation.entityType}:${operation.field}:${operation.fieldPath}`)) fail(`Unsupported public content operation: ${operation.entityType}`);
+        if (!spec || forbiddenOperation(operation)) fail(`Unsupported public content operation: ${operation.entityType}`);
         const delegate = modelDelegate(tx, spec);
         const currentRows = rowsByType.get(operation.entityType);
         const current = currentRows.find((row) => spec.lookup.some((key) => String(row[key] ?? "") === String(operation.entityKey)));
