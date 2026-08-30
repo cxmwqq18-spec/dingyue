@@ -8,6 +8,15 @@ export type AiVideoTopicImage = {
   objectPosition?: string;
 };
 
+export type AiVideoTopicVideo = {
+  src: string;
+  poster: string;
+  label: string;
+  width: number;
+  height: number;
+  fit: "cover" | "contain";
+};
+
 export type AiVideoTopicCard = {
   title: string;
   body: string;
@@ -83,6 +92,7 @@ export type AiVideoTopicLandingContent = {
     rightsCopy: string;
     imageNote: string;
     image: AiVideoTopicImage;
+    video?: AiVideoTopicVideo;
     images?: AiVideoTopicImage[];
     highlights?: string[];
     mediaAspectRatio?: string;
@@ -154,6 +164,15 @@ function image(value: ThemeSettingValue | undefined): boolean {
   return Boolean(candidate && text(candidate.src) && text(candidate.alt) && typeof candidate.width === "number" && typeof candidate.height === "number");
 }
 
+function video(value: ThemeSettingValue | undefined): boolean {
+  const candidate = record(value);
+  return Boolean(
+    candidate && text(candidate.src) && text(candidate.poster) && text(candidate.label) &&
+    typeof candidate.width === "number" && typeof candidate.height === "number" &&
+    (candidate.fit === "cover" || candidate.fit === "contain")
+  );
+}
+
 function topicContent(value: ThemeSettingValue | undefined): AiVideoTopicLandingContent | undefined {
   const candidate = record(value);
   const seo = candidate && record(candidate.seo);
@@ -169,7 +188,7 @@ function topicContent(value: ThemeSettingValue | undefined): AiVideoTopicLanding
   const valid = Boolean(
     candidate && seo && hero && useCases && foundation && guidance && steps && valueSection && trust && faq && finalCta &&
     text(seo.title) && text(seo.description) && text(seo.keywords) && text(seo.canonicalPath) &&
-    text(hero.title) && image(hero.image) &&
+    text(hero.title) && image(hero.image) && (!hero.video || video(hero.video)) &&
     Array.isArray(useCases.items) && Array.isArray(guidance.cards) && Array.isArray(steps.items) &&
     Array.isArray(valueSection.items) && Array.isArray(trust.items) && Array.isArray(faq.items)
   );

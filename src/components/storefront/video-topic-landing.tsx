@@ -1,4 +1,4 @@
-import { ArrowRight, Check, ChevronRight, ShieldCheck, Sparkles, X } from "lucide-react";
+import { ArrowRight, Check, ChevronRight, Play, ShieldCheck, Sparkles, X } from "lucide-react";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import type { SectionInstance, Site } from "@/lib/types";
@@ -23,6 +23,15 @@ type VideoTopicImage = {
   width: number;
   height: number;
   objectPosition?: string;
+};
+
+type VideoTopicVideo = {
+  src: string;
+  poster: string;
+  label: string;
+  width: number;
+  height: number;
+  fit: "cover" | "contain";
 };
 
 type VideoTopicUseCase = {
@@ -58,6 +67,7 @@ type VideoTopicContent = {
     rightsCopy: string;
     caption: string;
     image: VideoTopicImage;
+    video?: VideoTopicVideo;
     images?: VideoTopicImage[];
     highlights?: string[];
   };
@@ -233,7 +243,50 @@ function optimizedTopicImageSrc(src: string): string {
   return src.replace(/\.png(?=[?#]|$)/i, ".webp");
 }
 
-function DirectTopicHeroCards({ images, cropPetHero = false }: { images: VideoTopicImage[]; cropPetHero?: boolean }) {
+function heroPreviewImages(content: Pick<VideoTopicContent, "hero">): VideoTopicImage[] {
+  const seen = new Set<string>();
+  return [content.hero.image, ...(content.hero.images ?? [])]
+    .filter((image) => {
+      if (!image?.src || seen.has(image.src)) return false;
+      seen.add(image.src);
+      return true;
+    })
+    .slice(0, 3);
+}
+
+function TopicHeroVideo({ video }: { video: VideoTopicVideo }) {
+  return (
+    <DreamshootShowcasePreview className="h-full">
+      <div
+        aria-label={`Play ${video.label}`}
+        className="group relative h-full w-full cursor-pointer overflow-hidden bg-[#090b12] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd] focus-visible:ring-inset"
+        data-dreamshoot-preview-poster={video.poster}
+        data-dreamshoot-preview-src={video.src}
+        data-dreamshoot-preview-title={video.label}
+        data-dreamshoot-showcase-preview="video"
+        role="button"
+        tabIndex={0}
+      >
+        <img
+          alt={video.label}
+          className={`absolute inset-0 h-full w-full ${video.fit === "contain" ? "object-contain" : "object-cover"}`}
+          decoding="async"
+          fetchPriority="high"
+          height={video.height}
+          loading="eager"
+          src={video.poster}
+          width={video.width}
+        />
+        <span aria-hidden="true" className="absolute inset-0 bg-black/10 transition group-hover:bg-black/20" />
+        <span aria-hidden="true" className="absolute left-1/2 top-1/2 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/45 bg-black/55 text-white shadow-xl backdrop-blur-sm transition group-hover:scale-105 group-hover:bg-black/70">
+          <Play className="ml-1 h-7 w-7" fill="currentColor" strokeWidth={1.8} />
+        </span>
+      </div>
+    </DreamshootShowcasePreview>
+  );
+}
+
+function DirectTopicHeroCards({ images, video, cropPetHero = false }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean }) {
   const cards = images.slice(0, 3);
   const hasThreeCards = cards.length >= 3;
   return (
@@ -291,6 +344,11 @@ function DirectTopicHeroCards({ images, cropPetHero = false }: { images: VideoTo
       ))}
     </div>
   );
+}
+
+function TopicHeroMedia({ images, video, cropPetHero = false }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean }) {
+  if (video) return <div className="aspect-video"><TopicHeroVideo video={video} /></div>;
+  return <DirectTopicHeroCards images={images} cropPetHero={cropPetHero} />;
 }
 
 function UseCaseCard({ item, index }: { item: VideoTopicUseCase; index: number }) {
@@ -1036,6 +1094,7 @@ function normalizeAiContent(content: AiVideoTopicLandingContent): VideoTopicCont
       rightsCopy: content.hero.rightsCopy,
       caption: content.hero.imageNote,
       image: content.hero.image,
+      video: content.hero.video,
       images: content.hero.images,
       highlights: content.hero.highlights
     },
@@ -1360,7 +1419,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
   const isPet = contentKey === "pet-video";
   const topicLabel = isMusic ? "Music Video" : isFashion ? "Fashion Video" : isPet ? "Pet Video" : "Food Video";
   const primaryHref = `/app/create?videoMode=${encodeURIComponent(contentKey)}#step-video`;
-  const heroImages = content.hero.images?.length ? content.hero.images : [content.hero.image];
+  const heroImages = heroPreviewImages(content);
   const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
   const visualMap = content.platformExamples?.items ?? [];
   const accentClass = isMusic ? "text-fuchsia-300" : isFashion ? "text-pink-300" : isPet ? "text-cyan-300" : "text-orange-300";
@@ -1391,7 +1450,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end" data-video-topic-hero-media>
             <div className={`relative w-full overflow-hidden rounded-[8px] border ${accentBorder} bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]`}>
-              <DirectTopicHeroCards images={heroImages} cropPetHero={isPet} />
+              <TopicHeroMedia cropPetHero={isPet} images={heroImages} video={isMusic ? content.hero.video : undefined} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60"><Sparkles className={`mt-1 h-4 w-4 shrink-0 ${accentClass}`} strokeWidth={1.8} /><span>{content.hero.caption}</span></figcaption>
           </figure>
@@ -1440,7 +1499,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
     return <PromoVideoTopicLanding content={content} section={section} site={site} />;
   }
   const primaryHref = `/app/create?videoMode=${encodeURIComponent(contentKey)}#step-video`;
-  const heroImages = content.hero.images?.length ? content.hero.images.slice(0, 3) : [content.hero.image];
+  const heroImages = heroPreviewImages(content);
   return (
     <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-video-topic-page={contentKey}>
       <section className="relative border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
@@ -1463,7 +1522,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end">
             <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]" data-video-topic-hero-media>
-              <DirectTopicHeroCards images={heroImages} />
+              <TopicHeroMedia images={heroImages} video={content.hero.video} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
               <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />

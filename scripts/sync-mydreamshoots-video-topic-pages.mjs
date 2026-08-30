@@ -23,6 +23,31 @@ const EMPTY_UNPUBLISHED_PAGE_JSON = {
   sections: {}
 };
 const nonPublicVideoTopicSlugs = new Set(["text-to-video", "image-to-video"]);
+const heroMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "music-video"]);
+const videoMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "music-video"]);
+const targetedHeroFieldManifest = {
+  "talking-photo": {
+    image: "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp"
+  },
+  "cinematic-video": {
+    image: "/assets/dreamshoot/cinematic-video/cinematic-video-hotel-corridor-mystery-scene.png",
+    imageNote: "Slow tracking shot, warm practical lights, moody atmosphere."
+  },
+  "tiktok-video": {
+    image: "/assets/dreamshoot/tiktok-video/ai-tiktok-video-creator-phone-portrait.png",
+    imageNote: "9:16-first framing · hook -> body -> close · keep key information clear of interface overlays"
+  },
+  "instagram-reels": {
+    image: "/assets/dreamshoot/instagram-reels/ai-instagram-reels-creator-editorial-portrait.png",
+    imageNote: "9:16-first · cover-aware · safe-zone thinking · captions when dialogue matters"
+  },
+  "product-video": {
+    imageNote: "A product video should answer the buyer's question before it asks for the sale."
+  },
+  "music-video": {
+    image: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg"
+  }
+};
 
 const videoCategories = [
   {
@@ -180,7 +205,7 @@ const pages = [
       "Make a photo talk from one clear portrait and a short script. Create talking-photo videos for birthday wishes, personal messages, explainers, social intros, product pitches, and holiday greetings.",
     keywords:
       "AI talking photo generator, make a photo talk, talking photo AI, photo talking video, talking picture generator, speaking photo generator, animate a photo to talk, talking portrait",
-    imageUrl: "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp"
+    imageUrl: "/assets/dreamshoot/talking-photo/make-a-photo-talk-without-recording-another-take.webp"
   },
   {
     slug: "motion-generator",
@@ -200,7 +225,7 @@ const pages = [
       "Create cinematic videos with stronger mood, shot design, lighting, pacing, and camera movement. Turn ideas into short-film-style scenes for noir stories, luxury launches, music clips, sci-fi concepts, period moods, and brand storytelling.",
     keywords:
       "AI cinematic video generator, cinematic video maker, cinematic AI video, create cinematic video, story-driven video generator, cinematic scene generator, short film style AI video, AI video with camera movement and mood",
-    imageUrl: "/assets/dreamshoot/cinematic-video/cinematic-video-hotel-corridor-mystery-scene.png"
+    imageUrl: "/assets/dreamshoot/cinematic-video/create-a-more-cinematic-video-without-a-full-film-crew.webp"
   },
   {
     slug: "tiktok-video",
@@ -210,7 +235,7 @@ const pages = [
       "Turn photos and ideas into TikTok-first vertical videos with a clearer hook, mobile-safe framing, sound-aware structure, captions, and a focused close. Build short demos, micro-lessons, creator stories, event snippets, and campaign videos.",
     keywords:
       "AI TikTok video generator, TikTok video maker, AI TikTok video creator, make TikTok videos from photos, vertical video generator, TikTok content creator, TikTok video from images, short-form video maker",
-    imageUrl: "/assets/dreamshoot/generated/video-topic-clean/tiktok-video/ai-tiktok-video-creator-phone-portrait.webp"
+    imageUrl: "/assets/dreamshoot/tiktok-video/turn-your-photos-and-ideas-into-tiktok-first-videos.webp"
   },
   {
     slug: "instagram-reels",
@@ -220,7 +245,7 @@ const pages = [
       "Turn photos and ideas into Instagram Reels with 9:16 framing, safer text placement, stronger cover choices, captions, audio-aware pacing, and a clear visual story for tutorials, BTS, portfolios, launches, and product demos.",
     keywords:
       "AI Instagram Reels generator, Instagram Reels maker, create Instagram Reels from photos, AI Reels generator, Instagram video maker, vertical Reels creator, make Reels from images, Instagram short video generator",
-    imageUrl: "/assets/dreamshoot/generated/video-topic-clean/instagram-reels/ai-instagram-reels-creator-editorial-portrait.webp"
+    imageUrl: "/assets/dreamshoot/instagram-reels/turn-photos-and-ideas-into-reels-that-fit-your-feed.webp"
   },
   {
     slug: "social-media-video",
@@ -328,7 +353,7 @@ const pages = [
     seoTitle: "AI Music Video Generator for Artist Visuals | myDreamshoots",
     description: "Create AI music-video visuals from text or images for performances, artist promos, dance, visualizers, and cinematic sequences. Plan the look, generate clips, review continuity, and pair approved visuals with properly licensed audio in your publishing workflow.",
     keywords: "ai music video generator, AI music video maker, artist visual generator, performance video generator, AI visualizer maker, dance video concept generator, music promo video maker",
-    imageUrl: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg"
+    imageUrl: "/assets/dreamshoot/music-video/ai-music-video-generator-for-artist-visuals-and-performance-concepts.webp"
   },
   {
     slug: "fashion-video",
@@ -396,7 +421,10 @@ function isolateVideoTopicImages(content) {
   const next = clone(content);
   const heroSource = imageSource(next.hero?.image);
   if (Array.isArray(next.hero?.images)) {
-    const seen = new Set([heroSource]);
+    // Keep the explicit hero carousel intact. The renderer uses this list as
+    // the complete preview set, so removing the canonical first image here
+    // would shift the remaining images and hide a real hero frame.
+    const seen = new Set();
     next.hero.images = next.hero.images.filter((image) => {
       const src = imageSource(image);
       if (!src || seen.has(src)) return false;
@@ -531,6 +559,27 @@ function videoThemeGalleryImages(page) {
     .slice(0, 12);
 }
 
+function isVideoAsset(url) {
+  return typeof url === "string" && /\.(?:mp4|webm)(?:[?#]|$)/i.test(url);
+}
+
+function assertTargetFieldUnchanged(slug, field, currentValue, previousValue, nextValue) {
+  const normalizedCurrent = currentValue ?? "";
+  const normalizedPrevious = previousValue ?? "";
+  const normalizedNext = nextValue ?? "";
+  if (normalizedCurrent === normalizedPrevious || normalizedCurrent === normalizedNext) return;
+  throw new Error(`field_conflict:${slug}:${field}:${JSON.stringify(normalizedCurrent)}`);
+}
+
+function targetedVideoThemeGalleryImages(page, existingGallery) {
+  const canonicalVideo = videoTopicContentSeedForSlug(page.slug).hero?.video?.src;
+  if (!canonicalVideo) throw new Error(`missing_target_video:${page.slug}`);
+  const current = Array.isArray(existingGallery) ? existingGallery.filter((item) => typeof item === "string" && item) : [];
+  const conflictingVideo = current.find((item) => isVideoAsset(item) && item !== canonicalVideo);
+  if (conflictingVideo) throw new Error(`field_conflict:${page.slug}:galleryImages:${JSON.stringify(conflictingVideo)}`);
+  return [canonicalVideo, ...current.filter((item) => !isVideoAsset(item) && item !== page.imageUrl)];
+}
+
 function loadVideoTopicContentSeeds() {
   const jiti = createJiti(import.meta.url);
   return {
@@ -561,18 +610,26 @@ function hasStoredVideoTopicContent(pageJson, slug) {
 
 function syncStoredVideoTopicHeroImage(pageJson, slug) {
   const next = clone(pageJson);
+  if (!heroMediaSyncSlugs.has(slug)) return next;
   const sectionId = slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
   const section = next.sections?.[sectionId];
   const content = section?.settings?.content;
   const canonicalHero = videoTopicContentSeedForSlug(slug).hero;
   if (!content || typeof content !== "object" || Array.isArray(content) || !canonicalHero?.image) return next;
-  content.hero = {
-    ...(content.hero && typeof content.hero === "object" && !Array.isArray(content.hero) ? content.hero : {}),
-    image: clone(canonicalHero.image)
-  };
-  if (Array.isArray(content.hero.images) && content.hero.images.length > 0) {
-    content.hero.images = [clone(canonicalHero.image), ...content.hero.images.slice(1)];
+  const currentHero = content.hero && typeof content.hero === "object" && !Array.isArray(content.hero) ? content.hero : {};
+  const previous = targetedHeroFieldManifest[slug] ?? {};
+  const nextHero = { ...currentHero };
+  if (videoMediaSyncSlugs.has(slug)) {
+    assertTargetFieldUnchanged(slug, "image.src", imageSource(currentHero.image), previous.image, canonicalHero.image.src);
+    assertTargetFieldUnchanged(slug, "video.src", currentHero.video?.src, undefined, canonicalHero.video?.src);
+    nextHero.image = clone(canonicalHero.image);
+    nextHero.video = clone(canonicalHero.video);
   }
+  if (typeof previous.imageNote === "string" && typeof canonicalHero.imageNote === "string") {
+    assertTargetFieldUnchanged(slug, "imageNote", currentHero.imageNote, previous.imageNote, canonicalHero.imageNote);
+    nextHero.imageNote = canonicalHero.imageNote;
+  }
+  content.hero = nextHero;
   return next;
 }
 
@@ -656,9 +713,11 @@ function syncPages(state, changes) {
   const site = (state.sites ?? []).find((item) => item.id === SITE_ID);
   if (!site) throw new Error(`missing_site:${SITE_ID}`);
   site.pages ??= [];
-  return pages.map((pageDefinition) => {
+  const pageDefinitions = refreshContent ? pages : pages.filter((page) => heroMediaSyncSlugs.has(page.slug));
+  return pageDefinitions.map((pageDefinition) => {
     const slug = pagePath(pageDefinition.slug);
     let page = site.pages.find((item) => item.slug === slug);
+    if (!page && !refreshContent) throw new Error(`missing_target_page:${slug}`);
     if (!page) {
       page = {
         id: pageId(pageDefinition.slug),
@@ -672,16 +731,18 @@ function syncPages(state, changes) {
     const draftJson = !refreshContent && hasStoredVideoTopicContent(page.draftJson, pageDefinition.slug)
       ? syncStoredVideoTopicHeroImage(page.draftJson, pageDefinition.slug)
       : pageJson(pageDefinition);
-    const pageFields = {
-      id: page.id || pageId(pageDefinition.slug),
-      siteId: SITE_ID,
-      pageType: "ai_tool",
-      templateKey: `ai-video-topic-${pageDefinition.slug}`,
-      slug,
-      title: page.title || pageDefinition.title,
-      draftJson
-    };
-    if (!page.publishedJson) pageFields.publishedJson = clone(EMPTY_UNPUBLISHED_PAGE_JSON);
+    const pageFields = refreshContent
+      ? {
+          id: page.id || pageId(pageDefinition.slug),
+          siteId: SITE_ID,
+          pageType: "ai_tool",
+          templateKey: `ai-video-topic-${pageDefinition.slug}`,
+          slug,
+          title: page.title || pageDefinition.title,
+          draftJson
+        }
+      : { draftJson };
+    if (refreshContent && !page.publishedJson) pageFields.publishedJson = clone(EMPTY_UNPUBLISHED_PAGE_JSON);
     updateRecord(page, pageFields, changes, "ThemePage");
     if (JSON.stringify(page) !== before) page.updatedAt = RUN_TIMESTAMP;
     return page;
@@ -710,6 +771,7 @@ function pruneNonPublicVideoTopicPages(state, changes) {
 function syncExistingVideoThemePreviews(state, changes) {
   const themeRows = state.videoThemes ?? [];
   for (const page of pages) {
+    if (!refreshContent && !videoMediaSyncSlugs.has(page.slug)) continue;
     if (!page.imageUrl) continue;
     const theme = themeRows.find((item) => item.siteId === SITE_ID && item.slug === page.slug);
     if (!theme) continue;
@@ -718,7 +780,7 @@ function syncExistingVideoThemePreviews(state, changes) {
       theme,
       {
         imageUrl: page.imageUrl,
-        galleryImages: videoThemeGalleryImages(page)
+        galleryImages: refreshContent ? videoThemeGalleryImages(page) : targetedVideoThemeGalleryImages(page, theme.galleryImages)
       },
       changes,
       "VideoTheme"
@@ -816,21 +878,27 @@ async function updateDatabase(state, categories, syncedPages) {
             }
           });
         }
-        await tx.themePage.deleteMany({
-          where: {
-            siteId: SITE_ID,
-            slug: {
-              in: nonPublicVideoTopicPaths
+        if (refreshContent) {
+          await tx.themePage.deleteMany({
+            where: {
+              siteId: SITE_ID,
+              slug: {
+                in: nonPublicVideoTopicPaths
+              }
             }
-          }
-        });
+          });
+        }
         for (const page of pages) {
+          if (!refreshContent && !videoMediaSyncSlugs.has(page.slug)) continue;
           if (!page.imageUrl) continue;
           const existingTheme = await tx.videoTheme.findUnique({
             where: { siteId_slug: { siteId: SITE_ID, slug: page.slug } },
             select: { imageUrl: true, galleryImages: true }
           });
-          const galleryImages = videoThemeGalleryImages(page);
+          assertTargetFieldUnchanged(page.slug, "VideoTheme.imageUrl", existingTheme?.imageUrl, targetedHeroFieldManifest[page.slug]?.image, page.imageUrl);
+          const galleryImages = refreshContent
+            ? videoThemeGalleryImages(page)
+            : targetedVideoThemeGalleryImages(page, existingTheme?.galleryImages);
           if (existingTheme && (existingTheme.imageUrl !== page.imageUrl || !sameJson(existingTheme.galleryImages, galleryImages))) {
             await tx.videoTheme.update({
               where: { siteId_slug: { siteId: SITE_ID, slug: page.slug } },
@@ -842,15 +910,17 @@ async function updateDatabase(state, categories, syncedPages) {
           }
         }
         for (const page of syncedPages) {
-          const pageData = {
-            siteId: SITE_ID,
-            pageType: page.pageType,
-            templateKey: page.templateKey,
-            slug: page.slug,
-            title: page.title,
-            draftJson: toPrismaJson(page.draftJson),
-            draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
-          };
+          const pageData = refreshContent
+            ? {
+                siteId: SITE_ID,
+                pageType: page.pageType,
+                templateKey: page.templateKey,
+                slug: page.slug,
+                title: page.title,
+                draftJson: toPrismaJson(page.draftJson),
+                draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
+              }
+            : { draftJson: toPrismaJson(page.draftJson) };
           const existingPage = await tx.themePage.findFirst({
             where: {
               siteId: SITE_ID,
@@ -862,18 +932,22 @@ async function updateDatabase(state, categories, syncedPages) {
             // Existing remote pages can predate deterministic import IDs. The stable slug is
             // the publication identity, so retain that relational ID in the draft and snapshot.
             page.id = existingPage.id;
-            const pageChanged = existingPage.pageType !== pageData.pageType ||
-              existingPage.templateKey !== pageData.templateKey ||
-              existingPage.slug !== pageData.slug ||
-              existingPage.title !== pageData.title ||
-              !sameJson(existingPage.draftJson, pageData.draftJson) ||
-              !sameJson(existingPage.draftMeta, pageData.draftMeta);
+            const pageChanged = refreshContent
+              ? existingPage.pageType !== pageData.pageType ||
+                existingPage.templateKey !== pageData.templateKey ||
+                existingPage.slug !== pageData.slug ||
+                existingPage.title !== pageData.title ||
+                !sameJson(existingPage.draftJson, pageData.draftJson) ||
+                !sameJson(existingPage.draftMeta, pageData.draftMeta)
+              : !sameJson(existingPage.draftJson, pageData.draftJson);
             if (pageChanged) {
               await tx.themePage.update({
                 where: { id: existingPage.id },
                 data: pageData
               });
             }
+          } else if (!refreshContent) {
+            throw new Error(`missing_target_page:${page.slug}`);
           } else {
             await tx.themePage.create({
               data: {
@@ -888,7 +962,7 @@ async function updateDatabase(state, categories, syncedPages) {
         const relationalVideoThemes = await tx.videoTheme.findMany({
           where: {
             siteId: SITE_ID,
-            slug: { in: pages.map((page) => page.slug) }
+            slug: { in: (refreshContent ? pages : pages.filter((page) => videoMediaSyncSlugs.has(page.slug))).map((page) => page.slug) }
           },
           orderBy: [{ sortOrder: "asc" }, { slug: "asc" }]
         });
@@ -916,9 +990,9 @@ assertPageImageAssets();
 const state = await readPlatformState();
 if (!dryRun && !updateDb) throw new Error("PostgreSQL-only sync requires --dry-run or --db");
 const changes = [];
-const categories = syncCategories(state, changes);
+const categories = refreshContent ? syncCategories(state, changes) : [];
 const syncedPages = syncPages(state, changes);
-pruneNonPublicVideoTopicPages(state, changes);
+if (refreshContent) pruneNonPublicVideoTopicPages(state, changes);
 syncExistingVideoThemePreviews(state, changes);
 
 let databasePublication;

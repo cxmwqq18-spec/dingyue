@@ -258,6 +258,8 @@ try {
           );
           const result = await page.evaluate(() => {
             const legacyBlurredMediaPattern = /\/assets\/dreamshoot\/(?:tiktok-video|instagram-reels|social-media-video|story-video)\//;
+            const approvedVideoPosterPattern = /\/(?:turn-your-photos-and-ideas-into-tiktok-first-videos|turn-photos-and-ideas-into-reels-that-fit-your-feed)\.webp(?:[?#]|$)/;
+            const isLegacyBlurredMedia = (src) => legacyBlurredMediaPattern.test(src) && !approvedVideoPosterPattern.test(src);
             const cards = [...document.querySelectorAll("[data-video-topic-use-case-card]")];
             const heroFrame = document.querySelector("[data-video-topic-hero-media]");
             const heroImage = heroFrame?.querySelector("img");
@@ -277,7 +279,7 @@ try {
                 src: image?.getAttribute("src") || "",
                 alt: image?.getAttribute("alt") || "",
                 loaded: Boolean(image?.complete && image.naturalWidth > 0),
-                legacyBlurredMedia: Boolean(image && legacyBlurredMediaPattern.test(image.getAttribute("src") || ""))
+                legacyBlurredMedia: Boolean(image && isLegacyBlurredMedia(image.getAttribute("src") || ""))
               };
             });
             return {
@@ -288,7 +290,7 @@ try {
                 objectFit: heroImage ? getComputedStyle(heroImage).objectFit : "",
                 imageWidth: heroImage ? Math.round(heroImage.getBoundingClientRect().width) : 0,
                 imageHeight: heroImage ? Math.round(heroImage.getBoundingClientRect().height) : 0,
-                legacyBlurredMedia: Boolean(heroImage && legacyBlurredMediaPattern.test(heroImage.getAttribute("src") || ""))
+                legacyBlurredMedia: Boolean(heroImage && isLegacyBlurredMedia(heroImage.getAttribute("src") || ""))
               },
               cards: cards.length,
               columns: firstRow.length,
@@ -307,7 +309,11 @@ try {
           });
           assert.equal(result.pageMarker, 1, `${topic} ${viewport.name} should render one shared page marker`);
           const usesCleanTopicMedia = ["tiktok-video", "instagram-reels", "social-media-video", "story-video"].includes(topic);
-          const expectedHeroObjectFit = usesCleanTopicMedia ? "cover" : "contain";
+          const expectedHeroObjectFit = ["tiktok-video", "instagram-reels"].includes(topic)
+            ? "contain"
+            : ["talking-photo", "cinematic-video", "music-video"].includes(topic)
+              ? "cover"
+              : usesCleanTopicMedia ? "cover" : "contain";
           assert.equal(result.hero.objectFit, expectedHeroObjectFit, `${topic} ${viewport.name} hero media must preserve its intended framing`);
           assert.equal(result.hero.legacyBlurredMedia, false, `${topic} ${viewport.name} hero must not use a legacy blurred-bleed asset`);
           assert.equal(result.hero.width > 0 && result.hero.height > 0, true, `${topic} ${viewport.name} hero media must have a visible frame`);

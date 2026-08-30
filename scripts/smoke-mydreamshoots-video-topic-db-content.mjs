@@ -17,6 +17,13 @@ const topicSlugs = [
   "video-ad", "brand-video", "music-video", "fashion-video", "food-video", "pet-video", "explainer-video", "how-to-video", "talking-head-video"
 ];
 
+const seedJiti = createJiti(import.meta.url);
+const canonicalTopicContent = {
+  ...seedJiti("../scripts/seed-mydreamshoots-ai-video-topic-content.ts").aiVideoTopicLandingContentByKey,
+  "talking-photo": seedJiti("../scripts/seed-mydreamshoots-talking-photo-content.ts").talkingPhotoContent,
+  "talking-head-video": seedJiti("../scripts/seed-mydreamshoots-talking-head-video-content.ts").talkingHeadVideoContent
+};
+
 function record(value) {
   return Boolean(value && typeof value === "object" && !Array.isArray(value));
 }
@@ -176,8 +183,19 @@ try {
     const theme = themeBySlug.get(slug);
     assert(theme, `missing VideoTheme for ${slug}`);
     assert.equal(theme.imageUrl, content.hero.image.src, `${slug} directory/detail/theme covers must use one image`);
-    if (Array.isArray(content.hero.images) && content.hero.images.length > 0) {
+    const canonicalHeroImages = canonicalTopicContent[slug]?.hero?.images;
+    if (!content.hero.video && Array.isArray(canonicalHeroImages) && canonicalHeroImages.length > 0) {
+      assert.deepEqual(
+        (content.hero.images ?? []).map((image) => image.src),
+        canonicalHeroImages.map((image) => image.src),
+        `${slug} detail hero carousel must retain every canonical preview image`
+      );
+    }
+    if (!content.hero.video && Array.isArray(content.hero.images) && content.hero.images.length > 0) {
       assert.equal(content.hero.images[0].src, content.hero.image.src, `${slug} detail hero carousel must start with its cover`);
+    }
+    if (content.hero.video) {
+      assert(theme.galleryImages.includes(content.hero.video.src), `${slug} VideoTheme gallery must include the playable media URL`);
     }
     if (theme.imageUrl) {
       const owners = coverOwners.get(theme.imageUrl) ?? [];

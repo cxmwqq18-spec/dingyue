@@ -4,6 +4,15 @@ export type TalkingPhotoImage = {
   objectPosition?: string;
 };
 
+export type TalkingPhotoVideo = {
+  src: string;
+  poster: string;
+  label: string;
+  width: number;
+  height: number;
+  fit: "cover" | "contain";
+};
+
 export type TalkingPhotoUseCase = {
   title: string;
   problem: string;
@@ -43,6 +52,7 @@ export type TalkingPhotoContent = {
     caption: string;
     availabilityNote: string;
     image: TalkingPhotoImage;
+    video?: TalkingPhotoVideo;
   };
   useCases: {
     eyebrow: string;
@@ -125,8 +135,16 @@ export const talkingPhotoContent: TalkingPhotoContent = {
     availabilityNote:
       "Talking Photo is currently presented as a customer-first workflow guide. The button opens the existing video workspace; available generation options may vary.",
     image: {
-      src: `${imageRoot}/ai-talking-photo-older-woman-portrait.webp`,
-      alt: "Older woman smiling at the camera in a clear portrait for a talking-photo video"
+      src: `${imageRoot}/make-a-photo-talk-without-recording-another-take.webp`,
+      alt: "Older woman speaking to the camera in a talking-photo video"
+    },
+    video: {
+      src: `${imageRoot}/make-a-photo-talk-without-recording-another-take.mp4`,
+      poster: `${imageRoot}/make-a-photo-talk-without-recording-another-take.webp`,
+      label: "Make a Photo Talk Without Recording Another Take",
+      width: 752,
+      height: 560,
+      fit: "cover"
     }
   },
   useCases: {

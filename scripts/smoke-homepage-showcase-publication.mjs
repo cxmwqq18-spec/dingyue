@@ -34,6 +34,7 @@ const trustedProofRenderer = renderer.match(/const trustedProof = showTrustedLog
 assert.match(types, /publishedHomepageShowcases:\s*PublishedHomepageShowcaseItem\[\]/, "publication snapshot must expose homepage showcases");
 assert.match(types, /homepageShowcaseRevision\?:\s*string/, "homepage showcase revision must be tracked");
 assert.match(themeStore, /function buildHomepageShowcases/, "publication compiler must build homepage showcases");
+assert.match(themeStore, /imageUrl:\s*pageMediaItem\.primaryImage/, "homepage video covers must come from the relational page-media projection");
 assert.match(themeStore, /item\.status === "published"/, "Save the Date projection must gate on published status");
 assert.match(themeStore, /publishedStandardPageMedia/, "Save the Date projection must require published media");
 assert.match(renderer, /homepageShowcases/, "renderer must consume the publication projection");
@@ -57,7 +58,7 @@ for (const key of expectedReviewKeys) {
   assert.match(read("scripts/sync-mydreamshoots-public-content-local.mjs"), new RegExp(`reviewQuotes\\.${key}\\b`), `content sync must read the approved ${key} quote`);
 }
 assert.match(renderer, /projectedVideosByPath = new Map/, "homepage video showcase must use active-publication projection rows");
-assert.match(renderer, /MYDREAMSHOOTS_HOMEPAGE_VIDEO_ORDER/, "homepage video showcase must use the approved eight-item order");
+assert.match(renderer, /MYDREAMSHOOTS_HOMEPAGE_VIDEO_ORDER/, "homepage video showcase must use the approved nine-item order");
 assert.match(renderer, /slice\(0, Math\.max\(1, Math\.min\(6, numberSetting\(section, "saveTheDateItemLimit", 6\)\)\)\)/, "MyDreamShoots Save the Date showcase must render up to six published cards");
 assert.match(renderer, /const raw = setting\(section, key, ""\)\.trim\(\);[\s\S]{0,100}if \(!raw\) return fallback;/, "numeric section settings must fall back when empty");
 assert.match(renderer, /data-dreamshoot-showcase-heading=\{kind\}/, "homepage Save the Date showcase must expose a semantic heading marker");

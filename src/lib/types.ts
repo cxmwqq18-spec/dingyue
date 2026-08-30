@@ -1092,6 +1092,7 @@ export interface PublishedVideoNavigationProjection {
   label: string;
   description: string;
   imageUrl?: string;
+  videoUrl?: string;
   parentSlug: string;
   parentLabel: string;
   parentSortOrder: number;

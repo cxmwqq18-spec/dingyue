@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 type PreviewMedia = {
   kind: "image" | "video";
   meta: string;
+  poster: string;
   src: string;
   title: string;
 };
@@ -24,6 +25,7 @@ function previewMediaFor(target: HTMLElement): PreviewMedia | null {
   return {
     kind: target.dataset.dreamshootShowcasePreview === "video" ? "video" : "image",
     meta: target.dataset.dreamshootPreviewMeta?.trim() || "",
+    poster: target.dataset.dreamshootPreviewPoster?.trim() || image?.currentSrc || image?.src || "",
     src,
     title: target.dataset.dreamshootPreviewTitle?.trim() || image?.alt.trim() || target.getAttribute("alt")?.trim() || "Media preview"
   };
@@ -76,6 +78,8 @@ export function DreamshootShowcasePreviewClient({ children, className }: { child
     return () => window.removeEventListener("keydown", onEscape);
   }, [preview]);
 
+  const mediaLabel = preview?.kind === "video" ? "video" : "image";
+
   return (
     <div className={`${className || ""} [&_img:not([data-dreamshoot-preview-disabled])]:cursor-zoom-in`.trim()} data-dreamshoot-preview-root="true" onClick={onClick} onKeyDown={onKeyDown}>
       {children}
@@ -88,12 +92,12 @@ export function DreamshootShowcasePreviewClient({ children, className }: { child
                 {preview.meta ? <p className="truncate text-xs text-white/68" id="dreamshoot-media-preview-meta">{preview.meta}</p> : null}
               </div>
               <div className="flex shrink-0 items-center gap-2">
-                <a aria-label="Open original image" className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-black/35 text-white transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white" href={preview.src} rel="noreferrer" target="_blank" title="Open original image"><ExternalLink aria-hidden="true" className="h-4 w-4" /></a>
-                <button aria-label="Close image preview" className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-black/35 text-white transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white" onClick={closePreview} ref={closeRef} title="Close preview" type="button"><X aria-hidden="true" className="h-5 w-5" /></button>
+                <a aria-label={`Open original ${mediaLabel}`} className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-black/35 text-white transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white" href={preview.src} rel="noreferrer" target="_blank" title={`Open original ${mediaLabel}`}><ExternalLink aria-hidden="true" className="h-4 w-4" /></a>
+                <button aria-label={`Close ${mediaLabel} preview`} className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-black/35 text-white transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white" onClick={closePreview} ref={closeRef} title="Close preview" type="button"><X aria-hidden="true" className="h-5 w-5" /></button>
               </div>
             </div>
             <div className="min-h-0 overflow-hidden rounded-[8px] bg-[#090b12]">
-              {preview.kind === "video" ? <video autoPlay className="max-h-[calc(100vh-9rem)] w-full object-contain" controls playsInline src={preview.src} /> : <img alt={preview.title} className="max-h-[calc(100vh-9rem)] w-full object-contain" src={preview.src} />}
+              {preview.kind === "video" ? <video autoPlay className="max-h-[calc(100vh-9rem)] w-full object-contain" controls playsInline poster={preview.poster || undefined} preload="metadata" src={preview.src} /> : <img alt={preview.title} className="max-h-[calc(100vh-9rem)] w-full object-contain" src={preview.src} />}
             </div>
           </div>
         </div>

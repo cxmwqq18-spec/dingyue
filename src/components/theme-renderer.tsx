@@ -10,7 +10,9 @@ import { CustomerBootstrapPrefetch, CustomerHeaderBootstrapControls, CustomerWor
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 import { DreamshootPackageCatalogClient, type DreamshootCategoryHrefOverrides } from "@/components/storefront/dreamshoot-package-catalog-client";
 import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
+import { DreamshootShowcasePreviewClient } from "@/components/storefront/dreamshoot-showcase-preview-client";
 import { DreamshootShowcaseRail } from "@/components/storefront/dreamshoot-showcase-rail";
+import { MydreamshootsLogoShowcase } from "@/components/storefront/mydreamshoots-logo-showcase";
 import { DreamshootShowcaseVideo } from "@/components/storefront/dreamshoot-showcase-video";
 import { DreamshootToolDirectoryClient, type DreamshootToolDirectoryCard } from "@/components/storefront/dreamshoot-tool-directory-client";
 import { SaveTheDateDirectory } from "@/components/storefront/save-the-date-directory";
@@ -105,6 +107,7 @@ import {
   creativePackCollectionHref as sharedCreativePackCollectionHref,
   getPhotoPackageMegaGroups as sharedPhotoPackageMegaGroups,
   isMydreamshootsVideoGenerationSlug,
+  mydreamshootsCollectionGroupSlugForItem,
   publicCollectionPathForSite,
   publicCollectionSlugFromPath,
   publicVideoGenerationPathForSite,
@@ -1188,7 +1191,22 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
       ? configuredPhotoPackageMegaGroups
       : dreamshootFallbackPhotoPackageGroups;
   const fullPhotoPackageMegaGroups = spanishXby ? spanishPhotoPackageMegaGroups(rawPhotoPackageMegaGroups, isAidreamcapes) : rawPhotoPackageMegaGroups;
-  const photoPackageMegaGroups = fullPhotoPackageMegaGroups.filter((group) => group.items.length > 0);
+  const photoPackageMegaGroups = (isMyDreamShootsCom
+    ? fullPhotoPackageMegaGroups.reduce<HeaderPhotoPackageMegaGroup[]>((groups, group) => {
+        group.items.forEach((item) => {
+          const canonicalGroupSlug = mydreamshootsCollectionGroupSlugForItem(photoPackageSlug(item.label));
+          if (!canonicalGroupSlug) return;
+          const target = groups.find((candidate) => candidate.slug === canonicalGroupSlug);
+          if (target) {
+            if (!target.items.some((existing) => existing.slug === item.slug)) target.items.push(item);
+            return;
+          }
+          groups.push({ ...group, slug: canonicalGroupSlug, items: [item] });
+        });
+        return groups;
+      }, [])
+    : fullPhotoPackageMegaGroups
+  ).filter((group) => group.items.length > 0);
   const showPhotoPackageMega = !lightweight && (isDreamShoot || isAidreamcapes);
   const clientPhotoPackageMegaGroups = deferMegaMenuPanels ? headerPhotoPackageMegaGroupsForClient(site, photoPackageMegaGroups) : [];
   const clientToolMegaItems = deferMegaMenuPanels ? headerToolMegaItemsForClient(site, toolMegaBlocks, spanishXby) : [];
@@ -2621,7 +2639,7 @@ function mediaAssetUrl(site: Site, value: string): string {
   const publicUrl = withStorefrontPublicWatermarkCacheVersion(spanishXbyPublicAssetUrl(site, preferred));
   if (isMyDreamShootsProfileSite(site) && /\/assets\/dreamshoot\/generated\/pack-galleries\//i.test(publicUrl)) {
     const separator = publicUrl.includes("?") ? "&" : "?";
-    return `${publicUrl}${separator}pair=20260823packpair1`;
+    return `${publicUrl}${separator}pair=20260830colorfix1`;
   }
   return publicUrl;
 }
@@ -2732,6 +2750,7 @@ type GenerationShowcaseVideoCard = {
 const MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES: Record<string, string> = {
   "talking-photo": "Create a talking video from a portrait",
   "cinematic-video": "Turn photos into cinematic video scenes",
+  "music-video": "Create artist visuals and performance concepts",
   "tiktok-video": "Create short AI videos for TikTok",
   "instagram-reels": "Create vertical AI videos for Instagram",
   "product-video": "Turn product images into AI product videos",
@@ -2742,6 +2761,7 @@ const MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES: Record<string, string> = {
 const MYDREAMSHOOTS_HOMEPAGE_VIDEO_ORDER = [
   "talking-photo",
   "cinematic-video",
+  "music-video",
   "tiktok-video",
   "instagram-reels",
   "product-video",
@@ -12776,12 +12796,7 @@ function SectionView({
     const trustedLogoRows = showTrustedLogoIntro
       ? [trustedLogoBlocks.slice(0, trustedLogoSplitIndex), trustedLogoBlocks.slice(trustedLogoSplitIndex)].filter((row) => row.length > 0)
       : [];
-    const trustedLogoEyebrow = mydreamProfileSite ? setting(section, "trustedLogoEyebrow", "CREATIVE SHOWCASE") : "";
-    const trustedLogoSubtitle = mydreamProfileSite ? setting(section, "trustedLogoSubtitle", "Ideas, brands and visual experiments brought together with AI.") : "";
-    const trustedLogoTitle = mydreamProfileSite && /^Made with myDreamshoots$/i.test(setting(section, "trustedLogoTitle", "Made with MyDreamShoots"))
-      ? "Made with MyDreamShoots"
-      : setting(section, "trustedLogoTitle", "Most Trusted Creators. | myDreamshoots");
-    const renderTrustedLogoCard = (logo: SectionBlockInstance, index: number) => {
+    const renderTrustedLogoCard = (logo: SectionBlockInstance, index: number, duplicate = false) => {
       const logoName = blockValue(logo, "name", `Creator logo ${index + 1}`);
       const logoImage = blockValue(logo, "imageUrl", "");
       const resolvedLogoImage = cleanStorefrontImageSrc(resolveMediaAssetUrl(site, logoImage));
@@ -12794,51 +12809,49 @@ function SectionView({
         ? `${logoName} logo de marca`
         : `${logoName} brand logo`;
       return (
-        <div
-          aria-label={logoAlt}
-          className={mydreamProfileSite
-            ? "pointer-events-none flex aspect-square w-[min(27vw,6.2rem)] shrink-0 cursor-default select-none items-center justify-center overflow-hidden rounded-[8px] border border-[#8291aa]/70 bg-[#162033] p-2 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.95)] ring-1 ring-white/12 sm:w-[5.7rem] md:w-[6.25rem]"
-            : "pointer-events-none flex aspect-square w-[min(27vw,6.2rem)] shrink-0 cursor-default select-none items-center justify-center overflow-hidden rounded-[8px] border border-white/70 bg-white px-3 py-2.5 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.85)] ring-1 ring-black/10 sm:w-[5.7rem] md:w-[6.25rem]"}
-          key={instanceKey(logo, index, "trusted_logo")}
-          title={logoAlt}
-          {...xfcartBlockAttrs(mode, logo, index, "trusted_logo")}
+        <article
+          aria-label={duplicate ? undefined : logoAlt}
+          className={mydreamProfileSite ? "mydreamshoots-logo-card" : "pointer-events-none flex aspect-square w-[min(27vw,6.2rem)] shrink-0 cursor-default select-none items-center justify-center overflow-hidden rounded-[8px] border border-white/70 bg-white px-3 py-2.5 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.85)] ring-1 ring-black/10 sm:w-[5.7rem] md:w-[6.25rem]"}
+          key={`${instanceKey(logo, index, "trusted_logo")}${duplicate ? "-duplicate" : ""}`}
+          title={duplicate ? undefined : logoAlt}
+          {...(duplicate ? {} : xfcartBlockAttrs(mode, logo, index, "trusted_logo"))}
         >
           {logoSrc ? (
             <img
-              alt={logoAlt}
-              className={mydreamProfileSite ? "h-full w-full object-contain" : "max-h-[3.25rem] max-w-[5.25rem] object-contain"}
+              alt={duplicate ? "" : logoAlt}
+              className={mydreamProfileSite ? undefined : "max-h-[3.25rem] max-w-[5.25rem] object-contain"}
               loading="lazy"
               src={logoSrc}
             />
           ) : (
             <span className={`text-center text-sm font-semibold leading-tight ${mydreamProfileSite ? "text-white" : "text-[#14161a]"}`}>{logoName}</span>
           )}
-        </div>
+        </article>
       );
     };
-    const trustedProof = showTrustedLogoIntro ? (
+    const trustedProof = showTrustedLogoIntro && mydreamProfileSite ? (
+      <div
+        className="relative left-1/2 mb-12 w-screen -translate-x-1/2 border-b border-white/10 md:mb-14"
+        data-dreamshoot-workflow-examples="true"
+      >
+        <MydreamshootsLogoShowcase />
+        <div className="mx-auto max-w-[38rem] px-5 py-12 text-center md:py-14">
+          <h2 className="text-[clamp(1.45rem,1.75vw,1.9rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
+            {setting(section, "aboutTitle", "What is myDreamshoots?")}
+          </h2>
+          {aboutBody ? <p className="mt-4 text-[clamp(0.84rem,0.88vw,0.94rem)] font-medium leading-[1.58] text-white/74">{aboutBody}</p> : null}
+        </div>
+      </div>
+    ) : showTrustedLogoIntro ? (
       <div
         className="relative left-1/2 mb-12 w-[min(82vw,106rem)] -translate-x-1/2 border-b border-white/10 pb-10 md:mb-14 md:pb-14"
-        data-dreamshoot-trusted-logos={mydreamProfileSite ? undefined : "true"}
-        data-dreamshoot-workflow-examples={mydreamProfileSite ? "true" : undefined}
+        data-dreamshoot-trusted-logos="true"
       >
-        {mydreamProfileSite ? (
-          <>
-            {trustedLogoEyebrow ? <p className="mb-3 text-center text-[11px] font-extrabold uppercase tracking-[0.22em] text-white/62">{trustedLogoEyebrow}</p> : null}
-            <p className="text-center text-[clamp(1.8rem,3.15vw,2.9rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
-              <DreamshootUnderlinedTitle gradient={accent}>
-                {trustedLogoTitle}
-              </DreamshootUnderlinedTitle>
-            </p>
-            {trustedLogoSubtitle ? <p className="mx-auto mt-4 max-w-[42.5rem] text-center text-[clamp(0.875rem,1.15vw,1.06rem)] leading-relaxed text-white/58">{trustedLogoSubtitle}</p> : null}
-          </>
-        ) : (
           <h2 className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
             <DreamshootUnderlinedTitle gradient={accent}>
               {setting(section, "trustedLogoTitle", "Most Trusted Creators. | myDreamshoots")}
             </DreamshootUnderlinedTitle>
           </h2>
-        )}
         <div className="mx-auto mt-7 max-w-[78rem] space-y-3 md:mt-8 md:space-y-3.5">
           {trustedLogoRows.map((row, rowIndex) => (
             <DreamshootShowcaseRail
@@ -12848,7 +12861,7 @@ function SectionView({
               speed={rowIndex % 2 === 1 ? 17 : 15}
               trackClassName="dreamshoot-showcase-track flex w-max gap-3 px-0 md:gap-4"
             >
-              {row.map(renderTrustedLogoCard)}
+              {row.map((logo, index) => renderTrustedLogoCard(logo, index))}
             </DreamshootShowcaseRail>
           ))}
         </div>
@@ -12949,6 +12962,47 @@ function SectionView({
         const href = hrefFor(site, item.canonicalPath);
         const compactCard = item.kind === "save_the_date";
         const mediaClassName = "h-full w-full object-cover";
+        if (item.kind === "video" && item.videoUrl) {
+          const containPoster = item.canonicalPath.endsWith("/instagram-reels") || item.canonicalPath.endsWith("/tiktok-video");
+          return (
+            <article
+              className="group min-w-0 overflow-hidden rounded-[8px] border border-white/12 bg-[#090B12] transition hover:-translate-y-0.5 hover:border-white/24"
+              data-showcase-card-kind="video"
+              key={item.id}
+            >
+              <div
+                aria-label={`Play ${item.title}`}
+                className="relative aspect-square cursor-pointer overflow-hidden bg-[#05070e] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-inset"
+                data-dreamshoot-preview-meta={item.subtitle}
+                data-dreamshoot-preview-poster={mediaAssetUrl(site, item.imageUrl)}
+                data-dreamshoot-preview-src={mediaAssetUrl(site, item.videoUrl)}
+                data-dreamshoot-preview-title={item.imageAlt}
+                data-dreamshoot-showcase-preview="video"
+                role="button"
+                tabIndex={0}
+              >
+                <StorefrontImage
+                  alt={item.imageAlt}
+                  className={`h-full w-full ${containPoster ? "object-contain" : "object-cover"}`}
+                  loading="lazy"
+                  preview={false}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                  src={mediaAssetUrl(site, item.imageUrl)}
+                />
+                <span aria-hidden="true" className="absolute inset-0 bg-black/10 transition group-hover:bg-black/20" />
+                <span aria-hidden="true" className="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/45 bg-black/55 text-white shadow-xl backdrop-blur-sm transition group-hover:scale-105 group-hover:bg-black/70">
+                  <PlayCircle className="h-7 w-7" strokeWidth={1.8} />
+                </span>
+              </div>
+              <div className="border-t border-white/10 p-3">
+                <h3 className="truncate text-sm font-semibold text-white">
+                  <Link className="transition hover:text-white/72 focus:outline-none focus-visible:underline" href={href}>{item.title}</Link>
+                </h3>
+                <p className="mt-1 line-clamp-2 text-xs leading-5 text-white/60">{item.subtitle}</p>
+              </div>
+            </article>
+          );
+        }
         const media = item.videoUrl ? (
           <DreamshootShowcaseVideo className={mediaClassName} label={item.imageAlt} poster={mediaAssetUrl(site, item.imageUrl)} priority={false} src={mediaAssetUrl(site, item.videoUrl)} />
         ) : (
@@ -12975,11 +13029,11 @@ function SectionView({
         <div className="mt-12" data-dreamshoot-homepage-showcase-kind={kind}>
           {renderShowcaseSubsectionHeader(title, href, label, kind)}
           <p className="mx-auto mt-4 max-w-[64rem] text-center text-sm leading-7 text-white/66">{intro}</p>
-            <div className={kind === "save_the_date"
+            {kind === "video" ? <DreamshootShowcasePreviewClient><div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">{items.map(renderPublishedCard)}</div></DreamshootShowcasePreviewClient> : <div className={kind === "save_the_date"
             ? "mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6"
             : "mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"}>
             {items.map(renderPublishedCard)}
-          </div>
+          </div>}
         </div>
       ) : null;
       return (

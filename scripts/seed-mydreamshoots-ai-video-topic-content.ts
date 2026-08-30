@@ -9,6 +9,15 @@ export type AiVideoTopicImage = {
   objectPosition?: string;
 };
 
+export type AiVideoTopicVideo = {
+  src: string;
+  poster: string;
+  label: string;
+  width: number;
+  height: number;
+  fit: "cover" | "contain";
+};
+
 export type AiVideoTopicCard = {
   title: string;
   body: string;
@@ -80,6 +89,7 @@ export type AiVideoTopicLandingContent = {
     rightsCopy: string;
     imageNote: string;
     image: AiVideoTopicImage;
+    video?: AiVideoTopicVideo;
     images?: AiVideoTopicImage[];
     highlights?: string[];
     mediaAspectRatio?: string;
@@ -283,8 +293,9 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       availabilityNote:
         "This page explains the intended creative direction. Open the current video workspace to review the creation tools available today.",
       rightsCopy: "Use only content you own or have permission to transform. Review the final result before publishing.",
-      imageNote: "Slow tracking shot, warm practical lights, moody atmosphere.",
-      image: image(`${cinematicImageRoot}/cinematic-video-hotel-corridor-mystery-scene.png`, "Woman in a dark coat walking through a warm-lit hotel corridor for a cinematic mystery scene", 1672, 941)
+      imageNote: "Cinematic tracking shot, neon rain, shifting headlights, and a tense over-the-shoulder reveal.",
+      image: { src: `${cinematicImageRoot}/create-a-more-cinematic-video-without-a-full-film-crew.webp`, alt: "Man looking over his shoulder on a neon-lit street in the rain", width: 864, height: 496 },
+      video: { src: `${cinematicImageRoot}/create-a-more-cinematic-video-without-a-full-film-crew.mp4`, poster: `${cinematicImageRoot}/create-a-more-cinematic-video-without-a-full-film-crew.webp`, label: "Create a More Cinematic Video Without a Full Film Crew", width: 864, height: 496, fit: "cover" }
     },
     useCases: {
       eyebrow: "WHAT KIND OF CINEMATIC VIDEO ARE YOU TRYING TO CREATE?",
@@ -506,8 +517,9 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       availabilityNote:
         "This page explains the creative direction. Open the current video workspace to review the creation tools available today.",
       rightsCopy: "Use content you own or have permission to use. Review the final clip, text, audio, and AI disclosure needs before publishing.",
-      imageNote: "9:16-first framing · hook -> body -> close · keep key information clear of interface overlays",
-      image: image(`${tiktokImageRoot}/ai-tiktok-video-creator-phone-portrait.png`, "Creator holding a phone in a café for a TikTok-first vertical video concept", 1080, 1920)
+      imageNote: "Hand-cover transition · casual to polished · TikTok-first 9:16",
+      image: { src: `${tiktokImageRoot}/turn-your-photos-and-ideas-into-tiktok-first-videos.webp`, alt: "Creator revealing a polished outfit after a hand-cover transition", width: 496, height: 864 },
+      video: { src: `${tiktokImageRoot}/turn-your-photos-and-ideas-into-tiktok-first-videos.mp4`, poster: `${tiktokImageRoot}/turn-your-photos-and-ideas-into-tiktok-first-videos.webp`, label: "Turn Your Photos and Ideas Into TikTok-First Videos", width: 496, height: 864, fit: "contain" }
     },
     useCases: {
       eyebrow: "WHAT ARE YOU TRYING TO GET ACROSS IN ONE SHORT VIDEO?",
@@ -690,8 +702,9 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       availabilityNote:
         "This page explains the creative direction. Open the current video workspace to review the creation tools available today.",
       rightsCopy: "Use content you own or have permission to use. Review cover, crop, text, audio rights, claims, and AI disclosure needs before publishing.",
-      imageNote: "9:16-first · cover-aware · safe-zone thinking · captions when dialogue matters",
-      image: image(`${instagramImageRoot}/ai-instagram-reels-creator-editorial-portrait.png`, "Female creator in an editorial café portrait for an Instagram Reels concept", 1080, 1920)
+      imageNote: "Raw creator setup · cover-ready reveal · polished 9:16 Reel",
+      image: { src: `${instagramImageRoot}/turn-photos-and-ideas-into-reels-that-fit-your-feed.webp`, alt: "Creator presenting a polished vertical Reel from a bedroom recording setup", width: 496, height: 864 },
+      video: { src: `${instagramImageRoot}/turn-photos-and-ideas-into-reels-that-fit-your-feed.mp4`, poster: `${instagramImageRoot}/turn-photos-and-ideas-into-reels-that-fit-your-feed.webp`, label: "Turn Photos and Ideas Into Reels That Fit Your Feed", width: 496, height: 864, fit: "contain" }
     },
     useCases: {
       eyebrow: "SIX REAL REEL TASKS",
@@ -1860,7 +1873,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         "This page explains the Product Video direction. Open the current video workspace to review the creation tools available today.",
       rightsCopy:
         "Use accurate product photos and claims. Do not invent materials, dimensions, performance, results, included items, or compatibility.",
-      imageNote: "A product video should answer the buyer's question before it asks for the sale.",
+      imageNote: "Problem-to-payoff ad · product-focused storytelling · AI-generated commercial",
       image: image(
         `${productImageRoot}/product-video-size-scale-backpack.jpg`,
         "Backpack shown at a clear scale for a product video",
@@ -3341,9 +3354,10 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       rightsCopy: "Use approved artist references and properly licensed audio. Review identity, instruments, text, logos, motion continuity, and rights before publishing.",
       imageNote: "Artist identity -> Visual motif -> Performance or narrative -> Motion -> Sequence",
       highlights: ["Performance Visuals", "Artist Identity", "Narrative Scenes", "Dance & Motion", "Text to Video", "Image to Video"],
-      image: image(`${musicVideoImageRoot}/hero-music-video-performance.jpg`, "Female vocalist singing into a studio microphone under red and blue cinematic lighting, used as the dedicated hero performance frame.", 1800, 1200, "50% 42%"),
+      image: { src: `${musicVideoImageRoot}/ai-music-video-generator-for-artist-visuals-and-performance-concepts.webp`, alt: "Male singer performing into a vintage microphone under blue and magenta stage lights", width: 864, height: 496 },
+      video: { src: `${musicVideoImageRoot}/ai-music-video-generator-for-artist-visuals-and-performance-concepts.mp4`, poster: `${musicVideoImageRoot}/ai-music-video-generator-for-artist-visuals-and-performance-concepts.webp`, label: "AI Music Video Generator for Artist Visuals & Performance Concepts", width: 864, height: 496, fit: "cover" },
       images: [
-        image(`${musicVideoImageRoot}/hero-music-video-performance.jpg`, "Female vocalist singing into a studio microphone under red and blue cinematic lighting, used as the dedicated hero performance frame.", 1800, 1200, "50% 42%"),
+        { src: `${musicVideoImageRoot}/ai-music-video-generator-for-artist-visuals-and-performance-concepts.webp`, alt: "Male singer performing into a vintage microphone under blue and magenta stage lights", width: 864, height: 496 },
         image(`${musicVideoImageRoot}/hero-music-video-artist-frame.jpg`, "Indie music artist in a colorful jacket photographed under moody purple studio lighting, used as the dedicated hero artist identity frame.", 1067, 1600, "50% 38%"),
         image(`${musicVideoImageRoot}/hero-music-video-visual-motif.jpg`, "Empty microphone stage surrounded by haze, spotlights, and light beams, used as the dedicated hero visual motif frame.", 1800, 1200, "50% 48%")
       ]

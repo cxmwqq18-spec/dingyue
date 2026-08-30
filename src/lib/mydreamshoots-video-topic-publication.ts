@@ -132,7 +132,7 @@ function topicImages(value: unknown, output: TopicImage[] = []): TopicImage[] {
   const record = value as Record<string, unknown>;
   const src = text(record.src);
   const alt = text(record.alt);
-  if (src && alt && !output.some((image) => image.src === src)) {
+  if (src && alt && !/\.(?:mp4|webm)(?:[?#]|$)/i.test(src) && !output.some((image) => image.src === src)) {
     output.push({ src, alt: storefrontSourceImageAlt({ imageUrl: src, fallback: alt }) });
   }
   Object.values(record).forEach((item) => topicImages(item, output));
@@ -232,6 +232,11 @@ function topicSortOrder(slug: string): number {
 
 function topicLabel(source: TopicSource): string {
   return text(source.page.title) || text(source.content.hero.title) || source.slug;
+}
+
+function topicVideoUrl(content: VideoTopicContent): string | undefined {
+  const video = content.hero.video;
+  return video && /\.(?:mp4|webm)(?:[?#]|$)/i.test(video.src) ? video.src : undefined;
 }
 
 function topicReady(entity: PublishedPageEntityProjection, media: PublishedPageMediaProjection): boolean {
@@ -361,6 +366,7 @@ export function compileMydreamshootsVideoTopicPublication(
       sourceHash: sourceHash(source.content)
     });
     const parent = parentForSlug(source.slug);
+    const videoUrl = topicVideoUrl(source.content);
     navigation.push({
       id: source.page.id,
       pageEntityId: entityId,
@@ -369,9 +375,10 @@ export function compileMydreamshootsVideoTopicPublication(
       label: topicLabel(source),
       description: finalizedEntity.metadata.description,
       imageUrl: finalizedMedia.primaryImage,
+      ...(videoUrl ? { videoUrl } : {}),
       ...parent,
       sortOrder: topicSortOrder(source.slug),
-      revision: revision([source.page.id, source.slug, topicLabel(source), finalizedEntity.metadata.description, finalizedMedia.primaryImage, parent, topicSortOrder(source.slug)])
+      revision: revision([source.page.id, source.slug, topicLabel(source), finalizedEntity.metadata.description, finalizedMedia.primaryImage, videoUrl, parent, topicSortOrder(source.slug)])
     });
   }
 

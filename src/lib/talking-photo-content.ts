@@ -6,6 +6,15 @@ export type TalkingPhotoImage = {
   objectPosition?: string;
 };
 
+export type TalkingPhotoVideo = {
+  src: string;
+  poster: string;
+  label: string;
+  width: number;
+  height: number;
+  fit: "cover" | "contain";
+};
+
 export type TalkingPhotoUseCase = {
   title: string;
   problem: string;
@@ -22,7 +31,7 @@ export type TalkingPhotoFaq = {
 
 export type TalkingPhotoContent = {
   seo: { title: string; description: string; keywords: string; canonicalPath: string };
-  hero: { eyebrow: string; title: string; body: string; primaryCta: string; secondaryCta: string; rightsCopy: string; caption: string; availabilityNote: string; image: TalkingPhotoImage };
+  hero: { eyebrow: string; title: string; body: string; primaryCta: string; secondaryCta: string; rightsCopy: string; caption: string; availabilityNote: string; image: TalkingPhotoImage; video?: TalkingPhotoVideo };
   useCases: { eyebrow: string; title: string; intro: string; items: TalkingPhotoUseCase[] };
   sourcePhoto: { eyebrow: string; title: string; intro: string; useTitle: string; useItems: string[]; avoidTitle: string; avoidItems: string[]; expertTip: string };
   script: { eyebrow: string; title: string; intro: string; rules: Array<{ title: string; body: string; exampleTitle?: string; exampleBody?: string }> };
@@ -41,6 +50,15 @@ function text(value: ThemeSettingValue | undefined): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
 
+function video(value: ThemeSettingValue | undefined): boolean {
+  const candidate = record(value);
+  return Boolean(
+    candidate && text(candidate.src) && text(candidate.poster) && text(candidate.label) &&
+    typeof candidate.width === "number" && typeof candidate.height === "number" &&
+    (candidate.fit === "cover" || candidate.fit === "contain")
+  );
+}
+
 function content(value: ThemeSettingValue | undefined): TalkingPhotoContent | undefined {
   const candidate = record(value);
   const seo = candidate && record(candidate.seo);
@@ -57,7 +75,7 @@ function content(value: ThemeSettingValue | undefined): TalkingPhotoContent | un
   const valid = Boolean(
     candidate && seo && hero && useCases && sourcePhoto && script && steps && valueSection && trust && faq && finalCta && image &&
     text(seo.title) && text(seo.description) && text(seo.keywords) && text(seo.canonicalPath) &&
-    text(hero.title) && text(image.src) && text(image.alt) &&
+    text(hero.title) && text(image.src) && text(image.alt) && (!hero.video || video(hero.video)) &&
     Array.isArray(useCases.items) && Array.isArray(sourcePhoto.useItems) && Array.isArray(sourcePhoto.avoidItems) &&
     Array.isArray(script.rules) && Array.isArray(steps.items) && Array.isArray(valueSection.items) && Array.isArray(trust.items) && Array.isArray(faq.items)
   );

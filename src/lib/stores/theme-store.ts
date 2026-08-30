@@ -88,43 +88,23 @@ function asPublishedMediaPack(pack: PublishPreflightCreativePack | undefined): {
   };
 }
 
-function firstVideoUrl(value: unknown): string | undefined {
-  if (typeof value === "string" && /\.(?:mp4|webm)(?:[?#]|$)/i.test(value)) return value;
-  if (Array.isArray(value)) {
-    for (const item of value) {
-      const result = firstVideoUrl(item);
-      if (result) return result;
-    }
-  }
-  if (value && typeof value === "object") {
-    for (const item of Object.values(value as Record<string, unknown>)) {
-      const result = firstVideoUrl(item);
-      if (result) return result;
-    }
-  }
-  return undefined;
-}
-
 function buildHomepageShowcases(params: {
   site: Site;
-  pages: ThemePage[];
   videoNavigation: PublishedSeoSnapshot["publishedVideoNavigation"];
   pageEntities: PublishedPageEntityProjection[];
   pageMedia: PublishedSeoSnapshot["publishedPageMedia"];
   standardMedia: PublishedStandardPageMediaProjection[];
   collections: PublishedSeoSnapshot["publishedCollectionRefs"];
 }): PublishedHomepageShowcaseItem[] {
-  const { site, pages, videoNavigation, pageEntities, pageMedia, standardMedia, collections } = params;
+  const { site, videoNavigation, pageEntities, pageMedia, standardMedia, collections } = params;
   const entities = new Map(pageEntities.map((entity) => [entity.pageEntityId, entity]));
   const media = new Map(pageMedia.map((item) => [item.pageEntityId, item]));
-  const pageById = new Map(pages.map((page) => [page.id, page]));
   const items: PublishedHomepageShowcaseItem[] = [];
 
   for (const item of videoNavigation) {
     const entity = entities.get(item.pageEntityId);
     const pageMediaItem = media.get(item.pageEntityId);
     if (!entity || entity.status !== "published" || !entity.indexable || !pageMediaItem || pageMediaItem.status !== "ready") continue;
-    const page = pageById.get(item.id);
     items.push({
       id: `homepage-video-${item.slug}`,
       kind: "video",
@@ -136,7 +116,7 @@ function buildHomepageShowcases(params: {
       sortOrder: item.sortOrder,
       imageUrl: pageMediaItem.primaryImage,
       imageAlt: pageMediaItem.imageAlts[0] || item.label,
-      ...(page ? { videoUrl: firstVideoUrl(page.publishedJson) } : {}),
+      ...(item.videoUrl ? { videoUrl: item.videoUrl } : {}),
       status: "published",
       indexable: true,
       sitemapEligible: true,
@@ -805,7 +785,6 @@ export function buildPublicationSnapshot(
   const collectionRevision = projectionRevision(publishedCollectionRefs);
   const publishedHomepageShowcases = buildHomepageShowcases({
     site,
-    pages: site.pages,
     videoNavigation: publishedVideoNavigation,
     pageEntities: publishedPageEntities,
     pageMedia: publishedPageMedia,
