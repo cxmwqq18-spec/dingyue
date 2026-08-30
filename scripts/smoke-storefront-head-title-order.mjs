@@ -19,6 +19,10 @@ const storefronts = [
     title: "AIdreamcapes – the most advanced AI photo generator maker"
   }
 ];
+const scopedSiteId = process.env.SMOKE_SITE_ID || "";
+const storefrontsToCheck = scopedSiteId
+  ? storefronts.filter((storefront) => storefront.key === "mydreamshoots" && scopedSiteId === "site_dreamshoot")
+  : storefronts;
 
 function headContent(html) {
   const match = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i);
@@ -77,7 +81,7 @@ async function checkStorefront({ key, host, path, title }) {
 }
 
 const results = [];
-for (const storefront of storefronts) {
+for (const storefront of storefrontsToCheck) {
   results.push(await checkStorefront(storefront));
 }
 

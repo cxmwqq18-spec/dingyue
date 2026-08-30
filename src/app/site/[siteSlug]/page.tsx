@@ -10,7 +10,7 @@ import {
 import { metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { headers } from "next/headers";
-import { STOREFRONT_PUBLIC_HOST_HEADER, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
+import { storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -21,7 +21,6 @@ type HeaderReader = {
 
 function publicHostCandidates(headers: HeaderReader): Array<string | null> {
   return [
-    headers.get(STOREFRONT_PUBLIC_HOST_HEADER),
     headers.get("x-forwarded-host"),
     headers.get("host")
   ];

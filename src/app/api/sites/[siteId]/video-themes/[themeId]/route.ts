@@ -7,6 +7,7 @@ import {
 } from "@/lib/stores/site-store";
 import type { VideoTheme } from "@/lib/types";
 import { normalizeVideoModelPricing } from "@/lib/video-frame-config";
+import { clearPublicVideoThemeCache } from "@/lib/video-theme-cache";
 
 function themeBody(body: Record<string, unknown>): Partial<VideoTheme> {
   return {
@@ -54,6 +55,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ site
       imageUrl: body.imageUrl,
       galleryImages: body.galleryImages
     });
+    clearPublicVideoThemeCache(siteId);
     return NextResponse.json({ ok: true, theme: result.theme, created: result.created });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;
@@ -68,6 +70,7 @@ export async function DELETE(_request: Request, { params }: { params: Promise<{ 
   }
   try {
     const result = await deleteVideoThemeRelational({ siteId, themeId });
+    clearPublicVideoThemeCache(siteId);
     return NextResponse.json({ ok: true, deletedTheme: result.deletedTheme });
   } catch (error) {
     const status = error instanceof StoreError ? error.status : 500;

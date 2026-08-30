@@ -164,14 +164,10 @@ assert.match(
 );
 assert.match(
   sitemapRoute,
-  /async \(host: string, forwardedHost: string\) => getStorefrontSitemapPayloadForHost\(\[forwardedHost, host\]\)/,
+  /const host = request\.headers\.get\("host"\);[\s\S]*const forwardedHost = request\.headers\.get\("x-forwarded-host"\);[\s\S]*getStorefrontSitemapPayloadForHost\(\[forwardedHost, host\]\)/,
   "sitemap route should prefer x-forwarded-host over host behind proxies"
 );
-assert.match(
-  sitemapRoute,
-  /getCachedSitemapPayload\(cacheHost, cacheForwardedHost\)/,
-  "sitemap route should preserve forwarded-host ordering through its cache wrapper"
-);
+assert.doesNotMatch(sitemapRoute, /x-(?:storefront|sitemap)-[a-z-]+["']\s*:/i, "sitemap route must not expose internal diagnostic headers");
 assert.match(
   sitemapRoute,
   /xmlns:image="http:\/\/www\.google\.com\/schemas\/sitemap-image\/1\.1"/,

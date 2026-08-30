@@ -133,6 +133,10 @@ DATABASE_URL=postgresql://<只读用户名>:***@127.0.0.1:15432/dingyue?schema=p
 此模式下，项目的 Prisma 包装器会拦截写操作。禁止在该目标上执行写入、发布、
 迁移、导入或同步命令。
 
+需要登录、客户会话、上传或其他必须写入线上数据库的开发验证，请使用
+`npm run dev:remote`。当前 `npm run dev` 和 `npm run dev:3002` 默认就是该远程
+读写模式；不需要线上写入时请改用 `npm run dev:remote-readonly`。
+
 ## 5. 验证连接目标
 
 建立隧道后，在读取业务数据前使用下面的显式临时环境验证目标。该命令不会修改

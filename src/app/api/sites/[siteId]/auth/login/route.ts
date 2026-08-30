@@ -7,6 +7,12 @@ import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit
 import { createExistingCustomerSessionRelational } from "@/lib/stores/customer-store";
 import type { NextRequest } from "next/server";
 
+function isDatabaseUnavailableError(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  const code = "code" in error ? String((error as { code?: unknown }).code ?? "") : "";
+  return ["P1001", "P1008", "P1017", "P2024", "P2028"].includes(code);
+}
+
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
   const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `customer:${siteId}:${request.headers.get("x-forwarded-for") ?? "local"}`);
@@ -35,8 +41,9 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     setCsrfCookie(response, `customer:${siteId}`, result.session.id, result.session.expiresAt, request);
     return response;
   } catch (error) {
-    const status = error instanceof StoreError ? error.status : 500;
-    const code = error instanceof StoreError ? error.message : "customer_login_failed";
+    const databaseUnavailable = isDatabaseUnavailableError(error);
+    const status = error instanceof StoreError ? error.status : databaseUnavailable ? 503 : 500;
+    const code = error instanceof StoreError ? error.message : databaseUnavailable ? "database_unavailable" : "customer_login_failed";
     return NextResponse.json({ error: code }, { status });
   }
 }

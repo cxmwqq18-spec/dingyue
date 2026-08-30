@@ -6,7 +6,7 @@ const base = new URL(baseUrl);
 const storefrontRoutes = [
   {
     host: "www.mydreamshoots.com",
-    paths: ["/", "/collections", "/tools", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/workflow", "/faq", "/blog", "/about-us", "/contact-us", "/ai-video-generation", "/ai-video-generation/motion-generator", "/ai-save-the-date/save-the-date"]
+    paths: ["/", "/collections", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/workflow", "/faq", "/blog", "/about-us", "/contact-us", "/ai-video-generation", "/ai-video-generation/motion-generator", "/ai-save-the-date/save-the-date"]
   },
   {
     host: "www.aidreamcapes.com",
@@ -184,10 +184,10 @@ async function crawlPublicPathsForHost(host) {
 }
 
 async function sectionLayoutSnapshot(page) {
-  return page.evaluate(() => Array.from(document.querySelectorAll(".xfcart-section[data-section-id]")).map((element) => {
+  return page.evaluate(() => Array.from(document.querySelectorAll(".xfcart-section[id^='xfcart-section-']")).map((element) => {
     const rect = element.getBoundingClientRect();
     return {
-      id: element.getAttribute("data-section-id") || "",
+      id: element.id.replace(/^xfcart-section-/, ""),
       top: Math.round(rect.top * 100) / 100,
       left: Math.round(rect.left * 100) / 100,
       width: Math.round(rect.width * 100) / 100,

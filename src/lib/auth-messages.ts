@@ -31,6 +31,7 @@ const authMessageMap: Record<string, string> = {
   password_confirmation_required: "Enter the password again to confirm it.",
   password_confirmation_mismatch: "The two passwords do not match.",
   site_not_found: "This site does not exist or has been removed.",
+  database_unavailable: "The database is temporarily unavailable. Please try again in a moment.",
   platform_login_failed: "平台登录失败，请稍后重试。",
   site_admin_login_failed: "站点后台登录失败，请稍后重试。",
   customer_login_failed: "Customer sign-in failed. Please try again."

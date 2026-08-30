@@ -1692,7 +1692,13 @@ async function loadStorefrontPublicRuntimeState(
   // The homepage projection is compiled from all current public topic pages.
   // Restricting this read to `/` and `/404` silently removes the video and
   // Save the Date showcase groups even though their relational rows exist.
-  const pageWhere = needs.profile === "home" ? undefined : publicRuntimePageWhere(pageSlugs);
+  // Directory pages compile their cards from the complete set of detail
+  // pages. A route-scoped read containing only the directory page leaves the
+  // published video/Save the Date projections with no owning entities, so
+  // the renderer correctly (but misleadingly) shows an empty state.
+  const pageWhere = ["home", "best-media", "save-the-date"].includes(needs.profile)
+    ? undefined
+    : publicRuntimePageWhere(pageSlugs);
   const select = {
       ...publicRuntimeSiteSelect,
       pages: pageWhere
@@ -2177,8 +2183,13 @@ export const getStorefrontRuntimeStateBySlug = cache(async (slug: string): Promi
 
 export const getStorefrontPublicRuntimeStateByHost = cache(async (host: string | null | undefined, pageSlug?: string, contextSlug?: string): Promise<PlatformState | undefined> => {
   const pageSlugs = publicRuntimePageSlugs(pageSlug);
-  const lookup = await getPublicRuntimeSiteLookupByHost(host);
+  const lookup = getPublicRuntimeHostLookup(host);
   return lookup ? loadStorefrontPublicRuntimeState(lookup, pageSlugs, contextSlug) : undefined;
+});
+
+export const getStorefrontPublicIndexingStateByHost = cache(async (host: string | null | undefined): Promise<PlatformState | undefined> => {
+  const lookup = getPublicRuntimeHostLookup(host);
+  return lookup ? loadStorefrontPublicRuntimeState(lookup, undefined, undefined, { indexing: true }) : undefined;
 });
 
 export const getStorefrontPublicPageMetadataStateByHost = cache(async (host: string | null | undefined, pageSlug?: string): Promise<PlatformState | undefined> => {
@@ -5000,7 +5011,7 @@ async function ensureMydreamshootsVideoGenerationFrameworkRelational(siteId: str
     const seededPrompt = theme.prompt;
     const existingTheme = await prisma.videoTheme.findUnique({
       where: { siteId_slug: { siteId, slug: theme.slug } },
-      select: { prompt: true, imageUrl: true }
+      select: { prompt: true, imageUrl: true, galleryImages: true }
     });
     const shouldUpgradePrompt = !existingTheme
       || !validateVideoPrompt(existingTheme.prompt).valid
@@ -5033,8 +5044,8 @@ async function ensureMydreamshootsVideoGenerationFrameworkRelational(siteId: str
         ...(shouldUpgradePrompt && validateVideoPrompt(seededPrompt).valid
           ? { prompt: seededPrompt, durationSeconds: theme.durationSeconds }
           : {}),
-        imageUrl: !existingTheme?.imageUrl && theme.imageUrl ? theme.imageUrl : undefined,
-        galleryImages: !existingTheme?.imageUrl && theme.imageUrl ? [theme.imageUrl] : undefined
+        imageUrl: theme.imageUrl || null,
+        galleryImages: normalizeSeededVideoThemeGallery(theme.imageUrl, existingTheme?.imageUrl, existingTheme?.galleryImages)
       }
     });
     await ensureVideoThemePageRelational({
@@ -5046,7 +5057,51 @@ async function ensureMydreamshootsVideoGenerationFrameworkRelational(siteId: str
       imageUrl: savedTheme.imageUrl
     });
   }
+  await dedupeMydreamshootsVideoThemeMedia(siteId);
   clearSiteReadCache();
+}
+
+function normalizeSeededVideoThemeGallery(
+  canonicalImageUrl: string,
+  previousImageUrl: string | null | undefined,
+  galleryImages: Prisma.JsonValue | null | undefined
+): string[] {
+  const previous = typeof previousImageUrl === "string" ? previousImageUrl.trim() : "";
+  const gallery = Array.isArray(galleryImages)
+    ? galleryImages.filter((item): item is string => typeof item === "string" && item.trim().length > 0).map((item) => item.trim())
+    : [];
+  const normalized = gallery.map((item) => previous && item === previous ? canonicalImageUrl : item);
+  if (!normalized.length && canonicalImageUrl) normalized.push(canonicalImageUrl);
+  return [...new Set(normalized)];
+}
+
+async function dedupeMydreamshootsVideoThemeMedia(siteId: string): Promise<void> {
+  const themes = await prisma.videoTheme.findMany({
+    where: { siteId },
+    select: { id: true, imageUrl: true, galleryImages: true },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }]
+  });
+  const claimed = new Set<string>();
+  for (const theme of themes) {
+    const primary = typeof theme.imageUrl === "string" ? theme.imageUrl.trim() : "";
+    if (primary) claimed.add(primary);
+  }
+  for (const theme of themes) {
+    const primary = typeof theme.imageUrl === "string" ? theme.imageUrl.trim() : "";
+    const gallery = Array.isArray(theme.galleryImages)
+      ? theme.galleryImages.filter((item): item is string => typeof item === "string" && item.trim().length > 0).map((item) => item.trim())
+      : [];
+    const nextGallery = gallery.filter((item, index) => {
+      if (!item || item === primary) return false;
+      const firstIndex = gallery.indexOf(item);
+      if (firstIndex !== index || claimed.has(item)) return false;
+      claimed.add(item);
+      return true;
+    });
+    if (JSON.stringify(gallery) !== JSON.stringify(nextGallery)) {
+      await prisma.videoTheme.update({ where: { id: theme.id }, data: { galleryImages: nextGallery } });
+    }
+  }
 }
 
 async function ensurePromptDirectedDefaultVideoThemeRelational(siteId: string): Promise<void> {
@@ -5440,7 +5495,9 @@ export async function upsertVideoThemeRelational(params: {
   if (!slug) throw new RelationalStoreError("video_theme_slug_required", 400);
   const description = params.description.trim();
   if (description.length < 8) throw new RelationalStoreError("video_theme_description_required", 400);
-  const prompt = normalizeVideoThemePromptOutputSettings(params.prompt);
+  // Persist the administrator's prompt verbatim (after trimming). Output settings
+  // are metadata owned by the form, not a reason to rewrite prompt content.
+  const prompt = params.prompt.trim();
   if (prompt.length < 12) throw new RelationalStoreError("video_theme_prompt_required", 400);
   if (prompt.length > 6000) throw new RelationalStoreError("video_theme_prompt_too_long", 400);
   const status = videoThemeStatus(params.status);

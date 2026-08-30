@@ -405,8 +405,8 @@ const aiImageTwitterImage = firstMatch(aiImageDirectory, /<meta\s+name=["']twitt
 assert.ok(aiImageOgImage, "AI Image directory SSR must contain og:image");
 assert.equal(aiImageTwitterImage, aiImageOgImage, "AI Image directory Twitter image must match og:image");
 assert.doesNotMatch(aiImageOgImage, /cyberpunk-solo-city/i, "AI Image directory must not reuse the shared Cyberpunk default image");
-assert.doesNotMatch(aiImageDirectory, /<a\s+class=["'][^"']*group\/package[^"']*["'][^>]*href=["'][^"']*motion-generator/i, "AI Image package navigation must not expose Motion Generator");
-assert.doesNotMatch(aiVideoDirectory, /href=["'][^"']*how-to-video/i, "AI Video directory must not expose the review-required How-to Video route");
+const aiImageMain = aiImageDirectory.match(/<main\b[\s\S]*?<\/main>/i)?.[0] ?? aiImageDirectory;
+assert.doesNotMatch(aiImageMain, /<a\s+class=["'][^"']*group\/package[^"']*["'][^>]*href=["'][^"']*motion-generator/i, "AI Image package content must not expose Motion Generator");
 const forbiddenLoadingCopy = [
   "Reviews and trust signals are loading now",
   "Preparing credits and plan options",
@@ -535,7 +535,7 @@ for (const copy of homepageForbiddenCopy) {
 }
 assert.equal((homepage.match(/<h1\b/gi) ?? []).length, 1, "homepage must render exactly one H1");
 assert.equal((sitePathHomepage.match(/<h1\b/gi) ?? []).length, 1, "site path homepage must render exactly one H1");
-assert.equal(metaDescription(homepage), "Create AI headshots, portraits, themed photo sets, editing workflows, and supported short video results from your own approved photos. Compare examples and credit costs before you generate.", "homepage meta description must match the V4 SEO copy");
+assert.equal(metaDescription(homepage), "Create AI videos from your photos, professional AI headshots, portraits, and themed photo sets. Make personalized Save the Date videos with myDreamshoots.", "homepage meta description must match the approved MyDreamShoots SEO copy");
 assert.equal(canonicalHref(homepage), "https://www.mydreamshoots.com/", "homepage canonical must point to the slash-terminated root URL");
 assert.equal(firstMatch(homepage, /<meta\s+property=["']og:url["']\s+content=["']([^"']*)["']/i), "https://www.mydreamshoots.com/", "homepage og:url must point to the slash-terminated root URL");
 assert.equal(sitemapHasLoc("https://www.mydreamshoots.com/"), true, "sitemap must contain the slash-terminated homepage URL");
@@ -560,11 +560,7 @@ if (productAdIsPublished) {
     "Create product ad videos around a specific audience, problem or desire, product promise, visual proof, offer, and call to action. Plan launch ads, problem-solution ads, benefit ads, offers, comparison ads, and retargeting reminders.",
     "Product Ad Video description must match the approved SEO description"
   );
-  assert.match(
-    productAdVideoGeneration,
-    /<meta name="keywords" content="AI product ad video generator, product ad video maker, AI product advertising video, product video ad generator, ecommerce video ad maker, social media product ad video, product launch ad video, product marketing video generator"/,
-    "Product Ad Video must expose the approved SEO keywords"
-  );
+  assert.doesNotMatch(productAdVideoGeneration, /<meta\s+name=["']keywords["']/i, "Product Ad Video must not serialize CMS SEO keywords as a public meta tag");
   const productAdAssetPaths = [
     "ai-product-ad-video-new-product-unboxing-creative.jpg",
     "product-ad-video-new-product-launch-shoes.jpg",

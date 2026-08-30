@@ -43,7 +43,7 @@ import {
   sleepWithLocalWorkerAbort,
   throwIfLocalWorkerAborted
 } from "@/lib/local-worker-abort-registry";
-import { DEFAULT_VIDEO_RESOLUTION, MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, normalizeVideoDurationSeconds, normalizeVideoFrameLimit, normalizeVideoModelPreference, normalizeVideoResolution, type VideoModelFamily, type VideoModelPreference } from "@/lib/video-frame-config";
+import { MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, VIDEO_RESOLUTIONS, normalizeVideoDurationSeconds, normalizeVideoFrameLimit, normalizeVideoModelPreference, normalizeVideoResolution, type VideoModelFamily, type VideoModelPreference } from "@/lib/video-frame-config";
 import { orderSelectableAiProviderFallbackCandidates, shouldTryNextPaidVideoProvider } from "@/lib/video-provider-fallback";
 import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, videoProviderMatchesModelPreference, videoProviderModelFamilyForProvider, type VideoProviderProtocol } from "@/lib/video-provider-family";
 import { isVideoProviderModel } from "@/lib/video-provider-limits";
@@ -1164,11 +1164,11 @@ function assertTokengoMediaPublicFrameUrls(protocol: VideoProviderProtocol, imag
 }
 
 const videoAspectRatios = new Set(["16:9", "4:3", "1:1", "3:4", "9:16", "3:2", "2:3"]);
-const videoResolutions = new Set([DEFAULT_VIDEO_RESOLUTION]);
+const videoResolutions = new Set(VIDEO_RESOLUTIONS);
 
-function videoSizeForParams(aspectRatio: string) {
-  const longEdge = 1280;
-  const shortEdge = 720;
+function videoSizeForParams(aspectRatio: string, resolution: string) {
+  const shortEdge = Number(normalizeVideoResolution(resolution).replace("p", ""));
+  const longEdge = Math.round(shortEdge * 16 / 9);
   if (aspectRatio === "4:3") return `${Math.round(shortEdge * 4 / 3)}x${shortEdge}`;
   if (aspectRatio === "3:4") return `${shortEdge}x${Math.round(shortEdge * 4 / 3)}`;
   if (aspectRatio === "9:16" || aspectRatio === "2:3") return `${shortEdge}x${longEdge}`;
@@ -1235,9 +1235,11 @@ function videoProviderParams(payload: WorkerPayload) {
   const rawResolution = textValue(payload.params.resolution) || textValue(fields?.resolution);
   const rawDuration = textValue(payload.params.durationSeconds) || textValue(payload.params.videoDurationSeconds) || textValue(payload.params.duration) || textValue(payload.params.videoDuration) || textValue(fields?.durationSeconds) || textValue(fields?.videoDurationSeconds) || textValue(fields?.duration) || textValue(fields?.videoDuration);
   const aspect_ratio = videoAspectRatios.has(rawAspectRatio) ? rawAspectRatio : "16:9";
-  const resolution = videoResolutions.has(rawResolution) ? rawResolution : normalizeVideoResolution(rawResolution);
+  const resolution = videoResolutions.has(rawResolution as typeof VIDEO_RESOLUTIONS[number])
+    ? rawResolution as typeof VIDEO_RESOLUTIONS[number]
+    : normalizeVideoResolution(rawResolution);
   const duration = String(normalizeVideoDurationSeconds(rawDuration, undefined, modelPreference));
-  return { aspect_ratio, resolution, duration, size: videoSizeForParams(aspect_ratio) };
+  return { aspect_ratio, resolution, duration, size: videoSizeForParams(aspect_ratio, resolution) };
 }
 
 function explicitVideoEndImageUrl(payload: WorkerPayload) {

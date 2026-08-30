@@ -163,7 +163,7 @@ export function tokengoMediaVideoParams(videoParams: TokengoVideoParams, imageUr
     aspect_ratio: videoParams.aspect_ratio,
     duration,
     ...(seedanceSpecial
-      ? { resolution: "720p", quality: "标准", count: 1 }
+      ? { resolution: videoParams.resolution ?? "720p", quality: "标准", count: 1 }
       : {}),
     ...(!seedanceSpecial && tokengoMediaModelSupportsResolution(model) && videoParams.resolution
       ? { resolution: videoParams.resolution }

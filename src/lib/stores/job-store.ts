@@ -8,7 +8,7 @@ import type { AiProviderConfig, AiWorkflowConfig, AiWorkflowField, CreditLedgerE
 import { generatedOutputCopy, generationThemeLabel } from "@/lib/generation-output-labels";
 import { StoreError } from "@/lib/server-store";
 import { addAuditLogRelational, mapCreditLedger, mapCustomer, mapGenerationJob, mapSiteAiApp } from "@/lib/stores/prisma-mappers";
-import { AUTO_VIDEO_MODEL_FAMILY, CUSTOMER_VIDEO_FRAME_LIMIT, normalizeVideoDurationSecondsForFrameCount, normalizeVideoFrameLimit, normalizeVideoModelPreference, normalizeVideoResolution, videoDurationCreditCost, videoDurationCreditCostForModelFamilies, type VideoModelPreference } from "@/lib/video-frame-config";
+import { AUTO_VIDEO_MODEL_FAMILY, CUSTOMER_VIDEO_FRAME_LIMIT, normalizeVideoDurationSecondsForFrameCount, normalizeVideoFrameLimit, normalizeVideoModelPreference, normalizeVideoResolution, videoDurationCreditCost, videoDurationCreditCostForModelFamilies, videoResolutionCreditCost, type VideoModelPreference } from "@/lib/video-frame-config";
 import { videoProviderAvailability } from "@/lib/video-provider-availability";
 import { videoProviderMatchesModelPreference, videoProviderModelFamilyForProvider } from "@/lib/video-provider-family";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
@@ -1287,11 +1287,14 @@ async function createGenerationJobInTx(tx: Tx, params: {
   const requestedVideoResolution = videoTheme
     ? normalizeVideoResolution(fields.resolution ?? params.requestJson?.resolution)
     : undefined;
-  const unitCreditCost = videoTheme
+  const durationCreditCost = videoTheme
     ? (requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY) === AUTO_VIDEO_MODEL_FAMILY
       ? videoDurationCreditCostForModelFamilies(videoTheme.creditCost, requestedVideoDurationSeconds, videoCandidateModelFamilies, videoTheme.modelPricing)
       : videoDurationCreditCost(videoTheme.creditCost, requestedVideoDurationSeconds, requestedModelPreference, videoTheme.modelPricing)
     : creativePack?.creditCost ?? siteAiApp.creditCost;
+  const unitCreditCost = videoTheme
+    ? videoResolutionCreditCost(durationCreditCost, requestedVideoResolution)
+    : durationCreditCost;
   const outputCount = videoTheme ? 1 : isThemeModeRequest(params.requestJson) ? requestedOutputCount(params.requestJson) : 1;
   const billableCredits = unitCreditCost * outputCount;
   const creditsReserved = billableCredits;

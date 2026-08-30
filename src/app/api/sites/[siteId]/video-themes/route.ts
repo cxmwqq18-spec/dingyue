@@ -16,10 +16,9 @@ import { isBlockedPublicVideoThemeSlugForSite, publicVideoThemeSlugListForSite }
 import { videoProviderModelFamiliesForProviders } from "@/lib/video-provider-family";
 import { runnableVideoProviderModelFamiliesForRequest } from "@/lib/video-provider-availability";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
+import { clearPublicVideoThemeCache, getPublicVideoThemeCache, setPublicVideoThemeCache } from "@/lib/video-theme-cache";
 
-const publicVideoThemeCache = new Map<string, { expiresAt: number; payload: unknown }>();
 const publicVideoThemeDefaultsEnsured = new Set<string>();
-const PUBLIC_VIDEO_THEME_CACHE_MS = 60_000;
 
 function publicCacheKey(params: {
   category?: string;
@@ -37,12 +36,6 @@ function publicCacheKey(params: {
     params.status || "",
     params.category || ""
   ].join(":");
-}
-
-function clearPublicVideoThemeCache(siteId: string) {
-  for (const key of publicVideoThemeCache.keys()) {
-    if (key.startsWith(`${siteId}:`)) publicVideoThemeCache.delete(key);
-  }
 }
 
 function numberParam(value: string | null, fallback: number, min: number, max: number) {
@@ -203,8 +196,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
       return NextResponse.json({ error: "site_not_found" }, { status: 404 });
     }
     const cacheKey = publicCacheKey({ category, includeCategories, pageSize, query, siteId, status });
-    const cached = publicVideoThemeCache.get(cacheKey);
-    if (cached && cached.expiresAt > Date.now()) return NextResponse.json(cached.payload);
+    const cached = getPublicVideoThemeCache(cacheKey);
+    if (cached) return NextResponse.json(cached);
     let themes = await prisma.videoTheme.findMany({
       where,
       include: {
@@ -262,7 +255,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ site
         paused: 0
       }
     };
-    publicVideoThemeCache.set(cacheKey, { expiresAt: Date.now() + PUBLIC_VIDEO_THEME_CACHE_MS, payload });
+    setPublicVideoThemeCache(cacheKey, payload);
     return NextResponse.json(payload);
   }
 

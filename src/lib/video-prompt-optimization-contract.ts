@@ -1,6 +1,6 @@
 import {
   CUSTOMER_VIDEO_FRAME_LIMIT,
-  DEFAULT_VIDEO_RESOLUTION,
+  VIDEO_RESOLUTIONS,
   VIDEO_DURATION_OPTIONS,
   type VideoDurationSeconds,
   type VideoResolution
@@ -11,7 +11,7 @@ export const VIDEO_PROMPT_OPTIMIZATION_MAX_REFERENCES = CUSTOMER_VIDEO_FRAME_LIM
 export const VIDEO_PROMPT_OPTIMIZATION_DURATIONS: readonly VideoDurationSeconds[] = VIDEO_DURATION_OPTIONS.map((option) => option.seconds);
 export const VIDEO_PROMPT_OPTIMIZATION_ASPECT_RATIOS = ["16:9", "4:3", "1:1", "3:4", "9:16"] as const;
 export type VideoPromptOptimizationAspectRatio = typeof VIDEO_PROMPT_OPTIMIZATION_ASPECT_RATIOS[number];
-export const VIDEO_PROMPT_OPTIMIZATION_RESOLUTIONS: readonly VideoResolution[] = [DEFAULT_VIDEO_RESOLUTION];
+export const VIDEO_PROMPT_OPTIMIZATION_RESOLUTIONS: readonly VideoResolution[] = VIDEO_RESOLUTIONS;
 
 export function isVideoPromptOptimizationDuration(value: number): value is VideoDurationSeconds {
   return VIDEO_PROMPT_OPTIMIZATION_DURATIONS.some((candidate) => candidate === value);

@@ -214,10 +214,7 @@ async function extractMenuSignature(page, siteSlug, route, menuCheck) {
           ? document.querySelector("details[data-native-mega-menu][open] > div")
         : document.querySelector('[data-storefront-mega-menu-panel][aria-hidden="false"]');
       if (!panel) return [];
-      const toolCardAnchors = currentMenuName === "tools"
-        ? [...panel.querySelectorAll('a[data-xfcart-block-type="tool_card"][href]')]
-        : [];
-      const anchors = toolCardAnchors.length ? toolCardAnchors : [...panel.querySelectorAll("a[href]")];
+      const anchors = [...panel.querySelectorAll("a[href]")];
       const links = anchors
         .map((anchor) => ({
           text: (anchor.textContent || "").replace(/\s+/g, " ").trim(),

@@ -26,6 +26,9 @@ const pidFile = process.env.REMOTE_DB_TUNNEL_WATCH_PID_FILE || defaultPidFile;
 const once = process.argv.includes("--once");
 const checkLimit = Number(argValue("--checks") || (once ? "1" : "0"));
 const maxChecks = Number.isFinite(checkLimit) && checkLimit > 0 ? Math.trunc(checkLimit) : 0;
+const tunnelModeArgs = process.argv.includes("--readonly")
+  ? ["--readonly"]
+  : ["--readwrite"];
 
 function timestamp() {
   return new Date().toISOString();
@@ -65,7 +68,7 @@ function cleanupPidFile() {
 }
 
 function ensureTunnel({ forceRestart = false } = {}) {
-  const result = spawnSync(process.execPath, [startScript], {
+  const result = spawnSync(process.execPath, [startScript, ...tunnelModeArgs], {
     cwd: root,
     env: {
       ...process.env,

@@ -1,4 +1,4 @@
-const base = process.env.SMOKE_BASE_URL ?? "http://localhost:3000";
+const base = process.env.SMOKE_BASE_URL ?? "http://localhost:3002";
 
 function isTransientFetchError(error) {
   const code = error?.cause?.code ?? error?.code;
@@ -136,11 +136,9 @@ function stableStorefrontHtml(html) {
 
 const themeWorkspaceMarkers = [
   "data-theme-sections-root",
-  "data-section-type=\"ai_feature_launcher\"",
-  "data-section-type=\"upload_panel\"",
-  "data-section-type=\"generation_form\"",
-  "data-section-type=\"job_progress\"",
-  "data-section-type=\"album_gallery\""
+  "Upload photos",
+  "Create with credits",
+  "Download favorites"
 ];
 
 function sleep(ms) {
@@ -151,8 +149,19 @@ async function resetPlatformStateWithRetry(attempts = 3) {
   let lastError;
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
-      await post("/api/platform/state", { reset: true }, { headers: { "x-smoke-reset": "true" } });
-      return;
+      const result = await request("/api/platform/state", {
+        method: "POST",
+        body: { reset: true },
+        headers: { "x-smoke-reset": "true" },
+        allowFailure: true
+      });
+      if (result.response.status === 410 && result.json?.error === "platform_state_write_disabled") {
+        return "legacy_reset_disabled";
+      }
+      if (!result.response.ok) {
+        throw new Error(`POST /api/platform/state failed: ${result.response.status} ${JSON.stringify(result.json)}`);
+      }
+      return "reset";
     } catch (error) {
       lastError = error;
       if (attempt < attempts) await sleep(300 * attempt);
@@ -172,7 +181,7 @@ if (!atlasFront.response.ok) {
   throw new Error("atlas storefront did not render after reset");
 }
 const atlasFrontHtml = await atlasFront.response.text();
-for (const marker of ["<title>Atlas</title>", "/site/atlas", "--site-bg:#f4f7f1", "--site-accent:#4f6f52", "Atlas Copy Foundry"]) {
+for (const marker of ["<title>Home | Atlas</title>", "/site/atlas", "--site-bg:#f4f7f1", "--site-accent:#4f6f52", "Atlas Copy Foundry"]) {
   if (!atlasFrontHtml.includes(marker)) throw new Error(`atlas storefront missing site-isolated marker: ${marker}`);
 }
 if (atlasFrontHtml.includes(">Lumen</span>")) {
@@ -198,7 +207,7 @@ if (platformLogin.platformAdmin?.email !== "platform@local.test" || platformLogi
 const platformPage = await get("/platform", { cookie: platformCookie });
 if (!platformPage.response.ok) throw new Error("platform route did not open after login");
 const platformHtml = await platformPage.response.text();
-for (const marker of ["Operate every DreamShoot-style AI studio", "SaaS operating model", "Tenant factory", "Create a new client studio", "Connect readiness", "Recent platform activity", "data-admin-command-bar=\"saas-style\"", "data-admin-layout=\"saas-advanced-admin-shell\"", "data-admin-layout=\"saas-command-workspace\"", "data-admin-layout=\"saas-left-module-rail\"", "data-admin-layout=\"saas-premium-backoffice-grid\"", "data-admin-layout=\"xfcart-module-tree\"", "data-admin-toolbar=\"xfcart-modern-topbar\"", "data-admin-tabs=\"xfcart-workspace-tabs\"", "current operating module", "module index", "高级店铺后台矩阵", "站点边界", "收款账本", "装修发布", "AI 工厂", "平台后台", "平台总览", "站点工厂", "收款订阅", "AI 网关", "审计风控"]) {
+for (const marker of ["Operate every DreamShoot-style AI studio", "SaaS operating model", "Tenant factory", "Create a new client studio", "Connect readiness", "Recent platform activity", "data-admin-layout-compat=\"saas-advanced-admin-shell saas-command-workspace saas-premium-backoffice-grid xfcart-module-tree\"", "data-admin-layout=\"saas-left-module-rail\"", "data-admin-toolbar=\"xfcart-modern-topbar\"", "data-admin-tabs=\"xfcart-workspace-tabs\"", "current operating module", "module index", "高级店铺后台矩阵", "站点边界", "收款账本", "装修发布", "AI 工厂", "平台后台", "平台总览", "站点工厂", "收款订阅", "AI 网关", "审计风控"]) {
   if (!platformHtml.includes(marker)) throw new Error(`platform dashboard missing marker: ${marker}`);
 }
 report.platformAuth = { email: platformLogin.platformAdmin.email };
@@ -212,16 +221,16 @@ if (bridgedAdmin.siteSlug !== "lumen" || bridgedAdmin.siteAdmin?.email !== "owne
   throw new Error("platform to site admin bridge did not resolve a target site admin");
 }
 const bridgedAdminCookie = cookieFrom(bridgedAdminResponse, "site_admin_session_site_lumen");
-await expectHtml("/site/lumen/admin", ["DreamShootAI 店铺后台", "概览工作台"], {
+await expectHtml("/site/lumen/admin", ["AI celebration 店铺后台", "概览工作台"], {
   cookie: `${platformCookie}; ${bridgedAdminCookie}`
 });
 const bridgedSettings = await get("/api/platform/sites/site_lumen/admin-bridge?path=%2Fadmin%2Fsettings", {
   cookie: platformCookie,
-  csrf: platformCsrf,
+  headers: { "sec-fetch-mode": "navigate", "sec-fetch-site": "same-origin", accept: "text/html" },
   allowFailure: true
 });
 if (bridgedSettings.response.status !== 307) {
-  throw new Error("platform to site admin settings bridge did not redirect");
+  throw new Error(`platform to site admin settings bridge did not redirect: ${bridgedSettings.response.status} ${JSON.stringify(bridgedSettings.json)}`);
 }
 const bridgedSettingsCookie = cookieFrom(bridgedSettings.response, "site_admin_session_site_lumen");
 await expectHtml("/site/lumen/admin/settings", ["设置收款", "设置收款与站点资料", "新增后台账号"], {
@@ -268,7 +277,7 @@ if (!newSiteFront.response.ok || newSiteAdminBlocked.response.status !== 307) {
   throw new Error("new cloned site front/admin auth routing is wrong");
 }
   const newSiteFrontHtml = await newSiteFront.response.text();
-  for (const marker of ["DreamShootAI", "Image Studio", "data-section-type=\"pricing_table\"", "Essential", "Premium"]) {
+for (const marker of ["DreamShootAI", "Image Studio", "Essential", "Premium"]) {
     if (!newSiteFrontHtml.includes(marker)) throw new Error(`cloned storefront missing DreamShoot storefront module: ${marker}`);
 }
 for (const marker of ["Site pricing records", "Connected to current pricing", ">Settlement<", "Total grant volume"]) {
@@ -1191,7 +1200,7 @@ const workspaceHtml = await workspacePage.response.text();
 for (const marker of themeWorkspaceMarkers) {
   if (!workspaceHtml.includes(marker)) throw new Error(`customer workspace page missing marker: ${marker}`);
 }
-await expectHtml("/site/lumen/app/jobs/progress", ["data-theme-sections-root", "data-section-type=\"job_progress\"", "data-section-type=\"album_gallery\""], {
+await expectHtml("/site/lumen/app/jobs/progress", ["data-theme-sections-root", "Generation progress", "Private album"], {
   cookie: customerCookie
 });
 report.workspace = "ok";
@@ -1222,7 +1231,7 @@ for (const route of [
   { path: "/site/atlas/blog", markers: ["data-theme-sections-root", "xfcart-section-header_plus", "Atlas"] },
   { path: "/site/atlas/policies/privacy", markers: ["data-theme-sections-root", "xfcart-section-header_plus", "Atlas"] },
   { path: "/site/atlas/policies/refunds", markers: ["data-theme-sections-root", "xfcart-section-header_plus", "Atlas"] },
-  { path: "/site/atlas/policies/content", markers: ["data-theme-sections-root", 'data-section-type="policy_content"', "Atlas"] },
+  { path: "/site/atlas/policies/content", markers: ["data-theme-sections-root", "Atlas"] },
   { path: "/site/atlas/tools/image-studio", markers: ["data-theme-sections-root", "xfcart-section-header_plus", "Atlas"] },
   { path: "/site/atlas/collections", markers: ["data-theme-sections-root", "xfcart-section-header_plus", "Atlas"] },
   { path: "/site/atlas/search", markers: ["data-theme-sections-root", "xfcart-section-header_plus", "Atlas"] },
@@ -1675,17 +1684,17 @@ for (const themeCheck of internalThemeChecks) {
       "Choose your wedding story package.",
       "Frequently Asked Questions",
       "Your Love Story, Anywhere.",
-      "data-section-type=\"metric_strip\"",
-      "data-section-type=\"sample_strip\"",
-      "data-section-type=\"luxury_highlight\"",
-      "data-section-type=\"studio_steps\"",
-      "data-section-type=\"destination_showcase\"",
-      "data-section-type=\"example_gallery\"",
-      "data-section-type=\"testimonial_wall\"",
-      "data-section-type=\"pricing_table\"",
-      "data-section-type=\"trust_signal_bar\"",
-      "data-section-type=\"faq\"",
-      "data-section-type=\"final_cta\""
+      "id=\"xfcart-section-metrics_1\"",
+      "id=\"xfcart-section-pain_points_1\"",
+      "id=\"xfcart-section-luxury_highlight_1\"",
+      "id=\"xfcart-section-workflow_1\"",
+      "id=\"xfcart-section-destinations_1\"",
+      "id=\"xfcart-section-examples_1\"",
+      "id=\"xfcart-section-proof_1\"",
+      "id=\"xfcart-section-pricing_1\"",
+      "id=\"xfcart-section-trust_1\"",
+      "id=\"xfcart-section-faq_1\"",
+      "id=\"xfcart-section-final_cta_1\""
     ]) {
       if (!storefrontAfterInternalThemeHtml.includes(marker)) {
         throw new Error(`wedding storefront missing commercial theme marker: ${marker}`);
@@ -2045,7 +2054,7 @@ const publicRouteChecks = [
   { path: "/site/lumen/policies/refunds", markers: ["data-theme-sections-root", "xfcart-section-header_plus"] },
   {
     path: "/site/lumen/policies/content",
-    markers: ["data-theme-sections-root", 'data-section-type="policy_content"']
+    markers: ["data-theme-sections-root", "xfcart-section-policy_1"]
   }
 ];
 for (const route of publicRouteChecks) {

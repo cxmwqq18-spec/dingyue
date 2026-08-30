@@ -327,31 +327,31 @@ function englishThemeSubject(key: string): string | undefined {
     return "Red-carpet event portrait";
   }
   if (/(christmas-couple)/.test(key)) {
-    return "Christmas couple portrait with cozy festive light";
+    return "Christmas couple portrait";
   }
   if (/(christmas-photos)/.test(key)) {
-    return "Solo Christmas portrait with warm festive styling";
+    return "Solo Christmas portrait";
   }
   if (/(thanksgiving)/.test(key)) {
-    return "Thanksgiving group portrait at a warm dinner setting";
+    return "Thanksgiving group portrait";
   }
   if (/(halloween)/.test(key)) {
-    return "Halloween party portrait with dramatic colored lighting";
+    return "Halloween party portrait";
   }
   if (/(holiday|seasonal)/.test(key)) {
-    return "Seasonal holiday portrait with warm festive styling";
+    return "Seasonal holiday portrait";
   }
   if (/(cyberpunk|neon)/.test(key)) {
-    return "Neon cyberpunk portrait in a city scene";
+    return "Neon cyberpunk portrait";
   }
   if (/(mafia|noir)/.test(key)) {
-    return "Noir character portrait with dramatic contrast";
+    return "Noir character portrait";
   }
   if (/(anime-avatar)/.test(key)) {
     return "Stylized anime avatar portrait";
   }
   if (/(avatar)/.test(key)) {
-    return "Social avatar portrait with clean framing";
+    return "Social avatar portrait";
   }
   if (/(profile-cards|social-cards|avatar-card)/.test(key)) {
     return "Social profile card portrait";
@@ -363,16 +363,16 @@ function englishThemeSubject(key: string): string | undefined {
     return "Motion-ready portrait preview";
   }
   if (/(product-style)/.test(key)) {
-    return "Product-style lifestyle scene";
+    return "Product lifestyle image";
   }
   if (/(product-style|product|upscaler|enhance|utility)/.test(key)) {
-    return "Enhanced portrait preview with crisp detail";
+    return "Enhanced portrait preview";
   }
   if (/(creator-portraits)/.test(key)) {
-    return "Creator portrait with polished studio styling";
+    return "Creator portrait";
   }
   if (/(creator|profile|thumbnail|media-kit|personal-brand)/.test(key)) {
-    return "Creator profile portrait with polished styling";
+    return "Creator profile portrait";
   }
   if (/(world-cup|football|soccer|stadium|match-day|game-day|match|watch-party|championship|tunnel-entrance)/.test(key)) {
     return "Football fan portrait in a stadium";
@@ -384,11 +384,11 @@ function englishThemeSubject(key: string): string | undefined {
     return "Desi wedding-style portrait with traditional celebration styling";
   }
   if (/(christmas|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume-cast|cozy-card|family-occasion|winter|new-year)/.test(key)) {
-    if (/(christmas-couple)/.test(key)) return "Christmas couple portrait with cozy festive light";
-    if (/(christmas-photos)/.test(key)) return "Solo Christmas portrait with warm festive styling";
-    if (/(thanksgiving)/.test(key)) return "Thanksgiving group portrait at a warm dinner setting";
-    if (/(halloween)/.test(key)) return "Halloween party portrait with dramatic colored lighting";
-    return "Seasonal holiday portrait with warm festive styling";
+    if (/(christmas-couple)/.test(key)) return "Christmas couple portrait";
+    if (/(christmas-photos)/.test(key)) return "Solo Christmas portrait";
+    if (/(thanksgiving)/.test(key)) return "Thanksgiving group portrait";
+    if (/(halloween)/.test(key)) return "Halloween party portrait";
+    return "Seasonal holiday portrait";
   }
   if (/(wedding|engagement|couple|valentine|desi|indian)/.test(key)) {
     return "Couple keepsake portrait";
@@ -397,8 +397,8 @@ function englishThemeSubject(key: string): string | undefined {
     return "Travel portrait in a scenic setting";
   }
   if (/(beauty|hairstyle|hair|try-on|fashion|boudoir)/.test(key)) {
-    if (/(hairstyle)/.test(key)) return "Hairstyle preview portrait with polished styling";
-    if (/(fashion)/.test(key)) return "Editorial fashion portrait with refined wardrobe styling";
+    if (/(hairstyle)/.test(key)) return "Hairstyle preview portrait";
+    if (/(fashion)/.test(key)) return "Editorial fashion portrait";
     return "Beauty portrait";
   }
   return undefined;
@@ -530,15 +530,15 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
       ?? contextScene
       ?? (locale === "es"
         ? "retrato estilizado para una galeria privada"
-        : "Styled portrait prepared for a private gallery");
+        : "Portrait image");
   const sourceAlt = sourceSpecificAlt(input.imageUrl, locale, input.title || imageScene || specificScene || contextScene);
   if (templatedSceneAltPattern.test(explicit) || templatedSceneAltPattern.test(galleryAlt)) return sourceAlt;
   if (explicit) return compactMediaAltSentence(explicit, locale);
   if (galleryAlt) return compactMediaAltSentence(galleryAlt, locale);
   if (stableSourceImagePattern.test(imageIdentity(input.imageUrl))) return sourceAlt;
   const fallbackScene = locale === "es"
-    ? "retrato estilizado para una galeria privada"
-    : "Styled portrait prepared for a private gallery";
+    ? "retrato"
+    : "Portrait image";
   const naturalScene = scene || fallbackScene;
   return compactMediaAltSentence(naturalScene, locale);
 }

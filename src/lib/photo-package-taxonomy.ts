@@ -1,6 +1,7 @@
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import type { CreativePack, CreativePackCategory, Site } from "@/lib/types";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
+import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 
 export type PhotoPackageMegaGroup = {
   label: string;
@@ -236,7 +237,8 @@ export function parsePublicCollectionRouteForSite(site: CollectionRouteSiteIdent
     };
   }
   if (segments.length === 2) {
-    const itemSlug = photoPackageSlug(segments[1]);
+    const rawItemSlug = photoPackageSlug(segments[1]);
+    const itemSlug = isSpanishStorefrontSite(site) ? canonicalSpanishXbyCollectionSlug(rawItemSlug) : rawItemSlug;
     return {
       root: "collections",
       itemSlug,

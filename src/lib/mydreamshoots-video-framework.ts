@@ -413,6 +413,19 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     sortOrder: 30
   },
   {
+    slug: "motion-generator",
+    categorySlug: "motion-generator",
+    name: "Motion Generator",
+    headline: "Animate an approved photo into a short, controlled video.",
+    description: "Turn an approved still image into a short, coherent motion concept with controlled subject movement, camera motion, pacing, and visual continuity.",
+    prompt: "Animate the approved source image into a short video with one deliberate subject action and restrained camera movement. Preserve identity, composition, lighting, and important scene details while keeping motion physically coherent from the opening frame through the final hold.",
+    imageUrl: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp",
+    creditCost: 24,
+    durationSeconds: 6,
+    maxFrames: 1,
+    sortOrder: 35
+  },
+  {
     slug: "cinematic-video",
     categorySlug: "cinematic-video",
     name: "Cinematic Video",
@@ -458,7 +471,7 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     headline: "Adapt one core idea into platform-aware social video.",
     description: "Turn one core idea into platform-aware social media videos with stronger hooks, crops, captions, audio, pacing, safe zones, and CTAs.",
     prompt: "Create a platform-aware social media video from the provided idea and frames. Keep the message clear, use mobile-safe composition, include natural pacing, and make the ending suitable for a simple call to action.",
-    imageUrl: "/assets/dreamshoot/social-media-video/social-media-video-before-after-transformation.png",
+    imageUrl: "/assets/dreamshoot/generated/video-topic-media/social-media-video/social-media-video-01.webp",
     creditCost: 24,
     durationSeconds: 6,
     maxFrames: 10,

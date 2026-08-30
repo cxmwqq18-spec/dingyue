@@ -606,7 +606,7 @@ async function markVisibleDraftPreviewTarget(page) {
     });
     const target = visibleCandidates
       .map((node) => {
-        const sectionId = node.closest(".xfcart-section[data-section-id]")?.getAttribute("data-section-id") ?? "";
+        const sectionId = node.closest(".xfcart-section")?.id?.replace(/^xfcart-section-/, "") ?? "";
         const text = (node.textContent || node.getAttribute("aria-label") || node.getAttribute("title") || "").trim().replace(/\s+/g, " ");
         const globalPenalty = sectionId === "header_plus" || sectionId === "footer_plus" ? -120 : 0;
         const actionBonus = /create|start|buy|package|learn|shop|pricing|生成|开始|立即|套餐|购买/i.test(text) ? 40 : 0;

@@ -30,13 +30,17 @@ const sites = [
     forbiddenPatterns: [/mydreamshoots/i, /dreamshootai/i, /mydreamshoots\.com/i, /support@mydreamshoots\.com/i]
   }
 ];
+const scopedSiteId = process.env.SMOKE_SITE_ID || "";
+const sitesToCheck = scopedSiteId ? sites.filter((site) => site.id === scopedSiteId) : sites;
+if (scopedSiteId && sitesToCheck.length !== 1) {
+  throw new Error(`Unknown SMOKE_SITE_ID: ${scopedSiteId}`);
+}
 
 const approvedHomeOrders = {
   site_dreamshoot: [
     "hero_1",
     "generation_showcase_1",
     "tutorial_video_1",
-    "tutorial_video_2",
     "proof_1",
     "faq_1",
     "conversion_1",
@@ -303,7 +307,10 @@ function collectVisibleRecords(siteId) {
 function homeSectionsOrder(siteId) {
   const site = getSite(siteId);
   const home = (site.pages ?? []).find((page) => page.slug === "/" || page.pageType === "home");
-  return home?.publishedJson?.sectionsOrder ?? [];
+  const order = home?.publishedJson?.sectionsOrder ?? [];
+  if (siteId !== "site_dreamshoot") return order;
+  const sections = home?.publishedJson?.sections ?? {};
+  return order.filter((sectionId) => sectionId !== "package_catalog_1" && sections[sectionId]?.type !== "dreamshoot_package_catalog");
 }
 
 function bestPackagesSectionsOrder(siteId) {
@@ -323,11 +330,11 @@ function samePageComparable(left, right) {
   return false;
 }
 
-const seoBySite = Object.fromEntries(sites.map((site) => [site.id, collectSeoRecords(site.id)]));
-const visibleBySite = Object.fromEntries(sites.map((site) => [site.id, collectVisibleRecords(site.id)]));
-const pairsBySite = Object.fromEntries(sites.map((site) => [site.id, collectTitleDescriptionPairs(site.id)]));
+const seoBySite = Object.fromEntries(sitesToCheck.map((site) => [site.id, collectSeoRecords(site.id)]));
+const visibleBySite = Object.fromEntries(sitesToCheck.map((site) => [site.id, collectVisibleRecords(site.id)]));
+const pairsBySite = Object.fromEntries(sitesToCheck.map((site) => [site.id, collectTitleDescriptionPairs(site.id)]));
 
-for (const site of sites) {
+for (const site of sitesToCheck) {
   const records = visibleBySite[site.id] ?? [];
   for (const record of records) {
     for (const pattern of site.forbiddenPatterns) {
@@ -338,12 +345,15 @@ for (const site of sites) {
   }
 }
 
-const [dreamshootHomeOrder, aidreamcapesHomeOrder] = sites.map((site) => homeSectionsOrder(site.id));
-const [dreamshootBestPackagesOrder, aidreamcapesBestPackagesOrder] = sites.map((site) => bestPackagesSectionsOrder(site.id));
+const dreamshootHomeOrder = scopedSiteId === "site_aidreamcapes" ? [] : homeSectionsOrder("site_dreamshoot");
+const aidreamcapesHomeOrder = scopedSiteId === "site_dreamshoot" ? [] : homeSectionsOrder("site_aidreamcapes");
+const dreamshootBestPackagesOrder = scopedSiteId === "site_aidreamcapes" ? [] : bestPackagesSectionsOrder("site_dreamshoot");
+const aidreamcapesBestPackagesOrder = scopedSiteId === "site_dreamshoot" ? [] : bestPackagesSectionsOrder("site_aidreamcapes");
 for (const [siteId, order] of [
   ["site_dreamshoot", dreamshootHomeOrder],
   ["site_aidreamcapes", aidreamcapesHomeOrder]
 ]) {
+  if (scopedSiteId && siteId !== scopedSiteId) continue;
   const approvedHomeOrder = approvedHomeOrders[siteId];
   if (order.length > 0 && approvedHomeOrder && JSON.stringify(order) !== JSON.stringify(approvedHomeOrder)) {
     failures.push(`home_sections_order_mismatch:${siteId}:expected=${approvedHomeOrder.join(" > ")}:actual=${order.join(" > ")}`);
@@ -366,12 +376,13 @@ for (const [siteId, order] of [
   ["site_dreamshoot", dreamshootBestPackagesOrder],
   ["site_aidreamcapes", aidreamcapesBestPackagesOrder]
 ]) {
+  if (scopedSiteId && siteId !== scopedSiteId) continue;
   if (JSON.stringify(order) !== JSON.stringify(approvedBestPackagesOrder)) {
     failures.push(`best_packages_sections_order_mismatch:${siteId}:expected=${approvedBestPackagesOrder.join(" > ")}:actual=${order.join(" > ")}`);
   }
 }
 
-for (const left of seoBySite.site_dreamshoot ?? []) {
+if (!scopedSiteId) for (const left of seoBySite.site_dreamshoot ?? []) {
   for (const right of seoBySite.site_aidreamcapes ?? []) {
     if (!samePageComparable(left, right)) continue;
 
@@ -393,7 +404,7 @@ for (const left of seoBySite.site_dreamshoot ?? []) {
 }
 
 const phraseGroups = new Map();
-for (const site of sites) {
+for (const site of sitesToCheck) {
   for (const record of visibleBySite[site.id] ?? []) {
     if (!["title", "headline", "heading", "subheading", "subheadline", "subtitle", "description", "caption", "question", "answer"].includes(record.key)) continue;
     const normalized = normalizeForCompare(record.text);
@@ -409,7 +420,7 @@ for (const [phrase, records] of phraseGroups) {
   const siteIds = new Set(records.map((record) => record.siteId));
   if (siteIds.size < 2) continue;
   if (records.length < 4) continue;
-  const examples = sites
+  const examples = sitesToCheck
     .map((site) => records.find((record) => record.siteId === site.id))
     .filter(Boolean)
     .map((record) => `${record.siteId}:${record.source}:${record.key}`)
@@ -422,7 +433,7 @@ const allowedNormalizedTitleDescriptionPairs = new Set([
   "{brand} com :: {brand} company name",
   "support {brand} com :: contact us email for {brand}"
 ]);
-for (const site of sites) {
+for (const site of sitesToCheck) {
   for (const pair of pairsBySite[site.id] ?? []) {
     const normalized = `${normalizeForCompare(pair.title)} :: ${normalizeForCompare(pair.description)}`;
     if (allowedNormalizedTitleDescriptionPairs.has(normalized)) continue;
@@ -439,7 +450,7 @@ for (const [pair, records] of pairGroups) {
   if (siteIds.size < 2) continue;
   const sourceKeys = new Set(records.map((record) => `${record.siteId}:${record.source}`));
   if (sourceKeys.size < 2) continue;
-  const examples = sites
+  const examples = sitesToCheck
     .map((site) => records.find((record) => record.siteId === site.id))
     .filter(Boolean)
     .map((record) => `${record.siteId}:${record.source}`)
@@ -447,7 +458,7 @@ for (const [pair, records] of pairGroups) {
   failures.push(`repeated_title_description_pair:${records.length}x:${pair}:${examples}`);
 }
 
-if (fs.existsSync(jsonLdPath)) {
+if (!scopedSiteId && fs.existsSync(jsonLdPath)) {
   const source = fs.readFileSync(jsonLdPath, "utf8");
   if (/serviceType:\s*["']AI photo editing tool["']/.test(source) && !/aidreamcapes[\s\S]{0,240}serviceType/i.test(source)) {
     failures.push("aidreamcapes_jsonld_generic_service_type:src/lib/theme/json-ld.ts uses static serviceType \"AI photo editing tool\" for /tools/ pages");

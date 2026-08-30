@@ -41,6 +41,7 @@ const microActionPattern = /\b(?:hand|hands|finger|fingers|breath|breathing|blin
 const soundAnchorPattern = /\b(?:sounds?|audio|music|ambience|hum|buzz|ventilation|whisper|voice|footsteps?|click|rustle|silence|echo|motif|reflection|chime|splash|tone|narration|dialogue|applause|laughter|breath|pencil|paper|chair|scissors|espresso|ceramic|glass|clock|engine|relay|surf|waves?|cap|ring|bark|meow|purr|chirp|jingle|paws?|tool|machine|keyboard|envelope|instrument|bell|cloth|fabric|water|wind|sizzle|chop|scrape|pour|room tone)\b/i;
 const finalFramePattern = /\b(?:final (?:frame|image|shot)|ending (?:frame|image|shot)|ends? on|finish(?:es)? on|last frame)\b/i;
 const unsafePromptPattern = /\b(?:child porn|sexual(?:ized)? minor|underage (?:sex|nude|nudity)|explicit sexual content|graphic gore)\b/i;
+const fifteenSecondContinuity = "15 seconds total; every time-coded beat must contain visible action, reaction, information, or environmental change with no dead air, then reserve the final beat for the named ending image.";
 
 function headingPattern(label: VideoPromptSectionLabel): RegExp {
   const aliases = sectionAliases[label].map((alias) => alias.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
@@ -227,15 +228,20 @@ function compactVideoThemeBlueprint(topicSlug?: string) {
 export function providerReadyVideoThemePrompt(direction: string, topicSlug?: string): string {
   const sceneDirection = direction.trim();
   const blueprint = compactVideoThemeBlueprint(topicSlug);
+  const soundDirection = blueprint?.sound ?? "Location ambience and one clear action sound.";
+  const pacedSoundDirection = /\"[^\"]+\"/.test(soundDirection)
+    ? `${soundDirection}; dialogue pacing: deliver the quoted words naturally across the action, finish speaking by 13.5 seconds, and leave the final 1.5 seconds for the reaction and end pose.`
+    : soundDirection;
+  const actionDirection = blueprint?.action ?? `0-3s establish the supplied subject, goal, and location while the first physical change is already visible; 3-8s the subject performs one concrete action toward the goal; 8-12s a readable consequence or reaction appears; 12-15s the subject completes the stated beat and settles into a clear final pose.`;
   return formatVideoPromptSections({
     "Subject / Character": [blueprint?.focus, sceneDirection].filter(Boolean).join(". "),
-    "Action / Motion": blueprint?.action ?? sceneDirection,
+    "Action / Motion": actionDirection,
     "Scene / Environment": blueprint?.scene ?? "A grounded location with tactile surfaces, natural reflections, and one clear visual anchor.",
     "Camera / Shot / Lens": blueprint?.camera ?? "Slow 35mm lens dolly push-in toward the key action.",
     "Lighting / Atmosphere": blueprint?.lighting ?? "Natural motivated light with believable shadow and atmosphere.",
     "Style / Mood / Palette": blueprint?.style ?? "Natural cinematic realism shaped by the user's brief.",
-    "Sound / Audio": blueprint?.sound ?? "Location ambience and one clear action sound.",
-    "Duration / Aspect Ratio / Resolution": "Use the externally selected duration, aspect ratio, and resolution as the highest-priority output settings. When no external setting is provided, use 15 seconds, 16:9 aspect ratio, and 720p resolution.",
+    "Sound / Audio": pacedSoundDirection,
+    "Duration / Aspect Ratio / Resolution": `${fifteenSecondContinuity} Use the externally selected duration, aspect ratio, and resolution as the highest-priority output settings. When no external setting is provided, use 15 seconds, 16:9 aspect ratio, and 720p resolution.`,
     Continuity: `Preserve identity, hands, wardrobe, objects, and scene facts. Final frame: ${blueprint?.ending ?? "hold on the completed action."}`,
     "Negative Constraints": "No identity drift, warped anatomy or products, invented text or claims, logos, watermarks, abrupt cuts, or unrelated subjects."
   });
@@ -243,7 +249,7 @@ export function providerReadyVideoThemePrompt(direction: string, topicSlug?: str
 
 export const defaultVideoThemeExamplePrompt = formatVideoPromptSections({
   "Subject / Character": "A single adult subject with clear wardrobe and grounded physical presence.",
-  "Action / Motion": "The subject turns toward the window, raises one hand, and takes the first slow step into frame.",
+  "Action / Motion": "0-2s the subject turns toward the window as the curtain lifts; 2-6s one hand follows the moving light across the sill; 6-10s the subject takes a slow step and the floor reflection shifts; 10-13s fingertips reach the rain-streaked glass; 13-15s the hand settles and the subject holds the quiet decision.",
   "Scene / Environment": "A rain-cooled apartment with wet glass, a draft moving the curtain, and reflections pooling on the floor.",
   "Camera / Shot / Lens": "Gentle dolly push-in with a slow pan, medium shot on a 35mm lens, shallow depth of field.",
   "Lighting / Atmosphere": "Overcast window light meets a warm practical lamp; humid, quiet, intimate atmosphere.",

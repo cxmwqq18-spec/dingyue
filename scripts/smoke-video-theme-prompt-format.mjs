@@ -13,15 +13,30 @@ const {
 } = jiti("../src/lib/video-prompt-format.ts");
 const { COVER_ANCHORED_VIDEO_THEME_BLUEPRINTS } = jiti("../src/lib/video-theme-cover-blueprints.ts");
 
+function hasContinuousFifteenSecondCoverage(action) {
+  const beats = [...action.matchAll(/(\d+(?:\.\d+)?)-(\d+(?:\.\d+)?)s\b/gi)]
+    .map((match) => ({ start: Number(match[1]), end: Number(match[2]) }));
+  return beats.length > 0
+    && beats[0].start === 0
+    && beats.at(-1).end === 15
+    && beats.every((beat, index) => index === 0 || beat.start === beats[index - 1].end);
+}
+
 const complete = validateVideoPrompt(defaultVideoThemeExamplePrompt);
 assert.equal(complete.valid, true, complete.errors.join("; "));
 assert.equal(Object.keys(complete.sections).length, 10);
+assert.equal(hasContinuousFifteenSecondCoverage(complete.sections["Action / Motion"]), true);
 
 const missingCamera = defaultVideoThemeExamplePrompt.replace(/Camera \/ Shot \/ Lens:[^\n]+/, "Camera / Shot / Lens: A medium shot.");
 assert.equal(validateVideoPrompt(missingCamera).valid, false);
 
 const missingAction = defaultVideoThemeExamplePrompt.replace(/Action \/ Motion:[^\n]+/, "Action / Motion: A subject is present.");
 assert.equal(validateVideoPrompt(missingAction).valid, false);
+const userEditedFifteenSecondPrompt = defaultVideoThemeExamplePrompt.replace(
+  /Action \/ Motion:[^\n]+/,
+  "Action / Motion: The subject turns toward the window, raises one hand, and takes one slow step."
+);
+assert.equal(validateVideoPrompt(userEditedFifteenSecondPrompt).valid, true, "user-edited 15-second prompts should not be blocked for omitting template timecodes");
 
 const missingFinalFrame = defaultVideoThemeExamplePrompt.replace(/final frame ends on[^.]+\./i, "the subject remains consistent.");
 assert.equal(validateVideoPrompt(missingFinalFrame).valid, false);
@@ -76,7 +91,9 @@ for (const slug of VIDEO_THEME_PROMPT_BLUEPRINT_SLUGS) {
   const prompt = providerReadyVideoThemePrompt("User-supplied direction remains higher priority than the defaults.", slug);
   const validation = validateVideoPrompt(prompt);
   assert.equal(validation.valid, true, `${slug}: ${validation.errors.join("; ")}`);
+  assert.equal(hasContinuousFifteenSecondCoverage(validation.sections["Action / Motion"]), true, `${slug}: example must cover a continuous 0s-15s arc`);
   assert.match(validation.sections["Action / Motion"], /\b0-\d+s/, `${slug}: missing opening time beat`);
+  assert.match(validation.sections["Action / Motion"], /\b\d+(?:\.\d+)?-15s/, `${slug}: missing final time beat`);
   assert.match(prompt, /\[[^\]]+\]/, `${slug}: missing replaceable field`);
   assert.doesNotMatch(prompt, /Perform one readable move|Keep the source environment and physical surfaces stable/i, `${slug}: generic legacy wording returned`);
 
@@ -86,13 +103,15 @@ for (const slug of VIDEO_THEME_PROMPT_BLUEPRINT_SLUGS) {
   assert.match(editor, /\nAction: .*\b0-\d+s/);
   assert.match(editor, /\nEnding: \S+/);
   assert.doesNotMatch(editor, /Duration \/ Aspect Ratio|Negative Constraints/i);
-  assert.ok(editor.length < 1450, `${slug}: editor prompt is too long (${editor.length})`);
+  assert.ok(editor.length < 1800, `${slug}: editor prompt is too long (${editor.length})`);
   editorPrompts.set(slug, editor);
 }
 assert.equal(new Set(editorPrompts.values()).size, VIDEO_THEME_PROMPT_BLUEPRINT_SLUGS.length, "Every theme must have an independent editor prompt.");
 
 assert.match(editorPrompts.get("brand-video"), /white lounge chair.*mustard ottoman/i);
 assert.match(editorPrompts.get("talking-photo"), /tea at four/i);
+assert.match(editorPrompts.get("talking-photo"), /2\.0 to 13\.5 seconds|2-5s.*5-9s.*9-12s.*12-13\.5s.*13\.5-15s/i);
+assert.match(editorPrompts.get("talking-photo"), /kettle is small.*little ritual still brings you home/i);
 assert.match(editorPrompts.get("music-video"), /turn the room blue.*burn pink/i);
 assert.match(editorPrompts.get("travel-video"), /ferry terminal|fish market|harbor wall/i);
 assert.match(editorPrompts.get("travel-route-story"), /rust-brown sweater.*mountain lake/i);

@@ -183,6 +183,7 @@ const spanishAuthMessages: Record<string, string> = {
   verification_code_expired: "Este codigo ha caducado. Envia uno nuevo.",
   customer_already_exists: "Este email ya esta registrado. Entra con tu cuenta.",
   customer_not_found_for_site: "No se encontro una cuenta de cliente con este email en este sitio.",
+  database_unavailable: "La base de datos no esta disponible temporalmente. Intentalo de nuevo en un momento.",
   email_code_send_failed: "No pudimos enviar el email de verificacion. Intentalo de nuevo.",
   email_code_verify_failed: "No pudimos verificar el codigo de email. Intentalo de nuevo.",
   email_provider_not_configured: "El envio de email aun no esta configurado del todo.",
@@ -323,8 +324,13 @@ export function LoginForm({
       });
       if (!response.ok) {
         const error = (await response.json().catch(() => ({}))) as { error?: string };
+        const errorCode = typeof error.error === "string" && error.error.trim()
+          ? error.error
+          : response.status >= 500
+            ? "customer_login_failed"
+            : "invalid_customer_credentials";
         setPending(false);
-        setMessage(authMessageForLocale(locale, error.error));
+        setMessage(authMessageForLocale(locale, errorCode));
         return;
       }
       openCustomerWorkspace();
@@ -523,7 +529,7 @@ export function LoginForm({
           .
         </p>
       ) : null}
-      <div className="mt-1 rounded-[8px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm leading-6 text-white/62">
+      <div aria-live="polite" className="mt-1 rounded-[8px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm leading-6 text-white/62" role="status">
         <div className="flex gap-2">
           <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-white/70" strokeWidth={1.8} />
           <span>{message}{devCode && isEmailCodeMode && codeSent ? ` (${devCode})` : ""}</span>

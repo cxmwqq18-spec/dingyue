@@ -54,6 +54,44 @@ const nextConfig = {
     }
     return config;
   },
+  async rewrites() {
+    // Remote database development can reference newly published media before
+    // the corresponding files have been copied into this checkout. Keep local
+    // assets authoritative and use the public storefront only as a dev fallback.
+    if (process.env.NODE_ENV !== "development" || process.env.STOREFRONT_ASSET_REMOTE_FALLBACK === "0") return [];
+
+    const origins = {
+      mydreamshoots: process.env.MYDREAMSHOOTS_ASSET_REMOTE_ORIGIN?.trim() || "https://www.mydreamshoots.com",
+      aidreamcapes: process.env.AIDREAMCAPES_ASSET_REMOTE_ORIGIN?.trim() || "https://www.aidreamcapes.com",
+      aidreamshootsEu: process.env.AIDREAMSHOOTS_EU_ASSET_REMOTE_ORIGIN?.trim() || "https://aidreamshoots.eu",
+      aidreamcapesEu: process.env.AIDREAMCAPES_EU_ASSET_REMOTE_ORIGIN?.trim() || "https://aidreamcapes.eu"
+    };
+
+    return {
+      afterFiles: [
+        {
+          source: "/assets/sites/site_aidreamcapes_eu/:path*",
+          destination: `${origins.aidreamcapesEu}/assets/sites/site_aidreamcapes_eu/:path*`
+        },
+        {
+          source: "/assets/sites/site_aidreamshoots/:path*",
+          destination: `${origins.aidreamshootsEu}/assets/sites/site_aidreamshoots/:path*`
+        },
+        {
+          source: "/assets/sites/site_aidreamcapes/:path*",
+          destination: `${origins.aidreamcapes}/assets/sites/site_aidreamcapes/:path*`
+        },
+        {
+          source: "/assets/sites/site_dreamshoot/:path*",
+          destination: `${origins.mydreamshoots}/assets/sites/site_dreamshoot/:path*`
+        },
+        {
+          source: "/assets/dreamshoot/:path*",
+          destination: `${origins.mydreamshoots}/assets/dreamshoot/:path*`
+        }
+      ]
+    };
+  },
   async headers() {
     const publicStorefrontCache = { key: "Cache-Control", value: "public, max-age=60, s-maxage=300, stale-while-revalidate=1800" };
     const publicStorefrontCdnCache = { key: "CDN-Cache-Control", value: "public, s-maxage=300, stale-while-revalidate=1800" };

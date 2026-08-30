@@ -10,7 +10,13 @@ export const AUTO_VIDEO_MODEL_FAMILY = "auto";
 export type VideoModelPreference = VideoModelFamily | typeof AUTO_VIDEO_MODEL_FAMILY;
 export const DEFAULT_VIDEO_MODEL_FAMILY: VideoModelFamily = "grok";
 export const DEFAULT_VIDEO_RESOLUTION = "720p";
-export type VideoResolution = typeof DEFAULT_VIDEO_RESOLUTION;
+export const VIDEO_RESOLUTIONS = ["480p", DEFAULT_VIDEO_RESOLUTION, "1080p"] as const;
+export type VideoResolution = typeof VIDEO_RESOLUTIONS[number];
+export const VIDEO_RESOLUTION_CREDIT_MULTIPLIERS: Record<VideoResolution, number> = {
+  "480p": 0.8,
+  "720p": 1,
+  "1080p": 1.5
+};
 const STANDARD_VIDEO_DURATION_MODEL_FAMILIES: readonly VideoModelFamily[] = VIDEO_MODEL_FAMILIES;
 export const VIDEO_DURATION_OPTIONS = [
   { seconds: 6, creditMultiplier: 1, modelFamilies: STANDARD_VIDEO_DURATION_MODEL_FAMILIES },
@@ -41,8 +47,16 @@ export function isAutoVideoModelPreference(value: unknown): value is typeof AUTO
   return value === AUTO_VIDEO_MODEL_FAMILY;
 }
 
-export function normalizeVideoResolution(_value: unknown): VideoResolution {
-  return DEFAULT_VIDEO_RESOLUTION;
+export function normalizeVideoResolution(value: unknown): VideoResolution {
+  return typeof value === "string" && VIDEO_RESOLUTIONS.some((resolution) => resolution === value.toLowerCase())
+    ? value.toLowerCase() as VideoResolution
+    : DEFAULT_VIDEO_RESOLUTION;
+}
+
+export function videoResolutionCreditCost(baseCreditCost: unknown, resolution: unknown = DEFAULT_VIDEO_RESOLUTION): number {
+  const parsedBase = typeof baseCreditCost === "number" || typeof baseCreditCost === "string" ? Number(baseCreditCost) : 0;
+  const base = Number.isFinite(parsedBase) ? Math.max(0, Math.trunc(parsedBase)) : 0;
+  return Math.max(0, Math.ceil(base * VIDEO_RESOLUTION_CREDIT_MULTIPLIERS[normalizeVideoResolution(resolution)]));
 }
 
 export function normalizeVideoFrameLimit(value: unknown, fallback = DEFAULT_VIDEO_FRAME_LIMIT): number {

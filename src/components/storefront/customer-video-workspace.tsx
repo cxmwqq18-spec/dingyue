@@ -21,9 +21,11 @@ import {
   DEFAULT_VIDEO_DURATION_SECONDS,
   DEFAULT_VIDEO_RESOLUTION,
   CUSTOMER_VIDEO_FRAME_LIMIT,
+  VIDEO_RESOLUTIONS,
   normalizeVideoDurationSecondsForFrameCount,
   trimVideoFrameSelection,
   videoDurationCreditCostForModelFamilies,
+  videoResolutionCreditCost,
   videoDurationOptionsForFrameCount,
   type VideoDurationSeconds,
   type VideoResolution
@@ -73,12 +75,33 @@ type PersistedVideoPromptOptimization = {
 };
 
 function ThemeMedia({ src, className, alt = "" }: { src?: string; className: string; alt?: string }) {
-  const [failed, setFailed] = useState(false);
   const normalizedSrc = typeof src === "string" ? src.trim() : "";
-  if (!normalizedSrc || failed) {
+  const [retryingSrc, setRetryingSrc] = useState("");
+  const [failedSrc, setFailedSrc] = useState("");
+  const shouldShowFallback = !normalizedSrc || failedSrc === normalizedSrc;
+
+  useEffect(() => {
+    setRetryingSrc("");
+    setFailedSrc("");
+  }, [normalizedSrc]);
+
+  if (shouldShowFallback) {
     return <div className={`${className} grid place-items-center bg-white/[0.05]`} aria-hidden="true"><Film className="h-5 w-5 text-[#31d4ff]/65" /></div>;
   }
-  return <img alt={alt} className={className} onError={() => setFailed(true)} src={normalizedSrc} />;
+  const imageSrc = retryingSrc || normalizedSrc;
+  return <img
+    alt={alt}
+    className={className}
+    onError={() => {
+      if (retryingSrc) {
+        setFailedSrc(normalizedSrc);
+        return;
+      }
+      const separator = normalizedSrc.includes("?") ? "&" : "?";
+      setRetryingSrc(`${normalizedSrc}${separator}media_retry=1`);
+    }}
+    src={imageSrc}
+  />;
 }
 
 const VIDEO_ASPECT_SHAPES: Record<VideoAspectRatio, string> = {
@@ -94,8 +117,10 @@ const VIDEO_ASPECT_OPTIONS: Array<{ id: VideoAspectRatio; label: string; shape: 
   shape: VIDEO_ASPECT_SHAPES[id]
 }));
 
-const VIDEO_RESOLUTION_OPTIONS: Array<{ id: VideoResolution; label: string }> = [
-  { id: DEFAULT_VIDEO_RESOLUTION, label: "720P" }
+const VIDEO_RESOLUTION_OPTIONS: Array<{ id: VideoResolution; label: string; note: string }> = [
+  { id: VIDEO_RESOLUTIONS[0], label: "480P", note: "Standard" },
+  { id: DEFAULT_VIDEO_RESOLUTION, label: "720P", note: "HD" },
+  { id: VIDEO_RESOLUTIONS[2], label: "1080P", note: "Full HD" }
 ];
 
 const PROMPT_DIRECTED_VIDEO_THEME_SLUG = "prompt-directed-motion";
@@ -159,6 +184,15 @@ function videoDurationCostForCandidateFamilies(
 ): number {
   if (modelFamilies && !modelFamilies.length) return 0;
   return videoDurationCreditCostForModelFamilies(theme.creditCost, seconds, modelFamilies, theme.modelPricing);
+}
+
+function videoCreditCostForOutput(
+  theme: Pick<VideoTheme, "creditCost" | "modelPricing">,
+  seconds: unknown,
+  resolution: VideoResolution,
+  modelFamilies?: VideoTheme["providerModelFamilies"]
+): number {
+  return videoResolutionCreditCost(videoDurationCostForCandidateFamilies(theme, seconds, modelFamilies), resolution);
 }
 
 function newVideoSubmitIdempotencyKey() {
@@ -607,8 +641,8 @@ export function CustomerVideoWorkspace({
     : "";
   const selectedCreditCost = selectedTheme
     ? selectedPricingModelFamilies
-      ? videoDurationCostForCandidateFamilies(selectedTheme, effectiveDurationSeconds, selectedPricingModelFamilies)
-      : videoDurationCostForCandidateFamilies(selectedTheme, effectiveDurationSeconds)
+      ? videoCreditCostForOutput(selectedTheme, effectiveDurationSeconds, selectedResolution, selectedPricingModelFamilies)
+      : videoCreditCostForOutput(selectedTheme, effectiveDurationSeconds, selectedResolution)
     : 0;
   const hasCreditsForSelectedVideo = selectedCreditCost > 0 && selectedCreditCost <= customer.balance.available;
   const generationFrameIds = readyFrameIds ?? selectedFrameIds;
@@ -1400,9 +1434,14 @@ export function CustomerVideoWorkspace({
                       <div className="mt-2 grid grid-cols-1 gap-1 rounded-[12px] bg-white/[0.035] p-1">
                         {VIDEO_RESOLUTION_OPTIONS.map((option) => {
                           const selected = selectedResolution === option.id;
+                          const cost = selectedTheme
+                            ? selectedPricingModelFamilies
+                              ? videoCreditCostForOutput(selectedTheme, effectiveDurationSeconds, option.id, selectedPricingModelFamilies)
+                              : videoCreditCostForOutput(selectedTheme, effectiveDurationSeconds, option.id)
+                            : 0;
                           return (
                             <button
-                              className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-[10px] px-3 text-sm font-semibold transition ${selected ? "bg-white/[0.1] text-white" : "text-white/58 hover:bg-white/[0.06] hover:text-white"}`}
+                              className={`flex min-h-12 items-center justify-between rounded-[10px] px-3 text-left transition ${selected ? "bg-white/[0.1] text-white" : "text-white/58 hover:bg-white/[0.06] hover:text-white"}`}
                               key={option.id}
                               onClick={() => {
                                 setSelectedResolution(option.id);
@@ -1410,8 +1449,8 @@ export function CustomerVideoWorkspace({
                               }}
                               type="button"
                             >
-                              {option.label}
-                              {selected ? <Check className="h-3.5 w-3.5 text-[#31d4ff]" strokeWidth={2} /> : null}
+                              <span><span className="block text-sm font-semibold">{option.label}</span><span className="block text-[11px] text-white/42">{option.note}</span></span>
+                              <span className="inline-flex items-center gap-2 text-xs font-semibold"><span>{cost} {vt(spanish, "credits", "creditos")}</span>{selected ? <Check className="h-3.5 w-3.5 text-[#31d4ff]" strokeWidth={2} /> : null}</span>
                             </button>
                           );
                         })}
@@ -1424,8 +1463,8 @@ export function CustomerVideoWorkspace({
                     const selected = effectiveDurationSeconds === option.seconds;
                     const cost = selectedTheme
                       ? selectedPricingModelFamilies
-                        ? videoDurationCostForCandidateFamilies(selectedTheme, option.seconds, selectedPricingModelFamilies)
-                        : videoDurationCostForCandidateFamilies(selectedTheme, option.seconds)
+                        ? videoCreditCostForOutput(selectedTheme, option.seconds, selectedResolution, selectedPricingModelFamilies)
+                        : videoCreditCostForOutput(selectedTheme, option.seconds, selectedResolution)
                       : 0;
                     return (
                       <button

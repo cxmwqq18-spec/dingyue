@@ -124,8 +124,8 @@ async function imageSnapshot(page) {
         ? `${anchor.getAttribute("href") || ""}@${Math.round((rect?.left || 0) / 10) * 10},${Math.round((rect?.top || 0) / 10) * 10}`
         : "";
     })(),
-    sectionId: image.closest(".xfcart-section")?.getAttribute("data-section-id") || "",
-    sectionType: image.closest(".xfcart-section")?.getAttribute("data-section-type") || ""
+    sectionId: image.closest(".xfcart-section")?.id?.replace(/^xfcart-section-/, "") || "",
+    sectionType: ""
   })));
   return rawImages
     .map((image) => ({ ...image, url: normalizeImageUrl(image.src) }))

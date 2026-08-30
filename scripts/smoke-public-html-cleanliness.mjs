@@ -30,6 +30,7 @@ for (const marker of [
 assert.doesNotMatch(themeSeo, /\bkeywords:\s*seo\.keywords\b/, "public metadata must not serialize CMS keywords");
 assert.doesNotMatch(middleware, /x-storefront-build/i, "public HTML responses must not expose a build header");
 assert.doesNotMatch(middleware, /headers\.set\(["']x-storefront-/i, "middleware must not add internal x-storefront response headers");
+assert.doesNotMatch(middleware, /x-pathname|x-storefront-public-host/i, "middleware must not inject internal request markers into RSC HTML");
 assert.doesNotMatch(robots, /x-storefront-/i, "robots.txt must not expose storefront identity headers");
 assert.doesNotMatch(sitemap, /x-(?:storefront|sitemap)-/i, "sitemap.xml must not expose internal diagnostic headers");
 assert.match(nextConfig, /poweredByHeader:\s*false/, "Next.js implementation header must be disabled");

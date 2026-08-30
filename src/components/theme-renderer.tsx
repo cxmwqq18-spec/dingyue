@@ -3003,7 +3003,13 @@ function generationShowcaseVideoCardsForSite(videoThemes: VideoTheme[], selected
     .filter((theme) => {
       if (seenVideoIds.has(theme.id)) return false;
       seenVideoIds.add(theme.id);
-      return Boolean((theme.galleryImages ?? []).find((item) => /\.(?:mp4|webm)(?:\?|#|$)/i.test(item)));
+      // Current topic records may carry approved visual references before a
+      // playable demo is uploaded. Keep those themes visible in the directory
+      // instead of dropping the entire list while waiting for the demo file.
+      return Boolean(
+        theme.imageUrl?.trim() ||
+        (theme.galleryImages ?? []).find((item) => /\.(?:mp4|webm|avif|jpe?g|png|webp)(?:\?|#|$)/i.test(item))
+      );
     })
     .map((theme, index) => {
       const videoUrl = (theme.galleryImages ?? []).find((item) => /\.(?:mp4|webm)(?:\?|#|$)/i.test(item)) ?? "";
@@ -8427,8 +8433,9 @@ function PricingTableSectionView({
     quarter: { eyebrow: "", title: "", body: "", items: [] },
     half_year: { eyebrow: "", title: "", body: "", items: [] }
   });
+  const compactHomepageSpacing = embedded && mydreamPricingCopyLayout && renderContext.pagePath === "/";
   const sectionClassName = embedded
-    ? "relative mt-16 overflow-hidden border-t border-white/10 py-14 text-white"
+    ? `relative mt-16 overflow-hidden border-t border-white/10 py-14 text-white${compactHomepageSpacing ? " pb-6" : ""}`
     : aidreamcapes
       ? "relative overflow-hidden bg-[#05070E] px-5 py-16 text-white"
       : "relative overflow-hidden bg-[#111114] px-5 py-16 text-white";
@@ -9575,8 +9582,9 @@ function SectionView({
       : videoUrl.includes("mydreamshoots-ai-video-tutorial-20260814.mp4")
         ? mediaAssetUrl(site, `/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-video-tutorial-20260814-cover-v2.jpg?v=${dreamshootHomepageShowcaseVersion}`)
         : image;
+    const compactHomepageSpacing = isMyDreamShootsProfileSite(site) && renderContext.pagePath === "/";
     return (
-      <section className="bg-[#0a0a0b] px-5 py-14 text-white md:py-20" id={sectionAnchor(section, "how-it-works")}>
+      <section className={`bg-[#0a0a0b] px-5 py-14 text-white md:py-20${compactHomepageSpacing ? " pt-8 md:pt-12" : ""}`} id={sectionAnchor(section, "how-it-works")}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className="mx-auto max-w-[52rem] text-center">
             <p className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]" style={{ color: accentBlue }}>{setting(section, "eyebrow", "Tutorial")}</p>
@@ -12639,7 +12647,18 @@ function SectionView({
                       tabIndex={0}
                     >
                       <div className={isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) ? "aspect-square" : "aspect-[3/4]"}>
-	                        <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
+                        {card.videoUrl ? (
+                          <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
+                        ) : (
+                          <StorefrontImage
+                            alt={videoPosterAltForSite(site, { meta: card.meta, title: card.title })}
+                            className="h-full w-full max-w-full object-cover"
+                            loading="lazy"
+                            preview={false}
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                            src={mediaAssetUrl(site, card.posterUrl)}
+                          />
+                        )}
                       </div>
                       <figcaption className="border-t border-white/10 bg-[#090B12] p-3">
                         <span className="block truncate text-sm font-semibold text-white">{card.title}</span>
@@ -12857,6 +12876,7 @@ function SectionView({
         storefrontContext={storefrontContext}
       />
     ) : null;
+    const compactHomepageShowcaseSpacing = mydreamProfileSite && renderContext.pagePath === "/" && Boolean(embeddedPricing);
     const showcaseIntro = (
       <div className="mt-14 grid gap-7 border-t border-white/10 pt-10 lg:grid-cols-[minmax(0,0.62fr)_minmax(18rem,0.38fr)] lg:items-end">
         <div>
@@ -12972,7 +12992,7 @@ function SectionView({
         </div>
       ) : null;
       return (
-        <section className={`relative overflow-hidden ${shellTone} px-5 py-16 md:py-20`} id={sectionAnchor(section, "generated-showcase")}>
+        <section className={`relative overflow-hidden ${shellTone} px-5 py-16 md:py-20${compactHomepageShowcaseSpacing ? " pb-8 md:pb-10" : ""}`} id={sectionAnchor(section, "generated-showcase")}>
           <div className={"absolute inset-0 opacity-38 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.72)_1px,transparent_1px)] [background-size:86px_86px]"} />
           <div className="relative mx-auto max-w-[var(--site-content-width)]">
             {trustedProof}

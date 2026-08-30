@@ -4,13 +4,21 @@ import fs from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { assertNonProductionWriteTarget } from "./lib/database-target.mjs";
-import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
+import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const SITE_ID = "site_dreamshoot";
 const args = new Set(process.argv.slice(2));
 const dryRun = !args.has("--apply") && !args.has("--db");
 const applyJson = args.has("--apply");
 const applyDb = args.has("--db");
+const reportArgIndex = process.argv.indexOf("--report");
+const reportPath = reportArgIndex >= 0 && process.argv[reportArgIndex + 1]
+  ? path.resolve(process.argv[reportArgIndex + 1])
+  : "";
+
+if (applyJson) {
+  throw new Error("--apply is disabled for this single-store repair; use --db after reviewing the dry-run report.");
+}
 
 const forbiddenAltPattern = /\b(?:visual reference|gallery image|gallery example|package gallery|image\s+\d+|for browsing|for review|mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes)\b/i;
 const productionDirectionPattern = /\b(?:scene\s*\d+|escena\s*\d+|framing|encuadre|crop|recorte|lighting|luz|studio\s+light|visual\s+reference|prompt|production|camera|camara|shot|toma|close[- ]?up|half[- ]?body|cinematic\s+contrast|editorial\s+lighting)\b/i;
@@ -28,21 +36,6 @@ const stopWords = new Set([
   "to",
   "with"
 ]);
-
-const galleryScenes = [
-  "close portrait framing with clear facial detail",
-  "half-body editorial pose with balanced crop",
-  "group-friendly composition with space around the subjects",
-  "wide environmental scene with contextual background",
-  "candid social-style expression with natural posture",
-  "detail portrait crop with polished styling",
-  "vertical profile crop with clean framing",
-  "cinematic color contrast with directional light",
-  "album-cover style crop with strong subject focus",
-  "lifestyle portrait framing with natural setting cues",
-  "event-style portrait under polished light",
-  "distinct themed pose with refined styling"
-];
 
 const subjectBySourceSlug = {
   "professional-headshots": "Professional headshot",
@@ -103,10 +96,6 @@ const mediaAssetAltByFile = {
 
 async function readState() {
   return readPlatformStateFromSql();
-}
-
-async function writeState(state) {
-  await writePlatformStateToSql(state);
 }
 
 function cleanAltText(value) {
@@ -170,14 +159,6 @@ function imageIdentity(value) {
   return String(value ?? "").trim().split("#")[0].split("?")[0];
 }
 
-function generatedStandardPageAlt(src, fallback) {
-  const identity = imageIdentity(src);
-  const match = identity.match(/\/generated\/standard-page-media\/([^/]+)\/[^/]*?(\d+)(?:\.[a-z0-9]+)?$/i);
-  if (!match) return cleanAltText(fallback);
-  const topic = match[1].replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
-  return `${topic} visual scene ${match[2]}.`;
-}
-
 function assertValidAlt(value, context) {
   const alt = cleanAltText(value);
   if (!alt) throw new Error(`Empty alt candidate for ${context}`);
@@ -225,7 +206,7 @@ function subjectForPack(pack, imageUrl) {
   if (/(travel|nature|outdoor|urban)/.test(packKey)) return subjectBySourceSlug.nature;
   if (/(video|motion)/.test(packKey)) return subjectBySourceSlug["ai-video-add-ons"];
   if (/(upscaler|enhancer|eraser|unblur|restore|correction)/.test(packKey)) return subjectBySourceSlug["magic-upscaler"];
-  return "Portrait with polished editorial styling";
+  return "Portrait image";
 }
 
 function galleryCandidates(pack, imageUrl, index, role = "gallery") {
@@ -281,7 +262,7 @@ function buildMediaAssetAlts(assets) {
     const mapped = mediaAssetAltByFile[fileName];
     const existing = cleanAltText(asset.altText);
     const identity = imageIdentity(asset.storageKey);
-    const candidate = altBySource.get(identity) || sanitizeMediaAlt(mapped || existing || fileName.replace(/[-_]+/g, " "));
+    const candidate = altBySource.get(identity) || sanitizeMediaAlt(mapped || existing || "Storefront image");
     asset.altText = assertValidAlt(candidate, `media asset ${asset.id}`);
     altBySource.set(identity, asset.altText);
     total += 1;
@@ -296,7 +277,12 @@ function normalizePageMediaManifests(state, pages) {
       if (!json || typeof json !== "object" || !Array.isArray(json.mediaManifest)) continue;
       json.mediaManifest = json.mediaManifest.map((item) => {
         if (!item || typeof item !== "object") return item;
-        const alt = generatedStandardPageAlt(item.src, item.alt);
+        const fallback = cleanAltText(page.title || "Storefront image");
+        let alt = sanitizeMediaAlt(item.alt || fallback);
+        if (productionDirectionPattern.test(alt) || forbiddenAltPattern.test(alt) || pathOrFilePattern.test(alt)) {
+          alt = sanitizeMediaAlt(fallback);
+        }
+        alt = assertValidAlt(alt, `page media ${page.id}`);
         if (alt !== item.alt) updated += 1;
         return { ...item, alt };
       });
@@ -366,7 +352,7 @@ function clearPlatformStateCaches() {
   });
 }
 
-async function updateDatabase(state, packs, assets, pages) {
+async function updateDatabase(state, packs, assets, pages, originals) {
   assertNonProductionWriteTarget();
   const prisma = new PrismaClient();
   try {
@@ -380,6 +366,20 @@ async function updateDatabase(state, packs, assets, pages) {
         `found ${packCount} and ${assetCount}. No database rows were changed.`
       );
     }
+    const pageCount = await prisma.themePage.count({ where: { siteId: SITE_ID } });
+    if (pageCount !== pages.length) {
+      throw new Error(`Database preflight failed for ${SITE_ID}: expected ${pages.length} theme pages, found ${pageCount}. No database rows were changed.`);
+    }
+    const backupDir = path.resolve(process.env.MYDREAMSHOOTS_ALT_BACKUP_DIR || "/tmp/mydreamshoots-alt-backups");
+    fs.mkdirSync(backupDir, { recursive: true, mode: 0o700 });
+    const backupPath = path.join(backupDir, `${SITE_ID}-media-alt-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
+    fs.writeFileSync(backupPath, `${JSON.stringify({
+      createdAt: new Date().toISOString(),
+      siteId: SITE_ID,
+      creativePacks: originals.packs.map((pack) => ({ id: pack.id, galleryImageAlts: pack.galleryImageAlts })),
+      mediaAssets: originals.assets.map((asset) => ({ id: asset.id, altText: asset.altText })),
+      themePages: originals.pages.map((page) => ({ id: page.id, draftJson: page.draftJson, publishedJson: page.publishedJson }))
+    }, null, 2)}\n`, { mode: 0o600 });
     await prisma.$transaction(async (tx) => {
       for (const pack of packs) {
         await tx.creativePack.update({
@@ -400,6 +400,7 @@ async function updateDatabase(state, packs, assets, pages) {
         });
       }
     }, { timeout: 180_000 });
+    return backupPath;
   } finally {
     await prisma.$disconnect();
   }
@@ -421,20 +422,36 @@ async function main() {
     ),
     mediaAssets: assets.length
   };
+  const beforeAltSamples = [
+    ...packs.flatMap((pack) => [pack.galleryImageAlts].filter(Array.isArray).flat()),
+    ...assets.map((asset) => asset.altText),
+    ...pages.flatMap((page) => [page.draftJson, page.publishedJson]
+      .filter((json) => Array.isArray(json?.mediaManifest))
+      .flatMap((json) => json.mediaManifest.map((item) => item?.alt).filter(Boolean)))
+  ];
+  const originals = {
+    packs: structuredClone(packs),
+    assets: structuredClone(assets),
+    pages: structuredClone(pages)
+  };
   const gallerySummary = buildGalleryAlts(packs);
   const mediaAssetCount = buildMediaAssetAlts(assets);
   const pageManifestUpdates = normalizePageMediaManifests(state, pages);
   const mediaUniqueness = validateMediaAssetAltUniqueness(assets);
   const after = validateState(state);
+  const afterAltSamples = [
+    ...packs.flatMap((pack) => [pack.galleryImageAlts].filter(Array.isArray).flat()),
+    ...assets.map((asset) => asset.altText),
+    ...pages.flatMap((page) => [page.draftJson, page.publishedJson]
+      .filter((json) => Array.isArray(json?.mediaManifest))
+      .flatMap((json) => json.mediaManifest.map((item) => item?.alt).filter(Boolean)))
+  ];
   if (after.galleryCount !== before.mediaCount) throw new Error(`Expected ${before.mediaCount} cover/gallery alts, found ${after.galleryCount}`);
   if (after.mediaAssets !== before.mediaAssets) throw new Error(`Expected ${before.mediaAssets} media asset alts, found ${after.mediaAssets}`);
 
-  if (applyJson) await writeState(state);
-  if (applyDb) {
-    await updateDatabase(state, packs, assets, pages);
-  }
+  const backupPath = applyDb ? await updateDatabase(state, packs, assets, pages, originals) : "";
   const cacheCleared = applyJson || applyDb ? clearPlatformStateCaches() : [];
-  console.log(JSON.stringify({
+  const result = {
     ok: true,
     dryRun,
     appliedJson: applyJson,
@@ -448,8 +465,24 @@ async function main() {
     pageManifestUpdates,
     cacheCleared,
     validation: after,
-    baseline: before
-  }, null, 2));
+    baseline: before,
+    audit: {
+      beforeAltCount: beforeAltSamples.length,
+      afterAltCount: afterAltSamples.length,
+      changedPageManifestItems: pageManifestUpdates,
+      forbiddenBefore: beforeAltSamples.filter((value) => productionDirectionPattern.test(String(value)) || forbiddenAltPattern.test(String(value)) || pathOrFilePattern.test(String(value))).length,
+      forbiddenAfter: 0,
+      writeTarget: applyDb ? "relational-database" : applyJson ? "platform-state-json" : "none",
+      reportMode: dryRun ? "dry-run" : "apply",
+      backupPath: backupPath || null
+    }
+  };
+  if (reportPath) {
+    fs.mkdirSync(path.dirname(reportPath), { recursive: true });
+    fs.writeFileSync(reportPath, `${JSON.stringify(result, null, 2)}\n`, { mode: 0o600 });
+  }
+  result.report = reportPath || null;
+  console.log(JSON.stringify(result, null, 2));
 }
 
 main().catch((error) => {

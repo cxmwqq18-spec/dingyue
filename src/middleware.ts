@@ -1,7 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
-import { STOREFRONT_PUBLIC_HOST_HEADER } from "@/lib/storefront-route-mode";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
@@ -431,7 +430,7 @@ function rewriteStorefrontHtmlStream(body: ReadableStream<Uint8Array>, request: 
 
 function nextWithPathname(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-pathname", requestHeaders.get("x-pathname") || request.nextUrl.pathname || "/");
+  requestHeaders.delete(REORDER_SKIP_HEADER);
   return NextResponse.next({ request: { headers: requestHeaders } });
 }
 
@@ -471,7 +470,6 @@ function isLocalStorefrontHost(host: string): boolean {
 
 function publicOriginForRequest(request: NextRequest): URL {
   const publicHost = [
-    headerHost(request.headers.get(STOREFRONT_PUBLIC_HOST_HEADER)),
     headerHost(request.headers.get("x-forwarded-host")),
     headerHost(request.headers.get("host"))
   ].find((host) => TARGET_HOST_RE.test(host));
@@ -560,7 +558,7 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
   upstreamUrl.search = "";
 
   const upstreamResponse = await fetch(upstreamUrl, {
-    headers: sanitizeUpstreamHeaders(new Headers({ [REORDER_SKIP_HEADER]: "1", "x-pathname": request.nextUrl.pathname || "/" }))
+    headers: sanitizeUpstreamHeaders(new Headers({ [REORDER_SKIP_HEADER]: "1" }))
   });
   if (!upstreamResponse.ok) return undefined;
 
@@ -595,13 +593,11 @@ export async function middleware(request: NextRequest) {
 
   const upstreamHeaders = new Headers(request.headers);
   upstreamHeaders.set(REORDER_SKIP_HEADER, "1");
-  upstreamHeaders.set("x-pathname", request.nextUrl.pathname || "/");
   const upstreamUrl = sameServerStorefrontUrl(request);
   const usesInternalSitePath = upstreamUrl.pathname.startsWith("/site/") && !request.nextUrl.pathname.startsWith("/site/");
   if (usesInternalSitePath) {
     const publicHost = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
-    if (TARGET_HOST_RE.test(publicHost)) upstreamHeaders.set(STOREFRONT_PUBLIC_HOST_HEADER, publicHost);
-    upstreamHeaders.set("x-forwarded-host", `127.0.0.1:${sameServerPort(request)}`);
+    if (TARGET_HOST_RE.test(publicHost)) upstreamHeaders.set("x-forwarded-host", publicHost);
   } else {
     const requestHost = request.headers.get("host") ?? "";
     const forwardedHost = upstreamHeaders.get("x-forwarded-host") ?? "";

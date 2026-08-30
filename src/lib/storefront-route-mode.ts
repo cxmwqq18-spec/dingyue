@@ -2,8 +2,6 @@ import { canonicalSiteSlug, cleanHost, isPlatformHost, publicSiteSlug } from "@/
 
 export type StorefrontRouteMode = "host" | "path";
 
-export const STOREFRONT_PUBLIC_HOST_HEADER = "x-storefront-public-host";
-
 type HeaderReader = {
   get(name: string): string | null;
 };
@@ -27,8 +25,6 @@ function publicHostMatchesSite(host: string | null | undefined, siteSlug: string
 }
 
 export function storefrontRouteModeForHeaders(headers: HeaderReader, siteSlug: string): StorefrontRouteMode {
-  const publicHost = headers.get(STOREFRONT_PUBLIC_HOST_HEADER);
-  if (publicHostMatchesSite(publicHost, siteSlug)) return "host";
   if (publicHostMatchesSite(headers.get("x-forwarded-host"), siteSlug)) return "host";
   if (publicHostMatchesSite(headers.get("host"), siteSlug)) return "host";
   return "path";

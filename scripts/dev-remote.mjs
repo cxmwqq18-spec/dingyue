@@ -6,6 +6,7 @@ import { buildTunneledDatabaseUrl, assertDatabaseTarget } from "./lib/database-t
 
 const repoRoot = process.cwd();
 const tunnelScript = path.join(repoRoot, "scripts", "start-remote-db-tunnel.mjs");
+const tunnelWatcherScript = path.join(repoRoot, "scripts", "watch-remote-db-tunnel.mjs");
 const devLauncher = path.join(repoRoot, "scripts", "dev-fixed-port.mjs");
 const remoteDatabaseUrl = process.env.REMOTE_DB_DATABASE_URL?.trim();
 
@@ -21,7 +22,9 @@ const remoteEnv = {
   DATABASE_URL: buildTunneledDatabaseUrl(remoteDatabaseUrl),
   PERSISTENCE_BACKEND: process.env.PERSISTENCE_BACKEND || "postgres",
   PLATFORM_STATE_POSTGRES_STRICT: process.env.PLATFORM_STATE_POSTGRES_STRICT || "1",
-  STOREFRONT_PATH_MODE_READS: process.env.STOREFRONT_PATH_MODE_READS || "database"
+  STOREFRONT_PATH_MODE_READS: process.env.STOREFRONT_PATH_MODE_READS || "database",
+  // Public storefront navigation can take longer over the SSH hop than local Postgres.
+  STOREFRONT_PUBLIC_TX_TIMEOUT_MS: process.env.STOREFRONT_PUBLIC_TX_TIMEOUT_MS || "90000"
 };
 
 assertDatabaseTarget({ expectedTarget: "remote", env: remoteEnv });
@@ -39,6 +42,12 @@ if (tunnelResult.status !== 0) {
   process.exit(tunnelResult.status ?? 1);
 }
 
+const tunnelWatcher = spawn(process.execPath, [tunnelWatcherScript, "--readwrite"], {
+  cwd: repoRoot,
+  env: remoteEnv,
+  stdio: "inherit"
+});
+
 const child = spawn(process.execPath, [devLauncher], {
   cwd: repoRoot,
   env: remoteEnv,
@@ -46,10 +55,14 @@ const child = spawn(process.execPath, [devLauncher], {
 });
 
 for (const signal of ["SIGINT", "SIGTERM"]) {
-  process.on(signal, () => child.kill(signal));
+  process.on(signal, () => {
+    child.kill(signal);
+    tunnelWatcher.kill(signal);
+  });
 }
 
 child.on("exit", (code, signal) => {
+  tunnelWatcher.kill("SIGTERM");
   if (signal) {
     process.kill(process.pid, signal);
     return;

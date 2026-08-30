@@ -15,7 +15,7 @@ import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSi
 import { legacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
-import { STOREFRONT_PUBLIC_HOST_HEADER, storefrontPathForRouteMode, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
+import { storefrontPathForRouteMode, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
 import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
@@ -30,7 +30,6 @@ type HeaderReader = {
 
 function publicHostCandidates(headers: HeaderReader): Array<string | null> {
   return [
-    headers.get(STOREFRONT_PUBLIC_HOST_HEADER),
     headers.get("x-forwarded-host"),
     headers.get("host")
   ];
@@ -313,7 +312,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const collectionRoute = isCollectionRequest ? parsePublicCollectionRouteForSite(site, path) : undefined;
   if (isCollectionRequest) {
     if (!collectionRoute) return {};
-    if (collectionRoute.collectionSlug && resolvePublishedRouteDisposition(snapshot, collectionRoute.canonicalPath).kind !== "render") return {};
+    if (collectionRoute.collectionSlug && !isSpanishStorefrontSite(site) && resolvePublishedRouteDisposition(snapshot, collectionRoute.canonicalPath).kind !== "render") return {};
     if (collectionRoute.collectionSlug && !canResolveCollectionSlugForSite(state, site, collectionRoute.collectionSlug)) return {};
     if (resolvePublishedRouteDisposition(snapshot, collectionRootPageSlug).kind !== "render") return {};
     const page = findPage(site, collectionRootPageSlug) ?? findPage(site, "/collections");
@@ -471,7 +470,7 @@ export default async function SiteCatchAllPage({
   };
   if (collectionRoute) {
     if (resolvePublishedRouteDisposition(snapshot, collectionRootPageSlug).kind !== "render") notFound();
-    if (collectionRoute.collectionSlug && resolvePublishedRouteDisposition(snapshot, collectionRoute.canonicalPath).kind !== "render") notFound();
+    if (collectionRoute.collectionSlug && !isSpanishStorefrontSite(publicSite) && resolvePublishedRouteDisposition(snapshot, collectionRoute.canonicalPath).kind !== "render") notFound();
     const canonicalCollectionPath = canonicalSeoDirectoryPathForSite(publicSite, "collection", collectionRoute.collectionSlug);
     if (canonicalCollectionPath !== collectionRoute.canonicalPath) redirect(routePath(canonicalCollectionPath));
   }

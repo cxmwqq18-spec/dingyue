@@ -5,6 +5,12 @@ import { setCsrfCookie } from "@/lib/security/csrf";
 import { createCustomerSessionRelational } from "@/lib/stores/customer-store";
 import type { Site } from "@/lib/types";
 
+function isDatabaseUnavailableError(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  const code = "code" in error ? String((error as { code?: unknown }).code ?? "") : "";
+  return ["P1001", "P1008", "P1017", "P2024", "P2028"].includes(code);
+}
+
 export async function handleCustomerLoginForm(request: Request, site: Site, successPath: string, failurePath: string) {
   const form = await request.formData();
   if (!form.get("password")) {
@@ -28,7 +34,11 @@ export async function handleCustomerLoginForm(request: Request, site: Site, succ
     setCsrfCookie(response, `customer:${site.id}`, result.session.id, result.session.expiresAt, request);
     return response;
   } catch (error) {
-    const code = error instanceof StoreError ? error.message : "customer_login_failed";
+    const code = error instanceof StoreError
+      ? error.message
+      : isDatabaseUnavailableError(error)
+        ? "database_unavailable"
+        : "customer_login_failed";
     return NextResponse.redirect(publicUrlForRequest(request, `${failurePath}?error=${encodeURIComponent(code)}`), 303);
   }
 }

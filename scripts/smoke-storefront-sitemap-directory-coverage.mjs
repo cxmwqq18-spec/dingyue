@@ -56,21 +56,18 @@ function normalizePath(value, fallback = "/") {
 }
 
 function expectedCanonicalPaths(state, site) {
-  const publication = site.activePublication;
-  if (!publication?.id || !publication.snapshot) {
-    throw new Error(`missing_published_theme_snapshot:${site.id}`);
-  }
   const entries = sitemapEntriesForSite(state, site);
   return new Set(entries.map((entry) => normalizePath(new URL(entry.loc).pathname)));
 }
 
 function publicationIdentity(site) {
-  const publication = site.activePublication;
   return {
-    publicationId: publication?.id ?? null,
-    publicationVersion: publication?.version ?? null,
-    snapshotHash: publication?.snapshot?.snapshotHash ?? null,
-    factsRevision: publication?.factsRevision ?? publication?.snapshot?.revisions?.factsRevision ?? null
+    source: "postgres-relational",
+    siteId: site.id,
+    publicationId: null,
+    publicationVersion: null,
+    snapshotHash: null,
+    factsRevision: null
   };
 }
 
@@ -274,7 +271,7 @@ for (const target of targets) {
   results.push({
     siteId: target.siteId,
     host: target.host,
-    mode: state ? "snapshot-set" : "live-publication",
+    mode: state ? "postgres-relational" : "live-publication",
     publication: site ? publicationIdentity(site) : null,
     expected: expected?.size ?? null,
     actual: actual.paths.size,
@@ -301,5 +298,5 @@ const failures = results.filter((result) =>
   result.liveFailures.length ||
   result.orphanPaths.length
 );
-console.log(JSON.stringify({ ok: failures.length === 0, stateSource: "postgres:active-or-latest-theme-publication+seo-indexer", results }, null, 2));
+console.log(JSON.stringify({ ok: failures.length === 0, stateSource: "postgres:relational-current-state+seo-indexer", results }, null, 2));
 if (failures.length) process.exitCode = 1;

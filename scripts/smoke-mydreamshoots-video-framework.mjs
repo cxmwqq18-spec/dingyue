@@ -87,6 +87,26 @@ try {
   const frameworkImageUrls = Array.from(frameworkSource.matchAll(/imageUrl:\s*"([^"]*)"/g))
     .map((match) => match[1])
     .filter((imageUrl) => imageUrl.startsWith("/assets/"));
+  const socialMediaCover = "/assets/dreamshoot/generated/video-topic-media/social-media-video/social-media-video-01.webp";
+  assertCondition(
+    frameworkSource.includes(`slug: "social-media-video"`) && frameworkSource.includes(`imageUrl: "${socialMediaCover}"`),
+    "social-media-video must use its dedicated graduation cover",
+    { socialMediaCover }
+  );
+  const seededImageUrls = Array.from(frameworkSource.matchAll(/slug:\s*"([^"]+)"[\s\S]{0,600}?imageUrl:\s*"([^"]*)"/g))
+    .map((match) => ({ slug: match[1], imageUrl: match[2] }))
+    .filter((item) => item.imageUrl.startsWith("/assets/"));
+  const seededImageOwners = new Map();
+  for (const item of seededImageUrls) {
+    const owners = seededImageOwners.get(item.imageUrl) ?? [];
+    owners.push(item.slug);
+    seededImageOwners.set(item.imageUrl, owners);
+  }
+  assertCondition(
+    [...seededImageOwners.values()].every((owners) => owners.length === 1),
+    "video theme seed covers must not be reused across themes",
+    { duplicates: [...seededImageOwners.entries()].filter(([, owners]) => owners.length > 1) }
+  );
   for (const imageUrl of frameworkImageUrls) {
     const assetPath = path.join(repoRoot, "public", imageUrl.split(/[?#]/)[0]);
     assertCondition(fs.existsSync(assetPath), "video framework seed image must exist in public assets", { imageUrl, assetPath });
