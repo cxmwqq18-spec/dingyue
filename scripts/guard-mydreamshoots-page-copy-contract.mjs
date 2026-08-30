@@ -32,7 +32,12 @@ const taxonomy = readJson("src/lib/mydreamshoots-theme-taxonomy.json");
 const useCaseProfiles = readJson("src/lib/photo-package-use-case-profiles.json").mydreamshootsCategories ?? {};
 const packProfiles = readJson("src/lib/dreamshoot-pack-profiles.json");
 const platformState = await readPlatformState();
-const blackFridayPack = (platformState.creativePacks ?? []).find((pack) => pack.siteId === "site_dreamshoot" && normalizeSlug(pack.category || pack.name) === "black-friday");
+const blackFridayPacks = (platformState.creativePacks ?? []).filter((pack) =>
+  pack.siteId === "site_dreamshoot" &&
+  pack.status === "active" &&
+  normalizeSlug(pack.category || pack.name) === "black-friday"
+);
+const blackFridayPack = blackFridayPacks[0];
 const ownedMediaSlugs = new Set(["black-friday", "cannes", "nightlife", "rich-lifestyle"]);
 const mediaSlugFromUrl = (value) => String(value || "").split(/[?#]/, 1)[0].split("/").filter(Boolean).at(-2) || "";
 const mediaOwnerMismatches = (platformState.creativePacks ?? [])
@@ -257,6 +262,7 @@ assert.equal(invalidProfiles.length, 0, "every MyDreamShoots direct page-copy pr
 assert.equal(packProfileOwnerRows.length, 0, "pack profiles must contain operational data only and cannot own page SEO/copy", { packProfileOwnerRows });
 
 assert.ok(blackFridayPack, "Black Friday pack must exist in platform-state");
+assert.equal(blackFridayPacks.length, 1, "MyDreamShoots must expose exactly one active Black Friday pack", { blackFridayPacks: blackFridayPacks.map((pack) => pack.id) });
 assert.equal(blackFridayPack.id, "pack_dreamshoot_black_friday", "Black Friday must own a dedicated pack id instead of Anime Avatar");
 assert.ok(blackFridayPack.imageUrl, "Black Friday pack must keep a cover image");
 assert.equal(mediaOwnerMismatches.length, 0, "dedicated MyDreamShoots theme media must be owned by its own slug", { mediaOwnerMismatches });

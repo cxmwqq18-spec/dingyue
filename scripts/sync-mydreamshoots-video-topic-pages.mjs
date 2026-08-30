@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import "./load-runtime-env.mjs";
 import fs from "node:fs";
-import Module from "node:module";
 import path from "node:path";
 import createJiti from "jiti";
 import { assertDatabaseTarget, assertNonProductionWriteTarget } from "./lib/database-target.mjs";
@@ -211,7 +210,7 @@ const pages = [
       "Turn photos and ideas into TikTok-first vertical videos with a clearer hook, mobile-safe framing, sound-aware structure, captions, and a focused close. Build short demos, micro-lessons, creator stories, event snippets, and campaign videos.",
     keywords:
       "AI TikTok video generator, TikTok video maker, AI TikTok video creator, make TikTok videos from photos, vertical video generator, TikTok content creator, TikTok video from images, short-form video maker",
-    imageUrl: "/assets/dreamshoot/tiktok-video/ai-tiktok-video-creator-phone-portrait.png"
+    imageUrl: "/assets/dreamshoot/generated/video-topic-clean/tiktok-video/ai-tiktok-video-creator-phone-portrait.webp"
   },
   {
     slug: "instagram-reels",
@@ -221,7 +220,7 @@ const pages = [
       "Turn photos and ideas into Instagram Reels with 9:16 framing, safer text placement, stronger cover choices, captions, audio-aware pacing, and a clear visual story for tutorials, BTS, portfolios, launches, and product demos.",
     keywords:
       "AI Instagram Reels generator, Instagram Reels maker, create Instagram Reels from photos, AI Reels generator, Instagram video maker, vertical Reels creator, make Reels from images, Instagram short video generator",
-    imageUrl: "/assets/dreamshoot/instagram-reels/ai-instagram-reels-creator-editorial-portrait.png"
+    imageUrl: "/assets/dreamshoot/generated/video-topic-clean/instagram-reels/ai-instagram-reels-creator-editorial-portrait.webp"
   },
   {
     slug: "social-media-video",
@@ -231,7 +230,7 @@ const pages = [
       "Turn one core idea into platform-aware social media videos. Adapt hooks, crops, captions, audio, pacing, safe zones, and CTAs for TikTok, Instagram Reels, YouTube Shorts, campaigns, testimonials, events, and weekly content.",
     keywords:
       "AI social media video maker, social media video generator, AI social video maker, create videos for social media, multi-platform video creator, social media content video maker, repurpose content into social videos, make vertical social media videos",
-    imageUrl: "/assets/dreamshoot/generated/video-topic-media/social-media-video/social-media-video-01.webp"
+    imageUrl: "/assets/dreamshoot/generated/video-topic-clean/social-media-video/social-media-video-01.webp"
   },
   {
     slug: "youtube-video",
@@ -251,7 +250,7 @@ const pages = [
       "Turn photos, clips, memories, and ideas into story-led videos with a clearer setup, tension, turning point, payoff, and meaning. Create origin stories, personal journeys, comeback stories, mini documentaries, community stories, and fictional shorts.",
     keywords:
       "AI story video generator, story video maker, AI storytelling video generator, turn photos into a story video, narrative video generator, create story videos from photos, short story video maker, AI video story creator",
-    imageUrl: "/assets/dreamshoot/story-video/story-video-hero-woman-sunset-reflection.png"
+    imageUrl: "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-hero-woman-sunset-reflection.webp"
   },
   {
     slug: "meme-video",
@@ -463,7 +462,7 @@ async function readPlatformState() {
 
 function updateRecord(record, fields, changes, targetType) {
   for (const [field, value] of Object.entries(fields)) {
-    if (JSON.stringify(record[field]) === JSON.stringify(value)) continue;
+    if (sameJson(record[field], value)) continue;
     changes.push({
       targetType,
       id: record.id,
@@ -560,6 +559,23 @@ function hasStoredVideoTopicContent(pageJson, slug) {
   return Boolean(content && typeof content === "object" && !Array.isArray(content));
 }
 
+function syncStoredVideoTopicHeroImage(pageJson, slug) {
+  const next = clone(pageJson);
+  const sectionId = slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
+  const section = next.sections?.[sectionId];
+  const content = section?.settings?.content;
+  const canonicalHero = videoTopicContentSeedForSlug(slug).hero;
+  if (!content || typeof content !== "object" || Array.isArray(content) || !canonicalHero?.image) return next;
+  content.hero = {
+    ...(content.hero && typeof content.hero === "object" && !Array.isArray(content.hero) ? content.hero : {}),
+    image: clone(canonicalHero.image)
+  };
+  if (Array.isArray(content.hero.images) && content.hero.images.length > 0) {
+    content.hero.images = [clone(canonicalHero.image), ...content.hero.images.slice(1)];
+  }
+  return next;
+}
+
 function pageJson(page, content = videoTopicContentSeedForSlug(page.slug)) {
   const canonicalPath = content.seo?.canonicalPath || pagePath(page.slug);
   const sectionId = page.slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
@@ -654,7 +670,7 @@ function syncPages(state, changes) {
     }
     const before = JSON.stringify(page);
     const draftJson = !refreshContent && hasStoredVideoTopicContent(page.draftJson, pageDefinition.slug)
-      ? clone(page.draftJson)
+      ? syncStoredVideoTopicHeroImage(page.draftJson, pageDefinition.slug)
       : pageJson(pageDefinition);
     const pageFields = {
       id: page.id || pageId(pageDefinition.slug),
@@ -758,76 +774,6 @@ function stableJson(value) {
 
 function sameJson(left, right) {
   return JSON.stringify(stableJson(left)) === JSON.stringify(stableJson(right));
-}
-
-function loadPublicationTools() {
-  const sourceRoot = path.resolve(repoRoot, "src");
-  const originalResolveFilename = Module._resolveFilename;
-  const originalLoad = Module._load;
-  Module._load = function load(request, ...args) {
-    if (request === "server-only") return {};
-    return originalLoad.call(this, request, ...args);
-  };
-  Module._resolveFilename = function resolveFilename(request, ...args) {
-    if (request === "server-only") return path.join(sourceRoot, "lib/storefront-context/types.ts");
-    let resolved = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : request;
-    if (request.startsWith("@/") && fs.existsSync(`${resolved}.ts`)) resolved = `${resolved}.ts`;
-    return originalResolveFilename.call(this, resolved, ...args);
-  };
-  try {
-    const jiti = createJiti(import.meta.url);
-    return {
-      missingStorefrontProfileFacts: jiti("../src/lib/storefront-context/facts.ts").missingStorefrontProfileFacts,
-      prepareDraftPublishManifestRelational: jiti("../src/lib/stores/theme-store.ts").prepareDraftPublishManifestRelational,
-      applyMydreamshootsVideoTopicPublication: jiti("../src/lib/mydreamshoots-video-topic-publication.ts").applyMydreamshootsVideoTopicPublication,
-      publicationSnapshotHash: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotHash,
-      publicationSnapshotIntegrity: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotIntegrity
-    };
-  } finally {
-    Module._resolveFilename = originalResolveFilename;
-    Module._load = originalLoad;
-  }
-}
-
-function addPublicationToState(state, publication) {
-  const publications = state.themePublications ?? (state.themePublications = []);
-  const existingIndex = publications.findIndex((candidate) => candidate.id === publication.id);
-  if (existingIndex === -1) publications.push(toPrismaJson(publication));
-  else publications[existingIndex] = toPrismaJson(publication);
-}
-
-async function publishMissingVideoPages(state, syncedPages, prisma) {
-  const {
-    missingStorefrontProfileFacts,
-    publicationSnapshotIntegrity,
-    prepareDraftPublishManifestRelational
-  } = loadPublicationTools();
-  const activePointer = await prisma.activeThemePublication.findUnique({
-    where: { siteId: SITE_ID },
-    include: { publication: true }
-  });
-  const currentPublication = activePointer?.publication && publicationSnapshotIntegrity(activePointer.publication.snapshot) === "valid"
-    ? activePointer.publication
-    : undefined;
-  const sourceSite = (state.sites ?? []).find((site) => site.id === SITE_ID);
-  if (!sourceSite) throw new Error(`missing_site:${SITE_ID}`);
-  if (!currentPublication) {
-    const profile = sourceSite.storefrontProfile?.draftJson ?? sourceSite.storefrontProfile?.publishedJson;
-    const missingProfileFacts = missingStorefrontProfileFacts(profile, { requireProductionClaims: SITE_ID === "site_dreamshoot" });
-    if (missingProfileFacts.length) {
-      throw new Error(`missing_storefront_profile_facts:${SITE_ID}:${missingProfileFacts.join(",")}`);
-    }
-  }
-
-  const databaseVideoPages = await prisma.themePage.findMany({
-    where: {
-      siteId: SITE_ID,
-      slug: { in: pages.map((page) => pagePath(page.slug)) }
-    },
-    orderBy: [{ slug: "asc" }]
-  });
-  if (currentPublication && !syncedPages.length && !databaseVideoPages.length) return undefined;
-  return prepareDraftPublishManifestRelational(SITE_ID);
 }
 
 async function updateDatabase(state, categories, syncedPages) {
@@ -955,16 +901,11 @@ async function updateDatabase(state, categories, syncedPages) {
       },
         { timeout: DB_TRANSACTION_TIMEOUT_MS }
     );
-    const publication = await publishMissingVideoPages(state, syncedPages, prisma);
-    if (publication) {
-      await prisma.platformStateDocument.upsert({
-        where: { id: "platform" },
-        create: { id: "platform", state: toPrismaJson(state) },
-        update: { state: toPrismaJson(state) }
-      });
-    }
+    // Public SSR now projects directly from relational draft rows. The legacy
+    // publication tables were removed, so syncing content must stop after the
+    // draft/theme transaction commits.
     clearPlatformStateCaches();
-    return publication;
+    return undefined;
   } finally {
     await prisma.$disconnect();
   }

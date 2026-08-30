@@ -129,7 +129,9 @@ function sourceSpecificAlt(
   const canonical = canonicalSourceAltByPath[imageIdentity(imageUrl).toLowerCase()];
   if (canonical && locale === "en") return canonical;
   const sourceTopic = imageTopicFromUrl(imageUrl);
-  const themeSubject = cleanAltText(theme);
+  const themeSubject = locale === "en" && /(?:^|-)edit-by-prompt(?:-|$)/.test(normalizeSlug(String(theme ?? "")))
+    ? "Social profile portrait"
+    : cleanAltText(theme);
   const subjectBase = themeSubject || (sourceTopic === "Storefront portrait" ? sourceTopic : sourceTopic);
   const subject = /\b(?:portrait|photo|image|avatar|logo|scene|video|poster)\b/i.test(subjectBase)
     ? subjectBase
@@ -317,6 +319,9 @@ function imageSlugHasSpecificTheme(key: string): boolean {
 }
 
 function englishThemeSubject(key: string): string | undefined {
+  if (/(edit-by-prompt)/.test(key)) {
+    return "Social profile portrait";
+  }
   if (/\b(?:credit|subscription|plan|pricing|checkout)\b/.test(key)) {
     return "Credit plan panel for private photo galleries";
   }

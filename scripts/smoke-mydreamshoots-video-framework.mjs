@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
+import createJiti from "jiti";
 import { PrismaClient } from "@prisma/client";
 import { assertDatabaseTarget } from "./lib/database-target.mjs";
 import "./load-runtime-env.mjs";
@@ -14,6 +14,10 @@ const frameworkSource = fs.readFileSync(path.join(repoRoot, "src", "lib", "mydre
 const siteStoreSource = fs.readFileSync(path.join(repoRoot, "src", "lib", "stores", "site-store.ts"), "utf8");
 const themeRendererSource = fs.readFileSync(path.join(repoRoot, "src", "components", "theme-renderer.tsx"), "utf8");
 const targetSiteIds = ["site_dreamshoot"];
+const jiti = createJiti(import.meta.url);
+const frameworkModule = jiti("../src/lib/mydreamshoots-video-framework.ts");
+const aiTopicContentModule = jiti("../scripts/seed-mydreamshoots-ai-video-topic-content.ts");
+const talkingPhotoContentModule = jiti("../scripts/seed-mydreamshoots-talking-photo-content.ts");
 const baseExpectedCategories = [
   ["text-to-video", "Text to Video", 10],
   ["image-to-video", "Image to Video", 20]
@@ -87,7 +91,7 @@ try {
   const frameworkImageUrls = Array.from(frameworkSource.matchAll(/imageUrl:\s*"([^"]*)"/g))
     .map((match) => match[1])
     .filter((imageUrl) => imageUrl.startsWith("/assets/"));
-  const socialMediaCover = "/assets/dreamshoot/generated/video-topic-media/social-media-video/social-media-video-01.webp";
+  const socialMediaCover = "/assets/dreamshoot/generated/video-topic-clean/social-media-video/social-media-video-01.webp";
   assertCondition(
     frameworkSource.includes(`slug: "social-media-video"`) && frameworkSource.includes(`imageUrl: "${socialMediaCover}"`),
     "social-media-video must use its dedicated graduation cover",
@@ -106,6 +110,33 @@ try {
     [...seededImageOwners.values()].every((owners) => owners.length === 1),
     "video theme seed covers must not be reused across themes",
     { duplicates: [...seededImageOwners.entries()].filter(([, owners]) => owners.length > 1) }
+  );
+  const canonicalContentBySlug = {
+    ...aiTopicContentModule.aiVideoTopicLandingContentByKey,
+    "talking-photo": talkingPhotoContentModule.talkingPhotoContent
+  };
+  const canonicalThemes = frameworkModule.mydreamshootsVideoGenerationThemeSeedsForSite("site_dreamshoot")
+    .filter((theme) => frameworkModule.mydreamshootsPublicVideoGenerationTopicSlugs.includes(theme.slug));
+  const canonicalCoverOwners = new Map();
+  for (const theme of canonicalThemes) {
+    const content = canonicalContentBySlug[theme.slug];
+    assertCondition(content?.hero?.image?.src, "every public video theme must have canonical detail hero media", { slug: theme.slug });
+    assertCondition(theme.imageUrl === content.hero.image.src, "directory cover and detail hero must use the same canonical image", {
+      slug: theme.slug,
+      directoryCover: theme.imageUrl,
+      detailHero: content.hero.image.src
+    });
+    if (content.hero.images?.length) {
+      assertCondition(content.hero.images[0].src === content.hero.image.src, "detail hero carousel must start with its canonical cover", { slug: theme.slug });
+    }
+    const owners = canonicalCoverOwners.get(theme.imageUrl) ?? [];
+    owners.push(theme.slug);
+    canonicalCoverOwners.set(theme.imageUrl, owners);
+  }
+  assertCondition(
+    [...canonicalCoverOwners.values()].every((owners) => owners.length === 1),
+    "canonical detail hero covers must not be reused across public video themes",
+    { duplicates: [...canonicalCoverOwners.entries()].filter(([, owners]) => owners.length > 1) }
   );
   for (const imageUrl of frameworkImageUrls) {
     const assetPath = path.join(repoRoot, "public", imageUrl.split(/[?#]/)[0]);

@@ -153,7 +153,14 @@ function imageAlt(value: string): string {
 }
 
 function image(src: string, alt: string, width: number, height: number, objectPosition?: string): AiVideoTopicImage {
-  return { src, alt: imageAlt(alt), width, height, ...(objectPosition ? { objectPosition } : {}) };
+  const canonicalSrc = src.replace(
+    /^\/assets\/dreamshoot\/(tiktok-video|instagram-reels|social-media-video|story-video)\/([^/?#]+)\.(?:png|jpe?g|webp)(?:[?#].*)?$/i,
+    "/assets/dreamshoot/generated/video-topic-clean/$1/$2.webp"
+  ).replace(
+    /^\/assets\/dreamshoot\/generated\/video-topic-media\/social-media-video\/social-media-video-01\.webp(?:[?#].*)?$/i,
+    "/assets/dreamshoot/generated/video-topic-clean/social-media-video/social-media-video-01.webp"
+  );
+  return { src: canonicalSrc, alt: imageAlt(alt), width, height, ...(objectPosition ? { objectPosition } : {}) };
 }
 
 function makeUseCaseCard(card: AiVideoTopicUseCase): AiVideoTopicUseCase {
@@ -169,7 +176,6 @@ const tiktokImageRoot = "/assets/dreamshoot/tiktok-video";
 const instagramImageRoot = "/assets/dreamshoot/instagram-reels";
 const socialImageRoot = "/assets/dreamshoot/social-media-video";
 const youtubeImageRoot = "/assets/dreamshoot/youtube-video";
-const storyImageRoot = "/assets/dreamshoot/story-video";
 const memeImageRoot = "/assets/dreamshoot/meme-video";
 const productImageRoot = "/assets/dreamshoot/product-video";
 const productAdImageRoot = "/assets/dreamshoot/product-ad-video";
@@ -872,7 +878,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         "This page explains the creative direction. Open the current video workspace to review the creation tools available today.",
       rightsCopy: "Use content you own or have permission to use. Review platform rules, audio rights, factual claims, and AI disclosure needs before publishing.",
       imageNote: "Master story -> platform cut -> text/safe zone -> audio -> CTA",
-      image: image(`${socialImageRoot}/social-media-video-cross-platform-creator.png`, "Creator presenting a cross-platform social video story", 1080, 1920)
+      image: image("/assets/dreamshoot/generated/video-topic-media/social-media-video/social-media-video-01.webp", "Smiling graduate holding a diploma for a social video story", 1600, 1200)
     },
     useCases: {
       eyebrow: "SIX SOCIAL VIDEO JOBS",
@@ -1536,9 +1542,9 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         "Use source images, clips, voices, comments, and recognizable people only when you have the rights and context to do so. Do not fabricate a real person's actions, speech, endorsement, or embarrassing behavior.",
       imageNote: "WHEN YOU FINALLY SIT DOWN TO RELAX / AND SOMEONE ASKS FOR “A QUICK FAVOR”",
       image: image(
-        `${memeImageRoot}/meme-video-hero-relax-quick-favor.png`,
-        "Surprised dog meme with captions about finally relaxing before someone asks for a quick favor",
-        1086,
+        `${memeImageRoot}/meme-video-message-overload.png`,
+        "Creator reacting to an overloaded message thread for a meme video",
+        1080,
         1448,
         "50% 50%"
       ),
@@ -1648,9 +1654,9 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           title: "Relax / Quick Favor",
           body: "A reaction setup that lands before the viewer has time to overthink it.",
           image: image(
-            `${memeImageRoot}/meme-video-hero-relax-quick-favor.png`,
-            "Surprised dog meme with captions about finally relaxing before someone asks for a quick favor",
-            1086,
+            `${memeImageRoot}/meme-video-message-overload.png`,
+            "Creator reacting to an overloaded message thread for a meme video",
+            1080,
             1448
           )
         },
@@ -1856,9 +1862,9 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         "Use accurate product photos and claims. Do not invent materials, dimensions, performance, results, included items, or compatibility.",
       imageNote: "A product video should answer the buyer's question before it asks for the sale.",
       image: image(
-        `${productImageRoot}/ai-product-video-serum-texture-use.jpg`,
-        "Hand using a dropper above an amber skincare serum bottle to show product texture and packaging",
-        5184,
+        `${productImageRoot}/product-video-size-scale-backpack.jpg`,
+        "Backpack shown at a clear scale for a product video",
+        1600,
         3456
       ),
       highlights: ["Scale", "Material Detail", "Real Use", "What's Included"]
@@ -3866,14 +3872,14 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       title: "Build the Next Shot Around the Animal",
       intro: "These are photographic scene references, not claims that every image is a one-click preset or a real myDreamshoots output.",
       items: [
-        { title: "Outdoor action frame", body: "Energetic movement where animal identity, gait, paws, background, and owner position need to remain coherent.", image: image(`${petVideoImageRoot}/pet-video-outdoor-run.jpg`, "Labrador Retriever running toward the camera in a sunny park with its owner behind, used as an energetic outdoor pet-action reference.", 7558, 5041) },
-        { title: "Grooming detail frame", body: "Close pet-care action where coat, brush, hands, body position, and salon context carry the scene.", image: image(`${petVideoImageRoot}/pet-video-grooming.jpg`, "Yorkshire Terrier being combed by a groomer at a pet salon, used as a grooming and close-detail pet-care scene reference.", 5760, 3840) },
-        { title: "Veterinary-context frame", body: "A clinic or volunteer setting that can establish context without turning a visual into a diagnosis or welfare claim.", image: image(`${petVideoImageRoot}/pet-video-vet-check.jpg`, "Veterinarian and volunteer examining a dog during a clinic check-up, used as a veterinary-context scene reference without diagnostic claims.", 4000, 6000) },
-        { title: "Indoor play frame", body: "Bright home play with toy, bed, floor, and animal personality visible in one simple action.", image: image(`${petVideoImageRoot}/pet-video-cat-play.jpg`, "Calico cat playing with a toy beside a pet bed in a bright home interior, used as an indoor pet-play reference.", 5644, 4000) },
-        { title: "Urban walking frame", body: "Leash-led movement where person, dog, sidewalk, direction, collar, and public setting need continuity.", image: image(`${petVideoImageRoot}/pet-video-urban-walk.jpg`, "Person walking a dog on a leash along a city sidewalk, used as an urban pet-walking and lifestyle reference.", 4096, 2730) },
-        { title: "Feeding routine frame", body: "A home routine with bowl, hand, animal position, and setting kept clear without making nutrition claims.", image: image(`${petVideoImageRoot}/pet-video-feeding.jpg`, "Woman holding a food bowl for a tabby cat in a home setting, used as a feeding-routine visual reference without nutrition claims.", 6048, 4024) },
-        { title: "Training interaction frame", body: "Handler-and-animal interaction where the cue, body language, space, and visible response should be described precisely.", image: image(`${petVideoImageRoot}/pet-video-training-command.jpg`, "Belgian Malinois interacting closely with a handler during outdoor training, used as a pet-training behavior reference.", 4000, 6016) },
-        { title: "Owner bonding frame", body: "A relationship-led portrait that establishes personality, trust, human presence, and the emotional role of the shot.", image: image(`${petVideoImageRoot}/pet-video-owner-bond.jpg`, "Woman posing with a dog in a studio setting, used as a pet-owner bonding and personality-content reference.", 4631, 3087) }
+        { title: "Outdoor action frame", body: "Energetic movement where animal identity, gait, paws, background, and owner position need to remain coherent.", image: image(`${petVideoImageRoot}/pet-video-outdoor-run.jpg`, "Labrador Retriever running toward the camera in a sunny park with its owner behind.", 7558, 5041) },
+        { title: "Grooming detail frame", body: "Close pet-care action where coat, brush, hands, body position, and salon context carry the scene.", image: image(`${petVideoImageRoot}/pet-video-grooming.jpg`, "Yorkshire Terrier being combed by a groomer at a pet salon.", 5760, 3840) },
+        { title: "Veterinary-context frame", body: "A clinic or volunteer setting that can establish context without turning a visual into a diagnosis or welfare claim.", image: image(`${petVideoImageRoot}/pet-video-vet-check.jpg`, "Veterinarian and volunteer examining a dog during a clinic check-up.", 4000, 6000) },
+        { title: "Indoor play frame", body: "Bright home play with toy, bed, floor, and animal personality visible in one simple action.", image: image(`${petVideoImageRoot}/pet-video-cat-play.jpg`, "Calico cat playing with a toy beside a pet bed in a bright home interior.", 5644, 4000) },
+        { title: "Urban walking frame", body: "Leash-led movement where person, dog, sidewalk, direction, collar, and public setting need continuity.", image: image(`${petVideoImageRoot}/pet-video-urban-walk.jpg`, "Person walking a dog on a leash along a city sidewalk.", 4096, 2730) },
+        { title: "Feeding routine frame", body: "A home routine with bowl, hand, animal position, and setting kept clear without making nutrition claims.", image: image(`${petVideoImageRoot}/pet-video-feeding.jpg`, "Woman holding a food bowl for a tabby cat in a home setting.", 6048, 4024) },
+        { title: "Training interaction frame", body: "Handler-and-animal interaction where the cue, body language, space, and visible response should be described precisely.", image: image(`${petVideoImageRoot}/pet-video-training-command.jpg`, "Belgian Malinois interacting closely with a handler during outdoor training.", 4000, 6016) },
+        { title: "Owner bonding frame", body: "A relationship-led portrait that establishes personality, trust, human presence, and the emotional role of the shot.", image: image(`${petVideoImageRoot}/pet-video-owner-bond.jpg`, "Woman posing with a dog in a studio setting.", 4631, 3087) }
       ]
     },
     guidance: {

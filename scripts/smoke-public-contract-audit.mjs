@@ -38,6 +38,18 @@ assert.deepEqual(good.failures, []);
 assert.equal(good.seoSummary.pageType, "theme-detail");
 assert.equal(good.seoSummary.allowedIndexState, "INDEXABLE");
 
+const graphSchema = evaluatePage({
+  requestedUrl: `${origin}/ai-image-generation/avatar`,
+  status: 200,
+  finalUrl: `${origin}/ai-image-generation/avatar`,
+  html: goodHtml.replace(
+    /\{"@context":"https:\/\/schema\.org","@type":"BreadcrumbList","itemListElement":\[\{"position":1,"item":"([^"]+)"\}\]\}/,
+    '{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"position":1,"item":"$1"}]}]}'
+  )
+});
+assert.equal(graphSchema.state, "INDEXABLE");
+assert.deepEqual(graphSchema.jsonLdTypes, ["BreadcrumbList"]);
+
 const leaked = evaluatePage({
   requestedUrl: origin,
   status: 200,
@@ -58,4 +70,4 @@ const missingSchema = evaluatePage({
 assert.equal(missingSchema.state, "REVIEW_REQUIRED");
 assert.ok(missingSchema.failures.includes("missing_json_ld"));
 
-console.log(JSON.stringify({ ok: true, contract: "public-contract-audit", states: [good.state, leaked.state, missingSchema.state] }, null, 2));
+console.log(JSON.stringify({ ok: true, contract: "public-contract-audit", states: [good.state, graphSchema.state, leaked.state, missingSchema.state] }, null, 2));

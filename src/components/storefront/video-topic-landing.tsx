@@ -217,7 +217,7 @@ function intrinsicAspectRatio(image: VideoTopicImage): string {
 }
 
 function hasEmbeddedVideoLetterbox(image: VideoTopicImage): boolean {
-  return image.src.includes("/assets/dreamshoot/generated/video-topic-media/");
+  return image.src.includes("/assets/dreamshoot/generated/video-topic-media/") || image.src.includes("/assets/dreamshoot/generated/video-topic-clean/");
 }
 
 function mediaAspectRatio(image: VideoTopicImage): string {

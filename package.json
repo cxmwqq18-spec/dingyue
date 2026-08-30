@@ -56,12 +56,13 @@
     "smoke:aidreamcapes-before-after-assets": "node scripts/smoke-aidreamcapes-before-after-assets.mjs",
     "smoke:aidreamcapes-before-after-assets:db": "node scripts/smoke-aidreamcapes-before-after-assets.mjs --db",
     "smoke:storefront-seo-fingerprint": "node scripts/smoke-storefront-seo-fingerprint.mjs",
-    "smoke:mydreamshoots-seo-fingerprint": "node scripts/smoke-storefront-seo-fingerprint.mjs",
+    "smoke:mydreamshoots-seo-fingerprint": "SMOKE_SITE_ID=site_dreamshoot node scripts/smoke-storefront-seo-fingerprint.mjs",
     "smoke:storefront-head-title-order": "node scripts/smoke-storefront-head-title-order.mjs",
     "smoke:public-seo-policy": "node scripts/smoke-public-seo-policy.mjs",
     "smoke:public-seo-ssr": "node scripts/smoke-public-seo-ssr.mjs",
     "smoke:mydreamshoots-public-contract": "node scripts/smoke-public-contract-audit.mjs && node scripts/audit-mydreamshoots-public-contract.mjs",
     "guard:public-storefront-ssr": "node scripts/guard-public-storefront-ssr.mjs",
+    "smoke:showcase-rail": "node scripts/smoke-dreamshoot-showcase-rail.mjs",
     "guard:live-storefront-ssr": "node scripts/guard-live-storefront-ssr.mjs",
     "guard:remote-readonly-database-role": "node scripts/guard-remote-readonly-database-role.mjs",
     "smoke:live-draft-validation": "node --experimental-strip-types scripts/smoke-live-draft-validation.mjs",
@@ -81,6 +82,7 @@
     "configure:tokengo-video-provider": "node scripts/configure-tokengo-video-provider.mjs",
     "configure:seedance-special-video-provider": "node scripts/configure-seedance-special-video-provider.mjs",
     "sync:dreamshoot-homepage-showcase": "node scripts/sync-dreamshoot-homepage-showcase.mjs",
+    "sync:mydreamshoots-logo-wall": "node scripts/sync-mydreamshoots-logo-wall.mjs",
     "sync:save-the-date-valentines-day": "node scripts/sync-save-the-date-valentines-day.mjs",
     "sync:save-the-date-topic-pages": "node scripts/sync-save-the-date-topic-pages.mjs",
     "sync:save-the-date-indexability": "node scripts/sync-save-the-date-indexability.mjs",
@@ -252,7 +254,8 @@
     "smoke:postgres-state": "node scripts/smoke-postgres-platform-state.mjs",
     "seed:aidreamcapes": "node scripts/migrate-aidreamcapes-demo.mjs",
     "clean:mydreamshoots-legacy-routes": "node scripts/clean-mydreamshoots-legacy-routes.mjs",
-    "smoke:mydreamshoots-public-routes": "node scripts/smoke-mydreamshoots-public-routes.mjs"
+    "smoke:mydreamshoots-public-routes": "node scripts/smoke-mydreamshoots-public-routes.mjs",
+    "smoke:mydreamshoots-image-detail-routes": "node scripts/smoke-mydreamshoots-image-detail-routes.mjs"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",

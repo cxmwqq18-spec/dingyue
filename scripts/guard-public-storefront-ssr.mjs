@@ -81,7 +81,9 @@ assert.equal(existsSync(path.join(root, "src/components/storefront/html-lang-syn
 assert.doesNotMatch(pricingTable, /use client|useState|useMemo/, "public pricing must be server-rendered");
 assert.doesNotMatch(partnerForm, /use client|\bonSubmit=|\bfetch\s*\(/, "public partner form must use native form submission");
 assert.doesNotMatch(showcaseVideo, /use client|useEffect|IntersectionObserver|\.play\s*\(/, "public showcase video must use native HTML media");
-assert.doesNotMatch(showcaseRail, /use client|useEffect|requestAnimationFrame|onMouseEnter|onPointerDown/, "public showcase rail must use native scrolling");
+assert.match(showcaseRail, /use client/, "public showcase rail may use a client-only presentation layer");
+assert.match(showcaseRail, /requestAnimationFrame/, "public showcase rail must retain automatic presentation motion");
+assert.doesNotMatch(showcaseRail, /\b(?:fetch|XMLHttpRequest|EventSource)\b/, "public showcase rail must not fetch data from the browser");
 assert.doesNotMatch(lazyVideo, /use client|useEffect|IntersectionObserver|\.play\s*\(/, "public video must not use client lazy-loading controls");
 assert.doesNotMatch(headerMegaPanels, /^\s*["']use client["'];/m, "public mega menu panels must remain server components");
 assert.doesNotMatch(jsonLd, /use client|useServerInsertedHTML|useRef/, "public JSON-LD must be emitted by the server component");

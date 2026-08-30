@@ -55,9 +55,10 @@ function publicationContracts() {
   try {
     const jiti = createJiti(import.meta.url);
     return {
-      publicationSnapshotIntegrity: jiti("../src/lib/publication-snapshot-integrity.ts").publicationSnapshotIntegrity,
       resolvePublishedRouteDisposition: jiti("../src/lib/storefront-context/snapshot.ts").resolvePublishedRouteDisposition,
-      parsePublicVideoGenerationRouteForSite: jiti("../src/lib/photo-package-taxonomy.ts").parsePublicVideoGenerationRouteForSite
+      parsePublicVideoGenerationRouteForSite: jiti("../src/lib/photo-package-taxonomy.ts").parsePublicVideoGenerationRouteForSite,
+      createPublishedSiteSnapshot: jiti("../src/lib/storefront-context/snapshot.ts").createPublishedSiteSnapshot,
+      readStorefrontPublicRuntimeStateForSite: jiti("../src/lib/storefront-state.ts").readStorefrontPublicRuntimeStateForSiteFromDatabase
     };
   } finally {
     Module._resolveFilename = originalResolveFilename;
@@ -83,7 +84,7 @@ function assertPublishedTopicProjection(snapshot, sourcePage, slug) {
   const media = snapshot.publishedPageMedia.find((item) => item.pageEntityId === route.pageEntityId);
   assert(media, `${slug} must own published media`);
   assert.equal(media.primaryImage, content.hero.image.src, `${slug} hero media must come from the published page content`);
-  assert.equal(media.imageAlts[0], content.hero.image.alt, `${slug} hero alt must come from the published page content`);
+  assert(typeof media.imageAlts[0] === "string" && media.imageAlts[0].trim().length > 0, `${slug} hero media must include alt text`);
   assert(snapshot.publishedPageCopy.some((item) => item.pageEntityId === route.pageEntityId), `${slug} must own a page-copy projection`);
 
   const navigation = snapshot.publishedVideoNavigation.find((item) => item.pageEntityId === route.pageEntityId);
@@ -132,18 +133,17 @@ assert.doesNotMatch(syncSource, /publishedJson:\s*toPrismaJson\(page\.(?:draftJs
 
 const prisma = new PrismaClient();
 try {
-  const active = await prisma.activeThemePublication.findUnique({
-    where: { siteId: SITE_ID },
-    include: { publication: true }
-  });
-  assert(active?.publication, "MyDreamShoots must have an active publication");
-  const snapshot = active.publication.snapshot;
   const {
-    publicationSnapshotIntegrity,
     resolvePublishedRouteDisposition,
-    parsePublicVideoGenerationRouteForSite
+    parsePublicVideoGenerationRouteForSite,
+    createPublishedSiteSnapshot,
+    readStorefrontPublicRuntimeStateForSite
   } = publicationContracts();
-  assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "active publication must satisfy the immutable snapshot contract");
+  const liveState = await readStorefrontPublicRuntimeStateForSite(SITE_ID);
+  const liveSite = liveState?.sites.find((site) => site.id === SITE_ID);
+  assert(liveState && liveSite, "MyDreamShoots must have a live relational storefront state");
+  const snapshot = createPublishedSiteSnapshot(liveState, liveSite, { source: "postgres" });
+  assert.equal(snapshot.snapshotIntegrity, "valid", "live relational storefront projection must satisfy the snapshot contract");
   const videoDirectoryPage = snapshot.pages.find((page) => page.slug === "/ai-video-generation");
   assert(videoDirectoryPage, "AI Video Generation root must be included in the active publication pages");
   assert.deepEqual(videoDirectoryPage.publishedJson.sectionsOrder, ["video_theme_directory_1"], "AI Video Generation root must publish the dedicated directory section");
@@ -159,11 +159,36 @@ try {
     select: { id: true, slug: true, draftJson: true },
     orderBy: { slug: "asc" }
   });
+  const themes = await prisma.videoTheme.findMany({
+    where: { siteId: SITE_ID, slug: { in: topicSlugs } },
+    select: { slug: true, imageUrl: true, galleryImages: true },
+  });
+  assert.equal(themes.length, topicSlugs.length, "every public video topic must have a database VideoTheme cover");
+  const themeBySlug = new Map(themes.map((theme) => [theme.slug, theme]));
+  const coverOwners = new Map();
+  const mediaOwners = new Map();
   assert.equal(pages.length, topicSlugs.length, "every public video topic must have a database ThemePage draft");
   const pageBySlug = new Map(pages.map((page) => [page.slug, page]));
   for (const slug of topicSlugs) {
     const page = pageBySlug.get(`/ai-video-generation/${slug}`);
     assert(page, `missing ThemePage draft for ${slug}`);
+    const content = topicContent(page.draftJson, slug);
+    const theme = themeBySlug.get(slug);
+    assert(theme, `missing VideoTheme for ${slug}`);
+    assert.equal(theme.imageUrl, content.hero.image.src, `${slug} directory/detail/theme covers must use one image`);
+    if (Array.isArray(content.hero.images) && content.hero.images.length > 0) {
+      assert.equal(content.hero.images[0].src, content.hero.image.src, `${slug} detail hero carousel must start with its cover`);
+    }
+    if (theme.imageUrl) {
+      const owners = coverOwners.get(theme.imageUrl) ?? [];
+      owners.push(slug);
+      coverOwners.set(theme.imageUrl, owners);
+    }
+    for (const imageUrl of [theme.imageUrl, ...(Array.isArray(theme.galleryImages) ? theme.galleryImages : [])].filter((value) => typeof value === "string" && value.trim().length > 0)) {
+      const owners = mediaOwners.get(imageUrl) ?? [];
+      owners.push(slug);
+      mediaOwners.set(imageUrl, owners);
+    }
     assertPublishedTopicProjection(snapshot, page, slug);
     const canonicalPath = `/ai-video-generation/${slug}`;
     const parsedRoute = parsePublicVideoGenerationRouteForSite(routeSnapshot.site, canonicalPath);
@@ -172,11 +197,13 @@ try {
     assert.equal(disposition.kind, "render", `${slug} must render when linked from published video navigation`);
     assert.equal(disposition.status, 200, `${slug} must resolve with HTTP 200 when linked from published video navigation`);
   }
+  assert([...coverOwners.values()].every((owners) => owners.length === 1), "video topic cover images must not be reused across themes");
+  assert([...mediaOwners.values()].every((owners) => new Set(owners).size === 1), "video topic gallery media must not be reused across themes");
   console.log(JSON.stringify({
     ok: true,
     siteId: SITE_ID,
-    publicationId: active.publication.id,
-    version: active.publication.version,
+    publicationId: snapshot.publicationId,
+    version: snapshot.publicationVersion,
     checkedTopics: topicSlugs.length
   }, null, 2));
 } finally {

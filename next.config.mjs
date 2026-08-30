@@ -36,7 +36,11 @@ const nextConfig = {
   },
   onDemandEntries: {
     maxInactiveAge: 60_000,
-    pagesBufferLength: 2
+    // The storefront has dozens of independently addressable theme pages.
+    // Keeping only two app entries lets Next evict the catch-all module while
+    // a menu navigation or smoke pass is still requesting it, which can
+    // surface as a transient 404/ENOENT from the dev server.
+    pagesBufferLength: 64
   },
   images: {
     localPatterns: [

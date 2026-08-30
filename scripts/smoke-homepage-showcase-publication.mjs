@@ -21,6 +21,14 @@ const expectedReviewKeys = [
   "review_jordan",
   "review_riley"
 ];
+const expectedLogoFiles = [
+  "30-ikraddy.webp", "09-hana-pet.webp", "07-fumei.webp", "15-mrlin.webp", "20-popo.webp",
+  "04-coffee-swap.webp", "05-ezzy.webp", "26-xraz.webp", "08-giantdc.webp", "24-smart-check.webp",
+  "22-prevence.webp", "10-heart-beat.webp", "23-shurong-lim.webp", "27-yu-kidsrooms.webp", "14-mr-sdm.webp",
+  "02-bison.webp", "25-tosaco.webp", "06-fb.webp", "11-jo.webp", "12-laboom.webp",
+  "16-mashtacore.webp", "17-monkey.webp", "13-moonpizza.webp", "18-observer.webp", "19-oficina.webp",
+  "21-panda-ber.webp", "28-yx.webp", "29-beer.webp", "01-anteater.webp", "03-chinawuzhougem.webp"
+];
 const trustedProofRenderer = renderer.match(/const trustedProof = showTrustedLogoIntro[\s\S]*?\n\s+const renderPublishedSection/)?.[0] ?? "";
 
 assert.match(types, /publishedHomepageShowcases:\s*PublishedHomepageShowcaseItem\[\]/, "publication snapshot must expose homepage showcases");
@@ -32,8 +40,10 @@ assert.match(renderer, /homepageShowcases/, "renderer must consume the publicati
 assert.match(renderer, /Featured AI Video Generators/, "homepage must render the video-first heading");
 assert.match(renderer, /AI Save the Date Videos/, "homepage must support the Save the Date module");
 assert.match(renderer, /Featured AI Photo Generators/, "homepage must retain the photo module");
-assert.match(trustedProofRenderer, /mydreamProfileSite \? \([\s\S]*?<p[\s\S]*?Creative workflow examples built with myDreamshoots/, "MyDreamShoots workflow examples title must be ordinary text");
-assert.doesNotMatch(trustedProofRenderer, /mydreamProfileSite \? \([\s\S]*?<h2[\s\S]*?Creative workflow examples built with myDreamshoots/, "MyDreamShoots workflow examples title must not be an H2");
+assert.match(trustedProofRenderer, /trustedLogoEyebrow/, "MyDreamShoots logo wall must render the HTML eyebrow");
+assert.match(trustedProofRenderer, /Made with MyDreamShoots/, "MyDreamShoots logo wall must render the HTML heading");
+assert.match(renderer, /Ideas, brands and visual experiments brought together with AI\./, "MyDreamShoots logo wall must render the HTML subtitle");
+assert.doesNotMatch(trustedProofRenderer, /mydreamProfileSite \? \([\s\S]*?<h2[\s\S]*?Made with MyDreamShoots/, "MyDreamShoots workflow examples title must remain ordinary text");
 assert.doesNotMatch(packageCatalog, /<h2[^>]*>\{card\.title\}<\/h2>/, "package cards must not render card titles as H2");
 assert.match(packageCatalog, /Want to bring your photos to life\? Explore AI Video Generation/, "photo package catalog must link to AI Video Generation");
 assert.equal(homepageCopy.reviewTitle, "What Our Customers Say", "homepage copy contract must use the approved review heading");
@@ -55,5 +65,9 @@ const homeShowcaseTemplate = templates.match(/generation_showcase_1:[\s\S]*?\n  
 assert.ok(homeShowcaseTemplate, "homepage showcase template must be present");
 assert.doesNotMatch(homeShowcaseTemplate, /imageSlugs\s*:/, "homepage template must not persist static image slugs");
 assert.doesNotMatch(homeShowcaseTemplate, /videoSlugs\s*:/, "homepage template must not persist static video slugs");
+for (const logoFile of expectedLogoFiles) {
+  assert.ok(fs.existsSync(path.join(root, "public/assets/dreamshoot/brand/logo-wall-demo", logoFile)), `${logoFile} must be bundled with the logo wall`);
+  assert.match(templates, new RegExp(logoFile.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), `${logoFile} must be wired into the homepage template`);
+}
 
 console.log(JSON.stringify({ ok: true, check: "homepage-showcase-publication" }, null, 2));

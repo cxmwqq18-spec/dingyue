@@ -159,6 +159,21 @@ assert(
   `Virtual Try-On fallback should use a concise subject description: ${virtualTryOnAlt}`
 );
 
+const editByPromptAlt = storefrontCardImageAlt({
+  brand: "MyDreamShoots",
+  category: "edit-by-prompt",
+  description: "",
+  imageUrl: "/assets/dreamshoot/generated/pack-covers/social-cards/social-cards-cover.webp",
+  locale: "en",
+  meta: "AI Image Generation",
+  role: "card",
+  title: "Edit By Prompt"
+});
+assert(
+  editByPromptAlt === "Social profile portrait.",
+  `Edit By Prompt must use a subject-based alt without production language: ${editByPromptAlt}`
+);
+
 assert(
   storefrontMeaningfulAlt("professional AI headshot with clean studio lighting, close portrait with clear facial detail, Professional Headshots package gallery example for myDreamshoots.") === "",
   "legacy stored MyDreamShoots gallery alt should be rejected"
@@ -235,6 +250,7 @@ console.log(JSON.stringify({
   ok: true,
   samples,
   virtualTryOnAlt,
+  editByPromptAlt,
   myDreamShoots: {
     creativePacks: myDreamShootsPacks.length,
     galleryAlts: galleryCount,

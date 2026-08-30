@@ -8916,12 +8916,6 @@ function SectionView({
         .filter(Boolean);
       const primaryCta = ctas[0];
       const secondaryCta = ctas[1];
-      const heroStats = stats.length
-        ? stats
-        : legacyStats.map((item, index) => {
-            const [value = item, label = ""] = item.split("|");
-            return { id: `legacy_stat_${index}`, type: "stat", settings: { value, label } } as SectionBlockInstance;
-          });
       const proofBullets = bullets.slice(0, 4);
       const primaryImage = displayImages[0] ?? fallbackHeroImages[0];
       const configuredGridImages = listSetting(section, "heroGridImages", [
@@ -9145,14 +9139,6 @@ function SectionView({
             </div>
           </div>
 
-          <div className="relative z-10 mx-auto grid max-w-[var(--site-content-width)] grid-cols-3 gap-3 border-t border-white/14 py-5 text-white sm:gap-4">
-            {heroStats.map((item, index) => (
-              <div className="min-w-0" key={instanceKey(item, index, "hero_stat")} {...xfcartBlockAttrs(mode, item, index, "hero_stat")}>
-	                <div className="text-[1.05rem] font-semibold tracking-tight text-white sm:font-mono sm:text-[1.15rem]">{homepageMetricBlockValue(item, "value", homepageMetrics)}</div>
-	                <div className="mt-1 text-[11px] leading-4 text-white/58 sm:text-[12px] sm:leading-5">{homepageMetricBlockValue(item, "label", homepageMetrics)}</div>
-              </div>
-            ))}
-          </div>
           <div className="relative z-10 mx-auto max-w-[var(--site-content-width)] pb-7 md:hidden">
             <Link className="flex items-center justify-between rounded-[18px] border border-white/14 px-4 py-3 text-sm font-semibold text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.9)] backdrop-blur" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))} style={{ background: "linear-gradient(100deg, rgba(236,75,221,0.22), rgba(122,76,255,0.46), rgba(22,220,240,0.3))" }}>
 	              <span>{imageBadge}: {authPrimaryLabel}</span>
@@ -12790,6 +12776,8 @@ function SectionView({
     const trustedLogoRows = showTrustedLogoIntro
       ? [trustedLogoBlocks.slice(0, trustedLogoSplitIndex), trustedLogoBlocks.slice(trustedLogoSplitIndex)].filter((row) => row.length > 0)
       : [];
+    const trustedLogoEyebrow = mydreamProfileSite ? setting(section, "trustedLogoEyebrow", "CREATIVE SHOWCASE") : "";
+    const trustedLogoSubtitle = mydreamProfileSite ? setting(section, "trustedLogoSubtitle", "Ideas, brands and visual experiments brought together with AI.") : "";
     const renderTrustedLogoCard = (logo: SectionBlockInstance, index: number) => {
       const logoName = blockValue(logo, "name", `Creator logo ${index + 1}`);
       const logoImage = blockValue(logo, "imageUrl", "");
@@ -12832,11 +12820,15 @@ function SectionView({
         data-dreamshoot-workflow-examples={mydreamProfileSite ? "true" : undefined}
       >
         {mydreamProfileSite ? (
-          <p className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
-            <DreamshootUnderlinedTitle gradient={accent}>
-              {setting(section, "trustedLogoTitle", "Creative workflow examples built with myDreamshoots")}
-            </DreamshootUnderlinedTitle>
-          </p>
+          <>
+            {trustedLogoEyebrow ? <p className="mb-3 text-center text-[11px] font-extrabold uppercase tracking-[0.22em] text-white/62">{trustedLogoEyebrow}</p> : null}
+            <p className="text-center text-[clamp(1.8rem,3.15vw,2.9rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
+              <DreamshootUnderlinedTitle gradient={accent}>
+                {setting(section, "trustedLogoTitle", "Made with MyDreamShoots")}
+              </DreamshootUnderlinedTitle>
+            </p>
+            {trustedLogoSubtitle ? <p className="mx-auto mt-4 max-w-[42.5rem] text-center text-[clamp(0.875rem,1.15vw,1.06rem)] leading-relaxed text-white/58">{trustedLogoSubtitle}</p> : null}
+          </>
         ) : (
           <h2 className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
             <DreamshootUnderlinedTitle gradient={accent}>
@@ -12953,11 +12945,7 @@ function SectionView({
       const renderPublishedCard = (item: PublishedHomepageShowcaseItem) => {
         const href = hrefFor(site, item.canonicalPath);
         const compactCard = item.kind === "save_the_date";
-        // The TikTok and Instagram source artwork is portrait-oriented with a
-        // blurred bleed around the intended frame. Crop that decorative bleed
-        // on the homepage so these cards match the direct image presentation.
-        const cropPortraitBleed = /\/(?:tiktok-video|instagram-reels)\/?$/.test(item.canonicalPath);
-        const mediaClassName = `h-full w-full object-cover${cropPortraitBleed ? " scale-[1.55]" : ""}`;
+        const mediaClassName = "h-full w-full object-cover";
         const media = item.videoUrl ? (
           <DreamshootShowcaseVideo className={mediaClassName} label={item.imageAlt} poster={mediaAssetUrl(site, item.imageUrl)} priority={false} src={mediaAssetUrl(site, item.videoUrl)} />
         ) : (

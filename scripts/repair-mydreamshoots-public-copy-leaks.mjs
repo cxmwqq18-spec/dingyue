@@ -19,8 +19,8 @@ function transform(value) {
       .replace(/indexation/gi, "publishing")
       .replace(/do not index/gi, "keep this page focused")
       .replace(/before launch/gi, "before publishing")
-      .replace(/,?\s*used as a feeding-routine visual reference without nutrition claims/gi, "")
-      .replace(/,?\s*feeding-routine visual reference/gi, "")
+      .replace(/,?\s*used as (?:an?\s+)?(?:energetic outdoor pet-action|grooming and close-detail pet-care scene|veterinary-context scene|indoor pet-play|urban pet-walking and lifestyle|feeding-routine visual|pet-training behavior|pet-owner bonding and personality-content) reference(?: without diagnostic claims| without nutrition claims)?/gi, "")
+      .replace(/,?\s*(?:energetic outdoor pet-action|grooming and close-detail pet-care scene|veterinary-context scene|indoor pet-play|urban pet-walking and lifestyle|feeding-routine visual|pet-training behavior|pet-owner bonding and personality-content) reference/gi, "")
     return next === value ? value : next.replace(/\s+/g, " ").trim();
   }
   if (Array.isArray(value)) return value.map(transform);

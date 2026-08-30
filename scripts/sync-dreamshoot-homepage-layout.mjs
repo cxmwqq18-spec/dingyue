@@ -111,40 +111,40 @@ const myAssets = {
   galleryHoliday: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1"
 };
 
-const mydreamshootsTrustedLogoAssetBase = "/assets/dreamshoot/brand/trusted-creators-dark-v2";
+const mydreamshootsTrustedLogoAssetBase = "/assets/dreamshoot/brand/logo-wall-demo";
 const aidreamTrustedLogoAssetBase = "/assets/sites/site_aidreamcapes/trusted-logos";
 const mydreamshootsAboutBody = "myDreamshoots is an AI video and photo generation platform that turns your images into AI videos, personalized Save the Date videos, professional AI headshots, portraits, couple photos, and themed photo sets.";
 const mydreamshootsTrustedLogoDefinitions = [
-  { key: "ikraddy", name: "iKraddy", file: "01__ikraddy.webp" },
-  { key: "beer", name: "Beer", file: "02__beer.webp" },
-  { key: "fumei", name: "FUMEI", file: "03__fumei.webp" },
-  { key: "mrlin", name: "MRLIN", file: "04__mrlin.webp" },
-  { key: "popo", name: "POPO", file: "05__popo.webp" },
-  { key: "mr-sdm", name: "MR.SDM", file: "06__mr-sdm.webp" },
-  { key: "ezzy", name: "EZZY", file: "07__ezzy.webp" },
-  { key: "xraz", name: "XRAZ", file: "08__xraz.webp" },
-  { key: "giantdc", name: "Giantdc", file: "09__giantdc.webp" },
-  { key: "smart-check", name: "SMART Check", file: "10__smart-check.webp" },
-  { key: "jo", name: "JO", file: "11__jo.webp" },
-  { key: "mashtacore", name: "Mashtacore", file: "12__mashtacore.webp" },
-  { key: "fb", name: "FB", file: "13__fb.webp" },
-  { key: "shurong-lim", name: "SHURONG LIM", file: "14__shurong-lim.webp" },
-  { key: "coffee-swap", name: "COFFEE SWAP", file: "15__coffee-swap.webp" },
-  { key: "heart-beat", name: "HEART BEAT", file: "16__heart-beat.webp" },
-  { key: "chinawuzhougem", name: "CHINAWUZHOUGEM", file: "17__chinawuzhougem.webp" },
-  { key: "tosaco", name: "TOSACO", file: "18__tosaco.webp" },
-  { key: "monkey", name: "Monkey", file: "19__monkey.webp" },
-  { key: "yu-kidsrooms", name: "YU kidsrooms", file: "20__yu-kidsrooms.webp" },
-  { key: "yx", name: "YX", file: "21__yx.webp" },
-  { key: "laboom", name: "LABOOM", file: "22__laboom.webp" },
-  { key: "moonpizza", name: "MOONPIZZA", file: "23__moonpizza.webp" },
-  { key: "observer", name: "OBSERVER", file: "24__observer.webp" },
-  { key: "anteater", name: "Anteater", file: "25__anteater.webp" },
-  { key: "prevence", name: "Prevence", file: "26__prevence.webp" },
-  { key: "bison", name: "BISON", file: "27__bison.webp" },
-  { key: "hana-pet", name: "HANA PET", file: "28__hana-pet.webp" },
-  { key: "oficina", name: "Oficina", file: "29__oficina.webp" },
-  { key: "panda-ber", name: "Panda BER", file: "30__panda-ber.webp" }
+  { key: "ikraddy", name: "iKraddy", file: "30-ikraddy.webp" },
+  { key: "hana-pet", name: "HANA PET", file: "09-hana-pet.webp" },
+  { key: "fumei", name: "FUMEI", file: "07-fumei.webp" },
+  { key: "mrlin", name: "MRLIN", file: "15-mrlin.webp" },
+  { key: "popo", name: "POPO", file: "20-popo.webp" },
+  { key: "coffee-swap", name: "COFFEE SWAP", file: "04-coffee-swap.webp" },
+  { key: "ezzy", name: "EZZY", file: "05-ezzy.webp" },
+  { key: "xraz", name: "XRAZ", file: "26-xraz.webp" },
+  { key: "giantdc", name: "Giantdc", file: "08-giantdc.webp" },
+  { key: "smart-check", name: "SMART Check", file: "24-smart-check.webp" },
+  { key: "prevence", name: "Prevence", file: "22-prevence.webp" },
+  { key: "heart-beat", name: "HEART BEAT", file: "10-heart-beat.webp" },
+  { key: "shurong-lim", name: "SHURONG LIM", file: "23-shurong-lim.webp" },
+  { key: "yu-kidsrooms", name: "YU kidsrooms", file: "27-yu-kidsrooms.webp" },
+  { key: "mr-sdm", name: "MR.SDM", file: "14-mr-sdm.webp" },
+  { key: "bison", name: "BISON", file: "02-bison.webp" },
+  { key: "tosaco", name: "TOSACO", file: "25-tosaco.webp" },
+  { key: "fb", name: "FB", file: "06-fb.webp" },
+  { key: "jo", name: "JO", file: "11-jo.webp" },
+  { key: "laboom", name: "LABOOM", file: "12-laboom.webp" },
+  { key: "mashtacore", name: "Mashtacore", file: "16-mashtacore.webp" },
+  { key: "monkey", name: "Monkey", file: "17-monkey.webp" },
+  { key: "moonpizza", name: "MOONPIZZA", file: "13-moonpizza.webp" },
+  { key: "observer", name: "OBSERVER", file: "18-observer.webp" },
+  { key: "oficina", name: "Oficina", file: "19-oficina.webp" },
+  { key: "panda-ber", name: "Panda BER", file: "21-panda-ber.webp" },
+  { key: "yx", name: "YX", file: "28-yx.webp" },
+  { key: "beer", name: "beer", file: "29-beer.webp" },
+  { key: "anteater", name: "Anteater", file: "01-anteater.webp" },
+  { key: "chinawuzhougem", name: "CHINAWUZHOUGEM", file: "03-chinawuzhougem.webp" }
 ];
 const trustedLogoDefinitions = [
   { key: "wliano", name: "Wliano", file: "39__wliano__wliano.com.png" },
@@ -232,9 +232,13 @@ const stores = [
 	      sidePanelTitle: "Plans start at {LIVE_LOWEST_ACTIVE_PLAN_PRICE}, with the current credit allowance and billing interval shown for each option.",
 	      sidePanelBody: "Review the credit cost before each generation and use the current plan or top-up options when you need additional runs."
     },
-    generationSettings: {
+	    generationSettings: {
       anchor: "generated-showcase",
-      showTrustedLogoIntro: false,
+	      showTrustedLogoIntro: true,
+	      trustedLogoEyebrow: "CREATIVE SHOWCASE",
+	      trustedLogoTitle: "Made with MyDreamShoots",
+	      trustedLogoSubtitle: "Ideas, brands and visual experiments brought together with AI.",
+	      trustedLogoSplitIndex: 15,
       embeddedPricingSectionId: "pricing_1",
 	      eyebrow: "Customer-created examples",
 	      title: "Browse image and video themes customers have already created.",
@@ -249,7 +253,7 @@ const stores = [
       primaryHref: "/app/create",
       videoItemLimit: 8
     },
-	    generationBlocks: [],
+	    generationBlocks: mydreamshootsTrustedLogoBlocks,
     featuredPack: section("dreamshoot_featured_pack", {
       anchor: "featured-pack",
       label: "Recommended seasonal pack",

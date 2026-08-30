@@ -108,11 +108,20 @@ function firstMainAction(html, origin) {
 function parseJsonLd(html) {
   const nodes = [];
   const errors = [];
+  const appendNode = (value) => {
+    if (Array.isArray(value)) {
+      value.forEach(appendNode);
+      return;
+    }
+    if (!value || typeof value !== "object") return;
+    nodes.push(value);
+    if (Array.isArray(value["@graph"])) value["@graph"].forEach(appendNode);
+  };
   for (const match of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
     const raw = match[1].trim();
     try {
       const parsed = JSON.parse(raw);
-      nodes.push(...(Array.isArray(parsed) ? parsed : [parsed]));
+      appendNode(parsed);
     } catch (error) {
       errors.push(error instanceof Error ? error.message : String(error));
     }
