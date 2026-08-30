@@ -244,6 +244,21 @@ function pageSectionTypes(pageJson: ThemePageJson): Set<string> {
   return new Set(pageJson.sectionsOrder.map((sectionId) => pageJson.sections[sectionId]?.type).filter((type): type is string => Boolean(type)));
 }
 
+function withoutMydreamshootsHomepagePackageCatalog(site: Site, slug: string, pageJson: ThemePageJson): ThemePageJson {
+  if (!isPrimaryMydreamshootsStorefront(site) || slug !== "/") return pageJson;
+  const removedIds = new Set(
+    pageJson.sectionsOrder.filter((sectionId) =>
+      sectionId === "package_catalog_1" || pageJson.sections[sectionId]?.type === "dreamshoot_package_catalog"
+    )
+  );
+  if (!removedIds.size) return pageJson;
+  return {
+    ...pageJson,
+    sectionsOrder: pageJson.sectionsOrder.filter((sectionId) => !removedIds.has(sectionId)),
+    sections: Object.fromEntries(Object.entries(pageJson.sections).filter(([sectionId]) => !removedIds.has(sectionId)))
+  };
+}
+
 function publicStorefrontToken(value: string, prefixes: string[]): string {
   let next = String(value ?? "")
     .trim()
@@ -2848,16 +2863,20 @@ export async function renderStorefrontPage({
   const canonicalRenderPath = isPrimaryMydreamshootsStorefront(currentSite) && (renderPagePath.startsWith("/holidays-events/") || renderPagePath.startsWith("/ai-save-the-date/"))
     ? canonicalSaveTheDatePath(renderPagePath)
     : renderPagePath;
-  const pageJson = isPrimaryMydreamshootsStorefront(currentSite) && canonicalRenderPath.startsWith("/ai-save-the-date/")
-    ? {
-        ...canonicalizeSaveTheDateRoutes(basePageJson),
-        seo: {
-          ...basePageJson.seo,
-          canonicalPath: canonicalRenderPath,
-          canonical: `https://www.mydreamshoots.com${canonicalRenderPath}`
+  const pageJson = withoutMydreamshootsHomepagePackageCatalog(
+    currentSite,
+    slug,
+    isPrimaryMydreamshootsStorefront(currentSite) && canonicalRenderPath.startsWith("/ai-save-the-date/")
+      ? {
+          ...canonicalizeSaveTheDateRoutes(basePageJson),
+          seo: {
+            ...basePageJson.seo,
+            canonicalPath: canonicalRenderPath,
+            canonical: `https://www.mydreamshoots.com${canonicalRenderPath}`
+          }
         }
-      }
-    : basePageJson;
+      : basePageJson
+  );
   const renderDataForPage = isFocusedCollectionPage ? focusedCollectionRenderData : publicDirectoryRenderData;
   let pageRenderData = withPageMediaAssets(
     currentSite,
@@ -3079,23 +3098,27 @@ export async function renderStorefrontSectionPayloads({
     internalSlug === "/tools" &&
     (usesAiGenerationPublicRoutes(currentSite) || isAidreamcapesStorefront(currentSite));
   const usesDreamShootVideoGenerationDirectory = internalSlug === "/ai-video-generation" && isPrimaryMydreamshootsStorefront(currentSite);
-  const pageJson: ThemePageJson = internalSlug === "/account"
-    ? withAccountDashboardPage(directPage.publishedJson)
-    : toolDetailSlug && resolvedToolDetail?.matched
-    ? withSeoDirectorySection(directPage.publishedJson, "tool", toolDetailSlug, { site: currentSite })
-    : usesDreamShootVideoGenerationDirectory
-    ? withDreamShootVideoGenerationDirectoryPage(directPage.publishedJson)
-    : usesDreamShootToolsDirectory
-    ? withDreamShootToolsDirectoryPage(directPage.publishedJson, currentSite)
-    : isFocusedCollectionPage
-    ? withSeoDirectorySection(directPage.publishedJson, "collection", collectionCategory, {
-        focused: true,
-        site: currentSite,
-        publishedCopy: publishedLeafCopy(publishedSnapshot, collectionCategory)
-      })
-    : internalSlug === "/collections"
-    ? withDreamShootCollectionsDirectoryPage(directPage.publishedJson, currentSite)
-    : directPage.publishedJson;
+  const pageJson: ThemePageJson = withoutMydreamshootsHomepagePackageCatalog(
+    currentSite,
+    internalSlug,
+    internalSlug === "/account"
+      ? withAccountDashboardPage(directPage.publishedJson)
+      : toolDetailSlug && resolvedToolDetail?.matched
+      ? withSeoDirectorySection(directPage.publishedJson, "tool", toolDetailSlug, { site: currentSite })
+      : usesDreamShootVideoGenerationDirectory
+      ? withDreamShootVideoGenerationDirectoryPage(directPage.publishedJson)
+      : usesDreamShootToolsDirectory
+      ? withDreamShootToolsDirectoryPage(directPage.publishedJson, currentSite)
+      : isFocusedCollectionPage
+      ? withSeoDirectorySection(directPage.publishedJson, "collection", collectionCategory, {
+          focused: true,
+          site: currentSite,
+          publishedCopy: publishedLeafCopy(publishedSnapshot, collectionCategory)
+        })
+      : internalSlug === "/collections"
+      ? withDreamShootCollectionsDirectoryPage(directPage.publishedJson, currentSite)
+      : directPage.publishedJson
+  );
 
   const settings = currentSite.themeSettings.publishedJson;
   const renderedPage = { ...directPage, publishedJson: pageJson };
