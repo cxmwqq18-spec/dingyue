@@ -34,11 +34,17 @@ const targetedHeroFieldManifest = {
     imageNote: "Slow tracking shot, warm practical lights, moody atmosphere."
   },
   "tiktok-video": {
-    image: "/assets/dreamshoot/tiktok-video/ai-tiktok-video-creator-phone-portrait.png",
+    image: [
+      "/assets/dreamshoot/tiktok-video/ai-tiktok-video-creator-phone-portrait.png",
+      "/assets/dreamshoot/generated/video-topic-clean/tiktok-video/ai-tiktok-video-creator-phone-portrait.webp"
+    ],
     imageNote: "9:16-first framing · hook -> body -> close · keep key information clear of interface overlays"
   },
   "instagram-reels": {
-    image: "/assets/dreamshoot/instagram-reels/ai-instagram-reels-creator-editorial-portrait.png",
+    image: [
+      "/assets/dreamshoot/instagram-reels/ai-instagram-reels-creator-editorial-portrait.png",
+      "/assets/dreamshoot/generated/video-topic-clean/instagram-reels/ai-instagram-reels-creator-editorial-portrait.webp"
+    ],
     imageNote: "9:16-first · cover-aware · safe-zone thinking · captions when dialogue matters"
   },
   "product-video": {
@@ -566,9 +572,9 @@ function isVideoAsset(url) {
 
 function assertTargetFieldUnchanged(slug, field, currentValue, previousValue, nextValue) {
   const normalizedCurrent = currentValue ?? "";
-  const normalizedPrevious = previousValue ?? "";
+  const normalizedPrevious = (Array.isArray(previousValue) ? previousValue : [previousValue]).map((value) => value ?? "");
   const normalizedNext = nextValue ?? "";
-  if (normalizedCurrent === normalizedPrevious || normalizedCurrent === normalizedNext) return;
+  if (normalizedPrevious.includes(normalizedCurrent) || normalizedCurrent === normalizedNext) return;
   throw new Error(`field_conflict:${slug}:${field}:${JSON.stringify(normalizedCurrent)}`);
 }
 
