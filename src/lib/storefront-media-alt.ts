@@ -29,54 +29,7 @@ const storefrontBrandNamePattern = /\b(?:mydreamshoots|mydreamshoots\.com|aidrea
 const filenameLikeAltPattern = /^[a-z0-9][a-z0-9 -]{1,72}\s+image$/i;
 const urlLikePattern = /\bhttps?:\/\/\S+|(?:^|\s)\/assets\/\S+|(?:^|\s)[\w./-]+\.(?:png|jpe?g|webp|avif|svg)(?:\?\S+)?/gi;
 const templatedSceneAltPattern = /\b(?:portrait with polished|theme scene|representative cover image|enhanced portrait preview|ai video theme cover)\b/i;
-const englishImageVariantCompositions = [
-  "close facial crop",
-  "balanced half-body pose",
-  "open group framing",
-  "wide environmental view",
-  "candid social pose",
-  "styled detail crop",
-  "clean vertical framing",
-  "cinematic contrast",
-  "album-cover crop",
-  "natural lifestyle framing",
-  "polished event lighting",
-  "distinct themed pose"
-];
-const englishImageVariantLighting = [
-  "soft studio light",
-  "directional window light",
-  "warm ambient light",
-  "high-contrast rim light",
-  "natural daylight",
-  "muted evening light",
-  "bright editorial light",
-  "balanced front light"
-];
-const spanishImageVariantCompositions = [
-  "recorte facial cercano",
-  "pose equilibrada de medio cuerpo",
-  "encuadre abierto para grupo",
-  "vista amplia del entorno",
-  "pose social espontanea",
-  "recorte de detalle pulido",
-  "encuadre vertical limpio",
-  "contraste cinematografico",
-  "recorte de portada",
-  "encuadre de estilo de vida",
-  "luz pulida de evento",
-  "pose tematica distintiva"
-];
-const spanishImageVariantLighting = [
-  "luz suave de estudio",
-  "luz direccional de ventana",
-  "luz ambiental calida",
-  "luz de contorno contrastada",
-  "luz natural del dia",
-  "luz tenue de tarde",
-  "luz editorial brillante",
-  "luz frontal equilibrada"
-];
+const productionDirectionAltPattern = /\b(?:scene\s*\d+|escena\s*\d+|framing|encuadre|crop|recorte|lighting|luz|studio\s+light|luz\s+de\s+estudio|visual\s+reference|referencia\s+visual|prompt|production|camera|camara|shot|toma|close[- ]?up|half[- ]?body|wide\s+view|cinematic\s+contrast|editorial\s+lighting)\b/i;
 const genericImageParentPattern = /^(?:assets|sites|theme|generated|frames|media|images|20260622-homepage-unique|\d{8}-.+)$/i;
 const stableSourceImagePattern = /\/assets\/dreamshoot\/(?:generated\/(?:video-topic-media|pack-covers|pack-galleries|20260622-homepage-unique)|frames\/|seasonal\/|save-the-date\/|wedding-invitation\/)/i;
 const canonicalSourceAltByPath: Record<string, string> = {
@@ -134,18 +87,6 @@ function cleanAltText(value: string | undefined): string {
     .trim();
 }
 
-function imageVariantDetail(imageUrl: string | undefined, locale: StorefrontMediaAltLocale): string {
-  const identity = String(imageUrl ?? "").split("#")[0]?.split("?")[0] ?? "";
-  if (!identity) return "";
-  let hash = 0;
-  for (const character of identity) hash = (hash * 31 + character.charCodeAt(0)) >>> 0;
-  const compositions = locale === "es" ? spanishImageVariantCompositions : englishImageVariantCompositions;
-  const lighting = locale === "es" ? spanishImageVariantLighting : englishImageVariantLighting;
-  const composition = compositions[hash % compositions.length] ?? "";
-  const light = lighting[(hash >>> 8) % lighting.length] ?? "";
-  return [composition, light].filter(Boolean).join(locale === "es" ? " con " : " with ");
-}
-
 function spanishVideoAltPhrase(value: string | undefined, fallback: string): string {
   const cleaned = cleanAltText(value);
   if (!cleaned) return fallback;
@@ -171,11 +112,6 @@ function imageIdentity(value: string | undefined): string {
   return String(value ?? "").trim().split("#")[0]?.split("?")[0] ?? "";
 }
 
-function imageSequence(imageUrl: string | undefined): string {
-  const filename = imageIdentity(imageUrl).split("/").filter(Boolean).at(-1) ?? "";
-  return filename.match(/-(\d+)(?:\.[a-z0-9]+)?$/i)?.[1] ?? "";
-}
-
 function imageTopicFromUrl(imageUrl: string | undefined): string {
   const [parent, basename] = imageSlugParts(imageUrl);
   const topic = parent && !genericImageParentPattern.test(parent) ? parent : basename;
@@ -193,11 +129,12 @@ function sourceSpecificAlt(
   const canonical = canonicalSourceAltByPath[imageIdentity(imageUrl).toLowerCase()];
   if (canonical && locale === "en") return canonical;
   const sourceTopic = imageTopicFromUrl(imageUrl);
-  const subject = sourceTopic === "Storefront portrait" ? (theme || sourceTopic) : `${sourceTopic} portrait`;
-  const detail = imageVariantDetail(imageUrl, locale);
-  const sequence = imageSequence(imageUrl);
-  const frame = sequence ? (locale === "es" ? `escena ${sequence}` : `scene ${sequence}`) : "";
-  return compactMediaAltSentence([subject, detail, frame].filter(Boolean).join(", "), locale);
+  const themeSubject = cleanAltText(theme);
+  const subjectBase = themeSubject || (sourceTopic === "Storefront portrait" ? sourceTopic : sourceTopic);
+  const subject = /\b(?:portrait|photo|image|avatar|logo|scene|video|poster)\b/i.test(subjectBase)
+    ? subjectBase
+    : `${subjectBase} portrait`;
+  return compactMediaAltSentence(subject, locale);
 }
 
 export function storefrontSourceImageAlt({
@@ -218,6 +155,7 @@ function meaningfulAlt(value: string | undefined): string {
   const wordCount = cleaned.split(/\s+/).filter(Boolean).length;
   if (weakAltPattern.test(cleaned)) return "";
   if (legacyTemplateAltPattern.test(cleaned)) return "";
+  if (productionDirectionAltPattern.test(cleaned)) return "";
   const brandMentions = cleaned.match(storefrontBrandNamePattern)?.length ?? 0;
   if (brandMentions > 0) return "";
   if (brandPlacementAltPattern.test(cleaned.toLowerCase()) && wordCount > 6) return "";
@@ -419,13 +357,13 @@ function englishThemeSubject(key: string): string | undefined {
     return "Social profile card portrait";
   }
   if (/(headshot|professional|business|linkedin|executive)/.test(key)) {
-    return "Professional studio headshot";
+    return "Professional headshot";
   }
   if (/(video|motion|clip|animation|add-ons?|addon|teaser)/.test(key)) {
     return "Motion-ready portrait preview";
   }
   if (/(product-style)/.test(key)) {
-    return "Product-style lifestyle scene with clean studio lighting";
+    return "Product-style lifestyle scene";
   }
   if (/(product-style|product|upscaler|enhance|utility)/.test(key)) {
     return "Enhanced portrait preview with crisp detail";
@@ -461,7 +399,7 @@ function englishThemeSubject(key: string): string | undefined {
   if (/(beauty|hairstyle|hair|try-on|fashion|boudoir)/.test(key)) {
     if (/(hairstyle)/.test(key)) return "Hairstyle preview portrait with polished styling";
     if (/(fashion)/.test(key)) return "Editorial fashion portrait with refined wardrobe styling";
-    return "Beauty portrait with editorial lighting";
+    return "Beauty portrait";
   }
   return undefined;
 }
@@ -492,7 +430,7 @@ function spanishThemeSubject(key: string): string | undefined {
     return "retrato para tarjeta de perfil social";
   }
   if (/(headshot|professional|business|linkedin|executive|profesional)/.test(key)) {
-    return "retrato profesional con luz de estudio";
+    return "retrato profesional";
   }
   if (/(video|motion|clip|animation|add-ons?|addon|teaser|video adicional)/.test(key)) {
     return "retrato listo para video";
@@ -516,7 +454,7 @@ function spanishThemeSubject(key: string): string | undefined {
     return "retrato de viaje en destino";
   }
   if (/(beauty|hairstyle|hair|try-on|fashion|boudoir|belleza)/.test(key)) {
-    return "retrato de belleza con luz editorial";
+    return "retrato de belleza";
   }
   return undefined;
 }
@@ -593,17 +531,16 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
       ?? (locale === "es"
         ? "retrato estilizado para una galeria privada"
         : "Styled portrait prepared for a private gallery");
-  const sourceAlt = sourceSpecificAlt(input.imageUrl, locale, imageScene ?? specificScene ?? contextScene);
-  if (stableSourceImagePattern.test(imageIdentity(input.imageUrl))) return sourceAlt;
+  const sourceAlt = sourceSpecificAlt(input.imageUrl, locale, input.title || imageScene || specificScene || contextScene);
   if (templatedSceneAltPattern.test(explicit) || templatedSceneAltPattern.test(galleryAlt)) return sourceAlt;
   if (explicit) return compactMediaAltSentence(explicit, locale);
   if (galleryAlt) return compactMediaAltSentence(galleryAlt, locale);
+  if (stableSourceImagePattern.test(imageIdentity(input.imageUrl))) return sourceAlt;
   const fallbackScene = locale === "es"
     ? "retrato estilizado para una galeria privada"
     : "Styled portrait prepared for a private gallery";
   const naturalScene = scene || fallbackScene;
-  const detail = imageVariantDetail(input.imageUrl, locale);
-  return compactMediaAltSentence([naturalScene, detail].filter(Boolean).join(", "), locale);
+  return compactMediaAltSentence(naturalScene, locale);
 }
 
 function storedAltForPackImage(pack: CreativePack, imageUrl: string | undefined): string | undefined {

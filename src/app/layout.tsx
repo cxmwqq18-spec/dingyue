@@ -16,7 +16,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html lang={language} suppressHydrationWarning translate="yes">
       <head>
         <meta httpEquiv="Content-Language" content={language} />
-        {process.env.NEXT_PUBLIC_RELEASE_COMMIT ? <meta name="release-commit" content={process.env.NEXT_PUBLIC_RELEASE_COMMIT} /> : null}
       </head>
       <body translate="yes">
         {children}

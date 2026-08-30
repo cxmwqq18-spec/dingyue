@@ -50,7 +50,7 @@ npm run deploy:release -- \
   --confirm=deploy-production
 ```
 
-测试 release 使用 `test.grownstride.com` / `grownstride-test.service` / `3011` / `site_grownstride_test`；生产 release 使用 `www.mydreamshoots.com` / `mydreamshoots.service` / `3010` / `site_dreamshoot`。服务器会再次 fetch 并校验 `origin/main` 等于指定 SHA，然后在独立候选端口构建、生成 Prisma client、执行 `prisma migrate deploy`，用 HTML `release-commit` 标记做候选验证。只有候选验证通过后才更新 systemd、切换 `current` 和重启服务；切换后的服务或域名 readback 失败会自动恢复旧 release。
+测试 release 使用 `test.grownstride.com` / `grownstride-test.service` / `3011` / `site_grownstride_test`；生产 release 使用 `www.mydreamshoots.com` / `mydreamshoots.service` / `3010` / `site_dreamshoot`。服务器会再次 fetch 并校验 `origin/main` 等于指定 SHA，然后在独立候选端口构建、生成 Prisma client、执行 `prisma migrate deploy`。候选验证检查进程工作目录、`.deployed-commit` 与核心 SEO 标签，不向公开 HTML 写入 commit。只有候选验证通过后才更新 systemd、切换 `current` 和重启服务；切换后的 service 工作目录、release manifest 或域名 readback 失败会自动恢复旧 release。
 
 服务器永远不执行 `prisma db push`，不上传本地 `.env`，不导入数据库 dump，也不使用本地未提交代码。
 

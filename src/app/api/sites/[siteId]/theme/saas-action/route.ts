@@ -59,7 +59,7 @@ function fallbackSectionHtml(sectionId: string, section?: SectionInstance): stri
     firstBlockText(section.blocks, "sub_title") ||
     firstBlockText(section.blocks, "text") ||
     "";
-  return `<div id="xfcart-section-${escapeHtml(sectionId)}" class="xfcart-section" data-section-id="${escapeHtml(sectionId)}" data-section-type="${escapeHtml(String(section.type))}" data-section-style=""><section style="padding:32px;font-family:Arial,sans-serif"><p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#777;margin:0 0 12px">SaaS iframe patch</p><h2 style="margin:0;font-size:28px;line-height:1.1">${escapeHtml(title)}</h2>${body ? `<p style="margin:12px 0 0;color:#555;line-height:1.6">${escapeHtml(body)}</p>` : ""}</section></div>`;
+  return `<div id="xfcart-section-${escapeHtml(sectionId)}" class="xfcart-section" data-section-id="${escapeHtml(sectionId)}" data-section-type="${escapeHtml(String(section.type))}"><section style="padding:32px;font-family:Arial,sans-serif"><p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#777;margin:0 0 12px">SaaS iframe patch</p><h2 style="margin:0;font-size:28px;line-height:1.1">${escapeHtml(title)}</h2>${body ? `<p style="margin:12px 0 0;color:#555;line-height:1.6">${escapeHtml(body)}</p>` : ""}</section></div>`;
 }
 
 function firstBlockText(blocks: SectionBlockInstance[] | undefined, key: string): string {

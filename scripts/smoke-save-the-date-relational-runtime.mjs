@@ -36,7 +36,7 @@ assert.doesNotMatch(topicSmoke, /sitePublishedState|currentState|snapshot\./,
   "Save the Date smoke must validate relational ThemePage data, not snapshots");
 assert.doesNotMatch(`${storefrontMetadata}\n${themeSeo}`, /storefront-(?:publication|snapshot-hash|current-revision)/,
   "public metadata must not expose obsolete publication or snapshot state");
-assert.match(`${storefrontMetadata}\n${themeSeo}`, /storefront-data-source["']:\s*["']postgres-relational/,
-  "public metadata must identify the relational data source");
+assert.doesNotMatch(`${storefrontMetadata}\n${themeSeo}`, /storefront-data-source/,
+  "public metadata must not identify the relational data source");
 
 console.log("Save the Date relational runtime remediation contract passed.");

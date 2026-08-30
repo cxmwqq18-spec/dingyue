@@ -201,15 +201,13 @@ export function PreviewFrame({
   const previewInteractionLabel = interactiveMode ? "真实交互预览" : "编辑定位模式";
   const selectedBlockRule = selectedPreviewSectionId && selectedPreviewBlockId
     ? `
-      .designer-live-preview .xfcart-section[data-section-id="${cssAttrValue(selectedPreviewSectionId)}"] [data-xfcart-block-id="${cssAttrValue(selectedPreviewBlockId)}"],
-      .designer-live-preview .xfcart-section[data-section-id="${cssAttrValue(selectedPreviewSectionId)}"] [data-xfcart-block-legacy-id="${cssAttrValue(selectedPreviewBlockId)}"] {
+      .designer-live-preview .xfcart-section[data-section-id="${cssAttrValue(selectedPreviewSectionId)}"] [data-xfcart-block-id="${cssAttrValue(selectedPreviewBlockId)}"] {
         outline: 2px dashed rgba(168, 107, 76, 0.92);
         outline-offset: -5px;
         box-shadow: inset 0 0 0 1px rgba(255,255,255,0.8);
         position: relative;
       }
-      .designer-live-preview .xfcart-section[data-section-id="${cssAttrValue(selectedPreviewSectionId)}"] [data-xfcart-block-id="${cssAttrValue(selectedPreviewBlockId)}"]::after,
-      .designer-live-preview .xfcart-section[data-section-id="${cssAttrValue(selectedPreviewSectionId)}"] [data-xfcart-block-legacy-id="${cssAttrValue(selectedPreviewBlockId)}"]::after {
+      .designer-live-preview .xfcart-section[data-section-id="${cssAttrValue(selectedPreviewSectionId)}"] [data-xfcart-block-id="${cssAttrValue(selectedPreviewBlockId)}"]::after {
         content: "Block";
         position: absolute;
         right: 12px;
@@ -249,12 +247,12 @@ export function PreviewFrame({
     if (!section) return;
     const sectionId = section.dataset.sectionId;
     if (!sectionId) return;
-    const block = target?.closest<HTMLElement>("[data-xfcart-block-id], [data-xfcart-block-legacy-id]");
+    const block = target?.closest<HTMLElement>("[data-xfcart-block-id]");
     event.preventDefault();
     event.stopPropagation();
     onLivePreviewSelect(
       sectionId,
-      block?.getAttribute("data-xfcart-block-id") ?? block?.getAttribute("data-xfcart-block-legacy-id") ?? undefined,
+      block?.getAttribute("data-xfcart-block-id") ?? undefined,
       clickedTextFromTarget(target, section)
     );
   }
@@ -546,8 +544,7 @@ export function PreviewFrame({
                           pointer-events: none;
                           box-shadow: 0 18px 42px -32px rgba(24, 24, 27, 0.78);
                         }
-                        .designer-live-preview [data-xfcart-block-id],
-                        .designer-live-preview [data-xfcart-block-legacy-id] {
+                        .designer-live-preview [data-xfcart-block-id] {
                           cursor: cell;
                         }
                         .designer-live-preview .xfcart-section[data-xfcart-selected="true"] {

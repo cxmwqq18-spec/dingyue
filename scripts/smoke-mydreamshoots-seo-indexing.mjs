@@ -660,11 +660,9 @@ assert(
     sitemapRoute.includes("entry.changefreq") &&
     sitemapRoute.includes("xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\"") &&
     sitemapRoute.includes('"cache-control"') &&
-    sitemapRoute.includes('"x-sitemap-url-count"') &&
-    sitemapRoute.includes('"x-sitemap-image-count"') &&
     !sitemapRoute.includes("unstable_cache") &&
     sitemapRoute.includes('"cache-control": "no-store, max-age=0"') &&
-    sitemapRoute.includes('"x-sitemap-generation-ms"'),
+    !sitemapRoute.includes('"x-sitemap-generation-ms"'),
   "live-draft sitemap must select URLs using the request host, emit per-entry metadata, avoid request-time lastmod, and bypass cross-request caching"
 );
 assert(
@@ -680,7 +678,7 @@ assert(
   seoIndexing.includes("readStorefrontPublicIndexingStateByHostFromDatabase") &&
     seoIndexing.includes("readIndexableStateAndSitesForHosts") &&
     !robots.includes("getStorefrontPublicationIdentityForHost") &&
-    robots.includes("NEXT_PUBLIC_RELEASE_COMMIT") &&
+    !robots.includes("NEXT_PUBLIC_RELEASE_COMMIT") &&
     themeRenderer.includes('data-focused-collection-compare="true"'),
   "robots, sitemap, and focused image pages must use their lightweight public projections"
 );

@@ -42,6 +42,7 @@
     "smoke:storefront-image-isolation": "node scripts/smoke-storefront-image-isolation.mjs",
     "smoke:storefront-dom-image-isolation": "node scripts/smoke-storefront-dom-image-isolation.mjs",
     "smoke:storefront-media-alt": "node scripts/smoke-storefront-media-alt.mjs",
+    "smoke:public-html-cleanliness": "node scripts/smoke-public-html-cleanliness.mjs",
     "repair:mydreamshoots-media-alt": "node scripts/rectify-mydreamshoots-media-alt.mjs",
     "smoke:storefront-watermarks": "node scripts/smoke-storefront-watermarks.mjs",
     "smoke:customer-account-center": "node scripts/smoke-customer-account-center.mjs",

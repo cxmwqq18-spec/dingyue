@@ -30,9 +30,9 @@ const LOCAL_DEFAULT_STOREFRONT_PATHS = new Set(["/ai-image-generation", "/ai-vid
 const LOCAL_DEFAULT_STOREFRONT_PREFIXES = ["/account", "/app", "/dashboard", "/login"];
 
 const SEO_HEAD_TAG_RE =
-  /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|keywords|robots|storefront-(?:publication|facts-revision)|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>/gi;
+  /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>/gi;
 const LEADING_SEO_HEAD_TAG_RE =
-  /^(?:\s*(?:<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:charset=|name=["'](?:viewport|description|keywords|robots|storefront-(?:publication|facts-revision)|twitter:(?:card|title|description|image))["']|http-equiv=["']Content-Language["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>))*/i;
+  /^(?:\s*(?:<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:charset=|name=["'](?:viewport|description|robots|twitter:(?:card|title|description|image))["']|http-equiv=["']Content-Language["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>))*/i;
 const ESSENTIAL_HEAD_TAG_RE =
   /<meta\b(?=[^>]*(?:charset=|name=["']viewport["']|http-equiv=["']Content-Language["']))[^>]*\/?>/gi;
 const ICON_HEAD_TAG_RE = /<link\b(?=[^>]*rel=["'][^"']*(?:icon|apple-touch-icon)[^"']*["'])[^>]*\/?>/gi;
@@ -530,9 +530,7 @@ function applyGrownstrideNoindex(response: Response, request: NextRequest): Resp
 
 function finalizeStorefrontResponse(response: Response, request: NextRequest): Response {
   const guarded = withStorefrontGuardCookie(response, request);
-  const headers = new Headers(guarded.headers);
-  headers.set("x-storefront-build", process.env.VERCEL_GIT_COMMIT_SHA ?? process.env.GIT_COMMIT_SHA ?? "local");
-  return applyGrownstrideNoindex(new Response(guarded.body, { status: guarded.status, statusText: guarded.statusText, headers }), request);
+  return applyGrownstrideNoindex(guarded, request);
 }
 
 function sameServerStorefrontUrl(request: NextRequest): URL {
@@ -570,7 +568,6 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
   headers.delete("content-length");
   headers.set("content-type", "image/png");
   headers.set("cache-control", "no-store, max-age=0");
-  headers.set("x-storefront-icon-source", iconHref.png);
 
   return new Response(upstreamResponse.body, {
     status: upstreamResponse.status,
@@ -631,9 +628,7 @@ export async function middleware(request: NextRequest) {
   const headers = new Headers(upstreamResponse.headers);
   headers.delete("content-length");
   applyStorefrontHtmlCacheHeaders(headers, request, upstreamResponse.headers);
-  if (shouldReorder) headers.set("x-storefront-head-seo-reordered", "1");
   if (isSpanishXbyRequest(request)) {
-    headers.set("x-storefront-locale", "es");
     headers.set("content-language", "es");
   }
   if (isGrownstrideRequest(request)) headers.set("X-Robots-Tag", "noindex, nofollow");

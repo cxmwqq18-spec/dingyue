@@ -191,8 +191,6 @@ function canonicalHref(html) {
 
 async function validateLivePublishedPages(host, paths) {
   const failures = [];
-  const publications = new Set();
-  const factsRevisions = new Set();
   const inbound = new Map([...paths].map((pathname) => [pathname, new Set()]));
   const pageResults = [];
   const queue = [...paths];
@@ -203,8 +201,6 @@ async function validateLivePublishedPages(host, paths) {
       const expectedCanonical = new URL(pathname, `https://${host}`).toString().replace(/\/$/, pathname === "/" ? "" : "/");
       const canonical = canonicalHref(response.body).replace(/\/$/, pathname === "/" ? "" : "/");
       const robots = metaContent(response.body, "robots").toLowerCase();
-      const publication = metaContent(response.body, "storefront-publication");
-      const factsRevision = metaContent(response.body, "storefront-facts-revision");
       const hasIndexFollow = /(?:^|[ ,])index(?:$|[ ,])/.test(robots) && /(?:^|[ ,])follow(?:$|[ ,])/.test(robots) && !robots.includes("noindex");
       const links = [];
       for (const match of response.body.matchAll(/<a\s+[^>]*href=["']([^"']+)["'][^>]*>/gi)) {
@@ -228,16 +224,12 @@ async function validateLivePublishedPages(host, paths) {
         finalUrl: response.status >= 300 && response.status < 400 ? response.location || null : `https://${host}${pathname}`,
         canonical,
         robots,
-        publication,
-        factsRevision,
         inboundCount: inbound.get(pathname)?.size ?? 0
       };
       pageResults.push(pageResult);
-      if (response.status !== 200 || (response.status >= 300 && response.status < 400) || canonical !== expectedCanonical || !hasIndexFollow || !publication || publication === "unpublished" || !factsRevision || !/<(?:main|body)\b/i.test(response.body)) {
-        failures.push({ pathname, status: response.status, canonical, expectedCanonical, robots, publication, factsRevision });
+      if (response.status !== 200 || (response.status >= 300 && response.status < 400) || canonical !== expectedCanonical || !hasIndexFollow || /storefront-(?:publication|facts-revision|data-source)/i.test(response.body) || !/<(?:main|body)\b/i.test(response.body)) {
+        failures.push({ pathname, status: response.status, canonical, expectedCanonical, robots });
       }
-      if (publication && publication !== "unpublished") publications.add(publication);
-      if (factsRevision) factsRevisions.add(factsRevision);
     }
   });
   await Promise.all(workers);
@@ -250,8 +242,6 @@ async function validateLivePublishedPages(host, paths) {
     .map(([pathname]) => pathname);
   return {
     failures,
-    publications: [...publications],
-    factsRevisions: [...factsRevisions],
     pageResults,
     inbound: Object.fromEntries([...inbound.entries()].map(([pathname, sources]) => [pathname, [...sources]])),
     orphanPaths: unresolvedOrphans
@@ -300,8 +290,6 @@ for (const target of targets) {
     pageResults: live.pageResults,
     inbound: live.inbound,
     orphanPaths: live.orphanPaths,
-    publications: live?.publications ?? [],
-    factsRevisions: live?.factsRevisions ?? []
   });
 }
 
@@ -311,8 +299,7 @@ const failures = results.filter((result) =>
   result.foreignHosts.length ||
   result.duplicateLocs.length ||
   result.liveFailures.length ||
-  result.orphanPaths.length ||
-  (result.mode === "live-publication" && (result.publications.length !== 1 || result.factsRevisions.length !== 1))
+  result.orphanPaths.length
 );
 console.log(JSON.stringify({ ok: failures.length === 0, stateSource: "postgres:active-or-latest-theme-publication+seo-indexer", results }, null, 2));
 if (failures.length) process.exitCode = 1;

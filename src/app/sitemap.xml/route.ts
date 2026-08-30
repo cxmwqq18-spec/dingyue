@@ -47,34 +47,13 @@ function isGrownstrideHost(value: string | null | undefined): boolean {
 export async function GET(request: Request): Promise<Response> {
   const host = request.headers.get("host");
   const forwardedHost = request.headers.get("x-forwarded-host");
-  const startedAt = Date.now();
-  const { entries, identity } = await getStorefrontSitemapPayloadForHost([forwardedHost, host]);
-  const urlCount = entries.length;
-  const imageCount = entries.reduce((total, entry) => total + entry.images.length, 0);
+  const { entries } = await getStorefrontSitemapPayloadForHost([forwardedHost, host]);
 
   return new Response(sitemapXml(entries), {
     headers: {
       "content-type": "application/xml; charset=utf-8",
       "cache-control": "no-store, max-age=0",
       "vary": "Host, X-Forwarded-Host, RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
-      "x-sitemap-url-count": String(urlCount),
-      "x-sitemap-image-count": String(imageCount),
-      "x-sitemap-generation-ms": String(Date.now() - startedAt),
-      ...(identity?.publicationId ? { "x-storefront-publication": identity.publicationId } : {}),
-      ...(identity?.publicationVersion !== undefined ? { "x-storefront-publication-version": String(identity.publicationVersion) } : {}),
-      ...(identity?.currentRevision ? { "x-storefront-current-revision": identity.currentRevision } : {}),
-      ...(identity?.contentHash ? { "x-storefront-content-hash": identity.contentHash } : {}),
-      ...(identity?.snapshotHash ? { "x-storefront-snapshot-hash": identity.snapshotHash } : {}),
-      ...(identity?.buildId ? { "x-storefront-build": identity.buildId } : {}),
-      ...(identity?.routeRevision ? { "x-storefront-route-revision": identity.routeRevision } : {}),
-      ...(identity?.pageRevision ? { "x-storefront-page-revision": identity.pageRevision } : {}),
-      ...(identity?.copyRevision ? { "x-storefront-copy-revision": identity.copyRevision } : {}),
-      ...(identity?.mediaRevision ? { "x-storefront-media-revision": identity.mediaRevision } : {}),
-      ...(identity?.factsRevision ? { "x-storefront-facts-revision": identity.factsRevision } : {}),
-      ...(identity?.offerRevision ? { "x-storefront-offer-revision": identity.offerRevision } : {}),
-      ...(identity?.collectionRevision ? { "x-storefront-collection-revision": identity.collectionRevision } : {}),
-      ...(identity?.linkRevision ? { "x-storefront-link-revision": identity.linkRevision } : {}),
-      ...(identity?.policyRevision ? { "x-storefront-policy-revision": identity.policyRevision } : {}),
       ...(isGrownstrideHost(forwardedHost) || isGrownstrideHost(host)
         ? { "x-robots-tag": "noindex, nofollow" }
         : {})

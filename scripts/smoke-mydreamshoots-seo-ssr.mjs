@@ -247,8 +247,8 @@ const aiVideoDirectory = await fetchHtml("/ai-video-generation");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
 const robotsResponse = await fetchStatusNoRedirect("/robots.txt", "text/plain");
 assert.equal(robotsResponse.status, 200, "robots.txt must return HTTP 200");
-for (const header of ["x-storefront-publication", "x-storefront-publication-version", "x-storefront-snapshot-hash", "x-storefront-build", "x-storefront-route-revision", "x-storefront-page-revision", "x-storefront-copy-revision", "x-storefront-media-revision", "x-storefront-facts-revision", "x-storefront-offer-revision", "x-storefront-collection-revision", "x-storefront-link-revision", "x-storefront-policy-revision"]) {
-  assert.ok(robotsResponse.headers[header], `robots.txt must expose ${header}`);
+for (const header of ["x-storefront-publication", "x-storefront-publication-version", "x-storefront-snapshot-hash", "x-storefront-build", "x-storefront-route-revision", "x-storefront-page-revision", "x-storefront-copy-revision", "x-storefront-media-revision", "x-storefront-facts-revision", "x-storefront-offer-revision", "x-storefront-collection-revision", "x-storefront-link-revision", "x-storefront-policy-revision", "x-sitemap-url-count", "x-sitemap-image-count", "x-sitemap-generation-ms"]) {
+  assert.equal(robotsResponse.headers[header], undefined, `robots.txt must not expose ${header}`);
 }
 const headshotPath = "/ai-image-generation/headshot";
 const headshotIsPublished = sitemapHasLoc(`https://${host}${headshotPath}`);

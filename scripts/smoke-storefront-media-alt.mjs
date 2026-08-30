@@ -43,6 +43,7 @@ function assert(condition, message) {
 const blockedPattern = /\b(?:visual reference|source reference|gallery image|gallery example|package gallery|image\s+\d+|for browsing|for review|storefront browsing|package gallery example|gallery scene example|package showcase frame|package cover frame|featured package scene|related package scene|private gallery visual frame|private storefront gallery|private gallery workflow|private AI album workflow|visual frame|detailed storefront visual|storefront visual showing|finished gallery example|private AI photo example|private AI photo package|how to plan this|mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes|AI-generated video poster)\b/i;
 const pathOrFilePattern = /https?:\/\/|\/assets\/|(?:^|\s)sites\/|(?:^|\s)[\w./-]+\.(?:png|jpe?g|webp|avif|svg)(?:\?\S+)?/i;
 const repeatedPhrasePattern = /\b([a-z][a-z'-]*(?:\s+[a-z][a-z'-]*){1,3})\s+\1\b/i;
+const productionDirectionPattern = /\b(?:scene\s*\d+|framing|facial crop|half-body pose|group framing|environmental view|detail crop|vertical framing|cinematic contrast|album-cover crop|event lighting|studio light|window light|ambient light|rim light|editorial light|front light|visual reference|source reference)\b/i;
 const stopWords = new Set(["a", "an", "and", "for", "in", "of", "on", "the", "to", "with"]);
 
 function normalizeAlt(value) {
@@ -77,6 +78,7 @@ function assertCleanAlt(alt, context) {
   assert(!blockedPattern.test(alt), `${context} uses blocked template copy: ${alt}`);
   assert(!pathOrFilePattern.test(alt), `${context} includes a path, URL, or filename: ${alt}`);
   assert(!repeatedPhrasePattern.test(alt), `${context} repeats a phrase: ${alt}`);
+  assert(!productionDirectionPattern.test(alt), `${context} includes production direction: ${alt}`);
 }
 
 const samples = [
@@ -153,8 +155,8 @@ const virtualTryOnAlt = storefrontCardImageAlt({
   title: "Virtual Try-On"
 });
 assert(
-  /^Virtual Try On portrait, .+, scene 08\.$/.test(virtualTryOnAlt),
-  `Virtual Try-On fallback should keep a source-specific scene description: ${virtualTryOnAlt}`
+  virtualTryOnAlt === "Virtual Try-On portrait.",
+  `Virtual Try-On fallback should use a concise subject description: ${virtualTryOnAlt}`
 );
 
 assert(

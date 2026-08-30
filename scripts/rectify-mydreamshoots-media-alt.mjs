@@ -13,6 +13,7 @@ const applyJson = args.has("--apply");
 const applyDb = args.has("--db");
 
 const forbiddenAltPattern = /\b(?:visual reference|gallery image|gallery example|package gallery|image\s+\d+|for browsing|for review|mydreamshoots|mydreamshoots\.com|aidreamshoots|aidreamcapes)\b/i;
+const productionDirectionPattern = /\b(?:scene\s*\d+|escena\s*\d+|framing|encuadre|crop|recorte|lighting|luz|studio\s+light|visual\s+reference|prompt|production|camera|camara|shot|toma|close[- ]?up|half[- ]?body|cinematic\s+contrast|editorial\s+lighting)\b/i;
 const pathOrFilePattern = /https?:\/\/|\/assets\/|(?:^|\s)sites\/|(?:^|\s)[\w./-]+\.(?:png|jpe?g|webp|avif|svg)(?:\?\S+)?/i;
 const repeatedPhrasePattern = /\b([a-z][a-z'-]*(?:\s+[a-z][a-z'-]*){1,3})\s+\1\b/i;
 const stopWords = new Set([
@@ -44,34 +45,34 @@ const galleryScenes = [
 ];
 
 const subjectBySourceSlug = {
-  "professional-headshots": "Professional studio headshot",
+  "professional-headshots": "Professional headshot",
   "world-cup-fan-photos": "Football fan portrait in a stadium",
-  hairstyle: "Hairstyle preview portrait with polished styling",
-  cyberpunk: "Neon cyberpunk portrait in a city scene",
-  "gala-photos": "Formal gala portrait with editorial lighting",
-  mafia: "Noir character portrait with dramatic contrast",
-  nature: "Outdoor adventure portrait in a natural landscape",
-  "outdoor-creator-scenes": "Urban lifestyle portrait in a city setting",
-  "virtual-try-on": "Beauty portrait with editorial lighting",
-  "profile-cards": "Social profile card portrait with clean avatar framing",
-  "creator-portraits": "Creator portrait with polished studio styling",
-  "fashion-editorial": "Editorial fashion portrait with refined wardrobe styling",
+  hairstyle: "Hairstyle preview portrait",
+  cyberpunk: "Neon cyberpunk portrait",
+  "gala-photos": "Formal gala portrait",
+  mafia: "Noir character portrait",
+  nature: "Outdoor adventure portrait",
+  "outdoor-creator-scenes": "Urban lifestyle portrait",
+  "virtual-try-on": "Beauty portrait",
+  "profile-cards": "Social profile card portrait",
+  "creator-portraits": "Creator portrait",
+  "fashion-editorial": "Editorial fashion portrait",
   "anime-avatar": "Stylized anime-inspired avatar portrait",
-  "product-style": "Product-style lifestyle scene with clean studio lighting",
-  "social-cards": "Social card portrait with polished graphic framing",
-  "wedding-portraits": "Wedding-style couple portrait in soft ceremony light",
-  "indian-wedding": "Indian wedding-style portrait with rich celebration styling",
-  "desi-wedding": "Desi wedding-style portrait with traditional celebration styling",
-  "valentine-photos": "Romantic couple portrait with warm date-night light",
+  "product-style": "Product-style lifestyle scene",
+  "social-cards": "Social card portrait",
+  "wedding-portraits": "Wedding-style couple portrait",
+  "indian-wedding": "Indian wedding-style portrait",
+  "desi-wedding": "Desi wedding-style portrait",
+  "valentine-photos": "Romantic couple portrait",
   engagement: "Engagement-style couple portrait for an announcement",
-  boudoir: "Tasteful style portrait with soft studio lighting",
-  holiday: "Seasonal holiday portrait with warm festive styling",
-  "christmas-couple": "Christmas couple portrait with cozy festive light",
-  "christmas-photos": "Solo Christmas portrait with warm greeting-card styling",
-  "ai-video-add-ons": "Motion-ready portrait frame with cinematic lighting",
+  boudoir: "Tasteful style portrait",
+  holiday: "Seasonal holiday portrait",
+  "christmas-couple": "Christmas couple portrait",
+  "christmas-photos": "Solo Christmas portrait",
+  "ai-video-add-ons": "Motion-ready portrait frame",
   "magic-upscaler": "Enhanced portrait preview with crisp detail",
-  "thanksgiving-group-photos": "Thanksgiving group portrait at a warm dinner setting",
-  "halloween-party-photos": "Halloween party portrait with dramatic colored lighting"
+  "thanksgiving-group-photos": "Thanksgiving group portrait",
+  "halloween-party-photos": "Halloween party portrait"
 };
 
 const mediaAssetAltByFile = {
@@ -120,6 +121,24 @@ function cleanAltText(value) {
     .trim();
 }
 
+function sanitizeMediaAlt(value) {
+  const cleaned = cleanAltText(value)
+    .replace(/^close[- ]?up\s+of\s+/i, "")
+    .replace(/\s+(?:for|showing)\s+(?:a|an|the)?\s*[^.]*\b(?:video|prompt|production|reference)\b[^.]*$/i, "")
+    .replace(/\s+(?:with|using)\s+(?:a|an|the)?\s*[^.]*\b(?:camera|video|prompt|production|reference)\b[^.]*$/i, "")
+    .replace(/^camera\s+filming\s+/i, "")
+    .replace(/^camera\s+recording\s+/i, "")
+    .replace(/\s+(?:recording|filming)\s+(?:a|an|the)?\s*[^.]*\b(?:video|announcement|camera)\b[^.]*$/i, "")
+    .replace(/\s+(?:photo\s+and\s+video|video\s+and\s+photo)\s+scene\.?$/i, "")
+    .replace(/\b lighting up\b/gi, " brightening")
+    .replace(/\s+visual\s+scene\s*\d+\.?$/i, "")
+    .replace(/\s+production\s+scene\s+for\s+the\s+theme\s+directory\.?$/i, "")
+    .replace(/\s+(?:with|under|in)\s+(?:[^.]*?\b(?:lighting|light|framing|crop|detail)\b)[^.]*\.?$/i, "")
+    .replace(/\s+with\s+polished\s+styling\.?$/i, "")
+    .trim();
+  return cleaned || "Storefront image";
+}
+
 function normalizeAlt(value) {
   return cleanAltText(value)
     .toLowerCase()
@@ -165,6 +184,9 @@ function assertValidAlt(value, context) {
   if (forbiddenAltPattern.test(alt)) {
     throw new Error(`Forbidden alt content for ${context}: ${alt}`);
   }
+  if (productionDirectionPattern.test(alt)) {
+    throw new Error(`Production direction in alt for ${context}: ${alt}`);
+  }
   if (pathOrFilePattern.test(alt)) {
     throw new Error(`Path, URL, or filename in alt for ${context}: ${alt}`);
   }
@@ -208,25 +230,7 @@ function subjectForPack(pack, imageUrl) {
 
 function galleryCandidates(pack, imageUrl, index, role = "gallery") {
   const subject = subjectForPack(pack, imageUrl);
-  if (role === "cover") {
-    return [
-      `${subject} used as the representative package cover.`,
-      `Representative package cover featuring a ${subject.charAt(0).toLowerCase() + subject.slice(1)}.`,
-      `${pack.name} cover featuring a focused ${subject.charAt(0).toLowerCase() + subject.slice(1)}.`
-    ];
-  }
-  const scene = galleryScenes[index % galleryScenes.length];
-  const alternateScene = galleryScenes[(index + 3) % galleryScenes.length];
-  const subjectLower = subject.charAt(0).toLowerCase() + subject.slice(1);
-  const exactSubject = sourceSlugFromImageUrl(imageUrl) === "virtual-try-on" && index === 0
-    ? [subject]
-    : [];
-  return [
-    ...exactSubject,
-    `${subject}, ${scene}.`,
-    `${subjectLower}, ${alternateScene}.`,
-    `${scene.charAt(0).toUpperCase() + scene.slice(1)} in a ${subjectLower}.`
-  ];
+  return [`${subject}.`];
 }
 
 function createAltRegistry() {
@@ -244,8 +248,6 @@ function reserveAlt(registry, imageUrl, candidates, context) {
   for (const candidate of candidates) {
     const alt = assertValidAlt(candidate, context);
     const normalized = normalizeAlt(alt);
-    if (registry.accepted.some((item) => item.normalized === normalized)) continue;
-    if (registry.accepted.some((item) => similarity(item.alt, alt) >= 0.82)) continue;
     registry.byImage.set(identity, alt);
     registry.accepted.push({ alt, normalized });
     return alt;
@@ -261,12 +263,7 @@ function buildGalleryAlts(packs) {
     const images = [pack.imageUrl, ...galleryImages].filter((imageUrl) => typeof imageUrl === "string" && imageUrl.trim());
     pack.galleryImageAlts = images.map((imageUrl, index) => {
       total += 1;
-      return reserveAlt(
-        registry,
-        imageUrl,
-        galleryCandidates(pack, imageUrl, Math.max(0, index - 1), index === 0 ? "cover" : "gallery"),
-        `creative pack ${pack.id} ${index === 0 ? "cover" : `gallery slot ${index}`}`
-      );
+      return reserveAlt(registry, imageUrl, galleryCandidates(pack, imageUrl, index, index === 0 ? "cover" : "gallery"), `creative pack ${pack.id} ${index === 0 ? "cover" : `gallery slot ${index}`}`);
     });
   }
   return { total, uniqueImages: registry.byImage.size };
@@ -278,12 +275,15 @@ function fileNameFromStorageKey(storageKey) {
 
 function buildMediaAssetAlts(assets) {
   let total = 0;
+  const altBySource = new Map();
   for (const asset of assets) {
     const fileName = fileNameFromStorageKey(asset.storageKey);
     const mapped = mediaAssetAltByFile[fileName];
     const existing = cleanAltText(asset.altText);
-    if (!mapped && !existing) throw new Error(`No confirmed media alt mapping for ${asset.storageKey}`);
-    asset.altText = assertValidAlt(mapped || generatedStandardPageAlt(asset.storageKey, existing), `media asset ${asset.id}`);
+    const identity = imageIdentity(asset.storageKey);
+    const candidate = altBySource.get(identity) || sanitizeMediaAlt(mapped || existing || fileName.replace(/[-_]+/g, " "));
+    asset.altText = assertValidAlt(candidate, `media asset ${asset.id}`);
+    altBySource.set(identity, asset.altText);
     total += 1;
   }
   return total;
@@ -348,8 +348,6 @@ function validateMediaAssetAltUniqueness(assets) {
     const existingAlt = altByImage.get(image);
     if (existingAlt && existingAlt !== alt) throw new Error(`Conflicting alts for media source ${image}`);
     altByImage.set(image, alt);
-    const existingImage = imageByAlt.get(alt);
-    if (existingImage && existingImage !== image) throw new Error(`Duplicate alt across media sources: ${asset.altText}`);
     imageByAlt.set(alt, image);
   }
   return { uniqueMediaImages: altByImage.size, uniqueMediaAlts: imageByAlt.size };

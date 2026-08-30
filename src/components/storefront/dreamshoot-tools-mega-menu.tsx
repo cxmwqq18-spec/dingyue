@@ -104,16 +104,11 @@ function instanceKey(item: { id?: string; type?: string }, index: number, prefix
   return item.id?.trim() ? item.id : `${prefix}_${item.type ?? "item"}_${index}`;
 }
 
-function legacyInstanceKey(item: { id?: string }, index: number, prefix: string): string {
-  if (item.id?.startsWith(`${prefix}_`)) return item.id;
-  return `${prefix}_${index + 1}`;
-}
-
-function xfcartBlockAttrs(block: SectionBlockInstance, index: number, prefix: string) {
+function xfcartBlockAttrs(editorMode: boolean, block: SectionBlockInstance, index: number, prefix: string) {
+  if (!editorMode) return {};
   return {
     "data-xfcart-block-id": instanceKey(block, index, prefix),
-    "data-xfcart-block-type": block.type,
-    "data-xfcart-block-legacy-id": legacyInstanceKey(block, index, prefix)
+    "data-xfcart-block-type": block.type
   };
 }
 
@@ -549,6 +544,7 @@ function orderedToolCategories(categories: string[]): string[] {
 }
 
 export function DreamShootMegaToolsPanel({
+  editorMode = false,
   site,
   tools,
   ctaLabel,
@@ -556,6 +552,7 @@ export function DreamShootMegaToolsPanel({
   variant = "section",
   variantTone = "dark"
 }: {
+  editorMode?: boolean;
   site: DreamShootToolsMenuSite;
   tools: SectionBlockInstance[];
   ctaLabel: string;
@@ -671,7 +668,7 @@ export function DreamShootMegaToolsPanel({
                         className={warm ? "group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"}
                         href={toolActionHref(site, blockValue(tool, "href", "/tools"), tool.id)}
                         key={instanceKey(tool, index, toolPrefix)}
-                        {...xfcartBlockAttrs(tool, index, toolPrefix)}
+                        {...xfcartBlockAttrs(editorMode, tool, index, toolPrefix)}
                       >
                         <Icon className={warm ? "mt-0.5 h-4.5 w-4.5 shrink-0 text-[#b86e36] transition group-hover/tool:text-[#8f5327]" : "mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/tool:text-white"} strokeWidth={1.8} />
                         <span className="text-[0.94rem] font-semibold leading-6">{storefrontPaidToolBlockValue(tool, "title", "AI photo tool")}</span>

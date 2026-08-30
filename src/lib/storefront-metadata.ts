@@ -41,20 +41,10 @@ export async function metadataForPublishedStorefrontPage({
   const configuredOgImage = context.seo.ogImage?.trim();
   const defaultOgImage = context.settings.seo?.defaultOgImage?.trim();
   const useApprovedDirectoryImage = Boolean(approvedDirectoryImage && (!configuredOgImage || configuredOgImage === defaultOgImage));
-  const metadata = metadataForSingleThemePage(snapshot.site, snapshotPage, useApprovedDirectoryImage
+  return metadataForSingleThemePage(snapshot.site, snapshotPage, useApprovedDirectoryImage
     ? { ...context, seo: { ...context.seo, ogImage: approvedDirectoryImage } }
     : context
   );
-  const existingOther = (metadata.other ?? {}) as Record<string, string | number | (string | number)[]>;
-  return {
-    ...metadata,
-    other: {
-      ...existingOther,
-      "storefront-facts-revision": context.revisions.factsRevision,
-      "storefront-data-source": "postgres-relational",
-      "storefront-build": context.revisions.buildId
-    }
-  };
 }
 
 export async function metadataForPublishedStorefrontDirectoryPage({

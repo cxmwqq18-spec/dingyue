@@ -88,7 +88,6 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
   return {
     title: seo.title,
     description: seo.description,
-    keywords: seo.keywords || undefined,
     alternates: canonical ? { canonical } : undefined,
     robots: {
       index: seo.index,
@@ -111,12 +110,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
       description: seo.description,
       images: ogImage ? [ogImage] : undefined
     },
-    icons: siteIcons(site, context.settings),
-    other: {
-      "storefront-facts-revision": context.revisions.factsRevision,
-      "storefront-data-source": "postgres-relational",
-      "storefront-build": context.revisions.buildId
-    }
+    icons: siteIcons(site, context.settings)
   };
 }
 
