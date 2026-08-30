@@ -2275,7 +2275,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
             location: "Fan Photos",
             rating: "",
             avatarUrl: "/assets/dreamshoot/generated/20260618/headshot-lifestyle-v1.png",
-            resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
+            resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03-20260830.webp"
           }),
           block("proof_vip_style", "testimonial", {
             quote: "Plan VIP-style portraits and red-carpet fan moments from approved source photos before spending credits on a full private gallery.",
@@ -2284,7 +2284,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
             location: "VIP Looks",
             rating: "",
             avatarUrl: "/assets/dreamshoot/frames/story-beauty-portrait.png",
-            resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp"
+            resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02-20260830.webp"
           }),
           block("proof_christmas_cards", "testimonial", {
             quote: "Compare Christmas couple, friend-card, and group portrait directions before creating card-ready favorites for a private album.",

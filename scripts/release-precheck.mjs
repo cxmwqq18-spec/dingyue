@@ -84,6 +84,7 @@ if (!skipLive) {
   run(process.execPath, ["scripts/smoke-storefront-header-layout.mjs"]);
   run(process.execPath, ["scripts/smoke-storefront-public-routes.mjs"]);
   run(process.execPath, ["scripts/smoke-storefront-navigation-data.mjs"]);
+  run(process.execPath, ["scripts/smoke-storefront-asset-urls.mjs"]);
 }
 
 console.log(JSON.stringify({

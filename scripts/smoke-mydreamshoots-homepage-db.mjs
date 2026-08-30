@@ -96,6 +96,10 @@ try {
     review_jordan: { name: "Jordan K.", location: "Profile refresh" },
     review_riley: { name: "Riley W.", location: "Social content" }
   };
+  const expectedReviewResultImages = {
+    review_ava: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03-20260830.webp",
+    review_lucas: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02-20260830.webp"
+  };
   const publishedReviewBlocks = reviews?.blocks ?? [];
   assert.deepEqual(publishedReviewBlocks.map((block) => block.id), expectedReviewKeys, "published homepage reviews must contain the approved eight-card order");
   const draftReviewBlocks = draftReviews?.blocks ?? [];
@@ -106,6 +110,7 @@ try {
     assert.ok(settings.role, `${block.id} published review must retain role metadata`);
     assert.equal(settings.rating, "5", `${block.id} published review must retain the approved five-star rating`);
     assert.ok(settings.avatarUrl && settings.resultImageUrl, `${block.id} published review must retain avatar and result assets`);
+    if (expectedReviewResultImages[block.id]) assert.equal(settings.resultImageUrl, expectedReviewResultImages[block.id], `${block.id} published result image must use a committed asset`);
   }
   for (const block of draftReviewBlocks) {
     const settings = block.settings ?? {};
@@ -114,6 +119,7 @@ try {
     assert.ok(settings.role, `${block.id} must retain role metadata`);
     assert.equal(settings.rating, "5", `${block.id} must retain the approved five-star rating`);
     assert.ok(settings.avatarUrl && settings.resultImageUrl, `${block.id} must retain avatar and result assets`);
+    if (expectedReviewResultImages[block.id]) assert.equal(settings.resultImageUrl, expectedReviewResultImages[block.id], `${block.id} result image must use a committed asset`);
   }
 
   assert.equal(expectedVideoParents.size, 5, "video menu must define five parent categories");

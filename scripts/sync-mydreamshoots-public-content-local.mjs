@@ -150,7 +150,7 @@ const mydreamshootsReviewBlocks = [
     location: "Sports fan set",
     rating: "5",
     avatarUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/review-ava-avatar.png",
-    resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
+    resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03-20260830.webp"
   }),
   block("review_lucas", "testimonial", {
     quote: mydreamshootsHomepageCopy.reviewQuotes.review_lucas,
@@ -159,7 +159,7 @@ const mydreamshootsReviewBlocks = [
     location: "Profile images",
     rating: "5",
     avatarUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/review-lucas-avatar.png",
-    resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp"
+    resultImageUrl: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02-20260830.webp"
   }),
   block("review_mia", "testimonial", {
     quote: mydreamshootsHomepageCopy.reviewQuotes.review_mia,

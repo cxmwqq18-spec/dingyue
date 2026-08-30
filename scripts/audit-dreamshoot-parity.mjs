@@ -350,8 +350,8 @@ for (const phrase of [
   assert(featuredPackText.includes(phrase), `World Cup featured pack missing required copy: ${phrase}`);
 }
 const requiredWorldCupAssets = [
-  "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp",
-  "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp",
+  "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03-20260830.webp",
+  "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02-20260830.webp",
   "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-02.webp",
   "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp",
   "/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp?v=20260801visualfix1",

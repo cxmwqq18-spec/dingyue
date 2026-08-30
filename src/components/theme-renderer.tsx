@@ -2689,7 +2689,7 @@ const dreamshootHomepageSafeShowcaseImagePathBySlug: Record<string, string> = {
   "valentine-photos": "/assets/dreamshoot/generated/pack-galleries/valentine-photos/valentine-photos-08.webp",
   "virtual-try-on": "/assets/dreamshoot/generated/pack-galleries/virtual-try-on/virtual-try-on-08.webp",
   "wedding-portraits": "/assets/dreamshoot/generated/homepage-showcase/images/wedding-portraits.webp",
-  "world-cup-fan-photos": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
+  "world-cup-fan-photos": "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03-20260830.webp"
 };
 const aidreamcapesRootCategoryShowcaseSlugs = [
   "fan-scene-albums",

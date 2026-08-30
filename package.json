@@ -36,6 +36,7 @@
     "smoke:storefront-header-layout": "node scripts/smoke-storefront-header-layout.mjs",
     "smoke:storefront-sitemap-directory-coverage": "node scripts/smoke-storefront-sitemap-directory-coverage.mjs",
     "smoke:storefront-image-isolation": "node scripts/smoke-storefront-image-isolation.mjs",
+    "smoke:storefront-asset-urls": "node scripts/smoke-storefront-asset-urls.mjs",
     "smoke:storefront-dom-image-isolation": "node scripts/smoke-storefront-dom-image-isolation.mjs",
     "smoke:storefront-media-alt": "node scripts/smoke-storefront-media-alt.mjs",
     "repair:mydreamshoots-media-alt": "node scripts/rectify-mydreamshoots-media-alt.mjs",
