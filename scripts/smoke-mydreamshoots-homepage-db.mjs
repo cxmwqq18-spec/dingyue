@@ -66,6 +66,8 @@ try {
 
   const home = site.pages.find((page) => page.slug === "/");
   assert(home, "homepage is required");
+  assert.equal(home.draftJson?.sections?.package_catalog_1, undefined, "homepage draft must not retain the removed package catalog section");
+  assert.equal(home.publishedJson?.sections?.package_catalog_1, undefined, "homepage published content must not retain the removed package catalog section");
   const homeSection = home.publishedJson?.sections?.generation_showcase_1;
   assert.equal(homeSection?.settings?.showTrustedLogoIntro, true, "trusted logo intro must be enabled");
   assert.equal(homeSection?.settings?.embeddedPricingSectionId, "pricing_1", "homepage must embed pricing_1");

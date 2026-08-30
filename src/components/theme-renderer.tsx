@@ -265,10 +265,8 @@ export function ThemeRenderer({
         ) : null}
         <div
           className="xfcart-section"
-          data-section-id="header_plus"
-          data-section-style=""
-          data-section-type="header_plus"
           id="xfcart-section-header_plus"
+          {...sectionEditorAttrs(mode, "header_plus", "header_plus")}
           {...previewSelectedAttrs(previewSelection, "header_plus")}
         >
           <ThemeGlobalHeader
@@ -277,6 +275,7 @@ export function ThemeRenderer({
             deferMegaMenuPanels
             disablePrefetch={disableStorefrontPrefetch}
             lightweight={lightweightChrome}
+            mode={mode}
             publicStorefrontPage={publicStorefrontPage}
             runtime={runtime}
             site={routedSite}
@@ -333,17 +332,15 @@ export function ThemeRenderer({
         </main>
         <div
           className="xfcart-section"
-          data-section-id="footer_plus"
-          data-section-style=""
-          data-section-type="footer_plus"
           id="xfcart-section-footer_plus"
           style={{
             contentVisibility: "auto",
             containIntrinsicSize: "1px 420px"
           }}
+          {...sectionEditorAttrs(mode, "footer_plus", "footer_plus")}
           {...previewSelectedAttrs(previewSelection, "footer_plus")}
         >
-          <ThemeGlobalFooter lightweight={lightweightChrome} site={routedSite} settings={settings} storefrontContext={storefrontContext} homepageShowcases={homepageShowcases} />
+          <ThemeGlobalFooter lightweight={lightweightChrome} mode={mode} site={routedSite} settings={settings} storefrontContext={storefrontContext} homepageShowcases={homepageShowcases} />
         </div>
       </div>
     </StorefrontLinkPrefetchProvider>
@@ -747,11 +744,9 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
   return (
     <div
       className="xfcart-section"
-      data-section-id={id}
-      data-section-style=""
-      data-section-type={section.type}
       id={`xfcart-section-${id}`}
       style={lazyStyle}
+      {...sectionEditorAttrs(mode, id, section.type)}
       {...previewSelectedAttrs(previewSelection, id)}
     >
       <DreamshootShowcasePreview>
@@ -844,7 +839,15 @@ function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: 
   };
 }
 
-function AidreamcapesLogoMark({ ariaLabel = "Aidreamcapes logo for private fan-scene and holiday photo albums", className = "h-full w-full" }: { ariaLabel?: string; className?: string }) {
+function sectionEditorAttrs(mode: "published" | "preview", id: string, type: string) {
+  if (mode !== "preview") return {};
+  return {
+    "data-section-id": id,
+    "data-section-type": type
+  };
+}
+
+function AidreamcapesLogoMark({ ariaLabel = "Aidreamcapes logo", className = "h-full w-full" }: { ariaLabel?: string; className?: string }) {
   return (
     <svg className={className} viewBox="0 0 512 512" role="img" aria-label={ariaLabel}>
       <defs>
@@ -969,7 +972,7 @@ function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic
   };
 }
 
-export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, publicStorefrontPage = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [], homepageShowcases = [], videoGenerationTopics }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; publicStorefrontPage?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[]; homepageShowcases?: PublishedHomepageShowcaseItem[]; videoGenerationTopics?: HeaderVideoGenerationTopic[] }) {
+export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, mode = "published", publicStorefrontPage = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [], homepageShowcases = [], videoGenerationTopics }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; mode?: "published" | "preview"; publicStorefrontPage?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[]; homepageShowcases?: PublishedHomepageShowcaseItem[]; videoGenerationTopics?: HeaderVideoGenerationTopic[] }) {
   const HeaderLink = StorefrontInstantLink;
   const MegaMenu = ClickMegaMenu;
   const header = settings.globalSections?.header;
@@ -1210,15 +1213,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
         ? "Aidreamcapes"
         : title;
   const visualBrandTitle = spanishXby ? readableBrandTitle : isDreamShoot ? dreamShootsVisibleTitle : isAidreamcapes ? aidreamcapesVisibleTitle : readableBrandTitle;
-  const brandDescription = spanishXby
-    ? isAidreamcapes
-      ? `${readableBrandTitle} inicio, retratos de viaje con IA y galerias privadas`
-      : `${readableBrandTitle} inicio, paquetes de fotos con IA y galerias privadas`
-    : isDreamShoot
-      ? "myDreamshoots home, AI shoot packages, creator portraits, headshots, fan photos, and private albums"
-      : isAidreamcapes
-        ? "Aidreamcapes home, private fan-scene photo albums and holiday memory sets"
-        : `${readableBrandTitle} home`;
+  const brandDescription = `${readableBrandTitle} home`;
   const logoAlt = spanishXby
     ? isAidreamcapes
       ? `${readableBrandTitle} logo`
@@ -1226,7 +1221,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
     : isDreamShoot
       ? "myDreamshoots heart camera logo"
       : isAidreamcapes
-        ? header ? setting(header, "logoAlt", "Aidreamcapes logo for private fan-scene and holiday photo albums") : "Aidreamcapes logo for private fan-scene and holiday photo albums"
+        ? header ? setting(header, "logoAlt", "Aidreamcapes logo") : "Aidreamcapes logo"
         : header
           ? setting(header, "logoAlt", `${readableBrandTitle} logo`)
           : `${readableBrandTitle} logo`;
@@ -1362,8 +1357,6 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                     <span aria-hidden={isAidreamcapes && !spanishXby ? "true" : undefined}>{visualBrandTitle}</span>
                   </span>
                 )}
-                {isDreamShoot ? <span className="sr-only">{spanishXby ? `${readableBrandTitle} paquetes de fotos con IA y galerias privadas` : "myDreamshoots AI shoot packages, creator portraits, headshots, fan photos, and private albums"}</span> : null}
-                {isAidreamcapes ? <span className="sr-only">{spanishXby ? `${readableBrandTitle} albumes privados de fans y recuerdos festivos` : "Aidreamcapes private fan-scene photo albums and holiday memory sets"}</span> : null}
                 {lightCommerce ? <span className="sr-only">{market}</span> : null}
               </span>
             </>
@@ -1390,7 +1383,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 		                className={navClass}
 		                href={hrefForPage(site, link.href, pagePath)}
                     prefetch={disablePublicSeoPrefetch ? false : isWorkspaceNavLink(link.label, link.href) ? true : undefined}
-                {...xfcartBlockAttrs(link.block, index, "header_nav")}
+                {...xfcartBlockAttrs(mode, link.block, index, "header_nav")}
               >
                 {link.label}
               </HeaderLink>
@@ -1404,7 +1397,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
             }
             return (
             <MegaMenu
-	                blockAttrs={xfcartBlockAttrs(link.block, index, "header_nav")}
+	                blockAttrs={xfcartBlockAttrs(mode, link.block, index, "header_nav")}
 	                buttonClassName={navClass}
 	                disablePrefetch={disablePublicSeoPrefetch}
 	                key={`${link.label}_${link.href}`}
@@ -1444,6 +1437,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                    <SharedDreamShootMegaToolsPanel
 	                      ctaHref={isMyDreamShootsCom ? "/ai-video-generation" : "/tools"}
 	                      ctaLabel={spanishXby ? "Ver todas las herramientas" : isMyDreamShootsCom ? "View all video generators" : "View all tools"}
+	                      editorMode={mode === "preview"}
 	                      site={site}
 	                      tools={toolMegaBlocks}
 	                      variantTone="dark"
@@ -1621,7 +1615,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                         className={mobileLinkClass}
                         href={hrefForPage(site, link.href, pagePath)}
                         key={`mobile_${link.label}_${link.href}`}
-                        {...xfcartBlockAttrs(link.block, index, "header_nav_mobile")}
+                        {...xfcartBlockAttrs(mode, link.block, index, "header_nav_mobile")}
                       >
                         {link.label}
                       </HeaderLink>
@@ -1688,7 +1682,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   );
 }
 
-export function ThemeGlobalFooter({ lightweight = false, site, settings, storefrontContext, homepageShowcases = [] }: { lightweight?: boolean; site: Site; settings: ThemeSettings; storefrontContext?: StorefrontContext; homepageShowcases?: PublishedHomepageShowcaseItem[] }) {
+export function ThemeGlobalFooter({ lightweight = false, mode = "published", site, settings, storefrontContext, homepageShowcases = [] }: { lightweight?: boolean; mode?: "published" | "preview"; site: Site; settings: ThemeSettings; storefrontContext?: StorefrontContext; homepageShowcases?: PublishedHomepageShowcaseItem[] }) {
   const footer = settings.globalSections?.footer;
   const saasFooter = saasGlobalSection(settings, "footer_plus");
   const title = footer ? setting(footer, "title", site.branding.logoText) : site.branding.logoText;
@@ -2050,8 +2044,6 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
                       <span aria-hidden={isAidreamcapesFooter && !spanishXbyFooter ? "true" : undefined}>{visualFooterTitle}</span>
                     </span>
                   )}
-                  {isDreamShootFooter ? <span className="sr-only">{spanishXbyFooter ? `${readableFooterTitle} paquetes de fotos con IA y galerias privadas` : "myDreamshoots AI shoot packages, creator portraits, headshots, fan photos, and private albums"}</span> : null}
-                  {isAidreamcapesFooter ? <span className="sr-only">{spanishXbyFooter ? `${readableFooterTitle} albumes privados de fans y recuerdos festivos` : "Aidreamcapes private fan-scene photo albums and holiday memory sets"}</span> : null}
                 </span>
                 <p className={dark ? "mt-1.5 text-[10px] uppercase tracking-[0.18em] text-white/44" : "mt-1.5 text-[10px] uppercase tracking-[0.18em] text-[#8f7d6d]"}>
                   {tagline}
@@ -2092,7 +2084,7 @@ export function ThemeGlobalFooter({ lightweight = false, site, settings, storefr
                       key={`${link.label}_${link.href}_${column.heading}`}
                       prefetch={false}
                       rel={isExternalFooterLink(link.href) ? "nofollow noopener noreferrer" : undefined}
-                      {...xfcartBlockAttrs(link.block, index, `footer_nav_${slugify(column.heading)}`)}
+                      {...xfcartBlockAttrs(mode, link.block, index, `footer_nav_${slugify(column.heading)}`)}
                     >
                       {footerLinkLabel(link.label, link.href)}
                     </Link>
@@ -2438,16 +2430,11 @@ function instanceKey(item: { id?: string; type?: string }, index: number, prefix
   return item.id?.trim() ? item.id : `${prefix}_${item.type ?? "item"}_${index}`;
 }
 
-function legacyInstanceKey(item: { id?: string }, index: number, prefix: string): string {
-  if (item.id?.startsWith(`${prefix}_`)) return item.id;
-  return `${prefix}_${index + 1}`;
-}
-
-function xfcartBlockAttrs(block: SectionBlockInstance, index: number, prefix: string) {
+function xfcartBlockAttrs(mode: "published" | "preview", block: SectionBlockInstance, index: number, prefix: string) {
+  if (mode !== "preview") return {};
   return {
     "data-xfcart-block-id": instanceKey(block, index, prefix),
-    "data-xfcart-block-type": block.type,
-    "data-xfcart-block-legacy-id": legacyInstanceKey(block, index, prefix)
+    "data-xfcart-block-type": block.type
   };
 }
 
@@ -6503,6 +6490,7 @@ function dreamshootToolCategoryHref(category: string): string {
 }
 
 function DreamShootMegaToolsPanel({
+  mode = "published",
   site,
   tools,
   ctaLabel,
@@ -6510,6 +6498,7 @@ function DreamShootMegaToolsPanel({
   variant = "section",
   variantTone = "dark"
 }: {
+  mode?: "published" | "preview";
   site: Site;
   tools: SectionBlockInstance[];
   ctaLabel: string;
@@ -6610,7 +6599,7 @@ function DreamShootMegaToolsPanel({
                       className={warm ? "group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"}
                       href={toolActionHref(site, blockValue(tool, "href", "/tools/image-studio"), tool.id)}
                       key={instanceKey(tool, index, toolPrefix)}
-                      {...xfcartBlockAttrs(tool, index, toolPrefix)}
+                      {...xfcartBlockAttrs(mode, tool, index, toolPrefix)}
                     >
                       <Icon className={warm ? "mt-0.5 h-4.5 w-4.5 shrink-0 text-[#b86e36] transition group-hover/tool:text-[#8f5327]" : "mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/tool:text-white"} strokeWidth={1.8} />
                       <ContentLabelTag className="text-[0.94rem] font-semibold leading-6">{storefrontPaidToolBlockValue(tool, "title", "AI photo tool")}</ContentLabelTag>
@@ -7386,7 +7375,7 @@ function renderLegacySaasSection({
           </div>
           <div className="grid gap-3 sm:grid-cols-[0.68fr_1fr]">
             {slides.slice(0, 3).map((slide, index) => (
-              <div className={`overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/10 ${index === 0 ? "sm:row-span-2" : ""}`} key={instanceKey(slide, index, "reveal_slide")} {...xfcartBlockAttrs(slide, index, "reveal_slide")}>
+              <div className={`overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/10 ${index === 0 ? "sm:row-span-2" : ""}`} key={instanceKey(slide, index, "reveal_slide")} {...xfcartBlockAttrs(mode, slide, index, "reveal_slide")}>
                 <img
                   className="h-full min-h-[220px] w-full object-cover opacity-90"
                   src={mediaAssetUrl(site, blockValue(slide, "src", image))}
@@ -7595,7 +7584,7 @@ function renderLegacySaasSection({
                   { id: "default_filter_1", type: "tag_filter", settings: { title: "Style", tags: "creator,editorial,headshot" } },
                   { id: "default_filter_2", type: "price_filter", settings: { title: "Credits", tags: "0,20,40" } }
                 ]).map((filter, index) => (
-                  <div key={instanceKey(filter, index, "collection_filter")} {...xfcartBlockAttrs(filter, index, "collection_filter")}>
+                  <div key={instanceKey(filter, index, "collection_filter")} {...xfcartBlockAttrs(mode, filter, index, "collection_filter")}>
                     <p className="text-sm font-semibold">{blockValue(filter, "title", filter.type)}</p>
                     <div className="mt-2 flex flex-wrap gap-2">
                       {blockValue(filter, "tags", "all").split(",").filter(Boolean).map((tag) => (
@@ -8042,7 +8031,7 @@ function renderLegacySaasSection({
             {(blocks.length ? blocks : [{ id: "fallback", type: "text_block", settings: { title: "Story block", text: "Add guidance, proof, or collection details for the photo pack experience.", image: "" } }]).map((block, index) => {
               const image = mediaAssetUrl(site, blockValue(block, "image", blockValue(block, "src", fallbackImageForSeed(`${site.slug}-${type}-${index}`))));
               return (
-                <article className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-white" key={instanceKey(block, index, "feature_column")} {...xfcartBlockAttrs(block, index, "feature_column")}>
+                <article className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-white" key={instanceKey(block, index, "feature_column")} {...xfcartBlockAttrs(mode, block, index, "feature_column")}>
                   {saasBool(block.settings.enable_image, true) ? (
                     <div className="aspect-[16/11] bg-zinc-200">
                       <img className="h-full w-full object-cover" src={image} alt={blockVisualAltForSite(site, section, block, image, index, storefrontSectionLabel(block.type))} />
@@ -8069,7 +8058,7 @@ function renderLegacySaasSection({
           {setting(section, "title") ? <h2 className="text-center text-2xl font-semibold">{setting(section, "title")}</h2> : null}
           <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6">
             {(blocks.length ? blocks : Array.from({ length: 6 }, (_, index) => ({ id: `logo_${index}`, type: "logo_image", settings: { image: "" } }))).map((block, index) => (
-              <div className="grid h-24 place-items-center rounded-[1rem] border border-black/10 bg-zinc-50 p-4 text-center font-mono text-xs uppercase tracking-[0.18em] text-zinc-500" key={instanceKey(block, index, "logo")} {...xfcartBlockAttrs(block, index, "logo")}>
+              <div className="grid h-24 place-items-center rounded-[1rem] border border-black/10 bg-zinc-50 p-4 text-center font-mono text-xs uppercase tracking-[0.18em] text-zinc-500" key={instanceKey(block, index, "logo")} {...xfcartBlockAttrs(mode, block, index, "logo")}>
                 {blockValue(block, "image") ? <img className="max-h-12 max-w-full object-contain" src={mediaAssetUrl(site, blockValue(block, "image"))} alt={`Logo ${index + 1}`} /> : `Brand ${index + 1}`}
               </div>
             ))}
@@ -8109,7 +8098,7 @@ function renderLegacySaasSection({
             {(blocks.length ? blocks : Array.from({ length: 4 }, (_, index) => ({ id: `gallery_${index}`, type: "banner", settings: { src: "", title: "" } }))).slice(0, 8).map((block, index) => {
               const image = mediaAssetUrl(site, blockValue(block, "src", fallbackImageForSeed(`${site.slug}-${type}-${index}`)));
               return (
-                <Link className="group relative aspect-square overflow-hidden rounded-[1rem] border border-black/10 bg-zinc-200" href={hrefFor(site, blockValue(block, "link", "#"))} key={instanceKey(block, index, "gallery")} {...xfcartBlockAttrs(block, index, "gallery")}>
+                <Link className="group relative aspect-square overflow-hidden rounded-[1rem] border border-black/10 bg-zinc-200" href={hrefFor(site, blockValue(block, "link", "#"))} key={instanceKey(block, index, "gallery")} {...xfcartBlockAttrs(mode, block, index, "gallery")}>
                   <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} alt={blockVisualAltForSite(site, section, block, image, index, blockValue(block, "account_id", "Gallery image"))} />
                   {blockValue(block, "account_id") ? <span className="absolute bottom-3 left-3 rounded-full bg-white/82 px-3 py-1 text-xs font-medium backdrop-blur">@{blockValue(block, "account_id")}</span> : null}
                 </Link>
@@ -8211,7 +8200,7 @@ function renderLegacySaasSection({
           {promoBlocks.length ? (
             <div className="grid gap-3 md:grid-cols-3">
               {promoBlocks.slice(0, 3).map((block, index) => (
-                <Link className="group overflow-hidden rounded-[1rem] border border-black/10 bg-zinc-50" href={hrefFor(site, blockValue(block, `link${index + 1}`, "/pricing"))} key={instanceKey(block, index, "header_ads")} {...xfcartBlockAttrs(block, index, "header_ads")}>
+                <Link className="group overflow-hidden rounded-[1rem] border border-black/10 bg-zinc-50" href={hrefFor(site, blockValue(block, `link${index + 1}`, "/pricing"))} key={instanceKey(block, index, "header_ads")} {...xfcartBlockAttrs(mode, block, index, "header_ads")}>
                   <img
                     className="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                     src={mediaAssetUrl(site, blockValue(block, `image${index + 1}`, fallbackImageForSeed(`${site.slug}-header-${index}`)))}
@@ -8596,7 +8585,7 @@ function SectionView({
             <h2 className={`${headingClass} mx-auto max-w-[24ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
             <div className={`mx-auto mt-10 max-w-[66rem] divide-y ${editorialThemeTone === "halloween" ? "divide-[#74462e] border-[#74462e]" : "divide-[#e4d1cb] border-[#e4d1cb]"} border-y`}>
               {blocks.map((block, index) => (
-                <details className="group py-5" key={instanceKey(block, index, "editorial_faq")} {...xfcartBlockAttrs(block, index, "editorial_faq")}>
+                <details className="group py-5" key={instanceKey(block, index, "editorial_faq")} {...xfcartBlockAttrs(mode, block, index, "editorial_faq")}>
                   <summary className="relative flex cursor-pointer list-none items-center justify-start gap-6 pr-10 text-left">
                     <h3 className={`${headingClass} text-lg`}>{blockValue(block, "question")}</h3>
                     <span aria-hidden="true" className="absolute right-0 text-2xl leading-none text-[#9a4b4b] transition group-open:rotate-45" style={editorialThemeTone === "halloween" ? { color: editorialTheme.accent } : undefined}>+</span>
@@ -8655,7 +8644,7 @@ function SectionView({
             <h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
             <div className="mx-auto mt-7 max-w-[70ch] text-center">
               {intro ? <p className="text-base leading-8 sm:text-lg" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}
-              {richTextList ? <ul className="mx-auto mt-5 max-w-[58ch] list-disc space-y-3 pl-6 text-left text-base leading-8" style={{ color: editorialTheme.mutedText }}>{blocks.map((block, index) => <li key={instanceKey(block, index, "editorial_list_item")} {...xfcartBlockAttrs(block, index, "editorial_list_item")}>{blockValue(block, "text")}</li>)}</ul> : <div className="mt-5 space-y-5 text-base leading-8" style={{ color: editorialTheme.mutedText }}>{blocks.map((block, index) => <p key={instanceKey(block, index, "editorial_paragraph")} {...xfcartBlockAttrs(block, index, "editorial_paragraph")}>{blockValue(block, "text")}</p>)}</div>}
+              {richTextList ? <ul className="mx-auto mt-5 max-w-[58ch] list-disc space-y-3 pl-6 text-left text-base leading-8" style={{ color: editorialTheme.mutedText }}>{blocks.map((block, index) => <li key={instanceKey(block, index, "editorial_list_item")} {...xfcartBlockAttrs(mode, block, index, "editorial_list_item")}>{blockValue(block, "text")}</li>)}</ul> : <div className="mt-5 space-y-5 text-base leading-8" style={{ color: editorialTheme.mutedText }}>{blocks.map((block, index) => <p key={instanceKey(block, index, "editorial_paragraph")} {...xfcartBlockAttrs(mode, block, index, "editorial_paragraph")}>{blockValue(block, "text")}</p>)}</div>}
             </div>
             {setting(section, "imageUrl") ? <div className="mx-auto mt-10 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#eadbd3]">{imageFor(section)}</div> : null}
           </div>
@@ -8669,7 +8658,7 @@ function SectionView({
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
             <div className="mt-10 grid gap-5 min-[760px]:grid-cols-3">
-              {blocks.map((block, index) => <article className="overflow-hidden rounded-[8px] border" style={cardStyle} key={instanceKey(block, index, "story_card")} {...xfcartBlockAttrs(block, index, "story_card")}>
+              {blocks.map((block, index) => <article className="overflow-hidden rounded-[8px] border" style={cardStyle} key={instanceKey(block, index, "story_card")} {...xfcartBlockAttrs(mode, block, index, "story_card")}>
                 {blockValue(block, "imageUrl") ? <div className="aspect-[5/3]">{imageFor(block)}</div> : null}
                 <div className="p-5"><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p></div>
               </article>)}
@@ -8690,7 +8679,7 @@ function SectionView({
                 <h2 className={`${headingClass} max-w-[24ch] text-4xl sm:text-5xl`}>{title}</h2>
                 {intro ? <p className="mt-6 max-w-[62ch] text-base leading-8 text-[#665252]">{intro}</p> : null}
                 <dl className="mt-8 divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">
-                  {blocks.map((block, index) => <div className="grid gap-2 py-4 sm:grid-cols-[8rem_1fr] sm:gap-5" key={instanceKey(block, index, "feature_detail_item")} {...xfcartBlockAttrs(block, index, "feature_detail_item")}><dt className="font-semibold text-[#9a4b4b]">{blockValue(block, "label")}</dt><dd className="text-base leading-7 text-[#665252]">{textBlock(block)}</dd></div>)}
+                  {blocks.map((block, index) => <div className="grid gap-2 py-4 sm:grid-cols-[8rem_1fr] sm:gap-5" key={instanceKey(block, index, "feature_detail_item")} {...xfcartBlockAttrs(mode, block, index, "feature_detail_item")}><dt className="font-semibold text-[#9a4b4b]">{blockValue(block, "label")}</dt><dd className="text-base leading-7 text-[#665252]">{textBlock(block)}</dd></div>)}
                 </dl>
               </div>
             </div>
@@ -8703,7 +8692,7 @@ function SectionView({
             <div className="mx-auto max-w-[70ch] text-center"><h2 className={`${headingClass} max-w-[34ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-6 text-base leading-8 text-[#665252]">{intro}</p> : null}</div>
             <dl className="divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">{blocks.map((block, index) => {
               const hasImage = Boolean(blockValue(block, "imageUrl"));
-              return <div className={`grid gap-4 py-5 sm:items-center sm:gap-6 ${hasImage ? "sm:grid-cols-[8rem_0.8fr_1fr]" : "sm:grid-cols-[8rem_1fr]"}`} key={instanceKey(block, index, "detail_item")} {...xfcartBlockAttrs(block, index, "detail_item")}><dt className="font-semibold text-[#9a4b4b]">{blockValue(block, "label")}</dt>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[10px] bg-[#eadbd3]">{imageFor(block)}</div> : null}<dd className="text-base leading-7 text-[#665252]">{textBlock(block)}</dd></div>;
+              return <div className={`grid gap-4 py-5 sm:items-center sm:gap-6 ${hasImage ? "sm:grid-cols-[8rem_0.8fr_1fr]" : "sm:grid-cols-[8rem_1fr]"}`} key={instanceKey(block, index, "detail_item")} {...xfcartBlockAttrs(mode, block, index, "detail_item")}><dt className="font-semibold text-[#9a4b4b]">{blockValue(block, "label")}</dt>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[10px] bg-[#eadbd3]">{imageFor(block)}</div> : null}<dd className="text-base leading-7 text-[#665252]">{textBlock(block)}</dd></div>;
             })}</dl>
           </div>
         </section>
@@ -8720,7 +8709,7 @@ function SectionView({
               {blocks.map((block, index) => {
                 const stepTitle = blockValue(block, "title");
                 const stepImage = blockValue(block, "imageUrl") ? imageFor(block) : null;
-                return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(block, index, "step")}>
+                return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(mode, block, index, "step")}>
                   {stepImage ? <div className="mb-5 aspect-[5/3] overflow-hidden rounded-[12px]">{stepImage}</div> : null}
                   <p className="text-sm font-semibold" style={{ color: editorialTheme.accent }}>{blockValue(block, "number", String(index + 1).padStart(2, "0"))}</p>
                   {stepTitle ? <h3 className={`${headingClass} mt-3 text-xl`}>{stepTitle}</h3> : null}
@@ -8737,7 +8726,7 @@ function SectionView({
     if (["editorial_ideas", "editorial_formats", "editorial_scene_grid"].includes(section.type)) {
       return (
         <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={sectionStyle}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}<div className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">{blocks.map((block, index) => { const hasImage = Boolean(blockValue(block, "imageUrl")); return <article className={`grid gap-5 border-t pt-5 ${hasImage ? "sm:grid-cols-[0.72fr_1fr] lg:grid-cols-1" : "sm:grid-cols-1"}`} style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(block, index, "editorial_item")}>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[12px]">{imageFor(block)}</div> : null}<div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p></div></article>; })}</div></div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}<div className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">{blocks.map((block, index) => { const hasImage = Boolean(blockValue(block, "imageUrl")); return <article className={`grid gap-5 border-t pt-5 ${hasImage ? "sm:grid-cols-[0.72fr_1fr] lg:grid-cols-1" : "sm:grid-cols-1"}`} style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(mode, block, index, "editorial_item")}>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[12px]">{imageFor(block)}</div> : null}<div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p></div></article>; })}</div></div>
         </section>
       );
     }
@@ -8749,7 +8738,7 @@ function SectionView({
         : blocks;
       return (
         <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={sectionStyle}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}{renderedBlocks.length ? <div className="mt-10 grid gap-4 md:grid-cols-2">{renderedBlocks.map((block, index) => { const rawItems = block.settings?.items; const items: string[] | null = Array.isArray(rawItems) ? rawItems.map((item) => String(item)) : null; const guidanceTitle = blockValue(block, "title"); return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(block, index, "editorial_guidance")}>{guidanceTitle ? <h3 className={`${headingClass} text-xl`}>{guidanceTitle}</h3> : null}{items ? <ul className="mt-3 space-y-2 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{items.map((item) => <li key={item}>{item}</li>)}</ul> : textBlock(block) ? <p className="mt-3 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p> : null}</article>; })}</div> : null}{guidanceImage ? <div className="mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px]">{guidanceImage}</div> : null}</div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}{renderedBlocks.length ? <div className="mt-10 grid gap-4 md:grid-cols-2">{renderedBlocks.map((block, index) => { const rawItems = block.settings?.items; const items: string[] | null = Array.isArray(rawItems) ? rawItems.map((item) => String(item)) : null; const guidanceTitle = blockValue(block, "title"); return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(mode, block, index, "editorial_guidance")}>{guidanceTitle ? <h3 className={`${headingClass} text-xl`}>{guidanceTitle}</h3> : null}{items ? <ul className="mt-3 space-y-2 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{items.map((item) => <li key={item}>{item}</li>)}</ul> : textBlock(block) ? <p className="mt-3 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p> : null}</article>; })}</div> : null}{guidanceImage ? <div className="mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px]">{guidanceImage}</div> : null}</div>
         </section>
       );
     }
@@ -8757,7 +8746,7 @@ function SectionView({
     if (section.type === "editorial_checklist") {
       return (
         <section className="bg-[#f1e4de] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2><ul className="mx-auto mt-10 grid max-w-5xl gap-x-10 gap-y-5 md:grid-cols-2">{blocks.map((block, index) => <li className="flex gap-3 border-t border-[#d7bdb8] pt-4 text-base leading-7 text-[#5e4a4a]" key={instanceKey(block, index, "check_item")} {...xfcartBlockAttrs(block, index, "check_item")}><span aria-hidden="true" className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#9a4b4b] text-xs text-white">✓</span><span>{textBlock(block)}</span></li>)}</ul></div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2><ul className="mx-auto mt-10 grid max-w-5xl gap-x-10 gap-y-5 md:grid-cols-2">{blocks.map((block, index) => <li className="flex gap-3 border-t border-[#d7bdb8] pt-4 text-base leading-7 text-[#5e4a4a]" key={instanceKey(block, index, "check_item")} {...xfcartBlockAttrs(mode, block, index, "check_item")}><span aria-hidden="true" className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#9a4b4b] text-xs text-white">✓</span><span>{textBlock(block)}</span></li>)}</ul></div>
         </section>
       );
     }
@@ -8860,12 +8849,12 @@ function SectionView({
               {primaryCta || secondaryCta ? (
                 <div className="mt-9 flex flex-wrap gap-4">
                   {primaryCta ? (
-                    <Link className="inline-flex min-h-[56px] items-center justify-center rounded-[12px] bg-[#171514] px-8 text-[0.98rem] font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, blockValue(primaryCta, "href", "/login"))} {...xfcartBlockAttrs(primaryCta, 0, "hero_cta")}>
+                    <Link className="inline-flex min-h-[56px] items-center justify-center rounded-[12px] bg-[#171514] px-8 text-[0.98rem] font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, blockValue(primaryCta, "href", "/login"))} {...xfcartBlockAttrs(mode, primaryCta, 0, "hero_cta")}>
                       {blockValue(primaryCta, "label", "See Examples")}
                     </Link>
                   ) : null}
                   {secondaryCta ? (
-                    <Link className="inline-flex min-h-[56px] items-center justify-center rounded-[12px] border border-[#d8cec2] bg-white/88 px-8 text-[0.98rem] font-medium text-[#171514] transition hover:-translate-y-0.5 hover:bg-white active:scale-[0.98]" href={hrefFor(site, blockValue(secondaryCta, "href", "#workflow"))} {...xfcartBlockAttrs(secondaryCta, 1, "hero_cta")}>
+                    <Link className="inline-flex min-h-[56px] items-center justify-center rounded-[12px] border border-[#d8cec2] bg-white/88 px-8 text-[0.98rem] font-medium text-[#171514] transition hover:-translate-y-0.5 hover:bg-white active:scale-[0.98]" href={hrefFor(site, blockValue(secondaryCta, "href", "#workflow"))} {...xfcartBlockAttrs(mode, secondaryCta, 1, "hero_cta")}>
                       {blockValue(secondaryCta, "label", "How It Works")}
                     </Link>
                   ) : null}
@@ -9151,7 +9140,7 @@ function SectionView({
 
           <div className="relative z-10 mx-auto grid max-w-[var(--site-content-width)] grid-cols-3 gap-3 border-t border-white/14 py-5 text-white sm:gap-4">
             {heroStats.map((item, index) => (
-              <div className="min-w-0" key={instanceKey(item, index, "hero_stat")} {...xfcartBlockAttrs(item, index, "hero_stat")}>
+              <div className="min-w-0" key={instanceKey(item, index, "hero_stat")} {...xfcartBlockAttrs(mode, item, index, "hero_stat")}>
 	                <div className="text-[1.05rem] font-semibold tracking-tight text-white sm:font-mono sm:text-[1.15rem]">{homepageMetricBlockValue(item, "value", homepageMetrics)}</div>
 	                <div className="mt-1 text-[11px] leading-4 text-white/58 sm:text-[12px] sm:leading-5">{homepageMetricBlockValue(item, "label", homepageMetrics)}</div>
               </div>
@@ -9188,7 +9177,7 @@ function SectionView({
                       : "inline-flex items-center gap-2 rounded-full border border-black/15 bg-[var(--site-secondary-button)] px-5 py-3 text-sm font-medium text-[var(--site-secondary-button-text)] transition hover:-translate-y-0.5 active:scale-[0.98]"
                   }
                   href={hrefFor(site, blockValue(cta, "href", index === 0 ? "/login" : "#packages"))}
-                  key={instanceKey(cta, index, "hero_cta")} {...xfcartBlockAttrs(cta, index, "hero_cta")}
+                  key={instanceKey(cta, index, "hero_cta")} {...xfcartBlockAttrs(mode, cta, index, "hero_cta")}
                 >
                   {blockValue(cta, "label", index === 0 ? "Start" : "Pricing")}
                   {index === 0 ? <ArrowRight className="h-4 w-4" strokeWidth={1.8} /> : <ChevronRight className="h-4 w-4" strokeWidth={1.8} />}
@@ -9203,7 +9192,7 @@ function SectionView({
                 const value = blockValue(item, "value");
                 const label = blockValue(item, "label");
                 return (
-                  <div className="border-t border-black/10 pt-4" key={instanceKey(item, index, "hero_stat")} {...xfcartBlockAttrs(item, index, "hero_stat")}>
+                  <div className="border-t border-black/10 pt-4" key={instanceKey(item, index, "hero_stat")} {...xfcartBlockAttrs(mode, item, index, "hero_stat")}>
                     <div className="font-mono text-2xl tracking-tight">{value}</div>
                     <div className="mt-1 text-xs leading-5 text-zinc-600">{label}</div>
                   </div>
@@ -9274,7 +9263,7 @@ function SectionView({
               const name = blockValue(item, "name", "Brand");
               const image = mediaAssetUrl(site, blockValue(item, "imageUrl", ""));
               return (
-                <div className={dark ? "flex min-h-[68px] items-center justify-center gap-3 rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-white/90" : "flex min-h-[68px] items-center justify-center gap-3 rounded-[18px] border border-black/10 bg-zinc-50 px-4 py-3 text-zinc-700"} key={instanceKey(item, index, "logo")} {...xfcartBlockAttrs(item, index, "logo")}>
+                <div className={dark ? "flex min-h-[68px] items-center justify-center gap-3 rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-white/90" : "flex min-h-[68px] items-center justify-center gap-3 rounded-[18px] border border-black/10 bg-zinc-50 px-4 py-3 text-zinc-700"} key={instanceKey(item, index, "logo")} {...xfcartBlockAttrs(mode, item, index, "logo")}>
                   {image ? (
                     <img
                       className="h-7 max-w-[110px] object-contain"
@@ -9326,7 +9315,7 @@ function SectionView({
                     : `px-8 py-7 ${index > 0 ? "lg:border-l lg:border-[#efe4d8]" : ""} ${index > 1 ? "sm:border-t sm:border-[#efe4d8] lg:border-t-0" : ""}`
                 }
                 key={instanceKey(metric, index, "metric_strip")}
-                {...xfcartBlockAttrs(metric, index, "metric_strip")}
+                {...xfcartBlockAttrs(mode, metric, index, "metric_strip")}
               >
                 <div className="flex items-center gap-4">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#eadfce] bg-[#fffaf3] text-[#9a744b]">
@@ -9382,7 +9371,7 @@ function SectionView({
                     : "self-start overflow-hidden rounded-[20px] border border-black/10 bg-zinc-50"
                 }
                 key={instanceKey(card, index, "story_card")}
-                {...xfcartBlockAttrs(card, index, "story_card")}
+                {...xfcartBlockAttrs(mode, card, index, "story_card")}
               >
                 <img
                   className="aspect-[4/5] w-full object-cover"
@@ -9461,7 +9450,7 @@ function SectionView({
                   className="group overflow-hidden rounded-[18px] border border-[#e4d9cc] bg-white shadow-[0_24px_70px_-58px_rgba(20,22,26,0.18)] transition hover:-translate-y-1"
                   href={hrefFor(site, blockValue(item, "href", "/collections"))}
                   key={instanceKey(item, index, "destination")}
-                  {...xfcartBlockAttrs(item, index, "destination")}
+                  {...xfcartBlockAttrs(mode, item, index, "destination")}
                 >
                   <div className="relative aspect-[1.36/1] overflow-hidden bg-[#efe6d9]">
                     <img
@@ -9534,7 +9523,7 @@ function SectionView({
                   className="group overflow-hidden rounded-[18px] border border-[#e4d9cc] bg-white shadow-[0_24px_60px_-50px_rgba(20,22,26,0.16)] transition hover:-translate-y-1"
                   href={hrefFor(site, blockValue(item, "href", "/collections"))}
                   key={instanceKey(item, index, "example")}
-                  {...xfcartBlockAttrs(item, index, "example")}
+                  {...xfcartBlockAttrs(mode, item, index, "example")}
                 >
                   <div className="relative aspect-[4/5] overflow-hidden bg-[#efe6d9]">
                     <img
@@ -9833,7 +9822,7 @@ function SectionView({
                 {featureItems.slice(0, 4).map((item, index) => {
                   const Icon = featureIcons[index] || Sparkles;
                   return (
-                    <div className="grid grid-cols-[auto_1fr] gap-4" key={instanceKey(item, index, "luxury_card")} {...xfcartBlockAttrs(item, index, "luxury_card")}>
+                    <div className="grid grid-cols-[auto_1fr] gap-4" key={instanceKey(item, index, "luxury_card")} {...xfcartBlockAttrs(mode, item, index, "luxury_card")}>
                       <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/14 bg-white/[0.04] text-[#d7aa76]">
                         <Icon className="h-5 w-5" strokeWidth={1.8} />
                       </div>
@@ -9863,7 +9852,7 @@ function SectionView({
                     className="group w-[78%] shrink-0 snap-start overflow-hidden rounded-[20px] border border-white/10 bg-white/[0.04] shadow-[0_26px_74px_-60px_rgba(0,0,0,0.78)] sm:w-[42%] lg:w-[31%]"
                     href={hrefFor(site, blockValue(item, "href", "/collections"))}
                     key={instanceKey(item, index, "luxury_example")}
-                    {...xfcartBlockAttrs(item, index, "luxury_example")}
+                    {...xfcartBlockAttrs(mode, item, index, "luxury_example")}
                   >
                     <div className="relative aspect-[4/5] overflow-hidden bg-[#272321]">
                       <img
@@ -9965,7 +9954,7 @@ function SectionView({
                 <p className={dark ? "mt-5 max-w-xl text-sm leading-7 text-white/70" : "mt-5 max-w-xl text-sm leading-7 text-[#625d56]"}>{setting(section, "subtitle")}</p>
                 <div className="mt-7 grid max-w-xl gap-3 sm:grid-cols-3">
                   {displayStats.slice(0, 3).map((stat, index) => (
-                    <div className={dark ? "border-t border-white/12 pt-3" : "border-t border-[#ddd4c8] pt-3"} key={instanceKey(stat, index, "media_banner_stat")} {...xfcartBlockAttrs(stat, index, "media_banner_stat")}>
+                    <div className={dark ? "border-t border-white/12 pt-3" : "border-t border-[#ddd4c8] pt-3"} key={instanceKey(stat, index, "media_banner_stat")} {...xfcartBlockAttrs(mode, stat, index, "media_banner_stat")}>
                       <p className="font-mono text-xl font-semibold tracking-tight">{blockValue(stat, "value")}</p>
                       <p className={dark ? "mt-1 text-xs leading-5 text-white/52" : "mt-1 text-xs leading-5 text-[#726b62]"}>{blockValue(stat, "label")}</p>
                     </div>
@@ -10035,7 +10024,7 @@ function SectionView({
                 { id: "start_private", type: "stat", settings: { value: "Private", label: "customer uploads" } },
                 { id: "start_album", type: "stat", settings: { value: "Albums", label: "download delivery" } }
               ]).map((stat, index) => (
-                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4" key={instanceKey(stat, index, "start_stat")} {...xfcartBlockAttrs(stat, index, "start_stat")}>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4" key={instanceKey(stat, index, "start_stat")} {...xfcartBlockAttrs(mode, stat, index, "start_stat")}>
                   <p className="font-mono text-lg">{blockValue(stat, "value")}</p>
                   <p className="mt-1 text-xs leading-5 text-white/55">{blockValue(stat, "label")}</p>
                 </div>
@@ -10160,7 +10149,7 @@ function SectionView({
                     </div>
                     <div className="mt-4 grid gap-2">
                       {(methods.length ? methods : fallbackMethods).map((method, index) => (
-                        <Link className="flex items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-[#10131a] px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-white/18 hover:bg-[#131720]" href={hrefFor(site, blockValue(method, "href", "/login"))} key={instanceKey(method, index, "login_method")} {...xfcartBlockAttrs(method, index, "login_method")}>
+                        <Link className="flex items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-[#10131a] px-4 py-3 text-sm transition hover:-translate-y-0.5 hover:border-white/18 hover:bg-[#131720]" href={hrefFor(site, blockValue(method, "href", "/login"))} key={instanceKey(method, index, "login_method")} {...xfcartBlockAttrs(mode, method, index, "login_method")}>
                           <span className="flex min-w-0 items-start gap-3">
                             {blockValue(method, "kind", "") === "google" ? (
                               <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white ring-1 ring-white/10">
@@ -10212,7 +10201,7 @@ function SectionView({
             const linkLabel = blockValue(stat, "linkLabel", "");
             const linkHref = blockValue(stat, "href", "");
             return (
-              <div className={`${index > 0 ? "md:border-l md:border-[#e3d8cc]" : ""} flex gap-5 px-6 py-5`} key={instanceKey(stat, index, "trust_stat")} {...xfcartBlockAttrs(stat, index, "trust_stat")}>
+              <div className={`${index > 0 ? "md:border-l md:border-[#e3d8cc]" : ""} flex gap-5 px-6 py-5`} key={instanceKey(stat, index, "trust_stat")} {...xfcartBlockAttrs(mode, stat, index, "trust_stat")}>
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#f4ebe0] text-[#a6723e]">
                   <Icon className="h-6 w-6" strokeWidth={1.7} />
                 </div>
@@ -10328,7 +10317,7 @@ function SectionView({
           <div className="mt-9 grid gap-5 xl:grid-cols-[minmax(320px,0.42fr)_minmax(0,0.58fr)] xl:items-stretch">
             <div className="grid gap-3">
               {items.map((item, index) => (
-                <Link className={`group rounded-[1.25rem] border p-4 shadow-[0_20px_48px_-42px_rgba(20,22,26,0.18)] transition hover:-translate-y-1 sm:p-5 ${index === 0 ? "border-zinc-950 bg-white" : "border-black/10 bg-white/70"}`} href={hrefFor(site, blockValue(item, "href", "/tools"))} key={instanceKey(item, index, "feature_tab")} {...xfcartBlockAttrs(item, index, "feature_tab")}>
+                <Link className={`group rounded-[1.25rem] border p-4 shadow-[0_20px_48px_-42px_rgba(20,22,26,0.18)] transition hover:-translate-y-1 sm:p-5 ${index === 0 ? "border-zinc-950 bg-white" : "border-black/10 bg-white/70"}`} href={hrefFor(site, blockValue(item, "href", "/tools"))} key={instanceKey(item, index, "feature_tab")} {...xfcartBlockAttrs(mode, item, index, "feature_tab")}>
                   <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--site-accent)]">{blockValue(item, "label")}</p>
                   <h3 className="mt-2 text-xl font-semibold tracking-tight">{blockValue(item, "title")}</h3>
                   <p className="mt-2 text-sm leading-6 text-zinc-600">{blockValue(item, "description")}</p>
@@ -10390,7 +10379,7 @@ function SectionView({
               const tag = blockValue(item, "tag", "Photo set");
               const image = mediaAssetUrl(site, blockValue(item, "imageUrl", packImages.fashion));
               return (
-                <Link className="group relative min-h-[340px] overflow-hidden rounded-[1.45rem] border border-black/10 bg-zinc-200 shadow-diffusion" href={hrefFor(site, blockValue(item, "href", "/tools"))} key={instanceKey(item, index, "occasion")} {...xfcartBlockAttrs(item, index, "occasion")}>
+                <Link className="group relative min-h-[340px] overflow-hidden rounded-[1.45rem] border border-black/10 bg-zinc-200 shadow-diffusion" href={hrefFor(site, blockValue(item, "href", "/tools"))} key={instanceKey(item, index, "occasion")} {...xfcartBlockAttrs(mode, item, index, "occasion")}>
                   <StorefrontImage
                     alt={cardImageAltForSite(site, {
                       category: tag,
@@ -10580,7 +10569,7 @@ function SectionView({
                         className="group flex min-h-[150px] flex-col rounded-[18px] border border-[#e6dacb] bg-white p-4 transition hover:-translate-y-0.5 hover:border-[#d0bdab] hover:bg-[#fffdf9]"
                         href={hrefFor(site, featureHref)}
                         key={`launcher_workspace_${instanceKey(feature, index, "workspace")}`}
-                        {...xfcartBlockAttrs(feature, index, "launcher_workspace")}
+                        {...xfcartBlockAttrs(mode, feature, index, "launcher_workspace")}
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#171514] text-white">
@@ -10684,7 +10673,7 @@ function SectionView({
                           className="group flex min-h-[150px] flex-col rounded-[18px] border border-[#dfd3c4] bg-[#fdf8f1] p-4 transition hover:-translate-y-0.5 hover:border-[#d3c2b0] hover:bg-white"
                           href={hrefFor(site, accountFeatureHref(feature, index))}
                           key={`launcher_account_${instanceKey(feature, index, "account")}`}
-                          {...xfcartBlockAttrs(feature, index, "launcher_account")}
+                          {...xfcartBlockAttrs(mode, feature, index, "launcher_account")}
                         >
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#171514] text-white">
@@ -10734,7 +10723,7 @@ function SectionView({
                         className="group rounded-[18px] border border-[#efe5d8] bg-[#fffaf4] px-4 py-4 transition hover:-translate-y-0.5 hover:border-[#ddcebc]"
                         href={hrefFor(site, blockValue(feature, "href", "/app"))}
                         key={`launcher_overview_${instanceKey(feature, index + 1, "launcher")}`}
-                        {...xfcartBlockAttrs(feature, index + 1, "launcher_overview")}
+                        {...xfcartBlockAttrs(mode, feature, index + 1, "launcher_overview")}
                       >
                         <div className="flex items-start gap-3">
                           <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#171514] text-white">
@@ -10766,7 +10755,7 @@ function SectionView({
                     aria-label={cardLinkLabel("Open step", blockValue(leadFeature, "title", "source photo upload"))}
                     className="group relative min-h-[420px] overflow-hidden rounded-[30px] border border-[#e4dace] bg-[#efe6d9] shadow-[0_28px_72px_-58px_rgba(20,22,26,0.18)]"
                     href={hrefFor(site, blockValue(leadFeature, "href", "/app"))}
-                    {...xfcartBlockAttrs(leadFeature, 0, "launcher_lead")}
+                    {...xfcartBlockAttrs(mode, leadFeature, 0, "launcher_lead")}
                   >
                     <img className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={workspaceImage} alt={blockVisualAltForSite(site, section, leadFeature, workspaceImage, 0, "Customer workspace")} />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,22,26,0.06)_0%,rgba(20,22,26,0.16)_32%,rgba(20,22,26,0.82)_100%)]" />
@@ -10821,7 +10810,7 @@ function SectionView({
                     className="group rounded-[26px] border border-[#ded3c4] bg-[#fffaf3]/92 p-6 shadow-[0_22px_62px_-54px_rgba(20,22,26,0.16)] transition hover:-translate-y-0.5"
                     href={hrefFor(site, blockValue(feature, "href", "/app"))}
                     key={`launcher_panel_${instanceKey(feature, index, "panel")}`}
-                    {...xfcartBlockAttrs(feature, index, "launcher_panel")}
+                    {...xfcartBlockAttrs(mode, feature, index, "launcher_panel")}
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#171514] text-white">
@@ -10934,7 +10923,7 @@ function SectionView({
                 const icons = [UploadCloud, Layers3, Sparkles, Download];
                 const Icon = icons[index % icons.length];
                 return (
-                  <article className="flex min-h-[310px] flex-col rounded-[1.35rem] border border-[#e3ddd2] bg-[#fbfaf7] p-5 shadow-[0_22px_55px_-44px_rgba(20,22,26,0.24)]" key={instanceKey(item, index, "manual_feature")} {...xfcartBlockAttrs(item, index, "manual_feature")}>
+                  <article className="flex min-h-[310px] flex-col rounded-[1.35rem] border border-[#e3ddd2] bg-[#fbfaf7] p-5 shadow-[0_22px_55px_-44px_rgba(20,22,26,0.24)]" key={instanceKey(item, index, "manual_feature")} {...xfcartBlockAttrs(mode, item, index, "manual_feature")}>
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#14161a] text-white">
                         <Icon className="h-5 w-5" strokeWidth={1.8} />
@@ -12072,6 +12061,44 @@ function SectionView({
     const selectedPageCopy = kind === "collection" && !spanishXbyDirectory && !isAidreamcapesSite(site)
       ? storefrontContext?.pageCopy
       : undefined;
+    if (focusedCollectionRoute) {
+      const packageLabel = selectedPageCopy?.metaLabel ?? setting(section, "label", "this photo package");
+      return (
+        <section
+          className="bg-[#f8f3ea] px-5 py-14 text-[#14161a]"
+          data-focused-collection-compare="true"
+          id={sectionAnchor(section, setting(section, "anchor", "related-package-comparison"))}
+        >
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <div className="grid gap-6 rounded-[24px] border border-[#e0ceb6] bg-white p-6 shadow-[0_28px_90px_-68px_rgba(20,22,26,0.38)] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:p-8">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#e4561b]">Related photo packages</p>
+                <h2 className="mt-3 max-w-3xl text-[clamp(1.8rem,3.5vw,3rem)] font-bold leading-tight tracking-tight text-balance [font-family:var(--site-title-font)]">
+                  Compare {packageLabel} with nearby package themes
+                </h2>
+                <p className="mt-4 max-w-3xl text-base leading-7 text-[#5d6572]">
+                  Review adjacent themes before choosing the package that best matches your source photos and finished-image goal.
+                </p>
+                {internalLinks.length ? (
+                  <nav aria-label="Related photo packages" className="mt-6 flex flex-wrap gap-2">
+                    {internalLinks.map((link) => (
+                      <Link className="group inline-flex items-center gap-2 rounded-full border border-[#eadbc7] bg-[#fffaf3] px-4 py-2 text-sm font-semibold text-[#4b5563] transition hover:border-[#e4561b]/35 hover:text-[#14161a]" href={hrefFor(site, link.href)} key={`${link.label}_${link.href}`}>
+                        <span>{link.label}</span>
+                        <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#e4561b] transition group-hover:translate-x-0.5" strokeWidth={2} />
+                      </Link>
+                    ))}
+                  </nav>
+                ) : null}
+              </div>
+              <Link className="inline-flex items-center justify-center gap-2 rounded-[16px] bg-[#14161a] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 active:scale-[0.98]" href={hrefFor(site, setting(section, "ctaHref", "/login"))}>
+                {setting(section, "ctaLabel", "Start creating")}
+                <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+              </Link>
+            </div>
+          </div>
+        </section>
+      );
+    }
     const guideStats = spanishXbyDirectory
       ? [
           kind === "tool" ? "Guia de entrada" : "Ajuste del paquete",
@@ -12366,7 +12393,7 @@ function SectionView({
                   className="group relative block overflow-hidden rounded-[14px] border border-white/[0.11] bg-[#111827]/[0.82] text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.92)] transition duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:z-10 before:h-px before:bg-[linear-gradient(90deg,rgba(255,166,68,0.74),rgba(236,75,221,0.52),rgba(22,220,240,0.68))] before:opacity-70 before:content-[''] hover:-translate-y-1 hover:border-cyan-200/24 hover:shadow-[0_24px_74px_-50px_rgba(22,220,240,0.42)]"
                   href={hrefFor(site, proofCard.href)}
                   key={instanceKey(proofCard.card, index, "aidreamcapes_visual_proof_card")}
-                  {...xfcartBlockAttrs(proofCard.card, index, "visual_proof")}
+                  {...xfcartBlockAttrs(mode, proofCard.card, index, "visual_proof")}
                 >
                   <div className="bg-[#0B1020]/[0.70]">
                     <div className={proofCard.images.length > 1 ? "grid grid-cols-2 gap-0.5 p-3" : "grid p-3"}>
@@ -12466,7 +12493,7 @@ function SectionView({
             <Link
               className="group relative flex min-h-[460px] flex-col overflow-hidden rounded-[28px] border border-white/14 bg-[#090B14] shadow-[0_36px_120px_-70px_rgba(0,0,0,0.96)] transition hover:-translate-y-1 hover:border-white/24"
               href={hrefFor(site, blockValue(lead, "href", "/login"))}
-              {...xfcartBlockAttrs(lead, 0, "visual_proof")}
+              {...xfcartBlockAttrs(mode, lead, 0, "visual_proof")}
             >
 	              <div className="relative aspect-[1.22] overflow-hidden bg-[#070911] sm:aspect-[1.38] lg:flex-1">
 	                <StorefrontSafeImage
@@ -12505,7 +12532,7 @@ function SectionView({
                   className="group relative flex min-h-[350px] flex-col overflow-hidden rounded-[24px] border border-white/14 bg-[#090B14] shadow-[0_28px_90px_-66px_rgba(0,0,0,0.94)] transition hover:-translate-y-1 hover:border-white/24"
                   href={hrefFor(site, blockValue(card, "href", "/collections"))}
                   key={instanceKey(card, index, "visual_proof_card")}
-                  {...xfcartBlockAttrs(card, index + 1, "visual_proof")}
+                  {...xfcartBlockAttrs(mode, card, index + 1, "visual_proof")}
                 >
                   <div className="relative aspect-[1.28] overflow-hidden bg-[#070911]">
 	                    <StorefrontSafeImage
@@ -12764,7 +12791,7 @@ function SectionView({
             : "pointer-events-none flex aspect-square w-[min(27vw,6.2rem)] shrink-0 cursor-default select-none items-center justify-center overflow-hidden rounded-[8px] border border-white/70 bg-white px-3 py-2.5 shadow-[0_16px_38px_-34px_rgba(0,0,0,0.85)] ring-1 ring-black/10 sm:w-[5.7rem] md:w-[6.25rem]"}
           key={instanceKey(logo, index, "trusted_logo")}
           title={logoAlt}
-          {...xfcartBlockAttrs(logo, index, "trusted_logo")}
+          {...xfcartBlockAttrs(mode, logo, index, "trusted_logo")}
         >
           {logoSrc ? (
             <img
@@ -13215,7 +13242,7 @@ function SectionView({
                       data-featured-pack-tile-link="true"
                       href={tileHref}
                       key={instanceKey(item, index, "seasonal_image")}
-                      {...xfcartBlockAttrs(item, index, "seasonal_image")}
+                      {...xfcartBlockAttrs(mode, item, index, "seasonal_image")}
                     >
                       <figure className="min-w-0">
                         {useUniformFeaturedPackTiles ? (
@@ -13434,7 +13461,7 @@ function SectionView({
             <div className="mx-auto max-w-[var(--site-content-width)]">
               <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
                 {displaySteps.map((step, index) => (
-                  <article className="rounded-[26px] border border-[#eadfce] bg-white p-6 shadow-[0_24px_78px_-64px_rgba(114,82,48,0.32)]" key={instanceKey(step, index, "flow_step")} {...xfcartBlockAttrs(step, index, "flow_step")}>
+                  <article className="rounded-[26px] border border-[#eadfce] bg-white p-6 shadow-[0_24px_78px_-64px_rgba(114,82,48,0.32)]" key={instanceKey(step, index, "flow_step")} {...xfcartBlockAttrs(mode, step, index, "flow_step")}>
 	                    <div className="inline-grid h-9 min-w-[4.75rem] place-items-center whitespace-nowrap rounded-full px-3 text-xs font-bold text-white" style={{ background: index === 1 ? aidreamcapesAccent : aidreamcapesCopper }}>
 	                      {blockValue(step, "meta", `0${index + 1}`)}
 	                    </div>
@@ -13509,7 +13536,7 @@ function SectionView({
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
               {displaySteps.map((step, index) => (
-                <article className={`rounded-[26px] border p-6 shadow-[0_24px_78px_-62px_rgba(10,10,12,0.35)] ${index < 2 ? "border-[#D7D1C7] bg-white" : "border-[#11131B] bg-[#0D0F18] text-white"}`} key={instanceKey(step, index, "flow_step")} {...xfcartBlockAttrs(step, index, "flow_step")}>
+                <article className={`rounded-[26px] border p-6 shadow-[0_24px_78px_-62px_rgba(10,10,12,0.35)] ${index < 2 ? "border-[#D7D1C7] bg-white" : "border-[#11131B] bg-[#0D0F18] text-white"}`} key={instanceKey(step, index, "flow_step")} {...xfcartBlockAttrs(mode, step, index, "flow_step")}>
                   <div className="grid h-14 w-14 place-items-center rounded-full text-lg font-bold" style={index === 1 ? { background: dreamshootBrandGradient, color: "white" } : index < 2 ? { background: "#EFEFEF", color: "#0C0D12" } : { background: "rgba(255,255,255,0.08)", color: "white" }}>
                     {blockValue(step, "meta", `0${index + 1}`)}
                   </div>
@@ -13757,6 +13784,7 @@ function SectionView({
             <DreamShootMegaToolsPanel
               ctaHref={primaryMyDreamShoots ? "/ai-video-generation" : setting(section, "secondaryHref", "/tools")}
               ctaLabel={spanishXbyTools ? "Ver todas las herramientas" : primaryMyDreamShoots ? "View all video generators" : setting(section, "secondaryCta", "View all tools")}
+              mode={mode}
               site={site}
               tools={tools}
               variantTone="dark"
@@ -13967,7 +13995,7 @@ function SectionView({
                   title: label
                 });
                 return (
-                  <article className="group overflow-hidden rounded-[22px] border border-[#d8cdbf] bg-white shadow-[0_24px_60px_-54px_rgba(20,22,26,0.18)]" key={`${item.id}_${index}`} {...xfcartBlockAttrs(item, index, "pain_point")}>
+                  <article className="group overflow-hidden rounded-[22px] border border-[#d8cdbf] bg-white shadow-[0_24px_60px_-54px_rgba(20,22,26,0.18)]" key={`${item.id}_${index}`} {...xfcartBlockAttrs(mode, item, index, "pain_point")}>
                     <div className="relative aspect-[1.18/1] overflow-hidden bg-[#272321] lg:aspect-[1.03/1]">
                       <img className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-[1.04]" src={image} alt={problemAlt} />
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,9,0.16)_0%,rgba(8,8,9,0.28)_42%,rgba(8,8,9,0.64)_100%)]" />
@@ -14016,7 +14044,7 @@ function SectionView({
                 title: label
               });
               return (
-                  <article className="overflow-hidden rounded-[1.25rem] border border-[#e2ddcf] bg-[#fbfaf7] shadow-[0_24px_60px_-48px_rgba(20,22,26,0.22)]" key={`${item.id}_${index}`} {...xfcartBlockAttrs(item, index, "sample")}>
+                  <article className="overflow-hidden rounded-[1.25rem] border border-[#e2ddcf] bg-[#fbfaf7] shadow-[0_24px_60px_-48px_rgba(20,22,26,0.22)]" key={`${item.id}_${index}`} {...xfcartBlockAttrs(mode, item, index, "sample")}>
                     <div className="aspect-[4/5] overflow-hidden bg-zinc-200">
                       <img className="h-full w-full object-cover" src={image} alt={sampleAlt} />
                     </div>
@@ -14045,7 +14073,7 @@ function SectionView({
                     title: label
                   });
                   return (
-                    <article className="w-[230px] shrink-0 overflow-hidden rounded-[1.25rem] border border-[#e2ddcf] bg-[#fbfaf7] shadow-[0_24px_60px_-48px_rgba(20,22,26,0.22)] md:w-[300px]" key={`${item.id}_${index}`} {...xfcartBlockAttrs(item, index, "sample")}>
+                    <article className="w-[230px] shrink-0 overflow-hidden rounded-[1.25rem] border border-[#e2ddcf] bg-[#fbfaf7] shadow-[0_24px_60px_-48px_rgba(20,22,26,0.22)] md:w-[300px]" key={`${item.id}_${index}`} {...xfcartBlockAttrs(mode, item, index, "sample")}>
                       <div className="aspect-[4/5] overflow-hidden bg-zinc-200">
                         <img className="h-full w-full object-cover" src={image} alt={sampleAlt} />
                       </div>
@@ -16089,7 +16117,7 @@ function SectionView({
               const beforeImage = mediaAssetUrl(site, blockValue(item, "beforeImage", fallbackHeroImages[1]));
               const afterImage = mediaAssetUrl(site, blockValue(item, "afterImage", fallbackHeroImages[0]));
               return (
-                <div className="grid gap-3 rounded-[1.4rem] border border-black/10 bg-white p-3 shadow-[0_24px_80px_-60px_rgba(24,24,27,0.55)] sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2" key={instanceKey(item, index, "before_after")} {...xfcartBlockAttrs(item, index, "before_after")}>
+                <div className="grid gap-3 rounded-[1.4rem] border border-black/10 bg-white p-3 shadow-[0_24px_80px_-60px_rgba(24,24,27,0.55)] sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2" key={instanceKey(item, index, "before_after")} {...xfcartBlockAttrs(mode, item, index, "before_after")}>
 	                  {[
 	                    { image: beforeImage, label: beforeLabel, stage: "source upload" },
 	                    { image: afterImage, label: afterLabel, stage: "AI-generated result" }
@@ -16283,7 +16311,7 @@ function SectionView({
                   ? `Open ${resultVideo ? "video" : "image"} example for ${cardTitle}`
                   : `Open ${resultVideo ? "video" : "image"} result from ${customerName}'s ${customerRole} review`;
                 return (
-                  <article className={`group flex ${stackedReviewLayout ? "min-h-[410px]" : "min-h-[380px]"} min-w-0 flex-col overflow-hidden rounded-[14px] border border-[#e7dccf] bg-white shadow-[0_22px_58px_-46px_rgba(20,22,26,0.16)]`} key={instanceKey(item, index, "testimonial")} {...xfcartBlockAttrs(item, index, "testimonial")}>
+                  <article className={`group flex ${stackedReviewLayout ? "min-h-[410px]" : "min-h-[380px]"} min-w-0 flex-col overflow-hidden rounded-[14px] border border-[#e7dccf] bg-white shadow-[0_22px_58px_-46px_rgba(20,22,26,0.16)]`} key={instanceKey(item, index, "testimonial")} {...xfcartBlockAttrs(mode, item, index, "testimonial")}>
                     <div className={`flex flex-1 flex-col ${stackedReviewLayout ? "p-5" : "p-[18px]"}`}>
                       <div className="flex items-center gap-3">
                         {avatar ? (
@@ -16537,7 +16565,7 @@ function SectionView({
                       data-faq-open={index === 0 ? "true" : "false"}
                       key={instanceKey(item, index, "visual_faq")}
                       open={index === 0}
-                      {...xfcartBlockAttrs(item, index, "visual_faq")}
+                      {...xfcartBlockAttrs(mode, item, index, "visual_faq")}
                     >
                       <summary className="flex cursor-pointer list-none items-center justify-between gap-5 px-5 py-5 text-left transition hover:bg-white/[0.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-200 sm:px-6">
                         <h3 className="min-w-0 text-[1rem] font-semibold leading-6 text-white sm:text-[1.05rem]">{question}</h3>
@@ -16577,7 +16605,7 @@ function SectionView({
                 const question = headingBlockValue(item, "question", `Question ${index + 1}`);
                 const answer = blockValue(item, "answer");
                 return (
-                  <details className="group overflow-hidden bg-white data-[separated=true]:border-t data-[separated=true]:border-[#f0e6da]" data-separated={index > 0 ? "true" : "false"} key={instanceKey(item, index, "faq")} {...xfcartBlockAttrs(item, index, "faq")}>
+                  <details className="group overflow-hidden bg-white data-[separated=true]:border-t data-[separated=true]:border-[#f0e6da]" data-separated={index > 0 ? "true" : "false"} key={instanceKey(item, index, "faq")} {...xfcartBlockAttrs(mode, item, index, "faq")}>
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left">
                       <h3 className="text-[0.95rem] font-semibold text-[#171514]">{question}</h3>
                       <span aria-hidden="true" className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#eadfce] bg-[#fffaf3] text-lg leading-none text-[#8f7d6d] transition group-open:rotate-45">+</span>
@@ -16724,7 +16752,7 @@ function SectionView({
               {showInlineRichCards ? (
                 <div className={dark ? "mt-8 grid gap-3 border-t border-white/12 pt-5 sm:grid-cols-2" : "mt-8 grid gap-3 border-t border-[#ddd4c8] pt-5 sm:grid-cols-2"}>
                   {richCards.slice(0, 4).map((card, index) => (
-                    <article className={dark ? "rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "rounded-[18px] border border-[#e4dace] bg-white/56 p-4 shadow-[0_18px_48px_-42px_rgba(20,22,26,0.18)]"} key={instanceKey(card, index, "rich_text_card")} {...xfcartBlockAttrs(card, index, "rich_text_card")}>
+                    <article className={dark ? "rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "rounded-[18px] border border-[#e4dace] bg-white/56 p-4 shadow-[0_18px_48px_-42px_rgba(20,22,26,0.18)]"} key={instanceKey(card, index, "rich_text_card")} {...xfcartBlockAttrs(mode, card, index, "rich_text_card")}>
                       <p className={dark ? "font-mono text-[10px] uppercase tracking-[0.16em] text-white/46" : "font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a7a6d]"}>{blockValue(card, "meta", String(index + 1).padStart(2, "0"))}</p>
                       <h3 className="mt-3 text-lg font-semibold tracking-tight">{headingBlockValue(card, "title", headingBlockValue(card, "label", "Editable item"))}</h3>
                       <p className={dark ? "mt-2 text-sm leading-6 text-white/62" : "mt-2 text-sm leading-6 text-[#625d56]"}>{blockValue(card, "description", blockValue(card, "text", ""))}</p>
@@ -16784,7 +16812,7 @@ function SectionView({
                           ["Receive the album", "Track the request and review delivered lifestyle, portrait, and editorial images in a private gallery."]
                         ]).map(([label, detail], index) => ({ label, detail, card: undefined, index }))
                     ).map(({ label, detail, card, index }) => (
-                    <div className={`${dark ? "rounded-[18px] border border-white/10 bg-black/18 px-4 py-3" : "rounded-[18px] border border-[#e4dace] bg-white/58 px-4 py-3"} ${noImageCardJourney ? "flex flex-col justify-center" : ""}`} key={card ? instanceKey(card, index, "rich_text_journey_card") : label} {...(card ? xfcartBlockAttrs(card, index, "rich_text_card") : {})}>
+                    <div className={`${dark ? "rounded-[18px] border border-white/10 bg-black/18 px-4 py-3" : "rounded-[18px] border border-[#e4dace] bg-white/58 px-4 py-3"} ${noImageCardJourney ? "flex flex-col justify-center" : ""}`} key={card ? instanceKey(card, index, "rich_text_journey_card") : label} {...(card ? xfcartBlockAttrs(mode, card, index, "rich_text_card") : {})}>
                       <p className="text-sm font-semibold">{label}</p>
                       <p className={dark ? "mt-1 text-xs leading-5 text-white/58" : "mt-1 text-xs leading-5 text-[#706961]"}>{detail}</p>
                     </div>
@@ -16869,7 +16897,7 @@ function SectionView({
             {(blocks.length ? blocks : [{ id: "fallback", type: "text_block", settings: { title: "Story block", text: "Add a focused photo guide, story, or collection detail for this page.", image: "" } }]).map((block, index) => {
               const image = mediaAssetUrl(site, blockValue(block, "image", blockValue(block, "src", packImages.fashion)));
               return (
-                <article className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-white" key={instanceKey(block, index, "visual_block")} {...xfcartBlockAttrs(block, index, "visual_block")}>
+                <article className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-white" key={instanceKey(block, index, "visual_block")} {...xfcartBlockAttrs(mode, block, index, "visual_block")}>
                   <div className="aspect-[16/11] bg-zinc-200">
                     <img className="h-full w-full object-cover" src={image || packImages.fashion} alt={blockVisualAltForSite(site, section, block, image || packImages.fashion, index, storefrontSectionLabel(block.type))} />
                   </div>
@@ -16895,7 +16923,7 @@ function SectionView({
           <h2 className="mt-3 text-2xl font-semibold">{sectionHeading(section, storefrontSectionLabel(section.type))}</h2>
           <div className="mt-6 flex flex-wrap gap-3">
             {(blocks.length ? blocks : [{ id: "fallback", type: "item", settings: { title: storefrontSectionLabel(section.type) } }]).map((block, index) => (
-              <div className="rounded-full border border-black/10 bg-zinc-50 px-4 py-2 text-sm text-zinc-600" key={instanceKey(block, index, "simple_block")} {...xfcartBlockAttrs(block, index, "simple_block")}>
+              <div className="rounded-full border border-black/10 bg-zinc-50 px-4 py-2 text-sm text-zinc-600" key={instanceKey(block, index, "simple_block")} {...xfcartBlockAttrs(mode, block, index, "simple_block")}>
                 {headingBlockValue(block, "title", headingBlockValue(block, "name", `${storefrontSectionLabel(section.type)} ${index + 1}`))}
               </div>
             ))}
@@ -17104,7 +17132,7 @@ function SectionView({
           {sectionBlocks(section).length ? (
             <div className="mt-4 grid gap-2">
               {sectionBlocks(section).slice(0, 6).map((block, index) => (
-                <div className="rounded-lg bg-zinc-50 px-3 py-2 text-xs text-zinc-600" key={instanceKey(block, index, "fallback_block")} {...xfcartBlockAttrs(block, index, "fallback_block")}>
+                <div className="rounded-lg bg-zinc-50 px-3 py-2 text-xs text-zinc-600" key={instanceKey(block, index, "fallback_block")} {...xfcartBlockAttrs(mode, block, index, "fallback_block")}>
                   {block.type}: {headingBlockValue(block, "title", headingBlockValue(block, "label", headingBlockValue(block, "name", "Editable block")))}
                 </div>
               ))}
