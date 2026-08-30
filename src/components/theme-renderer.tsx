@@ -12778,6 +12778,9 @@ function SectionView({
       : [];
     const trustedLogoEyebrow = mydreamProfileSite ? setting(section, "trustedLogoEyebrow", "CREATIVE SHOWCASE") : "";
     const trustedLogoSubtitle = mydreamProfileSite ? setting(section, "trustedLogoSubtitle", "Ideas, brands and visual experiments brought together with AI.") : "";
+    const trustedLogoTitle = mydreamProfileSite && /^Made with myDreamshoots$/i.test(setting(section, "trustedLogoTitle", "Made with MyDreamShoots"))
+      ? "Made with MyDreamShoots"
+      : setting(section, "trustedLogoTitle", "Most Trusted Creators. | myDreamshoots");
     const renderTrustedLogoCard = (logo: SectionBlockInstance, index: number) => {
       const logoName = blockValue(logo, "name", `Creator logo ${index + 1}`);
       const logoImage = blockValue(logo, "imageUrl", "");
@@ -12824,7 +12827,7 @@ function SectionView({
             {trustedLogoEyebrow ? <p className="mb-3 text-center text-[11px] font-extrabold uppercase tracking-[0.22em] text-white/62">{trustedLogoEyebrow}</p> : null}
             <p className="text-center text-[clamp(1.8rem,3.15vw,2.9rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
               <DreamshootUnderlinedTitle gradient={accent}>
-                {setting(section, "trustedLogoTitle", "Made with MyDreamShoots")}
+                {trustedLogoTitle}
               </DreamshootUnderlinedTitle>
             </p>
             {trustedLogoSubtitle ? <p className="mx-auto mt-4 max-w-[42.5rem] text-center text-[clamp(0.875rem,1.15vw,1.06rem)] leading-relaxed text-white/58">{trustedLogoSubtitle}</p> : null}

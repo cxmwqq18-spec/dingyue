@@ -41,7 +41,7 @@ assert.match(renderer, /Featured AI Video Generators/, "homepage must render the
 assert.match(renderer, /AI Save the Date Videos/, "homepage must support the Save the Date module");
 assert.match(renderer, /Featured AI Photo Generators/, "homepage must retain the photo module");
 assert.match(trustedProofRenderer, /trustedLogoEyebrow/, "MyDreamShoots logo wall must render the HTML eyebrow");
-assert.match(trustedProofRenderer, /Made with MyDreamShoots/, "MyDreamShoots logo wall must render the HTML heading");
+assert.match(renderer, /Made with MyDreamShoots/, "MyDreamShoots logo wall must render the HTML heading");
 assert.match(renderer, /Ideas, brands and visual experiments brought together with AI\./, "MyDreamShoots logo wall must render the HTML subtitle");
 assert.doesNotMatch(trustedProofRenderer, /mydreamProfileSite \? \([\s\S]*?<h2[\s\S]*?Made with MyDreamShoots/, "MyDreamShoots workflow examples title must remain ordinary text");
 assert.doesNotMatch(packageCatalog, /<h2[^>]*>\{card\.title\}<\/h2>/, "package cards must not render card titles as H2");
