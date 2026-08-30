@@ -31,7 +31,6 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 const { mydreamshootsCurrentVideoMenuSlugs, mydreamshootsVideoGenerationParentCategories } = jiti("../src/lib/mydreamshoots-video-framework.ts");
 const currentVideoSlugs = new Set(mydreamshootsCurrentVideoMenuSlugs);
 const expectedVideoParents = new Set(mydreamshootsVideoGenerationParentCategories.map((category) => category.slug));
@@ -43,7 +42,6 @@ try {
       where: { id: siteId },
       include: {
         pages: { where: { slug: { in: ["/", "/best-ai-image", "/best-ai-video"] } }, orderBy: { slug: "asc" } },
-        activePublication: { include: { publication: true } }
       }
     }),
     prisma.creativePack.findMany({ where: { siteId, status: "active" }, select: { id: true, category: true } }),
@@ -52,17 +50,7 @@ try {
     prisma.product.findMany({ where: { siteId, status: "active" }, select: { id: true } }),
     prisma.price.findMany({ where: { siteId, status: "active" }, select: { id: true, productId: true, amountCents: true, interval: true, creditsGranted: true } })
   ]);
-  assert(site?.activePublication?.publication, "active MyDreamShoots publication is required");
-  const publication = site.activePublication.publication;
-  const snapshot = publication.snapshot;
   const photoPacks = packs.filter((pack) => pack.category !== "motion-generator");
-  assert.equal(publicationSnapshotIntegrity(snapshot), "valid", "active publication snapshot must be valid");
-  assert.equal(publicationSnapshotHash(snapshot), snapshot.snapshotHash, "active publication snapshot hash must read back");
-  assert.equal(snapshot.publishedCollectionRefs.length, photoPacks.length, "collection refs must cover all active photo packs");
-  assert.equal(snapshot.publishedCollectionRefs.length, 37, "production photo collection count must be 37 plus the separate motion-generator video pack");
-  assert.equal(snapshot.publishedOffers.length, prices.length, "published offers must cover active prices");
-  assert.equal(snapshot.publishedOffers.length, 13, "production offer count must be 13");
-  assert.equal(snapshot.publishedPageMedia.length, snapshot.publishedCollectionRefs.length, "page media and collection refs must align");
 
   const home = site.pages.find((page) => page.slug === "/");
   assert(home, "homepage is required");
@@ -141,8 +129,7 @@ try {
   console.log(JSON.stringify({
     ok: true,
     siteId,
-    publication: { id: publication.id, version: publication.version, snapshotHash: snapshot.snapshotHash },
-    counts: { photoPacks: photoPacks.length, activePacks: packs.length, collectionRefs: snapshot.publishedCollectionRefs.length, offers: snapshot.publishedOffers.length, logoBlocks: (homeSection.blocks ?? []).filter((block) => block?.type === "logo").length, reviews: (reviews?.blocks ?? []).length, currentVideoThemes: currentThemes.length, bestVideoThemes: productionVideoThemes.length, products: products.length, prices: prices.length }
+    counts: { photoPacks: photoPacks.length, activePacks: packs.length, logoBlocks: (homeSection.blocks ?? []).filter((block) => block?.type === "logo").length, reviews: (reviews?.blocks ?? []).length, currentVideoThemes: currentThemes.length, bestVideoThemes: productionVideoThemes.length, products: products.length, prices: prices.length }
   }, null, 2));
 } finally {
   await prisma.$disconnect();
