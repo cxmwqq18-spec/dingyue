@@ -13,6 +13,7 @@ for (const required of [
   "baseHash",
   "fieldPath",
   "confirm-deletions",
+  '"theme_page", "creative_pack"',
   "Protected business data changed during content apply",
   "contentSyncBaseline",
   "target_siteId_entityType_entityKey_fieldPath"

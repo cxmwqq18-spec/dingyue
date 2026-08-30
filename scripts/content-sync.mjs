@@ -366,7 +366,7 @@ async function apply() {
       }
       for (const deletion of manifest.deletions) {
         const spec = entitySpecs[deletion.entityType];
-        if (!spec || !["creative_pack", "media_asset", "tool_category", "tool_menu_item", "video_theme_category", "video_theme"].includes(deletion.entityType)) fail(`Deletion is not allowed for ${deletion.entityType}.`);
+        if (!spec || !["theme_page", "creative_pack", "media_asset", "tool_category", "tool_menu_item", "video_theme_category", "video_theme"].includes(deletion.entityType)) fail(`Deletion is not allowed for ${deletion.entityType}.`);
         const delegate = modelDelegate(tx, spec);
         const currentRows = rowsByType.get(deletion.entityType);
         const current = currentRows.find((row) => spec.lookup.some((key) => String(row[key] ?? "") === String(deletion.entityKey)));

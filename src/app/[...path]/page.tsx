@@ -100,7 +100,6 @@ const DREAMSHOOT_LEGACY_BLOG_TOOL_REDIRECTS: Record<string, string> = {
   "profile-clip": "/blog/video-photo-package-guide",
   "unblur-image": "/blog/utility-image-prep-guide",
   "video-ai": "/blog/video-photo-package-guide",
-  "world-cup-fan-photos": "/blog/sports-fan-photo-guide"
 };
 const DREAMSHOOT_LEGACY_BLOG_VIDEO_REDIRECTS: Record<string, string> = {
   "creator-motion": "/blog/video-photo-package-guide",
@@ -295,9 +294,6 @@ function legacyBlogRedirectPath(
 
 function redirectLegacyBlogArticle(site: { slug: string; name: string; branding: { logoText: string } }, slug: string, query: Record<string, string | string[] | undefined> = {}): void {
   if (!slug.startsWith("/blog/")) return;
-  if (isMydreamshootsSite(site) && slug === "/blog/world-cup-fan-photos-photo-package-guide" && process.env.MDS_SOCCER_MIGRATION_APPROVED === "1") {
-    permanentRedirect(`/blog/soccer-fan-photo-guide${searchParamsSuffix(query)}`);
-  }
   const articleSlug = slug.slice("/blog/".length);
   const redirectPath = isAidreamcapesSite(site)
     ? legacyBlogRedirectPath(
