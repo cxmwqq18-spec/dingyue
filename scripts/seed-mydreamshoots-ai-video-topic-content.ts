@@ -3357,7 +3357,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       image: { src: `${musicVideoImageRoot}/ai-music-video-generator-for-artist-visuals-and-performance-concepts.webp`, alt: "Male singer performing into a vintage microphone under blue and magenta stage lights", width: 864, height: 496 },
       video: { src: `${musicVideoImageRoot}/ai-music-video-generator-for-artist-visuals-and-performance-concepts.mp4`, poster: `${musicVideoImageRoot}/ai-music-video-generator-for-artist-visuals-and-performance-concepts.webp`, label: "AI Music Video Generator for Artist Visuals & Performance Concepts", width: 864, height: 496, fit: "cover" },
       images: [
-        { src: `${musicVideoImageRoot}/ai-music-video-generator-for-artist-visuals-and-performance-concepts.webp`, alt: "Male singer performing into a vintage microphone under blue and magenta stage lights", width: 864, height: 496 },
+        image(`${musicVideoImageRoot}/hero-music-video-performance.jpg`, "Female vocalist singing into a studio microphone under red and blue cinematic lighting, used as the dedicated hero performance frame.", 1800, 1200, "50% 42%"),
         image(`${musicVideoImageRoot}/hero-music-video-artist-frame.jpg`, "Indie music artist in a colorful jacket photographed under moody purple studio lighting, used as the dedicated hero artist identity frame.", 1067, 1600, "50% 38%"),
         image(`${musicVideoImageRoot}/hero-music-video-visual-motif.jpg`, "Empty microphone stage surrounded by haze, spotlights, and light beams, used as the dedicated hero visual motif frame.", 1800, 1200, "50% 48%")
       ]

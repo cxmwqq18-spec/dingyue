@@ -535,11 +535,12 @@ function assertPublicAssetExists(assetUrl, context) {
 }
 
 function assertPageImageAssets() {
-  for (const page of pages) {
+  const scopedPages = refreshContent ? pages : pages.filter((page) => heroMediaSyncSlugs.has(page.slug));
+  for (const page of scopedPages) {
     if (!page.imageUrl) continue;
     assertPublicAssetExists(page.imageUrl, page.slug);
   }
-  for (const page of pages) {
+  for (const page of scopedPages) {
     for (const assetUrl of assetUrlsIn(videoTopicContentSeedForSlug(page.slug))) {
       assertPublicAssetExists(assetUrl, `${page.slug}:content`);
     }
@@ -728,9 +729,12 @@ function syncPages(state, changes) {
       changes.push({ targetType: "ThemePage", id: page.id, field: "create", after: slug });
     }
     const before = JSON.stringify(page);
-    const draftJson = !refreshContent && hasStoredVideoTopicContent(page.draftJson, pageDefinition.slug)
-      ? syncStoredVideoTopicHeroImage(page.draftJson, pageDefinition.slug)
-      : pageJson(pageDefinition);
+    if (!refreshContent && !hasStoredVideoTopicContent(page.draftJson, pageDefinition.slug)) {
+      throw new Error(`missing_target_content:${slug}`);
+    }
+    const draftJson = refreshContent
+      ? pageJson(pageDefinition)
+      : syncStoredVideoTopicHeroImage(page.draftJson, pageDefinition.slug);
     const pageFields = refreshContent
       ? {
           id: page.id || pageId(pageDefinition.slug),
@@ -895,6 +899,7 @@ async function updateDatabase(state, categories, syncedPages) {
             where: { siteId_slug: { siteId: SITE_ID, slug: page.slug } },
             select: { imageUrl: true, galleryImages: true }
           });
+          if (!existingTheme) throw new Error(`missing_target_video_theme:${page.slug}`);
           assertTargetFieldUnchanged(page.slug, "VideoTheme.imageUrl", existingTheme?.imageUrl, targetedHeroFieldManifest[page.slug]?.image, page.imageUrl);
           const galleryImages = refreshContent
             ? videoThemeGalleryImages(page)
@@ -1011,7 +1016,7 @@ console.log(
       updateDb,
       stateSource: "postgres",
       siteId: SITE_ID,
-      pages: pages.map((page) => pagePath(page.slug)),
+      pages: (refreshContent ? pages : pages.filter((page) => heroMediaSyncSlugs.has(page.slug))).map((page) => pagePath(page.slug)),
       categories: categories.map((category) => category.slug),
       changedFields: changes.length,
       changedRecords: new Set(changes.map((change) => `${change.targetType}:${change.id}`)).size,
