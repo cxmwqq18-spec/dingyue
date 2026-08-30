@@ -435,6 +435,12 @@ export function getPhotoPackageMegaGroups(
   creativePackCategories: CreativePackCategory[] = []
 ): PhotoPackageMegaGroup[] {
   const groups = new Map<string, PhotoPackageMegaGroup>();
+  const isMydreamshootsCatalog = [...creativePacks, ...creativePackCategories]
+    .some((record) => record.siteId === "site_dreamshoot");
+  const canonicalRootBySlug = new Map(
+    mydreamshootsThemeTaxonomyData.roots.map((root) => [photoPackageSlug(root.slug), root])
+  );
+  const canonicalItemBySlug = mydreamshootsThemeItemsBySlug;
   const collectionHrefAliases = shouldUseAidreamcapesCollectionAliases([
     ...creativePacks.map((pack) => pack.siteId),
     ...creativePackCategories.map((category) => category.siteId)
@@ -466,9 +472,22 @@ export function getPhotoPackageMegaGroups(
       group.items.push(item);
     }
   };
-  const activeCategories = creativePackCategories.filter((category) => category.status === "active");
+  const activeCategories = creativePackCategories.filter((category) => {
+    if (category.status !== "active") return false;
+    if (!isMydreamshootsCatalog) return true;
+    const slug = photoPackageSlug(category.slug || category.label);
+    return canonicalRootBySlug.has(slug) || canonicalItemBySlug.has(slug);
+  });
   const categoryById = new Map(activeCategories.map((category) => [category.id, category]));
   const activePacks = creativePacks.filter((pack) => pack.status === "active");
+  const canonicalParentForCategory = (category: CreativePackCategory) => {
+    if (!isMydreamshootsCatalog) return undefined;
+    const item = canonicalItemBySlug.get(photoPackageSlug(category.slug || category.label));
+    if (!item) return undefined;
+    return activeCategories.find((candidate) =>
+      !candidate.parentId && photoPackageSlug(candidate.slug || candidate.label) === item.groupSlug
+    );
+  };
   const addActivePackItems = () => {
     activePacks.forEach((pack) => {
       const packSlug = photoPackageSlug(pack.categoryRecord?.slug || pack.category || pack.name);
@@ -479,7 +498,11 @@ export function getPhotoPackageMegaGroups(
         ? activeCategories.find((category) => !category.parentId && photoPackageSlug(category.slug || category.label) === overrideGroupSlug)
         : undefined;
       const canonicalCategory = pack.categoryRecord?.id ? categoryById.get(pack.categoryRecord.id) : undefined;
-      const parent = overrideParent ?? canonicalCategory?.parent ?? (canonicalCategory?.parentId ? categoryById.get(canonicalCategory.parentId) : undefined) ?? pack.categoryRecord?.parent;
+      const canonicalTaxonomyItem = isMydreamshootsCatalog ? canonicalItemBySlug.get(packSlug) : undefined;
+      const canonicalParent = canonicalTaxonomyItem
+        ? activeCategories.find((category) => !category.parentId && photoPackageSlug(category.slug || category.label) === canonicalTaxonomyItem.groupSlug)
+        : undefined;
+      const parent = overrideParent ?? canonicalParent ?? canonicalCategory?.parent ?? (canonicalCategory?.parentId ? categoryById.get(canonicalCategory.parentId) : undefined) ?? pack.categoryRecord?.parent;
       const groupLabel = parent?.label || canonicalCategory?.label || pack.categoryRecord?.label || pack.name || photoPackageLabel(pack.categoryRecord?.slug || pack.category);
       const groupSlug = parent?.slug || photoPackageSlug(groupLabel);
       const group = ensureGroup(groupSlug, groupLabel, parent?.description ?? canonicalCategory?.description ?? pack.categoryRecord?.description, parent?.icon ?? parent?.iconName ?? canonicalCategory?.icon ?? canonicalCategory?.iconName ?? pack.categoryRecord?.icon ?? pack.categoryRecord?.iconName, parent?.sortOrder ?? canonicalCategory?.sortOrder ?? pack.categoryRecord?.sortOrder);
@@ -510,7 +533,7 @@ export function getPhotoPackageMegaGroups(
       .filter((category) => !rootIds.has(category.id))
       .sort((a, b) => sortValue(a.sortOrder) - sortValue(b.sortOrder) || a.label.localeCompare(b.label))
       .forEach((category) => {
-        const parent = category.parent ?? (category.parentId ? categoryById.get(category.parentId) : undefined);
+        const parent = canonicalParentForCategory(category) ?? category.parent ?? (category.parentId ? categoryById.get(category.parentId) : undefined);
         const groupLabel = parent?.label || category.label;
         const groupSlug = parent?.slug || photoPackageSlug(groupLabel);
         const group = ensureGroup(groupSlug, groupLabel, parent?.description || category.description, parent?.icon ?? parent?.iconName ?? category.icon ?? category.iconName, sortValue(parent?.sortOrder));
@@ -524,7 +547,7 @@ export function getPhotoPackageMegaGroups(
     addActivePackItems();
   } else {
     activeCategories.forEach((category) => {
-      const parent = category.parent;
+      const parent = canonicalParentForCategory(category) ?? category.parent;
       const groupLabel = parent?.label || category.label;
       const groupSlug = parent?.slug || photoPackageSlug(groupLabel);
       const group = ensureGroup(groupSlug, groupLabel, parent?.description || category.description, parent?.icon ?? parent?.iconName ?? category.icon ?? category.iconName, sortValue(parent?.sortOrder ?? category.sortOrder));
