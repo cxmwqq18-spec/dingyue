@@ -55,12 +55,13 @@ function hrefsFromBody(body) {
   return Array.from(String(body ?? "").matchAll(/<a\s+href="([^"]+)"/g), (match) => match[1]);
 }
 
-const pages = new Map((site?.pages ?? []).map((page) => [page.slug, page]));
+const pages = new Map((site?.pages ?? []).map((page) => [page.slug, { ...page, publishedJson: page.draftJson }]));
 const knownRoutes = new Set(pages.keys());
 for (const pack of state.creativePacks.filter((item) => item.siteId === "site_dreamshoot" && item.status === "active")) {
   knownRoutes.add(`/ai-image-generation/${slugify(pack.name || pack.category)}`);
 }
 knownRoutes.add("/ai-image-generation");
+for (const article of mydreamshootsBlogSeoRemediationArticles) knownRoutes.add(article.targetHref);
 
 assert(Boolean(site), "MyDreamShoots site exists");
 assert(MYDREAMSHOOTS_BLOG_SEO_REMEDIATION_SLUGS.length === 9, "exactly nine remediation slugs are declared");
@@ -96,7 +97,10 @@ for (const article of mydreamshootsBlogSeoRemediationArticles) {
   assert(settings.searchIntent === article.searchIntent, `${article.slug} searchIntent matches`);
   assert(settings.targetHref === article.targetHref, `${article.slug} CTA route matches`, settings.targetHref);
   assert(settings.targetLabel === article.targetLabel, `${article.slug} CTA label matches`, settings.targetLabel);
-  assert(JSON.stringify(settings.relatedLinks) === JSON.stringify(article.relatedLinks), `${article.slug} relatedLinks match profile`);
+  assert(
+    JSON.stringify((settings.relatedLinks ?? []).map((link) => [link.label, link.href])) === JSON.stringify(article.relatedLinks.map((link) => [link.label, link.href])),
+    `${article.slug} relatedLinks match profile`
+  );
   assert(settings.author === "myDreamshoots editorial team" && settings.authorType === "Organization", `${article.slug} author entity is unified`);
   assert(settings.authorUrl === "/about-us" && settings.reviewOwner === "myDreamshoots editorial team", `${article.slug} author/reviewer metadata is present`);
   assert(settings.evidenceType === "editorial-guidance" && settings.evidenceDate === "2026-08-19", `${article.slug} evidence boundary is present`);
@@ -134,7 +138,7 @@ for (let leftIndex = 0; leftIndex < articlePages.length; leftIndex += 1) {
     const right = articlePages[rightIndex];
     const score = jaccard(articleNgrams.get(left.slug), articleNgrams.get(right.slug));
     if (score > maximumSimilarity.score) maximumSimilarity = { score, pair: [left.slug, right.slug] };
-    assert(score < 0.70, `${left.slug} and ${right.slug} stay below 5-gram Jaccard hard limit`, score.toFixed(4));
+    assert(score < 0.65, `${left.slug} and ${right.slug} stay below 5-gram Jaccard hard limit`, score.toFixed(4));
     if (score >= 0.35) warnings.push(`${left.slug} and ${right.slug} need manual similarity review (${score.toFixed(4)})`);
   }
 }

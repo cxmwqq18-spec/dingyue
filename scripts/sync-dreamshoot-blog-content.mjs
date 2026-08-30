@@ -86,7 +86,7 @@ const mydreamshootsCollectionHrefBySlug = new Map([
   ...mydreamshootsTaxonomy.items.map((item) => [item.slug, `/ai-image-generation/${item.groupSlug}/${item.slug}`]),
   ["creator", "/ai-image-generation/portrait-photo"],
   ["creator-portraits", "/ai-image-generation/portrait-photo"],
-  ["profile-cards", "/ai-image-generation/avatar"],
+  ["profile-cards", "/ai-image-generation/profile-cards"],
   ["wedding", "/ai-image-generation/wedding-photo"],
   ["wedding-portraits", "/ai-image-generation/wedding-photo"],
   ["cultural", "/ai-image-generation/wedding-photo"],
@@ -764,7 +764,7 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/outdoor-creator-scenes-photo-package-guide": {
     entityName: "Outdoor Creator scene comparison",
-    productSlug: "urban|travel",
+    productSlug: "urban",
     userIntent: "Choose Urban streets or Travel scenery for a creator image with a usable crop.",
     suitableUses: ["profile and story drafts", "creator moodboards", "campaign concept images"],
     unsuitableUses: ["undisclosed brand endorsement", "proof of a real destination or sponsorship"],
@@ -829,7 +829,7 @@ const mydreamshootsArticleFacts = {
   },
   "/blog/profile-cards-photo-package-guide": {
     entityName: "Profile card photo workflow",
-    productSlug: "avatar",
+    productSlug: "profile-cards",
     userIntent: "Create a consistent profile-card image set for approved personal or creator uses.",
     suitableUses: ["profile cards", "creator introductions", "private identity moodboards"],
     unsuitableUses: ["government IDs", "impersonation", "representing another person without permission"],
@@ -907,22 +907,22 @@ const mydreamshootsPriorityArticleOverrides = new Map([
     slug: "/blog/profile-cards-photo-package-guide",
     pageTitle: "Profile card photo guide",
     title: "Profile Card Photos: Plan a Consistent Image Set for Personal and Creator Uses",
-    summary: "Plan profile-card portraits around one approved identity, a clear crop, and factual copy added after image review. Use the Avatar package for visual concepts, not official identification.",
+    summary: "Plan profile-card portraits around one approved identity, a clear crop, and factual copy added after image review. Use Profile Cards for creative profiles, not official identification.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/profile-cards/profile-cards-01.webp?v=20260715b",
     imageAlt: "Profile-card portrait concept with a clear face, simple background, and crop-ready framing.",
-    tags: "Profile card photos|Avatar package|Creator profiles|Identity-safe planning",
-    targetLabel: "Open Avatar",
-    targetHref: "/ai-image-generation/avatar",
+    tags: "Profile card photos|Profile Cards|Creator profiles|Identity-safe planning",
+    targetLabel: "Open Profile Cards",
+    targetHref: "/ai-image-generation/profile-cards",
     relatedLinks: [
-      { label: "Explore Avatar profile formats", href: "/ai-image-generation/avatar" },
+      { label: "Open Profile Cards", href: "/ai-image-generation/profile-cards" },
       { label: "Read the Headshot guide", href: "/blog/headshot-photo-package-guide" },
       { label: "Compare Portrait Retouch", href: "/ai-image-generation/portrait-retouch" }
     ],
     seoTitle: "Profile card photo planning guide | myDreamshoots",
-    seoDescription: "Plan consistent profile-card portraits through Avatar, then review identity, crop, text-safe space, permissions, and disclosure before publishing.",
-    seoKeywords: "profile card photos, Avatar profile portraits, creator profile image, identity-safe AI photos, profile crop guide",
+    seoDescription: "Plan consistent profile-card portraits, then review identity, crop, text-safe space, permissions, and disclosure before publishing.",
+    seoKeywords: "profile card photos, profile portraits, creator profile image, identity-safe AI photos, profile crop guide",
     body: html`
-      <p>A profile card has a narrow job: help a viewer recognize the approved person and understand the context around the image. Use this guide when you need a small set of consistent portrait concepts for a creator introduction, personal profile, or private moodboard. The Avatar package supplies the visual direction; factual name, role, and contact copy should be added separately after review.</p>
+      <p>A profile card has a narrow job: help a viewer recognize the approved person and understand the context around the image. Use this guide when you need a small set of consistent portrait concepts for a creator introduction, personal profile, or private moodboard. The Profile Cards package supplies the visual direction; factual name, role, and contact copy should be added separately after review.</p>
       <h2 id="profile-card-define-use">Define the profile-card use first</h2>
       <p>Write down where the image will appear before choosing a crop. A square profile card needs immediate face recognition. A vertical creator card can show more shoulder or wardrobe context. A website header may need negative space for approved copy. The same generated portrait can fail one format and work well in another, so the card dimensions belong in the brief.</p>
       <p>Keep the use personal or creator-focused. Do not treat an AI portrait as a government ID, identity verification document, employment credential, or proof that another person approved the profile. If the card represents a team or organization, confirm the depicted person's permission and add factual text outside the image workflow.</p>
@@ -932,8 +932,8 @@ const mydreamshootsPriorityArticleOverrides = new Map([
       <h2 id="profile-card-crop-and-background">Plan the crop and background together</h2>
       <table><thead><tr><th>Card need</th><th>Planning cue</th><th>Review focus</th></tr></thead><tbody><tr><td>Square profile</td><td>Face-forward framing and quiet background.</td><td>Recognition at small size, eye line, and edge crop.</td></tr><tr><td>Creator introduction</td><td>Shoulder or half-body room for personality.</td><td>Expression, wardrobe, and text-safe area.</td></tr><tr><td>Website header</td><td>Wide composition with approved negative space.</td><td>Subject placement, readability, and responsive crop.</td></tr><tr><td>Private moodboard</td><td>Several related crops with one visual identity.</td><td>Consistency across background, light, and expression.</td></tr></tbody></table>
       <p>Keep background detail subordinate to the face. A busy scene can make the card look energetic, but it can also make the person hard to identify or leave no space for factual copy. If the image will carry text, generate clean space and add the final words in a design tool rather than trusting generated lettering.</p>
-      <h2 id="profile-card-avatar-comparison">Choose Avatar, Headshot, or Portrait Retouch</h2>
-      <p>Use <a href="/ai-image-generation/avatar">Avatar</a> when the profile image needs a recognizable but stylized format. Use <a href="/ai-image-generation/headshot">Headshot</a> when professional restraint matters more than a card concept. Use <a href="/ai-image-generation/portrait-retouch">Portrait Retouch</a> when the source is already sharp and the main need is controlled cleanup. Review the live product cards for current outputs and credit cost before starting.</p>
+      <h2 id="profile-card-product-comparison">Choose Profile Cards, Headshot, or Portrait Retouch</h2>
+      <p>Use <a href="/ai-image-generation/profile-cards">Profile Cards</a> when the image needs a repeatable bio or social-card crop. Use <a href="/ai-image-generation/headshot">Headshot</a> when professional restraint matters more than a card concept. Use <a href="/ai-image-generation/portrait-retouch">Portrait Retouch</a> when the source is already sharp and the main need is controlled cleanup. Review the live product cards for current outputs and credit cost before starting.</p>
       <h2 id="profile-card-review">Review identity and card safety</h2>
       <p>Review the full image at the final card size, then inspect it at 100 percent. Attractive lighting cannot compensate for a changed face, invented text, or a crop that removes the recognisable features a profile needs.</p>
       <ul><li>Compare eyes, face shape, hairline, expression, and skin tone with the approved source.</li><li>Check hands, glasses, jewelry, collars, and hair edges for impossible joins.</li><li>Inspect background text, logos, badges, and invented credentials.</li><li>Confirm the crop leaves room for approved name or role copy if the design needs it.</li><li>Make sure the image does not imply an official ID, employer endorsement, or identity verification.</li><li>Keep the original source and note which output was selected for the card.</li></ul>
@@ -1265,8 +1265,8 @@ const mydreamshootsPriorityArticleOverrides = new Map([
     seoDescription: "Plan AI wedding portraits for save-the-dates, moodboards, invitations, websites, or keepsakes with couple consent, verified text, and careful detail review.",
     seoKeywords: "AI wedding portraits, save-the-date concept, wedding moodboard, wedding couple photo guide, AI wedding keepsake",
     body: html`
-      <p>Use Wedding Photo for save-the-date concepts, ceremony moodboards, invitation-friendly portraits, wedding website visuals, or private keepsakes. Prepare approved photos of both people, choose one ceremony direction, and treat every result as wedding-inspired creative imagery rather than proof of a real event.</p>
-      <h2 id="wedding-choose-use">Choose the wedding use before the visual style</h2>
+      <p>Use AI Wedding Portraits through Wedding Photo for save-the-date concepts, ceremony moodboards, invitation-friendly portraits, wedding website visuals, or private keepsakes. Prepare approved photos of both people, choose one ceremony direction, and treat every result as wedding-inspired creative imagery rather than proof of a real event.</p>
+      <h2 id="wedding-choose-use">Choose the wedding portrait use before the visual style</h2>
       <p>A save-the-date needs text-safe composition. A ceremony moodboard can explore atmosphere, clothing, floral direction, and light. An invitation portrait should leave room for verified copy. A website header needs a wide crop that survives navigation overlays. A private keepsake can favor emotion and close detail.</p>
       <p>Choose Wedding Photo when formal couple styling, ceremony atmosphere, floral details, or card-ready framing is central. Choose Engagement for a proposal or ring-led announcement. Choose Valentine's Day for a seasonal romantic card that does not make a ceremony claim.</p>
       <h2 id="wedding-prepare-couple">Prepare both people and one ceremony direction</h2>
@@ -1277,7 +1277,7 @@ const mydreamshootsPriorityArticleOverrides = new Map([
       <p>Review the live <a href="/ai-image-generation/wedding-photo">Wedding Photo package card</a> for current outputs and credit cost.</p>
       <h2 id="wedding-add-text-later">Add names, dates, and venue copy later</h2>
       <p>Leave names, dates, venue details, invitation copy, and schedules out of the generated scene. Add verified text later in a design tool where spelling, hierarchy, and date accuracy can be controlled. A clean text-safe crop is more reliable than generated lettering that appears correct at first glance.</p>
-      <h2 id="wedding-trust-review">Review consent, ceremony details, and pair anatomy</h2>
+      <h2 id="wedding-trust-review">Review wedding portraits for consent, ceremony details, and pair anatomy</h2>
       <p>Use generated wedding images as concepts or keepsakes, not as proof that a ceremony, venue booking, marriage, or cultural rite occurred. Share couple images only with both people's approval.</p>
       <ul><li>Check both faces, eye direction, expression, and relative scale.</li><li>Inspect overlapping hands and arms, rings, jewelry, and bouquet stems.</li><li>Review veil and hair edges, suit and dress fabric, and floral repetition.</li><li>Check ceremonial objects, cultural details, background guests, and venue cues.</li><li>Confirm the final card or website crop preserves text-safe spacing.</li><li>Have knowledgeable participants review meaningful attire, symbols, and rituals.</li></ul>
       <h2 id="wedding-faq">AI wedding portrait FAQ</h2>
@@ -1311,7 +1311,7 @@ const mydreamshootsPriorityArticleOverrides = new Map([
     seoKeywords: "AI soccer fan photos, match-day poster, soccer supporter portrait, generic fan colors, sports logo safety, supporter avatar",
     body: html`
       <p>Create a personal soccer supporter portrait, match-day poster, profile avatar, social banner, or watch-party image from approved photos. Plan the crop and fan mood without using official tournament marks, team crests, sponsor logos, player likenesses, or language that implies an official partnership.</p>
-      <h2 id="soccer-choose-format">Choose one personal fan format</h2>
+      <h2 id="soccer-choose-format">Choose one personal soccer fan format</h2>
       <p>Choose Soccer for personal fan creativity: a face-led avatar, dramatic vertical poster, wide social banner, supporter portrait, or approved group scene. Use personal portraits or group references that you have permission to use. Pick one generic color direction and one format so the result has a clear job.</p>
       <table><thead><tr><th>Format</th><th>Composition</th><th>Review priority</th></tr></thead><tbody><tr><td>Profile avatar</td><td>Square, face-led, minimal background</td><td>Recognition at small size and no accidental marks.</td></tr><tr><td>Match-day poster</td><td>Vertical, energetic light, clean space for later copy</td><td>Hands, jersey details, stadium geometry, and text-safe area.</td></tr><tr><td>Social banner</td><td>Wide, subject placed away from interface overlays</td><td>Crop resilience, crowd repetition, and background signs.</td></tr><tr><td>Supporter group</td><td>Only approved people, with clear spacing</td><td>Every face, hand, garment, and relationship between figures.</td></tr></tbody></table>
       <h2 id="soccer-use-generic-elements">Use generic supporter colors and invented scene details</h2>
@@ -1589,6 +1589,73 @@ function assertMyDreamShootsArticleFacts(config) {
       if (!link || typeof link.href !== "string" || !/^\/(?:ai-image-generation(?:\/|$)|ai-video-generation(?:\/|$)|blog\/|policies\/|content$)/.test(link.href)) {
         throw new Error(`${slug} has a non-local related guide href: ${String(link?.href ?? "")}`);
       }
+    }
+    const expectedProductHref = article.productSlug === "ai-image-generation"
+      ? "/ai-image-generation"
+      : String(article.targetHref).startsWith("/ai-video-generation/")
+        ? `/ai-video-generation/${article.productSlug}`
+        : `/ai-image-generation/${article.productSlug}`;
+    if (article.targetHref !== expectedProductHref) {
+      throw new Error(`${slug} productSlug ${article.productSlug} must project to ${expectedProductHref}, received ${article.targetHref}.`);
+    }
+  }
+
+  const priorityArticles = config.articles.filter((article) => mydreamshootsPriorityBlogSlugSet.has(article.slug));
+  const normalizedArticleText = (article, value) => String(value ?? "")
+    .replace(new RegExp([article.entityName, article.primaryKeyword].filter(Boolean).map((item) => String(item).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "gi"), " ")
+    .replace(/<[^>]+>/g, " ")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const fiveGrams = (article) => {
+    const words = normalizedArticleText(article, article.body).split(" ").filter(Boolean);
+    return new Set(words.slice(0, Math.max(0, words.length - 4)).map((_, index) => words.slice(index, index + 5).join(" ")));
+  };
+  const h2Skeleton = (article) => new Set(
+    Array.from(String(article.body ?? "").matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>/g), (match) => normalizedArticleText(article, match[1])).filter(Boolean)
+  );
+  for (let leftIndex = 0; leftIndex < priorityArticles.length; leftIndex += 1) {
+    const left = priorityArticles[leftIndex];
+    const leftGrams = fiveGrams(left);
+    const leftH2 = h2Skeleton(left);
+    for (let rightIndex = leftIndex + 1; rightIndex < priorityArticles.length; rightIndex += 1) {
+      const right = priorityArticles[rightIndex];
+      const rightGrams = fiveGrams(right);
+      const rightH2 = h2Skeleton(right);
+      let gramIntersection = 0;
+      for (const gram of leftGrams) if (rightGrams.has(gram)) gramIntersection += 1;
+      const similarity = gramIntersection / Math.max(1, leftGrams.size + rightGrams.size - gramIntersection);
+      if (similarity > 0.65) {
+        throw new Error(`${left.slug} and ${right.slug} body similarity ${similarity.toFixed(4)} exceeds 0.65.`);
+      }
+      let sharedH2 = 0;
+      for (const heading of leftH2) if (rightH2.has(heading)) sharedH2 += 1;
+      if (sharedH2 > 4) {
+        throw new Error(`${left.slug} and ${right.slug} share ${sharedH2} normalized H2 headings.`);
+      }
+    }
+  }
+
+  const requiredQualifierBySlug = new Map([
+    ["/blog/anime-avatar-photo-package-guide", /anime\s+avatar/i],
+    ["/blog/profile-cards-photo-package-guide", /profile\s+cards?/i],
+    ["/blog/christmas-couple-photo-package-guide", /christmas\s+couple/i],
+    ["/blog/creator-portraits-photo-package-guide", /creator\s+portraits?/i],
+    ["/blog/desi-wedding-photo-package-guide", /desi\s+wedding/i],
+    ["/blog/halloween-party-photos-photo-package-guide", /halloween\s+party/i],
+    ["/blog/indian-wedding-photo-package-guide", /indian\s+wedding/i],
+    ["/blog/thanksgiving-group-photos-photo-package-guide", /thanksgiving\s+group/i],
+    ["/blog/wedding-portraits-photo-package-guide", /wedding\s+portraits?/i],
+    ["/blog/world-cup-fan-photos-photo-package-guide", /soccer\s+(?:fan|supporter)/i]
+  ]);
+  for (const [slug, qualifier] of requiredQualifierBySlug) {
+    const article = priorityArticles.find((item) => item.slug === slug);
+    if (!article) throw new Error(`${slug} is missing from the priority article guard.`);
+    const firstParagraph = String(article.body ?? "").match(/<p>([\s\S]*?)<\/p>/)?.[1] ?? "";
+    const majorSections = String(article.body ?? "").split(/<h2[^>]*>/).slice(1);
+    if (!qualifier.test(article.title) || !qualifier.test(firstParagraph) || majorSections.filter((section) => qualifier.test(section)).length < 2) {
+      throw new Error(`${slug} must retain its URL qualifier in the H1, first paragraph, and at least two major sections.`);
     }
   }
 }

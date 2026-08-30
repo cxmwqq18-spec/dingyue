@@ -57,7 +57,6 @@ const expectedHomeOrder = [
   "generation_showcase_1",
   "tutorial_video_1",
   "tutorial_video_2",
-  "package_catalog_1",
   "proof_1",
   "faq_1",
   "conversion_1",
@@ -153,39 +152,6 @@ for (const asset of homeAssetCounts.keys()) {
   const assetPath = path.join(repoRoot, "public", asset.split("?")[0].split("#")[0].replace(/^\/+/, ""));
   assert(fs.existsSync(assetPath), `home page references a missing image asset: ${asset}`);
 }
-
-function dreamshootFeaturedCatalogScore(pack) {
-  const title = String(pack.name ?? "").toLowerCase();
-  const category = String(pack.category ?? "").toLowerCase();
-  if (title.includes("world cup")) return 0;
-  if (title.includes("christmas photos")) return 1;
-  if (title.includes("christmas couple")) return 2;
-  if (title.includes("holiday") || category.includes("holiday") || category.includes("seasonal")) return 3;
-  if (category.includes("creator") || title.includes("creator")) return 4;
-  if (title.includes("gala") || category.includes("gala") || category.includes("red carpet") || category.includes("vip")) return 5;
-  if (title.includes("thanksgiving") || category.includes("thanksgiving")) return 6;
-  if (title.includes("halloween") || category.includes("halloween")) return 7;
-  if (title.includes("headshot")) return 8;
-  if (title.includes("hairstyle")) return 9;
-  if (title.includes("cyberpunk")) return 10;
-  if (title.includes("mafia")) return 11;
-  if (title.includes("nature")) return 12;
-  if (category.includes("wedding") || category.includes("couple") || category.includes("boudoir") || category.includes("cultural")) return 25;
-  return 15;
-}
-
-const homeFeaturedPackImages = [...packs]
-  .sort((a, b) => dreamshootFeaturedCatalogScore(a) - dreamshootFeaturedCatalogScore(b))
-  .slice(0, Math.max(3, Math.min(6, Number(homePage.publishedJson.sections?.package_catalog_1?.settings?.featuredCount ?? 5))))
-  .map((pack) => pack.imageUrl)
-  .filter(Boolean);
-const runtimeCatalogCounts = new Map();
-for (const asset of homeFeaturedPackImages) runtimeCatalogCounts.set(asset, (runtimeCatalogCounts.get(asset) ?? 0) + 1);
-const runtimeDuplicates = [...runtimeCatalogCounts.entries()].filter(([, count]) => count > 1);
-assert(
-  runtimeDuplicates.length === 0,
-  `rendered home page catalog pack images must not repeat within the catalog: ${runtimeDuplicates.map(([asset, count]) => `${asset} x${count}`).join("; ")}`
-);
 
 const requiredPackNames = [
   "Professional Headshots",
@@ -318,10 +284,7 @@ assert(collectionsPage?.publishedJson?.sectionsOrder?.includes("trust_1"), "coll
 assert(collectionsPage?.publishedJson?.sectionsOrder?.includes("proof_pairs_1"), "collections page must show package transformation proof");
 assert(collectionsPage?.publishedJson?.sectionsOrder?.includes("packages_strip_1"), "collections page must explain package path");
 
-const homeCatalog = homePage.publishedJson.sections?.package_catalog_1;
-assert(homeCatalog?.type === "dreamshoot_package_catalog", "home page missing DreamShoot package catalog renderer");
-assert(homeCatalog?.settings?.source === "creative_packs", "home package catalog must use active creative packs, not a short manual demo list");
-assert(Number(homeCatalog?.settings?.featuredCount ?? 0) >= 5, "home package catalog should feature at least 5 cards before the full directory");
+assert(homePage.publishedJson.sections?.package_catalog_1 === undefined, "home page must not retain the removed package catalog section");
 
 const featuredPack = bestPackagesPage.publishedJson.sections?.featured_pack_1;
 assert(featuredPack?.type === "dreamshoot_featured_pack", "Best Packages page missing DreamShoot featured pack renderer");

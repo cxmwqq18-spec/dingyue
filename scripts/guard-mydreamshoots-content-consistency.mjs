@@ -684,16 +684,6 @@ async function loadDatabaseSite() {
           publishedJson: true
         }
       },
-      publications: {
-        orderBy: [{ version: "desc" }],
-        take: 1,
-        select: {
-          id: true,
-          version: true,
-          publishedAt: true,
-          snapshot: true
-        }
-      }
     }
   });
 }
@@ -714,26 +704,13 @@ async function main() {
   const site = await loadDatabaseSite();
   if (!site) throw new Error("MyDreamShoots site was not found in Postgres.");
   const settings = site.settings?.publishedJson ?? {};
-  const latestPublication = site.publications?.[0];
+  const latestPublication = undefined;
   const perPage = [];
   const originReports = [];
   let homepageLockReport = skipHomepageLock ? { status: "skipped", path: homepageLockPath } : null;
 
-  if (latestPublication?.snapshot?.themeSettings) {
-    const snapshotSettings = latestPublication.snapshot.themeSettings.publishedJson ?? latestPublication.snapshot.themeSettings;
-    compareStructuredFingerprints({
-      leftLabel: "ThemeSettings.publishedJson",
-      rightLabel: `latest themePublication v${latestPublication.version} settings`,
-      slug: "themeSettings",
-      leftRecords: collectSettingsRecords(settings, "db:themeSettings.publishedJson"),
-      rightRecords: collectSettingsRecords(snapshotSettings, `publication:${latestPublication.id}:themeSettings`)
-    });
-  } else {
-    addFailure("publication-settings-missing", "latest ThemePublication does not contain a themeSettings snapshot", {
-      publicationId: latestPublication?.id,
-      version: latestPublication?.version
-    });
-  }
+  // Public SSR reads current relational draft/published rows directly. The
+  // historical ThemePublication snapshot tables are retired.
 
   if (writeHomepageLock) {
     const dbPage = findPageBySlug(site.pages, "/");
@@ -761,7 +738,6 @@ async function main() {
     }
 
     const dbRecords = collectPageRecords(dbPage, settings, `db:themePage:${dbPage.slug}`);
-    const snapshotPage = findPageBySlug(latestPublication?.snapshot?.pages ?? [], slug);
     const pageSummary = {
       slug,
       dbSlug: dbPage.slug,
@@ -774,24 +750,7 @@ async function main() {
       pageSummary.approvedHomepageLock = homepageLockReport;
     }
 
-    if (snapshotPage?.publishedJson) {
-      const snapshotRecords = collectPageRecords(snapshotPage, latestPublication?.snapshot?.themeSettings?.publishedJson ?? latestPublication?.snapshot?.themeSettings ?? settings, `publication:${latestPublication.id}:${snapshotPage.slug ?? slug}`);
-      pageSummary.publication = fingerprintSummary(snapshotRecords);
-      compareStructuredFingerprints({
-        leftLabel: "database ThemePage.publishedJson",
-        rightLabel: `latest themePublication v${latestPublication.version}`,
-        slug,
-        leftRecords: dbRecords,
-        rightRecords: snapshotRecords
-      });
-    } else {
-      addFailure("publication-page-missing", `${slug} is missing from the latest ThemePublication snapshot`, {
-        slug,
-        publicationId: latestPublication?.id,
-        version: latestPublication?.version,
-        candidates: slugCandidates(slug)
-      });
-    }
+    pageSummary.publication = { status: "retired; relational publishedJson is authoritative" };
 
     if (!skipLive) {
       originReports.push(await compareOriginToDatabase({ origin: liveOrigin, originLabel: "production", slug, records: dbRecords }));

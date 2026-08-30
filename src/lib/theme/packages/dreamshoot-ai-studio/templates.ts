@@ -2383,7 +2383,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   const conversionSection = aidreamcapesTemplateSite ? aidreamcapesConversionSection() : homeSections.conversion_1;
   const homeSectionsOrder = aidreamcapesTemplateSite
     ? ["hero_1", "generation_showcase_1", "featured_thanksgiving_1", "tutorial_video_1", "tutorial_video_2", "mobile_video_1", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"]
-    : ["hero_1", "generation_showcase_1", "tutorial_video_1", "package_catalog_1", "proof_1", "faq_1", "conversion_1"];
+    : ["hero_1", "generation_showcase_1", "tutorial_video_1", "proof_1", "faq_1", "conversion_1"];
   const homePageSections: ThemePageJson["sections"] = {
     hero_1: homeHeroSection,
     generation_showcase_1: generationShowcaseSection,
@@ -2391,7 +2391,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
     tutorial_video_1: firstTutorialVideoSection,
     ...(aidreamcapesTemplateSite ? { tutorial_video_2: secondTutorialVideoSection } : {}),
     ...(mobileVideoSection ? { mobile_video_1: mobileVideoSection } : {}),
-    package_catalog_1: packageCatalogSection,
+    ...(aidreamcapesTemplateSite ? { package_catalog_1: packageCatalogSection } : {}),
     proof_1: reviewSection,
     pricing_1: homeSections.pricing_1,
     faq_1: faqSection,

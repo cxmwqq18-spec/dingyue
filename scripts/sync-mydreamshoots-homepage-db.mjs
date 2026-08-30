@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
-import crypto from "node:crypto";
 import fs from "node:fs";
 import Module from "node:module";
 import path from "node:path";
@@ -45,23 +44,9 @@ Module._resolveFilename = function resolveFilename(request, ...args) {
 const jiti = createJiti(import.meta.url);
 const { dreamshootAiStudioTemplatesForSite } = jiti("../src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 const { prepareDraftPublishManifestRelational } = jiti("../src/lib/stores/theme-store.ts");
-const { publicationSnapshotHash, publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 function clone(value) {
   return value === undefined ? undefined : JSON.parse(JSON.stringify(value));
-}
-
-function stable(value) {
-  if (Array.isArray(value)) return value.map(stable);
-  if (!value || typeof value !== "object") return value;
-  return Object.fromEntries(Object.entries(value)
-    .filter(([, item]) => item !== undefined)
-    .sort(([left], [right]) => left.localeCompare(right))
-    .map(([key, item]) => [key, stable(item)]));
-}
-
-function projectionRevision(value) {
-  return crypto.createHash("sha256").update(JSON.stringify(stable(value))).digest("hex").slice(0, 20);
 }
 
 function homepageJsonFrom(siteRecord) {
@@ -94,25 +79,6 @@ const catalogOrder = [
   "christmas-photo",
   "thanksgiving-photo"
 ];
-
-const catalogCopy = {
-  soccer: { title: "Soccer", category: "Fan Photos", meta: "Match Day", description: "Create personal soccer fan portraits, stadium-style posters, match-day social images, and supporter albums without official marks." },
-  "portrait-photo": { title: "Portrait Photo", category: "Creator", meta: "Personal Brand", description: "Build polished creator portraits, media-kit images, founder visuals, newsletter photos, and personal-brand profile crops." },
-  "gala-photo": { title: "Gala Photo", category: "Vip Looks", meta: "Formal Event", description: "Create formal gala portraits with eveningwear mood, polished event lighting, red-carpet energy, and elegant editorial crops." },
-  headshot: { title: "Headshot", category: "Professional", meta: "LinkedIn", description: "Generate realistic professional headshots for LinkedIn, resumes, speaker pages, founder bios, and team profile updates." },
-  "hairstyle-generator": { title: "Hairstyle Generator", category: "Beauty", meta: "Hair Color", description: "Preview hairstyle, hair color, texture, bangs, length, and salon inspiration portraits before choosing a real-world look." },
-  cyberpunk: { title: "Cyberpunk", category: "Creative", meta: "Neon City", description: "Turn portraits into neon cyberpunk city scenes with rain reflections, futuristic styling, cinematic light, and poster crops." },
-  mafia: { title: "Mafia", category: "Creative", meta: "Noir Character", description: "Create mafia-inspired noir portraits with tailored wardrobe, moody interiors, dramatic light, and private character albums." },
-  travel: { title: "Travel", category: "Lifestyle", meta: "Destination Portraits", description: "Create travel portraits with scenic streets, coastal escapes, outdoor light, destination mood, and private creator albums." },
-  urban: { title: "Urban", category: "Lifestyle", meta: "Street Portraits", description: "Build urban portraits with city textures, street scenes, modern wardrobe, creator energy, and private gallery delivery." },
-  "virtual-try-on": { title: "Virtual Try-On", category: "Beauty", meta: "Outfit Ideas", description: "Preview outfit directions, wardrobe moodboards, fashion looks, creator styling ideas, and private try-on portraits." },
-  avatar: { title: "Avatar", category: "Creator", meta: "Profile Icons", description: "Turn selfies into recognizable avatars for profile icons, gaming handles, Discord servers, creator pages, and social refreshes." },
-  "street-style": { title: "Street Style", category: "Creator", meta: "Fashion Profile", description: "Generate fashion-forward street style portraits with outfit direction, editorial poses, city backdrops, and creator crops." },
-  "motion-generator": { title: "Motion Generator", category: "Video", meta: "Short Motion", description: "Turn approved source photos into short motion-ready scenes for social posts, creator intros, and private visual tests." },
-  "photo-enhancer": { title: "Photo Enhancer", category: "Utility", meta: "Image Polish", description: "Improve approved photos with a focused enhancement pass before using them in a private gallery workflow." },
-  "christmas-photo": { title: "Christmas Photo", category: "Christmas", meta: "Holiday Cards", description: "Create festive group portraits, greeting-card visuals, cozy couple scenes, and warm seasonal images." },
-  "thanksgiving-photo": { title: "Thanksgiving Photo", category: "Seasonal", meta: "Family Album", description: "Create warm family-style portraits, dinner-table keepsakes, gratitude cards, and private seasonal albums." }
-};
 
 const subscriptionMetadata = {
   Starter: {
@@ -247,7 +213,7 @@ function mergeFooter(settings) {
   return next;
 }
 
-function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
+function mergeHomepage(pageJson, templateHome, pricingPageJson) {
   const next = clone(pageJson);
   const templateGeneration = templateHome.sections?.generation_showcase_1;
   assert(templateGeneration, "studio template must provide generation_showcase_1");
@@ -329,43 +295,9 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson, creativePacks) {
     });
     next.sections.proof_1 = reviews;
   }
-  const catalogPacks = new Map((creativePacks ?? []).map((pack) => [pack.slug, pack]));
-  const catalogBlocks = catalogOrder.map((slug, index) => {
-    const pack = catalogPacks.get(slug);
-    assert(pack, `active CreativePack ${slug} is required for the homepage catalog`);
-    const copy = catalogCopy[slug] ?? { title: pack.name, category: pack.category, meta: "Private gallery", description: pack.description || pack.headline };
-    const images = Array.isArray(pack.galleryImages) ? pack.galleryImages : [];
-    return {
-      id: `catalog_${slug}`,
-      type: "catalog_pack",
-      settings: {
-        title: copy.title,
-        description: copy.description,
-        category: copy.category,
-        meta: copy.meta,
-        credits: `${pack.outputCount} Photos`,
-        imageUrl: images[2] || images[0] || pack.imageUrl || "",
-        href: `/ai-image-generation/${slug}`
-      }
-    };
-  });
-  const catalog = next.sections.package_catalog_1 ?? {};
-  next.sections.package_catalog_1 = {
-    ...catalog,
-    settings: {
-      ...(catalog.settings ?? {}),
-      source: "manual",
-      featuredCount: 12,
-      title: "AI Photo Packages by Style and Use Case",
-      subtitle: "Browse the currently published myDreamshoots themes across professional, lifestyle, creative, magic, and photo tools before spending credits.",
-      label: "AI PHOTO STUDIOS",
-      directoryLabel: "AI PHOTO THEMED",
-      directorySubtitle: "Compare every active theme by category, title, cover, and route before starting a private photo package."
-    },
-    blocks: catalogBlocks
-  };
+  delete next.sections.package_catalog_1;
   // Pricing is embedded by the showcase renderer and must remain out of the ordered sections.
-  next.sectionsOrder = next.sectionsOrder.filter((id) => id !== "pricing_1");
+  next.sectionsOrder = next.sectionsOrder.filter((id) => id !== "package_catalog_1" && id !== "pricing_1");
   return next;
 }
 
@@ -397,26 +329,10 @@ try {
       pages: { orderBy: { slug: "asc" } },
       settings: true,
       storefrontProfile: true,
-      activePublication: { include: { publication: true } },
       connect: true
     }
   });
   assert(siteRecord?.settings, "site and settings are required");
-  const creativePackRows = await prisma.creativePack.findMany({
-    where: { siteId, status: "active", aiAppSlug: "image_generator" },
-    include: { categoryRecord: true },
-    orderBy: { createdAt: "asc" }
-  });
-  const creativePacks = creativePackRows.map((pack) => ({
-    slug: pack.categoryRecord?.slug || pack.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
-    name: pack.name,
-    headline: pack.headline,
-    description: pack.description,
-    category: pack.category,
-    outputCount: pack.outputCount,
-    imageUrl: pack.imageUrl,
-    galleryImages: Array.isArray(pack.galleryImages) ? pack.galleryImages : []
-  }));
   const mergedThemeSettings = mergeFooter(siteRecord.settings.draftJson ?? siteRecord.settings.publishedJson);
   const pricingPage = siteRecord.pages.find((page) => page.slug === "/pricing");
   const templateHome = dreamshootAiStudioTemplatesForSite({
@@ -427,7 +343,7 @@ try {
     branding: siteRecord.branding
   }).home;
   const { page: homepage, json: currentJson } = homepageJsonFrom(siteRecord);
-  const mergedJson = mergeHomepage(currentJson, templateHome, pricingPage?.draftJson ?? pricingPage?.publishedJson, creativePacks);
+  const mergedJson = mergeHomepage(currentJson, templateHome, pricingPage?.draftJson ?? pricingPage?.publishedJson);
   const { page: bestImagePage, json: currentBestImageJson } = pageJsonFromSlug(siteRecord, "/best-ai-image");
   const { page: bestVideoPage, json: currentBestVideoJson } = pageJsonFromSlug(siteRecord, "/best-ai-video");
   const mergedBestImageJson = mergeBestGallery(currentBestImageJson, "image");
@@ -470,7 +386,7 @@ try {
       siteId,
       homepageId: homepage.id,
       trustedLogoBlocks: mergedJson.sections.generation_showcase_1.blocks?.length ?? 0,
-      homepageCatalogBlocks: mergedJson.sections.package_catalog_1.blocks?.length ?? 0,
+      homepageCatalogBlocks: 0,
       footerLinks: mergedThemeSettings.navigation.footerLinks.length,
       embedsPricing: mergedJson.sections.generation_showcase_1.settings?.embeddedPricingSectionId === "pricing_1",
       homepageVideoSlugs: undefined,
@@ -482,9 +398,9 @@ try {
     fs.mkdirSync(backupDir, { recursive: true, mode: 0o700 });
   fs.writeFileSync(backupPath, `${JSON.stringify(backup, null, 2)}\n`, { mode: 0o600 });
   await prisma.$transaction(async (tx) => {
-    await tx.themePage.update({ where: { id: homepage.id }, data: { draftJson: mergedJson, updatedAt: new Date() } });
-    await tx.themePage.update({ where: { id: bestImagePage.id }, data: { draftJson: mergedBestImageJson, updatedAt: new Date() } });
-    await tx.themePage.update({ where: { id: bestVideoPage.id }, data: { draftJson: mergedBestVideoJson, updatedAt: new Date() } });
+    await tx.themePage.update({ where: { id: homepage.id }, data: { draftJson: mergedJson, publishedJson: mergedJson, updatedAt: new Date() } });
+    await tx.themePage.update({ where: { id: bestImagePage.id }, data: { draftJson: mergedBestImageJson, publishedJson: mergedBestImageJson, updatedAt: new Date() } });
+    await tx.themePage.update({ where: { id: bestVideoPage.id }, data: { draftJson: mergedBestVideoJson, publishedJson: mergedBestVideoJson, updatedAt: new Date() } });
     await tx.themeSettings.update({ where: { siteId }, data: { draftJson: mergedThemeSettings, updatedAt: new Date() } });
     for (const product of Object.entries(subscriptionMetadata)) {
       const [name, metadata] = product;
@@ -549,41 +465,8 @@ try {
     }
   }, { timeout: 120_000 });
 
-  const freshSiteRecord = await prisma.site.findUnique({
-    where: { id: siteId },
-    include: { pages: { orderBy: { slug: "asc" } }, products: { include: { prices: true } }, activePublication: { include: { publication: true } } }
-  });
-  assert(freshSiteRecord?.activePublication?.publication, "site publication readback failed");
-  const activeSnapshot = clone(freshSiteRecord.activePublication.publication.snapshot);
-  assert.equal(publicationSnapshotIntegrity(activeSnapshot), "valid", "active publication must be valid before homepage repair");
-  // The homepage transaction updates Product/Price metadata. Re-project those
-  // public offers before publishing so the local PostgreSQL snapshot, not the
-  // previous publication, remains the storefront source of truth.
-  const productsById = new Map(freshSiteRecord.products.map((product) => [product.id, product]));
-  activeSnapshot.publishedOffers = (activeSnapshot.publishedOffers ?? []).map((offer) => {
-    const product = productsById.get(offer.productId);
-    const price = product?.prices.find((candidate) => candidate.id === offer.priceId);
-    return product && price
-      ? { ...offer, productMetadata: clone(product.metadata), priceMetadata: clone(price.metadata), revision: crypto.createHash("sha256").update(JSON.stringify([product.id, product.metadata, price])).digest("hex").slice(0, 20) }
-      : offer;
-  });
-  activeSnapshot.revisions.offerRevision = projectionRevision(activeSnapshot.publishedOffers);
-  for (const [pageId, pageJson] of [[homepage.id, mergedJson], [bestImagePage.id, mergedBestImageJson], [bestVideoPage.id, mergedBestVideoJson]]) {
-    const publishedPage = activeSnapshot.pages.find((candidate) => candidate.id === pageId);
-    assert(publishedPage, `page ${pageId} is missing from the active publication snapshot`);
-    publishedPage.publishedJson = clone(pageJson);
-  }
-  const snapshotForPublish = {
-    ...activeSnapshot,
-    themeSettings: mergedThemeSettings,
-    snapshotHash: "",
-    revisions: { ...activeSnapshot.revisions, snapshotHash: "" }
-  };
-  snapshotForPublish.snapshotHash = publicationSnapshotHash(snapshotForPublish);
-  snapshotForPublish.revisions.snapshotHash = snapshotForPublish.snapshotHash;
-  assert.equal(publicationSnapshotIntegrity(snapshotForPublish), "valid", "homepage repair must preserve snapshot integrity");
     const manifest = await prepareDraftPublishManifestRelational(siteId);
-    console.log(JSON.stringify({ ok: true, mode: "draft-only", siteId, backupPath, manifestHash: manifest.manifestHash, publicationRequired: true, showcaseVideoThemes: showcase.videoThemes.length }, null, 2));
+    console.log(JSON.stringify({ ok: true, mode: "draft-only", siteId, backupPath, manifestHash: manifest.manifestHash, publicationRequired: false, showcaseVideoThemes: showcase.videoThemes.length }, null, 2));
   }
 } finally {
   await prisma.$disconnect();

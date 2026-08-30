@@ -20,36 +20,21 @@ async function main() {
     where: { OR: [{ id: "site_dreamshoot" }, { primaryDomain: "www.mydreamshoots.com" }] },
     select: {
       id: true,
-      pages: { where: { slug: "/" }, select: { publishedJson: true } },
-      publications: { orderBy: [{ version: "desc" }], take: 1, select: { id: true, version: true, snapshot: true } }
+      pages: { where: { slug: "/" }, select: { publishedJson: true } }
     }
   });
   assert.ok(site, "site_dreamshoot must exist in PostgreSQL");
   const page = site.pages[0]?.publishedJson;
-  const publication = site.publications[0];
   assert.ok(page, "published MyDreamShoots homepage must exist");
-  assert.ok(publication?.snapshot, "active publication snapshot must exist");
   const sections = page.sections ?? {};
   const order = page.sectionsOrder ?? [];
-  assert.deepEqual(order, ["hero_1", "generation_showcase_1", "tutorial_video_1", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"], "homepage order must use the current Phase B contract");
+  assert.deepEqual(order, ["hero_1", "generation_showcase_1", "tutorial_video_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"], "homepage order must use the current Phase B contract");
   assert.equal(sections.generation_showcase_1?.type, "dreamshoot_generation_showcase");
-  assert.equal(sections.package_catalog_1?.type, "dreamshoot_package_catalog");
+  assert.equal(sections.package_catalog_1, undefined, "homepage must not retain the removed package catalog section");
   assert.equal(sections.proof_1?.settings?.title, copy.reviewTitle);
   assert.equal(sections.conversion_1?.settings?.title, copy.conversionTitle);
   assertText(sections.conversion_1?.settings?.subtitle, copy.conversionSubtitle, "conversion subtitle drifted");
   assert.equal(sections.pricing_1?.settings?.description, "Use credits across eligible AI photo and video workflows. The required credit cost is shown before generation.");
-
-  const rows = publication.snapshot.publishedHomepageShowcases ?? [];
-  const counts = rows.reduce((result, row) => {
-    result[row.kind] = (result[row.kind] ?? 0) + 1;
-    return result;
-  }, {});
-  assert.ok(counts.video >= 8, `publication must expose at least 8 published video showcases (got ${counts.video ?? 0})`);
-  assert.equal(counts.save_the_date, 4, "publication must expose four published Save the Date showcases");
-  assert.equal(counts.photo, 8, "publication must expose eight published photo showcases");
-  assert.ok(rows.every((row) => row.status === "published" && row.indexable === true && row.sitemapEligible === true), "homepage showcase projection must contain only published indexable rows");
-  const videoUrls = rows.filter((row) => row.kind === "video").map((row) => row.videoUrl).filter(Boolean);
-  assert.equal(new Set(videoUrls).size, videoUrls.length, "homepage video showcase URLs must be unique");
 
   const response = await fetch(`${origin}/`, { headers: { accept: "text/html,*/*" } });
   assert.equal(response.status, 200, "production homepage must return 200");
@@ -70,7 +55,7 @@ async function main() {
     "production photo showcase must contain at least one rendered photo card"
   );
 
-  console.log(JSON.stringify({ ok: true, publication: { id: publication.id, version: publication.version }, counts, production: { origin, status: response.status } }, null, 2));
+  console.log(JSON.stringify({ ok: true, production: { origin, status: response.status } }, null, 2));
 }
 
 try {

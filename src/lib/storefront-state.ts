@@ -3,6 +3,7 @@ import { readStorefrontPlatformStateRelational } from "@/lib/storefront-state-re
 import {
   getStorefrontAccessSummaryRelational,
   getStorefrontPublicCollectionDirectoryStateBySlug,
+  getStorefrontPublicIndexingStateByHost,
   getStorefrontPublicRuntimeStateByHost,
   getStorefrontPublicCollectionDetailStateBySlug,
   getStorefrontPublicCollectionMetadataStateBySlug,
@@ -23,6 +24,7 @@ export const readStorefrontPlatformStateFromDatabase = cache(() => readStorefron
 export const readStorefrontSiteByHostFromDatabase = (host: string | null | undefined) =>
   getStorefrontSiteByHostRelational(host);
 export const readStorefrontPublicRuntimeStateByHostFromDatabase = getStorefrontPublicRuntimeStateByHost;
+export const readStorefrontPublicIndexingStateByHostFromDatabase = getStorefrontPublicIndexingStateByHost;
 export const readStorefrontPublicCollectionDirectoryStateBySlugFromDatabase = getStorefrontPublicCollectionDirectoryStateBySlug;
 export const readStorefrontPublicCollectionDetailStateBySlugFromDatabase = getStorefrontPublicCollectionDetailStateBySlug;
 export const readStorefrontPublicCollectionMetadataStateBySlugFromDatabase = getStorefrontPublicCollectionMetadataStateBySlug;

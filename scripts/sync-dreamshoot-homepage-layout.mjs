@@ -22,7 +22,6 @@ const homeOrderByStore = {
     "hero_1",
     "generation_showcase_1",
     "tutorial_video_1",
-    "package_catalog_1",
     "proof_1",
     "faq_1",
     "conversion_1",
@@ -43,7 +42,7 @@ const homeOrderByStore = {
   ]
 };
 const removedHomeSectionsByStore = {
-  mydreamshoots: ["mobile_video_1", "tutorial_video_2", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1"],
+  mydreamshoots: ["mobile_video_1", "tutorial_video_2", "visual_proof_1", "flow_bridge_1", "trust_1", "featured_pack_1", "featured_christmas_1", "featured_thanksgiving_1", "package_catalog_1"],
   aidreamcapes: ["featured_pack_1", "featured_christmas_1"]
 };
 const bestPageTemplateKeys = ["best-packages", "best-ai-image", "best-ai-video"];
@@ -720,7 +719,7 @@ function applyStoreSpecificExistingSections(pageJson, store, featuredSections = 
       settings: { ...sections.hero_1.settings, ...clone(store.heroSettings) }
     };
   }
-  if (store.packageSettings && sections.package_catalog_1) {
+  if (store.key !== "mydreamshoots" && store.packageSettings && sections.package_catalog_1) {
     sections.package_catalog_1 = {
       ...sections.package_catalog_1,
       settings: { ...sections.package_catalog_1.settings, ...clone(store.packageSettings) }
@@ -732,7 +731,7 @@ function applyStoreSpecificExistingSections(pageJson, store, featuredSections = 
       settings: { ...sections.pricing_1.settings, ...clone(store.pricingSettings) }
     };
   }
-  if (sections.package_catalog_1) {
+  if (store.key !== "mydreamshoots" && sections.package_catalog_1) {
     sections.package_catalog_1 = {
       ...sections.package_catalog_1,
       settings: {

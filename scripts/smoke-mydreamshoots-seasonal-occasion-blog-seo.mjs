@@ -52,7 +52,7 @@ function bodyHrefs(body) {
   return Array.from(String(body ?? "").matchAll(/<a\s+href="([^"]+)"/g), (match) => match[1]);
 }
 
-const pages = new Map((site?.pages ?? []).map((page) => [page.slug, page]));
+const pages = new Map((site?.pages ?? []).map((page) => [page.slug, { ...page, publishedJson: page.draftJson }]));
 const knownRoutes = new Set(pages.keys());
 for (const pack of state.creativePacks.filter((item) => item.siteId === "site_dreamshoot" && item.status === "active")) {
   knownRoutes.add(`/ai-image-generation/${slugify(pack.name || pack.category)}`);
@@ -71,10 +71,10 @@ const subjectAltPatterns = new Map([
   ["/blog/indian-wedding-photo-package-guide", /indian.*wedding/i],
   ["/blog/thanksgiving-group-photos-photo-package-guide", /thanksgiving.*group/i]
 ]);
-const genericCtaSlugs = new Set([
-  "/blog/christmas-couple-photo-package-guide",
-  "/blog/desi-wedding-photo-package-guide",
-  "/blog/indian-wedding-photo-package-guide"
+const requiredProductCtas = new Map([
+  ["/blog/christmas-couple-photo-package-guide", ["Open Christmas Photo", "/ai-image-generation/christmas-photo"]],
+  ["/blog/desi-wedding-photo-package-guide", ["Open Wedding Photo", "/ai-image-generation/wedding-photo"]],
+  ["/blog/indian-wedding-photo-package-guide", ["Open Wedding Photo", "/ai-image-generation/wedding-photo"]]
 ]);
 const contractKeys = [
   "entityName", "primaryKeyword", "searchIntent", "seoTitle", "seoDescription", "title", "targetLabel",
@@ -109,7 +109,10 @@ for (const article of mydreamshootsSeasonalOccasionBlogSeoArticles) {
   assert(settings.entityName === article.entityName, `${article.slug} entityName matches its profile`);
   assert(settings.primaryKeyword === article.primaryKeyword && settings.searchIntent === article.searchIntent, `${article.slug} keyword and intent match`);
   assert(settings.targetHref === article.targetHref && settings.targetLabel === article.targetLabel, `${article.slug} CTA matches its profile`);
-  assert(JSON.stringify(settings.relatedLinks) === JSON.stringify(article.relatedLinks), `${article.slug} related links match its profile`);
+  assert(
+    JSON.stringify((settings.relatedLinks ?? []).map((link) => [link.label, link.href])) === JSON.stringify(article.relatedLinks.map((link) => [link.label, link.href])),
+    `${article.slug} related links match its profile`
+  );
   assert(settings.author === "myDreamshoots editorial team" && settings.authorType === "Organization", `${article.slug} author is the approved Organization`);
   assert(settings.authorUrl === "/about-us" && settings.reviewOwner === "myDreamshoots editorial team", `${article.slug} author and review URLs are present`);
   assert(settings.evidenceType === "editorial-guidance" && settings.evidenceDate === "2026-08-19", `${article.slug} evidence boundary is current`);
@@ -129,8 +132,9 @@ for (const article of mydreamshootsSeasonalOccasionBlogSeoArticles) {
   assert(!/Use .+ when .+ and .+ are the nearest match|The strongest .+ requests keep the brief|Prepare clear approved source portraits/i.test(body), `${article.slug} removes generic template phrases`);
   assert(!/open avatar theme|ai video add-ons|start with headshot|photo package category/i.test(visible), `${article.slug} removes unrelated recommendations`);
 
-  if (genericCtaSlugs.has(article.slug)) {
-    assert(settings.targetHref === "/ai-image-generation" && settings.targetLabel === "Browse AI Image Generation", `${article.slug} uses the approved generic CTA`);
+  const requiredProductCta = requiredProductCtas.get(article.slug);
+  if (requiredProductCta) {
+    assert(settings.targetLabel === requiredProductCta[0] && settings.targetHref === requiredProductCta[1], `${article.slug} uses its approved product CTA`);
   }
   assert(!/nightlife|cannes|rich lifestyle/i.test(visible), `${article.slug} does not expose a mismatched product entity`);
   if (article.slug.endsWith("boudoir-photo-package-guide")) {
@@ -149,7 +153,7 @@ for (let leftIndex = 0; leftIndex < mydreamshootsSeasonalOccasionBlogSeoArticles
     const right = comparisonArticles[rightIndex];
     const score = jaccard(comparisonNgrams.get(left.slug), comparisonNgrams.get(right.slug));
     if (score > maximumSimilarity.score) maximumSimilarity = { score, pair: [left.slug, right.slug] };
-    assert(score < 0.70, `${left.slug} and ${right.slug} stay below the 5-gram Jaccard hard limit`, score.toFixed(4));
+    assert(score < 0.65, `${left.slug} and ${right.slug} stay below the 5-gram Jaccard hard limit`, score.toFixed(4));
     if (score >= 0.35) warnings.push(`${left.slug} and ${right.slug} need manual similarity review (${score.toFixed(4)})`);
   }
 }

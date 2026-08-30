@@ -63,6 +63,7 @@ const siteRouteCanonical = readText("src/lib/site-route-canonical.ts");
 const storefrontRender = readText("src/lib/storefront-render.tsx");
 const mediaSource = readText("src/lib/media.ts");
 const storefrontStateRelational = readText("src/lib/storefront-state-relational.ts");
+const siteStore = readText("src/lib/stores/site-store.ts");
 const storefrontContextCore = readText("src/lib/storefront-context/core.ts");
 const storefrontContextSnapshot = readText("src/lib/storefront-context/snapshot.ts");
 const storefrontContextTypes = readText("src/lib/storefront-context/types.ts");
@@ -665,6 +666,23 @@ assert(
     sitemapRoute.includes('"cache-control": "no-store, max-age=0"') &&
     sitemapRoute.includes('"x-sitemap-generation-ms"'),
   "live-draft sitemap must select URLs using the request host, emit per-entry metadata, avoid request-time lastmod, and bypass cross-request caching"
+);
+assert(
+  siteStore.includes('envPositiveInt("STOREFRONT_PUBLIC_TX_CONCURRENCY", 6)') &&
+    siteStore.includes('envPositiveInt("STOREFRONT_PUBLIC_TX_MAX_WAIT_MS", 5_000)') &&
+    siteStore.includes('envPositiveInt("STOREFRONT_PUBLIC_TX_TIMEOUT_MS", 30_000)') &&
+    siteStore.includes('code === "P2028" && error.message.includes("Unable to start a transaction")') &&
+    siteStore.includes("needs.videoThemes ? tx.videoTheme.findMany") &&
+    siteStore.includes("getStorefrontPublicIndexingStateByHost"),
+  "public SSR must gate relational transactions, retry only transaction-start P2028 once, and avoid video-theme reads outside relevant routes"
+);
+assert(
+  seoIndexing.includes("readStorefrontPublicIndexingStateByHostFromDatabase") &&
+    seoIndexing.includes("readIndexableStateAndSitesForHosts") &&
+    !robots.includes("getStorefrontPublicationIdentityForHost") &&
+    robots.includes("NEXT_PUBLIC_RELEASE_COMMIT") &&
+    themeRenderer.includes('data-focused-collection-compare="true"'),
+  "robots, sitemap, and focused image pages must use their lightweight public projections"
 );
 assert(
   seoIndexing.includes("lastmod?: string") &&

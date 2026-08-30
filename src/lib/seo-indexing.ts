@@ -1,4 +1,4 @@
-import { readStorefrontPlatformStateFromDatabase } from "@/lib/storefront-state";
+import { readStorefrontPlatformStateFromDatabase, readStorefrontPublicIndexingStateByHostFromDatabase } from "@/lib/storefront-state";
 import { getSiteByHostCandidatesFromState } from "@/lib/domain-routing";
 import { canonicalSeoDirectoryPathForSite, canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySeo } from "@/lib/dreamshoot-seo-content";
 import {
@@ -987,6 +987,21 @@ async function readIndexableStateAndSites(): Promise<{ state: PlatformState; sit
   return undefined;
 }
 
+async function readIndexableStateAndSitesForHosts(hosts: string[]): Promise<{ state: PlatformState; sites: Site[] } | undefined> {
+  try {
+    for (const host of hosts) {
+      const state = await readStorefrontPublicIndexingStateByHostFromDatabase(host);
+      if (!state) continue;
+      const sites = findIndexableSites(state);
+      if (sites.length) return { state, sites };
+    }
+  } catch {
+    // Public indexing is fail-closed when the live relational projection is unavailable.
+    return undefined;
+  }
+  return undefined;
+}
+
 export async function getMydreamshootsSitemapUrls(): Promise<string[]> {
   const runtime = await readIndexableStateAndSites();
   if (!runtime) return [];
@@ -1071,7 +1086,9 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
   const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
   const isLocalHostRequest = !publicHostCandidates.length && normalizedHosts.some(isLocalDevelopmentHost);
   if (siteHostCandidates.some(isReservedGrownstrideHost)) return { entries: [] };
-  const runtime = await readIndexableStateAndSites();
+  const runtime = publicHostCandidates.length
+    ? await readIndexableStateAndSitesForHosts(siteHostCandidates)
+    : await readIndexableStateAndSites();
   if (!runtime) return { entries: [] };
   const site =
     isLocalHostRequest

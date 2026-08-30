@@ -94,15 +94,15 @@ export const mydreamshootsSeasonalOccasionBlogSeoArticles = [
     entityName: "Christmas Couple Photos",
     primaryKeyword: "Christmas couple photos",
     searchIntent: "Plan Christmas couple photos for greeting cards, gifts, and private keepsakes with consistent identity and room for verified copy.",
-    productSlug: "ai-image-generation",
+    productSlug: "christmas-photo",
     userIntent: "Create a two-person Christmas portrait set for cards or keepsakes without treating it as a general group album.",
     title: "How to Plan Christmas Couple Photos for Cards and Keepsakes",
     summary: "Build a coordinated two-person Christmas set with approved portraits, believable interaction, card-ready negative space, and careful review of both identities and hands.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-01.webp?v=20260715b",
     imageAlt: "Christmas couple portrait with warm festive light, cozy decor, and greeting-card composition.",
     tags: "Christmas couple photos|Holiday card|Couple keepsake|Festive portrait",
-    targetLabel: "Browse AI Image Generation",
-    targetHref: "/ai-image-generation",
+    targetLabel: "Open Christmas Photo",
+    targetHref: "/ai-image-generation/christmas-photo",
     relatedLinks: [
       { label: "Plan Christmas family and group photos", href: "/blog/christmas-photos-photo-package-guide" },
       { label: "Compare broad holiday portraits", href: "/blog/holiday-photo-package-guide" },
@@ -130,7 +130,7 @@ export const mydreamshootsSeasonalOccasionBlogSeoArticles = [
       <p>Both people must approve the source and the intended use. Agree on wardrobe formality, public or private distribution, and whether affectionate contact is appropriate. Do not infer a relationship or create a romantic image of two people who have not approved that framing.</p>
       <h2 id="christmas-couple-scene">Build one festive visual language</h2>
       <p>Choose one primary setting: warm indoor lights, a restrained tree backdrop, winter window light, an outdoor evening scene, or a simple card studio. Then select a small palette and wardrobe level. Combining fireplaces, snow, gifts, party lights, formalwear, and several holiday symbols in one brief can make the couple look secondary.</p>
-      <p>There is not yet a dedicated public Christmas Couple product entity that passes the route and H1 checks. Use the <a href="/ai-image-generation">AI Image Generation directory</a> to choose a current workflow rather than following an unrelated legacy destination.</p>
+      <p>Use the <a href="/ai-image-generation/christmas-photo">Christmas Photo package</a> for the current public workflow, then keep the brief specific to two approved people, natural interaction, and card-ready composition.</p>
       <h2 id="christmas-couple-pose">Direct interaction without forcing a romantic stereotype</h2>
       <p>Describe whether the pair should stand side by side, look toward the camera, share a relaxed laugh, hold a card, or use a light hand-on-shoulder pose. Keep height, posture, mobility, cultural preferences, and the couple's real comfort in mind. A good festive portrait can feel connected without exaggerated embraces, staged proposals, or identical clothing.</p>
       <h2 id="christmas-couple-compare">Separate the couple set from nearby seasonal pages</h2>
@@ -215,15 +215,15 @@ export const mydreamshootsSeasonalOccasionBlogSeoArticles = [
     entityName: "Desi Wedding Photos",
     primaryKeyword: "AI Desi wedding photos",
     searchIntent: "Plan Desi wedding-inspired couple and family album concepts without flattening diverse communities into one ceremony template.",
-    productSlug: "ai-image-generation",
+    productSlug: "wedding-photo",
     userIntent: "Develop a festive diaspora wedding portrait concept with approved identities, references, and respectful review.",
     title: "How to Plan AI Desi Wedding Photos for Celebrations and Albums",
     summary: "Plan Desi wedding-inspired images from participant-approved references, a named celebration context, and a review that respects varied family, regional, and diaspora identities.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/desi-wedding/desi-wedding-01.webp?v=20260715b",
     imageAlt: "Desi wedding-inspired couple portrait with festive color, celebration atmosphere, and album-ready framing.",
     tags: "AI Desi wedding photos|Celebration album|Couple portrait|Diaspora wedding",
-    targetLabel: "Browse AI Image Generation",
-    targetHref: "/ai-image-generation",
+    targetLabel: "Open Wedding Photo",
+    targetHref: "/ai-image-generation/wedding-photo",
     relatedLinks: [
       { label: "Compare Indian wedding portrait planning", href: "/blog/indian-wedding-photo-package-guide" },
       { label: "Plan broader wedding portraits", href: "/blog/wedding-portraits-photo-package-guide" },
@@ -252,8 +252,8 @@ export const mydreamshootsSeasonalOccasionBlogSeoArticles = [
       <h2 id="desi-album-arc">Plan an album arc instead of one overloaded scene</h2>
       <p>A useful concept set can move from a calm couple portrait to a brighter family grouping and then to a card-ready closing image. Keep the same people, age, attire logic, and color family across the sequence. If several event contexts are needed, assign each one a separate brief rather than blending them into an inaccurate composite.</p>
       <table><thead><tr><th>Album role</th><th>Visual purpose</th><th>Review focus</th></tr></thead><tbody><tr><td>Opening portrait</td><td>Introduce the couple or lead participants</td><td>Identity and attire continuity</td></tr><tr><td>Family frame</td><td>Show an approved group relationship</td><td>Roster, spacing, and hands</td></tr><tr><td>Celebration image</td><td>Carry color and atmosphere</td><td>Context-specific decor</td></tr><tr><td>Website or card crop</td><td>Leave room for verified copy</td><td>Responsive crop and text space</td></tr></tbody></table>
-      <h2 id="desi-workflow">Use a truthful product path while the dedicated route is absent</h2>
-      <p>No dedicated Desi Wedding product page currently passes the public entity checks. Use the <a href="/ai-image-generation">AI Image Generation directory</a> and choose a suitable current workflow. Do not reuse an unrelated festival-glamour destination merely because it shares an older media source.</p>
+      <h2 id="desi-workflow">Use Wedding Photo for the Desi wedding brief</h2>
+      <p>Use the <a href="/ai-image-generation/wedding-photo">Wedding Photo package</a> for the current public workflow, then preserve the participant-defined Desi celebration context in the brief. Do not reuse an unrelated festival-glamour destination merely because it shares an older media source.</p>
       <h2 id="desi-comparison">Distinguish broad Desi celebration planning from adjacent pages</h2>
       <p><a href="/blog/indian-wedding-photo-package-guide">Indian Wedding Photos</a> focuses more narrowly on Indian wedding portrait planning and the review of ceremony-inspired attire, jewelry, and family frames. <a href="/blog/wedding-portraits-photo-package-guide">Wedding Portraits</a> provides a broad save-the-date and keepsake workflow without a cultural label. Engagement Photos is for proposals and announcements before a wedding context.</p>
       <h2 id="desi-review">Review respect, accuracy, and image quality together</h2>
@@ -458,15 +458,15 @@ export const mydreamshootsSeasonalOccasionBlogSeoArticles = [
     entityName: "Indian Wedding Photos",
     primaryKeyword: "AI Indian wedding photos",
     searchIntent: "Plan Indian wedding-inspired ceremony portraits with participant-defined attire, jewelry, family groupings, and respectful review.",
-    productSlug: "ai-image-generation",
+    productSlug: "wedding-photo",
     userIntent: "Create an Indian wedding portrait concept without redirecting to an unrelated luxury lifestyle product or inventing ceremony facts.",
     title: "How to Plan AI Indian Wedding Photos for Ceremony Portraits",
     summary: "Plan Indian wedding-inspired ceremony portraits from participant-approved references, precise attire and jewelry notes, family grouping, and respectful concept labeling.",
     imageUrl: "/assets/dreamshoot/generated/pack-galleries/indian-wedding/indian-wedding-01.webp?v=20260715b",
     imageAlt: "Indian wedding-inspired portrait with textile detail, ceremony light, and respectful celebration styling.",
     tags: "AI Indian wedding photos|Ceremony portrait|Wedding attire|Family album",
-    targetLabel: "Browse AI Image Generation",
-    targetHref: "/ai-image-generation",
+    targetLabel: "Open Wedding Photo",
+    targetHref: "/ai-image-generation/wedding-photo",
     relatedLinks: [
       { label: "Compare Desi wedding album planning", href: "/blog/desi-wedding-photo-package-guide" },
       { label: "Plan broader wedding portraits", href: "/blog/wedding-portraits-photo-package-guide" },
@@ -495,8 +495,8 @@ export const mydreamshootsSeasonalOccasionBlogSeoArticles = [
       <h2 id="indian-family-frame">Plan family groupings from an approved roster</h2>
       <p>Write down who belongs in each frame, their relationship to the lead participants, and whether the arrangement should be formal, candid, seated, or standing. Build smaller group concepts when a large composite makes faces too small to verify. Do not add absent relatives or public figures, and do not change age or family role for composition.</p>
       <table><thead><tr><th>Frame</th><th>Planning input</th><th>Review priority</th></tr></thead><tbody><tr><td>Couple portrait</td><td>Approved pose and attire references</td><td>Two identities, hands, and jewelry</td></tr><tr><td>Immediate family</td><td>Named roster and arrangement</td><td>Face count, age, and scale</td></tr><tr><td>Individual portrait</td><td>Garment and crop notes</td><td>Drape, accessories, and expression</td></tr><tr><td>Website hero</td><td>Responsive layout and copy space</td><td>Accurate context and clean edges</td></tr></tbody></table>
-      <h2 id="indian-product-path">Use an accurate fallback when no dedicated route exists</h2>
-      <p>A dedicated Indian Wedding product route is not currently available with the correct public entity. Use the <a href="/ai-image-generation">AI Image Generation directory</a> to choose a current workflow. An unrelated luxury or creator destination does not answer ceremony portrait intent.</p>
+      <h2 id="indian-product-path">Use Wedding Photo as the accurate product path</h2>
+      <p>Use the <a href="/ai-image-generation/wedding-photo">Wedding Photo package</a> for the current public workflow, then keep the Indian ceremony portrait requirements explicit in the brief. An unrelated luxury or creator destination does not answer ceremony portrait intent.</p>
       <h2 id="indian-comparison">Distinguish this page from related wedding planning</h2>
       <p><a href="/blog/desi-wedding-photo-package-guide">Desi Wedding Photos</a> uses a broader diaspora and celebration-album lens across self-described Desi contexts. <a href="/blog/wedding-portraits-photo-package-guide">Wedding Portraits</a> covers general save-the-date, moodboard, and keepsake planning without a cultural entity. Engagement Photos focuses on a proposal or pre-wedding announcement rather than ceremony portrait direction.</p>
       <h2 id="indian-review">Use participant review as a quality gate</h2>
