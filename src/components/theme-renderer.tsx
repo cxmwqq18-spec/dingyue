@@ -107,7 +107,7 @@ import {
   creativePackCollectionHref as sharedCreativePackCollectionHref,
   getPhotoPackageMegaGroups as sharedPhotoPackageMegaGroups,
   isMydreamshootsVideoGenerationSlug,
-  mydreamshootsCollectionGroupSlugForItem,
+  mydreamshootsCollectionGroupForItem,
   publicCollectionPathForSite,
   publicCollectionSlugFromPath,
   publicVideoGenerationPathForSite,
@@ -1194,16 +1194,17 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const photoPackageMegaGroups = (isMyDreamShootsCom
     ? fullPhotoPackageMegaGroups.reduce<HeaderPhotoPackageMegaGroup[]>((groups, group) => {
         group.items.forEach((item) => {
-          const canonicalGroupSlug = mydreamshootsCollectionGroupSlugForItem(photoPackageSlug(item.label));
-          if (!canonicalGroupSlug) return;
-          const target = groups.find((candidate) => candidate.slug === canonicalGroupSlug);
+          const canonicalGroup = mydreamshootsCollectionGroupForItem(photoPackageSlug(item.label));
+          if (!canonicalGroup) return;
+          const target = groups.find((candidate) => candidate.slug === canonicalGroup.slug);
           if (target) {
             if (!target.items.some((existing) => existing.slug === item.slug)) target.items.push(item);
             return;
           }
-          groups.push({ ...group, slug: canonicalGroupSlug, items: [item] });
+          groups.push({ ...group, ...canonicalGroup, items: [item] });
         });
-        return groups;
+        const canonicalOrder = ["best-themes-presets", "professional", "lifestyle-creative", "magic", "photo-tools"];
+        return groups.sort((left, right) => canonicalOrder.indexOf(left.slug) - canonicalOrder.indexOf(right.slug));
       }, [])
     : fullPhotoPackageMegaGroups
   ).filter((group) => group.items.length > 0);

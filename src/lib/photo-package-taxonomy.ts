@@ -31,7 +31,7 @@ type CollectionRouteSiteIdentity = Partial<Pick<Site, "id" | "slug" | "name" | "
 };
 
 type MyDreamShootsThemeTaxonomy = {
-  roots: Array<{ slug: string; label: string }>;
+  roots: Array<{ slug: string; label: string; description?: string; icon?: string; sortOrder?: number }>;
   items: Array<{ slug: string; groupSlug: string; label: string }>;
 };
 
@@ -139,6 +139,12 @@ export function isMydreamshootsCollectionRouteSite(site: CollectionRouteSiteIden
 
 export function mydreamshootsCollectionGroupSlugForItem(slug: string | undefined): string | undefined {
   return mydreamshootsThemeItemsBySlug.get(photoPackageSlug(slug))?.groupSlug;
+}
+
+export function mydreamshootsCollectionGroupForItem(slug: string | undefined) {
+  const groupSlug = mydreamshootsCollectionGroupSlugForItem(slug);
+  if (!groupSlug) return undefined;
+  return mydreamshootsThemeTaxonomyData.roots.find((root) => root.slug === groupSlug);
 }
 
 export function isMydreamshootsCollectionRootSlug(slug: string | undefined): boolean {
