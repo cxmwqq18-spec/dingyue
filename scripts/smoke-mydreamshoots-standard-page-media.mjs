@@ -49,7 +49,6 @@ try {
     "/ai-save-the-date/save-the-date",
     "/ai-save-the-date/thanksgiving",
     "/ai-save-the-date/wedding-anniversary",
-    "/holidays-events/wedding-invitation",
     "/pricing",
     "/workflow"
   ];

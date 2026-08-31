@@ -17,11 +17,11 @@ async function saveTheDateMenuSignature(page, url) {
     const panel = id ? document.getElementById(id) : document.querySelector('[data-storefront-mega-menu-panel][aria-hidden="false"]');
     return [...(panel?.querySelectorAll("a[href]") ?? [])]
       .map((anchor) => anchor.getAttribute("href") || "")
-      .filter((href) => href.includes("/ai-save-the-date/") || href.includes("/holidays-events/wedding-invitation"))
+      .filter((href) => href.includes("/ai-save-the-date/"))
       .filter((href) => href !== "/best-save-the-date")
       .sort();
   }, controlId);
-  assert.equal(signature.length, 12, `${url} Save the Date menu must contain 12 published topics`);
+  assert.equal(signature.length, 11, `${url} Save the Date menu must contain 11 published topics`);
   await page.keyboard.press("Escape").catch(() => undefined);
   return signature;
 }
@@ -40,7 +40,7 @@ try {
   const api = await context.request.get(`${baseUrl}/api/sites/site_dreamshoot/video-themes?includeCategories=1&pageSize=5000&q=Save%20the%20Date`);
   const apiPayload = await api.json();
   assert.equal(api.status(), 200, "video theme search API failed");
-  assert.equal(apiPayload.themes?.length, 12, "Save the Date search must return 12 leaf themes");
+  assert.equal(apiPayload.themes?.length, 11, "Save the Date search must return 11 leaf themes");
   const categories = apiPayload.categories ?? [];
   const root = categories.find((category) => category.slug === "save-the-date");
   const love = categories.find((category) => category.slug === "love-wedding");
@@ -51,7 +51,7 @@ try {
   await page.goto(storefrontUrl("/best-save-the-date"), { waitUntil: "domcontentloaded", timeout: 60_000 });
   const directory = page.locator("[data-save-the-date-directory]");
   assert.equal(await directory.locator("[data-save-the-date-category]").count(), 2, "signed-in Save the Date directory must contain 2 published categories");
-  assert.equal(await directory.locator("[data-save-the-date-card]").count(), 12, "signed-in Save the Date directory must contain 12 published themes");
+  assert.equal(await directory.locator("[data-save-the-date-card]").count(), 11, "signed-in Save the Date directory must contain 11 published themes");
   const publicHeaderSignature = await saveTheDateMenuSignature(page, storefrontUrl("/ai-save-the-date/engagement"));
   const accountHeaderSignature = await saveTheDateMenuSignature(page, storefrontUrl("/account"));
   assert.deepEqual(accountHeaderSignature, publicHeaderSignature, "account and public Save the Date menus must be identical");
@@ -67,7 +67,7 @@ try {
   const dialogBox = await dialog.locator("> div").boundingBox();
   assert.ok(dialogBox && dialogBox.width >= 1300, `theme picker should use the enlarged desktop width: ${dialogBox?.width ?? "missing"}`);
   assert.equal(await dialog.getByRole("textbox", { name: "Search video themes" }).count(), 0, "theme picker search should be removed");
-  await dialog.getByRole("button", { name: /Save the Date\s*12/i }).click();
+  await dialog.getByRole("button", { name: /Save the Date\s*11/i }).click();
   await dialog.getByText("Love & Wedding", { exact: true }).waitFor({ state: "visible" });
   await dialog.getByText("Seasonal Holidays", { exact: true }).waitFor({ state: "visible" });
   const seasonalRow = dialog.getByText("Seasonal Holidays", { exact: true }).locator("../..");
@@ -91,7 +91,7 @@ try {
   assert.ok(await mobileMenu.getByRole("link", { name: "Save the Date" }).isVisible(), "workspace mobile menu is missing Save the Date");
   await page.screenshot({ path: "/tmp/mydreamshoots-save-the-date-picker-mobile.png", fullPage: false });
 
-  console.log(JSON.stringify({ ok: true, apiThemes: apiPayload.themes.length, categories: [root.slug, love.slug, seasonal.slug], directoryThemes: 12, headerTopics: publicHeaderSignature.length, desktopPromptLength: prompt.length, mobileMenu: true }, null, 2));
+  console.log(JSON.stringify({ ok: true, apiThemes: apiPayload.themes.length, categories: [root.slug, love.slug, seasonal.slug], directoryThemes: 11, headerTopics: publicHeaderSignature.length, desktopPromptLength: prompt.length, mobileMenu: true }, null, 2));
   await context.close();
 } finally {
   await browser.close();

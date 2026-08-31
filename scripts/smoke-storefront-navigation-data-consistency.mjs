@@ -230,9 +230,7 @@ async function extractMenuSignature(page, siteSlug, route, menuCheck) {
           }
           if (currentMenuName === "save-the-date") {
             return item.href.includes(`/site/${currentSiteSlug}/ai-save-the-date/`) ||
-              item.href.startsWith("/ai-save-the-date/") ||
-              item.href.includes(`/site/${currentSiteSlug}/holidays-events/wedding-invitation`) ||
-              item.href.startsWith("/holidays-events/wedding-invitation");
+              item.href.startsWith("/ai-save-the-date/");
           }
           if (currentSiteSlug === "mydreamshoots") {
             return item.href.includes(`/site/${currentSiteSlug}/app/create#step-video`) ||

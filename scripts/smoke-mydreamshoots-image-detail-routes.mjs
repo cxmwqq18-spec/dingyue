@@ -28,7 +28,7 @@ for (let index = 0; index < items.length; index += requestConcurrency) {
 
 const failures = results.filter((result) => {
   if (result.slug === expectedRedirectSlug) {
-    return result.status !== 308 || !result.location?.endsWith(expectedRedirectPath);
+    return result.status !== 301 || !result.location?.endsWith(expectedRedirectPath);
   }
   return result.status !== 200;
 });

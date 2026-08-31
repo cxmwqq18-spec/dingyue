@@ -671,7 +671,20 @@ export function buildPublicationSnapshot(
         routeRevision: crypto.createHash("sha256").update(JSON.stringify(["/ai-image-generation/motion-generator", "/ai-video-generation/motion-generator", 301])).digest("hex").slice(0, 20)
       }]
     : [];
-  const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...standardContentRoutes, ...policyRoutes, ...videoTopicPublication.routes, ...motionLegacyRedirect];
+  const weddingInvitationLegacyRedirect: PublishedRouteProjection[] = isMydreamshootsPublicationSite && site.pages.some((page) => page.slug === "wedding-invitation" || page.slug === "/ai-video-generation/wedding-invitation")
+    ? [{
+        disposition: "redirect",
+        siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
+        routeKind: "legacy-topic-alias",
+        aliasPath: "/holidays-events/wedding-invitation",
+        targetPath: "/ai-video-generation/wedding-invitation",
+        statusCode: 301,
+        indexable: false,
+        sitemapEligible: false,
+        routeRevision: crypto.createHash("sha256").update(JSON.stringify(["/holidays-events/wedding-invitation", "/ai-video-generation/wedding-invitation", 301])).digest("hex").slice(0, 20)
+      }]
+    : [];
+  const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...standardContentRoutes, ...policyRoutes, ...videoTopicPublication.routes, ...motionLegacyRedirect, ...weddingInvitationLegacyRedirect];
   const sourcePageEntities = isMydreamshootsPublicationSite
     ? mydreamshootsPublishedPageEntities(site.id as "site_dreamshoot" | "site_grownstride_test")
     : [];

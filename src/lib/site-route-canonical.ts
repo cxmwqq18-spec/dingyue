@@ -121,7 +121,8 @@ const LEGACY_MYDREAMSHOOTS_VIDEO_PATH_REDIRECTS: Record<string, string> = {
   "/ai-video-generation/proposal": "/ai-save-the-date/proposal",
   "/ai-video-generation/save-the-date": "/ai-save-the-date/save-the-date",
   "/ai-video-generation/thanksgiving": "/ai-save-the-date/thanksgiving",
-  "/ai-video-generation/valentines-day": "/ai-save-the-date/valentines-day"
+  "/ai-video-generation/valentines-day": "/ai-save-the-date/valentines-day",
+  "/holidays-events/wedding-invitation": "/ai-video-generation/wedding-invitation"
 };
 
 // These image-generation paths were published before the current product

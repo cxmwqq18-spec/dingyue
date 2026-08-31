@@ -11,8 +11,8 @@ const GROWNSTRIDE_LEGACY_HOSTS = new Set(["grownstride.com", "www.grownstride.co
 const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const HOST_PRIVATE_STORE_PATH_RE = /^\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
-const PUBLIC_STOREFRONT_CACHE_CONTROL = "no-store, max-age=0, must-revalidate";
-const PUBLIC_STOREFRONT_CDN_CACHE_CONTROL = "no-store";
+const PUBLIC_STOREFRONT_CACHE_CONTROL = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
+const PUBLIC_STOREFRONT_CDN_CACHE_CONTROL = "public, s-maxage=300, stale-while-revalidate=1800";
 const PRIVATE_STOREFRONT_CACHE_CONTROL = "private, no-store, max-age=0, must-revalidate";
 const STOREFRONT_GUARD_COOKIE_NAME = "k";
 const STOREFRONT_GUARD_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 12;
@@ -27,6 +27,58 @@ const HOP_BY_HOP_HEADERS = new Set([
 ]);
 const LOCAL_DEFAULT_STOREFRONT_PATHS = new Set(["/ai-image-generation", "/ai-video-generation", "/pricing", "/help"]);
 const LOCAL_DEFAULT_STOREFRONT_PREFIXES = ["/account", "/app", "/dashboard", "/login"];
+// These aliases are also represented in the published route projection. Keep
+// the edge list limited to public MyDreamShoots migration paths so redirects
+// are emitted before an internal /site rewrite can turn them into 307/308.
+const MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS: Record<string, string> = {
+  "/help": "/faq",
+  "/how-it-works": "/workflow",
+  "/privacy-policy": "/privacy",
+  "/policies/privacy": "/privacy",
+  "/policies/privacy-policy": "/privacy",
+  "/terms-of-service": "/terms",
+  "/policies/terms": "/terms",
+  "/policies/terms-of-service": "/terms",
+  "/cookie-policy": "/cookies",
+  "/policies/cookies": "/cookies",
+  "/policies/cookie-policy": "/cookies",
+  "/refund-policy": "/refunds",
+  "/policies/refund": "/refunds",
+  "/policies/refunds": "/refunds",
+  "/content-policy": "/content",
+  "/policies/content": "/content",
+  "/shipping-policy": "/shipping",
+  "/delivery-policy": "/shipping",
+  "/policies/shipping": "/shipping",
+  "/policies/delivery": "/shipping",
+  "/policies/delivery-policy": "/shipping",
+  "/children-privacy-policy": "/children-privacy",
+  "/childrens-privacy": "/children-privacy",
+  "/policies/children-privacy": "/children-privacy",
+  "/policies/children": "/children-privacy",
+  "/policies/children-privacy-policy": "/children-privacy",
+  "/policies/childrens-privacy": "/children-privacy",
+  "/state-privacy-rights": "/state-privacy",
+  "/california-privacy": "/state-privacy",
+  "/ccpa": "/state-privacy",
+  "/policies/state-privacy": "/state-privacy",
+  "/policies/state-privacy-rights": "/state-privacy",
+  "/policies/california-privacy": "/state-privacy",
+  "/policies/ccpa": "/state-privacy",
+  "/collections": "/ai-image-generation",
+  "/collections/engagement-photo": "/ai-image-generation/engagement-photo",
+  "/engagement-photo": "/ai-image-generation/engagement-photo",
+  "/collections/headshot": "/ai-image-generation/headshot",
+  "/ai-image-generation/profile-cards": "/ai-image-generation/avatar",
+  "/ai-image-generation/motion-generator": "/ai-video-generation/motion-generator",
+  "/ai-video-generation/mothers-day": "/ai-save-the-date/mothers-day",
+  "/ai-video-generation/new-year": "/ai-save-the-date/new-year",
+  "/ai-video-generation/proposal": "/ai-save-the-date/proposal",
+  "/ai-video-generation/save-the-date": "/ai-save-the-date/save-the-date",
+  "/ai-video-generation/thanksgiving": "/ai-save-the-date/thanksgiving",
+  "/ai-video-generation/valentines-day": "/ai-save-the-date/valentines-day",
+  "/holidays-events/wedding-invitation": "/ai-video-generation/wedding-invitation"
+};
 
 const SEO_HEAD_TAG_RE =
   /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>/gi;
@@ -167,9 +219,20 @@ function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse
     (normalizedHost.includes("aidreamcapes") && /^aidreamcapes(?:-xby|-eu)?$/.test(siteSlug));
   if (!hostMatchesSite) return undefined;
   const scopedPath = match[2] || "/";
-  const nextUrl = request.nextUrl.clone();
-  nextUrl.pathname = scopedPath === "/" ? "/" : scopedPath;
-  return NextResponse.redirect(nextUrl, 308);
+  return NextResponse.redirect(publicRedirectUrlForRequest(request, scopedPath === "/" ? "/" : scopedPath), 301);
+}
+
+function mydreamshootsLegacyPublicRedirect(request: NextRequest): NextResponse | undefined {
+  const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
+  const sitePathMatch = request.nextUrl.pathname.match(/^\/site\/mydreamshoots(\/.*)?$/i);
+  if (hostSlug !== "mydreamshoots" && !sitePathMatch) return undefined;
+
+  const requestedPath = (sitePathMatch?.[1] || request.nextUrl.pathname || "/").replace(/\/+$/, "") || "/";
+  const targetPath = MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS[requestedPath];
+  if (!targetPath) return undefined;
+  const target = publicRedirectUrlForRequest(request, targetPath);
+  target.search = request.nextUrl.search;
+  return NextResponse.redirect(target, 301);
 }
 
 function grownstrideLegacyHostRedirect(request: NextRequest): NextResponse | undefined {
@@ -587,10 +650,8 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 export async function middleware(request: NextRequest) {
   const workspaceRedirect = mydreamshootsWorkspaceRedirect(request);
   if (workspaceRedirect) return finalizeStorefrontResponse(workspaceRedirect, request);
-  if (request.nextUrl.pathname === "/ai-image-generation/motion-generator") {
-    const target = publicRedirectUrlForRequest(request, "/ai-video-generation/motion-generator");
-    return NextResponse.redirect(target, 308);
-  }
+  const legacyPublicRedirect = mydreamshootsLegacyPublicRedirect(request);
+  if (legacyPublicRedirect) return finalizeStorefrontResponse(legacyPublicRedirect, request);
   const iconResponse = await storefrontIconResponse(request);
   if (iconResponse) return applyGrownstrideNoindex(iconResponse, request);
 

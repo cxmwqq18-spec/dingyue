@@ -27,7 +27,6 @@ const navigationCatalogue = [
   { href: "/ai-save-the-date/engagement", label: "Engagement", group: "love-wedding" },
   { href: "/ai-save-the-date/proposal", label: "Proposal", group: "love-wedding" },
   { href: "/ai-save-the-date/save-the-date", label: "Save the Date", group: "love-wedding" },
-  { href: "/holidays-events/wedding-invitation", label: "Wedding Invitation", group: "love-wedding" },
   { href: "/ai-save-the-date/wedding-ceremony", label: "Wedding Ceremony", group: "love-wedding" },
   { href: "/ai-save-the-date/christmas", label: "Christmas", group: "seasonal-holidays" },
   { href: "/ai-save-the-date/halloween", label: "Halloween", group: "seasonal-holidays" },

@@ -15,7 +15,7 @@ const DB_TARGET = argument("--db-target", process.env.DATABASE_TARGET || "local"
 const SITE_ID = "site_dreamshoot";
 const paths = [
   "/ai-save-the-date/valentines-day", "/ai-save-the-date/engagement", "/ai-save-the-date/proposal",
-  "/ai-save-the-date/save-the-date", "/holidays-events/wedding-invitation", "/ai-save-the-date/wedding-ceremony",
+  "/ai-save-the-date/save-the-date", "/ai-save-the-date/wedding-ceremony",
   "/ai-save-the-date/christmas", "/ai-save-the-date/halloween", "/ai-save-the-date/thanksgiving",
   "/ai-save-the-date/new-year", "/ai-save-the-date/mothers-day", "/ai-save-the-date/fathers-day"
 ];

@@ -42,7 +42,7 @@ function cleanText(value: unknown, fallback = ""): string {
 const BLOCKED_PAGE_TYPES = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
 const BLOCKED_PATH_PREFIXES = ["/404", "/account", "/admin", "/album", "/api", "/app", "/cart", "/dashboard", "/job", "/login", "/platform", "/search", "/site"];
 const NON_PAGE_PATH_PREFIXES = ["/_next", "/assets", "/fonts", "/images", "/media", "/robots.txt", "/sitemap.xml", "/videos"];
-const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy"]);
+const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy", "/engagement-photo", "/ai-image-generation/profile-cards", "/ai-image-generation/motion-generator", "/holidays-events/wedding-invitation"]);
 const NON_INDEXABLE_TOOL_PATHS = new Set(["/tools/image-studio", "/tools/ai-image-studio", "/tools/image-generator", "/tools/image_generator", "/tools/travel-portraits"]);
 const REQUIRED_INDEXABLE_TOOL_PATHS = [
   "/tools/photo-ai",
@@ -91,7 +91,11 @@ const CANONICAL_PUBLIC_PATHS = new Map([
   ["/state-privacy-rights", "/state-privacy"],
   ["/california-privacy", "/state-privacy"],
   ["/ccpa", "/state-privacy"],
-  ["/policies/state-privacy", "/state-privacy"]
+  ["/policies/state-privacy", "/state-privacy"],
+  ["/engagement-photo", "/ai-image-generation/engagement-photo"],
+  ["/ai-image-generation/profile-cards", "/ai-image-generation/avatar"],
+  ["/ai-image-generation/motion-generator", "/ai-video-generation/motion-generator"],
+  ["/holidays-events/wedding-invitation", "/ai-video-generation/wedding-invitation"]
 ]);
 const DREAMSHOOT_LEGACY_TOOL_CANONICAL_PATHS = new Map([
   ["/tools/ai-image-studio", "/tools"],
@@ -672,7 +676,9 @@ function canonicalBlogPathForSite(site: Site, path: string): string {
 function canonicalDirectoryPathForSite(site: Site, path: string): string {
   const normalized = normalizePath(path);
   if (isDreamshootSite(site)) {
-    const canonicalSaveDate = canonicalSaveTheDatePath(normalized);
+    const canonicalSaveDate = normalized === "/holidays-events/wedding-invitation"
+      ? "/ai-video-generation/wedding-invitation"
+      : canonicalSaveTheDatePath(normalized);
     if (canonicalSaveDate !== normalized) return canonicalSaveDate;
   }
   if (isCollectionDirectoryPath(normalized)) return publicCollectionPathForSite(site, collectionSlugFromDirectoryPath(site, normalized));

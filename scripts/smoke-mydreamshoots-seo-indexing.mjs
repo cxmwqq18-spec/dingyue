@@ -480,8 +480,7 @@ for (const pathName of [
   "/ai-video-generation/proposal",
   "/ai-video-generation/save-the-date",
   "/ai-video-generation/thanksgiving",
-  "/ai-video-generation/valentines-day",
-  "/ai-video-generation/wedding-invitation"
+  "/ai-video-generation/valentines-day"
 ]) {
   assert(
     seoIndexing.includes("canonicalPath.startsWith(\"/ai-video-generation/\")") &&
@@ -530,6 +529,7 @@ for (const slug of ["text-to-video", "image-to-video"]) {
 }
 for (const slug of [
   "talking-photo",
+  "wedding-invitation",
   "explainer-video",
   "how-to-video",
   "talking-head-video",

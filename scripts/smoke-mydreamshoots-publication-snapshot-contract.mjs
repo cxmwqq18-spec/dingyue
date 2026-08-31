@@ -140,10 +140,10 @@ const policyRoutes = policySpecs.flatMap(({ canonicalPath, aliases }) => {
     routeKind: "policy-alias",
     aliasPath,
     targetPath: canonicalPath,
-    statusCode: 308,
+    statusCode: 301,
     indexable: false,
     sitemapEligible: false,
-    routeRevision: crypto.createHash("sha256").update(JSON.stringify([aliasPath, canonicalPath, 308])).digest("hex").slice(0, 20)
+    routeRevision: crypto.createHash("sha256").update(JSON.stringify([aliasPath, canonicalPath, 301])).digest("hex").slice(0, 20)
   }))];
 });
 const legacyMotionRedirect = {
@@ -152,7 +152,7 @@ const legacyMotionRedirect = {
   routeKind: "legacy-topic-alias",
   aliasPath: "/ai-image-generation/motion-generator",
   targetPath: "/ai-video-generation/motion-generator",
-  statusCode: 308,
+  statusCode: 301,
   indexable: false,
   sitemapEligible: false,
   routeRevision: "legacy-motion-v1"

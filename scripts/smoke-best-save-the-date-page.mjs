@@ -11,7 +11,6 @@ const expectedThemePaths = [
   "/ai-save-the-date/engagement",
   "/ai-save-the-date/proposal",
   "/ai-save-the-date/save-the-date",
-  "/holidays-events/wedding-invitation",
   "/ai-save-the-date/wedding-ceremony",
   "/ai-save-the-date/christmas",
   "/ai-save-the-date/thanksgiving",
@@ -49,7 +48,6 @@ const expectedNavigation = {
     ["Engagement", "/ai-save-the-date/engagement"],
     ["Proposal", "/ai-save-the-date/proposal"],
     ["Save the Date", "/ai-save-the-date/save-the-date"],
-    ["Wedding Invitation", "/holidays-events/wedding-invitation"],
     ["Wedding Ceremony", "/ai-save-the-date/wedding-ceremony"]
   ],
   "Seasonal Holidays": [

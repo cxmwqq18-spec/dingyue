@@ -55,7 +55,13 @@ if (!rawUrl) {
     assert.deepEqual(policyRoutes.filter((route) => route.disposition === "redirect").map((route) => route.aliasPath).sort(), [
       "/california-privacy", "/ccpa", "/children-privacy-policy", "/childrens-privacy", "/content-policy", "/cookie-policy", "/delivery-policy", "/policies/children-privacy", "/policies/content", "/policies/cookies", "/policies/privacy", "/policies/privacy-policy", "/policies/refund", "/policies/refunds", "/policies/shipping", "/policies/state-privacy", "/policies/terms", "/policies/terms-of-service", "/privacy-policy", "/refund-policy", "/shipping-policy", "/state-privacy-rights", "/terms-of-service"
     ]);
-    assert.ok(policyRoutes.filter((route) => route.disposition === "redirect").every((route) => route.statusCode === 308 && route.indexable === false && route.sitemapEligible === false));
+    assert.ok(policyRoutes.filter((route) => route.disposition === "redirect").every((route) => route.statusCode === 301 && route.indexable === false && route.sitemapEligible === false));
+    const weddingInvitationRedirect = current.publishedRoutes.find((route) => route.disposition === "redirect" && route.aliasPath === "/holidays-events/wedding-invitation");
+    assert.ok(weddingInvitationRedirect, "published route inventory must retain the legacy wedding invitation path as a redirect-only route");
+    assert.equal(weddingInvitationRedirect.targetPath, "/ai-video-generation/wedding-invitation");
+    assert.equal(weddingInvitationRedirect.statusCode, 301);
+    assert.equal(weddingInvitationRedirect.indexable, false);
+    assert.equal(weddingInvitationRedirect.sitemapEligible, false);
     const cookieRoute = policyRoutes.find((route) => route.disposition === "render" && route.canonicalPath === "/cookies");
     assert.ok(cookieRoute, "compiled relational projection must contain the canonical /cookies route");
     assert.equal(cookieRoute.pageId, cookiePage.id);

@@ -18,10 +18,6 @@ const coverRepairs = new Map([
     cover: "/assets/dreamshoot/save-the-date/save-the-date/hero-ai-save-the-date-couple-sunset.jpg",
     alt: "Couple embracing at sunset as the opening scene of an AI Save the Date video."
   }],
-  ["/ai-save-the-date/wedding-invitation", {
-    cover: "/assets/dreamshoot/save-the-date/save-the-date/save-the-date-couple-ring-announcement.jpg",
-    alt: "Couple showing an engagement ring for a wedding invitation announcement scene."
-  }],
   ["/ai-save-the-date/wedding-anniversary", {
     cover: "/assets/dreamshoot/save-the-date/save-the-date/save-the-date-romantic-beach-walk.jpg",
     alt: "Couple holding hands on the beach at sunset for a wedding anniversary story."

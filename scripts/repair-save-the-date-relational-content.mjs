@@ -173,21 +173,6 @@ function repairPage(slug, source) {
     json.sections.proposal_faq.blocks[6].settings.answer = "A proposal story centers on the question and immediate reaction. An engagement announcement focuses on sharing the news afterward.";
     json.sections.proposal_faq.blocks[7].settings.answer = "Use media and personal details you have permission to use, and review the current privacy policy before uploading.";
   }
-  if (slug === "/holidays-events/wedding-invitation") {
-    assignBlockImages(json, "wedding_invitation_styles_use_cases", [
-      "ai-wedding-invitation-card-closeup.jpg", "hero-ai-wedding-invitation-garden-couple.jpg",
-      "ai-wedding-invitation-design-selection.jpg", "ai-wedding-invitation-venue-display.jpg",
-      "ai-wedding-invitation-digital-share.jpg", "ai-wedding-invitation-envelope-prep.jpg"
-    ]);
-    json.sections.wedding_invitation_what_is.settings = {
-      ...json.sections.wedding_invitation_what_is.settings,
-      ...imageSettings(manifestMap(json).get("ai-wedding-invitation-reception-table.jpg"))
-    };
-    json.sections.wedding_invitation_accuracy.settings = {
-      ...json.sections.wedding_invitation_accuracy.settings,
-      ...imageSettings(manifestMap(json).get("ai-wedding-invitation-bridesmaid-review.jpg"))
-    };
-  }
   if (slug === "/ai-save-the-date/save-the-date") {
     assignBlockImages(json, "save_date_use_cases", [
       "save-the-date-planning-together.jpg", "hero-ai-save-the-date-video-announcement.jpg",
@@ -279,7 +264,7 @@ function assertPublicBoundary(page) {
 
 const targetSlugs = [
   "/ai-save-the-date/valentines-day", "/ai-save-the-date/engagement", "/ai-save-the-date/proposal",
-  "/ai-save-the-date/save-the-date", "/holidays-events/wedding-invitation", "/ai-save-the-date/wedding-ceremony",
+  "/ai-save-the-date/save-the-date", "/ai-save-the-date/wedding-ceremony",
   "/ai-save-the-date/christmas", "/ai-save-the-date/halloween", "/ai-save-the-date/thanksgiving",
   "/ai-save-the-date/new-year", "/ai-save-the-date/mothers-day", "/ai-save-the-date/fathers-day",
   "/ai-save-the-date/wedding-anniversary"

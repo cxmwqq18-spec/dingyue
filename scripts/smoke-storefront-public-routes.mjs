@@ -6,7 +6,7 @@ const focusHost = process.env.STOREFRONT_PUBLIC_ROUTES_FOCUS_HOST || "";
 const skipMediaChecks = process.env.STOREFRONT_PUBLIC_ROUTES_SKIP_MEDIA === "1";
 // This change set is scoped to the two .com storefronts; .eu remains covered by the language/SSR smokes.
 const routeChecks = [
-  { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/ai-image-generation", "/ai-image-generation/portrait-photo", "/ai-image-generation/headshot", "/ai-image-generation/avatar", "/ai-image-generation/background-changer", "/ai-video-generation", "/ai-video-generation/explainer-video", "/ai-video-generation/how-to-video", "/ai-video-generation/talking-head-video", "/ai-video-generation/meme-video", "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/product-ad-video", "/ai-video-generation/promo-video", "/ai-video-generation/ugc-ad-video", "/ai-video-generation/video-ad", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/cookies", "/terms", "/refunds"] },
+  { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/ai-image-generation", "/ai-image-generation/portrait-photo", "/ai-image-generation/headshot", "/ai-image-generation/avatar", "/ai-image-generation/background-changer", "/ai-video-generation", "/ai-video-generation/explainer-video", "/ai-video-generation/how-to-video", "/ai-video-generation/talking-head-video", "/ai-video-generation/meme-video", "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/product-ad-video", "/ai-video-generation/promo-video", "/ai-video-generation/ugc-ad-video", "/ai-video-generation/video-ad", "/ai-video-generation/wedding-invitation", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/cookies", "/terms", "/refunds"] },
   { host: "www.aidreamcapes.com", paths: ["/", "/workflow", "/collections", "/collections/fan-scene-albums", "/collections/private-fan-scene-albums", "/collections/game-day-group-photos", "/collections/game-day-group-portraits", "/collections/christmas-holiday-albums", "/collections/christmas-group-albums", "/collections/new-year-countdown-albums", "/tools", "/tools/fan-scene-album-builder", "/tools/game-day-group-portrait-maker", "/tools/christmas-group-album-studio", "/tools/new-year-countdown-album-maker", "/tools/permission-safe-photo-planner", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog/private-fan-scene-album-photo-package-guide", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] }
 ];
 const imageAltRouteChecks = [
@@ -37,7 +37,6 @@ const legacyRedirectChecks = [
   { host: "www.mydreamshoots.com", path: "/ai-video-generation/save-the-date", target: "/ai-save-the-date/save-the-date" },
   { host: "www.mydreamshoots.com", path: "/ai-video-generation/thanksgiving", target: "/ai-save-the-date/thanksgiving" },
   { host: "www.mydreamshoots.com", path: "/ai-video-generation/valentines-day", target: "/ai-save-the-date/valentines-day" },
-  { host: "www.mydreamshoots.com", path: "/ai-video-generation/wedding-invitation", target: "/holidays-events/wedding-invitation" },
   { host: "www.aidreamcapes.com", path: "/collections/route-portrait-albums", target: "/collections/fan-scene-albums" },
   { host: "www.aidreamcapes.com", path: "/collections/coastal-light-sets", target: "/collections/christmas-group-albums" },
   { host: "www.aidreamcapes.com", path: "/collections/old-quarter-walks", target: "/collections/premiere-style-portraits" },
@@ -49,9 +48,8 @@ const legacyRedirectChecks = [
   { host: "www.aidreamcapes.com", path: "/blog/holiday-memory-albums-guide", target: "/blog/christmas-group-album-photo-package-guide" }
 ];
 const legacyGoneChecks = [
-  { host: "www.mydreamshoots.com", path: "/ai-save-the-date/christmas" },
-  { host: "www.mydreamshoots.com", path: "/ai-save-the-date/new-year" },
-  { host: "www.mydreamshoots.com", path: "/ai-save-the-date/thanksgiving" },
+  { host: "www.mydreamshoots.com", path: "/ai-save-the-date/wedding-invitation" },
+  { host: "www.mydreamshoots.com", path: "/holidays-events/wedding-invitation" },
   { host: "www.mydreamshoots.com", path: "/tools" },
   { host: "www.mydreamshoots.com", path: "/collections/wedding-portraits" },
   { host: "www.mydreamshoots.com", path: "/collections/profile-cards" },
@@ -428,7 +426,8 @@ async function smokeStorefrontPublicRoutes() {
       const response = await redirectForPath(request, check.host, check.path).catch(() => undefined);
       const status = response?.status() ?? 599;
       const location = response?.headers().location ?? "";
-      if (![301, 302, 307, 308].includes(status) || !location.includes(check.target) || !redirectLocationUsesPublicHost(check.host, location)) {
+      const expectedStatus = check.host === "www.mydreamshoots.com" ? 301 : undefined;
+      if ((expectedStatus ? status !== expectedStatus : ![301, 302, 307, 308].includes(status)) || !location.includes(check.target) || !redirectLocationUsesPublicHost(check.host, location)) {
         failures.push({ host: check.host, path: check.path, status, expectedRedirect: check.target, location });
         console.log(`✗ ${check.host}${check.path} -> ${status} ${location}`);
       } else {

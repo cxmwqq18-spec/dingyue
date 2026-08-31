@@ -1071,7 +1071,7 @@ export interface PublishedRedirectRouteProjection {
   routeKind: "policy-alias" | "legacy-topic-alias";
   aliasPath: string;
   targetPath: string;
-  statusCode: 308;
+  statusCode: 301;
   indexable: false;
   sitemapEligible: false;
   routeRevision: string;

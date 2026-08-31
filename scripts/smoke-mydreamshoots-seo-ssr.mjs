@@ -280,10 +280,10 @@ for (const pathname of focusCollectionPaths) {
     const expectedStatus = expectedPublished ? 200 : 404;
     const isSitePathAlias = candidate.startsWith("/site/");
     if (isSitePathAlias) {
-      assert.ok([expectedStatus, 308].includes(getResponse.status), `${candidate} GET must render or use the canonical host alias`);
-      assert.ok([expectedStatus, 308].includes(headResponse.status), `${candidate} HEAD must render or use the canonical host alias`);
-      if (getResponse.status === 308) assert.ok(getResponse.headers.location?.endsWith(pathname), `${candidate} GET alias must target ${pathname}`);
-      if (headResponse.status === 308) assert.ok(headResponse.headers.location?.endsWith(pathname), `${candidate} HEAD alias must target ${pathname}`);
+      assert.ok([expectedStatus, 301].includes(getResponse.status), `${candidate} GET must render or use the canonical host alias`);
+      assert.ok([expectedStatus, 301].includes(headResponse.status), `${candidate} HEAD must render or use the canonical host alias`);
+      if (getResponse.status === 301) assert.ok(getResponse.headers.location?.endsWith(pathname), `${candidate} GET alias must target ${pathname}`);
+      if (headResponse.status === 301) assert.ok(headResponse.headers.location?.endsWith(pathname), `${candidate} HEAD alias must target ${pathname}`);
     } else {
       assert.equal(getResponse.status, expectedStatus, `${candidate} GET status must match the active immutable snapshot`);
       assert.equal(headResponse.status, expectedStatus, `${candidate} HEAD status must match the active immutable snapshot`);
@@ -296,7 +296,7 @@ for (const [canonicalPath, aliases] of [["/privacy", ["/privacy-policy", "/polic
   assert.equal((await fetchStatusNoRedirect(canonicalPath)).status, 200, `${canonicalPath} must be the sole policy render route`);
   for (const alias of aliases) {
     const response = await fetchStatusNoRedirect(alias);
-    assert.equal(response.status, 308, `${alias} must be a policy redirect-only alias`);
+    assert.equal(response.status, 301, `${alias} must be a policy redirect-only alias`);
     assert.ok(response.headers.location?.endsWith(canonicalPath), `${alias} must redirect to ${canonicalPath}`);
     assert.doesNotMatch(response.headers.location ?? "", /(?:localhost|127\.0\.0\.1)/i, `${alias} redirect must not expose a local origin`);
   }

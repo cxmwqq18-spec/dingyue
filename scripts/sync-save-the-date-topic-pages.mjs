@@ -26,7 +26,6 @@ const navigationLabels = new Map([
   ["/ai-save-the-date/engagement", "Engagement"],
   ["/ai-save-the-date/proposal", "Proposal"],
   ["/ai-save-the-date/save-the-date", "Save the Date"],
-  ["/holidays-events/wedding-invitation", "Wedding Invitation"],
   ["/ai-save-the-date/wedding-ceremony", "Wedding Ceremony"],
   ["/ai-save-the-date/christmas", "Christmas"],
   ["/ai-save-the-date/halloween", "Halloween"],
@@ -455,7 +454,6 @@ try {
       "/ai-save-the-date/engagement",
       "/ai-save-the-date/proposal",
       "/ai-save-the-date/save-the-date",
-      "/holidays-events/wedding-invitation",
       "/ai-save-the-date/wedding-ceremony"
     ];
     const seasonalNavigationPaths = [

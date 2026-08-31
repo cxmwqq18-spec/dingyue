@@ -38,8 +38,7 @@ if (scopedImageSlugs) {
 const selectedImagePackRepairs = Object.entries(imagePackRepairs).filter(([slug]) => !scopedImageSlugs || scopedImageSlugs.includes(slug));
 const holidaySources = {
   "/ai-save-the-date/save-the-date": "save-the-date/save-the-date",
-  "/ai-save-the-date/wedding-anniversary": ["save-the-date/engagement", "save-the-date/valentines-day"],
-  "/ai-save-the-date/wedding-invitation": ["save-the-date/proposal", "save-the-date/valentines-day"]
+  "/ai-save-the-date/wedding-anniversary": ["save-the-date/engagement", "save-the-date/valentines-day"]
 };
 
 function clone(value) { return value === undefined ? undefined : JSON.parse(JSON.stringify(value)); }

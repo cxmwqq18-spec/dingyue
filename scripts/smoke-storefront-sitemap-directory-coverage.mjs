@@ -153,7 +153,7 @@ async function validateLegacyCookieRedirects(host) {
     const response = await requestPageWithRetry(host, pathname);
     const location = response.location ? new URL(response.location, origin).toString() : "";
     const expected = new URL("/cookies", origin).toString();
-    if (response.status !== 308 || location !== expected) failures.push({ pathname, status: response.status, location: response.location || null, expected });
+    if (response.status !== 301 || location !== expected) failures.push({ pathname, status: response.status, location: response.location || null, expected });
   }
   return failures;
 }
