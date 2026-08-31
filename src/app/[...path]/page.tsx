@@ -607,7 +607,10 @@ export default async function HostStorefrontCatchAllPage({
     : isVideoGenerationRequest
     ? await getHostPublicRuntimeStateWithFallback(hostCandidates, "/ai-video-generation")
     : isCollectionRequest && collectionLookupSlug
-    ? await getHostPublicCollectionRuntimeStateWithFallback(hostCandidates, collectionLookupSlug)
+    // Leaf collection URLs render the shared published directory with a
+    // focused category. Keep the full directory state here so the renderer
+    // has the same published page/navigation context as the query form.
+    ? await getHostPublicRuntimeStateWithFallback(hostCandidates, collectionRootPageSlug)
     : await getHostPublicRuntimeStateWithFallback(hostCandidates, publicPageSlug);
   if (!state) notFound();
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
