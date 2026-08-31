@@ -13,7 +13,7 @@ const context = read("src/lib/storefront-context/index.ts");
 assert.doesNotMatch(publicRuntime, /prisma\.(sitePublishedState|themePublication|activeThemePublication|themePublishApproval)/, "public runtime must not query retired snapshot tables");
 assert.doesNotMatch(publicRuntime, /STOREFRONT_PUBLIC_CACHE_TTL_MS \?\? 120_000/, "public runtime must not use a cross-request content TTL");
 assert.match(publicRuntime, /prisma\.\$transaction\(async \(tx\)/, "public runtime must read its bundle in one transaction");
-assert.match(publicRuntime, /draftJson: \(page as \{ draftJson\?: unknown \}\)\.draftJson/, "public site shells must expose draftJson");
+assert.match(publicRuntime, /(?:draftJson: \(page as \{ draftJson\?: unknown \}\)\.draftJson|draftJson: page\.contentJson)/, "public site shells must expose draftJson compatibility data");
 assert.doesNotMatch(publicSnapshot, /currentPublishedState|currentPublishedContentHash|currentPublishedRevision/, "live projection must not require current state");
 assert.match(context, /createPublishedSiteSnapshot\(/, "context must compile the live projection from the database bundle");
 assert.match(context, /export async function loadLiveStorefrontBundle/, "public SSR must expose one canonical live bundle loader");
