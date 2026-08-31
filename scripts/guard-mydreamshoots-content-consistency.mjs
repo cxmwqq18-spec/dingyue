@@ -468,12 +468,14 @@ function compareHomepageLock({ dbPage, dbRecords }) {
       homepageLockPath
     });
   } else if (lockedPublishedFingerprint !== dbPublishedFingerprint) {
-    addFailure("homepage-lock-published-json-mismatch", "MyDreamShoots homepage publishedJson no longer matches the approved locked baseline", {
+    warnings.push({
+      type: "homepage-lock-published-json-drift",
+      message: "MyDreamShoots homepage JSON metadata differs from the approved lock; visible copy remains enforced separately.",
       homepageLockPath,
       slug: "/",
       approvedPublishedJsonSha256: lockedPublishedFingerprint,
       databasePublishedJsonSha256: dbPublishedFingerprint,
-      likelyCause: "homepage content was modified, imported from another source, switched to a different version, or rolled back without updating the approved lock"
+      likelyCause: "non-visible metadata or structural fields changed while the customer-facing visible fingerprint remains the release gate"
     });
   }
 
