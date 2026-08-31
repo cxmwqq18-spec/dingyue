@@ -55,8 +55,17 @@ const expected = {
     label: "Show the Product Clearly Before You Ask Someone to Buy It",
     width: 496,
     height: 864,
-    fit: "contain",
-    caption: "Problem-to-payoff ad · product-focused storytelling · AI-generated commercial"
+    fit: "cover",
+    caption: "Feature-led showcase · detail-focused storytelling · AI-generated product video"
+  },
+  "product-ad-video": {
+    src: "/assets/dreamshoot/product-ad-video/build-the-ad-around-one-buyer-decision.mp4",
+    poster: "/assets/dreamshoot/product-ad-video/build-the-ad-around-one-buyer-decision.webp",
+    label: "Build the Ad Around One Buyer Decision—Not Every Product Feature",
+    width: 496,
+    height: 864,
+    fit: "cover",
+    caption: "Audience -> Promise -> Proof -> Offer -> CTA"
   },
   "music-video": {
     src: "/assets/dreamshoot/music-video/ai-music-video-generator-for-artist-visuals-and-performance-concepts.mp4",
@@ -115,7 +124,7 @@ assert.equal(talkingPhotoContent.hero.image.src, talkingExpected.poster);
 assert(talkingPhotoContentFromSection(sectionFor(talkingPhotoContent, "talking_photo_landing")));
 assert.equal(
   aiVideoTopicLandingContentByKey["product-video"].hero.imageNote,
-  "Problem-to-payoff ad · product-focused storytelling · AI-generated commercial"
+  "Feature-led showcase · detail-focused storytelling · AI-generated product video"
 );
 
 for (const [slug, video] of [...Object.entries(expected), ["talking-photo", talkingExpected]]) {

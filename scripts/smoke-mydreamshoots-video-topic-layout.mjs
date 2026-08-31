@@ -209,6 +209,12 @@ try {
               return {
                 pageMarker: document.querySelectorAll("[data-video-topic-page]").length,
                 heroImages: document.querySelectorAll("[data-video-topic-hero-media] img").length,
+                heroImageFits: [...document.querySelectorAll("[data-video-topic-hero-media] img")].map((image) => getComputedStyle(image).objectFit),
+                heroImageFrameRatios: [...document.querySelectorAll("[data-video-topic-hero-media] img")].map((image) => {
+                  const frame = image.parentElement;
+                  const rect = frame?.getBoundingClientRect();
+                  return rect && rect.height > 0 ? rect.width / rect.height : 0;
+                }),
                 heroHeadingWithinViewport: Boolean(heroHeading && heroHeading.getBoundingClientRect().left >= 0 && heroHeading.getBoundingClientRect().right <= document.documentElement.clientWidth + 1),
                 scenes: scenes.length,
                 mapItems: document.querySelectorAll("[data-scene-topic-map-item]").length,
@@ -233,6 +239,10 @@ try {
             assert.equal(result.pageMarker, 1, `${topic} ${viewport.name} should render one shared page marker`);
             assert.equal(result.heroHeadingWithinViewport, true, `${topic} ${viewport.name} hero heading must fit within the viewport`);
             assert.equal(result.heroImages >= 1, true, `${topic} ${viewport.name} hero should render images`);
+            if (topic === "fashion-video") {
+              assert.deepEqual(result.heroImageFits, ["cover", "contain", "contain"], `${topic} ${viewport.name} should show both secondary hero images without cropping`);
+              assert.equal(result.heroImageFrameRatios.slice(1).every((ratio) => Math.abs(ratio - 1067 / 1600) < 0.04), true, `${topic} ${viewport.name} secondary hero frames must preserve their source ratio`);
+            }
             assert.equal(result.scenes >= 1, true, `${topic} ${viewport.name} should render scene cards`);
             assert.equal(result.mapItems >= 1, true, `${topic} ${viewport.name} should render visual-map items`);
             assert.equal(result.steps >= 1, true, `${topic} ${viewport.name} should render workflow steps`);
@@ -312,17 +322,18 @@ try {
           });
           assert.equal(result.pageMarker, 1, `${topic} ${viewport.name} should render one shared page marker`);
           const usesCleanTopicMedia = ["tiktok-video", "instagram-reels", "social-media-video", "story-video"].includes(topic);
-          const usesPortraitTopicVideo = ["tiktok-video", "instagram-reels", "product-video"].includes(topic);
-          const expectedHeroObjectFit = ["tiktok-video", "instagram-reels", "product-video"].includes(topic) ? "contain" : "cover";
+          const usesPortraitTopicVideo = ["tiktok-video", "instagram-reels", "product-video", "product-ad-video"].includes(topic);
+          const expectedHeroObjectFit = ["tiktok-video", "instagram-reels"].includes(topic) ? "contain" : "cover";
           const expectedCardObjectFit = "cover";
           assert.equal(result.hero.objectFit, expectedHeroObjectFit, `${topic} ${viewport.name} hero media must preserve its intended framing`);
-          if (topic === "product-video") {
+          if (topic === "product-video" || topic === "product-ad-video") {
             assert.equal(result.hero.mediaType, "video", `${topic} ${viewport.name} hero should render the source video directly`);
-            assert.equal(Math.abs(result.hero.imageWidth / result.hero.imageHeight - 496 / 864) < 0.04, true, `${topic} ${viewport.name} hero video must preserve its source ratio`);
           }
           assert.equal(result.hero.legacyBlurredMedia, false, `${topic} ${viewport.name} hero must not use a legacy blurred-bleed asset`);
           assert.equal(result.hero.width > 0 && result.hero.height > 0, true, `${topic} ${viewport.name} hero media must have a visible frame`);
-          if (usesPortraitTopicVideo) {
+          if (topic === "product-video" || topic === "product-ad-video") {
+            assert.equal(Math.abs(result.hero.imageWidth / result.hero.imageHeight - 9 / 16) < 0.01, true, `${topic} ${viewport.name} portrait hero video must use a 9:16 frame`);
+          } else if (usesPortraitTopicVideo) {
             assert.equal(Math.abs(result.hero.imageWidth / result.hero.imageHeight - 496 / 864) < 0.04, true, `${topic} ${viewport.name} portrait hero video must preserve its source ratio`);
           } else if (usesCleanTopicMedia) {
             assert.equal(Math.abs(result.hero.imageWidth / result.hero.imageHeight - 16 / 9) < 0.04, true, `${topic} ${viewport.name} clean hero media must use a 16:9 frame`);

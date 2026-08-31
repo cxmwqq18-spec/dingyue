@@ -23,8 +23,8 @@ const EMPTY_UNPUBLISHED_PAGE_JSON = {
   sections: {}
 };
 const nonPublicVideoTopicSlugs = new Set(["text-to-video", "image-to-video"]);
-const heroMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "music-video"]);
-const videoMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "music-video"]);
+const heroMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "product-ad-video", "music-video"]);
+const videoMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "product-ad-video", "music-video"]);
 const targetedHeroFieldManifest = {
   "talking-photo": {
     image: "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp"
@@ -49,7 +49,10 @@ const targetedHeroFieldManifest = {
   },
   "product-video": {
     image: "/assets/dreamshoot/product-video/product-video-size-scale-backpack.jpg",
-    imageNote: "A product video should answer the buyer's question before it asks for the sale."
+    imageNote: "Problem-to-payoff ad · product-focused storytelling · AI-generated commercial"
+  },
+  "product-ad-video": {
+    image: "/assets/dreamshoot/product-ad-video/ai-product-ad-video-new-product-unboxing-creative.jpg"
   },
   "music-video": {
     image: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg"
@@ -312,7 +315,7 @@ const pages = [
       "Create product ad videos around a specific audience, problem or desire, product promise, visual proof, offer, and call to action. Plan launch ads, problem-solution ads, benefit ads, offers, comparison ads, and retargeting reminders.",
     keywords:
       "AI product ad video generator, product ad video maker, AI product advertising video, product video ad generator, ecommerce video ad maker, social media product ad video, product launch ad video, product marketing video generator",
-    imageUrl: "/assets/dreamshoot/product-ad-video/ai-product-ad-video-new-product-unboxing-creative.jpg"
+    imageUrl: "/assets/dreamshoot/product-ad-video/build-the-ad-around-one-buyer-decision.webp"
   },
   {
     slug: "promo-video",

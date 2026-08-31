@@ -1873,10 +1873,10 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         "This page explains the Product Video direction. Open the current video workspace to review the creation tools available today.",
       rightsCopy:
         "Use accurate product photos and claims. Do not invent materials, dimensions, performance, results, included items, or compatibility.",
-      imageNote: "Problem-to-payoff ad · product-focused storytelling · AI-generated commercial",
+      imageNote: "Feature-led showcase · detail-focused storytelling · AI-generated product video",
       image: image(
         `${productImageRoot}/show-the-product-clearly-before-you-ask-someone-to-buy-it.webp`,
-        "Product demonstration scene in a home kitchen",
+        "Full-size keyboard shown with green backlighting in a product feature video",
         496,
         864
       ),
@@ -1886,7 +1886,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         label: "Show the Product Clearly Before You Ask Someone to Buy It",
         width: 496,
         height: 864,
-        fit: "contain"
+        fit: "cover"
       },
       highlights: ["Scale", "Material Detail", "Real Use", "What's Included"]
     },
@@ -2128,11 +2128,19 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         "Keep product claims, prices, discounts, availability, testimonials, and before/after evidence accurate. Do not promise outcomes the product or offer cannot support.",
       imageNote: "Audience -> Promise -> Proof -> Offer -> CTA",
       image: image(
-        `${productAdImageRoot}/ai-product-ad-video-new-product-unboxing-creative.jpg`,
-        "Adult opening a delivered product package in warm light for a new-product ad creative concept",
-        5184,
-        3456
-      )
+        `${productAdImageRoot}/build-the-ad-around-one-buyer-decision.webp`,
+        "Pet hair and debris on a living-room rug in a product ad opening scene",
+        496,
+        864
+      ),
+      video: {
+        src: `${productAdImageRoot}/build-the-ad-around-one-buyer-decision.mp4`,
+        poster: `${productAdImageRoot}/build-the-ad-around-one-buyer-decision.webp`,
+        label: "Build the Ad Around One Buyer Decision—Not Every Product Feature",
+        width: 496,
+        height: 864,
+        fit: "cover"
+      }
     },
     useCases: {
       eyebrow: "PAID CREATIVE SCENARIOS",
