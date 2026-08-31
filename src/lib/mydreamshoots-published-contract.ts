@@ -90,6 +90,14 @@ function revision(value: unknown): string {
   return (hash >>> 0).toString(16).padStart(8, "0");
 }
 
+function mediaSlugFromUrl(value: string): string {
+  return String(value)
+    .split(/[?#]/, 1)[0]
+    .split("/")
+    .filter(Boolean)
+    .at(-2) || "";
+}
+
 export function publishedLinkEntityId(pageEntityId: string, kind: "cta" | "related", index = 0): string {
   return `${pageEntityId}:link:${kind}${kind === "related" ? `:${index + 1}` : ""}`;
 }
@@ -304,7 +312,8 @@ export function buildPublishedPageMediaProjection(
   const imageAlts = images.map((_, index) => suppliedContractAlts[index] ?? "");
   const altsReady = imageAlts.length === images.length && imageAlts.every(Boolean);
   const imageContractReady = images.length === 13 && imageAlts.length === 13;
-  const ready = route.status === "published" && ownerMatches && imageContractReady && altsReady;
+  const imageNamespaceReady = route.canonicalSlug !== "edit-by-prompt" || images.every((image) => mediaSlugFromUrl(image) === route.canonicalSlug);
+  const ready = route.status === "published" && ownerMatches && imageContractReady && altsReady && imageNamespaceReady;
   return {
     siteId: route.siteId,
     routeKind: route.routeKind,
@@ -322,7 +331,7 @@ export function buildPublishedPageMediaProjection(
     imageAlts,
     status: ready ? "ready" : "review_required",
     ...(!ready
-      ? { reviewReason: route.reviewReason || (!ownerMatches ? "PAGE_COPY_MEDIA_ENTITY_MISMATCH" : !imageContractReady ? "PAGE_MEDIA_IMAGE_CONTRACT_REQUIRED" : !altsReady ? "PAGE_MEDIA_ALT_REQUIRED" : "PAGE_MEDIA_REQUIRED") }
+      ? { reviewReason: route.reviewReason || (!ownerMatches ? "PAGE_COPY_MEDIA_ENTITY_MISMATCH" : !imageNamespaceReady ? "PAGE_MEDIA_NAMESPACE_MISMATCH" : !imageContractReady ? "PAGE_MEDIA_IMAGE_CONTRACT_REQUIRED" : !altsReady ? "PAGE_MEDIA_ALT_REQUIRED" : "PAGE_MEDIA_REQUIRED") }
       : {})
   };
 }

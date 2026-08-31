@@ -12,6 +12,7 @@ const skipPlatformStateDocument = args.has("--skip-platform-state-document");
 const taxonomyPath = path.join(repoRoot, "src", "lib", "mydreamshoots-theme-taxonomy.json");
 const useCaseProfilesPath = path.join(repoRoot, "src", "lib", "photo-package-use-case-profiles.json");
 const SITE_ID = "site_dreamshoot";
+const LEGACY_SOCIAL_CARDS_PACK_ID = "pack_dreamshoot_social_cards";
 const UPDATE_TIMESTAMP = "2026-08-14T00:00:00.000Z";
 const generatedThemeAssetVersion = process.env.THEME_ASSET_VERSION ?? "20260826mediaowner1";
 const generatedThemeSlugs = new Set([
@@ -28,7 +29,8 @@ const generatedThemeSlugs = new Set([
   "portrait-retouch",
   "unblur-image",
   "color-correction",
-  "old-photo-restoration"
+  "old-photo-restoration",
+  "edit-by-prompt"
 ]);
 let requiredPageCopySlugs = new Set();
 const requiredPageCopyFields = [
@@ -167,6 +169,7 @@ function packIdForItem(item) {
     cannes: "pack_dreamshoot_cannes",
     nightlife: "pack_dreamshoot_nightlife",
     "rich-lifestyle": "pack_dreamshoot_rich_lifestyle",
+    "edit-by-prompt": "pack_dreamshoot_edit_by_prompt",
     urban: "pack_dreamshoot_urban"
   };
   if (dedicatedPackIds[item.slug]) return dedicatedPackIds[item.slug];
@@ -404,16 +407,16 @@ function categoryFieldsForItem(item, parentId, sortOrder, sourcePack) {
 }
 
 const taxonomyGalleryAltScenes = [
-  "close portrait framing with clear facial detail",
-  "half-body editorial pose with balanced crop",
+  "close portrait with clear facial detail",
+  "half-body editorial pose with balanced composition",
   "group-friendly composition with space around the subjects",
   "wide environmental scene with contextual background",
   "candid social-style expression with natural posture",
-  "detail portrait crop with polished styling",
-  "vertical profile crop with clean framing",
-  "cinematic color contrast with directional light",
-  "album-cover style crop with strong subject focus",
-  "lifestyle portrait framing with natural setting cues",
+  "detailed portrait with polished styling",
+  "vertical profile portrait with clean composition",
+  "cinematic color grading with directional light",
+  "album-cover-inspired portrait with strong subject focus",
+  "lifestyle portrait in a natural setting",
   "event-style portrait under polished light",
   "distinct themed pose with refined styling"
 ];
@@ -479,7 +482,7 @@ const dedicatedMediaSourceBySlug = {
   urban: "pack_dreamshoot_travel"
 };
 
-const slugOwnedMediaThemes = new Set(["black-friday", "cannes", "nightlife", "rich-lifestyle"]);
+const slugOwnedMediaThemes = new Set(["black-friday", "cannes", "nightlife", "rich-lifestyle", "edit-by-prompt"]);
 
 function mediaSlugFromUrl(value) {
   return String(value || "")
@@ -492,6 +495,7 @@ function mediaSlugFromUrl(value) {
 function assertSlugOwnedMedia(slug, imageUrl, galleryImages) {
   if (!slugOwnedMediaThemes.has(slug)) return;
   const urls = [imageUrl, ...(Array.isArray(galleryImages) ? galleryImages : [])].filter(Boolean);
+  if (slug === "edit-by-prompt" && urls.length === 0) return;
   if (urls.length < 13 || urls.some((url) => mediaSlugFromUrl(url) !== slug)) {
     throw new Error(`media_owner_mismatch:${slug}:${urls.map(mediaSlugFromUrl).join(",")}`);
   }
@@ -561,8 +565,9 @@ function generatedThemeMediaForSlug(rawSlug) {
 function packFieldsForItem(item, categoryId, sourcePack) {
   const profile = profileForItem(item);
   const generatedMedia = generatedThemeMediaForSlug(item.slug);
-  const galleryImages = generatedMedia?.galleryImages || sourcePack?.galleryImages || [];
-  const imageUrl = generatedMedia?.imageUrl || sourcePack?.imageUrl || "/assets/dreamshoot/generated/pack-covers/professional-headshots/professional-headshots-cover.webp?v=20260731themeuniqueness1";
+  const requiresDedicatedMedia = item.slug === "edit-by-prompt";
+  const galleryImages = generatedMedia?.galleryImages || (requiresDedicatedMedia ? [] : sourcePack?.galleryImages || []);
+  const imageUrl = generatedMedia?.imageUrl || (requiresDedicatedMedia ? "" : sourcePack?.imageUrl || "/assets/dreamshoot/generated/pack-covers/professional-headshots/professional-headshots-cover.webp?v=20260731themeuniqueness1");
   assertSlugOwnedMedia(item.slug, imageUrl, galleryImages);
   return {
     siteId: SITE_ID,
@@ -895,7 +900,12 @@ async function updateDatabase({ state, categories, packs }) {
     const categoryDbIdByLocalId = new Map(
       categories.map((category) => [
         category.id,
-        existingCategoryIdBySlug.get(normalizeSlug(category.slug)) || category.id
+        // The legacy Social Cards row was historically mislabeled as
+        // edit-by-prompt. Keep its database id with Social Cards and allow a
+        // fresh category id for the dedicated Edit By Prompt entity.
+        normalizeSlug(category.slug) === "edit-by-prompt"
+          ? category.id
+          : existingCategoryIdBySlug.get(normalizeSlug(category.slug)) || category.id
       ])
     );
     const targetCategoryDbIds = new Set();
@@ -905,7 +915,9 @@ async function updateDatabase({ state, categories, packs }) {
       for (const category of categories) {
         const dbCategoryId = categoryDbIdByLocalId.get(category.id) || category.id;
         const parentId = category.parentId ? categoryDbIdByLocalId.get(category.parentId) || category.parentId : null;
-        const existingIdForSlug = existingCategoryIdBySlug.get(normalizeSlug(category.slug));
+        const existingIdForSlug = normalizeSlug(category.slug) === "edit-by-prompt"
+          ? undefined
+          : existingCategoryIdBySlug.get(normalizeSlug(category.slug));
         const updateFields = {
           parentId,
           slug: category.slug,
@@ -926,10 +938,14 @@ async function updateDatabase({ state, categories, packs }) {
             data: updateFields
           });
         } else {
+          // Platform-state rows can include Prisma relation metadata from a
+          // prior read. Category create accepts only scalar fields plus the
+          // explicit parentId relationship.
+          const { parent: _parent, children: _children, packs: _packs, ...categoryData } = category;
           await tx.creativePackCategory.upsert({
             where: { id: dbCategoryId },
             create: {
-              ...category,
+              ...categoryData,
               id: dbCategoryId,
               parentId
             },
@@ -1091,6 +1107,37 @@ for (const root of taxonomy.roots) {
   targetCategoryIds.add(category.id);
   rootIdBySlug.set(targetSlug, category.id);
   syncedCategories.push(structuredClone(category));
+}
+
+// Social Cards predates the Edit By Prompt leaf. Preserve that operational pack
+// as its own entity when older state still has it under the Edit By Prompt slug.
+const legacySocialPack = packs.find((pack) => pack.siteId === SITE_ID && pack.id === LEGACY_SOCIAL_CARDS_PACK_ID);
+const legacySocialCategory = legacySocialPack
+  ? categories.find((category) => category.siteId === SITE_ID && category.id === legacySocialPack.categoryId)
+  : undefined;
+if (legacySocialPack && legacySocialCategory) {
+  const parentId = rootIdBySlug.get("photo-tools") || legacySocialCategory.parentId;
+  updateCategory(legacySocialCategory, {
+    slug: "social-cards",
+    label: "Social Cards",
+    description: "Create share-ready social announcement cards, story crops, creator banners, and polished social visuals.",
+    ...(parentId ? { parentId } : {}),
+    status: "active",
+    updatedAt: UPDATE_TIMESTAMP
+  }, changes);
+  updatePack(legacySocialPack, {
+    name: "Social Cards",
+    headline: "Social Cards",
+    description: "Generate share-ready cards, announcement visuals, profile banners, keepsake images, and polished story post crops.",
+    prompt: "Using the uploaded reference photo, create share-ready social announcement cards, story crops, creator banners, and polished social visuals. Preserve the subject's identity and use realistic lighting, clean composition, and private gallery-ready output. Avoid protected logos, public-figure likenesses, unauthorized marks, and misleading text.",
+    category: "social-cards",
+    status: "active",
+    updatedAt: UPDATE_TIMESTAMP
+  }, changes);
+  targetCategoryIds.add(legacySocialCategory.id);
+  targetPackIds.add(LEGACY_SOCIAL_CARDS_PACK_ID);
+  syncedCategories.push(structuredClone(legacySocialCategory));
+  syncedPacks.push(structuredClone(legacySocialPack));
 }
 
 for (const [index, item] of taxonomy.items.entries()) {

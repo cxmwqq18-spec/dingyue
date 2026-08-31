@@ -699,8 +699,8 @@
     },
     {
       "slug": "edit-by-prompt",
-      "sourceCategorySlug": "social-cards",
-      "reusePackId": "pack_dreamshoot_social_cards",
+      "sourceCategorySlug": "edit-by-prompt",
+      "reusePackId": "pack_dreamshoot_edit_by_prompt",
       "groupSlug": "photo-tools",
       "label": "Edit By Prompt",
       "description": "Use a written prompt to request safe photo edits, scene changes, style adjustments, and private image variations.",

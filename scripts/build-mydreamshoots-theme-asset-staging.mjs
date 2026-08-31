@@ -21,7 +21,8 @@ const targetSlugs = [
   "portrait-retouch",
   "unblur-image",
   "color-correction",
-  "old-photo-restoration"
+  "old-photo-restoration",
+  "edit-by-prompt"
 ];
 
 const themeLooks = {
@@ -34,7 +35,8 @@ const themeLooks = {
   "portrait-retouch": { brightness: 1.01, saturation: 0.98, hue: 0, sharpen: 0.58 },
   "unblur-image": { brightness: 1.04, saturation: 1.02, hue: -2, sharpen: 1.05 },
   "color-correction": { brightness: 1.03, saturation: 1.05, hue: 4, sharpen: 0.5 },
-  "old-photo-restoration": { brightness: 0.98, saturation: 0.72, hue: 18, sharpen: 0.7 }
+  "old-photo-restoration": { brightness: 0.98, saturation: 0.72, hue: 18, sharpen: 0.7 },
+  "edit-by-prompt": { brightness: 1.02, saturation: 1.04, hue: 2, sharpen: 0.62 }
 };
 
 function assert(condition, message) {

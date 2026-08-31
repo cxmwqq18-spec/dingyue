@@ -101,7 +101,7 @@ const legacyVideoThemes = (state.videoThemes ?? []).filter((theme) => theme.site
 // only immutable publication entities are allowed to feed public schema.
 const activeVideoThemes = [];
 const blackFridayPack = activePacks.find((pack) => schemaSlug(pack.category || pack.name) === "black-friday" || schemaSlug(pack.name) === "black-friday");
-const slugOwnedMediaThemes = ["black-friday", "cannes", "nightlife", "rich-lifestyle"];
+const slugOwnedMediaThemes = ["black-friday", "cannes", "nightlife", "rich-lifestyle", "edit-by-prompt"];
 const mediaSlugFromUrl = (value) => String(value ?? "").split(/[?#]/, 1)[0].split("/").filter(Boolean).at(-2) || "";
 const homePage = site.pages.find((page) => page.slug === "/");
 assert.ok(homePage, "MyDreamShoots homepage should exist");
@@ -170,7 +170,7 @@ const verifiedOffers = schemaContext.offers.active.filter((offer) => (
   && Boolean(offer.price.providerVerifiedAt)
 ));
 
-assert.equal(activePacks.length, 38, "MyDreamShoots should expose 38 active photo package themes");
+assert.equal(activePacks.length, 39, "MyDreamShoots should expose 39 active photo package themes");
 assert.equal(activeProducts.length, 7, "MyDreamShoots should expose 7 active pricing products");
 assert.ok(legacyVideoThemes.length <= legacyVideoThemeSlugs.size, "MyDreamShoots legacy video theme inventory should not exceed the known legacy set");
 assert.equal(activeVideoThemes.length, 0, "MyDreamShoots should not expose legacy video theme framework records after the AI Video Generation route migration");

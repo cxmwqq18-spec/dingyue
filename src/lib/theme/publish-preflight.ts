@@ -78,6 +78,15 @@ const mediaKeys = new Set([
   "afterImage"
 ]);
 
+function mediaNamespaceFromUrl(value: string | null | undefined): string {
+  return String(value ?? "")
+    .trim()
+    .split(/[?#]/, 1)[0]
+    .split("/")
+    .filter(Boolean)
+    .at(-2) || "";
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
@@ -384,11 +393,15 @@ export function runThemePublishPreflight({
         if (route.status === "published") pageCopyRouteFailures.push(`${route.canonicalSlug}:${error instanceof Error ? error.message : "PAGE_COPY_REVIEW_REQUIRED"}`);
       }
       const matchingPack = creativePacks.find((pack) => pack.status === "active" && pack.id === route.expectedPackId && normalizePublishedSlug(pack.categoryRecord?.slug || pack.category) === route.canonicalSlug);
-      if (!matchingPack || !matchingPack.imageUrl || (matchingPack.galleryImages ?? []).length === 0 || route.status !== "published") {
+      const mediaUrls = matchingPack ? [matchingPack.imageUrl, ...(matchingPack.galleryImages ?? [])].filter((value): value is string => Boolean(value?.trim())) : [];
+      const mediaNamespaceReady = route.canonicalSlug !== "edit-by-prompt" || (mediaUrls.length === 13 && mediaUrls.every((url) => mediaNamespaceFromUrl(url) === route.canonicalSlug));
+      if (!matchingPack || !matchingPack.imageUrl || (matchingPack.galleryImages ?? []).length === 0 || !mediaNamespaceReady || route.status !== "published") {
         const reason = route.status !== "published" && route.reviewReason
           ? route.reviewReason
           : !matchingPack
             ? "PAGE_COPY_MEDIA_ENTITY_MISMATCH"
+            : !mediaNamespaceReady
+              ? "PAGE_MEDIA_NAMESPACE_MISMATCH"
             : !matchingPack.imageUrl || (matchingPack.galleryImages ?? []).length === 0
               ? "PAGE_MEDIA_REQUIRED"
               : "PAGE_COPY_MEDIA_ENTITY_MISMATCH";

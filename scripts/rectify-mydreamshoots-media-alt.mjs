@@ -209,9 +209,31 @@ function subjectForPack(pack, imageUrl) {
   return "Portrait image";
 }
 
+const galleryAltScenes = [
+  "portrait showing clear facial detail against a softly blurred background",
+  "smiling portrait in a relaxed setting",
+  "three-quarter portrait with the surrounding scene visible",
+  "candid portrait with a natural expression",
+  "seated portrait in a comfortable setting",
+  "profile portrait with a softly lit background",
+  "confident portrait with vivid surroundings",
+  "portrait focused on the subject's face and expression",
+  "lifestyle portrait in an everyday setting",
+  "portrait during a social moment",
+  "distinctive pose that highlights the theme",
+  "natural portrait with an inviting atmosphere"
+];
+
 function galleryCandidates(pack, imageUrl, index, role = "gallery") {
-  const subject = subjectForPack(pack, imageUrl);
-  return [`${subject}.`];
+  const sourceSlug = sourceSlugFromImageUrl(imageUrl);
+  const subject = (subjectBySourceSlug[sourceSlug] || sourceSlug.replace(/-/g, " ") || subjectForPack(pack, imageUrl))
+    .replace(/\bprompt\b/gi, "custom")
+    .replace(/\bscene\b/gi, "setting")
+    .replace(/\b(?:production|camera|shot|toma|framing|encuadre|crop|recorte|lighting|luz)\b/gi, "")
+    .replace(/\s+/g, " ")
+    .trim() || "Themed portrait";
+  if (role === "cover" || index === 0) return [`${subject} cover portrait.`];
+  return [`${subject}, ${galleryAltScenes[(index - 1) % galleryAltScenes.length]}.`];
 }
 
 function createAltRegistry() {

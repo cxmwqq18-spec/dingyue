@@ -14076,7 +14076,7 @@ function SectionView({
                 return (
                   <article className="group overflow-hidden rounded-[22px] border border-[#d8cdbf] bg-white shadow-[0_24px_60px_-54px_rgba(20,22,26,0.18)]" key={`${item.id}_${index}`} {...xfcartBlockAttrs(mode, item, index, "pain_point")}>
                     <div className="relative aspect-[1.18/1] overflow-hidden bg-[#272321] lg:aspect-[1.03/1]">
-                      <img className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-[1.04]" src={image} alt={problemAlt} />
+                      <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} alt={problemAlt} />
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,9,0.16)_0%,rgba(8,8,9,0.28)_42%,rgba(8,8,9,0.64)_100%)]" />
                       <div className="absolute inset-x-0 bottom-0 p-4 text-white lg:p-5">
                         <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/22 backdrop-blur xl:mb-4">

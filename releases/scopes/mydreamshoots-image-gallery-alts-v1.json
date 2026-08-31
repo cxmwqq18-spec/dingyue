@@ -39,7 +39,8 @@
         "pack_dreamshoot_portrait_retouch",
         "pack_dreamshoot_unblur_image",
         "pack_dreamshoot_color_correction",
-        "pack_dreamshoot_old_photo_restoration"
+        "pack_dreamshoot_old_photo_restoration",
+        "pack_dreamshoot_edit_by_prompt"
       ],
       "fieldPaths": ["record/galleryImageAlts"]
     }

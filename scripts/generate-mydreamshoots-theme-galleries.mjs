@@ -93,6 +93,7 @@ const themeDirections = {
   "gala-photos": "formal gala and red-carpet portraits with black-tie wardrobe, evening gowns, polished event lighting, and luxury venue mood",
   mafia: "cinematic noir character portraits with tailored suits, moody interiors, vintage city streets, shadows, and dramatic film-still lighting",
   nature: "outdoor adventure portraits in mountains, forests, lakes, cliffs, trails, and golden-hour natural light; no city or studio scenes",
+  urban: "current city-based creator portraits in streets, concrete textures, modern architecture, rooftop light, and night city glow; contemporary wardrobe and personal-brand framing; no travel collage, logos, or unrelated scenes",
   "outdoor-creator-scenes": "outdoor creator portraits and personal-brand scenes in parks, trails, patios, markets, and golden-hour natural light; cameras, notebooks, and creator tools may appear as subtle props; no indoor studio or unrelated travel-collage imagery",
   "travel-scene-pack": "destination travel portraits across beaches, city walks, scenic overlooks, cafes, luggage moments, and vacation editorial scenes",
   "virtual-try-on": "private fashion try-on previews with outfits, styling mirrors, wardrobe racks, garment details, and lookbook poses",
@@ -106,6 +107,7 @@ const themeDirections = {
   "anime-avatar": "anime-inspired avatar portraits and stylized character profile images; playful, polished, original characters only, no copyrighted characters",
   "product-style": "creator-led product lifestyle scenes, product tables, package mockups, softbox lighting, social commerce visuals, and clean catalog compositions",
   "social-cards": "share-ready social announcement cards, story crops, creator banners, clean graphic portrait layouts, and polished social visuals",
+  "edit-by-prompt": "prompt-directed photo editing previews that visibly demonstrate focused scene changes, background adjustments, lighting refinements, object cleanup, and style variations while preserving the subject; no social card layouts, profile cards, text, logos, or before-and-after split screens",
   "wedding-portraits": "wedding-inspired portraits with ceremony light, veils, suits, flowers, soft romantic venue scenes, and save-the-date mood",
   "indian-wedding": "Indian wedding-inspired portraits with respectful saree, lehenga, sherwani, jewelry, mandap, warm ceremony light, and rich textiles",
   "desi-wedding": "Desi wedding celebration portraits with festive styling, rich colors, jewelry, family celebration mood, ceremony decor, and private album feel",
@@ -195,7 +197,8 @@ function coverPath(slug) {
 
 const assetSlugAliases = new Map([
   ["thanksgiving-photo", "thanksgiving-group-photos"],
-  ["halloween-photo", "halloween-party-photos"]
+  ["halloween-photo", "halloween-party-photos"],
+  ["urban", "outdoor-creator-scenes"]
 ]);
 
 function assetSlugForTheme(slug) {
@@ -211,18 +214,18 @@ function stagedReceiptPath(slug, index) {
 }
 
 const galleryAltScenes = [
-  "close portrait framing with clear facial detail",
-  "half-body editorial pose with balanced crop",
-  "group-friendly composition with space around the subjects",
-  "wide environmental scene with contextual background",
-  "candid social-style expression with natural posture",
-  "detail portrait crop with polished styling",
-  "vertical profile crop with clean framing",
-  "cinematic color contrast with directional light",
-  "album-cover style crop with strong subject focus",
-  "lifestyle portrait framing with natural setting cues",
-  "event-style portrait under polished light",
-  "distinct themed pose with refined styling"
+  "portrait showing clear facial detail against a softly blurred background",
+  "smiling portrait in a relaxed setting",
+  "three-quarter portrait with the surrounding scene visible",
+  "candid portrait with a natural expression",
+  "seated portrait in a comfortable setting",
+  "profile portrait with a softly lit background",
+  "confident portrait with vivid surroundings",
+  "portrait focused on the subject's face and expression",
+  "lifestyle portrait in an everyday setting",
+  "portrait during a social moment",
+  "distinctive pose that highlights the theme",
+  "natural portrait with an inviting atmosphere"
 ];
 
 function galleryImageAltForPack(pack, slug, index) {
@@ -237,9 +240,15 @@ function galleryImageAltForPack(pack, slug, index) {
 }
 
 function galleryImageAltsForPack(pack, slug, count) {
+  const direction = themeDirections[slug] ?? pack.description ?? pack.headline ?? pack.name;
+  const subject = String(direction)
+    .split(";")[0]
+    .replace(/\b(?:private|package|gallery|customer-facing|AI photo subscription aesthetic)\b/gi, "")
+    .replace(/\s+/g, " ")
+    .trim() || `${pack.name} portrait`;
   return [
-    `${pack.name} representative cover image with polished ${slug.replace(/-/g, " ")} styling.`,
-    ...Array.from({ length: count }, (_, index) => galleryImageAltForPack(pack, slug, index))
+    `${subject} cover portrait.`,
+    ...Array.from({ length: count }, (_, index) => `${subject}, ${galleryAltScenes[index % galleryAltScenes.length]}.`)
   ];
 }
 

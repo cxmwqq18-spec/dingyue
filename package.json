@@ -199,6 +199,8 @@
     "sync:mydreamshoots-best-packages-source:write": "node scripts/sync-mydreamshoots-best-packages-source.mjs --write",
     "smoke:mydreamshoots-best-packages-source": "node scripts/smoke-mydreamshoots-best-packages-source.mjs",
     "smoke:mydreamshoots-seo-ssr": "node scripts/smoke-mydreamshoots-seo-ssr.mjs",
+    "smoke:edit-by-prompt-media-contract": "node scripts/smoke-edit-by-prompt-media-contract.mjs",
+    "smoke:edit-by-prompt-seo": "node scripts/smoke-edit-by-prompt-seo.mjs",
     "smoke:mydreamshoots-video-topic-layout": "node scripts/smoke-mydreamshoots-video-topic-layout.mjs",
     "smoke:storefront-context-contract": "node scripts/smoke-storefront-context-contract.mjs",
     "smoke:seo-review-bundle": "node scripts/smoke-seo-review-bundle.mjs",

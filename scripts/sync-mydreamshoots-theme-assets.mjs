@@ -26,7 +26,8 @@ const targetSlugs = [
   "portrait-retouch",
   "unblur-image",
   "color-correction",
-  "old-photo-restoration"
+  "old-photo-restoration",
+  "edit-by-prompt"
 ];
 
 function assert(condition, message) {

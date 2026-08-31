@@ -540,12 +540,12 @@
     "operationalDescription": "Restore old or damaged photos with clearer detail, reduced scratches, improved tone, respectful keepsake handling, and private review."
   },
   "edit-by-prompt": {
-    "packId": "pack_dreamshoot_social_cards",
+    "packId": "pack_dreamshoot_edit_by_prompt",
     "creditCost": 12,
     "outputCount": 12,
-    "toolRef": "/app/create?pack_id=pack_dreamshoot_social_cards",
+    "toolRef": "/app/create?pack_id=pack_dreamshoot_edit_by_prompt",
     "promptRef": "dreamshoot:edit-by-prompt",
-    "mediaRef": "pack_dreamshoot_social_cards",
+    "mediaRef": "pack_dreamshoot_edit_by_prompt",
     "operationalDescription": "Use a written prompt to request safe photo edits, scene changes, style adjustments, object tweaks, and private image variations."
   }
 }

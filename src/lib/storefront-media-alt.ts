@@ -130,7 +130,7 @@ function sourceSpecificAlt(
   if (canonical && locale === "en") return canonical;
   const sourceTopic = imageTopicFromUrl(imageUrl);
   const themeSubject = locale === "en" && /(?:^|-)edit-by-prompt(?:-|$)/.test(normalizeSlug(String(theme ?? "")))
-    ? "Social profile portrait"
+    ? "Prompt-directed photo edit preview"
     : cleanAltText(theme);
   const subjectBase = themeSubject || (sourceTopic === "Storefront portrait" ? sourceTopic : sourceTopic);
   const subject = /\b(?:portrait|photo|image|avatar|logo|scene|video|poster)\b/i.test(subjectBase)
@@ -205,6 +205,10 @@ function altConflictsWithImageTheme(value: string, imageUrl: string | undefined)
   const key = imageSlugParts(imageUrl).join(" ");
   if (!key) return false;
   const cleaned = value.toLowerCase();
+
+  if (/edit-by-prompt/.test(key)) {
+    return /\b(?:social cards?|social profile|profile card|social-cards)\b/i.test(cleaned);
+  }
 
   if (/anime-avatar/.test(key)) {
     return /\b(?:football|stadium|world cup|match-day|holiday album|wedding|futbol|mundial|estadio|boda)\b/i.test(cleaned);
@@ -320,7 +324,7 @@ function imageSlugHasSpecificTheme(key: string): boolean {
 
 function englishThemeSubject(key: string): string | undefined {
   if (/(edit-by-prompt)/.test(key)) {
-    return "Social profile portrait";
+    return "Prompt-directed photo edit preview";
   }
   if (/\b(?:credit|subscription|plan|pricing|checkout)\b/.test(key)) {
     return "Credit plan panel for private photo galleries";

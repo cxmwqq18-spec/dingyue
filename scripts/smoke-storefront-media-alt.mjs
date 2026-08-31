@@ -163,14 +163,14 @@ const editByPromptAlt = storefrontCardImageAlt({
   brand: "MyDreamShoots",
   category: "edit-by-prompt",
   description: "",
-  imageUrl: "/assets/dreamshoot/generated/pack-covers/social-cards/social-cards-cover.webp",
+  imageUrl: "/assets/dreamshoot/generated/pack-covers/edit-by-prompt/edit-by-prompt-cover.webp",
   locale: "en",
   meta: "AI Image Generation",
   role: "card",
   title: "Edit By Prompt"
 });
 assert(
-  editByPromptAlt === "Social profile portrait.",
+  editByPromptAlt === "Prompt-directed photo edit preview.",
   `Edit By Prompt must use a subject-based alt without production language: ${editByPromptAlt}`
 );
 
