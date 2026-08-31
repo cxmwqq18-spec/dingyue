@@ -369,8 +369,12 @@ function DirectTopicHeroCards({ images, video, cropPetHero = false }: { images: 
 function TopicHeroMedia({ images, video, cropPetHero = false }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean }) {
   if (video && images.length < 3) {
     const portraitSizing = isPortraitVideo(video);
+    // Some landscape exports are delivered on a 4:3 canvas with 16:9 content
+    // letterboxed into the pixels. A 16:9 viewport lets object-cover crop those
+    // baked-in bars while keeping the actual video frame undistorted.
+    const videoAspectRatio = portraitSizing ? `${video.width} / ${video.height}` : "16 / 9";
     return (
-      <div className={`mx-auto max-w-full ${portraitSizing ? "h-auto max-h-full w-auto md:h-[min(78vh,54rem)]" : "w-full"}`} style={{ aspectRatio: `${video.width} / ${video.height}` }}>
+      <div className={`mx-auto max-w-full ${portraitSizing ? "h-auto max-h-full w-auto md:h-[min(78vh,54rem)]" : "w-full"}`} style={{ aspectRatio: videoAspectRatio }}>
         <TopicHeroVideo video={video} />
       </div>
     );
