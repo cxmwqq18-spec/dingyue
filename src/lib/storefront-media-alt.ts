@@ -542,6 +542,11 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
     ? meaningfulThemeAlignedAltForStorefront(input.galleryImageAlts?.[input.index], locale, brand, input.imageUrl)
     : "";
   const galleryAlt = /\bcover\b/i.test(rawGalleryAlt) ? "" : rawGalleryAlt;
+  const galleryAltRepeatsEarlier = isPackGalleryImage && typeof input.index === "number"
+    ? input.galleryImageAlts
+      ?.slice(0, input.index)
+      .some((candidate) => meaningfulThemeAlignedAltForStorefront(candidate, locale, brand, input.imageUrl) === galleryAlt)
+    : false;
 
   const specificKey = themeKey(input);
   const imageKey = themeImageSlugParts(input.imageUrl).join(" ");
@@ -560,7 +565,7 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
   const sourceAlt = sourceSpecificAlt(input.imageUrl, locale, input.title || imageScene || specificScene || contextScene);
   if (templatedSceneAltPattern.test(explicit) || templatedSceneAltPattern.test(galleryAlt)) return sourceAlt;
   if (explicit) return compactMediaAltSentence(explicit, locale);
-  if (galleryAlt) return compactMediaAltSentence(galleryAlt, locale);
+  if (galleryAlt && !galleryAltRepeatsEarlier) return compactMediaAltSentence(galleryAlt, locale);
   if (isPackGalleryImage && (input.galleryImageAlts?.length ?? 0) > 0 && typeof input.index === "number") {
     const fallback = galleryFallbackScenes[input.index % galleryFallbackScenes.length];
     return compactMediaAltSentence(`${scene}, ${fallback}`, locale);
