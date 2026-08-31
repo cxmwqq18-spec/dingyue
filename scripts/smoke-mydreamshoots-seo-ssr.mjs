@@ -697,7 +697,7 @@ if (ugcAdIsPublished) {
     "how it works",
     "message testing",
     "page differentiation / internal linking",
-    "responsible / e-e-a-t",
+    "responsible use",
     "questions that belong on a ugc generator page"
   ]) {
     assert.ok(normalizedUgcAdVideoGeneration.includes(label), `UGC Ad Video SSR must expose the section label ${label}`);
@@ -714,7 +714,7 @@ if (ugcAdIsPublished) {
     "HOW IT WORKS",
     "MESSAGE TESTING",
     "PAGE DIFFERENTIATION / INTERNAL LINKING",
-    "RESPONSIBLE / E-E-A-T",
+    "RESPONSIBLE USE",
     "FAQ",
     "CREATE WITH VERIFIED PRODUCT INPUTS"
   ].map((needle) => ugcRenderedMarkup.indexOf(needle));
@@ -762,7 +762,7 @@ if (promoIsPublished) {
     "urgency without inventing scarcity",
     "how it works",
     "page differentiation / internal linking",
-    "responsible / e-e-a-t"
+    "responsible use"
   ]) {
     assert.ok(normalizedPromoVideoGeneration.includes(label), `Promo Video SSR must expose the section label ${label}`);
   }

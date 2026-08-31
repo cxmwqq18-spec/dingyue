@@ -107,6 +107,7 @@ const LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   "/policies/california-privacy": "/state-privacy",
   "/policies/ccpa": "/state-privacy",
   "/collections/engagement-photo": "/ai-image-generation/engagement-photo",
+  "/engagement-photo": "/ai-image-generation/engagement-photo",
   "/collections/headshot": "/ai-image-generation/headshot",
   "/ai-image-generation/profile-cards": "/ai-image-generation/avatar"
 };

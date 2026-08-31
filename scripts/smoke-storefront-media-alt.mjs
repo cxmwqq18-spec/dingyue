@@ -170,7 +170,7 @@ const editByPromptAlt = storefrontCardImageAlt({
   title: "Edit By Prompt"
 });
 assert(
-  editByPromptAlt === "Prompt-directed photo edit preview.",
+  editByPromptAlt === "AI photo edit preview.",
   `Edit By Prompt must use a subject-based alt without production language: ${editByPromptAlt}`
 );
 

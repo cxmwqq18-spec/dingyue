@@ -28,6 +28,13 @@ function record(value) {
   return Boolean(value && typeof value === "object" && !Array.isArray(value));
 }
 
+const publicCopyLeakPattern = /\b(?:E[-\s]?E[-\s]?A[-\s]?T|VideoObject|structured data|the page should|only state[^.]{0,100}(?:rights|commercial)|commercial rights supported|search intent|query ownership|keyword ownership|indexation|do not index|landing-page hero|before launch|review required)\b/i;
+
+function assertNoPublicCopyLeaks(value, slug) {
+  const serialized = JSON.stringify(value);
+  assert.doesNotMatch(serialized, publicCopyLeakPattern, `${slug} canonical content must not contain internal editorial instructions`);
+}
+
 function topicSection(pageJson, slug) {
   const sectionType = slug === "talking-photo" ? "talking_photo_landing" : "ai_video_topic_landing";
   return Object.values(pageJson.sections ?? {}).find((section) => section?.type === sectionType);
@@ -169,6 +176,7 @@ try {
     const page = pageBySlug.get(`/ai-video-generation/${slug}`);
     assert(page, `missing ThemePage draft for ${slug}`);
     const content = topicContent(page.draftJson, slug);
+    assertNoPublicCopyLeaks(content, slug);
     const theme = themeBySlug.get(slug);
     assert(theme, `missing VideoTheme for ${slug}`);
     assert.equal(theme.imageUrl, content.hero.image.src, `${slug} directory/detail/theme covers must use one image`);

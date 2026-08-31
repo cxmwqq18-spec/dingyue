@@ -410,7 +410,7 @@ export const talkingPhotoContent: TalkingPhotoContent = {
       {
         question: "Can I use the result commercially?",
         answer:
-          "The live page should state only the commercial permissions included in the actual myDreamshoots plan and current terms."
+          "Commercial use depends on your plan and the current myDreamshoots terms. Review those terms before publishing."
       },
       {
         question: "What happens to my uploaded photo?",

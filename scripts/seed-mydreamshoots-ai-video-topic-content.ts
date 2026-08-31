@@ -478,7 +478,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         },
         {
           question: "How long can my video be?",
-          answer: "Only state exact limits if they are confirmed by the actual product."
+          answer: "Check the live product details for exact limits before you choose a package."
         },
         {
           question: "What formats do you support?",
@@ -649,7 +649,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     trust: {
-      eyebrow: "RESPONSIBLE / E-E-A-T",
+      eyebrow: "RESPONSIBLE USE",
       title: "TikTok-First Should Still Mean Accurate, Authorized, and Clearly Presented",
       intro: "Before publishing:",
       items: [
@@ -670,9 +670,9 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { question: "Where should I put captions and important text?", answer: "Keep critical information away from interface-heavy edge areas and preview the finished post in its real destination context." },
         { question: "Do I need sound?", answer: "Use music, voiceover, or effects when they genuinely support the message and you have the required rights." },
         { question: "How do I make the opening stronger?", answer: "Show the result, problem, question, surprising fact, or strongest visual early. Avoid spending the first seconds on branding that gives the viewer no reason to continue." },
-        { question: "Will this make my video go viral?", answer: "No tool can guarantee virality, reach, views, or conversions. The page should promise a more TikTok-aware creative process, not a guaranteed algorithmic outcome." },
+        { question: "Will this make my video go viral?", answer: "No tool can guarantee virality, reach, views, or conversions. Use the workflow to build a more TikTok-aware creative process, not a guaranteed algorithmic outcome." },
         { question: "Do AI TikTok videos need to be labeled?", answer: "TikTok requires labeling for certain AI-generated content, including realistic AI-generated images, audio, or video. Review TikTok's current rules for the exact content you plan to publish." },
-        { question: "Can I use the result commercially?", answer: "State only the commercial rights included in the actual myDreamshoots plan and current terms." }
+        { question: "Can I use the result commercially?", answer: "Commercial use depends on your plan and the current myDreamshoots terms. Review those terms before publishing." }
       ]
     },
     finalCta: {
@@ -837,7 +837,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     trust: {
-      eyebrow: "RESPONSIBLE / E-E-A-T",
+      eyebrow: "RESPONSIBLE USE",
       title: "Polished Reels Still Need Accurate Claims, Proper Rights, and Clear Context",
       intro: "Before publishing:",
       items: [
@@ -860,7 +860,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { question: "What should I keep inside the safe zone?", answer: "Keep key messages, logos, faces, and CTA information away from interface-heavy edge areas so they remain readable." },
         { question: "Do I need audio?", answer: "Reels supports music, original audio, voiceover, text, and effects. Use sound when it supports the story and you have the necessary rights." },
         { question: "Will a better Reel guarantee reach or sales?", answer: "No. Creative structure can improve clarity and fit, but no tool can guarantee distribution, engagement, or business outcomes." },
-        { question: "Can I use the result commercially?", answer: "State only the commercial rights supported by the real myDreamshoots plan and current terms." }
+        { question: "Can I use the result commercially?", answer: "Commercial use depends on your plan and the current myDreamshoots terms. Review those terms before publishing." }
       ]
     },
     finalCta: {
@@ -1031,7 +1031,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     trust: {
-      eyebrow: "RESPONSIBLE / E-E-A-T",
+      eyebrow: "RESPONSIBLE USE",
       title: "Cross-Platform Efficiency Should Not Create Cross-Platform Misinformation",
       intro: "Before publishing:",
       items: [
@@ -1055,7 +1055,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { question: "Do all social platforms use 9:16?", answer: "Vertical 9:16 is important for major phone-first formats such as TikTok and Reels, while YouTube Shorts currently accepts square or vertical videos. Always check current destination requirements." },
         { question: "Can I repurpose blogs, podcasts, webinars, and FAQs?", answer: "Yes, when you own or have rights to the source. Pull out one useful idea at a time rather than forcing the entire source into one short video." },
         { question: "Can I automate a full week of posts?", answer: "Only promise batch or automation behavior that the live myDreamshoots product actually supports. The content strategy can still be planned as a weekly batch." },
-        { question: "Can I use the videos commercially?", answer: "Only state the commercial rights supported by the actual myDreamshoots plan and current terms." }
+        { question: "Can I use the videos commercially?", answer: "Commercial use depends on your plan and the current myDreamshoots terms. Review those terms before publishing." }
       ]
     },
     finalCta: {
@@ -1217,7 +1217,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     trust: {
-      eyebrow: "RESPONSIBLE / E-E-A-T",
+      eyebrow: "RESPONSIBLE USE",
       title: "Long-Form Credibility Depends on Accuracy, Rights, and Honest Framing",
       intro: "Before publishing:",
       items: [
@@ -1240,7 +1240,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { question: "How should I open a long-form YouTube video?", answer: "Use the opening minute to confirm the value promised by the title and show where the video is going." },
         { question: "Should every video push another video?", answer: "No. The current video should first fulfill its own promise. Suggest another video only when it genuinely helps the viewer continue learning or deciding." },
         { question: "Do realistic AI-generated YouTube videos need disclosure?", answer: "YouTube requires creators to disclose certain realistic altered or synthetic content. Review the current YouTube requirements for the exact content you publish." },
-        { question: "Can I use the result commercially?", answer: "State only the rights supported by the actual myDreamshoots plan and current terms." }
+        { question: "Can I use the result commercially?", answer: "Commercial use depends on your plan and the current myDreamshoots terms. Review those terms before publishing." }
       ]
     },
     finalCta: {
@@ -1838,11 +1838,11 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { question: "How long should a meme video be?", answer: "Only as long as needed to establish the setup and land the punchline. Publish exact duration limits only if the actual myDreamshoots generator supports them." },
         { question: "Can you use trending audio?", answer: "Only promise built-in trending-audio access if the product actually provides it. Otherwise use audio you have permission to use." },
         { question: "Do you add captions to every meme?", answer: "Captions are useful when they carry the setup or punchline, but visual reaction memes may need very little text." },
-        { question: "Can you make memes for my brand?", answer: "Yes as a content direction, but the page should not promise specific brand-template or publishing features that the current product does not support." },
+        { question: "Can you make memes for my brand?", answer: "Yes as a content direction, but the workflow does not promise unsupported brand templates or publishing controls." },
         { question: "What video formats will I receive?", answer: "List only the real export formats and resolutions supported by the current product." },
         { question: "How many revisions do I get?", answer: "Use the actual plan and generation workflow. Do not invent revision counts." },
         { question: "Can I make memes about real people?", answer: "Only with appropriate rights and context. Do not fabricate their speech, actions, endorsements, or humiliating behavior." },
-        { question: "Can I use the result commercially?", answer: "State only the commercial-use rights supported by the actual myDreamshoots terms and plan." }
+        { question: "Can I use the result commercially?", answer: "Commercial use depends on your plan and the current myDreamshoots terms. Review those terms before publishing." }
       ]
     },
     finalCta: {
@@ -2421,12 +2421,12 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           answer: "A campaign idea can be reused, but the finished creative may need different framing, text placement, crop, captions, and CTA presentation for different placements."
         },
         {
-          question: "Should I add VideoObject structured data?",
-          answer: "Only when the live landing page contains a real, accessible video that meets Google's structured-data requirements. Do not mark a static ad mockup as a video."
+          question: "How should I review a product ad before publishing?",
+          answer: "Check that the product, claims, offer, destination, and call to action are accurate, and do not present a static mockup as a finished product video."
         },
         {
           question: "Can I use the result commercially?",
-          answer: "Only state commercial rights supported by the actual myDreamshoots plan and current terms."
+          answer: "Commercial use depends on your plan and the current myDreamshoots terms. Review those terms before publishing."
         }
       ]
     },
@@ -2695,7 +2695,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     trust: {
-      eyebrow: "RESPONSIBLE / E-E-A-T",
+      eyebrow: "RESPONSIBLE USE",
       title: "Urgency Should Come From the Campaign, Not the Copywriter",
       intro: "Before publishing:",
       items: [
@@ -2718,7 +2718,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { question: "Can I use stock images as my generated promo examples?", answer: "Stock images can explain the promotional scenario, but they should not be presented as myDreamshoots generated output, a real customer result, or proof that a real event or offer happened." },
         { question: "Can one promo video run on every platform?", answer: "The campaign facts can stay consistent, but the finished creative may need different framing, crop, text placement, captions, pacing, and CTA presentation for each destination." },
         { question: "Can I use a fictional campaign or event in a promo concept?", answer: "You can use a clearly labeled concept for creative planning, but do not present fictional dates, discounts, availability, attendance, or results as real campaign facts." },
-        { question: "Can I use the result commercially?", answer: "Only state commercial rights supported by the actual myDreamshoots plan and current terms. Review the finished creative and all campaign claims before publishing." }
+        { question: "Can I use the result commercially?", answer: "Commercial use depends on your plan and the current myDreamshoots terms. Review those terms, the finished creative, and all campaign claims before publishing." }
       ]
     },
     finalCta: {
@@ -2763,7 +2763,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       eyebrow: "WHAT THIS CREATES",
       title: "Short Campaign-Focused Motion for One Clear Advertising Job",
       intro:
-        "A useful video ad brief makes one campaign decision easy to understand. The page should help teams choose the objective, audience stage, hook, proof, placement, and CTA without turning every ad into the same generic creative.",
+        "A useful video ad brief makes one campaign decision easy to understand. It helps teams choose the objective, audience stage, hook, proof, placement, and CTA without turning every ad into the same generic creative.",
       cards: [
         { title: "Paid social concept", body: "Plan a focused paid-social video direction around one offer, product moment, audience stage, and next action." },
         { title: "Product campaign angle", body: "Turn approved product photos or a written brief into a clearer ad concept without adding unsupported claims." },
@@ -4081,7 +4081,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
     },
     evidence: {
       eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
-      title: "Verify the live workflow before indexation",
+      title: "Verify the live workflow before publishing",
       intro: "The page must be backed by real myDreamshoots evidence before it is promoted as an indexable product page.",
       cards: [
         { title: "Text to Video input", body: "Add a real, internally reviewed capture of the supported text input path and its current controls." },
@@ -4112,7 +4112,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     trust: {
-      eyebrow: "RESPONSIBLE / E-E-A-T",
+      eyebrow: "RESPONSIBLE USE",
       title: "Keep explanation useful, distinct, and verifiable",
       intro: "Before publishing an explainer sequence:",
       items: [
@@ -4245,7 +4245,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
     },
     evidence: {
       eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
-      title: "Verify the live workflow before indexation",
+      title: "Verify the live workflow before publishing",
       intro: "The page must be backed by real myDreamshoots evidence before it is promoted as an indexable product page.",
       cards: [
         { title: "Text to Video input", body: "Add a real, internally reviewed capture of the supported text input path and current controls for tutorial direction." },
@@ -4276,7 +4276,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     trust: {
-      eyebrow: "RESPONSIBLE / E-E-A-T",
+      eyebrow: "RESPONSIBLE USE",
       title: "Keep tutorial content useful, distinct, and verifiable",
       intro: "Before publishing a how-to sequence:",
       items: [
@@ -4601,7 +4601,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     trust: {
-      eyebrow: "RESPONSIBLE / E-E-A-T",
+      eyebrow: "RESPONSIBLE USE",
       title: "Creator Style Should Make the Message Easier to Understand—Not Harder to Verify",
       intro: "Before publishing:",
       items: [

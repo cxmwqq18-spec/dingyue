@@ -39,7 +39,7 @@ assert.match(syncSource, /edit-by-prompt.*slugOwnedMediaThemes|slugOwnedMediaThe
 
 const altSource = fs.readFileSync(path.join(repoRoot, "src/lib/storefront-media-alt.ts"), "utf8");
 assert.doesNotMatch(altSource, /edit-by-prompt[\\s\\S]{0,180}Social profile portrait/);
-assert.match(altSource, /Prompt-directed photo edit preview/);
+assert.match(altSource, /AI photo edit preview/);
 
 const generatorSource = fs.readFileSync(path.join(repoRoot, "scripts/generate-mydreamshoots-theme-galleries.mjs"), "utf8");
 assert.match(generatorSource, /"edit-by-prompt":\s*"prompt-directed photo editing previews/);

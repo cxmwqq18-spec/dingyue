@@ -23,7 +23,15 @@ const INTERNAL_MARKERS = [
   /\bdo not index\b/i,
   /\bbefore launch\b/i,
   /\blanding-page hero\b/i,
-  /\breview required\b/i
+  /\breview required\b/i,
+  /\bE[-\s]?E[-\s]?A[-\s]?T\b/i,
+  /\bVideoObject\b/i,
+  /\bstructured data\b/i,
+  /\bthe page should\b/i,
+  /\bonly state\b[^.]{0,100}\b(?:rights|commercial)\b/i,
+  /\bcommercial rights supported\b/i,
+  /\bSEO (?:instruction|instructions|directive|brief)\b/i,
+  /\b(?:editor|editorial) (?:instruction|brief|note)\b/i
 ];
 const FORBIDDEN_HEADER_MARKERS = [/^x-storefront-/i, /^x-sitemap-/i, /^x-powered-by$/i];
 const FORBIDDEN_DOM_MARKERS = [
@@ -71,6 +79,13 @@ function extractLink(html, relation) {
 
 function stripTags(value) {
   return value.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function visibleMarkup(html) {
+  return html
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<template\b[^>]*>[\s\S]*?<\/template>/gi, " ");
 }
 
 function pageTypeForUrl(value) {
@@ -180,10 +195,11 @@ export function evaluatePage({ requestedUrl, status, finalUrl, headers = {}, htm
   const h1 = stripTags(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "");
   const jsonLd = parseJsonLd(html);
   const breadcrumb = breadcrumbLastUrl(jsonLd.nodes);
+  const visibleHtml = visibleMarkup(html);
   const internalMarkers = [
     ...INTERNAL_MARKERS,
     ...FORBIDDEN_DOM_MARKERS
-  ].filter((marker) => marker.test(html)).map((marker) => marker.source);
+  ].filter((marker) => marker.test(visibleHtml)).map((marker) => marker.source);
   const altMarkers = [...html.matchAll(/\balt=["']([^"']*)["']/gi)]
     .filter((match) => !/mydreamshoots\b.*\blogo\b/i.test(match[1]) && FORBIDDEN_ALT_MARKERS.test(match[1]))
     .map((match) => match[1]);

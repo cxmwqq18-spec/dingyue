@@ -91,7 +91,7 @@ export const talkingHeadVideoContent: AiVideoTopicLandingContent = {
   comparison: {
     eyebrow: "RELATED VIDEO TOPICS",
     title: "Choose the page that matches the viewer's job",
-    intro: "Keep neighboring search intents distinct so the viewer lands on the format that actually answers the question.",
+    intro: "Keep neighboring formats distinct so the viewer lands on the format that actually answers the question.",
     items: [
       { title: "AI Avatar Video", body: "Owns synthetic presenter identity, avatar selection, voice, lip-sync, and multilingual virtual-presenter workflows.", href: "/ai-video-generation/ai-avatar-video", linkLabel: "Explore AI Avatar Video" },
       { title: "Explainer Video", body: "Owns diagrams, interfaces, charts, system relationships, and information-led explanation.", href: "/ai-video-generation/explainer-video", linkLabel: "Explore Explainer Video" },
@@ -102,7 +102,7 @@ export const talkingHeadVideoContent: AiVideoTopicLandingContent = {
   },
   evidence: {
     eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
-    title: "Show the real workflow before indexation",
+    title: "Show the real workflow before publishing",
     intro: "Editorial presenter images explain the format. They do not prove a current myDreamshoots capability or control.",
     cards: [
       { title: "Actual input path", body: "Document the current Text to Video and Image to Video paths with a verified product capture and source description.", exampleLabel: "Live product evidence required", exampleBody: "No first-party input capture is included in this editorial package." },
@@ -137,7 +137,7 @@ export const talkingHeadVideoContent: AiVideoTopicLandingContent = {
     ]
   },
   trust: {
-    eyebrow: "RESPONSIBLE / E-E-A-T",
+    eyebrow: "RESPONSIBLE USE",
     title: "Keep presenter-led content accurate and clearly identified",
     intro: "Before publishing a talking head video:",
     items: [

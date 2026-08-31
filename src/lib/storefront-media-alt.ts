@@ -133,7 +133,7 @@ function sourceSpecificAlt(
   const themeSubject = genericTheme
     ? ""
     : locale === "en" && /(?:^|-)edit-by-prompt(?:-|$)/.test(normalizeSlug(String(theme ?? "")))
-    ? "Prompt-directed photo edit preview"
+    ? "AI photo edit preview"
     : cleanAltText(theme);
   const subjectBase = themeSubject || (sourceTopic === "Storefront portrait" ? sourceTopic : sourceTopic);
   const subject = /\b(?:portrait|photo|image|avatar|logo|scene|video|poster)\b/i.test(subjectBase)
@@ -342,7 +342,7 @@ function imageSlugHasSpecificTheme(key: string): boolean {
 
 function englishThemeSubject(key: string): string | undefined {
   if (/(edit-by-prompt)/.test(key)) {
-    return "Prompt-directed photo edit preview";
+    return "AI photo edit preview";
   }
   if (/\b(?:credit|subscription|plan|pricing|checkout)\b/.test(key)) {
     return "Credit plan panel for private photo galleries";
