@@ -317,7 +317,8 @@ export const mydreamshootsCurrentVideoMenuSlugs = [
   "pet-video",
   "explainer-video",
   "how-to-video",
-  "talking-head-video"
+  "talking-head-video",
+  "wedding-invitation"
 ] as const;
 
 const mydreamshootsCurrentVideoMenuSlugSet = new Set<string>(mydreamshootsCurrentVideoMenuSlugs);

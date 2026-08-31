@@ -360,7 +360,7 @@ export default async function SiteCatchAllPage({
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
-  if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/holidays-events/wedding-invitation") notFound();
+  if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/holidays-events/wedding-invitation") permanentRedirect(routePath("/ai-video-generation/wedding-invitation"));
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
   if (isPrimaryMydreamshootsSlug(publicSlug) && legacyVideoTarget) permanentRedirect(routePath(legacyVideoTarget));
   if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/ai-image-generation/motion-generator") {

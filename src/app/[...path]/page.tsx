@@ -541,7 +541,7 @@ export default async function HostStorefrontCatchAllPage({
   const slug = `/${path.join("/")}`;
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
   const isMydreamshootsHost = isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]));
-  if (isMydreamshootsHost && slug === "/holidays-events/wedding-invitation") notFound();
+  if (isMydreamshootsHost && slug === "/holidays-events/wedding-invitation") permanentRedirect("/ai-video-generation/wedding-invitation");
   if (legacyVideoTarget && isMydreamshootsHost) permanentRedirect(legacyVideoTarget);
   if (slug === "/ai-image-generation/profile-cards" && isMydreamshootsHost) {
     permanentRedirect("/ai-image-generation/avatar");
