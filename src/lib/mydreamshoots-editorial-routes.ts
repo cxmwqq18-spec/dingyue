@@ -3,7 +3,6 @@ export const MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES = [
   "/ai-save-the-date/engagement",
   "/ai-save-the-date/proposal",
   "/ai-save-the-date/save-the-date",
-  "/holidays-events/wedding-invitation",
   "/ai-save-the-date/wedding-ceremony",
   "/ai-save-the-date/wedding-anniversary",
   "/ai-save-the-date/christmas",

@@ -541,6 +541,7 @@ export default async function HostStorefrontCatchAllPage({
   const slug = `/${path.join("/")}`;
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
   const isMydreamshootsHost = isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]));
+  if (isMydreamshootsHost && slug === "/holidays-events/wedding-invitation") notFound();
   if (legacyVideoTarget && isMydreamshootsHost) permanentRedirect(legacyVideoTarget);
   if (slug === "/ai-image-generation/profile-cards" && isMydreamshootsHost) {
     permanentRedirect("/ai-image-generation/avatar");
@@ -622,9 +623,6 @@ export default async function HostStorefrontCatchAllPage({
   if (site.id === "site_dreamshoot" && slug === "/ai-image-generation/motion-generator") {
     permanentRedirect("/ai-video-generation/motion-generator");
   }
-  if (site.id === "site_dreamshoot" && (slug === "/ai-save-the-date/wedding-invitation" || slug.startsWith("/ai-save-the-date/wedding-invitation/"))) {
-    permanentRedirect(canonicalSaveTheDatePath(slug));
-  }
   const publishedDisposition = resolvePublishedRouteDisposition(snapshot, slug);
   if (publishedDisposition.kind === "redirect" && publishedDisposition.targetPath) {
     permanentRedirect(publishedDisposition.targetPath);
@@ -686,8 +684,11 @@ export default async function HostStorefrontCatchAllPage({
     if (!videoGenerationRoute) notFound();
     if (videoGenerationRoute.itemSlug) {
       const disposition = resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath);
-      if (disposition.kind !== "render") notFound();
-      const page = snapshot.pages.find((candidate) => candidate.id === disposition.pageId);
+      const page = disposition.kind === "render"
+        ? snapshot.pages.find((candidate) => candidate.id === disposition.pageId)
+        : videoGenerationRoute.itemSlug === "wedding-invitation"
+          ? snapshot.pages.find((candidate) => candidate.slug === videoGenerationRoute.canonicalPath && candidate.pageType === "ai_tool")
+          : undefined;
       if (!page) notFound();
       return renderToolPage({
         site,

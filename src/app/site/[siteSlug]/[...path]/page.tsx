@@ -360,6 +360,7 @@ export default async function SiteCatchAllPage({
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
+  if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/holidays-events/wedding-invitation") notFound();
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
   if (isPrimaryMydreamshootsSlug(publicSlug) && legacyVideoTarget) permanentRedirect(routePath(legacyVideoTarget));
   if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/ai-image-generation/motion-generator") {
@@ -367,9 +368,6 @@ export default async function SiteCatchAllPage({
   }
   if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/ai-image-generation/profile-cards") {
     permanentRedirect(routePath("/ai-image-generation/avatar"));
-  }
-  if (isPrimaryMydreamshootsSlug(publicSlug) && (slug === "/ai-save-the-date/wedding-invitation" || slug.startsWith("/ai-save-the-date/wedding-invitation/"))) {
-    permanentRedirect(routePath(canonicalSaveTheDatePath(slug)));
   }
   if (isPrimaryMydreamshootsSlug(publicSlug) && (slug.startsWith("/holidays-events/") || slug === "/ai-video-generation/wedding-ceremony")) {
     const canonicalPath = canonicalSaveTheDatePath(slug);
@@ -454,8 +452,11 @@ export default async function SiteCatchAllPage({
     if (!videoGenerationRoute) notFound();
     if (videoGenerationRoute.itemSlug) {
       const disposition = resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath);
-      if (disposition.kind !== "render") notFound();
-      const detailPage = snapshot.pages.find((candidate) => candidate.id === disposition.pageId);
+      const detailPage = disposition.kind === "render"
+        ? snapshot.pages.find((candidate) => candidate.id === disposition.pageId)
+        : videoGenerationRoute.itemSlug === "wedding-invitation"
+          ? snapshot.pages.find((candidate) => candidate.slug === videoGenerationRoute.canonicalPath && candidate.pageType === "ai_tool")
+          : undefined;
       if (!detailPage) notFound();
       return renderToolPage({
         site: publicSite,

@@ -80,7 +80,8 @@ export const MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS = [
   "pet-video",
   "explainer-video",
   "how-to-video",
-  "talking-head-video"
+  "talking-head-video",
+  "wedding-invitation"
 ] as const;
 
 export const MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS = [
@@ -105,7 +106,8 @@ export const MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS = [
   "pet-video",
   "explainer-video",
   "how-to-video",
-  "talking-head-video"
+  "talking-head-video",
+  "wedding-invitation"
 ] as const;
 
 export type MyDreamShootsVideoGenerationSlug = typeof MYDREAMSHOOTS_AI_VIDEO_GENERATION_SLUGS[number];

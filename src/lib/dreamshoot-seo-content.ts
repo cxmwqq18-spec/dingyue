@@ -1452,6 +1452,29 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
     ],
     ctaLabel: "Try Outfit Looks",
     ctaHref: "/app/create?tool_id=virtual-try-on"
+  },
+  "wedding-invitation": {
+    label: "Wedding Invitation",
+    title: "AI Wedding Invitation Video Maker | myDreamshoots",
+    description: "Create a private wedding invitation reveal video from your approved invitation suite, names, date, venue, and visual references with myDreamshoots.",
+    keywords: "AI wedding invitation video maker, wedding invitation reveal video, save the date video, wedding stationery animation, myDreamshoots",
+    h2: "ai wedding invitation videos with readable event details",
+    h3: ["Invitation suite input guide", "Readable names, date, and venue", "Private review before sharing"],
+    intro: "Use Wedding Invitation to turn your approved invitation suite into a short, private reveal that keeps the couple names, date, venue, and paper details clear.",
+    details: [
+      "Start with invitation artwork or reference photos you own or have permission to use, plus the exact names, date, venue, and wording that must stay accurate.",
+      "The video can focus on envelopes, paper texture, embossing, ribbons, flowers, and the final invitation layout while preserving the supplied event details.",
+      "Review all text, timing, names, dates, and venue information in the private result before sending or publishing the invitation video."
+    ],
+    useCases: ["Wedding invitation reveals", "Save-the-date announcement videos", "Stationery suite previews", "Private guest communication drafts"],
+    workflow: ["Upload the approved invitation suite or references.", "Provide the exact couple names, date, venue, and wording.", "Choose the pacing and visual direction for the reveal.", "Review the private video before sharing it with guests."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore wedding ceremony video", href: "/ai-save-the-date/wedding-ceremony" },
+      { label: "Review pricing and credits", href: "/pricing" }
+    ],
+    ctaLabel: "Create Wedding Invitation Video",
+    ctaHref: "/app/create?videoMode=wedding-invitation#step-video"
   }
 };
 
