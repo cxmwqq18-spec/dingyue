@@ -376,7 +376,7 @@ export default async function SiteCatchAllPage({
     if (canonicalPath !== slug) permanentRedirect(routePath(canonicalPath));
   }
   const legacyAliasTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForPublicSlug(publicSlug));
-  if (legacyAliasTarget && (slug === "/collections/engagement-photo" || slug === "/collections/headshot")) {
+  if (legacyAliasTarget && (slug === "/engagement-photo" || slug === "/collections/engagement-photo" || slug === "/collections/headshot")) {
     permanentRedirect(routePath(legacyAliasTarget));
   }
   if (slug === "/help" && usesAiGenerationPublicSlug(publicSlug)) redirect(routePath("/faq"));
