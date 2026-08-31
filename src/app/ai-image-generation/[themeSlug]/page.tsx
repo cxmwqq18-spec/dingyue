@@ -13,11 +13,11 @@ import type { PlatformState, Site } from "@/lib/types";
 type Params = Promise<{ themeSlug: string }>;
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
-async function loadImageThemeState(): Promise<{ state: PlatformState; site: Site } | undefined> {
+async function loadImageThemeState(themeSlug: string): Promise<{ state: PlatformState; site: Site } | undefined> {
   const headerStore = await headers();
   const hosts = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const state = await Promise.all(hosts.map((host) =>
-    host ? readStorefrontPublicRuntimeStateByHostFromDatabase(host, "/ai-image-generation") : undefined
+    host ? readStorefrontPublicRuntimeStateByHostFromDatabase(host, "/ai-image-generation", themeSlug) : undefined
   )).then((states) => states.find(Boolean));
   if (!state) return undefined;
   const site = getSiteByHostCandidatesFromState(state, hosts) ?? state.sites[0];
@@ -26,7 +26,7 @@ async function loadImageThemeState(): Promise<{ state: PlatformState; site: Site
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { themeSlug } = await params;
-  const loaded = await loadImageThemeState();
+  const loaded = await loadImageThemeState(themeSlug);
   if (!loaded) return {};
   const { state, site } = loaded;
   const route = parsePublicCollectionRouteForSite(site, ["ai-image-generation", themeSlug]);
@@ -54,7 +54,7 @@ export default async function ImageThemePage({
   searchParams?: SearchParams;
 }) {
   const { themeSlug } = await params;
-  const loaded = await loadImageThemeState();
+  const loaded = await loadImageThemeState(themeSlug);
   if (!loaded) notFound();
   const { state, site } = loaded;
   const route = parsePublicCollectionRouteForSite(site, ["ai-image-generation", themeSlug]);

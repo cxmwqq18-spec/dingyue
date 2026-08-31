@@ -599,11 +599,10 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
   const upstreamUrl = sameServerUrl(request);
   const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
   if (!hostSlug || upstreamUrl.pathname.startsWith("/site/")) return upstreamUrl;
-  // Preserve the leaf route so its metadata remains scoped to the requested
-  // image theme; the leaf renderer still supplies the focused directory view.
+  // Preserve the host leaf route so its metadata and runtime-state query stay
+  // scoped to the requested image theme.
   const imageThemeMatch = upstreamUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/);
   if (hostSlug === "mydreamshoots" && imageThemeMatch?.[1]) {
-    upstreamUrl.pathname = `/site/${hostSlug}/ai-image-generation/${imageThemeMatch[1]}`;
     return upstreamUrl;
   }
   upstreamUrl.pathname = `/site/${hostSlug}${upstreamUrl.pathname === "/" ? "" : upstreamUrl.pathname}`;
