@@ -2,7 +2,7 @@ import "server-only";
 
 import { readStorefrontPublicRuntimeStateByHostFromDatabase, readStorefrontPublicRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
 import type { CreativePack, CreativePackCategory, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedStandardRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage, VideoTheme } from "@/lib/types";
-import { publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
+import { isMydreamshootsPublicVideoGenerationSlug, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
 import { buildPublicationSnapshot } from "@/lib/stores/theme-store";
 import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
@@ -426,6 +426,9 @@ export function resolveEffectivePublishedPage(snapshot: PublishedSiteSnapshot, p
 export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot, path: string): RouteDisposition {
   const requestedPath = normalizePath(path);
   if (!snapshot.pages.length) return { kind: "not_found", status: 404, path: requestedPath };
+  if (isPrimaryMydreamshootsSite(snapshot.site) && requestedPath === "/holidays-events/wedding-invitation") {
+    return { kind: "not_found", status: 404, path: requestedPath };
+  }
   // Resolve legacy Save the Date aliases before direct page lookup. Otherwise
   // an old ThemePage row can render at 200 and split the page's SEO identity.
   if (isPrimaryMydreamshootsSite(snapshot.site) && (requestedPath.startsWith("/holidays-events/") || requestedPath === "/ai-video-generation/wedding-ceremony")) {
@@ -477,6 +480,13 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
     return page && entity && media
       ? { kind: "render", status: 200, path: requestedPath, pageId: page.id }
       : { kind: "not_found", status: 404, path: requestedPath };
+  }
+  if (isPrimaryMydreamshootsSite(snapshot.site) && requestedPath.startsWith("/ai-video-generation/")) {
+    const toolSlug = requestedPath.slice("/ai-video-generation/".length);
+    const page = isMydreamshootsPublicVideoGenerationSlug(toolSlug)
+      ? snapshot.pages.find((candidate) => candidate.slug === requestedPath && candidate.pageType === "ai_tool" && candidate.publishedJson.seo?.canonicalPath === requestedPath)
+      : undefined;
+    if (page) return { kind: "render", status: 200, path: requestedPath, pageId: page.id };
   }
   const legacyTarget = legacyPublicPathTarget(requestedPath, publicCollectionRootPathForSite(snapshot.site));
   if (legacyTarget) return resolvePublishedRedirectDisposition(snapshot, requestedPath, legacyTarget);
