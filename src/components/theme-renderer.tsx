@@ -4271,6 +4271,24 @@ function galleryImageAltForPack(site: Site, pack: CreativePack, index: number, i
   });
 }
 
+function galleryFallbackAltForIndex(title: string, index: number): string {
+  const scenes = [
+    "portrait showing clear facial detail against a softly blurred background",
+    "smiling portrait in a relaxed setting",
+    "three-quarter portrait with the surrounding scene visible",
+    "candid portrait with a natural expression",
+    "seated portrait in a comfortable setting",
+    "profile portrait with a softly lit background",
+    "confident portrait with vivid surroundings",
+    "portrait focused on the subject's face and expression",
+    "lifestyle portrait in an everyday setting",
+    "portrait during a social moment",
+    "distinctive pose that highlights the theme",
+    "natural portrait with an inviting atmosphere"
+  ];
+  return `${title}, ${scenes[index % scenes.length]}`;
+}
+
 function galleryImagesForCollection(site: Site, packs: CreativePack[], limit = 12, excludeImages: string[] = []): string[] {
   return uniqueStringList(packs.flatMap((pack) => galleryImagesForPack(site, pack, limit, excludeImages))).slice(0, limit);
 }
@@ -11670,6 +11688,7 @@ function SectionView({
 	                          : cardImageAltForSite(site, {
 	                              category: selectedCategory?.label,
 	                              description: dynamicSubtitle,
+	                              explicitAlt: galleryFallbackAltForIndex(localizedDynamicTitle, index),
 	                              imageUrl: image,
 	                              index,
 	                              meta: selectedCategory?.parent?.label,
@@ -11783,6 +11802,7 @@ function SectionView({
 	                          : cardImageAltForSite(site, {
 	                              category: selectedCategory?.label,
 	                              description: dynamicSubtitle,
+	                              explicitAlt: galleryFallbackAltForIndex(localizedDynamicTitle, index),
 	                              imageUrl: image,
 	                              index,
 	                              meta: selectedCategory?.parent?.label,
