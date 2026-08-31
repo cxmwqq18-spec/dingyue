@@ -251,6 +251,21 @@ function meaningfulThemeAlignedAltForStorefront(
   return altConflictsWithImageTheme(cleaned, imageUrl) ? "" : cleaned;
 }
 
+const galleryFallbackScenes = [
+  "portrait showing clear facial detail against a softly blurred background",
+  "smiling portrait in a relaxed setting",
+  "three-quarter portrait with the surrounding scene visible",
+  "candid portrait with a natural expression",
+  "seated portrait in a comfortable setting",
+  "profile portrait with a softly lit background",
+  "confident portrait with vivid surroundings",
+  "portrait focused on the subject's face and expression",
+  "lifestyle portrait in an everyday setting",
+  "portrait during a social moment",
+  "distinctive pose that highlights the theme",
+  "natural portrait with an inviting atmosphere"
+];
+
 export function storefrontMeaningfulAlt(value: string | undefined): string {
   return meaningfulAlt(value);
 }
@@ -521,10 +536,12 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
   const locale = input.locale ?? "en";
   const brand = cleanAltText(input.brand) || (locale === "es" ? "AIdreamshoots" : "MyDreamShoots");
   const explicit = meaningfulThemeAlignedAltForStorefront(input.explicitAlt, locale, brand, input.imageUrl);
-  const galleryAlt = (input.role === "gallery" || /\/pack-galleries\//i.test(String(input.imageUrl ?? "")))
+  const isPackGalleryImage = /\/pack-galleries\//i.test(String(input.imageUrl ?? ""));
+  const rawGalleryAlt = (input.role === "gallery" || isPackGalleryImage)
     && typeof input.index === "number"
     ? meaningfulThemeAlignedAltForStorefront(input.galleryImageAlts?.[input.index], locale, brand, input.imageUrl)
     : "";
+  const galleryAlt = /\bcover\b/i.test(rawGalleryAlt) ? "" : rawGalleryAlt;
 
   const specificKey = themeKey(input);
   const imageKey = themeImageSlugParts(input.imageUrl).join(" ");
@@ -544,6 +561,10 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
   if (templatedSceneAltPattern.test(explicit) || templatedSceneAltPattern.test(galleryAlt)) return sourceAlt;
   if (explicit) return compactMediaAltSentence(explicit, locale);
   if (galleryAlt) return compactMediaAltSentence(galleryAlt, locale);
+  if (isPackGalleryImage && (input.galleryImageAlts?.length ?? 0) > 0 && typeof input.index === "number") {
+    const fallback = galleryFallbackScenes[input.index % galleryFallbackScenes.length];
+    return compactMediaAltSentence(`${scene}, ${fallback}`, locale);
+  }
   if (stableSourceImagePattern.test(imageIdentity(input.imageUrl))) return sourceAlt;
   const fallbackScene = locale === "es"
     ? "retrato"
