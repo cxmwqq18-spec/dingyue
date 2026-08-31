@@ -39,7 +39,7 @@ async function loadPrismaBundle(siteId: string) {
     where: { id: siteId },
     include: {
       domains: true,
-      pages: { orderBy: { slug: "asc" } },
+      livePages: { orderBy: { slug: "asc" } },
       settings: true,
       storefrontProfile: true,
       connect: true,
@@ -52,13 +52,19 @@ async function loadPrismaBundle(siteId: string) {
     }
   }), { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead });
   if (!siteRecord) throw new Error("site_not_found");
-  const mappedSite = toSite(siteRecord);
-  // Public SSR reads the current relational draft directly. Keep the legacy
-  // published-shaped fields populated only as an in-memory compatibility
-  // projection; no publication or snapshot record participates in the read.
+  const mappedSite = toSite({
+    ...siteRecord,
+    pages: siteRecord.livePages.map((page) => ({
+      ...page,
+      draftJson: page.contentJson,
+      publishedJson: page.contentJson
+    }))
+  });
+  // The public StorefrontContext interface still carries the historical page
+  // shape, but both values come exclusively from LivePage.contentJson.
   const site = {
     ...mappedSite,
-    pages: mappedSite.pages.map((page) => ({ ...page, publishedJson: page.draftJson })),
+    pages: mappedSite.pages.map((page) => ({ ...page, draftJson: page.publishedJson })),
     themeSettings: {
       ...mappedSite.themeSettings,
       publishedJson: mappedSite.themeSettings.draftJson

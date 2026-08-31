@@ -36,14 +36,16 @@ const targetedHeroFieldManifest = {
   "tiktok-video": {
     image: [
       "/assets/dreamshoot/tiktok-video/ai-tiktok-video-creator-phone-portrait.png",
-      "/assets/dreamshoot/generated/video-topic-clean/tiktok-video/ai-tiktok-video-creator-phone-portrait.webp"
+      "/assets/dreamshoot/generated/video-topic-clean/tiktok-video/ai-tiktok-video-creator-phone-portrait.webp",
+      "/assets/dreamshoot/generated/video-topic-clean/tiktok-video/turn-your-photos-and-ideas-into-tiktok-first-videos.webp"
     ],
     imageNote: "9:16-first framing · hook -> body -> close · keep key information clear of interface overlays"
   },
   "instagram-reels": {
     image: [
       "/assets/dreamshoot/instagram-reels/ai-instagram-reels-creator-editorial-portrait.png",
-      "/assets/dreamshoot/generated/video-topic-clean/instagram-reels/ai-instagram-reels-creator-editorial-portrait.webp"
+      "/assets/dreamshoot/generated/video-topic-clean/instagram-reels/ai-instagram-reels-creator-editorial-portrait.webp",
+      "/assets/dreamshoot/generated/video-topic-clean/instagram-reels/turn-photos-and-ideas-into-reels-that-fit-your-feed.webp"
     ],
     imageNote: "9:16-first · cover-aware · safe-zone thinking · captions when dialogue matters"
   },
@@ -640,6 +642,22 @@ function assertUniqueVideoTopicCardImages(syncedPages) {
       owners.set(src, slug);
     }
   }
+}
+
+function syncStoredVideoTopicUseCaseImages(pageJson, slug) {
+  const next = clone(pageJson);
+  const sectionId = slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
+  const content = next.sections?.[sectionId]?.settings?.content;
+  const canonicalItems = videoTopicContentSeedForSlug(slug).useCases?.items;
+  if (!content || typeof content !== "object" || Array.isArray(content) || !Array.isArray(content.useCases?.items) || !Array.isArray(canonicalItems)) return next;
+  // Keep editorial copy from the database, but make each card's media follow
+  // the topic seed. This repairs stale positional media mappings without
+  // replacing user-authored titles, problems, or body copy.
+  content.useCases.items = content.useCases.items.map((item, index) => {
+    const canonicalImage = canonicalItems[index]?.image;
+    return canonicalImage ? { ...item, image: clone(canonicalImage) } : item;
+  });
+  return next;
 }
 
 function syncStoredVideoTopicHeroImage(pageJson, slug) {
