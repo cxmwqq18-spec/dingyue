@@ -3,17 +3,17 @@ import assert from "node:assert/strict";
 import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
 
 const siteId = "site_dreamshoot";
-const pathName = "/ai-video-generation/wedding-invitation";
+const pathName = "/ai-save-the-date/wedding-invitation";
 const retiredPath = "/holidays-events/wedding-invitation";
 const state = await readPlatformStateFromSql();
 const site = state.sites.find((candidate) => candidate.id === siteId);
 assert(site, `missing_site:${siteId}`);
 
-const page = site.pages.find((candidate) => candidate.slug === pathName);
-assert(page, `${pathName}: missing AI Video detail page`);
-assert.equal(page.pageType, "ai_tool", `${pathName}: must remain an AI Video tool detail`);
-assert.equal(page.draftJson?.seo?.canonicalPath, pathName, `${pathName}: canonical path`);
+const page = site.pages.find((candidate) => candidate.slug === pathName || candidate.slug === "/ai-video-generation/wedding-invitation");
+assert(page, `${pathName}: missing wedding invitation detail page`);
+assert.equal(page.pageType, "ai_tool", `${pathName}: detail page type`);
+assert.equal(page.slug, "/ai-video-generation/wedding-invitation", `${pathName}: internal source slug`);
+assert.equal(site.pages.some((candidate) => candidate.slug === retiredPath), false, `${retiredPath}: retired page must be absent`);
 assert.equal(page.draftJson?.seo?.robots?.index, true, `${pathName}: indexable`);
-assert.equal(site.pages.some((candidate) => candidate.slug === retiredPath), false, `${retiredPath}: retired page must be removed`);
 
-console.log(JSON.stringify({ ok: true, path: pathName, retiredPath, pageType: page.pageType }, null, 2));
+console.log(JSON.stringify({ ok: true, path: pathName, sourcePath: page.slug, retiredPath, pageType: page.pageType }, null, 2));

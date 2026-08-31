@@ -372,12 +372,12 @@ export function resolveEffectiveIndexability(snapshot: PublishedSiteSnapshot, pa
   // The wedding invitation route predates the dedicated topic section. Keep
   // its verified AI-tool SEO contract indexable while the legacy content is
   // rendered through the compatibility page projection.
-  const legacyWeddingInvitation = isPrimaryMydreamshootsSite(snapshot.site) && canonicalPath === "/ai-video-generation/wedding-invitation" && page.pageType === "ai_tool";
+  const legacyWeddingInvitation = isPrimaryMydreamshootsSite(snapshot.site) && [MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH].includes(canonicalPath) && page.pageType === "ai_tool";
   const index = !blocked && (legacyWeddingInvitation || context.seo.index) && (legacyWeddingInvitation || mediaReady);
   return {
     index,
     follow: blocked ? false : context.seo.follow,
-    sitemapEligible: index && (legacyWeddingInvitation || context.seo.sitemapEligible) && snapshot.publishedPaths.includes(normalizePath(context.seo.canonicalPath)) && (publishedRoute ? publishedRoute.sitemapEligible : true)
+    sitemapEligible: index && (legacyWeddingInvitation || context.seo.sitemapEligible) && (legacyWeddingInvitation || snapshot.publishedPaths.includes(normalizePath(context.seo.canonicalPath))) && (publishedRoute ? publishedRoute.sitemapEligible : true)
   };
 }
 

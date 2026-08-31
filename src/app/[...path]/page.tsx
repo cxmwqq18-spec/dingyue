@@ -31,7 +31,7 @@ import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
-import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
+import { canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -239,6 +239,21 @@ function isVideoGenerationRouteRequest(path: string[]): boolean {
   return path[0] === "ai-video-generation" && !isMydreamshootsEditorialThemeRoute(`/${path.join("/")}`);
 }
 
+function weddingInvitationMetadata(): Metadata {
+  const canonical = "https://www.mydreamshoots.com/ai-save-the-date/wedding-invitation";
+  const title = "Wedding Invitation | myDreamshoots";
+  const description = "Create a private wedding invitation reveal with readable names, dates, venue details, and paper texture.";
+  const image = "https://www.mydreamshoots.com/assets/dreamshoot/wedding-invitation/hero-ai-wedding-invitation-couple-reviewing.jpg";
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    robots: { index: true, follow: true, "max-image-preview": "large" },
+    openGraph: { title, description, url: canonical, siteName: "myDreamshoots", images: [{ url: image }] },
+    twitter: { card: "summary_large_image", title, description, images: [image] }
+  };
+}
+
 function collectionRouteLookupSlug(path: string[]): string {
   if (path[0] === "ai-image-generation") return path[1] || "";
   if (path[0] === "collections") return path[1] || "";
@@ -421,6 +436,10 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const { path } = resolvedParams;
   const firstSegment = path[0] ?? "";
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+  const requestedPath = `/${path.join("/")}`;
+  const isMydreamshootsHost = isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]));
+  if (isMydreamshootsHost && requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
+  if (isMydreamshootsHost && (requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) return {};
   if (isStaticAssetCatchAllRequest(firstSegment)) return {};
   if (firstSegment === "account") {
     const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
@@ -448,7 +467,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if (!site) return {};
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
   if (path[0] === "tools" && isMydreamshootsSite(site) && !isAidreamcapesSite(site)) return {};
-  const slug = publicContentPageSlug(`/${path.join("/")}`);
+  const slug = publicContentPageSlug(requestedPath);
   if (isVideoGenerationRequest) {
     const videoGenerationRoute = parsePublicVideoGenerationRouteForSite(site, path);
     if (!videoGenerationRoute) return {};
@@ -541,7 +560,7 @@ export default async function HostStorefrontCatchAllPage({
   const slug = `/${path.join("/")}`;
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
   const isMydreamshootsHost = isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]));
-  if (isMydreamshootsHost && slug === "/holidays-events/wedding-invitation") permanentRedirect("/ai-video-generation/wedding-invitation");
+  if (isMydreamshootsHost && (slug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || slug === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) notFound();
   if (legacyVideoTarget && isMydreamshootsHost) permanentRedirect(legacyVideoTarget);
   if (slug === "/ai-image-generation/profile-cards" && isMydreamshootsHost) {
     permanentRedirect("/ai-image-generation/avatar");
@@ -599,6 +618,9 @@ export default async function HostStorefrontCatchAllPage({
     : isVideoGenerationRequest
     ? path[1] ? `/ai-video-generation/${path[1]}` : "/ai-video-generation"
     : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : legacyPathTarget ? publicContentPageSlug(legacyPathTarget) : publicContentPageSlug(`/${path.join("/")}`);
+  const sourcePageSlug = isMydreamshootsHost && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+    ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
+    : publicPageSlug;
   const collectionLookupSlug = collectionRouteLookupSlug(path);
   const videoLookupSlug = isVideoGenerationRequest ? path[1] || "" : "";
   const state = needsPrivateRuntime
@@ -612,7 +634,7 @@ export default async function HostStorefrontCatchAllPage({
     // focused category. Keep the full directory state here so the renderer
     // has the same published page/navigation context as the query form.
     ? await getHostPublicRuntimeStateWithFallback(hostCandidates, collectionRootPageSlug)
-    : await getHostPublicRuntimeStateWithFallback(hostCandidates, publicPageSlug);
+    : await getHostPublicRuntimeStateWithFallback(hostCandidates, sourcePageSlug);
   if (!state) notFound();
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) notFound();
@@ -686,9 +708,7 @@ export default async function HostStorefrontCatchAllPage({
       const disposition = resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath);
       const page = disposition.kind === "render"
         ? snapshot.pages.find((candidate) => candidate.id === disposition.pageId)
-        : videoGenerationRoute.itemSlug === "wedding-invitation"
-          ? snapshot.pages.find((candidate) => candidate.slug === videoGenerationRoute.canonicalPath && candidate.pageType === "ai_tool")
-          : undefined;
+        : undefined;
       if (!page) notFound();
       return renderToolPage({
         site,
@@ -725,12 +745,15 @@ export default async function HostStorefrontCatchAllPage({
   }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, site, collectionCategory)) notFound();
   const pageSlug = collectionRoute ? publicCollectionRootPathForSite(site) : publicContentPageSlug(`/${path.join("/")}`);
-  if (!collectionRoute && resolvePublishedRouteDisposition(snapshot, pageSlug).kind !== "render") notFound();
-  if (!collectionRoute && !findPage(site, pageSlug) && resolvePublishedRouteDisposition(snapshot, pageSlug).kind !== "render") notFound();
+  const renderPageSlug = isMydreamshootsHost && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+    ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
+    : pageSlug;
+  if (!collectionRoute && resolvePublishedRouteDisposition(snapshot, slug).kind !== "render") notFound();
+  if (!collectionRoute && !findPage(site, renderPageSlug) && resolvePublishedRouteDisposition(snapshot, slug).kind !== "render") notFound();
   const storefrontQuery = collectionCategory ? { ...query, category: collectionCategory } : query;
   return renderStorefrontPage({
     site,
-    slug: pageSlug,
+    slug: renderPageSlug,
     publicPath: collectionRoute?.canonicalPath ?? pageSlug,
     query: storefrontQuery,
     routeMode: "host",

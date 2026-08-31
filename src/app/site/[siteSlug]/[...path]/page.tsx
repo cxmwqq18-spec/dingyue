@@ -19,7 +19,7 @@ import { storefrontPathForRouteMode, storefrontRouteModeForHeaders, type Storefr
 import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
-import { canonicalSaveTheDatePath, legacySaveTheDatePath } from "@/lib/save-the-date-routes";
+import { canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -173,6 +173,21 @@ function isVideoGenerationRouteRequest(path: string[]): boolean {
   return path[0] === "ai-video-generation" && !isMydreamshootsEditorialThemeRoute(`/${path.join("/")}`);
 }
 
+function weddingInvitationMetadata(): Metadata {
+  const canonical = "https://www.mydreamshoots.com/ai-save-the-date/wedding-invitation";
+  const title = "Wedding Invitation | myDreamshoots";
+  const description = "Create a private wedding invitation reveal with readable names, dates, venue details, and paper texture.";
+  const image = "https://www.mydreamshoots.com/assets/dreamshoot/wedding-invitation/hero-ai-wedding-invitation-couple-reviewing.jpg";
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    robots: { index: true, follow: true, "max-image-preview": "large" },
+    openGraph: { title, description, url: canonical, siteName: "myDreamshoots", images: [{ url: image }] },
+    twitter: { card: "summary_large_image", title, description, images: [image] }
+  };
+}
+
 function canRenderPublishedPublicPath(
   snapshot: ReturnType<typeof createPublishedSiteSnapshot>,
   internalPath: string,
@@ -181,6 +196,9 @@ function canRenderPublishedPublicPath(
 ): boolean {
   const disposition = resolvePublishedRouteDisposition(snapshot, internalPath);
   if (disposition.kind === "render" || (disposition.kind === "redirect" && disposition.targetPath === requestedPath)) return true;
+  if (requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_PATH && internalPath === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH) {
+    return site ? findPage(site, internalPath)?.pageType === "ai_tool" : false;
+  }
   // Keep already-published standard-content pages reachable while an older
   // immutable publication is being replaced. The page itself is still
   // required to carry the requested canonical path; draft-only pages never
@@ -259,9 +277,12 @@ async function readVideoGenerationRouteState(siteSlug: string, videoSlug: string
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; path: string[] }> }): Promise<Metadata> {
   const { siteSlug, path } = await params;
   const requestedSlug = `/${path.join("/")}`;
+  if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
+  if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && (requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) return {};
   const canonicalRequestedSlug = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug))
     ? canonicalSaveTheDatePath(requestedSlug)
     : requestedSlug;
+  if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
   const legacyRequestedSlug = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug))
     ? legacySaveTheDatePath(canonicalRequestedSlug)
     : undefined;
@@ -276,6 +297,9 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   }
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
+  const metadataSourceSlug = canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+    ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
+    : slug;
   const state = isVideoGenerationRequest
     ? routeMode === "host"
       ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, `/ai-video-generation/${videoLookupSlug || ""}`.replace(/\/$/, ""), videoLookupSlug || undefined)
@@ -288,7 +312,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
       ? routeMode === "host"
         ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, "/ai-image-generation")
         : await readPathModePublicRuntimeState(siteSlug, "/ai-image-generation")
-    : await readRoutePublicMetadataState(headerStore, routeMode, siteSlug, slug)
+    : await readRoutePublicMetadataState(headerStore, routeMode, siteSlug, metadataSourceSlug)
       || (legacyRequestedSlug ? await readRoutePublicMetadataState(headerStore, routeMode, siteSlug, legacyRequestedSlug) : undefined);
   const site = state?.sites[0];
   if (!site) return {};
@@ -336,7 +360,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
     }
     return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
   }
-  const resolvedSlug = findPage(site, slug) ? slug : legacyRequestedSlug && findPage(site, legacyRequestedSlug) ? legacyRequestedSlug : slug;
+  const resolvedSlug = findPage(site, slug) ? slug : findPage(site, metadataSourceSlug) ? metadataSourceSlug : legacyRequestedSlug && findPage(site, legacyRequestedSlug) ? legacyRequestedSlug : slug;
   if (!canRenderPublishedPublicPath(snapshot, resolvedSlug, requestedSlug, site)) return {};
   const page = findPage(site, resolvedSlug);
   if (!page) return {};
@@ -360,7 +384,7 @@ export default async function SiteCatchAllPage({
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
-  if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/holidays-events/wedding-invitation") permanentRedirect(routePath("/ai-video-generation/wedding-invitation"));
+  if (isPrimaryMydreamshootsSlug(publicSlug) && (slug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || slug === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) notFound();
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
   if (isPrimaryMydreamshootsSlug(publicSlug) && legacyVideoTarget) permanentRedirect(routePath(legacyVideoTarget));
   if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/ai-image-generation/motion-generator") {
@@ -426,11 +450,14 @@ export default async function SiteCatchAllPage({
   const legacyPathTarget = legacyPublicPathTarget(slug, collectionRootPageSlug);
   const pageSlug = isCollectionRequest ? collectionRootPageSlug : isVideoGenerationRequest ? "/ai-video-generation" : legacyPathTarget ? publicContentPageSlug(legacyPathTarget) : publicContentPageSlug(canonicalSaveTheDatePath(slug));
   const legacySaveDateSlug = isPrimaryMydreamshootsSlug(publicSlug) ? legacySaveTheDatePath(pageSlug) : undefined;
+  const sourcePageSlug = isPrimaryMydreamshootsSlug(publicSlug) && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+    ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
+    : pageSlug;
   const state = isVideoGenerationRequest
     ? await readVideoGenerationRouteState(publicSlug, videoLookupSlug)
     : isCollectionRequest && collectionLookupSlug
     ? await readCollectionRouteState(publicSlug, collectionLookupSlug, headerStore, routeMode)
-    : await readPathModePublicRuntimeState(publicSlug, pageSlug)
+    : await readPathModePublicRuntimeState(publicSlug, sourcePageSlug)
       || (legacySaveDateSlug ? await readPathModePublicRuntimeState(publicSlug, legacySaveDateSlug) : undefined);
   const publicSite = state?.sites[0];
   if (!state || !publicSite) notFound();
@@ -454,9 +481,7 @@ export default async function SiteCatchAllPage({
       const disposition = resolvePublishedRouteDisposition(snapshot, videoGenerationRoute.canonicalPath);
       const detailPage = disposition.kind === "render"
         ? snapshot.pages.find((candidate) => candidate.id === disposition.pageId)
-        : videoGenerationRoute.itemSlug === "wedding-invitation"
-          ? snapshot.pages.find((candidate) => candidate.slug === videoGenerationRoute.canonicalPath && candidate.pageType === "ai_tool")
-          : undefined;
+        : undefined;
       if (!detailPage) notFound();
       return renderToolPage({
         site: publicSite,
@@ -488,8 +513,8 @@ export default async function SiteCatchAllPage({
   // During the route migration the draft site may already have the canonical
   // slug while the immutable publication still stores its legacy slug. Pick
   // the published page that actually exists, then expose the canonical URL.
-  const resolvedPageSlug = !isCollectionRequest && !findPage(snapshot.site, pageSlug) && legacySaveDateSlug && findPage(snapshot.site, legacySaveDateSlug)
-    ? legacySaveDateSlug
+  const resolvedPageSlug = !isCollectionRequest && !findPage(snapshot.site, pageSlug) && sourcePageSlug && findPage(snapshot.site, sourcePageSlug)
+    ? sourcePageSlug
     : pageSlug;
   if (!isCollectionRequest && !canRenderPublishedPublicPath(snapshot, resolvedPageSlug, slug, publicSite)) notFound();
   if (!isCollectionRequest && !findPage(publicSite, resolvedPageSlug) && resolvePublishedRouteDisposition(snapshot, resolvedPageSlug).kind !== "render") notFound();

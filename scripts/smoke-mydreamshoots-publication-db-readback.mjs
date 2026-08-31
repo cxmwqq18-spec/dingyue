@@ -56,12 +56,24 @@ if (!rawUrl) {
       "/california-privacy", "/ccpa", "/children-privacy-policy", "/childrens-privacy", "/content-policy", "/cookie-policy", "/delivery-policy", "/policies/children-privacy", "/policies/content", "/policies/cookies", "/policies/privacy", "/policies/privacy-policy", "/policies/refund", "/policies/refunds", "/policies/shipping", "/policies/state-privacy", "/policies/terms", "/policies/terms-of-service", "/privacy-policy", "/refund-policy", "/shipping-policy", "/state-privacy-rights", "/terms-of-service"
     ]);
     assert.ok(policyRoutes.filter((route) => route.disposition === "redirect").every((route) => route.statusCode === 301 && route.indexable === false && route.sitemapEligible === false));
-    const weddingInvitationRedirect = current.publishedRoutes.find((route) => route.disposition === "redirect" && route.aliasPath === "/holidays-events/wedding-invitation");
-    assert.ok(weddingInvitationRedirect, "published route inventory must retain the legacy wedding invitation path as a redirect-only route");
-    assert.equal(weddingInvitationRedirect.targetPath, "/ai-video-generation/wedding-invitation");
-    assert.equal(weddingInvitationRedirect.statusCode, 301);
-    assert.equal(weddingInvitationRedirect.indexable, false);
-    assert.equal(weddingInvitationRedirect.sitemapEligible, false);
+    const weddingInvitationPaths = new Set([
+      "/ai-save-the-date/wedding-invitation",
+      "/ai-video-generation/wedding-invitation",
+      "/holidays-events/wedding-invitation"
+    ]);
+    const weddingInvitationRoutes = current.publishedRoutes.filter((route) =>
+      weddingInvitationPaths.has(route.canonicalPath) ||
+      weddingInvitationPaths.has(route.aliasPath) ||
+      weddingInvitationPaths.has(route.targetPath)
+    );
+    assert.equal(weddingInvitationRoutes.length, 0, "wedding invitation must not be represented by a stale published route alias");
+    const weddingInvitationPage = await prisma.themePage.findUnique({
+      where: { siteId_slug: { siteId, slug: "/ai-video-generation/wedding-invitation" } },
+      select: { id: true, slug: true, pageType: true, draftJson: true }
+    });
+    assert.ok(weddingInvitationPage, "wedding invitation source page must remain available for the canonical Save the Date route");
+    assert.equal(weddingInvitationPage.pageType, "ai_tool");
+    assert.equal(weddingInvitationPage.slug, "/ai-video-generation/wedding-invitation");
     const cookieRoute = policyRoutes.find((route) => route.disposition === "render" && route.canonicalPath === "/cookies");
     assert.ok(cookieRoute, "compiled relational projection must contain the canonical /cookies route");
     assert.equal(cookieRoute.pageId, cookiePage.id);

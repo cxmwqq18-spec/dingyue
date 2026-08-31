@@ -70,6 +70,7 @@ const storefrontContextTypes = readText("src/lib/storefront-context/types.ts");
 const themeRenderer = readText("src/components/theme-renderer.tsx");
 const templates = readText("src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 const photoPackageTaxonomy = readText("src/lib/photo-package-taxonomy.ts");
+const editorialRoutes = readText("src/lib/mydreamshoots-editorial-routes.ts");
 const platformState = await readPlatformState();
 const mydreamshootsTaxonomy = readJson("src/lib/mydreamshoots-theme-taxonomy.json");
 const photoPackageUseCaseProfiles = readJson("src/lib/photo-package-use-case-profiles.json");
@@ -529,7 +530,6 @@ for (const slug of ["text-to-video", "image-to-video"]) {
 }
 for (const slug of [
   "talking-photo",
-  "wedding-invitation",
   "explainer-video",
   "how-to-video",
   "talking-head-video",
@@ -553,6 +553,7 @@ for (const slug of [
 ]) {
   assert(publicVideoSlugSource.includes(`"${slug}"`), "public video generation slug list must include the published topic slug", { slug });
 }
+assert(editorialRoutes.includes("/ai-save-the-date/wedding-invitation"), "wedding invitation must belong to the Save the Date editorial route inventory");
 
 assert(
   /grownstride\.com/.test(robots) &&

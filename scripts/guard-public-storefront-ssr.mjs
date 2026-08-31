@@ -90,7 +90,7 @@ assert.doesNotMatch(jsonLd, /use client|useServerInsertedHTML|useRef/, "public J
 assert.equal(existsSync(path.join(root, "src/components/storefront/lazy-storefront-section.tsx")), false, "legacy public lazy section fetcher must be removed");
 assert.match(themeRenderer, /publicStorefrontPage\s*=\s*false/, "header must receive an explicit public storefront boundary");
 assert.match(themeRenderer, /!publicStorefrontPage\s*&&\s*runtime\?\.clientBootstrapCustomer/, "customer bootstrap must be private-only");
-assert.match(hostCatchAll, /slug: pageSlug,[\s\S]{0,260}deferCustomerRuntime:\s*true/, "host public pages must defer customer runtime");
+assert.match(hostCatchAll, /slug:\s*(?:pageSlug|renderPageSlug),[\s\S]{0,320}deferCustomerRuntime:\s*true/, "host public pages must defer customer runtime");
 assert.match(sectionPage, /headers\(\)/, "section preview route must inspect request headers");
 assert.match(sectionPage, /x-storefront-preview/, "section preview route must require an explicit preview marker");
 assert.match(sectionPage, /index:\s*false/, "section preview route must be noindex");

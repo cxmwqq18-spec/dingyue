@@ -17,7 +17,7 @@ import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilitie
 import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import type { CreativePack, PlatformState, PublishedLeafRouteProjection, PublishedSeoSnapshot, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
-import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
+import { canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
 export const MYDREAMSHOOTS_SITEMAP_URL = `${MYDREAMSHOOTS_ORIGIN}/sitemap.xml`;
@@ -42,7 +42,7 @@ function cleanText(value: unknown, fallback = ""): string {
 const BLOCKED_PAGE_TYPES = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
 const BLOCKED_PATH_PREFIXES = ["/404", "/account", "/admin", "/album", "/api", "/app", "/cart", "/dashboard", "/job", "/login", "/platform", "/search", "/site"];
 const NON_PAGE_PATH_PREFIXES = ["/_next", "/assets", "/fonts", "/images", "/media", "/robots.txt", "/sitemap.xml", "/videos"];
-const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy", "/engagement-photo", "/ai-image-generation/profile-cards", "/ai-image-generation/motion-generator", "/holidays-events/wedding-invitation"]);
+const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy", "/engagement-photo", "/ai-image-generation/profile-cards", "/ai-image-generation/motion-generator", "/ai-video-generation/wedding-invitation", "/holidays-events/wedding-invitation"]);
 const NON_INDEXABLE_TOOL_PATHS = new Set(["/tools/image-studio", "/tools/ai-image-studio", "/tools/image-generator", "/tools/image_generator", "/tools/travel-portraits"]);
 const REQUIRED_INDEXABLE_TOOL_PATHS = [
   "/tools/photo-ai",
@@ -527,6 +527,16 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       changefreq: sitemapChangeFrequencyForPath(path),
       priority: sitemapPriorityForPath(path)
       });
+  }
+  if (isPrimaryMydreamshootsSite(site) && snapshot.pages.some((page) => page.slug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH)) {
+    const loc = `${siteOrigin(site) || MYDREAMSHOOTS_ORIGIN}${MYDREAMSHOOTS_WEDDING_INVITATION_PATH}`;
+    entries.set(loc, {
+      loc,
+      images: [],
+      lastmod: normalizeSitemapDate(snapshot.publication?.publishedAt),
+      changefreq: sitemapChangeFrequencyForPath(MYDREAMSHOOTS_WEDDING_INVITATION_PATH),
+      priority: sitemapPriorityForPath(MYDREAMSHOOTS_WEDDING_INVITATION_PATH)
+    });
   }
   const collectionPath = publicCollectionPathForSite(site, "");
   const collectionPage = snapshot.pages.find((page) => canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page)) === canonicalDirectoryPathForSite(site, collectionPath));

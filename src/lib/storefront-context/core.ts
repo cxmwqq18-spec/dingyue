@@ -8,6 +8,7 @@ import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilitie
 import { applyTitleTemplate, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 import { robotsForPage } from "@/lib/theme/seo";
 import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
+import { MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 
 function clean(value: unknown): string {
   return typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
@@ -236,7 +237,7 @@ export function resolveStorefrontContext(
   const standardPageEntityMissing = mode === "published" && Boolean(standardPageEntityPath) && !pageEntity;
   const standardPageMediaMissing = mode === "published" && Boolean(standardPageEntityPath) && standardPageMedia?.status !== "ready";
   const entityFailClosed = standardPageEntityMissing || standardPageMediaMissing;
-  const legacyWeddingInvitation = primaryMydreamshoots && mode === "published" && bundle.page.pageType === "ai_tool" && seo.canonicalPath === "/ai-video-generation/wedding-invitation";
+  const legacyWeddingInvitation = primaryMydreamshoots && mode === "published" && bundle.page.pageType === "ai_tool" && [MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH].includes(seo.canonicalPath);
   const resolvedSeo = pageEntity
     ? {
         ...seo,
