@@ -565,6 +565,18 @@ function storedAltForPackImage(pack: CreativePack, imageUrl: string | undefined)
   return undefined;
 }
 
+function directAltForPackImage(pack: CreativePack, imageUrl: string | undefined): string | undefined {
+  const identity = imageIdentity(imageUrl);
+  if (!identity) return undefined;
+  const images = [pack.imageUrl, ...(pack.galleryImages ?? [])]
+    .filter((value): value is string => typeof value === "string" && Boolean(value.trim()));
+  const imageIndex = images.findIndex((candidate) => imageIdentity(candidate) === identity);
+  if (imageIndex < 0) return undefined;
+  const alts = pack.galleryImageAlts ?? [];
+  const offset = alts.length === images.length + 1 ? 0 : alts.length === images.length - 1 ? 1 : 0;
+  return alts[imageIndex - offset];
+}
+
 export function storefrontCreativePackImageAlt({
   brand,
   explicitAlt,
@@ -582,7 +594,11 @@ export function storefrontCreativePackImageAlt({
   pack: CreativePack;
   role?: StorefrontMediaAltRole;
 }): string {
-  const storedAlt = storedAltForPackImage(pack, imageUrl);
+  // Published snapshots have historically stored either 13 alts (cover plus
+  // twelve gallery images) or 12 gallery-only alts. Resolve the canonical
+  // description by URL first so either representation stays aligned.
+  const directAlt = directAltForPackImage(pack, imageUrl);
+  const storedAlt = directAlt || storedAltForPackImage(pack, imageUrl);
   return storefrontPackMediaAlt({
     brand,
     category: pack.categoryRecord?.label || pack.category,
