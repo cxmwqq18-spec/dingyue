@@ -104,11 +104,42 @@ for (const name of requiredPreviewNames) {
 }
 for (const result of imageChecks) if (!result.ok) fail("Referenced media must return an image response", result);
 
+async function assertDistinctContentAlts(path, label) {
+  const page = await fetchText(absolute(`${pathPrefix}${path}`));
+  if (page.response.status !== 200) {
+    fail(`${label} page must return HTTP 200`, { status: page.response.status });
+    return;
+  }
+  const byAlt = new Map();
+  for (const tag of imgTags(page.body)) {
+    const alt = attr(tag, "alt").trim();
+    const src = attr(tag, "src");
+    if (!alt || !src || /\blogo\b/i.test(alt)) continue;
+    const key = alt.toLowerCase();
+    const set = byAlt.get(key) || new Set();
+    set.add(identity(absolute(src)));
+    byAlt.set(key, set);
+  }
+  for (const [alt, sources] of byAlt) {
+    if (sources.size > 1) fail(`${label} uses one alt for different content images`, { alt, sources: [...sources] });
+  }
+  return byAlt.size;
+}
+
+const altAudit = {
+  homepage: await assertDistinctContentAlts("/", "Homepage"),
+  directory: await assertDistinctContentAlts("/ai-image-generation", "AI Photo Packages directory")
+};
+for (const path of ["/background-changer", "/background-remover", "/bikini", "/black-friday", "/boudoir", "/cannes"]) {
+  altAudit[path.slice(1)] = await assertDistinctContentAlts(`/ai-image-generation${path}`, path.slice(1));
+}
+
 const report = {
   ok: failures.length === 0,
   origin,
   avatar: { domImages: avatarImages.size, sitemapImages: sitemapImages.size, imageChecks: imageChecks.length },
   urbanColorCorrection: { required: requiredPreviewNames.length, found: previewUrls.size },
+  altAudit,
   failures
 };
 console.log(JSON.stringify(report, null, 2));
