@@ -188,6 +188,19 @@ async function requestPageWithRetry(host, pathname) {
   throw lastError;
 }
 
+async function validateLegacyCookieRedirects(host) {
+  if (host !== "www.mydreamshoots.com") return [];
+  const origin = originForHost(host);
+  const failures = [];
+  for (const pathname of mydreamshootsLegacyCookiePaths) {
+    const response = await requestPageWithRetry(host, pathname);
+    const location = response.location ? new URL(response.location, origin).toString() : "";
+    const expected = new URL("/cookies", origin).toString();
+    if (response.status !== 308 || location !== expected) failures.push({ pathname, status: response.status, location: response.location || null, expected });
+  }
+  return failures;
+}
+
 function metaContent(html, name) {
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const tag = html.match(new RegExp(`<meta\\s+[^>]*name=["']${escaped}["'][^>]*>`, "i"))?.[0] ?? "";
@@ -262,6 +275,7 @@ function sitemapPaths(xml, host) {
   return {
     foreignHosts: urls.filter((value) => new URL(value).host !== host),
     duplicateLocs: urls.filter((value, index) => urls.indexOf(value) !== index),
+    urls,
     paths: new Set(urls.map((value) => normalizePath(new URL(value).pathname)))
   };
 }
@@ -280,6 +294,10 @@ for (const target of targets) {
   if (state && !site) throw new Error(`missing_site:${target.siteId}`);
   const expected = state && site ? expectedCanonicalPaths(state, site) : undefined;
   const live = await validateLivePublishedPages(target.host, actual.paths);
+  const legacyCookieRedirectFailures = await validateLegacyCookieRedirects(target.host);
+  const expectedCookieLoc = "https://www.mydreamshoots.com/cookies";
+  const cookieLocs = target.siteId === "site_dreamshoot" ? actual.urls.filter((value) => normalizePath(new URL(value).pathname) === "/cookies") : [];
+  const invalidCookieLocs = cookieLocs.filter((value) => value !== expectedCookieLoc);
   const missingRequiredPolicyPaths = target.siteId === "site_dreamshoot"
     ? mydreamshootsRequiredPolicyPaths.filter((pathname) => !actual.paths.has(pathname))
     : [];
@@ -302,6 +320,9 @@ for (const target of targets) {
     unexpected: expected ? [...actual.paths].filter((value) => !expected.has(value)) : [],
     missingRequiredPolicyPaths,
     legacyCookiePaths,
+    cookieLocs,
+    invalidCookieLocs,
+    legacyCookieRedirectFailures,
     foreignHosts: actual.foreignHosts,
     liveFailures: live.failures,
     pageResults: live.pageResults,
@@ -315,6 +336,9 @@ const failures = results.filter((result) =>
   result.unexpected.length ||
   result.missingRequiredPolicyPaths.length ||
   result.legacyCookiePaths.length ||
+  result.invalidCookieLocs.length ||
+  (result.siteId === "site_dreamshoot" && result.cookieLocs.length !== 1) ||
+  result.legacyCookieRedirectFailures.length ||
   result.foreignHosts.length ||
   result.duplicateLocs.length ||
   result.liveFailures.length ||

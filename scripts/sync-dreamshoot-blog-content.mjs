@@ -86,7 +86,7 @@ const mydreamshootsCollectionHrefBySlug = new Map([
   ...mydreamshootsTaxonomy.items.map((item) => [item.slug, `/ai-image-generation/${item.groupSlug}/${item.slug}`]),
   ["creator", "/ai-image-generation/portrait-photo"],
   ["creator-portraits", "/ai-image-generation/portrait-photo"],
-  ["profile-cards", "/ai-image-generation/profile-cards"],
+  ["profile-cards", "/ai-image-generation/avatar"],
   ["wedding", "/ai-image-generation/wedding-photo"],
   ["wedding-portraits", "/ai-image-generation/wedding-photo"],
   ["cultural", "/ai-image-generation/wedding-photo"],
@@ -912,9 +912,9 @@ const mydreamshootsPriorityArticleOverrides = new Map([
     imageAlt: "Profile-card portrait concept with a clear face, simple background, and crop-ready framing.",
     tags: "Profile card photos|Profile Cards|Creator profiles|Identity-safe planning",
     targetLabel: "Open Profile Cards",
-    targetHref: "/ai-image-generation/profile-cards",
+    targetHref: "/ai-image-generation/avatar",
     relatedLinks: [
-      { label: "Open Profile Cards", href: "/ai-image-generation/profile-cards" },
+      { label: "Open Avatar", href: "/ai-image-generation/avatar" },
       { label: "Read the Headshot guide", href: "/blog/headshot-photo-package-guide" },
       { label: "Compare Portrait Retouch", href: "/ai-image-generation/portrait-retouch" }
     ],
@@ -933,7 +933,7 @@ const mydreamshootsPriorityArticleOverrides = new Map([
       <table><thead><tr><th>Card need</th><th>Planning cue</th><th>Review focus</th></tr></thead><tbody><tr><td>Square profile</td><td>Face-forward framing and quiet background.</td><td>Recognition at small size, eye line, and edge crop.</td></tr><tr><td>Creator introduction</td><td>Shoulder or half-body room for personality.</td><td>Expression, wardrobe, and text-safe area.</td></tr><tr><td>Website header</td><td>Wide composition with approved negative space.</td><td>Subject placement, readability, and responsive crop.</td></tr><tr><td>Private moodboard</td><td>Several related crops with one visual identity.</td><td>Consistency across background, light, and expression.</td></tr></tbody></table>
       <p>Keep background detail subordinate to the face. A busy scene can make the card look energetic, but it can also make the person hard to identify or leave no space for factual copy. If the image will carry text, generate clean space and add the final words in a design tool rather than trusting generated lettering.</p>
       <h2 id="profile-card-product-comparison">Choose Profile Cards, Headshot, or Portrait Retouch</h2>
-      <p>Use <a href="/ai-image-generation/profile-cards">Profile Cards</a> when the image needs a repeatable bio or social-card crop. Use <a href="/ai-image-generation/headshot">Headshot</a> when professional restraint matters more than a card concept. Use <a href="/ai-image-generation/portrait-retouch">Portrait Retouch</a> when the source is already sharp and the main need is controlled cleanup. Review the live product cards for current outputs and credit cost before starting.</p>
+      <p>Use <a href="/ai-image-generation/avatar">Avatar</a> when the image needs a repeatable bio or social-card crop. Use <a href="/ai-image-generation/headshot">Headshot</a> when professional restraint matters more than a card concept. Use <a href="/ai-image-generation/portrait-retouch">Portrait Retouch</a> when the source is already sharp and the main need is controlled cleanup. Review the live product cards for current outputs and credit cost before starting.</p>
       <h2 id="profile-card-review">Review identity and card safety</h2>
       <p>Review the full image at the final card size, then inspect it at 100 percent. Attractive lighting cannot compensate for a changed face, invented text, or a crop that removes the recognisable features a profile needs.</p>
       <ul><li>Compare eyes, face shape, hairline, expression, and skin tone with the approved source.</li><li>Check hands, glasses, jewelry, collars, and hair edges for impossible joins.</li><li>Inspect background text, logos, badges, and invented credentials.</li><li>Confirm the crop leaves room for approved name or role copy if the design needs it.</li><li>Make sure the image does not imply an official ID, employer endorsement, or identity verification.</li><li>Keep the original source and note which output was selected for the card.</li></ul>

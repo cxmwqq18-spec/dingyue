@@ -124,6 +124,17 @@ const LEGACY_MYDREAMSHOOTS_VIDEO_PATH_REDIRECTS: Record<string, string> = {
   "/ai-video-generation/wedding-invitation": "/holidays-events/wedding-invitation"
 };
 
+// These image-generation paths were published before the current product
+// taxonomy. Keep them as inbound aliases, but never emit them in new links.
+const MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
+  "/ai-image-generation/motion-generator": "/ai-video-generation/motion-generator",
+  "/ai-image-generation/profile-cards": "/ai-image-generation/avatar"
+};
+
+export function mydreamshootsLegacyPublicPathTarget(pathname: string): string | undefined {
+  return MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS[normalizedPathname(pathname)];
+}
+
 export function mydreamshootsLegacyVideoPathTarget(pathname: string): string | undefined {
   return LEGACY_MYDREAMSHOOTS_VIDEO_PATH_REDIRECTS[normalizedPathname(pathname)];
 }

@@ -38,7 +38,7 @@ if (!rawUrl) {
   try {
     const cookiePage = await prisma.themePage.findUnique({
       where: { siteId_slug: { siteId, slug: "/cookies" } },
-      select: { id: true, slug: true, draftJson: true, updatedAt: true }
+      select: { id: true, slug: true, draftJson: true, publishedJson: true, updatedAt: true }
     });
     assert.ok(cookiePage, "current relational source must contain /cookies");
     const cookieSeo = cookiePage.draftJson?.seo ?? {};
@@ -46,6 +46,8 @@ if (!rawUrl) {
     assert.equal(cookieSeo.index, true, "/cookies source SEO must be indexable");
     assert.equal(cookieSeo.robots?.index, true, "/cookies robots must allow indexing");
     assert.equal(cookieSeo.robots?.follow, true, "/cookies robots must allow following");
+    assert.equal(cookieSeo.canonical, "https://www.mydreamshoots.com/cookies", "/cookies canonical must be the absolute production URL");
+    assert.equal(cookiePage.publishedJson?.seo?.index, true, "/cookies published SEO must be indexable");
 
     const current = await compileCurrentPublishedPayloadRelational(siteId, prisma);
     assert.equal(publicationSnapshotHash(current), current.snapshotHash, "compiled relational projection hash must verify");

@@ -16,25 +16,15 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
-function canonicalPath(value) {
-  if (typeof value !== "string" || !value.trim()) return "";
-  try {
-    return new URL(value, "https://www.mydreamshoots.com").pathname.replace(/\/+$/, "") || "/";
-  } catch {
-    return "";
-  }
-}
-
 try {
   const page = await prisma.themePage.findUnique({ where: { siteId_slug: { siteId, slug } } });
   if (!page) throw new Error("mydreamshoots_cookies_page_missing");
 
   const draftJson = clone(page.draftJson ?? {});
   const seo = draftJson.seo ?? {};
-  const canonical = canonicalPath(seo.canonical) === slug ? seo.canonical : slug;
   draftJson.seo = {
     ...seo,
-    canonical,
+    canonical: "https://www.mydreamshoots.com/cookies",
     canonicalPath: slug,
     index: true,
     follow: true,
@@ -48,7 +38,13 @@ try {
     fs.mkdirSync(backupRoot, { recursive: true, mode: 0o700 });
     backupPath = path.join(backupRoot, `mydreamshoots-cookies-indexability-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
     fs.writeFileSync(backupPath, `${JSON.stringify({ createdAt: new Date().toISOString(), siteId, page }, null, 2)}\n`, { mode: 0o600 });
-    await prisma.themePage.update({ where: { id: page.id }, data: { draftJson } });
+    await prisma.$transaction(async (tx) => {
+      await tx.themePage.update({ where: { id: page.id }, data: { draftJson, publishedJson: draftJson } });
+      const readback = await tx.themePage.findUnique({ where: { id: page.id }, select: { draftJson: true, publishedJson: true } });
+      if (readback?.draftJson?.seo?.canonical !== "https://www.mydreamshoots.com/cookies" || readback?.draftJson?.seo?.index !== true || readback?.publishedJson?.seo?.index !== true) {
+        throw new Error("mydreamshoots_cookies_indexability_readback_failed");
+      }
+    });
   }
 
   console.log(JSON.stringify({
@@ -59,6 +55,7 @@ try {
     changed,
     before: page.draftJson?.seo,
     after: draftJson.seo,
+    readback: apply && changed ? { draftIndex: true, publishedIndex: true, canonical: draftJson.seo.canonical } : null,
     backupPath
   }, null, 2));
 } finally {

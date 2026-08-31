@@ -37,7 +37,7 @@ import {
   aidreamcapesCategoryUseCaseProfileForSlug,
   type PhotoPackageUseCaseProfile
 } from "@/lib/photo-package-use-case-profiles";
-import { shortPolicyPath } from "@/lib/site-route-canonical";
+import { mydreamshootsLegacyPublicPathTarget, shortPolicyPath } from "@/lib/site-route-canonical";
 import { isMydreamshootsRemovedLegacyRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { isSpanishStorefrontSite, SPANISH_XBY_COLLECTION_ALIASES } from "@/lib/spanish-storefronts";
@@ -3748,9 +3748,10 @@ function hrefFor(site: Site, href: string): string {
               ? "/workflow"
               : url.pathname
         );
-        const canonicalPath = normalizedPath === "/collections" || normalizedPath.startsWith("/collections/") || normalizedPath === "/ai-image-generation" || normalizedPath.startsWith("/ai-image-generation/")
+        const legacyPath = primaryMyDreamShoots ? mydreamshootsLegacyPublicPathTarget(normalizedPath) : undefined;
+        const canonicalPath = legacyPath ?? (normalizedPath === "/collections" || normalizedPath.startsWith("/collections/") || normalizedPath === "/ai-image-generation" || normalizedPath.startsWith("/ai-image-generation/")
           ? canonicalCollectionHrefForSite(site, normalizedPath)
-          : normalizedPath;
+          : normalizedPath);
         const normalizedHash = url.hash === "#workflow" ? "" : url.hash;
         return `${routedSitePath(site, canonicalPath)}${url.search}${normalizedHash}`;
       }
@@ -3770,6 +3771,11 @@ function hrefFor(site: Site, href: string): string {
   if (href === "#faq" || href === "/#faq") return routedSitePath(site, "/faq");
   const normalizedPolicyPath = shortPolicyPath(href);
   if (normalizedPolicyPath !== href) return routedSitePath(site, normalizedPolicyPath);
+  if (primaryMyDreamShoots) {
+    const pathOnly = href.split(/[?#]/)[0] || "/";
+    const legacyPath = mydreamshootsLegacyPublicPathTarget(pathOnly);
+    if (legacyPath) return routedSitePath(site, `${legacyPath}${href.slice(pathOnly.length)}`);
+  }
   if (href.startsWith("/app?") && href.endsWith("#create")) return routedSitePath(site, `/app/create?${href.slice("/app?".length, -"#create".length)}`);
   if (href === "/app#create") return routedSitePath(site, "/app/create");
   if (href === "/app#upload_1") return routedSitePath(site, "/app/upload");

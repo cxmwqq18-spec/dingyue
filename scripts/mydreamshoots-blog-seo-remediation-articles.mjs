@@ -451,7 +451,7 @@ export const mydreamshootsBlogSeoRemediationArticles = [
     imageAlt: "Profile card portrait with a recognizable face, consistent shoulders-up crop, quiet background, and room for verified bio copy.",
     tags: "Profile cards|Bio portrait|Social profile|Avatar consistency",
     targetLabel: "Open Profile Cards",
-    targetHref: "/ai-image-generation/profile-cards",
+    targetHref: "/ai-image-generation/avatar",
     relatedLinks: [
       { label: "Compare professional headshots", href: "/blog/professional-headshots-photo-package-guide" },
       { label: "Plan creator portraits", href: "/blog/creator-portraits-photo-package-guide" },

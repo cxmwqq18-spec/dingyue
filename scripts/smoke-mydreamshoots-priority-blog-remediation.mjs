@@ -252,7 +252,7 @@ assert(Boolean(profileCardsPage), "/blog/profile-cards-photo-package-guide exist
 assert(profileCardsSection?.settings?.title === "Profile Card Photos for Consistent Bios and Social Profiles", "profile cards has an independent title");
 assert(typeof profileCardsSection?.settings?.body === "string" && profileCardsSection.settings.body.length >= 3400, "profile cards has independent substantive guidance");
 assert(!/anime avatar|photo package category|start with headshot/i.test(String(profileCardsSection?.settings?.body ?? "")), "profile cards avoids the old duplicate template");
-assert(profileCardsSection?.settings?.targetHref === "/ai-image-generation/profile-cards", "profile cards maps to Profile Cards");
+assert(profileCardsSection?.settings?.targetHref === "/ai-image-generation/avatar", "profile cards maps to the canonical Avatar route");
 
 let maximumSimilarity = { score: 0, pair: [] };
 for (let leftIndex = 0; leftIndex < pages.length; leftIndex += 1) {
