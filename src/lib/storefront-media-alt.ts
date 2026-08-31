@@ -619,7 +619,8 @@ export function storefrontCreativePackImageAlt({
   // twelve gallery images) or 12 gallery-only alts. Resolve the canonical
   // description by URL first so either representation stays aligned.
   const directAlt = directAltForPackImage(pack, imageUrl);
-  const storedAlt = directAlt || storedAltForPackImage(pack, imageUrl);
+  const isGalleryRole = role === "gallery" || /\/pack-galleries\//i.test(String(imageUrl ?? ""));
+  const storedAlt = isGalleryRole ? undefined : directAlt || storedAltForPackImage(pack, imageUrl);
   return storefrontPackMediaAlt({
     brand,
     category: pack.categoryRecord?.label || pack.category,
