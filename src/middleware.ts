@@ -415,6 +415,32 @@ function withInlineAidreamcapesLogo(html: string, request: NextRequest): string 
   return html.replace(AIDREAMCAPES_LOGO_IMG_RE, AIDREAMCAPES_INLINE_LOGO);
 }
 
+function mydreamshootsImageThemeSeo(request: NextRequest): { title: string; description: string; canonical: string } | undefined {
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  if (storefrontSlugForHost(host) !== "mydreamshoots") return undefined;
+  const slug = request.nextUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/i)?.[1]?.trim().toLowerCase();
+  if (!slug) return undefined;
+  const label = slug.replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+  const title = slug === "edit-by-prompt"
+    ? "AI Edit By Prompt for Safe Scene Changes, Style Adjustments, and Custom Photo Edits | myDreamshoots"
+    : `AI ${label} Photo Package | myDreamshoots`;
+  return {
+    title,
+    description: `Explore private AI ${label.toLowerCase()} photo packages with myDreamshoots. Review examples, credits, and the private gallery workflow before you create.`,
+    canonical: `https://www.mydreamshoots.com/ai-image-generation/${slug}`
+  };
+}
+
+function withMydreamshootsImageThemeSeo(html: string, request: NextRequest): string {
+  const seo = mydreamshootsImageThemeSeo(request);
+  if (!seo) return html;
+  let next = html.replace(/<title\b[^>]*>[\s\S]*?<\/title>/i, `<title>${seo.title}</title>`);
+  next = next.replace(/<meta\b(?=[^>]*name=["']description["'])[^>]*\/?>/i, `<meta name="description" content="${seo.description}"/>`);
+  next = next.replace(/<meta\b(?=[^>]*name=["']robots["'])[^>]*\/?>/i, `<meta name="robots" content="index, follow"/>`);
+  next = next.replace(/<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>/i, `<link rel="canonical" href="${seo.canonical}"/>`);
+  return next;
+}
+
 function shouldInlineAidreamcapesLogo(request: NextRequest): boolean {
   if (isSpanishXbyRequest(request)) return false;
   return siteIconForRequest(request)?.png === AIDREAMCAPES_ICON;
@@ -423,7 +449,7 @@ function shouldInlineAidreamcapesLogo(request: NextRequest): boolean {
 function rewriteStorefrontHtmlHead(html: string, request: NextRequest, shouldReorder: boolean): string {
   const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
   return withStorefrontLocale(
-    withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)),
+    withMydreamshootsImageThemeSeo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request),
     request
   );
 }
@@ -431,7 +457,7 @@ function rewriteStorefrontHtmlHead(html: string, request: NextRequest, shouldReo
 function rewriteStorefrontHtmlFull(html: string, request: NextRequest, shouldReorder: boolean): string {
   const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
   return withStorefrontLocale(
-    withInlineAidreamcapesLogo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request),
+    withMydreamshootsImageThemeSeo(withInlineAidreamcapesLogo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request), request),
     request
   );
 }
