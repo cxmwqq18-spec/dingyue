@@ -1876,7 +1876,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       imageNote: "Problem-to-payoff ad · product-focused storytelling · AI-generated commercial",
       image: image(
         `${productImageRoot}/show-the-product-clearly-before-you-ask-someone-to-buy-it.webp`,
-        "Backpack shown at a clear scale for a product video",
+        "Product demonstration scene in a home kitchen",
         496,
         864
       ),
