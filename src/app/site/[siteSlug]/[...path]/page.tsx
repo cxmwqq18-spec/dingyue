@@ -221,6 +221,12 @@ async function readCollectionRouteState(
   routeMode: StorefrontRouteMode = "path"
 ) {
   const collectionRootPageSlug = fallbackCollectionRootPathForPublicSlug(siteSlug);
+  // MyDreamShoots leaf URLs render the shared published directory with a
+  // focused category. The detail projection omits that directory page and
+  // therefore cannot render the route shell.
+  if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug))) {
+    return readPathModePublicRuntimeState(siteSlug, collectionRootPageSlug, collectionCategory);
+  }
   if (routeMode === "host" && headers) {
     const hostState = await readRoutePublicRuntimeState(
       headers,
