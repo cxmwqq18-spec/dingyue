@@ -575,7 +575,7 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
   // theme label but cannot distinguish two different source images. Let the
   // stable filename or gallery scene fallback add the visual distinction.
   const explicitIsGenericScene = genericSceneAlts.includes(normalizedExplicit) || /^(?:warm festive portrait for a seasonal card album|couple keepsake portrait|professional headshot|creator profile portrait)\.?$/i.test(normalizedExplicit);
-  if (input.role === "card" && /\/pack-covers\//i.test(imageIdentity(input.imageUrl))) {
+  if (input.role === "card" && /\/pack-covers\//i.test(imageIdentity(input.imageUrl)) && (!explicit || explicitIsGenericScene)) {
     return compactMediaAltSentence(sourceAlt, locale);
   }
   if (!isPackGalleryImage && stableSourceImagePattern.test(imageIdentity(input.imageUrl)) && (!explicit || explicitIsGenericScene)) {
