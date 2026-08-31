@@ -7,10 +7,13 @@ import {
   readStorefrontPublicPageMetadataStateByHostFromDatabase,
   readStorefrontPublicRuntimeStateByHostFromDatabase
 } from "@/lib/storefront-state";
-import { metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
+import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { headers } from "next/headers";
 import { storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
+import { canResolveCollectionSlugForSite } from "@/lib/storefront-render";
+import { createPublishedSiteSnapshot } from "@/lib/storefront-context";
+import { parsePublicCollectionRouteForSite } from "@/lib/photo-package-taxonomy";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -26,10 +29,10 @@ function publicHostCandidates(headers: HeaderReader): Array<string | null> {
   ];
 }
 
-async function readRoutePublicRuntimeState(headers: HeaderReader, publicSlug: string, routeMode: StorefrontRouteMode) {
+async function readRoutePublicRuntimeState(headers: HeaderReader, publicSlug: string, routeMode: StorefrontRouteMode, contextSlug?: string) {
   if (routeMode === "host") {
     for (const host of publicHostCandidates(headers)) {
-      const state = await readStorefrontPublicRuntimeStateByHostFromDatabase(host, "/");
+      const state = await readStorefrontPublicRuntimeStateByHostFromDatabase(host, "/", contextSlug);
       if (state?.sites[0]) return state;
     }
   }
@@ -46,14 +49,34 @@ async function readRoutePublicMetadataState(headers: HeaderReader, publicSlug: s
   return readPathModePublicMetadataState(publicSlug, "/");
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: { params: Promise<{ siteSlug: string }>; searchParams?: Promise<Record<string, string | string[] | undefined>> }): Promise<Metadata> {
   const { siteSlug } = await params;
   const publicSlug = publicSiteSlug(siteSlug);
+  const query = searchParams ? await searchParams : {};
+  const category = typeof query.category === "string" ? query.category : Array.isArray(query.category) ? query.category[0] : undefined;
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
-  const state = await readRoutePublicMetadataState(headerStore, publicSlug, routeMode);
+  const state = category
+    ? await readRoutePublicRuntimeState(headerStore, publicSlug, routeMode, category)
+    : await readRoutePublicMetadataState(headerStore, publicSlug, routeMode);
   const site = state?.sites[0];
   if (!site) return {};
+  if (category) {
+    const route = parsePublicCollectionRouteForSite(site, ["ai-image-generation", category]);
+    if (route?.collectionSlug && canResolveCollectionSlugForSite(state, site, route.collectionSlug)) {
+      const snapshot = createPublishedSiteSnapshot(state, site, { source: "postgres" });
+      return metadataForPublishedStorefrontDirectoryPage({
+        site,
+        page: getPage(site, "/"),
+        kind: "collection",
+        directorySlug: route.collectionSlug,
+        path: route.canonicalPath,
+        products: state.products,
+        creativePacks: state.creativePacks,
+        snapshot
+      });
+    }
+  }
   return metadataForPublishedStorefrontPage({ site, page: getPage(site, "/"), products: state.products, creativePacks: state.creativePacks });
 }
 
