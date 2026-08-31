@@ -535,6 +535,16 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
   const upstreamUrl = sameServerUrl(request);
   const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
   if (!hostSlug || upstreamUrl.pathname.startsWith("/site/")) return upstreamUrl;
+  // Keep MyDreamShoots image-theme URLs on the directory renderer. The
+  // directory query path carries the full published shell required by the
+  // focused category view, while the legacy internal leaf branch only loads
+  // a detail projection and can incorrectly return 404.
+  const imageThemeMatch = upstreamUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/);
+  if (hostSlug === "mydreamshoots" && imageThemeMatch?.[1]) {
+    upstreamUrl.pathname = `/site/${hostSlug}/ai-image-generation`;
+    upstreamUrl.searchParams.set("category", imageThemeMatch[1]);
+    return upstreamUrl;
+  }
   upstreamUrl.pathname = `/site/${hostSlug}${upstreamUrl.pathname === "/" ? "" : upstreamUrl.pathname}`;
   return upstreamUrl;
 }
