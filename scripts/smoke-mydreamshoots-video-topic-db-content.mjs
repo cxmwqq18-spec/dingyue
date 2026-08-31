@@ -133,6 +133,7 @@ assert.match(routeSource, /resolvePublishedRouteDisposition/, "public video rout
 assert.doesNotMatch(routeSource, /getVideoThemeSlugRedirectRelational/, "public video routes must not use relational redirect fallbacks");
 assert.match(syncSource, /draftJson:\s*toPrismaJson\(page\.draftJson\)/, "video sync must write editable content only to ThemePage draftJson");
 assert.doesNotMatch(syncSource, /publishedJson:\s*toPrismaJson\(page\.(?:draftJson|publishedJson)/, "video sync must not write public content directly to ThemePage publishedJson");
+assert.match(syncSource, /syncStoredVideoTopicUseCaseImages/, "video sync must refresh every topic's use-case card media from its canonical content seed");
 
 const prisma = new PrismaClient();
 try {
