@@ -43,7 +43,7 @@ assert.match(renderer, /Featured AI Video Generators/, "homepage must render the
 assert.match(renderer, /AI Save the Date Videos/, "homepage must support the Save the Date module");
 assert.match(renderer, /Featured AI Photo Generators/, "homepage must retain the photo module");
 assert.match(logoShowcase, /CREATIVE SHOWCASE/, "MyDreamShoots logo wall must render the supplied HTML eyebrow");
-assert.match(logoShowcase, /Made with <span>MyDreamShoots<\/span>/, "MyDreamShoots logo wall must render the HTML heading");
+assert.match(logoShowcase, /<h2 id="mydreamshoots-logo-showcase-title">\s*<span>\{title\}<\/span>/, "MyDreamShoots logo wall must render the database-driven HTML heading");
 assert.match(logoShowcase, /Ideas, brands and visual experiments brought together with AI\./, "MyDreamShoots logo wall must render the supplied HTML subtitle");
 assert.match(logoShowcase, /<h2 id="mydreamshoots-logo-showcase-title">/, "MyDreamShoots logo wall must retain the example HTML heading semantics");
 assert.match(logoShowcase, /<LogoGroup duplicate logos=\{logos\} \/>/, "MyDreamShoots logo rows must duplicate their groups for seamless animation");
