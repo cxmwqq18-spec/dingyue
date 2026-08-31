@@ -400,6 +400,49 @@ const promoVideoGenerationProducts = promoVideoGenerationGraph.filter((node) => 
 const videoAdGenerationProducts = videoAdGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const collectionProduct = collectionProducts[0];
 const collectionOffer = collectionProduct?.offers;
+const packageFacts = {
+  "background-changer": { outputCount: 12, creditCost: 12 },
+  "background-remover": { outputCount: 10, creditCost: 10 },
+  bikini: { outputCount: 24, creditCost: 24 },
+  "black-friday": { outputCount: 20, creditCost: 22 },
+  boudoir: { outputCount: 24, creditCost: 24 },
+  cannes: { outputCount: 24, creditCost: 24 }
+};
+const pricingGraph = graphNodes(pricing);
+const pricingOfferCatalog = pricingGraph.find((node) => node?.["@type"] === "OfferCatalog");
+const pricingOffers = Array.isArray(pricingOfferCatalog?.itemListElement) ? pricingOfferCatalog.itemListElement : [];
+const starterOffer = pricingOffers.find((offer) => offer?.name === "Starter");
+for (const [slug, facts] of Object.entries(packageFacts)) {
+  const pathname = `/ai-image-generation/${slug}`;
+  const html = focusCollections[pathname];
+  assert.ok(html, `${pathname} must be published for the P1-01 package contract`);
+  const text = visibleText(html);
+  assert.match(text, new RegExp(`\\b${facts.outputCount} (?:Photos|outputs)\\b`, "i"), `${pathname} visible copy must show its output count`);
+  assert.match(text, new RegExp(`\\b${facts.creditCost} credits\\b`, "i"), `${pathname} visible copy must show its credit cost`);
+  const graph = graphNodes(html);
+  const products = graph.filter((node) => node?.["@type"] === "Product");
+  assert.equal(products.length, 1, `${pathname} must expose one Product node`);
+  const product = products[0];
+  const canonical = canonicalHref(html);
+  const ogUrl = firstMatch(html, /<meta\s+property=["']og:url["']\s+content=["']([^"']*)["']/i);
+  assert.equal(sitemapHasLoc(product.url), true, `${pathname} canonical Product URL must be present in the sitemap`);
+  assert.equal(product.offers, undefined, `${pathname} Product must not inherit a site-level subscription Offer`);
+  assert.equal(JSON.stringify(product).includes("Starter"), false, `${pathname} Product must not expose Starter`);
+  assert.equal(JSON.stringify(product).includes("24.50"), false, `${pathname} Product must not expose the Starter price`);
+  assert.equal(JSON.stringify(product).includes("/pricing"), false, `${pathname} Product must not reference /pricing`);
+  assert.equal(product.url, `https://www.mydreamshoots.com${pathname}`, `${pathname} Product URL must match the visible page`);
+  assert.equal(product.mainEntityOfPage, product.url, `${pathname} Product mainEntityOfPage must match its URL`);
+  assert.equal(canonical, product.url, `${pathname} canonical must match its Product URL`);
+  assert.equal(ogUrl, product.url, `${pathname} og:url must match its Product URL`);
+}
+assert.match(visibleText(pricing), /Starter/i, "pricing visible copy must retain the Starter subscription");
+assert.match(pricing, /\$24\.50/, "pricing visible copy must retain the $24.50 price");
+assert.equal(starterOffer?.["@type"], "Offer", "pricing JSON-LD must retain the Starter Offer");
+assert.equal(starterOffer?.price, "24.50", "pricing JSON-LD Starter Offer must retain the $24.50 price");
+assert.equal(starterOffer?.priceCurrency, "USD", "pricing JSON-LD Starter Offer must retain USD currency");
+assert.equal(starterOffer?.url, "https://www.mydreamshoots.com/pricing", "pricing JSON-LD Starter Offer must point to /pricing");
+assert.equal(canonicalHref(pricing), "https://www.mydreamshoots.com/pricing", "pricing canonical must remain self-referential");
+assert.equal(firstMatch(pricing, /<meta\s+property=["']og:url["']\s+content=["']([^"']*)["']/i), "https://www.mydreamshoots.com/pricing", "pricing og:url must remain self-referential");
 const aiImageOgImage = firstMatch(aiImageDirectory, /<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i);
 const aiImageTwitterImage = firstMatch(aiImageDirectory, /<meta\s+name=["']twitter:image["']\s+content=["']([^"']+)["']/i);
 assert.ok(aiImageOgImage, "AI Image directory SSR must contain og:image");
@@ -869,15 +912,7 @@ if (headshotIsPublished) {
   assert.equal(collectionProduct?.subjectOf?.url, collectionProduct?.subjectOf?.contentUrl, "collection ImageObject url should match contentUrl");
   assert.equal(collectionProduct?.subjectOf?.thumbnailUrl, collectionProduct?.image?.[0], "collection ImageObject thumbnail should use the Product cover");
   assert.match(collectionProduct?.subjectOf?.encodingFormat ?? "", /^image\//, "collection ImageObject must expose image encodingFormat");
-  if (!hasProviderBackedPrice) {
-    assert.equal(collectionOffer, undefined, "collection Product must not expose a manual or draft price as an Offer");
-  } else {
-    assert.equal(collectionOffer?.["@type"], "Offer", "collection Product must contain a provider-backed Offer");
-    assert.equal(collectionOffer?.priceCurrency, "USD", "collection Offer must use USD");
-    assert.match(collectionOffer?.price ?? "", /^\d+\.\d{2}$/, "collection Offer must contain a decimal price");
-    assert.ok(["https://schema.org/InStock", "https://schema.org/OutOfStock"].includes(collectionOffer?.availability), "collection Offer availability must use a schema.org URL");
-    assert.equal(collectionOffer?.itemCondition, "https://schema.org/NewCondition", "collection Offer must use the schema.org NewCondition URL");
-  }
+  assert.equal(collectionOffer, undefined, "collection Product must not expose a site-level subscription Offer");
   assert.ok((collectionProduct?.additionalProperty ?? []).some((property) => property?.name === "Credit cost"), "collection Product must expose credit cost");
   assert.ok((collectionProduct?.additionalProperty ?? []).some((property) => property?.name === "Output count"), "collection Product must expose output count");
 }

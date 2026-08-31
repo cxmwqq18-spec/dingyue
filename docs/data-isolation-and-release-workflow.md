@@ -1,11 +1,10 @@
 # Data Isolation And Release Workflow
 
-This project keeps local, test, and production data separate. The default development server uses the explicit remote read-write tunnel; isolated local development remains available through its dedicated command.
+This project keeps local, test, and production data separate. The default development server uses the isolated local PostgreSQL database; remote database development is explicit.
 
 ## Environment Targets
 
-- `npm run dev:local` uses `DINGYUE_ENV=local`, `DATABASE_TARGET=local`, and `127.0.0.1:15433/dingyue_local`. The launcher starts the local PostgreSQL compose service, waits for its health check, applies pending Prisma migrations, and then starts Next.js.
-- `npm run dev` and `npm run dev:3002` default to the explicit remote read-write development mode (`DINGYUE_ENV=remote`, `DATABASE_TARGET=remote`) through the SSH tunnel at `127.0.0.1:15432`. Use these commands only when remote read-write access is intended; use `npm run dev:local` for isolated local data.
+- `npm run dev`, `npm run dev:local`, and `npm run dev:3002` use `DINGYUE_ENV=local`, `DATABASE_TARGET=local`, and `127.0.0.1:15433/dingyue_local`. The launcher starts the local PostgreSQL compose service, waits for its health check, applies pending Prisma migrations, and then starts Next.js.
 - `npm run dev:remote-readonly` uses `DINGYUE_ENV=remote-readonly`, `DATABASE_TARGET=remote-readonly`, and the production database through `127.0.0.1:15432`. This remote read-only path is explicit.
 - `npm run dev:remote` is an explicit remote read-write mode and must only be used for approved operational work.
 - Test releases must use `DINGYUE_ENV=test` and `DATABASE_TARGET=test` with a test-only database account.

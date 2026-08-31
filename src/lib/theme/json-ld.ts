@@ -771,14 +771,12 @@ function packProductSchema({
   routeMode,
   pagePath,
   pack,
-  context,
   description
 }: {
   site: Site;
   routeMode: "host" | "path";
   pagePath: string;
   pack: CreativePack;
-  context: StorefrontContext;
   description: string;
 }): JsonLdNode | undefined {
   if (!isPrimaryMyDreamShootsSite(site)) return undefined;
@@ -791,19 +789,7 @@ function packProductSchema({
   const primaryImageUrl = absoluteUrl(site, routeMode, image);
   const productName = cleanSchemaText(site, pack.name, "MyDreamShoots AI photo package");
   const productDescription = cleanSchemaText(site, pack.description, description);
-  const offerSource = context?.offers.lowestPublicMonthlySubscriptionPrice;
-  const offerUrl = absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, "/pricing"));
   const subjectImageDimensions = imageDimensions(subjectImage);
-  const offer = offerSource ? {
-    "@type": "Offer",
-    "@id": `${url}#offer`,
-    name: cleanSchemaText(site, offerSource.product.name, offerSource.price.label),
-    url: offerUrl,
-    priceCurrency: offerSource.price.currency.toUpperCase(),
-    price: (offerSource.price.amountCents / 100).toFixed(2),
-    availability: offerSource?.checkoutEnabled ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-    itemCondition: "https://schema.org/NewCondition"
-  } : undefined;
   const additionalProperty: JsonLdNode[] = [
     {
       "@type": "PropertyValue",
@@ -830,7 +816,6 @@ function packProductSchema({
     image: imagePaths.map((path) => absoluteUrl(site, routeMode, path)),
     url,
     mainEntityOfPage: url,
-    ...(offer ? { offers: offer } : {}),
     additionalProperty,
     subjectOf: {
       "@type": "ImageObject",
@@ -1222,7 +1207,6 @@ export function buildCollectionDirectoryJsonLd({
           routeMode,
           pagePath,
           pack: matchingPacks[0],
-          context,
           description: item.description
         })].filter(Boolean) as JsonLdNode[]
       : [])

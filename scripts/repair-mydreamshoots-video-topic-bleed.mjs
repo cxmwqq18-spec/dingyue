@@ -29,8 +29,10 @@ function cleanUrl(topic, baseName) {
 
 async function writeCleanAsset(sourcePath, outputPath, frame) {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  await sharp(sourcePath)
-    .extract(frame)
+  const image = sharp(sourcePath).rotate();
+  const metadata = await image.metadata();
+  if (metadata.width === 1080 && metadata.height === 1920) image.extract(frame);
+  await image
     .resize(1600, 900, { fit: "cover", position: "centre" })
     .webp({ quality: 92 })
     .toFile(outputPath);

@@ -309,11 +309,13 @@ try {
           });
           assert.equal(result.pageMarker, 1, `${topic} ${viewport.name} should render one shared page marker`);
           const usesCleanTopicMedia = ["tiktok-video", "instagram-reels", "social-media-video", "story-video"].includes(topic);
+          const usesCoverTopicMedia = usesCleanTopicMedia || topic === "youtube-video";
           const expectedHeroObjectFit = ["tiktok-video", "instagram-reels"].includes(topic)
             ? "contain"
             : ["talking-photo", "cinematic-video", "music-video"].includes(topic)
               ? "cover"
-              : usesCleanTopicMedia ? "cover" : "contain";
+              : usesCoverTopicMedia ? "cover" : "contain";
+          const expectedCardObjectFit = usesCoverTopicMedia ? "cover" : "contain";
           assert.equal(result.hero.objectFit, expectedHeroObjectFit, `${topic} ${viewport.name} hero media must preserve its intended framing`);
           assert.equal(result.hero.legacyBlurredMedia, false, `${topic} ${viewport.name} hero must not use a legacy blurred-bleed asset`);
           assert.equal(result.hero.width > 0 && result.hero.height > 0, true, `${topic} ${viewport.name} hero media must have a visible frame`);
@@ -328,10 +330,14 @@ try {
           assert.equal(new Set(result.media.map((media) => media.src)).size, 6, `${topic} ${viewport.name} use-case images must be unique`);
           assert.equal(result.media.every((media) => media.loaded && media.alt.trim()), true, `${topic} ${viewport.name} use-case images must load with alt text`);
           assert.equal(result.media.every((media) => !media.legacyBlurredMedia), true, `${topic} ${viewport.name} use-case images must not use legacy blurred-bleed assets`);
-          assert.equal(result.media.every((media) => media.objectFit === expectedHeroObjectFit), true, `${topic} ${viewport.name} use-case images must preserve their intended framing`);
+          assert.equal(result.media.every((media) => media.objectFit === expectedCardObjectFit), true, `${topic} ${viewport.name} use-case images must preserve their intended framing`);
           assert.equal(result.media.every((media) => media.width > 0 && media.height > 0), true, `${topic} ${viewport.name} media must have visible frames`);
           if (usesCleanTopicMedia) {
-            assert.equal(result.media.every((media) => Math.abs(media.width / media.height - 16 / 9) < 0.04), true, `${topic} ${viewport.name} clean media must use 16:9 frames`);
+            assert.equal(
+              result.media.every((media) => [16 / 9, 4 / 3].some((ratio) => Math.abs(media.width / media.height - ratio) < 0.04)),
+              true,
+              `${topic} ${viewport.name} clean media must use stable 16:9 or 4:3 frames`
+            );
           }
           assert.equal(result.cardLinks.length, 0, `${topic} ${viewport.name} use-case cards must not expose repeated actions`);
           assert.equal(result.workspaceCtaCount, 3, `${topic} ${viewport.name} should expose hero, steps, and final workspace CTAs`);

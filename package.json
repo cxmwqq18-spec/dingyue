@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/dev-remote.mjs",
+    "dev": "node scripts/dev-local.mjs",
     "dev:local": "node scripts/dev-local.mjs",
-    "dev:3002": "node scripts/dev-remote.mjs",
+    "dev:3002": "node scripts/dev-local.mjs",
     "dev:remote": "node scripts/dev-remote.mjs",
     "dev:remote-readonly": "node scripts/dev-remote-readonly.mjs",
     "dev:clean-caches": "node scripts/clean-next-caches.mjs",

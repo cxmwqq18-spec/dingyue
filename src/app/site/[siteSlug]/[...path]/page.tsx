@@ -356,6 +356,9 @@ export default async function SiteCatchAllPage({
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
   if (isPrimaryMydreamshootsSlug(publicSlug) && legacyVideoTarget) permanentRedirect(routePath(legacyVideoTarget));
+  if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/ai-image-generation/motion-generator") {
+    permanentRedirect(routePath("/ai-video-generation/motion-generator"));
+  }
   if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/ai-image-generation/profile-cards") {
     permanentRedirect(routePath("/ai-image-generation/avatar"));
   }

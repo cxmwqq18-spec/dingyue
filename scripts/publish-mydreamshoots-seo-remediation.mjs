@@ -44,7 +44,9 @@ function isolateVideoTopicImages(content) {
   const source = (image) => image && typeof image === "object" && typeof image.src === "string" ? image.src : "";
   const heroSource = source(next.hero?.image);
   if (Array.isArray(next.hero?.images)) {
-    const seen = new Set([heroSource]);
+    // Preserve the complete carousel. The shared landing renderer treats
+    // hero.images as the explicit preview list, including its canonical cover.
+    const seen = new Set();
     next.hero.images = next.hero.images.filter((image) => {
       const imageSource = source(image);
       if (!imageSource || seen.has(imageSource)) return false;

@@ -173,11 +173,6 @@ const verifiedOffers = schemaContext.offers.active.filter((offer) => (
   && /^price_[A-Za-z0-9]+$/.test(String(offer.price.stripePriceId ?? ""))
   && Boolean(offer.price.providerVerifiedAt)
 ));
-const lowestVerifiedMonthlyUsdCents = Math.min(
-  ...verifiedOffers
-    .filter((offer) => offer.product.type === "subscription" && offer.price.interval === "month")
-    .map((offer) => offer.price.amountCents)
-);
 
 assert.equal(activePacks.length, 38, "MyDreamShoots should expose 38 active photo package themes");
 assert.equal(activeProducts.length, 7, "MyDreamShoots should expose 7 active pricing products");
@@ -235,7 +230,8 @@ for (const video of videoObjects) {
 const productPaths = new Set();
 // Product detail coverage is exercised by the dedicated catalog smoke; this
 // contract smoke focuses on active snapshot schema and image sitemap wiring.
-const publishedPacks = [];
+const publishedPacks = publishedSiteSnapshot.creativePacks
+  .filter((pack) => pack.siteId === site.id && pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0);
 for (const pack of publishedPacks) {
   const canonicalPath = canonicalSeoDirectoryPathForSite(site, "collection", pack.category || pack.name);
   productPaths.add(canonicalPath);
@@ -273,18 +269,10 @@ for (const pack of publishedPacks) {
   assert.equal(product.subjectOf.representativeOfPage, true, `${canonicalPath} ImageObject should be representative of the page`);
   assertPositiveInteger(product.subjectOf.width, `${canonicalPath} ImageObject width`);
   assertPositiveInteger(product.subjectOf.height, `${canonicalPath} ImageObject height`);
-  if (verifiedOffers.length === 0) {
-    assert.equal(product.offers, undefined, `${canonicalPath} must not expose an unverified manual/draft price offer`);
-  } else {
-    assert.equal(product.offers?.["@type"], "Offer", `${canonicalPath} Product should include one verified Offer`);
-    assertMydreamshootsEntityId(product.offers?.["@id"], `${canonicalPath} Offer @id`);
-    assertAbsoluteUrl(product.offers.url, `${canonicalPath} Offer url`);
-    assert.equal(product.offers.availability, "https://schema.org/OutOfStock", `${canonicalPath} availability should reflect disabled checkout until local billing is enabled`);
-    assert.equal(product.offers.itemCondition, "https://schema.org/NewCondition", `${canonicalPath} itemCondition should use schema.org URL`);
-    assert.equal(product.offers.priceCurrency, "USD", `${canonicalPath} offer currency should be USD`);
-    assert.match(product.offers.price, /^\d+\.\d{2}$/, `${canonicalPath} offer price should be a decimal string`);
-    assert.equal(Math.round(Number(product.offers.price) * 100), lowestVerifiedMonthlyUsdCents, `${canonicalPath} offer should use the lowest verified monthly USD price`);
-  }
+  assert.equal(product.offers, undefined, `${canonicalPath} theme Product must not inherit a site-level subscription Offer`);
+  assert.equal(JSON.stringify(product).includes("/pricing"), false, `${canonicalPath} theme Product must not reference the pricing page`);
+  assert.equal(JSON.stringify(product).includes("Starter"), false, `${canonicalPath} theme Product must not reference the Starter subscription`);
+  assert.equal(JSON.stringify(product).includes("24.50"), false, `${canonicalPath} theme Product must not reference the Starter price`);
   const propertyNames = new Set((product.additionalProperty ?? []).map((property) => property.name));
   assert.ok(propertyNames.has("Credit cost"), `${canonicalPath} should expose credit cost as additionalProperty`);
   assert.ok(propertyNames.has("Output count"), `${canonicalPath} should expose output count as additionalProperty`);

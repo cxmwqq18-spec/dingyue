@@ -39,6 +39,239 @@
   --designer-accent: #f4a719;
 }
 
+@keyframes mydreamshoots-logo-marquee-left {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(calc(-50% - var(--mydreamshoots-logo-gap) / 2), 0, 0); }
+}
+
+@keyframes mydreamshoots-logo-marquee-right {
+  from { transform: translate3d(calc(-50% - var(--mydreamshoots-logo-gap) / 2), 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+.mydreamshoots-logo-showcase {
+  --logo-showcase-mx: 50%;
+  --logo-showcase-my: 48%;
+  --mydreamshoots-logo-card-w: 128px;
+  --mydreamshoots-logo-card-h: 104px;
+  --mydreamshoots-logo-gap: 16px;
+  --mydreamshoots-logo-duration: 48s;
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  overflow: hidden;
+  padding: clamp(62px, 7vw, 94px) 0 clamp(70px, 8vw, 108px);
+  color: #f7f8fb;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: linear-gradient(180deg, #090b10 0%, #07090d 100%);
+}
+
+.mydreamshoots-logo-showcase::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(520px circle at var(--logo-showcase-mx) var(--logo-showcase-my), rgba(86, 62, 190, 0.13), transparent 52%),
+    radial-gradient(420px circle at calc(var(--logo-showcase-mx) + 12%) calc(var(--logo-showcase-my) + 8%), rgba(28, 177, 229, 0.07), transparent 58%);
+  transition: opacity 0.3s ease;
+}
+
+.mydreamshoots-logo-showcase::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(to bottom, transparent, #000 32%, #000 70%, transparent);
+}
+
+.mydreamshoots-logo-showcase__ambient {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  z-index: -1;
+  width: min(720px, 72vw);
+  height: 190px;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0.17;
+  background: linear-gradient(90deg, #ff973c, #e14bc7 42%, #723cff 68%, #17d5e7);
+  filter: blur(46px);
+  transform: translateX(-50%);
+}
+
+.mydreamshoots-logo-showcase__heading {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto clamp(38px, 5vw, 58px);
+  text-align: center;
+}
+
+.mydreamshoots-logo-showcase__eyebrow {
+  margin-bottom: 13px;
+  color: #a5a9b6;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.22em;
+}
+
+.mydreamshoots-logo-showcase h2 {
+  margin: 0;
+  font-size: clamp(30px, 3.15vw, 46px);
+  font-weight: 760;
+  line-height: 1.06;
+  letter-spacing: 0;
+}
+
+.mydreamshoots-logo-showcase h2 span {
+  color: transparent;
+  background: linear-gradient(90deg, #fff 0%, #e5d4ff 34%, #a5dcff 74%, #fff 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.mydreamshoots-logo-showcase__heading p {
+  max-width: 680px;
+  margin: 14px auto 0;
+  color: #9398a8;
+  font-size: clamp(14px, 1.4vw, 17px);
+  line-height: 1.6;
+}
+
+.mydreamshoots-logo-marquee {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  overflow: hidden;
+  padding: 4px 0;
+  mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+.mydreamshoots-logo-row {
+  width: 100%;
+  overflow: hidden;
+}
+
+.mydreamshoots-logo-track,
+.mydreamshoots-logo-group {
+  display: flex;
+  gap: var(--mydreamshoots-logo-gap);
+}
+
+.mydreamshoots-logo-track {
+  width: max-content;
+  will-change: transform;
+}
+
+.mydreamshoots-logo-group {
+  padding-left: var(--mydreamshoots-logo-gap);
+}
+
+.mydreamshoots-logo-row--left .mydreamshoots-logo-track {
+  animation: mydreamshoots-logo-marquee-left var(--mydreamshoots-logo-duration) linear infinite;
+}
+
+.mydreamshoots-logo-row--right .mydreamshoots-logo-track {
+  animation: mydreamshoots-logo-marquee-right calc(var(--mydreamshoots-logo-duration) * 1.08) linear infinite;
+}
+
+.mydreamshoots-logo-marquee:hover .mydreamshoots-logo-track {
+  animation-play-state: paused;
+}
+
+.mydreamshoots-logo-card {
+  position: relative;
+  display: grid;
+  flex: 0 0 var(--mydreamshoots-logo-card-w);
+  place-items: center;
+  width: var(--mydreamshoots-logo-card-w);
+  height: var(--mydreamshoots-logo-card-h);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)), rgba(255, 255, 255, 0.042);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045), 0 12px 32px rgba(0, 0, 0, 0.14);
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.28s ease, background-color 0.28s ease, box-shadow 0.28s ease;
+}
+
+.mydreamshoots-logo-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  background: radial-gradient(circle at 50% 100%, rgba(95, 119, 255, 0.24), transparent 64%);
+  transition: opacity 0.28s ease;
+}
+
+.mydreamshoots-logo-card:hover {
+  z-index: 3;
+  border-color: rgba(143, 116, 255, 0.58);
+  background-color: rgba(255, 255, 255, 0.068);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.075), 0 16px 44px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(109, 92, 255, 0.08), 0 0 36px rgba(85, 67, 212, 0.12);
+  transform: translateY(-5px) scale(1.025);
+}
+
+.mydreamshoots-logo-card:hover::after { opacity: 1; }
+
+.mydreamshoots-logo-card img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  border-radius: 10px;
+  filter: saturate(0.94) contrast(1.01);
+  transform: translateZ(0);
+  transition: transform 0.28s ease, filter 0.28s ease;
+}
+
+.mydreamshoots-logo-card:hover img {
+  filter: saturate(1.08) contrast(1.02);
+  transform: scale(1.035);
+}
+
+@media (max-width: 760px) {
+  .mydreamshoots-logo-showcase {
+    --mydreamshoots-logo-card-w: 116px;
+    --mydreamshoots-logo-card-h: 94px;
+    --mydreamshoots-logo-gap: 12px;
+    --mydreamshoots-logo-duration: 38s;
+    padding: 54px 0 66px;
+  }
+
+  .mydreamshoots-logo-showcase__heading {
+    width: min(calc(100% - 28px), 680px);
+    margin-bottom: 34px;
+  }
+
+  .mydreamshoots-logo-showcase__heading p { font-size: 14px; }
+  .mydreamshoots-logo-marquee { gap: 12px; mask-image: linear-gradient(to right, transparent, #000 3.5%, #000 96.5%, transparent); }
+  .mydreamshoots-logo-card { border-radius: 14px; }
+  .mydreamshoots-logo-card img { width: 68px; height: 68px; border-radius: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mydreamshoots-logo-track { animation: none !important; transform: none !important; }
+  .mydreamshoots-logo-row { overflow-x: auto; scrollbar-width: none; }
+  .mydreamshoots-logo-row::-webkit-scrollbar { display: none; }
+  .mydreamshoots-logo-group[aria-hidden="true"] { display: none; }
+  .mydreamshoots-logo-card,
+  .mydreamshoots-logo-card img { transition: none; }
+}
+
 * {
   box-sizing: border-box;
 }

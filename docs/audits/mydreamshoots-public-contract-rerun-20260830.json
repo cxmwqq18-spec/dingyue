@@ -1,0 +1,2742 @@
+{
+  "recordedAt": "2026-08-30T11:33:15.083Z",
+  "origin": "https://www.mydreamshoots.com",
+  "batchSize": 2,
+  "coverageComplete": true,
+  "sitemap": {
+    "url": "https://www.mydreamshoots.com/sitemap.xml",
+    "status": 200,
+    "finalUrl": "https://www.mydreamshoots.com/sitemap.xml",
+    "urlCount": 53,
+    "uniqueUrlCount": 53,
+    "imageReferenceCount": 254,
+    "issues": [],
+    "robotsIssues": [],
+    "detailImageDuplicateGroups": []
+  },
+  "summary": {
+    "pageCount": 53,
+    "statusCounts": {
+      "200": 53
+    },
+    "stateCounts": {
+      "INDEXABLE": 51,
+      "REVIEW_REQUIRED": 2
+    },
+    "pagesWithFailures": 2,
+    "internalLeakPages": 0,
+    "timeoutOrRequestErrorPages": 0
+  },
+  "performance": {
+    "status": "REVIEW_REQUIRED",
+    "reason": "PageSpeed Insights API key was not supplied; no performance claim was made."
+  },
+  "pages": [
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/",
+      "finalUrl": "https://www.mydreamshoots.com/",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Video &amp; Photo Generator | myDreamshoots",
+      "description": "Create AI videos from your photos, professional AI headshots, portraits, and themed photo sets. Make personalized Save the Date videos with myDreamshoots.",
+      "h1": "Create AI Videos, Professional AI Headshots &amp; Photo Sets from Your Images",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/",
+      "ogUrl": "https://www.mydreamshoots.com/",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/",
+        "finalUrl": "https://www.mydreamshoots.com/",
+        "pageType": "home",
+        "userProblem": "Create AI videos from your photos, professional AI headshots, portraits, and themed photo sets. Make personalized Save the Date videos with myDreamshoots.",
+        "mainObjectScenarioOrFunction": "Create AI Videos, Professional AI Headshots &amp; Photo Sets from Your Images",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Create AI Videos, Professional AI Headshots &amp; Photo Sets from Your Images",
+        "nextAction": {
+          "label": "Create Now",
+          "url": "https://www.mydreamshoots.com/login"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 7,
+          "h3Count": 31,
+          "imageCount": 86,
+          "faqCount": 38,
+          "internalLinkCount": 238,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/about-us",
+      "finalUrl": "https://www.mydreamshoots.com/about-us",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "About private AI photo packages and galleries",
+      "description": "Learn about myDreamshoots, a private AI photo package workspace for portrait photos, headshots, fan photos, style sets, credits, and gallery delivery.",
+      "h1": "Private AI photo packages with clear credits and real customer delivery.",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/about-us",
+      "ogUrl": "https://www.mydreamshoots.com/about-us",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/about-us",
+        "finalUrl": "https://www.mydreamshoots.com/about-us",
+        "pageType": "standard-page",
+        "userProblem": "Learn about myDreamshoots, a private AI photo package workspace for portrait photos, headshots, fan photos, style sets, credits, and gallery delivery.",
+        "mainObjectScenarioOrFunction": "Private AI photo packages with clear credits and real customer delivery.",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Private AI photo packages with clear credits and real customer delivery.",
+        "nextAction": {
+          "label": "Explore photo packages",
+          "url": "https://www.mydreamshoots.com/ai-image-generation"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 2,
+          "h3Count": 6,
+          "imageCount": 4,
+          "faqCount": 23,
+          "internalLinkCount": 188,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-image-generation",
+      "finalUrl": "https://www.mydreamshoots.com/ai-image-generation",
+      "status": 200,
+      "state": "REVIEW_REQUIRED",
+      "title": "Browse private AI photo packages | myDreamshoots",
+      "description": "Browse myDreamshoots packages for headshots, fan photos, portrait photos, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs.",
+      "h1": "AI Photo Packages for Every Style and Goal",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-image-generation",
+      "ogUrl": "https://www.mydreamshoots.com/ai-image-generation",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [
+        "Edit By Prompt portrait."
+      ],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-image-generation",
+        "finalUrl": "https://www.mydreamshoots.com/ai-image-generation",
+        "pageType": "directory",
+        "userProblem": "Browse myDreamshoots packages for headshots, fan photos, portrait photos, beauty looks, AI shoot packages, and cinematic private albums with visible credit costs.",
+        "mainObjectScenarioOrFunction": "AI Photo Packages for Every Style and Goal",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "AI Photo Packages for Every Style and Goal",
+        "nextAction": {
+          "label": "Browse photo packages",
+          "url": "https://www.mydreamshoots.com/#package-taxonomy"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 53,
+          "h3Count": 10,
+          "imageCount": 52,
+          "faqCount": 29,
+          "internalLinkCount": 221,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "REVIEW_REQUIRED",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": [
+        "forbidden_alt_content"
+      ]
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-save-the-date/christmas",
+      "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/christmas",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Christmas Photo and Video Maker | Create Holiday Magic",
+      "description": "Create AI Christmas photos and videos for holiday cards, family memories, festive portraits, winter scenes, pet photos, social posts, and seasonal greetings.",
+      "h1": "Create AI Christmas Photos and Videos",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/ai-save-the-date/christmas",
+      "ogUrl": "https://www.mydreamshoots.com/ai-save-the-date/christmas",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-save-the-date/christmas",
+        "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/christmas",
+        "pageType": "theme-detail",
+        "userProblem": "Create AI Christmas photos and videos for holiday cards, family memories, festive portraits, winter scenes, pet photos, social posts, and seasonal greetings.",
+        "mainObjectScenarioOrFunction": "Create AI Christmas Photos and Videos",
+        "adjacentPageFamily": "/ai-save-the-date",
+        "primaryKeywordTheme": "Create AI Christmas Photos and Videos",
+        "nextAction": {
+          "label": "Create christmas content",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 9,
+          "h3Count": 42,
+          "imageCount": 35,
+          "faqCount": 33,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-save-the-date/engagement",
+      "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/engagement",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Engagement Photo &amp; Video Maker | myDreamshoots",
+      "description": "Create an AI engagement photo and video from couple images. Make a cinematic announcement or save-the-date story for social, email, and wedding websites.",
+      "h1": "Create an AI Engagement Photo &amp; Save the Date Video",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/ai-save-the-date/engagement",
+      "ogUrl": "https://www.mydreamshoots.com/ai-save-the-date/engagement",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-save-the-date/engagement",
+        "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/engagement",
+        "pageType": "theme-detail",
+        "userProblem": "Create an AI engagement photo and video from couple images. Make a cinematic announcement or save-the-date story for social, email, and wedding websites.",
+        "mainObjectScenarioOrFunction": "Create an AI Engagement Photo &amp; Save the Date Video",
+        "adjacentPageFamily": "/ai-save-the-date",
+        "primaryKeywordTheme": "Create an AI Engagement Photo &amp; Save the Date Video",
+        "nextAction": {
+          "label": "Create an Engagement Photo or Video",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 10,
+          "h3Count": 15,
+          "imageCount": 14,
+          "faqCount": 30,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-save-the-date/fathers-day",
+      "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/fathers-day",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Father&#x27;s Day Photo &amp; Video Maker | Family Visuals",
+      "description": "Create Father&#x27;s Day photos and videos with AI for family portraits, gifts, outdoor memories, dinners, and heartfelt appreciation.",
+      "h1": "Create Father’s Day Photos and Videos with AI",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/ai-save-the-date/fathers-day",
+      "ogUrl": "https://www.mydreamshoots.com/ai-save-the-date/fathers-day",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-save-the-date/fathers-day",
+        "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/fathers-day",
+        "pageType": "theme-detail",
+        "userProblem": "Create Father&#x27;s Day photos and videos with AI for family portraits, gifts, outdoor memories, dinners, and heartfelt appreciation.",
+        "mainObjectScenarioOrFunction": "Create Father’s Day Photos and Videos with AI",
+        "adjacentPageFamily": "/ai-save-the-date",
+        "primaryKeywordTheme": "Create Father’s Day Photos and Videos with AI",
+        "nextAction": {
+          "label": "Create Father&#x27;s Day Photos &amp; Videos",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 8,
+          "h3Count": 28,
+          "imageCount": 16,
+          "faqCount": 29,
+          "internalLinkCount": 185,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-save-the-date/halloween",
+      "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/halloween",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Halloween Photo and Video Maker | Spooky Visuals",
+      "description": "Create Halloween photos and videos with AI-ready ideas for costumes, trick-or-treat moments, pets, pumpkins, haunted scenes, parties, and seasonal content.",
+      "h1": "Create Halloween Photos and Videos with AI",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/ai-save-the-date/halloween",
+      "ogUrl": "https://www.mydreamshoots.com/ai-save-the-date/halloween",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-save-the-date/halloween",
+        "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/halloween",
+        "pageType": "theme-detail",
+        "userProblem": "Create Halloween photos and videos with AI-ready ideas for costumes, trick-or-treat moments, pets, pumpkins, haunted scenes, parties, and seasonal content.",
+        "mainObjectScenarioOrFunction": "Create Halloween Photos and Videos with AI",
+        "adjacentPageFamily": "/ai-save-the-date",
+        "primaryKeywordTheme": "Create Halloween Photos and Videos with AI",
+        "nextAction": {
+          "label": "Create a Halloween look",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 7,
+          "h3Count": 30,
+          "imageCount": 24,
+          "faqCount": 29,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-save-the-date/mothers-day",
+      "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/mothers-day",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Mother&#x27;s Day Photo &amp; Video Generator | Family Content",
+      "description": "Create Mother&#x27;s Day photos and videos with AI for family celebrations, gifts, brunch, heartfelt greetings, and spring lifestyle stories.",
+      "h1": "Create Mother&#x27;s Day Photos and Videos with AI",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/ai-save-the-date/mothers-day",
+      "ogUrl": "https://www.mydreamshoots.com/ai-save-the-date/mothers-day",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-save-the-date/mothers-day",
+        "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/mothers-day",
+        "pageType": "theme-detail",
+        "userProblem": "Create Mother&#x27;s Day photos and videos with AI for family celebrations, gifts, brunch, heartfelt greetings, and spring lifestyle stories.",
+        "mainObjectScenarioOrFunction": "Create Mother&#x27;s Day Photos and Videos with AI",
+        "adjacentPageFamily": "/ai-save-the-date",
+        "primaryKeywordTheme": "Create Mother&#x27;s Day Photos and Videos with AI",
+        "nextAction": {
+          "label": "Create Mother&#x27;s Day Photos and Videos",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 9,
+          "h3Count": 33,
+          "imageCount": 26,
+          "faqCount": 31,
+          "internalLinkCount": 185,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-save-the-date/new-year",
+      "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/new-year",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI New Year Photo and Video Maker | Create New Year Visuals",
+      "description": "Create New Year photos and videos with festive scene ideas for fireworks, countdown moments, greetings, family celebrations, party highlights, and fresh-start content.",
+      "h1": "Create New Year Photos and Videos with AI",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/ai-save-the-date/new-year",
+      "ogUrl": "https://www.mydreamshoots.com/ai-save-the-date/new-year",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-save-the-date/new-year",
+        "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/new-year",
+        "pageType": "theme-detail",
+        "userProblem": "Create New Year photos and videos with festive scene ideas for fireworks, countdown moments, greetings, family celebrations, party highlights, and fresh-start content.",
+        "mainObjectScenarioOrFunction": "Create New Year Photos and Videos with AI",
+        "adjacentPageFamily": "/ai-save-the-date",
+        "primaryKeywordTheme": "Create New Year Photos and Videos with AI",
+        "nextAction": {
+          "label": "Create New Year Photos &amp; Videos",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 7,
+          "h3Count": 26,
+          "imageCount": 27,
+          "faqCount": 28,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-save-the-date/proposal",
+      "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/proposal",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Proposal Video Maker | Turn Photos Into a Proposal Story",
+      "description": "Create an AI proposal video from your photos and story. Plan the setup, proposal moment, reaction, ring reveal, and a shareable closing scene.",
+      "h1": "Turn Your Photos and Proposal Ideas Into a Memorable AI Proposal Video",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/ai-save-the-date/proposal",
+      "ogUrl": "https://www.mydreamshoots.com/ai-save-the-date/proposal",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-save-the-date/proposal",
+        "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/proposal",
+        "pageType": "theme-detail",
+        "userProblem": "Create an AI proposal video from your photos and story. Plan the setup, proposal moment, reaction, ring reveal, and a shareable closing scene.",
+        "mainObjectScenarioOrFunction": "Turn Your Photos and Proposal Ideas Into a Memorable AI Proposal Video",
+        "adjacentPageFamily": "/ai-save-the-date",
+        "primaryKeywordTheme": "Turn Your Photos and Proposal Ideas Into a Memorable AI Proposal Video",
+        "nextAction": {
+          "label": "Create Your Proposal Video",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 8,
+          "h3Count": 26,
+          "imageCount": 21,
+          "faqCount": 31,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-save-the-date/save-the-date",
+      "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/save-the-date",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Save the Date Video Maker | myDreamshoots",
+      "description": "Create an AI Save the Date video from approved couple photos and a confirmed wedding date. Plan scenes for social, email, messaging, and wedding websites.",
+      "h1": "Create an AI Save the Date Video",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/ai-save-the-date/save-the-date",
+      "ogUrl": "https://www.mydreamshoots.com/ai-save-the-date/save-the-date",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-save-the-date/save-the-date",
+        "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/save-the-date",
+        "pageType": "theme-detail",
+        "userProblem": "Create an AI Save the Date video from approved couple photos and a confirmed wedding date. Plan scenes for social, email, messaging, and wedding websites.",
+        "mainObjectScenarioOrFunction": "Create an AI Save the Date Video",
+        "adjacentPageFamily": "/ai-save-the-date",
+        "primaryKeywordTheme": "Create an AI Save the Date Video",
+        "nextAction": {
+          "label": "Create a Save the Date Video",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 9,
+          "h3Count": 34,
+          "imageCount": 30,
+          "faqCount": 31,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-save-the-date/thanksgiving",
+      "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/thanksgiving",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Thanksgiving Photo and Video Generator | Create Holiday Content",
+      "description": "Create Thanksgiving photos and videos with AI for family dinners, Friendsgiving, food scenes, greeting content, and cozy fall storytelling across North American holiday moments.",
+      "h1": "Create Thanksgiving Photos and Videos with AI",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/ai-save-the-date/thanksgiving",
+      "ogUrl": "https://www.mydreamshoots.com/ai-save-the-date/thanksgiving",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-save-the-date/thanksgiving",
+        "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/thanksgiving",
+        "pageType": "theme-detail",
+        "userProblem": "Create Thanksgiving photos and videos with AI for family dinners, Friendsgiving, food scenes, greeting content, and cozy fall storytelling across North American holiday moments.",
+        "mainObjectScenarioOrFunction": "Create Thanksgiving Photos and Videos with AI",
+        "adjacentPageFamily": "/ai-save-the-date",
+        "primaryKeywordTheme": "Create Thanksgiving Photos and Videos with AI",
+        "nextAction": {
+          "label": "Create thanksgiving content",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 9,
+          "h3Count": 33,
+          "imageCount": 33,
+          "faqCount": 28,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-save-the-date/valentines-day",
+      "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/valentines-day",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Valentine&#x27;s Day Save the Date Video Maker | myDreamshoots",
+      "description": "Create a romantic Valentine&#x27;s Day save the date video with AI. Turn couple photos into a polished announcement for email, wedding sites, and social media.",
+      "h1": "Create a Valentine&#x27;s Day Save the Date Video with AI",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/ai-save-the-date/valentines-day",
+      "ogUrl": "https://www.mydreamshoots.com/ai-save-the-date/valentines-day",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-save-the-date/valentines-day",
+        "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/valentines-day",
+        "pageType": "theme-detail",
+        "userProblem": "Create a romantic Valentine&#x27;s Day save the date video with AI. Turn couple photos into a polished announcement for email, wedding sites, and social media.",
+        "mainObjectScenarioOrFunction": "Create a Valentine&#x27;s Day Save the Date Video with AI",
+        "adjacentPageFamily": "/ai-save-the-date",
+        "primaryKeywordTheme": "Create a Valentine&#x27;s Day Save the Date Video with AI",
+        "nextAction": {
+          "label": "Create Your Save the Date",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 9,
+          "h3Count": 22,
+          "imageCount": 18,
+          "faqCount": 29,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-save-the-date/wedding-ceremony",
+      "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/wedding-ceremony",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Wedding Ceremony Photo Video | myDreamshoots",
+      "description": "Turn approved wedding ceremony photos into a structured ceremony video story with vows, rings, aisle, guest reactions, first kiss, and recessional scenes.",
+      "h1": "Create an AI Wedding Ceremony Photo Video",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/ai-save-the-date/wedding-ceremony",
+      "ogUrl": "https://www.mydreamshoots.com/ai-save-the-date/wedding-ceremony",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-save-the-date/wedding-ceremony",
+        "finalUrl": "https://www.mydreamshoots.com/ai-save-the-date/wedding-ceremony",
+        "pageType": "theme-detail",
+        "userProblem": "Turn approved wedding ceremony photos into a structured ceremony video story with vows, rings, aisle, guest reactions, first kiss, and recessional scenes.",
+        "mainObjectScenarioOrFunction": "Create an AI Wedding Ceremony Photo Video",
+        "adjacentPageFamily": "/ai-save-the-date",
+        "primaryKeywordTheme": "Create an AI Wedding Ceremony Photo Video",
+        "nextAction": {
+          "label": "Open Video Workspace",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 10,
+          "h3Count": 30,
+          "imageCount": 28,
+          "faqCount": 32,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Video Generation for Private Motion Clips | myDreamshoots",
+      "description": "Explore myDreamshoots AI Video Generation for image-to-video clips, profile motion, creator intros, product teasers, animated avatars, fashion reels, and private album stories.",
+      "h1": "AI Video Generation",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation",
+        "pageType": "directory",
+        "userProblem": "Explore myDreamshoots AI Video Generation for image-to-video clips, profile motion, creator intros, product teasers, animated avatars, fashion reels, and private album stories.",
+        "mainObjectScenarioOrFunction": "AI Video Generation",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "AI Video Generation",
+        "nextAction": {
+          "label": "01 Talking Photo Make a photo talk from one clear portrait and a short script. Create talking-photo videos for birthday wishes, personal messages, explainers, social intros, product pitches, and holiday greetings. Open theme",
+          "url": "https://www.mydreamshoots.com/ai-video-generation/talking-photo"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 5,
+          "h3Count": 22,
+          "imageCount": 24,
+          "faqCount": 23,
+          "internalLinkCount": 204,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/brand-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/brand-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Brand Video Generator for Brand Stories | myDreamshoots",
+      "description": "Create brand-video concepts with AI for founder stories, company values, product origin, culture, community, and campaign identity. Start from text or an approved image, shape the narrative, then review the result in your myDreamshoots workflow.",
+      "h1": "AI Brand Video Generator for Brand Stories &amp; Identity",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/brand-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/brand-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/brand-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/brand-video",
+        "pageType": "theme-detail",
+        "userProblem": "Create brand-video concepts with AI for founder stories, company values, product origin, culture, community, and campaign identity. Start from text or an approved image, shape the narrative, then review the result in your myDreamshoots workflow.",
+        "mainObjectScenarioOrFunction": "AI Brand Video Generator for Brand Stories &amp; Identity",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "AI Brand Video Generator for Brand Stories &amp; Identity",
+        "nextAction": {
+          "label": "AI Video Generation",
+          "url": "https://www.mydreamshoots.com/ai-video-generation"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 12,
+          "h3Count": 43,
+          "imageCount": 13,
+          "faqCount": 31,
+          "internalLinkCount": 192,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/cinematic-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/cinematic-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Cinematic Video Generator – Create Story-Driven Cinematic Clips | myDreamshoots",
+      "description": "Create cinematic videos with stronger mood, shot design, lighting, pacing, and camera movement. Turn ideas into short-film-style scenes for noir stories, luxury launches, music clips, sci-fi concepts, period moods, and brand storytelling.",
+      "h1": "Create a More Cinematic Video Without a Full Film Crew",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/cinematic-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/cinematic-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/cinematic-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/cinematic-video",
+        "pageType": "theme-detail",
+        "userProblem": "Create cinematic videos with stronger mood, shot design, lighting, pacing, and camera movement. Turn ideas into short-film-style scenes for noir stories, luxury launches, music clips, sci-fi concepts, period moods, and brand storytelling.",
+        "mainObjectScenarioOrFunction": "Create a More Cinematic Video Without a Full Film Crew",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "Create a More Cinematic Video Without a Full Film Crew",
+        "nextAction": {
+          "label": "Create My Cinematic Video",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=cinematic-video#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 8,
+          "h3Count": 25,
+          "imageCount": 9,
+          "faqCount": 29,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/fashion-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/fashion-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Fashion Video Generator for Editorial &amp; Lookbook Visuals | myDreamshoots",
+      "description": "Create AI fashion-video visuals from text or approved images for editorials, lookbooks, runway concepts, styling, garment details, and campaign sequences. Define the look, generate clips, review garment and model continuity, and publish only with cleared source rights.",
+      "h1": "AI Fashion Video Generator for Editorial, Lookbook &amp; Runway Concepts",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/fashion-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/fashion-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/fashion-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/fashion-video",
+        "pageType": "theme-detail",
+        "userProblem": "Create AI fashion-video visuals from text or approved images for editorials, lookbooks, runway concepts, styling, garment details, and campaign sequences. Define the look, generate clips, review garment and model continuity, and publish only with cleared source rights.",
+        "mainObjectScenarioOrFunction": "AI Fashion Video Generator for Editorial, Lookbook &amp; Runway Concepts",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "AI Fashion Video Generator for Editorial, Lookbook &amp; Runway Concepts",
+        "nextAction": {
+          "label": "AI Video Generation",
+          "url": "https://www.mydreamshoots.com/ai-video-generation"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 12,
+          "h3Count": 49,
+          "imageCount": 13,
+          "faqCount": 29,
+          "internalLinkCount": 192,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/food-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/food-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Food Video Generator for Cooking &amp; Culinary Visuals | myDreamshoots",
+      "description": "Create AI food-video visuals from text or approved images for cooking, plating, ingredient prep, restaurant scenes, beverage pours, and culinary social clips.",
+      "h1": "AI Food Video Generator for Cooking, Plating &amp; Culinary Content",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/food-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/food-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/food-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/food-video",
+        "pageType": "theme-detail",
+        "userProblem": "Create AI food-video visuals from text or approved images for cooking, plating, ingredient prep, restaurant scenes, beverage pours, and culinary social clips.",
+        "mainObjectScenarioOrFunction": "AI Food Video Generator for Cooking, Plating &amp; Culinary Content",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "AI Food Video Generator for Cooking, Plating &amp; Culinary Content",
+        "nextAction": {
+          "label": "AI Video Generation",
+          "url": "https://www.mydreamshoots.com/ai-video-generation"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 12,
+          "h3Count": 49,
+          "imageCount": 13,
+          "faqCount": 29,
+          "internalLinkCount": 192,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/instagram-reels",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/instagram-reels",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Instagram Reels Generator – Create Reels From Photos &amp; Ideas | myDreamshoots",
+      "description": "Turn photos and ideas into Instagram Reels with 9:16 framing, safer text placement, stronger cover choices, captions, audio-aware pacing, and a clear visual story for tutorials, BTS, portfolios, launches, and product demos.",
+      "h1": "Turn Photos and Ideas Into Reels That Fit Your Feed",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/instagram-reels",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/instagram-reels",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/instagram-reels",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/instagram-reels",
+        "pageType": "theme-detail",
+        "userProblem": "Turn photos and ideas into Instagram Reels with 9:16 framing, safer text placement, stronger cover choices, captions, audio-aware pacing, and a clear visual story for tutorials, BTS, portfolios, launches, and product demos.",
+        "mainObjectScenarioOrFunction": "Turn Photos and Ideas Into Reels That Fit Your Feed",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "Turn Photos and Ideas Into Reels That Fit Your Feed",
+        "nextAction": {
+          "label": "Create My Instagram Reel",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=instagram-reels#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 8,
+          "h3Count": 27,
+          "imageCount": 9,
+          "faqCount": 31,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/meme-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/meme-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Meme Video Generator – Make Reaction, POV &amp; Relatable Meme Videos | myDreamshoots",
+      "description": "Turn photos, reactions, comments, awkward moments, and everyday situations into meme videos with bold captions, reaction timing, POV setups, expectation-vs-reality edits, and punchlines people instantly understand.",
+      "h1": "Turn Everyday Moments Into Meme Videos That Everyone Instantly Gets",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/meme-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/meme-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/meme-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/meme-video",
+        "pageType": "theme-detail",
+        "userProblem": "Turn photos, reactions, comments, awkward moments, and everyday situations into meme videos with bold captions, reaction timing, POV setups, expectation-vs-reality edits, and punchlines people instantly understand.",
+        "mainObjectScenarioOrFunction": "Turn Everyday Moments Into Meme Videos That Everyone Instantly Gets",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "Turn Everyday Moments Into Meme Videos That Everyone Instantly Gets",
+        "nextAction": {
+          "label": "Create My Meme Video",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=meme-video#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 9,
+          "h3Count": 35,
+          "imageCount": 9,
+          "faqCount": 31,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/motion-generator",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/motion-generator",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Motion Generator – Animate Photos Into Short Videos | myDreamshoots",
+      "description": "Animate an approved photo into a short, coherent video with controlled subject movement, camera motion, pacing, and visual continuity.",
+      "h1": "Animate a Still Image With Deliberate Motion",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/motion-generator",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/motion-generator",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/motion-generator",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/motion-generator",
+        "pageType": "theme-detail",
+        "userProblem": "Animate an approved photo into a short, coherent video with controlled subject movement, camera motion, pacing, and visual continuity.",
+        "mainObjectScenarioOrFunction": "Animate a Still Image With Deliberate Motion",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "Animate a Still Image With Deliberate Motion",
+        "nextAction": {
+          "label": "Open Motion Generator",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=motion-generator#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 8,
+          "h3Count": 18,
+          "imageCount": 6,
+          "faqCount": 27,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/music-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/music-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Music Video Generator for Artist Visuals | myDreamshoots",
+      "description": "Create AI music-video visuals from text or images for performances, artist promos, dance, visualizers, and cinematic sequences. Plan the look, generate clips, review continuity, and pair approved visuals with properly licensed audio in your publishing workflow.",
+      "h1": "AI Music Video Generator for Artist Visuals &amp; Performance Concepts",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/music-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/music-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/music-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/music-video",
+        "pageType": "theme-detail",
+        "userProblem": "Create AI music-video visuals from text or images for performances, artist promos, dance, visualizers, and cinematic sequences. Plan the look, generate clips, review continuity, and pair approved visuals with properly licensed audio in your publishing workflow.",
+        "mainObjectScenarioOrFunction": "AI Music Video Generator for Artist Visuals &amp; Performance Concepts",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "AI Music Video Generator for Artist Visuals &amp; Performance Concepts",
+        "nextAction": {
+          "label": "AI Video Generation",
+          "url": "https://www.mydreamshoots.com/ai-video-generation"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 12,
+          "h3Count": 49,
+          "imageCount": 12,
+          "faqCount": 29,
+          "internalLinkCount": 192,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/pet-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/pet-video",
+      "status": 200,
+      "state": "REVIEW_REQUIRED",
+      "title": "AI Pet Video Generator for Pet Portraits &amp; Animal Content | myDreamshoots",
+      "description": "Create AI pet-video visuals from text or approved images for pet portraits, playful moments, owner interactions, walks, grooming, training, and animal lifestyle content.",
+      "h1": "AI Pet Video Generator for Pet Portraits &amp; Animal Content",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/pet-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/pet-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [
+        "Woman holding a food bowl for a tabby cat in a home setting, used as a feeding-routine visual reference without nutrition claims."
+      ],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/pet-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/pet-video",
+        "pageType": "theme-detail",
+        "userProblem": "Create AI pet-video visuals from text or approved images for pet portraits, playful moments, owner interactions, walks, grooming, training, and animal lifestyle content.",
+        "mainObjectScenarioOrFunction": "AI Pet Video Generator for Pet Portraits &amp; Animal Content",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "AI Pet Video Generator for Pet Portraits &amp; Animal Content",
+        "nextAction": {
+          "label": "AI Video Generation",
+          "url": "https://www.mydreamshoots.com/ai-video-generation"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 12,
+          "h3Count": 49,
+          "imageCount": 13,
+          "faqCount": 29,
+          "internalLinkCount": 192,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "REVIEW_REQUIRED",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": [
+        "forbidden_alt_content"
+      ]
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/product-ad-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/product-ad-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Product Ad Video Generator – Create Product Ads With Clear Proof &amp; CTA | myDreamshoots",
+      "description": "Create product ad videos around a specific audience, problem or desire, product promise, visual proof, offer, and call to action. Plan launch ads, problem-solution ads, benefit ads, offers, comparison ads, and retargeting reminders.",
+      "h1": "Build the Ad Around One Buyer Decision—Not Every Product Feature",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/product-ad-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/product-ad-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/product-ad-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/product-ad-video",
+        "pageType": "theme-detail",
+        "userProblem": "Create product ad videos around a specific audience, problem or desire, product promise, visual proof, offer, and call to action. Plan launch ads, problem-solution ads, benefit ads, offers, comparison ads, and retargeting reminders.",
+        "mainObjectScenarioOrFunction": "Build the Ad Around One Buyer Decision—Not Every Product Feature",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "Build the Ad Around One Buyer Decision—Not Every Product Feature",
+        "nextAction": {
+          "label": "Create My Product Ad",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=product-ad-video#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 9,
+          "h3Count": 39,
+          "imageCount": 10,
+          "faqCount": 31,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/product-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/product-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Product Video Generator – Turn Product Photos Into Clear Videos | myDreamshoots",
+      "description": "Turn product photos and source images into videos that show scale, materials, features, real-world use, packaging, and the details buyers need before they decide.",
+      "h1": "Show the Product Clearly Before You Ask Someone to Buy It",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/product-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/product-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/product-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/product-video",
+        "pageType": "theme-detail",
+        "userProblem": "Turn product photos and source images into videos that show scale, materials, features, real-world use, packaging, and the details buyers need before they decide.",
+        "mainObjectScenarioOrFunction": "Show the Product Clearly Before You Ask Someone to Buy It",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "Show the Product Clearly Before You Ask Someone to Buy It",
+        "nextAction": {
+          "label": "Create My Product Video",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=product-video#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 9,
+          "h3Count": 34,
+          "imageCount": 10,
+          "faqCount": 29,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/promo-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/promo-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Promo Video Maker for Launches, Offers &amp; Announcements | myDreamshoots",
+      "description": "Create promotional videos for launches, limited-time offers, events, seasonal campaigns, and product updates with an AI promo video maker. Structure the message, proof, timing, terms, and CTA around verified product inputs and real generated outputs.",
+      "h1": "AI Promo Video Maker for Launches, Offers &amp; Announcements",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/promo-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/promo-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/promo-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/promo-video",
+        "pageType": "theme-detail",
+        "userProblem": "Create promotional videos for launches, limited-time offers, events, seasonal campaigns, and product updates with an AI promo video maker. Structure the message, proof, timing, terms, and CTA around verified product inputs and real generated outputs.",
+        "mainObjectScenarioOrFunction": "AI Promo Video Maker for Launches, Offers &amp; Announcements",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "AI Promo Video Maker for Launches, Offers &amp; Announcements",
+        "nextAction": {
+          "label": "Create a Promo Video",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=promo-video#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 12,
+          "h3Count": 46,
+          "imageCount": 11,
+          "faqCount": 31,
+          "internalLinkCount": 190,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/social-media-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/social-media-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Social Media Video Maker – Adapt One Idea Across Platforms | myDreamshoots",
+      "description": "Turn one core idea into platform-aware social media videos. Adapt hooks, crops, captions, audio, pacing, safe zones, and CTAs for TikTok, Instagram Reels, YouTube Shorts, campaigns, testimonials, events, and weekly content.",
+      "h1": "Create One Strong Story—Then Adapt It to the Social Feed It&#x27;s Going Into",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/social-media-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/social-media-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/social-media-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/social-media-video",
+        "pageType": "theme-detail",
+        "userProblem": "Turn one core idea into platform-aware social media videos. Adapt hooks, crops, captions, audio, pacing, safe zones, and CTAs for TikTok, Instagram Reels, YouTube Shorts, campaigns, testimonials, events, and weekly content.",
+        "mainObjectScenarioOrFunction": "Create One Strong Story—Then Adapt It to the Social Feed It&#x27;s Going Into",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "Create One Strong Story—Then Adapt It to the Social Feed It&#x27;s Going Into",
+        "nextAction": {
+          "label": "Create My Social Video",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=social-media-video#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 9,
+          "h3Count": 32,
+          "imageCount": 9,
+          "faqCount": 31,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/story-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/story-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Story Video Generator – Turn Photos &amp; Moments Into a Clear Story | myDreamshoots",
+      "description": "Turn photos, clips, memories, and ideas into story-led videos with a clearer setup, tension, turning point, payoff, and meaning. Create origin stories, personal journeys, comeback stories, mini documentaries, community stories, and fictional shorts.",
+      "h1": "Turn Photos, Clips, and Real Moments Into a Story Worth Watching",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/story-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/story-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/story-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/story-video",
+        "pageType": "theme-detail",
+        "userProblem": "Turn photos, clips, memories, and ideas into story-led videos with a clearer setup, tension, turning point, payoff, and meaning. Create origin stories, personal journeys, comeback stories, mini documentaries, community stories, and fictional shorts.",
+        "mainObjectScenarioOrFunction": "Turn Photos, Clips, and Real Moments Into a Story Worth Watching",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "Turn Photos, Clips, and Real Moments Into a Story Worth Watching",
+        "nextAction": {
+          "label": "Create My Story Video",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=story-video#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 8,
+          "h3Count": 28,
+          "imageCount": 15,
+          "faqCount": 28,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/talking-photo",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/talking-photo",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Talking Photo Generator – Make a Photo Talk | myDreamshoots",
+      "description": "Make a photo talk from one clear portrait and a short script. Create talking-photo videos for birthday wishes, personal messages, explainers, social intros, product pitches, and holiday greetings.",
+      "h1": "Make a Photo Talk Without Recording Another Take",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/talking-photo",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/talking-photo",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/talking-photo",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/talking-photo",
+        "pageType": "theme-detail",
+        "userProblem": "Make a photo talk from one clear portrait and a short script. Create talking-photo videos for birthday wishes, personal messages, explainers, social intros, product pitches, and holiday greetings.",
+        "mainObjectScenarioOrFunction": "Make a Photo Talk Without Recording Another Take",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "Make a Photo Talk Without Recording Another Take",
+        "nextAction": {
+          "label": "Make My Photo Talk",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=talking-photo#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 8,
+          "h3Count": 26,
+          "imageCount": 9,
+          "faqCount": 32,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/tiktok-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/tiktok-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI TikTok Video Generator – Create TikTok-First Vertical Videos | myDreamshoots",
+      "description": "Turn photos and ideas into TikTok-first vertical videos with a clearer hook, mobile-safe framing, sound-aware structure, captions, and a focused close. Build short demos, micro-lessons, creator stories, event snippets, and campaign videos.",
+      "h1": "Turn Your Photos and Ideas Into TikTok-First Videos",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/tiktok-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/tiktok-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/tiktok-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/tiktok-video",
+        "pageType": "theme-detail",
+        "userProblem": "Turn photos and ideas into TikTok-first vertical videos with a clearer hook, mobile-safe framing, sound-aware structure, captions, and a focused close. Build short demos, micro-lessons, creator stories, event snippets, and campaign videos.",
+        "mainObjectScenarioOrFunction": "Turn Your Photos and Ideas Into TikTok-First Videos",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "Turn Your Photos and Ideas Into TikTok-First Videos",
+        "nextAction": {
+          "label": "Create My TikTok Video",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=tiktok-video#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 8,
+          "h3Count": 27,
+          "imageCount": 9,
+          "faqCount": 31,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/ugc-ad-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/ugc-ad-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI UGC Video Generator for Creator-Style Product Ads | myDreamshoots",
+      "description": "Create creator-style product ads with an AI UGC video generator. Plan hooks, speaker roles, product-in-use scenes, visible proof, voiceover, and clear CTAs—then validate every claim against your real product assets and generated output.",
+      "h1": "AI UGC Video Generator for Creator-Style Product Ads",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/ugc-ad-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/ugc-ad-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/ugc-ad-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/ugc-ad-video",
+        "pageType": "theme-detail",
+        "userProblem": "Create creator-style product ads with an AI UGC video generator. Plan hooks, speaker roles, product-in-use scenes, visible proof, voiceover, and clear CTAs—then validate every claim against your real product assets and generated output.",
+        "mainObjectScenarioOrFunction": "AI UGC Video Generator for Creator-Style Product Ads",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "AI UGC Video Generator for Creator-Style Product Ads",
+        "nextAction": {
+          "label": "Create a UGC-Style Video",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=ugc-ad-video#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 13,
+          "h3Count": 58,
+          "imageCount": 10,
+          "faqCount": 30,
+          "internalLinkCount": 188,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/video-ad",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/video-ad",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Video Ad Generator for Paid Social | myDreamshoots",
+      "description": "Create video ad concepts with AI for paid social, product campaigns, launches, retargeting, and creator-style placements. Start from text or an image, shape the hook, proof, and CTA, then review the output in your myDreamshoots workflow.",
+      "h1": "AI Video Ad Generator for Paid Social Campaigns",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/video-ad",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/video-ad",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/video-ad",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/video-ad",
+        "pageType": "theme-detail",
+        "userProblem": "Create video ad concepts with AI for paid social, product campaigns, launches, retargeting, and creator-style placements. Start from text or an image, shape the hook, proof, and CTA, then review the output in your myDreamshoots workflow.",
+        "mainObjectScenarioOrFunction": "AI Video Ad Generator for Paid Social Campaigns",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "AI Video Ad Generator for Paid Social Campaigns",
+        "nextAction": {
+          "label": "AI Video Generation",
+          "url": "https://www.mydreamshoots.com/ai-video-generation"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 9,
+          "h3Count": 32,
+          "imageCount": 13,
+          "faqCount": 29,
+          "internalLinkCount": 193,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/ai-video-generation/youtube-video",
+      "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/youtube-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI YouTube Video Generator – Create Long-Form Videos From Photos &amp; Ideas | myDreamshoots",
+      "description": "Create YouTube videos from photos and ideas with a stronger opening, clearer structure, chapter-ready sequencing, captions, and a better path to the next video, playlist, or deeper explanation.",
+      "h1": "Turn a Bigger Idea Into a Video Worth Watching Through",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/ai-video-generation/youtube-video",
+      "ogUrl": "https://www.mydreamshoots.com/ai-video-generation/youtube-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/ai-video-generation/youtube-video",
+        "finalUrl": "https://www.mydreamshoots.com/ai-video-generation/youtube-video",
+        "pageType": "theme-detail",
+        "userProblem": "Create YouTube videos from photos and ideas with a stronger opening, clearer structure, chapter-ready sequencing, captions, and a better path to the next video, playlist, or deeper explanation.",
+        "mainObjectScenarioOrFunction": "Turn a Bigger Idea Into a Video Worth Watching Through",
+        "adjacentPageFamily": "/ai-video-generation",
+        "primaryKeywordTheme": "Turn a Bigger Idea Into a Video Worth Watching Through",
+        "nextAction": {
+          "label": "Create My YouTube Video",
+          "url": "https://www.mydreamshoots.com/app/create?videoMode=youtube-video#step-video"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 8,
+          "h3Count": 27,
+          "imageCount": 9,
+          "faqCount": 31,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/best-ai-image",
+      "finalUrl": "https://www.mydreamshoots.com/best-ai-image",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Best AI image gallery | myDreamshoots",
+      "description": "Browse the full myDreamshoots AI image gallery with photo generator themes, private album ideas, and package examples.",
+      "h1": "Best AI image",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/best-ai-image",
+      "ogUrl": "https://www.mydreamshoots.com/best-ai-image",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/best-ai-image",
+        "finalUrl": "https://www.mydreamshoots.com/best-ai-image",
+        "pageType": "directory",
+        "userProblem": "Browse the full myDreamshoots AI image gallery with photo generator themes, private album ideas, and package examples.",
+        "mainObjectScenarioOrFunction": "Best AI image",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Best AI image",
+        "nextAction": null,
+        "pageSpecificEvidence": {
+          "h2Count": 1,
+          "h3Count": 6,
+          "imageCount": 41,
+          "faqCount": 29,
+          "internalLinkCount": 182,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/best-ai-video",
+      "finalUrl": "https://www.mydreamshoots.com/best-ai-video",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Best AI video gallery | myDreamshoots",
+      "description": "Browse the full myDreamshoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
+      "h1": "Best AI video",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/best-ai-video",
+      "ogUrl": "https://www.mydreamshoots.com/best-ai-video",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/best-ai-video",
+        "finalUrl": "https://www.mydreamshoots.com/best-ai-video",
+        "pageType": "directory",
+        "userProblem": "Browse the full myDreamshoots AI video gallery with motion themes, short video cases, and image-to-video examples.",
+        "mainObjectScenarioOrFunction": "Best AI video",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Best AI video",
+        "nextAction": null,
+        "pageSpecificEvidence": {
+          "h2Count": 1,
+          "h3Count": 6,
+          "imageCount": 33,
+          "faqCount": 29,
+          "internalLinkCount": 182,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/best-packages",
+      "finalUrl": "https://www.mydreamshoots.com/best-packages",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Best Packages | myDreamshoots",
+      "description": "Compare myDreamshoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
+      "h1": "Best AI Photo Packages for Private Headshots, Albums, and Creative Sets",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/best-packages",
+      "ogUrl": "https://www.mydreamshoots.com/best-packages",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/best-packages",
+        "finalUrl": "https://www.mydreamshoots.com/best-packages",
+        "pageType": "directory",
+        "userProblem": "Compare myDreamshoots recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction.",
+        "mainObjectScenarioOrFunction": "Best AI Photo Packages for Private Headshots, Albums, and Creative Sets",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Best AI Photo Packages for Private Headshots, Albums, and Creative Sets",
+        "nextAction": {
+          "label": "Create Fan Photos",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 4,
+          "h3Count": 9,
+          "imageCount": 21,
+          "faqCount": 29,
+          "internalLinkCount": 206,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/best-save-the-date",
+      "finalUrl": "https://www.mydreamshoots.com/best-save-the-date",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Best Save the Date themes | myDreamshoots",
+      "description": "Browse every myDreamshoots Save the Date theme for Valentine announcements, engagements, proposals, and wedding date stories.",
+      "h1": "Browse every Save the Date theme",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/best-save-the-date",
+      "ogUrl": "https://www.mydreamshoots.com/best-save-the-date",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/best-save-the-date",
+        "finalUrl": "https://www.mydreamshoots.com/best-save-the-date",
+        "pageType": "directory",
+        "userProblem": "Browse every myDreamshoots Save the Date theme for Valentine announcements, engagements, proposals, and wedding date stories.",
+        "mainObjectScenarioOrFunction": "Browse every Save the Date theme",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Browse every Save the Date theme",
+        "nextAction": {
+          "label": "01 Valentine&#x27;s Day Create a romantic Valentine&#x27;s Day save the date video with AI. Turn couple photos into a polished announcement for email, wedding sites, and social media. Open theme",
+          "url": "https://www.mydreamshoots.com/ai-save-the-date/valentines-day"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 2,
+          "h3Count": 12,
+          "imageCount": 14,
+          "faqCount": 23,
+          "internalLinkCount": 195,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/blog",
+      "finalUrl": "https://www.mydreamshoots.com/blog",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "myDreamshoots Guides for AI photo packages and private albums",
+      "description": "Read myDreamshoots guides for source photos, AI photo package planning, visible credits, private galleries, downloads, and delivery review.",
+      "h1": "Blog",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/blog",
+      "ogUrl": "https://www.mydreamshoots.com/blog",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/blog",
+        "finalUrl": "https://www.mydreamshoots.com/blog",
+        "pageType": "blog-directory",
+        "userProblem": "Read myDreamshoots guides for source photos, AI photo package planning, visible credits, private galleries, downloads, and delivery review.",
+        "mainObjectScenarioOrFunction": "Blog",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Blog",
+        "nextAction": {
+          "label": "Video Photo Add-ons: Plan Motion-Ready Frames for Private Albums Plan a motion-ready photo frame or short video add-on with one clear movement idea, permission-safe source images, and a focused review of identity stability and crop quality. myDreamshoots editorial team / July 28, 2026 / 7 min read",
+          "url": "https://www.mydreamshoots.com/blog/video-photo-package-guide"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 1,
+          "h3Count": 1,
+          "imageCount": 3,
+          "faqCount": 23,
+          "internalLinkCount": 183,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/blog/video-photo-package-guide",
+      "finalUrl": "https://www.mydreamshoots.com/blog/video-photo-package-guide",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Video photo add-ons guide | myDreamshoots",
+      "description": "Plan motion-ready photo frames and short Motion Generator with focused source images, one movement direction, and a private review checklist.",
+      "h1": "Video Photo Add-ons: Plan Motion-Ready Frames for Private Albums",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/blog/video-photo-package-guide",
+      "ogUrl": "https://www.mydreamshoots.com/blog/video-photo-package-guide",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/blog/video-photo-package-guide",
+        "finalUrl": "https://www.mydreamshoots.com/blog/video-photo-package-guide",
+        "pageType": "article",
+        "userProblem": "Plan motion-ready photo frames and short Motion Generator with focused source images, one movement direction, and a private review checklist.",
+        "mainObjectScenarioOrFunction": "Video Photo Add-ons: Plan Motion-Ready Frames for Private Albums",
+        "adjacentPageFamily": "/blog",
+        "primaryKeywordTheme": "Video Photo Add-ons: Plan Motion-Ready Frames for Private Albums",
+        "nextAction": {
+          "label": "Open Motion Generator",
+          "url": "https://www.mydreamshoots.com/ai-video-generation/motion-generator"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 3,
+          "h3Count": 0,
+          "imageCount": 3,
+          "faqCount": 23,
+          "internalLinkCount": 188,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/children-privacy",
+      "finalUrl": "https://www.mydreamshoots.com/children-privacy",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "myDreamshoots KIDS Act",
+      "description": "Read the myDreamshoots children&#x27;s privacy notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private gallery handling.",
+      "h1": "KIDS Act",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/children-privacy",
+      "ogUrl": "https://www.mydreamshoots.com/children-privacy",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/children-privacy",
+        "finalUrl": "https://www.mydreamshoots.com/children-privacy",
+        "pageType": "policy",
+        "userProblem": "Read the myDreamshoots children&#x27;s privacy notice for COPPA-aware account access, minor image uploads, parent or guardian requests, and private gallery handling.",
+        "mainObjectScenarioOrFunction": "KIDS Act",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "KIDS Act",
+        "nextAction": {
+          "label": "[email&#160;protected]",
+          "url": "https://www.mydreamshoots.com/cdn-cgi/l/email-protection#a5d6d0d5d5cad7d1e5c8dcc1d7c0c4c8d6cdcacad1d68bc6cac8"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 1,
+          "h3Count": 0,
+          "imageCount": 2,
+          "faqCount": 23,
+          "internalLinkCount": 189,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/contact-us",
+      "finalUrl": "https://www.mydreamshoots.com/contact-us",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Contact account, billing, and photo package support | myDreamshoots",
+      "description": "Contact myDreamshoots for account access, upload guidance, billing questions, credit review, privacy requests, or creator photo package support.",
+      "h1": "Contact myDreamshoots support.",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/contact-us",
+      "ogUrl": "https://www.mydreamshoots.com/contact-us",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/contact-us",
+        "finalUrl": "https://www.mydreamshoots.com/contact-us",
+        "pageType": "standard-page",
+        "userProblem": "Contact myDreamshoots for account access, upload guidance, billing questions, credit review, privacy requests, or creator photo package support.",
+        "mainObjectScenarioOrFunction": "Contact myDreamshoots support.",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Contact myDreamshoots support.",
+        "nextAction": {
+          "label": "Email support",
+          "url": "https://www.mydreamshoots.com/cdn-cgi/l/email-protection#e5969095958a9791a5889c8197808488968d8a8a9196cb868a88"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 2,
+          "h3Count": 3,
+          "imageCount": 3,
+          "faqCount": 23,
+          "internalLinkCount": 194,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/content",
+      "finalUrl": "https://www.mydreamshoots.com/content",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Content Policy for myDreamshoots Uploads and AI Photo Outputs",
+      "description": "Read the myDreamshoots content policy for permitted source photos, upload rights, identity consent, moderation review, private album use, and the trust commitments that keep your photos out of model training and auto-delete inputs after 30 days.",
+      "h1": "Content policy",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/content",
+      "ogUrl": "https://www.mydreamshoots.com/content",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/content",
+        "finalUrl": "https://www.mydreamshoots.com/content",
+        "pageType": "policy",
+        "userProblem": "Read the myDreamshoots content policy for permitted source photos, upload rights, identity consent, moderation review, private album use, and the trust commitments that keep your photos out of model training and auto-delete inputs after 30 days.",
+        "mainObjectScenarioOrFunction": "Content policy",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Content policy",
+        "nextAction": {
+          "label": "[email&#160;protected]",
+          "url": "https://www.mydreamshoots.com/cdn-cgi/l/email-protection#ef9c9a9f9f809d9baf82968b9d8a8e829c8780809b9cc18c8082"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 0,
+          "h3Count": 0,
+          "imageCount": 2,
+          "faqCount": 23,
+          "internalLinkCount": 189,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/creators-circle",
+      "finalUrl": "https://www.mydreamshoots.com/creators-circle",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "myDreamshoots Creators Circle - affiliate and creator AI photo program",
+      "description": "Join the myDreamshoots Creators Circle for AI photo package campaigns, creator-ready assets, private galleries, credit-based workflows, and partner collaboration opportunities.",
+      "h1": "Earn with AI photo stories your audience can actually try.",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/creators-circle",
+      "ogUrl": "https://www.mydreamshoots.com/creators-circle",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/creators-circle",
+        "finalUrl": "https://www.mydreamshoots.com/creators-circle",
+        "pageType": "standard-page",
+        "userProblem": "Join the myDreamshoots Creators Circle for AI photo package campaigns, creator-ready assets, private galleries, credit-based workflows, and partner collaboration opportunities.",
+        "mainObjectScenarioOrFunction": "Earn with AI photo stories your audience can actually try.",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Earn with AI photo stories your audience can actually try.",
+        "nextAction": {
+          "label": "Create Now",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 4,
+          "h3Count": 10,
+          "imageCount": 5,
+          "faqCount": 23,
+          "internalLinkCount": 188,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/faq",
+      "finalUrl": "https://www.mydreamshoots.com/faq",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Help for uploads, credits, tools, and private albums",
+      "description": "Get myDreamshoots help for source photo preparation, package selection, credits, checkout, privacy, refunds, and private album delivery.",
+      "h1": "Frequently asked questions",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/faq",
+      "ogUrl": "https://www.mydreamshoots.com/faq",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/faq",
+        "finalUrl": "https://www.mydreamshoots.com/faq",
+        "pageType": "standard-page",
+        "userProblem": "Get myDreamshoots help for source photo preparation, package selection, credits, checkout, privacy, refunds, and private album delivery.",
+        "mainObjectScenarioOrFunction": "Frequently asked questions",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Frequently asked questions",
+        "nextAction": {
+          "label": "Choose a plan",
+          "url": "https://www.mydreamshoots.com/pricing"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 2,
+          "h3Count": 10,
+          "imageCount": 4,
+          "faqCount": 29,
+          "internalLinkCount": 184,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/holidays-events/wedding-invitation",
+      "finalUrl": "https://www.mydreamshoots.com/holidays-events/wedding-invitation",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "AI Wedding Invitation Maker | Create Custom Wedding Invites",
+      "description": "Create a personalized wedding invitation with AI. Explore elegant styles, organize names, date, venue and RSVP details, then review the final invite before sharing.",
+      "h1": "Create a Personalized Wedding Invitation with AI",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow, max-image-preview:large",
+      "canonical": "https://www.mydreamshoots.com/holidays-events/wedding-invitation",
+      "ogUrl": "https://www.mydreamshoots.com/holidays-events/wedding-invitation",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/holidays-events/wedding-invitation",
+        "finalUrl": "https://www.mydreamshoots.com/holidays-events/wedding-invitation",
+        "pageType": "standard-page",
+        "userProblem": "Create a personalized wedding invitation with AI. Explore elegant styles, organize names, date, venue and RSVP details, then review the final invite before sharing.",
+        "mainObjectScenarioOrFunction": "Create a Personalized Wedding Invitation with AI",
+        "adjacentPageFamily": "/holidays-events",
+        "primaryKeywordTheme": "Create a Personalized Wedding Invitation with AI",
+        "nextAction": {
+          "label": "Create Your Wedding Invitation",
+          "url": "https://www.mydreamshoots.com/app/create"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 9,
+          "h3Count": 20,
+          "imageCount": 14,
+          "faqCount": 31,
+          "internalLinkCount": 186,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/pricing",
+      "finalUrl": "https://www.mydreamshoots.com/pricing",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "myDreamshoots Pricing | Credits for Private AI Headshot Photo Package",
+      "description": "Compare myDreamshoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery.",
+      "h1": "How credits work for private AI photo packages.",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/pricing",
+      "ogUrl": "https://www.mydreamshoots.com/pricing",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/pricing",
+        "finalUrl": "https://www.mydreamshoots.com/pricing",
+        "pageType": "standard-page",
+        "userProblem": "Compare myDreamshoots plans and credit packs for private AI photo packages, source-photo uploads, generation requests, secure checkout, and private gallery delivery.",
+        "mainObjectScenarioOrFunction": "How credits work for private AI photo packages.",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "How credits work for private AI photo packages.",
+        "nextAction": {
+          "label": "Monthly",
+          "url": "https://www.mydreamshoots.com/pricing?billing=month#pricing-month"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 4,
+          "h3Count": 12,
+          "imageCount": 5,
+          "faqCount": 29,
+          "internalLinkCount": 192,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/privacy",
+      "finalUrl": "https://www.mydreamshoots.com/privacy",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Privacy Policy for AI Photo Uploads, Credits, and Private Albums | myDreamshoots",
+      "description": "Read how myDreamshoots keeps account data, uploaded source photos, generated portraits, credit activity, checkout records, and private album access private. Your photos are never used to train models, input photos auto-delete 30 days after generation, and data is protected with AES-256 at rest and TLS 256-bit in transit.",
+      "h1": "Privacy policy",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/privacy",
+      "ogUrl": "https://www.mydreamshoots.com/privacy",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/privacy",
+        "finalUrl": "https://www.mydreamshoots.com/privacy",
+        "pageType": "policy",
+        "userProblem": "Read how myDreamshoots keeps account data, uploaded source photos, generated portraits, credit activity, checkout records, and private album access private. Your photos are never used to train models, input photos auto-delete 30 days after generation, and data is protected with AES-256 at rest and TLS 256-bit in transit.",
+        "mainObjectScenarioOrFunction": "Privacy policy",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Privacy policy",
+        "nextAction": {
+          "label": "[email&#160;protected]",
+          "url": "https://www.mydreamshoots.com/cdn-cgi/l/email-protection#d8abada8a8b7aaac98b5a1bcaabdb9b5abb0b7b7acabf6bbb7b5"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 0,
+          "h3Count": 0,
+          "imageCount": 2,
+          "faqCount": 23,
+          "internalLinkCount": 189,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/refunds",
+      "finalUrl": "https://www.mydreamshoots.com/refunds",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Refund Policy for myDreamshoots Credits, Plans, and Failed Jobs",
+      "description": "Review how myDreamshoots handles the 100% money-back guarantee, unused credits, subscription cancellations, technical failures, reruns, billing reversals, and account credit history.",
+      "h1": "Refund policy",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/refunds",
+      "ogUrl": "https://www.mydreamshoots.com/refunds",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/refunds",
+        "finalUrl": "https://www.mydreamshoots.com/refunds",
+        "pageType": "policy",
+        "userProblem": "Review how myDreamshoots handles the 100% money-back guarantee, unused credits, subscription cancellations, technical failures, reruns, billing reversals, and account credit history.",
+        "mainObjectScenarioOrFunction": "Refund policy",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Refund policy",
+        "nextAction": {
+          "label": "[email&#160;protected]",
+          "url": "https://www.mydreamshoots.com/cdn-cgi/l/email-protection#40333530302f3234002d39243225212d33282f2f34336e232f2d"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 0,
+          "h3Count": 0,
+          "imageCount": 2,
+          "faqCount": 23,
+          "internalLinkCount": 189,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/shipping",
+      "finalUrl": "https://www.mydreamshoots.com/shipping",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Digital delivery for AI photo albums and downloads | myDreamshoots",
+      "description": "Review how myDreamshoots delivers AI photo credits, generated images, downloads, and private albums digitally without physical shipping.",
+      "h1": "Shipping and Digital Delivery Policy",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/shipping",
+      "ogUrl": "https://www.mydreamshoots.com/shipping",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/shipping",
+        "finalUrl": "https://www.mydreamshoots.com/shipping",
+        "pageType": "policy",
+        "userProblem": "Review how myDreamshoots delivers AI photo credits, generated images, downloads, and private albums digitally without physical shipping.",
+        "mainObjectScenarioOrFunction": "Shipping and Digital Delivery Policy",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Shipping and Digital Delivery Policy",
+        "nextAction": {
+          "label": "[email&#160;protected]",
+          "url": "https://www.mydreamshoots.com/cdn-cgi/l/email-protection#f1828481819e8385b19c88958394909c82999e9e8582df929e9c"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 0,
+          "h3Count": 0,
+          "imageCount": 2,
+          "faqCount": 23,
+          "internalLinkCount": 189,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/state-privacy",
+      "finalUrl": "https://www.mydreamshoots.com/state-privacy",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "myDreamshoots DPDPA",
+      "description": "Review myDreamshoots DPDPA information for California privacy requests, access, deletion, correction, opt-out choices, and company contact details.",
+      "h1": "DPDPA",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/state-privacy",
+      "ogUrl": "https://www.mydreamshoots.com/state-privacy",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/state-privacy",
+        "finalUrl": "https://www.mydreamshoots.com/state-privacy",
+        "pageType": "policy",
+        "userProblem": "Review myDreamshoots DPDPA information for California privacy requests, access, deletion, correction, opt-out choices, and company contact details.",
+        "mainObjectScenarioOrFunction": "DPDPA",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "DPDPA",
+        "nextAction": {
+          "label": "[email&#160;protected]",
+          "url": "https://www.mydreamshoots.com/cdn-cgi/l/email-protection#92e1e7e2e2fde0e6d2ffebf6e0f7f3ffe1fafdfde6e1bcf1fdff"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 1,
+          "h3Count": 0,
+          "imageCount": 2,
+          "faqCount": 23,
+          "internalLinkCount": 189,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/terms",
+      "finalUrl": "https://www.mydreamshoots.com/terms",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "Terms of Service for myDreamshoots AI Headshot Photo Package",
+      "description": "Review the myDreamshoots terms for customer accounts, AI photo credits, uploads, generation limits, refunds, and private gallery access. The service does not use your photos for model training, applies 30-day auto-delete to input photos, and protects data with AES-256 at rest and TLS 256-bit in transit.",
+      "h1": "Terms of service",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/terms",
+      "ogUrl": "https://www.mydreamshoots.com/terms",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/terms",
+        "finalUrl": "https://www.mydreamshoots.com/terms",
+        "pageType": "policy",
+        "userProblem": "Review the myDreamshoots terms for customer accounts, AI photo credits, uploads, generation limits, refunds, and private gallery access. The service does not use your photos for model training, applies 30-day auto-delete to input photos, and protects data with AES-256 at rest and TLS 256-bit in transit.",
+        "mainObjectScenarioOrFunction": "Terms of service",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "Terms of service",
+        "nextAction": {
+          "label": "[email&#160;protected]",
+          "url": "https://www.mydreamshoots.com/cdn-cgi/l/email-protection#d8abada8a8b7aaac98b5a1bcaabdb9b5abb0b7b7acabf6bbb7b5"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 1,
+          "h3Count": 0,
+          "imageCount": 2,
+          "faqCount": 23,
+          "internalLinkCount": 189,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    },
+    {
+      "requestedUrl": "https://www.mydreamshoots.com/workflow",
+      "finalUrl": "https://www.mydreamshoots.com/workflow",
+      "status": 200,
+      "state": "INDEXABLE",
+      "title": "How myDreamshoots AI photo generation works",
+      "description": "Learn how myDreamshoots customers upload source photos, choose AI photo packages, review credits, generate private results, and download finished galleries.",
+      "h1": "How myDreamshoots turns uploads into private AI photo sets.",
+      "h1Count": 1,
+      "htmlLang": "en",
+      "robots": "index, follow",
+      "canonical": "https://www.mydreamshoots.com/workflow",
+      "ogUrl": "https://www.mydreamshoots.com/workflow",
+      "twitterUrl": "",
+      "breadcrumb": "",
+      "jsonLdTypes": [],
+      "hasMainBody": true,
+      "internalMarkers": [],
+      "altMarkers": [],
+      "internalHeaderMarkers": [],
+      "seoSummary": {
+        "site": "www.mydreamshoots.com",
+        "route": "/workflow",
+        "finalUrl": "https://www.mydreamshoots.com/workflow",
+        "pageType": "standard-page",
+        "userProblem": "Learn how myDreamshoots customers upload source photos, choose AI photo packages, review credits, generate private results, and download finished galleries.",
+        "mainObjectScenarioOrFunction": "How myDreamshoots turns uploads into private AI photo sets.",
+        "adjacentPageFamily": "/",
+        "primaryKeywordTheme": "How myDreamshoots turns uploads into private AI photo sets.",
+        "nextAction": {
+          "label": "Headshot Photo Package",
+          "url": "https://www.mydreamshoots.com/ai-image-generation/headshot"
+        },
+        "pageSpecificEvidence": {
+          "h2Count": 5,
+          "h3Count": 11,
+          "imageCount": 4,
+          "faqCount": 23,
+          "internalLinkCount": 188,
+          "jsonLdTypes": []
+        },
+        "allowedIndexState": "INDEXABLE",
+        "adjacentDifferentiation": {
+          "uniqueTitle": true,
+          "uniqueDescription": true,
+          "duplicateTitleUrls": [],
+          "duplicateDescriptionUrls": []
+        }
+      },
+      "failures": []
+    }
+  ],
+  "liveWebStandard": "REVIEW_REQUIRED"
+}
