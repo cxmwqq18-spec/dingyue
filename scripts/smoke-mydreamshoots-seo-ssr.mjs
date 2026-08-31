@@ -427,6 +427,8 @@ for (const [slug, facts] of Object.entries(packageFacts)) {
   const ogUrl = firstMatch(html, /<meta\s+property=["']og:url["']\s+content=["']([^"']*)["']/i);
   assert.equal(sitemapHasLoc(product.url), true, `${pathname} canonical Product URL must be present in the sitemap`);
   assert.equal(product.offers, undefined, `${pathname} Product must not inherit a site-level subscription Offer`);
+  assert.equal(product.price, undefined, `${pathname} Product must not expose a subscription price`);
+  assert.equal(product.priceCurrency, undefined, `${pathname} Product must not expose a subscription currency`);
   assert.equal(JSON.stringify(product).includes("Starter"), false, `${pathname} Product must not expose Starter`);
   assert.equal(JSON.stringify(product).includes("24.50"), false, `${pathname} Product must not expose the Starter price`);
   assert.equal(JSON.stringify(product).includes("/pricing"), false, `${pathname} Product must not reference /pricing`);
@@ -434,6 +436,11 @@ for (const [slug, facts] of Object.entries(packageFacts)) {
   assert.equal(product.mainEntityOfPage, product.url, `${pathname} Product mainEntityOfPage must match its URL`);
   assert.equal(canonical, product.url, `${pathname} canonical must match its Product URL`);
   assert.equal(ogUrl, product.url, `${pathname} og:url must match its Product URL`);
+  const additionalProperties = new Map((product.additionalProperty ?? []).map((property) => [property.name, property.value]));
+  assert.deepEqual(Object.fromEntries(additionalProperties), {
+    "Credit cost": facts.creditCost,
+    "Output count": facts.outputCount
+  }, `${pathname} Product additionalProperty facts must match the visible package facts`);
 }
 assert.match(visibleText(pricing), /Starter/i, "pricing visible copy must retain the Starter subscription");
 assert.match(pricing, /\$24\.50/, "pricing visible copy must retain the $24.50 price");

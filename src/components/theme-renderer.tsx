@@ -1207,7 +1207,13 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
         return groups.sort((left, right) => canonicalOrder.indexOf(left.slug) - canonicalOrder.indexOf(right.slug));
       }, [])
     : fullPhotoPackageMegaGroups
-  ).filter((group) => group.items.length > 0);
+  ).filter((group) => group.items.length > 0).map((group) => ({
+    ...group,
+    items: group.items.map((item) => ({
+      ...item,
+      href: mydreamshootsLegacyPublicPathTarget(item.href) ?? item.href
+    }))
+  }));
   const showPhotoPackageMega = !lightweight && (isDreamShoot || isAidreamcapes);
   const clientPhotoPackageMegaGroups = deferMegaMenuPanels ? headerPhotoPackageMegaGroupsForClient(site, photoPackageMegaGroups) : [];
   const clientToolMegaItems = deferMegaMenuPanels ? headerToolMegaItemsForClient(site, toolMegaBlocks, spanishXby) : [];
@@ -3734,6 +3740,13 @@ function hrefFor(site: Site, href: string): string {
   }
   const pairedStore = usesAiGenerationPublicRoutes(site);
   const primaryMyDreamShoots = isPrimaryMydreamshootsCapabilitySite(site);
+  const legacyPrefix = `/site/${site.slug}`;
+  if (pairedStore && !isAidreamcapesSite(site)) {
+    const pathOnly = href.split(/[?#]/)[0] || "/";
+    const unscopedPath = pathOnly.startsWith(`${legacyPrefix}/`) ? pathOnly.slice(legacyPrefix.length) : pathOnly;
+    const legacyPath = mydreamshootsLegacyPublicPathTarget(unscopedPath);
+    if (legacyPath) return routedSitePath(site, `${legacyPath}${href.slice(pathOnly.length)}`);
+  }
   if (href.startsWith("http")) {
     try {
       const url = new URL(href);
@@ -3748,10 +3761,9 @@ function hrefFor(site: Site, href: string): string {
               ? "/workflow"
               : url.pathname
         );
-        const legacyPath = primaryMyDreamShoots ? mydreamshootsLegacyPublicPathTarget(normalizedPath) : undefined;
-        const canonicalPath = legacyPath ?? (normalizedPath === "/collections" || normalizedPath.startsWith("/collections/") || normalizedPath === "/ai-image-generation" || normalizedPath.startsWith("/ai-image-generation/")
+        const canonicalPath = normalizedPath === "/collections" || normalizedPath.startsWith("/collections/") || normalizedPath === "/ai-image-generation" || normalizedPath.startsWith("/ai-image-generation/")
           ? canonicalCollectionHrefForSite(site, normalizedPath)
-          : normalizedPath);
+          : normalizedPath;
         const normalizedHash = url.hash === "#workflow" ? "" : url.hash;
         return `${routedSitePath(site, canonicalPath)}${url.search}${normalizedHash}`;
       }
@@ -3771,18 +3783,12 @@ function hrefFor(site: Site, href: string): string {
   if (href === "#faq" || href === "/#faq") return routedSitePath(site, "/faq");
   const normalizedPolicyPath = shortPolicyPath(href);
   if (normalizedPolicyPath !== href) return routedSitePath(site, normalizedPolicyPath);
-  if (primaryMyDreamShoots) {
-    const pathOnly = href.split(/[?#]/)[0] || "/";
-    const legacyPath = mydreamshootsLegacyPublicPathTarget(pathOnly);
-    if (legacyPath) return routedSitePath(site, `${legacyPath}${href.slice(pathOnly.length)}`);
-  }
   if (href.startsWith("/app?") && href.endsWith("#create")) return routedSitePath(site, `/app/create?${href.slice("/app?".length, -"#create".length)}`);
   if (href === "/app#create") return routedSitePath(site, "/app/create");
   if (href === "/app#upload_1") return routedSitePath(site, "/app/upload");
   if (href === "/app#progress_1") return routedSitePath(site, "/app/jobs/progress");
   if (href === "/app#album_1") return routedSitePath(site, "/album");
   if (href.startsWith("#")) return href;
-  const legacyPrefix = `/site/${site.slug}`;
   if (href === legacyPrefix) return routedSitePath(site, "/");
   if (href.startsWith(`${legacyPrefix}/`)) return routedSitePath(site, href.slice(legacyPrefix.length));
   if (href.startsWith("/collections?")) {

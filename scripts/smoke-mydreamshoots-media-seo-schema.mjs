@@ -228,8 +228,8 @@ for (const video of videoObjects) {
 }
 
 const productPaths = new Set();
-// Product detail coverage is exercised by the dedicated catalog smoke; this
-// contract smoke focuses on active snapshot schema and image sitemap wiring.
+// Validate Product detail schema for every active pack in the immutable snapshot,
+// including the rule that package Products never inherit subscription Offers.
 const publishedPacks = publishedSiteSnapshot.creativePacks
   .filter((pack) => pack.siteId === site.id && pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0);
 for (const pack of publishedPacks) {
@@ -270,6 +270,8 @@ for (const pack of publishedPacks) {
   assertPositiveInteger(product.subjectOf.width, `${canonicalPath} ImageObject width`);
   assertPositiveInteger(product.subjectOf.height, `${canonicalPath} ImageObject height`);
   assert.equal(product.offers, undefined, `${canonicalPath} theme Product must not inherit a site-level subscription Offer`);
+  assert.equal(product.price, undefined, `${canonicalPath} theme Product must not expose a subscription price`);
+  assert.equal(product.priceCurrency, undefined, `${canonicalPath} theme Product must not expose a subscription currency`);
   assert.equal(JSON.stringify(product).includes("/pricing"), false, `${canonicalPath} theme Product must not reference the pricing page`);
   assert.equal(JSON.stringify(product).includes("Starter"), false, `${canonicalPath} theme Product must not reference the Starter subscription`);
   assert.equal(JSON.stringify(product).includes("24.50"), false, `${canonicalPath} theme Product must not reference the Starter price`);
