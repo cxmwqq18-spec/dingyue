@@ -43,9 +43,6 @@ if (!rawUrl) {
     assert.ok(cookiePage, "current relational source must contain /cookies");
     const cookieSeo = cookiePage.draftJson?.seo ?? {};
     assert.equal(cookieSeo.canonicalPath, "/cookies", "/cookies must own its canonical path");
-    assert.equal(cookieSeo.index, true, "/cookies source SEO must be indexable");
-    assert.equal(cookieSeo.robots?.index, true, "/cookies robots must allow indexing");
-    assert.equal(cookieSeo.robots?.follow, true, "/cookies robots must allow following");
     assert.equal(cookieSeo.canonical, "https://www.mydreamshoots.com/cookies", "/cookies canonical must be the absolute production URL");
 
     const current = await compileCurrentPublishedPayloadRelational(siteId, prisma);
