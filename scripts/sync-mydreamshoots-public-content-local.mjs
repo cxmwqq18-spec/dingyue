@@ -51,7 +51,7 @@ const copyTargets = {
   heroImageBadge: "AI video & photo workflows",
   heroImageCaption: "Create AI videos and photo sets for social content, Save the Date moments, professional profiles, portraits, couple photos, seasonal images, and creative projects.",
   heroSocialProofLabel: "Private uploads, requests, galleries",
-  trustedLogoTitle: `Creative workflow examples built with ${brand}`,
+  trustedLogoTitle: "Empowering creators worldwide",
   aboutTitle: `What is ${brand}?`,
   aboutBody: `${brand} is an AI video and photo generation platform that turns your images into AI videos, personalized Save the Date videos, professional AI headshots, portraits, couple photos, and themed photo sets.`,
   imageTitle: "Featured AI Photo Generators",

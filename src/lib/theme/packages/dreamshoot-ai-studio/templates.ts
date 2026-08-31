@@ -1271,7 +1271,7 @@ function aidreamcapesReviewSection(): SectionInstance {
 function mydreamshootsPartnerStripSection(): SectionInstance {
   return section(
     "brand_logo_strip",
-    { anchor: "workflow-examples", title: "Creative workflow examples built with myDreamshoots.", style: "dark" },
+    { anchor: "workflow-examples", title: "Empowering creators worldwide", style: "dark" },
     [
       block("workflow_creator_teams", "logo", { name: "Creator portrait sets", imageUrl: "", badge: "Content" }),
       block("workflow_headshots", "logo", { name: "Professional headshots", imageUrl: "", badge: "Profiles" }),

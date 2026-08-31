@@ -1500,7 +1500,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     settings: [
       text("anchor", "Anchor", "generated-showcase"),
       checkbox("showTrustedLogoIntro", "Show trusted logo intro", false),
-      text("trustedLogoTitle", "Trusted logo title", "Creative workflow examples built with myDreamshoots"),
+      text("trustedLogoTitle", "Trusted logo title", "Empowering creators worldwide"),
       text("aboutTitle", "About heading", "What is myDreamshoots?"),
       textarea("aboutBody", "About body", "myDreamshoots is an AI video and photo generation platform that turns your images into AI videos, personalized Save the Date videos, professional AI headshots, portraits, couple photos, and themed photo sets."),
       text("embeddedPricingSectionId", "Embedded pricing section ID", ""),
@@ -1533,7 +1533,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
         settings: {
           anchor: "generated-showcase",
           showTrustedLogoIntro: false,
-	          trustedLogoTitle: "Creative workflow examples built with myDreamshoots",
+	          trustedLogoTitle: "Empowering creators worldwide",
           aboutTitle: "What is myDreamshoots?",
           aboutBody: "myDreamshoots is an AI video and photo generation platform that turns your images into AI videos, personalized Save the Date videos, professional AI headshots, portraits, couple photos, and themed photo sets.",
           embeddedPricingSectionId: "",

@@ -12863,7 +12863,7 @@ function SectionView({
       >
           <h2 className="text-center text-[clamp(1.55rem,2vw,2.05rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
             <DreamshootUnderlinedTitle gradient={accent}>
-              {setting(section, "trustedLogoTitle", "Most Trusted Creators. | myDreamshoots")}
+              {setting(section, "trustedLogoTitle", "Empowering creators worldwide")}
             </DreamshootUnderlinedTitle>
           </h2>
         <div className="mx-auto mt-7 max-w-[78rem] space-y-3 md:mt-8 md:space-y-3.5">
