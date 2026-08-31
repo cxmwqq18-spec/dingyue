@@ -447,6 +447,10 @@ assert(
     themeRenderer.includes('? "/ai-video-generation/motion-generator"'),
   "MyDreamShoots fallback navigation must link Motion Generator directly to its canonical video route"
 );
+assert(
+  photoPackageTaxonomy.includes('id: site.siteId ?? site.id ?? ""'),
+  "CreativePack routing must prefer siteId over the pack record id"
+);
 assert(!mediaSource.includes("const fallbackImages"), "public media resolver must not contain a stock fallback image set");
 assert(mediaSource.includes("return \"\";"), "missing public media must fail closed");
 assert(!templates.includes('href: "/cookie-policy"'), "MyDreamShoots templates must not generate /cookie-policy links");

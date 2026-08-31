@@ -129,12 +129,12 @@ function siteIdentityToken(site: CollectionRouteSiteIdentity | undefined): strin
 }
 
 function isAidreamcapesRouteSite(site: CollectionRouteSiteIdentity | undefined): boolean {
-  return Boolean(site && isAidreamcapesCapabilitySite({ id: site.id ?? site.siteId ?? "", slug: site.slug ?? "" }));
+  return Boolean(site && isAidreamcapesCapabilitySite({ id: site.siteId ?? site.id ?? "", slug: site.slug ?? "" }));
 }
 
 export function isMydreamshootsCollectionRouteSite(site: CollectionRouteSiteIdentity | undefined): boolean {
   if (!site || isAidreamcapesRouteSite(site)) return false;
-  return isPrimaryMydreamshootsCapabilitySite({ id: site.id ?? site.siteId ?? "", slug: site.slug ?? "" });
+  return isPrimaryMydreamshootsCapabilitySite({ id: site.siteId ?? site.id ?? "", slug: site.slug ?? "" });
 }
 
 export function mydreamshootsCollectionGroupSlugForItem(slug: string | undefined): string | undefined {
