@@ -277,6 +277,7 @@ async function readVideoGenerationRouteState(siteSlug: string, videoSlug: string
 export async function generateMetadata({ params, searchParams }: { params: Promise<{ siteSlug: string; path: string[] }>; searchParams?: Promise<Record<string, string | string[] | undefined>> }): Promise<Metadata> {
   const { siteSlug, path } = await params;
   const metadataQuery = searchParams ? await searchParams : {};
+  const hintedCollectionSlug = (await headers()).get("x-storefront-image-theme")?.trim();
   const requestedSlug = `/${path.join("/")}`;
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && (requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) return {};
@@ -290,7 +291,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const isCollectionRequest = isCollectionRouteRequest(path);
   const isVideoGenerationRequest = isVideoGenerationRouteRequest(path);
   const collectionRootPageSlug = fallbackCollectionRootPathForPublicSlug(siteSlug);
-  const queryCollectionSlug = typeof metadataQuery.category === "string" ? metadataQuery.category : Array.isArray(metadataQuery.category) ? metadataQuery.category[0] : undefined;
+  const queryCollectionSlug = typeof metadataQuery.category === "string" ? metadataQuery.category : Array.isArray(metadataQuery.category) ? metadataQuery.category[0] : hintedCollectionSlug;
   const collectionPath = isCollectionRequest && path.length === 1 && queryCollectionSlug ? [...path, queryCollectionSlug] : path;
   const collectionLookupSlug = collectionRouteLookupSlug(collectionPath);
   const videoLookupSlug = isVideoGenerationRequest ? path[1] || "" : "";

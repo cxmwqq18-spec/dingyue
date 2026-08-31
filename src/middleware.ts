@@ -11,6 +11,7 @@ const GROWNSTRIDE_LEGACY_HOSTS = new Set(["grownstride.com", "www.grownstride.co
 const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const HOST_PRIVATE_STORE_PATH_RE = /^\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
+const IMAGE_THEME_CONTEXT_HEADER = "x-storefront-image-theme";
 const PUBLIC_STOREFRONT_CACHE_CONTROL = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
 const PUBLIC_STOREFRONT_CDN_CACHE_CONTROL = "public, s-maxage=300, stale-while-revalidate=1800";
 const PRIVATE_STOREFRONT_CACHE_CONTROL = "private, no-store, max-age=0, must-revalidate";
@@ -663,6 +664,10 @@ export async function middleware(request: NextRequest) {
 
   const upstreamHeaders = new Headers(request.headers);
   upstreamHeaders.set(REORDER_SKIP_HEADER, "1");
+  const imageThemeMatch = request.nextUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/);
+  if (imageThemeMatch?.[1] && storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host")) === "mydreamshoots") {
+    upstreamHeaders.set(IMAGE_THEME_CONTEXT_HEADER, imageThemeMatch[1]);
+  }
   const upstreamUrl = sameServerStorefrontUrl(request);
   const usesInternalSitePath = upstreamUrl.pathname.startsWith("/site/") && !request.nextUrl.pathname.startsWith("/site/");
   if (usesInternalSitePath) {
