@@ -42,7 +42,7 @@
         "pack_dreamshoot_old_photo_restoration",
         "pack_dreamshoot_edit_by_prompt"
       ],
-      "fieldPaths": ["record/galleryImageAlts"]
+      "fieldPaths": ["record/imageUrl", "record/galleryImages", "record/galleryImageAlts"]
     }
   }
 }
