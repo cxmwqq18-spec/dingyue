@@ -542,10 +542,11 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
     ? meaningfulThemeAlignedAltForStorefront(input.galleryImageAlts?.[input.index], locale, brand, input.imageUrl)
     : "";
   const galleryAlt = /\bcover\b/i.test(rawGalleryAlt) ? "" : rawGalleryAlt;
-  const galleryAltRepeatsEarlier = isPackGalleryImage && typeof input.index === "number"
+  const normalizedGalleryAlt = cleanAltText(rawGalleryAlt).toLowerCase();
+  const galleryAltRepeatsEarlier = isPackGalleryImage && normalizedGalleryAlt && typeof input.index === "number"
     ? input.galleryImageAlts
       ?.slice(0, input.index)
-      .some((candidate) => meaningfulThemeAlignedAltForStorefront(candidate, locale, brand, input.imageUrl) === galleryAlt)
+      .some((candidate) => cleanAltText(candidate).toLowerCase() === normalizedGalleryAlt)
     : false;
 
   const specificKey = themeKey(input);
