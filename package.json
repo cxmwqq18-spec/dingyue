@@ -220,6 +220,7 @@
     "content:baseline": "node scripts/content-sync.mjs --mode=baseline",
     "content:plan": "node scripts/content-sync.mjs --mode=plan",
     "content:apply": "node scripts/content-sync.mjs --mode=apply",
+    "repair:mydreamshoots-cookies-indexability": "node scripts/repair-mydreamshoots-cookies-indexability.mjs",
     "smoke:content-sync-contract": "node scripts/smoke-content-sync-contract.mjs",
     "launch:storefront-precheck": "npm run typecheck && npm run guard:public-storefront-ssr && npm run guard:live-storefront-ssr && npm run guard:storefront-launch-seo-contract && npm run guard:mydreamshoots-production-release && npm run smoke:mydreamshoots-seo-indexing && npm run smoke:public-seo-policy && npm run smoke:storefront-sitemap-directory-coverage && npm run smoke:storefront-head-title-order && npm run smoke:storefront-seo-fingerprint && npm run guard:mydreamshoots-content",
     "launch:mydreamshoots-precheck": "npm run typecheck && npm run guard:public-storefront-ssr && npm run guard:mydreamshoots-production-release && npm run smoke:mydreamshoots-seo-indexing && SMOKE_SITE_ID=site_dreamshoot npm run smoke:storefront-media-alt && npm run smoke:public-html-cleanliness && SMOKE_SITE_ID=site_dreamshoot npm run smoke:storefront-head-title-order && npm run smoke:mydreamshoots-seo-fingerprint && npm run repair:mydreamshoots-public-copy && node scripts/guard-mydreamshoots-content-consistency.mjs --skip-live && npm run smoke:mydreamshoots-public-contract",
