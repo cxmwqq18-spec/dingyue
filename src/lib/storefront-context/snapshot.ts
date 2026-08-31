@@ -426,6 +426,9 @@ export function resolveEffectivePublishedPage(snapshot: PublishedSiteSnapshot, p
 export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot, path: string): RouteDisposition {
   const requestedPath = normalizePath(path);
   if (!snapshot.pages.length) return { kind: "not_found", status: 404, path: requestedPath };
+  if (isPrimaryMydreamshootsSite(snapshot.site) && requestedPath === "/holidays-events/wedding-invitation") {
+    return { kind: "not_found", status: 404, path: requestedPath };
+  }
   // Resolve legacy Save the Date aliases before direct page lookup. Otherwise
   // an old ThemePage row can render at 200 and split the page's SEO identity.
   if (isPrimaryMydreamshootsSite(snapshot.site) && (requestedPath.startsWith("/holidays-events/") || requestedPath === "/ai-video-generation/wedding-ceremony")) {

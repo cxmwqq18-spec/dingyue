@@ -94,8 +94,7 @@ const CANONICAL_PUBLIC_PATHS = new Map([
   ["/policies/state-privacy", "/state-privacy"],
   ["/engagement-photo", "/ai-image-generation/engagement-photo"],
   ["/ai-image-generation/profile-cards", "/ai-image-generation/avatar"],
-  ["/ai-image-generation/motion-generator", "/ai-video-generation/motion-generator"],
-  ["/holidays-events/wedding-invitation", "/ai-video-generation/wedding-invitation"]
+  ["/ai-image-generation/motion-generator", "/ai-video-generation/motion-generator"]
 ]);
 const DREAMSHOOT_LEGACY_TOOL_CANONICAL_PATHS = new Map([
   ["/tools/ai-image-studio", "/tools"],
@@ -676,9 +675,7 @@ function canonicalBlogPathForSite(site: Site, path: string): string {
 function canonicalDirectoryPathForSite(site: Site, path: string): string {
   const normalized = normalizePath(path);
   if (isDreamshootSite(site)) {
-    const canonicalSaveDate = normalized === "/holidays-events/wedding-invitation"
-      ? "/ai-video-generation/wedding-invitation"
-      : canonicalSaveTheDatePath(normalized);
+    const canonicalSaveDate = canonicalSaveTheDatePath(normalized);
     if (canonicalSaveDate !== normalized) return canonicalSaveDate;
   }
   if (isCollectionDirectoryPath(normalized)) return publicCollectionPathForSite(site, collectionSlugFromDirectoryPath(site, normalized));

@@ -33,8 +33,7 @@ const policyRouteSpecs = [
   { canonicalPath: "/state-privacy", aliases: ["/state-privacy-rights", "/california-privacy", "/ccpa", "/policies/state-privacy"] }
 ] as const;
 const legacyMotionAlias = { aliasPath: "/ai-image-generation/motion-generator", targetPath: "/ai-video-generation/motion-generator" } as const;
-const legacyWeddingInvitationAlias = { aliasPath: "/holidays-events/wedding-invitation", targetPath: "/ai-video-generation/wedding-invitation" } as const;
-const legacyTopicAliases = [legacyMotionAlias, legacyWeddingInvitationAlias] as const;
+const legacyTopicAliases = [legacyMotionAlias] as const;
 const policyCanonicalPaths = new Set(policyRouteSpecs.map((spec) => spec.canonicalPath));
 
 function record(value: unknown): value is Record<string, unknown> {
