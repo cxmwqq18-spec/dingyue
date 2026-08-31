@@ -53,8 +53,12 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const { siteSlug } = await params;
   const publicSlug = publicSiteSlug(siteSlug);
   const query = searchParams ? await searchParams : {};
-  const category = typeof query.category === "string" ? query.category : Array.isArray(query.category) ? query.category[0] : undefined;
   const headerStore = await headers();
+  const category = typeof query.category === "string"
+    ? query.category
+    : Array.isArray(query.category)
+      ? query.category[0]
+      : headerStore.get("x-storefront-image-theme")?.trim();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const state = category
     ? await readRoutePublicRuntimeState(headerStore, publicSlug, routeMode, category)
