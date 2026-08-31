@@ -12809,6 +12809,7 @@ function SectionView({
     const trustedLogoRows = showTrustedLogoIntro
       ? [trustedLogoBlocks.slice(0, trustedLogoSplitIndex), trustedLogoBlocks.slice(trustedLogoSplitIndex)].filter((row) => row.length > 0)
       : [];
+    const trustedLogoTitle = mydreamProfileSite ? setting(section, "trustedLogoTitle", "Empowering creators worldwide") : "";
     const renderTrustedLogoCard = (logo: SectionBlockInstance, index: number, duplicate = false) => {
       const logoName = blockValue(logo, "name", `Creator logo ${index + 1}`);
       const logoImage = blockValue(logo, "imageUrl", "");
@@ -12847,7 +12848,7 @@ function SectionView({
         className="relative left-1/2 mb-12 w-screen -translate-x-1/2 border-b border-white/10 md:mb-14"
         data-dreamshoot-workflow-examples="true"
       >
-        <MydreamshootsLogoShowcase />
+        <MydreamshootsLogoShowcase title={trustedLogoTitle} />
         <div className="mx-auto max-w-[38rem] px-5 py-12 text-center md:py-14">
           <h2 className="text-[clamp(1.45rem,1.75vw,1.9rem)] font-semibold leading-tight tracking-normal text-white [font-family:var(--site-title-font)]">
             {setting(section, "aboutTitle", "What is myDreamshoots?")}

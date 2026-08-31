@@ -236,7 +236,7 @@ const stores = [
       anchor: "generated-showcase",
 	      showTrustedLogoIntro: true,
 	      trustedLogoEyebrow: "CREATIVE SHOWCASE",
-	      trustedLogoTitle: "Made with MyDreamShoots",
+	      trustedLogoTitle: "Empowering creators worldwide",
 	      trustedLogoSubtitle: "Ideas, brands and visual experiments brought together with AI.",
 	      trustedLogoSplitIndex: 15,
       embeddedPricingSectionId: "pricing_1",

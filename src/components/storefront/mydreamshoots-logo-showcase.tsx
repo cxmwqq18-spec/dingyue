@@ -33,7 +33,7 @@ function LogoGroup({ duplicate, logos }: { duplicate?: boolean; logos: (typeof l
   );
 }
 
-export function MydreamshootsLogoShowcase() {
+export function MydreamshootsLogoShowcase({ title }: { title: string }) {
   const updateSpotlight = (event: PointerEvent<HTMLElement>) => {
     const bounds = event.currentTarget.getBoundingClientRect();
     event.currentTarget.style.setProperty("--logo-showcase-mx", `${event.clientX - bounds.left}px`);
@@ -50,9 +50,7 @@ export function MydreamshootsLogoShowcase() {
       <div aria-hidden="true" className="mydreamshoots-logo-showcase__ambient" />
       <div className="mydreamshoots-logo-showcase__heading" translate="no">
         <div className="mydreamshoots-logo-showcase__eyebrow">CREATIVE SHOWCASE</div>
-        <h2 id="mydreamshoots-logo-showcase-title">
-          Made with <span>MyDreamShoots</span>
-        </h2>
+        <h2 id="mydreamshoots-logo-showcase-title"><span>{title}</span></h2>
         <p>Ideas, brands and visual experiments brought together with AI.</p>
       </div>
       <div aria-label="Logo showcase" className="mydreamshoots-logo-marquee">

@@ -484,7 +484,7 @@ const homeSections: ThemePageJson["sections"] = {
       anchor: "generated-showcase",
       showTrustedLogoIntro: true,
       trustedLogoEyebrow: "CREATIVE SHOWCASE",
-      trustedLogoTitle: "Made with MyDreamShoots",
+      trustedLogoTitle: "Empowering creators worldwide",
       trustedLogoSubtitle: "Ideas, brands and visual experiments brought together with AI.",
       aboutTitle: "What is myDreamshoots?",
       aboutBody: mydreamshootsAboutBody,

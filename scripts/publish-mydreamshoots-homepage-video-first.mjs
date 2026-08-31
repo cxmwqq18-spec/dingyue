@@ -124,7 +124,7 @@ function updateHomepage(page, homePageId) {
   if (showcase) {
     showcase.settings = {
       ...(showcase.settings ?? {}),
-      trustedLogoTitle: "Creative workflow examples built with myDreamshoots",
+      trustedLogoTitle: "Empowering creators worldwide",
       aboutTitle: "What is myDreamshoots?",
       aboutBody: "myDreamshoots is an AI video and photo generation platform that turns your images into AI videos, personalized Save the Date videos, professional AI headshots, portraits, couple photos, and themed photo sets.",
       subtitle: "These examples use materials customers created in private accounts. Scan the theme labels to choose a direction for your own set.",

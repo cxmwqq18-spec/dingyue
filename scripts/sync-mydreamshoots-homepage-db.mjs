@@ -237,7 +237,7 @@ function mergeHomepage(pageJson, templateHome, pricingPageJson) {
       ...clone(templateGeneration.settings),
       showTrustedLogoIntro: true,
       trustedLogoEyebrow: "CREATIVE SHOWCASE",
-      trustedLogoTitle: "Made with MyDreamShoots",
+      trustedLogoTitle: "Empowering creators worldwide",
       trustedLogoSubtitle: "Ideas, brands and visual experiments brought together with AI.",
       aboutTitle: "What is myDreamshoots?",
       aboutBody: "myDreamshoots is an AI video and photo generation platform that turns your images into AI videos, personalized Save the Date videos, professional AI headshots, portraits, couple photos, and themed photo sets.",
