@@ -429,12 +429,22 @@ function imageSource(value) {
   return value && typeof value === "object" && typeof value.src === "string" ? value.src : "";
 }
 
+function cleanVideoTopicImageSource(src) {
+  return typeof src === "string"
+    ? src.replace(
+        /^\/assets\/dreamshoot\/(tiktok-video|instagram-reels|social-media-video|story-video)\/([^/?#]+)\.(?:png|jpe?g|webp)(?:[?#].*)?$/i,
+        "/assets/dreamshoot/generated/video-topic-clean/$1/$2.webp"
+      )
+    : src;
+}
+
 // Keep the published topic payload aligned with the design-package roles.
 // Hero previews may repeat the hero image, but a use-case card is an explicit
 // content slot and must keep its manifest-backed image. Remove gallery entries
 // that merely repeat the hero or a card image so the same asset is not rendered twice.
 function isolateVideoTopicImages(content) {
   const next = clone(content);
+  if (next.hero?.image?.src) next.hero.image.src = cleanVideoTopicImageSource(next.hero.image.src);
   const heroSource = imageSource(next.hero?.image);
   if (Array.isArray(next.hero?.images)) {
     // Keep the explicit hero carousel intact. The renderer uses this list as
@@ -442,9 +452,10 @@ function isolateVideoTopicImages(content) {
     // would shift the remaining images and hide a real hero frame.
     const seen = new Set();
     next.hero.images = next.hero.images.filter((image) => {
-      const src = imageSource(image);
+      const src = cleanVideoTopicImageSource(imageSource(image));
       if (!src || seen.has(src)) return false;
       seen.add(src);
+      image.src = src;
       return true;
     });
   }

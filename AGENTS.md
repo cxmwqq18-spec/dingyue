@@ -36,6 +36,13 @@ and navigation directories, must be complete server-rendered HTML.
   compiler may refresh `SitePublishedState` as a derived cache, but it is never
   a deployment/import/rollback source. Never replace missing data with hardcoded
   copy, historical snapshots, or client fetches.
+- Public page content must be read only from `LivePage.contentJson`.
+  `ThemePage`, `draftJson`, and `publishedJson` are legacy admin migration
+  storage and must never be queried or used as a fallback by public SSR,
+  metadata, sitemap, robots, navigation, or directory loaders.
+- A committed `LivePage` update is live on the next server request. Do not
+  require a publication action, content snapshot, deployment, or cache refresh
+  for it to become visible.
 - `use client` is allowed only for explicitly reviewed, non-data presentation
   behavior and cannot become a public data source.
 - Private `/account`, `/app`, checkout, authentication, customer generation,
