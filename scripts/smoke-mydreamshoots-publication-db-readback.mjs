@@ -46,7 +46,8 @@ if (!rawUrl) {
     assert.equal(cookieSeo.canonical, "https://www.mydreamshoots.com/cookies", "/cookies canonical must be the absolute production URL");
 
     const current = await compileCurrentPublishedPayloadRelational(siteId, prisma);
-    assert.equal(publicationSnapshotHash(current), current.snapshotHash, "compiled relational projection hash must verify");
+    const projectionHash = publicationSnapshotHash(current);
+    assert.equal(projectionHash, current.snapshotHash, "compiled relational projection hash must verify");
     const policyRoutes = current.publishedRoutes.filter((route) => route.routeKind === "policy" || route.routeKind === "policy-alias");
     assert.deepEqual(policyRoutes.filter((route) => route.disposition === "render").map((route) => route.canonicalPath).sort(), [
       "/children-privacy", "/content", "/cookies", "/privacy", "/refunds", "/shipping", "/state-privacy", "/terms"
@@ -67,12 +68,12 @@ if (!rawUrl) {
     console.log(JSON.stringify({
       ok: true,
       skipped: false,
-      source: "postgres-relational-live-draft",
+      source: "postgres-relational-draft-projection",
       siteId,
       pageId: cookiePage.id,
       pageEntityId: cookieRoute.pageEntityId,
       pageUpdatedAt: cookiePage.updatedAt,
-      snapshotHash: current.snapshotHash,
+      projectionHash,
       routeRevision: current.revisions.routeRevision,
       policyRevision: current.revisions.policyRevision,
       buildId: current.buildId

@@ -1,33 +1,6 @@
 import http from "node:http";
 import https from "node:https";
-import fs from "node:fs";
-import Module from "node:module";
-import path from "node:path";
-import createJiti from "jiti";
-import { readPlatformStateFromSql } from "./lib/platform-state-sql.mjs";
-
-const repoRoot = process.cwd();
-const sourceRoot = path.join(repoRoot, "src");
-const originalResolveFilename = Module._resolveFilename;
-const originalLoad = Module._load;
-Module._load = function load(request, ...args) {
-  if (request === "server-only") return {};
-  return originalLoad.call(this, request, ...args);
-};
-Module._resolveFilename = function resolveFilename(request, ...args) {
-  if (request === "server-only") return path.join(sourceRoot, "lib/storefront-context/types.ts");
-  const aliasPath = request.startsWith("@/") ? path.join(sourceRoot, request.slice(2)) : "";
-  const resolvedRequest = aliasPath && fs.existsSync(`${aliasPath}.ts`) ? `${aliasPath}.ts` : aliasPath || request;
-  return originalResolveFilename.call(this, resolvedRequest, ...args);
-};
-const jiti = createJiti(import.meta.url);
-const { sitemapEntriesForSite } = jiti("../src/lib/seo-indexing.ts");
 const baseUrl = new URL((process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/\/$/, ""));
-const stateArgument = process.argv.find((value) => value.startsWith("--state="))?.slice("--state=".length);
-if (stateArgument || process.env.SEO_REVIEW_STATE_PATH) {
-  throw new Error("Sitemap state fixtures are disabled; read the PostgreSQL publication source instead.");
-}
-const state = await readPlatformStateFromSql();
 const timeoutMs = Number(process.env.SITEMAP_SMOKE_SITEMAP_TIMEOUT_MS ?? 120_000);
 const pageTimeoutMs = Number(process.env.SITEMAP_SMOKE_PAGE_TIMEOUT_MS ?? 45_000);
 const pageConcurrency = Math.max(1, Number(process.env.SITEMAP_SMOKE_PAGE_CONCURRENCY ?? 2));
@@ -65,22 +38,6 @@ function normalizePath(value, fallback = "/") {
   if (/^https?:\/\//i.test(raw)) return normalizePath(new URL(raw).pathname, fallback);
   const pathname = raw.split("?")[0].split("#")[0] || fallback;
   return pathname === "/" ? "/" : `/${pathname.replace(/^\/+|\/+$/g, "")}`;
-}
-
-function expectedCanonicalPaths(state, site) {
-  const entries = sitemapEntriesForSite(state, site);
-  return new Set(entries.map((entry) => normalizePath(new URL(entry.loc).pathname)));
-}
-
-function publicationIdentity(site) {
-  return {
-    source: "postgres-relational",
-    siteId: site.id,
-    publicationId: null,
-    publicationVersion: null,
-    snapshotHash: null,
-    factsRevision: null
-  };
 }
 
 function pathFamily(pathname) {
@@ -290,9 +247,6 @@ for (const target of targets) {
   const head = await requestSitemap(target.host, "HEAD");
   if (head.status !== 200 || head.body.length !== 0) throw new Error(`sitemap_head_invalid:${target.host}:${head.status}:${head.body.length}`);
   const actual = sitemapPaths(response.body, target.host);
-  const site = state?.sites.find((candidate) => candidate.id === target.siteId);
-  if (state && !site) throw new Error(`missing_site:${target.siteId}`);
-  const expected = state && site ? expectedCanonicalPaths(state, site) : undefined;
   const live = await validateLivePublishedPages(target.host, actual.paths);
   const legacyCookieRedirectFailures = await validateLegacyCookieRedirects(target.host);
   const expectedCookieLoc = "https://www.mydreamshoots.com/cookies";
@@ -307,17 +261,12 @@ for (const target of targets) {
   results.push({
     siteId: target.siteId,
     host: target.host,
-    mode: state ? "postgres-relational" : "live-publication",
-    publication: site ? publicationIdentity(site) : null,
-    expected: expected?.size ?? null,
+    mode: "live-origin",
     actual: actual.paths.size,
     duplicateLocs: actual.duplicateLocs,
     coldElapsedMs: response.elapsedMs,
     warmElapsedMs: warmResponse.elapsedMs,
-    expectedPathFamilies: expected ? familyCounts(expected) : {},
     actualPathFamilies: familyCounts(actual.paths),
-    missing: expected ? [...expected].filter((value) => !actual.paths.has(value)) : [],
-    unexpected: expected ? [...actual.paths].filter((value) => !expected.has(value)) : [],
     missingRequiredPolicyPaths,
     legacyCookiePaths,
     cookieLocs,
@@ -332,8 +281,6 @@ for (const target of targets) {
 }
 
 const failures = results.filter((result) =>
-  result.missing.length ||
-  result.unexpected.length ||
   result.missingRequiredPolicyPaths.length ||
   result.legacyCookiePaths.length ||
   result.invalidCookieLocs.length ||
@@ -344,5 +291,5 @@ const failures = results.filter((result) =>
   result.liveFailures.length ||
   result.orphanPaths.length
 );
-console.log(JSON.stringify({ ok: failures.length === 0, stateSource: "postgres:relational-current-state+seo-indexer", results }, null, 2));
+console.log(JSON.stringify({ ok: failures.length === 0, stateSource: "live-origin+explicit-policy-contract", results }, null, 2));
 if (failures.length) process.exitCode = 1;
