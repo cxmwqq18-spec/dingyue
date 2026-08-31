@@ -50,8 +50,8 @@ const expected = {
     caption: "Hand-cover transition · casual to polished · TikTok-first 9:16"
   },
   "product-video": {
-    src: "/assets/dreamshoot/product-video/show-the-product-clearly-before-you-ask-someone-to-buy-it.mp4",
-    poster: "/assets/dreamshoot/product-video/show-the-product-clearly-before-you-ask-someone-to-buy-it.webp",
+    src: "/assets/dreamshoot/product-video/feature-led-product-showcase.mp4",
+    poster: "/assets/dreamshoot/product-video/feature-led-product-showcase.webp",
     label: "Show the Product Clearly Before You Ask Someone to Buy It",
     width: 496,
     height: 864,

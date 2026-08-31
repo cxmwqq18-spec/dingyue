@@ -1875,14 +1875,14 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         "Use accurate product photos and claims. Do not invent materials, dimensions, performance, results, included items, or compatibility.",
       imageNote: "Feature-led showcase · detail-focused storytelling · AI-generated product video",
       image: image(
-        `${productImageRoot}/show-the-product-clearly-before-you-ask-someone-to-buy-it.webp`,
+        `${productImageRoot}/feature-led-product-showcase.webp`,
         "Full-size keyboard shown with green backlighting in a product feature video",
         496,
         864
       ),
       video: {
-        src: `${productImageRoot}/show-the-product-clearly-before-you-ask-someone-to-buy-it.mp4`,
-        poster: `${productImageRoot}/show-the-product-clearly-before-you-ask-someone-to-buy-it.webp`,
+        src: `${productImageRoot}/feature-led-product-showcase.mp4`,
+        poster: `${productImageRoot}/feature-led-product-showcase.webp`,
         label: "Show the Product Clearly Before You Ask Someone to Buy It",
         width: 496,
         height: 864,

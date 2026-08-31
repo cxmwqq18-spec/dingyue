@@ -48,7 +48,11 @@ const targetedHeroFieldManifest = {
     imageNote: "9:16-first · cover-aware · safe-zone thinking · captions when dialogue matters"
   },
   "product-video": {
-    image: "/assets/dreamshoot/product-video/product-video-size-scale-backpack.jpg",
+    image: [
+      "/assets/dreamshoot/product-video/product-video-size-scale-backpack.jpg",
+      "/assets/dreamshoot/product-video/show-the-product-clearly-before-you-ask-someone-to-buy-it.webp"
+    ],
+    video: "/assets/dreamshoot/product-video/show-the-product-clearly-before-you-ask-someone-to-buy-it.mp4",
     imageNote: "Problem-to-payoff ad · product-focused storytelling · AI-generated commercial"
   },
   "product-ad-video": {
@@ -305,7 +309,7 @@ const pages = [
       "Turn product photos and source images into videos that show scale, materials, features, real-world use, packaging, and the details buyers need before they decide.",
     keywords:
       "AI product video generator, product video maker, product showcase video, ecommerce product video, product video from images, product video generator from photos, product page video, product marketing video",
-    imageUrl: "/assets/dreamshoot/product-video/show-the-product-clearly-before-you-ask-someone-to-buy-it.webp"
+    imageUrl: "/assets/dreamshoot/product-video/feature-led-product-showcase.webp"
   },
   {
     slug: "product-ad-video",
@@ -632,7 +636,7 @@ function syncStoredVideoTopicHeroImage(pageJson, slug) {
   const nextHero = { ...currentHero };
   if (videoMediaSyncSlugs.has(slug)) {
     assertTargetFieldUnchanged(slug, "image.src", imageSource(currentHero.image), previous.image, canonicalHero.image.src);
-    assertTargetFieldUnchanged(slug, "video.src", currentHero.video?.src, undefined, canonicalHero.video?.src);
+    assertTargetFieldUnchanged(slug, "video.src", currentHero.video?.src, previous.video, canonicalHero.video?.src);
     nextHero.image = clone(canonicalHero.image);
     nextHero.video = clone(canonicalHero.video);
   }
