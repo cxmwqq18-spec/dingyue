@@ -459,7 +459,10 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   // migration, but unsupported video slugs must not become sitemap URLs.
   if (isDreamshootSite(site) && canonicalPath.startsWith("/ai-video-generation/") && !isPublicVideoGenerationSitemapPath(site, canonicalPath)) return "";
   const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug));
-  return isIndexablePage(page) && !isLegacyDuplicate && !isBlockedPublicPathForSite(site, canonicalPath) && pageSeo?.robots?.index !== false && pageSeo?.index !== false
+  // SEO eligibility is resolved once below by resolveEffectivePublishedPage().
+  // Reading raw page flags here creates a second owner that can disagree with
+  // the published route projection used by metadata and page rendering.
+  return isIndexablePage(page) && !isLegacyDuplicate && !isBlockedPublicPathForSite(site, canonicalPath)
     ? canonicalDirectoryPathForSite(site, canonicalPath)
     : "";
 }

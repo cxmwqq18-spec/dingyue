@@ -41,6 +41,18 @@ const targets = [
 ].filter((target) => configuredSiteIds.has(target.siteId));
 if (!targets.length) throw new Error("SITEMAP_SMOKE_SITE_IDS_selected_no_targets");
 
+const mydreamshootsRequiredPolicyPaths = [
+  "/children-privacy",
+  "/content",
+  "/cookies",
+  "/privacy",
+  "/refunds",
+  "/shipping",
+  "/state-privacy",
+  "/terms"
+];
+const mydreamshootsLegacyCookiePaths = ["/cookie-policy", "/policies/cookies"];
+
 function originForHost(host) {
   const configured = process.env[`SITEMAP_SMOKE_${host.toUpperCase().replace(/[^A-Z0-9]/g, "_")}_BASE_URL`];
   if (configured) return new URL(configured.replace(/\/$/, ""));
@@ -268,6 +280,12 @@ for (const target of targets) {
   if (state && !site) throw new Error(`missing_site:${target.siteId}`);
   const expected = state && site ? expectedCanonicalPaths(state, site) : undefined;
   const live = await validateLivePublishedPages(target.host, actual.paths);
+  const missingRequiredPolicyPaths = target.siteId === "site_dreamshoot"
+    ? mydreamshootsRequiredPolicyPaths.filter((pathname) => !actual.paths.has(pathname))
+    : [];
+  const legacyCookiePaths = target.siteId === "site_dreamshoot"
+    ? mydreamshootsLegacyCookiePaths.filter((pathname) => actual.paths.has(pathname))
+    : [];
   results.push({
     siteId: target.siteId,
     host: target.host,
@@ -282,6 +300,8 @@ for (const target of targets) {
     actualPathFamilies: familyCounts(actual.paths),
     missing: expected ? [...expected].filter((value) => !actual.paths.has(value)) : [],
     unexpected: expected ? [...actual.paths].filter((value) => !expected.has(value)) : [],
+    missingRequiredPolicyPaths,
+    legacyCookiePaths,
     foreignHosts: actual.foreignHosts,
     liveFailures: live.failures,
     pageResults: live.pageResults,
@@ -293,6 +313,8 @@ for (const target of targets) {
 const failures = results.filter((result) =>
   result.missing.length ||
   result.unexpected.length ||
+  result.missingRequiredPolicyPaths.length ||
+  result.legacyCookiePaths.length ||
   result.foreignHosts.length ||
   result.duplicateLocs.length ||
   result.liveFailures.length ||

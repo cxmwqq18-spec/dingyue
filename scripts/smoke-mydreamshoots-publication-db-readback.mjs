@@ -32,23 +32,24 @@ if (!rawUrl) {
     if (request.startsWith("@/") && fs.existsSync(`${resolved}.ts`)) resolved = `${resolved}.ts`;
     return originalResolveFilename.call(this, resolved, ...args);
   };
-  const { publicationSnapshotIntegrity, publicationSnapshotHash } = createJiti(import.meta.url)("../src/lib/publication-snapshot-integrity.ts");
+  const { publicationSnapshotHash } = createJiti(import.meta.url)("../src/lib/publication-snapshot-integrity.ts");
+  const { compileCurrentPublishedPayloadRelational } = createJiti(import.meta.url)("../src/lib/stores/theme-store.ts");
   const prisma = new PrismaClient();
   try {
-    const active = await prisma.activeThemePublication.findUnique({
-      where: { siteId },
-      include: { publication: true }
+    const cookiePage = await prisma.themePage.findUnique({
+      where: { siteId_slug: { siteId, slug: "/cookies" } },
+      select: { id: true, slug: true, draftJson: true, updatedAt: true }
     });
-    assert.ok(active, "local database must have an active MyDreamShoots publication");
-    const first = active.publication;
-    const second = await prisma.themePublication.findUnique({ where: { id: first.id } });
-    assert.ok(second, "active publication must be readable by ID");
-    assert.equal(first.id, second.id);
-    assert.equal(first.version, second.version);
-    assert.deepEqual(first.snapshot, second.snapshot, "publication snapshot must be byte-stable on readback");
-    assert.equal(publicationSnapshotIntegrity(first.snapshot), "valid", "readback snapshot must satisfy the immutable contract");
-    assert.equal(publicationSnapshotHash(first.snapshot), first.snapshot.snapshotHash, "snapshot hash must verify after readback");
-    const policyRoutes = first.snapshot.publishedRoutes.filter((route) => route.routeKind === "policy" || route.routeKind === "policy-alias");
+    assert.ok(cookiePage, "current relational source must contain /cookies");
+    const cookieSeo = cookiePage.draftJson?.seo ?? {};
+    assert.equal(cookieSeo.canonicalPath, "/cookies", "/cookies must own its canonical path");
+    assert.equal(cookieSeo.index, true, "/cookies source SEO must be indexable");
+    assert.equal(cookieSeo.robots?.index, true, "/cookies robots must allow indexing");
+    assert.equal(cookieSeo.robots?.follow, true, "/cookies robots must allow following");
+
+    const current = await compileCurrentPublishedPayloadRelational(siteId, prisma);
+    assert.equal(publicationSnapshotHash(current), current.snapshotHash, "compiled relational projection hash must verify");
+    const policyRoutes = current.publishedRoutes.filter((route) => route.routeKind === "policy" || route.routeKind === "policy-alias");
     assert.deepEqual(policyRoutes.filter((route) => route.disposition === "render").map((route) => route.canonicalPath).sort(), [
       "/children-privacy", "/content", "/cookies", "/privacy", "/refunds", "/shipping", "/state-privacy", "/terms"
     ]);
@@ -56,10 +57,28 @@ if (!rawUrl) {
       "/california-privacy", "/ccpa", "/children-privacy-policy", "/childrens-privacy", "/content-policy", "/cookie-policy", "/delivery-policy", "/policies/children-privacy", "/policies/content", "/policies/cookies", "/policies/privacy", "/policies/privacy-policy", "/policies/refund", "/policies/refunds", "/policies/shipping", "/policies/state-privacy", "/policies/terms", "/policies/terms-of-service", "/privacy-policy", "/refund-policy", "/shipping-policy", "/state-privacy-rights", "/terms-of-service"
     ]);
     assert.ok(policyRoutes.filter((route) => route.disposition === "redirect").every((route) => route.statusCode === 308 && route.indexable === false && route.sitemapEligible === false));
+    const cookieRoute = policyRoutes.find((route) => route.disposition === "render" && route.canonicalPath === "/cookies");
+    assert.ok(cookieRoute, "compiled relational projection must contain the canonical /cookies route");
+    assert.equal(cookieRoute.pageId, cookiePage.id);
+    assert.equal(cookieRoute.pageEntityId, "mydreamshoots:policy:cookies");
+    assert.equal(cookieRoute.indexable, true);
+    assert.equal(cookieRoute.sitemapEligible, true);
     for (const field of ["publishedRoutes", "publishedPageEntities", "publishedPageCopy", "publishedPageMedia", "publishedStandardPageMedia", "publishedPackFacts", "publishedOffers", "publishedFacts", "publishedCollectionRefs", "publishedLinkRefs", "revisions", "snapshotHash", "buildId"]) {
-      assert.ok(field in first.snapshot, `readback snapshot missing ${field}`);
+      assert.ok(field in current, `compiled relational projection missing ${field}`);
     }
-    console.log(JSON.stringify({ ok: true, skipped: false, siteId, publicationId: first.id, version: first.version, snapshotHash: first.snapshot.snapshotHash }, null, 2));
+    console.log(JSON.stringify({
+      ok: true,
+      skipped: false,
+      source: "postgres-relational-live-draft",
+      siteId,
+      pageId: cookiePage.id,
+      pageEntityId: cookieRoute.pageEntityId,
+      pageUpdatedAt: cookiePage.updatedAt,
+      snapshotHash: current.snapshotHash,
+      routeRevision: current.revisions.routeRevision,
+      policyRevision: current.revisions.policyRevision,
+      buildId: current.buildId
+    }, null, 2));
   } finally {
     await prisma.$disconnect();
   }

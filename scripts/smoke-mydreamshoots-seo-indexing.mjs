@@ -593,6 +593,13 @@ assert(
     seoIndexing.includes("effective.context.seo.canonicalUrl"),
   "sitemap must use one published snapshot, effective page disposition, indexability, and canonical URL"
 );
+const sitemapCandidateResolver = seoIndexing.match(/function pageSitemapPathForSite[\s\S]*?\n}/)?.[0] ?? "";
+assert(
+  !sitemapCandidateResolver.includes("pageSeo?.robots?.index") &&
+    !sitemapCandidateResolver.includes("pageSeo?.index !== false") &&
+    sitemapCandidateResolver.includes("SEO eligibility is resolved once below by resolveEffectivePublishedPage()"),
+  "sitemap candidate discovery must not re-evaluate raw page SEO flags before effective publication indexability"
+);
 assert(
   publishedContract.includes("mydreamshootsPublishedRouteManifest") &&
     publishedContract.includes('copySource: "page-copy" | "missing"') &&
