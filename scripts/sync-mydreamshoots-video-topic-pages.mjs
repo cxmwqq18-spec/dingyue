@@ -62,6 +62,9 @@ const targetedHeroFieldManifest = {
   },
   "music-video": {
     image: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg"
+  },
+  "pet-video": {
+    image: "/assets/dreamshoot/pet-video/hero-pet-video-training-frame.jpg"
   }
 };
 
@@ -393,7 +396,7 @@ const pages = [
     seoTitle: "AI Pet Video Generator for Pet Portraits & Animal Content | myDreamshoots",
     description: "Create AI pet-video visuals from text or approved images for pet portraits, playful moments, owner interactions, walks, grooming, training, and animal lifestyle content.",
     keywords: "ai pet video generator, AI pet video maker, pet portrait video generator, animal video generator, pet lifestyle video, dog video generator, cat video maker, pet social video creator",
-    imageUrl: "/assets/dreamshoot/pet-video/hero-pet-video-training-frame.jpg"
+    imageUrl: "/assets/dreamshoot/pet-video/hero-pet-video-portrait-frame.jpg"
   },
   {
     slug: "explainer-video",
@@ -480,7 +483,7 @@ async function readPlatformState() {
     const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
     if (!document?.state) throw new Error("missing_platform_state_document:platform");
     const state = clone(document.state);
-    const persistedPages = await prisma.themePage.findMany({
+    const persistedPages = await prisma.livePage.findMany({
       where: {
         siteId: SITE_ID,
         slug: { in: pages.map((page) => pagePath(page.slug)) }
@@ -491,7 +494,7 @@ async function readPlatformState() {
     site.pages ??= [];
     for (const persistedPage of persistedPages) {
       const slug = persistedPage.slug.replace("/ai-video-generation/", "");
-      if (!hasStoredVideoTopicContent(persistedPage.draftJson, slug)) continue;
+      if (!hasStoredVideoTopicContent(persistedPage.contentJson, slug)) continue;
       const statePage = site.pages.find((page) => page.id === persistedPage.id || page.slug === persistedPage.slug);
       const relationalPage = {
         id: persistedPage.id,
@@ -500,9 +503,8 @@ async function readPlatformState() {
         templateKey: persistedPage.templateKey ?? undefined,
         slug: persistedPage.slug,
         title: persistedPage.title,
-        draftJson: clone(persistedPage.draftJson),
-        publishedJson: clone(persistedPage.publishedJson),
-        draftMeta: persistedPage.draftMeta ? clone(persistedPage.draftMeta) : undefined,
+        draftJson: clone(persistedPage.contentJson),
+        publishedJson: clone(persistedPage.contentJson),
         createdAt: persistedPage.createdAt.toISOString(),
         updatedAt: persistedPage.updatedAt.toISOString()
       };
@@ -685,8 +687,10 @@ function syncStoredVideoTopicHeroImage(pageJson, slug) {
   if (videoMediaSyncSlugs.has(slug)) {
     assertTargetFieldUnchanged(slug, "image.src", imageSource(currentHero.image), previous.image, canonicalHero.image.src);
     assertTargetFieldUnchanged(slug, "video.src", currentHero.video?.src, previous.video, canonicalHero.video?.src);
-    nextHero.image = clone(canonicalHero.image);
-    nextHero.video = clone(canonicalHero.video);
+    nextHero.image = { ...clone(canonicalHero.image), src: cleanVideoTopicImageSource(canonicalHero.image.src) };
+    nextHero.video = canonicalHero.video
+      ? { ...clone(canonicalHero.video), poster: cleanVideoTopicImageSource(canonicalHero.video.poster) }
+      : canonicalHero.video;
   }
   if (typeof previous.imageNote === "string" && typeof canonicalHero.imageNote === "string") {
     assertTargetFieldUnchanged(slug, "imageNote", currentHero.imageNote, previous.imageNote, canonicalHero.imageNote);
@@ -786,7 +790,7 @@ function syncPages(state, changes) {
         createdAt: RUN_TIMESTAMP
       };
       site.pages.push(page);
-      changes.push({ targetType: "ThemePage", id: page.id, field: "create", after: slug });
+      changes.push({ targetType: "LivePage", id: page.id, field: "create", after: slug });
     }
     const before = JSON.stringify(page);
     if (!refreshContent && !hasStoredVideoTopicContent(page.draftJson, pageDefinition.slug)) {
@@ -812,7 +816,7 @@ function syncPages(state, changes) {
         }
       : { draftJson };
     if (refreshContent && !page.publishedJson) pageFields.publishedJson = clone(EMPTY_UNPUBLISHED_PAGE_JSON);
-    updateRecord(page, pageFields, changes, "ThemePage");
+    updateRecord(page, pageFields, changes, "LivePage");
     if (JSON.stringify(page) !== before) page.updatedAt = RUN_TIMESTAMP;
     return page;
   });
@@ -837,19 +841,28 @@ function pruneNonPublicVideoTopicPages(state, changes) {
   }
 }
 
-function syncExistingVideoThemePreviews(state, changes) {
+function videoTopicHeroImageFromDraft(page) {
+  const slug = String(page?.slug || "").replace(/^.*\//, "");
+  const sectionId = slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
+  const image = page?.draftJson?.sections?.[sectionId]?.settings?.content?.hero?.image;
+  return cleanVideoTopicImageSource(imageSource(image));
+}
+
+function syncExistingVideoThemePreviews(state, changes, syncedPages = []) {
   const themeRows = state.videoThemes ?? [];
   for (const page of pages) {
     if (!refreshContent && !videoMediaSyncSlugs.has(page.slug)) continue;
     if (!page.imageUrl) continue;
     const theme = themeRows.find((item) => item.siteId === SITE_ID && item.slug === page.slug);
     if (!theme) continue;
+    const sourcePage = syncedPages.find((candidate) => candidate.slug === pagePath(page.slug));
+    const heroImage = videoTopicHeroImageFromDraft(sourcePage) || cleanVideoTopicImageSource(page.imageUrl);
     const before = JSON.stringify(theme);
     updateRecord(
       theme,
       {
-        imageUrl: page.imageUrl,
-        galleryImages: refreshContent ? videoThemeGalleryImages(page) : targetedVideoThemeGalleryImages(page, theme.galleryImages)
+        imageUrl: heroImage,
+        galleryImages: refreshContent ? videoThemeGalleryImages({ ...page, imageUrl: heroImage }) : targetedVideoThemeGalleryImages({ ...page, imageUrl: heroImage }, theme.galleryImages)
       },
       changes,
       "VideoTheme"
@@ -948,7 +961,7 @@ async function updateDatabase(state, categories, syncedPages) {
           });
         }
         if (refreshContent) {
-          await tx.themePage.deleteMany({
+          await tx.livePage.deleteMany({
             where: {
               siteId: SITE_ID,
               slug: {
@@ -965,15 +978,23 @@ async function updateDatabase(state, categories, syncedPages) {
             select: { imageUrl: true, galleryImages: true }
           });
           if (!existingTheme) throw new Error(`missing_target_video_theme:${page.slug}`);
-          assertTargetFieldUnchanged(page.slug, "VideoTheme.imageUrl", existingTheme?.imageUrl, targetedHeroFieldManifest[page.slug]?.image, page.imageUrl);
+          const syncedPage = syncedPages.find((candidate) => candidate.slug === pagePath(page.slug));
+          const heroImage = videoTopicHeroImageFromDraft(syncedPage) || cleanVideoTopicImageSource(page.imageUrl);
+          assertTargetFieldUnchanged(
+            page.slug,
+            "VideoTheme.imageUrl",
+            existingTheme?.imageUrl,
+            [targetedHeroFieldManifest[page.slug]?.image, page.imageUrl].flat(),
+            heroImage
+          );
           const galleryImages = refreshContent
-            ? videoThemeGalleryImages(page)
-            : targetedVideoThemeGalleryImages(page, existingTheme?.galleryImages);
-          if (existingTheme && (existingTheme.imageUrl !== page.imageUrl || !sameJson(existingTheme.galleryImages, galleryImages))) {
+            ? videoThemeGalleryImages({ ...page, imageUrl: heroImage })
+            : targetedVideoThemeGalleryImages({ ...page, imageUrl: heroImage }, existingTheme?.galleryImages);
+          if (existingTheme && (existingTheme.imageUrl !== heroImage || !sameJson(existingTheme.galleryImages, galleryImages))) {
             await tx.videoTheme.update({
               where: { siteId_slug: { siteId: SITE_ID, slug: page.slug } },
               data: {
-                imageUrl: page.imageUrl,
+                imageUrl: heroImage,
                 galleryImages
               }
             });
@@ -987,16 +1008,15 @@ async function updateDatabase(state, categories, syncedPages) {
                 templateKey: page.templateKey,
                 slug: page.slug,
                 title: page.title,
-                draftJson: toPrismaJson(page.draftJson),
-                draftMeta: page.draftMeta ? toPrismaJson(page.draftMeta) : null
+                contentJson: toPrismaJson(page.draftJson)
               }
-            : { draftJson: toPrismaJson(page.draftJson) };
-          const existingPage = await tx.themePage.findFirst({
+            : { contentJson: toPrismaJson(page.draftJson) };
+          const existingPage = await tx.livePage.findFirst({
             where: {
               siteId: SITE_ID,
               OR: [{ id: page.id }, { slug: page.slug }]
             },
-            select: { id: true, pageType: true, templateKey: true, slug: true, title: true, draftJson: true, draftMeta: true }
+            select: { id: true, pageType: true, templateKey: true, slug: true, title: true, contentJson: true }
           });
           if (existingPage) {
             // Existing remote pages can predate deterministic import IDs. The stable slug is
@@ -1007,11 +1027,10 @@ async function updateDatabase(state, categories, syncedPages) {
                 existingPage.templateKey !== pageData.templateKey ||
                 existingPage.slug !== pageData.slug ||
                 existingPage.title !== pageData.title ||
-                !sameJson(existingPage.draftJson, pageData.draftJson) ||
-                !sameJson(existingPage.draftMeta, pageData.draftMeta)
-              : !sameJson(existingPage.draftJson, pageData.draftJson);
+                !sameJson(existingPage.contentJson, pageData.contentJson)
+              : !sameJson(existingPage.contentJson, pageData.contentJson);
             if (pageChanged) {
-              await tx.themePage.update({
+              await tx.livePage.update({
                 where: { id: existingPage.id },
                 data: pageData
               });
@@ -1019,11 +1038,10 @@ async function updateDatabase(state, categories, syncedPages) {
           } else if (!refreshContent) {
             throw new Error(`missing_target_page:${page.slug}`);
           } else {
-            await tx.themePage.create({
+            await tx.livePage.create({
               data: {
                 id: page.id,
                 ...pageData,
-                publishedJson: toPrismaJson(EMPTY_UNPUBLISHED_PAGE_JSON),
                 createdAt: new Date(page.createdAt ?? UPDATE_TIMESTAMP)
               }
             });
@@ -1045,9 +1063,8 @@ async function updateDatabase(state, categories, syncedPages) {
       },
         { timeout: DB_TRANSACTION_TIMEOUT_MS }
     );
-    // Public SSR now projects directly from relational draft rows. The legacy
-    // publication tables were removed, so syncing content must stop after the
-    // draft/theme transaction commits.
+    // Public SSR reads these LivePage rows on its next request. No draft,
+    // publication action, cache invalidation, or deployment is required.
     clearPlatformStateCaches();
     return undefined;
   } finally {
@@ -1064,7 +1081,7 @@ const categories = refreshContent ? syncCategories(state, changes) : [];
 const syncedPages = syncPages(state, changes);
 assertUniqueVideoTopicCardImages(syncedPages);
 if (refreshContent) pruneNonPublicVideoTopicPages(state, changes);
-syncExistingVideoThemePreviews(state, changes);
+syncExistingVideoThemePreviews(state, changes, syncedPages);
 
 let databasePublication;
 if (updateDb && !dryRun) {

@@ -11,7 +11,7 @@ const siteId = "site_dreamshoot";
 const root = process.cwd();
 const publicRoot = path.join(root, "public");
 const cleanRoot = path.join(root, "public/assets/dreamshoot/generated/video-topic-clean");
-const legacyPattern = /\/assets\/dreamshoot\/(?:tiktok-video|instagram-reels|social-media-video|story-video)\//;
+const legacyPattern = /\/assets\/dreamshoot\/(?:tiktok-video|instagram-reels|social-media-video|story-video)\/[^"?#]+\.(?:png|jpe?g|webp)(?:[?#]|$)/i;
 const topics = ["tiktok-video", "instagram-reels", "social-media-video", "story-video"];
 const publicVideoTopicSlugs = [
   "talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "social-media-video", "youtube-video",

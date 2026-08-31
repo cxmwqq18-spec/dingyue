@@ -82,10 +82,10 @@ function publicationContracts() {
 
 function assertPublishedTopicProjection(snapshot, sourcePage, slug) {
   const canonicalPath = `/ai-video-generation/${slug}`;
-  const content = topicContent(sourcePage.draftJson, slug);
+  const content = topicContent(sourcePage.contentJson, slug);
   const snapshotPage = snapshot.pages.find((page) => page.slug === canonicalPath);
   assert(snapshotPage, `${slug} must be included in the active publication pages`);
-  assert.deepEqual(snapshotPage.publishedJson, sourcePage.draftJson, `${slug} active publication must be compiled from its database draft content`);
+  assert.deepEqual(snapshotPage.publishedJson, sourcePage.contentJson, `${slug} active publication must be compiled from its LivePage content`);
 
   const route = snapshot.publishedRoutes.find((item) => item.routeKind === "ai-video-topic-leaf" && item.canonicalPath === canonicalPath);
   assert(route, `${slug} must have a published route projection`);
@@ -131,8 +131,8 @@ assert.doesNotMatch(directorySource, /Open this AI video theme guide/, "video di
 assert.match(renderSource, /publishedVideoGenerationTopics/, "public video navigation must be derived from the immutable publication snapshot");
 assert.match(routeSource, /resolvePublishedRouteDisposition/, "public video routes must resolve from the immutable publication snapshot");
 assert.doesNotMatch(routeSource, /getVideoThemeSlugRedirectRelational/, "public video routes must not use relational redirect fallbacks");
-assert.match(syncSource, /draftJson:\s*toPrismaJson\(page\.draftJson\)/, "video sync must write editable content only to ThemePage draftJson");
-assert.doesNotMatch(syncSource, /publishedJson:\s*toPrismaJson\(page\.(?:draftJson|publishedJson)/, "video sync must not write public content directly to ThemePage publishedJson");
+assert.match(syncSource, /contentJson:\s*toPrismaJson\(page\.draftJson\)/, "video sync must write public content to LivePage contentJson");
+assert.doesNotMatch(syncSource, /(?:draftJson|publishedJson):\s*toPrismaJson\(page\.(?:draftJson|publishedJson)/, "video sync must not write public content to ThemePage JSON fields");
 assert.match(syncSource, /syncStoredVideoTopicUseCaseImages/, "video sync must refresh every topic's use-case card media from its canonical content seed");
 
 const prisma = new PrismaClient();
@@ -158,9 +158,9 @@ try {
     publishedRoutes: snapshot.publishedRoutes
   };
 
-  const pages = await prisma.themePage.findMany({
+  const pages = await prisma.livePage.findMany({
     where: { siteId: SITE_ID, slug: { in: topicSlugs.map((slug) => `/ai-video-generation/${slug}`) } },
-    select: { id: true, slug: true, draftJson: true },
+    select: { id: true, slug: true, contentJson: true },
     orderBy: { slug: "asc" }
   });
   const themes = await prisma.videoTheme.findMany({
@@ -171,12 +171,12 @@ try {
   const themeBySlug = new Map(themes.map((theme) => [theme.slug, theme]));
   const coverOwners = new Map();
   const mediaOwners = new Map();
-  assert.equal(pages.length, topicSlugs.length, "every public video topic must have a database ThemePage draft");
+  assert.equal(pages.length, topicSlugs.length, "every public video topic must have a database LivePage row");
   const pageBySlug = new Map(pages.map((page) => [page.slug, page]));
   for (const slug of topicSlugs) {
     const page = pageBySlug.get(`/ai-video-generation/${slug}`);
-    assert(page, `missing ThemePage draft for ${slug}`);
-    const content = topicContent(page.draftJson, slug);
+    assert(page, `missing LivePage content for ${slug}`);
+    const content = topicContent(page.contentJson, slug);
     assertNoPublicCopyLeaks(content, slug);
     const theme = themeBySlug.get(slug);
     assert(theme, `missing VideoTheme for ${slug}`);

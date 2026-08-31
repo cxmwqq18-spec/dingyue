@@ -3854,11 +3854,11 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       rightsCopy: "Use approved pet, owner, shelter, brand, location, and third-party references. Review animal identity, anatomy, props, continuity, health boundaries, and rights before publishing.",
       imageNote: "Identity -> Behavior -> Interaction -> Continuity",
       highlights: ["Pet Portraits", "Owner & Pet", "Play & Lifestyle", "Training & Routine", "Text to Video", "Image to Video"],
-      image: image(`${petVideoImageRoot}/hero-pet-video-training-frame.jpg`, "Girl giving a hand signal to a Corgi on a pink studio backdrop, used as the dedicated Hero pet-training interaction frame.", 4480, 6720, "50% 36%"),
+      image: image(`${petVideoImageRoot}/hero-pet-video-portrait-frame.jpg`, "Close studio portrait of a white Jack Russell Terrier against a black background, used as the dedicated Hero pet portrait frame.", 6000, 4000, "50% 42%"),
       images: [
-        image(`${petVideoImageRoot}/hero-pet-video-owner-frame.jpg`, "Pet owner kneeling beside a large dog in a warm studio portrait, used as the dedicated Hero owner-and-pet relationship frame.", 4081, 6121, "50% 44%"),
+        image(`${petVideoImageRoot}/hero-pet-video-portrait-frame.jpg`, "Close studio portrait of a white Jack Russell Terrier against a black background, used as the dedicated Hero pet portrait frame.", 6000, 4000, "50% 42%"),
         image(`${petVideoImageRoot}/hero-pet-video-training-frame.jpg`, "Girl giving a hand signal to a Corgi on a pink studio backdrop, used as the dedicated Hero pet-training interaction frame.", 4480, 6720, "50% 36%"),
-        image(`${petVideoImageRoot}/hero-pet-video-portrait-frame.jpg`, "Close studio portrait of a white Jack Russell Terrier against a black background, used as the dedicated Hero pet portrait frame.", 6000, 4000, "50% 42%")
+        image(`${petVideoImageRoot}/hero-pet-video-owner-frame.jpg`, "Pet owner kneeling beside a large dog in a warm studio portrait, used as the dedicated Hero owner-and-pet relationship frame.", 4081, 6121, "50% 44%")
       ]
     },
     quickAnswer: {

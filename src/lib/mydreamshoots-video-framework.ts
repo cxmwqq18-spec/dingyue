@@ -640,7 +640,7 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
     headline: "Create pet-motion concepts around portraits, play, routine, and owner interaction.",
     description: "Plan pet-, animal-, owner-, and lifestyle-led video directions with identity, anatomy, prop, and welfare-boundary review.",
     prompt: "Create a pet-video visual concept around an approved pet portrait, owner-and-pet image, animal-content brief, shelter reference, or pet-lifestyle scene. Define the animal identity, visible behavior, human interaction, environment, props, framing, and continuity rules. Do not claim veterinary diagnosis, nutrition advice, behavior assessment, training efficacy, welfare compliance, product safety, or adoption outcomes without verified product support.",
-    imageUrl: "/assets/dreamshoot/pet-video/hero-pet-video-training-frame.jpg",
+    imageUrl: "/assets/dreamshoot/pet-video/hero-pet-video-portrait-frame.jpg",
     creditCost: 24,
     durationSeconds: 6,
     maxFrames: 10,

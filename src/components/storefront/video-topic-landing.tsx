@@ -273,7 +273,12 @@ function heroPreviewImages(content: Pick<VideoTopicContent, "hero">): VideoTopic
 
 function sceneHeroPreviewImages(content: VideoTopicContent, contentKey: string): VideoTopicImage[] {
   const images = heroPreviewImages(content);
-  if (contentKey === "pet-video" && images.length >= 2) return [images[1], images[0], ...images.slice(2)];
+  if (contentKey === "pet-video") {
+    const portrait = images.find((image) => image.src.includes("hero-pet-video-portrait-frame"));
+    const training = images.find((image) => image.src.includes("hero-pet-video-training-frame"));
+    const owner = images.find((image) => image.src.includes("hero-pet-video-owner-frame"));
+    if (portrait && training && owner) return [portrait, training, owner];
+  }
   if (contentKey === "music-video" && images.length >= 2) {
     return [images[0], { src: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg", alt: "Female vocalist singing into a studio microphone under red and blue cinematic lighting, used as the dedicated hero performance frame.", width: 1800, height: 1200, objectPosition: "50% 42%" }, ...images.slice(2)];
   }

@@ -249,8 +249,9 @@ try {
               assert.equal(result.heroImageSources[0].includes("hero-music-video-performance.jpg"), true, `${topic} ${viewport.name} should use the performance reference in the lower-left hero frame`);
             }
             if (topic === "pet-video") {
-              assert.equal(result.heroImageSources[0].includes("hero-pet-video-owner-frame.jpg"), true, `${topic} ${viewport.name} should lead with the owner-and-pet frame`);
+              assert.equal(result.heroImageSources[0].includes("hero-pet-video-portrait-frame.jpg"), true, `${topic} ${viewport.name} should lead with the pet portrait frame`);
               assert.equal(result.heroImageSources[1].includes("hero-pet-video-training-frame.jpg"), true, `${topic} ${viewport.name} should place the training frame in the lower-left hero frame`);
+              assert.equal(result.heroImageSources[2].includes("hero-pet-video-owner-frame.jpg"), true, `${topic} ${viewport.name} should place the owner-and-pet frame in the lower-right hero frame`);
             }
             assert.equal(result.scenes >= 1, true, `${topic} ${viewport.name} should render scene cards`);
             assert.equal(result.mapItems >= 1, true, `${topic} ${viewport.name} should render visual-map items`);
