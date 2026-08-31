@@ -96,8 +96,8 @@ export function DreamshootShowcasePreviewClient({ children, className }: { child
                 <button aria-label={`Close ${mediaLabel} preview`} className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-black/35 text-white transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white" onClick={closePreview} ref={closeRef} title="Close preview" type="button"><X aria-hidden="true" className="h-5 w-5" /></button>
               </div>
             </div>
-            <div className="min-h-0 overflow-hidden rounded-[8px] bg-[#090b12]">
-              {preview.kind === "video" ? <video autoPlay className="max-h-[calc(100vh-9rem)] w-full object-contain" controls playsInline poster={preview.poster || undefined} preload="metadata" src={preview.src} /> : <img alt={preview.title} className="max-h-[calc(100vh-9rem)] w-full object-contain" src={preview.src} />}
+            <div className="flex min-h-0 justify-center overflow-hidden rounded-[8px] bg-transparent">
+              {preview.kind === "video" ? <video autoPlay className="h-auto max-h-[calc(100vh-9rem)] w-auto max-w-full object-contain" controls playsInline poster={preview.poster || undefined} preload="metadata" src={preview.src} /> : <img alt={preview.title} className="max-h-[calc(100vh-9rem)] w-full object-contain" src={preview.src} />}
             </div>
           </div>
         </div>

@@ -564,9 +564,10 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
         ? "retrato estilizado para una galeria privada"
         : "Portrait image");
   const sourceAlt = sourceSpecificAlt(input.imageUrl, locale, input.title || imageScene || specificScene || contextScene);
-  if (templatedSceneAltPattern.test(explicit) || templatedSceneAltPattern.test(galleryAlt)) return sourceAlt;
-  if (explicit) return compactMediaAltSentence(explicit, locale);
-  if (galleryAlt && !galleryAltRepeatsEarlier) return compactMediaAltSentence(galleryAlt, locale);
+  const usableExplicit = templatedSceneAltPattern.test(explicit) ? "" : explicit;
+  const usableGalleryAlt = templatedSceneAltPattern.test(galleryAlt) ? "" : galleryAlt;
+  if (usableExplicit) return compactMediaAltSentence(usableExplicit, locale);
+  if (usableGalleryAlt && !galleryAltRepeatsEarlier) return compactMediaAltSentence(usableGalleryAlt, locale);
   if (isPackGalleryImage && (input.galleryImageAlts?.length ?? 0) > 0 && typeof input.index === "number") {
     const fallback = galleryFallbackScenes[input.index % galleryFallbackScenes.length];
     return compactMediaAltSentence(`${scene}, ${fallback}`, locale);
@@ -627,6 +628,10 @@ export function storefrontCreativePackImageAlt({
   const directAlt = directAltForPackImage(pack, imageUrl);
   const isGalleryRole = role === "gallery" || /\/pack-galleries\//i.test(String(imageUrl ?? ""));
   const storedAlt = isGalleryRole ? undefined : directAlt || storedAltForPackImage(pack, imageUrl);
+  const storedGalleryAlts = pack.galleryImageAlts ?? [];
+  const galleryImageAlts = /\bcover\b/i.test(storedGalleryAlts[0] ?? "")
+    ? storedGalleryAlts.slice(1)
+    : storedGalleryAlts;
   return storefrontPackMediaAlt({
     brand,
     category: pack.categoryRecord?.label || pack.category,
@@ -634,7 +639,7 @@ export function storefrontCreativePackImageAlt({
     // A resource has one canonical description, even when it appears in a
     // card, a gallery, or a related-package block.
     explicitAlt: storedAlt || explicitAlt,
-    galleryImageAlts: pack.galleryImageAlts,
+    galleryImageAlts,
     imageUrl,
     index,
     locale,

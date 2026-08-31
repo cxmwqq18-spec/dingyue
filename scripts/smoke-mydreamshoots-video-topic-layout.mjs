@@ -128,7 +128,7 @@ try {
             assert.equal(result.media.length, result.scenes, `${topic} ${viewport.name} should render media for every scene card`);
             assert.equal(new Set(result.media.map((media) => media.src)).size, result.scenes, `${topic} ${viewport.name} scene images must be unique`);
             assert.equal(result.media.every((media) => media.loaded && media.alt.trim()), true, `${topic} ${viewport.name} scene images must load with alt text`);
-            assert.equal(result.media.every((media) => media.objectFit === "contain"), true, `${topic} ${viewport.name} scene images must preserve their complete frame`);
+            assert.equal(result.media.every((media) => media.objectFit === "cover"), true, `${topic} ${viewport.name} scene images must use the shared scene framing`);
             assert.equal(result.media.every((media) => media.width > 0 && media.height > 0), true, `${topic} ${viewport.name} scene media must use visible frames`);
             assert.equal(result.workspaceCtaCount >= 1, true, `${topic} ${viewport.name} should expose workspace CTAs`);
             assert.equal(new Set(result.workspaceCtaHrefs).size, 1, `${topic} ${viewport.name} workspace CTAs must share one destination`);
@@ -263,6 +263,8 @@ try {
             const cards = [...document.querySelectorAll("[data-video-topic-use-case-card]")];
             const heroFrame = document.querySelector("[data-video-topic-hero-media]");
             const heroImage = heroFrame?.querySelector("img");
+            const heroVideo = heroFrame?.querySelector("video");
+            const heroMedia = heroImage || heroVideo;
             const cardRects = cards.map((card) => card.getBoundingClientRect());
             const firstRowTop = cardRects[0]?.top ?? 0;
             const firstRow = cardRects.filter((rect) => Math.abs(rect.top - firstRowTop) < 2);
@@ -287,9 +289,10 @@ try {
               hero: {
                 width: heroFrame ? Math.round(heroFrame.getBoundingClientRect().width) : 0,
                 height: heroFrame ? Math.round(heroFrame.getBoundingClientRect().height) : 0,
-                objectFit: heroImage ? getComputedStyle(heroImage).objectFit : "",
-                imageWidth: heroImage ? Math.round(heroImage.getBoundingClientRect().width) : 0,
-                imageHeight: heroImage ? Math.round(heroImage.getBoundingClientRect().height) : 0,
+                mediaType: heroVideo ? "video" : heroImage ? "image" : "",
+                objectFit: heroMedia ? getComputedStyle(heroMedia).objectFit : "",
+                imageWidth: heroMedia ? Math.round(heroMedia.getBoundingClientRect().width) : 0,
+                imageHeight: heroMedia ? Math.round(heroMedia.getBoundingClientRect().height) : 0,
                 legacyBlurredMedia: Boolean(heroImage && isLegacyBlurredMedia(heroImage.getAttribute("src") || ""))
               },
               cards: cards.length,
@@ -309,17 +312,19 @@ try {
           });
           assert.equal(result.pageMarker, 1, `${topic} ${viewport.name} should render one shared page marker`);
           const usesCleanTopicMedia = ["tiktok-video", "instagram-reels", "social-media-video", "story-video"].includes(topic);
-          const usesCoverTopicMedia = usesCleanTopicMedia || topic === "youtube-video";
-          const expectedHeroObjectFit = ["tiktok-video", "instagram-reels"].includes(topic)
-            ? "contain"
-            : ["talking-photo", "cinematic-video", "music-video"].includes(topic)
-              ? "cover"
-              : usesCoverTopicMedia ? "cover" : "contain";
-          const expectedCardObjectFit = usesCoverTopicMedia ? "cover" : "contain";
+          const usesPortraitTopicVideo = ["tiktok-video", "instagram-reels", "product-video"].includes(topic);
+          const expectedHeroObjectFit = ["tiktok-video", "instagram-reels", "product-video"].includes(topic) ? "contain" : "cover";
+          const expectedCardObjectFit = "cover";
           assert.equal(result.hero.objectFit, expectedHeroObjectFit, `${topic} ${viewport.name} hero media must preserve its intended framing`);
+          if (topic === "product-video") {
+            assert.equal(result.hero.mediaType, "video", `${topic} ${viewport.name} hero should render the source video directly`);
+            assert.equal(Math.abs(result.hero.imageWidth / result.hero.imageHeight - 496 / 864) < 0.04, true, `${topic} ${viewport.name} hero video must preserve its source ratio`);
+          }
           assert.equal(result.hero.legacyBlurredMedia, false, `${topic} ${viewport.name} hero must not use a legacy blurred-bleed asset`);
           assert.equal(result.hero.width > 0 && result.hero.height > 0, true, `${topic} ${viewport.name} hero media must have a visible frame`);
-          if (usesCleanTopicMedia) {
+          if (usesPortraitTopicVideo) {
+            assert.equal(Math.abs(result.hero.imageWidth / result.hero.imageHeight - 496 / 864) < 0.04, true, `${topic} ${viewport.name} portrait hero video must preserve its source ratio`);
+          } else if (usesCleanTopicMedia) {
             assert.equal(Math.abs(result.hero.imageWidth / result.hero.imageHeight - 16 / 9) < 0.04, true, `${topic} ${viewport.name} clean hero media must use a 16:9 frame`);
           }
           assert.equal(result.cards, 6, `${topic} ${viewport.name} should render six use-case cards`);

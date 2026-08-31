@@ -4254,7 +4254,12 @@ function optionalStringArrayField(value: object, key: string): string[] | undefi
 }
 
 function galleryImageAltForPack(site: Site, pack: CreativePack, index: number, imageUrl?: string): string {
+  const galleryImages = pack.galleryImages ?? [];
+  const galleryAlts = pack.galleryImageAlts ?? [];
+  const firstAltDescribesCover = /\bcover\b/i.test(galleryAlts[0] ?? "");
+  const altOffset = galleryAlts.length === galleryImages.length + 1 || firstAltDescribesCover ? 1 : 0;
   return creativePackAltForSite({
+    explicitAlt: galleryAlts[index + altOffset],
     imageUrl,
     index,
     pack,
