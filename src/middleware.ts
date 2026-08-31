@@ -71,6 +71,8 @@ const MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS: Record<string, string> = {
   "/collections/headshot": "/ai-image-generation/headshot",
   "/ai-image-generation/profile-cards": "/ai-image-generation/avatar",
   "/ai-image-generation/motion-generator": "/ai-video-generation/motion-generator",
+  "/ai-video-generation/wedding-invitation": "/ai-save-the-date/wedding-invitation",
+  "/holidays-events/wedding-invitation": "/ai-save-the-date/wedding-invitation",
   "/ai-video-generation/mothers-day": "/ai-save-the-date/mothers-day",
   "/ai-video-generation/new-year": "/ai-save-the-date/new-year",
   "/ai-video-generation/proposal": "/ai-save-the-date/proposal",
