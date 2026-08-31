@@ -345,7 +345,7 @@ function packSitemapImages(site: Site, pack: CreativePack, limit = 8): SitemapIm
     if (!comparable || seen.has(comparable)) return;
     seen.add(comparable);
     const galleryIndex = index - 1;
-    const title = index === 0
+    const rawTitle = index === 0
       ? storefrontCreativePackImageAlt({
           brand: storefrontMediaBrandName(site),
           imageUrl: loc,
@@ -361,6 +361,7 @@ function packSitemapImages(site: Site, pack: CreativePack, limit = 8): SitemapIm
           pack,
           role: "gallery"
         });
+    const title = sitemapImageTitleForPack(pack, rawTitle, index);
     const caption = cleanText(pack.headline || pack.description, `${pack.name} photo package preview`);
     images.push({
       loc,
@@ -370,6 +371,24 @@ function packSitemapImages(site: Site, pack: CreativePack, limit = 8): SitemapIm
   });
 
   return images;
+}
+
+function sitemapImageTitleForPack(pack: CreativePack, title: string, index: number): string {
+  const cleaned = cleanText(title, "");
+  const words = cleaned.split(/\s+/).filter(Boolean);
+  const weak = /^(?:.+\s)?(?:cover|gallery) portrait$/i.test(cleaned) || /\b(?:cover portrait|package image|gallery image)\b/i.test(cleaned);
+  if (words.length >= 4 && !weak) return cleaned;
+  const packName = cleanText(pack.name, "AI photo package");
+  return `${packName} photo package ${index === 0 ? "cover" : "example"}`;
+}
+
+function sitemapImageTitleForMedia(page: ThemePage, title: string, index: number): string {
+  const cleaned = cleanText(title, "");
+  const words = cleaned.split(/\s+/).filter(Boolean);
+  const weak = /\b(?:cover portrait|package image|gallery image)\b/i.test(cleaned);
+  if (words.length >= 4 && !weak) return cleaned;
+  const pageTitle = cleanText(page.title, "AI photo theme");
+  return `${pageTitle} photo theme ${index === 0 ? "cover" : "gallery example"}`;
 }
 
 function appendSitemapImages(entry: SitemapEntry, images: SitemapImageEntry[]): void {
@@ -491,12 +510,12 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       images: standardMedia?.status === "ready"
         ? standardMedia.sitemapImages.map((image, index) => ({
             loc: absoluteMediaUrl(site, image),
-            title: index === 0 ? standardMedia.primaryImageAlt : sitemapImageTitleForPage(page)
+            title: sitemapImageTitleForMedia(page, index === 0 ? standardMedia.primaryImageAlt : sitemapImageTitleForPage(page), index)
           })).filter((image) => image.loc)
         : pageMedia?.status === "ready"
           ? [pageMedia.primaryImage, ...pageMedia.galleryImages].map((image, index) => ({
               loc: absoluteMediaUrl(site, image),
-              title: pageMedia.imageAlts[index] || sitemapImageTitleForPage(page)
+              title: sitemapImageTitleForMedia(page, pageMedia.imageAlts[index] || sitemapImageTitleForPage(page), index)
             })).filter((image) => image.loc)
         : isPrimaryMydreamshootsSite(site)
           ? []
@@ -546,7 +565,9 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       const mediaImages = [media.primaryImage, ...media.galleryImages]
         .map((value, index) => ({
           loc: absoluteMediaUrl(site, value),
-          title: media.imageAlts[index]
+          title: pack
+            ? sitemapImageTitleForPack(pack, media.imageAlts[index] || "", index)
+            : sitemapImageTitleForMedia(page, media.imageAlts[index] || "", index)
         }))
         .filter((image) => image.loc);
       entries.set(loc, {

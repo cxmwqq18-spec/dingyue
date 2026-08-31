@@ -4006,7 +4006,14 @@ function activeCreativePacksForCollectionSlug(creativePacks: CreativePack[], slu
   return creativePacks.filter((pack) => {
     if (pack.status !== "active" || pack.creditCost <= 0 || pack.outputCount <= 0) return false;
     if (site && isMyDreamShootsProfileSite(site)) {
-      return dreamshootCategorySlug(pack.categoryRecord?.slug || pack.category) === selectedSlug;
+      // Relational packs can expose a normalized category record alongside
+      // the public route category. Avatar is stored as `category: avatar` but
+      // its taxonomy record is `profile-cards`; both are valid route keys.
+      return [
+        pack.categoryRecord?.slug,
+        pack.category,
+        pack.name
+      ].some((value) => value && dreamshootCategorySlug(value) === selectedSlug);
     }
     return creativePackCollectionTokens(pack).includes(selectedSlug);
   });

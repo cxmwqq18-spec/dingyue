@@ -564,8 +564,16 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
         ? "retrato estilizado para una galeria privada"
         : "Portrait image");
   const sourceAlt = sourceSpecificAlt(input.imageUrl, locale, input.title || imageScene || specificScene || contextScene);
-  const usableExplicit = templatedSceneAltPattern.test(explicit) ? "" : explicit;
-  const usableGalleryAlt = templatedSceneAltPattern.test(galleryAlt) ? "" : galleryAlt;
+  const normalizedExplicit = cleanAltText(explicit).toLowerCase();
+  const genericSceneAlts = [specificScene, imageScene, contextScene]
+    .map((value) => cleanAltText(value).toLowerCase())
+    .filter(Boolean);
+  // A canonical subject such as "Professional headshot" is useful as a
+  // theme label but cannot distinguish two different source images. Let the
+  // stable filename or gallery scene fallback add the visual distinction.
+  const explicitIsGenericScene = genericSceneAlts.includes(normalizedExplicit);
+  const usableExplicit = templatedSceneAltPattern.test(explicit) || explicitIsGenericScene && stableSourceImagePattern.test(imageIdentity(input.imageUrl)) ? "" : explicit;
+  const usableGalleryAlt = templatedSceneAltPattern.test(galleryAlt) || explicitIsGenericScene ? "" : galleryAlt;
   if (usableExplicit) return compactMediaAltSentence(usableExplicit, locale);
   if (usableGalleryAlt && !galleryAltRepeatsEarlier) return compactMediaAltSentence(usableGalleryAlt, locale);
   if (isPackGalleryImage && (input.galleryImageAlts?.length ?? 0) > 0 && typeof input.index === "number") {

@@ -42,6 +42,7 @@
     "smoke:storefront-image-isolation": "node scripts/smoke-storefront-image-isolation.mjs",
     "smoke:storefront-dom-image-isolation": "node scripts/smoke-storefront-dom-image-isolation.mjs",
     "smoke:storefront-media-alt": "node scripts/smoke-storefront-media-alt.mjs",
+    "smoke:mydreamshoots-avatar-media-parity": "node scripts/smoke-mydreamshoots-avatar-media-parity.mjs",
     "smoke:public-html-cleanliness": "node scripts/smoke-public-html-cleanliness.mjs",
     "audit:mydreamshoots-public-contract": "node scripts/audit-mydreamshoots-public-contract.mjs",
     "smoke:public-contract-audit": "node scripts/smoke-public-contract-audit.mjs",
