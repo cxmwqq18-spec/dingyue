@@ -33,6 +33,7 @@ const { dreamshootPackProfileSlug } = jiti("../src/lib/dreamshoot-pack-profiles.
 const { sitemapEntriesForSite } = jiti("../src/lib/seo-indexing.ts");
 const { resolveStorefrontContext } = jiti("../src/lib/storefront-context/core.ts");
 const { createPublishedSiteSnapshot } = jiti("../src/lib/storefront-context/snapshot.ts");
+const { mydreamshootsPageCopyForRoute } = jiti("../src/lib/mydreamshoots-page-copy.ts");
 
 async function readPlatformState() {
   return readPlatformStateFromSql();
@@ -224,22 +225,41 @@ for (const video of videoObjects) {
 
 const productPaths = new Set();
 // Validate Product detail schema for every active pack in the relational
-// projection, including the rule that package Products never inherit Offers.
+// projection that has a published, ready route, including the rule that
+// package Products never inherit subscription Offers.
 const publishedPacks = publishedSiteSnapshot.creativePacks
-  .filter((pack) => pack.siteId === site.id && pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0);
+  .filter((pack) => {
+    if (pack.siteId !== site.id || pack.status !== "active" || pack.creditCost <= 0 || pack.outputCount <= 0) return false;
+    const canonicalPath = canonicalSeoDirectoryPathForSite(site, "collection", pack.category || pack.name);
+    const route = publishedSiteSnapshot.publishedRoutes.find((candidate) => candidate.disposition === "render" && candidate.routeKind === "ai-image-theme-leaf" && candidate.canonicalPath === canonicalPath);
+    const media = route ? publishedSiteSnapshot.publishedPageMedia.find((candidate) => candidate.pageEntityId === route.pageEntityId) : undefined;
+    return route?.status === "published" && media?.status === "ready";
+  });
 for (const pack of publishedPacks) {
   const canonicalPath = canonicalSeoDirectoryPathForSite(site, "collection", pack.category || pack.name);
   productPaths.add(canonicalPath);
   const collectionSlug = canonicalPath.split("/").pop();
+  const pageCopy = mydreamshootsPageCopyForRoute({
+    siteId: site.id,
+    routeKind: "ai-image-theme-leaf",
+    canonicalSlug: collectionSlug,
+    canonicalPath
+  });
+  assert.ok(pageCopy, `${canonicalPath} must have published page copy for Product schema coverage`);
   const graph = graphNodes(buildCollectionDirectoryJsonLd({
     site,
     collectionSlug,
     routeMode: "host",
     creativePacks: publishedPacks,
     products: publishedSiteSnapshot.products,
-    // The collection renderer resolves one package by slug. Do not carry the
-    // homepage's page-media owner into this package-level schema projection.
-    context: { ...schemaContext, publishedPageMedia: undefined }
+    // Resolve each package against its own page copy. The homepage context
+    // cannot prove the package entity and would intentionally fail closed.
+    context: {
+      ...schemaContext,
+      seo: { ...schemaContext.seo, canonicalPath, canonicalUrl: `https://www.mydreamshoots.com${canonicalPath}` },
+      pageCopy,
+      publishedPageMedia: undefined
+    }
   }));
   const products = graph.filter((node) => node?.["@type"] === "Product");
   assert.equal(products.length, 1, `${canonicalPath} should expose one Product node`);
