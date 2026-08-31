@@ -4258,8 +4258,11 @@ function galleryImageAltForPack(site: Site, pack: CreativePack, index: number, i
   const galleryAlts = pack.galleryImageAlts ?? [];
   const firstAltDescribesCover = /\bcover\b/i.test(galleryAlts[0] ?? "");
   const altOffset = galleryAlts.length === galleryImages.length + 1 || firstAltDescribesCover ? 1 : 0;
+  const fallbackSubject = /prompt/i.test(pack.name) ? "Custom photo edit" : pack.name;
+  const explicitAlt = galleryAlts[index + altOffset]
+    ?? `${fallbackSubject}, natural portrait with an inviting atmosphere`;
   return creativePackAltForSite({
-    explicitAlt: galleryAlts[index + altOffset],
+    explicitAlt,
     imageUrl,
     index,
     pack,
