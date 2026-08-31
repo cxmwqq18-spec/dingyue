@@ -98,6 +98,8 @@ const metadata = await metadataForPublishedStorefrontDirectoryPage({
   creativePacks: snapshot.creativePacks,
   snapshot
 });
+assert.equal(metadata.alternates?.canonical, "https://www.mydreamshoots.com/ai-image-generation/edit-by-prompt");
+assert.notEqual(metadata.title, "Browse private AI photo packages | myDreamshoots");
 const ogImage = metadata.openGraph?.images?.[0]?.url;
 const twitterImage = Array.isArray(metadata.twitter?.images) ? metadata.twitter.images[0] : metadata.twitter?.images;
 assert.ok(/edit-by-prompt/i.test(String(ogImage)) && !/social-cards/i.test(String(ogImage)));

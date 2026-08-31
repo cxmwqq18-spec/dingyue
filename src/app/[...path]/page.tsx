@@ -461,7 +461,10 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     ? path[1] ? `/ai-video-generation/${path[1]}` : "/ai-video-generation"
     : path[0] === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
-  const state = await getHostPublicRuntimeStateWithFallback(hostCandidates, metadataPageSlug);
+  const collectionLookupSlug = collectionRouteLookupSlug(path);
+  const state = isCollectionRequest && collectionLookupSlug
+    ? await getHostPublicCollectionRuntimeStateWithFallback(hostCandidates, collectionLookupSlug)
+    : await getHostPublicRuntimeStateWithFallback(hostCandidates, metadataPageSlug);
   if (!state) return {};
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) return {};
