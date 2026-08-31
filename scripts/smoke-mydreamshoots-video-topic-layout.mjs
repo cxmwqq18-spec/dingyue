@@ -210,11 +210,13 @@ try {
                 pageMarker: document.querySelectorAll("[data-video-topic-page]").length,
                 heroImages: document.querySelectorAll("[data-video-topic-hero-media] img").length,
                 heroImageFits: [...document.querySelectorAll("[data-video-topic-hero-media] img")].map((image) => getComputedStyle(image).objectFit),
+                heroImageSources: [...document.querySelectorAll("[data-video-topic-hero-media] img")].map((image) => image.getAttribute("src") || ""),
                 heroImageFrameRatios: [...document.querySelectorAll("[data-video-topic-hero-media] img")].map((image) => {
                   const frame = image.parentElement;
                   const rect = frame?.getBoundingClientRect();
-                  return rect && rect.height > 0 ? rect.width / rect.height : 0;
+                return rect && rect.height > 0 ? rect.width / rect.height : 0;
                 }),
+                heroImageNaturalRatios: [...document.querySelectorAll("[data-video-topic-hero-media] img")].map((image) => image.naturalHeight > 0 ? image.naturalWidth / image.naturalHeight : 0),
                 heroHeadingWithinViewport: Boolean(heroHeading && heroHeading.getBoundingClientRect().left >= 0 && heroHeading.getBoundingClientRect().right <= document.documentElement.clientWidth + 1),
                 scenes: scenes.length,
                 mapItems: document.querySelectorAll("[data-scene-topic-map-item]").length,
@@ -239,9 +241,16 @@ try {
             assert.equal(result.pageMarker, 1, `${topic} ${viewport.name} should render one shared page marker`);
             assert.equal(result.heroHeadingWithinViewport, true, `${topic} ${viewport.name} hero heading must fit within the viewport`);
             assert.equal(result.heroImages >= 1, true, `${topic} ${viewport.name} hero should render images`);
-            if (topic === "fashion-video") {
-              assert.deepEqual(result.heroImageFits, ["cover", "contain", "contain"], `${topic} ${viewport.name} should show both secondary hero images without cropping`);
-              assert.equal(result.heroImageFrameRatios.slice(1).every((ratio) => Math.abs(ratio - 1067 / 1600) < 0.04), true, `${topic} ${viewport.name} secondary hero frames must preserve their source ratio`);
+            if (topic === "music-video" || topic === "fashion-video" || topic === "food-video" || topic === "pet-video") {
+              assert.equal(result.heroImageFits.slice(-2).every((fit) => fit === "contain"), true, `${topic} ${viewport.name} secondary hero images must show without cropping`);
+              assert.equal(result.heroImageFrameRatios.slice(-2).every((ratio, index) => Math.abs(ratio - result.heroImageNaturalRatios.slice(-2)[index]) < 0.04), true, `${topic} ${viewport.name} secondary hero frames must preserve their source ratios`);
+            }
+            if (topic === "music-video") {
+              assert.equal(result.heroImageSources[0].includes("hero-music-video-performance.jpg"), true, `${topic} ${viewport.name} should use the performance reference in the lower-left hero frame`);
+            }
+            if (topic === "pet-video") {
+              assert.equal(result.heroImageSources[0].includes("hero-pet-video-owner-frame.jpg"), true, `${topic} ${viewport.name} should lead with the owner-and-pet frame`);
+              assert.equal(result.heroImageSources[1].includes("hero-pet-video-training-frame.jpg"), true, `${topic} ${viewport.name} should place the training frame in the lower-left hero frame`);
             }
             assert.equal(result.scenes >= 1, true, `${topic} ${viewport.name} should render scene cards`);
             assert.equal(result.mapItems >= 1, true, `${topic} ${viewport.name} should render visual-map items`);

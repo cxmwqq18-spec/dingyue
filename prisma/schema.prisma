@@ -170,6 +170,7 @@ model Site {
   ledger                  CreditLedger[]
   balances                CreditBalance[]
   pages                   ThemePage[]
+  livePages               LivePage[]
   settings                ThemeSettings?
   storefrontProfile       StorefrontProfile?
   currentPublishedState   SitePublishedState?
@@ -643,6 +644,26 @@ model ThemePage {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   site          Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@unique([siteId, slug])
+  @@index([siteId, pageType])
+  @@index([siteId, templateKey])
+  @@index([siteId, updatedAt])
+}
+
+/// Current public page data. Public SSR reads this table directly on every
+/// request; there is no draft, publication snapshot, or ThemePage fallback.
+model LivePage {
+  id          String   @id
+  siteId      String
+  pageType    String
+  templateKey String?
+  slug        String
+  title       String
+  contentJson Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  site        Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
 
   @@unique([siteId, slug])
   @@index([siteId, pageType])

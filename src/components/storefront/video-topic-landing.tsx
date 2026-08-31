@@ -271,6 +271,15 @@ function heroPreviewImages(content: Pick<VideoTopicContent, "hero">): VideoTopic
     .slice(0, 3);
 }
 
+function sceneHeroPreviewImages(content: VideoTopicContent, contentKey: string): VideoTopicImage[] {
+  const images = heroPreviewImages(content);
+  if (contentKey === "pet-video" && images.length >= 2) return [images[1], images[0], ...images.slice(2)];
+  if (contentKey === "music-video" && images.length >= 2) {
+    return [images[0], { src: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg", alt: "Female vocalist singing into a studio microphone under red and blue cinematic lighting, used as the dedicated hero performance frame.", width: 1800, height: 1200, objectPosition: "50% 42%" }, ...images.slice(2)];
+  }
+  return images;
+}
+
 function isPortraitVideo(video?: VideoTopicVideo): boolean {
   return Boolean(video && video.height > video.width);
 }
@@ -311,7 +320,7 @@ function TopicHeroVideo({ video }: { video: VideoTopicVideo }) {
   );
 }
 
-function DirectTopicHeroCards({ images, video, cropPetHero = false }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean }) {
+function DirectTopicHeroCards({ images, video, cropPetHero = false, containSecondaryImages = false }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean; containSecondaryImages?: boolean }) {
   const cards = images.slice(0, 3);
   const hasThreeCards = cards.length >= 3;
   return (
@@ -320,17 +329,16 @@ function DirectTopicHeroCards({ images, video, cropPetHero = false }: { images: 
       style={{ gridTemplateColumns: cards.length > 1 ? "repeat(2, minmax(0, 1fr))" : "1fr" }}
       data-video-topic-hero-collage={hasThreeCards ? "stacked" : cards.length === 2 ? "split" : "single"}
     >
-      {cards.map((item, index) => (
+      {cards.map((item, index) => {
+        const shouldContainImage = containSecondaryImages && hasThreeCards && index > 0;
+        return (
         <div
           className="relative min-w-0 overflow-hidden rounded-[6px] bg-[#292438]"
           key={item.src}
           style={{
             ...(hasThreeCards && index === 0 ? { gridColumn: "1 / -1" } : {}),
             // Keep the lead frame prominent while preserving two compact side-by-side previews below.
-            aspectRatio:
-              video && index === 0
-                ? `${video.width} / ${video.height}`
-                : "16 / 9"
+            aspectRatio: shouldContainImage ? intrinsicAspectRatio(item) : video && index === 0 ? `${video.width} / ${video.height}` : "16 / 9"
           }}
           {...(hasThreeCards && index === 0 && !video
             ? {
@@ -346,7 +354,7 @@ function DirectTopicHeroCards({ images, video, cropPetHero = false }: { images: 
           {video && index === 0 ? <TopicHeroVideo video={video} /> : <img
               src={optimizedTopicImageSrc(item.src)}
               alt={item.alt}
-              className={`absolute ${hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item) ? "top-0 left-1/2 h-auto max-w-none" : "inset-0 h-full w-full"} ${hasThreeCards && index === 0 && !hasEmbeddedVideoLetterbox(item) ? "object-cover object-top" : hasThreeCards ? "object-cover object-center" : `${mediaObjectFit(item)} object-center`}`}
+              className={`absolute ${hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item) ? "top-0 left-1/2 h-auto max-w-none" : "inset-0 h-full w-full"} ${shouldContainImage ? "object-contain object-center" : hasThreeCards && index === 0 && !hasEmbeddedVideoLetterbox(item) ? "object-cover object-top" : hasThreeCards ? "object-cover object-center" : `${mediaObjectFit(item)} object-center`}`}
               style={
                 hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item)
                   ? { width: "200%", transform: cropPetHero ? "translate(-50%, -18%)" : "translateX(-50%)", objectPosition: cropPetHero ? "50% 50%" : "50% 0%" }
@@ -361,12 +369,13 @@ function DirectTopicHeroCards({ images, video, cropPetHero = false }: { images: 
               decoding="async"
             />}
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
 
-function TopicHeroMedia({ images, video, cropPetHero = false, displayAspectRatio }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean; displayAspectRatio?: string }) {
+function TopicHeroMedia({ images, video, cropPetHero = false, displayAspectRatio, containSecondaryImages = false }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean; displayAspectRatio?: string; containSecondaryImages?: boolean }) {
   if (video && images.length < 3) {
     const portraitSizing = isPortraitVideo(video);
     // Some landscape exports are delivered on a 4:3 canvas with 16:9 content
@@ -379,7 +388,7 @@ function TopicHeroMedia({ images, video, cropPetHero = false, displayAspectRatio
       </div>
     );
   }
-  return <DirectTopicHeroCards images={images} video={video} cropPetHero={cropPetHero} />;
+  return <DirectTopicHeroCards images={images} video={video} cropPetHero={cropPetHero} containSecondaryImages={containSecondaryImages} />;
 }
 
 function UseCaseCard({ item, index }: { item: VideoTopicUseCase; index: number }) {
@@ -1451,7 +1460,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
   const topicLabel = isMusic ? "Music Video" : isFashion ? "Fashion Video" : isPet ? "Pet Video" : "Food Video";
   const heroVideo = isMusic ? content.hero.video : undefined;
   const primaryHref = `/app/create?videoMode=${encodeURIComponent(contentKey)}#step-video`;
-  const heroImages = heroPreviewImages(content);
+  const heroImages = sceneHeroPreviewImages(content, contentKey);
   const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
   const petHeroExtras = isPet ? (content.hero.images?.slice(1) ?? []).map((image, index) => ({
     title: index === 0 ? "Owner and pet portrait" : "Pet portrait frame",
@@ -1488,7 +1497,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
           </div>
           <figure className={`relative min-w-0 ${heroMediaSizingClass(heroVideo)} lg:justify-self-end`} data-video-topic-hero-media>
             <div className={`relative ${heroMediaSizingClass(heroVideo)} overflow-hidden rounded-[8px] border ${accentBorder} bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]`}>
-              <TopicHeroMedia cropPetHero={isPet} images={heroImages} video={heroVideo} />
+              <TopicHeroMedia containSecondaryImages cropPetHero={isPet} images={heroImages} video={heroVideo} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60"><Sparkles className={`mt-1 h-4 w-4 shrink-0 ${accentClass}`} strokeWidth={1.8} /><span>{content.hero.caption}</span></figcaption>
           </figure>

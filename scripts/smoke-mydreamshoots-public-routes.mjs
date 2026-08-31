@@ -150,7 +150,7 @@ async function main() {
   const hiddenVideoRoutes = HIDDEN_VIDEO_SLUGS.map((slug) => `/ai-video-generation/${slug}`);
   const legacyVideoGoneRoutes = ["/tools", ...LEGACY_VIDEO_GONE_SLUGS.map((slug) => `/tools/${slug}`)];
   const weddingInvitationCanonicalRoute = "/ai-save-the-date/wedding-invitation";
-  const weddingInvitationGoneRoutes = ["/ai-video-generation/wedding-invitation", "/holidays-events/wedding-invitation"];
+  const weddingInvitationLegacyRoutes = ["/ai-video-generation/wedding-invitation", "/holidays-events/wedding-invitation"];
   const keyRoutes = ["/", "/login", "/pricing", "/workflow", "/faq", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/blog", weddingInvitationCanonicalRoute];
   const htmlScanRoutes = ["/", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/blog", "/sitemap.xml"];
   const failures = [];
@@ -212,10 +212,10 @@ async function main() {
     }
   }
 
-  for (const route of weddingInvitationGoneRoutes) {
+  for (const route of weddingInvitationLegacyRoutes) {
     const result = await fetchRoute(baseUrl, route, { redirect: "manual", readBody: false });
-    if (result.status !== 404 || result.location) {
-      failures.push({ kind: "wedding_invitation_legacy_status", route, expected: 404, actual: result.status, location: result.location });
+    if (result.status !== 301 || !result.location?.endsWith("/ai-save-the-date/wedding-invitation")) {
+      failures.push({ kind: "wedding_invitation_legacy_status", route, expected: "301 -> /ai-save-the-date/wedding-invitation", actual: result.status, location: result.location });
     }
   }
 
@@ -255,7 +255,7 @@ async function main() {
       videoRoutes: videoRoutes.length,
       hiddenVideoRoutes: hiddenVideoRoutes.length,
       legacyVideoGoneRoutes: legacyVideoGoneRoutes.length,
-      weddingInvitationGoneRoutes: weddingInvitationGoneRoutes.length,
+      weddingInvitationLegacyRoutes: weddingInvitationLegacyRoutes.length,
       htmlScanRoutes: htmlScanRoutes.length
     },
     failures

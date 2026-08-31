@@ -462,7 +462,7 @@ const collectionDetailSiteSelect = {
       createdAt: true
     }
   },
-  pages: {
+  livePages: {
     where: { slug: { in: ["/collections", "/ai-image-generation", "/404"] } },
     orderBy: { slug: "asc" },
     select: {
@@ -472,8 +472,7 @@ const collectionDetailSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
-      draftJson: true,
-      publishedJson: true
+      contentJson: true
     }
   },
   connect: {
@@ -513,7 +512,7 @@ const publicRuntimeSiteSelect = {
       createdAt: true
     }
   },
-  pages: {
+  livePages: {
     orderBy: { slug: "asc" },
     select: {
       id: true,
@@ -522,8 +521,7 @@ const publicRuntimeSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
-      draftJson: true,
-      publishedJson: true
+      contentJson: true
     }
   },
   connect: {
@@ -647,7 +645,7 @@ const publicMetadataSiteSelect = {
       isPrimary: true
     }
   },
-  pages: {
+  livePages: {
     select: {
       id: true,
       siteId: true,
@@ -655,8 +653,7 @@ const publicMetadataSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
-      draftJson: true,
-      publishedJson: true
+      contentJson: true
     }
   },
   connect: {
@@ -993,6 +990,13 @@ function toPublicSiteShell(
   const primaryDomain = record.domains.find((domain) => domain.isPrimary)?.domain ?? record.domains[0]?.domain ?? "";
   const settingsRecord = "settings" in record ? record.settings : undefined;
   const profileRecord = "storefrontProfile" in record ? record.storefrontProfile : undefined;
+  const pageRecords = "livePages" in record
+    ? record.livePages.map((page) => ({
+        ...page,
+        draftJson: page.contentJson,
+        publishedJson: page.contentJson
+      }))
+    : record.pages;
   return {
     id: record.id,
     name: record.name,
@@ -1011,13 +1015,9 @@ function toPublicSiteShell(
     },
     themeSettings: toAdminShellThemeSettings(settingsRecord),
     storefrontProfile: toStorefrontProfile(profileRecord),
-    pages: record.pages.map((page) => toThemePage({
-      ...page,
-      // Public SSR is deliberately sourced from the latest draft. The
-      // publishedJson column is retained only for backwards compatibility.
-      draftJson: (page as { draftJson?: unknown }).draftJson ?? (page as { publishedJson: unknown }).publishedJson,
-      publishedJson: (page as { draftJson?: unknown }).draftJson ?? (page as { publishedJson: unknown }).publishedJson
-    })),
+    // ThemePage is an internal compatibility shape only. Public data comes
+    // exclusively from LivePage.contentJson and has no fallback source.
+    pages: pageRecords.map((page) => toThemePage(page)),
     mediaAssets
   };
 }
@@ -1106,7 +1106,7 @@ function publicRuntimePageSlugs(slug?: string): string[] | undefined {
   return Array.from(new Set([normalized, internalPolicySlug, ...legacySlugs, ...policySourceSlugs, "/404"]));
 }
 
-function publicRuntimePageWhere(pageSlugs?: string[]): Prisma.ThemePageWhereInput | undefined {
+function publicRuntimePageWhere(pageSlugs?: string[]): Prisma.LivePageWhereInput | undefined {
   if (!pageSlugs) return undefined;
   const includeBlogPages = pageSlugs.some((slug) => slug === "/blog" || slug.startsWith("/blog/"));
   return includeBlogPages
@@ -1701,9 +1701,9 @@ async function loadStorefrontPublicRuntimeState(
     : publicRuntimePageWhere(pageSlugs);
   const select = {
       ...publicRuntimeSiteSelect,
-      pages: pageWhere
-        ? { ...publicRuntimeSiteSelect.pages, where: pageWhere }
-        : publicRuntimeSiteSelect.pages
+      livePages: pageWhere
+        ? { ...publicRuntimeSiteSelect.livePages, where: pageWhere }
+        : publicRuntimeSiteSelect.livePages
     } satisfies Prisma.SiteSelect;
   return runStorefrontPublicTransaction(async (tx) => {
     const hostSiteId = "hostCandidates" in lookup
@@ -1723,7 +1723,7 @@ async function loadStorefrontPublicRuntimeState(
     if (!site) return undefined;
     storefrontPerfMark("site", startedAt, { pageSlugs, profile: needs.profile });
     const siteId = site.id;
-    const loadedPageSlugs = new Set(site.pages.map((page) => page.slug));
+    const loadedPageSlugs = new Set(site.livePages.map((page) => page.slug));
     // Header and footer are site-global. Always hydrate the relational pages
     // referenced by that shared shell before publishedPaths is compiled, so a
     // route-specific body query cannot change global navigation visibility.
@@ -1733,14 +1733,14 @@ async function loadStorefrontPublicRuntimeState(
     ))
       .filter((slug) => !loadedPageSlugs.has(slug));
     const navigationPages = missingNavigationPageSlugs.length
-      ? await tx.themePage.findMany({
+      ? await tx.livePage.findMany({
           where: { siteId, slug: { in: missingNavigationPageSlugs } },
           orderBy: { slug: "asc" },
-          select: publicRuntimeSiteSelect.pages.select
+          select: publicRuntimeSiteSelect.livePages.select
         })
       : [];
     const siteWithNavigationPages = navigationPages.length
-      ? { ...site, pages: [...site.pages, ...navigationPages].sort((left, right) => left.slug.localeCompare(right.slug)) }
+      ? { ...site, livePages: [...site.livePages, ...navigationPages].sort((left, right) => left.slug.localeCompare(right.slug)) }
       : site;
     const limits = publicRuntimeLimits(needs.profile);
     const [products, siteAiApps, creativePacks, creativePackCategories, mediaAssets, toolCategories, toolMenuItems, videoThemeCategories, videoThemes] = await Promise.all([
@@ -2203,12 +2203,12 @@ export const getStorefrontPublicPageMetadataStateByHost = cache(async (host: str
       const pageWhere = normalizedPageSlug ? { slug: { in: Array.from(new Set([normalizedPageSlug, "/404"])) } } : undefined;
       const select = {
         ...publicMetadataSiteSelect,
-        pages: pageWhere
+        livePages: pageWhere
           ? {
-              ...publicMetadataSiteSelect.pages,
+              ...publicMetadataSiteSelect.livePages,
               where: pageWhere
             }
-          : publicMetadataSiteSelect.pages
+          : publicMetadataSiteSelect.livePages
       } satisfies Prisma.SiteSelect;
       const site = "id" in lookup
         ? await prisma.site.findUnique({ where: { id: lookup.id }, select })
@@ -2278,12 +2278,12 @@ export const getStorefrontPublicPageMetadataStateBySlug = cache(async (slug: str
         orderBy: { updatedAt: "desc" },
         select: {
           ...publicMetadataSiteSelect,
-          pages: normalizedPageSlug
+          livePages: normalizedPageSlug
             ? {
-                ...publicMetadataSiteSelect.pages,
+                ...publicMetadataSiteSelect.livePages,
                 where: { slug: { in: Array.from(new Set([normalizedPageSlug, "/404"])) } }
               }
-            : publicMetadataSiteSelect.pages
+            : publicMetadataSiteSelect.livePages
         }
       });
       if (!site) return undefined;

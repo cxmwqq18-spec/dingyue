@@ -30,6 +30,8 @@ const legacyRedirectChecks = [
   { host: "www.mydreamshoots.com", path: "/collections/engagement-photo", target: "/ai-image-generation/engagement-photo" },
   { host: "www.mydreamshoots.com", path: "/collections/headshot", target: "/ai-image-generation/headshot" },
   { host: "www.mydreamshoots.com", path: "/ai-image-generation/motion-generator", target: "/ai-video-generation/motion-generator" },
+  { host: "www.mydreamshoots.com", path: "/ai-video-generation/wedding-invitation", target: "/ai-save-the-date/wedding-invitation" },
+  { host: "www.mydreamshoots.com", path: "/holidays-events/wedding-invitation", target: "/ai-save-the-date/wedding-invitation" },
   { host: "www.mydreamshoots.com", path: "/ai-image-generation/profile-cards", target: "/ai-image-generation/avatar" },
   { host: "www.mydreamshoots.com", path: "/ai-video-generation/mothers-day", target: "/ai-save-the-date/mothers-day" },
   { host: "www.mydreamshoots.com", path: "/ai-video-generation/new-year", target: "/ai-save-the-date/new-year" },
@@ -48,8 +50,6 @@ const legacyRedirectChecks = [
   { host: "www.aidreamcapes.com", path: "/blog/holiday-memory-albums-guide", target: "/blog/christmas-group-album-photo-package-guide" }
 ];
 const legacyGoneChecks = [
-  { host: "www.mydreamshoots.com", path: "/ai-video-generation/wedding-invitation" },
-  { host: "www.mydreamshoots.com", path: "/holidays-events/wedding-invitation" },
   { host: "www.mydreamshoots.com", path: "/tools" },
   { host: "www.mydreamshoots.com", path: "/collections/wedding-portraits" },
   { host: "www.mydreamshoots.com", path: "/collections/profile-cards" },

@@ -355,7 +355,6 @@ const requiredCollectionPaths = [
   "/ai-image-generation/headshot",
   "/ai-image-generation/avatar",
   "/ai-image-generation/background-changer",
-  "/ai-image-generation/motion-generator",
   "/ai-image-generation/soccer"
 ];
 function requiredCollectionPathIsCovered(requiredPath) {

@@ -239,7 +239,8 @@ assert.ok(
   "/how-it-works should remain a legacy alias for /workflow"
 );
 for (const command of [
-  "npm run guard:storefront-launch-seo-contract"
+  "npm run guard:storefront-launch-seo-contract",
+  "npm run guard:mydreamshoots-content"
 ]) {
   assert.ok(packageJson.scripts?.["deploy:precheck"]?.includes(command), `deploy:precheck should include ${command}`);
 }
@@ -247,7 +248,8 @@ for (const command of [
   "npm run guard:storefront-launch-seo-contract",
   "npm run smoke:storefront-sitemap-directory-coverage",
   "npm run smoke:storefront-head-title-order",
-  "npm run smoke:storefront-seo-fingerprint"
+  "npm run smoke:storefront-seo-fingerprint",
+  "npm run guard:mydreamshoots-content"
 ]) {
   assert.ok(packageJson.scripts?.["launch:storefront-precheck"]?.includes(command), `launch:storefront-precheck should include ${command}`);
 }
