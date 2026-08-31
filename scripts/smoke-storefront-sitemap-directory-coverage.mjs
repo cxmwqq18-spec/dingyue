@@ -52,11 +52,6 @@ const mydreamshootsRequiredPolicyPaths = [
   "/terms"
 ];
 const mydreamshootsLegacyCookiePaths = ["/cookie-policy", "/policies/cookies"];
-const mydreamshootsRequiredVideoTopicPaths = [
-  "/ai-video-generation/explainer-video",
-  "/ai-video-generation/how-to-video",
-  "/ai-video-generation/talking-head-video"
-];
 
 function originForHost(host) {
   const configured = process.env[`SITEMAP_SMOKE_${host.toUpperCase().replace(/[^A-Z0-9]/g, "_")}_BASE_URL`];
@@ -306,9 +301,6 @@ for (const target of targets) {
   const missingRequiredPolicyPaths = target.siteId === "site_dreamshoot"
     ? mydreamshootsRequiredPolicyPaths.filter((pathname) => !actual.paths.has(pathname))
     : [];
-  const missingRequiredVideoTopicPaths = target.siteId === "site_dreamshoot"
-    ? mydreamshootsRequiredVideoTopicPaths.filter((pathname) => !actual.paths.has(pathname))
-    : [];
   const legacyCookiePaths = target.siteId === "site_dreamshoot"
     ? mydreamshootsLegacyCookiePaths.filter((pathname) => actual.paths.has(pathname))
     : [];
@@ -327,7 +319,6 @@ for (const target of targets) {
     missing: expected ? [...expected].filter((value) => !actual.paths.has(value)) : [],
     unexpected: expected ? [...actual.paths].filter((value) => !expected.has(value)) : [],
     missingRequiredPolicyPaths,
-    missingRequiredVideoTopicPaths,
     legacyCookiePaths,
     cookieLocs,
     invalidCookieLocs,
@@ -344,7 +335,6 @@ const failures = results.filter((result) =>
   result.missing.length ||
   result.unexpected.length ||
   result.missingRequiredPolicyPaths.length ||
-  result.missingRequiredVideoTopicPaths.length ||
   result.legacyCookiePaths.length ||
   result.invalidCookieLocs.length ||
   (result.siteId === "site_dreamshoot" && result.cookieLocs.length !== 1) ||

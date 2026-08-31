@@ -1,9 +1,0 @@
-{
-  "formatVersion": 1,
-  "entities": {
-    "theme_page": {
-      "keys": ["site_dreamshoot_policy_cookies"],
-      "fieldPaths": ["draftJson/seo/index"]
-    }
-  }
-}
