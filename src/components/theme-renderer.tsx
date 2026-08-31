@@ -6393,7 +6393,9 @@ const dreamshootFallbackPhotoPackageGroups: PhotoPackageMegaGroup[] = ([
   ...group,
   items: group.items.map((item) => ({
     ...item,
-    href: publicCollectionPathForSite({ id: "site_dreamshoot" }, item.slug)
+    href: item.slug === "motion-generator"
+      ? "/ai-video-generation/motion-generator"
+      : publicCollectionPathForSite({ id: "site_dreamshoot" }, item.slug)
   }))
 }));
 

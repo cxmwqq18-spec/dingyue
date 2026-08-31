@@ -442,6 +442,11 @@ assert(
   "Creators Circle must use its published route contract in both host and site routes"
 );
 assert(!storefrontRender.includes("syntheticDreamShootPartnerPage"), "public runtime must not synthesize partner pages");
+assert(
+  themeRenderer.includes('item.slug === "motion-generator"') &&
+    themeRenderer.includes('? "/ai-video-generation/motion-generator"'),
+  "MyDreamShoots fallback navigation must link Motion Generator directly to its canonical video route"
+);
 assert(!mediaSource.includes("const fallbackImages"), "public media resolver must not contain a stock fallback image set");
 assert(mediaSource.includes("return \"\";"), "missing public media must fail closed");
 assert(!templates.includes('href: "/cookie-policy"'), "MyDreamShoots templates must not generate /cookie-policy links");
