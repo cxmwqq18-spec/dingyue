@@ -93,6 +93,36 @@ function isPublicVideoTopicPath(path: string): boolean {
   return Boolean(match && isMydreamshootsPublicVideoGenerationTopicSlug(match[1]));
 }
 
+function legacyWeddingInvitationContent(page: Pick<ThemePage, "slug" | "title" | "draftJson">): AiVideoTopicLandingContent | undefined {
+  if (page.slug !== "/ai-video-generation/wedding-invitation") return undefined;
+  const seo = page.draftJson.seo ?? {};
+  const entry = Object.values(page.draftJson.sections ?? {}).find((section) => section.type === "ai_tool_entry")?.settings ?? {};
+  const imageUrl = typeof entry.imageUrl === "string" && entry.imageUrl.trim()
+    ? entry.imageUrl
+    : "/assets/dreamshoot/wedding-invitation/hero-ai-wedding-invitation-couple-reviewing.jpg";
+  const title = typeof seo.title === "string" && seo.title.trim() ? seo.title : page.title || "Wedding Invitation";
+  const description = typeof seo.description === "string" && seo.description.trim()
+    ? seo.description
+    : "Create a private wedding invitation reveal video with readable names, dates, venue details, and paper texture.";
+  const image = { src: imageUrl, alt: "Couple reviewing wedding invitation cards at a reception table.", width: 1800, height: 1200 };
+  return {
+    seo: { title, description, keywords: typeof seo.keywords === "string" ? seo.keywords : "AI wedding invitation video maker, wedding invitation reveal video, save the date video", canonicalPath: page.slug },
+    hero: { eyebrow: "AI VIDEO THEME", title: "Create a Wedding Invitation Reveal Video", body: description, primaryCta: "Create Wedding Invitation Video", secondaryCta: "Browse AI Video Generation", availabilityNote: "Private workspace review before sharing.", rightsCopy: "Use invitation artwork and event details you own or have permission to use.", imageNote: "Keep names, dates, venue details, and supplied wording readable.", image },
+    useCases: { eyebrow: "INVITATION VIDEO JOBS", title: "Turn Stationery Into a Clear Event Moment", intro: "Build a short reveal around the details guests need to see.", items: [
+      { title: "Invitation suite reveal", body: "Show the envelope, card, liner, seal, and complete suite in a readable sequence.", problem: "Guests need the full invitation context.", cta: "Reveal the suite", image },
+      { title: "Save-the-date announcement", body: "Lead with the couple names and event date, then finish on the approved design.", problem: "The date should remain the visual anchor.", cta: "Create a save-the-date", image },
+      { title: "Private guest preview", body: "Review the finished video privately before sending it to guests or posting it.", problem: "Details must be checked before sharing.", cta: "Review a private draft", image }
+    ] },
+    foundation: { eyebrow: "START WITH ACCURATE DETAILS", title: "Give the Reveal a Reliable Source", intro: "Use approved artwork and exact event information.", leftTitle: "Provide", leftItems: ["Approved invitation artwork", "Exact names, date, and venue", "Preferred pacing and visual direction"], rightTitle: "Check", rightItems: ["Text remains unchanged", "Paper and print details stay legible", "No unsupported event details are added"], expertTip: "Treat the supplied invitation as the source of truth." },
+    guidance: { eyebrow: "REVEAL DIRECTION", title: "Let Material Detail Carry the Story", intro: "Use movement to reveal paper, print, ribbon, seal, and final wording.", cards: [{ title: "Envelope to card", body: "Open with the envelope, then reveal the main card in reading order." }, { title: "Macro paper detail", body: "Use a close view for embossing, ink, fiber, or foil without glare." }, { title: "Complete suite", body: "End with the full approved suite visible and correctly arranged." }] },
+    steps: { eyebrow: "HOW IT WORKS", title: "From Approved Suite to Private Draft", items: [{ title: "Upload the source", body: "Add invitation artwork or reference photos you can use." }, { title: "Add exact event text", body: "Provide the couple names, date, venue, and wording that must stay accurate." }, { title: "Choose the reveal", body: "Set the pacing and visual direction for the stationery sequence." }, { title: "Review before sharing", body: "Check every name, date, venue detail, crop, and final frame." }], cta: "Create Wedding Invitation Video" },
+    value: { eyebrow: "PRIVATE REVIEW", title: "Make Every Detail Easy to Verify", intro: "A focused reveal helps guests read the information that matters.", items: [{ title: "Readable details", body: "Keep names, date, venue, and supplied wording clear." }, { title: "Tactile material", body: "Use paper texture, embossing, ribbon, and seal as visual anchors." }, { title: "Confident sharing", body: "Review the finished draft privately before sending it." }] },
+    trust: { eyebrow: "RESPONSIBLE USE", title: "Keep the Invitation Accurate", intro: "Before sharing:", items: [{ title: "Use approved artwork", body: "Only upload invitation designs and references you own or have permission to use." }, { title: "Check every event detail", body: "Verify names, dates, venue, addresses, and wording against the approved source." }, { title: "Do not invent information", body: "Do not add unsupported times, locations, hosts, dress codes, or registry details." }] },
+    faq: { eyebrow: "FAQ", title: "Wedding Invitation Video Questions", items: [{ question: "What should I upload?", answer: "Use clear photos or artwork of the approved invitation suite and provide the exact event details." }, { question: "Can the names and date change?", answer: "They should remain exactly as supplied. Review the finished video before sharing." }, { question: "Can I share the video with guests?", answer: "Yes, after checking the private draft for readable and accurate event information." }, { question: "What makes a good reveal?", answer: "A clear sequence from envelope to card to complete suite, with paper details and wording easy to read." }] },
+    finalCta: { eyebrow: "CREATE WITH APPROVED DETAILS", title: "Build a Wedding Invitation Reveal", body: "Turn your approved invitation suite into a short, readable video and review it privately before sharing.", cta: "Create Wedding Invitation Video", microcopy: "Approved source. Readable details. Private review." }
+  };
+}
+
 export function dedicatedVideoTopicContentFromPageJson(pageJson: ThemePageJson): VideoTopicContent | undefined {
   for (const sectionId of pageJson.sectionsOrder) {
     const section = pageJson.sections[sectionId];
@@ -116,7 +146,7 @@ function sourcesFromPages(pages: Array<Pick<ThemePage, "id" | "pageType" | "slug
   return pages.flatMap((page) => {
     if (!isPublicVideoTopicPath(page.slug)) return [];
     const slug = page.slug.slice("/ai-video-generation/".length);
-    const content = dedicatedVideoTopicContentFromPageJson(page.draftJson);
+    const content = dedicatedVideoTopicContentFromPageJson(page.draftJson) ?? legacyWeddingInvitationContent(page);
     return content ? [{ page, slug, content }] : [];
   });
 }
