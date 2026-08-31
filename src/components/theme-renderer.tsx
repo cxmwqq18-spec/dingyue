@@ -4080,7 +4080,9 @@ function creativePackAltForSite({
 }): string {
   return storefrontCreativePackImageAlt({
     brand: storefrontMediaBrandName(site),
-    explicitAlt,
+    // Card covers need a resource-specific subject. A legacy 13-entry alt
+    // array can contain the same generic cover label for several packs.
+    explicitAlt: role === "card" && !explicitAlt ? pack.name : explicitAlt,
     imageUrl,
     index,
     locale: storefrontMediaAltLocaleForSite(site),
@@ -13011,6 +13013,16 @@ function SectionView({
         const href = hrefFor(site, item.canonicalPath);
         const compactCard = item.kind === "save_the_date";
         const mediaClassName = "h-full w-full object-cover";
+        const publishedImageAlt = item.kind === "photo"
+          ? cardImageAltForSite(site, {
+              category: "homepage photo package",
+              description: item.subtitle,
+              explicitAlt: item.imageAlt,
+              imageUrl: mediaAssetUrl(site, item.imageUrl),
+              role: "card",
+              title: item.title
+            })
+          : item.imageAlt;
         if (item.kind === "video" && item.videoUrl) {
           const containPoster = item.canonicalPath.endsWith("/instagram-reels") || item.canonicalPath.endsWith("/tiktok-video");
           return (
@@ -13031,7 +13043,7 @@ function SectionView({
                 tabIndex={0}
               >
                 <StorefrontImage
-                  alt={item.imageAlt}
+                  alt={publishedImageAlt}
                   className={`h-full w-full ${containPoster ? "object-contain" : "object-cover"}`}
                   loading="lazy"
                   preview={false}
@@ -13053,9 +13065,9 @@ function SectionView({
           );
         }
         const media = item.videoUrl ? (
-          <DreamshootShowcaseVideo className={mediaClassName} label={item.imageAlt} poster={mediaAssetUrl(site, item.imageUrl)} priority={false} src={mediaAssetUrl(site, item.videoUrl)} />
+          <DreamshootShowcaseVideo className={mediaClassName} label={publishedImageAlt} poster={mediaAssetUrl(site, item.imageUrl)} priority={false} src={mediaAssetUrl(site, item.videoUrl)} />
         ) : (
-          <StorefrontImage alt={item.imageAlt} className={mediaClassName} loading="lazy" preview={false} sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw" src={mediaAssetUrl(site, item.imageUrl)} />
+          <StorefrontImage alt={publishedImageAlt} className={mediaClassName} loading="lazy" preview={false} sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw" src={mediaAssetUrl(site, item.imageUrl)} />
         );
         return (
           <Link

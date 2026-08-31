@@ -129,7 +129,10 @@ function sourceSpecificAlt(
   const canonical = canonicalSourceAltByPath[imageIdentity(imageUrl).toLowerCase()];
   if (canonical && locale === "en") return canonical;
   const sourceTopic = imageTopicFromUrl(imageUrl);
-  const themeSubject = locale === "en" && /(?:^|-)edit-by-prompt(?:-|$)/.test(normalizeSlug(String(theme ?? "")))
+  const genericTheme = /^(?:warm festive portrait for a seasonal card album|couple keepsake portrait|professional headshot|creator profile portrait)\.?$/i.test(cleanAltText(theme));
+  const themeSubject = genericTheme
+    ? ""
+    : locale === "en" && /(?:^|-)edit-by-prompt(?:-|$)/.test(normalizeSlug(String(theme ?? "")))
     ? "Prompt-directed photo edit preview"
     : cleanAltText(theme);
   const subjectBase = themeSubject || (sourceTopic === "Storefront portrait" ? sourceTopic : sourceTopic);
@@ -571,7 +574,13 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
   // A canonical subject such as "Professional headshot" is useful as a
   // theme label but cannot distinguish two different source images. Let the
   // stable filename or gallery scene fallback add the visual distinction.
-  const explicitIsGenericScene = genericSceneAlts.includes(normalizedExplicit);
+  const explicitIsGenericScene = genericSceneAlts.includes(normalizedExplicit) || /^(?:warm festive portrait for a seasonal card album|couple keepsake portrait|professional headshot|creator profile portrait)\.?$/i.test(normalizedExplicit);
+  if (input.role === "card" && /\/pack-covers\//i.test(imageIdentity(input.imageUrl))) {
+    return compactMediaAltSentence(sourceAlt, locale);
+  }
+  if (!isPackGalleryImage && stableSourceImagePattern.test(imageIdentity(input.imageUrl)) && (!explicit || explicitIsGenericScene)) {
+    return compactMediaAltSentence(sourceAlt, locale);
+  }
   const usableExplicit = templatedSceneAltPattern.test(explicit) || explicitIsGenericScene && stableSourceImagePattern.test(imageIdentity(input.imageUrl)) ? "" : explicit;
   const usableGalleryAlt = templatedSceneAltPattern.test(galleryAlt) || explicitIsGenericScene ? "" : galleryAlt;
   if (usableExplicit) return compactMediaAltSentence(usableExplicit, locale);
@@ -635,7 +644,11 @@ export function storefrontCreativePackImageAlt({
   // description by URL first so either representation stays aligned.
   const directAlt = directAltForPackImage(pack, imageUrl);
   const isGalleryRole = role === "gallery" || /\/pack-galleries\//i.test(String(imageUrl ?? ""));
-  const storedAlt = isGalleryRole ? undefined : directAlt || storedAltForPackImage(pack, imageUrl);
+  const storedAlt = isGalleryRole
+    ? undefined
+    : role === "card" && explicitAlt
+      ? explicitAlt
+      : directAlt || storedAltForPackImage(pack, imageUrl);
   const storedGalleryAlts = pack.galleryImageAlts ?? [];
   const galleryImageAlts = /\bcover\b/i.test(storedGalleryAlts[0] ?? "")
     ? storedGalleryAlts.slice(1)
