@@ -49,6 +49,15 @@ const expected = {
     fit: "contain",
     caption: "Hand-cover transition · casual to polished · TikTok-first 9:16"
   },
+  "product-video": {
+    src: "/assets/dreamshoot/product-video/show-the-product-clearly-before-you-ask-someone-to-buy-it.mp4",
+    poster: "/assets/dreamshoot/product-video/show-the-product-clearly-before-you-ask-someone-to-buy-it.webp",
+    label: "Show the Product Clearly Before You Ask Someone to Buy It",
+    width: 496,
+    height: 864,
+    fit: "contain",
+    caption: "Problem-to-payoff ad · product-focused storytelling · AI-generated commercial"
+  },
   "music-video": {
     src: "/assets/dreamshoot/music-video/ai-music-video-generator-for-artist-visuals-and-performance-concepts.mp4",
     poster: "/assets/dreamshoot/music-video/ai-music-video-generator-for-artist-visuals-and-performance-concepts.webp",

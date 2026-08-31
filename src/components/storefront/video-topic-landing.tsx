@@ -240,7 +240,9 @@ function cardMediaAspectRatio(image: VideoTopicImage): string {
 }
 
 function mediaObjectFit(image: VideoTopicImage): "object-cover" | "object-contain" {
-  return hasEmbeddedVideoLetterbox(image) || image.src.includes("/assets/dreamshoot/youtube-video/") ? "object-cover" : "object-contain";
+  // Detail-page media should fill its frame. Containment exposes baked-in
+  // letterbox/blurred background pixels on portrait source assets.
+  return "object-cover";
 }
 
 function optimizedTopicImageSrc(src: string): string {
@@ -320,15 +322,7 @@ function DirectTopicHeroCards({ images, video, cropPetHero = false }: { images: 
             aspectRatio:
               video && index === 0
                 ? `${video.width} / ${video.height}`
-                : hasThreeCards && index === 0
-                ? cropPetHero && hasEmbeddedVideoLetterbox(item)
-                  ? "6 / 7"
-                : hasEmbeddedVideoLetterbox(item)
-                  ? "1 / 1"
-                  : `${item.width} / ${Math.round(item.height * (2 / 3))}`
-                : hasThreeCards
-                  ? "16 / 9"
-                  : mediaAspectRatio(item)
+                : "16 / 9"
           }}
           {...(hasThreeCards && index === 0 && !video
             ? {
@@ -727,7 +721,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end">
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <div className="relative overflow-hidden rounded-[21px]" data-video-topic-hero-media style={{ aspectRatio: mediaAspectRatio(content.hero.image) }}>
+              <div className="relative aspect-video overflow-hidden rounded-[21px]" data-video-topic-hero-media>
                 <img
                   src={optimizedTopicImageSrc(content.hero.image.src)}
                   alt={content.hero.image.alt}
@@ -918,7 +912,7 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end">
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <div className="relative overflow-hidden rounded-[21px]" data-video-topic-hero-media style={{ aspectRatio: mediaAspectRatio(content.hero.image) }}>
+              <div className="relative aspect-video overflow-hidden rounded-[21px]" data-video-topic-hero-media>
                 <img
                   src={content.hero.image.src}
                   alt={content.hero.image.alt}

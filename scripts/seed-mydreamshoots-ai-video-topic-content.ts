@@ -1875,11 +1875,19 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         "Use accurate product photos and claims. Do not invent materials, dimensions, performance, results, included items, or compatibility.",
       imageNote: "Problem-to-payoff ad · product-focused storytelling · AI-generated commercial",
       image: image(
-        `${productImageRoot}/product-video-size-scale-backpack.jpg`,
+        `${productImageRoot}/show-the-product-clearly-before-you-ask-someone-to-buy-it.webp`,
         "Backpack shown at a clear scale for a product video",
-        1600,
-        3456
+        496,
+        864
       ),
+      video: {
+        src: `${productImageRoot}/show-the-product-clearly-before-you-ask-someone-to-buy-it.mp4`,
+        poster: `${productImageRoot}/show-the-product-clearly-before-you-ask-someone-to-buy-it.webp`,
+        label: "Show the Product Clearly Before You Ask Someone to Buy It",
+        width: 496,
+        height: 864,
+        fit: "contain"
+      },
       highlights: ["Scale", "Material Detail", "Real Use", "What's Included"]
     },
     useCases: {

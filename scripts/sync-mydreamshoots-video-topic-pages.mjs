@@ -24,7 +24,7 @@ const EMPTY_UNPUBLISHED_PAGE_JSON = {
 };
 const nonPublicVideoTopicSlugs = new Set(["text-to-video", "image-to-video"]);
 const heroMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "music-video"]);
-const videoMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "music-video"]);
+const videoMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "music-video"]);
 const targetedHeroFieldManifest = {
   "talking-photo": {
     image: "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp"
@@ -48,6 +48,7 @@ const targetedHeroFieldManifest = {
     imageNote: "9:16-first · cover-aware · safe-zone thinking · captions when dialogue matters"
   },
   "product-video": {
+    image: "/assets/dreamshoot/product-video/product-video-size-scale-backpack.jpg",
     imageNote: "A product video should answer the buyer's question before it asks for the sale."
   },
   "music-video": {
@@ -301,7 +302,7 @@ const pages = [
       "Turn product photos and source images into videos that show scale, materials, features, real-world use, packaging, and the details buyers need before they decide.",
     keywords:
       "AI product video generator, product video maker, product showcase video, ecommerce product video, product video from images, product video generator from photos, product page video, product marketing video",
-    imageUrl: "/assets/dreamshoot/product-video/product-video-size-scale-backpack.jpg"
+    imageUrl: "/assets/dreamshoot/product-video/show-the-product-clearly-before-you-ask-someone-to-buy-it.webp"
   },
   {
     slug: "product-ad-video",
