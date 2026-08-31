@@ -590,7 +590,8 @@ function targetedVideoThemeGalleryImages(page, existingGallery) {
   const canonicalVideo = videoTopicContentSeedForSlug(page.slug).hero?.video?.src;
   if (!canonicalVideo) throw new Error(`missing_target_video:${page.slug}`);
   const current = Array.isArray(existingGallery) ? existingGallery.filter((item) => typeof item === "string" && item) : [];
-  const conflictingVideo = current.find((item) => isVideoAsset(item) && item !== canonicalVideo);
+  const legacyVideo = targetedHeroFieldManifest[page.slug]?.video;
+  const conflictingVideo = current.find((item) => isVideoAsset(item) && item !== canonicalVideo && item !== legacyVideo);
   if (conflictingVideo) throw new Error(`field_conflict:${page.slug}:galleryImages:${JSON.stringify(conflictingVideo)}`);
   return [canonicalVideo, ...current.filter((item) => !isVideoAsset(item) && item !== page.imageUrl)];
 }
@@ -621,6 +622,24 @@ function hasStoredVideoTopicContent(pageJson, slug) {
   const sectionId = slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
   const content = pageJson.sections?.[sectionId]?.settings?.content;
   return Boolean(content && typeof content === "object" && !Array.isArray(content));
+}
+
+function videoTopicCardImageSources(pageJson, slug) {
+  const sectionId = slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
+  const items = pageJson?.sections?.[sectionId]?.settings?.content?.useCases?.items;
+  return Array.isArray(items) ? items.map((item) => imageSource(item?.image)).filter(Boolean) : [];
+}
+
+function assertUniqueVideoTopicCardImages(syncedPages) {
+  const owners = new Map();
+  for (const page of syncedPages) {
+    const slug = page.slug.replace(/^\/ai-video-generation\//, "");
+    for (const src of videoTopicCardImageSources(page.draftJson, slug)) {
+      const owner = owners.get(src);
+      if (owner && owner !== slug) throw new Error(`duplicate_video_topic_card_image:${src}:${owner}:${slug}`);
+      owners.set(src, slug);
+    }
+  }
 }
 
 function syncStoredVideoTopicHeroImage(pageJson, slug) {
@@ -746,7 +765,7 @@ function syncPages(state, changes) {
     }
     const draftJson = refreshContent
       ? pageJson(pageDefinition)
-      : syncStoredVideoTopicHeroImage(page.draftJson, pageDefinition.slug);
+      : isolateVideoTopicImages(syncStoredVideoTopicHeroImage(page.draftJson, pageDefinition.slug));
     const pageFields = refreshContent
       ? {
           id: page.id || pageId(pageDefinition.slug),
@@ -1009,6 +1028,7 @@ if (!dryRun && !updateDb) throw new Error("PostgreSQL-only sync requires --dry-r
 const changes = [];
 const categories = refreshContent ? syncCategories(state, changes) : [];
 const syncedPages = syncPages(state, changes);
+assertUniqueVideoTopicCardImages(syncedPages);
 if (refreshContent) pruneNonPublicVideoTopicPages(state, changes);
 syncExistingVideoThemePreviews(state, changes);
 
