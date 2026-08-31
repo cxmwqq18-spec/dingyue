@@ -274,8 +274,9 @@ async function readVideoGenerationRouteState(siteSlug: string, videoSlug: string
   return readPathModePublicRuntimeState(siteSlug, "/ai-video-generation");
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; path: string[] }> }): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: { params: Promise<{ siteSlug: string; path: string[] }>; searchParams?: Promise<Record<string, string | string[] | undefined>> }): Promise<Metadata> {
   const { siteSlug, path } = await params;
+  const metadataQuery = searchParams ? await searchParams : {};
   const requestedSlug = `/${path.join("/")}`;
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && (requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) return {};
@@ -289,7 +290,9 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const isCollectionRequest = isCollectionRouteRequest(path);
   const isVideoGenerationRequest = isVideoGenerationRouteRequest(path);
   const collectionRootPageSlug = fallbackCollectionRootPathForPublicSlug(siteSlug);
-  const collectionLookupSlug = collectionRouteLookupSlug(path);
+  const queryCollectionSlug = typeof metadataQuery.category === "string" ? metadataQuery.category : Array.isArray(metadataQuery.category) ? metadataQuery.category[0] : undefined;
+  const collectionPath = isCollectionRequest && path.length === 1 && queryCollectionSlug ? [...path, queryCollectionSlug] : path;
+  const collectionLookupSlug = collectionRouteLookupSlug(collectionPath);
   const videoLookupSlug = isVideoGenerationRequest ? path[1] || "" : "";
   const slug = isCollectionRequest ? collectionRootPageSlug : isVideoGenerationRequest ? "/ai-video-generation" : publicContentPageSlug(canonicalRequestedSlug);
   if (slug === "/account") {
@@ -339,7 +342,7 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
     const page = findPage(site, "/ai-video-generation");
     return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
   }
-  const collectionRoute = isCollectionRequest ? parsePublicCollectionRouteForSite(site, path) : undefined;
+  const collectionRoute = isCollectionRequest ? parsePublicCollectionRouteForSite(site, collectionPath) : undefined;
   if (isCollectionRequest) {
     if (!collectionRoute) return {};
     if (collectionRoute.collectionSlug && !isSpanishStorefrontSite(site) && resolvePublishedRouteDisposition(snapshot, collectionRoute.canonicalPath).kind !== "render") return {};

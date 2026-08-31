@@ -599,10 +599,12 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
   const upstreamUrl = sameServerUrl(request);
   const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
   if (!hostSlug || upstreamUrl.pathname.startsWith("/site/")) return upstreamUrl;
-  // Preserve the host leaf route so its metadata and runtime-state query stay
-  // scoped to the requested image theme.
+  // Keep the directory renderer for its complete published shell, while the
+  // category query lets its metadata resolve the requested image theme.
   const imageThemeMatch = upstreamUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/);
   if (hostSlug === "mydreamshoots" && imageThemeMatch?.[1]) {
+    upstreamUrl.pathname = `/site/${hostSlug}/ai-image-generation`;
+    upstreamUrl.searchParams.set("category", imageThemeMatch[1]);
     return upstreamUrl;
   }
   upstreamUrl.pathname = `/site/${hostSlug}${upstreamUrl.pathname === "/" ? "" : upstreamUrl.pathname}`;
