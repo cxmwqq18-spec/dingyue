@@ -192,6 +192,7 @@ const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_M
   "/ai-save-the-date/proposal": "Proposal video scenes showing the planned story and reaction",
   "/ai-save-the-date/save-the-date": "Save the Date video scenes for a confirmed wedding date",
   "/ai-save-the-date/wedding-ceremony": "Wedding ceremony photo and video scenes for vows, rings, reactions, and the recessional",
+  "/ai-save-the-date/wedding-invitation": "Wedding invitation reveal scenes showing approved stationery, names, date, and venue details",
   "/ai-save-the-date/wedding-anniversary": "Wedding anniversary photo and video scenes for shared memories and celebration",
   "/ai-save-the-date/christmas": "Christmas family, gifts, portraits, and seasonal celebration scenes",
   "/ai-save-the-date/thanksgiving": "Thanksgiving family dinner, gratitude, and seasonal gathering scenes",

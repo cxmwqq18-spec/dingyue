@@ -9,7 +9,7 @@ import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
 import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
 import { canonicalPathForPage, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
-import { canonicalSaveTheDatePath, legacySaveTheDatePath } from "@/lib/save-the-date-routes";
+import { canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import type {
   EffectiveIndexability,
   EffectivePublishedPage,
@@ -369,11 +369,15 @@ export function resolveEffectiveIndexability(snapshot: PublishedSiteSnapshot, pa
       : MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(canonicalPath)
       ? standardMedia?.status === "ready"
       : true;
-  const index = !blocked && context.seo.index && mediaReady;
+  // The wedding invitation route predates the dedicated topic section. Keep
+  // its verified AI-tool SEO contract indexable while the legacy content is
+  // rendered through the compatibility page projection.
+  const legacyWeddingInvitation = isPrimaryMydreamshootsSite(snapshot.site) && canonicalPath === "/ai-video-generation/wedding-invitation" && page.pageType === "ai_tool";
+  const index = !blocked && (legacyWeddingInvitation || context.seo.index) && (legacyWeddingInvitation || mediaReady);
   return {
     index,
     follow: blocked ? false : context.seo.follow,
-    sitemapEligible: index && context.seo.sitemapEligible && snapshot.publishedPaths.includes(normalizePath(context.seo.canonicalPath)) && (publishedRoute ? publishedRoute.sitemapEligible : true)
+    sitemapEligible: index && (legacyWeddingInvitation || context.seo.sitemapEligible) && snapshot.publishedPaths.includes(normalizePath(context.seo.canonicalPath)) && (publishedRoute ? publishedRoute.sitemapEligible : true)
   };
 }
 
@@ -426,8 +430,13 @@ export function resolveEffectivePublishedPage(snapshot: PublishedSiteSnapshot, p
 export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot, path: string): RouteDisposition {
   const requestedPath = normalizePath(path);
   if (!snapshot.pages.length) return { kind: "not_found", status: 404, path: requestedPath };
-  if (isPrimaryMydreamshootsSite(snapshot.site) && requestedPath === "/holidays-events/wedding-invitation") {
-    return resolvePublishedRedirectDisposition(snapshot, requestedPath, "/ai-video-generation/wedding-invitation", 301);
+  if (isPrimaryMydreamshootsSite(snapshot.site) && (requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) {
+    return { kind: "not_found", status: 404, path: requestedPath };
+  }
+  if (isPrimaryMydreamshootsSite(snapshot.site) && requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) {
+    const sourcePage = snapshot.pages.find((candidate) => normalizePath(candidate.slug) === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH && candidate.pageType === "ai_tool");
+    if (sourcePage) return { kind: "render", status: 200, path: requestedPath, pageId: sourcePage.id };
+    return { kind: "not_found", status: 404, path: requestedPath };
   }
   // Resolve legacy Save the Date aliases before direct page lookup. Otherwise
   // an old ThemePage row can render at 200 and split the page's SEO identity.

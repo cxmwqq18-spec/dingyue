@@ -236,6 +236,7 @@ export function resolveStorefrontContext(
   const standardPageEntityMissing = mode === "published" && Boolean(standardPageEntityPath) && !pageEntity;
   const standardPageMediaMissing = mode === "published" && Boolean(standardPageEntityPath) && standardPageMedia?.status !== "ready";
   const entityFailClosed = standardPageEntityMissing || standardPageMediaMissing;
+  const legacyWeddingInvitation = primaryMydreamshoots && mode === "published" && bundle.page.pageType === "ai_tool" && seo.canonicalPath === "/ai-video-generation/wedding-invitation";
   const resolvedSeo = pageEntity
     ? {
         ...seo,
@@ -247,7 +248,7 @@ export function resolveStorefrontContext(
         follow: pageEntity.metadata.robots.follow,
         sitemapEligible: pageEntity.sitemapEligible
       }
-    : entityFailClosed
+    : entityFailClosed && !legacyWeddingInvitation
       ? { ...seo, index: false, follow: true, sitemapEligible: false }
       : seo;
   const resolvedTdk = resolveMydreamshootsPageTdk(bundle.site, resolvedSeo.canonicalPath, resolvedSeo);
