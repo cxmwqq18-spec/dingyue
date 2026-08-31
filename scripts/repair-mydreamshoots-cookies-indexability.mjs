@@ -37,7 +37,7 @@ try {
     robots: { ...(seo.robots ?? {}), index: true, follow: true }
   };
 
-  const contentChanged = JSON.stringify(page.draftJson) !== JSON.stringify(draftJson) || JSON.stringify(page.publishedJson) !== JSON.stringify(draftJson);
+  const contentChanged = JSON.stringify(page.draftJson) !== JSON.stringify(draftJson);
   const draftMeta = contentChanged ? nextDraftMeta(page) : page.draftMeta;
   const changed = contentChanged;
   let backupPath;
@@ -47,9 +47,9 @@ try {
     backupPath = path.join(backupRoot, `mydreamshoots-cookies-indexability-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
     fs.writeFileSync(backupPath, `${JSON.stringify({ createdAt: new Date().toISOString(), siteId, page }, null, 2)}\n`, { mode: 0o600 });
     await prisma.$transaction(async (tx) => {
-      await tx.themePage.update({ where: { id: page.id }, data: { draftJson, publishedJson: draftJson, draftMeta } });
-      const readback = await tx.themePage.findUnique({ where: { id: page.id }, select: { draftJson: true, publishedJson: true, draftMeta: true } });
-      if (readback?.draftJson?.seo?.canonical !== "https://www.mydreamshoots.com/cookies" || readback?.draftJson?.seo?.index !== true || readback?.publishedJson?.seo?.index !== true || readback?.draftMeta?.etag !== draftMeta.etag) {
+      await tx.themePage.update({ where: { id: page.id }, data: { draftJson, draftMeta } });
+      const readback = await tx.themePage.findUnique({ where: { id: page.id }, select: { draftJson: true, draftMeta: true } });
+      if (readback?.draftJson?.seo?.canonical !== "https://www.mydreamshoots.com/cookies" || readback?.draftJson?.seo?.index !== true || readback?.draftMeta?.etag !== draftMeta.etag) {
         throw new Error("mydreamshoots_cookies_indexability_readback_failed");
       }
     });
@@ -63,7 +63,7 @@ try {
     changed,
     before: page.draftJson?.seo,
     after: draftJson.seo,
-    readback: apply && changed ? { draftIndex: true, publishedIndex: true, canonical: draftJson.seo.canonical, draftMeta } : null,
+    readback: apply && changed ? { draftIndex: true, canonical: draftJson.seo.canonical, draftMeta } : null,
     backupPath
   }, null, 2));
 } finally {
