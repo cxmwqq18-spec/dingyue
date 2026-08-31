@@ -79,7 +79,9 @@ try {
   assert.match(result.title, /AI Talking Head Video Generator for Business & Social/);
   assert.match(result.description, /AI talking head videos/);
   assert.match(result.canonical, /\/ai-video-generation\/talking-head-video$/);
-  assert.match(result.robots, /noindex/i, "product evidence gate should keep the page noindex");
+  assert.match(result.robots, /(?:^|[ ,])index(?:$|[ ,])/i, "public topic page must be indexable");
+  assert.match(result.robots, /(?:^|[ ,])follow(?:$|[ ,])/i, "public topic page must allow crawling");
+  assert.doesNotMatch(result.robots, /noindex/i, "public topic page must never emit noindex");
   assert.equal(result.faqQuestions.length, 6, "visible FAQ should contain six questions");
   assert.equal(result.faqNodeQuestions.length, 6, "FAQ JSON-LD should contain six questions");
   assert.deepEqual(result.faqNodeQuestions, result.faqQuestions, "FAQ JSON-LD should match visible FAQ questions");

@@ -302,6 +302,9 @@ for (const [canonicalPath, aliases] of [["/privacy", ["/privacy-policy", "/polic
   }
 }
 const talkingPhotoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/talking-photo");
+const explainerVideoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/explainer-video");
+const howToVideoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/how-to-video");
+const talkingHeadVideoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/talking-head-video");
 const videoGenerationDirectory = await fetchHtml("/ai-video-generation");
 assert.match(videoGenerationDirectory, /<h1[^>]*>AI Video Generation<\/h1>/, "AI Video Generation root must render the video directory heading");
 assert.doesNotMatch(videoGenerationDirectory, /Paid AI photo tools for better source images\./, "AI Video Generation root must not render the legacy photo-tool heading");
@@ -336,6 +339,9 @@ const foodVideoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generati
 const petVideoGeneration = await fetchPublishedOrReviewHtml("/ai-video-generation/pet-video");
 const videoTopicGenerationByPath = {
   "/ai-video-generation/talking-photo": talkingPhotoGeneration,
+  "/ai-video-generation/explainer-video": explainerVideoGeneration,
+  "/ai-video-generation/how-to-video": howToVideoGeneration,
+  "/ai-video-generation/talking-head-video": talkingHeadVideoGeneration,
   "/ai-video-generation/cinematic-video": await fetchPublishedOrReviewHtml("/ai-video-generation/cinematic-video"),
   "/ai-video-generation/tiktok-video": await fetchPublishedOrReviewHtml("/ai-video-generation/tiktok-video"),
   "/ai-video-generation/instagram-reels": await fetchPublishedOrReviewHtml("/ai-video-generation/instagram-reels"),
@@ -487,6 +493,9 @@ const publicHtmlPages = {
   collection,
   ...focusCollections,
   talkingPhotoGeneration,
+  explainerVideoGeneration,
+  howToVideoGeneration,
+  talkingHeadVideoGeneration,
   storyVideoGeneration,
   memeVideoGeneration,
   productVideoGeneration,
@@ -502,6 +511,13 @@ const publicHtmlPages = {
   workflow,
   faq
 };
+
+for (const [pageName, html] of Object.entries({ explainerVideoGeneration, howToVideoGeneration, talkingHeadVideoGeneration })) {
+  assert.ok(html, `${pageName} must be published and render HTML`);
+  assert.doesNotMatch(robotsContent(html), /noindex/i, `${pageName} must never emit noindex`);
+  assert.match(robotsContent(html), /(?:^|[ ,])index(?:$|[ ,])/i, `${pageName} must emit index`);
+  assert.match(robotsContent(html), /(?:^|[ ,])follow(?:$|[ ,])/i, `${pageName} must emit follow`);
+}
 
 for (const [pageName, html] of Object.entries(publicHtmlPages)) {
   for (const copy of forbiddenLoadingCopy) {

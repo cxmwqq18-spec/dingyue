@@ -6,11 +6,11 @@ const focusHost = process.env.STOREFRONT_PUBLIC_ROUTES_FOCUS_HOST || "";
 const skipMediaChecks = process.env.STOREFRONT_PUBLIC_ROUTES_SKIP_MEDIA === "1";
 // This change set is scoped to the two .com storefronts; .eu remains covered by the language/SSR smokes.
 const routeChecks = [
-  { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/ai-image-generation", "/ai-image-generation/portrait-photo", "/ai-image-generation/headshot", "/ai-image-generation/avatar", "/ai-image-generation/background-changer", "/ai-image-generation/motion-generator", "/ai-video-generation", "/ai-video-generation/explainer-video", "/ai-video-generation/how-to-video", "/ai-video-generation/meme-video", "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/product-ad-video", "/ai-video-generation/promo-video", "/ai-video-generation/ugc-ad-video", "/ai-video-generation/video-ad", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/cookies", "/terms", "/refunds"] },
+  { host: "www.mydreamshoots.com", paths: ["/", "/workflow", "/ai-image-generation", "/ai-image-generation/portrait-photo", "/ai-image-generation/headshot", "/ai-image-generation/avatar", "/ai-image-generation/background-changer", "/ai-video-generation", "/ai-video-generation/explainer-video", "/ai-video-generation/how-to-video", "/ai-video-generation/talking-head-video", "/ai-video-generation/meme-video", "/ai-video-generation/talking-photo", "/ai-video-generation/story-video", "/ai-video-generation/product-ad-video", "/ai-video-generation/promo-video", "/ai-video-generation/ugc-ad-video", "/ai-video-generation/video-ad", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/cookies", "/terms", "/refunds"] },
   { host: "www.aidreamcapes.com", paths: ["/", "/workflow", "/collections", "/collections/fan-scene-albums", "/collections/private-fan-scene-albums", "/collections/game-day-group-photos", "/collections/game-day-group-portraits", "/collections/christmas-holiday-albums", "/collections/christmas-group-albums", "/collections/new-year-countdown-albums", "/tools", "/tools/fan-scene-album-builder", "/tools/game-day-group-portrait-maker", "/tools/christmas-group-album-studio", "/tools/new-year-countdown-album-maker", "/tools/permission-safe-photo-planner", "/best-packages", "/best-ai-image", "/best-ai-video", "/blog/private-fan-scene-album-photo-package-guide", "/pricing", "/faq", "/login", "/about-us", "/contact-us", "/privacy", "/terms", "/cookies", "/refunds"] }
 ];
 const imageAltRouteChecks = [
-  { host: "www.mydreamshoots.com", paths: ["/", "/ai-image-generation", "/ai-image-generation/soccer", "/ai-image-generation/christmas-photo", "/ai-image-generation/avatar", "/ai-image-generation/portrait-photo", "/ai-image-generation/background-changer", "/ai-image-generation/motion-generator", "/ai-image-generation/cyberpunk", "/ai-video-generation", "/ai-video-generation/talking-photo", "/ai-video-generation/product-ad-video", "/ai-video-generation/promo-video", "/ai-video-generation/ugc-ad-video", "/ai-video-generation/video-ad", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date"] },
+  { host: "www.mydreamshoots.com", paths: ["/", "/ai-image-generation", "/ai-image-generation/soccer", "/ai-image-generation/christmas-photo", "/ai-image-generation/avatar", "/ai-image-generation/portrait-photo", "/ai-image-generation/background-changer", "/ai-image-generation/cyberpunk", "/ai-video-generation", "/ai-video-generation/talking-photo", "/ai-video-generation/product-ad-video", "/ai-video-generation/promo-video", "/ai-video-generation/ugc-ad-video", "/ai-video-generation/video-ad", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date"] },
   { host: "www.aidreamcapes.com", paths: ["/", "/collections", "/collections/fan-scene-albums", "/collections/private-fan-scene-albums", "/collections/game-day-group-photos", "/collections/stadium-night-fan-sets", "/collections/christmas-group-albums", "/collections/christmas-holiday-albums", "/collections/premiere-style-portraits", "/tools", "/tools/fan-scene-album-builder", "/tools/new-year-countdown-album-maker", "/best-packages", "/best-ai-image", "/best-ai-video"] },
   { host: "aidreamshoots.eu", paths: ["/", "/collections", "/collections/world-cup-fan-photos", "/collections/anime-avatar", "/collections/profile-cards", "/collections/product-style", "/collections/ai-video-add-ons", "/tools"] },
   { host: "aidreamcapes.eu", paths: ["/", "/collections", "/collections/fan-scene-albums", "/collections/game-day-group-photos", "/collections/christmas-group-albums", "/collections/premiere-style-portraits", "/tools"] }
@@ -29,6 +29,7 @@ const legacyRedirectChecks = [
   { host: "www.mydreamshoots.com", path: "/collections", target: "/ai-image-generation" },
   { host: "www.mydreamshoots.com", path: "/collections/engagement-photo", target: "/ai-image-generation/engagement-photo" },
   { host: "www.mydreamshoots.com", path: "/collections/headshot", target: "/ai-image-generation/headshot" },
+  { host: "www.mydreamshoots.com", path: "/ai-image-generation/motion-generator", target: "/ai-video-generation/motion-generator" },
   { host: "www.mydreamshoots.com", path: "/ai-image-generation/profile-cards", target: "/ai-image-generation/avatar" },
   { host: "www.mydreamshoots.com", path: "/ai-video-generation/mothers-day", target: "/ai-save-the-date/mothers-day" },
   { host: "www.mydreamshoots.com", path: "/ai-video-generation/new-year", target: "/ai-save-the-date/new-year" },
@@ -67,6 +68,10 @@ const legacyGoneChecks = [
   { host: "www.mydreamshoots.com", path: "/tool" }
 ];
 const legacyGoneKeys = new Set(legacyGoneChecks.map((item) => `${item.host}${item.path}`));
+const forbiddenInternalRedirectPaths = new Set([
+  "/ai-image-generation/motion-generator",
+  "/ai-image-generation/profile-cards"
+]);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -400,6 +405,10 @@ async function smokeStorefrontPublicRoutes() {
       for (const path of check.paths.slice(0, 6)) {
         for (const linkPath of await collectInternalLinks(request, check.host, path).catch(() => [])) {
           if (/^\/(?:site|api|platform|_next)(?:\/|$)/.test(linkPath)) continue;
+          if (check.host === "www.mydreamshoots.com" && forbiddenInternalRedirectPaths.has(linkPath.split("?")[0])) {
+            failures.push({ host: check.host, sourcePath: path, path: linkPath, reason: "internal_link_uses_redirect_alias" });
+            continue;
+          }
           paths.add(linkPath);
         }
       }

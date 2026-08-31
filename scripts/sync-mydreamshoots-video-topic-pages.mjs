@@ -644,8 +644,6 @@ function pageJson(page, content = videoTopicContentSeedForSlug(page.slug)) {
   const canonicalPath = content.seo?.canonicalPath || pagePath(page.slug);
   const sectionId = page.slug === "talking-photo" ? "talking_photo_landing_1" : "ai_video_topic_landing_1";
   const sectionType = page.slug === "talking-photo" ? "talking_photo_landing" : "ai_video_topic_landing";
-  // Editorial topic packages remain noindex until first-party product evidence is reviewed.
-  const indexable = !new Set(["explainer-video", "how-to-video", "talking-head-video"]).has(page.slug);
   return {
     pageType: "ai_tool",
     version: 1,
@@ -668,10 +666,10 @@ function pageJson(page, content = videoTopicContentSeedForSlug(page.slug)) {
       canonicalPath,
       canonical: canonicalPath,
       robots: {
-        index: indexable,
+        index: true,
         follow: true
       },
-      index: indexable,
+      index: true,
       follow: true
     }
   };

@@ -45,8 +45,6 @@ type TopicImage = {
   alt: string;
 };
 
-const videoTopicReviewRequiredSlugs = new Set(["explainer-video", "how-to-video", "talking-head-video"]);
-
 function stable(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(stable);
   if (!value || typeof value !== "object") return value;
@@ -282,8 +280,6 @@ export function compileMydreamshootsVideoTopicPublication(
     const content = pageEntityContent(source);
     const pageRevision = revision(source.page.draftJson);
     const copyRevision = revision(content);
-    const sourceSeo = source.page.draftJson.seo ?? {};
-    const sourceIndexable = sourceSeo.index !== false && sourceSeo.robots?.index !== false;
     const media: PublishedPageMediaProjection = {
       mediaEntityId: mediaEntityId(source.slug),
       ownerPageEntityId: entityId,
@@ -310,7 +306,7 @@ export function compileMydreamshootsVideoTopicPublication(
         description: source.content.seo.description,
         keywords: mydreamshootsKeywordsForPath(canonicalPath, source.content.seo.title, source.content.seo.description),
         canonicalPath,
-        robots: { index: sourceIndexable, follow: true }
+        robots: { index: true, follow: true }
       },
       content,
       mediaEntityId: media.mediaEntityId,
@@ -318,13 +314,9 @@ export function compileMydreamshootsVideoTopicPublication(
       copyRevision,
       reviewReasons: []
     };
-    const ready = topicReady(entity, media) && sourceIndexable && !videoTopicReviewRequiredSlugs.has(source.slug);
+    const ready = topicReady(entity, media);
     const status = ready ? "published" as const : "review_required" as const;
-    const reviewReason = ready ? undefined : videoTopicReviewRequiredSlugs.has(source.slug)
-      ? "FIRST_PARTY_PRODUCT_EVIDENCE_REQUIRED"
-      : sourceIndexable
-        ? "VIDEO_TOPIC_CONTENT_OR_MEDIA_REQUIRED"
-        : "PAGE_SEO_REVIEW_REQUIRED";
+    const reviewReason = ready ? undefined : "VIDEO_TOPIC_CONTENT_OR_MEDIA_REQUIRED";
     const finalizedEntity: PublishedPageEntityProjection = ready ? entity : {
       ...entity,
       status,

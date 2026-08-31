@@ -503,7 +503,7 @@ export function runThemePublishPreflight({
 
   if (site.id === "site_dreamshoot") {
     checks.push(mydreamshootsReviewSlugs.size
-      ? warn("PAGE_COPY_REVIEW_ISOLATED", "pages", "MyDreamShoots review pages are isolated", `${mydreamshootsReviewSlugs.size} 个页面保持 review_required、noindex 且不进入 sitemap；这不阻塞其他页面发布。`)
+      ? warn("PAGE_COPY_REVIEW_ISOLATED", "pages", "MyDreamShoots review pages are isolated", `${mydreamshootsReviewSlugs.size} 个页面保持 review_required、直接 fail closed 且不进入 sitemap；公开 200 页面不得使用 noindex。`)
       : pass("PAGE_COPY_REVIEW_ISOLATED", "pages", "没有待审核页面", "所有 MyDreamShoots page entity 都已通过独立性合同。"));
     checks.push(pageCopyRouteFailures.length
       ? block("PAGE_COPY_REVIEW_REQUIRED", "pages", "MyDreamShoots page copy requires review", pageCopyRouteFailures.slice(0, 8).join("; "))

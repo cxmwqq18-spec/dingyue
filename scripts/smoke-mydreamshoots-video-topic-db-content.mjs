@@ -99,17 +99,6 @@ function assertPublishedTopicProjection(snapshot, sourcePage, slug) {
   assert.equal(navigation.canonicalPath, canonicalPath, `${slug} navigation must use the canonical published route`);
   assert.equal(navigation.description, content.seo.description, `${slug} directory summary must come from published content`);
 
-  if (["explainer-video", "how-to-video", "talking-head-video"].includes(slug)) {
-    assert.equal(route.status, "review_required", `${slug} must remain review-gated until first-party evidence exists`);
-    assert.equal(route.indexable, false);
-    assert.equal(route.sitemapEligible, false);
-    assert.equal(entity.status, "review_required");
-    assert.equal(entity.indexable, false);
-    assert.equal(entity.sitemapEligible, false);
-    assert.equal(entity.reviewReasons.includes("FIRST_PARTY_PRODUCT_EVIDENCE_REQUIRED"), true);
-    assert.equal(media.status, "review_required");
-    return;
-  }
   assert(route.status === "published" && route.indexable && route.sitemapEligible, `${slug} must have an indexable published route`);
   assert.equal(entity.status, "published");
   assert.equal(media.status, "ready");

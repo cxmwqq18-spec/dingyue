@@ -530,6 +530,9 @@ for (const slug of ["text-to-video", "image-to-video"]) {
 }
 for (const slug of [
   "talking-photo",
+  "explainer-video",
+  "how-to-video",
+  "talking-head-video",
   "cinematic-video",
   "tiktok-video",
   "instagram-reels",

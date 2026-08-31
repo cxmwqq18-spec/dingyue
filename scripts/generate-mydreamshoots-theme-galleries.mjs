@@ -93,6 +93,7 @@ const themeDirections = {
   "gala-photos": "formal gala and red-carpet portraits with black-tie wardrobe, evening gowns, polished event lighting, and luxury venue mood",
   mafia: "cinematic noir character portraits with tailored suits, moody interiors, vintage city streets, shadows, and dramatic film-still lighting",
   nature: "outdoor adventure portraits in mountains, forests, lakes, cliffs, trails, and golden-hour natural light; no city or studio scenes",
+  "outdoor-creator-scenes": "outdoor creator portraits and personal-brand scenes in parks, trails, patios, markets, and golden-hour natural light; cameras, notebooks, and creator tools may appear as subtle props; no indoor studio or unrelated travel-collage imagery",
   "travel-scene-pack": "destination travel portraits across beaches, city walks, scenic overlooks, cafes, luggage moments, and vacation editorial scenes",
   "virtual-try-on": "private fashion try-on previews with outfits, styling mirrors, wardrobe racks, garment details, and lookbook poses",
   "profile-cards": "clean social profile card portraits, avatar crops, bio images, personal landing page visuals, and identity-card compositions",
