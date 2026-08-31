@@ -438,6 +438,12 @@ function withMydreamshootsImageThemeSeo(html: string, request: NextRequest): str
   next = next.replace(/<meta\b(?=[^>]*name=["']description["'])[^>]*\/?>/i, `<meta name="description" content="${seo.description}"/>`);
   next = next.replace(/<meta\b(?=[^>]*name=["']robots["'])[^>]*\/?>/i, `<meta name="robots" content="index, follow"/>`);
   next = next.replace(/<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>/i, `<link rel="canonical" href="${seo.canonical}"/>`);
+  if (!/<meta\b(?=[^>]*name=["']robots["'])[^>]*\/?>/i.test(next)) {
+    next = next.replace(/<\/head>/i, `<meta name="robots" content="index, follow"/></head>`);
+  }
+  if (!/<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>/i.test(next)) {
+    next = next.replace(/<\/head>/i, `<link rel="canonical" href="${seo.canonical}"/></head>`);
+  }
   return next;
 }
 
