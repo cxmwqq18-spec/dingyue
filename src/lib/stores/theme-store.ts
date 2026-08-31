@@ -191,7 +191,6 @@ const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_M
   "/ai-save-the-date/engagement": "Engagement save the date video scenes from approved couple visuals",
   "/ai-save-the-date/proposal": "Proposal video scenes showing the planned story and reaction",
   "/ai-save-the-date/save-the-date": "Save the Date video scenes for a confirmed wedding date",
-  "/holidays-events/wedding-invitation": "Wedding invitation visuals for ceremony details and guest communication",
   "/ai-save-the-date/wedding-ceremony": "Wedding ceremony photo and video scenes for vows, rings, reactions, and the recessional",
   "/ai-save-the-date/wedding-anniversary": "Wedding anniversary photo and video scenes for shared memories and celebration",
   "/ai-save-the-date/christmas": "Christmas family, gifts, portraits, and seasonal celebration scenes",
@@ -648,10 +647,10 @@ export function buildPublicationSnapshot(
           routeKind: "policy-alias",
           aliasPath,
           targetPath: canonicalPath,
-          statusCode: 308,
+          statusCode: 301,
           indexable: false,
           sitemapEligible: false,
-          routeRevision: crypto.createHash("sha256").update(JSON.stringify([aliasPath, canonicalPath, 308])).digest("hex").slice(0, 20)
+          routeRevision: crypto.createHash("sha256").update(JSON.stringify([aliasPath, canonicalPath, 301])).digest("hex").slice(0, 20)
         }));
         return [renderRoute, ...redirects];
       })
@@ -666,10 +665,10 @@ export function buildPublicationSnapshot(
         routeKind: "legacy-topic-alias",
         aliasPath: "/ai-image-generation/motion-generator",
         targetPath: "/ai-video-generation/motion-generator",
-        statusCode: 308,
+        statusCode: 301,
         indexable: false,
         sitemapEligible: false,
-        routeRevision: crypto.createHash("sha256").update(JSON.stringify(["/ai-image-generation/motion-generator", "/ai-video-generation/motion-generator", 308])).digest("hex").slice(0, 20)
+        routeRevision: crypto.createHash("sha256").update(JSON.stringify(["/ai-image-generation/motion-generator", "/ai-video-generation/motion-generator", 301])).digest("hex").slice(0, 20)
       }]
     : [];
   const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...standardContentRoutes, ...policyRoutes, ...videoTopicPublication.routes, ...motionLegacyRedirect];
