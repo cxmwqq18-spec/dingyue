@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import CatchAllPage, { generateMetadata as generateCatchAllMetadata } from "../../[...path]/page";
+import { notFound } from "next/navigation";
+import { readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
+import { renderStorefrontPage } from "@/lib/storefront-render";
+import { generateMetadata as generateCatchAllMetadata } from "../../[...path]/page";
 
 type RouteParams = Promise<{ siteSlug: string; themeSlug: string }>;
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
@@ -24,8 +27,17 @@ export default async function ImageThemePage({
   searchParams?: SearchParams;
 }) {
   const resolved = await params;
-  return CatchAllPage({
-    params: catchAllParams(resolved),
-    searchParams
+  const state = await readPathModePublicRuntimeState(resolved.siteSlug, "/ai-image-generation", resolved.themeSlug);
+  const site = state?.sites[0];
+  if (!site) notFound();
+  const query = searchParams ? await searchParams : {};
+  return renderStorefrontPage({
+    site,
+    slug: "/ai-image-generation",
+    publicPath: `/ai-image-generation/${resolved.themeSlug}`,
+    query: { ...query, category: resolved.themeSlug },
+    routeMode: "path",
+    state,
+    deferCustomerRuntime: true
   });
 }
