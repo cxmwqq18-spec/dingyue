@@ -783,7 +783,12 @@ function syncPages(state, changes) {
     }
     const draftJson = refreshContent
       ? pageJson(pageDefinition)
-      : isolateVideoTopicImages(syncStoredVideoTopicHeroImage(page.draftJson, pageDefinition.slug));
+      : isolateVideoTopicImages(
+          syncStoredVideoTopicUseCaseImages(
+            syncStoredVideoTopicHeroImage(page.draftJson, pageDefinition.slug),
+            pageDefinition.slug
+          )
+        );
     const pageFields = refreshContent
       ? {
           id: page.id || pageId(pageDefinition.slug),
