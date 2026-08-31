@@ -32,9 +32,7 @@ const {
 const { dreamshootPackProfileSlug } = jiti("../src/lib/dreamshoot-pack-profiles.ts");
 const { sitemapEntriesForSite } = jiti("../src/lib/seo-indexing.ts");
 const { resolveStorefrontContext } = jiti("../src/lib/storefront-context/core.ts");
-const { buildPublicationSnapshot } = jiti("../src/lib/stores/theme-store.ts");
 const { createPublishedSiteSnapshot } = jiti("../src/lib/storefront-context/snapshot.ts");
-const { publicationSnapshotIntegrity } = jiti("../src/lib/publication-snapshot-integrity.ts");
 
 async function readPlatformState() {
   return readPlatformStateFromSql();
@@ -143,15 +141,12 @@ const fixtureSite = {
     }
   }
 };
-const immutableSnapshot = site.activePublication?.snapshot;
-assert.ok(immutableSnapshot, "active publication snapshot must exist");
 const expectedStandardMediaCount = MYDREAMSHOOTS_STANDARD_SEO_INVENTORY.length;
 assert.ok(expectedStandardMediaCount === 21, "canonical inventory must contain all 21 standard routes");
-assert.ok(immutableSnapshot.publishedStandardPageMedia.length > 0, "fixture publication should include standard media projections");
 const publishedSiteSnapshot = createPublishedSiteSnapshot({
   ...state,
-  sites: [{ ...fixtureSite, activePublication: { id: "smoke_publication", siteId: site.id, version: 1, snapshot: immutableSnapshot } }]
-}, { ...fixtureSite, activePublication: { id: "smoke_publication", siteId: site.id, version: 1, snapshot: immutableSnapshot } });
+  sites: [fixtureSite]
+}, fixtureSite, { source: "postgres" });
 const schemaPage = publishedSiteSnapshot.pages.find((page) => page.slug === "/");
 const schemaContext = resolveStorefrontContext({
   site: fixtureSite,
@@ -228,8 +223,8 @@ for (const video of videoObjects) {
 }
 
 const productPaths = new Set();
-// Validate Product detail schema for every active pack in the immutable snapshot,
-// including the rule that package Products never inherit subscription Offers.
+// Validate Product detail schema for every active pack in the relational
+// projection, including the rule that package Products never inherit Offers.
 const publishedPacks = publishedSiteSnapshot.creativePacks
   .filter((pack) => pack.siteId === site.id && pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0);
 for (const pack of publishedPacks) {
@@ -242,7 +237,9 @@ for (const pack of publishedPacks) {
     routeMode: "host",
     creativePacks: publishedPacks,
     products: publishedSiteSnapshot.products,
-    context: schemaContext
+    // The collection renderer resolves one package by slug. Do not carry the
+    // homepage's page-media owner into this package-level schema projection.
+    context: { ...schemaContext, publishedPageMedia: undefined }
   }));
   const products = graph.filter((node) => node?.["@type"] === "Product");
   assert.equal(products.length, 1, `${canonicalPath} should expose one Product node`);
@@ -292,7 +289,7 @@ for (const pack of publishedPacks) {
 assert.equal(productPaths.size, publishedPacks.length, "each published pack should map to a unique canonical Product detail path");
 assert.equal(homeGraph.some((node) => node?.["@type"] === "Review" || node?.["@type"] === "AggregateRating"), false, "homepage JSON-LD should not emit review rating schema without a real review source");
 
-const smokeSite = { ...fixtureSite, activePublication: { id: "smoke_publication", siteId: site.id, version: 1, snapshot: immutableSnapshot } };
+const smokeSite = fixtureSite;
 const sitemapEntries = sitemapEntriesForSite({ ...state, sites: [smokeSite] }, smokeSite);
 const sitemapEntryByPath = new Map(sitemapEntries.map((entry) => [new URL(entry.loc).pathname, entry]));
 const leafRoutes = publishedSiteSnapshot.publishedRoutes.filter((route) => route.disposition === "render" && route.routeKind === "ai-image-theme-leaf");
