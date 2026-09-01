@@ -99,7 +99,7 @@ function runRemote(config) {
     `systemctl daemon-reload`,
     `systemctl restart ${shellQuote(service)}`,
     `test "$(systemctl is-active ${shellQuote(service)})" = active`,
-    `test "$(systemctl show -p WorkingDirectory --value ${shellQuote(service)})" = ${releaseQ}`,
+    `test "$(systemctl show -p WorkingDirectory ${shellQuote(service)} | sed -n 's/^WorkingDirectory=//p')" = ${releaseQ}`,
     `test "$(cat ${rootQ}/current/.deployed-commit)" = ${commitQ}`,
     `curl -fsS --max-time 20 https://${config.domain}/ | grep -E '<title[^>]*>[^<]+</title>'`,
     `SWITCHED=0; trap - EXIT`,
