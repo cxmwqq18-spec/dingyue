@@ -34,7 +34,16 @@ const link = (html, rel) => {
   const tags = html.match(/<link\b[^>]*>/gi) || [];
   return attr(tags.find((tag) => attr(tag, "rel") === rel) || "", "href");
 };
-const images = (html) => (html.match(/<img\b[^>]*>/gi) || []).map((tag) => ({ src: attr(tag, "src"), alt: attr(tag, "alt") }));
+const imageSource = (value) => {
+  const source = String(value || "");
+  if (!source.startsWith("/_next/image?")) return source;
+  try {
+    return new URL(source, "https://www.mydreamshoots.com").searchParams.get("url") || source;
+  } catch {
+    return source;
+  }
+};
+const images = (html) => (html.match(/<img\b[^>]*>/gi) || []).map((tag) => ({ src: imageSource(attr(tag, "src")), alt: attr(tag, "alt") }));
 const fetchHtml = async (url) => {
   let lastError;
   for (let attempt = 1; attempt <= 4; attempt += 1) {

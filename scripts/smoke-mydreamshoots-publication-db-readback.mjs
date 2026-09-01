@@ -66,7 +66,11 @@ if (!rawUrl) {
       weddingInvitationPaths.has(route.aliasPath) ||
       weddingInvitationPaths.has(route.targetPath)
     );
-    assert.equal(weddingInvitationRoutes.length, 0, "wedding invitation must not be represented by a stale published route alias");
+    const weddingInvitationRenderRoutes = weddingInvitationRoutes.filter((route) => route.disposition === "render");
+    const weddingInvitationLegacyAliases = weddingInvitationRoutes.filter((route) => route.disposition === "redirect" || route.aliasPath === "/ai-video-generation/wedding-invitation" || route.aliasPath === "/holidays-events/wedding-invitation");
+    assert.equal(weddingInvitationLegacyAliases.length, 0, "wedding invitation must not expose stale published route aliases");
+    assert.equal(weddingInvitationRenderRoutes.length, 1, "wedding invitation must have one canonical Save the Date render route");
+    assert.equal(weddingInvitationRenderRoutes[0].canonicalPath, "/ai-save-the-date/wedding-invitation", "wedding invitation canonical route");
     const weddingInvitationPage = await prisma.themePage.findUnique({
       where: { siteId_slug: { siteId, slug: "/ai-video-generation/wedding-invitation" } },
       select: { id: true, slug: true, pageType: true, draftJson: true }

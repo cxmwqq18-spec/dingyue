@@ -984,7 +984,10 @@ export function assertMydreamshootsPublicationCountContract(siteId: string, snap
   if (siteId !== "site_dreamshoot") return;
   const videoTopics = snapshot.publishedVideoNavigation ?? [];
   const videoRoutes = new Set((snapshot.publishedRoutes ?? [])
-    .filter((route) => route.routeKind === "ai-video-topic-leaf" && route.disposition === "render" && route.status === "published")
+    // Wedding Invitation is authored by the video topic renderer, but its
+    // canonical public route belongs to Save the Date rather than the video
+    // directory. It is intentionally absent from the AI Video navigation.
+    .filter((route) => route.routeKind === "ai-video-topic-leaf" && route.disposition === "render" && route.status === "published" && "canonicalPath" in route && route.canonicalPath.startsWith("/ai-video-generation/"))
     .map((route) => "canonicalPath" in route ? route.canonicalPath : ""));
   const videoItems = videoTopics.filter((item) => videoRoutes.has(item.canonicalPath));
   const videoCounts = countBy(videoItems, (item) => item.parentLabel || item.parentSlug);
