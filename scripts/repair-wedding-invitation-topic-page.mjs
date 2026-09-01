@@ -75,7 +75,7 @@ try {
     }),
     prisma.themePage.findUnique({
       where: { siteId_slug: { siteId, slug } },
-      select: { id: true, slug: true, title: true, pageType: true, templateKey: true, draftJson: true, publishedJson: true }
+      select: { id: true, slug: true, title: true, pageType: true, templateKey: true, draftJson: true }
     })
   ]);
   assert(livePage, "missing_wedding_invitation_live_page");
