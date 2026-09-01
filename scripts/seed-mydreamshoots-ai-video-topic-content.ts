@@ -1102,7 +1102,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Outcome -> chapter map -> process -> recap -> next step.",
           cta: "Create a Tutorial",
-          image: image(`${youtubeImageRoot}/youtube-video-full-tutorial.png`, "Presenter explaining a lesson in a YouTube tutorial", 1080, 1920)
+          image: image(`${youtubeImageRoot}/youtube-card-01.webp`, "Presenter explaining a lesson in a YouTube tutorial", 1600, 900)
         }),
         makeUseCaseCard({
           title: "Help the Viewer Reach a Decision, Not Just Watch a Demonstration",
@@ -1112,7 +1112,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Decision context -> criteria -> comparison -> verdict.",
           cta: "Create a Comparison Video",
-          image: image(`${youtubeImageRoot}/youtube-video-review-comparison.png`, "Spokesperson presenting a product for a YouTube review", 1080, 1920)
+          image: image(`${youtubeImageRoot}/youtube-card-02.webp`, "Spokesperson presenting a product for a YouTube review", 1600, 900)
         }),
         makeUseCaseCard({
           title: "Hook the Insight Before the Conversation Settles In",
@@ -1122,7 +1122,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Insight hook -> guiding question -> answer -> takeaway.",
           cta: "Create an Interview",
-          image: image(`${youtubeImageRoot}/youtube-video-interview-conversation.png`, "Live performer on stage in a cinematic conversation-style video scene", 1672, 941)
+          image: image(`${youtubeImageRoot}/youtube-card-03.webp`, "Live performer on stage in a cinematic conversation-style video scene", 1600, 900)
         }),
         makeUseCaseCard({
           title: "Move From Context to Decision to Result to Lesson",
@@ -1132,7 +1132,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Context -> decision -> result -> lesson.",
           cta: "Create a Case Study",
-          image: image(`${youtubeImageRoot}/youtube-video-case-study.png`, "Luxury vehicle reveal in a cinematic night scene", 1672, 941)
+          image: image(`${youtubeImageRoot}/youtube-card-04.webp`, "Luxury vehicle reveal in a cinematic night scene", 1600, 900)
         }),
         makeUseCaseCard({
           title: "Extract the Lessons People Need Instead of Uploading the Whole Event Without Guidance",
@@ -1142,7 +1142,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Topic framing -> 3 key lessons -> practical takeaway -> deeper resource.",
           cta: "Create a Webinar Recap",
-          image: image(`${youtubeImageRoot}/youtube-video-webinar-recap.png`, "Speaker presenting an insight in a YouTube webinar recap", 1080, 1920)
+          image: image(`${youtubeImageRoot}/youtube-card-05.webp`, "Speaker presenting an insight in a YouTube webinar recap", 1600, 900)
         }),
         makeUseCaseCard({
           title: "Make Each Episode Complete Enough - Then Let the Playlist Carry the Bigger Journey",
@@ -1152,7 +1152,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Episode promise -> lesson depth -> recap -> next episode or playlist.",
           cta: "Create a Series Episode",
-          image: image(`${youtubeImageRoot}/youtube-video-series-episode.png`, "Creator in an editorial street-style scene for a YouTube series", 1080, 1920)
+          image: image(`${youtubeImageRoot}/youtube-card-06.webp`, "Creator in an editorial street-style scene for a YouTube series", 1600, 900)
         })
       ]
     },

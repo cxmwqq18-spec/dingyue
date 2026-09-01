@@ -424,6 +424,8 @@ const pages = [
   }
 ];
 
+const cardMediaSyncSlugs = new Set(pages.map((page) => page.slug));
+
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
@@ -778,7 +780,7 @@ function syncPages(state, changes) {
   const site = (state.sites ?? []).find((item) => item.id === SITE_ID);
   if (!site) throw new Error(`missing_site:${SITE_ID}`);
   site.pages ??= [];
-  const pageDefinitions = refreshContent ? pages : pages.filter((page) => heroMediaSyncSlugs.has(page.slug));
+  const pageDefinitions = refreshContent ? pages : pages.filter((page) => cardMediaSyncSlugs.has(page.slug));
   return pageDefinitions.map((pageDefinition) => {
     const slug = pagePath(pageDefinition.slug);
     let page = site.pages.find((item) => item.slug === slug);

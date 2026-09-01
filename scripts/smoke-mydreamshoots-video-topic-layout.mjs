@@ -210,6 +210,13 @@ try {
                 pageMarker: document.querySelectorAll("[data-video-topic-page]").length,
                 heroImages: document.querySelectorAll("[data-video-topic-hero-media] img").length,
                 heroVideo: Boolean(document.querySelector("[data-video-topic-hero-media] video")),
+                heroCopyHeight: heroHeading?.closest("[data-video-topic-section=hero]")?.querySelector(":scope > div > div:first-child")?.getBoundingClientRect().height ?? 0,
+                heroFigureHeight: document.querySelector("[data-video-topic-hero-media]")?.getBoundingClientRect().height ?? 0,
+                heroLeadFrameRatio: (() => {
+                  const frame = document.querySelector("[data-video-topic-hero-media] img")?.parentElement;
+                  const rect = frame?.getBoundingClientRect();
+                  return rect && rect.height > 0 ? rect.width / rect.height : 0;
+                })(),
                 heroImageFits: [...document.querySelectorAll("[data-video-topic-hero-media] img")].map((image) => getComputedStyle(image).objectFit),
                 heroImageSources: [...document.querySelectorAll("[data-video-topic-hero-media] img")].map((image) => image.getAttribute("src") || ""),
                 heroImageFrameRatios: [...document.querySelectorAll("[data-video-topic-hero-media] img")].map((image) => {
@@ -250,6 +257,12 @@ try {
             if (topic === "fashion-video" || topic === "food-video" || topic === "pet-video") {
               assert.equal(result.heroImageFits.slice(-2).every((fit) => fit === "contain"), true, `${topic} ${viewport.name} secondary hero images must show without cropping`);
               assert.equal(result.heroImageFrameRatios.slice(-2).every((ratio, index) => Math.abs(ratio - result.heroImageNaturalRatios.slice(-2)[index]) < 0.04), true, `${topic} ${viewport.name} secondary hero frames must preserve their source ratios`);
+            }
+            if (topic === "fashion-video") {
+              assert.equal(Math.abs(result.heroLeadFrameRatio - (4 / 3)) < 0.04, true, `${topic} ${viewport.name} lead frame should use the taller 4:3 crop`);
+              if (viewport.width >= 1024) {
+                assert.equal(result.heroFigureHeight <= result.heroCopyHeight + 1, true, `${topic} ${viewport.name} three-image hero must stay within the left copy height`);
+              }
             }
             if (topic === "pet-video") {
               assert.equal(result.heroImageSources[0].includes("hero-pet-video-portrait-frame.jpg"), true, `${topic} ${viewport.name} should lead with the pet portrait frame`);

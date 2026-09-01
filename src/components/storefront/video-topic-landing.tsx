@@ -325,7 +325,7 @@ function TopicHeroVideo({ video }: { video: VideoTopicVideo }) {
   );
 }
 
-function DirectTopicHeroCards({ images, video, cropPetHero = false, containSecondaryImages = false }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean; containSecondaryImages?: boolean }) {
+function DirectTopicHeroCards({ images, video, cropPetHero = false, containSecondaryImages = false, leadAspectRatio }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean; containSecondaryImages?: boolean; leadAspectRatio?: string }) {
   const cards = images.slice(0, 3);
   const hasThreeCards = cards.length >= 3;
   return (
@@ -343,7 +343,7 @@ function DirectTopicHeroCards({ images, video, cropPetHero = false, containSecon
           style={{
             ...(hasThreeCards && index === 0 ? { gridColumn: "1 / -1" } : {}),
             // Keep the lead frame prominent while preserving two compact side-by-side previews below.
-            aspectRatio: shouldContainImage ? intrinsicAspectRatio(item) : video && index === 0 ? `${video.width} / ${video.height}` : "16 / 9"
+            aspectRatio: shouldContainImage ? intrinsicAspectRatio(item) : video && index === 0 ? `${video.width} / ${video.height}` : index === 0 && leadAspectRatio ? leadAspectRatio : "16 / 9"
           }}
           {...(hasThreeCards && index === 0 && !video
             ? {
@@ -380,7 +380,7 @@ function DirectTopicHeroCards({ images, video, cropPetHero = false, containSecon
   );
 }
 
-function TopicHeroMedia({ images, video, cropPetHero = false, displayAspectRatio, containSecondaryImages = false }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean; displayAspectRatio?: string; containSecondaryImages?: boolean }) {
+function TopicHeroMedia({ images, video, cropPetHero = false, displayAspectRatio, containSecondaryImages = false, leadAspectRatio }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean; displayAspectRatio?: string; containSecondaryImages?: boolean; leadAspectRatio?: string }) {
   if (video && images.length < 3) {
     const portraitSizing = isPortraitVideo(video);
     // Some landscape exports are delivered on a 4:3 canvas with 16:9 content
@@ -393,7 +393,7 @@ function TopicHeroMedia({ images, video, cropPetHero = false, displayAspectRatio
       </div>
     );
   }
-  return <DirectTopicHeroCards images={images} video={video} cropPetHero={cropPetHero} containSecondaryImages={containSecondaryImages} />;
+  return <DirectTopicHeroCards images={images} video={video} cropPetHero={cropPetHero} containSecondaryImages={containSecondaryImages} leadAspectRatio={leadAspectRatio} />;
 }
 
 function UseCaseCard({ item, index }: { item: VideoTopicUseCase; index: number }) {
@@ -1465,6 +1465,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
   const topicLabel = isMusic ? "Music Video" : isFashion ? "Fashion Video" : isPet ? "Pet Video" : "Food Video";
   const heroVideo = isMusic ? content.hero.video : undefined;
   const primaryHref = `/app/create?videoMode=${encodeURIComponent(contentKey)}#step-video`;
+  const heroLeadAspectRatio = isFashion ? "4 / 3" : undefined;
   // Music Video has a dedicated motion asset for the hero. Keep the two
   // supporting stills in the gallery below, but let the hero stay focused on
   // the single playable video.
@@ -1505,7 +1506,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
           </div>
           <figure className={`relative min-w-0 ${heroMediaSizingClass(heroVideo)} lg:justify-self-end`} data-video-topic-hero-media>
             <div className={`relative ${heroMediaSizingClass(heroVideo)} overflow-hidden rounded-[8px] border ${accentBorder} bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]`}>
-              <TopicHeroMedia containSecondaryImages cropPetHero={isPet} images={heroImages} video={heroVideo} />
+              <TopicHeroMedia containSecondaryImages cropPetHero={isPet} images={heroImages} video={heroVideo} leadAspectRatio={heroLeadAspectRatio} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60"><Sparkles className={`mt-1 h-4 w-4 shrink-0 ${accentClass}`} strokeWidth={1.8} /><span>{content.hero.caption}</span></figcaption>
           </figure>
