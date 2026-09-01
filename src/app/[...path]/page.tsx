@@ -506,7 +506,11 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if (isCollectionRequest) {
     const collectionRoute = parsePublicCollectionRouteForSite(site, path);
     if (!collectionRoute) return {};
-    if (collectionRoute.collectionSlug && !isSpanishStorefrontSite(site) && resolvePublishedRouteDisposition(snapshot, collectionRoute.canonicalPath).kind !== "render") return {};
+    if (collectionRoute.collectionSlug && !isSpanishStorefrontSite(site)) {
+      const disposition = resolvePublishedRouteDisposition(snapshot, collectionRoute.canonicalPath);
+      const knownLeafRoute = snapshot.publishedRoutes.some((route) => route.disposition === "render" && route.routeKind === "ai-image-theme-leaf" && route.canonicalPath === collectionRoute.canonicalPath);
+      if (disposition.kind !== "render" && !knownLeafRoute) return {};
+    }
     if (collectionRoute.collectionSlug && !canResolveCollectionSlugForSite(state, site, collectionRoute.collectionSlug)) return {};
     if (resolvePublishedRouteDisposition(snapshot, collectionRootPageSlug).kind !== "render") return {};
     const page = findPage(site, publicCollectionRootPathForSite(site)) ?? findPage(site, "/collections");
@@ -739,7 +743,11 @@ export default async function HostStorefrontCatchAllPage({
   const collectionCategory = collectionRoute?.collectionSlug ?? "";
   if (collectionRoute) {
     if (resolvePublishedRouteDisposition(snapshot, collectionRootPageSlug).kind !== "render") notFound();
-    if (collectionRoute.collectionSlug && !isSpanishStorefrontSite(site) && resolvePublishedRouteDisposition(snapshot, collectionRoute.canonicalPath).kind !== "render") notFound();
+    if (collectionRoute.collectionSlug && !isSpanishStorefrontSite(site)) {
+      const disposition = resolvePublishedRouteDisposition(snapshot, collectionRoute.canonicalPath);
+      const knownLeafRoute = snapshot.publishedRoutes.some((route) => route.disposition === "render" && route.routeKind === "ai-image-theme-leaf" && route.canonicalPath === collectionRoute.canonicalPath);
+      if (disposition.kind !== "render" && !knownLeafRoute) notFound();
+    }
     const canonicalCollectionPath = canonicalSeoDirectoryPathForSite(site, "collection", collectionRoute.collectionSlug);
     if (canonicalCollectionPath !== collectionRoute.canonicalPath) permanentRedirect(publicSiteUrl(site, canonicalCollectionPath));
   }
