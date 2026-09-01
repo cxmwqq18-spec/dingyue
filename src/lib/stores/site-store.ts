@@ -111,6 +111,15 @@ const siteRuntimeInclude = {
   connect: true
 } satisfies Prisma.SiteInclude;
 
+const liveStorefrontProfileSelect = {
+  id: true,
+  siteId: true,
+  draftJson: true,
+  draftMeta: true,
+  createdAt: true,
+  updatedAt: true
+} satisfies Prisma.StorefrontProfileSelect;
+
 function envPositiveInt(name: string, fallback: number): number {
   const parsed = Number(process.env[name]);
   return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : fallback;
@@ -486,10 +495,9 @@ const collectionDetailSiteSelect = {
   settings: {
     select: {
       draftJson: true,
-      publishedJson: true
     }
   },
-  storefrontProfile: true,
+  storefrontProfile: { select: liveStorefrontProfileSelect },
 } satisfies Prisma.SiteSelect;
 type CollectionDetailSiteRecord = Prisma.SiteGetPayload<{ select: typeof collectionDetailSiteSelect }>;
 const publicRuntimeSiteSelect = {
@@ -535,10 +543,9 @@ const publicRuntimeSiteSelect = {
   settings: {
     select: {
       draftJson: true,
-      publishedJson: true
     }
   },
-  storefrontProfile: true,
+  storefrontProfile: { select: liveStorefrontProfileSelect },
 } satisfies Prisma.SiteSelect;
 type PublicRuntimeSiteRecord = Prisma.SiteGetPayload<{ select: typeof publicRuntimeSiteSelect }>;
 const customerRuntimeSiteSelect = {
@@ -561,7 +568,7 @@ const customerRuntimeSiteSelect = {
       createdAt: true
     }
   },
-  pages: {
+  livePages: {
     where: { slug: { in: ["/account", "/app", "/404"] } },
     orderBy: { slug: "asc" },
     select: {
@@ -571,14 +578,12 @@ const customerRuntimeSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
-      draftJson: true,
-      publishedJson: true,
-      draftMeta: true
+      contentJson: true
     }
   },
   settings: {
     select: {
-      publishedJson: true
+      draftJson: true
     }
   },
   connect: {
@@ -589,7 +594,7 @@ const customerRuntimeSiteSelect = {
       payoutsEnabled: true
     }
   },
-  storefrontProfile: true
+  storefrontProfile: { select: liveStorefrontProfileSelect }
 } satisfies Prisma.SiteSelect;
 type CustomerRuntimeSiteRecord = Prisma.SiteGetPayload<{ select: typeof customerRuntimeSiteSelect }>;
 const adminLoginSiteSelect = {
@@ -623,7 +628,6 @@ const adminLoginSiteSelect = {
   settings: {
     select: {
       draftJson: true,
-      publishedJson: true
     }
   },
   storefrontProfile: true
@@ -875,7 +879,7 @@ const fullSiteRuntimeLimits = {
   albums: 80
 } as const;
 
-function toAdminShellThemeSettings(record?: { draftJson?: unknown; publishedJson: unknown } | null): Site["themeSettings"] {
+function toAdminShellThemeSettings(record?: { draftJson?: unknown; publishedJson?: unknown } | null): Site["themeSettings"] {
   const toShellSettings = (value: unknown): Site["themeSettings"]["draftJson"] => {
     const settings = cloneJson(value ?? {}) as Partial<Site["themeSettings"]["draftJson"]>;
     return {
@@ -912,7 +916,7 @@ function toAdminShellThemeSettings(record?: { draftJson?: unknown; publishedJson
       saasSettingsCurrent: settings.saasSettingsCurrent
     };
   };
-  const publishedJson = record?.publishedJson;
+  const publishedJson = record?.publishedJson ?? record?.draftJson;
   return {
     draftJson: toShellSettings(record?.draftJson ?? publishedJson),
     publishedJson: toShellSettings(publishedJson)
@@ -998,13 +1002,11 @@ function toPublicSiteShell(
   const publicThemeSettings = "livePages" in record
     ? { ...shellThemeSettings, publishedJson: shellThemeSettings.draftJson }
     : shellThemeSettings;
-  const pageRecords = "livePages" in record
-    ? record.livePages.map((page) => ({
-        ...page,
-        draftJson: page.contentJson,
-        publishedJson: page.contentJson
-      }))
-    : record.pages;
+  const pageRecords = record.livePages.map((page) => ({
+    ...page,
+    draftJson: page.contentJson,
+    publishedJson: page.contentJson
+  }));
   return {
     id: record.id,
     name: record.name,

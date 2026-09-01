@@ -645,7 +645,7 @@ export function toStorefrontProfile(record?: {
   id: string;
   siteId: string;
   draftJson: unknown;
-  publishedJson: unknown;
+  publishedJson?: unknown;
   draftMeta?: unknown;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -660,7 +660,7 @@ export function toStorefrontProfile(record?: {
     id: record.id,
     siteId: record.siteId,
     draftJson,
-    publishedJson: cloneJson(record.publishedJson ?? {}) as import("@/lib/types").StorefrontProfileJson,
+    publishedJson: cloneJson(record.publishedJson ?? record.draftJson ?? {}) as import("@/lib/types").StorefrontProfileJson,
     draftMeta,
     createdAt: toIsoString(record.createdAt),
     updatedAt: toIsoString(record.updatedAt)

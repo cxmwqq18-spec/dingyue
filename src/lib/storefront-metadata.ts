@@ -1,6 +1,6 @@
 import "server-only";
 
-import { getSeoDirectoryContentForSite, withSeoDirectorySeo, type SeoDirectoryKind } from "@/lib/dreamshoot-seo-content";
+import { withSeoDirectorySeo, type SeoDirectoryKind } from "@/lib/dreamshoot-seo-content";
 import { createPublishedSiteSnapshot, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, type PublishedSiteSnapshot } from "@/lib/storefront-context";
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
@@ -69,7 +69,9 @@ export async function metadataForPublishedStorefrontDirectoryPage({
   const publishedBasePage = snapshot?.pages.find((candidate) => candidate.id === page.id) ?? page;
   const publishedSite = snapshot?.site ?? site;
   const projectionPath = path ?? (kind === "collection" ? `/ai-image-generation/${directorySlug}` : `/ai-video-generation/${directorySlug}`);
-  const directoryContent = getSeoDirectoryContentForSite(publishedSite, kind, directorySlug);
+  // Dedicated video topic pages own their SEO in LivePage.contentJson. Resolve
+  // that first so they never require a generic tool-directory seed.
+  const pageJsonWithDirectorySeo = withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite);
   const resolved = isPrimaryMydreamshootsSite(publishedSite) && snapshot
     ? resolvePublishedSeoEntity(snapshot, projectionPath)
     : undefined;
@@ -82,10 +84,7 @@ export async function metadataForPublishedStorefrontDirectoryPage({
     ? {
         ...publishedBasePage.publishedJson,
         seo: {
-          ...publishedBasePage.publishedJson.seo,
-          title: directoryContent.title,
-          description: directoryContent.description,
-          keywords: directoryContent.keywords,
+          ...pageJsonWithDirectorySeo.seo,
           canonicalPath: pageEntity.canonicalPath,
           canonical: pageEntity.canonicalPath,
           index: pageEntity.indexable,
@@ -98,10 +97,7 @@ export async function metadataForPublishedStorefrontDirectoryPage({
       ? {
           ...publishedBasePage.publishedJson,
           seo: {
-            ...publishedBasePage.publishedJson.seo,
-            title: directoryContent.title,
-            description: directoryContent.description,
-            keywords: directoryContent.keywords,
+            ...pageJsonWithDirectorySeo.seo,
             canonicalPath: path ?? `/ai-image-generation/${directorySlug}`,
             canonical: path ?? `/ai-image-generation/${directorySlug}`,
             index: false,
@@ -110,7 +106,7 @@ export async function metadataForPublishedStorefrontDirectoryPage({
             ogImage: undefined
           }
         }
-      : withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite);
+      : pageJsonWithDirectorySeo;
   const resolvedPage = {
     ...publishedBasePage,
     publishedJson: directoryPageJson

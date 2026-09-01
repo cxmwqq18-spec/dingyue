@@ -91,7 +91,7 @@ function linkEntityId(slug: string, kind: "cta" | "related", index?: number): st
 
 function isPublicVideoTopicPath(path: string): boolean {
   const match = path.match(/^\/ai-video-generation\/([^/?#]+)$/);
-  return Boolean(match && isMydreamshootsPublicVideoGenerationTopicSlug(match[1]));
+  return Boolean(match && (match[1] === "wedding-invitation" || isMydreamshootsPublicVideoGenerationTopicSlug(match[1])));
 }
 
 export function resolveWeddingInvitationTopicContent(page: Pick<ThemePage, "slug" | "title" | "draftJson">, canonicalPath = page.slug): AiVideoTopicLandingContent | undefined {

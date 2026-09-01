@@ -1225,7 +1225,9 @@ function normalizeTalkingContent(content: TalkingPhotoContent): VideoTopicConten
 function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopicContent; section: SectionInstance; site: Site }) {
   const primaryHref = `/app/create?videoMode=${encodeURIComponent("brand-video")}#step-video`;
   const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
-  const heroPreview = [galleryItems[0], galleryItems[4], galleryItems[7]].filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item));
+  // Keep the hero focused on one visual anchor. The gallery remains available
+  // below for the broader set of brand-story scene references.
+  const heroPreview = galleryItems[0]?.image ? [galleryItems[0].image] : [content.hero.image];
   const storyBeats = content.platformExamples?.items ?? [];
 
   return (
@@ -1249,8 +1251,8 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
             ) : null}
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end" data-video-topic-hero-media>
-            <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <DirectTopicHeroCards images={heroPreview.map((item) => item.image)} />
+            <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]" style={{ aspectRatio: "16 / 9" }}>
+              <DirectTopicHeroCards images={heroPreview} leadAspectRatio="16 / 9" />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
               <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />

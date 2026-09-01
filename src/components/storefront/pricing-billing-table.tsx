@@ -51,10 +51,10 @@ export function PricingBillingTable({
     setActiveBillingCycle(cycle);
     if (typeof window === "undefined") return;
 
-    // Keep the URL shareable without invoking a route transition or the browser's hash scroll.
+    // Keep the selected cycle shareable without invoking a route transition or hash scroll.
     const url = new URL(window.location.href);
     url.searchParams.set("billing", cycle);
-    url.hash = `pricing-${cycle}`;
+    url.hash = "";
     window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
   }
 

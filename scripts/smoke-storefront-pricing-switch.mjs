@@ -21,16 +21,21 @@ try {
 
   const quarterlyTab = page.locator('nav[aria-label="Billing periods"] button[data-storefront-instant-filter="true"]').filter({ hasText: "Quarterly" }).first();
   await quarterlyTab.waitFor({ state: "visible", timeout: 30_000 });
+  assert.equal(await page.getByText("$24.50", { exact: true }).count(), 1, "monthly Starter price must be rendered");
+  assert.equal(await page.getByText("200 monthly credits balance", { exact: true }).count(), 1, "monthly credit allowance must be rendered");
+  assert.equal(await page.getByText("AI photo editor with prompts", { exact: true }).count(), 3, "all pricing cards must retain their feature lists");
+  assert.equal(await page.getByText("No watermark", { exact: true }).count(), 3, "all pricing cards must retain the final feature");
   requestsAfterClick.length = 0;
   page.on("request", (request) => requestsAfterClick.push(request.url()));
 
   await page.evaluate(() => window.scrollTo(0, 640));
   const scrollBeforeClick = await page.evaluate(() => window.scrollY);
-  await quarterlyTab.click();
+  // Trigger the real click handler without Playwright scrolling the off-screen tab into view first.
+  await quarterlyTab.evaluate((button) => button.click());
   await page.waitForTimeout(250);
 
   assert.match(page.url(), /[?&]billing=quarter(?:#|$)/, "billing switch must update the URL");
-  assert.match(page.url(), /#pricing-quarter$/, "billing switch must preserve the pricing anchor");
+  assert(!page.url().includes("#pricing-quarter"), "billing switch must not add a scrolling pricing anchor");
   assert(
     !requestsAfterClick.some((url) => /[?&]billing=quarter(?:#|$)/.test(url)),
     `billing switch must not navigate to a new document: ${requestsAfterClick.join(" | ")}`
@@ -39,7 +44,14 @@ try {
     !requestsAfterClick.some((url) => /\/api\//.test(url)),
     `billing switch must not fetch pricing from a browser API: ${requestsAfterClick.join(" | ")}`
   );
+  assert(
+    !requestsAfterClick.some((url) => new URL(url).pathname === "/site/mydreamshoots"),
+    `billing switch must not request the storefront document: ${requestsAfterClick.join(" | ")}`
+  );
   assert.equal(await page.locator('[data-active-billing-cycle="quarter"]').count(), 1, "quarterly pricing must be rendered in place");
+  assert.equal(await page.getByText("$45", { exact: true }).count(), 1, "quarterly Starter price must be rendered");
+  assert.equal(await page.getByText("600 quarterly credits balance", { exact: true }).count(), 1, "quarterly credit allowance must be rendered");
+  assert.equal(await page.getByText("AI photo editor with prompts", { exact: true }).count(), 3, "quarterly cards must retain their feature lists");
   assert(Math.abs((await page.evaluate(() => window.scrollY)) - scrollBeforeClick) <= 2, "billing switch must preserve scroll position");
   assert.equal(await page.locator('[aria-label="Loading page"]').count(), 0, "billing switch must not show the page loading indicator");
   assert(
@@ -51,7 +63,7 @@ try {
     ok: true,
     status: response.status(),
     url: page.url(),
-    documentNavigation: true,
+    documentNavigation: false,
     requestsAfterClick,
     loadingIndicatorVisible: false,
     browserErrors

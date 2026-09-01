@@ -111,7 +111,15 @@ try {
     return JSON.stringify(product.metadata?.features ?? null) !== JSON.stringify(expectedFeatures)
       || JSON.stringify(product.metadata?.sidePanelItems ?? null) !== JSON.stringify(sidePanelItems);
   });
-  console.log(JSON.stringify({ target, siteId, operation: mode, mode: apply ? "apply" : "dry-run", affectedProducts: needsUpdate.map((product) => product.name), featureCount: mode === "clear" ? 0 : undefined, sidePanelItemCount: sidePanelItems.length }, null, 2));
+  console.log(JSON.stringify({
+    target,
+    siteId,
+    operation: mode,
+    mode: apply ? "apply" : "dry-run",
+    affectedProducts: needsUpdate.map((product) => product.name),
+    featureCounts: Object.fromEntries(subscriptions.map((product) => [product.name, restoredFeatures[product.name]?.length ?? 0])),
+    sidePanelItemCount: sidePanelItems.length
+  }, null, 2));
   if (!apply || !needsUpdate.length) {
     // Dry-run and already-repaired environments need no write or publication.
   } else {
