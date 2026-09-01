@@ -9,7 +9,11 @@ import { assertDatabaseTarget } from "./lib/database-target.mjs";
 
 const siteId = process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot";
 const apply = process.argv.includes("--apply");
-assertDatabaseTarget({ expectedTarget: String(process.env.DATABASE_TARGET || "local").trim().toLowerCase() });
+const databaseTarget = String(process.env.DATABASE_TARGET || "local").trim().toLowerCase();
+if (apply && databaseTarget === "remote" && process.env.CONFIRM_WEDDING_INVITATION_PRODUCTION !== "1") {
+  throw new Error("Production repair requires CONFIRM_WEDDING_INVITATION_PRODUCTION=1.");
+}
+assertDatabaseTarget({ expectedTarget: databaseTarget });
 
 const sourceRoot = path.join(process.cwd(), "src");
 const originalLoad = Module._load;
@@ -26,7 +30,7 @@ Module._resolveFilename = function resolve(request, ...args) {
 };
 
 const jiti = createJiti(import.meta.url);
-const { resolveWeddingInvitationTopicContent } = jiti("../src/lib/mydreamshoots-video-topic-publication.ts");
+const { resolveWeddingInvitationTopicContent, WEDDING_INVITATION_MEDIA } = jiti("../src/lib/mydreamshoots-video-topic-publication.ts");
 
 function buildPageJson(content, canonicalPath) {
   return {
@@ -91,6 +95,20 @@ try {
   }, canonicalPath);
   assert(content, "missing_wedding_invitation_topic_content");
   const pageJson = buildPageJson(content, canonicalPath);
+  const weddingInvitationGallery = WEDDING_INVITATION_MEDIA.slice(1).map((item) => item.src);
+  const weddingInvitationCover = WEDDING_INVITATION_MEDIA[0];
+  const nextNavigation = structuredClone((await prisma.themeSettings.findUnique({ where: { siteId }, select: { draftJson: true } }))?.draftJson ?? {});
+  for (const group of nextNavigation.saveTheDateNavigation?.groups ?? []) {
+    for (const item of group.items ?? []) {
+      if (item.href === canonicalPath) {
+        item.imageUrl = weddingInvitationCover.src;
+        item.imageAlt = weddingInvitationCover.alt;
+        item.status = "published";
+      }
+    }
+  }
+  const publishedSettings = structuredClone((await prisma.themeSettings.findUnique({ where: { siteId }, select: { publishedJson: true } }))?.publishedJson ?? {});
+  publishedSettings.saveTheDateNavigation = structuredClone(nextNavigation.saveTheDateNavigation);
 
   if (apply) {
     await prisma.$transaction(async (tx) => {
@@ -113,6 +131,38 @@ try {
           publishedJson: pageJson
         }
       });
+      await tx.videoTheme.update({
+        where: { siteId_slug: { siteId, slug: "wedding-invitation" } },
+        data: {
+          imageUrl: weddingInvitationCover.src,
+          galleryImages: weddingInvitationGallery
+        }
+      });
+      for (const item of WEDDING_INVITATION_MEDIA) {
+        await tx.mediaAsset.upsert({
+          where: { siteId_storageKey: { siteId, storageKey: item.src } },
+          create: {
+            id: `media_${siteId}_${Buffer.from(item.src).toString("hex").slice(0, 24)}`,
+            siteId,
+            label: item.src.split("/").pop() || item.src,
+            storageKey: item.src,
+            mimeType: "image/jpeg",
+            usageType: "theme",
+            sourceType: "wedding-invitation-topic-repair",
+            previewUrl: item.src,
+            originUrl: item.src,
+            altText: item.alt
+          },
+          update: {
+            altText: item.alt,
+            previewUrl: item.src,
+            originUrl: item.src,
+            usageType: "theme",
+            sourceType: "wedding-invitation-topic-repair"
+          }
+        });
+      }
+      await tx.themeSettings.update({ where: { siteId }, data: { draftJson: nextNavigation, publishedJson: publishedSettings } });
     });
   }
 
@@ -122,6 +172,8 @@ try {
     siteId,
     slug,
     canonicalPath,
+    media: [weddingInvitationCover.src, ...weddingInvitationGallery],
+    navigation: nextNavigation.saveTheDateNavigation,
     sectionTypes: pageJson.sectionsOrder.map((sectionId) => pageJson.sections[sectionId].type),
     heroTitle: pageJson.sections.ai_video_topic_landing_1.settings.content.hero.title
   }, null, 2));

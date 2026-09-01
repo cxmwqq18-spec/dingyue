@@ -254,15 +254,23 @@ function optimizedTopicImageSrc(src: string): string {
     "youtube-card-04": "youtube-card-04",
     "youtube-card-05": "youtube-card-05",
     "youtube-card-06": "youtube-card-06",
-    "youtube-video-full-tutorial": "youtube-video-03",
-    "youtube-video-review-comparison": "youtube-video-05",
-    "youtube-video-interview-conversation": "youtube-video-04",
-    "youtube-video-case-study": "youtube-video-01",
-    "youtube-video-webinar-recap": "youtube-video-07",
-    "youtube-video-series-episode": "youtube-video-06"
+    "youtube-video-full-tutorial": "youtube-card-01",
+    "youtube-video-review-comparison": "youtube-card-02",
+    "youtube-video-interview-conversation": "youtube-card-03",
+    "youtube-video-case-study": "youtube-card-04",
+    "youtube-video-webinar-recap": "youtube-card-05",
+    "youtube-video-series-episode": "youtube-card-06"
+    ,"youtube-video-01": "youtube-card-04"
+    ,"youtube-video-03": "youtube-card-01"
+    ,"youtube-video-04": "youtube-card-03"
+    ,"youtube-video-05": "youtube-card-02"
+    ,"youtube-video-06": "youtube-card-06"
+    ,"youtube-video-07": "youtube-card-05"
   };
   const cleanYoutube = src.match(/^\/assets\/dreamshoot\/youtube-video\/(youtube-video-[^./?#]+)\.(?:png|webp)(?:[?#].*)?$/i);
   if (cleanYoutube && youtubeMap[cleanYoutube[1]]) return `/assets/dreamshoot/generated/video-topic-clean/youtube-video/${youtubeMap[cleanYoutube[1]]}.webp`;
+  const youtubeCard = src.match(/^\/assets\/dreamshoot\/youtube-video\/(youtube-card-[0-9]+)\.(?:png|webp)(?:[?#].*)?$/i);
+  if (youtubeCard && youtubeMap[youtubeCard[1]]) return `/assets/dreamshoot/generated/video-topic-clean/youtube-video/${youtubeMap[youtubeCard[1]]}.webp`;
   return src.replace(/\.png(?=[?#]|$)/i, ".webp");
 }
 
@@ -1156,7 +1164,11 @@ function normalizeAiContent(content: AiVideoTopicLandingContent): VideoTopicCont
     steps: content.steps,
     value: content.value,
     evidence: content.evidence ? { ...content.evidence, cards: content.evidence.cards.map((card) => ({ ...card })) } : undefined,
-    examples: content.examples ? { ...content.examples, cards: content.examples.cards.map((card) => ({ ...card })) } : undefined,
+    examples: content.examples
+      ? { ...content.examples, cards: content.examples.cards.map((card) => ({ ...card })) }
+      : content.gallery
+        ? { eyebrow: content.gallery.eyebrow, title: content.gallery.title, intro: content.gallery.intro, cards: content.gallery.items.map((item) => ({ ...item })) }
+        : undefined,
     trust: {
       eyebrow: content.trust.eyebrow,
       title: content.trust.title,
@@ -1250,9 +1262,9 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
               </div>
             ) : null}
           </div>
-          <figure className="relative min-w-0 w-full lg:justify-self-end" data-video-topic-hero-media>
-            <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]" style={{ aspectRatio: "16 / 9" }}>
-              <DirectTopicHeroCards images={heroPreview} leadAspectRatio="16 / 9" />
+          <figure className="relative min-w-0 w-full lg:max-w-[390px] lg:justify-self-end" data-video-topic-hero-media>
+            <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]" style={{ aspectRatio: "9 / 16" }}>
+              <DirectTopicHeroCards images={heroPreview} leadAspectRatio="9 / 16" />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
               <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />

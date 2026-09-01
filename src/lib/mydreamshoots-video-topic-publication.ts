@@ -46,6 +46,93 @@ type TopicImage = {
   alt: string;
 };
 
+export const WEDDING_INVITATION_MEDIA: TopicImage[] = [
+  {
+    src: "/assets/dreamshoot/wedding-invitation/hero-ai-wedding-invitation-garden-couple.jpg",
+    alt: "Bride and groom holding a floral wedding invitation together in a garden at golden hour."
+  },
+  {
+    src: "/assets/dreamshoot/wedding-invitation/hero-ai-wedding-invitation-couple-reviewing.jpg",
+    alt: "Bride and groom reviewing wedding invitation cards together at a candlelit reception table."
+  },
+  {
+    src: "/assets/dreamshoot/wedding-invitation/hero-ai-wedding-invitation-luxury-stationery.jpg",
+    alt: "Luxury ivory wedding invitation suite with satin ribbon, wax seal, flowers, and an engagement ring."
+  },
+  {
+    src: "/assets/dreamshoot/wedding-invitation/ai-wedding-invitation-card-closeup.jpg",
+    alt: "Hands holding an ivory floral wedding invitation and matching envelope beside roses and candlelight."
+  },
+  {
+    src: "/assets/dreamshoot/wedding-invitation/ai-wedding-invitation-design-selection.jpg",
+    alt: "Couple comparing wedding invitation paper, colors, and design options at a table with a laptop."
+  },
+  {
+    src: "/assets/dreamshoot/wedding-invitation/ai-wedding-invitation-reception-table.jpg",
+    alt: "Ivory wedding invitation and sealed envelope displayed on a candlelit reception table with blush flowers."
+  },
+  {
+    src: "/assets/dreamshoot/wedding-invitation/ai-wedding-invitation-bridesmaid-review.jpg",
+    alt: "Bride showing a floral wedding invitation to a bridesmaid in a bright room filled with flowers."
+  },
+  {
+    src: "/assets/dreamshoot/wedding-invitation/ai-wedding-invitation-digital-share.jpg",
+    alt: "Hand sharing a digital floral wedding invitation from a smartphone at a wedding table setting."
+  },
+  {
+    src: "/assets/dreamshoot/wedding-invitation/ai-wedding-invitation-venue-display.jpg",
+    alt: "Floral wedding invitation display on a wooden easel inside a candlelit reception venue."
+  },
+  {
+    src: "/assets/dreamshoot/wedding-invitation/ai-wedding-invitation-envelope-prep.jpg",
+    alt: "Bride and groom preparing wax-sealed wedding invitation envelopes with ribbon, flowers, stamps, and stationery."
+  }
+];
+
+function clone<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value)) as T;
+}
+
+export function normalizeWeddingInvitationTopicMedia(content: AiVideoTopicLandingContent): AiVideoTopicLandingContent {
+  const next = clone(content);
+  const [hero, reviewing, luxury, closeup, designSelection, receptionTable, bridesmaidReview, digitalShare, venueDisplay, envelopePrep] = WEDDING_INVITATION_MEDIA;
+  next.hero = {
+    ...next.hero,
+    image: { ...hero, width: 1600, height: 1000 },
+    images: [hero, reviewing, luxury].map((image) => ({ ...image, width: 1600, height: 1000 }))
+  };
+  const useCaseMedia = [reviewing, luxury, closeup];
+  next.useCases = {
+    ...next.useCases,
+    items: next.useCases.items.map((item, index) => ({
+      ...item,
+      image: { ...(useCaseMedia[index] ?? useCaseMedia[useCaseMedia.length - 1]), width: 1600, height: 1000 }
+    }))
+  };
+  const existingGallery = next.gallery;
+  const galleryMedia = [designSelection, receptionTable, bridesmaidReview, digitalShare, venueDisplay, envelopePrep];
+  const galleryCopy = [
+    { title: "Compare invitation directions", body: "Review paper, color, and layout choices before names, dates, and RSVP details are finalized." },
+    { title: "Match the reception setting", body: "Carry the invitation palette into the table, flowers, lighting, and surrounding wedding details." },
+    { title: "Proofread with a second pair of eyes", body: "Review the invitation with someone you trust before the design is shared or printed." },
+    { title: "Prepare the digital share", body: "Keep links, RSVP instructions, and event details editable when the invitation moves to mobile." },
+    { title: "Extend the visual language", body: "Use the approved invitation style as a reference for day-of signage and venue details." },
+    { title: "Finish the envelope suite", body: "Check ribbon, seal, stamps, margins, and the final arrangement before sending." }
+  ];
+  next.gallery = {
+    eyebrow: existingGallery?.eyebrow || "INVITATION DETAILS",
+    title: existingGallery?.title || "Build the Suite Beyond the Main Card",
+    intro: existingGallery?.intro || "Review each supporting piece before the invitation is ready to share.",
+    ...(existingGallery?.cta ? { cta: existingGallery.cta } : {}),
+    ...(existingGallery?.ctaHref ? { ctaHref: existingGallery.ctaHref } : {}),
+    items: galleryMedia.map((image, index) => ({
+      ...(existingGallery?.items?.[index] ?? galleryCopy[index]),
+      image: { ...image, width: 1600, height: 1000 }
+    }))
+  };
+  return next;
+}
+
 function stable(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(stable);
   if (!value || typeof value !== "object") return value;
@@ -98,13 +185,13 @@ export function resolveWeddingInvitationTopicContent(page: Pick<ThemePage, "slug
   if (page.slug !== "/ai-video-generation/wedding-invitation") return undefined;
   const dedicated = dedicatedVideoTopicContentFromPageJson(page.draftJson);
   if (dedicated && "foundation" in dedicated && "guidance" in dedicated) {
-    return {
+    return normalizeWeddingInvitationTopicMedia({
       ...dedicated,
       seo: {
         ...dedicated.seo,
         canonicalPath
       }
-    };
+      });
   }
   const seo = page.draftJson.seo ?? {};
   const entry = Object.values(page.draftJson.sections ?? {}).find((section) => section.type === "ai_tool_entry")?.settings ?? {};
@@ -116,7 +203,7 @@ export function resolveWeddingInvitationTopicContent(page: Pick<ThemePage, "slug
     ? seo.description
     : "Create a private wedding invitation reveal video with readable names, dates, venue details, and paper texture.";
   const image = { src: imageUrl, alt: "Couple reviewing wedding invitation cards at a reception table.", width: 1800, height: 1200 };
-  return {
+  return normalizeWeddingInvitationTopicMedia({
     seo: { title, description, keywords: typeof seo.keywords === "string" ? seo.keywords : "AI wedding invitation video maker, wedding invitation reveal video, save the date video", canonicalPath },
     hero: { eyebrow: "AI VIDEO THEME", title: "Create a Wedding Invitation Reveal Video", body: description, primaryCta: "Create Wedding Invitation Video", secondaryCta: "Browse AI Video Generation", availabilityNote: "Private workspace review before sharing.", rightsCopy: "Use invitation artwork and event details you own or have permission to use.", imageNote: "Keep names, dates, venue details, and supplied wording readable.", image },
     useCases: { eyebrow: "INVITATION VIDEO JOBS", title: "Turn Stationery Into a Clear Event Moment", intro: "Build a short reveal around the details guests need to see.", items: [
@@ -131,7 +218,7 @@ export function resolveWeddingInvitationTopicContent(page: Pick<ThemePage, "slug
     trust: { eyebrow: "RESPONSIBLE USE", title: "Keep the Invitation Accurate", intro: "Before sharing:", items: [{ title: "Use approved artwork", body: "Only upload invitation designs and references you own or have permission to use." }, { title: "Check every event detail", body: "Verify names, dates, venue, addresses, and wording against the approved source." }, { title: "Do not invent information", body: "Do not add unsupported times, locations, hosts, dress codes, or registry details." }] },
     faq: { eyebrow: "FAQ", title: "Wedding Invitation Video Questions", items: [{ question: "What should I upload?", answer: "Use clear photos or artwork of the approved invitation suite and provide the exact event details." }, { question: "Can the names and date change?", answer: "They should remain exactly as supplied. Review the finished video before sharing." }, { question: "Can I share the video with guests?", answer: "Yes, after checking the private draft for readable and accurate event information." }, { question: "What makes a good reveal?", answer: "A clear sequence from envelope to card to complete suite, with paper details and wording easy to read." }] },
     finalCta: { eyebrow: "CREATE WITH APPROVED DETAILS", title: "Build a Wedding Invitation Reveal", body: "Turn your approved invitation suite into a short, readable video and review it privately before sharing.", cta: "Create Wedding Invitation Video", microcopy: "Approved source. Readable details. Private review." }
-  };
+  });
 }
 
 export function dedicatedVideoTopicContentFromPageJson(pageJson: ThemePageJson): VideoTopicContent | undefined {
@@ -404,6 +491,7 @@ export function compileMydreamshootsVideoTopicPublication(
     });
     const parent = parentForSlug(source.slug);
     const videoUrl = topicVideoUrl(source.content);
+    if (source.slug === "wedding-invitation") continue;
     navigation.push({
       id: source.page.id,
       pageEntityId: entityId,
