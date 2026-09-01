@@ -25,6 +25,17 @@ const decode = (value) => String(value || "")
   .replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&amp;/g, "&")
   .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&#(\d+);/g, (_match, code) => String.fromCodePoint(Number(code)));
 const cleanText = (value) => decode(String(value || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
+const applyTitleTemplate = (title, template, brand = "myDreamshoots") => {
+  const rawTitle = String(title || "").trim();
+  const rawTemplate = String(template || "").trim();
+  if (!rawTemplate) return rawTitle || brand;
+  if (rawTemplate.includes("%s")) {
+    const suffix = rawTemplate.replace("%s", "").replace(/^[\s|:-]+|[\s|:-]+$/g, "");
+    if (suffix && rawTitle.toLowerCase().includes(suffix.toLowerCase())) return rawTitle || brand;
+    return rawTemplate.replace("%s", rawTitle || brand);
+  }
+  return rawTitle === rawTemplate ? rawTitle : `${rawTitle} | ${rawTemplate}`;
+};
 const attr = (tag, name) => decode(tag.match(new RegExp(`\\s${name}="([^"]*)"`, "i"))?.[1] || "");
 const meta = (html, name) => {
   const tags = html.match(/<meta\b[^>]*>/gi) || [];
@@ -63,6 +74,8 @@ const rows = await prisma.themePage.findMany({
   where: { siteId: SITE_ID, slug: { in: paths } },
   select: { slug: true, draftJson: true }
 });
+const settingsRow = await prisma.themeSettings.findUnique({ where: { siteId: SITE_ID }, select: { draftJson: true } });
+const titleTemplate = settingsRow?.draftJson?.seo?.titleTemplate || "%s";
 await prisma.$disconnect();
 assert.equal(rows.length, paths.length, "relational page inventory changed");
 const pageByPath = new Map(rows.map((row) => [row.slug, row.draftJson]));
@@ -78,7 +91,7 @@ for (const pagePath of paths) {
   const heroId = json.sectionsOrder.find((id) => json.sections[id]?.type === "editorial_hero");
   const heroTitle = String(json.sections[heroId]?.settings?.title || "").trim();
 
-  assert.equal(title, json.seo.title, `${pagePath}: title readback`);
+  assert.equal(title, applyTitleTemplate(json.seo.title, titleTemplate), `${pagePath}: title readback`);
   assert.equal(meta(html, "description"), json.seo.description, `${pagePath}: description readback`);
   assert.equal(meta(html, "keywords"), json.seo.keywords, `${pagePath}: keywords readback`);
   assert.equal(link(html, "canonical"), json.seo.canonical, `${pagePath}: canonical readback`);
