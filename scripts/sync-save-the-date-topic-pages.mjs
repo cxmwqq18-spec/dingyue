@@ -477,6 +477,7 @@ try {
       const json = parsedItem?.pageJson || page?.draftJson || page?.publishedJson;
       const hero = json?.sections?.[json.sectionsOrder?.[0]]?.settings || {};
       const media = json?.mediaManifest?.[0];
+      const topic = Object.values(json?.sections || {}).find((section) => section?.type === "ai_video_topic_landing")?.settings?.content;
       const label = navigationLabels.get(href)
         || (parsedItem?.key === "save-the-date" ? "Save the Date" : undefined)
         || page?.title
@@ -488,9 +489,9 @@ try {
         href,
         status: "published",
         sortOrder,
-        description: String(hero.intro || json?.seo?.description || "").trim(),
-        imageUrl: String(hero.imageUrl || media?.src || "").trim(),
-        imageAlt: String(hero.imageAlt || media?.alt || "").trim()
+        description: String(topic?.seo?.description || hero.intro || json?.seo?.description || "").trim(),
+        imageUrl: String(hero.imageUrl || media?.src || topic?.hero?.image?.src || "").trim(),
+        imageAlt: String(hero.imageAlt || media?.alt || topic?.hero?.image?.alt || "").trim()
       };
     };
     const groups = [{

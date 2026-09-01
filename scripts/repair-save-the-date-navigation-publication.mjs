@@ -63,7 +63,13 @@ const seasonalPaths = [
 const validPathSet = new Set([...lovePaths, ...seasonalPaths]);
 
 function firstMedia(page) {
-  return page?.draftJson?.mediaManifest?.find((item) => item?.src && item?.alt) || page?.publishedJson?.mediaManifest?.find((item) => item?.src && item?.alt);
+  const json = page?.draftJson || page?.publishedJson;
+  const direct = json?.mediaManifest?.find((item) => item?.src && item?.alt);
+  if (direct) return direct;
+  const topic = Object.values(json?.sections || {}).find((section) => section?.type === "ai_video_topic_landing")?.settings?.content;
+  return topic?.hero?.image?.src && topic?.hero?.image?.alt
+    ? { src: topic.hero.image.src, alt: topic.hero.image.alt }
+    : undefined;
 }
 
 function pageForPath(pages, pathName) {
@@ -102,8 +108,9 @@ try {
   const itemFor = (pathName, sortOrder) => {
     const page = pageForPath(allPages, pathName);
     const json = page?.draftJson || page?.publishedJson;
+    const topic = Object.values(json?.sections || {}).find((section) => section?.type === "ai_video_topic_landing")?.settings?.content;
     const media = firstMedia(page);
-    return { label: routeLabel.get(pathName) || pathName, slug: pathName.split("/").pop(), href: pathName, status: "published", sortOrder, description: String(json?.seo?.description || `Create ${routeLabel.get(pathName)} photos and videos with AI.`).replace(/^#\s*/, "").trim(), ...(media ? { imageUrl: media.src, imageAlt: media.alt } : {}) };
+    return { label: routeLabel.get(pathName) || pathName, slug: pathName.split("/").pop(), href: pathName, status: "published", sortOrder, description: String(topic?.seo?.description || json?.seo?.description || `Create ${routeLabel.get(pathName)} photos and videos with AI.`).replace(/^#\s*/, "").trim(), ...(media ? { imageUrl: media.src, imageAlt: media.alt } : {}) };
   };
   settings.saveTheDateNavigation = {
     menuLabel: "Save the Date",
