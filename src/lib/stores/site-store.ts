@@ -990,6 +990,14 @@ function toPublicSiteShell(
   const primaryDomain = record.domains.find((domain) => domain.isPrimary)?.domain ?? record.domains[0]?.domain ?? "";
   const settingsRecord = "settings" in record ? record.settings : undefined;
   const profileRecord = "storefrontProfile" in record ? record.storefrontProfile : undefined;
+  const shellThemeSettings = toAdminShellThemeSettings(settingsRecord);
+  // LivePage-backed public SSR treats the current relational draft as the
+  // live navigation/settings projection too. Keeping the historical
+  // `publishedJson` value here makes menus lag behind taxonomy updates even
+  // after the page content has been synchronized.
+  const publicThemeSettings = "livePages" in record
+    ? { ...shellThemeSettings, publishedJson: shellThemeSettings.draftJson }
+    : shellThemeSettings;
   const pageRecords = "livePages" in record
     ? record.livePages.map((page) => ({
         ...page,
@@ -1013,7 +1021,7 @@ function toPublicSiteShell(
       chargesEnabled: Boolean(record.connect?.chargesEnabled),
       payoutsEnabled: Boolean(record.connect?.payoutsEnabled)
     },
-    themeSettings: toAdminShellThemeSettings(settingsRecord),
+    themeSettings: publicThemeSettings,
     storefrontProfile: toStorefrontProfile(profileRecord),
     // ThemePage is an internal compatibility shape only. Public data comes
     // exclusively from LivePage.contentJson and has no fallback source.

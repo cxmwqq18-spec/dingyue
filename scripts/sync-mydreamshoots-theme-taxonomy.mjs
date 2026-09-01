@@ -1053,6 +1053,36 @@ async function updateDatabase({ state, categories, packs }) {
         };
         await tx.themePage.update({ where: { id: page.id }, data: pageData });
       }
+      // The public image directory is served from LivePage. Keep its page
+      // content in the same transaction as the taxonomy draft update so a
+      // successful taxonomy sync cannot leave the public directory stale.
+      const imageDirectoryPage = (siteRecord?.pages ?? []).find((page) => page.slug === AI_IMAGE_GENERATION_ROOT);
+      if (imageDirectoryPage) {
+        const livePage = await tx.livePage.findUnique({
+          where: { siteId_slug: { siteId: SITE_ID, slug: AI_IMAGE_GENERATION_ROOT } },
+          select: { id: true, contentJson: true }
+        });
+        const livePageData = {
+          siteId: SITE_ID,
+          pageType: imageDirectoryPage.pageType || "collection",
+          templateKey: imageDirectoryPage.templateKey ?? "collection",
+          slug: AI_IMAGE_GENERATION_ROOT,
+          title: imageDirectoryPage.title || "Photo packages",
+          contentJson: toPrismaJson(imageDirectoryPage.draftJson),
+          updatedAt: new Date()
+        };
+        if (!livePage) {
+          await tx.livePage.create({
+            data: {
+              id: imageDirectoryPage.id,
+              ...livePageData,
+              createdAt: new Date(imageDirectoryPage.createdAt ?? UPDATE_TIMESTAMP)
+            }
+          });
+        } else if (!jsonEquals(livePage.contentJson, livePageData.contentJson)) {
+          await tx.livePage.update({ where: { id: livePage.id }, data: livePageData });
+        }
+      }
       await rewriteThemeJsonRows(tx, "themePage", ["draftJson", "draftMeta"]);
       await rewriteThemeJsonRows(tx, "themeSettings", ["draftJson"]);
       await rewriteThemeJsonRows(tx, "siteTheme", ["templates", "settings"]);
