@@ -48,6 +48,7 @@ import { normalizeGlobalSection } from "@/lib/theme/section-normalize";
 import { publicationSnapshotHash, publicationSnapshotIntegrity } from "@/lib/publication-snapshot-integrity";
 import { validatePublicDraftMediaReferences } from "@/lib/public-draft-validation";
 import { isMydreamshootsRemovedLegacyRoute, MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES, MYDREAMSHOOTS_STANDARD_SEO_INVENTORY, MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
+import { MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import type {
   MediaAsset,
   Product,
@@ -272,6 +273,7 @@ function buildPublishedStandardPageMedia(
 
 function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStandardRouteProjection | undefined {
   if (!isPrimaryMydreamshootsSite(site)) return undefined;
+  if (page.pageType === "ai_tool" && page.slug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH) return undefined;
   const canonicalPath = page.publishedJson.seo?.canonicalPath || page.publishedJson.seo?.canonical || page.slug;
   const standardPaths = new Set<string>(MYDREAMSHOOTS_STANDARD_SEO_ROUTES);
   if (!standardPaths.has(canonicalPath)) return undefined;
