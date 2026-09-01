@@ -326,8 +326,8 @@ async function getHostRuntimeStateWithFallback(hosts: Array<string | null>): Pro
   return getHostRuntimeStateForModeWithFallback(hosts, "private");
 }
 
-async function getHostPublicRuntimeStateWithFallback(hosts: Array<string | null>, pageSlug?: string): Promise<PlatformState | undefined> {
-  return getHostRuntimeStateForModeWithFallback(hosts, "public", pageSlug);
+async function getHostPublicRuntimeStateWithFallback(hosts: Array<string | null>, pageSlug?: string, contextSlug?: string): Promise<PlatformState | undefined> {
+  return getHostRuntimeStateForModeWithFallback(hosts, "public", pageSlug, contextSlug);
 }
 
 async function getHostPublicToolRuntimeStateWithFallback(hosts: Array<string | null>, pageSlug: string, toolSlug: string): Promise<PlatformState | undefined> {
@@ -634,10 +634,10 @@ export default async function HostStorefrontCatchAllPage({
     : isVideoGenerationRequest
     ? await getHostPublicRuntimeStateWithFallback(hostCandidates, "/ai-video-generation")
     : isCollectionRequest && collectionLookupSlug
-    // Leaf collection URLs render the shared published directory with a
-    // focused category. Keep the full directory state here so the renderer
-    // has the same published page/navigation context as the query form.
-    ? await getHostPublicRuntimeStateWithFallback(hostCandidates, collectionRootPageSlug)
+    // Load the focused collection projection for leaf routes. This carries
+    // the selected pack/media bundle needed by the detail renderer while the
+    // shared navigation is hydrated separately from the full site projection.
+    ? await getHostPublicRuntimeStateWithFallback(hostCandidates, collectionRootPageSlug, collectionLookupSlug)
     : await getHostPublicRuntimeStateWithFallback(hostCandidates, sourcePageSlug);
   if (!state) notFound();
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
