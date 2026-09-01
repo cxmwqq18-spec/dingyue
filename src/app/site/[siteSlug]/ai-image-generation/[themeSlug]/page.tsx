@@ -6,19 +6,16 @@ import { readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
 import { renderStorefrontPage } from "@/lib/storefront-render";
 import { createPublishedSiteSnapshot } from "@/lib/storefront-context";
 import { metadataForPublishedStorefrontDirectoryPage } from "@/lib/storefront-metadata";
+import { canResolveCollectionSlugForSite } from "@/lib/storefront-render";
 import type { PlatformState, Site } from "@/lib/types";
 
 type RouteParams = Promise<{ siteSlug: string; themeSlug: string }>;
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
-function hasActiveCollection(state: PlatformState, themeSlug: string): boolean {
-  return (state.creativePackCategories ?? []).some((category) => category.slug === themeSlug && category.status === "active");
-}
-
 async function loadImageThemeState(siteSlug: string, themeSlug: string): Promise<{ state: PlatformState; site: Site } | undefined> {
   const state = await readPathModePublicRuntimeState(siteSlug, "/ai-image-generation", themeSlug);
   const site = state?.sites[0];
-  return state && site && hasActiveCollection(state, themeSlug) ? { state, site } : undefined;
+  return state && site && canResolveCollectionSlugForSite(state, site, themeSlug) ? { state, site } : undefined;
 }
 
 export async function generateMetadata({ params }: { params: RouteParams }): Promise<Metadata> {

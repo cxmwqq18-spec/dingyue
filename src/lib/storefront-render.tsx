@@ -2756,7 +2756,19 @@ export async function renderStorefrontPage({
       ? publicCollectionPathForSite(currentSite, collectionCategory)
       : slug
   );
-  if (usesPublishedLeafProjection && resolvePublishedRouteDisposition(publishedSnapshot, renderPagePath).kind !== "render") notFound();
+  if (usesPublishedLeafProjection) {
+    const leafDisposition = resolvePublishedRouteDisposition(publishedSnapshot, renderPagePath);
+    const knownLeafRoute = publishedSnapshot.publishedRoutes.some((route) =>
+      route.disposition === "render" &&
+      route.routeKind === "ai-image-theme-leaf" &&
+      route.canonicalPath === renderPagePath
+    );
+    // A review_required leaf is excluded from indexing until its media/copy
+    // gate passes, but it must remain directly viewable for customers and
+    // editors. Route existence is validated against the immutable manifest;
+    // review status must not turn a real detail page into a 404.
+    if (leafDisposition.kind !== "render" && !knownLeafRoute) notFound();
+  }
   const currentRenderData = getSiteRenderData(state, currentSite.id);
   const renderData = usesPublishedLeafProjection
     ? {
