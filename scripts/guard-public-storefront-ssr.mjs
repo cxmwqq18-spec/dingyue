@@ -12,6 +12,7 @@ const routePrefetch = read("src/components/storefront/customer-route-prefetch.ts
 const showcasePreview = read("src/components/storefront/dreamshoot-showcase-preview.tsx");
 const layout = read("src/app/layout.tsx");
 const pricingTable = read("src/components/storefront/pricing-billing-table.tsx");
+const pricingInteractive = read("src/components/storefront/pricing-billing-interactive.tsx");
 const partnerForm = read("src/components/storefront/partner-application-form.tsx");
 const showcaseVideo = read("src/components/storefront/dreamshoot-showcase-video.tsx");
 const showcaseRail = read("src/components/storefront/dreamshoot-showcase-rail.tsx");
@@ -79,6 +80,8 @@ assert.match(clickMegaMenu, /document\.addEventListener\("pointerdown", handlePo
 assert.doesNotMatch(layout, /HtmlLangSync/, "public root layout must not mount client language synchronization");
 assert.equal(existsSync(path.join(root, "src/components/storefront/html-lang-sync.tsx")), false, "legacy public language sync component must be removed");
 assert.doesNotMatch(pricingTable, /use client|useState|useMemo/, "public pricing must be server-rendered");
+assert.match(pricingTable, /PricingBillingInteractive/, "public pricing server entry must render the interactive presentation layer");
+assert.doesNotMatch(pricingInteractive, /\bfetch\s*\(|XMLHttpRequest|EventSource|customer\/runtime|customer\/bootstrap/, "public pricing interaction must use server-provided data");
 assert.doesNotMatch(partnerForm, /use client|\bonSubmit=|\bfetch\s*\(/, "public partner form must use native form submission");
 assert.doesNotMatch(showcaseVideo, /use client|useEffect|IntersectionObserver|\.play\s*\(/, "public showcase video must use native HTML media");
 assert.match(showcaseRail, /use client/, "public showcase rail may use a client-only presentation layer");
