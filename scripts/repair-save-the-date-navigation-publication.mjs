@@ -38,6 +38,7 @@ const routeLabel = new Map([
   ["/ai-save-the-date/christmas", "Christmas"],
   ["/ai-save-the-date/thanksgiving", "Thanksgiving"],
   ["/ai-save-the-date/new-year", "New Year"],
+  ["/ai-save-the-date/easter", "Easter"],
   ["/ai-save-the-date/mothers-day", "Mother's Day"],
   ["/ai-save-the-date/fathers-day", "Father's Day"],
   ["/ai-save-the-date/halloween", "Halloween"]
@@ -53,6 +54,7 @@ const seasonalPaths = [
   "/ai-save-the-date/christmas",
   "/ai-save-the-date/thanksgiving",
   "/ai-save-the-date/new-year",
+  "/ai-save-the-date/easter",
   "/ai-save-the-date/mothers-day",
   "/ai-save-the-date/fathers-day",
   "/ai-save-the-date/halloween"

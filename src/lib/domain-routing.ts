@@ -13,6 +13,7 @@ const SITE_ADMIN_DOMAINS: Record<string, string> = {
 };
 const PUBLIC_SITE_SLUG_ALIASES: Record<string, string> = {
   dreamshoot: "mydreamshoots",
+  mydreamshoot: "mydreamshoots",
   ...SPANISH_STOREFRONT_SLUG_ALIASES
 };
 

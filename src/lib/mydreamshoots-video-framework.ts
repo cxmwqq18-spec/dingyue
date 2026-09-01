@@ -265,7 +265,7 @@ const saveTheDateCoverImages: Record<string, string> = {
   proposal: "/assets/dreamshoot/save-the-date/proposal/hero-ai-proposal-beach-sunset.jpg",
   "save-the-date": "/assets/dreamshoot/save-the-date/save-the-date/hero-ai-save-the-date-couple-sunset.jpg",
   "wedding-invitation": "/assets/dreamshoot/wedding-invitation/hero-ai-wedding-invitation-couple-reviewing.jpg",
-  "wedding-ceremony": "/assets/dreamshoot/seasonal/wedding-ceremony/hero-ai-wedding-ceremony-first-kiss.jpg",
+  "wedding-ceremony": "/assets/dreamshoot/seasonal/wedding-ceremony/hero-ai-wedding-ceremony-recessional.jpg",
   christmas: "/assets/dreamshoot/seasonal/christmas/hero-ai-christmas-family-gift.jpg",
   halloween: "/assets/dreamshoot/seasonal/halloween/hero-ai-halloween-costume-party.jpg",
   thanksgiving: "/assets/dreamshoot/seasonal/thanksgiving/hero-ai-thanksgiving-family-dinner.jpg",

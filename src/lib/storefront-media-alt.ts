@@ -292,7 +292,8 @@ export function storefrontGalleryMediaPairs(
     const image = typeof galleryImages[index] === "string" ? galleryImages[index].trim() : "";
     if (!image) continue;
     images.push(image);
-    alts.push(storefrontStoredMediaAlt(altItems[index + altOffset]));
+    const storedAlt = storefrontStoredMediaAlt(altItems[index + altOffset]);
+    alts.push(storedAlt || galleryFallbackScenes[index % galleryFallbackScenes.length]);
   }
   return { galleryImageAlts: alts, galleryImages: images };
 }

@@ -9,6 +9,7 @@ export const MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES = [
   "/ai-save-the-date/christmas",
   "/ai-save-the-date/thanksgiving",
   "/ai-save-the-date/new-year",
+  "/ai-save-the-date/easter",
   "/ai-save-the-date/mothers-day",
   "/ai-save-the-date/fathers-day",
   "/ai-save-the-date/halloween"
@@ -17,7 +18,8 @@ export const MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES = [
 // These routes stay available by direct URL, but are temporarily suppressed
 // from the public Save the Date navigation while their catalogue status is reviewed.
 export const MYDREAMSHOOTS_REMOVED_LEGACY_ROUTES = [
-  "/ai-save-the-date/wedding-anniversary"
+  "/ai-save-the-date/wedding-anniversary",
+  "/ai-save-the-date/easter"
 ] as const;
 
 export function isMydreamshootsRemovedLegacyRoute(path: string): boolean {
@@ -26,10 +28,12 @@ export function isMydreamshootsRemovedLegacyRoute(path: string): boolean {
 
 export const MYDREAMSHOOTS_STANDARD_SEO_ROUTES = [
   "/about-us",
+  "/creators-circle",
   "/best-packages",
   "/best-ai-image",
   "/best-ai-video",
   "/best-save-the-date",
+  "/partner-registration",
   "/pricing",
   "/faq",
   "/workflow",

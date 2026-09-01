@@ -18,6 +18,7 @@ const formalPaths = [
   "/ai-save-the-date/halloween",
   "/ai-save-the-date/thanksgiving",
   "/ai-save-the-date/new-year",
+  "/ai-save-the-date/easter",
   "/ai-save-the-date/mothers-day",
   "/ai-save-the-date/fathers-day"
 ];

@@ -248,6 +248,12 @@ function mediaObjectFit(image: VideoTopicImage): "object-cover" | "object-contai
 function optimizedTopicImageSrc(src: string): string {
   if (!src.startsWith("/assets/dreamshoot/")) return src;
   const youtubeMap: Record<string, string> = {
+    "youtube-card-01": "youtube-card-01",
+    "youtube-card-02": "youtube-card-02",
+    "youtube-card-03": "youtube-card-03",
+    "youtube-card-04": "youtube-card-04",
+    "youtube-card-05": "youtube-card-05",
+    "youtube-card-06": "youtube-card-06",
     "youtube-video-full-tutorial": "youtube-video-03",
     "youtube-video-review-comparison": "youtube-video-05",
     "youtube-video-interview-conversation": "youtube-video-04",
@@ -552,14 +558,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
       <section className="border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:py-24">
           <div>
-            <nav className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-normal text-white/45" aria-label="Breadcrumb">
-              <InternalLink className="text-[#c4b5fd] transition hover:text-white" href="/ai-video-generation" site={site}>AI Video Generation</InternalLink>
-              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
-              <span>Marketing & Commerce</span>
-              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
-              <span className="text-white/68">Video Ad</span>
-            </nav>
-            <p className="mt-8 text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.hero.eyebrow}</p>
+            <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.hero.eyebrow}</p>
             <h1 className="mt-5 max-w-[760px] text-balance text-4xl font-semibold leading-[0.96] tracking-normal text-white sm:text-6xl lg:text-7xl">{content.hero.title}</h1>
             <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">{content.hero.body}</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -1234,14 +1233,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
       <section className="border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:py-24">
           <div>
-            <nav className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-normal text-white/45" aria-label="Breadcrumb">
-              <InternalLink className="text-[#c4b5fd] transition hover:text-white" href="/ai-video-generation" site={site}>AI Video Generation</InternalLink>
-              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
-              <span>Marketing &amp; Commerce</span>
-              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
-              <span className="text-white/68">Brand Video</span>
-            </nav>
-            <p className="mt-8 text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.hero.eyebrow}</p>
+            <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.hero.eyebrow}</p>
             <h1 className="mt-5 max-w-[760px] text-balance text-4xl font-semibold leading-[0.96] tracking-normal text-white sm:text-6xl lg:text-7xl">{content.hero.title}</h1>
             <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">{content.hero.body}</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -1486,14 +1478,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
       <section className="border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:py-24">
           <div className="min-w-0">
-            <nav className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-normal text-white/45" aria-label="Breadcrumb">
-              <InternalLink className="text-[#c4b5fd] transition hover:text-white" href="/ai-video-generation" site={site}>AI Video Generation</InternalLink>
-              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
-              <span>Creative &amp; Lifestyle</span>
-              <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
-              <span className="text-white/68">{topicLabel}</span>
-            </nav>
-            <p className={`mt-8 text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{content.hero.eyebrow}</p>
+            <p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{content.hero.eyebrow}</p>
             <h1 className="mt-5 min-w-0 max-w-[760px] break-words text-balance text-4xl font-semibold leading-[0.96] tracking-normal text-white sm:text-6xl lg:text-7xl">{content.hero.title}</h1>
             <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">{content.hero.body}</p>
             <div className="mt-8 flex flex-wrap gap-3">

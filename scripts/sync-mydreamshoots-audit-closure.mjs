@@ -68,7 +68,7 @@ const legacyVideoThemeSlugs = new Set([
   "creator-intro-motion"
 ]);
 
-const unsupportedPublicNavigationHrefs = new Set(["/creators-circle"]);
+const unsupportedPublicNavigationHrefs = new Set();
 
 const exactReplacements = [
   ["Money-back guarantee", "Refund review"],

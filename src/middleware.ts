@@ -28,6 +28,7 @@ const HOP_BY_HOP_HEADERS = new Set([
 ]);
 const LOCAL_DEFAULT_STOREFRONT_PATHS = new Set(["/ai-image-generation", "/ai-video-generation", "/pricing", "/help"]);
 const LOCAL_DEFAULT_STOREFRONT_PREFIXES = ["/account", "/app", "/dashboard", "/login"];
+const MYDREAMSHOOTS_LEGACY_SITE_SLUGS = new Set(["dreamshoot", "mydreamshoot"]);
 // These aliases are also represented in the published route projection. Keep
 // the edge list limited to public MyDreamShoots migration paths so redirects
 // are emitted before an internal /site rewrite can turn them into 307/308.
@@ -222,6 +223,16 @@ function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse
   if (!hostMatchesSite) return undefined;
   const scopedPath = match[2] || "/";
   return NextResponse.redirect(publicRedirectUrlForRequest(request, scopedPath === "/" ? "/" : scopedPath), 301);
+}
+
+function mydreamshootsLegacySiteSlugRedirect(request: NextRequest): NextResponse | undefined {
+  const match = request.nextUrl.pathname.match(/^\/site\/([^/]+)(\/.*)?$/i);
+  const legacySlug = match?.[1]?.toLowerCase();
+  if (!legacySlug || !MYDREAMSHOOTS_LEGACY_SITE_SLUGS.has(legacySlug)) return undefined;
+
+  const target = request.nextUrl.clone();
+  target.pathname = `/site/mydreamshoots${match?.[2] ?? ""}`;
+  return NextResponse.redirect(target, 301);
 }
 
 function mydreamshootsLegacyPublicRedirect(request: NextRequest): NextResponse | undefined {
@@ -682,6 +693,8 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 export async function middleware(request: NextRequest) {
   const workspaceRedirect = mydreamshootsWorkspaceRedirect(request);
   if (workspaceRedirect) return finalizeStorefrontResponse(workspaceRedirect, request);
+  const legacySiteSlugRedirect = mydreamshootsLegacySiteSlugRedirect(request);
+  if (legacySiteSlugRedirect) return finalizeStorefrontResponse(legacySiteSlugRedirect, request);
   const legacyPublicRedirect = mydreamshootsLegacyPublicRedirect(request);
   if (legacyPublicRedirect) return finalizeStorefrontResponse(legacyPublicRedirect, request);
   const iconResponse = await storefrontIconResponse(request);

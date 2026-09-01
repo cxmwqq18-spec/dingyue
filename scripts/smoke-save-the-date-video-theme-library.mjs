@@ -32,6 +32,8 @@ assert.equal(parentVideoGenerationCategorySlugForChild(seasonal.slug), saveRoot.
 const saveThemes = themes.filter((theme) => expectedLove.includes(theme.slug) || expectedSeasonal.includes(theme.slug));
 assert.equal(saveThemes.length, 12, "Save the Date must have exactly 12 leaf themes");
 assert.equal(new Set(saveThemes.map((theme) => theme.slug)).size, 12, "Save the Date theme slugs must be unique");
+const weddingCeremonyTheme = themes.find((theme) => theme.slug === "wedding-ceremony");
+assert.equal(weddingCeremonyTheme?.imageUrl, "/assets/dreamshoot/seasonal/wedding-ceremony/hero-ai-wedding-ceremony-recessional.jpg", "wedding ceremony cover must use the color recessional image");
 for (const theme of saveThemes) {
   assert.equal(theme.categorySlug, expectedLove.includes(theme.slug) ? love.slug : seasonal.slug, `${theme.slug} has the wrong category`);
   assert.equal(theme.durationSeconds, 15, `${theme.slug} must default to 15 seconds`);

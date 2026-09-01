@@ -4303,8 +4303,6 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       items: [
         { title: "Explainer Video", body: "Explain what something is, why it matters, or how a system works.", href: "/ai-video-generation/explainer-video", linkLabel: "Explore Explainer Video" },
         { title: "Talking Head Video", body: "Use a presenter-led format for direct explanation, commentary, or delivery.", href: "/ai-video-generation/talking-head-video", linkLabel: "Explore Talking Head Video" },
-        { title: "AI Avatar Video", body: "Use a digital presenter when the avatar itself is part of the communication format.", href: "/ai-video-generation/ai-avatar-video", linkLabel: "Explore AI Avatar Video" },
-        { title: "Fitness Video", body: "Own movement-led workouts, exercise sequences, and training context.", href: "/ai-video-generation/fitness-video", linkLabel: "Explore Fitness Video" },
         { title: "Food Video", body: "Own cooking action, preparation, plating, service, and culinary visuals.", href: "/ai-video-generation/food-video", linkLabel: "Explore Food Video" },
         { title: "AI Video Generation", body: "Browse the full directory when the creative job is not yet clear.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" }
       ]

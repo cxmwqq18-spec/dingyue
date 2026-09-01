@@ -15,6 +15,7 @@ const expectedThemePaths = [
   "/ai-save-the-date/christmas",
   "/ai-save-the-date/thanksgiving",
   "/ai-save-the-date/new-year",
+  "/ai-save-the-date/easter",
   "/ai-save-the-date/mothers-day",
   "/ai-save-the-date/fathers-day",
   "/ai-save-the-date/halloween"
@@ -55,6 +56,7 @@ const expectedNavigation = {
     ["Halloween", "/ai-save-the-date/halloween"],
     ["Thanksgiving", "/ai-save-the-date/thanksgiving"],
     ["New Year", "/ai-save-the-date/new-year"],
+    ["Easter", "/ai-save-the-date/easter"],
     ["Mother's Day", "/ai-save-the-date/mothers-day"],
     ["Father's Day", "/ai-save-the-date/fathers-day"]
   ]

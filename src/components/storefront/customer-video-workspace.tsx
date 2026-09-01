@@ -878,6 +878,9 @@ export function CustomerVideoWorkspace({
     const hasChildren = children.length > 0;
     const contentExpanded = hasChildren ? categoryExpanded : themesExpanded;
     const categoryIsSelected = pickerCategory?.id === category.id;
+    const categoryCount = themeCountForCategory(category.id);
+    const categoryLabel = categoryCount > 0 ? `${category.label} ${categoryCount}` : category.label;
+    const categoryAction = hasExpandableContent ? (contentExpanded ? "Collapse" : "Expand") : "Select";
     const toggleCategoryContent = () => {
       if (!hasExpandableContent) {
         choosePickerCategory(category);
@@ -893,7 +896,7 @@ export function CustomerVideoWorkspace({
       <div key={category.id}>
         <div style={{ paddingLeft: `${Math.min(depth, 5) * 12}px` }}>
           <button
-            aria-label={hasExpandableContent ? (contentExpanded ? `Collapse ${category.label}` : `Expand ${category.label}`) : `Select ${category.label}`}
+            aria-label={`${categoryAction} ${categoryLabel}`}
             aria-expanded={hasExpandableContent ? contentExpanded : undefined}
             className={`flex min-w-0 w-full items-center rounded-[10px] py-1 text-left text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#31d4ff]/45 ${categoryIsSelected ? "bg-[#31d4ff]/12 text-[#bcefff]" : "text-white/68 hover:bg-white/[0.06] hover:text-white"}`}
             onClick={toggleCategoryContent}

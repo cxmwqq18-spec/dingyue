@@ -93,10 +93,8 @@ export const talkingHeadVideoContent: AiVideoTopicLandingContent = {
     title: "Choose the page that matches the viewer's job",
     intro: "Keep neighboring formats distinct so the viewer lands on the format that actually answers the question.",
     items: [
-      { title: "AI Avatar Video", body: "Owns synthetic presenter identity, avatar selection, voice, lip-sync, and multilingual virtual-presenter workflows.", href: "/ai-video-generation/ai-avatar-video", linkLabel: "Explore AI Avatar Video" },
       { title: "Explainer Video", body: "Owns diagrams, interfaces, charts, system relationships, and information-led explanation.", href: "/ai-video-generation/explainer-video", linkLabel: "Explore Explainer Video" },
       { title: "How-to Video", body: "Owns ordered task instruction, prerequisites, demonstrations, and visible checkpoints.", href: "/ai-video-generation/how-to-video", linkLabel: "Explore How-to Video" },
-      { title: "Corporate Video", body: "Owns company, culture, workplace, team, and organization-led communication.", href: "/ai-video-generation/corporate-video", linkLabel: "Explore Corporate Video" },
       { title: "AI Video Generation", body: "Browse the full directory when the creative job is not yet clear.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" }
     ]
   },

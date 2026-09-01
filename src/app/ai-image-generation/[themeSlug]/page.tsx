@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getSiteByHostCandidatesFromState } from "@/lib/domain-routing";
 import { findPage } from "@/lib/data";
 import { parsePublicCollectionRouteForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
+import { getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storefront-state";
 import { canResolveCollectionSlugForSite, renderStorefrontPage } from "@/lib/storefront-render";
 import { createPublishedSiteSnapshot } from "@/lib/storefront-context";
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "postgres" });
   const page = findPage(site, publicCollectionRootPathForSite(site)) ?? findPage(site, "/collections");
   if (!page) return {};
-  return metadataForPublishedStorefrontDirectoryPage({
+  const metadata = await metadataForPublishedStorefrontDirectoryPage({
     site,
     page,
     kind: "collection",
@@ -44,6 +45,22 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     creativePacks: state.creativePacks,
     snapshot
   });
+  const directoryContent = getSeoDirectoryContentForSite(site, "collection", route.collectionSlug);
+  return {
+    ...metadata,
+    title: directoryContent.title,
+    description: directoryContent.description,
+    openGraph: {
+      ...(metadata.openGraph ?? {}),
+      title: directoryContent.title,
+      description: directoryContent.description
+    },
+    twitter: {
+      ...(metadata.twitter ?? {}),
+      title: directoryContent.title,
+      description: directoryContent.description
+    }
+  };
 }
 
 export default async function ImageThemePage({

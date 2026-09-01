@@ -467,6 +467,39 @@ const collectionDirectory: Record<string, SeoDirectorySeed> = {
     ctaLabel: "Make Valentine Photos",
     ctaHref: "/tools/wedding-portraits"
   },
+  "engagement-photo": {
+    label: "Engagement Photo",
+    title: "AI Engagement Photos for Proposals & Announcements | myDreamshoots",
+    description: "Create proposal-inspired engagement portraits, announcement images, ring reveal scenes, and romantic couple story photos.",
+    keywords: "Engagement photos, Proposal, Announcement, Couple Story, Ring Reveal, myDreamshoots engagement",
+    h2: "12 AI Engagement Photo Examples for Proposals and Announcements",
+    h3: ["What this creates", "Best use cases", "Workflow and review"],
+    intro: "Use this theme when the photo set needs to feel like a proposal moment, engagement announcement, or polished couple story rather than a generic romantic portrait.",
+    details: [
+      "AI engagement portraits, proposal-style scenes, ring-focused crops, announcement-ready images, and private couple album options.",
+      "Engagement announcement posts, save-the-date drafts, and proposal keepsakes.",
+      "Only upload and publish photos of another person when you have permission."
+    ],
+    useCases: [
+      "Engagement announcement posts, save-the-date drafts, and proposal keepsakes",
+      "Couple portraits with ring, flowers, city lights, or soft outdoor mood",
+      "Private romantic albums before a real shoot or after a milestone",
+      "Card-ready crops for family messages, social posts, and wedding site drafts"
+    ],
+    workflow: [
+      "Upload recent solo or couple photos with clear faces and natural expressions.",
+      "Choose proposal, announcement, outdoor, studio, or cinematic couple styling.",
+      "Generate variations for portrait crops, card layouts, and private album covers.",
+      "Review faces, hands, jewelry, and mood before downloading favorites."
+    ],
+    internalLinks: [
+      { label: "Wedding Photo", href: "/ai-image-generation/wedding-photo" },
+      { label: "Valentines Photo", href: "/ai-image-generation/valentines-photo" },
+      { label: "Christmas Photo", href: "/ai-image-generation/christmas-photo" }
+    ],
+    ctaLabel: "Create Engagement Photos",
+    ctaHref: "/app/create"
+  },
   headshots: {
     label: "Headshots",
     title: "AI Headshot Generator for LinkedIn & Team Photos | myDreamshoots",
@@ -732,6 +765,75 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
       { label: "Review pricing and credits", href: "/pricing" }
     ],
     ctaLabel: "Start AI Video Generation",
+    ctaHref: "/app/create#step-video"
+  },
+  "explainer-video": {
+    label: "Explainer Video",
+    title: "AI Explainer Video Generator for Concepts & Product Explanations | myDreamshoots",
+    description: "Create AI explainer-video visuals for products, processes, data, technology, education, business frameworks, and user journeys from text or approved images.",
+    keywords: "ai explainer video generator, explainer video maker, AI product explainer video, process visualization video, data storytelling video, educational video generator, technology explainer video, business framework video",
+    h2: "ai explainer video generator for concepts and product explanations",
+    h3: ["Concept explanation guide", "Product, process, and data outputs", "Responsible review and publication"],
+    intro: "Explainer Video is for showing what something is, why it matters, or how a system works before opening the current video workspace.",
+    details: [
+      "Use it for products, workflows, diagrams, data stories, education, technology concepts, business frameworks, and user journeys.",
+      "Keep generated labels, numbers, charts, citations, UI text, and claims illustrative until verified or replaced with source material.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["Product walkthroughs", "Process maps", "Data stories", "Education and technology", "Business frameworks", "User journeys"],
+    workflow: ["Choose one explanatory job.", "Upload approved text or images.", "Define the visual hierarchy and sequence.", "Review the draft before publishing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore How-to Video", href: "/ai-video-generation/how-to-video" },
+      { label: "Explore Talking Head Video", href: "/ai-video-generation/talking-head-video" }
+    ],
+    ctaLabel: "Create Explainer Video Visuals",
+    ctaHref: "/app/create#step-video"
+  },
+  "how-to-video": {
+    label: "How-to Video",
+    title: "AI Tutorial Video Generator for Step-by-Step How-to Videos | myDreamshoots",
+    description: "Create AI tutorial-video visuals from text or approved images for step-by-step instructions, software walkthroughs, assembly, demonstrations, checkpoints, and training content.",
+    keywords: "ai tutorial video generator, how-to video maker, AI instructional video generator, step-by-step video maker, software tutorial video generator, assembly tutorial video, training video generator, product instruction video",
+    h2: "ai tutorial video generator for step-by-step how-to videos",
+    h3: ["Tutorial input guide", "Ordered action and checkpoint outputs", "Responsible instructional review"],
+    intro: "How-to Video is for action-led instruction with a starting state, ordered steps, and a visible checkpoint before opening the current video workspace.",
+    details: [
+      "Use it for setup, assembly, software walkthroughs, demonstrations, checkpoints, training, and final verification.",
+      "Treat generated labels, measurements, warnings, commands, safety statements, and product instructions as placeholders until verified.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["Setup and assembly", "Software walkthroughs", "Demonstrations", "Checkpoints", "Training content", "Verification scenes"],
+    workflow: ["Define the task goal.", "Show the starting state and prerequisites.", "Order the actions and verification step.", "Review the result before sharing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore Explainer Video", href: "/ai-video-generation/explainer-video" },
+      { label: "Explore Talking Head Video", href: "/ai-video-generation/talking-head-video" }
+    ],
+    ctaLabel: "Create How-to Video Visuals",
+    ctaHref: "/app/create#step-video"
+  },
+  "talking-head-video": {
+    label: "Talking Head Video",
+    title: "AI Talking Head Video Generator for Business & Social | myDreamshoots",
+    description: "Create AI talking head videos for business updates, training, product introductions, thought leadership, and social clips from a script or approved image.",
+    keywords: "ai talking head video generator, talking head video maker, direct-to-camera video generator, presenter video generator, business update video maker, training video generator, thought leadership video maker, social talking head video",
+    h2: "ai talking head video generator for direct-to-camera content",
+    h3: ["Presenter-led format", "Business and social outputs", "Review identity and claims"],
+    intro: "Talking Head Video is a direct-to-camera format where one presenter carries one clear message before opening the current video workspace.",
+    details: [
+      "Use it for business updates, training, product introductions, thought leadership, webinars, and social clips.",
+      "Review identity, expression, timing, framing, subtitles, and every factual claim before publishing.",
+      "The current CTA opens the existing video workspace so customers can review the available creation tools."
+    ],
+    useCases: ["Business updates", "Training and education", "Product introductions", "Thought leadership", "Social short-form", "Presenter clips"],
+    workflow: ["Choose the message and audience.", "Write a concise script.", "Set framing and delivery style.", "Review the draft before publishing."],
+    internalLinks: [
+      { label: "Browse AI Video Generation", href: "/ai-video-generation" },
+      { label: "Explore Explainer Video", href: "/ai-video-generation/explainer-video" },
+      { label: "Explore How-to Video", href: "/ai-video-generation/how-to-video" }
+    ],
+    ctaLabel: "Create a Talking Head Video",
     ctaHref: "/app/create#step-video"
   },
   "ai-photo-edit": {
@@ -1506,6 +1608,41 @@ function mydreamshootsCollectionSeedForRoot(root: MyDreamshootsThemeTaxonomy["ro
 
 function mydreamshootsCollectionSeedForItem(item: MyDreamshootsThemeTaxonomy["items"][number]): SeoDirectorySeed {
   const group = mydreamshootsThemeTaxonomyData.roots.find((root) => root.slug === item.groupSlug);
+  if (item.slug === "engagement-photo") {
+    return {
+      label: "Engagement Photo",
+      title: "AI Engagement Photos for Proposals & Announcements | myDreamshoots",
+      description: "Create proposal-inspired engagement portraits, announcement images, ring reveal scenes, and romantic couple story photos.",
+      keywords: "Engagement photos, Proposal, Announcement, Couple Story, Ring Reveal, myDreamshoots engagement",
+      h2: "12 AI Engagement Photo Examples for Proposals and Announcements",
+      h3: ["What this creates", "Best use cases", "Workflow and review"],
+      intro: "Use this theme when the photo set needs to feel like a proposal moment, engagement announcement, or polished couple story rather than a generic romantic portrait.",
+      details: [
+        "AI engagement portraits, proposal-style scenes, ring-focused crops, announcement-ready images, and private couple album options.",
+        "Engagement announcement posts, save-the-date drafts, and proposal keepsakes.",
+        "Only upload and publish photos of another person when you have permission."
+      ],
+      useCases: [
+        "Engagement announcement posts, save-the-date drafts, and proposal keepsakes",
+        "Couple portraits with ring, flowers, city lights, or soft outdoor mood",
+        "Private romantic albums before a real shoot or after a milestone",
+        "Card-ready crops for family messages, social posts, and wedding site drafts"
+      ],
+      workflow: [
+        "Upload recent solo or couple photos with clear faces and natural expressions.",
+        "Choose proposal, announcement, outdoor, studio, or cinematic couple styling.",
+        "Generate variations for portrait crops, card layouts, and private album covers.",
+        "Review faces, hands, jewelry, and mood before downloading favorites."
+      ],
+      internalLinks: [
+        { label: "Wedding Photo", href: "/ai-image-generation/wedding-photo" },
+        { label: "Valentines Photo", href: "/ai-image-generation/valentines-photo" },
+        { label: "Christmas Photo", href: "/ai-image-generation/christmas-photo" }
+      ],
+      ctaLabel: "Create Engagement Photos",
+      ctaHref: "/app/create"
+    };
+  }
   const subject = item.label;
   const lower = subject.toLowerCase();
   const itemSubject = /\bphotos?\b/i.test(subject) ? `${subject} Package` : `${subject} Photo Package`;
@@ -3120,9 +3257,11 @@ export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryK
     };
   }
   const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, normalizeDirectorySlug(rawSlug));
-  const item = publishedCopy && kind === "collection"
-    ? seoDirectoryContentFromPublishedCopy(publishedCopy, canonicalSlug, site)
-    : getSeoDirectoryContentForSite(site, kind, rawSlug);
+  const item = kind === "collection"
+    ? getSeoDirectoryContentForSite(site, kind, rawSlug)
+    : publishedCopy
+      ? seoDirectoryContentFromPublishedCopy(publishedCopy, canonicalSlug, site)
+      : getSeoDirectoryContentForSite(site, kind, rawSlug);
   const canonicalPath = item.canonicalPath;
   const publishedRoute = site?.id === "site_dreamshoot" && kind === "collection"
     ? mydreamshootsPublishedRouteForSlug(item.slug)

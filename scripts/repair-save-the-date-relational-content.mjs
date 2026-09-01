@@ -129,19 +129,19 @@ function repairPage(slug, source) {
   }
   if (slug === "/ai-save-the-date/wedding-ceremony") {
     assignBlockImages(json, "wedding_ceremony_reasons", [
-      "hero-ai-wedding-ceremony-first-kiss.jpg", "hero-ai-wedding-ceremony-vows.jpg",
-      "wedding-ceremony-bride-aisle.jpg", "wedding-ceremony-beach-processional.jpg",
-      "wedding-ceremony-guests-reaction.jpg", "wedding-ceremony-venue-setup.jpg"
+      "hero-ai-wedding-ceremony-recessional.jpg", "hero-ai-wedding-ceremony-vows.jpg",
+      "wedding-ceremony-beach-processional.jpg", "wedding-ceremony-church-atmosphere.jpg",
+      "wedding-ceremony-guests-reaction.jpg", "wedding-ceremony-bouquet-detail.jpg"
     ]);
     assignBlockImages(json, "wedding_ceremony_workflow", [
-      "wedding-ceremony-bride-aisle.jpg", "hero-ai-wedding-ceremony-vows.jpg",
-      "wedding-ceremony-ring-exchange.jpg", "wedding-ceremony-venue-setup.jpg"
+      "wedding-ceremony-beach-processional.jpg", "hero-ai-wedding-ceremony-vows.jpg",
+      "wedding-ceremony-ring-exchange.jpg", "wedding-ceremony-church-atmosphere.jpg"
     ]);
     assignBlockImages(json, "wedding_ceremony_scene_ideas", [
-      "hero-ai-wedding-ceremony-first-kiss.jpg", "hero-ai-wedding-ceremony-recessional.jpg", "hero-ai-wedding-ceremony-vows.jpg",
-      "wedding-ceremony-ring-exchange.jpg", "wedding-ceremony-church-atmosphere.jpg", "wedding-ceremony-bride-aisle.jpg",
-      "wedding-ceremony-guests-reaction.jpg", "wedding-ceremony-bouquet-detail.jpg", "wedding-ceremony-venue-setup.jpg",
-      "wedding-ceremony-officiant-wide.jpg", "wedding-ceremony-beach-processional.jpg"
+      "hero-ai-wedding-ceremony-recessional.jpg", "wedding-ceremony-church-atmosphere.jpg", "hero-ai-wedding-ceremony-vows.jpg",
+      "wedding-ceremony-ring-exchange.jpg", "wedding-ceremony-bouquet-detail.jpg", "wedding-ceremony-beach-processional.jpg",
+      "wedding-ceremony-guests-reaction.jpg", "wedding-ceremony-officiant-wide.jpg", "wedding-ceremony-church-atmosphere.jpg",
+      "wedding-ceremony-bouquet-detail.jpg", "wedding-ceremony-beach-processional.jpg"
     ]);
     json.sections.wedding_ceremony_definition.blocks[0].settings.text = "A ceremony story focuses on the event sequence from the processional through vows, rings, reactions, the first kiss, and the recessional. Proposal, engagement, invitation, and reception stories cover different moments.";
     removeSection(json, "wedding_ceremony_evidence", "evidence");
@@ -221,6 +221,11 @@ function repairPage(slug, source) {
     json.sections.mothers_day_family_match.settings.intro = "Mother's Day works naturally with family photos, including scenes with children, multi-generational gatherings, meaningful gifts, breakfast tables, and relaxed spring settings.";
     json.mediaManifest[7].caption = "Use a family-toast scene to include a multi-generational celebration or family gathering.";
   }
+  if (slug === "/ai-save-the-date/easter") {
+    json.sections.easter_faq.blocks[4].settings.answer = "Yes. Flowers, gifts, brunch scenes, self-care moments, and appreciation-focused imagery all work well for Easter.";
+    json.sections.easter_family_match.settings.intro = "Easter works naturally with family photos, including scenes with children, multi-generational gatherings, eggs, breakfast tables, and relaxed spring settings.";
+    json.mediaManifest[7].caption = "Use a family-toast scene to include a spring celebration or family gathering.";
+  }
   if (slug === "/ai-save-the-date/fathers-day") {
     const galleryId = "fathers_day_gallery";
     if (!json.sectionsOrder.includes(galleryId)) json.sectionsOrder.splice(6, 0, galleryId);
@@ -266,7 +271,7 @@ const targetSlugs = [
   "/ai-save-the-date/valentines-day", "/ai-save-the-date/engagement", "/ai-save-the-date/proposal",
   "/ai-save-the-date/save-the-date", "/ai-save-the-date/wedding-ceremony",
   "/ai-save-the-date/christmas", "/ai-save-the-date/halloween", "/ai-save-the-date/thanksgiving",
-  "/ai-save-the-date/new-year", "/ai-save-the-date/mothers-day", "/ai-save-the-date/fathers-day",
+  "/ai-save-the-date/new-year", "/ai-save-the-date/easter", "/ai-save-the-date/mothers-day", "/ai-save-the-date/fathers-day",
   "/ai-save-the-date/wedding-anniversary"
 ];
 

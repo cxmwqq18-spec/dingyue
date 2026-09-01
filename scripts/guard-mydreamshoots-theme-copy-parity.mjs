@@ -14,6 +14,7 @@ const pagePaths = [
   "/ai-save-the-date/save-the-date", "/ai-save-the-date/wedding-ceremony",
   "/ai-save-the-date/christmas", "/ai-save-the-date/halloween",
   "/ai-save-the-date/thanksgiving", "/ai-save-the-date/new-year",
+  "/ai-save-the-date/easter",
   "/ai-save-the-date/mothers-day", "/ai-save-the-date/fathers-day"
 ];
 const forbidden = /SEO\s*(?:page|copy)|page should|search intent|primary keyword|indexation|evidence gate|supplied taxonomy|belongs on the .* page|commercial use terms included|current evidence/i;

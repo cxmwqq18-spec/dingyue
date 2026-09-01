@@ -34,6 +34,8 @@
     "smoke:storefront-footer-route-consistency": "node scripts/smoke-storefront-footer-route-consistency.mjs",
     "repair:mydreamshoots-creators-circle": "node scripts/repair-mydreamshoots-creators-circle-page.mjs",
     "repair:mydreamshoots-creators-circle:apply": "node scripts/repair-mydreamshoots-creators-circle-page.mjs --apply",
+    "repair:mydreamshoots-partner-registration": "node scripts/repair-mydreamshoots-partner-registration-page.mjs",
+    "repair:mydreamshoots-partner-registration:apply": "node scripts/repair-mydreamshoots-partner-registration-page.mjs --apply",
     "smoke:storefront-mega-menu-dismiss": "node scripts/smoke-storefront-mega-menu-dismiss.mjs",
     "smoke:storefront-pricing-switch": "node scripts/smoke-storefront-pricing-switch.mjs",
     "smoke:storefront-dom-translation-guard": "node scripts/smoke-storefront-dom-translation-guard.mjs",
@@ -132,6 +134,7 @@
     "sync:mydreamshoots-video-theme-library:dry-run": "node scripts/sync-mydreamshoots-video-theme-library.mjs --dry-run",
     "sync:mydreamshoots-video-theme-library:rewrite": "node scripts/sync-mydreamshoots-video-theme-library.mjs --rewrite-prompts",
     "smoke:mydreamshoots-video-framework": "node scripts/smoke-mydreamshoots-video-framework.mjs",
+    "smoke:mydreamshoots-video-topic-links": "node scripts/smoke-mydreamshoots-video-topic-links.mjs",
     "smoke:mydreamshoots-video-topic-layout": "node scripts/smoke-mydreamshoots-video-topic-layout.mjs",
     "smoke:detail-directory-data": "node scripts/smoke-detail-directory-data.mjs",
     "smoke:mydreamshoots-talking-head-video": "node scripts/smoke-mydreamshoots-talking-head-video.mjs",
@@ -262,6 +265,7 @@
     "seed:aidreamcapes": "node scripts/migrate-aidreamcapes-demo.mjs",
     "clean:mydreamshoots-legacy-routes": "node scripts/clean-mydreamshoots-legacy-routes.mjs",
     "smoke:mydreamshoots-public-routes": "node scripts/smoke-mydreamshoots-public-routes.mjs",
+    "smoke:mydreamshoots-site-slug-alias": "node scripts/smoke-mydreamshoots-site-slug-alias.mjs",
     "smoke:mydreamshoots-image-detail-routes": "node scripts/smoke-mydreamshoots-image-detail-routes.mjs"
   },
   "dependencies": {

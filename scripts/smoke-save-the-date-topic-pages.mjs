@@ -4,6 +4,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
+import sharp from "sharp";
 import "./load-runtime-env.mjs";
 
 const SITE_ID = "site_dreamshoot";
@@ -17,6 +18,7 @@ const indexablePaths = [
   "/ai-save-the-date/halloween",
   "/ai-save-the-date/thanksgiving",
   "/ai-save-the-date/new-year",
+  "/ai-save-the-date/easter",
   "/ai-save-the-date/mothers-day",
   "/ai-save-the-date/fathers-day"
 ];
@@ -26,6 +28,7 @@ const expectedPages = [
   { path: "/ai-save-the-date/proposal", key: "proposal", media: 10, faq: 8, sections: ["hero", "definition", "use-cases", "story-flow", "workflow", "source-media", "accuracy", "faq", "final-cta"] },
   { path: "/ai-save-the-date/save-the-date", key: "save_date", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "workflow", "scene-ideas", "quality", "formats", "boundaries", "faq", "final-cta"] },
   { path: "/ai-save-the-date/wedding-ceremony", key: "wedding_ceremony", media: 11, faq: 9, sections: ["hero", "definition", "reasons", "sources", "workflow", "scene-ideas", "quality", "boundaries", "responsibility", "faq", "final-cta"] },
+  { path: "/ai-save-the-date/easter", key: "easter", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "quality", "workflow", "scene-ideas", "formats", "family-match", "faq", "final-cta"] },
   { path: "/ai-save-the-date/mothers-day", key: "mothers_day", media: 11, faq: 8, sections: ["hero", "definition", "use-cases", "quality", "workflow", "scene-ideas", "formats", "family-match", "faq", "final-cta"] },
   { path: "/ai-save-the-date/fathers-day", key: "fathers_day", media: 11, faq: 6, sections: ["hero", "definition", "scene-ideas", "quality", "workflow", "use-cases", "gallery", "faq", "final-cta"] }
 ];
@@ -89,6 +92,12 @@ const binaryHash = (asset) => {
   assert(fs.existsSync(file), `missing tracked engagement media: ${asset.src}`);
   return crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
 };
+const channelSpread = async (asset) => {
+  const file = path.join(process.cwd(), "public", asset.src.replace(/^\/+/, ""));
+  const stats = await sharp(file).stats();
+  const means = stats.channels.slice(0, 3).map((channel) => channel.mean);
+  return Math.max(...means) - Math.min(...means);
+};
 const engagementHashes = engagementManifest.map(binaryHash);
 const saveDateHashes = new Set(saveDateManifest.map(binaryHash));
 assert.equal(new Set(engagementHashes).size, engagementManifest.length, "engagement media must be byte-distinct");
@@ -96,14 +105,24 @@ assert(engagementHashes.every((hash) => !saveDateHashes.has(hash)), "engagement 
 
 const expectedImageMappings = [
   ["/ai-save-the-date/christmas", "christmas_video_ideas", ["hero-ai-christmas-family-gift.jpg", "ai-christmas-photo-capture.jpg", "ai-christmas-gift-wrapping.jpg", "ai-christmas-couple-market-lights.jpg"]],
-  ["/ai-save-the-date/wedding-ceremony", "wedding_ceremony_reasons", ["hero-ai-wedding-ceremony-first-kiss.jpg", "hero-ai-wedding-ceremony-vows.jpg", "wedding-ceremony-bride-aisle.jpg", "wedding-ceremony-beach-processional.jpg", "wedding-ceremony-guests-reaction.jpg", "wedding-ceremony-venue-setup.jpg"]],
-  ["/ai-save-the-date/wedding-ceremony", "wedding_ceremony_workflow", ["wedding-ceremony-bride-aisle.jpg", "hero-ai-wedding-ceremony-vows.jpg", "wedding-ceremony-ring-exchange.jpg", "wedding-ceremony-venue-setup.jpg"]]
+  ["/ai-save-the-date/easter", "easter_scene_ideas", ["hero-ai-mothers-day-family-breakfast.jpg", "hero-ai-mothers-day-garden-portrait.jpg", "hero-ai-mothers-day-gift-breakfast.jpg", "ai-mothers-day-brunch-table.jpg", "ai-mothers-day-family-baking.jpg", "ai-mothers-day-gift-still-life.jpg", "ai-mothers-day-phone-photo.jpg", "ai-mothers-day-family-toast.jpg", "ai-mothers-day-cozy-living-room.jpg", "ai-mothers-day-pet-portrait.jpg", "ai-mothers-day-spring-walk.jpg"]],
+  ["/ai-save-the-date/wedding-ceremony", "wedding_ceremony_reasons", ["hero-ai-wedding-ceremony-recessional.jpg", "hero-ai-wedding-ceremony-vows.jpg", "wedding-ceremony-beach-processional.jpg", "wedding-ceremony-church-atmosphere.jpg", "wedding-ceremony-guests-reaction.jpg", "wedding-ceremony-bouquet-detail.jpg"]],
+  ["/ai-save-the-date/wedding-ceremony", "wedding_ceremony_workflow", ["wedding-ceremony-beach-processional.jpg", "hero-ai-wedding-ceremony-vows.jpg", "wedding-ceremony-ring-exchange.jpg", "wedding-ceremony-church-atmosphere.jpg"]]
 ];
 for (const [pagePath, sectionId, filenames] of expectedImageMappings) {
   const section = pageByPath.get(pagePath).draftJson.sections[sectionId];
   assert.equal(section.blocks.length, filenames.length, `${pagePath}: ${sectionId} block count`);
   section.blocks.forEach((block, index) => assert.equal(block.settings?.imageUrl?.split("/").pop(), filenames[index], `${pagePath}: ${sectionId} image mapping ${index + 1}`));
 }
+
+const weddingCeremonyPage = pageByPath.get("/ai-save-the-date/wedding-ceremony");
+assert(weddingCeremonyPage, "/ai-save-the-date/wedding-ceremony: missing page for color spread checks");
+const weddingCeremonyColorFailures = [];
+for (const asset of weddingCeremonyPage.mediaManifest || []) {
+  const spread = await channelSpread(asset);
+  if (spread < 5) weddingCeremonyColorFailures.push({ src: asset.src, spread: Number(spread.toFixed(2)) });
+}
+assert.equal(weddingCeremonyColorFailures.length, 0, `/ai-save-the-date/wedding-ceremony: grayscale media must not surface: ${JSON.stringify(weddingCeremonyColorFailures)}`);
 
 console.log(JSON.stringify({
   siteId: SITE_ID,

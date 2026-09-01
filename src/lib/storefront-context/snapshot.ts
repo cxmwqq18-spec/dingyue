@@ -438,6 +438,8 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
     return { kind: "not_found", status: 404, path: requestedPath };
   }
   if (isPrimaryMydreamshootsSite(snapshot.site) && requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) {
+    const directPage = snapshot.pages.find((candidate) => normalizePath(candidate.slug) === MYDREAMSHOOTS_WEDDING_INVITATION_PATH);
+    if (directPage) return { kind: "render", status: 200, path: requestedPath, pageId: directPage.id };
     const sourcePage = snapshot.pages.find((candidate) => normalizePath(candidate.slug) === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH && candidate.pageType === "ai_tool");
     if (sourcePage) return { kind: "render", status: 200, path: requestedPath, pageId: sourcePage.id };
     return { kind: "not_found", status: 404, path: requestedPath };

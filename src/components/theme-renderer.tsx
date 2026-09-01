@@ -11140,7 +11140,7 @@ function SectionView({
             <div className="mt-7 flex flex-wrap items-center gap-2 text-xs text-white/62">
               <span className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 text-white/76">{displayCards.length} {spanishXbyPackageWall ? "paquetes visibles" : "visible packs"}</span>
               <Link className="rounded-full border border-white/14 bg-white/[0.08] px-3 py-1.5 transition hover:border-white/28 hover:text-white" href={hrefFor(site, "/collections")}>
-                {spanishXbyPackageWall ? "Todos" : "All"}
+                {spanishXbyPackageWall ? "Paquetes" : "All"}
               </Link>
               {categoryLinks.map((category) => {
                 const categorySlug = dreamshootCategorySlug(category);
@@ -11274,7 +11274,7 @@ function SectionView({
                 className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-medium text-[#14161a] transition hover:-translate-y-0.5"
                 href={hrefFor(site, "/collections")}
               >
-                {spanishXbyPackageWall ? "Explorar todos los paquetes" : "Explore all photo packages"}
+                {spanishXbyPackageWall ? "Explorar paquetes" : "Explore all photo packages"}
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </Link>
             </div>
@@ -12061,7 +12061,7 @@ function SectionView({
               </p>
             </div>
             <Link className="inline-flex items-center gap-2 rounded-full border border-white/14 px-5 py-3 text-sm font-semibold text-white/76 transition hover:border-white/28 hover:text-white" href={hrefFor(site, setting(section, "ctaHref", "/collections"))}>
-              {spanishXbyRelated ? "Ver todo" : selectedPageCopy?.relatedCtaLabel ?? setting(section, "ctaLabel", "View all packages")}
+              {spanishXbyRelated ? "Ver relacionados" : selectedPageCopy?.relatedCtaLabel ?? setting(section, "ctaLabel", "View all packages")}
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </Link>
           </div>
@@ -13514,7 +13514,7 @@ function SectionView({
         creditLabel={spanishXbyCatalog ? "Coste en creditos visible antes de generar" : "Credit cost shown before generation"}
         directoryLabel={setting(section, "directoryLabel", spanishXbyCatalog ? "Directorio completo" : "Full theme directory")}
         directorySubtitle={setting(section, "directorySubtitle", spanishXbyCatalog ? "Explora todas las categorias y temas disponibles." : "Browse every available theme by category on the full collections page.")}
-        directoryTitle={spanishXbyCatalog ? "Explora todos los paquetes disponibles." : "Browse all available photo packs."}
+        directoryTitle={spanishXbyCatalog ? "Explora paquetes disponibles." : "Browse all available photo packs."}
         featuredCount={featuredCount}
         initialCategory={selectedCategory || "all"}
         locale={spanishXbyCatalog ? "es" : "en"}

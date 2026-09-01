@@ -176,10 +176,12 @@ function buildHomepageShowcases(params: {
   return items;
 }
 
-const STANDARD_MYDREAMSHOOTS_MEDIA_PATHS = ["/about-us", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/faq", "/workflow"] as const;
+const STANDARD_MYDREAMSHOOTS_MEDIA_PATHS = ["/about-us", "/creators-circle", "/partner-registration", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/faq", "/workflow"] as const;
 const SAVE_THE_DATE_EDITORIAL_PATHS = MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES;
 const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_MEDIA_PATHS)[number] | (typeof SAVE_THE_DATE_EDITORIAL_PATHS)[number], string> = {
   "/about-us": "MyDreamShoots company overview with the private AI photo workflow",
+  "/creators-circle": "MyDreamShoots Creators Circle partnership and creator collaboration page",
+  "/partner-registration": "MyDreamShoots partner registration application page for creator collaborations",
   "/best-packages": "Published MyDreamShoots photo packages arranged for visual theme comparison",
   "/best-ai-image": "Published AI image examples selected from the current MyDreamShoots collection",
   "/best-ai-video": "Published AI video examples selected from the current MyDreamShoots themes",
@@ -197,6 +199,7 @@ const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_M
   "/ai-save-the-date/christmas": "Christmas family, gifts, portraits, and seasonal celebration scenes",
   "/ai-save-the-date/thanksgiving": "Thanksgiving family dinner, gratitude, and seasonal gathering scenes",
   "/ai-save-the-date/new-year": "New Year fireworks, countdown, celebration, and fresh-start scenes",
+  "/ai-save-the-date/easter": "Easter family gathering, spring color, treats, and celebration scenes",
   "/ai-save-the-date/mothers-day": "Mother's Day family, flowers, gifts, brunch, and spring celebration scenes",
   "/ai-save-the-date/fathers-day": "Father's Day family, gifts, outdoor activities, and celebration scenes",
   "/ai-save-the-date/halloween": "Halloween costume, couple, family, pet, pumpkin, party, and haunted-scene ideas"

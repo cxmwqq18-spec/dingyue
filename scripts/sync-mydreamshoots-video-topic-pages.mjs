@@ -550,6 +550,24 @@ const nonPublicVideoTopicPaths = [
   "/ai-video-generation/image-to-video"
 ];
 
+const publicVideoTopicPaths = new Set([
+  "/ai-video-generation",
+  ...pages.map((page) => pagePath(page.slug))
+]);
+
+function assertPublicVideoTopicComparisonLinks(content, slug) {
+  const invalidLinks = [];
+  for (const [index, item] of (content.comparison?.items ?? []).entries()) {
+    const href = typeof item?.href === "string" ? item.href.split(/[?#]/)[0] : "";
+    if (href.startsWith("/ai-video-generation/") && !publicVideoTopicPaths.has(href)) {
+      invalidLinks.push(`comparison.items[${index}].href=${href}`);
+    }
+  }
+  if (invalidLinks.length > 0) {
+    throw new Error(`unpublished_video_topic_comparison_links:${slug}:${invalidLinks.join(",")}`);
+  }
+}
+
 function publicAssetPath(assetUrl) {
   if (!assetUrl?.startsWith("/assets/")) return "";
   const cleanUrl = assetUrl.split(/[?#]/)[0];
@@ -558,7 +576,13 @@ function publicAssetPath(assetUrl) {
 
 function assertPublicAssetExists(assetUrl, context) {
   const assetPath = publicAssetPath(assetUrl);
-  if (assetPath && !fs.existsSync(assetPath)) throw new Error(`missing_public_asset:${context}:${assetUrl}`);
+  if (assetPath && !fs.existsSync(assetPath)) {
+    const cleanYoutube = assetUrl.match(/^\/assets\/dreamshoot\/youtube-video\/(youtube-card-[0-9]+)\.webp(?:[?#].*)?$/i);
+    const cleanYoutubePath = cleanYoutube
+      ? publicAssetPath(`/assets/dreamshoot/generated/video-topic-clean/youtube-video/${cleanYoutube[1]}.webp`)
+      : "";
+    if (!cleanYoutubePath || !fs.existsSync(cleanYoutubePath)) throw new Error(`missing_public_asset:${context}:${assetUrl}`);
+  }
   const optimizedAssetUrl = assetUrl.startsWith("/assets/dreamshoot/") ? assetUrl.split(/[?#]/)[0].replace(/\.png$/i, ".webp") : "";
   if (!optimizedAssetUrl || optimizedAssetUrl === assetUrl.split(/[?#]/)[0]) return;
   const optimizedAssetPath = publicAssetPath(optimizedAssetUrl);
@@ -631,6 +655,7 @@ function videoTopicContentSeedForSlug(slug) {
       ? videoTopicContentSeeds.talkingHeadVideoContent
       : videoTopicContentSeeds.aiVideoTopicLandingContentByKey[slug];
   if (!content) throw new Error(`missing_video_topic_content_seed:${slug}`);
+  assertPublicVideoTopicComparisonLinks(content, slug);
   return content;
 }
 

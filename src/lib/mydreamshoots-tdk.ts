@@ -36,6 +36,11 @@ function titleForTopic(topic: string): string {
 }
 
 const pathOverrides: Record<string, Pick<PageTdk, "title" | "description">> = {
+  "/ai-image-generation/engagement-photo": {
+    title: "AI Engagement Photos for Proposals & Announcements | myDreamshoots",
+    description:
+      "Create proposal-inspired engagement portraits, announcement images, ring reveal scenes, and romantic couple story photos."
+  },
   "/blog/profile-cards-photo-package-guide": {
     title: "AI Profile Cards and Personal Brand Images Guide | myDreamshoots",
     description:
@@ -118,10 +123,10 @@ export function resolveMydreamshootsPageTdk(
   const override = pathOverrides[canonicalPath];
   const topic = topicForPath(canonicalPath);
   const title =
-    clean(tdk.title) || clean(override?.title) ||
+    clean(override?.title) || clean(tdk.title) ||
     `${titleForTopic(topic)} | myDreamshoots`;
   const description =
-    clean(tdk.description) || clean(override?.description) ||
+    clean(override?.description) || clean(tdk.description) ||
     `Explore ${topic} with myDreamshoots AI photo and video tools.`;
   return {
     title,

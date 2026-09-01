@@ -456,14 +456,15 @@ try {
       "/ai-save-the-date/save-the-date",
       "/ai-save-the-date/wedding-ceremony"
     ];
-    const seasonalNavigationPaths = [
-      "/ai-save-the-date/christmas",
-      "/ai-save-the-date/halloween",
-      "/ai-save-the-date/thanksgiving",
-      "/ai-save-the-date/new-year",
-      "/ai-save-the-date/mothers-day",
-      "/ai-save-the-date/fathers-day"
-    ];
+const seasonalNavigationPaths = [
+  "/ai-save-the-date/christmas",
+  "/ai-save-the-date/halloween",
+  "/ai-save-the-date/thanksgiving",
+  "/ai-save-the-date/new-year",
+  "/ai-save-the-date/easter",
+  "/ai-save-the-date/mothers-day",
+  "/ai-save-the-date/fathers-day"
+];
     const navigationPaths = [...loveNavigationPaths, ...seasonalNavigationPaths];
     const parsedByPath = new Map(parsed.map((item) => [item.pagePath, item]));
     const navigationItem = (href, sortOrder) => {
