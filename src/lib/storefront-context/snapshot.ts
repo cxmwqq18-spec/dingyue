@@ -118,7 +118,11 @@ function creativePacksFromPublishedCollections(
       description: ref.summary,
       category: ref.categorySlug ?? ref.collectionSlug,
       aiAppSlug: ref.collectionSlug,
-      status: ref.status === "published" ? "active" : "draft",
+      // Route/media review status controls indexing, not whether an existing
+      // package can be viewed. Keep packs with a real primary image active so
+      // focused detail pages render their own gallery instead of falling back
+      // to the legacy generic hero image.
+      status: media?.primaryImage ? "active" : "draft",
       creditCost: ref.creditCost,
       outputCount: ref.outputCount,
       trainingRequired: false,
