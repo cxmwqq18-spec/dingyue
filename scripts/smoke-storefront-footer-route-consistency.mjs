@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 const storefrontBaseUrl = (process.env.STOREFRONT_FOOTER_BASE_URL || "http://127.0.0.1:3002/site/mydreamshoots").replace(/\/$/, "");
 const expectedProfile = (process.env.STOREFRONT_FOOTER_EXPECTED_PROFILE || "mydreamshoots").trim().toLowerCase();
-const routePaths = (process.env.STOREFRONT_FOOTER_PATHS || "/,/pricing,/about-us,/contact-us,/workflow,/best-packages,/ai-video-generation,/blog")
+const routePaths = (process.env.STOREFRONT_FOOTER_PATHS || "/,/pricing,/about-us,/contact-us,/workflow,/best-packages,/ai-video-generation,/ai-image-generation/unblur-image,/blog")
   .split(",")
   .map((value) => value.trim())
   .filter(Boolean)
