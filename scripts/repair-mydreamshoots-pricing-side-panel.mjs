@@ -29,6 +29,36 @@ const restoredSidePanelItems = [
   ["4K Ultra-High quality outputs", "Premium exports support higher-resolution delivery where available."]
 ];
 const sidePanelItems = mode === "clear" ? [] : restoredSidePanelItems;
+const restoredFeatures = {
+  Starter: [
+    "Create private photo albums after generation completes",
+    "AI photo editor with prompts",
+    "Special AI photo filters",
+    "Create photos by writing prompts in seconds",
+    "Create AI videos",
+    "Magic Upscaler for high-res images",
+    "No watermark"
+  ],
+  Pro: [
+    "Create private photo albums after generation completes",
+    "AI photo editor with prompts",
+    "Special AI photo filters",
+    "Create photos by writing prompts in seconds",
+    "Create AI videos",
+    "Magic Upscaler for high-res images",
+    "No watermark"
+  ],
+  Premium: [
+    "Create private photo albums after generation completes",
+    "AI photo editor with prompts",
+    "Special AI photo filters",
+    "Create photos by writing prompts in seconds",
+    "Create AI videos",
+    "Magic Upscaler for high-res images",
+    "No watermark",
+    "4K Ultra-High quality outputs"
+  ]
+};
 
 const databaseUrl = process.env.DATABASE_URL?.trim();
 if (!databaseUrl) throw new Error("DATABASE_URL is required");
@@ -76,9 +106,11 @@ try {
   assert(before, `site ${siteId} not found`);
   const subscriptions = before.products.filter((product) => product.type === "subscription");
   assert.equal(subscriptions.length, 3, "expected exactly three subscription products");
-  const needsUpdate = subscriptions.filter((product) => mode === "clear"
-    ? JSON.stringify(product.metadata?.features ?? null) !== "[]" || JSON.stringify(product.metadata?.sidePanelItems ?? null) !== "[]"
-    : JSON.stringify(product.metadata?.sidePanelItems ?? null) !== JSON.stringify(sidePanelItems));
+  const needsUpdate = subscriptions.filter((product) => {
+    const expectedFeatures = restoredFeatures[product.name] ?? [];
+    return JSON.stringify(product.metadata?.features ?? null) !== JSON.stringify(expectedFeatures)
+      || JSON.stringify(product.metadata?.sidePanelItems ?? null) !== JSON.stringify(sidePanelItems);
+  });
   console.log(JSON.stringify({ target, siteId, operation: mode, mode: apply ? "apply" : "dry-run", affectedProducts: needsUpdate.map((product) => product.name), featureCount: mode === "clear" ? 0 : undefined, sidePanelItemCount: sidePanelItems.length }, null, 2));
   if (!apply || !needsUpdate.length) {
     // Dry-run and already-repaired environments need no write or publication.
@@ -90,7 +122,8 @@ try {
         data: {
           metadata: {
             ...(product.metadata ?? {}),
-            ...(mode === "clear" ? { features: [], sidePanelItems: [] } : { sidePanelItems: clone(sidePanelItems) })
+            features: clone(restoredFeatures[product.name] ?? []),
+            sidePanelItems: clone(sidePanelItems)
           }
         }
       });

@@ -84,19 +84,44 @@ const subscriptionMetadata = {
   Starter: {
     badgeLabel: "Photo plan",
     summary: "A practical starting plan for first private albums and quick profile sets.",
-    features: [],
+    features: [
+      "Create private photo albums after generation completes",
+      "AI photo editor with prompts",
+      "Special AI photo filters",
+      "Create photos by writing prompts in seconds",
+      "Create AI videos",
+      "Magic Upscaler for high-res images",
+      "No watermark"
+    ],
     sidePanelItems: []
   },
   Pro: {
     badgeLabel: "Most popular",
     summary: "More credits for several albums, edits, and style tests.",
-    features: [],
+    features: [
+      "Create private photo albums after generation completes",
+      "AI photo editor with prompts",
+      "Special AI photo filters",
+      "Create photos by writing prompts in seconds",
+      "Create AI videos",
+      "Magic Upscaler for high-res images",
+      "No watermark"
+    ],
     sidePanelItems: []
   },
   Premium: {
     badgeLabel: "Best value",
     summary: "The highest credit allowance for repeat albums, video ideas, and premium outputs.",
-    features: [],
+    features: [
+      "Create private photo albums after generation completes",
+      "AI photo editor with prompts",
+      "Special AI photo filters",
+      "Create photos by writing prompts in seconds",
+      "Create AI videos",
+      "Magic Upscaler for high-res images",
+      "No watermark",
+      "4K Ultra-High quality outputs"
+    ],
     sidePanelItems: []
   }
 };
