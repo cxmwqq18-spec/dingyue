@@ -129,7 +129,9 @@ function buildHomepageShowcases(params: {
     ?.flatMap((group) => group.items.filter((item) => item.status === "published" && !(isPrimaryMydreamshootsSite(site) && isMydreamshootsRemovedLegacyRoute(item.href))).map((item) => ({ ...item, group }))) ?? [];
   for (const item of saveDateItems) {
     const entity = pageEntities.find((candidate) => candidate.canonicalPath === item.href && candidate.status === "published" && candidate.indexable);
-    const pageMediaItem = entity ? standardMedia.find((candidate) => candidate.pageEntityId === entity.pageEntityId && candidate.status === "ready") : undefined;
+    const standardMediaItem = entity ? standardMedia.find((candidate) => candidate.pageEntityId === entity.pageEntityId && candidate.status === "ready") : undefined;
+    const topicMediaItem = entity ? pageMedia.find((candidate) => candidate.pageEntityId === entity.pageEntityId && candidate.status === "ready") : undefined;
+    const pageMediaItem = standardMediaItem || topicMediaItem;
     if (!entity || !pageMediaItem) continue;
     items.push({
       id: `homepage-save-the-date-${item.slug}`,
@@ -141,12 +143,12 @@ function buildHomepageShowcases(params: {
       category: item.group.label,
       sortOrder: item.sortOrder,
       imageUrl: pageMediaItem.primaryImage,
-      imageAlt: pageMediaItem.primaryImageAlt,
+      imageAlt: standardMediaItem?.primaryImageAlt || topicMediaItem?.imageAlts[0] || item.imageAlt || item.label,
       status: "published",
       indexable: true,
       sitemapEligible: true,
       entityRevision: entity.pageRevision,
-      mediaRevision: pageMediaItem.revision
+      mediaRevision: (standardMediaItem && "revision" in standardMediaItem ? standardMediaItem.revision : undefined) || topicMediaItem?.entityRevision || ""
     });
   }
 
@@ -991,7 +993,7 @@ export function assertMydreamshootsPublicationCountContract(siteId: string, snap
   const saveTheDateItems = (snapshot.publishedHomepageShowcases ?? []).filter((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
   const saveTheDateCounts = countBy(saveTheDateItems, (item) => item.category ?? "Uncategorized");
   const saveTheDateIds = new Set(saveTheDateItems.map((item) => item.id));
-  if (saveTheDateIds.size !== saveTheDateItems.length || Object.values(saveTheDateCounts).reduce((sum, count) => sum + count, 0) !== saveTheDateItems.length) {
+  if (saveTheDateItems.length !== 12 || saveTheDateIds.size !== saveTheDateItems.length || saveTheDateCounts["Love & Wedding"] !== 6 || saveTheDateCounts["Seasonal Holidays"] !== 6) {
     throw new RelationalStoreError("mydreamshoots_save_the_date_count_contract_failed", 409);
   }
 

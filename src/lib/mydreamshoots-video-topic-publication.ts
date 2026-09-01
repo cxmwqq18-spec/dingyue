@@ -9,6 +9,7 @@ import {
 } from "@/lib/mydreamshoots-video-framework";
 import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/talking-photo-content";
 import { mydreamshootsKeywordsForPath } from "@/lib/mydreamshoots-tdk";
+import { MYDREAMSHOOTS_WEDDING_INVITATION_PATH } from "@/lib/save-the-date-routes";
 import { storefrontSourceImageAlt } from "@/lib/storefront-media-alt";
 import type {
   PublishedLinkRef,
@@ -306,7 +307,10 @@ export function compileMydreamshootsVideoTopicPublication(
 
   for (const source of sources) {
     const canonicalPath = source.content.seo.canonicalPath;
-    if (canonicalPath !== source.page.slug) continue;
+    const expectedCanonicalPath = source.slug === "wedding-invitation"
+      ? MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+      : source.page.slug;
+    if (canonicalPath !== expectedCanonicalPath) continue;
     const entityId = pageEntityId(source.slug);
     const images = topicImages(source.content);
     const hero = source.content.hero.image;
