@@ -11535,8 +11535,11 @@ function SectionView({
       ? galleryImagesForPack(site, selectedPack, 12)
       : galleryImagesForCollection(site, selectedPacks, 12);
     const selectedCategoryImage = selectedCategory?.imageUrl ? mediaAssetUrl(site, selectedCategory.imageUrl) : "";
+    // Theme cover files can include a blurred decorative surround. Prefer the
+    // first finished gallery image so the detail card always shows the actual
+    // sharp output edge-to-edge.
     const selectedHeroImage = selectedPack
-      ? packHeroImage(site, selectedPack)
+      ? galleryImagesForPack(site, selectedPack, 1)[0] ?? packHeroImage(site, selectedPack)
       : selectedCategoryImage || (selectedPacks[0] ? packImage(site, selectedPacks[0]) : rawSelectedGalleryImages[0] || fallbackHeroImages[0]);
     const selectedGalleryImages = selectedPack
       ? galleryImagesForPack(site, selectedPack, 12, [selectedHeroImage])
@@ -11659,7 +11662,7 @@ function SectionView({
             </div>
           ) : null}
           {isCollectionDetail ? (
-            <>
+            <DreamshootShowcasePreviewClient>
               <div className="grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,0.75fr)] lg:items-start">
                 <div className={selectedPanelClass}>
                   <p className={taxonomyEyebrowClass}>{setting(section, "eyebrow", "Photo package library")}</p>
@@ -11693,7 +11696,7 @@ function SectionView({
                 <div className="w-full overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] lg:max-w-[540px] lg:justify-self-end">
                   <div className={selectedDetailImages.length === 1 ? "grid items-start gap-3" : "grid grid-cols-2 items-start gap-3"}>
                     {selectedDetailImages.map((image, index) => (
-	                      <StorefrontNaturalImage
+                      <StorefrontSafeImage
 	                        alt={selectedPack
 	                          ? creativePackAltForSite({ imageUrl: image, index, pack: selectedPack, role: "cover", site })
 	                          : cardImageAltForSite(site, {
@@ -11706,7 +11709,7 @@ function SectionView({
 	                              role: "cover",
 	                              title: localizedDynamicTitle
 	                            })}
-                        className="rounded-[18px] bg-zinc-900"
+                        className="aspect-[4/3] rounded-[18px] bg-zinc-900"
                         fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "high" : "low"}
                         imageClassName="transition duration-500"
                         key={`${image}_${index}_detail`}
@@ -11831,7 +11834,7 @@ function SectionView({
                   </div>
                 </div>
               ) : null}
-            </>
+            </DreamshootShowcasePreviewClient>
           ) : (
             <PackageTaxonomyClient
               cards={taxonomyClientCards}
