@@ -1007,6 +1007,11 @@ function toPublicSiteShell(
     draftJson: page.contentJson,
     publishedJson: page.contentJson
   }));
+  const publicProfile = profileRecord
+    ? "livePages" in record
+      ? toStorefrontProfile({ ...profileRecord, publishedJson: profileRecord.draftJson })
+      : toStorefrontProfile(profileRecord)
+    : undefined;
   return {
     id: record.id,
     name: record.name,
@@ -1024,7 +1029,7 @@ function toPublicSiteShell(
       payoutsEnabled: Boolean(record.connect?.payoutsEnabled)
     },
     themeSettings: publicThemeSettings,
-    storefrontProfile: toStorefrontProfile(profileRecord),
+    storefrontProfile: publicProfile,
     // ThemePage is an internal compatibility shape only. Public data comes
     // exclusively from LivePage.contentJson and has no fallback source.
     pages: pageRecords.map((page) => toThemePage(page)),
@@ -2106,79 +2111,9 @@ async function loadStorefrontCustomerRuntimeStateForSite(params: StorefrontCusto
 }
 
 async function loadStorefrontRuntimeStateForSite(siteId: string): Promise<PlatformState | undefined> {
-  const site = await prisma.site.findUnique({
-    where: { id: siteId },
-    include: siteRuntimeInclude
-  });
-  if (!site) return undefined;
-
-  const [
-    siteDomains,
-    products,
-    siteAiApps,
-    toolCategories,
-    toolMenuItems,
-    videoThemeCategories,
-    creativePackCategories,
-    creativePacks,
-    mediaAssets,
-    customers,
-    customerSessions,
-    subscriptions,
-    orders,
-    jobs,
-    assetUploads,
-    ledger,
-    customerModels,
-    albums
-  ] = await Promise.all([
-    prisma.siteDomain.findMany({ where: { siteId }, orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }] }),
-    prisma.product.findMany({ where: { siteId }, include: { prices: true }, orderBy: [{ status: "asc" }, { createdAt: "asc" }] }),
-    prisma.siteAiApp.findMany({ where: { siteId }, include: { aiApp: true }, orderBy: [{ enabled: "desc" }, { routeKey: "asc" }] }),
-    loadToolCategoriesForSite(siteId),
-    loadToolMenuItemsForSite(siteId),
-    prisma.videoThemeCategory.findMany({ where: { siteId }, orderBy: [{ status: "asc" }, { sortOrder: "asc" }, { label: "asc" }] }),
-    prisma.creativePackCategory.findMany({ where: { siteId }, include: { parent: true }, orderBy: [{ status: "asc" }, { parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }] }),
-    prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: { include: { parent: true } } }, orderBy: [{ status: "asc" }, { createdAt: "asc" }] }),
-    prisma.mediaAsset.findMany({ where: { siteId }, orderBy: [{ createdAt: "desc" }, { id: "asc" }] }),
-    prisma.customer.findMany({ where: { siteId }, include: { balance: true }, orderBy: [{ createdAt: "asc" }], take: fullSiteRuntimeLimits.customers }),
-    prisma.customerSession.findMany({ where: { siteId }, orderBy: { createdAt: "desc" }, take: fullSiteRuntimeLimits.customerSessions }),
-    prisma.subscription.findMany({ where: { siteId }, orderBy: { createdAt: "desc" }, take: fullSiteRuntimeLimits.subscriptions }),
-    prisma.order.findMany({ where: { siteId }, orderBy: { createdAt: "desc" }, take: fullSiteRuntimeLimits.orders }),
-    prisma.generationJob.findMany({ where: { siteId }, orderBy: { updatedAt: "desc" }, take: fullSiteRuntimeLimits.jobs }),
-    prisma.assetUpload.findMany({ where: { siteId }, orderBy: { createdAt: "desc" }, take: fullSiteRuntimeLimits.assetUploads }),
-    prisma.creditLedger.findMany({ where: { siteId }, orderBy: { createdAt: "desc" }, take: fullSiteRuntimeLimits.ledger }),
-    prisma.customerModel.findMany({ where: { siteId }, orderBy: { updatedAt: "desc" }, take: fullSiteRuntimeLimits.customerModels }),
-    prisma.album.findMany({ where: { siteId, status: "ready" }, orderBy: { updatedAt: "desc" }, take: fullSiteRuntimeLimits.albums })
-  ]);
-
-  const mappedMediaAssets = mediaAssets.map(toMediaAsset);
-  const mappedSite = {
-    ...toSite(site),
-    mediaAssets: mappedMediaAssets
-  };
-
-  return emptyPlatformState({
-    sites: [mappedSite],
-    siteDomains: siteDomains.map(toSiteDomain),
-    products: products.map(mapProduct),
-    siteAiApps: siteAiApps.map(toSiteAiApp),
-    toolCategories: toolCategories.map(toToolCategory),
-    toolMenuItems: toolMenuItems.map(toToolMenuItem),
-    videoThemeCategories: videoThemeCategories.map(toVideoThemeCategory),
-    creativePackCategories: creativePackCategories.map(toCreativePackCategory),
-    creativePacks: creativePacks.map(toCreativePack),
-    mediaAssets: mappedMediaAssets,
-    customers: customers.map(mapCustomer),
-    customerSessions: customerSessions.map(toCustomerSessionRelational),
-    subscriptions: subscriptions.map(mapSubscriptionRuntime),
-    orders: orders.map(mapOrderRuntime),
-    jobs: jobs.map(mapGenerationJob),
-    assetUploads: assetUploads.map(toAssetUploadRelational),
-    ledger: ledger.map(mapCreditLedger),
-    customerModels: customerModels.map(toCustomerModelRelational),
-    albums: albums.map(toAlbumRelational)
-  });
+  // Public SSR is live-state only. Keep this compatibility entrypoint on the
+  // same LivePage/ThemeSettings draft projection as the public runtime.
+  return loadStorefrontPublicRuntimeState({ id: siteId });
 }
 
 export const getStorefrontRuntimeStateByHost = cache(async (host: string | null | undefined): Promise<PlatformState | undefined> => {
@@ -2629,8 +2564,15 @@ export type CustomerWorkspaceBootstrapRelational = {
 
 export async function getPublishedVideoGenerationNavigationForSite(siteId: string): Promise<PublishedVideoNavigationProjection[]> {
   if (!isMydreamshootsVideoFrameworkSiteId(siteId)) return [];
-  const pages = await prisma.themePage.findMany({ where: { siteId }, orderBy: { slug: "asc" } });
-  return compileMydreamshootsVideoTopicPublication(pages.map(toThemePage), siteId as "site_dreamshoot" | "site_grownstride_test").navigation;
+  const pages = await prisma.livePage.findMany({
+    where: { siteId },
+    orderBy: { slug: "asc" },
+    select: { id: true, siteId: true, pageType: true, templateKey: true, slug: true, title: true, contentJson: true }
+  });
+  return compileMydreamshootsVideoTopicPublication(
+    pages.map((page) => toThemePage({ ...page, draftJson: page.contentJson, publishedJson: page.contentJson })),
+    siteId as "site_dreamshoot" | "site_grownstride_test"
+  ).navigation;
 }
 
 function watermarkedCreativePackCategoryForWorkspace(category: CreativePackCategory | undefined): CreativePackCategory | undefined {
