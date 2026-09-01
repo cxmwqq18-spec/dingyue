@@ -1250,9 +1250,9 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
               </div>
             ) : null}
           </div>
-          <figure className="relative min-w-0 w-full lg:justify-self-end" data-video-topic-hero-media>
-            <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]" style={{ aspectRatio: "16 / 9" }}>
-              <DirectTopicHeroCards images={heroPreview} leadAspectRatio="16 / 9" />
+          <figure className="relative min-w-0 w-full lg:max-w-[390px] lg:justify-self-end" data-video-topic-hero-media>
+            <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]" style={{ aspectRatio: "9 / 16" }}>
+              <DirectTopicHeroCards images={heroPreview} leadAspectRatio="9 / 16" />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
               <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />
