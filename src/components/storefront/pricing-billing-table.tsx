@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 
@@ -28,23 +28,34 @@ export function PricingBillingTable({
   plans: PricingPlan[]; sidePanels: Record<BillingCycle, PricingSidePanel>; aidreamcapes: boolean; locale?: "en" | "es";
 }) {
   const [activeBillingCycle, setActiveBillingCycle] = useState<BillingCycle>(initialBillingCycle);
+  const pendingScrollY = useRef<number | null>(null);
 
   useEffect(() => {
     setActiveBillingCycle(initialBillingCycle);
   }, [initialBillingCycle]);
 
+  useEffect(() => {
+    const targetScrollY = pendingScrollY.current;
+    if (targetScrollY === null || typeof window === "undefined") return;
+    pendingScrollY.current = null;
+    window.scrollTo({ top: targetScrollY, behavior: "auto" });
+    const frame = window.requestAnimationFrame(() => {
+      if (Math.abs(window.scrollY - targetScrollY) > 1) window.scrollTo({ top: targetScrollY, behavior: "auto" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [activeBillingCycle]);
+
   function selectBillingCycle(cycle: BillingCycle) {
     if (cycle === activeBillingCycle) return;
+    if (typeof window !== "undefined") pendingScrollY.current = window.scrollY;
     setActiveBillingCycle(cycle);
     if (typeof window === "undefined") return;
 
     // Keep the URL shareable without invoking a route transition or the browser's hash scroll.
-    const scrollY = window.scrollY;
     const url = new URL(window.location.href);
     url.searchParams.set("billing", cycle);
     url.hash = `pricing-${cycle}`;
     window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
-    if (window.scrollY !== scrollY) window.scrollTo({ top: scrollY, behavior: "auto" });
   }
 
   const renderCycle = (billingCycle: BillingCycle) => {
