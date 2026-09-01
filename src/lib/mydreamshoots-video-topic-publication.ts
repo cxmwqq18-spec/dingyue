@@ -135,6 +135,7 @@ export function resolveWeddingInvitationTopicContent(page: Pick<ThemePage, "slug
 }
 
 export function dedicatedVideoTopicContentFromPageJson(pageJson: ThemePageJson): VideoTopicContent | undefined {
+  if (!Array.isArray(pageJson.sectionsOrder) || !pageJson.sections || typeof pageJson.sections !== "object") return undefined;
   for (const sectionId of pageJson.sectionsOrder) {
     const section = pageJson.sections[sectionId];
     if (section?.type === "ai_video_topic_landing") {

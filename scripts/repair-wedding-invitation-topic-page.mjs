@@ -81,11 +81,13 @@ try {
   assert(livePage, "missing_wedding_invitation_live_page");
   assert(themePage, "missing_wedding_invitation_theme_page");
 
-  const source = livePage.contentJson?.sectionsOrder?.length ? livePage : themePage;
+  // LivePage is the only public content source. The legacy ThemePage row is
+  // mirrored for compatibility but must never be used to reconstruct content.
+  const source = livePage;
   const content = resolveWeddingInvitationTopicContent({
     slug,
     title: source.title,
-    draftJson: source.contentJson ?? source.draftJson ?? source.publishedJson ?? {}
+    draftJson: source.contentJson ?? {}
   }, canonicalPath);
   assert(content, "missing_wedding_invitation_topic_content");
   const pageJson = buildPageJson(content, canonicalPath);

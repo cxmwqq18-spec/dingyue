@@ -63,7 +63,7 @@ const seasonalPaths = [
 const validPathSet = new Set([...lovePaths, ...seasonalPaths]);
 
 function firstMedia(page) {
-  const json = page?.draftJson || page?.publishedJson;
+  const json = page?.contentJson;
   const direct = json?.mediaManifest?.find((item) => item?.src && item?.alt);
   if (direct) return direct;
   const topic = Object.values(json?.sections || {}).find((section) => section?.type === "ai_video_topic_landing")?.settings?.content;
@@ -73,9 +73,12 @@ function firstMedia(page) {
 }
 
 function pageForPath(pages, pathName) {
-  return pages.find((page) => page.slug === pathName
-    || page.draftJson?.seo?.canonicalPath === pathName
-    || page.publishedJson?.seo?.canonicalPath === pathName);
+  const sourcePath = pathName === "/ai-save-the-date/wedding-invitation"
+    ? "/ai-video-generation/wedding-invitation"
+    : pathName;
+  return pages.find((page) => page.slug === pathName || page.slug === sourcePath
+    || page.contentJson?.seo?.canonicalPath === pathName
+    || page.contentJson?.seo?.canonical === pathName);
 }
 
 function normalizePageJson(pageJson, pathName, label) {
@@ -89,11 +92,12 @@ function normalizePageJson(pageJson, pathName, label) {
 }
 
 try {
-  const record = await prisma.site.findUnique({ where: { id: siteId }, include: { pages: { orderBy: { slug: "asc" } }, settings: true, domains: true, storefrontProfile: true, mediaAssets: true, connect: true } });
+  const record = await prisma.site.findUnique({ where: { id: siteId }, include: { pages: { orderBy: { slug: "asc" } }, livePages: { orderBy: { slug: "asc" } }, settings: true, domains: true, storefrontProfile: true, mediaAssets: true, connect: true } });
   if (!record) throw new Error(`Site not found: ${siteId}`);
-  const sourcePage = record.pages.find((page) => page.slug === "/ai-save-the-date/save-the-date") || record.pages.find((page) => page.slug === "/ai-save-the-date/engagement");
+  const livePages = record.livePages || [];
+  const sourcePage = livePages.find((page) => page.slug === "/ai-save-the-date/save-the-date") || livePages.find((page) => page.slug === "/ai-save-the-date/engagement");
   if (!sourcePage) throw new Error("Missing source Save the Date page");
-  const sourceJson = sourcePage.publishedJson?.sectionsOrder?.length ? sourcePage.publishedJson : sourcePage.draftJson;
+  const sourceJson = sourcePage.contentJson;
   const pageWrites = new Map();
   for (const pathName of [...validPathSet]) {
     const existing = pageForPath(record.pages, pathName);
@@ -104,10 +108,10 @@ try {
     pageWrites.set(pathName, { id: pageId, siteId, pageType: "standard-content", templateKey: "save-the-date-editorial", slug: pathName, title: `AI ${label} | myDreamshoots`, draftJson: json, publishedJson: {} });
   }
   const allPages = [...record.pages, ...pageWrites.values()];
-  const settings = clone(record.settings?.draftJson || record.settings?.publishedJson || {});
+  const settings = clone(record.settings?.draftJson || {});
   const itemFor = (pathName, sortOrder) => {
-    const page = pageForPath(allPages, pathName);
-    const json = page?.draftJson || page?.publishedJson;
+    const page = pageForPath(livePages, pathName);
+    const json = page?.contentJson;
     const topic = Object.values(json?.sections || {}).find((section) => section?.type === "ai_video_topic_landing")?.settings?.content;
     const media = firstMedia(page);
     return { label: routeLabel.get(pathName) || pathName, slug: pathName.split("/").pop(), href: pathName, status: "published", sortOrder, description: String(topic?.seo?.description || json?.seo?.description || `Create ${routeLabel.get(pathName)} photos and videos with AI.`).replace(/^#\s*/, "").trim(), ...(media ? { imageUrl: media.src, imageAlt: media.alt } : {}) };
@@ -124,9 +128,9 @@ try {
     for (const page of allPages.filter((candidate) => validPathSet.has(candidate.slug))) {
       const nextJson = pageWrites.has(page.slug)
         ? pageWrites.get(page.slug).draftJson
-        : ["/ai-save-the-date/halloween"].includes(page.slug)
-          ? normalizePageJson(page.draftJson?.sectionsOrder?.length ? page.draftJson : page.publishedJson, page.slug, routeLabel.get(page.slug))
-          : clone(page.draftJson?.sectionsOrder?.length ? page.draftJson : page.publishedJson);
+          : ["/ai-save-the-date/halloween"].includes(page.slug)
+          ? normalizePageJson(page.draftJson, page.slug, routeLabel.get(page.slug))
+          : clone(page.draftJson);
       const contractSections = nextJson.sectionsOrder.map((id) => nextJson.sections[id]).filter(Boolean);
       const faqSection = contractSections.find((section) => section.type === "faq");
       nextJson.contentContract = {
@@ -144,7 +148,7 @@ try {
       }
     }
     for (const page of allPages.filter((candidate) => /cookie/i.test(candidate.slug) || /cookie policy/i.test(candidate.title))) {
-      const json = clone(page.draftJson?.sectionsOrder?.length ? page.draftJson : page.publishedJson);
+      const json = clone(page.draftJson);
       json.seo = { ...(json.seo || {}), canonicalPath: page.slug, canonical: `https://www.mydreamshoots.com${page.slug}`, index: false, follow: true, title: json.seo?.title || "Cookie Policy | myDreamshoots", description: json.seo?.description || "Learn how myDreamshoots uses cookies and similar technologies on this website." };
       await tx.themePage.update({ where: { id: page.id }, data: { draftJson: json } });
     }

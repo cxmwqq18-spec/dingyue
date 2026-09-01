@@ -11540,7 +11540,7 @@ function SectionView({
     // sharp output edge-to-edge.
     const selectedHeroImage = selectedPack
       ? galleryImagesForPack(site, selectedPack, 1)[0] ?? packHeroImage(site, selectedPack)
-      : selectedCategoryImage || (selectedPacks[0] ? packImage(site, selectedPacks[0]) : rawSelectedGalleryImages[0] || fallbackHeroImages[0]);
+      : rawSelectedGalleryImages[0] || selectedCategoryImage || (selectedPacks[0] ? packImage(site, selectedPacks[0]) : fallbackHeroImages[0]);
     const selectedGalleryImages = selectedPack
       ? galleryImagesForPack(site, selectedPack, 12, [selectedHeroImage])
       : galleryImagesForCollection(site, selectedPacks, 12, [selectedHeroImage]);
