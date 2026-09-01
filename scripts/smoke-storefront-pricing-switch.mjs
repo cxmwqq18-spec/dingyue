@@ -19,7 +19,7 @@ try {
   assert.equal(response?.status(), 200, "pricing page must render successfully");
   await page.waitForLoadState("networkidle", { timeout: 30_000 }).catch(() => undefined);
 
-  const quarterlyTab = page.locator('nav[aria-label="Billing periods"] a[data-storefront-instant-filter="true"][href*="billing=quarter"]').first();
+  const quarterlyTab = page.locator('nav[aria-label="Billing periods"] button[data-storefront-instant-filter="true"]').filter({ hasText: "Quarterly" }).first();
   await quarterlyTab.waitFor({ state: "visible", timeout: 30_000 });
   requestsAfterClick.length = 0;
   page.on("request", (request) => requestsAfterClick.push(request.url()));

@@ -447,7 +447,7 @@ try {
       fs.chmodSync(targetPath, 0o644);
     }
   }
-  const siteRecord = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
+  const siteRecord = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, connect: true } });
   if (!siteRecord) throw new Error(`Site not found: ${siteId}`);
   await prisma.$transaction(async (tx) => {
     const settings = siteRecord.settings?.draftJson || siteRecord.settings?.publishedJson || {};
@@ -515,7 +515,7 @@ try {
       }
     }
   }, { maxWait: 20_000, timeout: 120_000 });
-  const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
+  const fresh = await prisma.site.findUnique({ where: { id: siteId }, include: { domains: true, pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true, mediaAssets: true, connect: true } });
   const site = toSite(fresh);
   const packs = await prisma.creativePack.findMany({ where: { siteId }, include: { categoryRecord: true } });
   const products = await prisma.product.findMany({ where: { siteId }, include: { prices: true } });

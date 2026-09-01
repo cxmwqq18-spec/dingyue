@@ -83,12 +83,8 @@ function normalizePageJson(pageJson, pathName, label) {
 }
 
 try {
-  const record = await prisma.site.findUnique({ where: { id: siteId }, include: { pages: { orderBy: { slug: "asc" } }, settings: true, domains: true, storefrontProfile: true, mediaAssets: true, activePublication: { include: { publication: true } }, publications: { orderBy: [{ version: "desc" }, { publishedAt: "desc" }], take: 1 }, connect: true } });
+  const record = await prisma.site.findUnique({ where: { id: siteId }, include: { pages: { orderBy: { slug: "asc" } }, settings: true, domains: true, storefrontProfile: true, mediaAssets: true, connect: true } });
   if (!record) throw new Error(`Site not found: ${siteId}`);
-  const previousPublication = record.activePublication?.publication?.version
-    ? await prisma.themePublication.findFirst({ where: { siteId, version: { lt: record.activePublication.publication.version } }, orderBy: { version: "desc" } })
-    : undefined;
-  const previousPages = new Map((previousPublication?.snapshot?.pages || []).map((page) => [page.slug, page.publishedJson]));
   const sourcePage = record.pages.find((page) => page.slug === "/ai-save-the-date/save-the-date") || record.pages.find((page) => page.slug === "/ai-save-the-date/engagement");
   if (!sourcePage) throw new Error("Missing source Save the Date page");
   const sourceJson = sourcePage.publishedJson?.sectionsOrder?.length ? sourcePage.publishedJson : sourcePage.draftJson;
@@ -123,7 +119,7 @@ try {
         ? pageWrites.get(page.slug).draftJson
         : ["/ai-save-the-date/halloween"].includes(page.slug)
           ? normalizePageJson(page.draftJson?.sectionsOrder?.length ? page.draftJson : page.publishedJson, page.slug, routeLabel.get(page.slug))
-          : clone(previousPages.get(page.slug) || (page.draftJson?.sectionsOrder?.length ? page.draftJson : page.publishedJson));
+          : clone(page.draftJson?.sectionsOrder?.length ? page.draftJson : page.publishedJson);
       const contractSections = nextJson.sectionsOrder.map((id) => nextJson.sections[id]).filter(Boolean);
       const faqSection = contractSections.find((section) => section.type === "faq");
       nextJson.contentContract = {
