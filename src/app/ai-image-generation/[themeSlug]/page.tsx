@@ -46,19 +46,27 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     snapshot
   });
   const directoryContent = getSeoDirectoryContentForSite(site, "collection", route.collectionSlug);
+  const engagementPhotoMeta = route.collectionSlug === "engagement-photo"
+    ? {
+        title: "AI Engagement Photos for Proposals & Announcements | myDreamshoots",
+        description: "Create proposal-inspired engagement portraits, announcement images, ring reveal scenes, and romantic couple story photos."
+      }
+    : undefined;
+  const finalTitle = engagementPhotoMeta?.title ?? directoryContent.title;
+  const finalDescription = engagementPhotoMeta?.description ?? directoryContent.description;
   return {
     ...metadata,
-    title: directoryContent.title,
-    description: directoryContent.description,
+    title: finalTitle,
+    description: finalDescription,
     openGraph: {
       ...(metadata.openGraph ?? {}),
-      title: directoryContent.title,
-      description: directoryContent.description
+      title: finalTitle,
+      description: finalDescription
     },
     twitter: {
       ...(metadata.twitter ?? {}),
-      title: directoryContent.title,
-      description: directoryContent.description
+      title: finalTitle,
+      description: finalDescription
     }
   };
 }

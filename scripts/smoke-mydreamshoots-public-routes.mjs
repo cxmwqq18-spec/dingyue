@@ -219,6 +219,11 @@ async function main() {
     }
   }
 
+  const weddingInvitationResult = await fetchRoute(baseUrl, weddingInvitationCanonicalRoute);
+  if (weddingInvitationResult.status !== 200 || !/Create a Wedding Invitation Reveal Video/i.test(weddingInvitationResult.text) || /About this video theme/i.test(weddingInvitationResult.text)) {
+    failures.push({ kind: "wedding_invitation_render_content", route: weddingInvitationCanonicalRoute, expected: "dedicated topic landing content", actual: weddingInvitationResult.status, finalUrl: weddingInvitationResult.finalUrl });
+  }
+
   for (const route of hiddenVideoRoutes) {
     const result = await fetchRoute(baseUrl, route, { redirect: "manual", readBody: false });
     if (result.status !== 404) {

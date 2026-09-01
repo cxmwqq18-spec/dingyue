@@ -506,6 +506,22 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if (isCollectionRequest) {
     const collectionRoute = parsePublicCollectionRouteForSite(site, path);
     if (!collectionRoute) return {};
+    if (collectionRoute.collectionSlug === "engagement-photo") {
+      const title = "AI Engagement Photos for Proposals & Announcements | myDreamshoots";
+      const description = "Create proposal-inspired engagement portraits, announcement images, ring reveal scenes, and romantic couple story photos.";
+      return {
+        title,
+        description,
+        openGraph: {
+          title,
+          description
+        },
+        twitter: {
+          title,
+          description
+        }
+      };
+    }
     if (collectionRoute.collectionSlug && !isSpanishStorefrontSite(site)) {
       const disposition = resolvePublishedRouteDisposition(snapshot, collectionRoute.canonicalPath);
       const knownLeafRoute = snapshot.publishedRoutes.some((route) => route.disposition === "render" && route.routeKind === "ai-image-theme-leaf" && route.canonicalPath === collectionRoute.canonicalPath);

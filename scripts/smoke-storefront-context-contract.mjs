@@ -21,6 +21,7 @@ const { buildStorefrontJsonLd } = jiti("../src/lib/theme/json-ld.ts");
 const pageSeo = {
   title: "Page-owned title",
   description: "Page-owned description",
+  keywords: "page-owned keyword one, page-owned keyword two",
   canonicalPath: "/",
   robots: { index: true, follow: true }
 };
@@ -160,6 +161,7 @@ assert.deepEqual(resolveStorefrontBindings("30-day auto-delete.", context).missi
 assert.equal(resolveStorefrontBindings("Training policy - {LIVE_TRAINING_POLICY_STATEMENT}", context).value, "Training policy - Customer media is not used to train models.");
 const metadata = metadataForSingleThemePage(bundle.site, bundle.page, context);
 assert.equal(metadata.description, context.seo.description);
+assert.equal(metadata.keywords, context.seo.keywords, "page keywords must reach Next metadata output");
 assert.equal(metadata.openGraph.description, context.seo.description);
 assert.equal(metadata.twitter.description, context.seo.description);
 const homeGraph = buildStorefrontJsonLd({ site: bundle.site, page: bundle.page, pageJson, pagePath: "/", routeMode: "host", context })[0]["@graph"];

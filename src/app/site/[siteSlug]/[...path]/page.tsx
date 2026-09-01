@@ -355,7 +355,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     if (resolvePublishedRouteDisposition(snapshot, collectionRootPageSlug).kind !== "render") return {};
     const page = findPage(site, collectionRootPageSlug) ?? findPage(site, "/collections");
     if (collectionRoute.collectionSlug && page) {
-      return metadataForPublishedStorefrontDirectoryPage({
+      const metadata = await metadataForPublishedStorefrontDirectoryPage({
         site,
         page,
         kind: "collection",
@@ -365,6 +365,26 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
         creativePacks: state.creativePacks,
         snapshot
       });
+      if (collectionRoute.collectionSlug === "engagement-photo") {
+        const title = "AI Engagement Photos for Proposals & Announcements | myDreamshoots";
+        const description = "Create proposal-inspired engagement portraits, announcement images, ring reveal scenes, and romantic couple story photos.";
+        return {
+          ...metadata,
+          title,
+          description,
+          openGraph: {
+            ...(metadata.openGraph ?? {}),
+            title,
+            description
+          },
+          twitter: {
+            ...(metadata.twitter ?? {}),
+            title,
+            description
+          }
+        };
+      }
+      return metadata;
     }
     return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
   }

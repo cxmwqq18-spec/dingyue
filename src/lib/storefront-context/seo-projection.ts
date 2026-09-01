@@ -29,8 +29,10 @@ export function normalizeCanonicalPath(value: unknown, fallback = "/"): string {
     }
   }
   const path = raw.split("?")[0]?.split("#")[0] || fallback || "/";
-  if (path === "/") return "/";
-  return `/${path.replace(/^\/+|\/+$/g, "")}`;
+  const sitePathMatch = path.match(/^\/site\/[^/]+(\/.*)?$/i);
+  const publicPath = sitePathMatch ? (sitePathMatch[1] || "/") : path;
+  if (publicPath === "/") return "/";
+  return `/${publicPath.replace(/^\/+|\/+$/g, "")}`;
 }
 
 export function canonicalPathForPage(page: Pick<ThemePage, "slug" | "publishedJson">): string {

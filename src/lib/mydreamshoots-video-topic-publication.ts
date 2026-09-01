@@ -93,8 +93,18 @@ function isPublicVideoTopicPath(path: string): boolean {
   return Boolean(match && isMydreamshootsPublicVideoGenerationTopicSlug(match[1]));
 }
 
-function legacyWeddingInvitationContent(page: Pick<ThemePage, "slug" | "title" | "draftJson">): AiVideoTopicLandingContent | undefined {
+export function resolveWeddingInvitationTopicContent(page: Pick<ThemePage, "slug" | "title" | "draftJson">, canonicalPath = page.slug): AiVideoTopicLandingContent | undefined {
   if (page.slug !== "/ai-video-generation/wedding-invitation") return undefined;
+  const dedicated = dedicatedVideoTopicContentFromPageJson(page.draftJson);
+  if (dedicated && "foundation" in dedicated && "guidance" in dedicated) {
+    return {
+      ...dedicated,
+      seo: {
+        ...dedicated.seo,
+        canonicalPath
+      }
+    };
+  }
   const seo = page.draftJson.seo ?? {};
   const entry = Object.values(page.draftJson.sections ?? {}).find((section) => section.type === "ai_tool_entry")?.settings ?? {};
   const imageUrl = typeof entry.imageUrl === "string" && entry.imageUrl.trim()
@@ -106,7 +116,7 @@ function legacyWeddingInvitationContent(page: Pick<ThemePage, "slug" | "title" |
     : "Create a private wedding invitation reveal video with readable names, dates, venue details, and paper texture.";
   const image = { src: imageUrl, alt: "Couple reviewing wedding invitation cards at a reception table.", width: 1800, height: 1200 };
   return {
-    seo: { title, description, keywords: typeof seo.keywords === "string" ? seo.keywords : "AI wedding invitation video maker, wedding invitation reveal video, save the date video", canonicalPath: page.slug },
+    seo: { title, description, keywords: typeof seo.keywords === "string" ? seo.keywords : "AI wedding invitation video maker, wedding invitation reveal video, save the date video", canonicalPath },
     hero: { eyebrow: "AI VIDEO THEME", title: "Create a Wedding Invitation Reveal Video", body: description, primaryCta: "Create Wedding Invitation Video", secondaryCta: "Browse AI Video Generation", availabilityNote: "Private workspace review before sharing.", rightsCopy: "Use invitation artwork and event details you own or have permission to use.", imageNote: "Keep names, dates, venue details, and supplied wording readable.", image },
     useCases: { eyebrow: "INVITATION VIDEO JOBS", title: "Turn Stationery Into a Clear Event Moment", intro: "Build a short reveal around the details guests need to see.", items: [
       { title: "Invitation suite reveal", body: "Show the envelope, card, liner, seal, and complete suite in a readable sequence.", problem: "Guests need the full invitation context.", cta: "Reveal the suite", image },
@@ -146,7 +156,7 @@ function sourcesFromPages(pages: Array<Pick<ThemePage, "id" | "pageType" | "slug
   return pages.flatMap((page) => {
     if (!isPublicVideoTopicPath(page.slug)) return [];
     const slug = page.slug.slice("/ai-video-generation/".length);
-    const content = dedicatedVideoTopicContentFromPageJson(page.draftJson) ?? legacyWeddingInvitationContent(page);
+    const content = dedicatedVideoTopicContentFromPageJson(page.draftJson) ?? resolveWeddingInvitationTopicContent(page);
     return content ? [{ page, slug, content }] : [];
   });
 }
