@@ -670,11 +670,10 @@ const publicMetadataSiteSelect = {
   },
   settings: {
     select: {
-      draftJson: true,
-      publishedJson: true
+      draftJson: true
     }
   },
-  storefrontProfile: true,
+  storefrontProfile: { select: liveStorefrontProfileSelect },
 } satisfies Prisma.SiteSelect;
 type PublicMetadataSiteRecord = Prisma.SiteGetPayload<{ select: typeof publicMetadataSiteSelect }>;
 const collectionDetailCreativePackSelect = {
