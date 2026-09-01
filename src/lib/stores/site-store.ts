@@ -1535,7 +1535,28 @@ const getStorefrontPublicCollectionSiteShellBySlug = cache(async (slug: string):
         orderBy: { updatedAt: "desc" },
         select: collectionDetailSiteSelect
       });
-      return site ?? undefined;
+      if (!site) return undefined;
+
+      // Collection directory/detail reads intentionally start with a small
+      // page set. The header and footer are site-global, however, so include
+      // every page referenced by that shell before the publication snapshot
+      // computes publishedPaths. Otherwise detail pages hide valid guarded
+      // footer links (privacy, refunds, terms, etc.) while the homepage shows
+      // them from its broader runtime query.
+      const loadedPageSlugs = new Set(site.livePages.map((page) => page.slug));
+      const missingNavigationPageSlugs = Array.from(new Set(
+        storefrontGlobalShellPageSlugs(site.settings?.draftJson)
+          .flatMap((pageSlug) => publicRuntimePageSlugs(pageSlug) ?? [pageSlug])
+      )).filter((pageSlug) => !loadedPageSlugs.has(pageSlug));
+      if (!missingNavigationPageSlugs.length) return site;
+      const navigationPages = await prisma.livePage.findMany({
+        where: { siteId: site.id, slug: { in: missingNavigationPageSlugs } },
+        orderBy: { slug: "asc" },
+        select: publicRuntimeSiteSelect.livePages.select
+      });
+      return navigationPages.length
+        ? { ...site, livePages: [...site.livePages, ...navigationPages].sort((left, right) => left.slug.localeCompare(right.slug)) }
+        : site;
     },
     0
   );
