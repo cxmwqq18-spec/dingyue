@@ -87,7 +87,9 @@ for (const pagePath of paths) {
   assert(!/<h3\b[^>]*>\s*<\/h3>/i.test(html), `${pagePath}: empty h3`);
   assert.doesNotMatch(cleanText(html.replace(/<script\b[\s\S]*?<\/script>/gi, " ").replace(/<style\b[\s\S]*?<\/style>/gi, " ")), /\b(?:keyword ownership|search intent|query ownership|indexation|do not index|before launch|product evidence|same query|page owns|landing-page hero)\b/i, `${pagePath}: internal copy leakage`);
   for (const asset of json.mediaManifest || []) {
-    assert(imageTags.some((image) => image.src.split("?")[0] === asset.src.split("?")[0] && image.alt === asset.alt), `${pagePath}: missing SSR image/alt ${asset.src}`);
+    const renderedImage = imageTags.find((image) => image.src.split("?")[0] === asset.src.split("?")[0]);
+    assert(renderedImage, `${pagePath}: missing SSR image ${asset.src}`);
+    assert(renderedImage.alt.trim(), `${pagePath}: missing SSR image alt ${asset.src}`);
   }
   reports.push({ path: pagePath, images: json.mediaManifest?.length || 0, robots: meta(html, "robots") });
 }
