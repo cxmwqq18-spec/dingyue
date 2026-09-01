@@ -163,7 +163,7 @@ try {
         });
       }
       await tx.themeSettings.update({ where: { siteId }, data: { draftJson: nextNavigation, publishedJson: publishedSettings } });
-    });
+    }, { maxWait: 20_000, timeout: 120_000 });
   }
 
   console.log(JSON.stringify({
