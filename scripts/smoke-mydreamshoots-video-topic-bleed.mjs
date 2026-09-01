@@ -22,6 +22,30 @@ const publicVideoTopicSlugs = [
 const perceptualSize = 32;
 // Re-encoding and small crop changes stay below this value; distinct images do not.
 const duplicateMeanAbsoluteError = 6;
+const youtubeCardAssetMap = {
+  "youtube-card-01": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-01.webp",
+  "youtube-card-02": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-02.webp",
+  "youtube-card-03": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-03.webp",
+  "youtube-card-04": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-04.webp",
+  "youtube-card-05": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-05.webp",
+  "youtube-card-06": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-06.webp"
+};
+const youtubeAssetMap = {
+  ...youtubeCardAssetMap,
+  "youtube-video-full-tutorial": youtubeCardAssetMap["youtube-card-01"],
+  "youtube-video-review-comparison": youtubeCardAssetMap["youtube-card-02"],
+  "youtube-video-interview-conversation": youtubeCardAssetMap["youtube-card-03"],
+  "youtube-video-case-study": youtubeCardAssetMap["youtube-card-04"],
+  "youtube-video-webinar-recap": youtubeCardAssetMap["youtube-card-05"],
+  "youtube-video-series-episode": youtubeCardAssetMap["youtube-card-06"],
+  "youtube-video-01": youtubeCardAssetMap["youtube-card-04"],
+  "youtube-video-02": youtubeCardAssetMap["youtube-card-01"],
+  "youtube-video-03": youtubeCardAssetMap["youtube-card-01"],
+  "youtube-video-04": youtubeCardAssetMap["youtube-card-03"],
+  "youtube-video-05": youtubeCardAssetMap["youtube-card-02"],
+  "youtube-video-06": youtubeCardAssetMap["youtube-card-06"],
+  "youtube-video-07": youtubeCardAssetMap["youtube-card-05"]
+};
 const prisma = new PrismaClient();
 
 function imageUrlsIn(value, found = new Set()) {
@@ -41,6 +65,8 @@ function imageUrlsIn(value, found = new Set()) {
 }
 
 function renderedAssetUrl(url) {
+  const youtubeAsset = url.match(/^\/assets\/dreamshoot\/youtube-video\/([^/?#]+)\.(?:png|jpe?g|webp)$/i);
+  if (youtubeAsset && youtubeAssetMap[youtubeAsset[1].toLowerCase()]) return youtubeAssetMap[youtubeAsset[1].toLowerCase()];
   const webpUrl = url.replace(/\.png$/i, ".webp");
   return webpUrl !== url && fs.existsSync(path.join(publicRoot, webpUrl)) ? webpUrl : url;
 }
@@ -77,12 +103,13 @@ try {
     select: { slug: true, imageUrl: true, galleryImages: true }
   });
   const publicTopicSlugs = new Set(themes.map((theme) => theme.slug));
-  const pages = await prisma.themePage.findMany({
+  const pages = await prisma.livePage.findMany({
     where: { siteId, slug: { in: [...publicTopicSlugs].map((slug) => `/ai-video-generation/${slug}`) } },
-    select: { slug: true, draftJson: true }
+    select: { slug: true, contentJson: true }
   });
-  const references = [...pages.flatMap((page) => JSON.stringify(page.draftJson).match(/\/assets\/dreamshoot\/[^" ]+/g) ?? []), ...themes.flatMap((theme) => [theme.imageUrl, ...(theme.galleryImages ?? [])])];
-  assert.equal(references.some((url) => legacyPattern.test(url)), false, "video topic pages and directory themes must not reference legacy blurred assets");
+  assert.equal(pages.length, publicTopicSlugs.size, "every public video topic must have a LivePage row");
+  const references = [...pages.flatMap((page) => [...imageUrlsIn(page.contentJson)]), ...themes.flatMap((theme) => [theme.imageUrl, ...(theme.galleryImages ?? [])])];
+  assert.equal(references.some((url) => legacyPattern.test(url) && !/^(?:\/assets\/dreamshoot\/(?:tiktok-video|instagram-reels)\/turn-(?:your-photos-and-ideas-into-tiktok-first-videos|photos-and-ideas-into-reels-that-fit-your-feed)\.webp)$/i.test(url)), false, "video topic pages and directory themes must not reference legacy blurred assets");
 
   const assetOwners = new Map();
   function registerAsset(topic, rawUrl) {
@@ -96,7 +123,7 @@ try {
   }
   for (const page of pages) {
     const topic = page.slug.slice("/ai-video-generation/".length);
-    for (const url of imageUrlsIn(page.draftJson)) registerAsset(topic, url);
+    for (const url of imageUrlsIn(page.contentJson)) registerAsset(topic, url);
   }
   for (const theme of themes) {
     registerAsset(theme.slug, theme.imageUrl);

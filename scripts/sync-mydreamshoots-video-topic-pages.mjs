@@ -24,7 +24,31 @@ const EMPTY_UNPUBLISHED_PAGE_JSON = {
 };
 const nonPublicVideoTopicSlugs = new Set(["text-to-video", "image-to-video"]);
 const heroMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "product-ad-video", "music-video"]);
-const videoMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "product-ad-video", "music-video"]);
+const videoMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "product-ad-video", "music-video", "youtube-video"]);
+const youtubeCardAssetMap = {
+  "youtube-card-01": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-01.webp",
+  "youtube-card-02": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-02.webp",
+  "youtube-card-03": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-03.webp",
+  "youtube-card-04": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-04.webp",
+  "youtube-card-05": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-05.webp",
+  "youtube-card-06": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-06.webp"
+};
+const youtubeAssetMap = {
+  ...youtubeCardAssetMap,
+  "youtube-video-full-tutorial": youtubeCardAssetMap["youtube-card-01"],
+  "youtube-video-review-comparison": youtubeCardAssetMap["youtube-card-02"],
+  "youtube-video-interview-conversation": youtubeCardAssetMap["youtube-card-03"],
+  "youtube-video-case-study": youtubeCardAssetMap["youtube-card-04"],
+  "youtube-video-webinar-recap": youtubeCardAssetMap["youtube-card-05"],
+  "youtube-video-series-episode": youtubeCardAssetMap["youtube-card-06"],
+  "youtube-video-01": youtubeCardAssetMap["youtube-card-04"],
+  "youtube-video-02": youtubeCardAssetMap["youtube-card-01"],
+  "youtube-video-03": youtubeCardAssetMap["youtube-card-01"],
+  "youtube-video-04": youtubeCardAssetMap["youtube-card-03"],
+  "youtube-video-05": youtubeCardAssetMap["youtube-card-02"],
+  "youtube-video-06": youtubeCardAssetMap["youtube-card-06"],
+  "youtube-video-07": youtubeCardAssetMap["youtube-card-05"]
+};
 const targetedHeroFieldManifest = {
   "talking-photo": {
     image: "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp"
@@ -440,6 +464,10 @@ function cleanVideoTopicImageSource(src) {
         /^\/assets\/dreamshoot\/(tiktok-video|instagram-reels|social-media-video|story-video)\/([^/?#]+)\.(?:png|jpe?g|webp)(?:[?#].*)?$/i,
         "/assets/dreamshoot/generated/video-topic-clean/$1/$2.webp"
       )
+      .replace(
+        /^\/assets\/dreamshoot\/youtube-video\/([^/?#]+)\.(?:png|jpe?g|webp)(?:[?#].*)?$/i,
+        (_match, assetName) => youtubeAssetMap[assetName.toLowerCase()] || _match
+      )
     : src;
 }
 
@@ -629,7 +657,12 @@ function assertTargetFieldUnchanged(slug, field, currentValue, previousValue, ne
 
 function targetedVideoThemeGalleryImages(page, existingGallery) {
   const canonicalVideo = videoTopicContentSeedForSlug(page.slug).hero?.video?.src;
-  if (!canonicalVideo) throw new Error(`missing_target_video:${page.slug}`);
+  if (!canonicalVideo) {
+    // Some long-form topics have image-only previews. Rebuild their gallery
+    // from the same isolated seed used by LivePage so stale card aliases
+    // cannot survive in VideoTheme.
+    return videoThemeGalleryImages(page);
+  }
   const current = Array.isArray(existingGallery) ? existingGallery.filter((item) => typeof item === "string" && item) : [];
   const legacyVideo = targetedHeroFieldManifest[page.slug]?.video;
   const conflictingVideo = current.find((item) => isVideoAsset(item) && item !== canonicalVideo && item !== legacyVideo);
@@ -697,6 +730,7 @@ function syncStoredVideoTopicUseCaseImages(pageJson, slug) {
     const canonicalImage = canonicalItems[index]?.image;
     return canonicalImage ? { ...item, image: clone(canonicalImage) } : item;
   });
+  if (slug === "meme-video" && content.gallery?.title === "Meme Video Examples") delete content.gallery;
   return next;
 }
 
@@ -1126,7 +1160,7 @@ console.log(
       updateDb,
       stateSource: "postgres",
       siteId: SITE_ID,
-      pages: (refreshContent ? pages : pages.filter((page) => heroMediaSyncSlugs.has(page.slug))).map((page) => pagePath(page.slug)),
+      pages: (refreshContent ? pages : pages.filter((page) => cardMediaSyncSlugs.has(page.slug))).map((page) => pagePath(page.slug)),
       categories: categories.map((category) => category.slug),
       changedFields: changes.length,
       changedRecords: new Set(changes.map((change) => `${change.targetType}:${change.id}`)).size,

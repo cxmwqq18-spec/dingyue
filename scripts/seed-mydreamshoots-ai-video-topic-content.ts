@@ -162,6 +162,31 @@ function imageAlt(value: string): string {
   return cleaned.replace(/[,.]+$/, "").trim();
 }
 
+const youtubeCardAssetMap: Record<string, string> = {
+  "youtube-card-01": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-01.webp",
+  "youtube-card-02": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-02.webp",
+  "youtube-card-03": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-03.webp",
+  "youtube-card-04": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-04.webp",
+  "youtube-card-05": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-05.webp",
+  "youtube-card-06": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-06.webp"
+};
+const youtubeAssetMap: Record<string, string> = {
+  ...youtubeCardAssetMap,
+  "youtube-video-full-tutorial": youtubeCardAssetMap["youtube-card-01"],
+  "youtube-video-review-comparison": youtubeCardAssetMap["youtube-card-02"],
+  "youtube-video-interview-conversation": youtubeCardAssetMap["youtube-card-03"],
+  "youtube-video-case-study": youtubeCardAssetMap["youtube-card-04"],
+  "youtube-video-webinar-recap": youtubeCardAssetMap["youtube-card-05"],
+  "youtube-video-series-episode": youtubeCardAssetMap["youtube-card-06"],
+  "youtube-video-01": youtubeCardAssetMap["youtube-card-04"],
+  "youtube-video-02": youtubeCardAssetMap["youtube-card-01"],
+  "youtube-video-03": youtubeCardAssetMap["youtube-card-01"],
+  "youtube-video-04": youtubeCardAssetMap["youtube-card-03"],
+  "youtube-video-05": youtubeCardAssetMap["youtube-card-02"],
+  "youtube-video-06": youtubeCardAssetMap["youtube-card-06"],
+  "youtube-video-07": youtubeCardAssetMap["youtube-card-05"]
+};
+
 function image(src: string, alt: string, width: number, height: number, objectPosition?: string): AiVideoTopicImage {
   const canonicalSrc = src.replace(
     /^\/assets\/dreamshoot\/(tiktok-video|instagram-reels|social-media-video|story-video)\/([^/?#]+)\.(?:png|jpe?g|webp)(?:[?#].*)?$/i,
@@ -169,6 +194,9 @@ function image(src: string, alt: string, width: number, height: number, objectPo
   ).replace(
     /^\/assets\/dreamshoot\/generated\/video-topic-media\/social-media-video\/social-media-video-01\.webp(?:[?#].*)?$/i,
     "/assets/dreamshoot/generated/video-topic-clean/social-media-video/social-media-video-01.webp"
+  ).replace(
+    /^\/assets\/dreamshoot\/youtube-video\/([^/?#]+)\.(?:png|jpe?g|webp)(?:[?#].*)?$/i,
+    (_match, assetName: string) => youtubeAssetMap[assetName.toLowerCase()] ?? src
   );
   return { src: canonicalSrc, alt: imageAlt(alt), width, height, ...(objectPosition ? { objectPosition } : {}) };
 }
@@ -1102,7 +1130,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Outcome -> chapter map -> process -> recap -> next step.",
           cta: "Create a Tutorial",
-          image: image(`${youtubeImageRoot}/youtube-card-01.webp`, "Presenter explaining a lesson in a YouTube tutorial", 1600, 900)
+          image: image(`${youtubeImageRoot}/youtube-video-full-tutorial.webp`, "Presenter explaining a lesson in a YouTube tutorial", 1600, 900)
         }),
         makeUseCaseCard({
           title: "Help the Viewer Reach a Decision, Not Just Watch a Demonstration",
@@ -1112,7 +1140,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Decision context -> criteria -> comparison -> verdict.",
           cta: "Create a Comparison Video",
-          image: image(`${youtubeImageRoot}/youtube-card-02.webp`, "Spokesperson presenting a product for a YouTube review", 1600, 900)
+          image: image(`${youtubeImageRoot}/youtube-video-review-comparison.webp`, "Spokesperson presenting a product for a YouTube review", 1600, 900)
         }),
         makeUseCaseCard({
           title: "Hook the Insight Before the Conversation Settles In",
@@ -1122,7 +1150,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Insight hook -> guiding question -> answer -> takeaway.",
           cta: "Create an Interview",
-          image: image(`${youtubeImageRoot}/youtube-card-03.webp`, "Live performer on stage in a cinematic conversation-style video scene", 1600, 900)
+          image: image(`${youtubeImageRoot}/youtube-video-interview-conversation.webp`, "Host interviewing a guest for a YouTube conversation", 1600, 900)
         }),
         makeUseCaseCard({
           title: "Move From Context to Decision to Result to Lesson",
@@ -1132,7 +1160,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Context -> decision -> result -> lesson.",
           cta: "Create a Case Study",
-          image: image(`${youtubeImageRoot}/youtube-card-04.webp`, "Luxury vehicle reveal in a cinematic night scene", 1600, 900)
+          image: image(`${youtubeImageRoot}/youtube-video-case-study.webp`, "Team reviewing a case study in a YouTube business video", 1600, 900)
         }),
         makeUseCaseCard({
           title: "Extract the Lessons People Need Instead of Uploading the Whole Event Without Guidance",
@@ -1142,7 +1170,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Topic framing -> 3 key lessons -> practical takeaway -> deeper resource.",
           cta: "Create a Webinar Recap",
-          image: image(`${youtubeImageRoot}/youtube-card-05.webp`, "Speaker presenting an insight in a YouTube webinar recap", 1600, 900)
+          image: image(`${youtubeImageRoot}/youtube-video-webinar-recap.webp`, "Speaker presenting an insight in a YouTube webinar recap", 1600, 900)
         }),
         makeUseCaseCard({
           title: "Make Each Episode Complete Enough - Then Let the Playlist Carry the Bigger Journey",
@@ -1152,7 +1180,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteLabel: "Structure",
           noteBody: "Episode promise -> lesson depth -> recap -> next episode or playlist.",
           cta: "Create a Series Episode",
-          image: image(`${youtubeImageRoot}/youtube-card-06.webp`, "Creator in an editorial street-style scene for a YouTube series", 1600, 900)
+          image: image(`${youtubeImageRoot}/youtube-video-series-episode.webp`, "Creator filming an editorial YouTube series episode", 1600, 900)
         })
       ]
     },
@@ -1657,95 +1685,6 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           )
         })
       ]
-    },
-    gallery: {
-      eyebrow: "MEME VIDEO EXAMPLES",
-      title: "Meme Video Examples",
-      intro: "Real meme structures that grab attention quickly. See the kind of finished visual the generator direction is meant to support before reading the method.",
-      items: [
-        {
-          title: "Relax / Quick Favor",
-          body: "A reaction setup that lands before the viewer has time to overthink it.",
-          image: image(
-            `${memeImageRoot}/meme-video-message-overload.png`,
-            "Creator reacting to an overloaded message thread for a meme video",
-            1080,
-            1448
-          )
-        },
-        {
-          title: "Message Overload",
-          body: "One message becomes ten more, with the reaction doing most of the work.",
-          image: image(
-            `${memeImageRoot}/meme-video-message-overload.png`,
-            "Reaction meme about opening one message and finding ten more unread messages",
-            1086,
-            1448
-          )
-        },
-        {
-          title: "Expectation / Reality",
-          body: "A split contrast makes the punchline readable without extra explanation.",
-          image: image(
-            `${memeImageRoot}/meme-video-expectation-vs-reality-dog.png`,
-            "Expectation versus reality meme using contrasting dog reactions",
-            1086,
-            1448
-          )
-        },
-        {
-          title: "POV: One Tiny Change",
-          body: "A specific workplace setup creates instant recognition.",
-          image: image(
-            `${memeImageRoot}/meme-video-pov-boss-tiny-change.png`,
-            "POV reaction meme about a boss asking for one tiny change",
-            1086,
-            1448
-          )
-        },
-        {
-          title: "Printer Disagrees",
-          body: "A deadpan caption becomes funnier when the visual refuses to cooperate.",
-          image: image(
-            `${memeImageRoot}/meme-video-printer-disagrees.png`,
-            "Deadpan office meme with the caption I’m fine while the printer disagrees",
-            1086,
-            1448
-          )
-        },
-        {
-          title: "Zoom / Could Have Been an Email",
-          body: "A familiar work moment turned into a clean reaction beat.",
-          image: image(
-            `${memeImageRoot}/meme-video-zoom-could-have-been-email.png`,
-            "Reaction meme about a Zoom call that could have been an email",
-            1086,
-            1448
-          )
-        },
-        {
-          title: "Tiny Revision / Sure",
-          body: "A short reply becomes the punchline when the setup is already understood.",
-          image: image(
-            `${memeImageRoot}/meme-video-tiny-revision-sure.png`,
-            "Reaction meme replying sure to a request for one tiny revision",
-            1086,
-            1448
-          )
-        },
-        {
-          title: "Coffee / Adulting",
-          body: "A simple brand-safe situational line that can stand on its own.",
-          image: image(
-            `${memeImageRoot}/meme-video-coffee-adulting.png`,
-            "Coffee sign meme reading Coffee because adulting is hard",
-            1086,
-            1448
-          )
-        }
-      ],
-      cta: "See More Meme Examples",
-      ctaHref: "#examples"
     },
     foundation: {
       eyebrow: "WHAT MAKES A MEME SHAREABLE?",

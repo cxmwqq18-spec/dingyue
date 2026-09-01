@@ -259,13 +259,14 @@ function optimizedTopicImageSrc(src: string): string {
     "youtube-video-interview-conversation": "youtube-card-03",
     "youtube-video-case-study": "youtube-card-04",
     "youtube-video-webinar-recap": "youtube-card-05",
-    "youtube-video-series-episode": "youtube-card-06"
-    ,"youtube-video-01": "youtube-card-04"
-    ,"youtube-video-03": "youtube-card-01"
-    ,"youtube-video-04": "youtube-card-03"
-    ,"youtube-video-05": "youtube-card-02"
-    ,"youtube-video-06": "youtube-card-06"
-    ,"youtube-video-07": "youtube-card-05"
+    "youtube-video-series-episode": "youtube-card-06",
+    "youtube-video-01": "youtube-card-04",
+    "youtube-video-02": "youtube-card-01",
+    "youtube-video-03": "youtube-card-01",
+    "youtube-video-04": "youtube-card-03",
+    "youtube-video-05": "youtube-card-02",
+    "youtube-video-06": "youtube-card-06",
+    "youtube-video-07": "youtube-card-05"
   };
   const cleanYoutube = src.match(/^\/assets\/dreamshoot\/youtube-video\/(youtube-video-[^./?#]+)\.(?:png|webp)(?:[?#].*)?$/i);
   if (cleanYoutube && youtubeMap[cleanYoutube[1]]) return `/assets/dreamshoot/generated/video-topic-clean/youtube-video/${youtubeMap[cleanYoutube[1]]}.webp`;
