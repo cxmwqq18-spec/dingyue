@@ -209,6 +209,7 @@ try {
               return {
                 pageMarker: document.querySelectorAll("[data-video-topic-page]").length,
                 heroImages: document.querySelectorAll("[data-video-topic-hero-media] img").length,
+                heroVideo: Boolean(document.querySelector("[data-video-topic-hero-media] video")),
                 heroImageFits: [...document.querySelectorAll("[data-video-topic-hero-media] img")].map((image) => getComputedStyle(image).objectFit),
                 heroImageSources: [...document.querySelectorAll("[data-video-topic-hero-media] img")].map((image) => image.getAttribute("src") || ""),
                 heroImageFrameRatios: [...document.querySelectorAll("[data-video-topic-hero-media] img")].map((image) => {
@@ -240,13 +241,15 @@ try {
             });
             assert.equal(result.pageMarker, 1, `${topic} ${viewport.name} should render one shared page marker`);
             assert.equal(result.heroHeadingWithinViewport, true, `${topic} ${viewport.name} hero heading must fit within the viewport`);
-            assert.equal(result.heroImages >= 1, true, `${topic} ${viewport.name} hero should render images`);
-            if (topic === "music-video" || topic === "fashion-video" || topic === "food-video" || topic === "pet-video") {
+            if (topic === "music-video") {
+              assert.equal(result.heroImages, 0, `${topic} ${viewport.name} should not render the two supporting hero images`);
+              assert.equal(result.heroVideo, true, `${topic} ${viewport.name} should render the dedicated hero video`);
+            } else {
+              assert.equal(result.heroImages >= 1, true, `${topic} ${viewport.name} hero should render images`);
+            }
+            if (topic === "fashion-video" || topic === "food-video" || topic === "pet-video") {
               assert.equal(result.heroImageFits.slice(-2).every((fit) => fit === "contain"), true, `${topic} ${viewport.name} secondary hero images must show without cropping`);
               assert.equal(result.heroImageFrameRatios.slice(-2).every((ratio, index) => Math.abs(ratio - result.heroImageNaturalRatios.slice(-2)[index]) < 0.04), true, `${topic} ${viewport.name} secondary hero frames must preserve their source ratios`);
-            }
-            if (topic === "music-video") {
-              assert.equal(result.heroImageSources[0].includes("hero-music-video-performance.jpg"), true, `${topic} ${viewport.name} should use the performance reference in the lower-left hero frame`);
             }
             if (topic === "pet-video") {
               assert.equal(result.heroImageSources[0].includes("hero-pet-video-portrait-frame.jpg"), true, `${topic} ${viewport.name} should lead with the pet portrait frame`);

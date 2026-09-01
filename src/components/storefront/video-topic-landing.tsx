@@ -1465,7 +1465,10 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
   const topicLabel = isMusic ? "Music Video" : isFashion ? "Fashion Video" : isPet ? "Pet Video" : "Food Video";
   const heroVideo = isMusic ? content.hero.video : undefined;
   const primaryHref = `/app/create?videoMode=${encodeURIComponent(contentKey)}#step-video`;
-  const heroImages = sceneHeroPreviewImages(content, contentKey);
+  // Music Video has a dedicated motion asset for the hero. Keep the two
+  // supporting stills in the gallery below, but let the hero stay focused on
+  // the single playable video.
+  const heroImages = isMusic && heroVideo ? [] : sceneHeroPreviewImages(content, contentKey);
   const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
   const petHeroExtras = isPet ? (content.hero.images?.slice(1) ?? []).map((image, index) => ({
     title: index === 0 ? "Owner and pet portrait" : "Pet portrait frame",
