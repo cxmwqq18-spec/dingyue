@@ -11535,11 +11535,10 @@ function SectionView({
       ? galleryImagesForPack(site, selectedPack, 12)
       : galleryImagesForCollection(site, selectedPacks, 12);
     const selectedCategoryImage = selectedCategory?.imageUrl ? mediaAssetUrl(site, selectedCategory.imageUrl) : "";
-    // Theme cover files can include a blurred decorative surround. Prefer the
-    // first finished gallery image so the detail card always shows the actual
-    // sharp output edge-to-edge.
+    // Keep the dedicated pack hero separate from the gallery so all twelve
+    // gallery outputs remain available below the detail card.
     const selectedHeroImage = selectedPack
-      ? galleryImagesForPack(site, selectedPack, 1)[0] ?? packHeroImage(site, selectedPack)
+      ? packHeroImage(site, selectedPack) || galleryImagesForPack(site, selectedPack, 1)[0]
       : rawSelectedGalleryImages[0] || selectedCategoryImage || (selectedPacks[0] ? packImage(site, selectedPacks[0]) : fallbackHeroImages[0]);
     const selectedGalleryImages = selectedPack
       ? galleryImagesForPack(site, selectedPack, 12, [selectedHeroImage])
