@@ -34,6 +34,7 @@ const routeLabel = new Map([
   ["/ai-save-the-date/engagement", "Engagement"],
   ["/ai-save-the-date/proposal", "Proposal"],
   ["/ai-save-the-date/save-the-date", "Save the Date"],
+  ["/ai-save-the-date/wedding-invitation", "Wedding Invitation"],
   ["/ai-save-the-date/wedding-ceremony", "Wedding Ceremony"],
   ["/ai-save-the-date/christmas", "Christmas"],
   ["/ai-save-the-date/thanksgiving", "Thanksgiving"],
@@ -48,21 +49,27 @@ const lovePaths = [
   "/ai-save-the-date/engagement",
   "/ai-save-the-date/proposal",
   "/ai-save-the-date/save-the-date",
+  "/ai-save-the-date/wedding-invitation",
   "/ai-save-the-date/wedding-ceremony"
 ];
 const seasonalPaths = [
   "/ai-save-the-date/christmas",
+  "/ai-save-the-date/halloween",
   "/ai-save-the-date/thanksgiving",
   "/ai-save-the-date/new-year",
-  "/ai-save-the-date/easter",
   "/ai-save-the-date/mothers-day",
-  "/ai-save-the-date/fathers-day",
-  "/ai-save-the-date/halloween"
+  "/ai-save-the-date/fathers-day"
 ];
 const validPathSet = new Set([...lovePaths, ...seasonalPaths]);
 
 function firstMedia(page) {
   return page?.draftJson?.mediaManifest?.find((item) => item?.src && item?.alt) || page?.publishedJson?.mediaManifest?.find((item) => item?.src && item?.alt);
+}
+
+function pageForPath(pages, pathName) {
+  return pages.find((page) => page.slug === pathName
+    || page.draftJson?.seo?.canonicalPath === pathName
+    || page.publishedJson?.seo?.canonicalPath === pathName);
 }
 
 function normalizePageJson(pageJson, pathName, label) {
@@ -87,7 +94,7 @@ try {
   const sourceJson = sourcePage.publishedJson?.sectionsOrder?.length ? sourcePage.publishedJson : sourcePage.draftJson;
   const pageWrites = new Map();
   for (const pathName of [...validPathSet]) {
-    const existing = record.pages.find((page) => page.slug === pathName);
+    const existing = pageForPath(record.pages, pathName);
     if (existing) continue;
     const label = routeLabel.get(pathName);
     const json = normalizePageJson(sourceJson, pathName, label);
@@ -97,7 +104,7 @@ try {
   const allPages = [...record.pages, ...pageWrites.values()];
   const settings = clone(record.settings?.draftJson || record.settings?.publishedJson || {});
   const itemFor = (pathName, sortOrder) => {
-    const page = allPages.find((candidate) => candidate.slug === pathName);
+    const page = pageForPath(allPages, pathName);
     const json = page?.draftJson || page?.publishedJson;
     const media = firstMedia(page);
     return { label: routeLabel.get(pathName) || pathName, slug: pathName.split("/").pop(), href: pathName, status: "published", sortOrder, description: String(json?.seo?.description || `Create ${routeLabel.get(pathName)} photos and videos with AI.`).replace(/^#\s*/, "").trim(), ...(media ? { imageUrl: media.src, imageAlt: media.alt } : {}) };

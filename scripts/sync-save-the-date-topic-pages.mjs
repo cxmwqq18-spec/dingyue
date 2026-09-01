@@ -26,6 +26,7 @@ const navigationLabels = new Map([
   ["/ai-save-the-date/engagement", "Engagement"],
   ["/ai-save-the-date/proposal", "Proposal"],
   ["/ai-save-the-date/save-the-date", "Save the Date"],
+  ["/ai-save-the-date/wedding-invitation", "Wedding Invitation"],
   ["/ai-save-the-date/wedding-ceremony", "Wedding Ceremony"],
   ["/ai-save-the-date/christmas", "Christmas"],
   ["/ai-save-the-date/halloween", "Halloween"],
@@ -41,6 +42,9 @@ const packages = [
 ];
 
 const read = (file) => fs.readFileSync(file, "utf8").replace(/^\uFEFF/, "");
+const pageForPath = (pages, pathName) => pages.find((page) => page.slug === pathName
+  || page.draftJson?.seo?.canonicalPath === pathName
+  || page.publishedJson?.seo?.canonicalPath === pathName);
 const clean = (value) => String(value ?? "").replace(/`([^`]+)`/g, "$1").replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/\*\*([^*]+)\*\*/g, "$1").replace(/\*([^*]+)\*/g, "$1").replace(/\s+/g, " ").trim();
 const customerText = (value) => clean(value)
   .replace(/The page should stay focused on video intent\. Couple photos are source material for the video, not the product being targeted by the SEO page\.?/gi, "This page focuses on creating an engagement video from couple photos. The photos are the starting point for the video, while formal invitation wording remains a separate step.")
@@ -454,22 +458,22 @@ try {
       "/ai-save-the-date/engagement",
       "/ai-save-the-date/proposal",
       "/ai-save-the-date/save-the-date",
+      "/ai-save-the-date/wedding-invitation",
       "/ai-save-the-date/wedding-ceremony"
     ];
-const seasonalNavigationPaths = [
-  "/ai-save-the-date/christmas",
-  "/ai-save-the-date/halloween",
-  "/ai-save-the-date/thanksgiving",
-  "/ai-save-the-date/new-year",
-  "/ai-save-the-date/easter",
-  "/ai-save-the-date/mothers-day",
-  "/ai-save-the-date/fathers-day"
-];
+    const seasonalNavigationPaths = [
+      "/ai-save-the-date/christmas",
+      "/ai-save-the-date/halloween",
+      "/ai-save-the-date/thanksgiving",
+      "/ai-save-the-date/new-year",
+      "/ai-save-the-date/mothers-day",
+      "/ai-save-the-date/fathers-day"
+    ];
     const navigationPaths = [...loveNavigationPaths, ...seasonalNavigationPaths];
     const parsedByPath = new Map(parsed.map((item) => [item.pagePath, item]));
     const navigationItem = (href, sortOrder) => {
       const parsedItem = parsedByPath.get(href);
-      const page = siteRecord.pages.find((candidate) => candidate.slug === href);
+      const page = pageForPath(siteRecord.pages, href);
       const json = parsedItem?.pageJson || page?.draftJson || page?.publishedJson;
       const hero = json?.sections?.[json.sectionsOrder?.[0]]?.settings || {};
       const media = json?.mediaManifest?.[0];

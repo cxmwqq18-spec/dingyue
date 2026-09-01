@@ -73,13 +73,29 @@ const navigationConfig = snapshot.themeSettings?.saveTheDateNavigation ?? { menu
 assert.equal(navigationConfig.menuLabel, "Save the Date");
 const navigation = navigationConfig.groups ?? [];
 const publishedItems = navigation.flatMap((group) => group.items.filter((item) => item.status === "published"));
-assert(publishedItems.length >= 7, `Save the Date navigation should retain all published themes (found ${publishedItems.length})`);
+assert.equal(publishedItems.length, 12, `Save the Date navigation should contain the 12 published themes (found ${publishedItems.length})`);
 assert(publishedItems.every((item) => item.description?.trim() && item.imageUrl?.trim() && item.imageAlt?.trim()), "published Save the Date themes require description, cover, and alt text");
 assert(publishedItems.some((item) => item.href === PAGE_PATH && item.label === "Valentine's Day"));
 const homepageSaveTheDate = (snapshot.publishedHomepageShowcases ?? []).filter((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
 assert.equal(new Set(homepageSaveTheDate.map((item) => item.imageUrl)).size, homepageSaveTheDate.length, "published homepage Save the Date covers must be unique");
 assert.equal(navigation[0]?.label, "Love & Wedding");
 assert.equal(navigation[1]?.label, "Seasonal Holidays");
+assert.deepEqual(navigation[0]?.items.map((item) => item.href), [
+  "/ai-save-the-date/valentines-day",
+  "/ai-save-the-date/engagement",
+  "/ai-save-the-date/proposal",
+  "/ai-save-the-date/save-the-date",
+  "/ai-save-the-date/wedding-invitation",
+  "/ai-save-the-date/wedding-ceremony"
+]);
+assert.deepEqual(navigation[1]?.items.map((item) => item.href), [
+  "/ai-save-the-date/christmas",
+  "/ai-save-the-date/halloween",
+  "/ai-save-the-date/thanksgiving",
+  "/ai-save-the-date/new-year",
+  "/ai-save-the-date/mothers-day",
+  "/ai-save-the-date/fathers-day"
+]);
 
 const ownedLinks = snapshot.publishedLinkRefs.filter((link) => link.ownerPageEntityId === route.pageEntityId);
 const cta = ownedLinks.find((link) => link.kind === "cta");
