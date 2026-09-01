@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 
@@ -24,7 +27,25 @@ export function PricingBillingTable({
   canShowBillingSwitch: boolean; emphasizeBillingSwitch?: boolean; initialBillingCycle: BillingCycle;
   plans: PricingPlan[]; sidePanels: Record<BillingCycle, PricingSidePanel>; aidreamcapes: boolean; locale?: "en" | "es";
 }) {
-  const activeBillingCycle = initialBillingCycle;
+  const [activeBillingCycle, setActiveBillingCycle] = useState<BillingCycle>(initialBillingCycle);
+
+  useEffect(() => {
+    setActiveBillingCycle(initialBillingCycle);
+  }, [initialBillingCycle]);
+
+  function selectBillingCycle(cycle: BillingCycle) {
+    if (cycle === activeBillingCycle) return;
+    setActiveBillingCycle(cycle);
+    if (typeof window === "undefined") return;
+
+    // Keep the URL shareable without invoking a route transition or the browser's hash scroll.
+    const scrollY = window.scrollY;
+    const url = new URL(window.location.href);
+    url.searchParams.set("billing", cycle);
+    url.hash = `pricing-${cycle}`;
+    window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+    if (window.scrollY !== scrollY) window.scrollTo({ top: scrollY, behavior: "auto" });
+  }
 
   const renderCycle = (billingCycle: BillingCycle) => {
     const activeSidePanel = sidePanels[billingCycle] ?? sidePanels.month;
@@ -46,7 +67,7 @@ export function PricingBillingTable({
     </div>;
   };
   return <div data-pricing-ssr="true">
-    {canShowBillingSwitch ? <nav aria-label="Billing periods" className={emphasizeBillingSwitch ? "mt-7 flex flex-col items-center gap-3" : "mt-7 flex flex-wrap gap-3"}><div className="inline-flex flex-wrap gap-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1" role="tablist">{billingCycles.map((cycle) => <a aria-selected={cycle === activeBillingCycle} className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold ${cycle === activeBillingCycle ? "bg-white text-[#171514]" : "text-white/80 hover:bg-white hover:text-[#171514]"}`} data-storefront-instant-filter="true" href={`?billing=${cycle}#pricing-${cycle}`} key={cycle} role="tab">{cycleLabel(cycle, locale)}</a>)}</div></nav> : null}
+    {canShowBillingSwitch ? <nav aria-label="Billing periods" className={emphasizeBillingSwitch ? "mt-7 flex flex-col items-center gap-3" : "mt-7 flex flex-wrap gap-3"}><div className="inline-flex flex-wrap gap-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1" role="tablist">{billingCycles.map((cycle) => <button aria-selected={cycle === activeBillingCycle} className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold ${cycle === activeBillingCycle ? "bg-white text-[#171514]" : "text-white/80 hover:bg-white hover:text-[#171514]"}`} data-storefront-instant-filter="true" key={cycle} onClick={() => selectBillingCycle(cycle)} role="tab" type="button">{cycleLabel(cycle, locale)}</button>)}</div></nav> : null}
     <section className="scroll-mt-24" id={`pricing-${activeBillingCycle}`}><h3 className="sr-only">{cycleLabel(activeBillingCycle, locale)} pricing</h3>{renderCycle(activeBillingCycle)}</section>
     <span className="sr-only" data-initial-billing-cycle={initialBillingCycle} data-active-billing-cycle={activeBillingCycle} />
   </div>;

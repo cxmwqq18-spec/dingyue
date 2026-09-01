@@ -61,7 +61,6 @@ async function readSite() {
     where: { id: siteId },
     include: {
       pages: { orderBy: { slug: "asc" } }, settings: true, storefrontProfile: true,
-      activePublication: { include: { publication: true } },
       siteThemes: { orderBy: [{ status: "asc" }, { updatedAt: "desc" }] }, themeCopies: { orderBy: { updatedAt: "desc" } },
       creativePackCategories: { orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { slug: "asc" }] },
       creativePacks: { include: { categoryRecord: true }, orderBy: { createdAt: "asc" } }, mediaAssets: { orderBy: { storageKey: "asc" } },
@@ -77,8 +76,10 @@ try {
   assert(before, `site ${siteId} not found`);
   const subscriptions = before.products.filter((product) => product.type === "subscription");
   assert.equal(subscriptions.length, 3, "expected exactly three subscription products");
-  const needsUpdate = subscriptions.filter((product) => JSON.stringify(product.metadata?.sidePanelItems ?? null) !== JSON.stringify(sidePanelItems));
-  console.log(JSON.stringify({ target, siteId, operation: mode, mode: apply ? "apply" : "dry-run", affectedProducts: needsUpdate.map((product) => product.name), sidePanelItemCount: sidePanelItems.length }, null, 2));
+  const needsUpdate = subscriptions.filter((product) => mode === "clear"
+    ? JSON.stringify(product.metadata?.features ?? null) !== "[]" || JSON.stringify(product.metadata?.sidePanelItems ?? null) !== "[]"
+    : JSON.stringify(product.metadata?.sidePanelItems ?? null) !== JSON.stringify(sidePanelItems));
+  console.log(JSON.stringify({ target, siteId, operation: mode, mode: apply ? "apply" : "dry-run", affectedProducts: needsUpdate.map((product) => product.name), featureCount: mode === "clear" ? 0 : undefined, sidePanelItemCount: sidePanelItems.length }, null, 2));
   if (!apply || !needsUpdate.length) {
     // Dry-run and already-repaired environments need no write or publication.
   } else {
@@ -86,7 +87,12 @@ try {
     for (const product of needsUpdate) {
       await tx.product.update({
         where: { id: product.id },
-        data: { metadata: { ...(product.metadata ?? {}), sidePanelItems: clone(sidePanelItems) } }
+        data: {
+          metadata: {
+            ...(product.metadata ?? {}),
+            ...(mode === "clear" ? { features: [], sidePanelItems: [] } : { sidePanelItems: clone(sidePanelItems) })
+          }
+        }
       });
     }
     }, { timeout: 30_000 });

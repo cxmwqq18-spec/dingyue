@@ -24,23 +24,23 @@ try {
   requestsAfterClick.length = 0;
   page.on("request", (request) => requestsAfterClick.push(request.url()));
 
-  await Promise.all([
-    page.waitForURL(/[?&]billing=quarter#pricing-quarter$/, { timeout: 30_000 }),
-    quarterlyTab.click()
-  ]);
-  await page.waitForLoadState("domcontentloaded");
+  await page.evaluate(() => window.scrollTo(0, 640));
+  const scrollBeforeClick = await page.evaluate(() => window.scrollY);
+  await quarterlyTab.click();
+  await page.waitForTimeout(250);
 
   assert.match(page.url(), /[?&]billing=quarter(?:#|$)/, "billing switch must update the URL");
   assert.match(page.url(), /#pricing-quarter$/, "billing switch must preserve the pricing anchor");
   assert(
-    requestsAfterClick.some((url) => /[?&]billing=quarter(?:#|$)/.test(url)),
-    `billing switch must request the server-rendered quarterly view: ${requestsAfterClick.join(" | ")}`
+    !requestsAfterClick.some((url) => /[?&]billing=quarter(?:#|$)/.test(url)),
+    `billing switch must not navigate to a new document: ${requestsAfterClick.join(" | ")}`
   );
   assert(
     !requestsAfterClick.some((url) => /\/api\//.test(url)),
     `billing switch must not fetch pricing from a browser API: ${requestsAfterClick.join(" | ")}`
   );
-  assert.equal(await page.locator('[data-active-billing-cycle="quarter"]').count(), 1, "quarterly pricing must be rendered by the server");
+  assert.equal(await page.locator('[data-active-billing-cycle="quarter"]').count(), 1, "quarterly pricing must be rendered in place");
+  assert(Math.abs((await page.evaluate(() => window.scrollY)) - scrollBeforeClick) <= 2, "billing switch must preserve scroll position");
   assert.equal(await page.locator('[aria-label="Loading page"]').count(), 0, "billing switch must not show the page loading indicator");
   assert(
     !browserErrors.some((message) => /hydration|didn.t match|Cannot access .* before initialization/i.test(message)),
