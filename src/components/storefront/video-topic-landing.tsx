@@ -739,7 +739,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
 }
 
 function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicContent; section: SectionInstance; site: Site }) {
-  const primaryHref = `/app/create?videoMode=${encodeURIComponent("ugc-ad-video")}#step-video`;
+  const primaryHref = "#how-it-works";
   return (
     <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? "ugc-ad-video")} data-video-topic-page="ugc-ad-video">
       <section className="relative border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
@@ -930,7 +930,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
 }
 
 function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopicContent; section: SectionInstance; site: Site }) {
-  const primaryHref = `/app/create?videoMode=${encodeURIComponent("promo-video")}#step-video`;
+  const primaryHref = "#how-it-works";
   return (
     <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? "promo-video")} data-video-topic-page="promo-video">
       <section className="relative border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
