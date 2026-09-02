@@ -14,11 +14,13 @@ const outputHeight = 900;
 const createSize = "1536x1024";
 const timeoutMs = 300_000;
 const downloadAttempts = 3;
-const requestSalt = "20260902-story-topic-media-v2";
+const requestedOnly = process.argv.find((arg) => arg.startsWith("--only="))?.slice("--only=".length) || "";
+const requestedProvider = process.argv.find((arg) => arg.startsWith("--provider="))?.slice("--provider=".length) || "";
+const requestSalt = requestedOnly ? `20260902-story-topic-media-v3-${requestedOnly}` : "20260902-story-topic-media-v2";
 const auditRoot = path.join(repoRoot, "tmp", "paid-image-regeneration-20260902-story-topic");
 const dispatcher = new Agent({ headersTimeout: timeoutMs + 60_000, bodyTimeout: timeoutMs + 60_000 });
 
-const tasks = [
+const allTasks = [
   {
     key: "story-video-mini-documentary-interview-creator",
     prompt: [
@@ -52,13 +54,15 @@ const tasks = [
       "Asset type: horizontal 16:9 storefront use-case image for a story-video detail page",
       "Primary request: show a fictional character facing a clear obstacle in a noir story, with the character readable and the conflict visible.",
       "Scene/backdrop: a rain-slick neon side street at night with a doorway, reflected colored light, and an approaching obstacle in the distance.",
-      "Subject: one original adult protagonist in a dark coat stands near the center-right, full face and upper body clearly visible, looking toward a blocked exit or distant silhouette that creates tension.",
-      "Composition/framing: wide 16:9 cinematic frame, keep the protagonist's eyes well above the bottom edge, reserve enough environment to show the objective and obstacle, no empty blurred foreground.",
+      "Subject: one original adult protagonist in a dark coat stands from the waist up near the center-right, facing three-quarters toward camera; show the complete face, both eyes, neck, shoulders, and upper torso clearly. The character is the unmistakable focal point.",
+      "Composition/framing: wide 16:9 cinematic frame at eye level; place the protagonist's eyes around 45 percent of the image height, with generous headroom above the hair and visible shoulders below. Keep the character fully inside the middle of the frame; put the blocked exit and distant silhouette behind them, never in front. No empty blurred foreground, no face at the bottom edge, no cropped head.",
       "Lighting/mood: controlled blue and magenta practical light, sharp subject separation, suspenseful but legible.",
       "Constraints: original fictional adult only; no text, captions, logos, watermarks, UI, celebrity likenesses, cropped forehead, face at the bottom edge, detective hat, cigar, or reuse of any existing Cinematic Video image."
     ].join("\n")
   }
 ];
+const tasks = requestedOnly ? allTasks.filter(({ key }) => key === requestedOnly) : allTasks;
+if (requestedOnly && tasks.length === 0) throw new Error(`Unknown --only key: ${requestedOnly}`);
 
 function normalizeBaseUrl(value) {
   const trimmed = String(value || "").trim().replace(/\/+$/, "");
@@ -88,7 +92,7 @@ async function loadProvider() {
   const prisma = new PrismaClient();
   try {
     const provider = await prisma.platformAiProvider.findFirst({
-      where: { modelType: model, enabled: true },
+      where: { modelType: model, enabled: true, ...(requestedProvider ? { label: requestedProvider } : {}) },
       orderBy: [{ preferred: "desc" }, { priority: "asc" }, { updatedAt: "desc" }]
     });
     if (!provider?.apiKey || !provider.aiUrl) throw new Error(`No enabled provider found for ${model}`);
@@ -153,7 +157,7 @@ async function writeAsset(task, buffer) {
   await fs.writeFile(path.join(cleanRoot, `${basename}.webp`), encoded);
 }
 
-console.log(JSON.stringify({ dryRun, model, createSize, output: `${outputWidth}x${outputHeight}`, paidCreateAttempts: tasks.length, attemptsPerCreate: 1, stopOnFirstError: true, tasks: tasks.map(({ key }) => key) }, null, 2));
+console.log(JSON.stringify({ dryRun, model, createSize, output: `${outputWidth}x${outputHeight}`, provider: requestedProvider || "preferred", paidCreateAttempts: tasks.length, attemptsPerCreate: 1, stopOnFirstError: true, tasks: tasks.map(({ key }) => key) }, null, 2));
 if (!dryRun) {
   const provider = await loadProvider();
   console.log(`using platform AI provider: ${provider.label} (${provider.model}); one create per task, no paid retries`);
