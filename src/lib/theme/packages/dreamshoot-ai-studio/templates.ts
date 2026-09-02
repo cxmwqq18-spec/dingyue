@@ -2066,20 +2066,32 @@ function aidreamcapesFeaturedThanksgivingSection(): SectionInstance {
   );
 }
 
+const mydreamshootsHomepageVideoSlugs = [
+  "talking-photo",
+  "cinematic-video",
+  "music-video",
+  "tiktok-video",
+  "instagram-reels",
+  "product-video",
+  "product-ad-video"
+];
+
 function bestMediaGallerySection(kind: "image" | "video", aidreamcapes: boolean): SectionInstance {
+  const useMydreamshootsHomepageVideos = kind === "video" && !aidreamcapes;
   return section("dreamshoot_media_gallery", {
     anchor: kind === "image" ? "best-ai-image" : "best-ai-video",
     kind,
-    fullGallery: true,
+    fullGallery: !useMydreamshootsHomepageVideos,
     eyebrow: aidreamcapes ? "Aidreamcapes gallery" : "myDreamshoots gallery",
-    title: kind === "image" ? "Best AI image" : "Best AI video",
+    title: kind === "image" ? "Best AI image" : useMydreamshootsHomepageVideos ? "Best AI Video Generation" : "Best AI video",
     subtitle: aidreamcapes
       ? kind === "image"
         ? "Browse Aidreamcapes fan-scene, game-day, holiday, and occasion image themes in one simple grid."
         : "Browse Aidreamcapes motion cases for fan scenes, occasion moods, and celebration albums in one simple grid."
       : kind === "image"
         ? "Browse every myDreamshoots photo generator theme in one simple grid."
-        : "Browse every myDreamshoots motion case in one simple grid.",
+        : "Explore the AI videos already generated for myDreamshoots homepage themes, from cinematic portraits and social clips to travel stories, keepsake films, and product motion.",
+    ...(useMydreamshootsHomepageVideos ? { videoSlugs: mydreamshootsHomepageVideoSlugs.join("|") } : {})
   });
 }
 

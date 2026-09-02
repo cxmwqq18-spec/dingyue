@@ -22,7 +22,17 @@ import {
 const repoRoot = process.cwd();
 const showcaseSectionId = "generation_showcase_1";
 const workflowSectionId = "flow_bridge_1";
+const bestVideoPageSlug = "/best-ai-video";
 const CUSTOMER_VIDEO_FRAME_LIMIT = 7;
+const mydreamshootsHomepagePlayableVideoSlugs = [
+  "talking-photo",
+  "cinematic-video",
+  "music-video",
+  "tiktok-video",
+  "instagram-reels",
+  "product-video",
+  "product-ad-video"
+];
 const obsoleteShowcaseRows = {
   site_dreamshoot: {
     categorySlugs: [],
@@ -324,6 +334,29 @@ function applyHomeShowcase(pageJson, store) {
   return true;
 }
 
+function applyBestVideoGallery(pageJson, store) {
+  if (!pageJson?.sections || !Array.isArray(pageJson.sectionsOrder)) return false;
+  const sectionId = pageJson.sections.best_ai_video_1
+    ? "best_ai_video_1"
+    : Object.entries(pageJson.sections).find(([, section]) => section?.type === "dreamshoot_media_gallery")?.[0];
+  if (!sectionId) return false;
+
+  const section = pageJson.sections[sectionId];
+  const settings = {
+    ...(section.settings ?? {}),
+    anchor: "best-ai-video",
+    kind: "video",
+    fullGallery: false,
+    eyebrow: "MYDREAMSHOOTS VIDEO GALLERY",
+    title: "Best AI Video Generation",
+    subtitle: "Explore the AI videos already generated for myDreamshoots homepage themes, from cinematic portraits and social clips to travel stories, keepsake films, and product motion.",
+    videoSlugs: (store.siteId === "site_dreamshoot" ? mydreamshootsHomepagePlayableVideoSlugs : store.videoThemes.map((theme) => theme.slug)).join("|")
+  };
+  delete settings.imageSlugs;
+  pageJson.sections[sectionId] = { ...section, type: "dreamshoot_media_gallery", settings };
+  return true;
+}
+
 function applyShowcaseToState(state, stores) {
   let pageUpdates = 0;
   let themeTemplateUpdates = 0;
@@ -335,7 +368,10 @@ function applyShowcaseToState(state, stores) {
     if (homePage) {
       if (applyHomeShowcase(homePage.draftJson, store)) pageUpdates += 1;
     }
-
+    const bestVideoPage = site?.pages?.find((page) => page.slug === bestVideoPageSlug);
+    if (bestVideoPage) {
+      if (applyBestVideoGallery(bestVideoPage.draftJson, store)) pageUpdates += 1;
+    }
     for (const theme of state.siteThemes ?? []) {
       if (theme.siteId !== store.siteId) continue;
       const indexTemplate = theme.templates?.index;
@@ -358,7 +394,7 @@ function applyShowcaseToState(state, stores) {
 
 async function updateDatabase(state, stores) {
   const prisma = new PrismaClient();
-  const report = { categories: 0, themes: 0, pages: 0, siteThemes: 0, publications: 0 };
+  const report = { categories: 0, themes: 0, pages: 0, livePages: 0, siteThemes: 0, publications: 0 };
   try {
     for (const store of stores) {
       const categories = categoryRowsForStore(store, state, new Date().toISOString());
@@ -437,17 +473,23 @@ async function updateDatabase(state, stores) {
         });
       }
 
-      const homePage = (state.sites ?? [])
-        .find((site) => site.id === store.siteId)
-        ?.pages?.find((page) => page.slug === "/");
-      if (homePage) {
+      const pages = (state.sites ?? []).find((site) => site.id === store.siteId)?.pages ?? [];
+      const pagesForPublicRuntime = pages.filter((page) => page.slug === "/" || page.slug === bestVideoPageSlug);
+      for (const page of pagesForPublicRuntime) {
         await prisma.themePage.updateMany({
-          where: { siteId: store.siteId, slug: "/" },
+          where: { siteId: store.siteId, slug: page.slug },
           data: {
-            draftJson: homePage.draftJson
+            draftJson: page.draftJson,
+            publishedJson: page.draftJson
           }
         });
         report.pages += 1;
+        const liveResult = await prisma.livePage.updateMany({
+          where: { siteId: store.siteId, slug: page.slug },
+          data: { contentJson: page.draftJson }
+        });
+        if (liveResult.count !== 1) throw new Error(`expected_one_live_page:${store.siteId}:${page.slug}:${liveResult.count}`);
+        report.livePages += 1;
       }
 
       const stateThemes = (state.siteThemes ?? []).filter((theme) => theme.siteId === store.siteId);
