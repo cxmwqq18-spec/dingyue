@@ -12688,7 +12688,7 @@ function SectionView({
               </p>
             </div>
           </div>
-          <DreamshootShowcasePreview>
+          <DreamshootShowcasePreviewClient>
             {kind === "video" ? (
               videoCards.length ? (
                 <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" data-dreamshoot-media-gallery-grid="video">
@@ -12720,6 +12720,9 @@ function SectionView({
                           />
                         )}
                       </div>
+                      <span aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/45 bg-black/55 text-white shadow-xl backdrop-blur-sm transition group-hover:scale-105 group-hover:bg-black/70">
+                        <PlayCircle className="h-7 w-7" strokeWidth={1.8} />
+                      </span>
                       <figcaption className="border-t border-white/10 bg-[#090B12] p-3">
                         <span className="block truncate text-sm font-semibold text-white">{card.title}</span>
                         <span className="mt-1 block truncate text-xs text-white/52">{card.meta}</span>
@@ -12775,7 +12778,7 @@ function SectionView({
             ) : (
               <p className="mt-8 rounded-[8px] border border-white/12 bg-white/[0.05] p-5 text-sm text-white/64">Photo examples are being prepared.</p>
             )}
-          </DreamshootShowcasePreview>
+          </DreamshootShowcasePreviewClient>
         </div>
       </section>
     );
