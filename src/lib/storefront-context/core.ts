@@ -404,12 +404,12 @@ export function resolveStorefrontBindings(text: string, context: StorefrontConte
   const missingBindings = Array.from(text.matchAll(bindingPattern))
     .map((match) => match[1])
     .filter((key) => !values[key]);
-  // A valid PostgreSQL publication is the source of truth for published copy.
-  // Apply the legacy hard-coded-claim guard to drafts and invalid snapshots,
-  // while allowing the sealed publication payload to render unchanged.
-  const isSealedPublishedSnapshot = context.snapshotIntegrity === "valid" && Boolean(context.revisions.snapshotRevision);
+  // The verified public projection is the source of truth for published copy.
+  // SQL-backed LivePage reads intentionally have no historical snapshot ID, so
+  // only drafts, legacy values, and invalid snapshots need this claim guard.
+  const isVerifiedPublishedContent = context.snapshotIntegrity === "valid";
   const legacyClaims = legacyFactClaimRules
-    .filter(() => !isSealedPublishedSnapshot)
+    .filter(() => !isVerifiedPublishedContent)
     .filter((rule) => rule.pattern.test(text.split(rule.token).join("")))
     .map((rule) => rule.key);
   const missing = [...missingBindings, ...legacyClaims];

@@ -159,6 +159,16 @@ assert.equal(resolveStorefrontBindings("Plans start at {LIVE_LOWEST_ACTIVE_PLAN_
 assert.equal(resolveStorefrontBindings("No AI training on your photos - Your inputs are never used to train models.", context).value, undefined, "legacy policy claims must not bypass typed bindings");
 assert.deepEqual(resolveStorefrontBindings("30-day auto-delete.", context).missing, ["LEGACY_RETENTION_POLICY_CLAIM"]);
 assert.equal(resolveStorefrontBindings("Training policy - {LIVE_TRAINING_POLICY_STATEMENT}", context).value, "Training policy - Customer media is not used to train models.");
+const livePageContext = {
+  ...context,
+  snapshotIntegrity: "valid",
+  revisions: { ...context.revisions, snapshotRevision: undefined }
+};
+assert.equal(
+  resolveStorefrontBindings("No AI training on your photos - Your inputs are never used to train models.", livePageContext).value,
+  "No AI training on your photos - Your inputs are never used to train models.",
+  "verified SQL-backed LivePage content must render without a historical snapshot revision"
+);
 const metadata = metadataForSingleThemePage(bundle.site, bundle.page, context);
 assert.equal(metadata.description, context.seo.description);
 assert.equal(metadata.keywords, context.seo.keywords, "page keywords must reach Next metadata output");
