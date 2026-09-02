@@ -1302,8 +1302,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       image: image(
         "/assets/dreamshoot/story-video/story-video-hero-woman-sunset-reflection.png",
         "Woman at sunset in a reflective outdoor scene for a story video opening",
-        1080,
-        1920
+        1600,
+        900
       )
     },
     useCases: {
@@ -1322,8 +1322,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           image: image(
             "/assets/dreamshoot/story-video/story-video-origin-family-home-beginning.png",
             "Parent and child sharing a warm home moment for an origin story",
-            1080,
-            1920
+            1600,
+            900
           )
         }),
         makeUseCaseCard({
@@ -1337,8 +1337,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           image: image(
             "/assets/dreamshoot/story-video/story-video-personal-journey-coastal-turning-point.png",
             "Person overlooking a coastline at sunset for a personal turning-point story",
-            1080,
-            1920
+            1600,
+            900
           )
         }),
         makeUseCaseCard({
@@ -1352,8 +1352,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           image: image(
             "/assets/dreamshoot/story-video/story-video-comeback-speaker-new-direction.png",
             "Speaker presenting on stage to represent a comeback and new direction",
-            1080,
-            1920
+            1600,
+            900
           )
         }),
         makeUseCaseCard({
@@ -1366,9 +1366,9 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           cta: "Create a Mini Documentary",
           image: image(
             "/assets/dreamshoot/story-video/story-video-mini-documentary-interview-creator.png",
-            "Creator speaking in a studio for a mini-documentary interview scene",
-            1080,
-            1920
+            "Craftsperson explaining their work while a documentarian records the scene",
+            1600,
+            900
           )
         }),
         makeUseCaseCard({
@@ -1381,9 +1381,9 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           cta: "Create a Community Story",
           image: image(
             "/assets/dreamshoot/story-video/story-video-community-shared-milestone.png",
-            "Graduate celebrating a shared milestone for a community story",
-            1080,
-            1920
+            "Neighbors working together on a community garden project",
+            1600,
+            900
           )
         }),
         makeUseCaseCard({
@@ -1396,9 +1396,9 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           cta: "Create a Fictional Story",
           image: image(
             "/assets/dreamshoot/story-video/story-video-fictional-noir-character-conflict.png",
-            "Noir character in a rainy neon alley for a fictional story conflict",
-            1080,
-            1920
+            "Fictional noir protagonist facing an obstacle in a rain-soaked neon alley",
+            1600,
+            900
           )
         })
       ]
@@ -1440,8 +1440,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           image: image(
             "/assets/dreamshoot/story-video/story-video-setup-memory-photo-selection.png",
             "Person organizing printed photographs to establish a story setup",
-            1080,
-            1920
+            1600,
+            900
           )
         }),
         guidanceCard({
@@ -1450,8 +1450,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           image: image(
             "/assets/dreamshoot/story-video/story-video-tension-reflective-man-study.png",
             "Thoughtful man in a dim study representing tension and uncertainty",
-            1080,
-            1920
+            1600,
+            900
           )
         }),
         guidanceCard({
@@ -1460,8 +1460,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           image: image(
             "/assets/dreamshoot/story-video/story-video-turning-point-creator-decision.png",
             "Creator holding a phone in a cafe representing a decision and turning point",
-            1080,
-            1920
+            1600,
+            900
           )
         }),
         guidanceCard({
@@ -1470,8 +1470,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           image: image(
             "/assets/dreamshoot/story-video/story-video-payoff-celebration-gift-moment.png",
             "Warm gift celebration scene representing a story payoff",
-            1080,
-            1920
+            1600,
+            900
           )
         }),
         guidanceCard({
@@ -1480,8 +1480,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           image: image(
             "/assets/dreamshoot/story-video/story-video-meaning-reflection-elder-portrait.png",
             "Older man in a study representing reflection and story meaning",
-            1080,
-            1920
+            1600,
+            900
           )
         })
       ]
@@ -1504,8 +1504,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       image: image(
         "/assets/dreamshoot/story-video/story-video-closing-memory-reflection.png",
         "Older woman smiling at home for a reflective closing story moment",
-        1080,
-        1920
+        1600,
+        900
       ),
       items: [
         { title: "Less filler", body: "Remove scenes that do not change what the viewer understands." },

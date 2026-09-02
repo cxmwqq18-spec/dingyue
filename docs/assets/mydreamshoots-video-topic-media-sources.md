@@ -2,6 +2,8 @@
 
 These Pexels images replace visually duplicated media across MyDreamShoots video topic pages. The local derivatives are cropped and encoded for the storefront. Pexels permits free use under the [Pexels license](https://www.pexels.com/license/).
 
+The three Story Video use-case images below were regenerated as original, topic-exclusive `gpt-image-2` outputs on 2026-09-02. They are not reused from another topic and are encoded as 1600×900 WebP files in both the source and clean namespaces.
+
 | Topic | Local asset base name | Pexels photo |
 | --- | --- | --- |
 | cinematic-video | cinematic-video-brand-story-founder-studio | [7414273](https://www.pexels.com/photo/7414273/) |
@@ -17,7 +19,6 @@ These Pexels images replace visually duplicated media across MyDreamShoots video
 | social-media-video | social-media-video-behind-scenes-creator | [5642758](https://www.pexels.com/photo/5642758/) |
 | instagram-reels | instagram-reels-announcement-launch-celebration | [789822](https://www.pexels.com/photo/789822/) |
 | social-media-video | social-media-video-announcement-launch | [3184423](https://www.pexels.com/photo/3184423/) |
-| story-video | story-video-fictional-noir-character-conflict | [26522389](https://www.pexels.com/photo/26522389/) |
 | instagram-reels | instagram-reels-mini-tutorial-presenter | [9034291](https://www.pexels.com/photo/9034291/) |
 | instagram-reels | instagram-reels-product-demo-spokesperson | [7113517](https://www.pexels.com/photo/7113517/) |
 | promo-video | promo-video-product-launch-presentation | [29708258](https://www.pexels.com/photo/29708258/) |
@@ -37,3 +38,9 @@ These Pexels images replace visually duplicated media across MyDreamShoots video
 | youtube-video | youtube-video-webinar-recap | [28683720](https://www.pexels.com/photo/28683720/) |
 | youtube-video | youtube-video-full-tutorial | [8276606](https://www.pexels.com/photo/8276606/) |
 | youtube-video | youtube-video-series-episode | [18386861](https://www.pexels.com/photo/18386861/) |
+
+| Topic | Local asset base name | Source |
+| --- | --- | --- |
+| story-video | story-video-mini-documentary-interview-creator | Original gpt-image-2 generation (2026-09-02) |
+| story-video | story-video-community-shared-milestone | Original gpt-image-2 generation (2026-09-02) |
+| story-video | story-video-fictional-noir-character-conflict | Original gpt-image-2 generation (2026-09-02) |

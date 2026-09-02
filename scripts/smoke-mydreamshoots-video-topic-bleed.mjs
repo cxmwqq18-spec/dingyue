@@ -64,6 +64,17 @@ function imageUrlsIn(value, found = new Set()) {
   return found;
 }
 
+function imageObjectsIn(value, found = []) {
+  if (Array.isArray(value)) {
+    for (const item of value) imageObjectsIn(item, found);
+    return found;
+  }
+  if (!value || typeof value !== "object") return found;
+  if (typeof value.src === "string" && /^\/assets\/.*\.(?:png|jpe?g|webp)$/i.test(value.src.split(/[?#]/, 1)[0])) found.push(value);
+  for (const item of Object.values(value)) imageObjectsIn(item, found);
+  return found;
+}
+
 function renderedAssetUrl(url) {
   const youtubeAsset = url.match(/^\/assets\/dreamshoot\/youtube-video\/([^/?#]+)\.(?:png|jpe?g|webp)$/i);
   if (youtubeAsset && youtubeAssetMap[youtubeAsset[1].toLowerCase()]) return youtubeAssetMap[youtubeAsset[1].toLowerCase()];
@@ -108,6 +119,16 @@ try {
     select: { slug: true, contentJson: true }
   });
   assert.equal(pages.length, publicTopicSlugs.size, "every public video topic must have a LivePage row");
+  const storyPage = pages.find((page) => page.slug === "/ai-video-generation/story-video");
+  assert.ok(storyPage, "story-video LivePage must exist");
+  const storyImageObjects = imageObjectsIn(storyPage.contentJson);
+  assert.ok(storyImageObjects.length >= 13, "story-video must retain its complete dedicated image set");
+  for (const image of storyImageObjects) {
+    const cleanUrl = image.src.split(/[?#]/, 1)[0];
+    assert.match(cleanUrl, /^\/assets\/dreamshoot\/generated\/video-topic-clean\/story-video\/[^/]+\.webp$/i, `story-video image must use its dedicated clean namespace: ${cleanUrl}`);
+    assert.equal(image.width, 1600, `story-video image metadata width must match the clean asset: ${cleanUrl}`);
+    assert.equal(image.height, 900, `story-video image metadata height must match the clean asset: ${cleanUrl}`);
+  }
   const references = [...pages.flatMap((page) => [...imageUrlsIn(page.contentJson)]), ...themes.flatMap((theme) => [theme.imageUrl, ...(theme.galleryImages ?? [])])];
   assert.equal(references.some((url) => legacyPattern.test(url) && !/^(?:\/assets\/dreamshoot\/(?:tiktok-video|instagram-reels)\/turn-(?:your-photos-and-ideas-into-tiktok-first-videos|photos-and-ideas-into-reels-that-fit-your-feed)\.webp)$/i.test(url)), false, "video topic pages and directory themes must not reference legacy blurred assets");
 
