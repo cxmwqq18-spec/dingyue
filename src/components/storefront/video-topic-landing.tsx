@@ -750,7 +750,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
             <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">{content.hero.body}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ActionLink href={primaryHref} label={content.hero.primaryCta} site={site} />
-              <ActionLink href="#examples" label={content.hero.secondaryCta} site={site} variant="secondary" />
+              <ActionLink href="#how-it-works" label={content.hero.secondaryCta} site={site} variant="secondary" />
             </div>
             <p className="mt-5 max-w-xl text-xs leading-5 text-white/50">{content.hero.availabilityNote}</p>
             <p className="mt-4 max-w-xl text-sm leading-6 text-white/58">{content.hero.rightsCopy}</p>
@@ -941,7 +941,7 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
             <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">{content.hero.body}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ActionLink href={primaryHref} label={content.hero.primaryCta} site={site} />
-              <ActionLink href="#examples" label={content.hero.secondaryCta} site={site} variant="secondary" />
+              <ActionLink href="#how-it-works" label={content.hero.secondaryCta} site={site} variant="secondary" />
             </div>
             <p className="mt-5 max-w-xl text-xs leading-5 text-white/50">{content.hero.availabilityNote}</p>
             <p className="mt-4 max-w-xl text-sm leading-6 text-white/58">{content.hero.rightsCopy}</p>
