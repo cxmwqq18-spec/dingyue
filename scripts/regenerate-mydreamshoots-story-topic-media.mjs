@@ -48,7 +48,7 @@ const allTasks = [
     ].join("\n")
   },
   {
-    key: "story-video-fictional-noir-character-conflict",
+    key: "story-video-fictional-noir-character-conflict-v2",
     prompt: [
       "Use case: photorealistic-natural",
       "Asset type: horizontal 16:9 storefront use-case image for a story-video detail page",

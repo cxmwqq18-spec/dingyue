@@ -43,4 +43,4 @@ The three Story Video use-case images below were regenerated as original, topic-
 | --- | --- | --- |
 | story-video | story-video-mini-documentary-interview-creator | Original gpt-image-2 generation (2026-09-02) |
 | story-video | story-video-community-shared-milestone | Original gpt-image-2 generation (2026-09-02) |
-| story-video | story-video-fictional-noir-character-conflict | Original gpt-image-2 generation (2026-09-02) |
+| story-video | story-video-fictional-noir-character-conflict-v2 | Original gpt-image-2 generation (2026-09-02, regenerated for centered framing and cache-busting) |

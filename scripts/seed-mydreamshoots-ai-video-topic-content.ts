@@ -1395,7 +1395,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteBody: "Character -> objective -> obstacle -> turn -> consequence.",
           cta: "Create a Fictional Story",
           image: image(
-            "/assets/dreamshoot/story-video/story-video-fictional-noir-character-conflict.png",
+            "/assets/dreamshoot/story-video/story-video-fictional-noir-character-conflict-v2.png",
             "Fictional noir protagonist facing an obstacle in a rain-soaked neon alley",
             1600,
             900

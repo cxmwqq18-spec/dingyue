@@ -52,6 +52,20 @@ function isImage(value) {
   return Boolean(value && typeof value === "object" && !Array.isArray(value) && typeof value.src === "string");
 }
 
+function canonicalImageSources(value, output = []) {
+  if (Array.isArray(value)) {
+    for (const nested of value) canonicalImageSources(nested, output);
+    return output;
+  }
+  if (!value || typeof value !== "object") return output;
+  if (typeof value.src === "string" && /^\/assets\/dreamshoot\/(?:generated\/video-topic-clean\/)?story-video\//i.test(value.src)) {
+    output.push(cleanStoryImage(value).src);
+    return output;
+  }
+  for (const nested of Object.values(value)) canonicalImageSources(nested, output);
+  return output;
+}
+
 function syncImages(stored, canonical, pathLabel = "content", changes = []) {
   if (Array.isArray(stored) && Array.isArray(canonical)) {
     for (let index = 0; index < Math.min(stored.length, canonical.length); index += 1) {
@@ -118,11 +132,25 @@ try {
   assert.ok(storedSection && typeof storedSection === "object" && !Array.isArray(storedSection), `missing_target_content:${STORY_SLUG}`);
   const imageChanges = syncImages(storedSection, canonicalContent, "content");
   const nextContent = storedContent;
+  const canonicalHero = cleanStoryImage(canonicalContent.hero?.image).src;
+  const canonicalGallery = [...new Set(canonicalImageSources(canonicalContent).filter((src) => src !== canonicalHero))];
+  const videoTheme = await prisma.videoTheme.findUnique({
+    where: { siteId_slug: { siteId: SITE_ID, slug: "story-video" } },
+    select: { id: true, galleryImages: true }
+  });
+  assert.ok(videoTheme, "missing_target_video_theme:story-video");
+  const videoThemeGalleryChanged = !sameJson(videoTheme.galleryImages, canonicalGallery);
 
   if (!dryRun && imageChanges.length > 0) {
     await prisma.livePage.update({
       where: { id: page.id },
       data: { contentJson: nextContent }
+    });
+  }
+  if (!dryRun && videoThemeGalleryChanged) {
+    await prisma.videoTheme.update({
+      where: { id: videoTheme.id },
+      data: { galleryImages: canonicalGallery }
     });
   }
 
@@ -133,7 +161,8 @@ try {
     page: STORY_SLUG,
     changedImageFields: imageChanges.length,
     imageFields: imageChanges,
-    written: !dryRun && imageChanges.length > 0
+    changedVideoThemeGallery: videoThemeGalleryChanged,
+    written: !dryRun && (imageChanges.length > 0 || videoThemeGalleryChanged)
   }, null, 2));
 } finally {
   await prisma.$disconnect();

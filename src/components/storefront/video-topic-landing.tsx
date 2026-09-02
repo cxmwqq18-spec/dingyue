@@ -1128,6 +1128,14 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
 }
 
 function normalizeAiContent(content: AiVideoTopicLandingContent): VideoTopicContent {
+  const evidence = Array.isArray(content.evidence?.cards)
+    ? { ...content.evidence, cards: content.evidence.cards.map((card) => ({ ...card })) }
+    : undefined;
+  const examples = Array.isArray(content.examples?.cards)
+    ? { ...content.examples, cards: content.examples.cards.map((card) => ({ ...card })) }
+    : content.gallery
+      ? { eyebrow: content.gallery.eyebrow, title: content.gallery.title, intro: content.gallery.intro, cards: content.gallery.items.map((item) => ({ ...item })) }
+      : undefined;
   const supportingGroups = [content.platformExamples, content.comparison]
     .filter(Boolean)
     .map((group) => ({
@@ -1164,12 +1172,8 @@ function normalizeAiContent(content: AiVideoTopicLandingContent): VideoTopicCont
     comparison: content.comparison ? { ...content.comparison, items: content.comparison.items.map((item) => ({ ...item })) } : undefined,
     steps: content.steps,
     value: content.value,
-    evidence: content.evidence ? { ...content.evidence, cards: content.evidence.cards.map((card) => ({ ...card })) } : undefined,
-    examples: content.examples
-      ? { ...content.examples, cards: content.examples.cards.map((card) => ({ ...card })) }
-      : content.gallery
-        ? { eyebrow: content.gallery.eyebrow, title: content.gallery.title, intro: content.gallery.intro, cards: content.gallery.items.map((item) => ({ ...item })) }
-        : undefined,
+    evidence,
+    examples,
     trust: {
       eyebrow: content.trust.eyebrow,
       title: content.trust.title,
