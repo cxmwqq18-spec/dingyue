@@ -117,7 +117,7 @@ const dreamshootFallbackRouteMetadata: Record<string, DreamshootRouteMetadataSee
     follow: true
   },
   "/pricing": {
-    title: "myDreamshoots Pricing - AI photo credits, plans, and top-ups",
+    title: "myDreamshoots Pricing | AI Photo and Video Credits",
     description:
       "Compare myDreamshoots plans, monthly AI photo credits, one-time top-ups, private model access, package generation, secure checkout, and gallery delivery before you create.",
     keywords: "myDreamshoots pricing, AI photo credits, AI portrait subscription, private photo package plans",
@@ -1158,7 +1158,7 @@ const toolDirectory: Record<string, SeoDirectorySeed> = {
       "Create YouTube videos from photos and ideas with a stronger opening, clearer structure, chapter-ready sequencing, captions, and a better path to the next video, playlist, or deeper explanation.",
     keywords:
       "AI YouTube video generator, YouTube video maker, AI long-form video generator, create YouTube videos, make YouTube videos from photos, YouTube content creator, long-form YouTube video maker, video generator for YouTube channel",
-    h2: "turn a bigger idea into a video worth watching through",
+    h2: "turn a bigger idea into a YouTube video worth watching",
     h3: ["Long-form YouTube use cases", "Promise, opening, chapters, depth, and next-video guidance", "YouTube rights, claims, and disclosure review"],
     intro:
       "YouTube Video helps customers shape bigger topics into clearer long-form drafts with a stronger opening, better structure, caption planning, and a relevant next step.",

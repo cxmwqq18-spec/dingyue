@@ -1105,7 +1105,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
     },
     hero: {
       eyebrow: "AI YOUTUBE VIDEO GENERATOR",
-      title: "Turn a Bigger Idea Into a Video Worth Watching Through",
+      title: "Turn a Bigger Idea Into a YouTube Video Worth Watching",
       body:
         "Start from a tutorial topic, expert talk, case study, review, webinar, or series concept. Build a video around a clearer promise, a stronger opening minute, better structure, readable captions, and one logical next step - another episode, a related video, or a playlist path.",
       primaryCta: "Create My YouTube Video",
@@ -2400,7 +2400,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       body:
         "Turn one promotional moment into a video people can understand quickly: what is happening, who it is for, why it matters now, what evidence supports the message, when the offer or event is valid, and what the viewer should do next. Build the draft around verified product, campaign, event, and offer inputs—not invented urgency.",
       primaryCta: "Create a Promo Video",
-      secondaryCta: "See Promo Examples",
+      secondaryCta: "See the promo workflow",
       availabilityNote:
         "The current video workspace is the verified creation path. This page does not claim a separate Promo-only generator or unverified campaign controls.",
       rightsCopy:
@@ -2495,60 +2495,6 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         })
       ]
     },
-    evidence: {
-      eyebrow: "PROVE THE GENERATOR, NOT JUST THE PROMO CATEGORY",
-      title: "Show What myDreamshoots Actually Accepts, Controls, and Generates",
-      intro: "Stock campaign imagery explains promotional contexts, but it cannot prove the product itself. Replace these evidence-ready slots with verified myDreamshoots captures before publishing.",
-      cards: [
-        { title: "Real input", body: "Show an actual input state a user can provide today and caption the verified asset or input type supplied.", exampleLabel: "First-party evidence required", exampleBody: "No first-party input capture was included in the delivery package." },
-        { title: "Real direction / controls", body: "Show only controls, settings, or prompt instructions that exist now. Do not add invented duration, ratio, voice, template, platform, music, caption, or export controls.", exampleLabel: "First-party evidence required", exampleBody: "Product and development verification is required before publishing control claims." },
-        { title: "Real generated output", body: "Embed or show a verified output generated through the current product, with a matching thumbnail and concise Input -> Direction -> Output caption.", exampleLabel: "First-party evidence required", exampleBody: "A public generated Promo output was not supplied with this content package." },
-        { title: "Product fact strip", body: "Publish only verified facts such as supported inputs, outputs, duration, audio, credits, export behavior, or commercial-use terms. Omit unverified fields.", exampleLabel: "Fact check required", exampleBody: "Fact-strip fields remain intentionally empty until product verification is complete." }
-      ]
-    },
-    examples: {
-      eyebrow: "REAL PROMO EXAMPLES",
-      title: "Show What a Real Promotional Brief Becomes",
-      intro: "Use first-party examples when available. Stock scene references explain the promotional context but must not be presented as myDreamshoots outputs.",
-      cards: [
-        {
-          title: "Launch Promo",
-          body: "Reserve this slot for a real myDreamshoots launch case with one verified product or campaign fact pattern.",
-          details: [
-            { label: "Input", body: "Verified source asset - pending capture." },
-            { label: "Brief", body: "Product, launch state, proof, timing, and CTA - pending product record." },
-            { label: "Output", body: "Real generated video and matching thumbnail - pending." },
-            { label: "Why", body: "Launch fact appears early, proof supports the message, and timing matches the destination - pending review." }
-          ],
-          exampleLabel: "First-party proof required",
-          exampleBody: "This card is an evidence-ready slot, not a fabricated customer result."
-        },
-        {
-          title: "Limited-Time Offer",
-          body: "Use a verified offer case where the discount, eligibility, conditions, and deadline all match the destination.",
-          details: [
-            { label: "Input", body: "Verified source asset - pending capture." },
-            { label: "Facts", body: "Offer, eligibility, and deadline - pending campaign record." },
-            { label: "Output", body: "Real generated video and matching thumbnail - pending." },
-            { label: "Why", body: "The offer is legible, conditions are visible, and urgency is factual - pending review." }
-          ],
-          exampleLabel: "First-party proof required",
-          exampleBody: "Do not turn a stock sale image into a verified product outcome."
-        },
-        {
-          title: "Event or Seasonal Promo",
-          body: "Use a verified event or seasonal campaign case where the viewer can understand what, when, why, and where to act.",
-          details: [
-            { label: "Input", body: "Verified event, product, or campaign asset - pending capture." },
-            { label: "Facts", body: "Date, location or format, reason to attend, and terms - pending campaign record." },
-            { label: "Output", body: "Real generated video and matching thumbnail - pending." },
-            { label: "Why", body: "The message preserves the campaign facts while keeping the visual experience clear - pending review." }
-          ],
-          exampleLabel: "First-party proof required",
-          exampleBody: "The package does not include a generated output, so no result is claimed here."
-        }
-      ]
-    },
     foundation: {
       eyebrow: "PROMO BRIEF MODEL",
       title: "Write the Promotional Fact Pattern Before the Creative Brief",
@@ -2607,7 +2553,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     comparison: {
-      eyebrow: "PAGE DIFFERENTIATION / INTERNAL LINKING",
+      eyebrow: "Which video format fits",
       title: "Promo Video Is About a Time-Bound Promotional Moment",
       intro: "Keep adjacent pages distinct by the customer decision they support.",
       items: [
@@ -3221,19 +3167,6 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { title: "End with a brand promise, not false urgency", body: "Close on a line, belief, invitation, or next step. Use scarcity only when it is a verified promotion." }
       ]
     },
-    evidence: {
-      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
-      title: "Product Evidence Is Required Before This Page Can Prove the Workflow",
-      intro:
-        "The eight editorial photos explain brand-story directions. They do not prove a generated result, customer outcome, or product capability.",
-      cards: [
-        { title: "Text to Video input", body: "Add a verified myDreamshoots Text to Video input state before treating it as product proof." },
-        { title: "Image to Video input", body: "Add a verified Image to Video input state that reflects the current workflow." },
-        { title: "Credit confirmation", body: "Use the real credit-confirmation state shown before generation, not a recreated UI." },
-        { title: "Generation state", body: "Show a real current generation state when first-party evidence is available." },
-        { title: "Reviewed brand-video output", body: "Use a real reviewed Brand Video-style output before presenting a result as myDreamshoots product evidence." }
-      ]
-    },
     value: {
       eyebrow: "START THIS VIDEO WORKFLOW",
       title: "Turn a Verified Brand Story Into a Reviewable Video Draft",
@@ -3393,18 +3326,6 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       expertLabel: "Expert tip",
       expertTip: "Write the visual system first. Treat audio synchronization as a separate production step unless the live workspace explicitly documents that control."
     },
-    evidence: {
-      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
-      title: "Evidence Is Required Before This Page Proves the Workflow",
-      intro: "The eight editorial photos explain music-video directions. They do not prove a generated result, customer outcome, or product capability.",
-      cards: [
-        { title: "Text to Video input", body: "Add a verified current Text to Video input state before treating it as product proof." },
-        { title: "Image to Video input", body: "Add a verified Image to Video input state that reflects the current workflow." },
-        { title: "Credit confirmation", body: "Use the real credit-confirmation state shown before generation, not a recreated UI." },
-        { title: "Generation state", body: "Show a real current generation state when first-party evidence is available." },
-        { title: "Reviewed output", body: "Use a real reviewed music-video-style output before presenting a result as product evidence." }
-      ]
-    },
     value: {
       eyebrow: "START THIS VIDEO WORKFLOW",
       title: "Turn an Approved Music Brief Into a Reviewable Visual Draft",
@@ -3553,18 +3474,6 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       rightTone: "avoid",
       expertLabel: "Expert tip",
       expertTip: "Choose movement that reveals the garment. Review the result for construction and identity instead of treating a fashion reference image as proof of a dedicated apparel-control feature."
-    },
-    evidence: {
-      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
-      title: "Evidence Is Required Before This Page Proves the Workflow",
-      intro: "The eight editorial photos explain fashion-video directions. They do not prove a generated result, customer outcome, or product capability.",
-      cards: [
-        { title: "Text to Video input", body: "Add a verified current Text to Video input state before treating it as product proof." },
-        { title: "Image to Video input", body: "Add a verified Image to Video input state that reflects the current workflow." },
-        { title: "Credit confirmation", body: "Use the real credit-confirmation state shown before generation, not a recreated UI." },
-        { title: "Generation state", body: "Show a real current generation state when first-party evidence is available." },
-        { title: "Reviewed output", body: "Use a real reviewed fashion-video-style output before presenting a result as product evidence." }
-      ]
     },
     value: {
       eyebrow: "START THIS VIDEO WORKFLOW",
@@ -3715,18 +3624,6 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       expertLabel: "Expert tip",
       expertTip: "Choose one food action per shot and review ingredients, portions, hands, liquids, steam, labels, and props. Treat generated food visuals as creative material, not food-safety guidance."
     },
-    evidence: {
-      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
-      title: "Evidence Is Required Before This Page Proves the Workflow",
-      intro: "The eleven culinary photographs explain food-video directions. They do not prove a generated result, customer outcome, recipe, or product capability.",
-      cards: [
-        { title: "Text to Video input", body: "Add a verified current Text to Video input state before treating it as product proof." },
-        { title: "Image to Video input", body: "Add a verified Image to Video input state that reflects the current workflow." },
-        { title: "Credit confirmation", body: "Use the real credit-confirmation state shown before generation, not a recreated UI." },
-        { title: "Generation state", body: "Show a real current generation state when first-party evidence is available." },
-        { title: "Reviewed output", body: "Use a real reviewed food-video-style output before presenting a result as product evidence." }
-      ]
-    },
     value: {
       eyebrow: "START THIS VIDEO WORKFLOW",
       title: "Turn an Approved Food Brief Into a Reviewable Visual Draft",
@@ -3876,18 +3773,6 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       expertLabel: "Expert tip",
       expertTip: "Choose one visible behavior per shot and review animal identity, anatomy, hands, props, and continuity. Treat generated pet visuals as creative material, not veterinary, nutrition, training, or welfare guidance."
     },
-    evidence: {
-      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
-      title: "Evidence Is Required Before This Page Proves the Workflow",
-      intro: "The eleven pet photographs explain pet-video directions. They do not prove a generated result, customer outcome, veterinary fact, or product capability.",
-      cards: [
-        { title: "Text to Video input", body: "Add a verified current Text to Video input state before treating it as product proof." },
-        { title: "Image to Video input", body: "Add a verified Image to Video input state that reflects the current workflow." },
-        { title: "Credit confirmation", body: "Use the live workspace to confirm credit use and any output limits before promising a production workflow." },
-        { title: "Pet identity review", body: "Show a verified before-and-after review of animal identity, anatomy, props, and continuity when first-party evidence is available." },
-        { title: "Rights and welfare review", body: "Document source permission and a human review boundary for animal safety, health, nutrition, behavior, training, and welfare claims." }
-      ]
-    },
     value: {
       eyebrow: "WHY THIS STRUCTURE HELPS",
       title: "Move From a Pet Idea to a Reviewable Motion Brief",
@@ -4024,16 +3909,6 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { title: "Preserve relationships between shots", body: "Keep node order, terminology, icons, colors, and causal relationships consistent when the content has not changed." },
         { title: "Do not manufacture authority", body: "Generated experts, charts, dashboards, and technical visuals do not establish credentials, evidence, or product truth." },
         { title: "Design for the destination", body: "A landing page, onboarding flow, classroom visual, investor concept, sales clip, and social explainer need different density and pacing." }
-      ]
-    },
-    evidence: {
-      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
-      title: "Verify the live workflow before publishing",
-      intro: "The page must be backed by real myDreamshoots evidence before it is promoted as an indexable product page.",
-      cards: [
-        { title: "Text to Video input", body: "Add a real, internally reviewed capture of the supported text input path and its current controls." },
-        { title: "Image to Video input", body: "Add a real capture showing how an approved diagram, interface, chart, or product image enters the workflow." },
-        { title: "Credits and job state", body: "Document the real credit requirement, generation request, job state, and at least one reviewed explainer-style output." }
       ]
     },
     steps: {
@@ -4190,16 +4065,6 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { title: "End with verification", body: "Close with a fit, alignment, measurement, status, count, or other observable checkpoint." }
       ]
     },
-    evidence: {
-      eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
-      title: "Verify the live workflow before publishing",
-      intro: "The page must be backed by real myDreamshoots evidence before it is promoted as an indexable product page.",
-      cards: [
-        { title: "Text to Video input", body: "Add a real, internally reviewed capture of the supported text input path and current controls for tutorial direction." },
-        { title: "Image to Video input", body: "Add a real capture showing how an approved product, interface, diagram, or reference image enters the workflow." },
-        { title: "Credits and job state", body: "Document the real credit requirement, generation request, job state, and at least one reviewed tutorial-style output." }
-      ]
-    },
     steps: {
       eyebrow: "HOW IT WORKS",
       title: "From one task to a reviewed tutorial sequence",
@@ -4281,7 +4146,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       body:
         "Build UGC-style product videos around a clear creator role, a scroll-stopping hook, a real product moment, and proof the viewer can actually see. Keep AI, actors, paid creators, and real customers accurately represented while turning approved product inputs into creator-native ad concepts.",
       primaryCta: "Create a UGC-Style Video",
-      secondaryCta: "See UGC Examples",
+      secondaryCta: "See the UGC workflow",
       availabilityNote:
         "The current video workspace is the verified creation path. This page does not claim a separate UGC-only generator or unverified creator controls.",
       rightsCopy:
@@ -4406,60 +4271,6 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         })
       ]
     },
-    evidence: {
-      eyebrow: "V2 - FIRST-PARTY PRODUCT EVIDENCE",
-      title: "Show the Real Generator, Not Just the Category",
-      intro: "Stock creator photos explain the scenario. Real UI and real generated output prove the product.",
-      cards: [
-        { title: "Actual input state", body: "Replace this card with a verified myDreamshoots input screenshot and a caption describing the real asset type supplied.", exampleLabel: "Live product evidence required", exampleBody: "No first-party input capture was included in the delivery package." },
-        { title: "Actual workflow / controls", body: "Name only controls or instructions that exist in the current product. Do not add mock creator selectors, voices, ratios, durations, or integrations.", exampleLabel: "Live product evidence required", exampleBody: "Product and development verification is required before publishing control claims." },
-        { title: "Actual generated video", body: "Use a real output and matching thumbnail from the current myDreamshoots workflow. Do not use a stock creator photo as output evidence.", exampleLabel: "Live product evidence required", exampleBody: "A public generated UGC output was not supplied with this content package." },
-        { title: "Verified product facts", body: "Add only verified input, output, ratio, voice, pricing, export, timing, or commercial-use facts. Omit any field that has not been confirmed.", exampleLabel: "Live product evidence required", exampleBody: "Fact-strip fields remain intentionally empty until product verification is complete." }
-      ]
-    },
-    examples: {
-      eyebrow: "V2 - REAL EXAMPLES",
-      title: "Show What a Real UGC Brief Becomes",
-      intro: "At least three first-party examples: Input -> Brief -> Output -> Why it works.",
-      cards: [
-        {
-          title: "Product Demo UGC",
-          body: "Reserve this slot for a real myDreamshoots product demo case. The source, direction, output, and observable reason must all refer to the same generation.",
-          details: [
-            { label: "Input", body: "Real product asset - pending verified capture." },
-            { label: "Brief", body: "Actual direction used - pending product record." },
-            { label: "Output", body: "Real generated video and matching thumbnail - pending." },
-            { label: "Why", body: "One observable reason the product action and proof work together - pending review." }
-          ],
-          exampleLabel: "First-party proof required",
-          exampleBody: "This card is an evidence-ready slot, not a fabricated customer result."
-        },
-        {
-          title: "Direct-to-Camera UGC",
-          body: "Use a verified direct-to-camera case and identify the speaker status accurately. A scripted actor, AI person, paid creator, and real customer require different wording.",
-          details: [
-            { label: "Input", body: "Real product asset and approved speaker direction - pending." },
-            { label: "Brief", body: "Actual hook, context, proof, and CTA - pending." },
-            { label: "Output", body: "Real generated video and matching thumbnail - pending." },
-            { label: "Why", body: "Explain one visible proof or message decision - pending review." }
-          ],
-          exampleLabel: "First-party proof required",
-          exampleBody: "Do not present a stock person or scripted experience as a verified testimonial."
-        },
-        {
-          title: "B-Roll + Voiceover UGC",
-          body: "Use a verified B-roll case where the footage adds action and the voiceover adds context instead of repeating the same line.",
-          details: [
-            { label: "Input", body: "Real product asset and approved source direction - pending." },
-            { label: "Brief", body: "Actual B-roll sequence, context, and CTA - pending." },
-            { label: "Output", body: "Real generated video and matching thumbnail - pending." },
-            { label: "Why", body: "Explain how the visible sequence carries part of the claim - pending review." }
-          ],
-          exampleLabel: "First-party proof required",
-          exampleBody: "The package does not include a generated output, so no result is claimed here."
-        }
-      ]
-    },
     foundation: {
       eyebrow: "BRIEF MODEL",
       title: "Start With the Speaker and the Evidence",
@@ -4505,7 +4316,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       ]
     },
     comparison: {
-      eyebrow: "PAGE DIFFERENTIATION / INTERNAL LINKING",
+      eyebrow: "Which video format fits",
       title: "UGC Ad Video Is a Specific Creator-Message Job",
       intro: "Keep adjacent pages distinct by the customer decision they support. Use the existing AI Video Generation hub and Product Ad Video page when those are the better fit.",
       items: [

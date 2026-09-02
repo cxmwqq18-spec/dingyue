@@ -34,19 +34,19 @@ const sectionOrder = ["hero", "use-cases", "foundation", "guidance", "steps", "v
 
 function sectionOrderForTopic(topic) {
   if (topic === "ugc-ad-video") {
-    return ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"];
+    return ["hero", "quick-answer", "use-cases", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"];
   }
   if (topic === "promo-video") {
-    return ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "urgency", "how-it-works", "comparison", "trust", "faq", "final-cta"];
+    return ["hero", "quick-answer", "use-cases", "foundation", "guidance", "urgency", "how-it-works", "comparison", "trust", "faq", "final-cta"];
   }
   if (topic === "video-ad") {
     return ["hero", "what-this-creates", "style-cues", "how-it-works", "scene-gallery", "guide", "workflow", "faq", "related-pages", "final-cta"];
   }
   if (topic === "brand-video") {
-    return ["hero", "what-this-creates", "brand-story-map", "brand-signals", "how-it-works", "scene-gallery", "brand-consistency-guide", "product-evidence", "workflow", "brand-integrity-review", "faq", "related-pages", "final-cta"];
+    return ["hero", "what-this-creates", "brand-story-map", "brand-signals", "how-it-works", "scene-gallery", "brand-consistency-guide", "workflow", "brand-integrity-review", "faq", "related-pages", "final-cta"];
   }
   if (topic === "music-video" || topic === "fashion-video" || topic === "food-video" || topic === "pet-video") {
-    return ["hero", "what-this-creates", "visual-map", "how-it-works", "scene-gallery", "sequence-guide", "product-boundary", "product-evidence", "workflow", "integrity-review", "faq", "related-pages", "final-cta"];
+    return ["hero", "what-this-creates", "visual-map", "how-it-works", "scene-gallery", "sequence-guide", "product-boundary", "workflow", "integrity-review", "faq", "related-pages", "final-cta"];
   }
   return sectionOrder;
 }
@@ -158,7 +158,6 @@ try {
                 scenes: scenes.length,
                 beats: document.querySelectorAll("[data-brand-video-beat]").length,
                 guideCards: document.querySelectorAll("[data-brand-video-guide-card]").length,
-                evidenceCards: document.querySelectorAll("[data-brand-video-evidence] article").length,
                 steps: document.querySelectorAll("[data-brand-video-step]").length,
                 reviewCards: document.querySelectorAll("[data-brand-video-review-card]").length,
                 hasWorkspacePanel: Boolean(document.querySelector("[data-brand-video-workspace]")),
@@ -180,7 +179,6 @@ try {
             assert.equal(result.scenes >= 1, true, `${topic} ${viewport.name} should render scene cards`);
             assert.equal(result.beats >= 1, true, `${topic} ${viewport.name} should render story beats`);
             assert.equal(result.guideCards >= 1, true, `${topic} ${viewport.name} should render guide cards`);
-            assert.equal(result.evidenceCards >= 1, true, `${topic} ${viewport.name} should render evidence cards`);
             assert.equal(result.steps >= 1, true, `${topic} ${viewport.name} should render workflow steps`);
             assert.equal(result.reviewCards >= 1, true, `${topic} ${viewport.name} should render review cards`);
             assert.equal(result.hasWorkspacePanel, true, `${topic} ${viewport.name} should render the workspace review panel`);
@@ -230,7 +228,6 @@ try {
                 mapItems: document.querySelectorAll("[data-scene-topic-map-item]").length,
                 steps: document.querySelectorAll("[data-scene-topic-step]").length,
                 guideCards: document.querySelectorAll('[data-video-topic-section="sequence-guide"] article').length,
-                evidenceCards: document.querySelectorAll('[data-video-topic-section="product-evidence"] [data-video-topic-supporting-cards] > article').length,
                 workflowCards: document.querySelectorAll("[data-scene-topic-workflow]").length,
                 reviewCards: document.querySelectorAll("[data-scene-topic-review-card]").length,
                 sceneSources: scenes.map((card) => card.querySelector("img")?.getAttribute("src") || ""),
@@ -273,7 +270,6 @@ try {
             assert.equal(result.mapItems >= 1, true, `${topic} ${viewport.name} should render visual-map items`);
             assert.equal(result.steps >= 1, true, `${topic} ${viewport.name} should render workflow steps`);
             assert.equal(result.guideCards >= 1, true, `${topic} ${viewport.name} should render sequence-guide cards`);
-            assert.equal(result.evidenceCards >= 1, true, `${topic} ${viewport.name} should render evidence cards`);
             assert.equal(result.workflowCards >= 1, true, `${topic} ${viewport.name} should render workflow cards`);
             assert.equal(result.reviewCards >= 1, true, `${topic} ${viewport.name} should render review cards`);
             assert.equal(result.sceneImagesLoaded, true, `${topic} ${viewport.name} scene images must load with alt text`);

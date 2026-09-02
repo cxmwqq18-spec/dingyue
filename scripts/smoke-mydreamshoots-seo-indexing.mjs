@@ -55,6 +55,7 @@ const jsonLd = readText("src/lib/theme/json-ld.ts");
 const dreamshootSeoContent = readText("src/lib/dreamshoot-seo-content.ts");
 const robots = readText("src/app/robots.txt/route.ts");
 const nextConfig = readText("next.config.mjs");
+const middleware = readText("src/middleware.ts");
 const sitemapRoute = readText("src/app/sitemap.xml/route.ts");
 const hostCatchAllPage = readText("src/app/[...path]/page.tsx");
 const siteCatchAllPage = readText("src/app/site/[siteSlug]/[...path]/page.tsx");
@@ -92,6 +93,10 @@ const mydreamshootsTaxonomyPathBySlug = new Map([
   ...(mydreamshootsTaxonomy.roots ?? []).map((root) => [root.slug, "/ai-image-generation"]),
   ...(mydreamshootsTaxonomy.items ?? []).map((item) => [item.slug, `/ai-image-generation/${item.slug}`])
 ]);
+assert(
+  !mydreamshootsTaxonomyPathBySlug.has("social-cards"),
+  "MyDreamShoots Social Cards must not be part of the public taxonomy route projection"
+);
 const mydreamshootsUseCaseProfiles = photoPackageUseCaseProfiles.mydreamshootsCategories ?? {};
 const requiredUseCaseProfileFields = [
   "headline",
@@ -320,13 +325,23 @@ assert(
   !slugRows.some((row) => row.slug === "/app/legacy-ai-image-studio" && row.index !== false),
   "legacy image studio page must not enter the sitemap when present"
 );
+assert(
+  siteRouteCanonical.includes('"/ai-image-generation/social-cards": "/ai-image-generation"') ||
+    storefrontContextSnapshot.includes('requestedPath === "/ai-image-generation/social-cards"'),
+  "MyDreamShoots Social Cards must resolve through a site-scoped 301 to AI Image Generation"
+);
+assert(
+  themeRenderer.includes('photoPackageSlug(item.label)') &&
+    themeRenderer.includes('motion-generator'),
+  "MyDreamShoots image navigation must retain an explicit source for filtering the retired motion-generator item"
+);
 
 const hrefHits = [];
 const visiblePackageLabelHits = [];
 walk(mydreamshootsSite, (key, value, location) => {
   if (key === "href" && typeof value === "string") hrefHits.push({ href: value, location: location.join(".") });
   if (["label", "primaryCta", "secondaryCta", "ctaLabel"].includes(key) && typeof value === "string") {
-    if (["Headshot Generator", "Browse packages", "Best Packages", "Best AI image", "Best AI video"].includes(value)) {
+    if (["Headshot Generator", "Browse packages", "Best Packages", "AI Photo Packages", "Best AI image", "Best AI video"].includes(value)) {
       visiblePackageLabelHits.push({ label: value, location: location.join(".") });
     }
   }
@@ -367,7 +382,9 @@ function requiredCollectionPathIsCovered(requiredPath) {
   return activeDreamshootCategorySlugs.has(slug) && activeDreamshootPackCategories.has(slug);
 }
 const badLegacyCollectionHrefHits = hrefHits.filter((hit) => legacyCollectionHrefs.has(hit.href));
+const socialCardsHrefHits = hrefHits.filter((hit) => hit.href === "/ai-image-generation/social-cards");
 assert(!badLegacyHrefHits.length, "MyDreamShoots internal hrefs must use canonical policy paths to avoid redirects", { badLegacyHrefHits });
+assert(!socialCardsHrefHits.length, "MyDreamShoots public navigation must not link to the retired Social Cards aggregate route", { socialCardsHrefHits });
 assert(
   !badLegacyCollectionHrefHits.length,
   "MyDreamShoots internal hrefs must not keep legacy collection slugs after the taxonomy migration",
@@ -413,7 +430,13 @@ assert(
   "MyDreamShoots header must not expose the removed Headshot Generator top label",
   { headerLinks }
 );
-for (const [label, href] of [["AI Video Generation", "/ai-video-generation"], ["AI Image Generation", "/ai-image-generation"], ["Best Packages", "/best-packages"], ["Pricing", "/pricing"]]) {
+for (const [label, href] of [
+  ["AI Video Generation", "/ai-video-generation"],
+  ["AI Save the Date", "/ai-save-the-date/save-the-date"],
+  ["AI Image Generation", "/ai-image-generation"],
+  ["AI Photo Packages", "/best-packages"],
+  ["Pricing", "/pricing"]
+]) {
   assert(
     footerProductLinks.some((link) => link.label === label && link.href === href),
     "MyDreamShoots footer product links must expose the Phase B product order",
@@ -471,6 +494,15 @@ assert(
     !templates.includes('ctaLabel: "Browse packages"'),
   "MyDreamShoots templates must not expose Browse packages as a CTA or navigation label"
 );
+assert(
+  templates.includes('primaryCta: "Contact us about the Creators Circle"') &&
+    templates.includes('primaryHref: "/contact-us"'),
+  "Creators Circle CTAs must use the canonical contact route"
+);
+assert(
+  readText("src/lib/mydreamshoots-homepage-copy.json").includes('"conversionTitle": "Ready to try myDreamshoots?"'),
+  "MyDreamshoots conversion copy must not use the possessive typo"
+);
 
 for (const pathName of ["/cookie-policy", "/privacy-policy", "/terms-of-service"]) {
   assert(seoIndexing.includes(`"${pathName}"`), "sitemap legacy duplicate exclusions must include old policy paths", { pathName });
@@ -502,6 +534,15 @@ for (const pathName of [
 assert(
   siteRouteCanonical.includes('"/ai-image-generation/profile-cards": "/ai-image-generation/avatar"'),
   "legacy profile-cards image path must redirect to the canonical avatar route"
+);
+assert(
+  siteRouteCanonical.includes('"/ai-image-generation/social-cards": "/ai-image-generation"') &&
+    middleware.includes('"/ai-image-generation/social-cards": "/ai-image-generation"') &&
+    middleware.includes("mydreamshootsPageCopyForSlug") &&
+    hostCatchAllPage.includes('slug === "/ai-image-generation/social-cards"') &&
+    hostCatchAllPage.includes('site.id === "site_dreamshoot"') &&
+    siteCatchAllPage.includes('slug === "/ai-image-generation/social-cards"'),
+  "legacy Social Cards image path must use site-scoped server redirect to the image directory"
 );
 for (const slug of [
   "talking-photo",

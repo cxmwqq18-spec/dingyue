@@ -380,6 +380,12 @@ const legacyToolRedirectStatuses = [];
 for (const pathname of ["/tools"]) {
   legacyToolRedirectStatuses.push({ pathname, ...(await fetchStatusNoRedirect(pathname)) });
 }
+const socialCardsRedirect = await fetchStatusNoRedirect("/ai-image-generation/social-cards");
+assert.equal(socialCardsRedirect.status, 301, "MyDreamShoots Social Cards must return a server-side 301");
+assert.ok(socialCardsRedirect.headers.location?.endsWith("/ai-image-generation"), "Social Cards 301 must target /ai-image-generation");
+const siteSocialCardsRedirect = await fetchStatusNoRedirect("/site/mydreamshoots/ai-image-generation/social-cards");
+assert.equal(siteSocialCardsRedirect.status, 301, "MyDreamShoots site-path Social Cards must return a server-side 301");
+assert.ok(siteSocialCardsRedirect.headers.location?.endsWith("/ai-image-generation"), "site-path Social Cards 301 must target /ai-image-generation");
 const hiddenVideoStatuses = [];
 for (const pathname of ["/ai-video-generation/text-to-video", "/ai-video-generation/image-to-video", "/tools/image-to-video"]) {
   hiddenVideoStatuses.push({ pathname, ...(await fetchStatusNoRedirect(pathname)) });
@@ -686,17 +692,16 @@ if (ugcAdIsPublished) {
     assert.ok(renderedUgcAssetPaths.includes(assetPath), `UGC Ad Video SSR must render ${assetPath}`);
   }
   const normalizedUgcAdVideoGeneration = ugcAdVideoGeneration.toLowerCase();
+  assert.doesNotMatch(normalizedUgcAdVideoGeneration, /first-party product evidence|v2 - real examples|pending capture|pending review|page differentiation \/ internal linking/, "UGC Ad Video SSR must not expose internal production notes");
   for (const label of [
     "ai ugc video generator",
     "what to make clear",
-    "v2 - first-party product evidence",
-    "v2 - real examples",
     "brief model",
     "natural script model",
     "creator-native framing",
     "how it works",
     "message testing",
-    "page differentiation / internal linking",
+    "which video format fits",
     "responsible use",
     "questions that belong on a ugc generator page"
   ]) {
@@ -706,14 +711,12 @@ if (ugcAdIsPublished) {
   const ugcSectionOrder = [
     "WHAT TO MAKE CLEAR",
     "UGC JOBS",
-    "V2 - FIRST-PARTY PRODUCT EVIDENCE",
-    "V2 - REAL EXAMPLES",
     "BRIEF MODEL",
     "NATURAL SCRIPT MODEL",
     "CREATOR-NATIVE FRAMING",
     "HOW IT WORKS",
     "MESSAGE TESTING",
-    "PAGE DIFFERENTIATION / INTERNAL LINKING",
+    "WHICH VIDEO FORMAT FITS",
     "RESPONSIBLE USE",
     "FAQ",
     "CREATE WITH VERIFIED PRODUCT INPUTS"
@@ -752,16 +755,15 @@ if (promoIsPublished) {
     assert.ok(renderedPromoAssetPaths.includes(assetPath), `Promo Video SSR must render ${assetPath}`);
   }
   const normalizedPromoVideoGeneration = promoVideoGeneration.toLowerCase();
+  assert.doesNotMatch(normalizedPromoVideoGeneration, /first-party product evidence|real promo examples|pending capture|pending review|page differentiation \/ internal linking/, "Promo Video SSR must not expose internal production notes");
   for (const label of [
     "what to make clear",
     "six promo video jobs",
-    "prove the generator, not just the promo category",
-    "real promo examples",
     "promo brief model",
     "message hierarchy",
     "urgency without inventing scarcity",
     "how it works",
-    "page differentiation / internal linking",
+    "which video format fits",
     "responsible use"
   ]) {
     assert.ok(normalizedPromoVideoGeneration.includes(label), `Promo Video SSR must expose the section label ${label}`);
@@ -825,8 +827,8 @@ for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
   assert.equal((pageMarkup.match(/data-video-topic-page=/g) ?? []).length, 1, `${pathname} must render the shared video topic page marker`);
   if (["brand-video", "music-video", "fashion-video", "food-video", "pet-video"].includes(slug)) {
     const sectionNames = slug === "brand-video"
-      ? ["hero", "what-this-creates", "brand-story-map", "brand-signals", "how-it-works", "scene-gallery", "brand-consistency-guide", "product-evidence", "workflow", "brand-integrity-review", "faq", "related-pages", "final-cta"]
-      : ["hero", "what-this-creates", "visual-map", "how-it-works", "scene-gallery", "sequence-guide", "product-boundary", "product-evidence", "workflow", "integrity-review", "faq", "related-pages", "final-cta"];
+      ? ["hero", "what-this-creates", "brand-story-map", "brand-signals", "how-it-works", "scene-gallery", "brand-consistency-guide", "workflow", "brand-integrity-review", "faq", "related-pages", "final-cta"]
+      : ["hero", "what-this-creates", "visual-map", "how-it-works", "scene-gallery", "sequence-guide", "product-boundary", "workflow", "integrity-review", "faq", "related-pages", "final-cta"];
     for (const section of sectionNames) {
       assert.ok(pageMarkup.includes(`data-video-topic-section="${section}"`), `${pathname} must render the ${section} section`);
     }
@@ -847,9 +849,9 @@ for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
   }
   assert.equal((pageMarkup.match(/<article[^>]+data-video-topic-use-case-card/g) ?? []).length, 6, `${pathname} must render exactly six use-case cards`);
   const sectionNames = slug === "ugc-ad-video"
-    ? ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"]
+    ? ["hero", "quick-answer", "use-cases", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"]
     : slug === "promo-video"
-      ? ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "urgency", "how-it-works", "comparison", "trust", "faq", "final-cta"]
+      ? ["hero", "quick-answer", "use-cases", "foundation", "guidance", "urgency", "how-it-works", "comparison", "trust", "faq", "final-cta"]
     : ["hero", "use-cases", "foundation", "guidance", "steps", "value", "trust", "faq", "final-cta"];
   for (const section of sectionNames) {
     assert.ok(pageMarkup.includes(`data-video-topic-section="${section}"`), `${pathname} must render the shared ${section} section`);
@@ -869,15 +871,15 @@ for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
   const slug = pathname.split("/").at(-1);
   const pageMarkup = renderedMarkup(html);
   const sectionOrder = slug === "ugc-ad-video"
-    ? ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"]
+      ? ["hero", "quick-answer", "use-cases", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"]
     : slug === "promo-video"
-      ? ["hero", "quick-answer", "use-cases", "evidence", "examples", "foundation", "guidance", "urgency", "how-it-works", "comparison", "trust", "faq", "final-cta"]
+      ? ["hero", "quick-answer", "use-cases", "foundation", "guidance", "urgency", "how-it-works", "comparison", "trust", "faq", "final-cta"]
     : slug === "video-ad"
       ? ["hero", "what-this-creates", "style-cues", "how-it-works", "scene-gallery", "guide", "workflow", "faq", "related-pages", "final-cta"]
       : slug === "brand-video"
-        ? ["hero", "what-this-creates", "brand-story-map", "brand-signals", "how-it-works", "scene-gallery", "brand-consistency-guide", "product-evidence", "workflow", "brand-integrity-review", "faq", "related-pages", "final-cta"]
+        ? ["hero", "what-this-creates", "brand-story-map", "brand-signals", "how-it-works", "scene-gallery", "brand-consistency-guide", "workflow", "brand-integrity-review", "faq", "related-pages", "final-cta"]
         : ["music-video", "fashion-video", "food-video", "pet-video"].includes(slug)
-          ? ["hero", "what-this-creates", "visual-map", "how-it-works", "scene-gallery", "sequence-guide", "product-boundary", "product-evidence", "workflow", "integrity-review", "faq", "related-pages", "final-cta"]
+          ? ["hero", "what-this-creates", "visual-map", "how-it-works", "scene-gallery", "sequence-guide", "product-boundary", "workflow", "integrity-review", "faq", "related-pages", "final-cta"]
     : pageMarkup.includes('data-video-topic-section="supporting"')
       ? ["hero", "use-cases", "foundation", "guidance", "supporting", "steps", "value", "trust", "faq", "final-cta"]
       : sharedSectionOrder;
@@ -967,6 +969,7 @@ console.log(JSON.stringify({
   pages: ["/", "/site/mydreamshoots/", "/pricing", ...(headshotIsPublished ? [headshotPath] : []), ...Object.entries(videoTopicGenerationByPath).filter(([, html]) => Boolean(html)).map(([pathname]) => pathname), "/workflow", "/faq"],
   legacy404s: legacyCollectionStatuses.map(({ pathname, status }) => ({ pathname, status })),
   retiredTool404s: legacyToolRedirectStatuses.map(({ pathname, status }) => ({ pathname, status })),
+  socialCardsRedirect: { status: socialCardsRedirect.status, location: socialCardsRedirect.headers.location },
   hiddenVideo404s: hiddenVideoStatuses.map(({ pathname, status }) => ({ pathname, status })),
   placeholders: 0,
   homepageVideoObjects: homepageVideos.length,

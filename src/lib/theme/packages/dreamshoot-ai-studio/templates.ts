@@ -968,8 +968,8 @@ const templateSections = {
     headingLevel: "h1",
     tone: "dark",
     imageUrl: assets.heroGridSocial,
-    primaryCta: "Apply as a partner",
-    primaryHref: "/partner-registration",
+    primaryCta: "Contact us about the Creators Circle",
+    primaryHref: "/contact-us",
     secondaryCta: "Explore photo packages",
     secondaryHref: "/ai-image-generation"
   }, [
@@ -983,8 +983,8 @@ const templateSections = {
     title: "Built for creators who explain style, identity, and transformation.",
     body: "The strongest partners show real use cases: a founder updating a profile photo, a fan making match-day images, a creator testing avatar styles, or a small team refreshing campaign visuals. We care more about audience fit, clear storytelling, and consistent publishing than raw follower count.",
     imageUrl: assets.proofBusinessFounder,
-    primaryCta: "Start the application",
-    primaryHref: "/partner-registration",
+    primaryCta: "Contact us about the Creators Circle",
+    primaryHref: "/contact-us",
     secondaryCta: "View pricing",
     secondaryHref: "/pricing"
   }, [

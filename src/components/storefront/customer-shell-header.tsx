@@ -8,7 +8,7 @@ import { HeaderPhotoPackageMegaPanel, HeaderSaveTheDateMegaPanel, HeaderVideoGen
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import { isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationParentCategories, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
-import { getPhotoPackageMegaGroups } from "@/lib/photo-package-taxonomy";
+import { getPhotoPackageMegaGroups, photoPackageSlug } from "@/lib/photo-package-taxonomy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isMydreamshootsRemovedLegacyRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
@@ -89,7 +89,9 @@ function dynamicPackageGroupsFromPacks(creativePacks?: CreativePack[], creativeP
       label: group.label,
       accent: packageGroups[index % packageGroups.length]?.accent ?? "#38a8ff",
       icon: iconForMenuGroup(`${group.slug} ${group.label} ${group.icon ?? ""}`),
-      items: group.items.map((item) => ({ label: item.label, href: item.href }))
+      items: group.items
+        .filter((item) => photoPackageSlug(item.label) !== "motion-generator")
+        .map((item) => ({ label: item.label, href: item.href }))
     }))
     .filter((group) => group.items.length > 0);
 }

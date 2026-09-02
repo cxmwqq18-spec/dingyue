@@ -28,7 +28,14 @@ function record(value) {
   return Boolean(value && typeof value === "object" && !Array.isArray(value));
 }
 
-const publicCopyLeakPattern = /\b(?:E[-\s]?E[-\s]?A[-\s]?T|VideoObject|structured data|the page should|only state[^.]{0,100}(?:rights|commercial)|commercial rights supported|search intent|query ownership|keyword ownership|indexation|do not index|landing-page hero|before launch|review required)\b/i;
+const publicCopyLeakPattern = /\b(?:E[-\s]?E[-\s]?A[-\s]?T|VideoObject|structured data|the page should|only state[^.]{0,100}(?:rights|commercial)|commercial rights supported|search intent|query ownership|keyword ownership|indexation|do not index|landing-page hero|before launch|review required|TODO|FIXME|FIRST-PARTY PRODUCT EVIDENCE|V2\s*-\s*REAL EXAMPLES|pending capture|pending product record|pending review|PAGE DIFFERENTIATION \/ INTERNAL LINKING)\b/i;
+const evidenceRemovedSlugs = new Set(["brand-video", "fashion-video", "food-video", "music-video", "pet-video", "explainer-video", "how-to-video", "promo-video", "talking-head-video", "ugc-ad-video"]);
+const examplesRemovedSlugs = new Set(["promo-video", "ugc-ad-video"]);
+const retiredRelatedTopicHrefs = new Set([
+  "/ai-video-generation/ai-avatar-video",
+  "/ai-video-generation/corporate-video",
+  "/ai-video-generation/fitness-video"
+]);
 
 function assertNoPublicCopyLeaks(value, slug) {
   const serialized = JSON.stringify(value);
@@ -178,6 +185,16 @@ try {
     assert(page, `missing LivePage content for ${slug}`);
     const content = topicContent(page.contentJson, slug);
     assertNoPublicCopyLeaks(content, slug);
+    if (evidenceRemovedSlugs.has(slug)) assert.equal(content.evidence, undefined, `${slug} LivePage content must remove evidence`);
+    if (examplesRemovedSlugs.has(slug)) assert.equal(content.examples, undefined, `${slug} LivePage content must remove examples`);
+    if (examplesRemovedSlugs.has(slug)) {
+      assert.equal(content.comparison?.eyebrow, "Which video format fits", `${slug} comparison eyebrow must be customer-facing`);
+      assert.equal(content.hero?.secondaryCta, slug === "promo-video" ? "See the promo workflow" : "See the UGC workflow", `${slug} secondary CTA must point to the workflow`);
+    }
+    if (["how-to-video", "talking-head-video"].includes(slug)) {
+      const relatedHrefs = (content.comparison?.items ?? []).map((item) => item.href).filter(Boolean);
+      assert.equal(relatedHrefs.some((href) => retiredRelatedTopicHrefs.has(href)), false, `${slug} LivePage content must not link to retired video topic pages`);
+    }
     const theme = themeBySlug.get(slug);
     assert(theme, `missing VideoTheme for ${slug}`);
     assert.equal(theme.imageUrl, content.hero.image.src, `${slug} directory/detail/theme covers must use one image`);

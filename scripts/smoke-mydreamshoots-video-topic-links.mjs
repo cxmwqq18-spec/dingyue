@@ -35,8 +35,28 @@ const publicTopicPaths = new Set([
 const jiti = createJiti(import.meta.url);
 const { aiVideoTopicLandingContentByKey } = jiti("./seed-mydreamshoots-ai-video-topic-content.ts");
 const invalidLinks = [];
+const retiredRelatedTopicHrefs = new Set([
+  "/ai-video-generation/ai-avatar-video",
+  "/ai-video-generation/corporate-video",
+  "/ai-video-generation/fitness-video"
+]);
+const internalProductionCopyPattern = /FIRST-PARTY PRODUCT EVIDENCE|V2\s*-\s*REAL EXAMPLES|pending capture|pending product record|pending review|PAGE DIFFERENTIATION \/ INTERNAL LINKING/i;
 
 for (const [slug, content] of Object.entries(aiVideoTopicLandingContentByKey)) {
+  const serialized = JSON.stringify(content);
+  assert.doesNotMatch(serialized, internalProductionCopyPattern, `${slug} seed must not expose internal production copy`);
+  if (["brand-video", "fashion-video", "food-video", "music-video", "pet-video", "explainer-video", "how-to-video", "promo-video", "talking-head-video", "ugc-ad-video"].includes(slug)) {
+    assert.equal(content.evidence, undefined, `${slug} must not publish an evidence section`);
+  }
+  if (["promo-video", "ugc-ad-video"].includes(slug)) {
+    assert.equal(content.examples, undefined, `${slug} must not publish an examples section`);
+    assert.equal(content.comparison?.eyebrow, "Which video format fits", `${slug} comparison eyebrow must be customer-facing`);
+    assert.equal(content.hero?.secondaryCta, slug === "promo-video" ? "See the promo workflow" : "See the UGC workflow", `${slug} secondary CTA must point to the workflow`);
+  }
+  if (["how-to-video", "talking-head-video"].includes(slug)) {
+    const relatedHrefs = (content.comparison?.items ?? []).map((item) => item.href).filter(Boolean);
+    assert.equal(relatedHrefs.some((href) => retiredRelatedTopicHrefs.has(href)), false, `${slug} must not link to retired video topic pages`);
+  }
   for (const [index, item] of (content.comparison?.items ?? []).entries()) {
     const href = typeof item?.href === "string" ? item.href.split(/[?#]/)[0] : "";
     if (href.startsWith("/ai-video-generation/") && !publicTopicPaths.has(href)) {

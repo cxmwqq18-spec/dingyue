@@ -585,6 +585,9 @@ export default async function HostStorefrontCatchAllPage({
   if (slug === "/ai-image-generation/profile-cards" && isMydreamshootsHost) {
     permanentRedirect("/ai-image-generation/avatar");
   }
+  if (slug === "/ai-image-generation/social-cards" && isMydreamshootsHost) {
+    permanentRedirect("/ai-image-generation");
+  }
   if (slug === "/workspace") {
     const query = searchParams ? await searchParams : {};
     const suffix = searchParamsSuffix(query);
@@ -658,6 +661,9 @@ export default async function HostStorefrontCatchAllPage({
   if (!state) notFound();
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
   if (!site) notFound();
+  if (site.id === "site_dreamshoot" && slug === "/ai-image-generation/social-cards") {
+    permanentRedirect("/ai-image-generation");
+  }
   if (isMydreamshootsSite(site) && isVideoGenerationRequest && ["text-to-video", "image-to-video"].includes(path[1] ?? "")) {
     notFound();
   }

@@ -98,17 +98,6 @@ export const talkingHeadVideoContent: AiVideoTopicLandingContent = {
       { title: "AI Video Generation", body: "Browse the full directory when the creative job is not yet clear.", href: "/ai-video-generation", linkLabel: "Browse AI Video Generation" }
     ]
   },
-  evidence: {
-    eyebrow: "FIRST-PARTY PRODUCT EVIDENCE",
-    title: "Show the real workflow before publishing",
-    intro: "Editorial presenter images explain the format. They do not prove a current myDreamshoots capability or control.",
-    cards: [
-      { title: "Actual input path", body: "Document the current Text to Video and Image to Video paths with a verified product capture and source description.", exampleLabel: "Live product evidence required", exampleBody: "No first-party input capture is included in this editorial package." },
-      { title: "Actual controls", body: "Name only controls that exist in the current product. Do not imply teleprompter, voice, avatar, duration, subtitle, or multilingual controls without proof.", exampleLabel: "Live product evidence required", exampleBody: "Product verification is required before publishing control claims." },
-      { title: "Actual generated output", body: "Add a real talking-head-style output and matching thumbnail from the current workflow, not a stock or editorial presenter image.", exampleLabel: "Live product evidence required", exampleBody: "A public generated output was not supplied with this package." },
-      { title: "Verified usage facts", body: "Confirm credits, generation states, output states, supported aspect ratios, crop behavior, and any disclosure or rights terms.", exampleLabel: "Live product details", exampleBody: "Keep the page aligned with the current generation workflow and published usage terms." }
-    ]
-  },
   steps: {
     eyebrow: "HOW IT WORKS",
     title: "From presenter brief to reviewed draft",

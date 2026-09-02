@@ -3,7 +3,7 @@ import "server-only";
 import { readStorefrontPublicRuntimeStateByHostFromDatabase, readStorefrontPublicRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
 import type { CreativePack, CreativePackCategory, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedStandardRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage, VideoTheme } from "@/lib/types";
 import { isMydreamshootsPublicVideoGenerationSlug, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
-import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
+import { legacyPublicPathTarget, mydreamshootsLegacyPublicPathTarget } from "@/lib/site-route-canonical";
 import { buildPublicationSnapshot } from "@/lib/stores/theme-store";
 import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
 import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
@@ -454,6 +454,10 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
   }
   if (isPrimaryMydreamshootsSite(snapshot.site) && requestedPath === "/ai-image-generation/motion-generator") {
     return resolvePublishedRedirectDisposition(snapshot, requestedPath, "/ai-video-generation/motion-generator", 301);
+  }
+  if (isPrimaryMydreamshootsSite(snapshot.site)) {
+    const legacyTarget = mydreamshootsLegacyPublicPathTarget(requestedPath);
+    if (legacyTarget) return resolvePublishedRedirectDisposition(snapshot, requestedPath, legacyTarget, 301);
   }
   if (isPrimaryMydreamshootsSite(snapshot.site) && DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS.has(requestedPath)) {
     return { kind: "not_found", status: 404, path: requestedPath };

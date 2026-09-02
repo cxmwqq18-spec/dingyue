@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
+import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
@@ -72,6 +73,7 @@ const MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS: Record<string, string> = {
   "/engagement-photo": "/ai-image-generation/engagement-photo",
   "/collections/headshot": "/ai-image-generation/headshot",
   "/ai-image-generation/profile-cards": "/ai-image-generation/avatar",
+  "/ai-image-generation/social-cards": "/ai-image-generation",
   "/ai-image-generation/motion-generator": "/ai-video-generation/motion-generator",
   "/ai-video-generation/wedding-invitation": "/ai-save-the-date/wedding-invitation",
   "/holidays-events/wedding-invitation": "/ai-save-the-date/wedding-invitation",
@@ -431,13 +433,14 @@ function mydreamshootsImageThemeSeo(request: NextRequest): { title: string; desc
   if (storefrontSlugForHost(host) !== "mydreamshoots") return undefined;
   const slug = request.nextUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/i)?.[1]?.trim().toLowerCase();
   if (!slug) return undefined;
+  const pageCopy = mydreamshootsPageCopyForSlug(slug);
   const label = slug.replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
-  const title = slug === "edit-by-prompt"
+  const title = pageCopy?.seoTitle || (slug === "edit-by-prompt"
     ? "AI Edit By Prompt for Safe Scene Changes, Style Adjustments, and Custom Photo Edits | myDreamshoots"
-    : `AI ${label} Photo Package | myDreamshoots`;
+    : `AI ${label} Photo Package | myDreamshoots`);
   return {
     title,
-    description: `Explore private AI ${label.toLowerCase()} photo packages with myDreamshoots. Review examples, credits, and the private gallery workflow before you create.`,
+    description: pageCopy?.cardDescription || `Explore private AI ${label.toLowerCase()} photo packages with myDreamshoots. Review examples, credits, and the private gallery workflow before you create.`,
     canonical: `https://www.mydreamshoots.com/ai-image-generation/${slug}`
   };
 }

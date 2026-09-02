@@ -352,7 +352,7 @@ const stores = [
     conversion: section("conversion_panel", {
       anchor: "start",
 	      eyebrow: "AI VIDEO + PHOTO CREATION",
-	      title: "Ready to create with myDreamshoots?",
+	      title: "Ready to try myDreamshoots?",
 	      subtitle: "Create AI videos, personalized Save the Date videos, and professional photo sets from your images—all in one private workspace.",
       primaryCta: "Create Now",
       primaryHref: "/app/create",

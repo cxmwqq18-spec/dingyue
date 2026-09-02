@@ -167,7 +167,7 @@ function updateHomepage(page, homePageId) {
     next.sections.conversion_1.settings = {
       ...(next.sections.conversion_1.settings ?? {}),
       eyebrow: "AI VIDEO + PHOTO CREATION",
-      title: "Ready to create with myDreamshoots?",
+      title: "Ready to try myDreamshoots?",
       subtitle: "Create AI videos, personalized Save the Date videos, and professional photo sets from your images—all in one private workspace.",
       primaryCta: "Create Now",
       primaryHref: "/app/create"

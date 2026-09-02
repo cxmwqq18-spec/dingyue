@@ -421,6 +421,9 @@ export default async function SiteCatchAllPage({
   if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/ai-image-generation/profile-cards") {
     permanentRedirect(routePath("/ai-image-generation/avatar"));
   }
+  if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/ai-image-generation/social-cards") {
+    permanentRedirect(routePath("/ai-image-generation"));
+  }
   if (isPrimaryMydreamshootsSlug(publicSlug) && (slug.startsWith("/holidays-events/") || slug === "/ai-video-generation/wedding-ceremony")) {
     const canonicalPath = canonicalSaveTheDatePath(slug);
     if (canonicalPath !== slug) permanentRedirect(routePath(canonicalPath));
