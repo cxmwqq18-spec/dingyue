@@ -101,7 +101,7 @@ function runRemote(config) {
     `test "$(systemctl is-active ${shellQuote(service)})" = active`,
     `test "$(systemctl show -p WorkingDirectory ${shellQuote(service)} | sed -n 's/^WorkingDirectory=//p')" = ${releaseQ}`,
     `test "$(cat ${rootQ}/current/.deployed-commit)" = ${commitQ}`,
-    `curl -fsS --max-time 20 https://${config.domain}/ | grep -E '<title[^>]*>[^<]+</title>'`,
+    `PUBLIC_READY=0; for ATTEMPT in $(seq 1 12); do if curl -fsS --max-time 20 https://${config.domain}/ | grep -E '<title[^>]*>[^<]+</title>'; then PUBLIC_READY=1; break; fi; sleep 2; done; test \"$PUBLIC_READY\" = 1`,
     `SWITCHED=0; trap - EXIT`,
     `printf '%s\\n' ${shellQuote(`deployed_commit=${commit}`)} ${shellQuote(`service=$(systemctl is-active ${service})`)} ${shellQuote(`current=$(readlink -f ${config.root}/current)`)}`
   ].join("\n");
