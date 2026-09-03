@@ -60,6 +60,21 @@ function isPrimaryMyDreamShootsSite(site: Site): boolean {
   return isPrimaryMydreamshootsCapabilitySite(site);
 }
 
+function isMydreamshootsComSite(site: Site): boolean {
+  return site.id === "site_dreamshoot" || cleanText(site.primaryDomain).toLowerCase() === "www.mydreamshoots.com";
+}
+
+const MYDREAMSHOOTS_VIDEO_SCHEMA_PATHS = new Set([
+  "/ai-video-generation/brand-video", "/ai-video-generation/cinematic-video", "/ai-video-generation/explainer-video",
+  "/ai-video-generation/fashion-video", "/ai-video-generation/food-video", "/ai-video-generation/how-to-video",
+  "/ai-video-generation/instagram-reels", "/ai-video-generation/meme-video", "/ai-video-generation/motion-generator",
+  "/ai-video-generation/music-video", "/ai-video-generation/pet-video", "/ai-video-generation/product-ad-video",
+  "/ai-video-generation/product-video", "/ai-video-generation/promo-video", "/ai-video-generation/social-media-video",
+  "/ai-video-generation/story-video", "/ai-video-generation/talking-head-video", "/ai-video-generation/talking-photo",
+  "/ai-video-generation/tiktok-video", "/ai-video-generation/ugc-ad-video", "/ai-video-generation/video-ad",
+  "/ai-video-generation/youtube-video"
+]);
+
 function collapseSpanishXbyBrandRepeats(value: string): string {
   return value
     .replace(/\bMyDreamShoots-xby(?:-xby)+\b/g, "MyDreamShoots-xby")
@@ -82,6 +97,7 @@ function schemaServiceType(site: Site, pagePath: string): string {
     if (pagePath.includes("postcard") || pagePath.includes("journal")) return "AI occasion album and keepsake portrait service";
     return "AI occasion portrait generation service";
   }
+  if (isMydreamshootsComSite(site) && MYDREAMSHOOTS_VIDEO_SCHEMA_PATHS.has(pagePath)) return "AI video generation service";
   if (pagePath.includes("video")) return "AI image to video concept tool";
   if (pagePath.includes("headshot")) return "AI headshot and profile portrait tool";
   return "AI photo generation and editing tool";
@@ -334,7 +350,20 @@ function companyIdentifiers(profile: StorefrontCompanyProfile): JsonLdNode[] {
   return identifiers;
 }
 
-function organizationSchema(site: Site, routeMode: "host" | "path", context?: StorefrontContext): JsonLdNode {
+function homepageOfferCatalogSchema(site: Site, routeMode: "host" | "path"): JsonLdNode {
+  const siteName = siteBrandName(site);
+  const baseUrl = storefrontBaseUrl(site, routeMode);
+  return {
+    "@type": "OfferCatalog",
+    "@id": `${baseUrl}#plans`,
+    name: isSpanishXbySite(site)
+      ? isAidreamcapesSite(site) ? `Paquetes de retrato de viaje y creditos ${siteName}` : `Paquetes de fotos y creditos ${siteName}`
+      : isAidreamcapesSite(site) ? "Aidreamcapes occasion portrait packages and credits" : "MyDreamShoots photo packages and credits",
+    url: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, "/pricing"))
+  };
+}
+
+function organizationSchema(site: Site, routeMode: "host" | "path", context?: StorefrontContext, pagePath?: string): JsonLdNode {
   const profile = storefrontCompanyProfile(context);
   const address = companyAddressSchema(profile);
   const identifiers = companyIdentifiers(profile);
@@ -355,7 +384,8 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
     ...(address ? { address } : {}),
     ...(profile.taxId ? { taxID: profile.taxId } : {}),
     ...(identifiers.length ? { identifier: identifiers } : {}),
-    ...(sameAs.length ? { sameAs } : {})
+    ...(sameAs.length ? { sameAs } : {}),
+    ...(pagePath === "/" && isMydreamshootsComSite(site) ? { hasOfferCatalog: homepageOfferCatalogSchema(site, routeMode) } : {})
   };
 }
 
@@ -586,6 +616,11 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
           itemListElement: offers
         }
       : undefined;
+    const catalogLink = offerCatalog
+      ? isMydreamshootsComSite(input.site)
+        ? { hasOfferCatalog: { "@id": `${url}#offers` } }
+        : { offers: { "@id": `${url}#offers` } }
+      : {};
     return [
       {
         "@type": "Service",
@@ -596,7 +631,7 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
           ? isAidreamcapesSite(input.site) ? "servicio de retratos de viaje IA" : "servicio de generacion de fotos IA"
           : isAidreamcapesSite(input.site) ? "AI occasion portrait generation service" : "AI photo generation service",
         url,
-        ...(offerCatalog ? { offers: { "@id": `${url}#offers` } } : {})
+        ...catalogLink
       },
       {
         "@type": "SoftwareApplication",
@@ -606,7 +641,7 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
         operatingSystem: "Web",
         url,
         provider: { "@type": "Organization", name: siteName },
-        ...(offerCatalog ? { offers: { "@id": `${url}#offers` } } : {})
+        ...(offerCatalog && !isMydreamshootsComSite(input.site) ? { offers: { "@id": `${url}#offers` } } : {})
       },
       offerCatalog
     ].filter(Boolean) as JsonLdNode[];
@@ -955,7 +990,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   const title = pageTitle(resolvedInput.site, resolvedInput.page, resolvedInput.context);
   const description = pageDescription(resolvedInput.site, resolvedInput.page, resolvedInput.context);
   const graph: Array<JsonLdNode | undefined> = [
-    organizationSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.context),
+    organizationSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.context, resolvedInput.pagePath),
     websiteSchema(resolvedInput.site, resolvedInput.routeMode),
     storefrontApplicationSchema(resolvedInput, title, description),
     breadcrumbs(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, resolvedInput.publishedRoutePaths),
@@ -1026,7 +1061,7 @@ export function buildToolDirectoryJsonLd({
   const title = context.seo.title;
   const description = context.seo.description;
   const graph: JsonLdNode[] = [
-    organizationSchema(site, routeMode, context),
+    organizationSchema(site, routeMode, context, pagePath),
     websiteSchema(site, routeMode),
     breadcrumbs(site, routeMode, pagePath, label),
     {
@@ -1048,7 +1083,7 @@ export function buildToolDirectoryJsonLd({
           : "https://schema.org/OutOfStock",
         category: isSpanishXbySite(site)
           ? isAidreamcapesSite(site) ? "herramienta de retratos de viaje IA" : "herramienta de fotos IA"
-          : isAidreamcapesSite(site) ? "AI occasion portrait tool" : "AI photo tool",
+          : isAidreamcapesSite(site) ? "AI occasion portrait tool" : isMydreamshootsComSite(site) && MYDREAMSHOOTS_VIDEO_SCHEMA_PATHS.has(pagePath) ? "AI video tool" : "AI photo tool",
         url
       }
     },

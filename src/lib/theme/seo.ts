@@ -88,7 +88,6 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
   return {
     title: seo.title,
     description: seo.description,
-    keywords: seo.keywords || undefined,
     alternates: canonical ? { canonical } : undefined,
     robots: {
       index: seo.index,

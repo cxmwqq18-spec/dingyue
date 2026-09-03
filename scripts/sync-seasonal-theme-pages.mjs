@@ -266,6 +266,10 @@ const customerText = (value) => clean(value)
   .map((sentence) => sentence.replace(/\bthe page should\b/gi, "the experience should"))
   .filter((sentence) => !/\bsearch intent\b|\bprimary keyword\b|\bindexation\b|\bEvidence Gate\b/i.test(sentence))
   .join(" ");
+const weddingCeremonyPrivacyFaq = {
+  question: "What privacy checks matter for ceremony photos?",
+  answer: "Use approved assets and avoid unnecessary personal data. Review the current Privacy Policy for storage, retention, processing, and deletion details before uploading ceremony photos."
+};
 
 function csvRows(file) {
   return read(file).trim().split(/\r?\n/).map((line) => {
@@ -745,12 +749,17 @@ function buildPage(config) {
   const sectionTypes = sectionRows.map(([, type]) => type);
   const faqSource = sectionFor(sections, "faq");
   const faqItems = headingBlocks(faqSource).map((item, index) => ({ id: `${config.key}-faq-${index + 1}`, question: item.title, answer: item.text }));
-  const safeFaqItems = faqItems.length >= 4 ? faqItems : [
+  let safeFaqItems = faqItems.length >= 4 ? faqItems : [
     { id: `${config.key}-faq-1`, question: `What is ${heading.replace(/^Create\s+/i, "").replace(/\s+with AI$/i, "")}?`, answer: firstParagraph(sectionFor(sections, "What Is"), seo.meta_description || seo.meta_description || "Review the published page details before creating seasonal content.") },
     { id: `${config.key}-faq-2`, question: "What source images work best?", answer: "Use clear, well-lit images you own or have permission to use, with the main people, pets, or objects visible and easy to review." },
     { id: `${config.key}-faq-3`, question: "Can I prepare the result for social media?", answer: "Yes. Choose the destination before finalizing the crop, keep important text editable, and review every format before sharing." },
     { id: `${config.key}-faq-4`, question: "What should I check before sharing?", answer: "Review faces, hands, pets, objects, text, crop safety, source permissions, and any claims about the event or occasion." }
   ];
+  if (config.key === "wedding-ceremony") {
+    const privacyFaq = safeFaqItems.find((item) => item.question === weddingCeremonyPrivacyFaq.question);
+    if (privacyFaq) privacyFaq.answer = weddingCeremonyPrivacyFaq.answer;
+    else safeFaqItems = [...safeFaqItems, { id: `${config.key}-faq-${safeFaqItems.length + 1}`, ...weddingCeremonyPrivacyFaq }];
+  }
 
   const sectionData = {};
   sectionRows.forEach(([id, type, sourceTitle], index) => {

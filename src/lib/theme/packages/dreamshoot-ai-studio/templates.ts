@@ -886,7 +886,7 @@ const homeSections: ThemePageJson["sections"] = {
 const templateSections = {
   pricing_intro_1: section("rich_text", {
     eyebrow: "Pricing",
-    title: "How credits work for private AI photo packages.",
+    title: "How myDreamshoots credits work for AI photo and video packages.",
     body: "Choose a plan based on how often you need AI headshots, creator portraits, fan photos, image cleanup, video previews, and private gallery delivery. Credits are shown before generation starts, reserved when a request begins, used after successful delivery, and returned when a failed request releases the reservation.",
     headingLevel: "h1"
   }),
@@ -2936,7 +2936,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
         { label: "Terms of Service", href: "/terms", group: "support" },
         { label: "Cookie Policy", href: "/cookies", group: "support" },
         { label: "KIDS Act", href: "/children-privacy", group: "support" },
-        { label: "DPDPA", href: "/state-privacy", group: "support" },
+        { label: "State Privacy", href: "/state-privacy", group: "support" },
         { label: "Content policy", href: "/content", group: "support" },
         { label: "FAQ", href: "/faq", group: "company" },
         { label: "Blog", href: "/blog", group: "company" },
@@ -3009,7 +3009,7 @@ export const dreamshootAiStudioSiteSettings: ThemePackageSiteSettings = {
           { id: "dreamshoot_footer_terms", type: "menu_link", settings: { label: "Terms of Service", href: "/terms", group: "support" } },
           { id: "dreamshoot_footer_cookies", type: "menu_link", settings: { label: "Cookie Policy", href: "/cookies", group: "support" } },
           { id: "dreamshoot_footer_children_privacy", type: "menu_link", settings: { label: "KIDS Act", href: "/children-privacy", group: "support" } },
-          { id: "dreamshoot_footer_state_privacy", type: "menu_link", settings: { label: "DPDPA", href: "/state-privacy", group: "support" } },
+          { id: "dreamshoot_footer_state_privacy", type: "menu_link", settings: { label: "State Privacy", href: "/state-privacy", group: "support" } },
           { id: "dreamshoot_footer_content", type: "menu_link", settings: { label: "Content policy", href: "/content", group: "support" } },
           { id: "dreamshoot_footer_guides", type: "menu_link", settings: { label: "Blog", href: "/blog", group: "company" } },
           { id: "dreamshoot_footer_about", type: "menu_link", settings: { label: "About us", href: "/about-us", group: "company" } },

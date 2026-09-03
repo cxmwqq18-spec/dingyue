@@ -2027,7 +2027,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
 	    if (normalizedHref === "/terms") return "Terms of Service";
     if (normalizedHref === "/cookies") return "Cookie Policy";
     if (normalizedHref === "/children-privacy" && (isDreamShootFooter || isAidreamcapesFooter) && !spanishXbyFooter) return "KIDS Act";
-    if (normalizedHref === "/state-privacy" && isDreamShootFooter && !spanishXbyFooter) return "DPDPA";
+    if (normalizedHref === "/state-privacy" && isDreamShootFooter && !spanishXbyFooter) return "State Privacy";
     if (normalizedHref === "/state-privacy" && isAidreamcapesFooter && !spanishXbyFooter) return "CISA";
     if (normalizedHref === "/children-privacy") return "Children's Privacy";
     if (normalizedHref === "/state-privacy") return "State Privacy Rights";
@@ -2036,7 +2036,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
   const bottomPolicyLinks = (isDreamShootFooter || isAidreamcapesFooter) && !spanishXbyFooter
     ? [
         ...(footerLinkIsPublished({ href: "/children-privacy" }) ? [{ label: "KIDS Act", href: "/children-privacy" }] : []),
-        ...(footerLinkIsPublished({ href: "/state-privacy" }) ? [{ label: isAidreamcapesFooter ? "CISA" : "DPDPA", href: "/state-privacy" }] : [])
+        ...(footerLinkIsPublished({ href: "/state-privacy" }) ? [{ label: isAidreamcapesFooter ? "CISA" : "State Privacy", href: "/state-privacy" }] : [])
       ]
     : [];
   const normalizedCopyright = `© ${new Date().getUTCFullYear()} ${readableFooterTitle}. All rights reserved.`;
@@ -17151,7 +17151,7 @@ function SectionView({
             ) : null}
             {!spanishXbyPolicy ? (
               <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/state-privacy")}>
-                {isAidreamcapesSite(site) ? "CISA" : "DPDPA"}
+                {isAidreamcapesSite(site) ? "CISA" : "State Privacy"}
               </Link>
             ) : null}
             <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/faq")}>

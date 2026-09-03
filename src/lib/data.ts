@@ -1115,7 +1115,7 @@ const mydreamshootsTermsPolicyBody =
 const termsJson: ThemePageJson = {
   pageType: "policy",
   version: 1,
-  seo: policyPageSeo("Terms of Service | myDreamshoots", "Terms for myDreamshoots accounts, source-photo rights, current published offers, generation requests, delivered results, and acceptable use.", "/terms"),
+  seo: policyPageSeo("Terms of Service for myDreamshoots AI Photo and Video Services", "Terms for myDreamshoots accounts, source-photo rights, current published offers, generation requests, delivered results, and acceptable use.", "/terms"),
   sectionsOrder: ["header_1", "policy_1", "footer_1"],
   sections: {
     header_1: section("rich_text", {

@@ -634,17 +634,18 @@ if (productAdIsPublished) {
   );
   assert.doesNotMatch(productAdVideoGeneration, /<meta\s+name=["']keywords["']/i, "Product Ad Video must not serialize CMS SEO keywords as a public meta tag");
   const productAdAssetPaths = [
-    "ai-product-ad-video-new-product-unboxing-creative.jpg",
+    "build-the-ad-around-one-buyer-decision.webp",
     "product-ad-video-new-product-launch-shoes.jpg",
     "product-ad-video-problem-solution-cleaning-scene.jpg",
     "product-ad-video-benefit-feature-headphones.jpg",
     "product-ad-video-limited-offer-shopping-response.jpg",
     "product-ad-video-comparison-shopping-decision.jpg",
     "product-ad-video-retargeting-purchase-reminder.jpg",
+    "build-the-ad-around-one-buyer-decision.mp4",
     "product-ad-video-skincare-customer-context.jpg"
   ];
   const renderedProductAdAssetPaths = Array.from(productAdVideoGeneration.matchAll(/\/assets\/dreamshoot\/product-ad-video\/([^"'?\\]+)/g)).map((match) => match[1]);
-  assert.equal(new Set(renderedProductAdAssetPaths).size, 8, "Product Ad Video SSR must render eight unique topic assets");
+  assert.equal(new Set(renderedProductAdAssetPaths).size, 9, "Product Ad Video SSR must render nine unique topic assets");
   for (const assetPath of productAdAssetPaths) {
     assert.ok(renderedProductAdAssetPaths.includes(assetPath), `Product Ad Video SSR must render ${assetPath}`);
   }
@@ -671,11 +672,7 @@ if (ugcAdIsPublished) {
     "Create creator-style product ads with an AI UGC video generator. Plan hooks, speaker roles, product-in-use scenes, visible proof, voiceover, and clear CTAs—then validate every claim against your real product assets and generated output.",
     "UGC Ad Video description must match the approved SEO description"
   );
-  assert.match(
-    ugcAdVideoGeneration,
-    /<meta name="keywords" content="AI UGC video generator, UGC ad video generator, AI UGC ad creator, UGC product video maker, creator-style product video, AI creator ad video, UGC style video ad, short-form creator ad generator"/,
-    "UGC Ad Video must expose the approved SEO keywords"
-  );
+  assert.doesNotMatch(ugcAdVideoGeneration, /<meta\s+name=["']keywords["']/i, "UGC Ad Video must not serialize CMS SEO keywords as a public meta tag");
   const ugcAssetPaths = [
     "ai-ugc-video-creator-lip-product-hook.jpg",
     "ugc-ad-video-unboxing-first-impression.jpg",
@@ -734,11 +731,7 @@ if (promoIsPublished) {
     "Create promotional videos for launches, limited-time offers, events, seasonal campaigns, and product updates with an AI promo video maker. Structure the message, proof, timing, terms, and CTA around verified product inputs and real generated outputs.",
     "Promo Video description must match the approved SEO description"
   );
-  assert.match(
-    promoVideoGeneration,
-    /<meta name="keywords" content="AI promo video maker, AI promotional video maker, promo video generator, promotional video generator, AI marketing promo video, product launch video maker, sale promo video maker, event promo video generator, social media promo video maker"/,
-    "Promo Video must expose the approved SEO keywords"
-  );
+  assert.doesNotMatch(promoVideoGeneration, /<meta\s+name=["']keywords["']/i, "Promo Video must not serialize CMS SEO keywords as a public meta tag");
   const promoAssetPaths = [
     "promo-video-product-launch-presentation.jpg",
     "promo-video-limited-time-offer-sale.jpg",
@@ -780,11 +773,7 @@ if (videoAdIsPublished) {
     "Create video ad concepts with AI for paid social, product campaigns, launches, retargeting, and creator-style placements. Start from text or an image, shape the hook, proof, and CTA, then review the output in your myDreamshoots workflow.",
     "Video Ad description must match the approved SEO description"
   );
-  assert.match(
-    videoAdGeneration,
-    /<meta name="keywords" content="ai video ad generator, paid social video ad generator, AI video ad maker, performance marketing video creator, paid social creative generator, campaign video variant creator"/,
-    "Video Ad must expose the approved SEO keywords"
-  );
+  assert.doesNotMatch(videoAdGeneration, /<meta\s+name=["']keywords["']/i, "Video Ad must not serialize CMS SEO keywords as a public meta tag");
   const videoAdAssetPaths = [
     "video-ad-creator-phone-tripod.jpg",
     "video-ad-ecommerce-shopping-intent.jpg",

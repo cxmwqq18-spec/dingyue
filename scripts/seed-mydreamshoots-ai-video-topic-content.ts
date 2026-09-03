@@ -502,7 +502,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         },
         {
           question: "Can I control the camera movement?",
-          answer: "Only say yes when the live product supports meaningful scene or movement guidance."
+          answer: "Camera-movement control depends on the options available in the current video workspace. Review those options before starting your video."
         },
         {
           question: "How long can my video be?",
@@ -510,11 +510,11 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         },
         {
           question: "What formats do you support?",
-          answer: "Only publish verified output formats."
+          answer: "The available output formats are shown in the video workspace before you start. Check the current format options for your account."
         },
         {
           question: "Is my content safe and private?",
-          answer: "Only publish privacy, storage, and deletion claims that match real platform behavior."
+          answer: "Review the current Privacy Policy for how myDreamshoots handles storage, retention, processing, and deletion before uploading content."
         }
       ]
     },
@@ -1082,7 +1082,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { question: "What should change?", answer: "The opening, crop, text position, captions, sound treatment, pacing, length, and CTA may need to change by platform." },
         { question: "Do all social platforms use 9:16?", answer: "Vertical 9:16 is important for major phone-first formats such as TikTok and Reels, while YouTube Shorts currently accepts square or vertical videos. Always check current destination requirements." },
         { question: "Can I repurpose blogs, podcasts, webinars, and FAQs?", answer: "Yes, when you own or have rights to the source. Pull out one useful idea at a time rather than forcing the entire source into one short video." },
-        { question: "Can I automate a full week of posts?", answer: "Only promise batch or automation behavior that the live myDreamshoots product actually supports. The content strategy can still be planned as a weekly batch." },
+        { question: "Can I automate a full week of posts?", answer: "You can plan a full week of content as a batch, but the number of videos you can generate or manage at once depends on your plan and the current workspace." },
         { question: "Can I use the videos commercially?", answer: "Commercial use depends on your plan and the current myDreamshoots terms. Review those terms before publishing." }
       ]
     },
@@ -1105,7 +1105,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
     },
     hero: {
       eyebrow: "AI YOUTUBE VIDEO GENERATOR",
-      title: "Turn a Bigger Idea Into a YouTube Video Worth Watching",
+      title: "Turn a Bigger Idea Into a Video Worth Watching",
       body:
         "Start from a tutorial topic, expert talk, case study, review, webinar, or series concept. Build a video around a clearer promise, a stronger opening minute, better structure, readable captions, and one logical next step - another episode, a related video, or a playlist path.",
       primaryCta: "Create My YouTube Video",
@@ -1774,12 +1774,12 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       eyebrow: "QUESTIONS? WE'VE GOT ANSWERS",
       title: "Frequently Asked Questions",
       items: [
-        { question: "How long should a meme video be?", answer: "Only as long as needed to establish the setup and land the punchline. Publish exact duration limits only if the actual myDreamshoots generator supports them." },
-        { question: "Can you use trending audio?", answer: "Only promise built-in trending-audio access if the product actually provides it. Otherwise use audio you have permission to use." },
+        { question: "How long should a meme video be?", answer: "Keep the video long enough to establish the setup and land the punchline. Check the current video workspace for the available duration options before you start." },
+        { question: "Can you use trending audio?", answer: "Use audio you have permission to use. Built-in trending-audio access depends on the options available in your current workspace." },
         { question: "Do you add captions to every meme?", answer: "Captions are useful when they carry the setup or punchline, but visual reaction memes may need very little text." },
         { question: "Can you make memes for my brand?", answer: "Yes as a content direction, but the workflow does not promise unsupported brand templates or publishing controls." },
-        { question: "What video formats will I receive?", answer: "List only the real export formats and resolutions supported by the current product." },
-        { question: "How many revisions do I get?", answer: "Use the actual plan and generation workflow. Do not invent revision counts." },
+        { question: "What video formats will I receive?", answer: "The available export formats and resolutions are shown in the current video workspace. Check them before starting your generation." },
+        { question: "How many revisions do I get?", answer: "The number of generation attempts or revisions depends on your plan and the current workflow. Check your account and plan details before starting." },
         { question: "Can I make memes about real people?", answer: "Only with appropriate rights and context. Do not fabricate their speech, actions, endorsements, or humiliating behavior." },
         { question: "Can I use the result commercially?", answer: "Commercial use depends on your plan and the current myDreamshoots terms. Review those terms before publishing." }
       ]
@@ -3376,7 +3376,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { question: "What is an AI music video generator?", answer: "An AI music video generator helps create motion visuals for an artist, song, performance, or music campaign. Here the useful job is visual generation and planning: define artist identity, mood, motif, scene type, and motion, then generate and review clips from text or approved images." },
         { question: "Can I create music-video visuals from a photo?", answer: "myDreamshoots publicly lists Image to Video as an AI Video Generation path. Use an approved image when the performer, styling, cover-art mood, or location should anchor motion, then review identity and continuity." },
         { question: "Can I create music-video visuals from text?", answer: "myDreamshoots also publicly lists Text to Video. Describe the subject, setting, motif, lighting, framing, motion, and role of the shot instead of relying only on words such as cinematic or music video." },
-        { question: "Does myDreamshoots automatically sync video to my song?", answer: "Do not promise automatic music upload or beat synchronization unless that feature is confirmed in the live product. Audio synchronization should be described only when the actual product path supports it." },
+        { question: "Does myDreamshoots automatically sync video to my song?", answer: "Automatic music upload and beat synchronization depend on the options available in the current video workspace. Check the available audio controls before starting." },
         { question: "What should I review before using AI-generated clips?", answer: "Check artist identity, hands, instruments, clothing, text, logos, background details, motion continuity, and rights to every source image, person, brand element, and audio track used in the final edit." },
         { question: "How is this different from Brand Video?", answer: "Music Video owns artist, performance, and track-led visual storytelling. Brand Video owns company or artist-brand identity, origin, values, culture, and recognition." }
       ]
