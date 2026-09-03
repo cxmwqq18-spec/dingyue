@@ -966,7 +966,7 @@ function groupedVideoGenerationTopicsForServer(topics: HeaderVideoGenerationTopi
     .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label));
 }
 
-const defaultMydreamshootsVideoThemeCover = "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp";
+const defaultMydreamshootsVideoThemeCover = "/assets/dreamshoot/talking-photo/make-a-photo-talk-without-recording-another-take.webp";
 
 function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic, fallbackImageUrl = defaultMydreamshootsVideoThemeCover) {
   const src = topic.imageUrl || fallbackImageUrl;

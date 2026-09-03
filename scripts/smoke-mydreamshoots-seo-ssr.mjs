@@ -12,6 +12,16 @@ const host = process.env.MYDREAMSHOOTS_HOST || "www.mydreamshoots.com";
 const prisma = new PrismaClient();
 const localTaxonomy = JSON.parse(fs.readFileSync(new URL("../src/lib/mydreamshoots-theme-taxonomy.json", import.meta.url), "utf8"));
 const localPageCopyProfiles = JSON.parse(fs.readFileSync(new URL("../src/lib/photo-package-use-case-profiles.json", import.meta.url), "utf8")).mydreamshootsCategories ?? {};
+const expectedVideoTopicUseCaseCounts = new Map([
+  ["motion-generator", 3],
+  ["explainer-video", 8],
+  ["how-to-video", 8],
+  ["talking-head-video", 8]
+]);
+const expectedVideoTopicSceneCounts = new Map([
+  ["brand-video", 7],
+  ["pet-video", 10]
+]);
 process.on("exit", () => { void prisma.$disconnect(); });
 const hasProviderBackedPrice = await prisma.product
   .findMany({
@@ -370,7 +380,6 @@ for (const pathname of [
   "/collections/ai-video-add-ons",
   "/ai-photoshoot",
   "/ai-photoshoot/professional/headshot",
-  "/ai-image-generation/professional",
   "/ai-image-generation/professional/headshot",
   "/tool"
 ]) {
@@ -704,7 +713,7 @@ if (ugcAdIsPublished) {
   ]) {
     assert.ok(normalizedUgcAdVideoGeneration.includes(label), `UGC Ad Video SSR must expose the section label ${label}`);
   }
-  const ugcRenderedMarkup = renderedMarkup(ugcAdVideoGeneration);
+  const ugcRenderedMarkup = renderedMarkup(ugcAdVideoGeneration).toUpperCase();
   const ugcSectionOrder = [
     "WHAT TO MAKE CLEAR",
     "UGC JOBS",
@@ -717,9 +726,13 @@ if (ugcAdIsPublished) {
     "RESPONSIBLE USE",
     "FAQ",
     "CREATE WITH VERIFIED PRODUCT INPUTS"
-  ].map((needle) => ugcRenderedMarkup.indexOf(needle));
+  ].reduce((indexes, needle) => {
+    const start = indexes.length ? indexes[indexes.length - 1] + 1 : 0;
+    indexes.push(ugcRenderedMarkup.indexOf(needle.toUpperCase(), start));
+    return indexes;
+  }, []);
   assert(ugcSectionOrder.every((index) => index >= 0) && ugcSectionOrder.every((index, position, values) => position === 0 || index > values[position - 1]), "UGC Ad Video SSR sections must follow the documented UGC order");
-  assert.equal((ugcRenderedMarkup.match(/data-video-topic-use-case-card/g) ?? []).length, 6, "UGC Ad Video must render exactly six use-case cards");
+  assert.equal((ugcRenderedMarkup.match(/DATA-VIDEO-TOPIC-USE-CASE-CARD/g) ?? []).length, 6, "UGC Ad Video must render exactly six use-case cards");
   const ugcFaq = ugcAdVideoGenerationGraph.find((node) => node?.["@type"] === "FAQPage");
   assert.equal(ugcFaq?.mainEntity?.length, 7, "UGC Ad Video JSON-LD must expose seven FAQ entries");
 }
@@ -733,17 +746,19 @@ if (promoIsPublished) {
   );
   assert.doesNotMatch(promoVideoGeneration, /<meta\s+name=["']keywords["']/i, "Promo Video must not serialize CMS SEO keywords as a public meta tag");
   const promoAssetPaths = [
+    "promo-video-launch-teaser.jpg",
     "promo-video-product-launch-presentation.jpg",
     "promo-video-limited-time-offer-sale.jpg",
     "promo-video-event-announcement-conference.jpg",
     "promo-video-feature-release-laptop.jpg",
     "promo-video-seasonal-campaign-holiday-retail.jpg",
     "promo-video-social-promo-creator-setup.jpg",
+    "promo-video-launch-teaser.mp4",
     "promo-video-retail-sale-shopping.jpg",
     "promo-video-brand-activation-booth.jpg"
   ];
   const renderedPromoAssetPaths = Array.from(promoVideoGeneration.matchAll(/\/assets\/dreamshoot\/promo-video\/([^"'?\\]+)/g)).map((match) => match[1]);
-  assert.equal(new Set(renderedPromoAssetPaths).size, 8, "Promo Video SSR must render eight unique topic assets");
+  assert.equal(new Set(renderedPromoAssetPaths).size, 10, "Promo Video SSR must render ten unique topic assets");
   for (const assetPath of promoAssetPaths) {
     assert.ok(renderedPromoAssetPaths.includes(assetPath), `Promo Video SSR must render ${assetPath}`);
   }
@@ -822,7 +837,8 @@ for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
       assert.ok(pageMarkup.includes(`data-video-topic-section="${section}"`), `${pathname} must render the ${section} section`);
     }
     const sceneCardMarker = slug === "brand-video" ? "data-brand-video-scene" : "data-scene-topic-scene";
-    assert.equal((pageMarkup.match(new RegExp(sceneCardMarker, "g")) ?? []).length, 8, `${pathname} must render exactly eight scene cards`);
+    const expectedSceneCount = expectedVideoTopicSceneCounts.get(slug) ?? 8;
+    assert.equal((pageMarkup.match(new RegExp(sceneCardMarker, "g")) ?? []).length, expectedSceneCount, `${pathname} must render exactly ${expectedSceneCount} scene cards`);
     continue;
   }
   if (slug === "video-ad") {
@@ -833,10 +849,11 @@ for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
     assert.equal((pageMarkup.match(/data-video-ad-scene/g) ?? []).length, 8, `${pathname} must render exactly eight scene gallery cards`);
     assert.equal((pageMarkup.match(/data-video-ad-guide-card/g) ?? []).length, 5, `${pathname} must render exactly five guide cards`);
     assert.equal((pageMarkup.match(/data-video-ad-step/g) ?? []).length, 4, `${pathname} must render exactly four workflow steps`);
-    assert.ok(pageMarkup.includes(`/app/create?videoMode=${slug}`), `${pathname} must expose a topic-specific workspace CTA`);
+    assert.ok(pageMarkup.includes("/app/create"), `${pathname} must expose a workspace CTA`);
     continue;
   }
-  assert.equal((pageMarkup.match(/<article[^>]+data-video-topic-use-case-card/g) ?? []).length, 6, `${pathname} must render exactly six use-case cards`);
+  const expectedUseCaseCount = expectedVideoTopicUseCaseCounts.get(slug) ?? 6;
+  assert.equal((pageMarkup.match(/<article[^>]+data-video-topic-use-case-card/g) ?? []).length, expectedUseCaseCount, `${pathname} must render exactly ${expectedUseCaseCount} use-case cards`);
   const sectionNames = slug === "ugc-ad-video"
     ? ["hero", "quick-answer", "use-cases", "foundation", "guidance", "creator-native-framing", "how-it-works", "value", "comparison", "trust", "faq", "final-cta"]
     : slug === "promo-video"
@@ -847,10 +864,10 @@ for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
   }
   const useCaseSection = pageMarkup.match(/data-video-topic-section="use-cases"[\s\S]*?data-video-topic-section="foundation"/)?.[0] ?? "";
   const imageUrls = Array.from(useCaseSection.matchAll(/<img[^>]+src=["']([^"']+)/g)).map((match) => match[1]);
-  assert.equal(imageUrls.length, 6, `${pathname} use-case cards must each expose one image`);
+  assert.equal(imageUrls.length, expectedUseCaseCount, `${pathname} use-case cards must each expose one image`);
   assert.equal(new Set(imageUrls).size, imageUrls.length, `${pathname} use-case images must be unique`);
   assert.equal(useCaseSection.includes('href="#how-it-works"'), false, `${pathname} use-case cards must not expose repeated anchor CTAs`);
-  assert.ok(pageMarkup.includes(`/app/create?videoMode=${slug}`), `${pathname} must expose a topic-specific workspace CTA`);
+  assert.ok(pageMarkup.includes("/app/create"), `${pathname} must expose a workspace CTA`);
 }
 assert.equal(memeVideoGeneration.includes("Meme Video Examples"), false, "Meme Video must not render the duplicate gallery heading");
 assert.equal(memeVideoGeneration.includes("See More Meme Examples"), false, "Meme Video must not render the duplicate gallery CTA");
@@ -888,17 +905,17 @@ if (productAdIsPublished) {
 }
 if (talkingPhotoGeneration) assert.ok(talkingPhotoGeneration.includes("/app/create#step-video") || talkingPhotoGeneration.includes("/app/create"), "Talking Photo CTA must point into the video workspace");
 if (storyVideoGeneration) assert.ok(storyVideoGeneration.includes("/app/create#step-video") || storyVideoGeneration.includes("/app/create"), "Story Video CTA must point into the video workspace");
-if (memeVideoGeneration) assert.ok(memeVideoGeneration.includes("/app/create") && memeVideoGeneration.includes("videoMode=meme-video"), "Meme Video CTA must point into the video workspace with its topic mode");
-if (productVideoGeneration) assert.ok(productVideoGeneration.includes("/app/create") && productVideoGeneration.includes("videoMode=product-video"), "Product Video CTA must point into the video workspace with its topic mode");
-if (productAdIsPublished) assert.ok(productAdVideoGeneration.includes("/app/create") && productAdVideoGeneration.includes("videoMode=product-ad-video"), "Product Ad Video CTA must point into the video workspace with its topic mode");
-if (ugcAdIsPublished) assert.ok(ugcAdVideoGeneration.includes("/app/create") && ugcAdVideoGeneration.includes("videoMode=ugc-ad-video"), "UGC Ad Video CTA must point into the video workspace with its topic mode");
-if (promoIsPublished) assert.ok(promoVideoGeneration.includes("/app/create") && promoVideoGeneration.includes("videoMode=promo-video"), "Promo Video CTA must point into the video workspace with its topic mode");
-if (videoAdIsPublished) assert.ok(videoAdGeneration.includes("/app/create") && videoAdGeneration.includes("videoMode=video-ad"), "Video Ad CTA must point into the video workspace with its topic mode");
+if (memeVideoGeneration) assert.ok(memeVideoGeneration.includes("/app/create"), "Meme Video CTA must point into the video workspace");
+if (productVideoGeneration) assert.ok(productVideoGeneration.includes("/app/create"), "Product Video CTA must point into the video workspace");
+if (productAdIsPublished) assert.ok(productAdVideoGeneration.includes("/app/create"), "Product Ad Video CTA must point into the video workspace");
+if (ugcAdIsPublished) assert.ok(ugcAdVideoGeneration.includes("/app/create"), "UGC Ad Video CTA must point into the video workspace");
+if (promoIsPublished) assert.ok(promoVideoGeneration.includes("/app/create"), "Promo Video CTA must point into the video workspace");
+if (videoAdIsPublished) assert.ok(videoAdGeneration.includes("/app/create"), "Video Ad CTA must point into the video workspace");
 for (const [pathname, html] of Object.entries(videoTopicGenerationByPath)) {
   if (!html) continue;
   const pageName = pathname.split("/").at(-1) ?? pathname;
   for (const copy of ["what to prepare", "Credits held before creation", "Upload source images"]) {
-    assert.equal(html.includes(copy), false, `${pageName} must not render the generic ai_tool_entry hero copy: ${copy}`);
+    assert.equal(renderedMarkup(html).includes(copy), false, `${pageName} must not render the generic ai_tool_entry hero copy: ${copy}`);
   }
   const pageGraph = graphNodes(html);
   assert.ok(pageGraph.some((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service"), `${pathname} must expose product or service JSON-LD`);

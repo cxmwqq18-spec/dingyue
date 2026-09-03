@@ -23,8 +23,8 @@ const EMPTY_UNPUBLISHED_PAGE_JSON = {
   sections: {}
 };
 const nonPublicVideoTopicSlugs = new Set(["text-to-video", "image-to-video"]);
-const heroMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "product-ad-video", "promo-video", "music-video"]);
-const videoMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "product-ad-video", "promo-video", "music-video", "youtube-video"]);
+const heroMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "story-video", "product-video", "product-ad-video", "promo-video", "music-video"]);
+const videoMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "story-video", "product-video", "product-ad-video", "promo-video", "music-video", "youtube-video"]);
 const youtubeCardAssetMap = {
   "youtube-card-01": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-01.webp",
   "youtube-card-02": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-02.webp",
@@ -51,7 +51,10 @@ const youtubeAssetMap = {
 };
 const targetedHeroFieldManifest = {
   "talking-photo": {
-    image: "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp"
+    image: [
+      "/assets/dreamshoot/talking-photo/ai-talking-photo-older-woman-portrait.webp",
+      "/assets/dreamshoot/talking-photo/make-a-photo-talk-without-recording-another-take.webp"
+    ]
   },
   "cinematic-video": {
     image: "/assets/dreamshoot/cinematic-video/cinematic-video-hotel-corridor-mystery-scene.png",
@@ -80,6 +83,12 @@ const targetedHeroFieldManifest = {
     ],
     video: "/assets/dreamshoot/product-video/show-the-product-clearly-before-you-ask-someone-to-buy-it.mp4",
     imageNote: "Problem-to-payoff ad · product-focused storytelling · AI-generated commercial"
+  },
+  "story-video": {
+    image: [
+      "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-hero-woman-sunset-reflection.webp",
+      "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-hero-library-restoration-v2.webp"
+    ]
   },
   "product-ad-video": {
     image: "/assets/dreamshoot/product-ad-video/ai-product-ad-video-new-product-unboxing-creative.jpg"
@@ -323,7 +332,7 @@ const pages = [
       "Turn photos, clips, memories, and ideas into story-led videos with a clearer setup, tension, turning point, payoff, and meaning. Create origin stories, personal journeys, comeback stories, mini documentaries, community stories, and fictional shorts.",
     keywords:
       "AI story video generator, story video maker, AI storytelling video generator, turn photos into a story video, narrative video generator, create story videos from photos, short story video maker, AI video story creator",
-    imageUrl: "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-hero-woman-sunset-reflection.webp"
+    imageUrl: "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-hero-library-restoration-v2.webp"
   },
   {
     slug: "meme-video",
@@ -502,7 +511,7 @@ function isolateVideoTopicImages(content) {
     (next.useCases?.items ?? []).map((item) => imageSource(item?.image)).filter(Boolean)
   );
   const reservedSources = new Set([heroSource, ...useCaseSources].filter(Boolean));
-  if (Array.isArray(next.gallery?.items)) {
+  if (Array.isArray(next.gallery?.items) && next.seo?.canonicalPath !== "/ai-video-generation/video-ad") {
     next.gallery.items = next.gallery.items.filter((item) => {
       const src = imageSource(item?.image);
       return !src || !reservedSources.has(src);
