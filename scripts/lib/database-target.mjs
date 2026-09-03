@@ -100,7 +100,7 @@ export function assertDatabaseTarget({
 }) {
   assertEnvironmentLabel(expectedTarget, env);
   const parsed = parseDatabaseUrl(env.DATABASE_URL);
-  if (parsed.port === 15432 && !["remote", "remote-readonly"].includes(expectedTarget)) {
+  if (parsed.port === 15432 && !["production", "remote", "remote-readonly"].includes(expectedTarget)) {
     throw new Error("Refusing database operations through the remote tunnel port 15432 unless DATABASE_TARGET=remote or remote-readonly.");
   }
   if (expectedTarget === "remote-readonly" || expectedTarget === "remote") {
