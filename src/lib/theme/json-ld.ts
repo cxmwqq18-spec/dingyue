@@ -971,15 +971,7 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
     applicationCategory: "PhotographyApplication",
     operatingSystem: "Web",
     url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath)),
-    provider: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
-    offers: {
-      "@type": "OfferCatalog",
-      "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#plans`,
-      name: isSpanishXbySite(input.site)
-        ? isAidreamcapesSite(input.site) ? `Paquetes de retrato de viaje y creditos ${siteName}` : `Paquetes de fotos y creditos ${siteName}`
-        : isAidreamcapesSite(input.site) ? "Aidreamcapes occasion portrait packages and credits" : "MyDreamShoots photo packages and credits",
-      url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, "/pricing"))
-    }
+    provider: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` }
   };
 }
 
