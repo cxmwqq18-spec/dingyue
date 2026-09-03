@@ -27,6 +27,7 @@ import { PartnerApplicationForm, type PartnerApplicationField } from "@/componen
 import { PricingBillingTable } from "@/components/storefront/pricing-billing-table";
 import { pricingSidePanelItemsFromMetadata } from "@/lib/mydreamshoots-pricing-facts";
 import mydreamshootsHomepageCopy from "@/lib/mydreamshoots-homepage-copy.json";
+import { mydreamshootsHomepageVideoAspectRatio, mydreamshootsHomepageVideoCover } from "@/lib/mydreamshoots-homepage-showcase";
 import { StorefrontInstantLink, StorefrontLinkPrefetchProvider, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
 import { AiVideoTopicLanding } from "@/components/storefront/ai-video-topic-landing";
 import { TalkingPhotoLanding } from "@/components/storefront/talking-photo-landing";
@@ -13006,11 +13007,15 @@ function SectionView({
                 ...item,
                 id: `homepage-published-video-${item.id}`,
                 sortOrder: index + 1,
-                subtitle: MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES[slug] ?? item.subtitle
+                subtitle: MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES[slug] ?? item.subtitle,
+                imageUrl: isPrimaryMydreamshootsCapabilitySite(site)
+                  ? mydreamshootsHomepageVideoCover(item.canonicalPath) ?? item.imageUrl
+                  : item.imageUrl
               }
             : undefined;
         })
-        .filter((item): item is PublishedHomepageShowcaseItem => Boolean(item));
+        .filter((item): item is PublishedHomepageShowcaseItem => Boolean(item))
+        .slice(0, 8);
       const saveTheDateItems = publishedHomepageItems
         .filter((item) => item.kind === "save_the_date")
         .slice(0, Math.max(1, Math.min(6, numberSetting(section, "saveTheDateItemLimit", 6))));
@@ -13030,7 +13035,9 @@ function SectionView({
             })
           : item.imageAlt;
         if (item.kind === "video" && item.videoUrl) {
-          const containPoster = item.canonicalPath.endsWith("/instagram-reels") || item.canonicalPath.endsWith("/tiktok-video");
+          const videoAspectRatio = isPrimaryMydreamshootsCapabilitySite(site)
+            ? mydreamshootsHomepageVideoAspectRatio(item.canonicalPath)
+            : "1 / 1";
           return (
             <article
               className="group min-w-0 overflow-hidden rounded-[8px] border border-white/12 bg-[#090B12] transition hover:-translate-y-0.5 hover:border-white/24"
@@ -13039,18 +13046,19 @@ function SectionView({
             >
               <div
                 aria-label={`Play ${item.title}`}
-                className="relative aspect-square cursor-pointer overflow-hidden bg-[#05070e] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-inset"
+                className="relative cursor-pointer overflow-hidden bg-[#05070e] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-inset"
                 data-dreamshoot-preview-meta={item.subtitle}
                 data-dreamshoot-preview-poster={mediaAssetUrl(site, item.imageUrl)}
                 data-dreamshoot-preview-src={mediaAssetUrl(site, item.videoUrl)}
                 data-dreamshoot-preview-title={item.imageAlt}
                 data-dreamshoot-showcase-preview="video"
                 role="button"
+                style={{ aspectRatio: videoAspectRatio }}
                 tabIndex={0}
               >
                 <StorefrontImage
                   alt={publishedImageAlt}
-                  className={`h-full w-full ${containPoster ? "object-contain" : "object-cover"}`}
+                  className="h-full w-full object-cover"
                   loading="lazy"
                   preview={false}
                   sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
@@ -13096,7 +13104,7 @@ function SectionView({
         <div className="mt-12" data-dreamshoot-homepage-showcase-kind={kind}>
           {renderShowcaseSubsectionHeader(title, href, label, kind)}
           <p className="mx-auto mt-4 max-w-[64rem] text-center text-sm leading-7 text-white/66">{intro}</p>
-            {kind === "video" ? <DreamshootShowcasePreviewClient><div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">{items.map(renderPublishedCard)}</div></DreamshootShowcasePreviewClient> : <div className={kind === "save_the_date"
+            {kind === "video" ? <DreamshootShowcasePreviewClient><div className="mt-7 grid grid-cols-1 items-start gap-5 sm:grid-cols-2 xl:grid-cols-4">{items.map(renderPublishedCard)}</div></DreamshootShowcasePreviewClient> : <div className={kind === "save_the_date"
             ? "mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6"
             : "mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"}>
             {items.map(renderPublishedCard)}
