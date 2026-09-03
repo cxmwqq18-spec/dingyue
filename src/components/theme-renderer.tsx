@@ -27,6 +27,7 @@ import { PartnerApplicationForm, type PartnerApplicationField } from "@/componen
 import { PricingBillingTable } from "@/components/storefront/pricing-billing-table";
 import { pricingSidePanelItemsFromMetadata } from "@/lib/mydreamshoots-pricing-facts";
 import mydreamshootsHomepageCopy from "@/lib/mydreamshoots-homepage-copy.json";
+import { mydreamshootsHomepageVideoAspectRatio, mydreamshootsHomepageVideoCover } from "@/lib/mydreamshoots-homepage-showcase";
 import { StorefrontInstantLink, StorefrontLinkPrefetchProvider, type StorefrontInstantLinkProps } from "@/components/storefront/storefront-instant-link";
 import { AiVideoTopicLanding } from "@/components/storefront/ai-video-topic-landing";
 import { TalkingPhotoLanding } from "@/components/storefront/talking-photo-landing";
@@ -13006,11 +13007,15 @@ function SectionView({
                 ...item,
                 id: `homepage-published-video-${item.id}`,
                 sortOrder: index + 1,
-                subtitle: MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES[slug] ?? item.subtitle
+                subtitle: MYDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES[slug] ?? item.subtitle,
+                imageUrl: isPrimaryMydreamshootsCapabilitySite(site)
+                  ? mydreamshootsHomepageVideoCover(item.canonicalPath) ?? item.imageUrl
+                  : item.imageUrl
               }
             : undefined;
         })
-        .filter((item): item is PublishedHomepageShowcaseItem => Boolean(item));
+        .filter((item): item is PublishedHomepageShowcaseItem => Boolean(item))
+        .slice(0, 8);
       const saveTheDateItems = publishedHomepageItems
         .filter((item) => item.kind === "save_the_date")
         .slice(0, Math.max(1, Math.min(6, numberSetting(section, "saveTheDateItemLimit", 6))));
@@ -13030,7 +13035,10 @@ function SectionView({
             })
           : item.imageAlt;
         if (item.kind === "video" && item.videoUrl) {
-          const containPoster = item.canonicalPath.endsWith("/instagram-reels") || item.canonicalPath.endsWith("/tiktok-video");
+          const videoAspectRatio = isPrimaryMydreamshootsCapabilitySite(site)
+            ? mydreamshootsHomepageVideoAspectRatio(item.canonicalPath)
+            : "1 / 1";
+          const containPoster = videoAspectRatio === "9 / 16";
           return (
             <article
               className="group min-w-0 overflow-hidden rounded-[8px] border border-white/12 bg-[#090B12] transition hover:-translate-y-0.5 hover:border-white/24"
