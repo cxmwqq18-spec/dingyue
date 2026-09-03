@@ -1350,8 +1350,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteBody: "Damage -> response -> repair -> renewed use.",
           cta: "Create a Comeback Story",
           image: image(
-            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-11.webp",
-            "Woman sorting photographs and notes to rebuild a personal story",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-comeback-repaired-library-window-v2.webp",
+            "Carpenter repairs a tall library window while volunteers clean the frame",
             1600,
             900
           )
@@ -1365,8 +1365,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteBody: "Place -> craftsperson -> detail -> evidence -> meaning.",
           cta: "Create a Mini Documentary",
           image: image(
-            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-07.webp",
-            "Creator speaking into a studio microphone while explaining a story detail",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-mini-documentary-bookbinder-v2.webp",
+            "Adult bookbinder demonstrates a library repair at a workbench while a documentarian records",
             1600,
             900
           )
@@ -1380,8 +1380,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteBody: "Need -> neighbors -> shared work -> visible result.",
           cta: "Create a Community Story",
           image: image(
-            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-02.webp",
-            "Speaker addressing a full audience during a shared public moment",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-community-cataloging-books-v2.webp",
+            "Adult neighbors sort and catalog recovered books together in a library workroom",
             1600,
             900
           )
@@ -1395,8 +1395,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           noteBody: "Character -> locked clue -> choice -> consequence.",
           cta: "Create a Fictional Story",
           image: image(
-            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-04.webp",
-            "Fictional character alone on a night-time city street before a difficult decision",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-fictional-locked-archive-room-v2.webp",
+            "Fictional adult protagonist tries a key in a locked library archive cabinet",
             1600,
             900
           )
@@ -1438,8 +1438,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           title: "1. Setup: Show the Material and the Question",
           body: "Open on the floor plan, gloves, keys, and archive boxes. Before anyone begins, the viewer should see the place, the material, and the work that needs a plan.",
           image: image(
-            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-13.webp",
-            "Person reading papers and planning the first step of a story",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-setup-floor-plan-archive-table-v2.webp",
+            "Two adult volunteers study a floor plan and organize archive boxes before restoration",
             1600,
             900
           )
@@ -1448,8 +1448,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           title: "2. Tension: Let Uncertainty Become Visible",
           body: "Make the missing ledger and empty shelf legible. Two people searching the archive aisle create tension through a real unanswered question, not manufactured drama.",
           image: image(
-            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-12.webp",
-            "Man considering an unresolved question in a dim study",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-tension-missing-ledger-search-v2.webp",
+            "Two adult volunteers search a dark archive aisle for a missing ledger",
             1600,
             900
           )
@@ -1458,8 +1458,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           title: "3. Turning Point: Choose the New Direction",
           body: "Let the key turn and the cabinet open. One decisive action reveals the recovered box and sends the restoration into its next phase.",
           image: image(
-            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-05.webp",
-            "Woman looking back toward the coast at the moment her journey changes direction",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-turning-point-key-cabinet-action-v2.webp",
+            "Volunteer turns a brass key to open a library cabinet and reveal a recovered ledger box",
             1600,
             900
           )
@@ -1468,8 +1468,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           title: "4. Payoff: Let the Result Land",
           body: "Open the library doors and let people carry the final boxes inside. The payoff is a usable shared place, earned by the care and decisions that came before it.",
           image: image(
-            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-03.webp",
-            "Graduate holding a diploma at the end of a long personal journey",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-payoff-library-reopening-courtyard-v2.webp",
+            "Neighbors carry final boxes through the open doors of a restored neighborhood library",
             1600,
             900
           )
@@ -1478,8 +1478,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           title: "5. Meaning: End With What Stays",
           body: "Close at the reading table, where the restored books now support a quiet shared moment. The meaning is the place people can use together after the work is done.",
           image: image(
-            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-01.webp",
-            "Older woman reflecting on a memory in her warm living room",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-meaning-shared-memory-reading-table-v2.webp",
+            "Three adults share a quiet reading moment around a table in the restored library",
             1600,
             900
           )
@@ -1502,8 +1502,8 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       eyebrow: "WHY CREATORS USE IT",
       title: "Stories That Hold on to What Matters",
       image: image(
-        "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-08.webp",
-        "Parent and child sharing a joyful moment at home",
+        "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-closing-lights-library-evening-v2.webp",
+        "Adults shelve books inside a restored neighborhood library glowing at blue hour",
         1600,
         900
       ),
