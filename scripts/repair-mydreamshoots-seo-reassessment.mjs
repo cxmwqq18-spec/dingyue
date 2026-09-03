@@ -91,7 +91,12 @@ function updatePageJson(slug, json) {
   if (slug === "/ai-video-generation/youtube-video") {
     const topic = next.sections?.ai_video_topic_landing_1?.settings?.content;
     assert(topic?.hero && typeof topic.hero === "object", "YouTube Video must keep dedicated topic content");
-    assert(!topic.hero.title || ["Turn a Bigger Idea Into a YouTube Video Worth Watching", MYDREAMSHOOTS_REASSESSMENT_P1.youtubeH1].includes(topic.hero.title), "YouTube H1 has an unexpected manual edit");
+    assert(!topic.hero.title || [
+      "Turn a Bigger Idea Into a YouTube Video Worth Watching",
+      "Turn a Bigger Idea Into a YouTube Video Worth Watching Through",
+      "Turn a Bigger Idea Into a Video Worth Watching Through",
+      MYDREAMSHOOTS_REASSESSMENT_P1.youtubeH1
+    ].includes(topic.hero.title), "YouTube H1 has an unexpected manual edit");
     topic.hero.title = MYDREAMSHOOTS_REASSESSMENT_P1.youtubeH1;
   }
   return next;

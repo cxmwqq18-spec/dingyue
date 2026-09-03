@@ -171,7 +171,7 @@ assert.equal(
 );
 const metadata = metadataForSingleThemePage(bundle.site, bundle.page, context);
 assert.equal(metadata.description, context.seo.description);
-assert.equal(metadata.keywords, context.seo.keywords, "page keywords must reach Next metadata output");
+assert.equal(metadata.keywords, undefined, "public metadata must not serialize CMS keywords");
 assert.equal(metadata.openGraph.description, context.seo.description);
 assert.equal(metadata.twitter.description, context.seo.description);
 const homeGraph = buildStorefrontJsonLd({ site: bundle.site, page: bundle.page, pageJson, pagePath: "/", routeMode: "host", context })[0]["@graph"];
@@ -184,6 +184,7 @@ assert.equal(homeGraph.find((node) => node["@type"] === "SoftwareApplication").u
 assert.equal(homeGraph.find((node) => node["@type"] === "SoftwareApplication")["@id"], "https://example.test/#app", "homepage SoftwareApplication ID must use the canonical root URL");
 assert.equal(homeGraph.find((node) => node["@type"] === "BreadcrumbList").itemListElement[0].item, "https://example.test/", "homepage breadcrumb root must use the canonical root URL");
 assert.equal(homeGraph.find((node) => node["@type"] === "SoftwareApplication").description, context.seo.description, "JSON-LD page description must serialize the resolved context");
+assert.equal(homeGraph.find((node) => node["@type"] === "SoftwareApplication").offers?.["@type"], "OfferCatalog", "non-MyDreamShoots storefronts must retain homepage OfferCatalog ownership");
 assert.equal(homeGraph.find((node) => node["@type"] === "Organization").name, bundle.site.branding.logoText, "Organization JSON-LD must use the single display-brand source");
 assert.equal(homeGraph.find((node) => node["@type"] === "Organization").legalName, profile.identity.legalName, "Organization JSON-LD must serialize the resolved profile");
 

@@ -578,6 +578,20 @@ function publishedStandardPageSchema(input: JsonLdInput, title: string, descript
   };
 }
 
+function policyWebPageSchema(input: JsonLdInput, title: string, description: string): JsonLdNode | undefined {
+  if (!isMydreamshootsComSite(input.site) || !new Set(["/terms", "/state-privacy"]).has(input.pagePath)) return undefined;
+  const url = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath));
+  return {
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    name: title,
+    description,
+    url,
+    isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
+    publisher: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` }
+  };
+}
+
 function serviceOrProductSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
   const path = input.pagePath;
   if (path.startsWith("/tools/") || path.startsWith("/ai-video-generation/")) {
@@ -971,7 +985,8 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
     applicationCategory: "PhotographyApplication",
     operatingSystem: "Web",
     url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath)),
-    provider: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` }
+    provider: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
+    ...(!isMydreamshootsComSite(input.site) ? { offers: homepageOfferCatalogSchema(input.site, input.routeMode) } : {})
   };
 }
 
@@ -987,6 +1002,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     storefrontApplicationSchema(resolvedInput, title, description),
     breadcrumbs(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, resolvedInput.publishedRoutePaths),
     publishedStandardPageSchema(resolvedInput, title, description),
+    policyWebPageSchema(resolvedInput, title, description),
     faqSchema(resolvedInput.site, resolvedInput.pageJson, resolvedInput),
     articleSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, description, resolvedInput.pageJson),
     ...collectionPageSchema(resolvedInput, title, description),
