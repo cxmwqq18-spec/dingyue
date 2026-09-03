@@ -1290,113 +1290,113 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
     },
     hero: {
       eyebrow: "AI STORY VIDEO GENERATOR",
-      title: "Turn Photos, Clips, and Real Moments Into a Story Worth Watching",
+      title: "Turn Real Moments Into a Story People Can Follow",
       body:
-        "Start with the person, memory, place, idea, or event you want to share. Build the video around what changes: the setup, the tension, the turning point, the payoff, and the meaning the viewer should leave with.",
+        "Start with the person, place, or event that matters. Then make the change visible: show what called for action, the work or choice that followed, the result, and the meaning that remains.",
       primaryCta: "Create My Story Video",
       secondaryCta: "See Story Types",
       availabilityNote:
         "This page explains the story direction. Open the current video workspace to review the creation tools available today.",
       rightsCopy: "Use photos, voices, quotes, and real-world claims you own or have permission to use. Keep factual stories faithful to what actually happened.",
-      imageNote: "Setup -> Tension -> Turning Point -> Payoff -> Meaning",
+      imageNote: "A neighborhood library restoration: condition -> shared work -> reopening.",
       image: image(
-        "/assets/dreamshoot/story-video/story-video-hero-woman-sunset-reflection.png",
-        "Woman at sunset in a reflective outdoor scene for a story video opening",
+        "/assets/dreamshoot/story-video/story-video-story-hero-library-restoration-v2.png",
+        "Volunteers enter a neglected neighborhood library carrying archive boxes and a floor plan",
         1600,
         900
       )
     },
     useCases: {
       eyebrow: "WHAT KIND OF CHANGE IS THIS STORY ABOUT?",
-      title: "Six Story Video Jobs That Need Different Narrative Decisions",
-      intro: "Pick the story type that fits your purpose. The narrative should follow what changes, not just what happened next.",
+      title: "Six Story Shapes, Each With a Different Job",
+      intro: "Choose the story shape that fits the change you need to make clear. Every image below carries a distinct moment, person, or decision.",
       items: [
         makeUseCaseCard({
-          title: "Show Why It Had to Begin",
-          problem: "You know when something started, but a timeline of dates still does not explain why the beginning mattered.",
+          title: "Show What Made the Work Necessary",
+          problem: "A beginning can feel abstract when viewers never see the condition, clue, or unmet need that called people into action.",
           body:
-            "Start before the founding moment. Show what was missing, what someone tried first, and what early proof made the idea real. The date is context; the problem and first change are the story.",
+            "Open on tangible evidence: the damaged record, empty shelf, unfinished room, or other detail that makes the first step understandable. Let the viewer see why the work had to begin.",
           noteLabel: "Story shape",
-          noteBody: "Before -> problem -> first step -> first proof -> today.",
+          noteBody: "Condition -> clue -> first step -> proof -> future.",
           cta: "Create an Origin Story",
           image: image(
-            "/assets/dreamshoot/story-video/story-video-origin-family-home-beginning.png",
-            "Parent and child sharing a warm home moment for an origin story",
+            "/assets/dreamshoot/story-video/story-video-story-origin-closed-library-archive-v2.png",
+            "Volunteers uncover a damaged record in a neglected library archive",
             1600,
             900
           )
         }),
         makeUseCaseCard({
-          title: "Build the Journey Around the Decision That Changes What Happens Next",
-          problem: "You have many emotional moments, but no clear point where the direction changes.",
+          title: "Let a Choice Redirect the Journey",
+          problem: "You have many memories from the road, but no clear decision that explains why the next chapter looks different.",
           body:
-            "Choose the turning point first. Keep only the earlier moments that make that choice understandable and the later moments that show its consequence.",
+            "Use the pause before a decision to establish what was at stake. Keep the scenes that lead to the choice, then show the direction it opens rather than collecting every stop along the way.",
           noteLabel: "Story shape",
-          noteBody: "Old pattern -> pressure -> decision -> new direction -> reflection.",
+          noteBody: "Old direction -> pressure -> choice -> new path -> reflection.",
           cta: "Create a Personal Journey",
           image: image(
-            "/assets/dreamshoot/story-video/story-video-personal-journey-coastal-turning-point.png",
-            "Person overlooking a coastline at sunset for a personal turning-point story",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-10.webp",
+            "Traveler pauses above a coastal route at sunset before choosing a new direction",
             1600,
             900
           )
         }),
         makeUseCaseCard({
-          title: "Make the Response the Center of the Comeback",
-          problem: "The setback is dramatic, but a simple failure-then-success edit feels generic or manipulative.",
+          title: "Find the Thread After a Setback",
+          problem: "After a difficult chapter, a collection of photos and fragments can show the past without explaining what someone did next.",
           body:
-            "Show what was expected, what went wrong, what changed in response, and what happened because of that response. The meaningful part is not the hardship itself; it is what the person did next.",
+            "Show the response in action: gathering what remains, choosing what matters, and making the next move. The comeback is credible when the viewer can see the work between the setback and the result.",
           noteLabel: "Story shape",
-          noteBody: "Expectation -> setback -> response -> consequence -> lesson.",
+          noteBody: "Expectation -> setback -> response -> result -> lesson.",
           cta: "Create a Comeback Story",
           image: image(
-            "/assets/dreamshoot/story-video/story-video-comeback-speaker-new-direction.png",
-            "Speaker presenting on stage to represent a comeback and new direction",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-11.webp",
+            "Woman sorting photographs and notes to rebuild a personal story",
             1600,
             900
           )
         }),
         makeUseCaseCard({
-          title: "Let Real Details Carry the Story",
-          problem: "You have beautiful footage, but outsiders still do not understand the place, person, craft, routine, or issue.",
+          title: "Let the Witness Explain the Detail",
+          problem: "The setting looks compelling, but the audience cannot tell why a maker, organizer, or witness considers one detail important.",
           body:
-            "Show the place, introduce the people who experience it, capture details outsiders might miss, and use real voices or verifiable context when appropriate. Meaning should grow from observation, not generic narration.",
+            "Anchor the scene in a person who can explain what the camera is seeing. Pair their voice with the place, object, or process so observation, not generic narration, carries the meaning.",
           noteLabel: "Story shape",
-          noteBody: "Place -> person -> detail -> voice/evidence -> meaning.",
+          noteBody: "Place -> witness -> detail -> voice -> meaning.",
           cta: "Create a Mini Documentary",
           image: image(
-            "/assets/dreamshoot/story-video/story-video-mini-documentary-interview-creator.png",
-            "Craftsperson explaining their work while a documentarian records the scene",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-07.webp",
+            "Creator speaking into a studio microphone while explaining a story detail",
             1600,
             900
           )
         }),
         makeUseCaseCard({
-          title: "Keep People, Action, and Evidence at the Center",
-          problem: "A cause or community matters, but emotional footage can accidentally turn the people involved into background scenery.",
+          title: "Put the Shared Moment in Context",
+          problem: "A crowd or public event can look impressive while leaving viewers unsure whose work, decision, or invitation brought people together.",
           body:
-            "Explain the real need, who defines it, what people are already doing, what has changed, what still has not, and what a viewer can realistically do next.",
+            "Start with the people gathered around the moment, then connect the stage, audience, or celebration to the action that made it possible. A community story should give the shared outcome a human reason.",
           noteLabel: "Story shape",
-          noteBody: "Need -> people -> action -> evidence -> realistic next step.",
+          noteBody: "Need -> people -> action -> shared result -> next step.",
           cta: "Create a Community Story",
           image: image(
-            "/assets/dreamshoot/story-video/story-video-community-shared-milestone.png",
-            "Neighbors working together on a community garden project",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-02.webp",
+            "Speaker addressing a full audience during a shared public moment",
             1600,
             900
           )
         }),
         makeUseCaseCard({
-          title: "Give the Character Something to Want - and Something That Gets in the Way",
-          problem: "You have a mood or visual world, but nothing forces the scene to move.",
+          title: "Give a Fictional Character a Decision to Make",
+          problem: "A striking city scene can establish mood, but a story does not move until the character has an objective and a reason to act.",
           body:
-            "A fictional short needs an objective, obstacle, turning point, and consequence. Atmosphere supports the story; it cannot replace it.",
+            "Show the character in a place that creates pressure, then make the obstacle and choice legible. Atmosphere can raise the stakes, but the decision is what carries the scene forward.",
           noteLabel: "Story shape",
-          noteBody: "Character -> objective -> obstacle -> turn -> consequence.",
+          noteBody: "Character -> objective -> obstacle -> decision -> consequence.",
           cta: "Create a Fictional Story",
           image: image(
-            "/assets/dreamshoot/story-video/story-video-fictional-noir-character-conflict-v2.png",
-            "Fictional noir protagonist facing an obstacle in a rain-soaked neon alley",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-04.webp",
+            "Fictional character alone on a night-time city street before a difficult decision",
             1600,
             900
           )
@@ -1431,55 +1431,55 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
     },
     guidance: {
       eyebrow: "YOUR STORY, CLEARLY TOLD",
-      title: "A Story That Moves People",
-      intro: "Every powerful story follows a structure. Use each beat to make the change visible and the ending meaningful.",
+      title: "Build One Clear Story, Beat by Beat",
+      intro: "Use a different visual job for each beat so the sequence moves from evidence to pressure, action, result, and reflection.",
       cards: [
         guidanceCard({
-          title: "1. Setup",
-          body: "Introduce the world, characters, and what matters most.",
+          title: "1. Setup: Show the Material and the Question",
+          body: "Open with the photographs, papers, objects, or place that make the story worth telling. The viewer should understand what needs attention before anyone explains it.",
           image: image(
-            "/assets/dreamshoot/story-video/story-video-setup-memory-photo-selection.png",
-            "Person organizing printed photographs to establish a story setup",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-13.webp",
+            "Person reading papers and planning the first step of a story",
             1600,
             900
           )
         }),
         guidanceCard({
-          title: "2. Tension",
-          body: "Show the challenge, doubt, or obstacle that raises the question.",
+          title: "2. Tension: Let Uncertainty Become Visible",
+          body: "Give the person a real problem to consider. A quiet pause, an unresolved room, or an unanswered question can create tension without exaggerating the conflict.",
           image: image(
-            "/assets/dreamshoot/story-video/story-video-tension-reflective-man-study.png",
-            "Thoughtful man in a dim study representing tension and uncertainty",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-12.webp",
+            "Man considering an unresolved question in a dim study",
             1600,
             900
           )
         }),
         guidanceCard({
-          title: "3. Turning Point",
-          body: "Show the decision or event that changes what happens next.",
+          title: "3. Turning Point: Choose the New Direction",
+          body: "Make the change of course readable. The viewer should be able to point to the look, gesture, choice, or event that sends the story forward.",
           image: image(
-            "/assets/dreamshoot/story-video/story-video-turning-point-creator-decision.png",
-            "Creator holding a phone in a cafe representing a decision and turning point",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-05.webp",
+            "Woman looking back toward the coast at the moment her journey changes direction",
             1600,
             900
           )
         }),
         guidanceCard({
-          title: "4. Payoff",
-          body: "Reveal the consequence and the emotional resolution.",
+          title: "4. Payoff: Let the Result Land",
+          body: "Show the outcome in a real moment of arrival, recognition, or relief. The result should feel earned by the work and choices that came before it.",
           image: image(
-            "/assets/dreamshoot/story-video/story-video-payoff-celebration-gift-moment.png",
-            "Warm gift celebration scene representing a story payoff",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-03.webp",
+            "Graduate holding a diploma at the end of a long personal journey",
             1600,
             900
           )
         }),
         guidanceCard({
-          title: "5. Meaning",
-          body: "Leave the viewer with what this story now means.",
+          title: "5. Meaning: End With What Stays",
+          body: "Close with the person, relationship, or place that carries the change forward. A quiet reflection can say more than another highlight reel.",
           image: image(
-            "/assets/dreamshoot/story-video/story-video-meaning-reflection-elder-portrait.png",
-            "Older man in a study representing reflection and story meaning",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-01.webp",
+            "Older woman reflecting on a memory in her warm living room",
             1600,
             900
           )
@@ -1500,18 +1500,18 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
     },
     value: {
       eyebrow: "WHY CREATORS USE IT",
-      title: "Stories People Remember",
+      title: "Stories That Hold on to What Matters",
       image: image(
-        "/assets/dreamshoot/story-video/story-video-closing-memory-reflection.png",
-        "Older woman smiling at home for a reflective closing story moment",
+        "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-08.webp",
+        "Parent and child sharing a joyful moment at home",
         1600,
         900
       ),
       items: [
-        { title: "Less filler", body: "Remove scenes that do not change what the viewer understands." },
-        { title: "Stronger emotional logic", body: "Let emotion come from action, choice, detail, and consequence." },
-        { title: "More useful real stories", body: "Origin, documentary, personal, and community content can explain rather than merely advertise." },
-        { title: "Better fictional scenes", body: "Give strong visuals a character objective, obstacle, turn, and consequence." }
+        { title: "Every image has a job", body: "Use each visual to introduce evidence, show pressure, reveal action, or let the result land." },
+        { title: "Emotion follows the action", body: "Let feeling come from what a person notices, chooses, repairs, shares, or remembers." },
+        { title: "Real moments stay specific", body: "Keep the people, places, and details that make a personal or community story recognizably its own." },
+        { title: "Fiction still needs a cause", body: "Give an invented character a clear objective, obstacle, and consequence instead of relying on mood alone." }
       ]
     },
     trust: {

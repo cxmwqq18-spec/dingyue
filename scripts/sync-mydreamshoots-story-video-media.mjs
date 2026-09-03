@@ -13,6 +13,7 @@ const SECTION_ID = "ai_video_topic_landing_1";
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const updateDb = args.has("--db");
+const syncContent = args.has("--content");
 const productionConfirmed = args.has("--confirm-production");
 const repoRoot = process.cwd();
 
@@ -42,7 +43,7 @@ function cleanStoryImage(image) {
     /^\/assets\/dreamshoot\/story-video\/([^/?#]+)\.(?:png|jpe?g|webp)(?:[?#].*)?$/i,
     "/assets/dreamshoot/generated/video-topic-clean/story-video/$1.webp"
   );
-  assert.match(src, /^\/assets\/dreamshoot\/generated\/video-topic-clean\/story-video\/[^/]+\.webp$/i, `canonical_story_image_not_clean:${src}`);
+  assert.match(src, /^\/assets\/dreamshoot\/generated\/video-topic-(?:clean|media)\/story-video\/[^/]+\.webp$/i, `canonical_story_image_not_public:${src}`);
   const diskPath = path.join(repoRoot, "public", src);
   assert.equal(fs.existsSync(diskPath), true, `missing_canonical_story_image:${src}`);
   return { ...clone(image), src };
@@ -58,12 +59,24 @@ function canonicalImageSources(value, output = []) {
     return output;
   }
   if (!value || typeof value !== "object") return output;
-  if (typeof value.src === "string" && /^\/assets\/dreamshoot\/(?:generated\/video-topic-clean\/)?story-video\//i.test(value.src)) {
+  if (typeof value.src === "string" && /^\/assets\/dreamshoot\/(?:generated\/video-topic-(?:clean|media)\/)?story-video\//i.test(value.src)) {
     output.push(cleanStoryImage(value).src);
     return output;
   }
   for (const nested of Object.values(value)) canonicalImageSources(nested, output);
   return output;
+}
+
+function canonicalizeStoryImages(value) {
+  if (Array.isArray(value)) return value.map(canonicalizeStoryImages);
+  if (!value || typeof value !== "object") return value;
+  if (isImage(value)) return cleanStoryImage(value);
+  return Object.fromEntries(Object.entries(value).map(([key, nested]) => [key, canonicalizeStoryImages(nested)]));
+}
+
+function assertUniqueStoryImages(content) {
+  const sources = canonicalImageSources(content);
+  assert.equal(new Set(sources).size, sources.length, `duplicate_story_image_sources:${sources.join(",")}`);
 }
 
 function syncImages(stored, canonical, pathLabel = "content", changes = []) {
@@ -120,6 +133,8 @@ assertDatabaseTarget({
 });
 
 const canonicalContent = storyContentSeed();
+const canonicalSection = canonicalizeStoryImages(canonicalContent);
+assertUniqueStoryImages(canonicalSection);
 const prisma = new PrismaClient();
 try {
   const page = await prisma.livePage.findUnique({
@@ -130,27 +145,34 @@ try {
   const storedContent = clone(page.contentJson);
   const storedSection = storedContent?.sections?.[SECTION_ID]?.settings?.content;
   assert.ok(storedSection && typeof storedSection === "object" && !Array.isArray(storedSection), `missing_target_content:${STORY_SLUG}`);
-  const imageChanges = syncImages(storedSection, canonicalContent, "content");
+  const imageChanges = syncImages(clone(storedSection), canonicalSection, "content");
+  const contentChanged = syncContent && !sameJson(storedSection, canonicalSection);
+  if (syncContent) {
+    storedContent.sections[SECTION_ID].settings.content = canonicalSection;
+  } else {
+    syncImages(storedSection, canonicalSection, "content");
+  }
   const nextContent = storedContent;
-  const canonicalHero = cleanStoryImage(canonicalContent.hero?.image).src;
-  const canonicalGallery = [...new Set(canonicalImageSources(canonicalContent).filter((src) => src !== canonicalHero))];
+  const canonicalHero = cleanStoryImage(canonicalSection.hero?.image).src;
+  const canonicalGallery = [...new Set(canonicalImageSources(canonicalSection).filter((src) => src !== canonicalHero))];
   const videoTheme = await prisma.videoTheme.findUnique({
     where: { siteId_slug: { siteId: SITE_ID, slug: "story-video" } },
-    select: { id: true, galleryImages: true }
+    select: { id: true, imageUrl: true, galleryImages: true }
   });
   assert.ok(videoTheme, "missing_target_video_theme:story-video");
+  const videoThemeImageChanged = videoTheme.imageUrl !== canonicalHero;
   const videoThemeGalleryChanged = !sameJson(videoTheme.galleryImages, canonicalGallery);
 
-  if (!dryRun && imageChanges.length > 0) {
+  if (!dryRun && (contentChanged || imageChanges.length > 0)) {
     await prisma.livePage.update({
       where: { id: page.id },
       data: { contentJson: nextContent }
     });
   }
-  if (!dryRun && videoThemeGalleryChanged) {
+  if (!dryRun && (videoThemeImageChanged || videoThemeGalleryChanged)) {
     await prisma.videoTheme.update({
       where: { id: videoTheme.id },
-      data: { galleryImages: canonicalGallery }
+      data: { imageUrl: canonicalHero, galleryImages: canonicalGallery }
     });
   }
 
@@ -159,10 +181,13 @@ try {
     updateDb,
     target,
     page: STORY_SLUG,
+    syncContent,
+    changedContent: contentChanged,
     changedImageFields: imageChanges.length,
     imageFields: imageChanges,
+    changedVideoThemeImage: videoThemeImageChanged,
     changedVideoThemeGallery: videoThemeGalleryChanged,
-    written: !dryRun && (imageChanges.length > 0 || videoThemeGalleryChanged)
+    written: !dryRun && (contentChanged || imageChanges.length > 0 || videoThemeImageChanged || videoThemeGalleryChanged)
   }, null, 2));
 } finally {
   await prisma.$disconnect();
