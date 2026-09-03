@@ -226,6 +226,16 @@ function verifyAsset(operation) {
 }
 function forbiddenOperation(operation) {
   if (operation.entityType === "theme_page" && operation.field === "draftJson" && operation.fieldPath === "/sectionsOrder") return false;
+  if (operation.entityType === "live_page" && operation.field === "contentJson" && [
+    "contentJson/sections/ai_video_topic_landing_1/settings/content/",
+    "contentJson/sections/talking_photo_landing_1/settings/content/",
+    "contentJson/sections/creators_intro_1/",
+    "contentJson/sections/creators_fit_1/",
+    "contentJson/sections/partner_form_1/",
+    "contentJson/sections/partner_expectations_1/",
+    "contentJson/sections/trust_1/",
+    "contentJson/sectionsOrder"
+  ].some((prefix) => `${operation.field}${operation.fieldPath}`.startsWith(prefix))) return false;
   return forbidden.test(`${operation.entityType}:${operation.field}:${operation.fieldPath}`);
 }
 function baselineFields(type, row, spec) {
@@ -389,7 +399,7 @@ async function apply() {
         const delegate = modelDelegate(tx, spec);
         const currentRows = rowsByType.get(deletion.entityType);
         const current = currentRows.find((row) => spec.lookup.some((key) => String(row[key] ?? "") === String(deletion.entityKey)));
-        if (!current) continue;
+        if (!current) { report.skipped.push({ ...deletion, reason: "entity_missing_idempotent" }); continue; }
         const currentHash = hash(publicRow(current, spec));
         if (deletion.baseHash && deletion.baseHash !== currentHash) { report.conflicts.push({ ...deletion, reason: "online_value_changed" }); continue; }
         await delegate.delete({ where: { id: current.id } });
