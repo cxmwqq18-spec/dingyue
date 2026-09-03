@@ -1370,8 +1370,8 @@ const sharedPages = (siteId: string): ThemePage[] => [
   }
 ];
 
-type WeddingTemplateKey = ThemePackageTemplateKey | "creators-circle" | "partner-registration" | "about-us" | "contact-us";
-type WeddingDreamshootTemplateKey = Extract<WeddingTemplateKey, "creators-circle" | "partner-registration" | "about-us" | "contact-us">;
+type WeddingTemplateKey = ThemePackageTemplateKey | "creators-circle" | "about-us" | "contact-us";
+type WeddingDreamshootTemplateKey = Extract<WeddingTemplateKey, "creators-circle" | "about-us" | "contact-us">;
 
 type WeddingPageMapping = {
   idSuffix: string;
@@ -1406,7 +1406,6 @@ const weddingPageMappings: WeddingPageMapping[] = [
   { idSuffix: "blog", packageTemplate: "blog-list", templateKey: "blog", slug: "/blog", title: "Wedding journal", pageType: "blog" },
   { idSuffix: "blog_detail", packageTemplate: "blog-detail", templateKey: "blog-detail", slug: "/blog/preparing-source-photos", title: "Preparing source photos", pageType: "article" },
   { idSuffix: "creators_circle", packageTemplate: "creators-circle", templateKey: "creators-circle", slug: "/creators-circle", title: "Creators Circle", pageType: "content" },
-  { idSuffix: "partner_registration", packageTemplate: "partner-registration", templateKey: "partner-registration", slug: "/partner-registration", title: "Partner Registration", pageType: "content" },
   { idSuffix: "about_us", packageTemplate: "about-us", templateKey: "about-us", slug: "/about-us", title: "About Us", pageType: "content" },
   { idSuffix: "contact_us", packageTemplate: "contact-us", templateKey: "contact-us", slug: "/contact-us", title: "Contact Us", pageType: "content" },
   { idSuffix: "search", packageTemplate: "search", templateKey: "search", slug: "/search", title: "Search", pageType: "search" },
@@ -1415,7 +1414,7 @@ const weddingPageMappings: WeddingPageMapping[] = [
 ];
 
 function isWeddingDreamshootTemplateKey(packageTemplate: WeddingTemplateKey): packageTemplate is WeddingDreamshootTemplateKey {
-  return packageTemplate === "creators-circle" || packageTemplate === "partner-registration" || packageTemplate === "about-us" || packageTemplate === "contact-us";
+  return packageTemplate === "creators-circle" || packageTemplate === "about-us" || packageTemplate === "contact-us";
 }
 
 function weddingPageJson(packageTemplate: ThemePackageTemplateKey, pageType: string, templateKey: string): ThemePageJson {

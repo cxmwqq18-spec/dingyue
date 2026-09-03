@@ -495,9 +495,9 @@ assert(
   "MyDreamShoots templates must not expose Browse packages as a CTA or navigation label"
 );
 assert(
-  templates.includes('primaryCta: "Contact us about the Creators Circle"') &&
-    templates.includes('primaryHref: "/contact-us"'),
-  "Creators Circle CTAs must use the canonical contact route"
+  templates.includes('primaryCta: "Apply to the Creators Circle"') &&
+    templates.includes('primaryHref: "/creators-circle#partner-application"'),
+  "Creators Circle CTAs must use the partner application anchor"
 );
 assert(
   readText("src/lib/mydreamshoots-homepage-copy.json").includes('"conversionTitle": "Ready to try myDreamshoots?"'),
@@ -798,7 +798,7 @@ console.log(JSON.stringify({
     cookies: "/cookies",
     forbiddenLegacyPolicyHrefs: badLegacyHrefHits.length
   },
-  syntheticRoutes: ["/workflow", "/creators-circle", "/partner-registration"],
+  syntheticRoutes: ["/workflow", "/creators-circle"],
   sitemapStrategy: "live draft projection only; renderable, indexable, canonical URLs per request host",
   hostAwareSitemaps: {
     mydreamshoots: "www.mydreamshoots.com only",

@@ -28,7 +28,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       cadence: typeof body.cadence === "string" ? body.cadence : undefined,
       campaignIdeas: typeof body.campaignIdeas === "string" ? body.campaignIdeas : undefined,
       message: typeof body.message === "string" ? body.message : undefined,
-      source: typeof body.source === "string" ? body.source : "partner-registration",
+      source: typeof body.source === "string" ? body.source : undefined,
       metadata: {
         userAgent: request.headers.get("user-agent") ?? undefined,
         referer: request.headers.get("referer") ?? undefined

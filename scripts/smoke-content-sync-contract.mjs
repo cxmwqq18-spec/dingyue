@@ -14,6 +14,7 @@ for (const required of [
   "fieldPath",
   "confirm-deletions",
   '"theme_page", "creative_pack"',
+  '"live_page", "theme_page"',
   "Protected business data changed during content apply",
   "contentSyncBaseline",
   "target_siteId_entityType_entityKey_fieldPath"

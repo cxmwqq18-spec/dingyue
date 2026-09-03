@@ -127,7 +127,7 @@ export async function createPartnerApplicationRelational(
       campaignIdeas: cleanLongText(input.campaignIdeas, 2000),
       message: cleanLongText(input.message, 2000),
       status: "pending",
-      source: cleanText(input.source, 120) ?? "partner-registration",
+      source: cleanText(input.source, 120) ?? (site.id === "site_dreamshoot" || site.slug === "mydreamshoots" ? "creators-circle" : "partner-registration"),
       metadata: input.metadata ? cloneJson(input.metadata) as Prisma.InputJsonValue : undefined
     },
     select: applicationSelect()

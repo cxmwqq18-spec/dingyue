@@ -155,15 +155,6 @@ export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMeta
     index: true,
     follow: true
   },
-  "/partner-registration": {
-    title: "myDreamshoots Partner Registration - apply for creator collaborations",
-    description:
-      "Apply to partner with myDreamshoots and share your audience, publishing channels, creator campaign fit, and AI photo package collaboration goals.",
-    keywords: "myDreamshoots partner registration, AI photo partner application, creator collaboration application, AI portrait campaign partner",
-    canonicalPath: "/partner-registration",
-    index: true,
-    follow: true
-  },
   "/about-us": {
     title: "About myDreamshoots",
     description:

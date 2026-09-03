@@ -2,6 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
+import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS as MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS } from "@/lib/mydreamshoots-legacy-public-redirects";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
@@ -74,7 +75,7 @@ const MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS: Record<string, string> = {
   "/collections/headshot": "/ai-image-generation/headshot",
   "/ai-image-generation/profile-cards": "/ai-image-generation/avatar",
   "/ai-image-generation/social-cards": "/ai-image-generation",
-  "/ai-image-generation/motion-generator": "/ai-video-generation/motion-generator",
+  ...Object.fromEntries(MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS.map(({ aliasPath, targetPath }) => [aliasPath, targetPath])),
   "/ai-video-generation/wedding-invitation": "/ai-save-the-date/wedding-invitation",
   "/holidays-events/wedding-invitation": "/ai-save-the-date/wedding-invitation",
   "/ai-video-generation/mothers-day": "/ai-save-the-date/mothers-day",

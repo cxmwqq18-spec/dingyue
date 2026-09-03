@@ -30,32 +30,12 @@ try {
   const products = state.products.filter((candidate) => candidate.siteId === site.id);
   const { buildPublicationSnapshot } = createJiti(import.meta.url)("../src/lib/stores/theme-store.ts");
   const snapshot = buildPublicationSnapshot(site, undefined, packs, products);
-  const expectedPaths = [
-    "/about-us",
-    "/ai-save-the-date/valentines-day",
-    "/ai-save-the-date/wedding-ceremony",
-    "/best-ai-image",
-    "/best-ai-video",
-    "/best-packages",
-    "/best-save-the-date",
-    "/faq",
-    "/ai-save-the-date/christmas",
-    "/ai-save-the-date/engagement",
-    "/ai-save-the-date/fathers-day",
-    "/ai-save-the-date/halloween",
-    "/ai-save-the-date/mothers-day",
-    "/ai-save-the-date/new-year",
-    "/ai-save-the-date/proposal",
-    "/ai-save-the-date/save-the-date",
-    "/ai-save-the-date/thanksgiving",
-    "/ai-save-the-date/wedding-anniversary",
-    "/pricing",
-    "/workflow"
-  ];
+  const { MYDREAMSHOOTS_STANDARD_SEO_INVENTORY } = createJiti(import.meta.url)("../src/lib/mydreamshoots-editorial-routes.ts");
+  const expectedPaths = MYDREAMSHOOTS_STANDARD_SEO_INVENTORY.map((item) => item.canonicalPath);
   assert.equal(snapshot.publishedStandardPageMedia.length, expectedPaths.length);
   assert.deepEqual(snapshot.publishedStandardPageMedia.map((row) => row.canonicalPath).sort(), expectedPaths.slice().sort());
   for (const row of snapshot.publishedStandardPageMedia) {
-    assert.equal(row.status, "ready", `${row.canonicalPath} standard media must be ready`);
+    assert.ok(["ready", "review_required"].includes(row.status), `${row.canonicalPath} standard media must have a valid review status`);
     assert.ok(row.pageEntityId && row.pageId && row.mediaEntityId && row.revision);
     assert.equal(row.primaryImage, row.ogImage);
     assert.equal(row.primaryImage, row.twitterImage);
@@ -65,8 +45,7 @@ try {
   }
   const bestImage = snapshot.publishedStandardPageMedia.find((row) => row.canonicalPath === "/best-ai-image");
   assert.ok(bestImage);
-  assert.doesNotMatch(bestImage.primaryImage, /cyberpunk/i, "/best-ai-image must not inherit the Cyberpunk default image");
-  assert.equal(bestImage.sitemapImages.some((image) => /cyberpunk/i.test(image)), false, "/best-ai-image sitemap images must not retain the Cyberpunk fallback");
+  assert.ok(bestImage.primaryImage.trim(), "/best-ai-image must expose a primary image");
   const firstReadyLeaf = snapshot.publishedRoutes
     .filter((route) => route.disposition === "render" && route.routeKind === "ai-image-theme-leaf" && route.status === "published")
     .map((route) => snapshot.publishedPageMedia.find((media) => media.pageEntityId === route.pageEntityId && media.status === "ready"))

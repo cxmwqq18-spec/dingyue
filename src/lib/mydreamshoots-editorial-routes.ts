@@ -33,7 +33,6 @@ export const MYDREAMSHOOTS_STANDARD_SEO_ROUTES = [
   "/best-ai-image",
   "/best-ai-video",
   "/best-save-the-date",
-  "/partner-registration",
   "/pricing",
   "/faq",
   "/workflow",

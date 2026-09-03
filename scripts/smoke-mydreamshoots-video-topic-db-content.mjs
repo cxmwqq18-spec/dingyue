@@ -6,6 +6,7 @@ import Module from "node:module";
 import path from "node:path";
 import createJiti from "jiti";
 import { assertDatabaseTarget } from "./lib/database-target.mjs";
+import { MYDREAMSHOOTS_P0_COPY_REPLACEMENTS, MYDREAMSHOOTS_P0_COPY_SLUGS } from "./lib/mydreamshoots-p0-copy-replacements.mjs";
 
 import { PrismaClient } from "@prisma/client";
 
@@ -28,7 +29,7 @@ function record(value) {
   return Boolean(value && typeof value === "object" && !Array.isArray(value));
 }
 
-const publicCopyLeakPattern = /\b(?:E[-\s]?E[-\s]?A[-\s]?T|VideoObject|structured data|the page should|only state[^.]{0,100}(?:rights|commercial)|commercial rights supported|search intent|query ownership|keyword ownership|indexation|do not index|landing-page hero|before launch|review required|TODO|FIXME|FIRST-PARTY PRODUCT EVIDENCE|V2\s*-\s*REAL EXAMPLES|pending capture|pending product record|pending review|PAGE DIFFERENTIATION \/ INTERNAL LINKING)\b/i;
+const publicCopyLeakPattern = /\b(?:E[-\s]?E[-\s]?A[-\s]?T|VideoObject|structured data|the page should|(?:this|the)\s+(?:live\s+)?page\s+must|product team confirms|only state[^.]{0,100}(?:rights|commercial)|commercial rights supported|search intent|query ownership|keyword ownership|indexation|do not index|landing-page hero|before launch|review required|TODO|FIXME|FIRST-PARTY PRODUCT EVIDENCE|V2\s*-\s*REAL EXAMPLES|pending capture|pending product record|pending review|PAGE DIFFERENTIATION \/ INTERNAL LINKING)\b/i;
 const evidenceRemovedSlugs = new Set(["brand-video", "fashion-video", "food-video", "music-video", "pet-video", "explainer-video", "how-to-video", "promo-video", "talking-head-video", "ugc-ad-video"]);
 const examplesRemovedSlugs = new Set(["promo-video", "ugc-ad-video"]);
 const retiredRelatedTopicHrefs = new Set([
@@ -40,6 +41,10 @@ const retiredRelatedTopicHrefs = new Set([
 function assertNoPublicCopyLeaks(value, slug) {
   const serialized = JSON.stringify(value);
   assert.doesNotMatch(serialized, publicCopyLeakPattern, `${slug} canonical content must not contain internal editorial instructions`);
+  for (const replacement of MYDREAMSHOOTS_P0_COPY_REPLACEMENTS.filter((item) => item.slug === slug)) {
+    assert.equal(serialized.includes(replacement.oldText), false, `${slug} must not contain retired P0 copy`);
+    assert.equal(serialized.includes(replacement.newText), true, `${slug} must contain approved P0 copy`);
+  }
 }
 
 function topicSection(pageJson, slug) {
@@ -57,6 +62,12 @@ function topicContent(pageJson, slug) {
   assert(typeof content.hero.image.src === "string" && typeof content.hero.image.alt === "string", `${slug} hero image needs source and alt text`);
   assert(record(content.faq) && Array.isArray(content.faq.items) && content.faq.items.length > 0, `${slug} must keep FAQ data in its section content`);
   return content;
+}
+
+for (const slug of MYDREAMSHOOTS_P0_COPY_SLUGS) {
+  const content = canonicalTopicContent[slug];
+  assert(content, `${slug} must have canonical seed content`);
+  assertNoPublicCopyLeaks(content, `${slug} seed`);
 }
 
 function publicationContracts() {

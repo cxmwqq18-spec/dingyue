@@ -67,6 +67,15 @@ const expected = {
     fit: "cover",
     caption: "Audience -> Promise -> Proof -> Offer -> CTA"
   },
+  "promo-video": {
+    src: "/assets/dreamshoot/promo-video/promo-video-launch-teaser.mp4",
+    poster: "/assets/dreamshoot/promo-video/promo-video-launch-teaser.jpg",
+    label: "Promo launch teaser",
+    width: 720,
+    height: 1280,
+    fit: "cover",
+    caption: "Teaser → Reveal → Key Message → Campaign Moment → Launch Timing → CTA"
+  },
   "music-video": {
     src: "/assets/dreamshoot/music-video/ai-music-video-generator-for-artist-visuals-and-performance-concepts.mp4",
     poster: "/assets/dreamshoot/music-video/ai-music-video-generator-for-artist-visuals-and-performance-concepts.webp",

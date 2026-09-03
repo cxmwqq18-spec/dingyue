@@ -11,7 +11,6 @@ export type MydreamShootsAiStudioTemplateKey =
   | "help"
   | "faq"
   | "creators-circle"
-  | "partner-registration"
   | "about-us"
   | "contact-us"
   | "best-packages"
@@ -968,8 +967,8 @@ const templateSections = {
     headingLevel: "h1",
     tone: "dark",
     imageUrl: assets.heroGridSocial,
-    primaryCta: "Contact us about the Creators Circle",
-    primaryHref: "/contact-us",
+    primaryCta: "Apply to the Creators Circle",
+    primaryHref: "/creators-circle#partner-application",
     secondaryCta: "Explore photo packages",
     secondaryHref: "/ai-image-generation"
   }, [
@@ -983,8 +982,8 @@ const templateSections = {
     title: "Built for creators who explain style, identity, and transformation.",
     body: "The strongest partners show real use cases: a founder updating a profile photo, a fan making match-day images, a creator testing avatar styles, or a small team refreshing campaign visuals. We care more about audience fit, clear storytelling, and consistent publishing than raw follower count.",
     imageUrl: assets.proofBusinessFounder,
-    primaryCta: "Contact us about the Creators Circle",
-    primaryHref: "/contact-us",
+    primaryCta: "Start the application",
+    primaryHref: "/creators-circle#partner-application",
     secondaryCta: "View pricing",
     secondaryHref: "/pricing"
   }, [
@@ -1008,7 +1007,8 @@ const templateSections = {
     eyebrow: "Partner application",
     title: "Apply for a reserved myDreamshoots promotion channel.",
     body: "Tell us who you reach, how you publish, and which myDreamshoots photo experiences would fit your audience. Approved partners can send customers to packages, pricing, or a specific private album offer.",
-    headingLevel: "h1",
+    headingLevel: "h2",
+    anchor: "partner-application",
     layout: "application_form",
     tone: "dark",
     imageUrl: assets.proofCinematicWorlds,
@@ -2380,7 +2380,7 @@ function aidreamcapesContactPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJ
   );
 }
 
-export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSiteSeed): Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> {
+export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSiteSeed): Record<MydreamShootsAiStudioTemplateKey, ThemePageJson> & Partial<Record<"partner-registration", ThemePageJson>> {
   const aidreamcapesTemplateSite = isAidreamcapesTemplateSite(site);
   const homeHeroSection = aidreamcapesTemplateSite ? aidreamcapesHomeHeroSection() : homeSections.hero_1;
   const featuredPackSection = aidreamcapesTemplateSite ? aidreamcapesFeaturedPackSection() : homeSections.featured_pack_1;
@@ -2697,28 +2697,19 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   ),
   "creators-circle": page(
     "content",
-    ["creators_intro_1", "creators_fit_1", "creators_steps_1", "pricing_1", "conversion_1"],
+    ["creators_intro_1", "creators_fit_1", "creators_steps_1", "partner_form_1", "partner_expectations_1", "trust_1", "pricing_1", "conversion_1"],
     {
       creators_intro_1: templateSections.creators_intro_1,
       creators_fit_1: templateSections.creators_fit_1,
       creators_steps_1: templateSections.creators_steps_1,
+      partner_form_1: templateSections.partner_form_1,
+      partner_expectations_1: templateSections.partner_expectations_1,
+      trust_1: homeSections.trust_1,
       pricing_1: homeSections.pricing_1,
       conversion_1: homeSections.conversion_1
     },
     1,
     seoForPublicPage("/creators-circle", site)
-  ),
-  "partner-registration": page(
-    "content",
-    ["partner_form_1", "partner_expectations_1", "trust_1", "conversion_1"],
-    {
-      partner_form_1: templateSections.partner_form_1,
-      partner_expectations_1: templateSections.partner_expectations_1,
-      trust_1: homeSections.trust_1,
-      conversion_1: homeSections.conversion_1
-    },
-    1,
-    seoForPublicPage("/partner-registration", site)
   ),
   "about-us": page(
     "content",
@@ -2897,7 +2888,6 @@ export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTempl
   "blog-list": "Blog List",
   "blog-detail": "Blog Detail",
   "creators-circle": "Creators Circle",
-  "partner-registration": "Partner Registration",
   "about-us": "About Us",
   "contact-us": "Contact Us",
   search: "Search",

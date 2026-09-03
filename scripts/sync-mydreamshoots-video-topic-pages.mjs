@@ -23,8 +23,8 @@ const EMPTY_UNPUBLISHED_PAGE_JSON = {
   sections: {}
 };
 const nonPublicVideoTopicSlugs = new Set(["text-to-video", "image-to-video"]);
-const heroMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "product-ad-video", "music-video"]);
-const videoMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "product-ad-video", "music-video", "youtube-video"]);
+const heroMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "product-ad-video", "promo-video", "music-video"]);
+const videoMediaSyncSlugs = new Set(["talking-photo", "cinematic-video", "tiktok-video", "instagram-reels", "product-video", "product-ad-video", "promo-video", "music-video", "youtube-video"]);
 const youtubeCardAssetMap = {
   "youtube-card-01": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-01.webp",
   "youtube-card-02": "/assets/dreamshoot/generated/video-topic-clean/youtube-video/youtube-card-02.webp",
@@ -83,6 +83,11 @@ const targetedHeroFieldManifest = {
   },
   "product-ad-video": {
     image: "/assets/dreamshoot/product-ad-video/ai-product-ad-video-new-product-unboxing-creative.jpg"
+  },
+  "promo-video": {
+    image: "/assets/dreamshoot/promo-video/promo-video-product-launch-presentation.jpg",
+    imageNote: "Goal -> Reason now -> Message -> Proof -> Timing / Terms -> CTA",
+    highlights: ["Goal", "Reason now", "Message", "Proof", "Timing / Terms", "CTA"]
   },
   "music-video": {
     image: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg"
@@ -756,6 +761,13 @@ function syncStoredVideoTopicHeroImage(pageJson, slug) {
   if (typeof previous.imageNote === "string" && typeof canonicalHero.imageNote === "string") {
     assertTargetFieldUnchanged(slug, "imageNote", currentHero.imageNote, previous.imageNote, canonicalHero.imageNote);
     nextHero.imageNote = canonicalHero.imageNote;
+  }
+  if (Array.isArray(previous.highlights) && Array.isArray(canonicalHero.highlights)) {
+    const currentHighlights = Array.isArray(currentHero.highlights) ? currentHero.highlights : [];
+    if (!sameJson(currentHighlights, previous.highlights) && !sameJson(currentHighlights, canonicalHero.highlights)) {
+      throw new Error(`field_conflict:${slug}:highlights:${JSON.stringify(currentHighlights)}`);
+    }
+    nextHero.highlights = clone(canonicalHero.highlights);
   }
   content.hero = nextHero;
   return next;

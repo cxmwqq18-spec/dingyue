@@ -53,6 +53,12 @@ function readScope() {
     if (!entitySpecs[type] || !Array.isArray(entry?.keys) || !entry.keys.length) fail(`Invalid content scope entity: ${type}`);
     if (entry.fieldPaths && (!Array.isArray(entry.fieldPaths) || entry.fieldPaths.some((value) => typeof value !== "string" || !value.includes("/")))) fail(`Invalid content scope field paths: ${type}`);
   }
+  if (scope.deletions !== undefined) {
+    if (!Array.isArray(scope.deletions)) fail("Invalid content scope deletions.");
+    for (const deletion of scope.deletions) {
+      if (deletion?.entityType !== "live_page" || !Array.isArray(deletion.keys) || !deletion.keys.length) fail("Only explicit live_page deletions are supported in content scopes.");
+    }
+  }
   return scope;
 }
 function clone(value) { return value === undefined ? undefined : JSON.parse(JSON.stringify(value)); }
@@ -194,7 +200,10 @@ function scopedRowOperations(sourceRow, targetRow, type, spec, baselineMap, scop
   const operations = rowOperations(sourceRow, targetRow, type, spec, baselineMap);
   if (!entry.fieldPaths?.length) return operations;
   const allowed = new Set(entry.fieldPaths);
-  return operations.filter((operation) => allowed.has(`${operation.field}${operation.fieldPath}`));
+  return operations.filter((operation) => {
+    const path = `${operation.field}${operation.fieldPath}`;
+    return [...allowed].some((candidate) => path === candidate || path.startsWith(`${candidate}/`));
+  });
 }
 function publicAssetDescriptor(row) {
   for (const value of [row.previewUrl, row.originUrl, row.storageKey]) {
@@ -269,11 +278,21 @@ async function plan() {
         operations.push(...scopedRowOperations(sourceRow, targetRow, type, spec, baselineMap, scope));
       }
     }
-    const manifest = { formatVersion: 2, releaseId: argumentValue("--release-id") || `content-${Date.now()}`, codeCommit, target: manifestTarget, sourceTarget: "local", sourceSiteId, siteId, createdAt: new Date().toISOString(), operations, deletions: [], ...(scopeArgument ? { scopeFile: path.relative(process.cwd(), path.resolve(scopeArgument)) } : {}) };
+    const deletions = [];
+    for (const deletion of scope?.deletions ?? []) {
+      const spec = entitySpecs[deletion.entityType];
+      const targetRowsForType = targetRows[deletion.entityType] ?? [];
+      for (const key of deletion.keys) {
+        const current = targetRowsForType.find((row) => spec.lookup.some((lookupKey) => String(row[lookupKey] ?? "") === String(key)));
+        if (!current) continue;
+        deletions.push({ entityType: deletion.entityType, entityKey: identity(current, spec), operation: "delete", baseHash: hash(publicRow(current, spec)), previousValue: publicRow(current, spec) });
+      }
+    }
+    const manifest = { formatVersion: 2, releaseId: argumentValue("--release-id") || `content-${Date.now()}`, codeCommit, target: manifestTarget, sourceTarget: "local", sourceSiteId, siteId, createdAt: new Date().toISOString(), operations, deletions, ...(scopeArgument ? { scopeFile: path.relative(process.cwd(), path.resolve(scopeArgument)) } : {}) };
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, `${JSON.stringify(manifest, null, 2)}\n`);
-    const reportPath = writeReport(reportPathFor(outPath), "公开内容字段增量计划", { 目标: target, 站点: siteId, 来源站点: sourceSiteId, codeCommit, 生成时间: manifest.createdAt, 字段操作数: operations.length }, operations);
-    console.log(JSON.stringify({ ok: true, mode: "plan", target, siteId, outPath, reportPath, operations: operations.length }, null, 2));
+    const reportPath = writeReport(reportPathFor(outPath), "公开内容字段增量计划", { 目标: target, 站点: siteId, 来源站点: sourceSiteId, codeCommit, 生成时间: manifest.createdAt, 字段操作数: operations.length, 显式删除数: deletions.length }, [...operations, ...deletions]);
+    console.log(JSON.stringify({ ok: true, mode: "plan", target, siteId, outPath, reportPath, operations: operations.length, deletions: deletions.length }, null, 2));
   } finally { await source.$disconnect(); await destination.$disconnect(); }
 }
 function readManifest() {
@@ -367,7 +386,7 @@ async function apply() {
       }
       for (const deletion of manifest.deletions) {
         const spec = entitySpecs[deletion.entityType];
-        if (!spec || !["theme_page", "creative_pack", "media_asset", "tool_category", "tool_menu_item", "video_theme_category", "video_theme"].includes(deletion.entityType)) fail(`Deletion is not allowed for ${deletion.entityType}.`);
+        if (!spec || !["live_page", "theme_page", "creative_pack", "media_asset", "tool_category", "tool_menu_item", "video_theme_category", "video_theme"].includes(deletion.entityType)) fail(`Deletion is not allowed for ${deletion.entityType}.`);
         const delegate = modelDelegate(tx, spec);
         const currentRows = rowsByType.get(deletion.entityType);
         const current = currentRows.find((row) => spec.lookup.some((key) => String(row[key] ?? "") === String(deletion.entityKey)));

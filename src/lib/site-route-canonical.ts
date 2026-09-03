@@ -1,6 +1,7 @@
 import { permanentRedirect, redirect } from "next/navigation";
 import { canonicalSiteSlug, cleanHost, isPlatformHost, publicSiteSlug } from "@/lib/domain-routing";
 import { usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
+import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS } from "@/lib/mydreamshoots-legacy-public-redirects";
 
 function isCanonicalPublicHost(host: string | null | undefined): boolean {
   const value = cleanHost(host);
@@ -127,7 +128,7 @@ const LEGACY_MYDREAMSHOOTS_VIDEO_PATH_REDIRECTS: Record<string, string> = {
 // These image-generation paths were published before the current product
 // taxonomy. Keep them as inbound aliases, but never emit them in new links.
 const MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
-  "/ai-image-generation/motion-generator": "/ai-video-generation/motion-generator",
+  ...Object.fromEntries(MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS.map(({ aliasPath, targetPath }) => [aliasPath, targetPath])),
   "/ai-image-generation/profile-cards": "/ai-image-generation/avatar",
   "/ai-image-generation/social-cards": "/ai-image-generation"
 };

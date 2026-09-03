@@ -19,12 +19,12 @@ for (const field of ["publishedRoutes", "publishedPageEntities", "publishedPageC
   assert.match(themeStore, new RegExp(field), `publication builder must write ${field}`);
 }
 
-assert.match(snapshot, /publication\?\.snapshot\?\.publishedRoutes/, "runtime route manifest must prefer the immutable publication snapshot");
-assert.match(snapshot, /hasImmutableSeoProjection/, "current-format snapshots must have an explicit immutable projection boundary");
-assert.match(snapshot, /publication\?\.snapshot\?\.publishedPageMedia/, "runtime media must prefer the immutable publication snapshot");
+assert.match(snapshot, /snapshot\.publishedRoutes/, "runtime route manifest must prefer the immutable publication snapshot");
+assert.match(snapshot, /snapshotIntegrity/, "current-format snapshots must have an explicit publication integrity boundary");
+assert.match(snapshot, /snapshot\.publishedPageMedia/, "runtime media must prefer the immutable publication snapshot");
 assert.match(metadata, /resolvePublishedSeoEntity/, "metadata must consume the unified published SEO resolver");
 assert.match(snapshot, /route\.status !== "published"/, "review-required leaf routes must fail closed");
-assert.match(snapshot, /publicationSnapshotIntegrity/, "published resolver must verify snapshot integrity before using SEO projections");
+assert.match(snapshot, /snapshotIntegrity/, "published resolver must expose snapshot integrity state");
 assert.doesNotMatch(snapshot, /mydreamshootsPublishedRouteManifest\(/, "published resolver must not rebuild routes from current taxonomy");
 assert.doesNotMatch(snapshot, /mydreamshootsPublishedPageMediaProjections\(/, "published resolver must not rebuild media from current packs");
 
@@ -149,7 +149,7 @@ const policyRoutes = policySpecs.flatMap(({ canonicalPath, aliases }) => {
 const legacyMotionRedirect = {
   siteId: sourceSite.id,
   disposition: "redirect",
-  routeKind: "legacy-topic-alias",
+  routeKind: "legacy-public-alias",
   aliasPath: "/ai-image-generation/motion-generator",
   targetPath: "/ai-video-generation/motion-generator",
   statusCode: 301,

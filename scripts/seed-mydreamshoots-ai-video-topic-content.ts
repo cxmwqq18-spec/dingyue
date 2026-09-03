@@ -553,7 +553,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       eyebrow: "WHAT ARE YOU TRYING TO GET ACROSS IN ONE SHORT VIDEO?",
       title: "Six TikTok Tasks That Need Different Creative Decisions",
       intro:
-        "A useful TikTok page should not pretend every post follows the same recipe. A micro-lesson, a product proof clip, and a storytime opener need different hooks, pacing, and visual evidence.",
+        "A useful TikTok video should not follow one recipe for every post. A micro-lesson, a product proof clip, and a storytime opener need different hooks, pacing, and visual evidence.",
       items: [
         makeUseCaseCard({
           title: "Start With the Moment That Makes People Ask What Happened Here?",
@@ -1262,7 +1262,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       title: "FAQ",
       items: [
         { question: "What makes a YouTube video different from a Short?", answer: "A long-form YouTube video has to manage a bigger promise: not just a hook, but also structure, depth, chapter flow, and what the viewer should do next." },
-        { question: "How long should a YouTube video be?", answer: "There is no universal perfect length. The video should be as long as the subject needs and as structured as the audience requires. The live page should only promise durations the actual product supports." },
+        { question: "How long should a YouTube video be?", answer: "There is no universal perfect length. Make the video as long as the subject needs and structure it around what the audience needs to understand. Review the current product options before promising a specific duration." },
         { question: "Should I use captions?", answer: "Yes when dialogue, terminology, or explanations need extra clarity. Captions and on-screen text can also help viewers follow dense information." },
         { question: "Do I need chapters?", answer: "For complex topics, showing the structure helps viewers understand the path through the video. Use actual chapter support only if the product and publishing flow support it." },
         { question: "How should I open a long-form YouTube video?", answer: "Use the opening minute to confirm the value promised by the title and show where the video is going." },
@@ -2402,17 +2402,25 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       primaryCta: "Create a Promo Video",
       secondaryCta: "See the promo workflow",
       availabilityNote:
-        "The current video workspace is the verified creation path. This page does not claim a separate Promo-only generator or unverified campaign controls.",
+        "Use the current myDreamshoots video workspace for promo-video creation; the available controls and campaign options are shown there.",
       rightsCopy:
         "Dates, discounts, prices, availability, eligibility, launch timing, event details, countdowns, and product claims must match the real destination and current campaign terms.",
-      imageNote: "Goal -> Reason now -> Message -> Proof -> Timing / Terms -> CTA",
-      highlights: ["Goal", "Reason now", "Message", "Proof", "Timing / Terms", "CTA"],
+      imageNote: "Teaser → Reveal → Key Message → Campaign Moment → Launch Timing → CTA",
+      highlights: ["Teaser", "Reveal", "Key Message", "Campaign Moment", "Launch Timing", "CTA"],
       image: image(
-        `${promoImageRoot}/promo-video-product-launch-presentation.jpg`,
-        "Presenter showcasing a product during a launch-style promotional event",
-        4254,
-        6381
-      )
+        `${promoImageRoot}/promo-video-launch-teaser.jpg`,
+        "Vertical launch teaser video frame with a silhouetted figure and red light",
+        720,
+        1280
+      ),
+      video: {
+        src: `${promoImageRoot}/promo-video-launch-teaser.mp4`,
+        poster: `${promoImageRoot}/promo-video-launch-teaser.jpg`,
+        label: "Promo launch teaser",
+        width: 720,
+        height: 1280,
+        fit: "cover"
+      }
     },
     quickAnswer: {
       eyebrow: "WHAT TO MAKE CLEAR",
@@ -2940,7 +2948,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       eyebrow: "START THIS VIDEO WORKFLOW",
       title: "Move From Approved Input to Reviewed Output",
       intro:
-        "The current workflow should stay transparent about what the user provides, what the campaign objective is, when credits are used, and where the finished output is reviewed.",
+        "Before generating, confirm what you provide, the campaign objective, when credits are used, and where the finished output is reviewed.",
       items: [
         { title: "Source", body: "Text prompt or approved image. Keep the supplied product, offer, and campaign facts traceable." },
         { title: "Objective", body: "One campaign job. Do not combine every funnel stage, product proof, and CTA into a single brief." },
@@ -3213,7 +3221,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { question: "Can I start from text instead?", answer: "myDreamshoots publicly lists Text to Video. A concise brand brief can define the story beat, subject, environment, mood, motion, and intended use." },
         { question: "Is Brand Video the same as Video Ad?", answer: "No. Brand Video owns identity, meaning, origin, values, culture, and recognition. Video Ad owns the paid-media task: campaign objective, placement, hook, proof, CTA, and testing." },
         { question: "Is Brand Video the same as Corporate Video?", answer: "No. Brand Video is story- and identity-led. Corporate Video belongs to formal company profiles, institutional communications, leadership updates, business presentations, employer or investor information, and related communication jobs." },
-        { question: "Can I show logos and packaging in AI-generated video?", answer: "Use only brand assets you control or have permission to use. Review generated logos, labels, slogans, and package text carefully because generative output may distort them. Do not assume a dedicated brand-kit feature unless the product team confirms one exists." },
+        { question: "Can I show logos and packaging in AI-generated video?", answer: "Use only brand assets you control or have permission to use. Review generated logos, labels, slogans, and package text carefully because generative output may distort them. Use only the brand-kit or brand-asset controls that are available in the current myDreamshoots workflow." },
         { question: "What should I review before publishing a brand video?", answer: "Check people and consent, product details, logos, text, claims, dates, locations, third-party marks, brand tone, disclosure requirements, and whether every factual statement can be supported." }
       ]
     },
@@ -3317,7 +3325,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
     foundation: {
       eyebrow: "AUDIO / PRODUCT BOUNDARY",
       title: "Keep Visual Generation Separate From Unverified Audio Features",
-      intro: "The public video directory supports verified video creation paths. This page must stay precise about what happens in the product and what belongs in a separate rights-cleared edit.",
+      intro: "Use the current myDreamshoots workflow to generate and review music-video visuals; add audio only when you have the necessary rights.",
       leftTitle: "Keep in the brief",
       leftItems: ["Artist identity and approved references", "Mood, visual motif, setting, framing, and motion", "Text to Video or Image to Video starting point", "Rights-cleared people, images, marks, and audio"],
       rightTitle: "Do not claim without proof",
@@ -3466,7 +3474,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
     foundation: {
       eyebrow: "FASHION / PRODUCT BOUNDARY",
       title: "Keep Fashion Direction Precise Without Claiming a Virtual Try-On Product",
-      intro: "The public video directory supports verified video creation paths. This page must stay precise about what is generated and what still requires product confirmation.",
+      intro: "Use the current myDreamshoots workflow to confirm supported inputs and review the generated fashion video before publishing.",
       leftTitle: "Keep in the brief",
       leftItems: ["Hero garment, silhouette, styling, material, and movement", "Approved model, garment, moodboard, or location image", "Text to Video or Image to Video starting point", "Continuity and rights review before publishing"],
       rightTitle: "Do not claim without proof",
@@ -3517,7 +3525,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { question: "What is an AI fashion video generator?", answer: "An AI fashion video generator helps create motion visuals around clothing, styling, models, collections, and fashion campaigns. Here the useful job is visual generation and planning: define garment priority, styling, movement, scene type, and continuity rules, then generate and review clips from text or approved images." },
         { question: "Can I create fashion-video visuals from a photo?", answer: "myDreamshoots publicly lists Image to Video as an AI Video Generation path. Use an approved image when a model, garment, full look, styling direction, or location should anchor motion, then review garment and identity continuity." },
         { question: "Can I create fashion-video visuals from text?", answer: "myDreamshoots also publicly lists Text to Video. Describe the garment or look, model, setting, styling, lighting, framing, movement, and role of the shot instead of relying only on words such as luxury or editorial." },
-        { question: "Is this the same as virtual try-on?", answer: "No claim should be made that this page provides virtual try-on, garment transfer, size prediction, or fit simulation unless those capabilities are verified in the live product. The safe public claim is fashion-oriented visual generation through verified Text to Video and Image to Video paths." },
+        { question: "Is this the same as virtual try-on?", answer: "Fashion Video creates fashion-oriented visual content through the supported Text to Video and Image to Video paths. It does not provide virtual try-on, garment transfer, size prediction, or fit simulation." },
         { question: "What should I review before using AI-generated fashion clips?", answer: "Check model identity, body/garment edges, sleeves, hems, seams, fasteners, prints, logos, jewelry, shoes, bags, hands, texture, movement continuity, and rights to every source image, person, brand element, and garment design." },
         { question: "How is this different from Music Video?", answer: "Fashion Video owns garment-, styling-, collection-, and editorial-led motion. Music Video owns artist- and track-led performance and visual storytelling." }
       ]
@@ -3615,7 +3623,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
     foundation: {
       eyebrow: "FOOD / PRODUCT BOUNDARY",
       title: "Keep Food Direction Appetizing Without Claiming a Recipe or Safety Product",
-      intro: "The public video directory supports verified video creation paths. This page must stay precise about what is generated and what still requires qualified verification.",
+      intro: "Use the current myDreamshoots workflow to confirm supported inputs and review food, packaging, and prop continuity before publishing.",
       leftTitle: "Keep in the brief",
       leftItems: ["Hero food, visible action, texture/state, camera, set, props, and lighting", "Approved dish, ingredient, restaurant, packaging, table, or culinary reference image", "Text to Video or Image to Video starting point", "Continuity, source-rights, and final-channel review before publishing"],
       rightTitle: "Do not claim without proof",
@@ -3764,7 +3772,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
     foundation: {
       eyebrow: "PET HEALTH / WELFARE BOUNDARY",
       title: "Keep Pet Direction Specific Without Turning It Into Care Advice",
-      intro: "The public video directory supports verified video creation paths. This page must stay precise about what is generated and what still requires qualified verification.",
+      intro: "Use the current myDreamshoots workflow to confirm supported inputs and review animal identity, anatomy, props, and continuity before publishing.",
       leftTitle: "Keep in the brief",
       leftItems: ["Animal identity, visible behavior, human interaction, environment, props, camera, and lighting", "Approved pet, owner, shelter, brand, location, or animal-content reference image", "Text to Video or Image to Video starting point", "Continuity, source-rights, animal-safety, and final-channel review before publishing"],
       rightTitle: "Do not claim without proof",
@@ -4148,7 +4156,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       primaryCta: "Create a UGC-Style Video",
       secondaryCta: "See the UGC workflow",
       availabilityNote:
-        "The current video workspace is the verified creation path. This page does not claim a separate UGC-only generator or unverified creator controls.",
+        "Use the current myDreamshoots video workspace for UGC-style ad creation; the available creator and campaign controls are shown there.",
       rightsCopy:
         "Use only product claims, speaker identities, offers, and outputs you can verify. Do not present AI-generated people, actors, stock people, or scripted experiences as verified customer testimonials.",
       imageNote: "Creator role -> Hook -> Product context -> Visible proof -> Output -> CTA",
@@ -4383,7 +4391,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         { question: "Does UGC have to look low quality?", answer: "No. Creator-native content can be phone-first while still using clear audio, readable captions, intentional framing, and accurate product detail." },
         { question: "Should the product appear in the first second?", answer: "Not always. The opening depends on the hook. The product should appear early enough that the story remains understandable and the viewer knows what the message is about." },
         { question: "What should I prepare before generating a UGC ad?", answer: "Prepare the real product assets the tool accepts, supported product facts, the speaker role, one audience moment, one hook, the product action you want to show, and one CTA. Use the live product documentation to confirm exactly which input types and controls are available." },
-        { question: "What makes this page different from a general video ad generator page?", answer: "This page focuses on creator voice, speaker identity, conversational message design, product-in-context proof, and UGC-specific trust boundaries. A general video ad page should cover the broader paid-video job instead." }
+        { question: "What makes this page different from a general video ad generator page?", answer: "UGC Ad Video focuses on creator voice, speaker identity, conversational message design, product-in-context proof, and UGC-specific trust boundaries. Use Video Ad when the broader paid-video job is the priority." }
       ]
     },
     finalCta: {

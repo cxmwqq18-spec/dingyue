@@ -415,7 +415,7 @@ export const talkingPhotoContent: TalkingPhotoContent = {
       {
         question: "What happens to my uploaded photo?",
         answer:
-          "The live page must describe the real storage, retention, processing, and deletion behavior. Do not invent a privacy promise."
+          "Review myDreamshoots' current storage, retention, processing, and deletion details before uploading a private photo or sharing a generated result."
       }
     ]
   },

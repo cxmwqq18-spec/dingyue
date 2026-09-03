@@ -49,6 +49,7 @@ import { publicationSnapshotHash, publicationSnapshotIntegrity } from "@/lib/pub
 import { validatePublicDraftMediaReferences } from "@/lib/public-draft-validation";
 import { isMydreamshootsRemovedLegacyRoute, MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES, MYDREAMSHOOTS_STANDARD_SEO_INVENTORY, MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 import { MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS } from "@/lib/mydreamshoots-legacy-public-redirects";
 import type {
   MediaAsset,
   Product,
@@ -179,12 +180,11 @@ function buildHomepageShowcases(params: {
   return items;
 }
 
-const STANDARD_MYDREAMSHOOTS_MEDIA_PATHS = ["/about-us", "/creators-circle", "/partner-registration", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/faq", "/workflow"] as const;
+const STANDARD_MYDREAMSHOOTS_MEDIA_PATHS = ["/about-us", "/creators-circle", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date", "/pricing", "/faq", "/workflow"] as const;
 const SAVE_THE_DATE_EDITORIAL_PATHS = MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES;
 const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_MEDIA_PATHS)[number] | (typeof SAVE_THE_DATE_EDITORIAL_PATHS)[number], string> = {
   "/about-us": "MyDreamShoots company overview with the private AI photo workflow",
   "/creators-circle": "MyDreamShoots Creators Circle partnership and creator collaboration page",
-  "/partner-registration": "MyDreamShoots partner registration application page for creator collaborations",
   "/best-packages": "Published MyDreamShoots photo packages arranged for visual theme comparison",
   "/best-ai-image": "Published AI image examples selected from the current MyDreamShoots collection",
   "/best-ai-video": "Published AI video examples selected from the current MyDreamShoots themes",
@@ -666,20 +666,22 @@ export function buildPublicationSnapshot(
   const videoTopicPublication = isMydreamshootsPublicationSite
     ? compileMydreamshootsVideoTopicPublication(site.pages, site.id as "site_dreamshoot" | "site_grownstride_test")
     : { routes: [], pageEntities: [], pageCopy: [], pageMedia: [], linkRefs: [], navigation: [] };
-  const motionLegacyRedirect: PublishedRouteProjection[] = isMydreamshootsPublicationSite && videoTopicPublication.routes.some((route) => route.disposition === "render" && route.canonicalPath === "/ai-video-generation/motion-generator" && route.status === "published")
-    ? [{
-        disposition: "redirect",
+  const legacyPublicRedirects: PublishedRouteProjection[] = isMydreamshootsPublicationSite
+    ? MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS
+      .filter(({ targetPath }) => site.pages.some((page) => page.slug === targetPath || page.publishedJson.seo?.canonicalPath === targetPath) || videoTopicPublication.routes.some((route) => route.disposition === "render" && route.canonicalPath === targetPath && route.status === "published"))
+      .map(({ aliasPath, targetPath }) => ({
+        disposition: "redirect" as const,
         siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
-        routeKind: "legacy-topic-alias",
-        aliasPath: "/ai-image-generation/motion-generator",
-        targetPath: "/ai-video-generation/motion-generator",
-        statusCode: 301,
-        indexable: false,
-        sitemapEligible: false,
-        routeRevision: crypto.createHash("sha256").update(JSON.stringify(["/ai-image-generation/motion-generator", "/ai-video-generation/motion-generator", 301])).digest("hex").slice(0, 20)
-      }]
+        routeKind: "legacy-public-alias" as const,
+        aliasPath,
+        targetPath,
+        statusCode: 301 as const,
+        indexable: false as const,
+        sitemapEligible: false as const,
+        routeRevision: crypto.createHash("sha256").update(JSON.stringify([aliasPath, targetPath, 301])).digest("hex").slice(0, 20)
+      }))
     : [];
-  const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...standardContentRoutes, ...policyRoutes, ...videoTopicPublication.routes, ...motionLegacyRedirect];
+  const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...standardContentRoutes, ...policyRoutes, ...videoTopicPublication.routes, ...legacyPublicRedirects];
   const sourcePageEntities = isMydreamshootsPublicationSite
     ? mydreamshootsPublishedPageEntities(site.id as "site_dreamshoot" | "site_grownstride_test")
     : [];
@@ -899,7 +901,7 @@ export function buildPublicationSnapshot(
   const snapshot: PublishedSeoSnapshot = {
     seoProjectionVersion: 1,
     pages: [...site.pages
-      .filter((page) => !isMydreamshootsPublicationSite || !new Set(policyRouteSpecs.flatMap((spec) => [spec.canonicalPath, ...spec.aliases])).has(page.slug)),
+      .filter((page) => !isMydreamshootsPublicationSite || (!new Set(policyRouteSpecs.flatMap((spec) => [spec.canonicalPath, ...spec.aliases])).has(page.slug) && !MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS.some(({ aliasPath }) => page.slug === aliasPath))),
       ...publishedPolicyPages]
       .map((page) => ({
       id: page.id,

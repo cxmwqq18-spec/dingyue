@@ -58,7 +58,6 @@ const dreamshootPartnerTemplateSlugs = new Set([
   "/workflow",
   "/faq",
   "/creators-circle",
-  "/partner-registration",
   "/about-us",
   "/contact-us",
   "/best-packages",

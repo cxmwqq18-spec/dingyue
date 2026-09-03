@@ -951,20 +951,24 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
               </div>
             ) : null}
           </div>
-          <figure className="relative min-w-0 w-full lg:justify-self-end">
+          <figure className="relative min-w-0 w-full max-w-[22rem] justify-self-center sm:max-w-[24rem] lg:max-w-[26rem] lg:justify-self-end">
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <div className="relative aspect-video overflow-hidden rounded-[21px]" data-video-topic-hero-media>
-                <img
-                  src={content.hero.image.src}
-                  alt={content.hero.image.alt}
-                  className={`absolute inset-0 h-full w-full ${mediaObjectFit(content.hero.image)} object-center`}
-                  style={imageStyle(content.hero.image)}
-                  width={content.hero.image.width}
-                  height={content.hero.image.height}
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                />
+              <div className="relative aspect-[9/16] overflow-hidden rounded-[21px]" data-video-topic-hero-media>
+                {content.hero.video ? (
+                  <TopicHeroVideo video={content.hero.video} />
+                ) : (
+                  <img
+                    src={content.hero.image.src}
+                    alt={content.hero.image.alt}
+                    className={`absolute inset-0 h-full w-full ${mediaObjectFit(content.hero.image)} object-center`}
+                    style={imageStyle(content.hero.image)}
+                    width={content.hero.image.width}
+                    height={content.hero.image.height}
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+                )}
               </div>
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">

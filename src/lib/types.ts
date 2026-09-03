@@ -1068,7 +1068,7 @@ export interface PublishedStandardRouteProjection {
 export interface PublishedRedirectRouteProjection {
   disposition: "redirect";
   siteId: "site_dreamshoot" | "site_grownstride_test";
-  routeKind: "policy-alias" | "legacy-topic-alias";
+  routeKind: "policy-alias" | "legacy-public-alias";
   aliasPath: string;
   targetPath: string;
   statusCode: 301;

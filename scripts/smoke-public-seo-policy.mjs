@@ -4,6 +4,7 @@ import nextConfig from "../next.config.mjs";
 
 const seoContent = readFileSync(new URL("../src/lib/dreamshoot-seo-content.ts", import.meta.url), "utf8");
 const siteRouteCanonical = readFileSync(new URL("../src/lib/site-route-canonical.ts", import.meta.url), "utf8");
+const mydreamshootsLegacyRedirects = readFileSync(new URL("../src/lib/mydreamshoots-legacy-public-redirects.ts", import.meta.url), "utf8");
 const hostCatchAll = readFileSync(new URL("../src/app/[...path]/page.tsx", import.meta.url), "utf8");
 const siteCatchAll = readFileSync(new URL("../src/app/site/[siteSlug]/[...path]/page.tsx", import.meta.url), "utf8");
 const robotsRoute = readFileSync(new URL("../src/app/robots.txt/route.ts", import.meta.url), "utf8");
@@ -137,6 +138,15 @@ assertRedirectSource(hostCatchAll, siteRouteCanonical, "/refund-policy", "/refun
 assertRedirectSource(hostCatchAll, siteRouteCanonical, "/content-policy", "/content");
 assertRedirectSource(siteCatchAll, siteRouteCanonical, "/refund-policy", "/refunds");
 assertRedirectSource(siteCatchAll, siteRouteCanonical, "/content-policy", "/content");
+for (const [alias, target] of [
+  ["/ai-video-generation/ai-avatar-video", "/ai-video-generation"],
+  ["/corporate-video", "/ai-video-generation"],
+  ["/fitness-video", "/ai-video-generation"],
+  ["/partner-registration", "/creators-circle"]
+]) {
+  assert.ok(mydreamshootsLegacyRedirects.includes(`aliasPath: "${alias}", targetPath: "${target}"`), `${alias} must be a published legacy redirect`);
+  assert.ok(middleware.includes("MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS"), `${alias} must use the published legacy redirect list at the edge`);
+}
 for (const [alias, target] of legacyPolicyAliases) {
   assert.ok(hostCatchAll.includes("legacyPublicPathTarget"), `host catch-all should use shared legacy policy redirect logic for ${alias}`);
   assert.ok(siteCatchAll.includes("legacyPublicPathTarget"), `site catch-all should use shared legacy policy redirect logic for ${alias}`);

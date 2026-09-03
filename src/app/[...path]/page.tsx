@@ -22,7 +22,7 @@ import {
 import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
-import { legacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
+import { legacyPublicPathTarget, mydreamshootsLegacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
 import { customerSessionCookie } from "@/lib/session";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
@@ -455,11 +455,12 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const isCollectionRequest = isCollectionRouteRequest(path);
   const isVideoGenerationRequest = isVideoGenerationRouteRequest(path);
   const collectionRootPageSlug = fallbackCollectionRootPathForHost(host);
+  const mydreamLegacyTarget = isMydreamshootsHost ? mydreamshootsLegacyPublicPathTarget(requestedPath) : undefined;
   const metadataPageSlug = isCollectionRequest
     ? collectionRootPageSlug
     : isVideoGenerationRequest
     ? path[1] ? `/ai-video-generation/${path[1]}` : "/ai-video-generation"
-    : path[0] === "tools" && path[1] ? `/tools/${path[1]}` : publicContentPageSlug(`/${path.join("/")}`);
+    : path[0] === "tools" && path[1] ? `/tools/${path[1]}` : mydreamLegacyTarget ?? publicContentPageSlug(`/${path.join("/")}`);
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const state = await getHostPublicRuntimeStateWithFallback(hostCandidates, metadataPageSlug);
   if (!state) return {};
@@ -596,9 +597,6 @@ export default async function HostStorefrontCatchAllPage({
     }
     redirect(`/app/create${suffix}`);
   }
-  if (slug === "/ai-image-generation/motion-generator") {
-    permanentRedirect("/ai-video-generation/motion-generator");
-  }
   if (host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) {
     const defaultSiteSlug = process.env.DEFAULT_STOREFRONT_SITE_SLUG || "mydreamshoots";
     if (firstSegment === "tools" || firstSegment === "account" || firstSegment === "app" || firstSegment === "ai-image-generation" || firstSegment === "ai-video-generation" || firstSegment === "pricing" || firstSegment === "help" || firstSegment === "faq" || firstSegment === "workflow" || firstSegment === "best-packages" || firstSegment === "best-ai-image" || firstSegment === "best-ai-video") {
@@ -668,9 +666,6 @@ export default async function HostStorefrontCatchAllPage({
     notFound();
   }
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
-  if (site.id === "site_dreamshoot" && slug === "/ai-image-generation/motion-generator") {
-    permanentRedirect("/ai-video-generation/motion-generator");
-  }
   const publishedDisposition = resolvePublishedRouteDisposition(snapshot, slug);
   if (publishedDisposition.kind === "redirect" && publishedDisposition.targetPath) {
     permanentRedirect(publishedDisposition.targetPath);

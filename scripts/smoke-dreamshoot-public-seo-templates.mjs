@@ -21,7 +21,7 @@ const {
   dreamshootAiStudioTemplatesForSite
 } = jiti("../src/lib/theme/packages/dreamshoot-ai-studio/templates.ts");
 
-const publicPaths = ["/about-us", "/contact-us", "/creators-circle", "/partner-registration", "/best-packages", "/best-ai-image", "/best-ai-video"];
+const publicPaths = ["/about-us", "/contact-us", "/creators-circle", "/best-packages", "/best-ai-image", "/best-ai-video"];
 const aidreamcapesSite = {
   id: "site_aidreamcapes",
   slug: "aidreamcapes",
@@ -53,5 +53,11 @@ for (const pathName of publicPaths) {
     `${pathName} Aidreamcapes template SEO title must not fall back to MyDreamShoots`
   );
 }
+
+assert.equal(dreamshootPublicSeoPageMetadata["/partner-registration"], undefined, "MyDreamShoots must retire Partner Registration metadata");
+assert.ok(aidreamcapesPublicSeoPageMetadata["/partner-registration"], "Aidreamcapes must keep Partner Registration metadata");
+assert.equal(dreamshootAiStudioTemplates["creators-circle"].sections.partner_form_1?.settings?.anchor, "partner-application", "MyDreamShoots Creators Circle must embed the partner application form");
+assert.equal(dreamshootAiStudioTemplates["creators-circle"].sections.partner_form_1?.settings?.headingLevel, "h2", "embedded partner application must not add a second H1");
+assert.ok(dreamshootAiStudioTemplatesForSite(aidreamcapesSite)["partner-registration"], "Aidreamcapes must keep its independent Partner Registration template");
 
 console.log("dreamshoot public SEO template smoke passed");

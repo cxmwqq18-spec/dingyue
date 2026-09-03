@@ -14,6 +14,7 @@ import { resolveMediaAssetUrl } from "@/lib/media";
 import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
+import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import type { CreativePack, PlatformState, PublishedLeafRouteProjection, PublishedSeoSnapshot, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
@@ -43,6 +44,7 @@ const BLOCKED_PAGE_TYPES = new Set(["account", "album", "cart", "job_detail", "j
 const BLOCKED_PATH_PREFIXES = ["/404", "/account", "/admin", "/album", "/api", "/app", "/cart", "/dashboard", "/job", "/login", "/platform", "/search", "/site"];
 const NON_PAGE_PATH_PREFIXES = ["/_next", "/assets", "/fonts", "/images", "/media", "/robots.txt", "/sitemap.xml", "/videos"];
 const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy", "/engagement-photo", "/ai-image-generation/profile-cards", "/ai-image-generation/motion-generator", "/ai-video-generation/wedding-invitation", "/holidays-events/wedding-invitation"]);
+const MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS = new Set<string>(MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS.map(({ aliasPath }) => aliasPath));
 const NON_INDEXABLE_TOOL_PATHS = new Set(["/tools/image-studio", "/tools/ai-image-studio", "/tools/image-generator", "/tools/image_generator", "/tools/travel-portraits"]);
 const REQUIRED_INDEXABLE_TOOL_PATHS = [
   "/tools/photo-ai",
@@ -59,7 +61,7 @@ const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
   ...MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS.map((slug) => `/ai-video-generation/${slug}`)
 ];
 const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_SLUGS = new Set<string>(MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS);
-const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/creators-circle", "/partner-registration", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date"];
+const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/creators-circle", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date"];
 const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"];
 const CANONICAL_PUBLIC_PATHS = new Map([
   ["/about", "/about-us"],
@@ -480,11 +482,11 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   // Legacy video ThemePage rows can remain in relational data during a route
   // migration, but unsupported video slugs must not become sitemap URLs.
   if (isDreamshootSite(site) && canonicalPath.startsWith("/ai-video-generation/") && !isPublicVideoGenerationSitemapPath(site, canonicalPath)) return "";
-  const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug));
+  const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug)) || (isDreamshootSite(site) && MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(normalizePath(page.slug)));
   // SEO eligibility is resolved once below by resolveEffectivePublishedPage().
   // Reading raw page flags here creates a second owner that can disagree with
   // the published route projection used by metadata and page rendering.
-  return isIndexablePage(page) && !isLegacyDuplicate && !isBlockedPublicPathForSite(site, canonicalPath)
+  return isIndexablePage(page, site) && !isLegacyDuplicate && !isBlockedPublicPathForSite(site, canonicalPath)
     ? canonicalDirectoryPathForSite(site, canonicalPath)
     : "";
 }
@@ -700,8 +702,9 @@ function hasNonPageFileExtension(path: string): boolean {
   return /\.[a-z0-9]{2,5}$/i.test(path) && !path.endsWith(".html");
 }
 
-function isBlockedPublicPath(path: string): boolean {
+function isBlockedPublicPath(path: string, site?: Site): boolean {
   if (LEGACY_OR_DUPLICATE_PATHS.has(path)) return true;
+  if (site && isDreamshootSite(site) && MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(path)) return true;
   if (NON_INDEXABLE_TOOL_PATHS.has(path)) return true;
   if (hasNonPageFileExtension(path)) return true;
   if (BLOCKED_PATH_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`))) return true;
@@ -714,7 +717,7 @@ function isBlockedPublicPathForSite(site: Site, path: string): boolean {
     if (path.startsWith("/ai-image-generation/") && !parsePublicCollectionRouteForSite(site, path)) return true;
     if (path.startsWith("/ai-video-generation/") && !isPublicVideoGenerationSitemapPath(site, path)) return true;
   }
-  return isBlockedPublicPath(path);
+  return isBlockedPublicPath(path, site);
 }
 
 function isPublicVideoGenerationSitemapPath(site: Site, path: string): boolean {
@@ -756,7 +759,7 @@ function isSitemapIndexablePath(site: Site, path: string): boolean {
 
   const pageMatch = pageSeoForPath(site, normalized);
   if (pageMatch) {
-    if (!isIndexablePage(pageMatch.page)) return false;
+    if (!isIndexablePage(pageMatch.page, site)) return false;
     if (pageMatch.jsonSeo?.robots?.index === false || pageMatch.jsonSeo?.index === false) return false;
   }
 
@@ -867,12 +870,13 @@ function findIndexableSites(state: PlatformState): Site[] {
   return Array.from(new Map(activeFirst.map((site) => [site.id, site])).values());
 }
 
-function isIndexablePage(page: ThemePage): boolean {
+function isIndexablePage(page: ThemePage, site?: Site): boolean {
   const path = canonicalPublicPath(normalizePath(page.slug));
   if (LEGACY_OR_DUPLICATE_PATHS.has(path)) return false;
+  if (site && isDreamshootSite(site) && MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(path)) return false;
   if (NON_INDEXABLE_TOOL_PATHS.has(path)) return false;
   if (BLOCKED_PAGE_TYPES.has(page.pageType)) return false;
-  return !isBlockedPublicPath(path);
+  return !isBlockedPublicPath(path, site);
 }
 
 function isIndexableToolPath(site: Site, path: string): boolean {

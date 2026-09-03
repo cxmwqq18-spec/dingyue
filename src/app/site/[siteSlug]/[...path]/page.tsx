@@ -12,7 +12,7 @@ import { preferLocalPathModeState, readPathModePublicMetadataState, readPathMode
 import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
 import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSite } from "@/lib/photo-package-taxonomy";
-import { legacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
+import { legacyPublicPathTarget, mydreamshootsLegacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
@@ -279,10 +279,11 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const metadataQuery = searchParams ? await searchParams : {};
   const hintedCollectionSlug = (await headers()).get("x-storefront-image-theme")?.trim();
   const requestedSlug = `/${path.join("/")}`;
+  const legacyPublicTarget = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) ? mydreamshootsLegacyPublicPathTarget(requestedSlug) : undefined;
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && (requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) return {};
   const canonicalRequestedSlug = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug))
-    ? canonicalSaveTheDatePath(requestedSlug)
+    ? canonicalSaveTheDatePath(legacyPublicTarget ?? requestedSlug)
     : requestedSlug;
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
   const legacyRequestedSlug = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug))
@@ -412,12 +413,10 @@ export default async function SiteCatchAllPage({
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
+  const mydreamLegacyTarget = isPrimaryMydreamshootsSlug(publicSlug) ? mydreamshootsLegacyPublicPathTarget(slug) : undefined;
   if (isPrimaryMydreamshootsSlug(publicSlug) && (slug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || slug === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) notFound();
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
   if (isPrimaryMydreamshootsSlug(publicSlug) && legacyVideoTarget) permanentRedirect(routePath(legacyVideoTarget));
-  if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/ai-image-generation/motion-generator") {
-    permanentRedirect(routePath("/ai-video-generation/motion-generator"));
-  }
   if (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/ai-image-generation/profile-cards") {
     permanentRedirect(routePath("/ai-image-generation/avatar"));
   }
@@ -479,7 +478,7 @@ export default async function SiteCatchAllPage({
     ...(searchParams ? await searchParams : {}),
   };
   const legacyPathTarget = legacyPublicPathTarget(slug, collectionRootPageSlug);
-  const pageSlug = isCollectionRequest ? collectionRootPageSlug : isVideoGenerationRequest ? "/ai-video-generation" : legacyPathTarget ? publicContentPageSlug(legacyPathTarget) : publicContentPageSlug(canonicalSaveTheDatePath(slug));
+  const pageSlug = isCollectionRequest ? collectionRootPageSlug : isVideoGenerationRequest ? "/ai-video-generation" : mydreamLegacyTarget ?? (legacyPathTarget ? publicContentPageSlug(legacyPathTarget) : publicContentPageSlug(canonicalSaveTheDatePath(slug)));
   const legacySaveDateSlug = isPrimaryMydreamshootsSlug(publicSlug) ? legacySaveTheDatePath(pageSlug) : undefined;
   const sourcePageSlug = isPrimaryMydreamshootsSlug(publicSlug) && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
     ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
@@ -496,6 +495,8 @@ export default async function SiteCatchAllPage({
     notFound();
   }
   const snapshot = createPublishedSiteSnapshot(state, publicSite, { source: "platform-state" });
+  const publishedDisposition = resolvePublishedRouteDisposition(snapshot, slug);
+  if (publishedDisposition.kind === "redirect" && publishedDisposition.targetPath) permanentRedirect(routePath(publishedDisposition.targetPath));
   const legacyTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForPublicSlug(publicSlug));
   // Keep a published seasonal page canonical when it exists. The legacy
   // redirect is only a recovery path for publications that are missing the

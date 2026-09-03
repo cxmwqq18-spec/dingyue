@@ -18,6 +18,7 @@ import type {
   PublishedSeoSnapshot
 } from "@/lib/types";
 import { MYDREAMSHOOTS_STANDARD_SEO_INVENTORY } from "@/lib/mydreamshoots-editorial-routes";
+import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { legacySaveTheDatePath } from "@/lib/save-the-date-routes";
 
 export type SnapshotIntegrity = "valid" | "invalid" | "legacy";
@@ -32,8 +33,6 @@ const policyRouteSpecs = [
   { canonicalPath: "/children-privacy", aliases: ["/children-privacy-policy", "/childrens-privacy", "/policies/children-privacy"] },
   { canonicalPath: "/state-privacy", aliases: ["/state-privacy-rights", "/california-privacy", "/ccpa", "/policies/state-privacy"] }
 ] as const;
-const legacyMotionAlias = { aliasPath: "/ai-image-generation/motion-generator", targetPath: "/ai-video-generation/motion-generator" } as const;
-const legacyTopicAliases = [legacyMotionAlias] as const;
 const policyCanonicalPaths = new Set(policyRouteSpecs.map((spec) => spec.canonicalPath));
 
 function record(value: unknown): value is Record<string, unknown> {
@@ -59,7 +58,7 @@ function route(value: unknown): value is PublishedRouteProjection {
       return text(value.aliasPath) && text(value.targetPath) && value.statusCode === 301 &&
         value.indexable === false && value.sitemapEligible === false && text(value.routeRevision);
     }
-    return value.routeKind === "legacy-topic-alias" && legacyTopicAliases.some((alias) => value.aliasPath === alias.aliasPath && value.targetPath === alias.targetPath) && value.statusCode === 301 &&
+    return value.routeKind === "legacy-public-alias" && MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS.some((alias) => value.aliasPath === alias.aliasPath && value.targetPath === alias.targetPath) && value.statusCode === 301 &&
       value.indexable === false && value.sitemapEligible === false && text(value.routeRevision);
   }
   if (value.disposition !== "render") return false;
@@ -355,9 +354,13 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
   const policyRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "policy");
   const standardContentRoutes = publishedRoutes.filter((item) => item.disposition === "render" && item.routeKind === "standard-content");
   const redirectRoutes = publishedRoutes.filter((item): item is PublishedRedirectRouteProjection => item.disposition === "redirect" && item.routeKind === "policy-alias");
-  const legacyRedirectRoutes = publishedRoutes.filter((item) => item.disposition === "redirect" && (item as { routeKind?: string }).routeKind === "legacy-topic-alias") as PublishedRedirectRouteProjection[];
+  const legacyRedirectRoutes = publishedRoutes.filter((item) => item.disposition === "redirect" && (item as { routeKind?: string }).routeKind === "legacy-public-alias") as PublishedRedirectRouteProjection[];
   const expectedPolicyPaths = policyRouteSpecs.map((spec) => spec.canonicalPath);
   const expectedPolicyAliases = policyRouteSpecs.flatMap((spec) => spec.aliases);
+  const expectedLegacyPublicAliases = MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS.filter((alias) =>
+    snapshot.pages.some((page) => page.slug === alias.targetPath || page.publishedJson.seo?.canonicalPath === alias.targetPath) ||
+    videoTopicRoutes.some((route) => route.canonicalPath === alias.targetPath && route.status === "published")
+  );
   const pageCopyRows = v1.publishedPageCopy;
   const collections = v1.publishedCollectionRefs;
   const links = v1.publishedLinkRefs;
@@ -407,10 +410,11 @@ export function publicationSnapshotIntegrity(snapshot: ThemePublicationSnapshot 
     expectedPolicyPaths.every((path) => policyRoutes.some((item) => item.canonicalPath === path)) &&
     redirectRoutes.length === expectedPolicyAliases.length &&
     expectedPolicyAliases.every((path) => redirectRoutes.some((item) => item.aliasPath === path)) &&
-    legacyTopicAliases.filter((alias) => videoTopicRoutes.some((route) => route.canonicalPath === alias.targetPath && route.status === "published")).every((alias) =>
+    expectedLegacyPublicAliases.every((alias) =>
       legacyRedirectRoutes.some((route) => route.aliasPath === alias.aliasPath && route.targetPath === alias.targetPath && route.statusCode === 301)
     ) &&
-    legacyRedirectRoutes.every((route) => legacyTopicAliases.some((alias) => route.aliasPath === alias.aliasPath && route.targetPath === alias.targetPath && route.statusCode === 301)) &&
+    legacyRedirectRoutes.length === expectedLegacyPublicAliases.length &&
+    legacyRedirectRoutes.every((route) => expectedLegacyPublicAliases.some((alias) => route.aliasPath === alias.aliasPath && route.targetPath === alias.targetPath && route.statusCode === 301)) &&
     [...pages.keys()].every((id) => [...leafRoutes, ...videoTopicRoutes, ...standardContentRoutes].some((routeItem) => routeItem.pageEntityId === id || snapshot.pages.some((page) => page.id === (routeItem as { pageId?: string }).pageId && page.id === id))) &&
     collections.every((item) => pages.has(item.pageEntityId) && mediaByPage.get(item.pageEntityId)?.mediaEntityId === item.mediaEntityId) &&
     policyRoutes.every((item) => snapshot.pages.some((page) => page.id === item.pageId && page.slug === item.canonicalPath)) &&

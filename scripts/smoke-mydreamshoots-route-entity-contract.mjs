@@ -26,9 +26,8 @@ const routes = contract.mydreamshootsPublishedRouteManifest();
 const entities = contract.mydreamshootsPublishedPageEntities();
 const profiles = JSON.parse(fs.readFileSync(path.join(root, "src/lib/photo-package-use-case-profiles.json"), "utf8")).mydreamshootsCategories ?? {};
 
-// motion-generator is a legacy alias owned by the published redirect
-// projection, not an indexable image-leaf entity. The taxonomy therefore has
-// 37 render rows plus one redirect disposition in the complete route inventory.
+// Legacy public aliases are owned by the published redirect projection, not
+// indexable taxonomy entities. The taxonomy therefore remains 37 render rows.
 assert.equal(routes.length, 37, "all indexable taxonomy routes must have a projection row");
 assert.equal(entities.length, 37, "all indexable taxonomy pages must have a page entity row");
 const publishedRoutes = routes.filter((route) => route.status === "published");
@@ -62,4 +61,4 @@ const source = fs.readFileSync(path.join(root, "src/lib/storefront-context/snaps
 assert.match(source, /resolvePublishedRouteDisposition/);
 assert.match(source, /route\.disposition === "redirect"/);
 assert.match(source, /return \{ kind: "not_found"/);
-console.log(JSON.stringify({ ok: true, sourceRows: 38, renderRows: 37, redirectRows: 1, independentRows: 37, reviewRows: 0, prospectiveProjectionRows: 38 }, null, 2));
+console.log(JSON.stringify({ ok: true, sourceRows: 37, renderRows: 37, redirectRows: 5, independentRows: 37, reviewRows: 0, prospectiveProjectionRows: 42 }, null, 2));
