@@ -160,7 +160,11 @@ async function readAll(client, requestedSiteId = siteId) {
   return result;
 }
 function leafPaths(value, prefix = "") {
-  if (value && typeof value === "object" && !Array.isArray(value)) {
+  if (Array.isArray(value)) {
+    if (!value.length) return [prefix || "/"];
+    return value.flatMap((child, index) => leafPaths(child, `${prefix}/${index}`));
+  }
+  if (value && typeof value === "object") {
     const entries = Object.entries(value);
     if (!entries.length) return [prefix || "/"];
     return entries.flatMap(([key, child]) => leafPaths(child, `${prefix}/${key.replaceAll("~", "~0").replaceAll("/", "~1")}`));

@@ -29,5 +29,6 @@ assert(!deploy.includes("prisma db push"), "deploy must never use prisma db push
 assert(schema.includes("model ContentSyncBaseline"), "schema must define hash-only baseline");
 assert(migration.includes("CREATE TABLE \"ContentSyncBaseline\""), "migration must create baseline table");
 assert(migration.includes("CREATE UNIQUE INDEX"), "baseline identity must be unique");
+assert(source.includes("return value.flatMap((child, index) => leafPaths(child, `${prefix}/${index}`));"), "content sync must preserve scoped array item paths");
 
 console.log(JSON.stringify({ ok: true, contract: "no-snapshot-incremental-content-sync", checks: 16 }, null, 2));
