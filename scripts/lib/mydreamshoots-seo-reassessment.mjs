@@ -72,6 +72,7 @@ export const MYDREAMSHOOTS_REASSESSMENT_P0_COPY = [
 ];
 
 export const MYDREAMSHOOTS_REASSESSMENT_P1 = {
+  homepageEmbeddedPricingSectionId: "pricing_1",
   pricingH1: "How myDreamshoots credits work for AI photo and video packages.",
   termsTitle: "Terms of Service for myDreamshoots AI Photo and Video Services",
   statePrivacyTitle: "State Privacy Notice for California and Other U.S. Residents | myDreamshoots",
@@ -109,6 +110,7 @@ export const MYDREAMSHOOTS_REASSESSMENT_VIDEO_PATHS = [
 ];
 
 export const MYDREAMSHOOTS_REASSESSMENT_P1_PATHS = [
+  "/",
   "/pricing",
   "/terms",
   "/state-privacy",

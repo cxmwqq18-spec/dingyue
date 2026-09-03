@@ -81,6 +81,17 @@ function updatePageJson(slug, json) {
     assert.equal(countQuestions(next, item.question), 1, `${slug} must contain exactly one audited FAQ question: ${item.question}`);
     next = replaceFaqAnswer(next, item);
   }
+  if (slug === "/") {
+    const showcase = next.sections?.generation_showcase_1;
+    assert(showcase?.type === "dreamshoot_generation_showcase", "homepage must keep the generation showcase section");
+    assert(next.sections?.pricing_1?.type === "pricing_table", "homepage must keep its embedded pricing section");
+    const currentEmbeddedPricing = showcase.settings?.embeddedPricingSectionId;
+    assert(!currentEmbeddedPricing || currentEmbeddedPricing === MYDREAMSHOOTS_REASSESSMENT_P1.homepageEmbeddedPricingSectionId, "homepage embedded pricing reference has an unexpected manual edit");
+    showcase.settings = {
+      ...(showcase.settings ?? {}),
+      embeddedPricingSectionId: MYDREAMSHOOTS_REASSESSMENT_P1.homepageEmbeddedPricingSectionId
+    };
+  }
   if (slug === "/pricing" && next.sections?.pricing_intro_1?.settings) {
     assert(!next.sections.pricing_intro_1.settings.title || ["How credits work for private AI photo packages.", MYDREAMSHOOTS_REASSESSMENT_P1.pricingH1].includes(next.sections.pricing_intro_1.settings.title), "pricing H1 has an unexpected manual edit");
     next.sections.pricing_intro_1.settings.title = MYDREAMSHOOTS_REASSESSMENT_P1.pricingH1;
