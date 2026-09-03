@@ -13047,19 +13047,18 @@ function SectionView({
             >
               <div
                 aria-label={`Play ${item.title}`}
-                className="relative cursor-pointer overflow-hidden bg-[#05070e] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-inset"
+                className="relative aspect-square cursor-pointer overflow-hidden bg-[#05070e] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-inset"
                 data-dreamshoot-preview-meta={item.subtitle}
                 data-dreamshoot-preview-poster={mediaAssetUrl(site, item.imageUrl)}
                 data-dreamshoot-preview-src={mediaAssetUrl(site, item.videoUrl)}
                 data-dreamshoot-preview-title={item.imageAlt}
                 data-dreamshoot-showcase-preview="video"
                 role="button"
-                style={{ aspectRatio: videoAspectRatio }}
                 tabIndex={0}
               >
                 <StorefrontImage
                   alt={publishedImageAlt}
-                  className="h-full w-full object-cover"
+                  className={`h-full w-full ${containPoster ? "object-contain" : "object-cover"}`}
                   loading="lazy"
                   preview={false}
                   sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
@@ -13105,7 +13104,7 @@ function SectionView({
         <div className="mt-12" data-dreamshoot-homepage-showcase-kind={kind}>
           {renderShowcaseSubsectionHeader(title, href, label, kind)}
           <p className="mx-auto mt-4 max-w-[64rem] text-center text-sm leading-7 text-white/66">{intro}</p>
-            {kind === "video" ? <DreamshootShowcasePreviewClient><div className="mt-7 grid grid-cols-1 items-start gap-5 sm:grid-cols-2 xl:grid-cols-4">{items.map(renderPublishedCard)}</div></DreamshootShowcasePreviewClient> : <div className={kind === "save_the_date"
+            {kind === "video" ? <DreamshootShowcasePreviewClient><div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">{items.map(renderPublishedCard)}</div></DreamshootShowcasePreviewClient> : <div className={kind === "save_the_date"
             ? "mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6"
             : "mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4"}>
             {items.map(renderPublishedCard)}

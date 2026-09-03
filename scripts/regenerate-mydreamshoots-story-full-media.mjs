@@ -9,11 +9,12 @@ import { PrismaClient } from "@prisma/client";
 const repoRoot = process.cwd();
 const only = process.argv.find((arg) => arg.startsWith("--only="))?.slice("--only=".length) || "";
 const providerLabel = process.argv.find((arg) => arg.startsWith("--provider="))?.slice("--provider=".length) || "image3";
+const allowPaidCreate = process.argv.includes("--allow-paid-create");
 const model = "gpt-image-2";
 const width = 1600;
 const height = 900;
 const createSize = "1536x1024";
-const requestSalt = "20260903-story-library-v1";
+const requestSalt = "20260903-story-library-v2";
 const auditRoot = path.join(repoRoot, "tmp", "paid-image-regeneration-20260903-story-library");
 const dispatcher = new Agent({ headersTimeout: 360_000, bodyTimeout: 360_000 });
 
@@ -33,7 +34,8 @@ const tasks = [
   ["story-video-story-closing-lights-library-evening-v2", "Show a quiet closing moment that belongs to the completed library story. Wide 16:9 cinematic-documentary exterior at blue hour: restored neighborhood library glowing warmly through windows, a few adults shelve the last books inside, bicycles and rain-dark pavement outside. Place and continuing human action carry the ending; people fully visible through windows, no single face dominates. No text, logos, stage, neon noir, holiday decorations, gifts, product display, coast, celebrity likeness, or direct-to-camera pose."]
 ].map(([key, prompt]) => ({ key, prompt: `Use case: photorealistic-natural\nAsset type: horizontal 16:9 storefront image for a Story Video detail page\n${prompt}` }));
 
-if (only && !tasks.some((task) => task.key === only)) throw new Error(`Unknown --only key: ${only}`);
+if (!only) throw new Error("--only=<taskKey> is required; this script never creates a batch of paid images by default");
+if (!tasks.some((task) => task.key === only)) throw new Error(`Unknown --only key: ${only}`);
 const selected = only ? tasks.filter((task) => task.key === only) : tasks;
 
 function normalizeBaseUrl(value) {
@@ -60,8 +62,21 @@ async function provider() {
   } finally { await prisma.$disconnect(); }
 }
 async function audit(file, value) { await fs.mkdir(auditRoot, { recursive: true }); await fs.writeFile(path.join(auditRoot, file), `${JSON.stringify(value, null, 2)}\n`); }
+async function hasSuccessfulPriorRequest(task) {
+  try {
+    const record = JSON.parse(await fs.readFile(path.join(auditRoot, `${task.key}.json`), "utf8"));
+    return record.status >= 200 && record.status < 300;
+  } catch (error) {
+    if (error && typeof error === "object" && "code" in error && error.code === "ENOENT") return false;
+    throw error;
+  }
+}
 async function generate(row, task) {
   const idempotencyKey = `storefront:${task.key}:${requestSalt}`.slice(0, 180);
+  if (await hasSuccessfulPriorRequest(task)) {
+    throw new Error(`${task.key}:prior_success_cannot_be_replayed_safely; use a provider read-only result endpoint instead of POSTing this task again`);
+  }
+  if (!allowPaidCreate) throw new Error(`${task.key}:paid_create_requires_--allow-paid-create`);
   const response = await fetch(`${row.baseUrl}/images/generations`, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${row.apiKey}`, "Idempotency-Key": idempotencyKey, "X-Client-Request-Id": idempotencyKey }, dispatcher, signal: AbortSignal.timeout(300_000), body: JSON.stringify({ model, prompt: task.prompt, size: createSize, quality: "high", response_format: "b64_json" }) });
   const rawBody = await response.text();
   let body = {};
@@ -88,6 +103,6 @@ async function writeAsset(task, input) {
   await fs.writeFile(path.join(cleanRoot, `${task.key}.webp`), encoded);
 }
 
-console.log(JSON.stringify({ model, provider: providerLabel, output: `${width}x${height}`, selected: selected.map((task) => task.key), maxPaidCreateAttempts: selected.length, retries: 0 }, null, 2));
+console.log(JSON.stringify({ model, provider: providerLabel, output: `${width}x${height}`, selected: selected.map((task) => task.key), maxPaidCreateAttempts: selected.length, retries: 0, allowPaidCreate }, null, 2));
 const row = await provider();
 for (const task of selected) { console.log(`generating ${task.key}`); await writeAsset(task, await generate(row, task)); }
