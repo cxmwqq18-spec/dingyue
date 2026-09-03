@@ -1327,27 +1327,27 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           )
         }),
         makeUseCaseCard({
-          title: "Let a Choice Redirect the Journey",
-          problem: "You have many memories from the road, but no clear decision that explains why the next chapter looks different.",
+          title: "Move the Work Into Its Next Chapter",
+          problem: "A restoration can stall in the middle when viewers see boxes and tasks but never see how the work moves something valuable to safety.",
           body:
-            "Use the pause before a decision to establish what was at stake. Keep the scenes that lead to the choice, then show the direction it opens rather than collecting every stop along the way.",
+            "Follow one useful handoff. Show the collection leaving the damaged room, people clearing the route, and the temporary space that makes the next chapter possible.",
           noteLabel: "Story shape",
-          noteBody: "Old direction -> pressure -> choice -> new path -> reflection.",
+          noteBody: "Risk -> shared effort -> safe handoff -> next task.",
           cta: "Create a Personal Journey",
           image: image(
-            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-10.webp",
-            "Traveler pauses above a coastal route at sunset before choosing a new direction",
+            "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-journey-carrying-archive-boxes-v2.webp",
+            "Adult volunteers carry archive boxes through a library corridor toward a temporary archive room",
             1600,
             900
           )
         }),
         makeUseCaseCard({
-          title: "Find the Thread After a Setback",
-          problem: "After a difficult chapter, a collection of photos and fragments can show the past without explaining what someone did next.",
+          title: "Make the Repair the Comeback",
+          problem: "The damage is clear, but jumping straight to a finished room leaves viewers without proof of what changed in response.",
           body:
-            "Show the response in action: gathering what remains, choosing what matters, and making the next move. The comeback is credible when the viewer can see the work between the setback and the result.",
+            "Keep the response concrete: show the tool, the damaged frame, the careful repair, and the light returning through the new pane. The recovery becomes believable when the work is visible.",
           noteLabel: "Story shape",
-          noteBody: "Expectation -> setback -> response -> result -> lesson.",
+          noteBody: "Damage -> response -> repair -> renewed use.",
           cta: "Create a Comeback Story",
           image: image(
             "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-11.webp",
@@ -1357,12 +1357,12 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           )
         }),
         makeUseCaseCard({
-          title: "Let the Witness Explain the Detail",
-          problem: "The setting looks compelling, but the audience cannot tell why a maker, organizer, or witness considers one detail important.",
+          title: "Let the Craftsperson Explain the Detail",
+          problem: "The setting looks compelling, but the audience cannot tell why one repaired spine, paper edge, or binding method matters to the larger story.",
           body:
-            "Anchor the scene in a person who can explain what the camera is seeing. Pair their voice with the place, object, or process so observation, not generic narration, carries the meaning.",
+            "Stay close to the hands and the workbench. A bookbinder showing a single repair gives the viewer a human guide to the craft, the evidence, and the care behind the restoration.",
           noteLabel: "Story shape",
-          noteBody: "Place -> witness -> detail -> voice -> meaning.",
+          noteBody: "Place -> craftsperson -> detail -> evidence -> meaning.",
           cta: "Create a Mini Documentary",
           image: image(
             "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-07.webp",
@@ -1372,12 +1372,12 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           )
         }),
         makeUseCaseCard({
-          title: "Put the Shared Moment in Context",
-          problem: "A crowd or public event can look impressive while leaving viewers unsure whose work, decision, or invitation brought people together.",
+          title: "Keep the Community at the Table",
+          problem: "A shared project can feel abstract when the people doing the sorting, cataloging, and decisions remain outside the story.",
           body:
-            "Start with the people gathered around the moment, then connect the stage, audience, or celebration to the action that made it possible. A community story should give the shared outcome a human reason.",
+            "Show neighbors doing different useful jobs around the same recovered collection. The labels, boxes, conversations, and shelves make the shared result feel earned by the people in the room.",
           noteLabel: "Story shape",
-          noteBody: "Need -> people -> action -> shared result -> next step.",
+          noteBody: "Need -> neighbors -> shared work -> visible result.",
           cta: "Create a Community Story",
           image: image(
             "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-02.webp",
@@ -1387,12 +1387,12 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
           )
         }),
         makeUseCaseCard({
-          title: "Give a Fictional Character a Decision to Make",
-          problem: "A striking city scene can establish mood, but a story does not move until the character has an objective and a reason to act.",
+          title: "Give a Fictional Character a Locked Door",
+          problem: "An atmospheric archive room can set the mood, but the scene only moves when the character has an obstacle they must solve.",
           body:
-            "Show the character in a place that creates pressure, then make the obstacle and choice legible. Atmosphere can raise the stakes, but the decision is what carries the scene forward.",
+            "Give the character a key, a locked cabinet, and something important just out of reach. The obstacle, failed attempt, and next choice give the scene a reason to continue.",
           noteLabel: "Story shape",
-          noteBody: "Character -> objective -> obstacle -> decision -> consequence.",
+          noteBody: "Character -> locked clue -> choice -> consequence.",
           cta: "Create a Fictional Story",
           image: image(
             "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-04.webp",
@@ -1436,7 +1436,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
       cards: [
         guidanceCard({
           title: "1. Setup: Show the Material and the Question",
-          body: "Open with the photographs, papers, objects, or place that make the story worth telling. The viewer should understand what needs attention before anyone explains it.",
+          body: "Open on the floor plan, gloves, keys, and archive boxes. Before anyone begins, the viewer should see the place, the material, and the work that needs a plan.",
           image: image(
             "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-13.webp",
             "Person reading papers and planning the first step of a story",
@@ -1446,7 +1446,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         }),
         guidanceCard({
           title: "2. Tension: Let Uncertainty Become Visible",
-          body: "Give the person a real problem to consider. A quiet pause, an unresolved room, or an unanswered question can create tension without exaggerating the conflict.",
+          body: "Make the missing ledger and empty shelf legible. Two people searching the archive aisle create tension through a real unanswered question, not manufactured drama.",
           image: image(
             "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-12.webp",
             "Man considering an unresolved question in a dim study",
@@ -1456,7 +1456,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         }),
         guidanceCard({
           title: "3. Turning Point: Choose the New Direction",
-          body: "Make the change of course readable. The viewer should be able to point to the look, gesture, choice, or event that sends the story forward.",
+          body: "Let the key turn and the cabinet open. One decisive action reveals the recovered box and sends the restoration into its next phase.",
           image: image(
             "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-05.webp",
             "Woman looking back toward the coast at the moment her journey changes direction",
@@ -1466,7 +1466,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         }),
         guidanceCard({
           title: "4. Payoff: Let the Result Land",
-          body: "Show the outcome in a real moment of arrival, recognition, or relief. The result should feel earned by the work and choices that came before it.",
+          body: "Open the library doors and let people carry the final boxes inside. The payoff is a usable shared place, earned by the care and decisions that came before it.",
           image: image(
             "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-03.webp",
             "Graduate holding a diploma at the end of a long personal journey",
@@ -1476,7 +1476,7 @@ export const aiVideoTopicLandingContentByKey: Record<string, AiVideoTopicLanding
         }),
         guidanceCard({
           title: "5. Meaning: End With What Stays",
-          body: "Close with the person, relationship, or place that carries the change forward. A quiet reflection can say more than another highlight reel.",
+          body: "Close at the reading table, where the restored books now support a quiet shared moment. The meaning is the place people can use together after the work is done.",
           image: image(
             "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-01.webp",
             "Older woman reflecting on a memory in her warm living room",
