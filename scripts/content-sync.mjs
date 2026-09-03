@@ -284,8 +284,7 @@ async function plan() {
       const targetRowsForType = targetRows[deletion.entityType] ?? [];
       for (const key of deletion.keys) {
         const current = targetRowsForType.find((row) => spec.lookup.some((lookupKey) => String(row[lookupKey] ?? "") === String(key)));
-        if (!current) continue;
-        deletions.push({ entityType: deletion.entityType, entityKey: identity(current, spec), operation: "delete", baseHash: hash(publicRow(current, spec)), previousValue: publicRow(current, spec) });
+        deletions.push({ entityType: deletion.entityType, entityKey: current ? identity(current, spec) : String(key), operation: "delete", baseHash: current ? hash(publicRow(current, spec)) : null, ...(current ? { previousValue: publicRow(current, spec) } : {}), reason: deletion.reason || "explicit_scope_deletion" });
       }
     }
     const manifest = { formatVersion: 2, releaseId: argumentValue("--release-id") || `content-${Date.now()}`, codeCommit, target: manifestTarget, sourceTarget: "local", sourceSiteId, siteId, createdAt: new Date().toISOString(), operations, deletions, ...(scopeArgument ? { scopeFile: path.relative(process.cwd(), path.resolve(scopeArgument)) } : {}) };
