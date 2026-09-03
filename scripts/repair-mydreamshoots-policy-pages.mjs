@@ -19,7 +19,7 @@ const policySources = [
   ["/content", "/policies/content", "Content policy"],
   ["/shipping", "/policies/shipping", "Shipping and Digital Delivery Policy"],
   ["/children-privacy", "/policies/children-privacy", "KIDS Act"],
-  ["/state-privacy", "/policies/state-privacy", "DPDPA"]
+  ["/state-privacy", "/policies/state-privacy", "State Privacy"]
 ];
 
 function clone(value) {
