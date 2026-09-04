@@ -40,6 +40,23 @@ function metaValue(html, selector) {
   return html.match(new RegExp(`<meta[^>]+(?:name|property)=["']${escaped}["'][^>]+content=["']([^"']*)["']`, "i"))?.[1] || "";
 }
 
+function assertOfferCatalogRelations(nodes, label) {
+  const visit = (value, path = label) => {
+    if (Array.isArray(value)) {
+      value.forEach((item, index) => visit(item, `${path}[${index}]`));
+      return;
+    }
+    if (!value || typeof value !== "object") return;
+    if ("offers" in value) {
+      const offers = value.offers;
+      assert.notEqual(offers?.["@type"], "OfferCatalog", `${path}.offers must not contain an OfferCatalog`);
+      assert.notEqual(offers?.["@id"], `${label}#offers`, `${path}.offers must not point to the OfferCatalog node`);
+    }
+    Object.entries(value).forEach(([key, child]) => visit(child, `${path}.${key}`));
+  };
+  visit(nodes);
+}
+
 async function fetchHtml(path) {
   let lastError;
   for (let attempt = 0; attempt < 8; attempt += 1) {
@@ -85,6 +102,7 @@ const homeOrganization = homeNodes.find((node) => node?.["@type"] === "Organizat
 const homeApplication = homeNodes.find((node) => node?.["@type"] === "SoftwareApplication");
 assert.equal(homeOrganization?.hasOfferCatalog?.["@id"], "https://www.mydreamshoots.com/#plans", "homepage Organization must point to #plans");
 assert.equal(homeApplication?.offers, undefined, "homepage SoftwareApplication must not own OfferCatalog through offers");
+assertOfferCatalogRelations(homeNodes, "homepage JSON-LD");
 
 const pricingNodes = graphNodes(pricing.html);
 const pricingService = pricingNodes.find((node) => node?.["@type"] === "Service");
@@ -94,6 +112,7 @@ assert.equal(pricingService?.hasOfferCatalog?.["@id"], "https://www.mydreamshoot
 assert.equal(pricingService?.offers, undefined, "pricing Service must not use offers for OfferCatalog");
 assert.equal(pricingApplication?.offers, undefined, "pricing SoftwareApplication must not use offers for OfferCatalog");
 assert.equal(pricingCatalog?.itemListElement?.length, 9, "pricing OfferCatalog must retain all nine offers");
+assertOfferCatalogRelations(pricingNodes, "pricing JSON-LD");
 assert.equal(headingText(pricing.html, 1).includes(MYDREAMSHOOTS_REASSESSMENT_P1.pricingH1), true, "Pricing H1 must be exact");
 
 const videoResults = await Promise.all(videoPaths.map(async (path) => ({ path, ...(await fetchHtml(path)) })));
@@ -119,8 +138,13 @@ assert.equal(graphNodes(statePrivacy.html).find((node) => node?.["@type"] === "W
 assert.equal(statePrivacy.html.includes("DPDPA"), false, "MyDreamShoots State Privacy page must not expose DPDPA naming");
 assert.equal(childrenPrivacy.html.includes(MYDREAMSHOOTS_REASSESSMENT_P1.childrenPrivacyH3), true, "Children's Privacy must use State privacy requests wording");
 assert.equal(home.html.includes("State Privacy"), true, "MyDreamShoots footer must label the State Privacy route");
-assert.equal(youtube.html.includes(MYDREAMSHOOTS_REASSESSMENT_P1.youtubeH1), true, "YouTube Video H1 must be complete");
+assert.equal(headingText(youtube.html, 1)[0], MYDREAMSHOOTS_REASSESSMENT_P1.youtubeH1, "YouTube Video H1 must be exact");
 assert.equal(graphNodes(youtube.html).find((node) => node?.["@type"] === "Service")?.name, MYDREAMSHOOTS_REASSESSMENT_P1.youtubeH1, "YouTube Service.name must be exact");
 assert.equal(graphNodes(youtube.html).find((node) => node?.["@type"] === "BreadcrumbList")?.itemListElement?.at(-1)?.name, MYDREAMSHOOTS_REASSESSMENT_P1.youtubeH1, "YouTube breadcrumb must be exact");
+
+for (const [path, result] of [["/", home], ["/pricing", pricing], ["/state-privacy", statePrivacy], ["/terms", terms], ["/ai-video-generation/youtube-video", youtube]]) {
+  assert.equal(result.html.includes("/cdn-cgi/l/email-protection"), false, `${path} must not expose Cloudflare email-protection links`);
+  assert.equal(result.html.includes("__cf_email__"), false, `${path} must not expose Cloudflare email-protection markers`);
+}
 
 console.log(JSON.stringify({ ok: true, baseUrl, checkedP0Answers: MYDREAMSHOOTS_REASSESSMENT_P0_COPY.length, checkedVideoPages: videoResults.length, checkedP1Routes: 6 }, null, 2));

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
 import { MYDREAMSHOOTS_P0_COPY_REPLACEMENTS, MYDREAMSHOOTS_P0_COPY_SLUGS } from "./lib/mydreamshoots-p0-copy-replacements.mjs";
+import { MYDREAMSHOOTS_REASSESSMENT_P0_COPY } from "./lib/mydreamshoots-seo-reassessment.mjs";
 
 const baseUrl = (process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/\/$/, "");
 const publicOrigin = process.env.SMOKE_PUBLIC_ORIGIN || "https://www.mydreamshoots.com";
@@ -27,7 +28,7 @@ async function readHtml(path) {
 }
 
 for (const slug of MYDREAMSHOOTS_P0_COPY_SLUGS) {
-  const path = `/ai-video-generation/${slug}`;
+  const path = slug === "wedding-ceremony" ? "/ai-save-the-date/wedding-ceremony" : `/ai-video-generation/${slug}`;
   const { status, html } = await readHtml(path);
   assert.equal(status, 200, `${path} must render with 200`);
   for (const phrase of oldPhrases) assert.equal(html.includes(phrase), false, `${path} must not render retired P0 copy`);
@@ -38,6 +39,16 @@ for (const slug of MYDREAMSHOOTS_P0_COPY_SLUGS) {
   assert.match(html, new RegExp(`<link[^>]+rel="canonical"[^>]+href="${publicOrigin.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}${path}"`, "i"), `${path} must self-canonicalize`);
 }
 
+for (const path of new Set(MYDREAMSHOOTS_REASSESSMENT_P0_COPY.map((item) => item.path))) {
+  const { status, html } = await readHtml(path);
+  assert.equal(status, 200, `${path} must render with 200`);
+  for (const phrase of oldPhrases) assert.equal(html.includes(phrase), false, `${path} must not render retired P0 copy`);
+  for (const replacement of MYDREAMSHOOTS_REASSESSMENT_P0_COPY.filter((item) => item.path === path)) {
+    assert.equal(html.includes(replacement.oldText), false, `${path} must not render reassessment instruction`);
+    assert.ok(html.includes(replacement.newText), `${path} must render the approved reassessment replacement`);
+  }
+}
+
 const creators = await readHtml("/creators-circle");
 assert.equal(creators.status, 200, "Creators Circle must render with 200");
 const creatorsHtml = creators.html;
@@ -45,4 +56,4 @@ assert.equal((creatorsHtml.match(/<h1\b/gi) ?? []).length, 1, "Creators Circle m
 assert.match(creatorsHtml, /id="partner-application"/, "Creators Circle must expose partner-application anchor");
 assert.match(creatorsHtml, /\/api\/sites\/site_dreamshoot\/partner-applications/, "Creators Circle must use the existing partner application API");
 
-console.log(JSON.stringify({ ok: true, baseUrl, checkedPages: MYDREAMSHOOTS_P0_COPY_SLUGS.length, oldPhraseHits: 0, creatorsCircleForm: true }, null, 2));
+console.log(JSON.stringify({ ok: true, baseUrl, checkedPages: MYDREAMSHOOTS_P0_COPY_SLUGS.length, reassessmentPages: new Set(MYDREAMSHOOTS_REASSESSMENT_P0_COPY.map((item) => item.path)).size, oldPhraseHits: 0, creatorsCircleForm: true }, null, 2));

@@ -75,6 +75,14 @@ function updateChildrenPrivacyJson(json) {
   return replaceStrings(clone(json), [["<h3>5. DPDPA requests</h3>", `<h3>${MYDREAMSHOOTS_REASSESSMENT_P1.childrenPrivacyH3}</h3>`], [">DPDPA</a>", ">State Privacy</a>"]]);
 }
 
+function updatePrivacyJson(json) {
+  return replaceStrings(clone(json), [
+    ["DPDPA notices", "State Privacy notices"],
+    ["DPDPA notice", "State Privacy notice"],
+    [">DPDPA</a>", ">State Privacy</a>"]
+  ]);
+}
+
 function updatePageJson(slug, json) {
   let next = clone(json);
   for (const item of p0ByPath.get(slug) ?? []) {
@@ -99,13 +107,12 @@ function updatePageJson(slug, json) {
   if (slug === "/terms") next.seo = { ...(next.seo ?? {}), title: MYDREAMSHOOTS_REASSESSMENT_P1.termsTitle };
   if (slug === "/state-privacy") next = updateStatePrivacyJson(next);
   if (slug === "/children-privacy") next = updateChildrenPrivacyJson(next);
+  if (slug === "/privacy") next = updatePrivacyJson(next);
   if (slug === "/ai-video-generation/youtube-video") {
     const topic = next.sections?.ai_video_topic_landing_1?.settings?.content;
     assert(topic?.hero && typeof topic.hero === "object", "YouTube Video must keep dedicated topic content");
     assert(!topic.hero.title || [
       "Turn a Bigger Idea Into a YouTube Video Worth Watching",
-      "Turn a Bigger Idea Into a YouTube Video Worth Watching Through",
-      "Turn a Bigger Idea Into a Video Worth Watching Through",
       MYDREAMSHOOTS_REASSESSMENT_P1.youtubeH1
     ].includes(topic.hero.title), "YouTube H1 has an unexpected manual edit");
     topic.hero.title = MYDREAMSHOOTS_REASSESSMENT_P1.youtubeH1;

@@ -80,6 +80,7 @@ export const MYDREAMSHOOTS_REASSESSMENT_P1 = {
   statePrivacyH1: "State Privacy Notice for California and Other U.S. Residents",
   statePrivacyH2: "State Privacy Notice",
   statePrivacyH3: "1. California and Other U.S. Privacy Rights",
+  statePrivacyFooterLabel: "State Privacy",
   childrenPrivacyH3: "5. State privacy requests",
   youtubeH1: "Turn a Bigger Idea Into a Video Worth Watching"
 };
@@ -111,6 +112,7 @@ export const MYDREAMSHOOTS_REASSESSMENT_VIDEO_PATHS = [
 
 export const MYDREAMSHOOTS_REASSESSMENT_P1_PATHS = [
   "/",
+  "/privacy",
   "/pricing",
   "/terms",
   "/state-privacy",

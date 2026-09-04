@@ -48,6 +48,18 @@ On `2026-08-13`, the following Cloudflare zone ruleset was applied to `mydreamsh
 
 This rule relaxes Cloudflare browser/security checks for public static assets. It does not contain secrets.
 
+## MyDreamShoots SEO Edge Remediation
+
+On `2026-09-04`, the `mydreamshoots.com` zone was updated for the public SEO release:
+
+- Zone setting `email_obfuscation` is `off`, so customer-facing HTML can expose the configured `mailto:` address without `/cdn-cgi/l/email-protection` wrappers.
+- Cache ruleset `28e028f9be1f4c3591bd6b600c7b3fd1` contains rule ref `mydreamshoots_public_html_cache` (`3dec8f6ff0c040d0bf612601262ec045`).
+- The cache rule is restricted to `www.mydreamshoots.com`, `GET`/`HEAD`, and published public HTML paths. Private account, app, checkout, authentication, API, robots, sitemap, and asset paths remain outside the rule.
+- Browser and edge TTLs respect the origin response headers. Public HTML origin headers are `Cache-Control: public, max-age=60, s-maxage=300, stale-while-revalidate=1800` and `CDN-Cache-Control: public, s-maxage=300, stale-while-revalidate=1800`.
+- A targeted purge was requested for the public policy, directory, video, Save the Date, and affected SEO routes after the rule was created.
+
+The change was applied with `scripts/configure-mydreamshoots-edge.mjs`; the script requires `--confirm=mydreamshoots-edge` for writes and refuses to overwrite an existing cache ruleset whose rule expression has drifted.
+
 ## Production Image Incident Note
 
 On `2026-08-13`, mobile image requests on `www.mydreamshoots.com` initially appeared to be Cloudflare/edge challenge behavior for asset requests without the guard cookie. Further production probing showed the real source was the server-level Nginx Lua script `/www/server/nginx/html/waf.lua`, loaded globally by `/www/server/nginx/conf/proxy.conf`. That script set `k=YYMMDD` and randomly redirected mobile requests without the cookie to external `jqoss.vip` / `jqdonw.top` URLs.
