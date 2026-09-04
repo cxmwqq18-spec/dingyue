@@ -16630,6 +16630,11 @@ function SectionView({
           });
       const configuredImageList = listLines(setting(section, "imageList", ""));
       const configuredImageAltList = listLines(setting(section, "imageListAlt", ""));
+      const featureCaptionFallback = aidreamcapesFaq
+        ? "Original occasion directions, approved source photos, and private gallery delivery in one account."
+        : renderContext.pagePath === "/best-ai-video"
+          ? "A guided place to compare AI video directions, review credits, and keep finished work organized."
+          : "A guided place to compare AI photo directions, review credits, and keep finished work organized.";
       const featureGallery = (configuredImageList.length ? configuredImageList : [configuredImage || fallbackImage])
         .map((image, index) => {
           const src = mediaAssetUrl(site, image);
@@ -16743,9 +16748,7 @@ function SectionView({
                   {setting(
                     section,
                     "featureCaption",
-                    aidreamcapesFaq
-                      ? "Original occasion directions, approved source photos, and private gallery delivery in one account."
-                      : "A guided place to compare AI photo directions, review credits, and keep finished work organized."
+                    featureCaptionFallback
                   )}
                 </p>
               </div>
