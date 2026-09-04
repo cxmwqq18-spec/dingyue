@@ -36,6 +36,7 @@ export type HeaderVideoGenerationTopic = {
   description?: string;
   href: string;
   imageUrl?: string;
+  videoUrl?: string;
   parentSlug?: string;
   parentLabel?: string;
   parentSortOrder?: number;

@@ -145,6 +145,7 @@ function publishedVideoGenerationTopicsForMenu(basePath: string, topics: Publish
     description: topic.description,
     href: `${basePath}${topic.canonicalPath}`,
     imageUrl: topic.imageUrl,
+    videoUrl: topic.videoUrl,
     parentSlug: topic.parentSlug,
     parentLabel: topic.parentLabel,
     parentSortOrder: topic.parentSortOrder,

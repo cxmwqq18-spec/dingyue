@@ -938,6 +938,7 @@ function headerVideoGenerationTopicsForClient(site: Site, categories: VideoTheme
         label: category?.label ?? definition.label,
         href: hrefFor(site, videoGenerationCreatePath(definition.slug)),
         imageUrl: theme?.imageUrl ?? undefined,
+        videoUrl: (theme?.galleryImages ?? []).find((item) => /\.(?:mp4|webm)(?:[?#]|$)/i.test(item)),
         parentSlug,
         parentLabel: configuredParent?.label ?? parentDefinition?.label,
         parentSortOrder: configuredParent?.sortOrder ?? parentDefinition?.sortOrder,
@@ -966,14 +967,46 @@ function groupedVideoGenerationTopicsForServer(topics: HeaderVideoGenerationTopi
     .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label));
 }
 
-const defaultMydreamshootsVideoThemeCover = "/assets/dreamshoot/talking-photo/make-a-photo-talk-without-recording-another-take.webp";
+const defaultMydreamshootsVideoThemeCover = "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-talking-photo.jpg";
+
+// Keep directory posters on an approved, presentation-ready frame instead of
+// reusing mutable theme rows that may contain letterboxed or mid-motion source
+// images. The video preview can still play above this poster when available.
+const mydreamshootsVideoDirectoryCoverOverrides: Record<string, string> = {
+  "talking-photo": "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-talking-photo.jpg",
+  "motion-generator": "/assets/dreamshoot/generated/homepage-showcase/posters/prompt-directed-motion.webp",
+  "cinematic-video": "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-cinematic-video.jpg",
+  "tiktok-video": "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-tiktok-video.jpg",
+  "instagram-reels": "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-instagram-reels.jpg",
+  "product-video": "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-product-video.jpg",
+  "product-ad-video": "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-product-ad-video.jpg",
+  "promo-video": "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-promo-video.jpg",
+  "music-video": "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-music-video.jpg",
+  "social-media-video": "/assets/dreamshoot/generated/video-topic-clean/social-media-video/social-media-video-cross-platform-creator.webp",
+  "story-video": "/assets/dreamshoot/generated/video-topic-clean/story-video/story-video-story-hero-library-restoration-v2.webp",
+  "fashion-video": "/assets/dreamshoot/fashion-video/fashion-video-duo-frame.jpg",
+  "food-video": "/assets/dreamshoot/food-video/hero-food-video-creator-frame.jpg",
+  "pet-video": "/assets/dreamshoot/pet-video/hero-pet-video-portrait-frame.jpg",
+  "explainer-video": "/assets/dreamshoot/explainer-video/hero-explainer-video-product-concept.jpg",
+  "how-to-video": "/assets/dreamshoot/how-to-video/hero-how-to-video-hands-on-step.jpg",
+  "talking-head-video": "/assets/dreamshoot/talking-head-video/hero-talking-head-video-professional-presenter.jpg",
+  "youtube-video": "/assets/dreamshoot/youtube-video/youtube-video-expert-presenter.webp",
+  "video-ad": "/assets/dreamshoot/video-ad/video-ad-editing-variant-workflow.jpg",
+  "brand-video": "/assets/dreamshoot/brand-video/brand-video-customer-community.jpg",
+  "ugc-ad-video": "/assets/dreamshoot/ugc-ad-video/ugc-ad-video-creator-conversation-recording.jpg",
+  "meme-video": "/assets/dreamshoot/meme-video/meme-video-message-overload.webp"
+};
 
 function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic, fallbackImageUrl = defaultMydreamshootsVideoThemeCover) {
-  const src = topic.imageUrl || fallbackImageUrl;
+  const src = mydreamshootsVideoDirectoryCoverOverrides[topic.slug] || topic.imageUrl || fallbackImageUrl;
   return {
     alt: storefrontSourceImageAlt({ imageUrl: src, fallback: topic.label }),
     src
   };
+}
+
+function mydreamshootsVideoThemeDirectoryPreview(topic: HeaderVideoGenerationTopic): string | undefined {
+  return topic.videoUrl;
 }
 
 export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks = [], deferMegaMenuPanels = false, disablePrefetch = false, lightweight = false, mode = "published", publicStorefrontPage = false, runtime, site, settings, pagePath = "/", toolMenuItems = [], videoThemeCategories = [], videoThemes = [], homepageShowcases = [], videoGenerationTopics }: { creativePackCategories?: CreativePackCategory[]; creativePacks?: CreativePack[]; deferMegaMenuPanels?: boolean; disablePrefetch?: boolean; lightweight?: boolean; mode?: "published" | "preview"; publicStorefrontPage?: boolean; runtime?: ThemeRuntimeData; site: Site; settings: ThemeSettings; pagePath?: string; toolMenuItems?: ToolMenuItem[]; videoThemeCategories?: VideoThemeCategory[]; videoThemes?: VideoTheme[]; homepageShowcases?: PublishedHomepageShowcaseItem[]; videoGenerationTopics?: HeaderVideoGenerationTopic[] }) {
@@ -13761,52 +13794,73 @@ function SectionView({
               </div>
             </div>
             <DreamshootShowcasePreview className="contents">
-              <div className="mt-8 grid items-start gap-10">
-                {topicGroups.map((group) => (
-                <section key={group.slug}>
-                  <div className="flex items-end justify-between gap-4 border-b border-white/10 pb-3">
-                    <h2 className="text-2xl font-semibold tracking-normal text-white">{group.label}</h2>
-                    <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white/42">{group.topics.length} themes</span>
-                  </div>
-                  <div className="mt-5 grid items-start gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                    {group.topics.map((topic, index) => {
-                      const coverImage = mydreamshootsVideoThemeDirectoryCover(topic, fallbackCoverImageUrl);
-                      return (
-                        <Link
+              <DreamshootShowcasePreviewClient className="contents">
+                <div className="mt-8 grid items-start gap-10">
+                  {topicGroups.map((group) => (
+                  <section key={group.slug}>
+                    <div className="flex items-end justify-between gap-4 border-b border-white/10 pb-3">
+                      <h2 className="text-2xl font-semibold tracking-normal text-white">{group.label}</h2>
+                      <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white/42">{group.topics.length} themes</span>
+                    </div>
+                    <div className="mt-5 grid items-start gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                      {group.topics.map((topic, index) => {
+                        const coverImage = mydreamshootsVideoThemeDirectoryCover(topic, fallbackCoverImageUrl);
+                        const previewVideo = mydreamshootsVideoThemeDirectoryPreview(topic);
+                        return (
+                        <article
                           className="group/theme relative overflow-hidden rounded-[8px] border border-white/12 bg-[#121018] text-white shadow-[0_24px_70px_-56px_rgba(0,0,0,0.92)] transition duration-300 hover:-translate-y-1 hover:border-[#c4b5fd]/55 hover:bg-[#17131f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd]/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09080d]"
                           data-video-theme-card={topic.slug}
-                          href={topic.href}
                           key={topic.id}
-                          prefetch={false}
                         >
-                          <div className="relative aspect-[16/9] overflow-hidden bg-[#211c2c]" data-video-theme-card-image>
-                            <img
-                              alt={manualImageAlt({ src: coverImage.src, fallback: coverImage.alt })}
-                            className="block h-full w-full object-contain object-center"
-                              decoding="async"
-                              loading={index === 0 ? "eager" : "lazy"}
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                              src={coverImage.src}
-                            />
+                          <div
+                            aria-label={previewVideo ? `Preview ${topic.label} video` : `View ${topic.label} cover`}
+                            className="relative aspect-[16/9] cursor-zoom-in overflow-hidden bg-[#211c2c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd]/80 focus-visible:ring-inset"
+                            data-dreamshoot-preview-meta={topic.description ?? ""}
+                            data-dreamshoot-preview-poster={coverImage.src}
+                            data-dreamshoot-preview-src={previewVideo ?? coverImage.src}
+                            data-dreamshoot-preview-title={previewVideo ? `${topic.label} video` : coverImage.alt}
+                            data-dreamshoot-showcase-preview={previewVideo ? "video" : "image"}
+                            role="button"
+                            tabIndex={0}
+                            data-video-theme-card-image>
+                            {previewVideo ? (
+                              <DreamshootShowcaseVideo
+                                className="block h-full w-full object-cover object-center"
+                                label={`${topic.label} video preview`}
+                                poster={coverImage.src}
+                                priority={index === 0}
+                                src={previewVideo}
+                              />
+                            ) : (
+                              <img
+                                alt={manualImageAlt({ src: coverImage.src, fallback: coverImage.alt })}
+                                className="block h-full w-full object-cover object-center"
+                                decoding="async"
+                                loading={index === 0 ? "eager" : "lazy"}
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                src={coverImage.src}
+                              />
+                            )}
                             <span className="absolute left-3 top-3 rounded-full border border-white/16 bg-black/44 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/82 backdrop-blur">
                               {String(index + 1).padStart(2, "0")}
                             </span>
                           </div>
-                          <div className="p-5">
+                          <Link className="block p-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd]/80 focus-visible:ring-inset" href={topic.href} prefetch={false}>
                             <h3 className="text-xl font-semibold leading-tight tracking-normal text-white">{topic.label}</h3>
                             {topic.description ? <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/66">{topic.description}</p> : null}
                             <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#ddd7ff] transition group-hover/theme:text-white">
                               Open theme
                               <ChevronRight className="h-4 w-4 shrink-0 transition group-hover/theme:translate-x-0.5" strokeWidth={1.9} />
                             </span>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </section>
-                ))}
-              </div>
+                          </Link>
+                        </article>
+                        );
+                      })}
+                    </div>
+                  </section>
+                  ))}
+                </div>
+              </DreamshootShowcasePreviewClient>
             </DreamshootShowcasePreview>
           </div>
         </section>
