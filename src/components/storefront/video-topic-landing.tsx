@@ -7,6 +7,7 @@ import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import { aiVideoTopicLandingContentFromSection, type AiVideoTopicLandingContent } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/talking-photo-content";
+import { MYDREAMSHOOTS_P1_PET_VIDEO_COPY } from "@/lib/mydreamshoots-seo-p1-manifest";
 
 type RoutedSite = Site & { __storefrontBasePath?: string };
 
@@ -1488,7 +1489,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
   const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
   const petHeroExtras = isPet ? (content.hero.images?.slice(1) ?? []).map((image, index) => ({
     title: index === 0 ? "Owner and pet portrait" : "Pet portrait frame",
-    body: "Additional approved reference kept with the scene list for continuity review.",
+    body: index === 0 ? MYDREAMSHOOTS_P1_PET_VIDEO_COPY.owner : MYDREAMSHOOTS_P1_PET_VIDEO_COPY.pet,
     image
   })) : [];
   const sceneGalleryItems = [...galleryItems, ...petHeroExtras];

@@ -7,6 +7,9 @@ import Module from "node:module";
 import createJiti from "jiti";
 import { PrismaClient } from "@prisma/client";
 
+const p1Manifest = createJiti(import.meta.url)("../src/lib/mydreamshoots-seo-p1-manifest.ts");
+const { stripMydreamshootsP1SeasonalDuplicateText } = p1Manifest;
+
 const repoRoot = process.cwd();
 const sourceRoot = path.join(repoRoot, "src");
 const originalLoad = Module._load;
@@ -409,6 +412,7 @@ function parsePackage(config) {
     const cta = section("final-cta");
     if (cta) cta.settings = { ...cta.settings, title: saveDatePublicCopy.finalCtaHeading, intro: saveDatePublicCopy.finalCtaBody, primaryCta: saveDatePublicCopy.finalCtaLabel, secondaryCta: saveDatePublicCopy.secondaryCta };
   }
+  stripMydreamshootsP1SeasonalDuplicateText({ sections }, config.pagePath);
   const publishedLinkTargets = new Set([
     "/ai-save-the-date/valentines-day",
     "/ai-save-the-date/engagement",

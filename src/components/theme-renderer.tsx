@@ -118,6 +118,7 @@ import {
 import { isMydreamshootsCurrentVideoMenuSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsRetiredVideoThemeSlugs, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationParentCategories, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { isPublicPrice, projectPublicCreativePacks, projectPublicPricingOffers, resolveStorefrontBindings, selectOfferPrice } from "@/lib/storefront-context/core";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
+import { MYDREAMSHOOTS_P1_GALLERY_H1 } from "@/lib/mydreamshoots-seo-p1-manifest";
 import type { ResolvedOffer, StorefrontContext } from "@/lib/storefront-context/types";
 import { themeValueToList, themeValueToString } from "@/lib/theme-values";
 import type {
@@ -12667,7 +12668,9 @@ function SectionView({
     const headingLevel = normalizedHeadingLevel(setting(section, "headingLevel"), pageHasMainHeadingBefore(id, renderContext) ? "h2" : "h1");
     const HeadingTag = headingLevel;
     const accent = aidreamcapes ? `linear-gradient(90deg,${aidreamcapesAccent},${aidreamcapesCopper})` : dreamshootBrandGradient;
-    const titleFallback = kind === "video" ? "Best AI video" : "Best AI image";
+    const titleFallback = kind === "video"
+      ? isPrimaryMydreamshootsCapabilitySite(site) ? MYDREAMSHOOTS_P1_GALLERY_H1.video : "Best AI video"
+      : isPrimaryMydreamshootsCapabilitySite(site) ? MYDREAMSHOOTS_P1_GALLERY_H1.image : "Best AI image";
     const subtitleFallback = kind === "video" ? "Browse every AI video case in one simple grid." : "Browse every AI image theme in one simple grid.";
     return (
       <section className="relative overflow-hidden bg-[#05070E] px-5 py-16 text-white md:py-20" data-dreamshoot-media-gallery={kind} id={sectionAnchor(section, kind === "video" ? "best-ai-video" : "best-ai-image")}>

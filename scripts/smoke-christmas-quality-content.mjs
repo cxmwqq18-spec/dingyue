@@ -11,7 +11,7 @@ function assertQuality(section, source) {
   assert.equal(section?.type, "editorial_quality", `${source}: section type`);
   assert.equal(section?.settings?.title, "What to Check Before Sharing AI Christmas Content", `${source}: title`);
   assert.equal(section?.settings?.intro, "Review faces, hands, pets, clothing, ornaments, text, object geometry, background continuity, and any personal information.", `${source}: intro`);
-  assert.equal(section?.blocks?.length, 4, `${source}: checklist count`);
+  assert.equal(section?.blocks?.length, 1, `${source}: checklist count`);
   assert(section.blocks.every((block) => block.settings?.title?.trim() && block.settings?.text?.trim()), `${source}: checklist fields`);
 }
 

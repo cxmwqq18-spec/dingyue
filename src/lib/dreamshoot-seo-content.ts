@@ -16,6 +16,7 @@ import {
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import { mydreamshootsPublishedRouteForSlug } from "@/lib/mydreamshoots-published-contract";
+import { mydreamshootsPhotoGuideHeadingsForSlug, mydreamshootsPhotoGuideHeadingsForText } from "@/lib/mydreamshoots-seo-p1-manifest";
 
 export type SeoDirectoryKind = "collection" | "tool";
 
@@ -3080,8 +3081,11 @@ function enrichCollectionGuide(seed: SeoDirectorySeed, brandName: string): SeoDi
   const guideDetails = aidreamcapes
     ? [`For stronger ${lower} results, use clear portraits that show the subject naturally and add outfit, light, color, group, or occasion references when the album scene needs a specific story.`, `Before starting, compare the scene examples, occasion mood, visible credit cost, and intended gallery format so the ${lower} direction fits the profile, post, campaign, or keepsake you have in mind.`]
     : [`For stronger ${lower} results, upload several clear photos you own or have permission to use, with natural lighting, visible subject detail, and enough angle variety for a consistent private gallery.`, `Before starting, compare the sample gallery, expected output, visible credit cost, and download goal so the ${lower} direction fits the profile, post, campaign, or album you have in mind.`];
-  const details = Array.from(new Set([...seed.details, ...guideDetails])).slice(0, 5);
-  const h3 = Array.from(new Set([...seed.h3, ...guideHeadings])).slice(0, details.length);
+  const p1Headings = !aidreamcapes
+    ? mydreamshootsPhotoGuideHeadingsForText(seed.h2) ?? mydreamshootsPhotoGuideHeadingsForText(seed.title) ?? mydreamshootsPhotoGuideHeadingsForSlug(subject.toLowerCase().replace(/\s+/g, "-"))
+    : undefined;
+  const details = Array.from(new Set([...seed.details, ...guideDetails])).slice(0, p1Headings ? 6 : 5);
+  const h3 = p1Headings ?? Array.from(new Set([...seed.h3, ...guideHeadings])).slice(0, details.length);
   return { ...seed, h3, details };
 }
 
@@ -3126,16 +3130,19 @@ function collectionSeedWithUseCaseProfile(seed: SeoDirectorySeed, profile: SeoUs
   const title = profile.seoTitle || (titleScenario ? `${profile.metaLabel} for ${titleScenario} | ${brandName}` : `${profile.metaLabel} | ${brandName}`);
   const description = truncateSeoDescription(profile.cardDescription);
   const keywordParts = [...seed.keywords.split(",").map((keyword) => keyword.trim()), profile.metaLabel, ...profile.tags, ...profile.detailTags.slice(0, 6)];
-  const details = [profile.detailIntro, profile.whatCreates, profile.coverNote, profile.safetyNote ?? "", ...seed.details].filter(Boolean);
+  const details = [profile.whatCreates, profile.coverNote, profile.safetyNote ?? "", ...profile.styleNotes, ...seed.details].filter(Boolean);
+  const profileSlug = profile.pageEntityId?.split(":").at(-1) || "";
+  const p1Headings = mydreamshootsPhotoGuideHeadingsForSlug(profileSlug);
+  const p1Details = p1Headings ? [profile.whatCreates, profile.coverNote, profile.styleNotes[0], profile.styleNotes[1], profile.styleNotes[2], profile.safetyNote ?? ""].filter(Boolean) : undefined;
   return {
     ...seed,
     title,
     description,
     keywords: Array.from(new Set(keywordParts.filter(Boolean))).join(", "),
     h2: profile.galleryTitle || profile.headline,
-    h3: ["What this creates", "Best use cases", "Workflow and review"],
+    h3: p1Headings ?? ["What this creates", "Best use cases", "Workflow and review"],
     intro: profile.detailIntro,
-    details: Array.from(new Set(details)).slice(0, 5),
+    details: p1Details ?? Array.from(new Set(details)).slice(0, 5),
     useCases: profile.bestFor,
     workflow: profile.workflow,
     ctaLabel: `Create ${profile.metaLabel}`,
@@ -3157,7 +3164,7 @@ function seoDirectoryContentFromPublishedCopy(copy: MyDreamshootsPageCopy, slug:
     keywords: Array.from(new Set([copy.metaLabel, ...copy.tags, ...copy.detailTags])).join(", "),
     canonicalPath: canonicalSeoDirectoryPathForSite(site, "collection", slug),
     h2: copy.galleryTitle,
-    h3: ["What this creates", "Best use cases", "Workflow and review"],
+    h3: mydreamshootsPhotoGuideHeadingsForSlug(slug) ?? ["What this creates", "Best use cases", "Workflow and review"],
     intro: copy.detailIntro,
     details: [copy.whatCreates, copy.coverNote, copy.safetyNote ?? "", ...(copy.reviewPoints ?? copy.styleNotes)].filter(Boolean),
     useCases: [...copy.bestFor],

@@ -3,6 +3,7 @@ import type { ThemePackageSiteSettings, ThemePackageTemplateKey } from "../types
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite } from "@/lib/storefront-context/capabilities";
 import mydreamshootsHomepageCopy from "@/lib/mydreamshoots-homepage-copy.json";
 import { getDreamshootPublicSeoPageMetadataForSite } from "@/lib/dreamshoot-seo-content";
+import { MYDREAMSHOOTS_P1_GALLERY_H1 } from "@/lib/mydreamshoots-seo-p1-manifest";
 
 export type MydreamShootsAiStudioTemplateKey =
   | ThemePackageTemplateKey
@@ -2083,7 +2084,9 @@ function bestMediaGallerySection(kind: "image" | "video", aidreamcapes: boolean)
     kind,
     fullGallery: !useMydreamshootsHomepageVideos,
     eyebrow: aidreamcapes ? "Aidreamcapes gallery" : "myDreamshoots gallery",
-    title: kind === "image" ? "Best AI image" : useMydreamshootsHomepageVideos ? "Best AI Video Generation" : "Best AI video",
+    title: kind === "image"
+      ? !aidreamcapes ? MYDREAMSHOOTS_P1_GALLERY_H1.image : "Best AI image"
+      : useMydreamshootsHomepageVideos ? "Best AI Video Generation" : !aidreamcapes ? MYDREAMSHOOTS_P1_GALLERY_H1.video : "Best AI video",
     subtitle: aidreamcapes
       ? kind === "image"
         ? "Browse Aidreamcapes fan-scene, game-day, holiday, and occasion image themes in one simple grid."

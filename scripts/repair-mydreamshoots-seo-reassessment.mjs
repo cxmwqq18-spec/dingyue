@@ -4,9 +4,19 @@ import assert from "node:assert/strict";
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import createJiti from "jiti";
 import { PrismaClient } from "@prisma/client";
 import { argumentValue, assertDatabaseTarget, assertNonProductionWriteTarget, hasArgument } from "./lib/database-target.mjs";
 import { MYDREAMSHOOTS_REASSESSMENT_P0_COPY, MYDREAMSHOOTS_REASSESSMENT_P1, MYDREAMSHOOTS_REASSESSMENT_P1_PATHS } from "./lib/mydreamshoots-seo-reassessment.mjs";
+const {
+  MYDREAMSHOOTS_P1_CHILDREN_PRIVACY,
+  MYDREAMSHOOTS_P1_CONTACT,
+  MYDREAMSHOOTS_P1_GALLERY_H1,
+  MYDREAMSHOOTS_P1_SEASONAL_DUPLICATE_TARGETS,
+  MYDREAMSHOOTS_P1_STATE_PRIVACY,
+  stripMydreamshootsP1ChristmasQualityDuplicates,
+  stripMydreamshootsP1SeasonalDuplicateText
+} = createJiti(import.meta.url)("../src/lib/mydreamshoots-seo-p1-manifest.ts");
 
 const SITE_ID = "site_dreamshoot";
 const target = argumentValue("--target") || process.env.DATABASE_TARGET || "local";
@@ -68,11 +78,26 @@ function updateStatePrivacyJson(json) {
     assert(!next.sections.policy_1.settings.title || ["DPDPA", MYDREAMSHOOTS_REASSESSMENT_P1.statePrivacyH1].includes(next.sections.policy_1.settings.title), "state privacy policy heading has an unexpected manual edit");
     next.sections.policy_1.settings.title = MYDREAMSHOOTS_REASSESSMENT_P1.statePrivacyH1;
   }
+  for (const section of Object.values(next.sections ?? {})) {
+    const body = section?.settings?.body;
+    if (typeof body === "string") section.settings.body = body
+      .replace("8 THE GREEN STE B,DOVER,DE 19901", MYDREAMSHOOTS_P1_STATE_PRIVACY.address)
+      .replace(MYDREAMSHOOTS_P1_STATE_PRIVACY.address.replaceAll(" ", ""), MYDREAMSHOOTS_P1_STATE_PRIVACY.address);
+  }
+  if (next.sections?.intro_1?.settings) next.sections.intro_1.settings.body = MYDREAMSHOOTS_P1_STATE_PRIVACY.intro;
   return replaceStrings(next, [["<h3>1. DPDPA</h3>", `<h3>${MYDREAMSHOOTS_REASSESSMENT_P1.statePrivacyH3}</h3>`], [">DPDPA</a>", ">State Privacy</a>"]]);
 }
 
 function updateChildrenPrivacyJson(json) {
-  return replaceStrings(clone(json), [["<h3>5. DPDPA requests</h3>", `<h3>${MYDREAMSHOOTS_REASSESSMENT_P1.childrenPrivacyH3}</h3>`], [">DPDPA</a>", ">State Privacy</a>"]]);
+  const next = clone(json);
+  next.title = MYDREAMSHOOTS_P1_CHILDREN_PRIVACY.h1;
+  next.seo = { ...(next.seo ?? {}), title: MYDREAMSHOOTS_P1_CHILDREN_PRIVACY.seoTitle };
+  if (next.sections?.intro_1?.settings) {
+    next.sections.intro_1.settings.title = MYDREAMSHOOTS_P1_CHILDREN_PRIVACY.h2;
+    next.sections.intro_1.settings.body = MYDREAMSHOOTS_P1_CHILDREN_PRIVACY.intro;
+  }
+  if (next.sections?.policy_1?.settings) next.sections.policy_1.settings.title = MYDREAMSHOOTS_P1_CHILDREN_PRIVACY.h2;
+  return replaceStrings(next, [["<h3>5. DPDPA requests</h3>", `<h3>${MYDREAMSHOOTS_REASSESSMENT_P1.childrenPrivacyH3}</h3>`], [">DPDPA</a>", ">State Privacy</a>"]]);
 }
 
 function updatePageJson(slug, json) {
@@ -99,6 +124,20 @@ function updatePageJson(slug, json) {
   if (slug === "/terms") next.seo = { ...(next.seo ?? {}), title: MYDREAMSHOOTS_REASSESSMENT_P1.termsTitle };
   if (slug === "/state-privacy") next = updateStatePrivacyJson(next);
   if (slug === "/children-privacy") next = updateChildrenPrivacyJson(next);
+  if (slug === "/contact-us") {
+    next = replaceStrings(next, [[MYDREAMSHOOTS_P1_CONTACT.oldAddress, MYDREAMSHOOTS_P1_CONTACT.address]]);
+  }
+  if (slug === "/cookies") {
+    next = replaceStrings(next, [["/policies/privacy", "/privacy"], ["/policies/terms", "/terms"]]);
+  }
+  if (slug === "/best-ai-image" || slug === "/best-ai-video") {
+    const targetTitle = slug === "/best-ai-image" ? MYDREAMSHOOTS_P1_GALLERY_H1.image : MYDREAMSHOOTS_P1_GALLERY_H1.video;
+    const sectionId = slug === "/best-ai-image" ? "best_ai_image_1" : "best_ai_video_1";
+    if (next.sections?.[sectionId]?.settings) next.sections[sectionId].settings.title = targetTitle;
+    if (next.title === "Best AI image" || next.title === "Best AI video") next.title = targetTitle;
+  }
+  stripMydreamshootsP1SeasonalDuplicateText(next, slug);
+  stripMydreamshootsP1ChristmasQualityDuplicates(next, slug);
   if (slug === "/ai-video-generation/youtube-video") {
     const topic = next.sections?.ai_video_topic_landing_1?.settings?.content;
     assert(topic?.hero && typeof topic.hero === "object", "YouTube Video must keep dedicated topic content");
@@ -140,7 +179,16 @@ function updateThemeSettings(value) {
   return next;
 }
 
-const allSlugs = [...new Set([...MYDREAMSHOOTS_REASSESSMENT_P0_COPY.map((item) => item.path), ...MYDREAMSHOOTS_REASSESSMENT_P1_PATHS])];
+const allSlugs = [...new Set([
+  ...MYDREAMSHOOTS_REASSESSMENT_P0_COPY.map((item) => item.path),
+  ...MYDREAMSHOOTS_REASSESSMENT_P1_PATHS,
+  ...Object.keys(MYDREAMSHOOTS_P1_SEASONAL_DUPLICATE_TARGETS),
+  "/ai-video-generation/pet-video",
+  "/contact-us",
+  "/cookies",
+  "/best-ai-image",
+  "/best-ai-video"
+])];
 const prisma = new PrismaClient();
 try {
   const [themePages, livePages, settings] = await Promise.all([
@@ -157,8 +205,13 @@ try {
   for (const slug of allSlugs) {
     const live = liveBySlug.get(slug); const theme = themeBySlug.get(slug);
     const liveNext = updatePageJson(slug, live.contentJson); const draftNext = updatePageJson(slug, theme.draftJson); const publishedNext = updatePageJson(slug, theme.publishedJson);
-    const pageTitle = slug === "/state-privacy" ? MYDREAMSHOOTS_REASSESSMENT_P1.statePrivacyTitle : slug === "/terms" ? MYDREAMSHOOTS_REASSESSMENT_P1.termsTitle : theme.title;
-    const liveTitle = slug === "/state-privacy" ? MYDREAMSHOOTS_REASSESSMENT_P1.statePrivacyTitle : slug === "/terms" ? MYDREAMSHOOTS_REASSESSMENT_P1.termsTitle : live.title;
+    const titleForSlug = (current) => slug === "/state-privacy" ? MYDREAMSHOOTS_REASSESSMENT_P1.statePrivacyTitle
+      : slug === "/children-privacy" ? MYDREAMSHOOTS_P1_CHILDREN_PRIVACY.h1
+      : slug === "/best-ai-image" ? MYDREAMSHOOTS_P1_GALLERY_H1.image
+      : slug === "/best-ai-video" ? MYDREAMSHOOTS_P1_GALLERY_H1.video
+      : slug === "/terms" ? MYDREAMSHOOTS_REASSESSMENT_P1.termsTitle : current;
+    const pageTitle = titleForSlug(theme.title);
+    const liveTitle = titleForSlug(live.title);
     if (stable(liveNext) !== stable(live.contentJson) || stable(draftNext) !== stable(theme.draftJson) || stable(publishedNext) !== stable(theme.publishedJson) || pageTitle !== theme.title || liveTitle !== live.title) updates.push({ slug, live, theme, liveNext, draftNext, publishedNext, pageTitle, liveTitle });
   }
   const settingsDraftNext = updateThemeSettings(settings.draftJson); const settingsPublishedNext = updateThemeSettings(settings.publishedJson);

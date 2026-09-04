@@ -7,6 +7,9 @@ import Module from "node:module";
 import createJiti from "jiti";
 import { PrismaClient } from "@prisma/client";
 
+const p1Manifest = createJiti(import.meta.url)("../src/lib/mydreamshoots-seo-p1-manifest.ts");
+const { stripMydreamshootsP1ChristmasQualityDuplicates, stripMydreamshootsP1SeasonalDuplicateText } = p1Manifest;
+
 const repoRoot = process.cwd();
 const sourceRoot = path.join(repoRoot, "src");
 const sourcePackageRoot = process.env.SEASONAL_SOURCE_ROOT || "/tmp/mydreamshoots-seasonal-packages.83JYeu";
@@ -534,6 +537,8 @@ function buildHalloweenPage(config, markdown, sections, seo, images) {
   const sectionIds = config.sections.map(([id]) => id);
   const sectionTypes = config.sections.map(([, type]) => type);
   const pageSeoIndexable = true;
+  stripMydreamshootsP1SeasonalDuplicateText({ sections: data }, config.pagePath);
+  stripMydreamshootsP1ChristmasQualityDuplicates({ sections: data }, config.pagePath);
   const customerData = JSON.parse(JSON.stringify(data, (_key, value) => typeof value === "string" ? customerText(value) : value));
   return {
     pageType: "standard-content",
@@ -618,6 +623,8 @@ function buildMothersOrFathersPage(config, markdown, sections, seo, images) {
   const faq = data[sectionId(config, "faq")];
   if (!faq?.blocks?.length) throw new Error(`${config.key}: FAQ is required`);
   const pageSeo = { title: config.seoOverrides.title, description: config.seoOverrides.description, keywords: seo.secondary_keywords, canonicalPath: config.pagePath, canonical: `https://www.mydreamshoots.com${config.pagePath}`, ogImage: images[0].src, index: true, follow: true, robots: { index: true, follow: true, maxImagePreview: "large" } };
+  stripMydreamshootsP1SeasonalDuplicateText({ sections: data }, config.pagePath);
+  stripMydreamshootsP1ChristmasQualityDuplicates({ sections: data }, config.pagePath);
   const customerData = JSON.parse(JSON.stringify(data, (_key, value) => typeof value === "string" ? customerText(value) : value));
   return { pageType: "standard-content", version: 1, sectionsOrder: sectionIds.map((id) => sectionId(config, id)), contentContract: { schema: "editorial-page-v1", pageKey: config.pageKey, requiredSections: sectionIds, sectionTypes, faqCount: faq.blocks.length, mediaCount: images.length, sourceRevision: `${config.key}-package-20260824` }, relatedLinks: [{ label: "How it works", href: "/workflow" }, { label: "Explore Save the Date themes", href: "/ai-save-the-date/save-the-date" }], mediaManifest: images, seo: pageSeo, sections: customerData };
 }
@@ -718,6 +725,8 @@ function buildNewYearPage(config, markdown, sections, seo, images) {
 
   const sectionIds = config.sections.map(([id]) => id);
   const sectionTypes = config.sections.map(([, type]) => type);
+  stripMydreamshootsP1SeasonalDuplicateText({ sections: data }, config.pagePath);
+  stripMydreamshootsP1ChristmasQualityDuplicates({ sections: data }, config.pagePath);
   const customerData = JSON.parse(JSON.stringify(data, (_key, value) => typeof value === "string" ? customerText(value) : value));
   return {
     pageType: "standard-content",

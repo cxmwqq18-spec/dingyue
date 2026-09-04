@@ -190,6 +190,7 @@
     "smoke:save-the-date-topic-pages": "node scripts/smoke-save-the-date-topic-pages.mjs",
     "repair:christmas-quality-content": "node scripts/repair-christmas-quality-content.mjs",
     "smoke:christmas-quality-content": "node scripts/smoke-christmas-quality-content.mjs",
+    "smoke:mydreamshoots-seo-audit-2026-09-04": "node scripts/smoke-mydreamshoots-seo-audit-2026-09-04.mjs",
     "smoke:save-the-date-image-uniqueness": "node scripts/smoke-save-the-date-image-uniqueness.mjs",
     "smoke:mydreamshoots-route-entity-contract": "node scripts/smoke-mydreamshoots-route-entity-contract.mjs",
     "guard:mydreamshoots-page-copy-contract": "node scripts/guard-mydreamshoots-page-copy-contract.mjs",

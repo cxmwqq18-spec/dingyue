@@ -11,40 +11,14 @@ const TARGET = String(process.env.DATABASE_TARGET || "local").trim().toLowerCase
 
 assertDatabaseTarget({ expectedTarget: TARGET, env: process.env });
 
-const QUALITY_BLOCKS = [
-  {
-    id: "christmas_quality_people",
-    type: "item",
-    settings: {
-      title: "Review people and objects",
-      text: "Review people and objects — check faces, hands, pets, decorations, gift shapes, clothing, and scene continuity."
-    }
-  },
-  {
-    id: "christmas_quality_details",
-    type: "item",
-    settings: {
-      title: "What should I check before sharing AI Christmas content?",
-      text: "Review faces, hands, pets, clothing, ornaments, text, object geometry, background continuity, and any personal information."
-    }
-  },
-  {
-    id: "christmas_quality_text",
-    type: "item",
-    settings: {
-      title: "Keep important text editable",
-      text: "Keep important text editable — names, dates, personal greetings, event details, and URLs should not depend on AI-generated image text."
-    }
-  },
-  {
-    id: "christmas_quality_crop",
-    type: "item",
-    settings: {
-      title: "Prepare the final crop",
-      text: "Prepare the final crop — keep enough safe space for desktop, mobile, social, card, or video output needs."
-    }
+const QUALITY_BLOCKS = [{
+  id: "christmas_quality_details",
+  type: "item",
+  settings: {
+    title: "What should I check before sharing AI Christmas content?",
+    text: "Review faces, hands, pets, clothing, ornaments, text, object geometry, background continuity, and any personal information."
   }
-];
+}];
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const stable = (value) => Array.isArray(value)
@@ -72,8 +46,12 @@ try {
     && before.intro === "Review faces, hands, pets, clothing, ornaments, text, object geometry, background continuity, and any personal information.";
   const previousRepair = before.blocks.length === 4
     && before.blocks.every((block) => block.type === "item");
+  const auditedDuplicates = before.blocks.length === 4
+    && before.blocks.some((block) => block.id === "christmas_quality_people")
+    && before.blocks.some((block) => block.id === "christmas_quality_text")
+    && before.blocks.some((block) => block.id === "christmas_quality_crop");
   const safelyEmpty = before.intro === "" && Array.isArray(before.blocks) && before.blocks.length === 0;
-  assert(safelyEmpty || previousRepair || alreadyRepaired, "christmas_quality_has_unexpected_content");
+  assert(safelyEmpty || previousRepair || auditedDuplicates || alreadyRepaired, "christmas_quality_has_unexpected_content");
 
   section.settings.intro = "Review faces, hands, pets, clothing, ornaments, text, object geometry, background continuity, and any personal information.";
   section.blocks = QUALITY_BLOCKS;

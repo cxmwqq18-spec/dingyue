@@ -1,9 +1,15 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
 import crypto from "node:crypto";
+import createJiti from "jiti";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { assertAllowedSite, assertDatabaseTarget } from "./lib/database-target.mjs";
+
+const {
+  stripMydreamshootsP1ChristmasQualityDuplicates,
+  stripMydreamshootsP1SeasonalDuplicateText
+} = createJiti(import.meta.url)("../src/lib/mydreamshoots-seo-p1-manifest.ts");
 
 const SITE_ID = assertAllowedSite(process.env.SAVE_THE_DATE_SITE_ID || "site_dreamshoot");
 const APPLY = process.argv.includes("--apply");
@@ -246,6 +252,8 @@ function repairPage(slug, source) {
     };
     json.mediaManifest = [];
   }
+  stripMydreamshootsP1SeasonalDuplicateText(json, slug);
+  stripMydreamshootsP1ChristmasQualityDuplicates(json, slug);
   if (slug === "/ai-save-the-date/save-the-date") {
     json.sections.save_date_boundaries.blocks[2].settings.text = "Formal wording, event logistics, and RSVP collection.";
   }
