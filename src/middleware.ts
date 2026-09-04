@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
-import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS as MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS } from "@/lib/mydreamshoots-legacy-public-redirects";
+import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS as MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS, isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
@@ -244,6 +244,9 @@ function mydreamshootsLegacyPublicRedirect(request: NextRequest): NextResponse |
   if (hostSlug !== "mydreamshoots" && !sitePathMatch) return undefined;
 
   const requestedPath = (sitePathMatch?.[1] || request.nextUrl.pathname || "/").replace(/\/+$/, "") || "/";
+  if (isMydreamshootsRetiredPublicPath(requestedPath)) {
+    return new NextResponse(null, { status: 404, headers: { "cache-control": "no-store, max-age=0, must-revalidate" } });
+  }
   const targetPath = MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS[requestedPath];
   if (!targetPath) return undefined;
   const target = publicRedirectUrlForRequest(request, targetPath);

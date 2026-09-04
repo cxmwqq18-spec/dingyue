@@ -320,6 +320,12 @@ export const mydreamshootsCurrentVideoMenuSlugs = [
   "talking-head-video"
 ] as const;
 
+export const mydreamshootsRetiredVideoThemeSlugs = [
+  "ai-avatar-video",
+  "corporate-video",
+  "fitness-video"
+] as const;
+
 const mydreamshootsCurrentVideoMenuSlugSet = new Set<string>(mydreamshootsCurrentVideoMenuSlugs);
 
 export function isMydreamshootsCurrentVideoMenuSlug(slug: string | undefined): boolean {
@@ -689,7 +695,7 @@ export const mydreamshootsVideoGenerationThemeSeeds = [
 
 export function mydreamshootsVideoGenerationCategoriesForSite(siteId: string) {
   return siteId === "site_dreamshoot"
-    ? [...mydreamshootsVideoGenerationCategories, saveTheDateChildCategories[0], saveTheDateChildCategories[1]]
+    ? [...mydreamshootsVideoGenerationCategories.filter((category) => !mydreamshootsRetiredVideoThemeSlugs.includes(category.slug as (typeof mydreamshootsRetiredVideoThemeSlugs)[number])), saveTheDateChildCategories[0], saveTheDateChildCategories[1]]
     : mydreamshootsVideoGenerationCategories.slice(0, 2);
 }
 

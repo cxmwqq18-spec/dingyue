@@ -260,6 +260,13 @@ assert.equal(robotsResponse.status, 200, "robots.txt must return HTTP 200");
 for (const header of ["x-storefront-publication", "x-storefront-publication-version", "x-storefront-snapshot-hash", "x-storefront-build", "x-storefront-route-revision", "x-storefront-page-revision", "x-storefront-copy-revision", "x-storefront-media-revision", "x-storefront-facts-revision", "x-storefront-offer-revision", "x-storefront-collection-revision", "x-storefront-link-revision", "x-storefront-policy-revision", "x-sitemap-url-count", "x-sitemap-image-count", "x-sitemap-generation-ms"]) {
   assert.equal(robotsResponse.headers[header], undefined, `robots.txt must not expose ${header}`);
 }
+for (const pathname of ["/ai-video-generation/ai-avatar-video", "/corporate-video", "/fitness-video", "/partner-registration"]) {
+  for (const method of ["GET", "HEAD"]) {
+    const response = await fetchStatusNoRedirect(pathname, "text/html", method);
+    assert.equal(response.status, 404, `${pathname} ${method} must stay retired`);
+    assert.equal(response.headers.location, undefined, `${pathname} ${method} must not redirect`);
+  }
+}
 const headshotPath = "/ai-image-generation/headshot";
 const headshotIsPublished = sitemapHasLoc(`https://${host}${headshotPath}`);
 const collectionResponse = await fetchText(headshotPath, "text/html");

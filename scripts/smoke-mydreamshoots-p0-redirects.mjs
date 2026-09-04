@@ -5,17 +5,25 @@ const baseUrl = (process.env.SMOKE_BASE_URL || "http://localhost:3002").replace(
 const publicOrigin = process.env.SMOKE_PUBLIC_ORIGIN || "https://www.mydreamshoots.com";
 const publicHost = new URL(publicOrigin).host;
 const redirects = [
-  ["/ai-image-generation/motion-generator", "/ai-video-generation/motion-generator"],
-  ["/ai-video-generation/ai-avatar-video", "/ai-video-generation"],
-  ["/corporate-video", "/ai-video-generation"],
-  ["/fitness-video", "/ai-video-generation"],
-  ["/partner-registration", "/creators-circle"]
+  ["/ai-image-generation/motion-generator", "/ai-video-generation/motion-generator"]
 ];
-const legacyPaths = redirects.map(([path]) => path);
+const retiredPaths = ["/ai-video-generation/ai-avatar-video", "/corporate-video", "/fitness-video", "/partner-registration"];
+const legacyPaths = [...redirects.map(([path]) => path), ...retiredPaths];
 const headers = baseUrl.startsWith("http://localhost") || baseUrl.startsWith("http://127.0.0.1") ? { host: publicHost, "x-forwarded-host": publicHost } : {};
 
 async function request(path, method = "GET") {
   return fetch(`${baseUrl}${path}`, { method, redirect: "manual", headers });
+}
+
+for (const alias of retiredPaths) {
+  for (const method of ["GET", "HEAD"]) {
+    const response = await request(alias, method);
+    assert.equal(response.status, 404, `${method} ${alias} must stay retired`);
+    assert.equal(response.headers.get("location"), null, `${method} ${alias} must not redirect`);
+  }
+  const siteResponse = await request(`/site/mydreamshoots${alias}`, "HEAD");
+  assert.equal(siteResponse.status, 404, `site alias ${alias} must stay retired`);
+  assert.equal(siteResponse.headers.get("location"), null, `site alias ${alias} must not redirect`);
 }
 
 for (const [alias, target] of redirects) {
@@ -46,4 +54,4 @@ for (const legacyPath of legacyPaths) assert.equal(html.includes(legacyPath), fa
 assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, "/creators-circle must render exactly one H1");
 assert.match(html, /partner-application/i, "Creators Circle must expose the partner application anchor");
 
-console.log(JSON.stringify({ ok: true, baseUrl, checkedRedirects: redirects.length, checkedMethods: ["GET", "HEAD"], sitemapLegacyHits: 0 }, null, 2));
+console.log(JSON.stringify({ ok: true, baseUrl, checkedRedirects: redirects.length, checkedRetiredPaths: retiredPaths.length, checkedMethods: ["GET", "HEAD"], sitemapLegacyHits: 0 }, null, 2));

@@ -40,6 +40,7 @@ const retiredRelatedTopicHrefs = new Set([
   "/ai-video-generation/corporate-video",
   "/ai-video-generation/fitness-video"
 ]);
+const retiredPublicTopicSlugs = new Set(["ai-avatar-video", "corporate-video", "fitness-video"]);
 const internalProductionCopyPattern = /FIRST-PARTY PRODUCT EVIDENCE|V2\s*-\s*REAL EXAMPLES|pending capture|pending product record|pending review|PAGE DIFFERENTIATION \/ INTERNAL LINKING/i;
 
 for (const [slug, content] of Object.entries(aiVideoTopicLandingContentByKey)) {
@@ -63,6 +64,12 @@ for (const [slug, content] of Object.entries(aiVideoTopicLandingContentByKey)) {
       invalidLinks.push(`${slug}: comparison.items[${index}].href -> ${href}`);
     }
   }
+}
+
+const framework = jiti("../src/lib/mydreamshoots-video-framework.ts");
+const frameworkCategories = framework.mydreamshootsVideoGenerationCategoriesForSite("site_dreamshoot");
+for (const slug of retiredPublicTopicSlugs) {
+  assert.equal(frameworkCategories.some((category) => category.slug === slug), false, `${slug} must not be in the active MyDreamShoots video category seed`);
 }
 
 assert.equal(invalidLinks.length, 0, `comparison cards point to unpublished video topic routes:\n${invalidLinks.join("\n")}`);

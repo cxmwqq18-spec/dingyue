@@ -38,6 +38,7 @@
     "repair:mydreamshoots-p0-content:apply": "node scripts/repair-mydreamshoots-p0-content.mjs --apply",
     "retire:mydreamshoots-partner-registration": "node scripts/retire-mydreamshoots-partner-registration.mjs",
     "retire:mydreamshoots-partner-registration:apply": "node scripts/retire-mydreamshoots-partner-registration.mjs --apply --confirm-deletion",
+    "retire:mydreamshoots-public-routes": "node scripts/retire-mydreamshoots-public-routes.mjs",
     "smoke:storefront-mega-menu-dismiss": "node scripts/smoke-storefront-mega-menu-dismiss.mjs",
     "smoke:storefront-pricing-switch": "node scripts/smoke-storefront-pricing-switch.mjs",
     "smoke:storefront-dom-translation-guard": "node scripts/smoke-storefront-dom-translation-guard.mjs",

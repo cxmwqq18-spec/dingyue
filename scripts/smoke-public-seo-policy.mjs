@@ -138,15 +138,11 @@ assertRedirectSource(hostCatchAll, siteRouteCanonical, "/refund-policy", "/refun
 assertRedirectSource(hostCatchAll, siteRouteCanonical, "/content-policy", "/content");
 assertRedirectSource(siteCatchAll, siteRouteCanonical, "/refund-policy", "/refunds");
 assertRedirectSource(siteCatchAll, siteRouteCanonical, "/content-policy", "/content");
-for (const [alias, target] of [
-  ["/ai-video-generation/ai-avatar-video", "/ai-video-generation"],
-  ["/corporate-video", "/ai-video-generation"],
-  ["/fitness-video", "/ai-video-generation"],
-  ["/partner-registration", "/creators-circle"]
-]) {
-  assert.ok(mydreamshootsLegacyRedirects.includes(`aliasPath: "${alias}", targetPath: "${target}"`), `${alias} must be a published legacy redirect`);
-  assert.ok(middleware.includes("MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS"), `${alias} must use the published legacy redirect list at the edge`);
+for (const alias of ["/ai-video-generation/ai-avatar-video", "/corporate-video", "/fitness-video", "/partner-registration"]) {
+  assert.equal(mydreamshootsLegacyRedirects.includes(`aliasPath: "${alias}"`), false, `${alias} must not remain a MyDreamShoots redirect`);
+  assert.ok(mydreamshootsLegacyRedirects.includes(`"${alias}"`), `${alias} must remain in the retired-path inventory`);
 }
+assert.ok(middleware.includes("isMydreamshootsRetiredPublicPath"), "edge routing must return 404 for retired MyDreamShoots paths");
 for (const [alias, target] of legacyPolicyAliases) {
   assert.ok(hostCatchAll.includes("legacyPublicPathTarget"), `host catch-all should use shared legacy policy redirect logic for ${alias}`);
   assert.ok(siteCatchAll.includes("legacyPublicPathTarget"), `site catch-all should use shared legacy policy redirect logic for ${alias}`);

@@ -3,6 +3,7 @@ import "server-only";
 import { readStorefrontPublicRuntimeStateByHostFromDatabase, readStorefrontPublicRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
 import type { CreativePack, CreativePackCategory, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedStandardRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage, VideoTheme } from "@/lib/types";
 import { isMydreamshootsPublicVideoGenerationSlug, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
+import { isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
 import { buildPublicationSnapshot } from "@/lib/stores/theme-store";
 import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
@@ -434,6 +435,9 @@ export function resolveEffectivePublishedPage(snapshot: PublishedSiteSnapshot, p
 export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot, path: string): RouteDisposition {
   const requestedPath = normalizePath(path);
   if (!snapshot.pages.length) return { kind: "not_found", status: 404, path: requestedPath };
+  if (isPrimaryMydreamshootsSite(snapshot.site) && isMydreamshootsRetiredPublicPath(requestedPath)) {
+    return { kind: "not_found", status: 404, path: requestedPath };
+  }
   if (isPrimaryMydreamshootsSite(snapshot.site) && (requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) {
     return { kind: "not_found", status: 404, path: requestedPath };
   }

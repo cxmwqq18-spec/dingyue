@@ -115,7 +115,7 @@ import {
   photoPackageLabel,
   photoPackageSlug
 } from "@/lib/photo-package-taxonomy";
-import { isMydreamshootsCurrentVideoMenuSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationParentCategories, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
+import { isMydreamshootsCurrentVideoMenuSlug, isMydreamshootsVideoFrameworkSite, mydreamshootsRetiredVideoThemeSlugs, mydreamshootsVideoGenerationCategories, mydreamshootsVideoGenerationParentCategories, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { isPublicPrice, projectPublicCreativePacks, projectPublicPricingOffers, resolveStorefrontBindings, selectOfferPrice } from "@/lib/storefront-context/core";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
 import type { ResolvedOffer, StorefrontContext } from "@/lib/storefront-context/types";
@@ -921,7 +921,7 @@ function headerVideoGenerationTopicsForClient(site: Site, categories: VideoTheme
   const parentDefinitionsBySlug = new Map<string, (typeof mydreamshootsVideoGenerationParentCategories)[number]>(
     mydreamshootsVideoGenerationParentCategories.map((category) => [category.slug, category])
   );
-  const themesBySlug = new Map(themes.filter((theme) => theme.status === "active").map((theme) => [theme.slug, theme]));
+  const themesBySlug = new Map(themes.filter((theme) => theme.status === "active" && !mydreamshootsRetiredVideoThemeSlugs.includes(theme.slug as (typeof mydreamshootsRetiredVideoThemeSlugs)[number])).map((theme) => [theme.slug, theme]));
   return mydreamshootsVideoGenerationCategories
     .filter((definition) => isMydreamshootsCurrentVideoMenuSlug(definition.slug))
     .flatMap((definition) => {
