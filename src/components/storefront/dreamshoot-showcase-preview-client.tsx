@@ -81,10 +81,10 @@ export function DreamshootShowcasePreviewClient({ children, className }: { child
   const mediaLabel = preview?.kind === "video" ? "video" : "image";
 
   return (
-    <div className={`${className || ""} [&_img:not([data-dreamshoot-preview-disabled])]:cursor-zoom-in`.trim()} data-dreamshoot-preview-root="true" onClick={onClick} onKeyDown={onKeyDown}>
+    <div className={`${className || ""} [&_img:not([data-dreamshoot-preview-disabled])]:cursor-zoom-in [&_video:not([data-dreamshoot-preview-disabled])]:cursor-zoom-in`.trim()} data-dreamshoot-preview-root="true" onClick={onClick} onKeyDown={onKeyDown}>
       {children}
       {preview ? (
-        <div aria-describedby={preview.meta ? "dreamshoot-media-preview-meta" : undefined} aria-label={`Preview: ${preview.title}`} aria-modal="true" className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm sm:p-8" onClick={closePreview} role="dialog">
+        <div aria-describedby={preview.meta ? "dreamshoot-media-preview-meta" : undefined} aria-label={`Preview: ${preview.title}`} aria-modal="true" className="fixed inset-0 z-[160] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm sm:p-8" onClick={closePreview} role="dialog">
           <div className="relative flex max-h-full w-full max-w-6xl flex-col" onClick={(event) => event.stopPropagation()}>
             <div className="mb-3 flex min-h-9 items-center justify-between gap-3 text-white">
               <div className="min-w-0">

@@ -3,6 +3,7 @@
 import { type Dispatch, type ReactNode, type SetStateAction, useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, Check, ChevronDown, ChevronRight, Film, ImagePlus, Monitor, RotateCcw, Send, Sparkles, X } from "lucide-react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
+import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
 import type { PublicCustomer, VideoTheme, VideoThemeCategory, VideoThemeExample } from "@/lib/types";
 import {
   DEFAULT_VIDEO_PROMPT_PERSONA_ID,
@@ -74,8 +75,35 @@ type PersistedVideoPromptOptimization = {
   body: VideoPromptOptimizationRequestBody;
 };
 
-function ThemeMedia({ src, className, alt = "" }: { src?: string; className: string; alt?: string }) {
+function isVideoMediaSource(src: string): boolean {
+  return /\.(?:mp4|webm|mov|m4v)(?:[?#]|$)/i.test(src) || /^data:video\//i.test(src);
+}
+
+function preferredThemeMediaSource(media: Pick<VideoTheme, "imageUrl" | "galleryImages"> | Pick<VideoThemeExample, "imageUrl" | "galleryImages">): { src?: string; posterSrc?: string } {
+  const posterSrc = typeof media.imageUrl === "string" && media.imageUrl.trim() ? media.imageUrl.trim() : undefined;
+  const videoSrc = media.galleryImages?.find((candidate) => typeof candidate === "string" && isVideoMediaSource(candidate.trim()))?.trim();
+  return { src: videoSrc || posterSrc || media.galleryImages?.[0], posterSrc };
+}
+
+function ThemeMedia({
+  src,
+  posterSrc,
+  className,
+  alt = "",
+  preview = false,
+  previewTitle,
+  previewMeta
+}: {
+  src?: string;
+  posterSrc?: string;
+  className: string;
+  alt?: string;
+  preview?: boolean;
+  previewTitle?: string;
+  previewMeta?: string;
+}) {
   const normalizedSrc = typeof src === "string" ? src.trim() : "";
+  const normalizedPosterSrc = typeof posterSrc === "string" ? posterSrc.trim() : "";
   const [retryingSrc, setRetryingSrc] = useState("");
   const [failedSrc, setFailedSrc] = useState("");
   const shouldShowFallback = !normalizedSrc || failedSrc === normalizedSrc;
@@ -85,13 +113,46 @@ function ThemeMedia({ src, className, alt = "" }: { src?: string; className: str
     setFailedSrc("");
   }, [normalizedSrc]);
 
+  if (shouldShowFallback && isVideoMediaSource(normalizedSrc) && normalizedPosterSrc && normalizedPosterSrc !== normalizedSrc) {
+    return <ThemeMedia alt={alt} className={className} preview={preview} previewMeta={previewMeta} previewTitle={previewTitle} src={normalizedPosterSrc} />;
+  }
   if (shouldShowFallback) {
     return <div className={`${className} grid place-items-center bg-white/[0.05]`} aria-hidden="true"><Film className="h-5 w-5 text-[#31d4ff]/65" /></div>;
+  }
+  if (isVideoMediaSource(normalizedSrc)) {
+    return <video
+      aria-label={alt || undefined}
+      autoPlay
+      className={className}
+      data-dreamshoot-preview-meta={preview ? previewMeta : undefined}
+      data-dreamshoot-preview-poster={preview ? normalizedPosterSrc : undefined}
+      data-dreamshoot-preview-src={preview ? normalizedSrc : undefined}
+      data-dreamshoot-preview-title={preview ? (previewTitle || alt || "Video preview") : undefined}
+      data-dreamshoot-showcase-preview={preview ? "video" : undefined}
+      loop
+      muted
+      onError={() => {
+        if (!retryingSrc) {
+          const separator = normalizedSrc.includes("?") ? "&" : "?";
+          setRetryingSrc(`${normalizedSrc}${separator}media_retry=1`);
+          return;
+        }
+        setFailedSrc(normalizedSrc);
+      }}
+      playsInline
+      poster={normalizedPosterSrc || undefined}
+      preload="metadata"
+      src={retryingSrc || normalizedSrc}
+    />;
   }
   const imageSrc = retryingSrc || normalizedSrc;
   return <img
     alt={alt}
     className={className}
+    data-dreamshoot-preview-meta={preview ? previewMeta : undefined}
+    data-dreamshoot-preview-src={preview ? normalizedSrc : undefined}
+    data-dreamshoot-preview-title={preview ? (previewTitle || alt || "Image preview") : undefined}
+    data-dreamshoot-showcase-preview={preview ? "image" : undefined}
     onError={() => {
       if (retryingSrc) {
         setFailedSrc(normalizedSrc);
@@ -1701,6 +1762,7 @@ export function CustomerVideoWorkspace({
                   {!rootThemeCategories.length ? <p className="rounded-[10px] border border-dashed border-white/10 p-5 text-sm text-white/45">{vt(spanish, "No active theme categories are available.", "No hay categorias de temas activas disponibles.")}</p> : null}
                 </div>
               </div>
+              <DreamshootShowcasePreview className="contents">
               <div className="min-h-0 overflow-y-auto rounded-[16px] border border-white/10 bg-black/16 p-5">
                 {pickerTheme ? <>
                   <div className="flex flex-wrap items-start justify-between gap-4">
@@ -1708,16 +1770,17 @@ export function CustomerVideoWorkspace({
                     <span className="text-xs text-white/40">{pickerExamples.length} {vt(spanish, "reference cases", "casos de referencia")}</span>
                   </div>
                   <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(220px,0.44fr)_minmax(0,1fr)]">
-                    <ThemeMedia className="aspect-[4/3] w-full max-h-[260px] rounded-[12px] object-cover" src={pickerTheme.imageUrl} />
+                    <ThemeMedia alt={pickerTheme.name} className="aspect-[4/3] w-full max-h-[260px] rounded-[12px] object-cover" preview previewMeta={pickerTheme.description} previewTitle={pickerTheme.name} src={pickerTheme.imageUrl} />
                     <div><p className="text-sm leading-7 text-white/72">{pickerTheme.description}</p><div className="mt-4 grid max-w-[520px] grid-cols-2 gap-2 text-xs">{[[vt(spanish, "Credits", "Creditos"), pickerTheme.creditCost], [vt(spanish, "Selected output", "Salida seleccionada"), `${effectiveDurationSeconds}s · ${selectedAspectRatio} · ${selectedResolution.toUpperCase()}`], [vt(spanish, "Frame limit", "Limite de fotogramas"), pickerTheme.effectiveMaxFrames ?? pickerTheme.maxFrames], [vt(spanish, "Generation", "Generacion"), pickerTheme.imageToVideoProviderModelFamilies?.length ? "Image + text" : "Text prompt"]].map(([label, value]) => <div className="rounded-[10px] border border-white/8 bg-white/[0.03] px-3 py-2.5 text-center" key={String(label)}><span className="block text-[11px] text-white/35">{label}</span><strong className="mt-1 block text-white">{value}</strong></div>)}</div></div>
                   </div>
                   <div className="mt-6 grid gap-4 lg:grid-cols-2"><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Best for", "Ideal para")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.headline} {vt(spanish, "Use a clear subject, one focal action, and a controlled camera move for the most consistent result.", "Usa un sujeto claro, una accion principal y un movimiento de camara controlado para obtener un resultado consistente.")}</p></div><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Production notes", "Notas de produccion")}</p><p className="mt-2 text-sm leading-6 text-white/65">{vt(spanish, "Keep the reference frame sharp and well lit. Avoid extra subjects, heavy text, logos, watermarks, or sudden scene changes.", "Mantén el fotograma de referencia nitido y bien iluminado. Evita sujetos adicionales, mucho texto, logotipos, marcas de agua o cambios bruscos de escena.")}</p></div></div>
                   <div className="mt-4 grid gap-3 sm:grid-cols-3"><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Visual focus", "Enfoque visual")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.headline}</p></div><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Recommended input", "Entrada recomendada")}</p><p className="mt-2 text-sm leading-6 text-white/65">{pickerTheme.imageToVideoProviderModelFamilies?.length ? vt(spanish, "A sharp JPG or PNG frame with one clear subject.", "Un fotograma JPG o PNG nitido con un sujeto claro.") : vt(spanish, "A concise written brief with one focal action.", "Un brief escrito conciso con una accion principal.")}</p></div><div className="rounded-[12px] border border-white/8 bg-white/[0.025] p-4"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Output profile", "Perfil de salida")}</p><p className="mt-2 text-sm leading-6 text-white/65">{effectiveDurationSeconds}s · {selectedAspectRatio} · {selectedResolution.toUpperCase()}<span className="mt-1 block text-xs text-white/38">{vt(spanish, "The settings outside the prompt always take priority.", "La configuracion fuera del prompt siempre tiene prioridad.")}</span></p></div></div>
-                  <div className="mt-6"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Reference cases", "Casos de referencia")}</p><div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{pickerExamples.map((example) => <button className={`rounded-[12px] border p-3 text-left transition ${pickerExample?.id === example.id ? "border-[#31d4ff]/45 bg-[#31d4ff]/10" : "border-white/8 bg-white/[0.025] hover:border-white/20"}`} key={example.id} onClick={() => choosePickerExample(example)} type="button"><ThemeMedia className="mb-2 aspect-video w-full rounded-[8px] object-cover" src={example.imageUrl} /><span className="block text-sm font-semibold">{example.name}</span><span className="mt-1 block line-clamp-2 text-xs leading-5 text-white/45">{example.description}</span></button>)}</div></div>
-                  {pickerTheme.galleryImages?.length ? <div className="mt-6"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "More visual references", "Mas referencias visuales")}</p><div className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4">{pickerTheme.galleryImages.slice(0, 4).map((imageUrl) => <ThemeMedia alt={vt(spanish, "Visual reference", "Referencia visual")} className="aspect-video w-full rounded-[9px] object-cover" key={imageUrl} src={imageUrl} />)}</div></div> : null}
+                  <div className="mt-6"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "Reference cases", "Casos de referencia")}</p><div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{pickerExamples.map((example) => <button className={`rounded-[12px] border p-3 text-left transition ${pickerExample?.id === example.id ? "border-[#31d4ff]/45 bg-[#31d4ff]/10" : "border-white/8 bg-white/[0.025] hover:border-white/20"}`} key={example.id} onClick={(event) => { if (event.target instanceof Element && event.target.closest("[data-dreamshoot-showcase-preview]")) return; choosePickerExample(example); }} type="button"><ThemeMedia alt={example.name} className="mb-2 aspect-video w-full rounded-[8px] object-cover" preview previewMeta={example.description} previewTitle={example.name} {...preferredThemeMediaSource(example)} /><span className="block text-sm font-semibold">{example.name}</span><span className="mt-1 block line-clamp-2 text-xs leading-5 text-white/45">{example.description}</span></button>)}</div></div>
+                  {pickerTheme.galleryImages?.length ? <div className="mt-6"><p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/38">{vt(spanish, "More visual references", "Mas referencias visuales")}</p><div className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4">{pickerTheme.galleryImages.slice(0, 4).map((imageUrl) => <ThemeMedia alt={vt(spanish, "Visual reference", "Referencia visual")} className="aspect-video w-full rounded-[9px] object-cover" key={imageUrl} posterSrc={pickerTheme.imageUrl} preview previewMeta={pickerTheme.name} previewTitle={pickerTheme.name} src={imageUrl} />)}</div></div> : null}
                   <label className="mt-6 block border-t border-white/10 pt-5"><div className="flex items-center justify-between gap-3"><span className="text-xs font-semibold uppercase tracking-[0.13em] text-white/40">{pickerTheme.imageUrl ? vt(spanish, "Cover-based theme direction", "Direccion basada en la portada") : vt(spanish, "Source-based theme direction", "Direccion basada en la fuente")}</span><span className="text-[11px] text-white/35">{themePickerPrompt.length} / 5000</span></div><p className="mt-1 text-xs leading-5 text-white/38">{pickerTheme.imageUrl ? vt(spanish, "This ready-to-use scene follows the cover's real people, objects, setting, and light. Replace bracketed details only when needed.", "Esta escena lista para usar sigue las personas, objetos, entorno y luz reales de la portada. Sustituye los detalles entre corchetes solo cuando sea necesario.") : vt(spanish, "This theme has no cover. Its scene follows your uploaded frame or written brief without borrowing another theme's content.", "Este tema no tiene portada. La escena sigue tu fotograma subido o tu descripcion sin tomar contenido de otro tema.")}</p><textarea className="mt-2 min-h-[150px] w-full resize-y rounded-[12px] border border-white/10 bg-[#080b10] p-3 text-sm leading-6 text-white/78 outline-none focus:border-[#31d4ff]/45" onChange={(event) => setThemePickerPrompt(event.target.value)} value={themePickerPrompt} /></label>
                 </> : <div className="grid min-h-[520px] place-items-center text-center"><div><Film className="mx-auto h-10 w-10 text-white/25" /><p className="mt-3 text-sm font-semibold text-white/58">{vt(spanish, "Select a theme from the directory", "Selecciona un tema del directorio")}</p><p className="mt-1 text-xs text-white/38">{vt(spanish, "Expand a category, then open its themes.", "Expande una categoria y abre sus temas.")}</p></div></div>}
               </div>
+              </DreamshootShowcasePreview>
             </div>
             <div className="flex shrink-0 flex-col-reverse gap-3 border-t border-white/10 p-5 sm:flex-row sm:justify-end"><button className="inline-flex min-h-10 items-center justify-center rounded-full border border-white/14 px-5 text-sm font-semibold text-white/72 hover:bg-white/[0.08] hover:text-white" onClick={() => setThemePickerOpen(false)} type="button">{vt(spanish, "Cancel", "Cancelar")}</button><button className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-[#2f6fed] px-5 text-sm font-semibold text-white hover:bg-[#4380ff] disabled:opacity-45" disabled={!pickerTheme || !themePickerPrompt.trim()} onClick={confirmThemePicker} type="button"><Check className="h-4 w-4" strokeWidth={2} />{vt(spanish, "Apply theme", "Aplicar tema")}</button></div>
           </div>
