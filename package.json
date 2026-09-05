@@ -135,6 +135,8 @@
     "sync:mydreamshoots-seo-p1-content:dry-run": "node scripts/sync-mydreamshoots-seo-p1-content-local.mjs",
     "sync:mydreamshoots-policy-remediation": "node scripts/sync-mydreamshoots-policy-remediation.mjs --dry-run",
     "sync:mydreamshoots-policy-remediation:apply": "node scripts/sync-mydreamshoots-policy-remediation.mjs --apply",
+    "sync:mydreamshoots-homepage-media": "node scripts/sync-mydreamshoots-homepage-media.mjs --dry-run",
+    "sync:mydreamshoots-homepage-media:apply": "node scripts/sync-mydreamshoots-homepage-media.mjs --apply",
     "smoke:mydreamshoots-policy-remediation": "node scripts/smoke-mydreamshoots-policy-remediation.mjs",
     "smoke:mydreamshoots-seo-p1-content": "node scripts/smoke-mydreamshoots-seo-p1-content.mjs",
     "sync:mydreamshoots-video-category-hierarchy": "node scripts/sync-mydreamshoots-video-category-hierarchy.mjs",

@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
+import "./load-runtime-env.mjs";
 
 // PostgreSQL is the only runtime/release source. data/platform-state.json is retired.
 const prisma = new PrismaClient();
@@ -37,9 +38,23 @@ async function main() {
   assertText(sections.conversion_1?.settings?.subtitle, copy.conversionSubtitle, "conversion subtitle drifted");
   assert.equal(sections.pricing_1?.settings?.description, "Use credits across eligible AI photo and video workflows. The required credit cost is shown before generation.");
 
+  const proofMedia = (sections.proof_1?.blocks ?? [])
+    .map((block) => block?.settings?.resultImageUrl)
+    .filter((value) => typeof value === "string" && value.startsWith("/assets/"));
+  for (const mediaPath of [...new Set(proofMedia)]) {
+    const mediaResponse = await fetch(`${origin}${mediaPath}`);
+    assert.equal(mediaResponse.status, 200, `homepage proof media must return 200: ${mediaPath}`);
+  }
+
   const response = await fetch(`${origin}/`, { headers: { accept: "text/html,*/*" } });
   assert.equal(response.status, 200, "production homepage must return 200");
   const html = await response.text();
+  for (const mediaPath of [...new Set(proofMedia)]) {
+    assert.ok(html.includes(mediaPath), `production homepage must render synced proof media: ${mediaPath}`);
+  }
+  assert.ok(!html.includes("20260830-homepage-review-replacements"), "production homepage must not reference retired review media");
+  assert.ok(!html.includes("world-cup-fan-photos-03-20260830.webp"), "production homepage must not reference retired world cup media");
+  assert.ok(!html.includes("gala-photos-02-20260830.webp"), "production homepage must not reference retired gala media");
   assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, "homepage must contain exactly one H1");
   assert.ok(!/<h2\b[^>]*>[^<]*Creative workflow examples built with myDreamshoots/i.test(html), "workflow examples must not render as an H2");
   assert.ok(!/<h2\b[^>]*>\s*(?:Soccer|Portrait Photo|Christmas Photo)\s*<\/h2>/i.test(html), "photo package cards must not render as H2");
