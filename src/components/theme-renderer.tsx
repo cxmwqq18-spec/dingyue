@@ -17261,7 +17261,11 @@ function SectionView({
           .replace(/^POLICY$/i, "Politica")
           .replace(/^Policy$/i, "Politica")
       : rawEyebrow;
-    const lastUpdated = storefrontContext?.profile?.policyFacts.effectiveDate ?? "";
+    const sectionLastUpdated = setting(section, "lastUpdated", "");
+    const usesPageSpecificPolicyDate = renderContext.pagePath === "/shipping" || renderContext.pagePath === "/policies/shipping";
+    const lastUpdated = usesPageSpecificPolicyDate && sectionLastUpdated
+      ? sectionLastUpdated
+      : storefrontContext?.profile?.policyFacts.effectiveDate ?? "";
     const contactEmail = storefrontContext?.profile?.identity.supportEmail ?? "";
     const bodyTemplate = setting(section, "body", "Private uploads, account activity, and delivered albums are handled according to this policy.");
     const bodyResolution = storefrontContext ? resolveStorefrontBindings(bodyTemplate, storefrontContext) : { value: bodyTemplate, missing: [] };
