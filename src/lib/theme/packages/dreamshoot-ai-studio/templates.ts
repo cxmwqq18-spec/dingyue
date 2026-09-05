@@ -970,6 +970,24 @@ function mydreamshootsAboutConversionSection(): SectionInstance {
   };
 }
 
+function mydreamshootsContactConversionSection(): SectionInstance {
+  const base = homeSections.conversion_1;
+  return {
+    ...base,
+    settings: {
+      ...base.settings,
+      eyebrow: "AI IMAGE + VIDEO CREATION",
+      title: "Ready to create something from your photos?",
+      subtitle: "Create AI images, AI videos, personalized Save the Date videos, and themed photo packages in one private workspace.",
+      primaryCta: "Start creating",
+      primaryHref: "/login",
+      secondaryCta: "View pricing",
+      secondaryHref: "/pricing"
+    },
+    blocks: (base.blocks ?? []).map((item) => ({ ...item, settings: { ...item.settings } }))
+  };
+}
+
 const templateSections = {
   pricing_intro_1: section("rich_text", {
     eyebrow: "Pricing",
@@ -2888,27 +2906,35 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       contact_intro_1: section("rich_text", {
         eyebrow: "Contact us",
         title: "Contact myDreamshoots support.",
-        body: "Reach myDreamshoots for account help, billing review, AI photo package questions, private album support, privacy requests, creator use cases, or plan questions.",
+        body: "Need help with an account, an upload, credits, billing, privacy, or a finished result? Contact myDreamshoots and include the details below so we can understand the request and route it to the right support path.",
         headingLevel: "h1",
         tone: "dark",
         imageUrl: assets.catalogHeadshotCard,
         primaryCta: "Email support",
-        primaryHref: "/contact-us",
-        secondaryCta: "Email support",
-        secondaryHref: "/faq"
+        primaryHref: "mailto:{LIVE_SUPPORT_EMAIL}"
       }, [
-        block("contact_support", "rich_text_card", { meta: "Support", title: "", description: "For account access, billing review, credit questions, upload help, privacy requests, and delivered album support." }),
-        block("contact_account", "rich_text_card", { meta: "Company", title: "", description: "Published company identity for legal and account correspondence." }),
-        block("contact_address", "rich_text_card", { meta: "Address", title: "", description: "Published address for business correspondence." })
+        block("contact_support", "rich_text_card", { meta: "Support", title: "{LIVE_SUPPORT_EMAIL}", description: "Email us for account, billing, upload, privacy, AI image, AI video, Save the Date, or digital delivery questions." }),
+        block("contact_company", "rich_text_card", { meta: "Company", title: "{LIVE_LEGAL_NAME}", description: "myDreamshoots.com is operated by {LIVE_LEGAL_NAME}, a Delaware company founded by NARUEBET NAKPHONG." }),
+        block("contact_address", "rich_text_card", { meta: "Address", title: "{LIVE_STORE_ADDRESS}", description: "Published business correspondence address." })
       ]),
       contact_details_1: section("policy_content", {
-        title: "Contact information",
+        eyebrow: "Before you contact us",
+        title: "Include the details that help us solve the issue.",
         headingLevel: "h2",
-        lastUpdated: "{LIVE_POLICY_EFFECTIVE_DATE}",
-        contactEmail: "",
-        body: "<h3>Company</h3><p>{LIVE_LEGAL_NAME}</p><h3>Address</h3><p>{LIVE_STORE_ADDRESS}</p><h3>Contact Us</h3><p>{LIVE_SUPPORT_EMAIL}</p>"
-      }),
-      conversion_1: homeSections.conversion_1
+        body: "For faster support, tell us what you were trying to do, which account email you used, and where the problem occurred. Do not send passwords, one-time codes, payment card numbers, or other sensitive secrets by email.",
+        contactPageVariant: "support_guidance",
+        supportProcessEyebrow: "Support process",
+        supportProcessTitle: "A clear path from question to resolution.",
+        supportProcessBody: "Tell us what happened, and we will use the information you provide to identify the right next step for your account or project."
+      }, [
+        block("contact_before_account", "rich_text_card", { meta: "01", title: "Account or billing", description: "Include the account email, order or payment reference, and the question you need answered." }),
+        block("contact_before_generation", "rich_text_card", { meta: "02", title: "Upload or generation", description: "Tell us which workflow you used, what happened, and whether the result is missing, delayed, or different from what you expected." }),
+        block("contact_before_privacy", "rich_text_card", { meta: "03", title: "Privacy or content", description: "Describe the request clearly and include the relevant page or job details. Only upload or share photos you own or are authorized to use." }),
+        block("contact_process_describe", "rich_text_card", { meta: "01", title: "Describe the issue", description: "Tell us the page, workflow, account area, or transaction involved." }),
+        block("contact_process_review", "rich_text_card", { meta: "02", title: "Review the details", description: "We review the relevant account, billing, upload, or delivery context." }),
+        block("contact_process_followup", "rich_text_card", { meta: "03", title: "Follow up by email", description: "We reply with the next step, a clarification, or the applicable policy path." })
+      ]),
+      conversion_1: mydreamshootsContactConversionSection()
     },
     1,
     seoForPublicPage("/contact-us", site)

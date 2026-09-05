@@ -2284,6 +2284,11 @@ function blockValue(block: SectionBlockInstance, key: string, fallback = ""): st
   return value.trim() ? value : fallback;
 }
 
+function storefrontBoundText(value: string, context?: StorefrontContext): string {
+  if (!context) return value;
+  return resolveStorefrontBindings(value, context).value ?? value;
+}
+
 function compactFallbackAltFromImageSrc(src: string | undefined): string {
   const readable = imageBasename(src || "")
     .replace(/[-_]+/g, " ")
@@ -17027,7 +17032,8 @@ function SectionView({
     const profileAddress = profileIdentity?.address
       ? [profileIdentity.address.line1, profileIdentity.address.line2, profileIdentity.address.city, profileIdentity.address.region, profileIdentity.address.postalCode, profileIdentity.address.country].filter(Boolean).join(", ")
       : "";
-    const richCards = renderContext.pagePath === "/contact-us" && profileIdentity
+    const configuredMydreamshootsContactCards = renderContext.pagePath === "/contact-us" && isMyDreamShootsProfileSite(site);
+    const richCards = renderContext.pagePath === "/contact-us" && profileIdentity && !configuredMydreamshootsContactCards
       ? [
           { id: "profile_contact_email", type: "rich_text_card", settings: { meta: "Support", title: profileIdentity.supportEmail ?? "", description: "Account, billing, upload, privacy, and delivery support." } },
           { id: "profile_contact_company", type: "rich_text_card", settings: { meta: "WEB", title: isMyDreamShootsProfileSite(site) ? "myDreamshoots.com" : site.primaryDomain.replace(/^www\./i, ""), description: profileIdentity.entityType ?? "", secondaryTitle: profileIdentity.legalName ?? "" } },
@@ -17037,7 +17043,9 @@ function SectionView({
     const primaryCta = setting(section, "primaryCta", "");
     const primaryHref = renderContext.pagePath === "/contact-us" && profileIdentity?.supportEmail
       ? `mailto:${profileIdentity.supportEmail}`
-      : setting(section, "primaryHref", "");
+      : configuredMydreamshootsContactCards
+        ? storefrontBoundText(setting(section, "primaryHref", ""), storefrontContext)
+        : setting(section, "primaryHref", "");
     const secondaryCta = setting(section, "secondaryCta", "");
     const secondaryHref = setting(section, "secondaryHref", "");
     const tone = setting(section, "tone", "warm");
@@ -17103,14 +17111,22 @@ function SectionView({
               ) : null}
               {showInlineRichCards ? (
                 <div className={dark ? "mt-8 grid min-w-0 gap-3 border-t border-white/12 pt-5 sm:grid-cols-2" : "mt-8 grid min-w-0 gap-3 border-t border-[#ddd4c8] pt-5 sm:grid-cols-2"}>
-                  {richCards.slice(0, 4).map((card, index) => (
-                    <article className={dark ? "min-w-0 rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "min-w-0 rounded-[18px] border border-[#e4dace] bg-white/56 p-4 shadow-[0_18px_48px_-42px_rgba(20,22,26,0.18)]"} key={instanceKey(card, index, "rich_text_card")} {...xfcartBlockAttrs(mode, card, index, "rich_text_card")}>
-                      <p className={dark ? "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-white/46 [overflow-wrap:anywhere]" : "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a7a6d] [overflow-wrap:anywhere]"}>{blockValue(card, "meta", String(index + 1).padStart(2, "0"))}</p>
-                      <h3 className="mt-3 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">{headingBlockValue(card, "title", headingBlockValue(card, "label", "Editable item"))}</h3>
-                      <p className={dark ? "mt-2 min-w-0 text-sm leading-6 text-white/62 [overflow-wrap:anywhere]" : "mt-2 min-w-0 text-sm leading-6 text-[#625d56] [overflow-wrap:anywhere]"}>{blockValue(card, "description", blockValue(card, "text", ""))}</p>
-                      {blockValue(card, "secondaryTitle", "") ? <p className="mt-4 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">{blockValue(card, "secondaryTitle", "")}</p> : null}
-                    </article>
-                  ))}
+                  {richCards.slice(0, 4).map((card, index) => {
+                    const meta = blockValue(card, "meta", String(index + 1).padStart(2, "0"));
+                    const cardTitle = storefrontBoundText(headingBlockValue(card, "title", headingBlockValue(card, "label", "Editable item")), configuredMydreamshootsContactCards ? storefrontContext : undefined);
+                    const cardDescription = storefrontBoundText(blockValue(card, "description", blockValue(card, "text", "")), configuredMydreamshootsContactCards ? storefrontContext : undefined);
+                    const isSupportEmail = configuredMydreamshootsContactCards && meta.toLowerCase() === "support" && cardTitle.includes("@");
+                    return (
+                      <article className={dark ? "min-w-0 rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "min-w-0 rounded-[18px] border border-[#e4dace] bg-white/56 p-4 shadow-[0_18px_48px_-42px_rgba(20,22,26,0.18)]"} key={instanceKey(card, index, "rich_text_card")} {...xfcartBlockAttrs(mode, card, index, "rich_text_card")}>
+                        <p className={dark ? "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-white/46 [overflow-wrap:anywhere]" : "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a7a6d] [overflow-wrap:anywhere]"}>{meta}</p>
+                        <h3 className="mt-3 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">
+                          {isSupportEmail ? <a className="underline decoration-white/25 underline-offset-4 transition hover:decoration-white/70" href={`mailto:${cardTitle}`}>{cardTitle}</a> : cardTitle}
+                        </h3>
+                        <p className={dark ? "mt-2 min-w-0 text-sm leading-6 text-white/62 [overflow-wrap:anywhere]" : "mt-2 min-w-0 text-sm leading-6 text-[#625d56] [overflow-wrap:anywhere]"}>{cardDescription}</p>
+                        {blockValue(card, "secondaryTitle", "") ? <p className="mt-4 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">{blockValue(card, "secondaryTitle", "")}</p> : null}
+                      </article>
+                    );
+                  })}
                 </div>
               ) : null}
             </div>
@@ -17291,6 +17307,59 @@ function SectionView({
   if (section.type === "header") return null;
 
   if (section.type === "policy_content") {
+    const mydreamshootsContactGuide = renderContext.pagePath === "/contact-us" && isMyDreamShootsProfileSite(site) && setting(section, "contactPageVariant", "") === "support_guidance";
+    if (mydreamshootsContactGuide) {
+      const cards = sectionBlocks(section, "rich_text_card");
+      const resolveContactText = (value: string) => storefrontBoundText(value, storefrontContext);
+      const renderGuideCard = (card: SectionBlockInstance, index: number, group: string) => {
+        const title = resolveContactText(headingBlockValue(card, "title", headingBlockValue(card, "label", `Step ${index + 1}`)));
+        const description = resolveContactText(blockValue(card, "description", blockValue(card, "text", "")));
+        return (
+          <article className="rounded-[24px] border border-[#e5ddd1] bg-white p-6 shadow-[0_24px_80px_-64px_rgba(18,20,24,0.25)]" key={instanceKey(card, index, `contact_${group}_card`)} {...xfcartBlockAttrs(mode, card, index, `contact_${group}_card`)}>
+            <p className="font-mono text-2xl text-[#14161a]">{blockValue(card, "meta", String(index + 1).padStart(2, "0"))}</p>
+            <h3 className="mt-6 text-xl font-semibold tracking-tight">{title}</h3>
+            <p className="mt-3 text-sm leading-7 text-[#6f685f]">{description}</p>
+          </article>
+        );
+      };
+      const policyLinks = [
+        ["Privacy Policy", "/privacy"],
+        ["Terms of Service", "/terms"],
+        ["Cookie Policy", "/cookies"],
+        ["Children's Privacy", "/children-privacy"],
+        ["State Privacy", "/state-privacy"],
+        ["Help center", "/faq"]
+      ] as const;
+      return (
+        <section className="bg-[#f6f5f1] px-4 py-12 text-[#16181d] sm:px-5 md:py-16" id={sectionAnchor(section, id)}>
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <div className="max-w-4xl">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#7a746b]">{setting(section, "eyebrow", "Before you contact us")}</p>
+              <h2 className="mt-4 text-[clamp(2.1rem,5vw,4.3rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]">{setting(section, "title", "Include the details that help us solve the issue.")}</h2>
+              <p className="mt-5 max-w-3xl text-base leading-8 text-[#6f685f]">{resolveContactText(setting(section, "body", ""))}</p>
+            </div>
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {cards.slice(0, 3).map((card, index) => renderGuideCard(card, index, "before"))}
+            </div>
+            <div className="mt-16 max-w-4xl">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#7a746b]">{setting(section, "supportProcessEyebrow", "Support process")}</p>
+              <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight md:text-5xl [font-family:var(--site-title-font)]">{setting(section, "supportProcessTitle", "A clear path from question to resolution.")}</h2>
+              <p className="mt-5 max-w-3xl text-base leading-8 text-[#6f685f]">{resolveContactText(setting(section, "supportProcessBody", ""))}</p>
+            </div>
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {cards.slice(3, 6).map((card, index) => renderGuideCard(card, index, "process"))}
+            </div>
+            <div className="mt-10 flex flex-wrap gap-3 text-sm">
+              {policyLinks.map(([label, href]) => (
+                <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, href)} key={href}>
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
     const spanishXbyPolicy = isSpanishXbySite(site);
     const rawTitle = setting(section, "title", "Policy");
     const title = spanishXbyPolicy
