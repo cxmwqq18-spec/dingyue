@@ -95,6 +95,8 @@
     "sync:mydreamshoots-logo-wall": "node scripts/sync-mydreamshoots-logo-wall.mjs",
     "update:mydreamshoots-logo-title": "node scripts/update-mydreamshoots-logo-title.mjs",
     "sync:save-the-date-valentines-day": "node scripts/sync-save-the-date-valentines-day.mjs",
+    "sync:save-the-date-valentines-day-video": "node scripts/sync-valentines-day-hero-video.mjs",
+    "sync:save-the-date-valentines-day-video:dry-run": "node scripts/sync-valentines-day-hero-video.mjs --dry-run",
     "sync:save-the-date-topic-pages": "node scripts/sync-save-the-date-topic-pages.mjs",
     "sync:save-the-date-indexability": "node scripts/sync-save-the-date-indexability.mjs",
     "migrate:save-the-date-route-prefix": "node scripts/migrate-save-the-date-route-prefix.mjs",
