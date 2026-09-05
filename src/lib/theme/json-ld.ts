@@ -75,6 +75,16 @@ const MYDREAMSHOOTS_VIDEO_SCHEMA_PATHS = new Set([
   "/ai-video-generation/youtube-video"
 ]);
 
+function toolOfferAvailability(site: Site, pagePath: string, context: StorefrontContext): string {
+  const publishedVideoToolIsAvailable =
+    isMydreamshootsComSite(site) &&
+    MYDREAMSHOOTS_VIDEO_SCHEMA_PATHS.has(pagePath) &&
+    context.capability.usesAiGenerationPublicRoutes;
+  return publishedVideoToolIsAvailable || context.offers.active.some((offer) => offer.checkoutEnabled)
+    ? "https://schema.org/InStock"
+    : "https://schema.org/OutOfStock";
+}
+
 function collapseSpanishXbyBrandRepeats(value: string): string {
   return value
     .replace(/\bMyDreamShoots-xby(?:-xby)+\b/g, "MyDreamShoots-xby")
@@ -1086,9 +1096,7 @@ export function buildToolDirectoryJsonLd({
       },
       offers: {
         "@type": "Offer",
-        availability: context.offers.active.some((offer) => offer.checkoutEnabled)
-          ? "https://schema.org/InStock"
-          : "https://schema.org/OutOfStock",
+        availability: toolOfferAvailability(site, pagePath, context),
         category: isSpanishXbySite(site)
           ? isAidreamcapesSite(site) ? "herramienta de retratos de viaje IA" : "herramienta de fotos IA"
           : isAidreamcapesSite(site) ? "AI occasion portrait tool" : isMydreamshootsComSite(site) && MYDREAMSHOOTS_VIDEO_SCHEMA_PATHS.has(pagePath) ? "AI video tool" : "AI photo tool",

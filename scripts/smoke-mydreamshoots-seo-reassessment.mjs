@@ -119,7 +119,9 @@ const videoResults = await Promise.all(videoPaths.map(async (path) => ({ path, .
 for (const { path, status, html } of videoResults) {
   assert.equal(status, 200, `${path} must render with HTTP 200`);
   const nodes = graphNodes(html);
-  assert.equal(nodes.find((node) => node?.["@type"] === "SoftwareApplication")?.offers?.category, "AI video tool", `${path} must identify its SoftwareApplication as an AI video tool`);
+  const applicationOffer = nodes.find((node) => node?.["@type"] === "SoftwareApplication")?.offers;
+  assert.equal(applicationOffer?.category, "AI video tool", `${path} must identify its SoftwareApplication as an AI video tool`);
+  assert.equal(applicationOffer?.availability, "https://schema.org/InStock", `${path} must advertise the published video workflow as available`);
   assert.equal(nodes.find((node) => node?.["@type"] === "Service")?.serviceType, "AI video generation service", `${path} must identify its Service as AI video generation`);
 }
 
