@@ -48,6 +48,10 @@ const canonicalSocialLinks = {
   tiktokUrl: "https://www.tiktok.com/@mydreamshoots"
 };
 
+const saveTheDateVideoUrls = {
+  christmas: "/assets/dreamshoot/seasonal/christmas/christmas-hero-family-gift.mp4"
+};
+
 const textReplacements = [
   ["https://www.instagram.com/blydey_inc", "https://www.instagram.com/mydreamshoots/"],
   ["https://www.facebook.com/blydeyinc", "https://www.facebook.com/mydreamshoots/"],
@@ -131,6 +135,12 @@ function updateThemeSettings(value) {
   const next = mapStrings(value);
   const footer = next?.globalSections?.footer;
   if (footer?.settings && typeof footer.settings === "object") footer.settings = { ...footer.settings, ...canonicalSocialLinks };
+  for (const group of next?.saveTheDateNavigation?.groups ?? []) {
+    for (const item of group.items ?? []) {
+      const videoUrl = saveTheDateVideoUrls[item?.slug];
+      if (videoUrl) item.videoUrl = videoUrl;
+    }
+  }
   return next;
 }
 
@@ -194,8 +204,12 @@ try {
     const settingsFooter = await prisma.themeSettings.findUnique({ where: { siteId: SITE_ID }, select: { draftJson: true, publishedJson: true } });
     for (const settings of [settingsFooter?.draftJson, settingsFooter?.publishedJson]) {
       for (const [key, expected] of Object.entries(canonicalSocialLinks)) assert.equal(settings?.globalSections?.footer?.settings?.[key], expected, `footer social readback failed: ${key}`);
+      for (const [slug, expected] of Object.entries(saveTheDateVideoUrls)) {
+        const item = settings?.saveTheDateNavigation?.groups?.flatMap((group) => group.items ?? []).find((candidate) => candidate?.slug === slug);
+        assert.equal(item?.videoUrl, expected, `Save the Date video readback failed: ${slug}`);
+      }
     }
-    report.readback = { homeEyebrow: home?.contentJson?.sections?.tutorial_video_1?.settings?.showEyebrow, packageCatalog: home?.contentJson?.sections?.package_catalog_1 ?? null, pricingTrust: trust.filter((block) => ["trust_refund", "trust_encryption"].includes(block.id)).map((block) => ({ id: block.id, value: block.settings?.value, label: block.settings?.label })), social: canonicalSocialLinks };
+    report.readback = { homeEyebrow: home?.contentJson?.sections?.tutorial_video_1?.settings?.showEyebrow, packageCatalog: home?.contentJson?.sections?.package_catalog_1 ?? null, pricingTrust: trust.filter((block) => ["trust_refund", "trust_encryption"].includes(block.id)).map((block) => ({ id: block.id, value: block.settings?.value, label: block.settings?.label })), social: canonicalSocialLinks, saveTheDateVideoUrls };
   }
   console.log(JSON.stringify(report, null, 2));
 } finally {
