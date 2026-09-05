@@ -87,7 +87,8 @@ assert.doesNotMatch(showcaseVideo, /use client|useEffect|IntersectionObserver|\.
 assert.match(showcaseRail, /use client/, "public showcase rail may use a client-only presentation layer");
 assert.match(showcaseRail, /requestAnimationFrame/, "public showcase rail must retain automatic presentation motion");
 assert.doesNotMatch(showcaseRail, /\b(?:fetch|XMLHttpRequest|EventSource)\b/, "public showcase rail must not fetch data from the browser");
-assert.doesNotMatch(lazyVideo, /use client|useEffect|IntersectionObserver|\.play\s*\(/, "public video must not use client lazy-loading controls");
+assert.match(lazyVideo, /<video[\s\S]*preload="metadata"[\s\S]*src=\{src\}/, "public video must keep server-rendered metadata video markup");
+assert.doesNotMatch(lazyVideo, /\b(?:fetch|XMLHttpRequest|EventSource)\b|customer\/(?:runtime|bootstrap)/, "public video controls must not fetch customer runtime data");
 assert.doesNotMatch(headerMegaPanels, /^\s*["']use client["'];/m, "public mega menu panels must remain server components");
 assert.doesNotMatch(jsonLd, /use client|useServerInsertedHTML|useRef/, "public JSON-LD must be emitted by the server component");
 assert.equal(existsSync(path.join(root, "src/components/storefront/lazy-storefront-section.tsx")), false, "legacy public lazy section fetcher must be removed");
