@@ -378,6 +378,7 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
   const address = companyAddressSchema(profile);
   const identifiers = companyIdentifiers(profile);
   const sameAs = (context?.profile?.identity.sameAs ?? []).filter((url) => /^https?:\/\//i.test(url));
+  const isAboutPage = pagePath === "/about-us" && isMydreamshootsComSite(site);
   const logo = isPrimaryMyDreamShootsSite(site)
     ? absoluteUrl(site, routeMode, "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
     : undefined;
@@ -385,10 +386,13 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
     "@type": "Organization",
     "@id": `${storefrontBaseUrl(site, routeMode)}#organization`,
     name: siteBrandName(site),
-    ...(profile.legalName ? { legalName: profile.legalName } : {}),
+    ...(isAboutPage ? { legalName: "MRNARUEBET LLC" } : profile.legalName ? { legalName: profile.legalName } : {}),
     url: storefrontBaseUrl(site, routeMode),
     ...(logo ? { logo: { "@type": "ImageObject", url: logo, contentUrl: logo } } : {}),
-    description: cleanSchemaText(site, site.branding.description),
+    description: isAboutPage
+      ? "myDreamshoots.com is an AI image and video creation tool for AI-generated images, short videos, personalized Save the Date videos, photo packages, and private digital delivery."
+      : cleanSchemaText(site, site.branding.description),
+    ...(isAboutPage ? { founder: { "@type": "Person", name: "NARUEBET NAKPHONG" } } : {}),
     ...(profile.email ? { email: profile.email } : {}),
     ...(profile.phone ? { telephone: profile.phone } : {}),
     ...(address ? { address } : {}),

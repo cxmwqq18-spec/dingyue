@@ -16942,6 +16942,60 @@ function SectionView({
   }
 
   if (section.type === "rich_text") {
+    if (renderContext.pagePath === "/about-us" && (site.id === "site_dreamshoot" || site.primaryDomain === "www.mydreamshoots.com") && (id === "about_story_1" || id === "about_company_1")) {
+      const dark = id === "about_story_1";
+      const rawParagraphs = section.settings.bodyParagraphs;
+      const paragraphs: string[] = Array.isArray(rawParagraphs)
+        ? rawParagraphs.reduce<string[]>((values, value) => {
+            if (typeof value === "string" && value.trim().length > 0) values.push(value);
+            return values;
+          }, [])
+        : [];
+      const cards = sectionBlocks(section, "rich_text_card");
+      const configuredImage = setting(section, "imageUrl", "");
+      const image = id === "about_company_1"
+        ? cleanStorefrontImageSrc(configuredImage)
+        : mediaAssetUrl(site, configuredImage);
+      const imageAlt = setting(section, "imageAlt", "");
+      const imageCaption = setting(section, "imageCaption", "");
+      const heading = setting(section, "title", id);
+      return (
+        <section className={dark ? "bg-[#101114] px-5 py-16 text-white" : "grid-paper bg-[#f7f3ec] px-5 py-16 text-[#14161a]"} id={sectionAnchor(section, id)}>
+          <div className="mx-auto max-w-[var(--site-content-width)]">
+            <div className={`grid gap-8 ${image ? "lg:grid-cols-[0.82fr_1.18fr] lg:items-center" : "lg:grid-cols-[0.82fr_1.18fr] lg:items-start"}`}>
+              <div className="min-w-0">
+                <p className={dark ? "font-mono text-xs uppercase tracking-[0.22em] text-white/54" : "font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]"}>{setting(section, "eyebrow", "")}</p>
+                <h2 className="mt-4 max-w-4xl text-4xl font-semibold leading-[1.04] tracking-tight text-balance md:text-6xl [font-family:var(--site-title-font)]">{heading}</h2>
+                {paragraphs.map((paragraph, index) => (
+                  <p className={index === 0 ? (dark ? "mt-5 max-w-3xl text-base leading-8 text-white/68" : "mt-5 max-w-3xl text-base leading-8 text-[#625d56]") : (dark ? "mt-4 max-w-3xl text-base leading-8 text-white/68" : "mt-4 max-w-3xl text-base leading-8 text-[#625d56]")} key={`${id}_paragraph_${index}`}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+              {image ? (
+                <figure className="min-w-0">
+                  <div className={dark ? "overflow-hidden rounded-[28px] border border-white/10 bg-zinc-900 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "overflow-hidden rounded-[28px] border border-[#ded5ca] bg-[#efe6d9] shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"}>
+                    <img className="aspect-[16/11] h-full w-full max-w-full object-cover" src={image} alt={imageAlt} />
+                  </div>
+                  {imageCaption ? <figcaption className={dark ? "mt-3 text-xs leading-5 text-white/52" : "mt-3 text-xs leading-5 text-[#8a7a6d]"}>{imageCaption}</figcaption> : null}
+                </figure>
+              ) : null}
+            </div>
+            {cards.length ? (
+              <div className={dark ? "mt-8 grid min-w-0 gap-3 sm:grid-cols-3" : "mt-8 grid min-w-0 gap-3 sm:grid-cols-3"}>
+                {cards.slice(0, 3).map((card, index) => (
+                  <article className={dark ? "min-w-0 rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "min-w-0 rounded-[18px] border border-[#e4dace] bg-white/56 p-4 shadow-[0_18px_48px_-42px_rgba(20,22,26,0.18)]"} key={instanceKey(card, index, "about_rich_text_card")} {...xfcartBlockAttrs(mode, card, index, "rich_text_card")}>
+                    <p className={dark ? "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-white/46 [overflow-wrap:anywhere]" : "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a7a6d] [overflow-wrap:anywhere]"}>{blockValue(card, "meta", String(index + 1).padStart(2, "0"))}</p>
+                    <h3 className="mt-3 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">{headingBlockValue(card, "title", "Editable item")}</h3>
+                    <p className={dark ? "mt-2 min-w-0 text-sm leading-6 text-white/62 [overflow-wrap:anywhere]" : "mt-2 min-w-0 text-sm leading-6 text-[#625d56] [overflow-wrap:anywhere]"}>{blockValue(card, "description", "")}</p>
+                  </article>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </section>
+      );
+    }
     const spanishXbyRichText = isSpanishXbySite(site);
     const aidreamcapesRichText = isAidreamcapesSite(site);
     const workflowIntroRichText = renderContext.pagePath === "/workflow" && id === "workflow_intro_1";

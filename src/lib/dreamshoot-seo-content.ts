@@ -156,9 +156,9 @@ export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMeta
     follow: true
   },
   "/about-us": {
-    title: "About myDreamshoots",
+    title: "About myDreamshoots: AI Image and Video Creation | myDreamshoots",
     description:
-      "Learn about myDreamshoots, an AI photo package workspace for private uploads, personal AI models, clear credits, secure checkout, and customer-only gallery delivery.",
+      "Learn how myDreamshoots turns your photos into AI images, videos, and personalized Save the Date moments. Operated by MRNARUEBET LLC in Delaware and founded by NARUEBET NAKPHONG.",
     keywords: "About myDreamshoots, AI photo packages, private AI photo albums, personal AI model, AI portrait workspace",
     canonicalPath: "/about-us",
     index: true,

@@ -891,6 +891,58 @@ const homeSections: ThemePageJson["sections"] = {
   )
 };
 
+function mydreamshootsAboutTrustSection(): SectionInstance {
+  const base = homeSections.trust_1;
+  return {
+    ...base,
+    settings: { ...base.settings },
+    blocks: (base.blocks ?? []).map((item) => {
+      if (item.id === "trust_refund") {
+        return {
+          ...item,
+          settings: {
+            ...item.settings,
+            value: "Results-based refund review",
+            label: "If a generated result does not look like you, request a refund review under the Refund Policy.",
+            href: "/refunds"
+          }
+        };
+      }
+      if (item.id === "trust_encryption") {
+        return {
+          ...item,
+          settings: {
+            ...item.settings,
+            value: "Encryption at rest and in transit",
+            label: "Data is protected using encryption controls described in the Privacy Policy."
+          }
+        };
+      }
+      return { ...item, settings: { ...item.settings } };
+    })
+  };
+}
+
+function mydreamshootsAboutConversionSection(): SectionInstance {
+  const base = homeSections.conversion_1;
+  return {
+    ...base,
+    settings: {
+      ...base.settings,
+      eyebrow: "AI IMAGE + VIDEO CREATION",
+      title: "Ready to create something from your photos?",
+      subtitle: "Create AI images, AI videos, personalized Save the Date videos, and themed photo packages in one private workspace.",
+      primaryCta: "Start Creating",
+      primaryHref: "/login",
+      secondaryCta: "View Pricing",
+      secondaryHref: "/pricing"
+    },
+    blocks: (base.blocks ?? []).map((item) => item.id === "cta_metric_private"
+      ? { ...item, settings: { ...item.settings, label: "uploads and results" } }
+      : { ...item, settings: { ...item.settings } })
+  };
+}
+
 const templateSections = {
   pricing_intro_1: section("rich_text", {
     eyebrow: "Pricing",
@@ -2407,6 +2459,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   const homeSectionsOrder = aidreamcapesTemplateSite
     ? ["hero_1", "generation_showcase_1", "featured_thanksgiving_1", "tutorial_video_1", "tutorial_video_2", "mobile_video_1", "package_catalog_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"]
     : ["hero_1", "generation_showcase_1", "tutorial_video_1", "proof_1", "faq_1", "conversion_1"];
+  const mydreamshootsAboutTarget = !site || site.id === "site_dreamshoot" || site.primaryDomain === "www.mydreamshoots.com";
   const homePageSections: ThemePageJson["sections"] = {
     hero_1: homeHeroSection,
     generation_showcase_1: generationShowcaseSection,
@@ -2722,12 +2775,16 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   ),
   "about-us": page(
     "content",
-    ["about_intro_1", "about_values_1", "trust_1", "conversion_1"],
+    mydreamshootsAboutTarget
+      ? ["about_intro_1", "about_values_1", "about_story_1", "about_company_1", "trust_1", "conversion_1"]
+      : ["about_intro_1", "about_values_1", "trust_1", "conversion_1"],
     {
       about_intro_1: section("rich_text", {
         eyebrow: "About myDreamshoots",
-        title: "Private AI photo packages with clear credits and real customer delivery.",
-        body: "myDreamshoots helps you turn your own photos into private AI headshots, portraits, and themed albums. Upload photos you own, review credits before generation, and keep finished results in your signed-in gallery.",
+        title: mydreamshootsAboutTarget ? "AI image and video creation built around your own photos." : "Private AI photo packages with clear credits and real customer delivery.",
+        body: mydreamshootsAboutTarget
+          ? "myDreamshoots.com was created to make that first step simpler. It is an AI image and video creation tool operated by MRNARUEBET LLC, a Delaware company founded by NARUEBET NAKPHONG. Customers start with their own approved photos, choose a supported workflow, review the credit cost, and create private results inside one account."
+          : "myDreamshoots helps you turn your own photos into private AI headshots, portraits, and themed albums. Upload photos you own, review credits before generation, and keep finished results in your signed-in gallery.",
         headingLevel: "h1",
         tone: "dark",
         imageUrl: assets.heroPackageWall,
@@ -2736,14 +2793,16 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         secondaryCta: "Contact us",
         secondaryHref: "/contact-us"
       }, [
-        block("about_private", "rich_text_card", { meta: "Private", title: "Customer-only workspace", description: "Uploads, generations, credit history, and albums stay connected to the customer's signed-in account." }),
-        block("about_packages", "rich_text_card", { meta: "Packages", title: "Outcome-first catalog", description: "Customers choose a finished photo direction first, then see the credit cost before generation starts." }),
-        block("about_delivery", "rich_text_card", { meta: "Delivery", title: "Album-ready results", description: "Finished images return to a private gallery for review, download, and reuse." })
+        block("about_private", "rich_text_card", { meta: "Private", title: mydreamshootsAboutTarget ? "Private customer workspace" : "Customer-only workspace", description: mydreamshootsAboutTarget ? "Uploads, image and video generations, credit history, and private galleries stay connected to the customer's signed-in account." : "Uploads, generations, credit history, and albums stay connected to the customer's signed-in account." }),
+        block("about_packages", "rich_text_card", { meta: mydreamshootsAboutTarget ? "Workflows" : "Packages", title: mydreamshootsAboutTarget ? "Choose the output first" : "Outcome-first catalog", description: mydreamshootsAboutTarget ? "Customers choose an AI image, AI video, Save the Date, or photo-package direction first, then see the credit cost before generation starts." : "Customers choose a finished photo direction first, then see the credit cost before generation starts." }),
+        block("about_delivery", "rich_text_card", { meta: "Delivery", title: mydreamshootsAboutTarget ? "Private digital results" : "Album-ready results", description: mydreamshootsAboutTarget ? "Finished images and videos become available in the customer's workspace or private gallery for review, download, and reuse." : "Finished images return to a private gallery for review, download, and reuse." })
       ]),
       about_values_1: section("rich_text", {
         eyebrow: "How we work",
-        title: "A practical photo workspace for customers who want control.",
-        body: "Our goal is simple: make AI photo creation feel organized, private, and understandable. myDreamshoots focuses on clear package choices, realistic expectations, account-scoped delivery, and responsive support for questions about uploads, credits, checkout, privacy, and finished albums.",
+        title: mydreamshootsAboutTarget ? "A practical AI image and video workspace for customers who want control." : "A practical photo workspace for customers who want control.",
+        body: mydreamshootsAboutTarget
+          ? "Our goal is simple: make AI image and video creation feel organized, private, and understandable. myDreamshoots focuses on clear workflow choices, realistic expectations, visible credit use, account-scoped delivery, and responsive support for questions about uploads, generations, checkout, privacy, and finished results."
+          : "Our goal is simple: make AI photo creation feel organized, private, and understandable. myDreamshoots focuses on clear package choices, realistic expectations, account-scoped delivery, and responsive support for questions about uploads, credits, checkout, privacy, and finished albums.",
         imageUrl: assets.flowPrivateAlbumWorkspace,
         primaryCta: "View pricing",
         primaryHref: "/pricing",
@@ -2751,11 +2810,46 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         secondaryHref: "/faq"
       }, [
         block("about_value_transparency", "rich_text_card", { meta: "01", title: "Clear credit use", description: "Credit reservations, successful generations, returned credits, and billing events are visible in the customer account." }),
-        block("about_value_support", "rich_text_card", { meta: "02", title: "Supportable workflow", description: "Customers can contact support for account, billing, privacy, upload, or album questions." }),
+        block("about_value_support", "rich_text_card", { meta: "02", title: "Supportable workflow", description: mydreamshootsAboutTarget ? "Customers can contact support for account, billing, privacy, upload, image, video, or gallery questions." : "Customers can contact support for account, billing, privacy, upload, or album questions." }),
         block("about_value_safety", "rich_text_card", { meta: "03", title: "Respect for source photos", description: "Source photos should belong to the customer or be used with permission, and policy pages explain the rules before upload." })
       ]),
-      trust_1: homeSections.trust_1,
-      conversion_1: homeSections.conversion_1
+      ...(mydreamshootsAboutTarget ? { about_story_1: section("rich_text", {
+        anchor: "about_story_1",
+        eyebrow: "Our story",
+        title: "We started with the photos people already have.",
+        bodyParagraphs: [
+          "Everyday photos already hold the context that a blank prompt cannot: the face of a person, the relationship between two people, the place where a memory began, or the milestone someone wants to share. But turning those photos into a finished image or video often means moving between disconnected tools, unclear costs, and files that are difficult to organize.",
+          "myDreamshoots was created to make that path more direct. It is an AI image and video generation tool that starts with a customer's existing photos and helps turn them into AI images, AI videos, and personalized Save the Date moments. The goal is not to replace the meaning in the original photo, but to give customers a practical way to create a new version of it.",
+          "From the first upload to the final download, the experience is designed around a clear project: choose the kind of result you want, see the credit cost before generation, create inside a private workspace, and receive the finished result through digital delivery."
+        ],
+        tone: "dark",
+        layout: "about_story"
+      }, [
+        block("about_story_start", "rich_text_card", { meta: "01", title: "Start with what is already yours", description: "Most projects begin with photos a customer already has or has permission to use. That starting point keeps the result connected to a real person, relationship, or occasion." }),
+        block("about_story_occasion", "rich_text_card", { meta: "02", title: "Create for a real occasion", description: "The tool supports AI images, AI videos, and personalized Save the Date content for the moments customers actually want to keep, send, or share." }),
+        block("about_story_next", "rich_text_card", { meta: "03", title: "Know what happens next", description: "Visible credits, a private workspace, and digital delivery give customers a clear path from upload and generation to review and download." })
+      ]),
+      about_company_1: section("rich_text", {
+        anchor: "about_company_1",
+        eyebrow: "About the company",
+        title: "A focused company building a more personal way to create with AI.",
+        bodyParagraphs: [
+          "myDreamshoots.com is operated by MRNARUEBET LLC, a Delaware company founded by NARUEBET NAKPHONG. The company is focused on building an AI image and video creation tool for people who want to start with their own photos instead of an empty canvas.",
+          "That focus shapes the product: AI images for portraits, style sets, and personal projects; AI videos for short visual stories and transformations; and personalized Save the Date content for couples and families. The surrounding workflow matters just as much as generation itself, which is why the product keeps credit costs visible, projects inside a private workspace, and finished files available through digital delivery.",
+          "The work continues with the same principle: make each step understandable, keep the customer's source photos at the center, and make the finished result easy to access after creation."
+        ],
+        imageUrl: "/assets/dreamshoot/generated/20260622-homepage-unique/about-company-office.png",
+        imageAlt: "A creative workspace representing the team behind myDreamshoots.",
+        imageCaption: "A creative workspace for building tools around real customer projects.",
+        layout: "about_company"
+      }, [
+        block("about_company_operator", "rich_text_card", { meta: "Operator", title: "MRNARUEBET LLC", description: "The company operating myDreamshoots.com." }),
+        block("about_company_founder", "rich_text_card", { meta: "Founder", title: "NARUEBET NAKPHONG", description: "The founder behind the product and its direction." }),
+        block("about_company_jurisdiction", "rich_text_card", { meta: "Company", title: "Delaware company", description: "MRNARUEBET LLC is organized in Delaware." })
+      ]),
+      } : {}),
+      trust_1: mydreamshootsAboutTarget ? mydreamshootsAboutTrustSection() : homeSections.trust_1,
+      conversion_1: mydreamshootsAboutTarget ? mydreamshootsAboutConversionSection() : homeSections.conversion_1
     },
     1,
     seoForPublicPage("/about-us", site)
