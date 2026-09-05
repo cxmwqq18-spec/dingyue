@@ -17014,7 +17014,7 @@ function SectionView({
       : rawEyebrow;
     const configuredBody = setting(section, "body", "Use this page to explain the photo experience, packages, delivery timing, and private customer journey.");
     const resolvedBody = storefrontContext ? resolveStorefrontBindings(configuredBody, storefrontContext).value ?? "" : configuredBody;
-    const operatorSuffix = renderContext.pagePath === "/about-us" && storefrontContext?.profile?.identity.legalName
+    const operatorSuffix = renderContext.pagePath !== "/about-us" && storefrontContext?.profile?.identity.legalName
       ? ` Operated by ${storefrontContext.profile.identity.legalName}.`
       : "";
     const body = `${storefrontPaidToolText(stripHtml(resolvedBody))}${operatorSuffix}`.trim();

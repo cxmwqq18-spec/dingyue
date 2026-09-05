@@ -762,7 +762,11 @@ export async function middleware(request: NextRequest) {
   }
   if (isGrownstrideRequest(request)) headers.set("X-Robots-Tag", "noindex, nofollow");
 
-  if (upstreamResponse.body && !shouldInlineAidreamcapesLogo(request)) {
+  // About Us emits its JSON-LD after the page body. Buffer this single public
+  // route so the existing full HTML rewrite can relocate that schema into
+  // <head>; keep streaming for the rest of the storefront for performance.
+  const aboutUsRoute = /(?:^|\/)about-us\/?$/i.test(request.nextUrl.pathname);
+  if (upstreamResponse.body && !shouldInlineAidreamcapesLogo(request) && !aboutUsRoute) {
     return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlStream(upstreamResponse.body, request, shouldReorder), {
       status: upstreamResponse.status,
       statusText: upstreamResponse.statusText,
