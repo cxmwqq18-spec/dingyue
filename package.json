@@ -225,6 +225,7 @@
     "guard:storefront-single-source": "node scripts/guard-postgres-single-source.mjs && node scripts/guard-storefront-single-source.mjs",
     "sync:mydreamshoots-public-sql": "node scripts/sync-mydreamshoots-public-sql.mjs",
     "smoke:mydreamshoots-login-redirect": "node scripts/smoke-mydreamshoots-login-redirect.mjs",
+    "smoke:customer-logout": "node scripts/smoke-customer-logout.mjs",
     "smoke:mydreamshoots-workspace-route": "node scripts/smoke-mydreamshoots-workspace-route.mjs",
     "smoke:mydreamshoots-publication-counts": "node scripts/smoke-mydreamshoots-publication-counts.mjs",
     "smoke:mydreamshoots-motion-generator-route": "node scripts/smoke-mydreamshoots-motion-generator-route.mjs",

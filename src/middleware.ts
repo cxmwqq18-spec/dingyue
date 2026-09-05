@@ -307,8 +307,14 @@ function isPrivateStorefrontHtmlRequest(request: NextRequest): boolean {
   return PRIVATE_STORE_PATH_RE.test(pathname) || (TARGET_HOST_RE.test(host) && HOST_PRIVATE_STORE_PATH_RE.test(pathname));
 }
 
-function storefrontHtmlCacheControl(request: NextRequest, upstreamHeaders: Headers): string {
-  if (isPrivateStorefrontHtmlRequest(request)) return PRIVATE_STOREFRONT_CACHE_CONTROL;
+function hasCustomerSessionCookie(request: NextRequest): boolean {
+  return request.cookies.getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
+}
+
+function storefrontHtmlCacheControl(request: NextRequest, _upstreamHeaders: Headers): string {
+  // Public routes can still render customer-specific header controls. Never let
+  // a browser or CDN reuse that HTML after the customer has signed out.
+  if (isPrivateStorefrontHtmlRequest(request) || hasCustomerSessionCookie(request)) return PRIVATE_STOREFRONT_CACHE_CONTROL;
   if (process.env.DINGYUE_ENV === "local" && process.env.STOREFRONT_INSTANT_DRAFT_PREVIEW !== "0") {
     return "private, no-store, max-age=0, must-revalidate";
   }
