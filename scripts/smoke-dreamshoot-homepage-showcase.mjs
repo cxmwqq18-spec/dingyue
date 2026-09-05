@@ -41,6 +41,19 @@ async function main() {
   const proofMedia = (sections.proof_1?.blocks ?? [])
     .map((block) => block?.settings?.resultImageUrl)
     .filter((value) => typeof value === "string" && value.startsWith("/assets/"));
+  const expectedProofMedia = {
+    review_ava: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03-20260830.webp",
+    review_lucas: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02-20260830.webp",
+    review_mia: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/christmas-holiday-card-couple-photo.webp",
+    review_noah: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/private-photo-gallery-review.webp",
+    review_chloe: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/fresh-social-content-creator-scene.webp",
+    review_eli: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/polished-professional-headshot.webp",
+    review_jordan: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/team-page-professional-portrait.webp",
+    review_riley: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/instagram-social-content-creator-photo.webp"
+  };
+  for (const block of sections.proof_1?.blocks ?? []) {
+    if (expectedProofMedia[block?.id]) assert.equal(block.settings?.resultImageUrl, expectedProofMedia[block.id], `${block.id} must use the approved current result image`);
+  }
   for (const mediaPath of [...new Set(proofMedia)]) {
     const mediaResponse = await fetch(`${origin}${mediaPath}`);
     assert.equal(mediaResponse.status, 200, `homepage proof media must return 200: ${mediaPath}`);
@@ -53,9 +66,9 @@ async function main() {
     const renderedPath = mediaPath.endsWith(".png") ? mediaPath.replace(/\.png$/, ".webp") : mediaPath;
     assert.ok(html.includes(mediaPath) || html.includes(renderedPath), `production homepage must render synced proof media: ${mediaPath}`);
   }
-  assert.ok(!html.includes("20260830-homepage-review-replacements"), "production homepage must not reference retired review media");
-  assert.ok(!html.includes("world-cup-fan-photos-03-20260830.webp"), "production homepage must not reference retired world cup media");
-  assert.ok(!html.includes("gala-photos-02-20260830.webp"), "production homepage must not reference retired gala media");
+  assert.ok(html.includes("20260830-homepage-review-replacements"), "production homepage must render the approved review media set");
+  assert.ok(html.includes("world-cup-fan-photos-03-20260830.webp"), "production homepage must render the approved world cup review media");
+  assert.ok(html.includes("gala-photos-02-20260830.webp"), "production homepage must render the approved gala review media");
   assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, "homepage must contain exactly one H1");
   assert.ok(!/<h2\b[^>]*>[^<]*Creative workflow examples built with myDreamshoots/i.test(html), "workflow examples must not render as an H2");
   assert.ok(!/<h2\b[^>]*>\s*(?:Soccer|Portrait Photo|Christmas Photo)\s*<\/h2>/i.test(html), "photo package cards must not render as H2");

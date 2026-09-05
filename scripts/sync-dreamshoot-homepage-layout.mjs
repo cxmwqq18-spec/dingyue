@@ -101,12 +101,20 @@ const myAssets = {
   reviewNoahAvatar: "/assets/dreamshoot/generated/20260622-homepage-unique/review-noah-avatar.png",
   womanPortrait: "/assets/dreamshoot/beauty-portrait-gpt2.png",
   selfie: "/assets/dreamshoot/frames/faq-intro-portrait.png",
-  galleryWorldCupFanThree: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp",
+  galleryWorldCupFanThree: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03-20260830.webp",
   galleryGalaOne: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp",
-  galleryGalaTwo: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp",
+  galleryGalaTwo: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02-20260830.webp",
   galleryChristmasCoupleTwo: "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-02.webp",
   galleryCreatorOne: "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp",
   galleryCreatorTwo: "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp",
+  reviewChristmasCouple: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/christmas-holiday-card-couple-photo.webp",
+  reviewPrivateGallery: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/private-photo-gallery-review.webp",
+  reviewCreatorScene: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/fresh-social-content-creator-scene.webp",
+  reviewProfessionalHeadshot: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/polished-professional-headshot.webp",
+  reviewJordanAvatar: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/jordan-k-team-profile-avatar.webp",
+  reviewTeamPortrait: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/team-page-professional-portrait.webp",
+  reviewRileyAvatar: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/riley-w-social-content-avatar.webp",
+  reviewSocialContent: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/instagram-social-content-creator-photo.webp",
   galleryThanksgiving: versioned("/assets/dreamshoot/generated/pack-covers/thanksgiving-group-photos/thanksgiving-group-photos-cover.webp"),
   galleryHoliday: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1"
 };
@@ -342,12 +350,12 @@ const stores = [
 	    }, [
 	      block("review_ava", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_ava, name: "Ava M.", role: "Fan photos", location: "Sports fan set", rating: "5", avatarUrl: myAssets.reviewAvaAvatar, resultImageUrl: myAssets.galleryWorldCupFanThree }),
 	      block("review_lucas", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_lucas, name: "Lucas R.", role: "VIP-style set", location: "Profile images", rating: "5", avatarUrl: myAssets.reviewLucasAvatar, resultImageUrl: myAssets.galleryGalaTwo }),
-	      block("review_mia", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_mia, name: "Mia C.", role: "Christmas album", location: "Holiday cards", rating: "5", avatarUrl: myAssets.reviewMiaAvatar, resultImageUrl: myAssets.galleryChristmasCoupleTwo }),
-	      block("review_noah", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_noah, name: "Noah P.", role: "Credit planning", location: "Private gallery", rating: "5", avatarUrl: myAssets.reviewNoahAvatar, resultImageUrl: myAssets.flowPrivateAlbumWorkspace }),
-	      block("review_chloe", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_chloe, name: "Chloe S.", role: "Creator workflow", location: "Creator scenes", rating: "5", avatarUrl: myAssets.womanPortrait, resultImageUrl: myAssets.galleryCreatorOne }),
-	      block("review_eli", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_eli, name: "Eli T.", role: "Clear credits", location: "Headshots and cards", rating: "5", avatarUrl: myAssets.selfie, resultImageUrl: myAssets.galleryCreatorTwo }),
-	      block("review_jordan", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_jordan, name: "Jordan K.", role: "Team portraits", location: "Profile refresh", rating: "5", avatarUrl: myAssets.reviewAvaAvatar, resultImageUrl: myAssets.galleryGalaOne }),
-	      block("review_riley", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_riley, name: "Riley W.", role: "Motion previews", location: "Social content", rating: "5", avatarUrl: myAssets.reviewLucasAvatar, resultImageUrl: myAssets.galleryCreatorTwo })
+      block("review_mia", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_mia, name: "Mia C.", role: "Christmas album", location: "Holiday cards", rating: "5", avatarUrl: myAssets.reviewMiaAvatar, resultImageUrl: myAssets.reviewChristmasCouple }),
+      block("review_noah", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_noah, name: "Noah P.", role: "Credit planning", location: "Private gallery", rating: "5", avatarUrl: myAssets.reviewNoahAvatar, resultImageUrl: myAssets.reviewPrivateGallery }),
+      block("review_chloe", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_chloe, name: "Chloe S.", role: "Creator workflow", location: "Creator scenes", rating: "5", avatarUrl: myAssets.womanPortrait, resultImageUrl: myAssets.reviewCreatorScene }),
+      block("review_eli", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_eli, name: "Eli T.", role: "Clear credits", location: "Headshots and cards", rating: "5", avatarUrl: myAssets.selfie, resultImageUrl: myAssets.reviewProfessionalHeadshot }),
+      block("review_jordan", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_jordan, name: "Jordan K.", role: "Team portraits", location: "Profile refresh", rating: "5", avatarUrl: myAssets.reviewJordanAvatar, resultImageUrl: myAssets.reviewTeamPortrait }),
+      block("review_riley", "testimonial", { quote: mydreamshootsHomepageCopy.reviewQuotes.review_riley, name: "Riley W.", role: "Motion previews", location: "Social content", rating: "5", avatarUrl: myAssets.reviewRileyAvatar, resultImageUrl: myAssets.reviewSocialContent })
 	    ]),
     faq: mydreamshootsFaqSection(),
     conversion: section("conversion_panel", {

@@ -22,50 +22,38 @@ if (target === "production" && apply && !productionConfirmed) {
   throw new Error("Production homepage media sync requires --confirm-production --confirm=mydreamshoots-homepage-media.");
 }
 
-const assetReplacements = new Map([
-  [
-    "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03-20260830.webp",
-    "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03.webp"
-  ],
-  [
-    "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02-20260830.webp",
-    "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02.webp"
-  ],
-  [
-    "/assets/dreamshoot/generated/20260830-homepage-review-replacements/christmas-holiday-card-couple-photo.webp",
-    "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-02.webp"
-  ],
-  [
-    "/assets/dreamshoot/generated/20260830-homepage-review-replacements/private-photo-gallery-review.webp",
-    "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.png"
-  ],
-  [
-    "/assets/dreamshoot/generated/20260830-homepage-review-replacements/fresh-social-content-creator-scene.webp",
-    "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp"
-  ],
-  [
-    "/assets/dreamshoot/generated/20260830-homepage-review-replacements/polished-professional-headshot.webp",
-    "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp"
-  ],
-  [
-    "/assets/dreamshoot/generated/20260830-homepage-review-replacements/jordan-k-team-profile-avatar.webp",
-    "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp"
-  ],
-  [
-    "/assets/dreamshoot/generated/20260830-homepage-review-replacements/team-page-professional-portrait.webp",
-    "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp"
-  ],
-  [
-    "/assets/dreamshoot/generated/20260830-homepage-review-replacements/riley-w-social-content-avatar.webp",
-    "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp"
-  ],
-  [
-    "/assets/dreamshoot/generated/20260830-homepage-review-replacements/instagram-social-content-creator-photo.webp",
-    "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp"
-  ]
-]);
+const homepageReviewAssets = {
+  review_ava: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03-20260830.webp",
+  review_lucas: "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02-20260830.webp",
+  review_mia: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/christmas-holiday-card-couple-photo.webp",
+  review_noah: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/private-photo-gallery-review.webp",
+  review_chloe: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/fresh-social-content-creator-scene.webp",
+  review_eli: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/polished-professional-headshot.webp",
+  review_jordan: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/team-page-professional-portrait.webp",
+  review_riley: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/instagram-social-content-creator-photo.webp"
+};
+
+const homepageReviewAvatars = {
+  review_jordan: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/jordan-k-team-profile-avatar.webp",
+  review_riley: "/assets/dreamshoot/generated/20260830-homepage-review-replacements/riley-w-social-content-avatar.webp"
+};
+
+const canonicalSocialLinks = {
+  instagramUrl: "https://www.instagram.com/mydreamshoots/",
+  facebookUrl: "https://www.facebook.com/mydreamshoots/",
+  threadsUrl: "https://www.threads.com/@mydreamshoots",
+  pinterestUrl: "https://www.pinterest.com/myDreamshoots/",
+  youtubeUrl: "https://www.youtube.com/@myDreamshoots",
+  xUrl: "https://x.com/myDreamshoots",
+  tiktokUrl: "https://www.tiktok.com/@mydreamshoots"
+};
 
 const textReplacements = [
+  ["https://www.instagram.com/blydey_inc", "https://www.instagram.com/mydreamshoots/"],
+  ["https://www.facebook.com/blydeyinc", "https://www.facebook.com/mydreamshoots/"],
+  ["https://www.threads.com/@blydey_inc", "https://www.threads.com/@mydreamshoots"],
+  ["https://www.pinterest.com/Blydeyinc", "https://www.pinterest.com/myDreamshoots/"],
+  ["https://www.youtube.com/@blydey-inc", "https://www.youtube.com/@myDreamshoots"],
   ["100% money-back guarantee", "Results-based refund review"],
   ["Money-back guarantee", "Results-based refund review"],
   ["money-back guarantee review", "results-based refund review"],
@@ -88,13 +76,29 @@ function clone(value) {
 
 function mapStrings(value) {
   if (typeof value === "string") {
-    let next = assetReplacements.get(value) ?? value;
+    let next = value;
     for (const [from, to] of textReplacements) next = next.replaceAll(from, to);
     return next;
   }
   if (Array.isArray(value)) return value.map(mapStrings);
   if (!value || typeof value !== "object") return value;
   return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, mapStrings(child)]));
+}
+
+function applyHomepageReviewMedia(next) {
+  for (const block of next?.sections?.proof_1?.blocks ?? []) {
+    const resultImageUrl = homepageReviewAssets[block?.id];
+    const avatarUrl = homepageReviewAvatars[block?.id];
+    if (resultImageUrl || avatarUrl) block.settings = { ...(block.settings ?? {}), ...(resultImageUrl ? { resultImageUrl } : {}), ...(avatarUrl ? { avatarUrl } : {}) };
+  }
+  return next;
+}
+
+function rewriteNestedHomepageReviewMedia(value) {
+  if (Array.isArray(value)) return value.map(rewriteNestedHomepageReviewMedia);
+  if (!value || typeof value !== "object") return value;
+  const next = Object.fromEntries(Object.entries(value).map(([key, child]) => [key, rewriteNestedHomepageReviewMedia(child)]));
+  return next.sections?.proof_1 ? applyHomepageReviewMedia(next) : next;
 }
 
 function updatePageJson(value, slug) {
@@ -104,10 +108,7 @@ function updatePageJson(value, slug) {
     if (home) home.settings = { ...(home.settings ?? {}), showEyebrow: false };
     if (next.sections?.package_catalog_1) delete next.sections.package_catalog_1;
     if (Array.isArray(next.sectionsOrder)) next.sectionsOrder = next.sectionsOrder.filter((id) => id !== "package_catalog_1");
-    for (const block of next.sections?.proof_1?.blocks ?? []) {
-      const replacement = assetReplacements.get(block?.settings?.resultImageUrl);
-      if (replacement) block.settings = { ...(block.settings ?? {}), resultImageUrl: replacement };
-    }
+    applyHomepageReviewMedia(next);
   }
   if (slug === "/pricing") {
     const trust = next.sections?.trust_1?.blocks ?? [];
@@ -123,6 +124,13 @@ function updatePageJson(value, slug) {
       value: "AES-256 encryption at rest · TLS encryption in transit"
     };
   }
+  return next;
+}
+
+function updateThemeSettings(value) {
+  const next = mapStrings(value);
+  const footer = next?.globalSections?.footer;
+  if (footer?.settings && typeof footer.settings === "object") footer.settings = { ...footer.settings, ...canonicalSocialLinks };
   return next;
 }
 
@@ -152,10 +160,10 @@ try {
   const nextLivePages = livePages.map((row) => ({ ...row, contentJson: updatePageJson(row.contentJson, row.slug) }));
   const nextThemeSettings = {
     ...themeSettings,
-    draftJson: mapStrings(themeSettings.draftJson),
-    publishedJson: mapStrings(themeSettings.publishedJson)
+    draftJson: updateThemeSettings(themeSettings.draftJson),
+    publishedJson: updateThemeSettings(themeSettings.publishedJson)
   };
-  const nextSiteThemes = siteThemes.map((row) => ({ ...row, templates: mapStrings(row.templates), settings: mapStrings(row.settings) }));
+  const nextSiteThemes = siteThemes.map((row) => ({ ...row, templates: rewriteNestedHomepageReviewMedia(mapStrings(row.templates)), settings: mapStrings(row.settings) }));
   const changed = {
     themePages: nextThemePages.filter((row) => changedJson(row.draftJson, themeBySlug.get(row.slug)?.draftJson) || changedJson(row.publishedJson, themeBySlug.get(row.slug)?.publishedJson)).map((row) => row.slug),
     livePages: nextLivePages.filter((row) => changedJson(row.contentJson, liveBySlug.get(row.slug)?.contentJson)).map((row) => row.slug),
@@ -179,14 +187,15 @@ try {
     ]);
     assert.equal(home?.contentJson?.sections?.tutorial_video_1?.settings?.showEyebrow, false, "LivePage homepage eyebrow readback failed");
     assert.equal(home?.contentJson?.sections?.package_catalog_1, undefined, "LivePage homepage package catalog readback failed");
-    for (const [id, expected] of assetReplacements) {
-      if (!id.includes("20260830") || !expected) continue;
-      assert(!JSON.stringify(home?.contentJson).includes(id), `stale homepage asset remains: ${id}`);
-    }
+    for (const expected of Object.values(homepageReviewAssets)) assert(JSON.stringify(home?.contentJson).includes(expected), `homepage review asset readback failed: ${expected}`);
     const trust = pricing?.contentJson?.sections?.trust_1?.blocks ?? [];
     assert.equal(trust.find((block) => block.id === "trust_refund")?.settings?.value, "Results-based refund review", "pricing refund trust readback failed");
     assert.equal(trust.find((block) => block.id === "trust_encryption")?.settings?.value, "AES-256 encryption at rest · TLS encryption in transit", "pricing encryption trust readback failed");
-    report.readback = { homeEyebrow: home?.contentJson?.sections?.tutorial_video_1?.settings?.showEyebrow, packageCatalog: home?.contentJson?.sections?.package_catalog_1 ?? null, pricingTrust: trust.filter((block) => ["trust_refund", "trust_encryption"].includes(block.id)).map((block) => ({ id: block.id, value: block.settings?.value, label: block.settings?.label })) };
+    const settingsFooter = await prisma.themeSettings.findUnique({ where: { siteId: SITE_ID }, select: { draftJson: true, publishedJson: true } });
+    for (const settings of [settingsFooter?.draftJson, settingsFooter?.publishedJson]) {
+      for (const [key, expected] of Object.entries(canonicalSocialLinks)) assert.equal(settings?.globalSections?.footer?.settings?.[key], expected, `footer social readback failed: ${key}`);
+    }
+    report.readback = { homeEyebrow: home?.contentJson?.sections?.tutorial_video_1?.settings?.showEyebrow, packageCatalog: home?.contentJson?.sections?.package_catalog_1 ?? null, pricingTrust: trust.filter((block) => ["trust_refund", "trust_encryption"].includes(block.id)).map((block) => ({ id: block.id, value: block.settings?.value, label: block.settings?.label })), social: canonicalSocialLinks };
   }
   console.log(JSON.stringify(report, null, 2));
 } finally {
