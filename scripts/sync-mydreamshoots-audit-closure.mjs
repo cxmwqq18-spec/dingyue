@@ -71,8 +71,8 @@ const legacyVideoThemeSlugs = new Set([
 const unsupportedPublicNavigationHrefs = new Set();
 
 const exactReplacements = [
-  ["Money-back guarantee", "Refund review"],
-  ["money-back guarantee review", "refund review"],
+  ["Money-back guarantee", "Results-based refund review"],
+  ["money-back guarantee review", "results-based refund review"],
   ["Your inputs are never used to train models.", "The current policy describes how inputs are handled for service delivery; confirm the live Privacy Policy and provider terms before relying on a retention or training assumption."],
   ["Your uploaded photos, prompts, and generated private results are used to provide the myDreamshoots service you request. They are never used to train models or build public datasets.", "Your uploaded photos, prompts, and generated private results are handled to provide the requested service. Review the live Privacy Policy and provider terms for the current data-use boundaries."],
   ["Your uploaded photos, prompts, and generated private results are used to provide the MyDreamShoots service you request. They are never used to train models or build public datasets.", "Your uploaded photos, prompts, and generated private results are handled to provide the requested service. Review the live Privacy Policy and provider terms for the current data-use boundaries."],
@@ -81,7 +81,6 @@ const exactReplacements = [
   ["No AI training on your photos", "Photo-use terms"],
   ["30-day auto-delete for input photos", "Input-photo retention"],
   ["30-day auto-delete", "Input-photo retention"],
-  ["AES-256", "account and provider safeguards"],
   ["no AI training", "photo-use policy"]
 ];
 
@@ -128,7 +127,7 @@ function mapTree(value, visitor) {
   return value;
 }
 
-const unverifiedClaimPattern = /(?:never used to train models|no ai training|30-day auto-delete|automatically delete 30 days|auto-delete 30 days|AES-256|TLS 256(?:-bit)?|100% money-back guarantee)/i;
+const unverifiedClaimPattern = /(?:never used to train models|no ai training|30-day auto-delete|automatically delete 30 days|auto-delete 30 days|AES-256(?! encryption at rest)|TLS 256(?:-bit)? in transit|100% money-back guarantee)/i;
 
 function countMatchingStrings(value, pattern) {
   if (typeof value === "string") return pattern.test(value) ? 1 : 0;

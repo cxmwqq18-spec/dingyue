@@ -97,6 +97,8 @@ const publishedSettings: ThemeSettings = {
       threadsUrl: "",
       pinterestUrl: "",
       youtubeUrl: "",
+      xUrl: "",
+      tiktokUrl: "",
       copyright: "Lumen Portrait Works. All rights reserved."
     }, [
       { id: "global_footer_product_packages", type: "menu_link", settings: { label: "Packages", href: "#packages", group: "product" } },

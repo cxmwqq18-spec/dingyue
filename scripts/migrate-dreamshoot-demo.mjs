@@ -292,7 +292,7 @@ const dreamshootSeoPages = {
   },
   shipping: {
     title: "Digital delivery for AI photo albums and downloads",
-    description: "Review how MyDreamShoots delivers AI photo credits, generated images, downloads, and private albums digitally without physical shipping.",
+    description: "Review how MyDreamShoots delivers credits for AI photo and video generation, generated image packages, video outputs, downloads, and private galleries digitally without physical shipping.",
     keywords: "MyDreamShoots digital delivery, AI photo delivery, private gallery downloads",
     canonicalPath: "/shipping",
     index: true,
@@ -411,7 +411,7 @@ function pageJsonFor(mapping, version) {
       title: "Shipping and Digital Delivery Policy",
       lastUpdated: "June 28, 2026",
       contactEmail: "support@mydreamshoots.com",
-      body: "<h3>No physical shipping</h3><p>MyDreamShoots sells digital AI photo credits, generated image packages, downloads, and private gallery access. We do not ship physical products, printed photos, USB drives, or mailed merchandise from this storefront.</p><h3>Digital delivery</h3><p>Credits are added after payment confirmation. Generated images are delivered inside the signed-in customer workspace or private gallery when a job completes. Delivery timing can vary based on source photo quality, selected package settings, provider availability, moderation review, and system load.</p><h3>Failed or delayed jobs</h3><p>If a service-side issue prevents delivery, support may release reserved credits, rerun the job, troubleshoot the account, or review refund eligibility under the refund policy.</p><h3>No carrier tracking or customs</h3><p>Because orders are digital, customers do not receive carrier tracking numbers and are not charged shipping, customs, duties, or physical handling fees by MyDreamShoots.</p><h3>Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, order or job details, and a short description if a digital delivery does not appear in the workspace.</p>"
+      body: "<h3>No physical shipping</h3><p>MyDreamShoots sells digital credits for AI photo and video generation, generated image packages, video outputs, downloads, and private gallery access. We do not ship physical products, printed photos, USB drives, or mailed merchandise from this storefront.</p><h3>Digital delivery</h3><p>Credits are added after payment confirmation. Generated images and videos are delivered inside the signed-in customer workspace or private gallery when a job completes. Delivery timing can vary based on source photo quality, selected package settings, provider availability, moderation review, and system load.</p><h3>Failed or delayed jobs</h3><p>If a service-side issue prevents delivery, support may release reserved credits, rerun the job, troubleshoot the account, or review refund eligibility under the refund policy.</p><h3>No carrier tracking or customs</h3><p>Because orders are digital, customers do not receive carrier tracking numbers and are not charged shipping, customs, duties, or physical handling fees by MyDreamShoots.</p><h3>Contact</h3><p>Email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, order or job details, and a short description if a digital delivery does not appear in the workspace.</p>"
     };
     pageJson.seo = {
       title: "MyDreamShoots Shipping and Digital Delivery Policy",

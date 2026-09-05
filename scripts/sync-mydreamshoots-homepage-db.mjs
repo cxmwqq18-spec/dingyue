@@ -163,9 +163,13 @@ function mergeFooter(settings) {
     supportHeading: "Support",
     socialHeading: "Why it works",
     socialBody: "myDreamshoots helps you turn your own photos into AI videos, Save the Date moments, private AI headshots, portraits, and themed albums.",
-    instagramUrl: "https://www.instagram.com/blydey_inc",
-    facebookUrl: "https://www.facebook.com/blydeyinc",
-    youtubeUrl: "https://www.youtube.com/@blydey-inc",
+    instagramUrl: "https://www.instagram.com/mydreamshoots/",
+    facebookUrl: "https://www.facebook.com/mydreamshoots/",
+    threadsUrl: "https://www.threads.com/@mydreamshoots",
+    pinterestUrl: "https://www.pinterest.com/myDreamshoots/",
+    youtubeUrl: "https://www.youtube.com/@myDreamshoots",
+    xUrl: "https://x.com/myDreamshoots",
+    tiktokUrl: "https://www.tiktok.com/@mydreamshoots",
     showPaymentIcons: true
   };
   next.globalSections.footer.blocks = [

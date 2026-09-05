@@ -1093,7 +1093,9 @@ function spanishFooterSettings(spec) {
     pinterestUrl: "",
     youtubeUrl: "",
     threadsUrl: "",
+    xUrl: "",
     twitterUrl: "",
+    tiktokUrl: "",
     bottomLine: "Creditos, generacion y galerias privadas en un solo espacio.",
     copyright: `© 2026 ${spec.readableBrand}. Todos los derechos reservados.`
   };

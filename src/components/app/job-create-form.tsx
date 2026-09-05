@@ -702,6 +702,12 @@ function workspacePackageHref(pack: CreativePack, groups: PhotoPackageMegaGroup[
   return megaGroupItemForPack(pack, groups)?.href || creativePackCollectionHref(pack);
 }
 
+function workspacePackSummary(pack: Pick<CreativePack, "description" | "headline">): string {
+  const source = (pack.description || pack.headline || "").replace(/\s+/g, " ").trim();
+  const sentenceEnd = source.search(/[.!?](?:\s|$)/);
+  return sentenceEnd >= 0 ? source.slice(0, sentenceEnd + 1) : source;
+}
+
 function creativePackMatchesMegaGroup(pack: CreativePack, category: string, groups: PhotoPackageMegaGroup[]): boolean {
   const selectedSlug = photoPackageSlug(category);
   if (!selectedSlug || selectedSlug === "all") return true;
@@ -757,12 +763,12 @@ function fieldsForMode(fields: AiWorkflowField[], mode: CreateMode): AiWorkflowF
     : [
         {
           id: TOOL_PROMPT_FIELD_ID,
-          label: "Prompt",
+          label: "Description",
           type: "textarea",
           required: true,
-          placeholder: "Describe the exact edit or image direction you want.",
+          placeholder: "Describe the exact edit or image result you want…",
           default: "",
-          helpText: "Keep it specific, lawful, and safe for private generation."
+          helpText: "Keep it specific, lawful, and safe for private image creation."
         },
         ...filteredFields
       ];
@@ -817,7 +823,7 @@ function photoCountLabel(count: number, spanish: boolean): string {
 
 function jobErrorMessage(error?: string, status?: number, spanish = false): string {
   if (status === 401 || error === "customer_login_required") {
-    return jobT(spanish, "Please sign in again before starting this photo set.", "Vuelve a iniciar sesion antes de empezar este set de fotos.");
+    return jobT(spanish, "Please sign in again before creating this photo set.", "Vuelve a iniciar sesion antes de crear este set de fotos.");
   }
   if (status === 403 || error?.includes("csrf")) {
     return jobT(spanish, "Your secure session expired. Refresh the page, then try again.", "Tu sesion segura expiro. Actualiza la pagina e intentalo de nuevo.");
@@ -835,7 +841,7 @@ function jobErrorMessage(error?: string, status?: number, spanish = false): stri
     return jobT(spanish, "Too many private photos are selected for this package. Reduce the selection and try again.", "Hay demasiadas fotos privadas seleccionadas para este paquete. Reduce la seleccion e intentalo de nuevo.");
   }
   if (error === "missing_required_prompt_input") {
-    return jobT(spanish, "This tool is missing a required setting. Reopen the tool or choose a photo package and try again.", "A esta herramienta le falta un ajuste obligatorio. Abrela de nuevo o elige un paquete e intentalo otra vez.");
+    return jobT(spanish, "This tool is missing a required setting. Reopen it or choose a photo package and try again.", "A esta herramienta le falta un ajuste obligatorio. Abrela de nuevo o elige un paquete e intentalo otra vez.");
   }
   if (error === "insufficient_credits") {
     return jobT(spanish, "You do not have enough credits for this request. Please add credits or choose a smaller package.", "No tienes creditos suficientes para esta solicitud. Anade creditos o elige un paquete mas pequeno.");
@@ -859,9 +865,9 @@ function jobErrorMessage(error?: string, status?: number, spanish = false): stri
     return jobT(spanish, "This photo package is no longer available for the selected tool. Choose the package again and retry.", "Este paquete de fotos ya no esta disponible para la herramienta seleccionada. Vuelve a elegir el paquete e intentalo de nuevo.");
   }
   if (error === "job_create_timeout") {
-    return jobT(spanish, "The job service timed out while creating this request. Please try again in a moment.", "El servicio tardo demasiado al crear esta solicitud. Intentalo de nuevo en un momento.");
+    return jobT(spanish, "This request took too long to start. Please try again in a moment.", "Esta solicitud tardo demasiado en comenzar. Intentalo de nuevo en un momento.");
   }
-  return jobT(spanish, "We could not start this photo set. Please check your selection and try again.", "No pudimos iniciar este set de fotos. Revisa tu seleccion e intentalo de nuevo.");
+  return jobT(spanish, "We could not create this photo set. Check your selection and try again.", "No pudimos crear este set de fotos. Revisa tu seleccion e intentalo de nuevo.");
 }
 
 function displayMaterialRule(rule: string, spanish = false): string {
@@ -1151,10 +1157,10 @@ export function JobCreateForm({
   const selectedToolPrompt = String(formValues[TOOL_PROMPT_FIELD_ID] || selectedToolPreset?.prompt || "");
   const selectedToolIsVideo = createMode === "tool" && selectedToolPreset?.kind === "video";
   const selectionPreviewImage = createMode === "theme" ? withStorefrontPublicWatermarkUrl(selectedPack?.imageUrl) : undefined;
-  const selectionTitle = createMode === "theme" ? selectedPack ? workspacePackageLabel(selectedPack, packageMegaGroups) : jobT(spanish, "Photo package", "Paquete de fotos") : selectedToolPreset?.title ?? selectedApp?.aiApp.name ?? jobT(spanish, "AI tool", "Herramienta IA");
+  const selectionTitle = createMode === "theme" ? selectedPack ? workspacePackageLabel(selectedPack, packageMegaGroups) : jobT(spanish, "Photo package", "Paquete de fotos") : selectedToolPreset?.title ?? selectedApp?.aiApp.name ?? jobT(spanish, "Image tool", "Herramienta de imagen");
   const selectionDescription = createMode === "theme"
-    ? selectedPack?.description || selectedPack?.headline || jobT(spanish, "Choose this package, attach selfies, then review credits before generation.", "Elige este paquete, adjunta selfies y revisa los creditos antes de generar.")
-    : selectedToolPreset?.description ?? jobT(spanish, "Choose this focused tool, attach selfies, then review credits before generation.", "Elige esta herramienta, adjunta selfies y revisa los creditos antes de generar.");
+    ? selectedPack ? workspacePackSummary(selectedPack) : jobT(spanish, "Choose this package, add photos, then review credits before creating your images.", "Elige este paquete, añade fotos y revisa los creditos antes de crear tus imagenes.")
+    : selectedToolPreset?.description ?? jobT(spanish, "Choose this focused tool, add photos, then review credits before creating the result.", "Elige esta herramienta, añade fotos y revisa los creditos antes de crear el resultado.");
   const selectedPackageGalleryExamples = useMemo<PackageGalleryExample[]>(() => {
     if (createMode !== "theme" || !selectedPack) return [];
     const excluded = new Set(
@@ -1216,11 +1222,11 @@ export function JobCreateForm({
   const subscriptionGateMessage = selectedToolIsVideo
     ? ""
     : subscriptionStatus === "loading"
-    ? jobT(spanish, "Checking your subscription before generation. You can keep preparing photos while this loads.", "Revisando tu suscripcion antes de generar. Puedes seguir preparando fotos mientras carga.")
+    ? jobT(spanish, "Checking your subscription. You can keep preparing photos while this loads.", "Revisando tu suscripcion. Puedes seguir preparando fotos mientras carga.")
     : subscriptionStatus === "required"
       ? selectionCreditCost > 0 && selectionCreditCost <= customer.balance.available
         ? jobT(spanish, "No active subscription is attached, but your available credits can start this paid request.", "No hay una suscripcion activa, pero tus creditos disponibles pueden iniciar esta solicitud pagada.")
-        : jobT(spanish, "Start a subscription or add enough credits before generating.", "Activa una suscripcion o anade creditos suficientes antes de generar.")
+        : jobT(spanish, "Start a subscription or add enough credits before creating images.", "Activa una suscripcion o añade creditos suficientes antes de crear imagenes.")
       : subscriptionStatus === "admin"
         ? jobT(spanish, "Site admin access is active. Subscription is not required, and credits will still be reserved for this request.", "El acceso de administrador esta activo. No se requiere suscripcion y los creditos se reservaran igualmente.")
       : "";
@@ -1230,7 +1236,7 @@ export function JobCreateForm({
   const creditsUsageNote = createMode === "theme"
     ? jobT(spanish, `${unitCreditCost} credits are spent for each generated image. This request will spend ${selectionCreditCost} credits for ${requestOutputCount} image${requestOutputCount === 1 ? "" : "s"}.`, `Se gastan ${unitCreditCost} creditos por cada imagen generada. Esta solicitud gastara ${selectionCreditCost} creditos por ${requestOutputCount} imagen${requestOutputCount === 1 ? "" : "es"}.`)
     : selectedToolIsVideo
-      ? jobT(spanish, "This tool opens the Image to Video workspace. No photo request is submitted from this form.", "Esta herramienta abre el espacio Image to Video. No se envia una solicitud de fotos desde este formulario.")
+      ? jobT(spanish, "This tool opens the Image to Video workspace. You can finish the video there.", "Esta herramienta abre el espacio Imagen a video. Puedes terminar el video alli.")
       : jobT(spanish, `${selectionCreditCost} credits are spent for this tool request.`, `Esta solicitud de herramienta gastara ${selectionCreditCost} creditos.`);
   const subscriptionGateClass = subscriptionHardGate
     ? (light ? "border-[#efb483] bg-[#fff5eb] text-[#8c4a13]" : "border-[#f59e0b]/35 bg-[#f59e0b]/10 text-[#ffdca8]")
@@ -1245,7 +1251,7 @@ export function JobCreateForm({
   const primarySourceAssets = sourceAssets.filter((asset) => selectedAssetIds.includes(asset.id));
   const partnerSourceAssets = sourceAssets.filter((asset) => partnerSelectedAssetIds.includes(asset.id));
   const isCoupleFlow = trainingMode === "couple" || selectedCustomerModel?.modelType === "couple" || packageAudience === "both";
-  const selectedModelLabel = selectedCustomerModel?.label ?? (selectedSourceAssets.length ? jobT(spanish, "Uploaded selfies", "Selfies subidas") : jobT(spanish, "No model selected", "Ningun modelo seleccionado"));
+  const selectedModelLabel = selectedCustomerModel?.label ?? (selectedSourceAssets.length ? jobT(spanish, "Uploaded photos", "Fotos subidas") : jobT(spanish, "No photo profile selected", "Ningun perfil de fotos seleccionado"));
   const textClass = light ? "text-[#171514]" : "text-white";
   const mutedClass = light ? "text-[#6f675e]" : "text-white/62";
   const eyebrowClass = light ? "text-[#9b6b42]" : "text-white/48";
@@ -1717,7 +1723,7 @@ export function JobCreateForm({
       });
     }
 
-    setMessage(jobT(spanish, "Previous failed request restored. Review the setup, then start generation again.", "Solicitud fallida restaurada. Revisa la configuracion y vuelve a iniciar la generacion."));
+    setMessage(jobT(spanish, "Previous failed request restored. Review the setup, then create it again.", "Solicitud fallida restaurada. Revisa la configuracion y vuelve a crearla."));
   }, [availableAssets, customerModels, orderedActiveCreativePacks, retryDraft, selectedApp, selectedToolId, siteAiApps, spanish, toolPresets]);
 
   async function uploadSourceFiles(files: FileList | null) {
@@ -1727,7 +1733,7 @@ export function JobCreateForm({
       return;
     }
     setUploadingSources(true);
-    setMessage(jobT(spanish, `Uploading ${imageFiles.length} private photo${imageFiles.length === 1 ? "" : "s"}...`, `Subiendo ${imageFiles.length} foto${imageFiles.length === 1 ? "" : "s"} privada${imageFiles.length === 1 ? "" : "s"}...`));
+    setMessage(jobT(spanish, `Uploading ${imageFiles.length} private photo${imageFiles.length === 1 ? "" : "s"}…`, `Subiendo ${imageFiles.length} foto${imageFiles.length === 1 ? "" : "s"} privada${imageFiles.length === 1 ? "" : "s"}…`));
     const createdAssets: ThemeRuntimeAsset[] = [];
     for (const [index, file] of imageFiles.entries()) {
       const preparedUpload = await prepareCustomerImageUploadFile(file);
@@ -1770,7 +1776,7 @@ export function JobCreateForm({
     const confirmed = window.confirm(jobT(spanish, `Delete "${asset.label}" from your private model photos?`, `Eliminar "${asset.label}" de tus fotos privadas del modelo?`));
     if (!confirmed) return;
     setDeletingAssetIds((current) => [...current, asset.id]);
-    setMessage(jobT(spanish, "Deleting private photo...", "Eliminando foto privada..."));
+    setMessage(jobT(spanish, "Deleting private photo…", "Eliminando foto privada…"));
     const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${asset.id}`, {
       method: "DELETE",
       headers: csrfHeader(`customer_csrf_${siteId}`)
@@ -1798,8 +1804,8 @@ export function JobCreateForm({
     if (!confirmed) return;
     setDeletingAssetIds((current) => Array.from(new Set([...current, ...remoteIds])));
     setMessage(remoteIds.length === 1
-      ? jobT(spanish, "Deleting private photo...", "Eliminando foto privada...")
-      : jobT(spanish, `Deleting ${remoteIds.length} private photos...`, `Eliminando ${remoteIds.length} fotos privadas...`));
+      ? jobT(spanish, "Deleting private photo…", "Eliminando foto privada…")
+      : jobT(spanish, `Deleting ${remoteIds.length} private photos…`, `Eliminando ${remoteIds.length} fotos privadas…`));
     const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets`, {
       method: "DELETE",
       headers: {
@@ -1852,7 +1858,7 @@ export function JobCreateForm({
       return;
     }
     if (subscriptionHardGate) {
-      showDialogError(jobT(spanish, "Choose a subscription or add enough credits before starting generation. Your workspace setup stays saved.", "Elige una suscripcion o anade creditos suficientes antes de generar. La configuracion de tu espacio queda guardada."));
+      showDialogError(jobT(spanish, "Choose a subscription or add enough credits before creating images. Your workspace setup stays saved.", "Elige una suscripcion o añade creditos suficientes antes de crear imagenes. La configuracion de tu espacio queda guardada."));
       return;
     }
     if (selectedRequestAssetIds.length < minAssets) {
@@ -1880,7 +1886,7 @@ export function JobCreateForm({
       const prompt = String(formValues[TOOL_PROMPT_FIELD_ID] ?? "").trim();
       const blockedTerm = blockedPromptTerm(prompt);
       if (blockedTerm) {
-        showDialogError(jobT(spanish, "This prompt includes unsafe or disallowed content. Please revise it before starting.", "Estas instrucciones incluyen contenido no permitido. Revisalas antes de empezar."));
+        showDialogError(jobT(spanish, "This description includes unsafe or disallowed content. Please revise it before starting.", "Estas instrucciones incluyen contenido no permitido. Revisalas antes de empezar."));
         return;
       }
     }
@@ -1911,11 +1917,11 @@ export function JobCreateForm({
     setPending(true);
     setDialogTone("info");
     setDialogMessage(subscriptionBypassActive
-      ? jobT(spanish, "Creating the admin job and reserving credits. Keep this window open until the request status page opens.", "Creando la solicitud de administrador y reservando creditos. Manten esta ventana abierta hasta que se abra el estado.")
-      : jobT(spanish, "Creating the job and reserving credits. Keep this window open until the request status page opens.", "Creando la solicitud y reservando creditos. Manten esta ventana abierta hasta que se abra el estado."));
+      ? jobT(spanish, "Creating the admin request and reserving credits. Keep this window open until the status page opens.", "Creando la solicitud de administrador y reservando creditos. Manten esta ventana abierta hasta que se abra el estado.")
+      : jobT(spanish, "Creating your request and reserving credits. Keep this window open until the status page opens.", "Creando tu solicitud y reservando creditos. Manten esta ventana abierta hasta que se abra el estado."));
     setMessage(subscriptionBypassActive
-      ? jobT(spanish, "Starting your admin photo set and holding credits...", "Iniciando tu set de administrador y reservando creditos...")
-      : jobT(spanish, "Starting your photo set and holding credits...", "Iniciando tu set de fotos y reservando creditos..."));
+      ? jobT(spanish, "Starting your admin photo set and holding credits…", "Iniciando tu set de administrador y reservando creditos…")
+      : jobT(spanish, "Starting your photo set and holding credits…", "Iniciando tu set de fotos y reservando creditos…"));
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 30_000);
     let response: Response;
@@ -1944,7 +1950,7 @@ export function JobCreateForm({
       window.clearTimeout(timeout);
       setPending(false);
       const text = error instanceof DOMException && error.name === "AbortError"
-        ? jobT(spanish, "This request is taking longer than expected. Refresh the All tab before retrying so you do not duplicate a request that may have started.", "Esta solicitud esta tardando mas de lo esperado. Actualiza la pestana Todo antes de reintentar para no duplicarla.")
+      ? jobT(spanish, "This request is taking longer than expected. Refresh All before retrying so you do not create a duplicate.", "Esta solicitud esta tardando mas de lo esperado. Actualiza Todo antes de reintentar para no duplicarla.")
         : jobT(spanish, "The network failed while starting this request. Please check the connection and try again.", "La red fallo al iniciar esta solicitud. Revisa la conexion e intentalo de nuevo.");
       showDialogError(text);
       return;
@@ -1959,12 +1965,12 @@ export function JobCreateForm({
     const dispatchStatus = result.workerDispatch?.status;
     const dispatchMessage =
       dispatchStatus === "failed"
-        ? jobT(spanish, `Job created, but the generator did not accept it: ${result.workerDispatch?.error ?? "worker_dispatch_failed"}. Opening the request status page.`, `Solicitud creada, pero el generador no la acepto: ${result.workerDispatch?.error ?? "worker_dispatch_failed"}. Abriendo la pagina de estado.`)
+        ? jobT(spanish, "Your request was saved, but image creation did not accept it. Opening the status page.", "Tu solicitud se guardo, pero la creacion de imagenes no pudo aceptarla. Abriendo la pagina de estado.")
         : dispatchStatus === "skipped"
           ? subscriptionBypassActive
-            ? jobT(spanish, "Admin job created and credits are held, but no generator is configured for this environment. Opening the request status page.", "Solicitud de administrador creada y creditos reservados, pero no hay generador configurado en este entorno. Abriendo estado.")
-            : jobT(spanish, "Job created and credits are held, but no generator is configured for this environment. Opening the request status page.", "Solicitud creada y creditos reservados, pero no hay generador configurado en este entorno. Abriendo estado.")
-          : jobT(spanish, "Job created. Opening the request status page so you can follow generation progress.", "Solicitud creada. Abriendo la pagina de estado para seguir el progreso.");
+            ? jobT(spanish, "Your admin request was saved and credits are held, but image creation is not available in this environment. Opening the status page.", "Tu solicitud de administrador se guardo y los creditos estan reservados, pero la creacion de imagenes no esta disponible en este entorno. Abriendo el estado.")
+            : jobT(spanish, "Your request was saved and credits are held, but image creation is not available in this environment. Opening the status page.", "Tu solicitud se guardo y los creditos estan reservados, pero la creacion de imagenes no esta disponible en este entorno. Abriendo el estado.")
+          : jobT(spanish, "Your request was created. Opening the status page so you can follow its progress.", "Tu solicitud se creo. Abriendo la pagina de estado para seguir su progreso.");
     setDialogTone("success");
     setDialogMessage(dispatchMessage);
     setMessage(dispatchMessage);
@@ -2045,12 +2051,12 @@ export function JobCreateForm({
       <div className={`grid gap-4 rounded-[16px] border p-4 ${panelClass}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
-            <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>
-              {jobT(spanish, "Step 03 · Advanced direction", "Paso 03 · Direccion avanzada")}
+      <p className={`font-mono text-[10px] uppercase tracking-[0.16em] ${eyebrowClass}`}>
+              {jobT(spanish, "Step 03 · Creative direction", "Paso 03 · Direccion creativa")}
             </p>
-            <h4 className={`mt-2 text-base font-semibold ${textClass}`}>{jobT(spanish, "Build a clearer image prompt", "Construye un prompt mas claro")}</h4>
+            <h4 className={`mt-2 text-base font-semibold ${textClass}`}>{jobT(spanish, "Describe your image", "Describe tu imagen")}</h4>
             <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>
-              {jobT(spanish, "Choose a shot plan or write your own note. We combine this with the selected package prompt and source photos.", "Elige un plan visual o escribe tu nota. Lo combinamos con el paquete seleccionado y las fotos fuente.")}
+              {jobT(spanish, "Choose a visual direction or write your own note. We combine it with the selected package and source photos.", "Elige una direccion visual o escribe tu nota. La combinamos con el paquete seleccionado y las fotos fuente.")}
             </p>
           </div>
           <WandSparkles className={`h-5 w-5 shrink-0 ${light ? "text-[#c65f32]" : "text-[#31d4ff]"}`} strokeWidth={1.8} />
@@ -2089,14 +2095,14 @@ export function JobCreateForm({
           ))}
         </div>
         <label className={`grid gap-2 text-sm font-medium ${textClass}`}>
-          {jobT(spanish, "Your creative direction", "Tu direccion creativa")}
+          {jobT(spanish, "Your image description", "Tu descripcion de imagen")}
           <textarea
             className={`${compact ? "min-h-[96px]" : "min-h-[118px]"} rounded-[14px] border px-4 py-3 ${fieldClass}`}
             onChange={(event) => {
               setPackagePromptDraft(event.target.value);
               if (createMode === "tool") updateField(TOOL_PROMPT_FIELD_ID, event.target.value);
             }}
-            placeholder={jobT(spanish, "Example: waist-up portrait, basketball court energy, natural motion, sharp face detail, soft background depth.", "Ejemplo: retrato medio, energia de cancha, movimiento natural, rostro nitido, fondo suave.")}
+            placeholder={jobT(spanish, "Example: waist-up portrait on a basketball court, natural movement, clear facial detail, soft background…", "Ejemplo: retrato medio en una cancha de baloncesto, movimiento natural, rostro nitido, fondo suave…")}
             value={packagePromptDraft}
           />
         </label>
@@ -2104,9 +2110,9 @@ export function JobCreateForm({
           <p className={`text-xs leading-5 ${mutedClass}`}>
             {promptBuilderSummary
               ? promptBuilderApplied
-                ? jobT(spanish, `Applied prompt cues: ${promptBuilderSummary}`, `Senales aplicadas: ${promptBuilderSummary}`)
-                : jobT(spanish, `Selected prompt cues: ${promptBuilderSummary}`, `Senales seleccionadas: ${promptBuilderSummary}`)
-              : jobT(spanish, "Use the chips for fast structure, then edit the final text freely.", "Usa los chips para estructurar rapido y edita el texto final libremente.")}
+                ? jobT(spanish, `Applied options: ${promptBuilderSummary}`, `Opciones aplicadas: ${promptBuilderSummary}`)
+                : jobT(spanish, `Selected options: ${promptBuilderSummary}`, `Opciones seleccionadas: ${promptBuilderSummary}`)
+                : jobT(spanish, "Use the options for a quick structure, then edit the final description freely.", "Usa las opciones para estructurar rapido y edita la descripcion final libremente.")}
           </p>
           <button
             className={`inline-flex items-center justify-center gap-2 rounded-[14px] border px-4 py-2.5 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-45 ${
@@ -2117,7 +2123,7 @@ export function JobCreateForm({
             type="button"
           >
             <WandSparkles className="h-4 w-4" strokeWidth={1.8} />
-            {promptBuilderApplied ? jobT(spanish, "Cues applied", "Senales aplicadas") : jobT(spanish, "Apply cues", "Aplicar senales")}
+            {promptBuilderApplied ? jobT(spanish, "Options applied", "Opciones aplicadas") : jobT(spanish, "Apply options", "Aplicar opciones")}
           </button>
         </div>
       </div>
@@ -2156,9 +2162,10 @@ export function JobCreateForm({
           <p className={`mt-2 text-sm leading-6 ${mutedClass}`}>
             {createMode === "theme"
               ? jobT(spanish, "Photo packages set the style direction, estimated outputs, credit use, and selfie needs before you upload or select images.", "Los paquetes definen estilo, resultados estimados, uso de creditos y selfies necesarias antes de subir o elegir imagenes.")
-              : jobT(spanish, "Tools use your selfies and notes to create a focused private result.", "Las herramientas usan tus selfies y notas para crear un resultado privado concreto.")}
+              : jobT(spanish, "Tools use your photos and description to create one focused private result.", "Las herramientas usan tus fotos y descripcion para crear un resultado privado concreto.")}
           </p>
         </div>
+        {toolPresets.length ? (
         <div className={`inline-flex w-fit max-w-full rounded-full border p-1 text-xs font-semibold ${light ? "border-[#dfd3c4] bg-[#f8f1e6]" : "border-white/10 bg-white/[0.04]"}`}>
           {[
             { mode: "theme" as const, label: jobT(spanish, "Photo packages", "Paquetes de fotos") },
@@ -2190,6 +2197,7 @@ export function JobCreateForm({
             );
           })}
         </div>
+        ) : null}
         {createMode === "theme" && packageMegaGroups.length > 1 ? (
           <div className={`rounded-[18px] border p-2 ${light ? "border-[#eadfce] bg-[#fffaf3]" : "border-white/10 bg-black/10"}`}>
             <div className="flex flex-wrap gap-2">
@@ -2252,7 +2260,7 @@ export function JobCreateForm({
               {createMode === "tool" ? (
                 <div className="mt-4 flex flex-wrap gap-2">
                   <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>{selectedToolPreset?.category ?? jobT(spanish, "Tool", "Herramienta")}</span>
-                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>{selectedToolIsVideo ? jobT(spanish, "Image to Video workspace", "Espacio Image to Video") : selectedApp?.aiApp.name ?? jobT(spanish, "AI tool", "Herramienta IA")}</span>
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${neutralPillClass}`}>{selectedToolIsVideo ? jobT(spanish, "Image to Video", "Imagen a video") : selectedApp?.aiApp.name ?? jobT(spanish, "Image tool", "Herramienta de imagen")}</span>
                 </div>
               ) : null}
             </div>
@@ -2348,7 +2356,7 @@ export function JobCreateForm({
             const active = pack.id === selectedPack?.id;
             const packageCardTitle = workspacePackageLabel(pack, packageMegaGroups);
             const packageCardHref = workspacePackageHref(pack, packageMegaGroups);
-            const packageCardCopy = pack.description.trim() || (pack.headline.trim() !== packageCardTitle.trim() ? pack.headline.trim() : "");
+            const packageCardCopy = workspacePackSummary(pack) || (pack.headline.trim() !== packageCardTitle.trim() ? pack.headline.trim() : "");
             const packageCardImage = withStorefrontPublicWatermarkUrl(pack.imageUrl);
             return (
               <button
@@ -2470,7 +2478,7 @@ export function JobCreateForm({
           </div>
           {createMode === "theme" ? (
             <label className={`grid min-w-[150px] gap-2 text-sm font-medium ${textClass}`}>
-              {jobT(spanish, "Estimated outputs", "Resultados estimados")}
+              {jobT(spanish, "Number of images", "Cantidad de imagenes")}
               <input
                 className={`rounded-[14px] border px-4 py-2.5 ${fieldClass}`}
                 min={1}
@@ -2485,7 +2493,7 @@ export function JobCreateForm({
         {createMode === "theme" && selectedPack ? (
           <div className={`rounded-[14px] border p-3 ${subtlePanelClass}`}>
             <p className={`text-sm font-semibold ${textClass}`}>{selectedPack.name}</p>
-            <p className={`mt-1 text-sm leading-6 ${mutedClass}`}>{selectedPack.description || selectedPack.headline}</p>
+            <p className={`mt-1 text-sm leading-6 ${mutedClass}`}>{workspacePackSummary(selectedPack)}</p>
           </div>
         ) : null}
         <div className="grid gap-2 md:grid-cols-2">
@@ -2498,8 +2506,8 @@ export function JobCreateForm({
         </div>
         <p className={`text-xs leading-5 ${light ? "text-[#776f66]" : "text-white/52"}`}>
           {createMode === "theme"
-            ? jobT(spanish, `Default is ${DEFAULT_THEME_OUTPUT_COUNT} image. Adjust this number if you want a different delivery estimate.`, `El valor predeterminado es ${DEFAULT_THEME_OUTPUT_COUNT} imagen. Ajusta el numero si quieres otra estimacion.`)
-            : jobT(spanish, "Tool requests use one focused result type. Add clear notes and selected selfies before review.", "Las herramientas usan un resultado concreto. Anade notas claras y selfies seleccionadas antes de revisar.")}
+            ? jobT(spanish, `The default is ${DEFAULT_THEME_OUTPUT_COUNT} image. Adjust the number if you want a different delivery size.`, `El valor predeterminado es ${DEFAULT_THEME_OUTPUT_COUNT} imagen. Ajusta la cantidad si quieres otro tamano de entrega.`)
+            : jobT(spanish, "Each tool creates one focused result. Add a clear description and select your photos before review.", "Cada herramienta crea un resultado concreto. Anade una descripcion clara y selecciona tus fotos antes de revisar.")}
         </p>
       </div>
       {renderPromptBuilderPanel()}
@@ -2753,7 +2761,7 @@ export function JobCreateForm({
             <div className="grid gap-3">
               <p className={`text-xs leading-5 ${mutedClass}`}>
                 {selectedToolIsVideo
-                  ? jobT(spanish, "Open the video workspace to upload frame images and write the motion prompt.", "Abre el espacio de video para subir fotogramas y escribir el prompt de movimiento.")
+                  ? jobT(spanish, "Open the video workspace to upload reference images and write a movement description.", "Abre el espacio de video para subir imagenes de referencia y escribir una descripcion del movimiento.")
                   : selectedRequestAssetIds.length > effectiveMaxAssets
                   ? jobT(spanish, `Use up to ${effectiveMaxAssets} private photos before starting.`, `Usa hasta ${effectiveMaxAssets} fotos privadas antes de empezar.`)
                   : sampleRequirementMessage}
@@ -2787,7 +2795,7 @@ export function JobCreateForm({
           <div className={`flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-[18px] border shadow-[0_30px_100px_-40px_rgba(0,0,0,0.95)] ${light ? "border-[#eadfce] bg-white text-[#171514]" : "border-white/14 bg-[#121821] text-white"}`}>
             <div className={`flex shrink-0 items-start justify-between gap-4 border-b p-5 ${light ? "border-[#eadfce] bg-white" : "border-white/10 bg-[#121821]"}`}>
               <div>
-                <p className={`font-mono text-[10px] uppercase tracking-[0.18em] ${eyebrowClass}`}>{createMode === "theme" ? jobT(spanish, "Photo package", "Paquete de fotos") : jobT(spanish, "AI tool", "Herramienta IA")}</p>
+                <p className={`font-mono text-[10px] uppercase tracking-[0.18em] ${eyebrowClass}`}>{createMode === "theme" ? jobT(spanish, "Photo package", "Paquete de fotos") : jobT(spanish, "Image tool", "Herramienta de imagen")}</p>
                 <h3 className={`mt-2 text-2xl font-semibold ${textClass}`}>{selectionTitle}</h3>
               </div>
               <button
@@ -2858,7 +2866,7 @@ export function JobCreateForm({
 
                   {createMode === "theme" ? (
                     <label className={`grid gap-2 text-sm font-medium ${textClass}`}>
-                      {jobT(spanish, "Estimated outputs", "Resultados estimados")}
+                      {jobT(spanish, "Number of images", "Cantidad de imagenes")}
                       <input
                         className={`rounded-[14px] border px-4 py-3 ${fieldClass}`}
                         min={1}
@@ -2928,7 +2936,7 @@ export function JobCreateForm({
                 </div>
                 <div className="grid gap-3">
                   <p className={`text-xs leading-5 ${mutedClass}`}>
-                    {jobT(spanish, "The request sends the selected package, prompt notes, primary photos, partner photos, subject focus, model, and output count to the generation job.", "La solicitud envia al trabajo de generacion el paquete, notas, fotos principales, fotos de pareja, enfoque del sujeto, modelo y cantidad de resultados.")}
+                    {jobT(spanish, "Your selected package, description, photos, subject focus, profile, and image count will be used to create this request.", "Tu paquete, descripcion, fotos, enfoque del sujeto, perfil y cantidad de imagenes seleccionados se usaran para crear esta solicitud.")}
                   </p>
                   {subscriptionGateMessage ? (
                     <div className={`rounded-[12px] border px-3 py-2 text-xs leading-5 ${subscriptionGateClass}`} role={subscriptionHardGate ? "alert" : "status"}>
@@ -2955,7 +2963,7 @@ export function JobCreateForm({
                     type="button"
                   >
                     <Play className="h-4 w-4" strokeWidth={1.8} />
-                    {pending ? jobT(spanish, "Creating job...", "Creando solicitud...") : modeSubmitLabel}
+                    {pending ? jobT(spanish, "Creating request…", "Creando solicitud…") : modeSubmitLabel}
                   </button>
                 </div>
               </div>
@@ -2967,7 +2975,7 @@ export function JobCreateForm({
 
       <div className={`flex flex-wrap items-center justify-between gap-3 rounded-[16px] border p-4 ${panelClass}`}>
         <div>
-          <p className={`text-sm font-semibold ${textClass}`}>{createMode === "theme" ? jobT(spanish, "Photo package mode", "Modo paquete de fotos") : jobT(spanish, "Tool mode", "Modo herramienta")}</p>
+          <p className={`text-sm font-semibold ${textClass}`}>{createMode === "theme" ? jobT(spanish, "Photo package", "Paquete de fotos") : jobT(spanish, "Image tool", "Herramienta de imagen")}</p>
           <p className={`mt-1 text-xs leading-5 ${mutedClass}`}>{message}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">

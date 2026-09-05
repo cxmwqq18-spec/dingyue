@@ -49,6 +49,35 @@ const policyCopyByCanonicalPath = {
     body: `<h3>1. Money-back guarantee review</h3><p>If the shoot does not look like you, contact support for a refund review. Include your account email, order details, package name, job or gallery link, and a short explanation of the mismatch. Eligible requests may receive a refund, credit return, or rerun depending on the account history and affected generation.</p><h3>2. Refund eligibility</h3><p>You may request a refund for purchased credits if none of the credits from that purchase have been used. Credits spent on successful generations are generally not refundable unless MyDreamShoots confirms a service-side issue or approves a money-back guarantee review.</p><h3>3. Failed jobs and technical issues</h3><p>If a technical failure on our side prevents credit use or delivery, support may release reserved credits, rerun the job, troubleshoot the account, or approve a refund after review.</p><h3>4. Trust commitments</h3><ul><li><strong>No AI training on your photos.</strong> Your inputs are never used to train models.</li><li><strong>30-day auto-delete.</strong> Input photos automatically delete 30 days after generation.</li><li><strong>Secure account workflow.</strong> Uploads, requests, credit review, and galleries stay inside signed-in account workflows.</li><li><strong>Money-back guarantee.</strong> If the shoot does not look like you, request a refund review.</li></ul><h3>5. Refund window and subscriptions</h3><p>Refund requests should be submitted within 30 days of the purchase date. If a subscription is canceled, the customer keeps access to purchased credits until they are used or expire according to plan rules. Cancellation does not automatically refund credits already used.</p><h3>6. Credit history and contact</h3><p>Refunds and billing reversals appear in the customer's credit history. Email <a href="mailto:support@mydreamshoots.com">support@mydreamshoots.com</a> with your account email and purchase details.</p>`
   }
 };
+
+const policyRemediationReplacements = [
+  ["AES-256 at rest", "AES-256 encryption at rest"],
+  ["TLS 256-bit in transit", "TLS encryption in transit"],
+  ["Our footer links include KIDS Act and State Privacy notices because privacy, child-related requests, deletion, access, correction, and regional privacy rights matter for AI photo services.", "Separate Children's Privacy and State Privacy notices explain child-related requests and regional privacy rights that may apply to your use of the service."],
+  ["Our footer links include KIDS Act and DPDPA notices because privacy, child-related requests, deletion, access, correction, and regional privacy rights matter for AI photo services.", "Separate Children's Privacy and State Privacy notices explain child-related requests and regional privacy rights that may apply to your use of the service."],
+  ["100% money-back guarantee", "Results-based refund review"],
+  ["Money-back guarantee", "Results-based refund review"],
+  ["money-back guarantee review", "results-based refund review"],
+  ["generated portraits", "generated images and videos"],
+  ["AI photo results can vary", "AI photo and video results can vary"],
+  ["use AI photo tools", "use AI photo and video tools"],
+  ["start AI photo jobs", "start AI photo or video generation jobs"],
+  ["Children's Privacy Notice (KIDS Act)", "Children's Privacy Notice"],
+  ["COPPA-aware privacy questions", "COPPA-related privacy questions"],
+  ["COPPA-aware handling", "COPPA-related handling"],
+  ["Do not upload minors, non-consenting people, public figures, protected marks, stolen images, or materials that violate law, platform rules, or third-party rights.", "Do not upload photos of minors or non-consenting people unless you have the legal right and consent required for the requested use. Do not upload photos of public figures, protected marks, stolen images, or other materials without the rights or permissions required for the requested use, or that violate law, platform rules, or third-party rights."],
+  ["including the 100% money-back guarantee when the shoot does not look like you, subject to support review, account history, and the details of the affected request.", "including a results-based refund review when a result does not look like you, subject to the conditions and review process described in that policy."]
+];
+for (const copy of Object.values(policyCopyByCanonicalPath)) {
+  copy.body = policyRemediationReplacements.reduce((text, [from, to]) => text.replaceAll(from, to), copy.body);
+  copy.seoTitle = copy.seoTitle
+    .replaceAll("Content Policy for MyDreamShoots Uploads and AI Photo Outputs", "Content Policy for MyDreamShoots Uploads and AI Photo and Video Outputs")
+    .replaceAll("Terms of Service for MyDreamShoots AI Headshot Generator", "Terms of Service for MyDreamShoots AI Photo and Video Services");
+}
+policyDescriptions["/privacy"] = "Review how MyDreamShoots handles account data, uploaded source photos, generated images and videos, credit activity, checkout records, and private album access.";
+policyDescriptions["/terms"] = "Review the MyDreamShoots terms for customer accounts, AI photo and video credits, uploads, generation limits, refunds, private gallery access, and the current data-handling policy.";
+policyDescriptions["/content"] = "Read the MyDreamShoots content policy for permitted source photos, upload rights, identity consent, moderation review, private album use, and AI photo and video outputs.";
+policyDescriptions["/refunds"] = "Review how MyDreamShoots handles results-based refund reviews, unused credits, subscription cancellations, technical failures, reruns, billing reversals, and account credit history.";
 const policyCanonicalPathBySlug = {
   "/policies/privacy": "/privacy",
   "/privacy": "/privacy",

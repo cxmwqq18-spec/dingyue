@@ -49,6 +49,7 @@ type SocialLinksForm = {
   pinterestUrl: string;
   youtubeUrl: string;
   xUrl: string;
+  tiktokUrl: string;
 };
 
 function themeText(value: unknown): string {
@@ -99,7 +100,8 @@ function createSocialLinksForm(site: Site): SocialLinksForm {
     threadsUrl: themeText(footerSettings.threadsUrl),
     pinterestUrl: themeText(footerSettings.pinterestUrl),
     youtubeUrl: themeText(footerSettings.youtubeUrl),
-    xUrl: themeText(footerSettings.xUrl)
+    xUrl: themeText(footerSettings.xUrl || footerSettings.twitterUrl),
+    tiktokUrl: themeText(footerSettings.tiktokUrl)
   };
 }
 
@@ -523,7 +525,8 @@ export function SiteSettingsEditor({
             ["threadsUrl", "Threads URL"],
             ["pinterestUrl", "Pinterest URL"],
             ["youtubeUrl", "YouTube URL"],
-            ["xUrl", "X URL"]
+            ["xUrl", "X URL"],
+            ["tiktokUrl", "TikTok URL"]
           ] as const).map(([key, label]) => (
             <ErpField hint="HTTPS only, for example https://www.instagram.com/your-account" key={key} label={label}>
               <ErpInput onChange={(event) => updateSocial(key, event.target.value)} placeholder="https://" type="url" value={socialForm[key]} />

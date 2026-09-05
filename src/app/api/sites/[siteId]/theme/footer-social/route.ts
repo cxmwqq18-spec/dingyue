@@ -33,7 +33,8 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     threadsUrl: cleanUrl(body.threadsUrl),
     pinterestUrl: cleanUrl(body.pinterestUrl),
     youtubeUrl: cleanUrl(body.youtubeUrl),
-    xUrl: cleanUrl(body.xUrl)
+    xUrl: cleanUrl(body.xUrl),
+    tiktokUrl: cleanUrl(body.tiktokUrl)
   };
 
   try {

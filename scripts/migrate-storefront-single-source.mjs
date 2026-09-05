@@ -100,7 +100,7 @@ function migrateGraph(input) {
   const existingProfile = site.storefrontProfile ?? {};
   const existingDraft = existingProfile.draftJson ?? { identity: {}, policyFacts: {} };
   const previousIdentity = existingDraft.identity ?? {};
-  const candidateSameAs = ["instagramUrl", "facebookUrl", "threadsUrl", "pinterestUrl", "youtubeUrl", "twitterUrl"]
+  const candidateSameAs = ["instagramUrl", "facebookUrl", "threadsUrl", "pinterestUrl", "youtubeUrl", "xUrl", "twitterUrl", "tiktokUrl"]
     .map((key) => clean(footer[key]))
     .filter((value) => value?.startsWith("https://"));
   const profile = {

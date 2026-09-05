@@ -18,7 +18,7 @@ const policySources = [
   ["/refunds", "/policies/refunds", "Refund policy"],
   ["/content", "/policies/content", "Content policy"],
   ["/shipping", "/policies/shipping", "Shipping and Digital Delivery Policy"],
-  ["/children-privacy", "/policies/children-privacy", "KIDS Act"],
+  ["/children-privacy", "/policies/children-privacy", "Children's Privacy"],
   ["/state-privacy", "/policies/state-privacy", "State Privacy"]
 ];
 

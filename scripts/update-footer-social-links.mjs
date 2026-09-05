@@ -12,7 +12,8 @@ const links = {
   threadsUrl: "https://www.threads.com/@mydreamshoots",
   pinterestUrl: "https://www.pinterest.com/myDreamshoots/",
   youtubeUrl: "https://www.youtube.com/@myDreamshoots",
-  xUrl: "https://x.com/myDreamshoots"
+  xUrl: "https://x.com/myDreamshoots",
+  tiktokUrl: "https://www.tiktok.com/@mydreamshoots"
 };
 
 if (apply && !confirm) throw new Error("Refusing to write without --confirm-footer-social-links");
@@ -29,7 +30,7 @@ function withLinks(settings) {
 try {
   const site = await prisma.site.findUnique({
     where: { id: siteId },
-    include: { settings: true, activePublication: { include: { publication: true } } }
+    include: { settings: true }
   });
   assert(site?.settings, `site settings not found: ${siteId}`);
   const draftJson = withLinks(site.settings.draftJson);

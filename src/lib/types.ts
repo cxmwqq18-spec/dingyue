@@ -70,6 +70,7 @@ export interface SaveTheDateNavigationItem {
   description?: string;
   imageUrl?: string;
   imageAlt?: string;
+  videoUrl?: string;
   status: "published" | "draft" | "review_required";
   sortOrder: number;
 }

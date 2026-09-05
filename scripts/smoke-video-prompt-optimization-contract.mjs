@@ -40,16 +40,16 @@ assert.match(workspace, /onClick=\{\(\) => void optimizeCurrentVideoPrompt\(\)\}
 assert.match(workspace, /requestVideoPromptOptimization/);
 assert.match(workspace, /window\.localStorage\.setItem/);
 assert.match(workspace, /promptOptimizationStorageKey/);
-assert.match(workspace, /Optimizing your prompt/);
-assert.match(workspace, /The overlay stays active until the task finishes/);
+assert.match(workspace, /Improving your description/);
+assert.match(workspace, /This window stays open until the update is complete/);
 assert.match(client, /pollIntervalMs \?\? 500/);
 assert.match(client, /headers\.set\("Idempotency-Key", params\.idempotencyKey\)/);
 assert.match(client, /typeof params\.headers === "function"/);
 assert.match(client, /postWithNetworkRetry/);
-assert.match(workspace, /Apply optimization/);
+assert.match(workspace, /Apply improved description/);
 assert.match(workspace, /Regenerate/);
-assert.match(workspace, /Original prompt/);
-assert.match(workspace, /Optimized prompt/);
+assert.match(workspace, /Original description/);
+assert.match(workspace, /Improved description/);
 assert.match(workspace, /undoPromptOptimization/);
 assert.match(workspace, /setAppliedPromptOptimization\(null\)/);
 

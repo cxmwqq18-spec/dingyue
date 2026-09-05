@@ -2498,6 +2498,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       url("youtubeUrl", "YouTube", ""),
       url("xUrl", "X", ""),
       url("twitterUrl", "X / Twitter", ""),
+      url("tiktokUrl", "TikTok", ""),
       checkbox("showPaymentIcons", "Show payment icons", true),
       text("bottomLine", "Bottom line", "Private albums, live pricing, and destination photo storytelling in one storefront."),
       text("copyright", "Copyright", "All rights reserved.")

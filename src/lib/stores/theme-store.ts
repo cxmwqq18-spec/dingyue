@@ -146,6 +146,7 @@ function buildHomepageShowcases(params: {
       sortOrder: item.sortOrder,
       imageUrl: pageMediaItem.primaryImage,
       imageAlt: standardMediaItem?.primaryImageAlt || topicMediaItem?.imageAlts[0] || item.imageAlt || item.label,
+      ...(item.videoUrl ? { videoUrl: item.videoUrl } : {}),
       status: "published",
       indexable: true,
       sitemapEligible: true,
@@ -1944,6 +1945,7 @@ export type ThemeFooterSocialLinks = {
   pinterestUrl: string;
   youtubeUrl: string;
   xUrl: string;
+  tiktokUrl: string;
 };
 
 function applyFooterSocialLinks(settings: ThemeSettings, socialLinks: ThemeFooterSocialLinks): ThemeSettings {
@@ -1959,7 +1961,8 @@ function applyFooterSocialLinks(settings: ThemeSettings, socialLinks: ThemeFoote
     threadsUrl: socialLinks.threadsUrl,
     pinterestUrl: socialLinks.pinterestUrl,
     youtubeUrl: socialLinks.youtubeUrl,
-    xUrl: socialLinks.xUrl
+    xUrl: socialLinks.xUrl,
+    tiktokUrl: socialLinks.tiktokUrl
   };
   return next;
 }

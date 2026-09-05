@@ -14,8 +14,6 @@ const expectedLinks = [
   ["AI Save the Date", "/best-save-the-date"],
   ["AI Image Generation", "/ai-image-generation"],
   ["AI Photo Packages", "/best-packages"],
-  ["How it works", "/workflow"],
-  ["Pricing", "/pricing"],
   ["Blog", "/blog"],
   ["About us", "/about-us"],
   ["Contact us", "/contact-us"],
@@ -26,6 +24,15 @@ const expectedLinks = [
   ["Content policy", "/content"],
   ["Terms of Service", "/terms"],
   ["Cookie Policy", "/cookies"]
+];
+const expectedSocialLinks = [
+  ["instagram", "https://www.instagram.com/mydreamshoots/"],
+  ["facebook", "https://www.facebook.com/mydreamshoots/"],
+  ["threads", "https://www.threads.com/@mydreamshoots"],
+  ["pinterest", "https://www.pinterest.com/myDreamshoots/"],
+  ["youtube", "https://www.youtube.com/@myDreamshoots"],
+  ["x", "https://x.com/myDreamshoots"],
+  ["tiktok", "https://www.tiktok.com/@mydreamshoots"]
 ];
 
 function pageUrl(routePath) {
@@ -52,6 +59,19 @@ async function readFooter(routePath) {
       !links.some((link) => link.href === href && link.label.includes(label))
     );
     assert.deepEqual(missing, [], `${url} is missing ${missing.map(([label, href]) => `${label} (${href})`).join(", ")}`);
+    const hiddenLinks = [
+      ["How it works", "/workflow"],
+      ["Pricing", "/pricing"]
+    ];
+    const unexpected = hiddenLinks.filter(([label, href]) =>
+      links.some((link) => link.href === href && link.label.includes(label))
+    );
+    assert.deepEqual(unexpected, [], `${url} must hide ${unexpected.map(([label, href]) => `${label} (${href})`).join(", ")}`);
+    const socialAnchors = [...footer.matchAll(/<a\b[^>]*>/gi)].map((match) => match[0]);
+    const missingSocial = expectedSocialLinks.filter(([platform, href]) =>
+      !socialAnchors.some((anchor) => anchor.includes(`data-social-platform="${platform}"`) && anchor.includes(`href="${href}"`))
+    );
+    assert.deepEqual(missingSocial, [], `${url} is missing social links: ${missingSocial.map(([platform, href]) => `${platform} (${href})`).join(", ")}`);
   }
   const internalSignature = Array.from(new Set(
     links
@@ -78,5 +98,6 @@ console.log(JSON.stringify({
   expectedProfile,
   routeCount: results.length,
   expectedLinkCount: expectedLinks.length,
+  hiddenLinkCount: 2,
   internalLinkCount: baseline.internalSignature.length
 }, null, 2));

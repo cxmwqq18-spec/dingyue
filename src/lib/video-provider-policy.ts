@@ -121,13 +121,13 @@ export function geminiVideoFrameRequirementMessage(spanish = false): string {
 export function geminiVideoFrameUploadTypeMessage(spanish = false): string {
   return spanish
     ? "Usa archivos JPG o PNG para fotogramas de video."
-    : "Use JPG or PNG frame images for video references.";
+    : "Use JPG or PNG images for video references.";
 }
 
 export function geminiVideoFramePolicyWarningMessage(spanish = false): string {
   return spanish
-    ? "El proveedor de video puede rechazar imagenes de referencia con personas reales o reconocibles. Las referencias ficticias/estilizadas pueden enviarse, pero pueden fallar en la revision del proveedor."
-    : "The video provider may reject reference images with real or recognizable people. Fictional or stylized references can be submitted, but may still fail provider review.";
+    ? "El servicio de video puede rechazar imagenes de referencia con personas reales o reconocibles. Las referencias ficticias o estilizadas pueden enviarse, pero aun pueden no pasar la revision."
+    : "The video service may reject reference images with real or recognizable people. Fictional or stylized references can be submitted, but may still fail review.";
 }
 
 export function geminiVideoFramePolicyDetailMessage(spanish = false): string {
@@ -138,14 +138,14 @@ export function geminiVideoFramePolicyDetailMessage(spanish = false): string {
 
 export function grokVideoFrameGuidanceMessage(spanish = false): string {
   return spanish
-    ? "El video puede generarse desde texto o desde imagenes de referencia. Sube fotogramas JPG o PNG solo cuando quieras que el clip siga referencias; deja los fotogramas vacios para un prompt solo de texto."
-    : "Video can be generated from text or reference images. Upload JPG or PNG frame images only when you want the clip to follow references; leave frames empty for a text-only prompt.";
+    ? "El video puede crearse desde texto o desde imagenes de referencia. Sube imagenes JPG o PNG solo cuando quieras que el clip las siga; dejalas vacias para crear solo desde tu descripcion."
+    : "Create the video from text or reference images. Upload JPG or PNG images when you want the clip to follow them; leave them empty to create from your description alone.";
 }
 
 export function grokVideoFrameGuidanceDetailMessage(spanish = false): string {
   return spanish
-    ? "Evita prompts y cargas inseguras o sensibles por derechos: menores, desnudez, celebridades o figuras publicas, personajes con copyright, violencia, odio, actividad ilegal, armas, autolesion, documentos sensibles, marcas de agua, mucho texto, imagenes borrosas o imagenes privadas. Si tu prompt menciona imagenes subidas, seleccionadas, de origen o de referencia, selecciona fotogramas antes de generar."
-    : "Avoid unsafe or rights-sensitive prompts and uploads: minors, nudity, celebrity or public figures, copyrighted characters, violence, hate, illegal activity, weapons, self-harm, sensitive documents, watermarks, large text, blurry images, or private images. If your prompt mentions uploaded, selected, source, or reference images, select frame images before generating.";
+    ? "Evita descripciones e imagenes inseguras o sensibles por derechos: menores, desnudez, celebridades o figuras publicas, personajes con copyright, violencia, odio, actividad ilegal, armas, autolesion, documentos sensibles, marcas de agua, mucho texto, imagenes borrosas o privadas. Si tu descripcion menciona imagenes subidas o de referencia, selecciona imagenes de referencia antes de crear el video."
+    : "Avoid unsafe or rights-sensitive descriptions and uploads: minors, nudity, celebrity or public figures, copyrighted characters, violence, hate, illegal activity, weapons, self-harm, sensitive documents, watermarks, large text, blurry images, or private images. If your description mentions uploaded or reference images, select reference images before creating the video.";
 }
 
 export function videoProviderFailureCustomerMessage(failure: VideoProviderFailure | VideoProviderFailureCode, spanish = false): string {
@@ -153,52 +153,52 @@ export function videoProviderFailureCustomerMessage(failure: VideoProviderFailur
   const providerFamily = typeof failure === "string" ? undefined : failure.providerFamily;
   if (code === "real_person_reference_unsupported") {
     return spanish
-      ? "El proveedor de video no puede usar imagenes de referencia que contengan personas reales o reconocibles. Elige una referencia sin personas reales e intentalo de nuevo."
-      : "The video provider cannot use reference images that contain real or recognizable people. Choose a non-real-person reference and try again.";
+      ? "La creacion de video no puede usar imagenes de referencia con personas reales o reconocibles. Elige otra imagen de referencia e intentalo de nuevo."
+      : "Video creation cannot use reference images that contain real or recognizable people. Choose a different reference image and try again.";
   }
   if (code === "minor_reference_unsupported") {
     return spanish
-      ? "El proveedor de video no puede usar referencias con menores o ninos. Elige otra imagen e intentalo de nuevo."
-      : "The video provider cannot use references with children or minors. Choose another image and try again.";
+      ? "La creacion de video no puede usar imagenes de referencia con menores o ninos. Elige otra imagen e intentalo de nuevo."
+      : "Video creation cannot use reference images with children or minors. Choose another image and try again.";
   }
   if (code === "sexual_content_unsupported") {
     return spanish
-      ? "El proveedor de video rechazo la referencia por contenido sexual o desnudez. Usa una imagen segura e intentalo de nuevo."
-      : "The video provider rejected the reference for sexual content or nudity. Use a safe image and try again.";
+      ? "Esta imagen de referencia contiene contenido sexual o desnudez y no se puede usar. Elige otra imagen e intentalo de nuevo."
+      : "This reference image includes sexual content or nudity, so it cannot be used. Choose a different image and try again.";
   }
   if (code === "violent_content_unsupported") {
     return spanish
-      ? "El proveedor de video rechazo la referencia por violencia, sangre, armas o autolesion. Usa otra imagen e intentalo de nuevo."
-      : "The video provider rejected the reference for violence, gore, weapons, or self-harm. Use another image and try again.";
+      ? "Esta imagen de referencia contiene violencia, sangre, armas o autolesion y no se puede usar. Elige otra imagen e intentalo de nuevo."
+      : "This reference image includes violence, gore, weapons, or self-harm, so it cannot be used. Choose another image and try again.";
   }
   if (code === "rights_or_public_figure_unsupported") {
     return spanish
-      ? "El proveedor de video rechazo la referencia por derechos, celebridades, figuras publicas o personajes con copyright. Usa otra imagen e intentalo de nuevo."
-      : "The video provider rejected the reference because it may involve rights, celebrities, public figures, or copyrighted characters. Use another image and try again.";
+      ? "Esta imagen de referencia puede incluir una celebridad, figura publica, personaje protegido u otro problema de derechos. Elige otra imagen e intentalo de nuevo."
+      : "This reference image may involve a celebrity, public figure, protected character, or other rights issue. Choose another image and try again.";
   }
   if (code === "text_logo_watermark_unsupported") {
     return spanish
-      ? "El proveedor de video no pudo usar esta referencia con texto, logo o marca de agua visible. Sube una imagen mas limpia e intentalo de nuevo."
-      : "The video provider could not use this reference with visible text, logos, or watermarks. Upload a cleaner image and try again.";
+      ? "Esta imagen de referencia tiene texto, logotipos o marcas de agua visibles. Sube una imagen mas limpia e intentalo de nuevo."
+      : "This reference image has visible text, logos, or watermarks. Upload a cleaner image and try again.";
   }
   if (code === "frame_url_unreadable") {
     return spanish
-      ? "El proveedor de video no pudo leer los fotogramas seleccionados. Usa imagenes subidas correctamente y vuelve a intentar."
-      : "The video provider could not read the selected frame images. Use properly uploaded images and try again.";
+      ? "No se pudieron leer las imagenes de referencia seleccionadas. Vuelve a subirlas e intentalo de nuevo."
+      : "The selected reference images could not be read. Re-upload them and try again.";
   }
   if (code === "unsupported_frame_format") {
     return spanish
-      ? "El proveedor de video no pudo procesar el formato de la imagen. Usa JPG o PNG e intentalo de nuevo."
-      : "The video provider could not process that image format. Use JPG or PNG and try again.";
+      ? "Ese formato de imagen no se puede usar aqui. Sube una imagen JPG o PNG e intentalo de nuevo."
+      : "That image format cannot be used here. Upload a JPG or PNG image and try again.";
   }
   if (providerFamily === "gemini") {
     return spanish
-      ? "El proveedor de video rechazo la referencia durante la revision de seguridad. Usa una imagen JPG/PNG simple de un producto, objeto, paisaje, mascota o referencia original no sensible; evita personas reales, menores, desnudez, violencia y personajes de anime/juegos/comics que puedan tener copyright."
-      : "The video provider rejected the reference during safety review. Use a simple JPG/PNG product, object, landscape, pet, or original non-sensitive reference; avoid real people, minors, nudity, violence, and anime/game/comic characters that may be copyrighted.";
+      ? "Esta imagen de referencia no paso la revision de seguridad. Usa una imagen JPG/PNG simple de un producto, objeto, paisaje, mascota u original no sensible; evita personas reales, menores, desnudez, violencia y personajes protegidos."
+      : "This reference image could not pass the safety review. Use a simple JPG/PNG product, object, landscape, pet, or original non-sensitive image; avoid real people, minors, nudity, violence, and protected characters.";
   }
   return spanish
-    ? "El proveedor de video rechazo la referencia. Revisa la imagen, elige otra referencia segura e intentalo de nuevo."
-    : "The video provider rejected the reference image. Review the image, choose another safe reference, and try again.";
+    ? "Esta imagen de referencia no se pudo usar. Revisala, elige otra imagen segura e intentalo de nuevo."
+    : "This reference image could not be used. Review it, choose another safe image, and try again.";
 }
 
 export function parseVideoProviderFailure(value: unknown): VideoProviderFailure | undefined {

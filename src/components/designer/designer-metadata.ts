@@ -232,6 +232,8 @@ export function fieldDisplayLabel(field: Pick<ThemeFieldSchema, "id" | "label">)
     threadsUrl: "Threads 链接",
     pinterestUrl: "Pinterest 链接",
     youtubeUrl: "YouTube 链接",
+    xUrl: "X 链接",
+    tiktokUrl: "TikTok 链接",
     backgroundImage: "背景图"
   };
   const byLabel: Record<string, string> = {

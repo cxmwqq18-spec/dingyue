@@ -25,19 +25,19 @@ function resultRecord(job: RuntimeJob): Record<string, unknown> {
 function stageLabel(stage: unknown, status: RuntimeJob["status"]): string {
   if (status === "failed") return "Generation failed";
   if (status === "succeeded") return "Images delivered";
-  if (stage === "local_worker_started") return "Preparing the generator";
-  if (stage === "source_images_ready") return "Reading selected photos";
-  if (stage === "provider_request_started") return "Sending photos to the image model";
-  if (stage === "provider_response_received") return "Saving generated images";
+  if (stage === "local_worker_started") return "Preparing your request";
+  if (stage === "source_images_ready") return "Preparing selected photos";
+  if (stage === "provider_request_started") return "Creating your images";
+  if (stage === "provider_response_received") return "Saving your images";
   if (status === "queued") return "Waiting in queue";
-  if (status === "running") return "Generating images";
+  if (status === "running") return "Creating images";
   return "Request updated";
 }
 
 function statusBody(job: RuntimeJob, assetsCount: number): string {
   const result = resultRecord(job);
   if (job.status === "failed") {
-    return "The generator could not finish this request. Held credits were returned automatically, so you can retry after adjusting the photos or package.";
+    return "We could not finish this request. Held credits were returned automatically, so you can try again after adjusting the photos or package.";
   }
   if (job.status === "succeeded") {
     return assetsCount > 0
@@ -45,26 +45,26 @@ function statusBody(job: RuntimeJob, assetsCount: number): string {
       : "The request completed, and delivered images are being attached.";
   }
   if (result.lastWorkerStage === "provider_request_started") {
-    return "The selected photos and package prompt are with the image model. This is usually the longest step.";
+    return "Your selected photos and description are being processed. This is usually the longest step.";
   }
   if (result.lastWorkerStage === "source_images_ready") {
-    return "The worker is preparing your selected private photos before generation.";
+    return "Your selected private photos are being prepared.";
   }
   if (job.status === "queued") {
-    return "Credits are held and the request is waiting for the generator.";
+    return "Credits are held while your request waits to start.";
   }
-  return "Keep this page open or come back later. The status updates when the generator sends progress.";
+  return "Keep this page open or come back later. The status updates as your request moves forward.";
 }
 
 function failureDetail(job: RuntimeJob): string | undefined {
   const error = resultRecord(job).error;
   if (typeof error !== "string" || !error.trim()) return undefined;
-  if (error.includes("no_image_ai_provider_configured")) return "No image generator is configured for this site.";
-  if (error.includes("UND_ERR_CONNECT_TIMEOUT") || error.includes("timeout")) return "The image provider did not respond before the timeout.";
-  if (error.includes("ai_provider_api_key_missing")) return "The image provider key is missing.";
-  if (error.includes("ai_provider_not_image_model")) return "The selected provider is not configured as an image model.";
-  if (error.includes("ai_provider_source_image_failed")) return "One selected photo could not be read by the generator.";
-  return error.replaceAll("_", " ").slice(0, 180);
+  if (error.includes("no_image_ai_provider_configured")) return "Image creation is temporarily unavailable. Try again later.";
+  if (error.includes("UND_ERR_CONNECT_TIMEOUT") || error.includes("timeout")) return "Image creation took too long to respond. Try again after a short wait.";
+  if (error.includes("ai_provider_api_key_missing")) return "Image creation is temporarily unavailable. Try again later.";
+  if (error.includes("ai_provider_not_image_model")) return "This image request could not be completed. Try again later.";
+  if (error.includes("ai_provider_source_image_failed")) return "One selected photo could not be read. Re-upload it and try again.";
+  return "We could not finish this request. Please try again after a short wait.";
 }
 
 function percentFor(job: RuntimeJob, assetsCount: number): number {

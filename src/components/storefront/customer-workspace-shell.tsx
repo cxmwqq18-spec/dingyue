@@ -293,7 +293,7 @@ function runtimeJobFromLivePatch(jobId: string, patch: LiveJobPatch): RuntimeJob
       fields: {
         mode: "video",
         outputType: "video",
-        videoThemeName: "Prompt Directed Motion"
+        videoThemeName: "Guided Motion"
       },
       billing: { outputCount: 1 }
     },
@@ -420,42 +420,42 @@ function workspaceVideoTimingBreakdown(job: RuntimeJob, spanish = false, nowMs =
 
   addRow(
     "submit_to_worker",
-    t(spanish, "Submit to worker", "Enviar al worker"),
+    t(spanish, "Start request", "Iniciar solicitud"),
     createdMs,
     workerAcceptedMs ?? (!workerAcceptedMs ? incompleteStageEndMs : undefined),
     active && !workerAcceptedMs
   );
   addRow(
     "prepare_references",
-    t(spanish, "Prepare references", "Preparar referencias"),
+    t(spanish, "Prepare images", "Preparar imagenes"),
     workerAcceptedMs,
     referencePreparedMs ?? (workerAcceptedMs && !referencePreparedMs ? incompleteStageEndMs : undefined),
     active && Boolean(workerAcceptedMs) && !referencePreparedMs
   );
   addRow(
     "create_provider_task",
-    t(spanish, "Create provider task", "Crear tarea del proveedor"),
+    t(spanish, "Start video", "Iniciar video"),
     referencePreparedMs,
     providerTaskCreatedMs ?? (referencePreparedMs && !providerTaskCreatedMs ? incompleteStageEndMs : undefined),
     active && Boolean(referencePreparedMs) && !providerTaskCreatedMs
   );
   addRow(
     "provider_generation",
-    t(spanish, "Provider generation", "Generacion del proveedor"),
+    t(spanish, "Create video", "Crear video"),
     providerTaskCreatedMs,
     providerCompletedMs ?? (providerTaskCreatedMs ? incompleteStageEndMs : undefined),
     active && Boolean(providerTaskCreatedMs) && !providerCompletedMs
   );
   addRow(
     "download_result",
-    t(spanish, "Download result", "Descargar resultado"),
+    t(spanish, "Prepare result", "Preparar resultado"),
     providerCompletedMs,
     downloadedMs ?? (providerCompletedMs && !downloadedMs ? incompleteStageEndMs : undefined),
     active && Boolean(providerCompletedMs) && !downloadedMs
   );
   addRow(
     "save_and_settle",
-    t(spanish, "Save and settle", "Guardar y cerrar"),
+    t(spanish, "Save result", "Guardar resultado"),
     downloadedMs,
     settledMs ?? storedMs ?? (downloadedMs ? incompleteStageEndMs : undefined),
     active && Boolean(downloadedMs) && !storedMs && !settledMs
@@ -580,16 +580,16 @@ function workspaceJobStageLabel(job: RuntimeJob, spanish = false, slots?: Runtim
   const effectiveStatus = workspaceJobEffectiveStatus(job, slots);
   if (effectiveStatus === "failed") return t(spanish, "Generation failed", "Generacion fallida");
   if (effectiveStatus === "succeeded") return isVideoRequest ? t(spanish, "Video delivered", "Video entregado") : t(spanish, "Images delivered", "Imagenes entregadas");
-  if (stage === "local_worker_started") return t(spanish, "Preparing the generator", "Preparando el generador");
-  if (stage === "local_video_worker_started") return t(spanish, "Preparing the video generator", "Preparando el generador de video");
-  if (stage === "source_images_ready") return t(spanish, "Reading selected photos", "Leyendo fotos seleccionadas");
-  if (stage === "provider_request_started") return t(spanish, "Generating images", "Generando imagenes");
-  if (stage === "video_provider_request_started" || stage === "video_task_created") return t(spanish, "Generating video", "Generando video");
-  if (typeof stage === "string" && stage.startsWith("video_provider_running")) return t(spanish, "Generating video", "Generando video");
-  if (stage === "video_result_received") return t(spanish, "Saving generated video", "Guardando video generado");
-  if (stage === "provider_response_received") return t(spanish, "Saving generated images", "Guardando imagenes generadas");
+  if (stage === "local_worker_started") return t(spanish, "Preparing your request", "Preparando tu solicitud");
+  if (stage === "local_video_worker_started") return t(spanish, "Preparing your video", "Preparando tu video");
+  if (stage === "source_images_ready") return t(spanish, "Preparing selected photos", "Preparando fotos seleccionadas");
+  if (stage === "provider_request_started") return t(spanish, "Creating images", "Creando imagenes");
+  if (stage === "video_provider_request_started" || stage === "video_task_created") return t(spanish, "Creating video", "Creando video");
+  if (typeof stage === "string" && stage.startsWith("video_provider_running")) return t(spanish, "Creating video", "Creando video");
+  if (stage === "video_result_received") return t(spanish, "Saving your video", "Guardando tu video");
+  if (stage === "provider_response_received") return t(spanish, "Saving your images", "Guardando tus imagenes");
   if (effectiveStatus === "queued") return t(spanish, "Waiting in queue", "En cola");
-  if (effectiveStatus === "running") return isVideoRequest ? t(spanish, "Generating video", "Generando video") : t(spanish, "Generating images", "Generando imagenes");
+  if (effectiveStatus === "running") return isVideoRequest ? t(spanish, "Creating video", "Creando video") : t(spanish, "Creating images", "Creando imagenes");
   return t(spanish, "Request updated", "Solicitud actualizada");
 }
 
@@ -615,56 +615,56 @@ function workspaceJobBody(job: RuntimeJob, spanish = false, slots?: RuntimeOutpu
   const result = jobResult(job);
   const effectiveStatus = workspaceJobEffectiveStatus(job, slots);
   if (videoJobMissingRequiredFrames(job)) {
-    return t(spanish, "This video request did not include selected frame images, so it cannot be trusted as a reference-based result. Start a new video after selecting frame images on the left.", "Esta solicitud de video no incluyo fotogramas seleccionados, por lo que no debe usarse como resultado basado en referencias. Crea un video nuevo despues de seleccionar fotogramas a la izquierda.");
+    return t(spanish, "This video request did not include selected reference images, so it cannot use your visual references. Start a new video after selecting reference images on the left.", "Esta solicitud de video no incluyo imagenes de referencia seleccionadas, por lo que no puede usar tus referencias visuales. Crea un video nuevo despues de seleccionar imagenes de referencia a la izquierda.");
   }
   if (effectiveStatus === "failed") {
     const slotError = slots?.find((slot) => slot.status === "failed" && slot.error)?.error;
     const error = typeof result.error === "string" && result.error ? result.error : slotError ?? "";
     const lowerError = error.toLowerCase();
     const isVideoRequest = isVideoRuntimeJob(job);
-    if (isVideoRequest && (error.includes("ai_provider_video_request_timeout") || error.includes("video_provider_request_timeout"))) return t(spanish, "The video request stalled before the provider returned a task id. Credits were returned automatically; refresh the workspace, then retry after a short wait.", "La solicitud de video se quedo detenida antes de que el proveedor devolviera un id de tarea. Los creditos se devolvieron automaticamente; actualiza el espacio y reintenta despues de una breve espera.");
-    if (isVideoRequest && (error.includes("ai_provider_video_create_timeout") || error.includes("video_provider_create_timeout"))) return t(spanish, "The video provider did not return a task after the create request timed out. Credits were returned automatically; retry after a short wait or use another healthy video provider.", "El proveedor de video no devolvio una tarea antes de agotar el tiempo de creacion. Los creditos se devolvieron automaticamente; reintenta despues de una breve espera o usa otro proveedor disponible.");
+    if (isVideoRequest && (error.includes("ai_provider_video_request_timeout") || error.includes("video_provider_request_timeout"))) return t(spanish, "Video creation took too long to begin. Credits were returned automatically; refresh the workspace, then try again after a short wait.", "La creacion del video tardo demasiado en comenzar. Los creditos se devolvieron automaticamente; actualiza el espacio y vuelve a intentarlo despues de una breve espera.");
+    if (isVideoRequest && (error.includes("ai_provider_video_create_timeout") || error.includes("video_provider_create_timeout"))) return t(spanish, "Video creation took too long to start. Credits were returned automatically; try again after a short wait.", "La creacion del video tardo demasiado en comenzar. Los creditos se devolvieron automaticamente; vuelve a intentarlo despues de una breve espera.");
     if (error.includes("generation_job_expired")) return isVideoRequest
-      ? t(spanish, "The video generator was interrupted before it returned a result. Credits were returned automatically, and you can retry from the same workspace.", "El generador de video se interrumpio antes de devolver un resultado. Los creditos se devolvieron automaticamente y puedes reintentar desde el mismo espacio.")
-      : t(spanish, "The generator was interrupted before it returned a result. Credits were returned automatically, and you can retry from the same workspace.", "El generador se interrumpio antes de devolver un resultado. Los creditos se devolvieron automaticamente y puedes reintentar desde el mismo espacio.");
+      ? t(spanish, "Video creation stopped before it returned a result. Credits were returned automatically, and you can try again from the workspace.", "La creacion de video se detuvo antes de devolver un resultado. Los creditos se devolvieron automaticamente y puedes intentarlo de nuevo desde el espacio.")
+      : t(spanish, "Image creation stopped before it returned a result. Credits were returned automatically, and you can try again from the workspace.", "La creacion de imagenes se detuvo antes de devolver un resultado. Los creditos se devolvieron automaticamente y puedes intentarlo de nuevo desde el espacio.");
     if (isVideoRequest && (error.includes("ai_provider_video_content_unverified") || error.includes("ai_provider_video_reference_channel_unreliable") || error.includes("video_provider_temporarily_unavailable") || error.includes("no_video_ai_provider_configured"))) {
-      return t(spanish, "Video generation is temporarily unavailable while provider access is being updated. Credits were returned automatically, and you can retry once video access is restored.", "La generacion de video no esta disponible temporalmente mientras se actualiza el acceso del proveedor. Los creditos se devolvieron automaticamente y podras reintentar cuando se restaure el acceso de video.");
+      return t(spanish, "Video creation is temporarily unavailable. Credits were returned automatically, and you can try again later.", "La creacion de video no esta disponible temporalmente. Los creditos se devolvieron automaticamente y puedes intentarlo mas tarde.");
     }
     if (isVideoRequest && isVideoProviderUpstreamUnavailableError(error)) {
-      return t(spanish, "The video provider is temporarily unavailable upstream. Credits were returned automatically; retry after provider access recovers.", "El proveedor de video no esta disponible temporalmente en upstream. Los creditos se devolvieron automaticamente; reintenta cuando se recupere el acceso.");
+      return t(spanish, "Video creation is temporarily unavailable. Credits were returned automatically; try again later.", "La creacion de video no esta disponible temporalmente. Los creditos se devolvieron automaticamente; intentalo mas tarde.");
     }
     if (!isVideoRequest && isImageProviderError(error)) {
       if (error.includes("no_image_ai_provider_configured")) {
-        return t(spanish, "Image generation is temporarily unavailable while provider access is being updated. Credits were returned automatically, and you can retry once image access is restored.", "La generacion de imagenes no esta disponible temporalmente mientras se actualiza el acceso del proveedor. Los creditos se devolvieron automaticamente y podras reintentar cuando se restaure el acceso.");
+        return t(spanish, "Image creation is temporarily unavailable. Credits were returned automatically, and you can try again later.", "La creacion de imagenes no esta disponible temporalmente. Los creditos se devolvieron automaticamente y puedes intentarlo mas tarde.");
       }
       if (isProviderTemporarilyUnavailableError(error)) {
-        return t(spanish, "The image provider is temporarily unavailable upstream. Credits were returned automatically; retry after provider access recovers.", "El proveedor de imagenes no esta disponible temporalmente en upstream. Los creditos se devolvieron automaticamente; reintenta cuando se recupere el acceso.");
+        return t(spanish, "Image creation is temporarily unavailable. Credits were returned automatically; try again later.", "La creacion de imagenes no esta disponible temporalmente. Los creditos se devolvieron automaticamente; intentalo mas tarde.");
       }
       if (error.includes("ai_provider_image_edit_failed_404")) {
-        return t(spanish, "The selected image provider endpoint rejected this request. Credits were returned automatically; retry after provider configuration is updated.", "El endpoint del proveedor de imagenes rechazo esta solicitud. Los creditos se devolvieron automaticamente; reintenta cuando se actualice la configuracion.");
+        return t(spanish, "This image request could not be accepted right now. Credits were returned automatically; try again later.", "Esta solicitud de imagen no se pudo aceptar ahora. Los creditos se devolvieron automaticamente; intentalo mas tarde.");
       }
-      return t(spanish, "The image provider could not finish this image. Credits were returned automatically, and you can retry after a short wait.", "El proveedor de imagenes no pudo terminar esta imagen. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.");
+      return t(spanish, "We could not finish this image. Credits were returned automatically, and you can try again after a short wait.", "No pudimos terminar esta imagen. Los creditos se devolvieron automaticamente y puedes intentarlo de nuevo despues de una breve espera.");
     }
-    if (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required")) return t(spanish, "The video provider could not reach the selected frame images through a public URL. Credits were returned automatically; retry after the workspace is opened on its public domain or a public asset base URL is configured.", "El proveedor de video no pudo leer los fotogramas mediante una URL publica. Los creditos se devolvieron automaticamente; reintenta cuando el sitio este en su dominio publico o tenga configurada una URL publica de recursos.");
-    if (isVideoRequest && (error.includes("ai_provider_video_create_failed_524") || error.includes("ai_provider_video_create_failed_504"))) return t(spanish, "The video provider timed out while creating the video task. The starter image was created correctly, credits were returned automatically, and you can retry after the provider recovers.", "El proveedor de video agoto el tiempo al crear la tarea. La imagen inicial se creo correctamente, los creditos se devolvieron automaticamente y puedes reintentar cuando el proveedor se recupere.");
-    if (isVideoRequest && (lowerError.includes("econnreset") || lowerError.includes("fetch failed") || lowerError.includes("socket") || lowerError.includes("terminated"))) return t(spanish, "The video provider connection was interrupted before it returned a video. Credits were returned automatically, and you can retry after a short wait.", "La conexion con el proveedor de video se interrumpio antes de devolver el video. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.");
+    if (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required")) return t(spanish, "The selected reference images could not be read. Credits were returned automatically; re-upload them and try again.", "No se pudieron leer las imagenes de referencia seleccionadas. Los creditos se devolvieron automaticamente; vuelve a subirlas e intentalo de nuevo.");
+    if (isVideoRequest && (error.includes("ai_provider_video_create_failed_524") || error.includes("ai_provider_video_create_failed_504"))) return t(spanish, "Video creation took too long to start. Credits were returned automatically; try again later.", "La creacion del video tardo demasiado en comenzar. Los creditos se devolvieron automaticamente; intentalo mas tarde.");
+    if (isVideoRequest && (lowerError.includes("econnreset") || lowerError.includes("fetch failed") || lowerError.includes("socket") || lowerError.includes("terminated"))) return t(spanish, "The video service was interrupted before it finished. Credits were returned automatically; try again after a short wait.", "El servicio de video se interrumpio antes de terminar. Los creditos se devolvieron automaticamente; intentalo de nuevo despues de una breve espera.");
     const providerFailure = isVideoRequest ? workspaceJobProviderFailure(job, slots) : undefined;
     if (providerFailure) return workspaceJobProviderFailureBody(providerFailure, spanish);
-    if (isVideoRequest && error.includes("ai_provider_video_failed")) return t(spanish, "The video provider could not finish this video. Credits were returned automatically, and you can retry after a short wait.", "El proveedor de video no pudo terminar este video. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.");
+    if (isVideoRequest && error.includes("ai_provider_video_failed")) return t(spanish, "The video service could not finish this video. Credits were returned automatically; try again after a short wait.", "El servicio de video no pudo terminar este video. Los creditos se devolvieron automaticamente; intentalo de nuevo despues de una breve espera.");
     if (error.includes("timeout") || error.includes("UND_ERR_CONNECT_TIMEOUT")) return isVideoRequest
-      ? t(spanish, "The video provider did not respond in time. Credits were returned automatically, and you can retry after a short wait.", "El proveedor de video no respondio a tiempo. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.")
-      : t(spanish, "The image provider did not respond in time. Credits were returned automatically, and you can retry after a short wait.", "El proveedor de imagenes no respondio a tiempo. Los creditos se devolvieron automaticamente y puedes reintentar despues de una breve espera.");
-    if (error.includes("fetch failed")) return t(spanish, "The image provider connection failed before it returned images. Credits were returned automatically, and you can retry.", "La conexion con el proveedor fallo antes de devolver imagenes. Los creditos se devolvieron automaticamente y puedes reintentar.");
-    return t(spanish, "The generator could not finish this request. Credits were returned automatically, and you can retry from the same workspace.", "El generador no pudo terminar esta solicitud. Los creditos se devolvieron automaticamente y puedes reintentar desde el mismo espacio.");
+      ? t(spanish, "Video creation did not respond in time. Credits were returned automatically; try again after a short wait.", "La creacion del video no respondio a tiempo. Los creditos se devolvieron automaticamente; intentalo de nuevo despues de una breve espera.")
+      : t(spanish, "Image creation did not respond in time. Credits were returned automatically; try again after a short wait.", "La creacion de la imagen no respondio a tiempo. Los creditos se devolvieron automaticamente; intentalo de nuevo despues de una breve espera.");
+    if (error.includes("fetch failed")) return t(spanish, "The image service was interrupted before it returned an image. Credits were returned automatically; try again.", "El servicio de imagenes se interrumpio antes de devolver una imagen. Los creditos se devolvieron automaticamente; intentalo de nuevo.");
+    return t(spanish, "We could not finish this request. Credits were returned automatically, and you can try again from the workspace.", "No pudimos terminar esta solicitud. Los creditos se devolvieron automaticamente y puedes intentarlo de nuevo desde el espacio.");
   }
   if (result.lastWorkerStage === "provider_request_started") {
     const elapsedMs = Date.now() - new Date(job.updatedAt).getTime();
-    if (elapsedMs > 4 * 60_000) return t(spanish, "The image model is taking longer than expected. If it does not return soon, credits will be released automatically and you can retry.", "El modelo esta tardando mas de lo esperado. Si no responde pronto, los creditos se liberaran automaticamente y podras reintentar.");
-    return t(spanish, "Your selected photos and prompt are with the image model. This is usually the longest step.", "Tus fotos seleccionadas e instrucciones estan con el modelo. Este suele ser el paso mas largo.");
+    if (elapsedMs > 4 * 60_000) return t(spanish, "Image creation is taking longer than expected. If it does not finish soon, credits will be released automatically and you can try again.", "La creacion de imagenes esta tardando mas de lo esperado. Si no termina pronto, los creditos se liberaran automaticamente y podras intentarlo de nuevo.");
+    return t(spanish, "Your selected photos and description are being processed. This is usually the longest step.", "Tus fotos seleccionadas y descripcion se estan procesando. Este suele ser el paso mas largo.");
   }
-  if (result.lastWorkerStage === "source_images_ready") return t(spanish, "Your selected photos are being prepared for generation.", "Tus fotos seleccionadas se estan preparando para generar.");
-  if (effectiveStatus === "queued") return t(spanish, "Credits are held and this request is waiting for the generator.", "Los creditos estan reservados y la solicitud espera al generador.");
-  return t(spanish, "The workspace updates when the generator sends progress.", "El espacio se actualiza cuando el generador envia progreso.");
+  if (result.lastWorkerStage === "source_images_ready") return t(spanish, "Your selected photos are being prepared for image creation.", "Tus fotos seleccionadas se estan preparando para crear imagenes.");
+  if (effectiveStatus === "queued") return t(spanish, "Credits are held while your request waits to start.", "Los creditos estan reservados mientras tu solicitud espera para comenzar.");
+  return t(spanish, "The workspace updates as your request moves forward.", "El espacio se actualiza a medida que avanza tu solicitud.");
 }
 
 function requestedJobOutputCount(job: RuntimeJob): number {
@@ -825,17 +825,17 @@ function workspaceSlotProgressText(slot: RuntimeOutputSlot, spanish = false): st
   if (slot.status === "succeeded") return t(spanish, "Output ready", "Resultado listo");
   if (slot.status === "failed") return t(spanish, "Needs retry", "Necesita reintento");
   if (slot.stage === "video_result_received") return t(spanish, "Saving video", "Guardando video");
-  if (slot.stage === "provider_response_received") return t(spanish, "Saving output", "Guardando resultado");
-  if (slot.stage === "video_task_created") return t(spanish, "Video task created", "Tarea de video creada");
-  if (slot.stage === "video_provider_create_started") return t(spanish, "Submitting video task", "Enviando tarea de video");
-  if (typeof slot.stage === "string" && slot.stage.startsWith("video_provider_running")) return t(spanish, "Generating video", "Generando video");
-  if (slot.stage === "video_scene_image_generation_started") return t(spanish, "Preparing starter image", "Preparando imagen inicial");
-  if (slot.stage === "video_provider_request_started") return t(spanish, "Generating video", "Generando video");
-  if (slot.stage === "provider_request_started") return t(spanish, "Generating output", "Generando resultado");
-  if (slot.stage === "source_images_ready") return t(spanish, "Preparing photos", "Preparando fotos");
-  if (slot.stage === "local_video_worker_started") return t(spanish, "Preparing video request", "Preparando solicitud de video");
-  if (slot.stage === "local_worker_started") return t(spanish, "Preparing request", "Preparando solicitud");
-  if (slot.status === "running") return t(spanish, "Generating output", "Generando resultado");
+  if (slot.stage === "provider_response_received") return t(spanish, "Saving result", "Guardando resultado");
+  if (slot.stage === "video_task_created") return t(spanish, "Video started", "Video iniciado");
+  if (slot.stage === "video_provider_create_started") return t(spanish, "Starting video", "Iniciando video");
+  if (typeof slot.stage === "string" && slot.stage.startsWith("video_provider_running")) return t(spanish, "Creating video", "Creando video");
+  if (slot.stage === "video_scene_image_generation_started") return t(spanish, "Preparing the first image", "Preparando la primera imagen");
+  if (slot.stage === "video_provider_request_started") return t(spanish, "Creating video", "Creando video");
+  if (slot.stage === "provider_request_started") return t(spanish, "Creating result", "Creando resultado");
+  if (slot.stage === "source_images_ready") return t(spanish, "Preparing selected photos", "Preparando fotos seleccionadas");
+  if (slot.stage === "local_video_worker_started") return t(spanish, "Preparing your video", "Preparando tu video");
+  if (slot.stage === "local_worker_started") return t(spanish, "Preparing your request", "Preparando tu solicitud");
+  if (slot.status === "running") return t(spanish, "Creating result", "Creando resultado");
   return t(spanish, "Waiting for this slot", "Esperando este resultado");
 }
 
@@ -1145,7 +1145,7 @@ function videoFrameLabel(asset: Pick<ThemeRuntimeAsset, "altText" | "label">, in
   const storedAlt = mediaLabel(asset.altText);
   if (storedAlt) return storedAlt;
   const frame = typeof index === "number" ? ` ${index + 1}` : "";
-  return `Uploaded video frame${frame}: ${mediaLabel(asset.label) || "reference image"}`;
+  return `Uploaded reference image${frame}: ${mediaLabel(asset.label) || "reference image"}`;
 }
 
 function isVideoRuntimeJob(job: RuntimeJob): boolean {
@@ -1181,41 +1181,41 @@ function workspaceGenerationErrorText(error: string, spanish = false, providerFa
   const lowerError = error.toLowerCase();
   if (!isVideoRequest && isImageProviderError(error)) {
     if (error.includes("no_image_ai_provider_configured")) {
-      return t(spanish, "Image generation is temporarily unavailable while provider access is being updated.", "La generacion de imagenes no esta disponible temporalmente mientras se actualiza el acceso del proveedor.");
+      return t(spanish, "Image creation is temporarily unavailable. Please try again later.", "La creacion de imagenes no esta disponible temporalmente. Intentalo mas tarde.");
     }
     if (isProviderTemporarilyUnavailableError(error)) {
-      return t(spanish, "The image provider is temporarily unavailable upstream.", "El proveedor de imagenes no esta disponible temporalmente en upstream.");
+      return t(spanish, "Image creation is temporarily unavailable. Please try again later.", "La creacion de imagenes no esta disponible temporalmente. Intentalo mas tarde.");
     }
     if (error.includes("ai_provider_image_edit_failed_404")) {
-      return t(spanish, "The selected image provider endpoint rejected this request.", "El endpoint del proveedor de imagenes rechazo esta solicitud.");
+      return t(spanish, "This image request could not be accepted right now. Please try again later.", "Esta solicitud de imagen no se pudo aceptar ahora. Intentalo mas tarde.");
     }
     if (lowerError.includes("timeout") || lowerError.includes("und_err_connect_timeout")) {
-      return t(spanish, "The image provider did not respond in time.", "El proveedor de imagenes no respondio a tiempo.");
+      return t(spanish, "Image creation took too long to respond. Please try again after a short wait.", "La creacion de imagenes tardo demasiado en responder. Intentalo de nuevo despues de una breve espera.");
     }
     if (lowerError.includes("fetch failed") || lowerError.includes("socket") || lowerError.includes("econnreset") || lowerError.includes("terminated")) {
-      return t(spanish, "The image provider connection was interrupted.", "La conexion con el proveedor de imagenes se interrumpio.");
+      return t(spanish, "The image service was interrupted. Please try again after a short wait.", "El servicio de imagenes se interrumpio. Intentalo de nuevo despues de una breve espera.");
     }
-    return t(spanish, "The image provider could not finish this image.", "El proveedor de imagenes no pudo terminar esta imagen.");
+    return t(spanish, "We could not finish this image. Please try again.", "No pudimos terminar esta imagen. Intentalo de nuevo.");
   }
   if (isVideoRequest && isVideoProviderUpstreamUnavailableError(error)) {
-    return t(spanish, "The video provider is temporarily unavailable upstream.", "El proveedor de video no esta disponible temporalmente en upstream.");
+    return t(spanish, "Video creation is temporarily unavailable. Please try again later.", "La creacion de video no esta disponible temporalmente. Intentalo mas tarde.");
   }
   const normalizedFailure = isVideoRequest ? providerFailure ?? normalizeVideoProviderFailure({ error }) : undefined;
   if (normalizedFailure) return videoProviderFailureCustomerMessage(normalizedFailure, spanish);
   if (isVideoRequest && (error.includes("ai_provider_video_frame_public_urls_required") || error.includes("video_public_asset_url_required"))) {
-    return t(spanish, "Frame images need a public URL before the video provider can read them.", "Los fotogramas necesitan una URL publica antes de que el proveedor de video pueda leerlos.");
+    return t(spanish, "The selected reference images could not be read. Re-upload them and try again.", "No se pudieron leer las imagenes de referencia seleccionadas. Vuelve a subirlas e intentalo de nuevo.");
   }
   if (isVideoRequest && (error.includes("ai_provider_video_content_unverified") || error.includes("ai_provider_video_reference_channel_unreliable") || error.includes("video_provider_temporarily_unavailable") || error.includes("no_video_ai_provider_configured"))) {
-    return t(spanish, "Video generation is temporarily unavailable while provider access is being updated.", "La generacion de video no esta disponible temporalmente mientras se actualiza el acceso del proveedor.");
+    return t(spanish, "Video creation is temporarily unavailable. Please try again later.", "La creacion de video no esta disponible temporalmente. Intentalo mas tarde.");
   }
   if (isVideoRequest && (error.includes("ai_provider_video_create_failed_524") || error.includes("ai_provider_video_create_failed_504"))) {
-    return t(spanish, "The video provider timed out while creating the video task.", "El proveedor de video agoto el tiempo al crear la tarea.");
+    return t(spanish, "Video creation took too long to start. Please try again later.", "La creacion del video tardo demasiado en comenzar. Intentalo mas tarde.");
   }
   if (isVideoRequest && (lowerError.includes("econnreset") || lowerError.includes("fetch failed") || lowerError.includes("socket") || lowerError.includes("terminated"))) {
-    return t(spanish, "The video provider connection was interrupted.", "La conexion con el proveedor de video se interrumpio.");
+    return t(spanish, "The video service was interrupted. Please try again after a short wait.", "El servicio de video se interrumpio. Intentalo de nuevo despues de una breve espera.");
   }
   if (isVideoRequest && error.includes("ai_provider_video_failed")) {
-    return t(spanish, "The video provider could not finish this video.", "El proveedor de video no pudo terminar este video.");
+    return t(spanish, "We could not finish this video. Please try again after a short wait.", "No pudimos terminar este video. Intentalo de nuevo despues de una breve espera.");
   }
   return error;
 }
@@ -1290,13 +1290,13 @@ type StudioConsoleSectionId = "generate" | "try-on" | "video" | "background" | "
 
 const studioConsoleSections: Array<{ id: StudioConsoleSectionId; label: string; panel: CustomerWorkspacePanel; anchor: WorkspaceAnchor }> = [
   { id: "video", label: "Image to Video", panel: "video", anchor: "step-video" },
-  { id: "model", label: "Create New AI Model", panel: "create", anchor: "source-photos" }
+  { id: "model", label: "Create a Photo Profile", panel: "create", anchor: "source-photos" }
 ];
 
 const studioGenderOptions = [
   { id: "man", label: "Man", icon: UserRound },
   { id: "woman", label: "Woman", icon: Users },
-  { id: "nonbinary", label: "N-Bi", icon: UserRound }
+  { id: "nonbinary", label: "Non-binary", icon: UserRound }
 ];
 
 function studioConsoleLabel(id: StudioConsoleSectionId, spanish: boolean): string {
@@ -1305,7 +1305,7 @@ function studioConsoleLabel(id: StudioConsoleSectionId, spanish: boolean): strin
     "try-on": t(spanish, "Try-On", "Probador virtual"),
     video: t(spanish, "Image to Video", "Imagen a video"),
     background: t(spanish, "Change Background", "Cambiar fondo"),
-    model: t(spanish, "Create New AI Model", "Crear nuevo modelo IA")
+    model: t(spanish, "Create a Photo Profile", "Crear un perfil de fotos")
   };
   return labels[id];
 }
@@ -1313,7 +1313,7 @@ function studioConsoleLabel(id: StudioConsoleSectionId, spanish: boolean): strin
 function studioGenderLabel(id: string, spanish: boolean): string {
   if (id === "man") return t(spanish, "Man", "Hombre");
   if (id === "woman") return t(spanish, "Woman", "Mujer");
-  return t(spanish, "N-Bi", "N-Bi");
+  return t(spanish, "Non-binary", "No binario");
 }
 
 export function CustomerWorkspaceShell({
@@ -1407,13 +1407,13 @@ export function CustomerWorkspaceShell({
   const [selectedVideoFrameIds, setSelectedVideoFrameIds] = useState<string[]>([]);
   const [draggedVideoFrameId, setDraggedVideoFrameId] = useState<string | null>(null);
   const [uploadingVideoFrames, setUploadingVideoFrames] = useState(false);
-  const [videoFrameMessage, setVideoFrameMessage] = useState(() => t(spanishXby, `Choose up to ${VIDEO_FRAME_UPLOAD_LIMIT} image files. WebP and other browser-readable images are converted to video-ready JPG or PNG before upload.`, `Elige hasta ${VIDEO_FRAME_UPLOAD_LIMIT} archivos de imagen. WebP y otras imagenes legibles por el navegador se convierten a JPG o PNG listo para video antes de subir.`));
+  const [videoFrameMessage, setVideoFrameMessage] = useState(() => t(spanishXby, `Choose up to ${VIDEO_FRAME_UPLOAD_LIMIT} images. WebP and other browser-readable images are converted to JPG or PNG before upload.`, `Elige hasta ${VIDEO_FRAME_UPLOAD_LIMIT} imagenes. WebP y otras imagenes legibles por el navegador se convierten a JPG o PNG antes de subir.`));
   const [videoWorkspaceTab, setVideoWorkspaceTab] = useState<VideoWorkspaceTab>("generate");
   const [retryVideoDraft, setRetryVideoDraft] = useState<VideoRetryDraft | null>(null);
   const [retryImageDraft, setRetryImageDraft] = useState<JobCreateRetryDraft | null>(null);
   const [preferredToolId, setPreferredToolId] = useState<string | undefined>(undefined);
   const [uploadingSampleTarget, setUploadingSampleTarget] = useState<SampleTarget | null>(null);
-  const [sampleUploadMessage, setSampleUploadMessage] = useState(() => t(spanishXby, "Upload samples to preview them here before generation.", "Sube muestras para verlas aqui antes de generar."));
+  const [sampleUploadMessage, setSampleUploadMessage] = useState(() => t(spanishXby, "Upload samples to preview them here before creating images.", "Sube muestras para verlas aqui antes de crear imagenes."));
   const [workspaceNotice, setWorkspaceNotice] = useState("");
   const [runtimeRefreshMessage, setRuntimeRefreshMessage] = useState("");
   const [manualRefreshPending, setManualRefreshPending] = useState(false);
@@ -1763,7 +1763,7 @@ export function CustomerWorkspaceShell({
     if (eventRefreshKey !== null && completedRuntimeRefreshKey === eventRefreshKey) {
       eventRefreshKeyRef.current = null;
       if (runtimeState.status === "ready") {
-        setRuntimeRefreshMessage(spanishXby ? `Actualizado por callback del generador ${workspaceJobTime(new Date().toISOString())}` : `Updated from generator callback ${workspaceJobTime(new Date().toISOString())}`);
+        setRuntimeRefreshMessage(spanishXby ? `Actualizado con el progreso mas reciente ${workspaceJobTime(new Date().toISOString())}` : `Updated with the latest progress ${workspaceJobTime(new Date().toISOString())}`);
       }
       if (runtimeState.status === "error") {
         setRuntimeRefreshMessage(t(spanishXby, "Generator callback received, but workspace refresh failed. Use Check now.", "Callback recibido, pero fallo la actualizacion. Usa Revisar ahora."));
@@ -2225,7 +2225,7 @@ export function CustomerWorkspaceShell({
   function editAndRetryVideoJob(job: RuntimeJob) {
     const draft = videoRetryDraftFromJob(job);
     if (!draft) {
-      setRuntimeRefreshMessage(t(spanishXby, "This failed video request cannot be restored because its frame selection is missing.", "No se puede restaurar esta solicitud porque falta su seleccion de fotogramas."));
+      setRuntimeRefreshMessage(t(spanishXby, "This failed video request cannot be restored because its reference images are missing.", "No se puede restaurar esta solicitud porque faltan sus imagenes de referencia."));
       chooseVideoWorkspaceTab("generate");
       return;
     }
@@ -2246,13 +2246,13 @@ export function CustomerWorkspaceShell({
     setVideoFrameMessage(missingFrameCount > 0
       ? t(
           spanishXby,
-          `Restored ${restoredFrameCount} of ${draft.frameAssetIds.length} frame images. Upload or select replacements for the missing frames before generating.`,
-          `Se restauraron ${restoredFrameCount} de ${draft.frameAssetIds.length} fotogramas. Sube o elige reemplazos antes de generar.`
+          `Restored ${restoredFrameCount} of ${draft.frameAssetIds.length} reference images. Upload or select replacements for the missing images before creating the video.`,
+          `Se restauraron ${restoredFrameCount} de ${draft.frameAssetIds.length} imagenes de referencia. Sube o elige reemplazos antes de crear el video.`
         )
       : t(
           spanishXby,
-          `Restored ${restoredFrameCount} video frame image${restoredFrameCount === 1 ? "" : "s"} in the previous order.`,
-          `Se restauraron ${restoredFrameCount} fotograma${restoredFrameCount === 1 ? "" : "s"} en el orden anterior.`
+          `Restored ${restoredFrameCount} reference image${restoredFrameCount === 1 ? "" : "s"} in the previous order.`,
+          `Se restauraron ${restoredFrameCount} imagen${restoredFrameCount === 1 ? "" : "es"} de referencia en el orden anterior.`
         ));
     chooseVideoWorkspaceTab("generate");
   }
@@ -2447,7 +2447,7 @@ export function CustomerWorkspaceShell({
     setSelectedVideoFrameIds((current) => {
       if (current.includes(asset.id)) return current.filter((id) => id !== asset.id);
       if (current.length >= maxVideoFrameCount) {
-        setVideoFrameMessage(t(spanishXby, `Use up to ${maxVideoFrameCount} frame images for one video.`, `Usa hasta ${maxVideoFrameCount} fotogramas para un video.`));
+        setVideoFrameMessage(t(spanishXby, `Use up to ${maxVideoFrameCount} reference images for one video.`, `Usa hasta ${maxVideoFrameCount} imagenes de referencia para un video.`));
         return current;
       }
       return [...current, asset.id];
@@ -2532,8 +2532,8 @@ export function CustomerWorkspaceShell({
     if (convertedCount) {
       setVideoFrameMessage(t(
         spanishXby,
-        `${convertedCount} selected frame${convertedCount === 1 ? "" : "s"} converted to JPG and ready for video.`,
-        `${convertedCount} fotograma${convertedCount === 1 ? "" : "s"} seleccionado${convertedCount === 1 ? "" : "s"} convertido${convertedCount === 1 ? "" : "s"} a JPG y listo${convertedCount === 1 ? "" : "s"} para video.`
+        `${convertedCount} selected reference image${convertedCount === 1 ? "" : "s"} converted to JPG and ready.`,
+        `${convertedCount} imagen${convertedCount === 1 ? "" : "es"} de referencia convertida${convertedCount === 1 ? "" : "s"} a JPG y lista${convertedCount === 1 ? "" : "s"}.`
       ));
       invalidateCustomerAssets(site.id, customer.id);
       window.dispatchEvent(new CustomEvent("customer-assets:updated"));
@@ -2546,7 +2546,7 @@ export function CustomerWorkspaceShell({
     const imageFiles = selectedFiles.filter(canPrepareCustomerVideoFrameUploadFile);
     const unsupportedCount = selectedFiles.length - imageFiles.length;
     if (!imageFiles.length) {
-      setVideoFrameMessage(selectedFiles.length ? t(spanishXby, "Choose a browser-readable image file for video. GIF and SVG files cannot be converted to video-ready JPG or PNG.", "Elige una imagen legible por el navegador para video. Los archivos GIF y SVG no se pueden convertir a JPG o PNG listo para video.") : t(spanishXby, "Choose one or more image files before uploading.", "Elige uno o mas archivos de imagen antes de subir."));
+      setVideoFrameMessage(selectedFiles.length ? t(spanishXby, "Choose a JPG, PNG, or another supported image file. GIF and SVG files are not supported here.", "Elige un archivo JPG, PNG u otra imagen compatible. Los archivos GIF y SVG no son compatibles aqui.") : t(spanishXby, "Choose one or more image files before uploading.", "Elige uno o mas archivos de imagen antes de subir."));
       return;
     }
     const uploadFiles = imageFiles.slice(0, maxVideoFrameCount);
@@ -2554,7 +2554,7 @@ export function CustomerWorkspaceShell({
     const now = Date.now();
     const optimisticAssets: VideoFrameAsset[] = uploadFiles.map((file, index) => ({
       id: `local:video:${now}:${index}`,
-      label: uploadLabelFor(file, index, t(spanishXby, "video frame", "fotograma")),
+      label: uploadLabelFor(file, index, t(spanishXby, "reference image", "imagen de referencia")),
       previewUrl: URL.createObjectURL(file),
       mimeType: file.type.toLowerCase().split(";")[0] === "image/png" ? "image/png" : "image/jpeg",
       role: "input",
@@ -2574,7 +2574,7 @@ export function CustomerWorkspaceShell({
     ]);
     setSelectedVideoFrameIds((current) => trimVideoFrameSelection(Array.from(new Set([...current, ...optimisticAssets.map((asset) => asset.id)])), maxVideoFrameCount));
     setUploadingVideoFrames(true);
-    setVideoFrameMessage(spanishXby ? `Subiendo ${uploadFiles.length} fotograma${uploadFiles.length === 1 ? "" : "s"}...` : `Uploading ${uploadFiles.length} frame image${uploadFiles.length === 1 ? "" : "s"}...`);
+    setVideoFrameMessage(spanishXby ? `Subiendo ${uploadFiles.length} imagen${uploadFiles.length === 1 ? "" : "es"} de referencia…` : `Uploading ${uploadFiles.length} reference image${uploadFiles.length === 1 ? "" : "s"}…`);
     const createdAssets: ThemeRuntimeAsset[] = [];
     let convertedCount = 0;
     for (const [index, file] of uploadFiles.entries()) {
@@ -2587,13 +2587,13 @@ export function CustomerWorkspaceShell({
         setRuntimeAssets((current) => current.map((asset) => asset.id === optimisticAsset.id ? { ...asset, localStatus: "failed" } : asset));
         setSelectedVideoFrameIds((current) => current.filter((assetId) => assetId !== optimisticAsset.id));
         setUploadingVideoFrames(false);
-        setVideoFrameMessage(t(spanishXby, `${file.name} could not be converted for video. Try exporting it as JPG or PNG, then upload again.`, `${file.name} no se pudo convertir para video. Exportala como JPG o PNG y vuelve a subirla.`));
+        setVideoFrameMessage(t(spanishXby, `${file.name} could not be prepared. Export it as JPG or PNG, then upload it again.`, `${file.name} no se pudo preparar. Exportala como JPG o PNG y vuelve a subirla.`));
         return;
       }
       if (preparedUpload.converted) convertedCount += 1;
       const formData = new FormData();
       formData.append("file", preparedUpload.file);
-      formData.append("label", uploadLabelFor(file, index, t(spanishXby, "video frame", "fotograma")));
+      formData.append("label", uploadLabelFor(file, index, t(spanishXby, "reference image", "imagen de referencia")));
       formData.append("role", "input");
       formData.append("subjectRole", "video_frame");
       const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets`, {
@@ -2618,14 +2618,14 @@ export function CustomerWorkspaceShell({
       ? t(spanishXby, ` Only the first ${maxVideoFrameCount} images were uploaded.`, ` Solo se subieron las primeras ${maxVideoFrameCount} imagenes.`)
       : "";
     const unsupportedNotice = unsupportedCount > 0
-      ? t(spanishXby, ` ${unsupportedCount} unsupported file${unsupportedCount === 1 ? "" : "s"} skipped. GIF and SVG files cannot be converted to video-ready JPG or PNG.`, ` ${unsupportedCount} archivo${unsupportedCount === 1 ? "" : "s"} no compatible${unsupportedCount === 1 ? "" : "s"} omitido${unsupportedCount === 1 ? "" : "s"}. Los archivos GIF y SVG no se pueden convertir a JPG o PNG listo para video.`)
+      ? t(spanishXby, ` ${unsupportedCount} unsupported file${unsupportedCount === 1 ? "" : "s"} skipped. GIF and SVG files are not supported here.`, ` ${unsupportedCount} archivo${unsupportedCount === 1 ? "" : "s"} no compatible${unsupportedCount === 1 ? "" : "s"} omitido${unsupportedCount === 1 ? "" : "s"}. Los archivos GIF y SVG no son compatibles aqui.`)
       : "";
     const convertedNotice = convertedCount > 0
-      ? t(spanishXby, ` ${convertedCount} image${convertedCount === 1 ? "" : "s"} converted to video-ready JPG.`, ` ${convertedCount} imagen${convertedCount === 1 ? "" : "es"} convertida${convertedCount === 1 ? "" : "s"} a JPG listo para video.`)
+      ? t(spanishXby, ` ${convertedCount} image${convertedCount === 1 ? "" : "s"} converted to JPG.`, ` ${convertedCount} imagen${convertedCount === 1 ? "" : "es"} convertida${convertedCount === 1 ? "" : "s"} a JPG.`)
       : "";
     setVideoFrameMessage(spanishXby
-      ? `${createdAssets.length} fotograma${createdAssets.length === 1 ? "" : "s"} subido${createdAssets.length === 1 ? "" : "s"} y seleccionado${createdAssets.length === 1 ? "" : "s"}.${limitNotice}${convertedNotice}${unsupportedNotice}`
-      : `${createdAssets.length} frame image${createdAssets.length === 1 ? "" : "s"} uploaded and selected.${limitNotice}${convertedNotice}${unsupportedNotice}`);
+      ? `${createdAssets.length} imagen${createdAssets.length === 1 ? "" : "es"} de referencia subida${createdAssets.length === 1 ? "" : "s"} y seleccionada${createdAssets.length === 1 ? "" : "s"}.${limitNotice}${convertedNotice}${unsupportedNotice}`
+      : `${createdAssets.length} reference image${createdAssets.length === 1 ? "" : "s"} uploaded and selected.${limitNotice}${convertedNotice}${unsupportedNotice}`);
     setUploadingVideoFrames(false);
     invalidateCustomerAssets(site.id, customer.id);
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
@@ -2633,7 +2633,7 @@ export function CustomerWorkspaceShell({
 
   async function deleteVideoFrame(asset: VideoFrameAsset) {
     if (asset.localStatus === "uploading") return;
-    const confirmed = window.confirm(t(spanishXby, `Delete "${asset.label}" from video frame images?`, `Eliminar "${asset.label}" de los fotogramas de video?`));
+    const confirmed = window.confirm(t(spanishXby, `Delete "${asset.label}" from your reference images?`, `Eliminar "${asset.label}" de tus imagenes de referencia?`));
     if (!confirmed) return;
     releaseVideoFramePreviewUrl(asset);
     deletedVideoFrameIdsRef.current.add(asset.id);
@@ -2642,7 +2642,7 @@ export function CustomerWorkspaceShell({
     setVideoFrameAssets((current) => current.filter((item) => item.id !== asset.id));
     setRuntimeAssets((current) => current.filter((item) => item.id !== asset.id));
     if (asset.id.startsWith("local:")) {
-      setVideoFrameMessage(t(spanishXby, "Frame image removed.", "Fotograma eliminado."));
+      setVideoFrameMessage(t(spanishXby, "Reference image removed.", "Imagen de referencia eliminada."));
       return;
     }
     const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets/${asset.id}`, {
@@ -2650,11 +2650,11 @@ export function CustomerWorkspaceShell({
       headers: csrfHeader(`customer_csrf_${site.id}`)
     });
     if (!response.ok) {
-      setVideoFrameMessage(t(spanishXby, "We could not delete that frame image. Refresh and try again.", "No pudimos eliminar ese fotograma. Actualiza e intentalo de nuevo."));
+      setVideoFrameMessage(t(spanishXby, "We could not delete that reference image. Refresh and try again.", "No pudimos eliminar esa imagen de referencia. Actualiza e intentalo de nuevo."));
       setRuntimeRefreshKey((current) => current + 1);
       return;
     }
-    setVideoFrameMessage(t(spanishXby, "Frame image deleted.", "Fotograma eliminado."));
+    setVideoFrameMessage(t(spanishXby, "Reference image deleted.", "Imagen de referencia eliminada."));
     invalidateCustomerAssets(site.id, customer.id);
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
   }
@@ -2664,8 +2664,8 @@ export function CustomerWorkspaceShell({
     if (!assetsToDelete.length) return;
     const confirmed = window.confirm(t(
       spanishXby,
-      `Delete ${assetsToDelete.length} selected video frame image${assetsToDelete.length === 1 ? "" : "s"}?`,
-      `Eliminar ${assetsToDelete.length} fotograma${assetsToDelete.length === 1 ? "" : "s"} de video seleccionado${assetsToDelete.length === 1 ? "" : "s"}?`
+      `Delete ${assetsToDelete.length} selected reference image${assetsToDelete.length === 1 ? "" : "s"}?`,
+      `Eliminar ${assetsToDelete.length} imagen${assetsToDelete.length === 1 ? "" : "es"} de referencia seleccionada${assetsToDelete.length === 1 ? "" : "s"}?`
     ));
     if (!confirmed) return;
     const deleteIds = assetsToDelete.map((asset) => asset.id);
@@ -2679,7 +2679,7 @@ export function CustomerWorkspaceShell({
     setRuntimeAssets((current) => current.filter((asset) => !deleteIds.includes(asset.id)));
     const persistedIds = deleteIds.filter((assetId) => !assetId.startsWith("local:"));
     if (!persistedIds.length) {
-      setVideoFrameMessage(t(spanishXby, "Selected frame images deleted.", "Fotogramas seleccionados eliminados."));
+      setVideoFrameMessage(t(spanishXby, "Selected reference images deleted.", "Imagenes de referencia seleccionadas eliminadas."));
       return;
     }
     const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets`, {
@@ -2691,11 +2691,11 @@ export function CustomerWorkspaceShell({
       body: JSON.stringify({ assetIds: persistedIds })
     });
     if (!response.ok) {
-      setVideoFrameMessage(t(spanishXby, "We could not delete every selected frame image. Refresh and try again.", "No pudimos eliminar todos los fotogramas seleccionados. Actualiza e intentalo de nuevo."));
+      setVideoFrameMessage(t(spanishXby, "We could not delete every selected reference image. Refresh and try again.", "No pudimos eliminar todas las imagenes de referencia seleccionadas. Actualiza e intentalo de nuevo."));
       setRuntimeRefreshKey((current) => current + 1);
       return;
     }
-    setVideoFrameMessage(t(spanishXby, "Selected frame images deleted.", "Fotogramas seleccionados eliminados."));
+    setVideoFrameMessage(t(spanishXby, "Selected reference images deleted.", "Imagenes de referencia seleccionadas eliminadas."));
     invalidateCustomerAssets(site.id, customer.id);
     window.dispatchEvent(new CustomEvent("customer-assets:updated"));
   }
@@ -2899,7 +2899,7 @@ export function CustomerWorkspaceShell({
     }
     const target = pendingSampleTargetRef.current;
     setUploadingSampleTarget(target);
-    setSampleUploadMessage(spanishXby ? `Subiendo ${imageFiles.length} muestra${imageFiles.length === 1 ? "" : "s"}...` : `Uploading ${imageFiles.length} sample${imageFiles.length === 1 ? "" : "s"}...`);
+    setSampleUploadMessage(spanishXby ? `Subiendo ${imageFiles.length} muestra${imageFiles.length === 1 ? "" : "s"}…` : `Uploading ${imageFiles.length} sample${imageFiles.length === 1 ? "" : "s"}…`);
     const now = Date.now();
     const optimisticAssets: SampleAsset[] = imageFiles.map((file, index) => ({
       id: `local:${target}:${now}:${index}`,
@@ -2985,7 +2985,7 @@ export function CustomerWorkspaceShell({
                 <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#31d4ff]">
                   {t(spanishXby, "Step 01", "Paso 01")}
                 </p>
-                <p className="mt-1 text-sm font-semibold text-white">{t(spanishXby, "Video frame images", "Fotogramas de video")}</p>
+                <p className="mt-1 text-sm font-semibold text-white">{t(spanishXby, "Reference images", "Imagenes de referencia")}</p>
               </div>
             </div>
             <span className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] font-semibold text-white/58">
@@ -2993,7 +2993,7 @@ export function CustomerWorkspaceShell({
             </span>
           </div>
           <p className="mt-3 text-xs leading-5 text-white/56">
-            {t(spanishXby, `Upload up to ${maxVideoFrameCount} images here. WebP and other browser-readable images are converted to video-ready JPG or PNG before upload. Only video frame uploads appear in this list, and new uploads are selected automatically.`, `Sube hasta ${maxVideoFrameCount} imagenes aqui. WebP y otras imagenes legibles por el navegador se convierten a JPG o PNG listo para video antes de subir. Solo aparecen fotogramas subidos para video y las nuevas subidas se seleccionan automaticamente.`)}
+            {t(spanishXby, `Upload up to ${maxVideoFrameCount} reference images here. WebP and other browser-readable images are converted to JPG or PNG before upload. New uploads are selected automatically.`, `Sube hasta ${maxVideoFrameCount} imagenes de referencia aqui. WebP y otras imagenes legibles por el navegador se convierten a JPG o PNG antes de subir. Las nuevas subidas se seleccionan automaticamente.`)}
           </p>
 
           <div className="mt-4 grid grid-cols-2 gap-2">
@@ -3011,7 +3011,7 @@ export function CustomerWorkspaceShell({
               onClick={() => chooseVideoWorkspaceTab("generate")}
               type="button"
             >
-              {t(spanishXby, "Write prompt", "Escribir prompt")}
+              {t(spanishXby, "Write description", "Escribir descripcion")}
               <ChevronRight className="h-4 w-4" strokeWidth={1.8} />
             </button>
           </div>
@@ -3031,7 +3031,7 @@ export function CustomerWorkspaceShell({
             <div className="flex items-center justify-between gap-2">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/52">{t(spanishXby, "Selected order", "Orden seleccionado")}</p>
               <button
-                aria-label={t(spanishXby, "Clear selected video frames", "Limpiar fotogramas seleccionados")}
+                aria-label={t(spanishXby, "Clear selected reference images", "Limpiar imagenes de referencia seleccionadas")}
                 className="grid h-7 w-7 place-items-center rounded-full border border-white/10 text-white/46 transition hover:bg-white/[0.08] hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
                 disabled={!selectedVideoFrameIds.length}
                 onClick={() => setSelectedVideoFrameIds([])}
@@ -3068,9 +3068,9 @@ export function CustomerWorkspaceShell({
                   </div>
                   <div className="flex shrink-0 items-center gap-1">
                     <GripVertical className="h-4 w-4 text-white/32" strokeWidth={1.8} />
-                    <button aria-label={t(spanishXby, "Move frame up", "Mover fotograma arriba")} className="grid h-8 w-8 place-items-center rounded-[8px] border border-white/10 text-white/64 hover:bg-white/[0.08] hover:text-white" onClick={() => moveVideoFrame(asset.id, -1)} type="button"><ArrowUp className="h-3.5 w-3.5" /></button>
-                    <button aria-label={t(spanishXby, "Move frame down", "Mover fotograma abajo")} className="grid h-8 w-8 place-items-center rounded-[8px] border border-white/10 text-white/64 hover:bg-white/[0.08] hover:text-white" onClick={() => moveVideoFrame(asset.id, 1)} type="button"><ArrowDown className="h-3.5 w-3.5" /></button>
-                    <button aria-label={t(spanishXby, "Remove frame", "Quitar fotograma")} className="grid h-8 w-8 place-items-center rounded-[8px] border border-white/10 text-white/58 hover:bg-rose-500/18 hover:text-rose-100" onClick={() => setSelectedVideoFrameIds((current) => current.filter((id) => id !== asset.id))} type="button">
+                    <button aria-label={t(spanishXby, "Move reference image up", "Mover imagen de referencia arriba")} className="grid h-8 w-8 place-items-center rounded-[8px] border border-white/10 text-white/64 hover:bg-white/[0.08] hover:text-white" onClick={() => moveVideoFrame(asset.id, -1)} type="button"><ArrowUp className="h-3.5 w-3.5" /></button>
+                    <button aria-label={t(spanishXby, "Move reference image down", "Mover imagen de referencia abajo")} className="grid h-8 w-8 place-items-center rounded-[8px] border border-white/10 text-white/64 hover:bg-white/[0.08] hover:text-white" onClick={() => moveVideoFrame(asset.id, 1)} type="button"><ArrowDown className="h-3.5 w-3.5" /></button>
+                    <button aria-label={t(spanishXby, "Remove reference image", "Quitar imagen de referencia")} className="grid h-8 w-8 place-items-center rounded-[8px] border border-white/10 text-white/58 hover:bg-rose-500/18 hover:text-rose-100" onClick={() => setSelectedVideoFrameIds((current) => current.filter((id) => id !== asset.id))} type="button">
                       <Trash2 className="h-3.5 w-3.5" strokeWidth={1.8} />
                     </button>
                   </div>
@@ -3083,7 +3083,7 @@ export function CustomerWorkspaceShell({
                 >
                   <span className="grid justify-items-center gap-2">
                     <ImagePlus className="h-5 w-5" strokeWidth={1.8} />
-                    {t(spanishXby, "Upload frame images or select uploaded frames below.", "Sube fotogramas o selecciona fotogramas subidos abajo.")}
+                    {t(spanishXby, "Upload reference images or select uploaded images below.", "Sube imagenes de referencia o selecciona imagenes subidas abajo.")}
                   </span>
                 </button>
               )}
@@ -3092,7 +3092,7 @@ export function CustomerWorkspaceShell({
 
           <div className="mt-4">
             <div className="mb-2 flex items-center justify-between gap-2">
-              <p className="min-w-0 truncate text-xs font-semibold uppercase tracking-[0.14em] text-white/52">{t(spanishXby, "Uploaded video frames", "Fotogramas de video subidos")}</p>
+              <p className="min-w-0 truncate text-xs font-semibold uppercase tracking-[0.14em] text-white/52">{t(spanishXby, "Uploaded reference images", "Imagenes de referencia subidas")}</p>
               <div className="flex shrink-0 items-center gap-2">
                 <button
                   className="rounded-full border border-rose-200/16 px-2 py-1 text-[10px] font-semibold text-rose-100/70 transition hover:bg-rose-400/12 hover:text-rose-50 disabled:cursor-not-allowed disabled:opacity-35"
@@ -3148,7 +3148,7 @@ export function CustomerWorkspaceShell({
                   onClick={() => videoFrameUploadInputRef.current?.click()}
                   type="button"
                 >
-                  {t(spanishXby, "Upload video frame images to start. Generated photo results stay out of this list.", "Sube fotogramas de video para comenzar. Los resultados generados no aparecen en esta lista.")}
+                  {t(spanishXby, "Upload reference images to start. Generated photo results stay out of this list.", "Sube imagenes de referencia para comenzar. Los resultados generados no aparecen en esta lista.")}
                 </button>
               ) : null}
             </div>
@@ -3342,14 +3342,14 @@ export function CustomerWorkspaceShell({
       <main className="grid min-h-[calc(100vh-97px)] border-t border-white/8 lg:grid-cols-[430px_minmax(0,1fr)] xl:grid-cols-[450px_minmax(0,1fr)]">
         <aside className="border-b border-white/10 bg-[#0b0c0f] px-3 py-4 lg:sticky lg:top-[98px] lg:h-[calc(100vh-98px)] lg:overflow-y-auto lg:border-b-0 lg:border-r xl:px-4">
           <div className="rounded-[16px] border border-white/10 bg-[#0f1116] p-4">
-            <p className="text-sm font-semibold text-white/84">{customerModels[0]?.label ?? t(spanishXby, "No Model Selected", "Ningun modelo seleccionado")}</p>
+            <p className="text-sm font-semibold text-white/84">{customerModels[0]?.label ?? t(spanishXby, "No Photo Profile Selected", "Ningun perfil de fotos seleccionado")}</p>
             {customerModels[0] ? (
               <p className="mt-1 flex items-center gap-1 text-xs text-white/46">
                 <Heart className="h-3.5 w-3.5 fill-[#ff4aa2] text-[#ff4aa2]" strokeWidth={1.8} />
                 {customerModels[0].status}
               </p>
             ) : (
-              <p className="mt-1 text-xs leading-5 text-white/46">{t(spanishXby, "Create a private model before package generation.", "Crea un modelo privado antes de generar un paquete.")}</p>
+              <p className="mt-1 text-xs leading-5 text-white/46">{t(spanishXby, "You can use your uploaded photos now, or create a private photo profile for future requests.", "Puedes usar tus fotos subidas ahora o crear un perfil de fotos privado para futuras solicitudes.")}</p>
             )}
           </div>
 
@@ -3372,12 +3372,12 @@ export function CustomerWorkspaceShell({
                     section.id === "model" ? (
                       <div className="grid gap-4 pb-5" id={`studio-console-${section.id}`}>
                         <div className="rounded-[14px] border border-white/20 bg-[#111318] p-4">
-                          <p className="text-sm font-semibold">{isAidreamcapes ? t(spanishXby, "Train Travel Model", "Entrenar modelo de viaje") : t(spanishXby, "Train Model", "Entrenar modelo")}</p>
+                          <p className="text-sm font-semibold">{isAidreamcapes ? t(spanishXby, "Create a Travel Photo Profile", "Crear un perfil de fotos de viaje") : t(spanishXby, "Create a Photo Profile", "Crear un perfil de fotos")}</p>
                           <p className="mt-2 text-xs leading-5 text-white/58">
-                            {t(spanishXby, "Add clear photos for each person when available. Each generation request needs at least 1 selected photo and can use up to 15 photos.", "Agrega fotos claras de cada persona cuando esten disponibles. Cada solicitud de generacion necesita al menos 1 foto seleccionada y puede usar hasta 15 fotos.")}
+                            {t(spanishXby, "Add clear photos for each person. Each request needs at least 1 selected photo and can use up to 15 photos.", "Agrega fotos claras de cada persona. Cada solicitud necesita al menos 1 foto seleccionada y puede usar hasta 15 fotos.")}
                           </p>
                           <div className="mt-4 flex items-center gap-3">
-                            <span className="text-xs font-semibold text-white/70">{t(spanishXby, "Training Mode:", "Modo de entrenamiento:")}</span>
+                            <span className="text-xs font-semibold text-white/70">{t(spanishXby, "Photo profile type:", "Tipo de perfil de fotos:")}</span>
                             <div className="inline-grid grid-cols-2 overflow-hidden rounded-[12px] border border-white/10 bg-white/[0.04]">
                               {(["single", "couple"] as const).map((mode) => (
                                 <button
@@ -3395,7 +3395,7 @@ export function CustomerWorkspaceShell({
 
                         <div className="grid gap-2 rounded-[14px] border border-white/12 bg-[#101216] p-4 text-sm font-semibold text-white">
                           <label htmlFor="studio-model-name">{t(spanishXby, "Name", "Nombre")}</label>
-                          <span className="text-xs font-normal leading-5 text-white/52">{t(spanishXby, "Give your model a name so you can easily identify it later.", "Pon un nombre al modelo para identificarlo facilmente despues.")}</span>
+                          <span className="text-xs font-normal leading-5 text-white/52">{t(spanishXby, "Give this profile a name so you can find it easily later.", "Pon un nombre a este perfil para encontrarlo facilmente despues.")}</span>
                           <input
                             autoComplete="off"
                             className="relative z-10 rounded-[10px] border border-white/10 bg-[#05070b] px-3 py-3 text-sm font-normal text-white outline-none transition placeholder:text-white/32 focus:border-[#ff4aa2]/70"
@@ -3598,7 +3598,7 @@ export function CustomerWorkspaceShell({
                             }}
                             type="button"
                           >
-                            {t(spanishXby, "Train Model", "Entrenar modelo")} ({studioTrainingMode === "couple" ? 100 : 50} {t(spanishXby, "credits", "creditos")})
+                            {t(spanishXby, "Create Photo Profile", "Crear perfil de fotos")} ({studioTrainingMode === "couple" ? 100 : 50} {t(spanishXby, "credits", "creditos")})
                           </button>
                           {!hasRequiredStudioSamples ? (
                             <p className="text-xs leading-5 text-amber-100/72" role="status">{studioSampleRequirementMessage}</p>
@@ -3610,7 +3610,7 @@ export function CustomerWorkspaceShell({
                         <div className="rounded-[14px] border border-white/12 bg-[#101216] p-4">
                           <p className="text-sm font-semibold">{section.label}</p>
                           <p className="mt-2 text-xs leading-5 text-white/52">
-                            {t(spanishXby, "Use the main window to select a package or tool, then return here for model setup and sample maintenance.", "Usa la ventana principal para elegir un paquete o herramienta y vuelve aqui para configurar el modelo y mantener muestras.")}
+                            {t(spanishXby, "Use the main window to choose a package, then return here to manage your photo profile.", "Usa la ventana principal para elegir un paquete y vuelve aqui para gestionar tu perfil de fotos.")}
                           </p>
                           <button
                             className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-white/12 bg-white/[0.06] px-4 py-3 text-xs font-semibold text-white transition hover:bg-white/[0.1]"
@@ -3778,7 +3778,7 @@ export function CustomerWorkspaceShell({
                         onClick={requestWorkspaceRefresh}
                         type="button"
                       >
-                        {runtimeRefreshUiPending ? t(spanishXby, "Refreshing...", "Actualizando...") : t(spanishXby, "Refresh status", "Actualizar estado")}
+              {runtimeRefreshUiPending ? t(spanishXby, "Refreshing…", "Actualizando…") : t(spanishXby, "Refresh status", "Actualizar estado")}
                       </button>
                       <button
                         className="rounded-[8px] bg-[#2f6fed] px-3 py-2 text-xs font-semibold text-white hover:bg-[#4380ff]"
@@ -3790,7 +3790,7 @@ export function CustomerWorkspaceShell({
                     </div>
                   </div>
                   <p className="min-h-5 pt-2 text-right text-xs text-white/40" role="status">
-                    {runtimeRefreshMessage || (runtimeRefreshUiPending ? t(spanishXby, "Refreshing status...", "Actualizando estado...") : "")}
+                    {runtimeRefreshMessage || (runtimeRefreshUiPending ? t(spanishXby, "Refreshing status…", "Actualizando estado…") : "")}
                   </p>
 
                   {runtimeIsInitializing && !videoResourceAssets.length ? (
@@ -3805,14 +3805,14 @@ export function CustomerWorkspaceShell({
                   {waitingForCreatedVideoJob || showVideoCreationFailureCard || visibleVideoProgressJobs.length ? (
                     <div className="grid gap-3 border-b border-white/8 py-4">
                       <div className="flex flex-wrap items-center justify-between gap-2">
-                        <p className="text-sm font-semibold text-white/80">{t(spanishXby, "Video request progress", "Progreso de video")}</p>
+                        <p className="text-sm font-semibold text-white/80">{t(spanishXby, "Video creation progress", "Progreso de creacion de video")}</p>
                         <button
                           className="rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-white/52 transition hover:bg-white/[0.07] hover:text-white/78 disabled:cursor-not-allowed disabled:opacity-45"
                           disabled={runtimeRefreshUiPending}
                           onClick={requestWorkspaceRefresh}
                           type="button"
                         >
-                          {runtimeRefreshUiPending ? t(spanishXby, "Checking...", "Revisando...") : t(spanishXby, "Check now", "Revisar ahora")}
+                          {runtimeRefreshUiPending ? t(spanishXby, "Checking…", "Revisando…") : t(spanishXby, "Check now", "Revisar ahora")}
                         </button>
                       </div>
                       <div className="grid gap-3 lg:grid-cols-2">
@@ -3842,7 +3842,7 @@ export function CustomerWorkspaceShell({
                                 onClick={requestWorkspaceRefresh}
                                 type="button"
                               >
-                                {runtimeRefreshUiPending ? t(spanishXby, "Checking...", "Revisando...") : t(spanishXby, "Check now", "Revisar ahora")}
+                                {runtimeRefreshUiPending ? t(spanishXby, "Checking…", "Revisando…") : t(spanishXby, "Check now", "Revisar ahora")}
                               </button>
                             </div>
                           </div>
@@ -3859,7 +3859,7 @@ export function CustomerWorkspaceShell({
                               </span>
                             </div>
                             <p className="mt-3 text-xs leading-5 text-white/54">
-                              {t(spanishXby, "The new video request is being loaded. Previous failed requests are hidden until the latest status arrives.", "La nueva solicitud de video se esta cargando. Las solicitudes fallidas anteriores se ocultan hasta que llegue el estado actualizado.")}
+      {t(spanishXby, "Your new video request is loading. Previous failed requests are hidden until the latest status arrives.", "Tu nueva solicitud de video se esta cargando. Las solicitudes fallidas anteriores se ocultan hasta que llegue el estado actualizado.")}
                             </p>
                             <div className="mt-3 grid gap-2 sm:grid-cols-2">
                               <div className="overflow-hidden rounded-[10px] border border-white/10 bg-white/[0.035]">
@@ -3867,9 +3867,9 @@ export function CustomerWorkspaceShell({
                                   <span className="text-xs font-semibold text-white/44">{t(spanishXby, "Refreshing video status", "Actualizando estado del video")}</span>
                                 </div>
                                 <div className="flex items-center justify-between gap-2 px-3 py-2">
-                                  <span className="text-[11px] font-semibold text-white/74">{t(spanishXby, "Image 1", "Imagen 1")}</span>
+                                  <span className="text-[11px] font-semibold text-white/74">{t(spanishXby, "Video 1", "Video 1")}</span>
                                   <span className="rounded-full bg-white/8 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-white/48">
-                                    {t(spanishXby, "Generating", "Generando")}
+                                    {t(spanishXby, "Creating", "Creando")}
                                   </span>
                                 </div>
                                 <div className="px-3 pb-3">
@@ -3877,7 +3877,7 @@ export function CustomerWorkspaceShell({
                                     <div className="h-full w-1/3 animate-[admin-progress_1.05s_ease-in-out_infinite] rounded-full bg-[#31d4ff]" />
                                   </div>
                                   <div className="mt-1.5 flex items-center justify-between gap-2 text-[10px] text-white/38">
-                                    <span className="truncate">{t(spanishXby, "Generating output", "Generando resultado")}</span>
+                                    <span className="truncate">{t(spanishXby, "Creating result", "Creando resultado")}</span>
                                     <span className="shrink-0">{t(spanishXby, "In progress", "En progreso")}</span>
                                   </div>
                                 </div>
@@ -3949,7 +3949,7 @@ export function CustomerWorkspaceShell({
                                     type="button"
                                   >
                                     <RotateCcw className="h-3.5 w-3.5" strokeWidth={1.8} />
-                                    {retryingThisJob ? t(spanishXby, "Retrying...", "Reintentando...") : t(spanishXby, "Retry video", "Reintentar video")}
+                                    {retryingThisJob ? t(spanishXby, "Retrying…", "Reintentando…") : t(spanishXby, "Retry video", "Reintentar video")}
                                   </button>
                                   <button
                                     className="inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-3 text-xs font-semibold text-white/72 transition hover:bg-white/[0.1] disabled:cursor-not-allowed disabled:opacity-45"
@@ -4189,7 +4189,7 @@ export function CustomerWorkspaceShell({
                       onClick={requestWorkspaceRefresh}
                       type="button"
                     >
-                      {runtimeRefreshUiPending ? t(spanishXby, "Refreshing...", "Actualizando...") : t(spanishXby, "Refresh status", "Actualizar estado")}
+                      {runtimeRefreshUiPending ? t(spanishXby, "Refreshing…", "Actualizando…") : t(spanishXby, "Refresh status", "Actualizar estado")}
                     </button>
                     <button
                       className="rounded-[8px] bg-[#2f6fed] px-3 py-2 text-xs font-semibold text-white hover:bg-[#4380ff]"
@@ -4207,7 +4207,7 @@ export function CustomerWorkspaceShell({
                   </div>
                 </div>
                 <p className="min-h-5 px-2 pt-2 text-right text-xs text-white/40" role="status">
-                  {runtimeRefreshMessage || (runtimeRefreshUiPending ? t(spanishXby, "Refreshing status...", "Actualizando estado...") : "")}
+                  {runtimeRefreshMessage || (runtimeRefreshUiPending ? t(spanishXby, "Refreshing status…", "Actualizando estado…") : "")}
                 </p>
 
                 {runtimeIsInitializing && !visibleResourceAssets.length ? (
@@ -4224,7 +4224,7 @@ export function CustomerWorkspaceShell({
                         onClick={requestWorkspaceRefresh}
                         type="button"
                       >
-                        {runtimeRefreshUiPending ? t(spanishXby, "Checking...", "Revisando...") : t(spanishXby, "Check now", "Revisar ahora")}
+                        {runtimeRefreshUiPending ? t(spanishXby, "Checking…", "Revisando…") : t(spanishXby, "Check now", "Revisar ahora")}
                       </button>
                     </div>
                     <div className="grid gap-3 lg:grid-cols-2">
@@ -4265,7 +4265,7 @@ export function CustomerWorkspaceShell({
                                   type="button"
                                 >
                                   <RotateCcw className="h-3.5 w-3.5" strokeWidth={1.8} />
-                                  {retryingThisJob ? t(spanishXby, "Retrying...", "Reintentando...") : t(spanishXby, "Retry", "Reintentar")}
+                                  {retryingThisJob ? t(spanishXby, "Retrying…", "Reintentando…") : t(spanishXby, "Retry", "Reintentar")}
                                 </button>
                                 <button
                                   className="inline-flex min-h-9 items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-3 text-xs font-semibold text-white/72 transition hover:bg-white/[0.1] disabled:cursor-not-allowed disabled:opacity-45"

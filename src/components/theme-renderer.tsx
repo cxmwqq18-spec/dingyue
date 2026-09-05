@@ -83,7 +83,6 @@ import {
   ShoppingCart,
   Sparkles,
   Tags,
-  Twitter,
   UploadCloud,
   UserRound,
   Users,
@@ -872,6 +871,27 @@ function AidreamcapesLogoMark({ ariaLabel = "Aidreamcapes logo", className = "h-
       <circle cx="256" cy="256" r="34" fill="url(#aidreamcapes-logo-mark-aura)" />
       <path d="M337 142v34M320 159h34M153 356v27M139 370h27" fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="13" strokeLinecap="round" />
       <path d="M142 218h58M312 338h58" fill="none" stroke="#ffffff" strokeWidth="17" strokeLinecap="round" opacity="0.76" />
+    </svg>
+  );
+}
+
+type SocialBrandIconProps = {
+  className?: string;
+  strokeWidth?: number;
+};
+
+function XSocialIcon({ className }: SocialBrandIconProps) {
+  return (
+    <svg aria-hidden="true" className={className} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817-5.967 6.817H1.68l7.73-8.835L1.254 2.25h6.826l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
+    </svg>
+  );
+}
+
+function TikTokSocialIcon({ className }: SocialBrandIconProps) {
+  return (
+    <svg aria-hidden="true" className={className} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94a7.84 7.84 0 0 1-6.2 3.38 7.68 7.68 0 0 1-4.3-1.09 7.84 7.84 0 0 1-3.78-5.92c-.01-.3-.02-.6-.01-.9a7.84 7.84 0 0 1 8.62-7.78c.02 1.48-.04 2.96-.04 4.44a3.47 3.47 0 0 0-4.43 2.15 4.01 4.01 0 0 0-.14 1.62c.35 2.4 3.26 3.54 5.25 2.08.65-.48 1.08-1.22 1.1-2.03.02-3.95.01-7.9.02-11.86h4.34Z" />
     </svg>
   );
 }
@@ -1832,6 +1852,9 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
             { label: "Pricing", href: "/pricing" },
             { label: "FAQ", href: "/faq" }
           ];
+    const visibleQuickLinks = (isDreamShootFooter || isAidreamcapesFooter)
+      ? quickLinks.filter((link) => !isPairedStoreFooterLinkToHide(link.href))
+      : quickLinks;
     return (
       <footer className={dark ? "border-t border-white/8 px-5 py-8" : "border-t border-[#e7dccf] px-5 py-8"} style={{ background: footerBg, color: footerTextColor }}>
         <div className="mx-auto flex max-w-[var(--site-content-width)] flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
@@ -1849,7 +1872,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
             <p className={dark ? "mt-1 text-sm text-white/54" : "mt-1 text-sm text-[#625d56]"}>{tagline}</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            {quickLinks.map((link) => (
+            {visibleQuickLinks.map((link) => (
               <Link className={dark ? "rounded-full border border-white/10 px-3 py-2 text-sm font-semibold text-white/68 transition hover:text-white" : "rounded-full border border-[#ddd2c5] px-3 py-2 text-sm font-semibold text-[#625d56] transition hover:text-[#171514]"} href={hrefFor(site, link.href)} key={link.href}>
                 {link.label}
               </Link>
@@ -1867,7 +1890,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
         block: { id: `footer_nav_${index + 1}`, type: "menu_link", settings: { label: link.label, href: link.href, group: link.group } } as SectionBlockInstance
       }));
   const visibleBaseLinks = (isDreamShootFooter || isAidreamcapesFooter)
-    ? baseLinks.filter((item) => !isVirtualGoodsFooterLinkToHide(item.label, item.href))
+    ? baseLinks.filter((item) => !isVirtualGoodsFooterLinkToHide(item.label, item.href) && !isPairedStoreFooterLinkToHide(item.href))
     : baseLinks;
   const pairedStoreFooterLinks = isDreamShootFooter || isAidreamcapesFooter
     ? (spanishXbyFooter
@@ -1962,7 +1985,9 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
             block: { id: `${isAidreamcapesFooter ? "aidreamcapes" : "dreamshoot"}_footer_${group}_${index + 1}`, type: "menu_link", settings: { label, href, group } } as SectionBlockInstance
           }))
     : [];
-  const links = pairedStoreFooterLinks.length ? pairedStoreFooterLinks : visibleBaseLinks;
+  const links = pairedStoreFooterLinks.length
+    ? pairedStoreFooterLinks.filter((item) => !isPairedStoreFooterLinkToHide(item.href))
+    : visibleBaseLinks;
   const guardedPublishedFooterPaths = new Set<string>(GUARDED_STOREFRONT_FOOTER_PATHS);
   const footerLinkIsPublished = (item: { href: string }) => {
     const path = item.href.split(/[?#]/)[0] || "/";
@@ -2013,7 +2038,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
     : semanticSupportLinks.length
       ? semanticSupportLinks
       : publishedLinks.slice(Math.min(4, publishedLinks.length));
-  const configuredSocialKeys = ["instagramUrl", "facebookUrl", "threadsUrl", "pinterestUrl", "youtubeUrl", "xUrl"];
+  const configuredSocialKeys = ["instagramUrl", "facebookUrl", "threadsUrl", "pinterestUrl", "youtubeUrl", "xUrl", "twitterUrl", "tiktokUrl"];
   const hasConfiguredSocialFields = Boolean(footer && configuredSocialKeys.some((key) => Object.prototype.hasOwnProperty.call(footer.settings, key)));
   const profileSocials = [
     ...[
@@ -2022,18 +2047,20 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
       footer ? setting(footer, "threadsUrl", "") : "",
       footer ? setting(footer, "pinterestUrl", "") : "",
       footer ? setting(footer, "youtubeUrl", "") : "",
-      footer ? setting(footer, "xUrl", "") : "",
+      footer ? setting(footer, "xUrl", setting(footer, "twitterUrl", "")) : "",
+      footer ? setting(footer, "tiktokUrl", "") : "",
     ],
     ...(hasConfiguredSocialFields ? [] : (identity?.sameAs ?? []))
   ].filter((url): url is string => typeof url === "string" && /^https?:\/\//i.test(url));
   const socialHref = (pattern: RegExp) => profileSocials.find((url) => pattern.test(url)) ?? "";
   const socialLinks = [
-    { label: "Instagram", href: socialHref(/instagram\.com/i), icon: Instagram },
-    { label: "Facebook", href: socialHref(/facebook\.com/i), icon: Facebook },
-    { label: "Threads", href: socialHref(/threads\.(?:com|net)/i), icon: AtSign },
-    { label: "Pinterest", href: socialHref(/pinterest\./i), icon: Pin },
-    { label: "YouTube", href: socialHref(/youtube\.com/i), icon: Youtube },
-    { label: "X", href: socialHref(/(?:^|https?:\/\/)(?:www\.)?x\.com/i), icon: Twitter }
+    { key: "instagram", label: "Instagram", href: socialHref(/instagram\.com/i), icon: Instagram },
+    { key: "facebook", label: "Facebook", href: socialHref(/facebook\.com/i), icon: Facebook },
+    { key: "threads", label: "Threads", href: socialHref(/threads\.(?:com|net)/i), icon: AtSign },
+    { key: "pinterest", label: "Pinterest", href: socialHref(/pinterest\./i), icon: Pin },
+    { key: "youtube", label: "YouTube", href: socialHref(/youtube\.com/i), icon: Youtube },
+    { key: "x", label: "X", href: socialHref(/(?:^|https?:\/\/)(?:www\.)?x\.com/i), icon: XSocialIcon },
+    { key: "tiktok", label: "TikTok", href: socialHref(/tiktok\.com/i), icon: TikTokSocialIcon }
   ].filter((item) => item.href);
   const showPaymentIconsValue = footer?.settings.showPaymentIcons;
   const showPaymentIcons = showPaymentIconsValue === undefined ? true : showPaymentIconsValue !== false && showPaymentIconsValue !== "false";
@@ -2059,7 +2086,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
 	    if (normalizedHref === "/privacy") return "Privacy Policy";
 	    if (normalizedHref === "/terms") return "Terms of Service";
     if (normalizedHref === "/cookies") return "Cookie Policy";
-    if (normalizedHref === "/children-privacy" && (isDreamShootFooter || isAidreamcapesFooter) && !spanishXbyFooter) return "KIDS Act";
+    if (normalizedHref === "/children-privacy" && (isDreamShootFooter || isAidreamcapesFooter) && !spanishXbyFooter) return "Children's Privacy";
     if (normalizedHref === "/state-privacy" && isDreamShootFooter && !spanishXbyFooter) return "State Privacy";
     if (normalizedHref === "/state-privacy" && isAidreamcapesFooter && !spanishXbyFooter) return "CISA";
     if (normalizedHref === "/children-privacy") return "Children's Privacy";
@@ -2068,7 +2095,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
   };
   const bottomPolicyLinks = (isDreamShootFooter || isAidreamcapesFooter) && !spanishXbyFooter
     ? [
-        ...(footerLinkIsPublished({ href: "/children-privacy" }) ? [{ label: "KIDS Act", href: "/children-privacy" }] : []),
+        ...(footerLinkIsPublished({ href: "/children-privacy" }) ? [{ label: "Children's Privacy", href: "/children-privacy" }] : []),
         ...(footerLinkIsPublished({ href: "/state-privacy" }) ? [{ label: isAidreamcapesFooter ? "CISA" : "State Privacy", href: "/state-privacy" }] : [])
       ]
     : [];
@@ -2167,7 +2194,8 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
                     return (
                       <a
                         aria-label={`${item.label} for ${readableFooterTitle}`}
-                        className={dark ? "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/74 transition hover:border-white/24 hover:bg-white/[0.1] hover:text-white" : "inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ddd2c5] bg-white/80 text-[#171514] transition hover:bg-white"}
+                        className={dark ? "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/74 transition hover:border-white/24 hover:bg-white/[0.1] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#101014]" : "inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ddd2c5] bg-white/80 text-[#171514] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#171514] focus-visible:ring-offset-2"}
+                        data-social-platform={item.key}
                         href={item.href}
                         key={item.label}
                         rel="nofollow noopener noreferrer"
@@ -6053,6 +6081,11 @@ function isVirtualGoodsFooterLinkToHide(label: string, href: string): boolean {
   );
 }
 
+function isPairedStoreFooterLinkToHide(href: string): boolean {
+  const normalizedHref = shortPolicyPath(href).toLowerCase();
+  return normalizedHref === "/workflow" || normalizedHref === "/pricing";
+}
+
 function canonicalSectionType(type: string): string {
   const normalizedType = type.trim().replace(/[\s-]+/g, "_").toLowerCase();
   if (normalizedType === "mobile_video_showcase" || normalizedType.endsWith("_mobile_video_showcase")) {
@@ -8721,6 +8754,31 @@ function SectionView({
       const primaryCta = setting(section, "primaryCta");
       const secondaryCta = setting(section, "secondaryCta");
       const heroVisuals = blocks.filter((block) => blockValue(block, "imageUrl"));
+      const heroVideoSource = setting(section, "videoUrl") || (heroVisuals[0] ? blockValue(heroVisuals[0], "videoUrl") : "");
+      const heroPosterSource = setting(section, "imageUrl") || (heroVisuals[0] ? blockValue(heroVisuals[0], "imageUrl") : "");
+      const heroVideo = heroVideoSource && heroPosterSource ? (
+        <DreamshootShowcasePreviewClient className="contents">
+          <div
+            aria-label={`Preview ${title || "hero video"}`}
+            className="h-full w-full"
+            data-dreamshoot-preview-meta={intro}
+            data-dreamshoot-preview-poster={mediaAssetUrl(site, heroPosterSource)}
+            data-dreamshoot-preview-src={mediaAssetUrl(site, heroVideoSource)}
+            data-dreamshoot-preview-title={title || "Hero video"}
+            data-dreamshoot-showcase-preview="video"
+            role="button"
+            tabIndex={0}
+          >
+            <DreamshootShowcaseVideo
+              className="h-full w-full object-cover"
+              label={setting(section, "imageAlt", title || "Christmas hero video")}
+              poster={mediaAssetUrl(site, heroPosterSource)}
+              priority
+              src={mediaAssetUrl(site, heroVideoSource)}
+            />
+          </div>
+        </DreamshootShowcasePreviewClient>
+      ) : null;
       const rawIntentChips = section.settings?.intentChips;
       const intentChips = Array.isArray(rawIntentChips) ? rawIntentChips.map((chip) => typeof chip === "string" ? chip.trim() : "").filter(Boolean) : [];
       return (
@@ -8741,9 +8799,9 @@ function SectionView({
             </div>
             {heroVisuals.length > 1 ? (
               <div className="grid gap-3 p-5 sm:grid-cols-2 lg:p-8">
-                {heroVisuals.map((block, index) => <div className={`${index === 0 ? "sm:col-span-2" : ""} aspect-[5/3] overflow-hidden rounded-[14px] bg-[#5c2930]`} key={instanceKey(block, index, "hero_visual")} style={{ backgroundColor: editorialTheme.heroBg }}>{imageFor(block)}</div>)}
+                {heroVisuals.map((block, index) => <div className={`${index === 0 ? "sm:col-span-2" : ""} aspect-[5/3] overflow-hidden rounded-[14px] bg-[#5c2930]`} key={instanceKey(block, index, "hero_visual")} style={{ backgroundColor: editorialTheme.heroBg }}>{index === 0 && heroVideo ? heroVideo : imageFor(block)}</div>)}
               </div>
-            ) : <div className="aspect-[5/3] min-h-0 overflow-hidden">{imageFor(section)}</div>}
+            ) : <div className="aspect-[5/3] min-h-0 overflow-hidden">{heroVideo ?? imageFor(section)}</div>}
           </div>
         </section>
       );
@@ -13056,6 +13114,8 @@ function SectionView({
       const renderPublishedCard = (item: PublishedHomepageShowcaseItem) => {
         const href = hrefFor(site, item.canonicalPath);
         const compactCard = item.kind === "save_the_date";
+        const hasVideo = Boolean(item.videoUrl);
+        const videoUrl = item.videoUrl ?? "";
         const mediaClassName = "h-full w-full object-cover";
         const publishedImageAlt = item.kind === "photo"
           ? cardImageAltForSite(site, {
@@ -13083,7 +13143,7 @@ function SectionView({
                 className="relative aspect-square cursor-pointer overflow-hidden bg-[#05070e] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-inset"
                 data-dreamshoot-preview-meta={item.subtitle}
                 data-dreamshoot-preview-poster={mediaAssetUrl(site, item.imageUrl)}
-                data-dreamshoot-preview-src={mediaAssetUrl(site, item.videoUrl)}
+                data-dreamshoot-preview-src={mediaAssetUrl(site, item.videoUrl ?? "")}
                 data-dreamshoot-preview-title={item.imageAlt}
                 data-dreamshoot-showcase-preview="video"
                 role="button"
@@ -13116,12 +13176,37 @@ function SectionView({
         ) : (
           <StorefrontImage alt={publishedImageAlt} className={mediaClassName} loading="lazy" preview={false} sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw" src={mediaAssetUrl(site, item.imageUrl)} />
         );
-        return (
+        const card = hasVideo ? (
+          <article
+            className="group block min-w-0 overflow-hidden rounded-[8px] border border-white/12 bg-[#090B12] transition hover:-translate-y-0.5 hover:border-white/24"
+            data-showcase-card-kind="video"
+            key={item.id}
+          >
+            <div
+              aria-label={`Preview ${item.title}`}
+              className="aspect-square overflow-hidden"
+              data-dreamshoot-preview-meta={item.subtitle}
+              data-dreamshoot-preview-poster={mediaAssetUrl(site, item.imageUrl)}
+              data-dreamshoot-preview-src={mediaAssetUrl(site, videoUrl)}
+              data-dreamshoot-preview-title={item.imageAlt || item.title}
+              data-dreamshoot-showcase-preview="video"
+              role="button"
+              tabIndex={0}
+            >{media}</div>
+            <Link
+              aria-label={`Open ${item.title}`}
+              className={compactCard ? "block border-t border-white/10 p-2 outline-none transition hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/80 sm:p-2.5" : "block border-t border-white/10 p-3 outline-none transition hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/80"}
+              href={href}
+            >
+              <h3 className={compactCard ? "truncate text-xs font-semibold text-white sm:text-sm" : "truncate text-sm font-semibold text-white"}>{item.title}</h3>
+              <p className={compactCard ? "mt-1 line-clamp-2 text-[11px] leading-4 text-white/60 sm:text-xs" : "mt-1 line-clamp-2 text-xs leading-5 text-white/60"}>{item.subtitle}</p>
+            </Link>
+          </article>
+        ) : (
           <Link
             aria-label={item.kind === "video" ? `${item.title} video example` : item.title}
             className="group block min-w-0 overflow-hidden rounded-[8px] border border-white/12 bg-[#090B12] transition hover:-translate-y-0.5 hover:border-white/24"
-            data-dreamshoot-showcase-preview={item.kind === "video" ? "video" : "image"}
-            data-showcase-card-kind={item.kind === "video" ? "video" : "image"}
+            data-showcase-card-kind="image"
             href={href}
             key={item.id}
           >
@@ -13132,6 +13217,7 @@ function SectionView({
             </div>
           </Link>
         );
+        return hasVideo ? <DreamshootShowcasePreviewClient className="contents" key={`${item.id}-preview`}>{card}</DreamshootShowcasePreviewClient> : card;
       };
       const renderPublishedSection = (items: PublishedHomepageShowcaseItem[], title: string, intro: string, href: string, label: string, kind: "video" | "save_the_date" | "photo") => items.length ? (
         <div className="mt-12" data-dreamshoot-homepage-showcase-kind={kind}>
@@ -16924,7 +17010,7 @@ function SectionView({
       <section className={dark ? "bg-[#101114] px-5 py-16 text-white" : "grid-paper bg-[#f7f3ec] px-5 py-16 text-[#14161a]"} id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className={`grid gap-8 ${richTextGridClass}`}>
-            <div>
+            <div className="min-w-0">
               {eyebrow ? <p className={dark ? "font-mono text-xs uppercase tracking-[0.22em] text-white/54" : "font-mono text-xs uppercase tracking-[0.22em] text-[#8a7a6d]"}>{eyebrow}</p> : null}
               <HeadingTag className={`${compact ? "mt-4 max-w-3xl text-3xl md:text-5xl" : "mt-4 max-w-4xl text-4xl md:text-6xl"} font-semibold leading-[1.04] tracking-tight text-balance [font-family:var(--site-title-font)]`}>
                 {localizedHeading}
@@ -16947,12 +17033,12 @@ function SectionView({
                 </div>
               ) : null}
               {showInlineRichCards ? (
-                <div className={dark ? "mt-8 grid gap-3 border-t border-white/12 pt-5 sm:grid-cols-2" : "mt-8 grid gap-3 border-t border-[#ddd4c8] pt-5 sm:grid-cols-2"}>
+                <div className={dark ? "mt-8 grid min-w-0 gap-3 border-t border-white/12 pt-5 sm:grid-cols-2" : "mt-8 grid min-w-0 gap-3 border-t border-[#ddd4c8] pt-5 sm:grid-cols-2"}>
                   {richCards.slice(0, 4).map((card, index) => (
-                    <article className={dark ? "rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "rounded-[18px] border border-[#e4dace] bg-white/56 p-4 shadow-[0_18px_48px_-42px_rgba(20,22,26,0.18)]"} key={instanceKey(card, index, "rich_text_card")} {...xfcartBlockAttrs(mode, card, index, "rich_text_card")}>
-                      <p className={dark ? "font-mono text-[10px] uppercase tracking-[0.16em] text-white/46" : "font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a7a6d]"}>{blockValue(card, "meta", String(index + 1).padStart(2, "0"))}</p>
-                      <h3 className="mt-3 text-lg font-semibold tracking-tight">{headingBlockValue(card, "title", headingBlockValue(card, "label", "Editable item"))}</h3>
-                      <p className={dark ? "mt-2 text-sm leading-6 text-white/62" : "mt-2 text-sm leading-6 text-[#625d56]"}>{blockValue(card, "description", blockValue(card, "text", ""))}</p>
+                    <article className={dark ? "min-w-0 rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "min-w-0 rounded-[18px] border border-[#e4dace] bg-white/56 p-4 shadow-[0_18px_48px_-42px_rgba(20,22,26,0.18)]"} key={instanceKey(card, index, "rich_text_card")} {...xfcartBlockAttrs(mode, card, index, "rich_text_card")}>
+                      <p className={dark ? "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-white/46 [overflow-wrap:anywhere]" : "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a7a6d] [overflow-wrap:anywhere]"}>{blockValue(card, "meta", String(index + 1).padStart(2, "0"))}</p>
+                      <h3 className="mt-3 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">{headingBlockValue(card, "title", headingBlockValue(card, "label", "Editable item"))}</h3>
+                      <p className={dark ? "mt-2 min-w-0 text-sm leading-6 text-white/62 [overflow-wrap:anywhere]" : "mt-2 min-w-0 text-sm leading-6 text-[#625d56] [overflow-wrap:anywhere]"}>{blockValue(card, "description", blockValue(card, "text", ""))}</p>
                     </article>
                   ))}
                 </div>
@@ -17010,8 +17096,8 @@ function SectionView({
                         ]).map(([label, detail], index) => ({ label, detail, card: undefined, index }))
                     ).map(({ label, detail, card, index }) => (
                     <div className={`${dark ? "rounded-[18px] border border-white/10 bg-black/18 px-4 py-3" : "rounded-[18px] border border-[#e4dace] bg-white/58 px-4 py-3"} ${noImageCardJourney ? "flex flex-col justify-center" : ""}`} key={card ? instanceKey(card, index, "rich_text_journey_card") : label} {...(card ? xfcartBlockAttrs(mode, card, index, "rich_text_card") : {})}>
-                      <p className="text-sm font-semibold">{label}</p>
-                      <p className={dark ? "mt-1 text-xs leading-5 text-white/58" : "mt-1 text-xs leading-5 text-[#706961]"}>{detail}</p>
+                      <p className="min-w-0 text-sm font-semibold [overflow-wrap:anywhere]">{label}</p>
+                      <p className={dark ? "mt-1 min-w-0 text-xs leading-5 text-white/58 [overflow-wrap:anywhere]" : "mt-1 min-w-0 text-xs leading-5 text-[#706961] [overflow-wrap:anywhere]"}>{detail}</p>
                     </div>
                   ))}
                 </div>
@@ -17203,7 +17289,7 @@ function SectionView({
             </Link>
             {!spanishXbyPolicy ? (
               <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/children-privacy")}>
-                KIDS Act
+                Children's Privacy
               </Link>
             ) : null}
             {!spanishXbyPolicy ? (

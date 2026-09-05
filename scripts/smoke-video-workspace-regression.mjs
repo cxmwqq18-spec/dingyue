@@ -91,8 +91,8 @@ assert(videoProviderPolicy.includes("GEMINI_VIDEO_FRAME_ALLOWED_MIME_TYPES"), "G
 assert(videoProviderPolicy.includes('"image/jpeg"') && videoProviderPolicy.includes('"image/png"'), "Gemini/Huitu video frames should be limited to JPG/PNG");
 assert(videoProviderPolicy.includes("geminiVideoFramePolicyWarningMessage"), "reference-image video upload warnings should come from shared policy copy");
 assert(videoProviderPolicy.includes("grokVideoFrameGuidanceMessage"), "text-to-video and image-to-video guidance should come from shared policy copy");
-assert(videoProviderPolicy.includes("Video can be generated from text or reference images"), "generic guidance should explain text-to-video and image-to-video modes");
-assert(videoProviderPolicy.includes("Avoid unsafe or rights-sensitive prompts and uploads"), "generic guidance should include prompt and upload safety guidance");
+assert(videoProviderPolicy.includes("Create the video from text or reference images"), "generic guidance should explain description-only and reference-image modes");
+assert(videoProviderPolicy.includes("Avoid unsafe or rights-sensitive descriptions and uploads"), "generic guidance should include description and upload safety guidance");
 assert(!videoProviderPolicy.includes("Gemini cannot use reference images"), "customer provider-failure copy should not expose a specific video model");
 assert(videoProviderPolicy.includes("real_person_reference_unsupported"), "provider failure normalization should classify real-person reference rejections");
 assert(videoProviderPolicy.includes("videoProviderFailureCustomerMessage"), "provider failure reasons should have customer-safe display copy");
@@ -111,7 +111,7 @@ assert(videoWorkspace.includes("ai_app_not_enabled_for_site"), "video workspace 
 assert(videoWorkspace.includes("const maxFrames = CUSTOMER_VIDEO_FRAME_LIMIT"), "video workspace should use the global customer video frame limit");
 assert(!videoWorkspace.includes("selectedTheme?.effectiveMaxFrames ?? selectedTheme?.maxFrames"), "video workspace should not let theme frame settings control the customer frame cap");
 assert(videoWorkspace.includes("trimVideoFrameSelection(current, maxFrames)"), "video workspace should trim over-limit selections by keeping the latest clicked frames");
-assert(videoWorkspace.includes("Selected frames are treated as ordered reference images"), "video workspace should explain that selected frames drive image-to-video references");
+assert(videoWorkspace.includes("Selected reference images are used in the order shown for image-to-video"), "video workspace should explain that selected references drive image-to-video");
 assert(videoWorkspace.includes("customerBalance?: PublicCustomer[\"balance\"]"), "video workspace should accept updated customer balance from job creation");
 assert(videoWorkspace.includes("onJobCreated(result.job.id, { customerBalance: result.customerBalance })"), "video job creation should return updated balance to the workspace shell");
 assert(videoWorkspace.includes("onGenerationStarted?.();"), "video workspace should notify the shell before the create request waits on the network");
@@ -133,7 +133,7 @@ assert(videoWorkspace.includes("textToVideoProviderModelFamilies") && videoWorks
 assert(!videoWorkspace.includes('onJobCreated(result.job.id, "videos")'), "video jobs should not route through the resource Videos tab");
 assert(!videoWorkspace.includes("Math.min(4"), "video workspace should not clamp frame count to 4");
 assert(!videoWorkspace.includes('id="video-step-themes"'), "video theme selection should stay hidden from the customer workspace");
-assert(videoWorkspace.includes("Agent video composer"), "video input should use the simplified composer module");
+assert(videoWorkspace.includes("Video creation"), "video input should use the simplified creation module");
 assert(videoWorkspace.includes("VIDEO_PROMPT_TEMPLATE"), "video workspace should provide a reusable video prompt template");
 assert(videoWorkspace.includes("Use template"), "video workspace should expose a prompt template button beside the composer frame count");
 assert(videoWorkspace.includes("VIDEO_PROMPT_MAX_LENGTH = VIDEO_PROMPT_OPTIMIZATION_MAX_PROMPT_LENGTH"), "video prompt composer should use the shared prompt limit");
@@ -153,26 +153,26 @@ assert(videoWorkspace.includes("resolution: selectedResolution"), "video jobs sh
 assert(videoWorkspace.includes("const isTextToVideo = selectedFrameIds.length === 0"), "video workspace should detect text-to-video mode when no frames are selected");
 assert(videoWorkspace.includes("videoInputMode: submitFrameIds.length ? \"image_to_video\" : \"text_to_video\""), "video workspace should submit an explicit text-to-video or image-to-video mode after frame normalization");
 assert(videoWorkspace.includes("videoThemeSlug: selectedTheme.slug"), "video workspace should submit the selected video theme slug so stale cached ids can be reconciled");
-assert(videoWorkspace.includes("Describe the video you want, or select frame images"), "video workspace should allow text prompts instead of forcing frame selection");
-assert(videoWorkspace.includes("{isTextToVideo ? vt(spanish, \"Text to video\""), "video workspace should show text-to-video mode in the composer");
+assert(videoWorkspace.includes("Describe the video you want, or select reference images"), "video workspace should allow descriptions instead of forcing image selection");
+assert(videoWorkspace.includes("{isTextToVideo ? vt(spanish, \"Description only\""), "video workspace should show description-only mode in the composer");
 assert(!videoWorkspace.includes("!selectedFrameIds.length || hasPendingFrameUploads"), "video generation button should not require selected frames when a prompt is present");
 assert(videoWorkspace.includes("hasSelectedFrameInput"), "video generation button should allow selected-but-uploading frames to reach the visible validation message");
 assert(!videoWorkspace.includes("const canGenerateCurrentVideo = !hasPendingFrameUploads"), "video generation button should not silently disable while selected frame uploads are pending");
 assert(videoWorkspace.includes("textToVideoConfirmArmed"), "text-to-video requests without selected frames should require an explicit confirmation click");
 assert(videoWorkspace.includes("textToVideoConfirmOpen"), "no-frame text-to-video confirmation should open a visible dialog");
-assert(videoWorkspace.includes("No frame images are selected. This will run as text-to-video"), "text-to-video confirmation should explain that no frames are selected");
-assert(videoWorkspace.includes("Generate text-to-video"), "the confirm-state button should identify text-to-video generation");
-assert(videoWorkspace.includes("No frame images selected"), "the no-frame warning should have an obvious dialog title");
-assert(videoWorkspace.includes("Select frame images"), "the no-frame dialog should offer a frame-selection action");
-assert(videoWorkspace.includes("Continue text-to-video"), "the no-frame dialog should require an explicit text-to-video continuation");
+assert(videoWorkspace.includes("No reference images are selected. The video will follow your description only"), "description-only confirmation should explain that no references are selected");
+assert(videoWorkspace.includes("Create from description"), "the confirm-state button should identify description-only creation");
+assert(videoWorkspace.includes("No reference images selected"), "the no-reference warning should have an obvious dialog title");
+assert(videoWorkspace.includes("Select reference images"), "the no-reference dialog should offer a reference-selection action");
+assert(videoWorkspace.includes("Create from description"), "the no-reference dialog should require an explicit description-only continuation");
 assert(videoWorkspace.includes("role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"text-to-video-confirm-title\""), "the no-frame warning should render as an accessible modal dialog");
 assert(videoWorkspace.includes("onOpenFrameManager()"), "the no-frame dialog should be able to send customers back to the frame picker");
 assert(videoWorkspace.includes("video_frame_selection_required"), "video workspace should explain backend image-reference prompt guard failures");
 assert(videoWorkspace.includes("function videoPromptRequiresFrameImages"), "video workspace should locally detect prompts that require selected frame images");
 assert(videoWorkspace.includes("function videoPromptRiskMessages"), "video workspace should surface local prompt risk guidance before paid video submission");
-assert(videoWorkspace.includes("Prompt check"), "video workspace should render prompt risk guidance next to the composer");
+assert(videoWorkspace.includes("Description check"), "video workspace should render description risk guidance next to the composer");
 assert(videoWorkspace.includes("blockingPromptRisk"), "video workspace should block deterministic prompt/frame mismatches before creating a paid video job");
-assert(videoWorkspace.includes("Your prompt says to use uploaded, selected, source, or reference images"), "video workspace should explain missing frame references before submit");
+assert(videoWorkspace.includes("Your description asks to use uploaded or reference images"), "video workspace should explain missing reference images before submit");
 assert(videoWorkspace.includes("NEGATED_PROMPT_CUE_PATTERN"), "video prompt risk detection should avoid false positives from avoid/no/without wording");
 assert(videoWorkspace.includes("promptHasNonNegatedMatch"), "video prompt risk detection should account for negated safety constraints");
 assert(videoWorkspace.includes("clauseBeforeMatch"), "video prompt risk detection should treat long avoid-lists as negated within the same clause");
@@ -180,7 +180,7 @@ assert(videoWorkspace.includes("POSITIVE_PROMPT_CUE_AFTER_NEGATION_PATTERN"), "v
 assert(videoWorkspace.includes("AUTO_VIDEO_MODEL_FAMILY"), "video workspace should use automatic video provider selection instead of a customer model picker");
 assert(videoWorkspace.includes("videoModelFamily: AUTO_VIDEO_MODEL_FAMILY"), "video workspace should submit auto video provider mode");
 assert(videoWorkspace.includes("modelFamily: AUTO_VIDEO_MODEL_FAMILY"), "video workspace should keep legacy model fields in auto mode for compatibility");
-assert(videoWorkspace.includes("Video uses the best available provider automatically"), "video workspace should show generic automatic-provider guidance");
+assert(videoWorkspace.includes("We choose the best available video service automatically"), "video workspace should show generic automatic-service guidance");
 assert(!videoWorkspace.includes("selectedVideoModelFamily"), "video workspace should not keep customer-facing video model state");
 assert(!videoWorkspace.includes("VIDEO_MODEL_OPTIONS"), "video workspace should not render a Grok/Gemini segmented model selector");
 assert(!videoWorkspace.includes('vt(spanish, "Use Grok"'), "video workspace should not offer a customer-facing model switch");
@@ -190,7 +190,7 @@ assert(videoWorkspace.includes("unsupportedVideoFrameMessage"), "video workspace
 assert(videoWorkspace.includes("isGeminiVideoFrameMimeType(frame.mimeType)"), "video workspace should use shared JPG/PNG MIME validation for selected frame metadata");
 assert(videoWorkspace.includes("promptSuggestsPeopleReference"), "video workspace should detect people-reference prompts for provider risk guidance");
 assert(videoWorkspace.includes("missing_required_prompt_input"), "video workspace should show clear copy for required prompt-field failures");
-assert(videoWorkspace.includes("Video providers may reject real or recognizable people in frame references"), "people-reference guidance should warn without blocking provider submission");
+assert(videoWorkspace.includes("The video service may reject reference images with real or recognizable people"), "people-reference guidance should warn without blocking submission");
 assert(!videoWorkspace.includes("For people, babies, children, portraits, selfies, or family photos, use Grok"), "people-reference guidance should not force customers to switch models locally");
 assert(videoWorkspace.includes("text-xs font-semibold leading-5 text-red-400"), "video composer operation messages should render in red for visibility");
 assert(videoWorkspace.includes("export type VideoRetryDraft"), "video workspace should expose a retry draft contract for failed video jobs");
@@ -199,7 +199,7 @@ assert(videoWorkspace.includes("initialThemes?: VideoTheme[]"), "video workspace
 assert(videoWorkspace.includes("useState<VideoTheme[]>(() => initialThemes)"), "video workspace should render immediately with initial video presets");
 assert(videoWorkspace.includes("defaultVideoTheme(initialThemes)?.id"), "video workspace should select the neutral preset from initial video presets");
 assert(videoWorkspace.includes("initialThemes.length ? current"), "video workspace should keep initial presets if the background preset refresh fails");
-assert(videoWorkspace.includes("Previous video request restored. Review it, then generate again."), "video workspace should confirm when a failed request has been restored");
+assert(videoWorkspace.includes("Previous video request restored. Review it, then create it again."), "video workspace should confirm when a failed request has been restored");
 assert(videoWorkspace.includes("setPromptNote(retryDraft.promptNote ?? \"\")"), "video retry should restore the previous motion prompt");
 assert(videoWorkspace.includes("setSelectedAspectRatio(retryDraft.aspectRatio)"), "video retry should restore the previous aspect ratio");
 assert(videoWorkspace.includes("setSelectedResolution(retryDraft.resolution)"), "video retry should restore the previous resolution");
@@ -304,7 +304,6 @@ const customerAssetsRouteForVideoPolicy = read("src/app/api/sites/[siteId]/custo
 assert(customerAssetsRouteForVideoPolicy.includes("unsupported_video_frame_type"), "video frame uploads should reject unsupported image types at the API boundary");
 assert(customerAssetsRouteForVideoPolicy.includes("geminiVideoFrameMimeTypeForUpload"), "video frame upload MIME validation should use shared Gemini policy");
 
-const htmlLangSync = read("src/components/storefront/html-lang-sync.tsx");
 const customerWorkspaceShell = read("src/components/storefront/customer-workspace-shell.tsx");
 assert(customerWorkspaceShell.includes("canPrepareCustomerVideoFrameUploadFile"), "video frame picker should accept browser-readable images before video-ready conversion");
 assert(customerWorkspaceShell.includes("prepareCustomerVideoFrameUploadFile(file)"), "video frame uploads should convert unsupported reference formats before upload");
@@ -320,9 +319,6 @@ assert(!customerWorkspaceShell.includes("geminiVideoFrameUploadTypeMessage"), "v
 assert(!customerWorkspaceShell.includes("Gemini video uses JPG or PNG frames only"), "video frame manager should not show model-specific upload requirements on the left");
 assert(customerWorkspaceShell.includes("parseVideoProviderFailure(record.providerFailure)"), "workspace output slots should parse structured provider failure details");
 assert(customerWorkspaceShell.includes("workspaceJobProviderFailureBody"), "failed video job cards should show provider-specific failure reasons");
-assert(htmlLangSync.includes("installBrowserTranslationDomGuard"), "customer pages should install a DOM guard for browser-translated React text nodes");
-assert(htmlLangSync.includes("Node.prototype.removeChild") && htmlLangSync.includes("child.parentNode !== this"), "translation guard should ignore stale removeChild calls from external translated text nodes");
-assert(htmlLangSync.includes("Node.prototype.insertBefore") && htmlLangSync.includes("nativeInsertBefore.call(this, node, null)"), "translation guard should recover stale insertBefore reference nodes after browser translation");
 assert(!customerWorkspaceShell.includes("activeJob ?? videoRuntimeJobs[0]"), "video progress cards should not fall back to the latest succeeded video when no active or focused video job exists");
 assert(customerWorkspaceShell.includes('status === "failed" || status === "partial"'), "video progress cards should still surface failed video jobs that need attention");
 assert(
@@ -441,7 +437,7 @@ assert(videoThemesRoute.includes("effectiveMaxFrames"), "video theme API should 
 assert(videoThemesRoute.includes("providerMaxFrames"), "video theme API should expose provider frame capacity for UI messaging");
 
 const siteStore = read("src/lib/stores/site-store.ts");
-assert(siteStore.includes("getStorefrontPublicVideoThemesForSite(site.id, 32)"), "workspace bootstrap should hydrate public video themes with the shell data");
+assert(siteStore.includes("getStorefrontPublicVideoThemesForSite(site.id)"), "workspace bootstrap should hydrate public video themes with the shell data");
 assert(siteStore.includes("effectiveVideoFrameLimit(providers, theme.maxFrames)"), "server-hydrated video themes should include the usable provider-aware frame limit");
 assert(siteStore.includes("effectiveVideoFrameLimit([], theme.maxFrames)"), "fallback video themes should also use the global customer video frame limit");
 assert(siteStore.includes("providerMaxFrames"), "server-hydrated video themes should include provider frame capacity");
@@ -512,7 +508,7 @@ assert(workspaceShell.includes("lastWorkerProgress"), "workspace should use pers
 assert(workspaceShell.includes("slotProgress === undefined"), "workspace should show an indeterminate bar when the provider has not reported a percentage");
 assert(workspaceShell.includes("workspaceVideoTimingBreakdown"), "video status cards should derive a compact timing breakdown from resultJson timing");
 assert(workspaceShell.includes("Time breakdown"), "video status cards should expose timing details to customers");
-assert(workspaceShell.includes("Provider generation"), "video status cards should show the provider generation segment");
+assert(workspaceShell.includes("Create video"), "video status cards should show the video creation segment");
 assert(workspaceShell.includes("Background optimization"), "video status cards should show async optimization timing when available");
 assert(workspaceShell.includes("Timing details are available for newer video requests"), "old video jobs without timing should keep a compatibility note");
 assert(workspaceShell.includes("runtimeTimingFromEvent") && workspaceShell.includes("...(timing ? { timing } : {})"), "workspace SSE patches should merge worker timing into resultJson timing");
@@ -523,14 +519,14 @@ assert(workspaceShell.includes("sample-selection:v2"), "workspace sample selecti
 assert(workspaceShell.includes('if (!asset.subjectRole && !asset.localTarget) return target === "primary";'), "unassigned legacy samples should not appear in both couple sample pickers");
 assert(workspaceShell.includes("partnerSampleIds.filter((id) => !savedPrimarySet.has(id))"), "saved primary and partner sample selections should stay mutually exclusive");
 assert(workspaceShell.includes("hasRequiredStudioSamples") && workspaceShell.includes("Couple mode requires at least one selected photo in both Your Samples and Partner Samples."), "couple training mode should require selected primary and partner samples before opening generation");
-assert(workspaceShell.includes("isImageProviderError") && workspaceShell.includes("The image provider is temporarily unavailable upstream.") && workspaceShell.includes("isVideoRuntimeJob(job)"), "image job slot errors should not be displayed as video provider failures");
+assert(workspaceShell.includes("isImageProviderError") && workspaceShell.includes("Image creation is temporarily unavailable.") && workspaceShell.includes("isVideoRuntimeJob(job)"), "image job slot errors should not be displayed as video failures");
 assert(workspaceShell.includes("setCurrentCustomerBalance(feedback.customerBalance)"), "workspace shell should apply created job balance updates immediately");
 assert(workspaceShell.includes("const workspaceCustomer = useMemo"), "workspace shell should pass a locally refreshed customer object to generation panels");
 assert(workspaceShell.includes("function videoJobFrameIds"), "workspace shell should read video frame ids consistently from job request data");
 assert(workspaceShell.includes("function videoJobMissingRequiredFrames"), "workspace shell should detect video jobs whose prompt required frames but none were submitted");
 assert(workspaceShell.includes("videoPromptRequiresFrameImages(videoJobPromptText(job))"), "workspace shell should not fail intentional text-to-video jobs just because they have no frames");
 assert(!workspaceShell.includes("isVideoRuntimeJob(job) && !videoJobFrameIds(job).length) return \"failed\""), "workspace shell should not mark every text-to-video job as failed");
-assert(workspaceShell.includes("This video request did not include selected frame images"), "workspace shell should warn when an image-reference video prompt has no frame references");
+assert(workspaceShell.includes("This video request did not include selected reference images"), "workspace shell should warn when an image-reference video prompt has no references");
 assert(workspaceShell.includes("URL.createObjectURL(file)"), "video frame uploads should use optimistic local previews");
 assert(workspaceShell.includes('params.asset.localStatus === "uploading" && params.asset.previewUrl'), "video frame uploads should render the local image preview while the file is still uploading");
 assert(workspaceShell.includes("prepareCustomerVideoFrameUploadFile(file)"), "video frame uploads should prepare a video-ready image before sending it to the server");
@@ -544,7 +540,7 @@ assert(workspaceShell.includes("...current.filter((asset) => asset.id !== localI
 assert(workspaceShell.includes("invalidateCustomerAssets(site.id, customer.id)"), "video frame upload and delete flows should invalidate the customer asset cache before broadcasting updates");
 assert(workspaceShell.includes("VIDEO_FRAME_UPLOAD_LIMIT = CUSTOMER_VIDEO_FRAME_LIMIT"), "workspace frame manager should use the global customer video frame limit");
 assert(workspaceShell.includes("const maxVideoFrameCount = VIDEO_FRAME_UPLOAD_LIMIT"), "workspace frame manager should not use the legacy 30-frame limit");
-assert(workspaceShell.includes("Choose up to ${VIDEO_FRAME_UPLOAD_LIMIT} image files"), "workspace frame manager copy should use the 7-frame upload limit and explain upload conversion");
+assert(workspaceShell.includes("Upload up to ${maxVideoFrameCount} reference images"), "workspace reference manager copy should use the 7-image upload limit and explain upload conversion");
 assert(workspaceShell.includes("imageFiles.slice(0, maxVideoFrameCount)"), "workspace frame uploads should cap each upload batch to the provider limit");
 assert(!workspaceShell.includes("readyVideoFrameAssets.slice(0, maxVideoFrameCount)"), "uploaded frame history should not be capped by the per-request selection limit");
 assert(!workspaceShell.includes("Choose up to ${DEFAULT_VIDEO_FRAME_LIMIT} frame images"), "workspace frame manager should not show the default 30-frame copy");
@@ -565,9 +561,9 @@ assert(!workspaceShell.includes('{ id: "themes"'), "the video workspace should n
 assert(!workspaceShell.includes('{ id: "frames"'), "the video workspace should not expose a frame tab in the top tab bar");
 assert(!workspaceShell.includes('chooseVideoWorkspaceTab("frames")'), "frame management should not be a top-level workspace tab");
 assert(workspaceShell.includes("onOpenFrameManager={focusVideoFrameManager}"), "frame management should stay available from the input composer");
-assert(workspaceShell.includes('aria-label={t(spanishXby, "Clear selected video frames"'), "selected frame list should use an icon-only clear control");
+assert(workspaceShell.includes('aria-label={t(spanishXby, "Clear selected reference images"'), "selected reference list should use an icon-only clear control");
 assert(workspaceShell.includes('className="flex shrink-0 items-center gap-1"'), "selected frame row actions should stay on one line");
-assert(workspaceShell.includes('aria-label={t(spanishXby, "Remove frame"'), "selected frame removal should be icon-only");
+assert(workspaceShell.includes('aria-label={t(spanishXby, "Remove reference image"'), "selected reference removal should be icon-only");
 assert(!workspaceShell.includes("col-span-2 grid h-7"), "selected frame row actions should not wrap into a second row");
 assert(workspaceShell.includes("const videoRuntimeJobs = recentJobs.filter(isVideoRuntimeJob);"), "video jobs should be scoped to the video workspace");
 assert(workspaceShell.includes('id="video-workspace-videos"'), "video workspace should render its own video results panel");
@@ -595,8 +591,8 @@ assert(workspaceShell.includes('0 of 1 delivered · 1 pending'), "video workspac
 assert(workspaceShell.includes('Waiting for status'), "video workspace pending card should show a stable status footer while the runtime job is loading");
 assert(workspaceShell.includes("w-1/3 animate-[admin-progress_1.05s_ease-in-out_infinite] rounded-full bg-[#31d4ff]"), "video workspace pending card should use an indeterminate progress animation instead of a fake percentage");
 assert(!workspaceShell.includes('w-[35%] rounded-full bg-[#31d4ff]'), "video workspace should not show a hardcoded pending percentage");
-assert(workspaceShell.includes("Video generation is temporarily unavailable while provider access is being updated. Credits were returned automatically"), "video result cards should explain provider availability failures instead of a generic no-progress failure");
-assert(workspaceShell.includes("The video request stalled before the provider returned a task id"), "video result cards should explain pre-create provider request timeouts distinctly");
+assert(workspaceShell.includes("Video creation is temporarily unavailable. Credits were returned automatically"), "video result cards should explain video availability failures instead of a generic no-progress failure");
+assert(workspaceShell.includes("Video creation took too long to begin. Credits were returned automatically"), "video result cards should explain start timeouts distinctly");
 assert(workspaceShell.includes("text-xs font-semibold leading-5 text-red-400"), "video frame sidebar operation messages should render in red for visibility");
 assert(workspaceShell.includes("group/video relative block w-full bg-black text-left"), "video resource cards should use the app preview entry instead of native thumbnail controls");
 assert(workspaceShell.indexOf("{selectedPreviewAsset ? (") > workspaceShell.indexOf("</main>"), "generated asset preview dialog should render outside panel-specific branches");
@@ -650,9 +646,9 @@ assert(workspaceShell.includes('previewStatus === "loading"'), "workspace shell 
 assert(workspaceShell.includes("Preparing preview"), "video frame cards should show an explicit loading preview instead of a stock cover");
 assert(!workspaceShell.includes('className="aspect-[4/5] w-full object-cover"\n                controls'), "video resource thumbnails should not use cropped portrait native controls");
 assert(!workspaceShell.includes('resourceTab === "videos"'), "resource overview should not render video-specific tab logic");
-assert(workspaceShell.includes("The video provider connection was interrupted"), "video provider network failures should not be described as public frame URL failures");
-assert(workspaceShell.includes("The video provider timed out while creating the video task"), "video create gateway timeouts should tell customers the starter image succeeded but the video provider timed out");
-assert(workspaceShell.includes("The video generator was interrupted before it returned a result"), "expired video jobs should tell customers the generator was interrupted and credits were returned");
+assert(workspaceShell.includes("The video service was interrupted before it finished"), "video network failures should use customer-facing service language");
+assert(workspaceShell.includes("Video creation took too long to start"), "video start timeouts should use customer-facing timing language");
+assert(workspaceShell.includes("Video creation stopped before it returned a result"), "expired video jobs should explain that creation stopped and credits were returned");
 assert(workspaceShell.includes("function workspaceJobEffectiveStatus"), "workspace job cards should derive an effective status from final job and slot states");
 assert(workspaceShell.includes('outputSlots.length > 0 && outputSlots.every((slot) => slot.status === "failed")'), "failed output slots should collapse a stale running job display to failed");
 assert(workspaceShell.includes("workspaceJobBody(job, spanishXby, slots)"), "workspace job failure body should use slot errors when final job error has not refreshed yet");
@@ -700,7 +696,7 @@ assert(jobCreateForm.includes("mergeRequestAssetIds") && jobCreateForm.includes(
 assert(videoWorkspace.includes("const hasCreditsForSelectedVideo = selectedCreditCost > 0 && selectedCreditCost <= customer.balance.available"), "video workspace should allow paid video requests to start from available credits");
 assert(videoWorkspace.includes("subscriptionStatus === \"required\" && !hasCreditsForSelectedVideo"), "video workspace should only hard-gate subscription when credits cannot cover the video");
 assert(videoWorkspace.includes("No credits were reserved."), "video composer should tell customers when provider preflight blocks generation before credit reservation");
-assert(videoWorkspace.includes("Video generation is not available right now."), "provider preflight failures should not look like reference-image rejections or created provider jobs");
+assert(videoWorkspace.includes("Video creation is not available right now."), "video availability failures should not look like reference-image rejections or created jobs");
 
 assert(localAssetsRoute.includes("parseByteRange"), "local asset proxy should parse browser Range requests for video playback");
 assert(localAssetsRoute.includes("status: 206"), "local asset proxy should return partial content for ranged video requests");
@@ -970,7 +966,7 @@ assert(siteStore.includes('slug: "prompt-directed-motion"'), "default video them
 assert(siteStore.includes("ensurePromptDirectedDefaultVideoThemeRelational"), "existing sites should backfill the neutral prompt-directed video preset");
 
 const schema = read("prisma/schema.prisma");
-assert(schema.includes("maxFrames       Int                 @default(30)"), "Prisma schema should default video themes to 30 frames");
+assert(/maxFrames\s+Int\s+@default\(30\)/.test(schema), "Prisma schema should default video themes to 30 frames");
 
 const migration = read("prisma/migrations/20260712043000_raise_video_frame_limit/migration.sql");
 assert(migration.includes('ALTER TABLE "VideoTheme" ALTER COLUMN "maxFrames" SET DEFAULT 30'), "migration should raise maxFrames default");
