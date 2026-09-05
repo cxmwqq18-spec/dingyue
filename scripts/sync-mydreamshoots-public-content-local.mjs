@@ -707,6 +707,9 @@ function syncKnownMydreamSections(pageJson, stats, source) {
     setSectionSetting(sections, "tutorial_video_1", key, value, stats, "02_generator_headings_links", source);
     setSectionSetting(sections, "mobile_video_1", key, value, stats, "02_generator_headings_links", source);
   }
+  if (isHomepagePageJson) {
+    setSectionSetting(sections, "tutorial_video_1", "showEyebrow", false, stats, "02_generator_headings_links", source);
+  }
 
   for (const [key, value] of [
     ["label", copyTargets.packageLabel],

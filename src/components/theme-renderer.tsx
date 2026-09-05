@@ -8727,7 +8727,7 @@ function SectionView({
     if (editorialFaq) {
       return (
         <section className="bg-[#fbf8f4] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor} style={editorialThemeTone === "halloween" ? sectionStyle : undefined}>
-          <div className="mx-auto max-w-[var(--site-content-width)]">
+        <div className="mx-auto max-w-[var(--site-content-width)]">
             <h2 className={`${headingClass} mx-auto max-w-[24ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
             <div className={`mx-auto mt-10 max-w-[66rem] divide-y ${editorialThemeTone === "halloween" ? "divide-[#74462e] border-[#74462e]" : "divide-[#e4d1cb] border-[#e4d1cb]"} border-y`}>
               {blocks.map((block, index) => (
@@ -9725,6 +9725,7 @@ function SectionView({
     const image = mediaAssetUrl(site, setting(section, "imageUrl", fallbackHeroImages[0]));
     const videoUrlSetting = setting(section, "videoUrl", "");
     const videoUrl = videoUrlSetting ? mediaAssetUrl(site, videoUrlSetting) : "";
+    const showEyebrow = settingBool(section, "showEyebrow", true);
     const supportingCopy = setting(section, "supportingCopy", "");
     const videoBadge = setting(section, "videoBadge", "");
     const videoPoster = videoUrl.includes("mydreamshoots-ai-image-tutorial-20260814.mp4")
@@ -9737,7 +9738,7 @@ function SectionView({
       <section className={`bg-[#0a0a0b] px-5 py-14 text-white md:py-20${compactHomepageSpacing ? " pt-8 md:pt-12" : ""}`} id={sectionAnchor(section, "how-it-works")}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <div className="mx-auto max-w-[52rem] text-center">
-            <p className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]" style={{ color: accentBlue }}>{setting(section, "eyebrow", "Tutorial")}</p>
+            {showEyebrow ? <p className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em]" style={{ color: accentBlue }}>{setting(section, "eyebrow", "Tutorial")}</p> : null}
             <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight md:text-5xl">{sectionHeading(section, "Photo tools")}</h2>
             <p className="mx-auto mt-4 max-w-[44rem] text-sm leading-7 text-white/70">{setting(section, "subtitle")}</p>
             {supportingCopy ? <p className="mx-auto mt-2 max-w-[44rem] text-sm leading-7 text-white/70">{supportingCopy}</p> : null}

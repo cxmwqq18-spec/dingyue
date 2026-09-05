@@ -31,6 +31,7 @@ async function main() {
   assert.deepEqual(order, ["hero_1", "generation_showcase_1", "tutorial_video_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"], "homepage order must use the current Phase B contract");
   assert.equal(sections.generation_showcase_1?.type, "dreamshoot_generation_showcase");
   assert.equal(sections.package_catalog_1, undefined, "homepage must not retain the removed package catalog section");
+  assert.equal(sections.tutorial_video_1?.settings?.showEyebrow, false, "homepage how-it-works eyebrow must be hidden");
   assert.equal(sections.proof_1?.settings?.title, copy.reviewTitle);
   assert.equal(sections.conversion_1?.settings?.title, copy.conversionTitle);
   assertText(sections.conversion_1?.settings?.subtitle, copy.conversionSubtitle, "conversion subtitle drifted");
@@ -45,6 +46,11 @@ async function main() {
   assert.ok(html.includes(copy.packageVideoLinkLabel), "photo packages must link to AI Video Generation");
   assert.ok(html.includes(copy.reviewTitle), "production homepage must expose the approved review heading");
   assert.ok(html.includes(copy.videoTitle) && html.includes(copy.saveTheDateTitle) && html.includes(copy.photoTitle), "production gallery headings must use the Phase B contract");
+  const tutorialMarker = 'id="xfcart-section-tutorial_video_1"';
+  const tutorialStart = html.indexOf(tutorialMarker);
+  const tutorialEnd = tutorialStart >= 0 ? html.indexOf('id="xfcart-section-', tutorialStart + tutorialMarker.length) : -1;
+  const tutorialHtml = tutorialStart >= 0 ? html.slice(tutorialStart, tutorialEnd > tutorialStart ? tutorialEnd : undefined) : "";
+  assert.ok(!/font-mono[^>]*uppercase[^>]*>\s*How it works\s*<\/p>/i.test(tutorialHtml), "homepage how-it-works eyebrow must not render");
   const photoSectionStart = html.indexOf('data-dreamshoot-homepage-showcase-kind="photo"');
   const videoSectionStart = html.indexOf('data-dreamshoot-homepage-showcase-kind="video"', photoSectionStart + 1);
   const photoShowcaseHtml = photoSectionStart >= 0 && videoSectionStart > photoSectionStart

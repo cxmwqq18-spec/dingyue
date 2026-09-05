@@ -732,6 +732,7 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
     maxBlocks: 8,
     settings: [
       text("anchor", "Anchor", "how-it-works"),
+      checkbox("showEyebrow", "Show eyebrow", true),
       text("eyebrow", "Eyebrow", "Tutorial"),
       text("title", "Title", "See how it works"),
       textarea("subtitle", "Subtitle", "Frame a featured photo story, collection, or sports campaign."),

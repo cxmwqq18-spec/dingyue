@@ -286,6 +286,7 @@ const stores = [
     ]),
     tutorial: section("video_feature", {
       anchor: "how-it-works",
+      showEyebrow: false,
       eyebrow: "How it works",
       title: "How it works",
 	      subtitle: "Upload approved source photos, choose a workflow, review the credit cost, and generate inside your signed-in workspace.",

@@ -1126,9 +1126,10 @@ function mydreamshootsTutorialVideoSection(): SectionInstance {
   });
 }
 
-function mydreamshootsImageTutorialVideoSection(): SectionInstance {
+function mydreamshootsImageTutorialVideoSection(showEyebrow = true): SectionInstance {
   return section("video_feature", {
     anchor: "how-it-works",
+    showEyebrow,
     eyebrow: "How it works",
     title: mydreamshootsHomepageCopy.tutorialTitle,
     subtitle: mydreamshootsHomepageCopy.tutorialSubtitle,
@@ -2387,7 +2388,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   const featuredChristmasSection = aidreamcapesTemplateSite ? aidreamcapesFeaturedChristmasSection() : homeSections.featured_christmas_1;
   const featuredThanksgivingSection = aidreamcapesTemplateSite ? aidreamcapesFeaturedThanksgivingSection() : homeSections.featured_thanksgiving_1;
   const generationShowcaseSection = aidreamcapesTemplateSite ? aidreamcapesGenerationShowcaseSection() : homeSections.generation_showcase_1;
-  const firstTutorialVideoSection = aidreamcapesTemplateSite ? aidreamcapesTutorialVideoSection() : mydreamshootsImageTutorialVideoSection();
+  const firstTutorialVideoSection = aidreamcapesTemplateSite ? aidreamcapesTutorialVideoSection() : mydreamshootsImageTutorialVideoSection(false);
   const secondTutorialVideoSection = aidreamcapesTemplateSite ? aidreamcapesImageTutorialVideoSection() : mydreamshootsTutorialVideoSection();
   const mobileVideoSection = aidreamcapesTemplateSite ? aidreamcapesMobileVideoShowcaseSection() : undefined;
   const packageCatalogSection = aidreamcapesTemplateSite ? aidreamcapesPackageCatalogSection() : homeSections.package_catalog_1;
