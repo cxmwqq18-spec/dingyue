@@ -16976,7 +16976,7 @@ function SectionView({
     const richCards = renderContext.pagePath === "/contact-us" && profileIdentity
       ? [
           { id: "profile_contact_email", type: "rich_text_card", settings: { meta: "Support", title: profileIdentity.supportEmail ?? "", description: "Account, billing, upload, privacy, and delivery support." } },
-          { id: "profile_contact_company", type: "rich_text_card", settings: { meta: "Company", title: profileIdentity.legalName ?? "", description: profileIdentity.entityType ?? "" } },
+          { id: "profile_contact_company", type: "rich_text_card", settings: { meta: "WEB", title: isMyDreamShootsProfileSite(site) ? "myDreamshoots.com" : site.primaryDomain.replace(/^www\./i, ""), description: profileIdentity.entityType ?? "", secondaryTitle: profileIdentity.legalName ?? "" } },
           { id: "profile_contact_address", type: "rich_text_card", settings: { meta: "Address", title: profileAddress, description: "Published business correspondence address." } }
         ].filter((card) => Boolean(card.settings.title)) as SectionBlockInstance[]
       : configuredRichCards;
@@ -17054,6 +17054,7 @@ function SectionView({
                       <p className={dark ? "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-white/46 [overflow-wrap:anywhere]" : "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a7a6d] [overflow-wrap:anywhere]"}>{blockValue(card, "meta", String(index + 1).padStart(2, "0"))}</p>
                       <h3 className="mt-3 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">{headingBlockValue(card, "title", headingBlockValue(card, "label", "Editable item"))}</h3>
                       <p className={dark ? "mt-2 min-w-0 text-sm leading-6 text-white/62 [overflow-wrap:anywhere]" : "mt-2 min-w-0 text-sm leading-6 text-[#625d56] [overflow-wrap:anywhere]"}>{blockValue(card, "description", blockValue(card, "text", ""))}</p>
+                      {blockValue(card, "secondaryTitle", "") ? <p className="mt-4 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">{blockValue(card, "secondaryTitle", "")}</p> : null}
                     </article>
                   ))}
                 </div>
