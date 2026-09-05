@@ -65,6 +65,7 @@ const policySeo = {
 
 const privacyFooterNotice = "Separate Children's Privacy and State Privacy notices explain child-related requests and regional privacy rights that may apply to your use of the service.";
 const termsUploadRule = "You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload photos of minors or non-consenting people unless you have the legal right and consent required for the requested use. Do not upload photos of public figures, protected marks, stolen images, or other materials without the rights or permissions required for the requested use, or that violate law, platform rules, or third-party rights.";
+const mydreamshootsShippingPolicyBody = "<h3>No physical products</h3><p>myDreamshoots does not ship physical products, printed photos, USB drives, or mailed merchandise from this storefront. All purchases and outputs described in this policy are digital.</p><h3>Credits and digital delivery</h3><p>Credits are added to the customer account after payment is confirmed. Generated images and videos become available in the signed-in customer workspace or private gallery when the relevant job is complete. Downloads are provided through the applicable workspace or gallery.</p><h3>Delivery timing</h3><p>Processing time can vary based on the source photo, selected package or generation settings, provider availability, moderation review, and system load.</p><h3>Failed or delayed jobs</h3><p>If a service-side issue prevents a digital result from being delivered, contact support. Depending on the circumstances, support may release reserved credits, rerun the job, troubleshoot the account, or review refund eligibility under the Refund Policy.</p><h3>No tracking, customs, or shipping charges</h3><p>Because purchases are digital, myDreamshoots does not provide carrier tracking numbers and does not charge shipping, customs, duties, or physical handling fees.</p><h3>Contact</h3><p>If a credit, generated file, download, or private gallery result does not appear in the workspace, email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, order or job details, and a short description of the issue.</p>";
 const replacements = [
   ["AES-256 at rest", "AES-256 encryption at rest"],
   ["TLS 256-bit in transit", "TLS encryption in transit"],
@@ -164,11 +165,12 @@ function updatePolicyJson(json, canonicalPath) {
       .replace(/Money-back guarantee\.?/g, "Results-based refund review.");
   }
   if (canonicalPath === "/shipping") {
-    const body = next.sections?.policy_1?.settings?.body;
-    if (typeof body === "string") next.sections.policy_1.settings.body = body.replace(
-      /myDreamshoots sells digital credits for AI photo and video generation, generated image packages, video outputs, downloads, and private gallery access\./i,
-      "myDreamshoots sells digital credits for AI photo and video generation, generated image packages, video outputs, downloads, and private gallery access."
-    );
+    const policySettings = next.sections?.policy_1?.settings;
+    if (policySettings) {
+      policySettings.title = "Digital Delivery Policy";
+      policySettings.lastUpdated = "2026-09-05";
+      policySettings.body = mydreamshootsShippingPolicyBody;
+    }
   }
   if (canonicalPath === "/terms" && next.sections?.policy_1?.settings?.body) {
     next.sections.policy_1.settings.body = next.sections.policy_1.settings.body.replace(
@@ -221,7 +223,7 @@ function updatePageRecord(record, contentKey) {
   const canonicalPath = canonicalBySlug.get(record.slug);
   if (!canonicalPath) return record;
   const next = clone(record);
-  next.title = canonicalPath === "/children-privacy" ? "Children's Privacy Notice" : canonicalPath === "/content" ? "Content policy" : canonicalPath === "/refunds" ? "Refund policy" : canonicalPath === "/shipping" ? "Shipping and Digital Delivery Policy" : canonicalPath === "/terms" ? "Terms of Service" : canonicalPath === "/cookies" ? "Cookie policy" : "Privacy policy";
+  next.title = canonicalPath === "/children-privacy" ? "Children's Privacy Notice" : canonicalPath === "/content" ? "Content policy" : canonicalPath === "/refunds" ? "Refund policy" : canonicalPath === "/shipping" ? "Digital Delivery Policy" : canonicalPath === "/terms" ? "Terms of Service" : canonicalPath === "/cookies" ? "Cookie policy" : "Privacy policy";
   next[contentKey] = updatePolicyJson(next[contentKey], canonicalPath);
   return next;
 }

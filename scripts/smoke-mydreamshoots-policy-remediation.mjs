@@ -94,7 +94,13 @@ try {
   assert.equal(children.draftJson.sections.policy_1.settings.body.includes("A parent, legal guardian, or other authorized adult must manage any child-related request"), true);
   assert.equal(cookies.draftJson.sections.header_1.settings.body.includes("AI photo and video service"), true);
   assert.equal(content.draftJson.seo.title, "Content Policy for myDreamshoots Uploads and AI Photo and Video Outputs");
-  assert.equal(shipping.draftJson.sections.policy_1.settings.body.includes("digital credits for AI photo and video generation, generated image packages, video outputs"), true);
+  assert.equal(shipping.title, "Digital Delivery Policy");
+  assert.equal(shipping.draftJson.sections.policy_1.settings.title, "Digital Delivery Policy");
+  assert.equal(shipping.draftJson.sections.policy_1.settings.lastUpdated, "2026-09-05");
+  assert.equal(shipping.draftJson.sections.policy_1.settings.body.includes("<h3>No physical products</h3>"), true);
+  assert.equal(shipping.draftJson.sections.policy_1.settings.body.includes("Credits are added to the customer account after payment is confirmed."), true);
+  assert.equal(shipping.draftJson.sections.policy_1.settings.body.includes("<h3>Delivery timing</h3>"), true);
+  assert.equal(shipping.draftJson.sections.policy_1.settings.body.includes("No tracking, customs, or shipping charges"), true);
   console.log(JSON.stringify({ ok: true, siteId: SITE_ID, checkedCanonicalPages: canonicalPaths.length, checkedAliases: targetThemePages.filter((page) => aliases.includes(page.slug)).length, checkedSiteThemes: siteThemes.length }, null, 2));
 } finally {
   await prisma.$disconnect();
