@@ -2704,11 +2704,25 @@ function shouldRenderStorefrontTrustedLogoImage(site: Site, src: string): boolea
   return Boolean(filename) && !aidreamcapesMissingTrustedLogoFiles.has(filename);
 }
 
+// These approved homepage review assets are dated replacements. They are
+// published at their exact paths and do not have the legacy gallery pair
+// derivative, so appending the gallery cache variant would turn a valid asset
+// URL into a 404.
+const mydreamshootsGalleryPairExcludedPaths = new Set([
+  "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03-20260830.webp",
+  "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02-20260830.webp"
+]);
+
 function mediaAssetUrl(site: Site, value: string): string {
   const resolved = siteScopedFallbackImage(site, cleanStorefrontImageSrc(resolveMediaAssetUrl(site, value)));
   const preferred = isAidreamcapesSite(site) ? preferAidreamcapesPhotoAsset(resolved) : preferDreamshootOptimizedImage(resolved);
   const publicUrl = withStorefrontPublicWatermarkCacheVersion(spanishXbyPublicAssetUrl(site, preferred));
-  if (isMyDreamShootsProfileSite(site) && /\/assets\/dreamshoot\/generated\/pack-galleries\//i.test(publicUrl)) {
+  const publicPath = publicUrl.split("?")[0]?.split("#")[0] ?? publicUrl;
+  if (
+    isMyDreamShootsProfileSite(site) &&
+    /\/assets\/dreamshoot\/generated\/pack-galleries\//i.test(publicPath) &&
+    !mydreamshootsGalleryPairExcludedPaths.has(publicPath)
+  ) {
     const separator = publicUrl.includes("?") ? "&" : "?";
     return `${publicUrl}${separator}pair=20260830colorfix1`;
   }

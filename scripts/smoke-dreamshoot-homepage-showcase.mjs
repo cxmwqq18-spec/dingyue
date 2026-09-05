@@ -73,6 +73,24 @@ async function main() {
   assert.ok(proofHtml.includes("20260830-homepage-review-replacements"), "production review section must render the approved replacement media set");
   assert.ok(proofHtml.includes("world-cup-fan-photos-03-20260830.webp"), "production review section must render the approved world cup media");
   assert.ok(proofHtml.includes("gala-photos-02-20260830.webp"), "production review section must render the approved gala media");
+  const renderedProofMedia = [...proofHtml.matchAll(/(?:src|srcset|data-dreamshoot-preview-src|data-dreamshoot-preview-poster)="([^"]+)"/g)]
+    .flatMap(([, value]) => value.split(",").map((candidate) => candidate.trim().split(/\s+/)[0]))
+    .filter((value) => value.startsWith("/assets/") || /^https?:\/\//i.test(value));
+  for (const renderedPath of [...new Set(renderedProofMedia)]) {
+    const renderedUrl = /^https?:\/\//i.test(renderedPath) ? renderedPath : `${origin}${renderedPath}`;
+    const renderedResponse = await fetch(renderedUrl, { method: "HEAD" });
+    assert.equal(renderedResponse.status, 200, `homepage proof must serve the exact rendered media URL: ${renderedPath}`);
+  }
+  for (const datedReviewPath of [
+    "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-03-20260830.webp",
+    "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-02-20260830.webp"
+  ]) {
+    assert.equal(
+      renderedProofMedia.some((value) => value.startsWith(`${datedReviewPath}?pair=`)),
+      false,
+      `dated review media must not use a missing gallery pair variant: ${datedReviewPath}`
+    );
+  }
   for (const stalePath of [
     "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-02.webp",
     "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.webp",
