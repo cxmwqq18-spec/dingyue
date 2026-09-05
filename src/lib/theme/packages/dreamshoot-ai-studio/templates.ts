@@ -57,6 +57,13 @@ function seoForPublicPage(path: string, site?: DreamshootPublicSeoSiteSeed): The
   };
 }
 
+function seoForMydreamshootsAboutPage(site?: DreamshootPublicSeoSiteSeed): ThemePageJson["seo"] {
+  const seo = seoForPublicPage("/about-us", site);
+  if (!seo || (site && site.id !== "site_dreamshoot" && site.primaryDomain !== "www.mydreamshoots.com")) return seo;
+  const { keywords: _keywords, ...aboutSeo } = seo;
+  return aboutSeo;
+}
+
 function isAidreamcapesTemplateSite(site?: DreamshootPublicSeoSiteSeed): boolean {
   return Boolean(site && isAidreamcapesCapabilitySite(site));
 }
@@ -897,6 +904,26 @@ function mydreamshootsAboutTrustSection(): SectionInstance {
     ...base,
     settings: { ...base.settings },
     blocks: (base.blocks ?? []).map((item) => {
+      if (item.id === "trust_no_training") {
+        return {
+          ...item,
+          settings: {
+            ...item.settings,
+            value: "No AI training on your photos",
+            label: "Your inputs are never used to train models."
+          }
+        };
+      }
+      if (item.id === "trust_auto_delete") {
+        return {
+          ...item,
+          settings: {
+            ...item.settings,
+            value: "30-day auto-delete",
+            label: "Input photos automatically delete 30 days after generation."
+          }
+        };
+      }
       if (item.id === "trust_refund") {
         return {
           ...item,
@@ -2806,8 +2833,8 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         imageUrl: assets.flowPrivateAlbumWorkspace,
         primaryCta: "View pricing",
         primaryHref: "/pricing",
-        secondaryCta: "FAQ",
-        secondaryHref: "/faq"
+        secondaryCta: "Help center",
+        secondaryHref: "/help"
       }, [
         block("about_value_transparency", "rich_text_card", { meta: "01", title: "Clear credit use", description: "Credit reservations, successful generations, returned credits, and billing events are visible in the customer account." }),
         block("about_value_support", "rich_text_card", { meta: "02", title: "Supportable workflow", description: mydreamshootsAboutTarget ? "Customers can contact support for account, billing, privacy, upload, image, video, or gallery questions." : "Customers can contact support for account, billing, privacy, upload, or album questions." }),
@@ -2852,7 +2879,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       conversion_1: mydreamshootsAboutTarget ? mydreamshootsAboutConversionSection() : homeSections.conversion_1
     },
     1,
-    seoForPublicPage("/about-us", site)
+    seoForMydreamshootsAboutPage(site)
   ),
   "contact-us": page(
     "content",
