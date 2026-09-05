@@ -62,13 +62,24 @@ async function main() {
   const response = await fetch(`${origin}/`, { headers: { accept: "text/html,*/*" } });
   assert.equal(response.status, 200, "production homepage must return 200");
   const html = await response.text();
+  const proofMarker = 'id="xfcart-section-proof_1"';
+  const proofStart = html.indexOf(proofMarker);
+  const proofEnd = proofStart >= 0 ? html.indexOf('id="xfcart-section-', proofStart + proofMarker.length) : -1;
+  const proofHtml = proofStart >= 0 ? html.slice(proofStart, proofEnd > proofStart ? proofEnd : undefined) : "";
   for (const mediaPath of [...new Set(proofMedia)]) {
     const renderedPath = mediaPath.endsWith(".png") ? mediaPath.replace(/\.png$/, ".webp") : mediaPath;
-    assert.ok(html.includes(mediaPath) || html.includes(renderedPath), `production homepage must render synced proof media: ${mediaPath}`);
+    assert.ok(proofHtml.includes(mediaPath) || proofHtml.includes(renderedPath), `production homepage must render synced proof media in the review section: ${mediaPath}`);
   }
-  assert.ok(html.includes("20260830-homepage-review-replacements"), "production homepage must render the approved review media set");
-  assert.ok(html.includes("world-cup-fan-photos-03-20260830.webp"), "production homepage must render the approved world cup review media");
-  assert.ok(html.includes("gala-photos-02-20260830.webp"), "production homepage must render the approved gala review media");
+  assert.ok(proofHtml.includes("20260830-homepage-review-replacements"), "production review section must render the approved replacement media set");
+  assert.ok(proofHtml.includes("world-cup-fan-photos-03-20260830.webp"), "production review section must render the approved world cup media");
+  assert.ok(proofHtml.includes("gala-photos-02-20260830.webp"), "production review section must render the approved gala media");
+  for (const stalePath of [
+    "/assets/dreamshoot/generated/pack-galleries/christmas-couple/christmas-couple-02.webp",
+    "/assets/dreamshoot/generated/20260622-homepage-unique/flow-private-album-workspace.webp",
+    "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-01.webp",
+    "/assets/dreamshoot/generated/pack-galleries/creator-portraits/creator-portraits-02.webp",
+    "/assets/dreamshoot/generated/pack-galleries/gala-photos/gala-photos-01.webp"
+  ]) assert.equal(proofHtml.includes(stalePath), false, `production review section must not render fallback media: ${stalePath}`);
   assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, "homepage must contain exactly one H1");
   assert.ok(!/<h2\b[^>]*>[^<]*Creative workflow examples built with myDreamshoots/i.test(html), "workflow examples must not render as an H2");
   assert.ok(!/<h2\b[^>]*>\s*(?:Soccer|Portrait Photo|Christmas Photo)\s*<\/h2>/i.test(html), "photo package cards must not render as H2");
