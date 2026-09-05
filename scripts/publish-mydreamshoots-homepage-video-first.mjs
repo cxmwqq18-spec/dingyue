@@ -146,6 +146,7 @@ function updateHomepage(page, homePageId) {
   if (next.sections.tutorial_video_1) {
     next.sections.tutorial_video_1.settings = {
       ...(next.sections.tutorial_video_1.settings ?? {}),
+      showEyebrow: false,
       title: "How It Works",
       subtitle: HOW_IT_WORKS_SUBTITLE,
       supportingCopy: HOW_IT_WORKS_SUPPORTING_COPY
