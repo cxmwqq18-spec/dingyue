@@ -62,7 +62,12 @@ try {
   assertClean(settings, "ThemeSettings");
   for (const theme of siteThemes) assertClean(theme, `SiteTheme ${theme.id}`);
 
-  const page = (slug) => themePages.find((row) => row.slug === slug);
+  // LivePage.contentJson is the public source of truth. ThemePage rows are
+  // retained only for editor compatibility and are checked above for drift.
+  const page = (slug) => {
+    const live = livePages.find((row) => row.slug === slug);
+    return live ? { ...live, draftJson: live.contentJson, publishedJson: live.contentJson } : undefined;
+  };
   const privacy = page("/privacy");
   const terms = page("/terms");
   const refunds = page("/refunds");

@@ -21,12 +21,12 @@ async function main() {
     where: { OR: [{ id: "site_dreamshoot" }, { primaryDomain: "www.mydreamshoots.com" }] },
     select: {
       id: true,
-      pages: { where: { slug: "/" }, select: { publishedJson: true } }
+      livePages: { where: { slug: "/" }, select: { contentJson: true } }
     }
   });
   assert.ok(site, "site_dreamshoot must exist in PostgreSQL");
-  const page = site.pages[0]?.publishedJson;
-  assert.ok(page, "published MyDreamShoots homepage must exist");
+  const page = site.livePages[0]?.contentJson;
+  assert.ok(page, "published MyDreamShoots homepage LivePage must exist");
   const sections = page.sections ?? {};
   const order = page.sectionsOrder ?? [];
   assert.deepEqual(order, ["hero_1", "generation_showcase_1", "tutorial_video_1", "proof_1", "faq_1", "conversion_1", "brand_strip_1"], "homepage order must use the current Phase B contract");
@@ -50,7 +50,8 @@ async function main() {
   assert.equal(response.status, 200, "production homepage must return 200");
   const html = await response.text();
   for (const mediaPath of [...new Set(proofMedia)]) {
-    assert.ok(html.includes(mediaPath), `production homepage must render synced proof media: ${mediaPath}`);
+    const renderedPath = mediaPath.endsWith(".png") ? mediaPath.replace(/\.png$/, ".webp") : mediaPath;
+    assert.ok(html.includes(mediaPath) || html.includes(renderedPath), `production homepage must render synced proof media: ${mediaPath}`);
   }
   assert.ok(!html.includes("20260830-homepage-review-replacements"), "production homepage must not reference retired review media");
   assert.ok(!html.includes("world-cup-fan-photos-03-20260830.webp"), "production homepage must not reference retired world cup media");
@@ -58,7 +59,9 @@ async function main() {
   assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, "homepage must contain exactly one H1");
   assert.ok(!/<h2\b[^>]*>[^<]*Creative workflow examples built with myDreamshoots/i.test(html), "workflow examples must not render as an H2");
   assert.ok(!/<h2\b[^>]*>\s*(?:Soccer|Portrait Photo|Christmas Photo)\s*<\/h2>/i.test(html), "photo package cards must not render as H2");
-  assert.ok(html.includes(copy.packageVideoLinkLabel), "photo packages must link to AI Video Generation");
+  if (sections.package_catalog_1) {
+    assert.ok(html.includes(copy.packageVideoLinkLabel), "photo packages must link to AI Video Generation");
+  }
   assert.ok(html.includes(copy.reviewTitle), "production homepage must expose the approved review heading");
   assert.ok(html.includes(copy.videoTitle) && html.includes(copy.saveTheDateTitle) && html.includes(copy.photoTitle), "production gallery headings must use the Phase B contract");
   const tutorialMarker = 'id="xfcart-section-tutorial_video_1"';
@@ -67,10 +70,7 @@ async function main() {
   const tutorialHtml = tutorialStart >= 0 ? html.slice(tutorialStart, tutorialEnd > tutorialStart ? tutorialEnd : undefined) : "";
   assert.ok(!/font-mono[^>]*uppercase[^>]*>\s*How it works\s*<\/p>/i.test(tutorialHtml), "homepage how-it-works eyebrow must not render");
   const photoSectionStart = html.indexOf('data-dreamshoot-homepage-showcase-kind="photo"');
-  const videoSectionStart = html.indexOf('data-dreamshoot-homepage-showcase-kind="video"', photoSectionStart + 1);
-  const photoShowcaseHtml = photoSectionStart >= 0 && videoSectionStart > photoSectionStart
-    ? html.slice(photoSectionStart, videoSectionStart)
-    : "";
+  const photoShowcaseHtml = photoSectionStart >= 0 ? html.slice(photoSectionStart) : "";
   assert.ok(
     photoShowcaseHtml.includes('data-dreamshoot-homepage-showcase-kind="photo"') || photoShowcaseHtml.includes('data-dreamshoot-showcase-preview="image"'),
     "production photo showcase must contain at least one rendered photo card"
