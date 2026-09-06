@@ -439,7 +439,7 @@ export function runThemePublishPreflight({
     "/cookie-policy", "/policies/cookies",
     "/refund-policy", "/policies/refund", "/policies/refunds",
     "/content-policy", "/policies/content",
-    "/shipping-policy", "/delivery-policy", "/policies/shipping",
+    "/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy",
     "/children-privacy-policy", "/childrens-privacy", "/policies/children-privacy",
     "/state-privacy-rights", "/california-privacy", "/ccpa", "/policies/state-privacy"
   ]);

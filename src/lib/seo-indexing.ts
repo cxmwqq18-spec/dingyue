@@ -43,7 +43,7 @@ function cleanText(value: unknown, fallback = ""): string {
 const BLOCKED_PAGE_TYPES = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
 const BLOCKED_PATH_PREFIXES = ["/404", "/account", "/admin", "/album", "/api", "/app", "/cart", "/dashboard", "/job", "/login", "/platform", "/search", "/site"];
 const NON_PAGE_PATH_PREFIXES = ["/_next", "/assets", "/fonts", "/images", "/media", "/robots.txt", "/sitemap.xml", "/videos"];
-const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy", "/engagement-photo", "/ai-image-generation/profile-cards", "/ai-image-generation/motion-generator", "/ai-video-generation/wedding-invitation", "/holidays-events/wedding-invitation"]);
+const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy", "/engagement-photo", "/ai-image-generation/profile-cards", "/ai-image-generation/motion-generator", "/ai-video-generation/wedding-invitation", "/holidays-events/wedding-invitation"]);
 const MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS = new Set<string>(MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS.map(({ aliasPath }) => aliasPath));
 const MYDREAMSHOOTS_RETIRED_PUBLIC_PATH_SET = new Set<string>(MYDREAMSHOOTS_RETIRED_PUBLIC_PATHS);
 const NON_INDEXABLE_TOOL_PATHS = new Set(["/tools/image-studio", "/tools/ai-image-studio", "/tools/image-generator", "/tools/image_generator", "/tools/travel-portraits"]);
@@ -63,7 +63,7 @@ const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
 ];
 const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_SLUGS = new Set<string>(MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS);
 const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/creators-circle", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date"];
-const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"];
+const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/digital-delivery", "/children-privacy", "/state-privacy"];
 const CANONICAL_PUBLIC_PATHS = new Map([
   ["/about", "/about-us"],
   ["/contact", "/contact-us"],
@@ -85,9 +85,12 @@ const CANONICAL_PUBLIC_PATHS = new Map([
   ["/policies/refunds", "/refunds"],
   ["/content-policy", "/content"],
   ["/policies/content", "/content"],
+  ["/shipping", "/shipping"],
   ["/shipping-policy", "/shipping"],
   ["/delivery-policy", "/shipping"],
   ["/policies/shipping", "/shipping"],
+  ["/policies/delivery", "/shipping"],
+  ["/policies/delivery-policy", "/shipping"],
   ["/children-privacy-policy", "/children-privacy"],
   ["/childrens-privacy", "/children-privacy"],
   ["/policies/children-privacy", "/children-privacy"],
@@ -687,6 +690,9 @@ function canonicalBlogPathForSite(site: Site, path: string): string {
 
 function canonicalDirectoryPathForSite(site: Site, path: string): string {
   const normalized = normalizePath(path);
+  if (isDreamshootSite(site) && ["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"].includes(normalized)) {
+    return "/digital-delivery";
+  }
   if (isDreamshootSite(site)) {
     const canonicalSaveDate = canonicalSaveTheDatePath(normalized);
     if (canonicalSaveDate !== normalized) return canonicalSaveDate;
@@ -873,6 +879,7 @@ function findIndexableSites(state: PlatformState): Site[] {
 
 function isIndexablePage(page: ThemePage, site?: Site): boolean {
   const path = canonicalPublicPath(normalizePath(page.slug));
+  if (site && isDreamshootSite(site) && path === "/shipping") return false;
   if (LEGACY_OR_DUPLICATE_PATHS.has(path)) return false;
   if (site && isDreamshootSite(site) && MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(path)) return false;
   if (NON_INDEXABLE_TOOL_PATHS.has(path)) return false;

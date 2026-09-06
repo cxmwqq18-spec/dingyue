@@ -223,6 +223,10 @@ const nextConfig = {
         headers: publicStorefrontHeaders
       },
       {
+        source: "/digital-delivery",
+        headers: publicStorefrontHeaders
+      },
+      {
         source: "/policies/:path*",
         headers: publicStorefrontHeaders
       },
@@ -392,6 +396,10 @@ const nextConfig = {
       },
       {
         source: "/site/:siteSlug/content",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/site/:siteSlug/digital-delivery",
         headers: publicStorefrontHeaders
       },
       {

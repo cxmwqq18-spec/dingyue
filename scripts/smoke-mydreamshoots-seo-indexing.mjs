@@ -626,7 +626,7 @@ assert(
   "public SEO critical pricing, review, and trust sections must be server-rendered instead of lazy placeholders"
 );
 
-for (const pathName of ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping"]) {
+for (const pathName of ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/digital-delivery"]) {
   assert(seoIndexing.includes(`"${pathName}"`), "required policy paths must use canonical short paths", { pathName });
 }
 

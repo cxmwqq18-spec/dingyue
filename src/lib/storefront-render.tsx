@@ -2650,6 +2650,7 @@ function renderThemePage({
     "/content",
     "/cookies",
     "/creators-circle",
+    "/digital-delivery",
     "/privacy",
     "/refunds",
     "/state-privacy",

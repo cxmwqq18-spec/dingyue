@@ -251,7 +251,10 @@ function renderedMarkup(html) {
 const homepage = await fetchHtml("/");
 const sitePathHomepage = await fetchHtml("/site/mydreamshoots/");
 const pricing = await fetchHtml("/pricing");
-const policyPages = Object.fromEntries(await Promise.all(["/content", "/privacy", "/refunds", "/shipping", "/terms"].map(async (pathname) => [pathname, await fetchHtml(pathname)])));
+const policyPages = Object.fromEntries(await Promise.all(["/content", "/privacy", "/refunds", "/digital-delivery", "/terms"].map(async (pathname) => [pathname, await fetchHtml(pathname)])));
+const legacyShipping = await fetchStatusNoRedirect("/shipping");
+assert.equal(legacyShipping.status, 301, "/shipping must permanently redirect to /digital-delivery");
+assert.ok(legacyShipping.headers.location?.endsWith("/digital-delivery"), "/shipping redirect must target /digital-delivery");
 const aiImageDirectory = await fetchHtml("/ai-image-generation");
 const aiVideoDirectory = await fetchHtml("/ai-video-generation");
 const sitemap = (await fetchText("/sitemap.xml", "application/xml")).body;
@@ -549,6 +552,11 @@ for (const [pageName, html] of Object.entries(publicHtmlPages)) {
 for (const [pathname, html] of Object.entries(policyPages)) {
   assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, `${pathname} must render exactly one H1`);
 }
+assert.equal(pageTitle(policyPages["/digital-delivery"]), "Digital Delivery Policy for AI Photos and Videos | myDreamshoots");
+assert.equal(metaDescription(policyPages["/digital-delivery"]), "Learn how myDreamshoots delivers digital credits, AI-generated photos and videos, downloads, and private gallery access. No physical products are shipped.");
+assert.equal(canonicalHref(policyPages["/digital-delivery"]), "https://www.mydreamshoots.com/digital-delivery");
+assert.match(visibleText(policyPages["/digital-delivery"]), /myDreamshoots provides digital AI photo and video services\./);
+assert.match(visibleText(policyPages["/digital-delivery"]), /No physical products/);
 for (const [pageName, html] of Object.entries(publicHtmlPages)) {
   for (const internalTerm of ["search intent", "content structure", "SEO strategy", "keyword layout", "review required", "TODO", "FIXME"]) {
     assert.equal(html.toLowerCase().includes(internalTerm.toLowerCase()), false, `${pageName} must not expose internal term: ${internalTerm}`);

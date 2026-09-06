@@ -20,7 +20,7 @@ const mydreamshootsRequiredPolicyPaths = [
   "/cookies",
   "/privacy",
   "/refunds",
-  "/shipping",
+  "/digital-delivery",
   "/state-privacy",
   "/terms"
 ];
@@ -42,7 +42,7 @@ function normalizePath(value, fallback = "/") {
 
 function pathFamily(pathname) {
   if (pathname === "/" || pathname === "/workflow" || pathname === "/pricing" || pathname === "/faq" || pathname === "/about-us" || pathname === "/contact-us") return "base";
-  if (["/privacy", "/terms", "/cookies", "/refunds", "/content", "/shipping", "/children-privacy", "/state-privacy"].includes(pathname)) return "policy";
+  if (["/privacy", "/terms", "/cookies", "/refunds", "/content", "/digital-delivery", "/children-privacy", "/state-privacy"].includes(pathname)) return "policy";
   if (pathname === "/collections" || pathname.startsWith("/collections/")) return "collections";
   if (pathname === "/tools" || pathname.startsWith("/tools/")) return "tools";
   if (pathname === "/ai-image-generation" || pathname.startsWith("/ai-image-generation/")) return "image-themes";

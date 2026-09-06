@@ -415,6 +415,9 @@ export default async function SiteCatchAllPage({
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
+  if (isPrimaryMydreamshootsSlug(publicSlug) && ["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"].includes(slug)) {
+    permanentRedirect(routePath("/digital-delivery"));
+  }
   if (isPrimaryMydreamshootsSlug(publicSlug) && isMydreamshootsRetiredPublicPath(slug)) notFound();
   const mydreamLegacyTarget = isPrimaryMydreamshootsSlug(publicSlug) ? mydreamshootsLegacyPublicPathTarget(slug) : undefined;
   if (isPrimaryMydreamshootsSlug(publicSlug) && (slug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || slug === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) notFound();
@@ -557,6 +560,6 @@ export default async function SiteCatchAllPage({
     : pageSlug;
   if (!isCollectionRequest && !canRenderPublishedPublicPath(snapshot, resolvedPageSlug, slug, publicSite)) notFound();
   if (!isCollectionRequest && !findPage(publicSite, resolvedPageSlug) && resolvePublishedRouteDisposition(snapshot, resolvedPageSlug).kind !== "render") notFound();
-  const publicPath = collectionRoute?.canonicalPath ?? publicContentPageSlug(slug);
+  const publicPath = collectionRoute?.canonicalPath ?? (isPrimaryMydreamshootsSlug(publicSlug) && slug === "/digital-delivery" ? "/digital-delivery" : publicContentPageSlug(slug));
   return renderStorefrontPage({ site: publicSite, slug: resolvedPageSlug, publicPath: canonicalSaveTheDatePath(publicPath), query: storefrontQuery, routeMode, state, deferCustomerRuntime: resolvedPageSlug !== "/cart" });
 }

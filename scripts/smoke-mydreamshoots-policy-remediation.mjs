@@ -4,11 +4,11 @@ import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 
 const SITE_ID = "site_dreamshoot";
-const canonicalPaths = ["/privacy", "/terms", "/refunds", "/children-privacy", "/cookies", "/content", "/shipping"];
+const canonicalPaths = ["/privacy", "/terms", "/refunds", "/children-privacy", "/cookies", "/content", "/digital-delivery"];
 const aliases = [
   "/privacy-policy", "/policies/privacy", "/terms-of-service", "/policies/terms", "/refund-policy", "/policies/refund", "/policies/refunds",
   "/children-privacy-policy", "/childrens-privacy", "/policies/children-privacy", "/cookie-policy", "/policies/cookies", "/content-policy", "/policies/content",
-  "/shipping-policy", "/delivery-policy", "/policies/shipping"
+  "/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"
 ];
 const forbidden = [
   "AES-256 at rest",
@@ -74,7 +74,7 @@ try {
   const children = page("/children-privacy");
   const cookies = page("/cookies");
   const content = page("/content");
-  const shipping = page("/shipping");
+  const shipping = page("/digital-delivery");
   for (const [label, row] of [["privacy", privacy], ["terms", terms], ["refunds", refunds], ["children", children], ["cookies", cookies], ["content", content], ["shipping", shipping]]) {
     assert(row?.draftJson?.seo?.canonicalPath, `${label} canonical path must be present`);
     assert.equal(row.draftJson.seo.index, true, `${label} must remain indexable`);
@@ -101,6 +101,10 @@ try {
   assert.equal(shipping.draftJson.sections.policy_1.settings.body.includes("Credits are added to the customer account after payment is confirmed."), true);
   assert.equal(shipping.draftJson.sections.policy_1.settings.body.includes("<h3>Delivery timing</h3>"), true);
   assert.equal(shipping.draftJson.sections.policy_1.settings.body.includes("No tracking, customs, or shipping charges"), true);
+  assert.equal(shipping.draftJson.seo.title, "Digital Delivery Policy for AI Photos and Videos | myDreamshoots");
+  assert.equal(shipping.draftJson.seo.description, "Learn how myDreamshoots delivers digital credits, AI-generated photos and videos, downloads, and private gallery access. No physical products are shipped.");
+  assert.equal(shipping.draftJson.seo.canonicalPath, "/digital-delivery");
+  assert.equal(shipping.draftJson.seo.canonical, "https://www.mydreamshoots.com/digital-delivery");
   console.log(JSON.stringify({ ok: true, siteId: SITE_ID, checkedCanonicalPages: canonicalPaths.length, checkedAliases: targetThemePages.filter((page) => aliases.includes(page.slug)).length, checkedSiteThemes: siteThemes.length }, null, 2));
 } finally {
   await prisma.$disconnect();

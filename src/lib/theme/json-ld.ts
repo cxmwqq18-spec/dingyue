@@ -168,6 +168,7 @@ function schemaPathLabel(site: Site, part: string): string {
     refunds: "Reembolsos",
     content: "Contenido",
     shipping: "Entrega",
+    "digital-delivery": "Entrega digital",
     help: "Ayuda",
     "about-us": "Sobre nosotros",
     "contact-us": "Contacto"

@@ -19,7 +19,7 @@ const expectedLinks = [
   ["Contact us", "/contact-us"],
   ["Creators Circle", "/creators-circle"],
   ["Refund Policy", "/refunds"],
-  ["Shipping", "/shipping"],
+  ["Digital Delivery Policy", "/digital-delivery"],
   ["Privacy Policy", "/privacy"],
   ["Content policy", "/content"],
   ["Terms of Service", "/terms"],

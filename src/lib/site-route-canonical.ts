@@ -18,7 +18,7 @@ const POLICY_PUBLIC_TO_INTERNAL = new Map<string, string>([
   ["/cookies", "/policies/cookies"], ["/cookie-policy", "/policies/cookies"], ["/policies/cookies", "/policies/cookies"], ["/policies/cookie-policy", "/policies/cookies"],
   ["/refunds", "/policies/refunds"], ["/refund-policy", "/policies/refunds"], ["/policies/refunds", "/policies/refunds"], ["/policies/refund", "/policies/refunds"],
   ["/content", "/policies/content"], ["/content-policy", "/policies/content"], ["/policies/content", "/policies/content"],
-  ["/shipping", "/policies/shipping"], ["/shipping-policy", "/policies/shipping"], ["/delivery-policy", "/policies/shipping"], ["/policies/shipping", "/policies/shipping"], ["/policies/delivery", "/policies/shipping"], ["/policies/delivery-policy", "/policies/shipping"],
+  ["/digital-delivery", "/policies/shipping"], ["/shipping", "/policies/shipping"], ["/shipping-policy", "/policies/shipping"], ["/delivery-policy", "/policies/shipping"], ["/policies/shipping", "/policies/shipping"], ["/policies/delivery", "/policies/shipping"], ["/policies/delivery-policy", "/policies/shipping"],
   ["/children-privacy", "/policies/children-privacy"], ["/children-privacy-policy", "/policies/children-privacy"], ["/childrens-privacy", "/policies/children-privacy"], ["/policies/children-privacy", "/policies/children-privacy"], ["/policies/children", "/policies/children-privacy"], ["/policies/children-privacy-policy", "/policies/children-privacy"], ["/policies/childrens-privacy", "/policies/children-privacy"],
   ["/state-privacy", "/policies/state-privacy"], ["/state-privacy-rights", "/policies/state-privacy"], ["/california-privacy", "/policies/state-privacy"], ["/ccpa", "/policies/state-privacy"], ["/policies/state-privacy", "/policies/state-privacy"], ["/policies/state-privacy-rights", "/policies/state-privacy"], ["/policies/california-privacy", "/policies/state-privacy"], ["/policies/ccpa", "/policies/state-privacy"]
 ]);
@@ -29,7 +29,7 @@ const POLICY_INTERNAL_TO_PUBLIC = new Map<string, string>([
   ["/policies/cookies", "/cookies"], ["/policies/cookie-policy", "/cookies"], ["/cookies", "/cookies"], ["/cookie-policy", "/cookies"],
   ["/policies/refunds", "/refunds"], ["/policies/refund", "/refunds"], ["/refunds", "/refunds"], ["/refund-policy", "/refunds"],
   ["/policies/content", "/content"], ["/content", "/content"], ["/content-policy", "/content"],
-  ["/policies/shipping", "/shipping"], ["/policies/delivery", "/shipping"], ["/policies/delivery-policy", "/shipping"], ["/shipping", "/shipping"], ["/shipping-policy", "/shipping"], ["/delivery-policy", "/shipping"],
+  ["/policies/shipping", "/shipping"], ["/policies/delivery", "/shipping"], ["/policies/delivery-policy", "/shipping"], ["/digital-delivery", "/digital-delivery"], ["/shipping", "/shipping"], ["/shipping-policy", "/shipping"], ["/delivery-policy", "/shipping"],
   ["/policies/children-privacy", "/children-privacy"], ["/policies/children", "/children-privacy"], ["/policies/children-privacy-policy", "/children-privacy"], ["/policies/childrens-privacy", "/children-privacy"], ["/children-privacy", "/children-privacy"], ["/children-privacy-policy", "/children-privacy"], ["/childrens-privacy", "/children-privacy"],
   ["/policies/state-privacy", "/state-privacy"], ["/policies/state-privacy-rights", "/state-privacy"], ["/policies/california-privacy", "/state-privacy"], ["/policies/ccpa", "/state-privacy"], ["/state-privacy", "/state-privacy"], ["/state-privacy-rights", "/state-privacy"], ["/california-privacy", "/state-privacy"], ["/ccpa", "/state-privacy"]
 ]);
@@ -129,6 +129,12 @@ const LEGACY_MYDREAMSHOOTS_VIDEO_PATH_REDIRECTS: Record<string, string> = {
 // taxonomy. Keep them as inbound aliases, but never emit them in new links.
 const MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   ...Object.fromEntries(MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS.map(({ aliasPath, targetPath }) => [aliasPath, targetPath])),
+  "/shipping": "/digital-delivery",
+  "/shipping-policy": "/digital-delivery",
+  "/delivery-policy": "/digital-delivery",
+  "/policies/shipping": "/digital-delivery",
+  "/policies/delivery": "/digital-delivery",
+  "/policies/delivery-policy": "/digital-delivery",
   "/ai-image-generation/profile-cards": "/ai-image-generation/avatar",
   "/ai-image-generation/social-cards": "/ai-image-generation"
 };

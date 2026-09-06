@@ -3,6 +3,7 @@ export const GUARDED_STOREFRONT_FOOTER_PATHS = [
   "/content",
   "/cookies",
   "/creators-circle",
+  "/digital-delivery",
   "/privacy",
   "/refunds",
   "/state-privacy",

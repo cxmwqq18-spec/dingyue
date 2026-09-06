@@ -21,7 +21,7 @@ if (target === "production" && apply && !productionConfirmed) {
   throw new Error("Production remediation requires --confirm-production --confirm=mydreamshoots-policy-remediation.");
 }
 
-const canonicalPaths = ["/privacy", "/terms", "/refunds", "/children-privacy", "/cookies", "/content", "/shipping"];
+const canonicalPaths = ["/privacy", "/terms", "/refunds", "/children-privacy", "/cookies", "/content", "/digital-delivery"];
 const canonicalBySlug = new Map([
   ["/privacy", "/privacy"], ["/privacy-policy", "/privacy"], ["/policies/privacy", "/privacy"],
   ["/terms", "/terms"], ["/terms-of-service", "/terms"], ["/policies/terms", "/terms"],
@@ -29,7 +29,7 @@ const canonicalBySlug = new Map([
   ["/children-privacy", "/children-privacy"], ["/children-privacy-policy", "/children-privacy"], ["/childrens-privacy", "/children-privacy"], ["/policies/children-privacy", "/children-privacy"],
   ["/cookies", "/cookies"], ["/cookie-policy", "/cookies"], ["/policies/cookies", "/cookies"],
   ["/content", "/content"], ["/content-policy", "/content"], ["/policies/content", "/content"],
-  ["/shipping", "/shipping"], ["/shipping-policy", "/shipping"], ["/delivery-policy", "/shipping"], ["/policies/shipping", "/shipping"]
+  ["/digital-delivery", "/digital-delivery"], ["/shipping", "/digital-delivery"], ["/shipping-policy", "/digital-delivery"], ["/delivery-policy", "/digital-delivery"], ["/policies/shipping", "/digital-delivery"], ["/policies/delivery", "/digital-delivery"], ["/policies/delivery-policy", "/digital-delivery"]
 ]);
 
 const policySeo = {
@@ -57,15 +57,15 @@ const policySeo = {
     title: "Content Policy for myDreamshoots Uploads and AI Photo and Video Outputs",
     description: "Read the myDreamshoots content policy for permitted source photos, upload rights, identity consent, moderation review, private album use, and AI photo and video outputs."
   },
-  "/shipping": {
-    title: "Digital Delivery for AI Photo and Video Albums and Downloads",
-    description: "Review how myDreamshoots delivers credits for AI photo and video generation, generated image packages, video outputs, downloads, and private galleries digitally without physical shipping."
+  "/digital-delivery": {
+    title: "Digital Delivery Policy for AI Photos and Videos | myDreamshoots",
+    description: "Learn how myDreamshoots delivers digital credits, AI-generated photos and videos, downloads, and private gallery access. No physical products are shipped."
   }
 };
 
 const privacyFooterNotice = "Separate Children's Privacy and State Privacy notices explain child-related requests and regional privacy rights that may apply to your use of the service.";
 const termsUploadRule = "You may upload only photos, reference images, prompts, or other materials that you own or have permission to use. Do not upload photos of minors or non-consenting people unless you have the legal right and consent required for the requested use. Do not upload photos of public figures, protected marks, stolen images, or other materials without the rights or permissions required for the requested use, or that violate law, platform rules, or third-party rights.";
-const mydreamshootsShippingPolicyBody = "<h3>No physical products</h3><p>myDreamshoots does not ship physical products, printed photos, USB drives, or mailed merchandise from this storefront. All purchases and outputs described in this policy are digital.</p><h3>Credits and digital delivery</h3><p>Credits are added to the customer account after payment is confirmed. Generated images and videos become available in the signed-in customer workspace or private gallery when the relevant job is complete. Downloads are provided through the applicable workspace or gallery.</p><h3>Delivery timing</h3><p>Processing time can vary based on the source photo, selected package or generation settings, provider availability, moderation review, and system load.</p><h3>Failed or delayed jobs</h3><p>If a service-side issue prevents a digital result from being delivered, contact support. Depending on the circumstances, support may release reserved credits, rerun the job, troubleshoot the account, or review refund eligibility under the Refund Policy.</p><h3>No tracking, customs, or shipping charges</h3><p>Because purchases are digital, myDreamshoots does not provide carrier tracking numbers and does not charge shipping, customs, duties, or physical handling fees.</p><h3>Contact</h3><p>If a credit, generated file, download, or private gallery result does not appear in the workspace, email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, order or job details, and a short description of the issue.</p>";
+const mydreamshootsShippingPolicyBody = "<p>myDreamshoots provides digital AI photo and video services. This policy explains how credits, generated files, downloads, and private gallery access are delivered. We do not ship physical products.</p><h3>No physical products</h3><p>myDreamshoots does not ship physical products, printed photos, USB drives, or mailed merchandise from this storefront. All purchases and outputs described in this policy are digital.</p><h3>Credits and digital delivery</h3><p>Credits are added to the customer account after payment is confirmed. Generated images and videos become available in the signed-in customer workspace or private gallery when the relevant job is complete. Downloads are provided through the applicable workspace or gallery.</p><h3>Delivery timing</h3><p>Processing time can vary based on the source photo, selected package or generation settings, provider availability, moderation review, and system load.</p><h3>Failed or delayed jobs</h3><p>If a service-side issue prevents a digital result from being delivered, contact support. Depending on the circumstances, support may release reserved credits, rerun the job, troubleshoot the account, or review refund eligibility under the Refund Policy.</p><h3>No tracking, customs, or shipping charges</h3><p>Because purchases are digital, myDreamshoots does not provide carrier tracking numbers and does not charge shipping, customs, duties, or physical handling fees.</p><h3>Contact</h3><p>If a credit, generated file, download, or private gallery result does not appear in the workspace, email <a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a> with the account email, order or job details, and a short description of the issue.</p>";
 const replacements = [
   ["AES-256 at rest", "AES-256 encryption at rest"],
   ["TLS 256-bit in transit", "TLS encryption in transit"],
@@ -127,11 +127,34 @@ function setPolicySeo(json, canonicalPath) {
     title: seo.title,
     description: seo.description,
     canonicalPath,
-    canonical: canonicalPath === "/cookies" ? "https://www.mydreamshoots.com/cookies" : (next.seo?.canonical || canonicalPath),
+    canonical: canonicalPath === "/cookies"
+      ? "https://www.mydreamshoots.com/cookies"
+      : canonicalPath === "/digital-delivery"
+        ? "https://www.mydreamshoots.com/digital-delivery"
+        : (next.seo?.canonical || canonicalPath),
     index: true,
     follow: true,
     robots: { ...(next.seo?.robots ?? {}), index: true, follow: true }
   };
+  return next;
+}
+
+function updateShippingLink(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return value;
+  const next = clone(value);
+  const updateList = (list) => {
+    if (!Array.isArray(list)) return;
+    for (const item of list) {
+      if (!item || typeof item !== "object") continue;
+      const settings = item.settings && typeof item.settings === "object" ? item.settings : item;
+      if (["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"].includes(settings.href)) {
+        settings.href = "/digital-delivery";
+        settings.label = "Digital Delivery Policy";
+      }
+    }
+  };
+  updateList(next.navigation?.footerLinks);
+  updateList(next.globalSections?.footer?.blocks);
   return next;
 }
 
@@ -164,7 +187,7 @@ function updatePolicyJson(json, canonicalPath) {
       .replace(/If the shoot does not look like you, contact support for a refund review\./g, "If the result does not look like you, contact support with the affected order and a short explanation.")
       .replace(/Money-back guarantee\.?/g, "Results-based refund review.");
   }
-  if (canonicalPath === "/shipping") {
+  if (canonicalPath === "/digital-delivery") {
     const policySettings = next.sections?.policy_1?.settings;
     if (policySettings) {
       policySettings.title = "Digital Delivery Policy";
@@ -202,7 +225,7 @@ function updateThemeSettingsJson(value) {
           : lower.includes("refund") ? "/refunds"
           : lower.includes("cookie") ? "/cookies"
           : lower.includes("content") ? "/content"
-          : lower.includes("shipping") || lower.includes("delivery") ? "/shipping"
+          : lower.includes("shipping") || lower.includes("delivery") ? "/digital-delivery"
           : undefined;
         if (!canonicalPath) continue;
         page.title = policySeo[canonicalPath].title;
@@ -216,14 +239,15 @@ function updateThemeSettingsJson(value) {
     return updated;
   };
   const withSeo = updateSeoPages(next);
-  return withSeo;
+  return updateShippingLink(withSeo);
 }
 
 function updatePageRecord(record, contentKey) {
   const canonicalPath = canonicalBySlug.get(record.slug);
   if (!canonicalPath) return record;
   const next = clone(record);
-  next.title = canonicalPath === "/children-privacy" ? "Children's Privacy Notice" : canonicalPath === "/content" ? "Content policy" : canonicalPath === "/refunds" ? "Refund policy" : canonicalPath === "/shipping" ? "Digital Delivery Policy" : canonicalPath === "/terms" ? "Terms of Service" : canonicalPath === "/cookies" ? "Cookie policy" : "Privacy policy";
+  if (canonicalPath === "/digital-delivery" && record.slug === "/shipping") next.slug = "/digital-delivery";
+  next.title = canonicalPath === "/children-privacy" ? "Children's Privacy Notice" : canonicalPath === "/content" ? "Content policy" : canonicalPath === "/refunds" ? "Refund policy" : canonicalPath === "/digital-delivery" ? "Digital Delivery Policy" : canonicalPath === "/terms" ? "Terms of Service" : canonicalPath === "/cookies" ? "Cookie policy" : "Privacy policy";
   next[contentKey] = updatePolicyJson(next[contentKey], canonicalPath);
   return next;
 }
@@ -254,9 +278,9 @@ function updateThemeTemplates(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return value;
   const next = clone(value);
   for (const [key, template] of Object.entries(next)) {
-    const canonicalPath = canonicalBySlug.get(`/${key}`) ?? canonicalBySlug.get(key) ?? (key === "privacy" || key === "terms" || key === "cookies" || key === "refunds" || key === "content" || key === "shipping" ? `/${key}` : key === "policies/children-privacy" ? "/children-privacy" : undefined);
+    const canonicalPath = canonicalBySlug.get(`/${key}`) ?? canonicalBySlug.get(key) ?? (key === "privacy" || key === "terms" || key === "cookies" || key === "refunds" || key === "content" || key === "shipping" || key === "digital-delivery" ? `/${key}` : key === "policies/children-privacy" ? "/children-privacy" : undefined);
     if (canonicalPath) next[key] = updatePolicyJson(template, canonicalPath);
-    else next[key] = mapStrings(template);
+    else next[key] = updateShippingLink(mapStrings(template));
   }
   return next;
 }
@@ -314,8 +338,8 @@ try {
     fs.mkdirSync(backupDir, { recursive: true, mode: 0o700 });
     fs.writeFileSync(backupPath, `${JSON.stringify({ createdAt: new Date().toISOString(), siteId: SITE_ID, themePages: targetThemePages, livePages: targetLivePages, themeSettings, siteThemes, platformState }, null, 2)}\n`, { mode: 0o600 });
     await prisma.$transaction(async (tx) => {
-      for (const page of nextThemePages) await tx.themePage.update({ where: { id: page.id }, data: { title: page.title, draftJson: page.draftJson, publishedJson: page.publishedJson } });
-      for (const page of nextLivePages) await tx.livePage.update({ where: { id: page.id }, data: { title: page.title, contentJson: page.contentJson } });
+      for (const page of nextThemePages) await tx.themePage.update({ where: { id: page.id }, data: { slug: page.slug, title: page.title, draftJson: page.draftJson, publishedJson: page.publishedJson } });
+      for (const page of nextLivePages) await tx.livePage.update({ where: { id: page.id }, data: { slug: page.slug, title: page.title, contentJson: page.contentJson } });
       await tx.themeSettings.update({ where: { id: themeSettings.id }, data: { draftJson: nextThemeSettings.draftJson, publishedJson: nextThemeSettings.publishedJson } });
       for (const theme of nextSiteThemes) await tx.siteTheme.update({ where: { id: theme.id }, data: { templates: theme.templates, settings: theme.settings } });
       await tx.platformStateDocument.update({ where: { id: "platform" }, data: { state: nextState } });

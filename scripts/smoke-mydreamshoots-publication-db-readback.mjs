@@ -50,10 +50,10 @@ if (!rawUrl) {
     assert.equal(projectionHash, current.snapshotHash, "compiled relational projection hash must verify");
     const policyRoutes = current.publishedRoutes.filter((route) => route.routeKind === "policy" || route.routeKind === "policy-alias");
     assert.deepEqual(policyRoutes.filter((route) => route.disposition === "render").map((route) => route.canonicalPath).sort(), [
-      "/children-privacy", "/content", "/cookies", "/privacy", "/refunds", "/shipping", "/state-privacy", "/terms"
+      "/children-privacy", "/content", "/cookies", "/digital-delivery", "/privacy", "/refunds", "/state-privacy", "/terms"
     ]);
     assert.deepEqual(policyRoutes.filter((route) => route.disposition === "redirect").map((route) => route.aliasPath).sort(), [
-      "/california-privacy", "/ccpa", "/children-privacy-policy", "/childrens-privacy", "/content-policy", "/cookie-policy", "/delivery-policy", "/policies/children-privacy", "/policies/content", "/policies/cookies", "/policies/privacy", "/policies/privacy-policy", "/policies/refund", "/policies/refunds", "/policies/shipping", "/policies/state-privacy", "/policies/terms", "/policies/terms-of-service", "/privacy-policy", "/refund-policy", "/shipping-policy", "/state-privacy-rights", "/terms-of-service"
+      "/california-privacy", "/ccpa", "/children-privacy-policy", "/childrens-privacy", "/content-policy", "/cookie-policy", "/delivery-policy", "/policies/children-privacy", "/policies/content", "/policies/cookies", "/policies/delivery", "/policies/delivery-policy", "/policies/privacy", "/policies/privacy-policy", "/policies/refund", "/policies/refunds", "/policies/shipping", "/policies/state-privacy", "/policies/terms", "/policies/terms-of-service", "/privacy-policy", "/refund-policy", "/shipping", "/shipping-policy", "/state-privacy-rights", "/terms-of-service"
     ]);
     assert.ok(policyRoutes.filter((route) => route.disposition === "redirect").every((route) => route.statusCode === 301 && route.indexable === false && route.sitemapEligible === false));
     const weddingInvitationPaths = new Set([

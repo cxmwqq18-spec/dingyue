@@ -621,7 +621,7 @@ export function buildPublicationSnapshot(
     { canonicalPath: "/cookies" as const, aliases: ["/cookie-policy", "/policies/cookies"] },
     { canonicalPath: "/refunds" as const, aliases: ["/refund-policy", "/policies/refund", "/policies/refunds"] },
     { canonicalPath: "/content" as const, aliases: ["/content-policy", "/policies/content"] },
-    { canonicalPath: "/shipping" as const, aliases: ["/shipping-policy", "/delivery-policy", "/policies/shipping"] },
+    { canonicalPath: "/digital-delivery" as const, aliases: ["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"] },
     { canonicalPath: "/children-privacy" as const, aliases: ["/children-privacy-policy", "/childrens-privacy", "/policies/children-privacy"] },
     { canonicalPath: "/state-privacy" as const, aliases: ["/state-privacy-rights", "/california-privacy", "/ccpa", "/policies/state-privacy"] }
   ];

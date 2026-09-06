@@ -56,6 +56,11 @@ const pathOverrides: Record<string, Pick<PageTdk, "title" | "description">> = {
     description:
       "Find myDreamshoots answers about source photos, package selection, credits, billing, privacy, refunds, and private gallery delivery.",
   },
+  "/digital-delivery": {
+    title: "Digital Delivery Policy for AI Photos and Videos | myDreamshoots",
+    description:
+      "Learn how myDreamshoots delivers digital credits, AI-generated photos and videos, downloads, and private gallery access. No physical products are shipped."
+  },
   "/help": {
     title: "myDreamshoots Help Center Redirect",
     description:

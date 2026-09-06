@@ -583,6 +583,9 @@ export default async function HostStorefrontCatchAllPage({
   const slug = `/${path.join("/")}`;
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
   const isMydreamshootsHost = isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]));
+  if (isMydreamshootsHost && ["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"].includes(slug)) {
+    permanentRedirect("/digital-delivery");
+  }
   if (isMydreamshootsHost && isMydreamshootsRetiredPublicPath(slug)) notFound();
   if (isMydreamshootsHost && (slug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || slug === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) notFound();
   if (legacyVideoTarget && isMydreamshootsHost) permanentRedirect(legacyVideoTarget);
@@ -779,10 +782,11 @@ export default async function HostStorefrontCatchAllPage({
   if (!collectionRoute && resolvePublishedRouteDisposition(snapshot, slug).kind !== "render") notFound();
   if (!collectionRoute && !findPage(site, renderPageSlug) && resolvePublishedRouteDisposition(snapshot, slug).kind !== "render") notFound();
   const storefrontQuery = collectionCategory ? { ...query, category: collectionCategory } : query;
+  const publicPath = collectionRoute?.canonicalPath ?? (isMydreamshootsHost && slug === "/digital-delivery" ? "/digital-delivery" : publicContentPageSlug(slug));
   return renderStorefrontPage({
     site,
     slug: renderPageSlug,
-    publicPath: collectionRoute?.canonicalPath ?? pageSlug,
+    publicPath,
     query: storefrontQuery,
     routeMode: "host",
     state,

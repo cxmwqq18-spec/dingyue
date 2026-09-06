@@ -91,7 +91,7 @@ function visibleMarkup(html) {
 function pageTypeForUrl(value) {
   const pathname = new URL(value).pathname;
   if (pathname === "/") return "home";
-  if (/^\/(?:privacy|terms|cookies|refunds|content|shipping|children-privacy|state-privacy)$/.test(pathname)) return "policy";
+  if (/^\/(?:privacy|terms|cookies|refunds|content|digital-delivery|children-privacy|state-privacy)$/.test(pathname)) return "policy";
   if (pathname === "/blog") return "blog-directory";
   if (pathname.startsWith("/blog/")) return "article";
   if (/^\/ai-(?:image|video)-generation$/.test(pathname) || /^\/best-/.test(pathname)) return "directory";

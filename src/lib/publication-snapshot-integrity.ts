@@ -29,7 +29,7 @@ const policyRouteSpecs = [
   { canonicalPath: "/cookies", aliases: ["/cookie-policy", "/policies/cookies"] },
   { canonicalPath: "/refunds", aliases: ["/refund-policy", "/policies/refund", "/policies/refunds"] },
   { canonicalPath: "/content", aliases: ["/content-policy", "/policies/content"] },
-  { canonicalPath: "/shipping", aliases: ["/shipping-policy", "/delivery-policy", "/policies/shipping"] },
+  { canonicalPath: "/digital-delivery", aliases: ["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"] },
   { canonicalPath: "/children-privacy", aliases: ["/children-privacy-policy", "/childrens-privacy", "/policies/children-privacy"] },
   { canonicalPath: "/state-privacy", aliases: ["/state-privacy-rights", "/california-privacy", "/ccpa", "/policies/state-privacy"] }
 ] as const;

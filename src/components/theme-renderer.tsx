@@ -569,13 +569,13 @@ function normalizedHeadingLevel(value: string, fallback: "h1" | "h2"): "h1" | "h
 }
 
 function primaryRichTextFallbackHeadingLevel(sectionId: string, page: ThemePageJson, pagePath: string): "h1" | "h2" {
-  const semanticH1Paths = new Set(["/about-us", "/contact-us", "/shipping", "/faq", "/help", "/search", "/cart", "/blog"]);
+  const semanticH1Paths = new Set(["/about-us", "/contact-us", "/digital-delivery", "/shipping", "/faq", "/help", "/search", "/cart", "/blog"]);
   const firstRichTextId = page.sectionsOrder.find((candidateId: string) => page.sections[candidateId]?.type === "rich_text");
   return (semanticH1Paths.has(pagePath) || page.pageType === "article") && firstRichTextId === sectionId ? "h1" : "h2";
 }
 
 function isPolicyPage(renderContext: RenderContext): boolean {
-  return renderContext.page.pageType === "policy" || new Set(["/content", "/privacy", "/refunds", "/shipping", "/terms"]).has(renderContext.pagePath);
+  return renderContext.page.pageType === "policy" || new Set(["/content", "/privacy", "/refunds", "/digital-delivery", "/shipping", "/terms"]).has(renderContext.pagePath);
 }
 
 function sectionRendersMainHeading(sectionId: string, section: SectionInstance, renderContext: RenderContext): boolean {
@@ -814,6 +814,7 @@ function isPublicSeoRoute(pagePath: string): boolean {
     pagePath === "/policies/refunds" ||
     pagePath === "/content" ||
     pagePath === "/policies/content" ||
+    pagePath === "/digital-delivery" ||
     pagePath === "/shipping" ||
     pagePath === "/policies/shipping" ||
     pagePath === "/children-privacy" ||
@@ -1956,7 +1957,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
               ["Contact us", "/contact-us", "company"],
               ["Creators Circle", "/creators-circle", "company"],
               ["Refund Policy", "/refunds", "company"],
-              ["Shipping", "/shipping", "support"],
+              ["Digital Delivery Policy", "/digital-delivery", "support"],
               ["Privacy Policy", "/privacy", "support"],
               ["Content policy", "/content", "support"],
               ["Terms of Service", "/terms", "support"],
@@ -17388,7 +17389,7 @@ function SectionView({
           .replace(/^Policy$/i, "Politica")
       : rawEyebrow;
     const sectionLastUpdated = setting(section, "lastUpdated", "");
-    const usesPageSpecificPolicyDate = renderContext.pagePath === "/shipping" || renderContext.pagePath === "/policies/shipping";
+    const usesPageSpecificPolicyDate = renderContext.pagePath === "/digital-delivery" || renderContext.pagePath === "/shipping" || renderContext.pagePath === "/policies/shipping";
     const lastUpdated = usesPageSpecificPolicyDate && sectionLastUpdated
       ? sectionLastUpdated
       : storefrontContext?.profile?.policyFacts.effectiveDate ?? "";

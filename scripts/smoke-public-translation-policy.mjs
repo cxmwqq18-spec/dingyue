@@ -64,7 +64,7 @@ const runtimeRoutesBySite = {
     "/terms",
     "/refunds",
     "/cookies",
-    "/shipping",
+    "/digital-delivery",
     "/content",
     "/blog/preparing-source-photos",
     "/search?q=privacy"

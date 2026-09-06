@@ -18,6 +18,7 @@ const publicExactPaths = [
   "/cookies",
   "/refunds",
   "/content",
+  "/digital-delivery",
   "/shipping",
   "/children-privacy",
   "/state-privacy",
