@@ -486,6 +486,7 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   // Legacy video ThemePage rows can remain in relational data during a route
   // migration, but unsupported video slugs must not become sitemap URLs.
   if (isDreamshootSite(site) && canonicalPath.startsWith("/ai-video-generation/") && !isPublicVideoGenerationSitemapPath(site, canonicalPath)) return "";
+  if (isAidreamcapesSite(site) && canonicalPath.startsWith("/ai-video-generation/") && !MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS.includes(canonicalPath.slice("/ai-video-generation/".length) as typeof MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS[number])) return "";
   const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug)) || (isDreamshootSite(site) && (MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(normalizePath(page.slug)) || MYDREAMSHOOTS_RETIRED_PUBLIC_PATH_SET.has(normalizePath(page.slug))));
   // SEO eligibility is resolved once below by resolveEffectivePublishedPage().
   // Reading raw page flags here creates a second owner that can disagree with
