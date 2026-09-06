@@ -3146,7 +3146,10 @@ function mapAidreamcapesProfileBrand(value: unknown): unknown {
 
 export function mirroredAidreamcapesCollectionProfileForSlug(slug: string): MyDreamshootsPageCopy | undefined {
   const source = mydreamshootsPageCopyForSlug(slug);
-  return source ? mapAidreamcapesProfileBrand(source) as MyDreamshootsPageCopy : undefined;
+  if (!source) return undefined;
+  const mirrored = mapAidreamcapesProfileBrand(source) as MyDreamshootsPageCopy;
+  if (!mirrored.reviewPoints?.length) mirrored.reviewPoints = [...mirrored.styleNotes];
+  return mirrored;
 }
 
 function collectionSeedWithUseCaseProfile(seed: SeoDirectorySeed, profile: SeoUseCaseProfile, brandName: string): SeoDirectorySeed {

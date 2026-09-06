@@ -2714,7 +2714,7 @@ function renderThemePage({
         lightweightChrome={lightweightChrome}
         storefrontContext={storefrontContext}
       />
-      {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} /> : null}
+      {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} preserveBodyMarker={pagePath === "/about-us"} /> : null}
     </div>
   );
 }
@@ -2898,6 +2898,9 @@ export async function renderStorefrontPage({
     settings,
     trimRenderDataForPage(renderDataForPage, pageJson, slug, isCollectionDirectoryPage && !isFocusedCollectionPage)
   );
+  if (isFocusedCollectionPage && isAidreamcapesStorefront(currentSite)) {
+    pageRenderData = { ...pageRenderData, creativePacks: renderDataForPage.creativePacks.map(lightweightCreativePack) };
+  }
   const currentPageSectionTypes = pageSectionTypes(pageJson);
   const currentPageUsesFullMediaGallery = pageUsesFullMediaGallery(pageJson);
   const pageUsesDirectoryPackLimit = currentPageSectionTypes.has("dreamshoot_generation_showcase") || currentPageSectionTypes.has("dreamshoot_media_gallery") || currentPageSectionTypes.has("dreamshoot_featured_pack");
