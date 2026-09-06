@@ -423,6 +423,7 @@ function pageDescription(site: Site, page: Pick<ThemePage, "id" | "title">, cont
 
 function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, title: string, publishedRoutePaths: readonly string[] = []): JsonLdNode {
   const parts = pagePath.split("/").filter(Boolean);
+  const finalLabel = isMydreamshootsComSite(site) && pagePath === "/digital-delivery" ? "Digital Delivery Policy" : title;
   const items = [
     {
       "@type": "ListItem",
@@ -439,7 +440,7 @@ function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, t
     items.push({
       "@type": "ListItem",
       position: items.length + 1,
-      name: isFinal ? title : schemaPathLabel(site, part),
+      name: isFinal ? finalLabel : schemaPathLabel(site, part),
       item: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, current))
     });
   });

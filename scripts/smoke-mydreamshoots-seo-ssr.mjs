@@ -555,6 +555,7 @@ for (const [pathname, html] of Object.entries(policyPages)) {
 assert.equal(pageTitle(policyPages["/digital-delivery"]), "Digital Delivery Policy for AI Photos and Videos | myDreamshoots");
 assert.equal(metaDescription(policyPages["/digital-delivery"]), "Learn how myDreamshoots delivers digital credits, AI-generated photos and videos, downloads, and private gallery access. No physical products are shipped.");
 assert.equal(canonicalHref(policyPages["/digital-delivery"]), "https://www.mydreamshoots.com/digital-delivery");
+assert.equal(graphNodes(policyPages["/digital-delivery"]).find((node) => node?.["@type"] === "BreadcrumbList")?.itemListElement?.at(-1)?.name, "Digital Delivery Policy");
 assert.match(visibleText(policyPages["/digital-delivery"]), /myDreamshoots provides digital AI photo and video services\./);
 assert.match(visibleText(policyPages["/digital-delivery"]), /No physical products/);
 for (const [pageName, html] of Object.entries(publicHtmlPages)) {
