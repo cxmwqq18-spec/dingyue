@@ -290,6 +290,8 @@
     "smoke:remote-readonly-storefront": "node scripts/smoke-remote-readonly-storefront.mjs",
     "smoke:postgres-state": "node scripts/smoke-postgres-platform-state.mjs",
     "seed:aidreamcapes": "node scripts/migrate-aidreamcapes-demo.mjs",
+    "sync:aidreamcapes-from-mydreamshoots": "node scripts/sync-aidreamcapes-from-mydreamshoots.mjs",
+    "sync:aidreamcapes-from-mydreamshoots:apply": "node scripts/sync-aidreamcapes-from-mydreamshoots.mjs --apply --confirm=aidreamcapes-from-mydreamshoots",
     "clean:mydreamshoots-legacy-routes": "node scripts/clean-mydreamshoots-legacy-routes.mjs",
     "smoke:mydreamshoots-public-routes": "node scripts/smoke-mydreamshoots-public-routes.mjs",
     "smoke:mydreamshoots-site-slug-alias": "node scripts/smoke-mydreamshoots-site-slug-alias.mjs",

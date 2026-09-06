@@ -32,7 +32,7 @@ import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
-import { canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import { aidreamcapesLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -267,7 +267,7 @@ function isMydreamshootsPublicSlug(slug: string | undefined): boolean {
 }
 
 function fallbackCollectionRootPathForHost(host: string | null | undefined): string {
-  return isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null])) ? "/ai-image-generation" : "/collections";
+  return isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null])) || knownWorkspaceSiteSlugForHost([host ?? null]) === "aidreamcapes" ? "/ai-image-generation" : "/collections";
 }
 
 function redirectMydreamshootsLegacyTool(site: { slug: string; name: string; branding: { logoText: string } }, toolSlug: string): void {
@@ -581,6 +581,11 @@ export default async function HostStorefrontCatchAllPage({
     if (videoMode === "text-to-video" || videoMode === "image-to-video") notFound();
   }
   const slug = `/${path.join("/")}`;
+  const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
+  if (hostSiteSlug === "aidreamcapes") {
+    const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);
+    if (legacySaveTheDateTarget) permanentRedirect(legacySaveTheDateTarget);
+  }
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
   const isMydreamshootsHost = isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]));
   if (isMydreamshootsHost && ["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"].includes(slug)) {
@@ -614,6 +619,8 @@ export default async function HostStorefrontCatchAllPage({
     if (isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]))) notFound();
     redirect("/tools");
   }
+  if (hostSiteSlug === "aidreamcapes" && slug === "/collections") permanentRedirect("/ai-image-generation");
+  if (hostSiteSlug === "aidreamcapes" && slug === "/tools") permanentRedirect("/ai-video-generation");
   if (slug === "/app" || slug === "/dashboard") {
     const query = searchParams ? await searchParams : {};
     const videoMode = Array.isArray(query.videoMode) ? query.videoMode[0] : query.videoMode;

@@ -2583,7 +2583,7 @@ export type CustomerWorkspaceBootstrapRelational = {
 };
 
 export async function getPublishedVideoGenerationNavigationForSite(siteId: string): Promise<PublishedVideoNavigationProjection[]> {
-  if (!isMydreamshootsVideoFrameworkSiteId(siteId)) return [];
+  if (!isMydreamshootsVideoFrameworkSiteId(siteId) && siteId !== "site_aidreamcapes") return [];
   const pages = await prisma.livePage.findMany({
     where: { siteId },
     orderBy: { slug: "asc" },
@@ -2591,7 +2591,7 @@ export async function getPublishedVideoGenerationNavigationForSite(siteId: strin
   });
   return compileMydreamshootsVideoTopicPublication(
     pages.map((page) => toThemePage({ ...page, draftJson: page.contentJson, publishedJson: page.contentJson })),
-    siteId as "site_dreamshoot" | "site_grownstride_test"
+    siteId as "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes"
   ).navigation;
 }
 

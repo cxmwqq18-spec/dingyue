@@ -20,7 +20,7 @@ import { storefrontPathForRouteMode, storefrontRouteModeForHeaders, type Storefr
 import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
-import { canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import { aidreamcapesLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -228,7 +228,7 @@ function searchParamsSuffix(query: Record<string, string | string[] | undefined>
 }
 
 function fallbackCollectionRootPathForPublicSlug(publicSlug: string): string {
-  return (publicSlug === "grownstride" || isPrimaryMydreamshootsSlug(publicSlug))
+  return usesAiGenerationPublicSlug(publicSlug)
     ? "/ai-image-generation"
     : "/collections";
 }
@@ -280,6 +280,10 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const metadataQuery = searchParams ? await searchParams : {};
   const hintedCollectionSlug = (await headers()).get("x-storefront-image-theme")?.trim();
   const requestedSlug = `/${path.join("/")}`;
+  if (publicSiteSlug(siteSlug) === "aidreamcapes") {
+    const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(requestedSlug);
+    if (legacySaveTheDateTarget) return {};
+  }
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && isMydreamshootsRetiredPublicPath(requestedSlug)) return {};
   const legacyPublicTarget = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) ? mydreamshootsLegacyPublicPathTarget(requestedSlug) : undefined;
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
@@ -415,6 +419,10 @@ export default async function SiteCatchAllPage({
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
+  if (publicSlug === "aidreamcapes") {
+    const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);
+    if (legacySaveTheDateTarget) permanentRedirect(routePath(legacySaveTheDateTarget));
+  }
   if (isPrimaryMydreamshootsSlug(publicSlug) && ["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"].includes(slug)) {
     permanentRedirect(routePath("/digital-delivery"));
   }
@@ -459,6 +467,8 @@ export default async function SiteCatchAllPage({
     if (isPrimaryMydreamshootsSlug(publicSlug)) notFound();
     redirect(routePath("/tools"));
   }
+  if (publicSlug === "aidreamcapes" && slug === "/collections") permanentRedirect(routePath("/ai-image-generation"));
+  if (publicSlug === "aidreamcapes" && slug === "/tools") permanentRedirect(routePath("/ai-video-generation"));
   if (slug === "/dashboard") {
     redirect(routePath("/app/create"));
   }

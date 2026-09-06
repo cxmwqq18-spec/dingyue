@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { renderStorefrontPage } from "@/lib/storefront-render";
 import { readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
 
@@ -32,6 +32,7 @@ export default async function SiteToolsPage({
   const { siteSlug } = await params;
   const publicSlug = publicSiteSlug(siteSlug);
   if (publicSlug === "mydreamshoots") notFound();
+  if (publicSlug === "aidreamcapes") permanentRedirect(`/site/${publicSlug}/ai-video-generation`);
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const query = searchParams ? await searchParams : {};

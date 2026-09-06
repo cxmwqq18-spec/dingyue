@@ -164,7 +164,7 @@ export function isMydreamshootsPublicVideoGenerationSlug(slug: string | undefine
 }
 
 export function publicCollectionRootPathForSite(site: CollectionRouteSiteIdentity | undefined): string {
-  return isMydreamshootsCollectionRouteSite(site) ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH : COLLECTIONS_ROOT_PATH;
+  return isMydreamshootsCollectionRouteSite(site) || isAidreamcapesRouteSite(site) ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH : COLLECTIONS_ROOT_PATH;
 }
 
 export function publicCollectionPathForSite(site: CollectionRouteSiteIdentity | undefined, rawSlug?: string): string {
@@ -179,6 +179,7 @@ export function publicCollectionPathForSite(site: CollectionRouteSiteIdentity | 
 export function publicVideoGenerationPathForSite(site: CollectionRouteSiteIdentity | undefined, rawSlug?: string): string {
   const slug = photoPackageSlug(rawSlug);
   if (!slug || slug === "all" || slug === "todo" || slug === "todos") return MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH;
+  if (isAidreamcapesRouteSite(site)) return `${MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH}/${slug}`;
   if (!isMydreamshootsPublicVideoGenerationSlug(slug)) return MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH;
   return `${MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH}/${slug}`;
 }
@@ -233,6 +234,30 @@ export function parsePublicCollectionRouteForSite(site: CollectionRouteSiteIdent
     }
     return undefined;
   }
+  if (isAidreamcapesRouteSite(site)) {
+    const isCanonicalRoot = segments[0] === MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT;
+    const isLegacyRoot = segments[0] === "collections";
+    if (!isCanonicalRoot && !isLegacyRoot) return undefined;
+    if (segments.length === 1) {
+      return {
+        root: isCanonicalRoot ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT : "collections",
+        collectionSlug: "",
+        canonicalPath: MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH,
+        kind: "directory"
+      };
+    }
+    if (segments.length === 2) {
+      const itemSlug = photoPackageSlug(segments[1]);
+      return {
+        root: isCanonicalRoot ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT : "collections",
+        itemSlug,
+        collectionSlug: itemSlug,
+        canonicalPath: `${MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH}/${itemSlug}`,
+        kind: "item"
+      };
+    }
+    return undefined;
+  }
   if (segments[0] !== "collections") return undefined;
   if (segments.length === 1) {
     return {
@@ -258,6 +283,15 @@ export function parsePublicCollectionRouteForSite(site: CollectionRouteSiteIdent
 
 export function parsePublicVideoGenerationRouteForSite(site: CollectionRouteSiteIdentity | undefined, rawPath: string | string[]): PublicVideoGenerationRoute | undefined {
   const segments = Array.isArray(rawPath) ? rawPath.filter(Boolean) : pathSegments(rawPath);
+  if (isAidreamcapesRouteSite(site)) {
+    if (segments[0] !== MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT) return undefined;
+    if (segments.length === 1) return { root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT, canonicalPath: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH, kind: "directory" };
+    if (segments.length === 2) {
+      const itemSlug = photoPackageSlug(segments[1]);
+      return { root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT, itemSlug, canonicalPath: publicVideoGenerationPathForSite(site, itemSlug), kind: "item" };
+    }
+    return undefined;
+  }
   if (!isMydreamshootsCollectionRouteSite(site)) return undefined;
   if (segments[0] !== MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT) return undefined;
   if (segments.length === 1) {

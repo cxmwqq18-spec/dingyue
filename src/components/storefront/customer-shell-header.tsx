@@ -215,8 +215,7 @@ export function CustomerShellHeader({
   }));
   const hasSaveTheDate = saveTheDateGroups.some((group) => group.items.some((item) => item.status === "published"));
   const menuSite = { ...site, __storefrontBasePath: basePath };
-  const primaryMyDreamShoots = isMyDreamShoots && !isSpanishXby;
-  const useVideoGenerationToolsMenu = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXby;
+  const useVideoGenerationToolsMenu = (isMydreamshootsVideoFrameworkSite(site) || isAidreamcapes) && !isSpanishXby;
   const videoGenerationMenuTopics = useVideoGenerationToolsMenu
     ? publishedVideoGenerationTopics !== undefined
       ? publishedVideoGenerationTopicsForMenu(basePath, publishedVideoGenerationTopics)
@@ -224,8 +223,9 @@ export function CustomerShellHeader({
     : [];
   const videoGenerationMenuHref = `${basePath}${videoGenerationCreatePath()}`;
   const activeToolBlocks = useVideoGenerationToolsMenu ? [] : getToolBlocksForMenu(menuSite, toolMenuItems);
-  const packageRootHref = isMyDreamShoots && !isSpanishXby ? "/ai-image-generation" : "/collections";
-  const toolRootHref = useVideoGenerationToolsMenu ? videoGenerationCreatePath() : primaryMyDreamShoots ? "/ai-video-generation" : "/tools";
+  const aiGenerationParity = (isMyDreamShoots || isAidreamcapes) && !isSpanishXby;
+  const packageRootHref = aiGenerationParity ? "/ai-image-generation" : "/collections";
+  const toolRootHref = useVideoGenerationToolsMenu ? videoGenerationCreatePath() : aiGenerationParity ? "/ai-video-generation" : "/tools";
   const packagePrefetchPaths = Array.from(new Set([
     `${basePath}${packageRootHref}`,
     ...activePackageGroups.flatMap((group) => group.items.map((item) => `${basePath}${item.href}`))
@@ -284,7 +284,7 @@ export function CustomerShellHeader({
           <nav className="order-2 hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-1 text-[0.78rem] font-semibold xl:flex min-[1440px]:gap-1.5 min-[1536px]:gap-2 min-[1800px]:gap-2.5">
             <ClickMegaMenu
               buttonClassName={`rounded-[15px] border transition ${desktopNavClass}`}
-              label={isSpanishXby ? isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : isAidreamcapes ? "Occasion Albums" : primaryMyDreamShoots ? "AI Image Generation" : "Browse packages"}
+              label={isSpanishXby ? isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aiGenerationParity ? "AI Image Generation" : isAidreamcapes ? "Occasion Albums" : "Browse packages"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={packagePrefetchPaths}
             >
@@ -298,7 +298,7 @@ export function CustomerShellHeader({
             </ClickMegaMenu>
             <ClickMegaMenu
               buttonClassName={`rounded-[15px] border transition ${desktopNavClass}`}
-              label={isSpanishXby ? "Herramientas" : useVideoGenerationToolsMenu ? "AI Video Generation" : primaryMyDreamShoots ? "AI Video Generation" : "Tools"}
+              label={isSpanishXby ? "Herramientas" : useVideoGenerationToolsMenu || aiGenerationParity ? "AI Video Generation" : "Tools"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={toolPrefetchPaths}
             >
@@ -312,7 +312,7 @@ export function CustomerShellHeader({
               ) : (
                 <DreamShootMegaToolsPanel
                   ctaHref={toolRootHref}
-                  ctaLabel={isSpanishXby ? "Ver todas las herramientas" : primaryMyDreamShoots ? "View all video generators" : "View all tools"}
+                  ctaLabel={isSpanishXby ? "Ver todas las herramientas" : aiGenerationParity ? "View all video generators" : "View all tools"}
                   site={menuSite}
                   tools={activeToolBlocks}
                   variant="popover"

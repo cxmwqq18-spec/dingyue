@@ -94,3 +94,38 @@ Strictly distinguish between the following:
 
 This rule takes precedence over wording-reuse requirements in content
 generation tasks.
+
+## Aidreamcapes Store Isolation Rule
+
+Aidreamcapes-only work is strictly isolated from MyDreamShoots. When a task
+names Aidreamcapes, the allowed write target is limited to Aidreamcapes-owned
+runtime data, pages, routes, SEO, media, navigation, assets, and deployment
+records for `site_aidreamcapes` and its Aidreamcapes domains.
+
+The following are explicitly out of scope and must not be edited, migrated,
+seeded, regenerated, synchronized, or overwritten as part of an Aidreamcapes
+task:
+
+- MyDreamShoots data, pages, SEO, media, routes, navigation, assets, or
+  deployment records (`site_dreamshoot`, `mydreamshoots`,
+  `www.mydreamshoots.com`).
+- MyDreamShoots-only source files, content manifests, generated state, and
+  database records.
+- Shared templates, shared navigation, shared theme defaults, shared
+  components, migrations, sync scripts, or deployment configuration when the
+  change could alter MyDreamShoots behavior.
+
+Read-only comparison or regression checks against MyDreamShoots are allowed,
+but they must not produce writes. If an Aidreamcapes fix appears to require a
+shared layer or would change MyDreamShoots behavior, stop and request explicit
+approval before editing that layer.
+
+Before reporting an Aidreamcapes change complete:
+
+1. Inspect `git diff --name-only` and confirm every changed file is within the
+   Aidreamcapes scope.
+2. Review database or sync commands for an explicit `site_aidreamcapes`
+   filter; never run an unscoped cross-store update.
+3. Confirm no MyDreamShoots production route, content, asset, SEO, or
+   navigation output changed. Any detected change is a release blocker until
+   the user explicitly approves it.

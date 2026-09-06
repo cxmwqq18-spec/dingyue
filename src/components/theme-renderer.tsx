@@ -936,7 +936,8 @@ function headerToolMegaItemsForClient(site: Site, tools: SectionBlockInstance[],
 }
 
 function headerVideoGenerationTopicsForClient(site: Site, categories: VideoThemeCategory[], themes: VideoTheme[]): HeaderVideoGenerationTopic[] {
-  if (site.id !== "site_dreamshoot") return [];
+  const aidreamcapes = isAidreamcapesCapabilitySite(site);
+  if (site.id !== "site_dreamshoot" && !aidreamcapes) return [];
   const categoriesBySlug = new Map(categories.map((category) => [category.slug, category]));
   const categoriesById = new Map(categories.map((category) => [category.id, category]));
   const parentDefinitionsBySlug = new Map<string, (typeof mydreamshootsVideoGenerationParentCategories)[number]>(
@@ -1185,7 +1186,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
     ? { label: saveTheDateMenuLabel, href: saveTheDateTargetHref, block: { id: "dreamshoot_header_save_the_date", type: "menu_link", settings: { label: saveTheDateMenuLabel, href: saveTheDateTargetHref } } as SectionBlockInstance }
     : null;
   const configuredSaveTheDate = Boolean(saveTheDateLink);
-  const rawLinks = isMyDreamShootsCom
+  const rawLinks = (isMyDreamShootsCom || isAidreamcapes)
     ? (saveTheDateLink ? [...myDreamShootsHeaderLinks.slice(0, 1), saveTheDateLink, ...myDreamShootsHeaderLinks.slice(1)] : myDreamShootsHeaderLinks)
     : rawLinksBase;
   const seenHeaderHrefs = new Set<string>();
@@ -1200,7 +1201,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const lightCommerce = style === "light_commerce";
   const darkHeaderControls = dark || isDreamShoot || isAidreamcapes;
   const airyCommerceHeader = lightCommerce && !isAidreamcapes;
-  const useVideoGenerationToolsMenu = isMydreamshootsVideoFrameworkSite(site) && !spanishXby && !isAidreamcapes;
+  const useVideoGenerationToolsMenu = (isMydreamshootsVideoFrameworkSite(site) || isAidreamcapes) && !spanishXby;
   const videoGenerationMenuTopics = useVideoGenerationToolsMenu
     ? (videoGenerationTopics ?? headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes))
       .map((topic) => ({ ...topic, href: hrefFor(site, topic.href) }))
@@ -1926,20 +1927,21 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
             ]
         : isAidreamcapesFooter
         ? [
-            ["Best Packages", "/best-packages", "product"],
-            ["Best AI image", "/best-ai-image", "product"],
+            ["AI Video Generation", "/ai-video-generation", "product"],
             ["Best AI video", "/best-ai-video", "product"],
-            ["AI Tools", "/tools", "product"],
+            ...(hasPublishedSaveTheDate ? [["AI Save the Date", "/best-save-the-date", "product"] as const] : []),
+            ["AI Image Generation", "/ai-image-generation", "product"],
+            ["AI Photo Packages", "/best-packages", "product"],
             ["How it works", "/workflow", "product"],
             ["Pricing", "/pricing", "product"],
-            ["FAQ", "/faq", "company"],
             ["Blog", "/blog", "company"],
-            ["About the Studio", "/about-us", "company"],
-            ["Contact the Studio", "/contact-us", "company"],
+            ["About us", "/about-us", "company"],
+            ["Contact us", "/contact-us", "company"],
             ["Creators Circle", "/creators-circle", "company"],
             ["Refund Policy", "/refunds", "company"],
+            ["Digital Delivery Policy", "/digital-delivery", "support"],
             ["Privacy Policy", "/privacy", "support"],
-            ["Creative Safety", "/content", "support"],
+            ["Content policy", "/content", "support"],
             ["Terms of Service", "/terms", "support"],
             ["Cookie Policy", "/cookies", "support"]
           ]
@@ -1992,6 +1994,9 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
   const guardedPublishedFooterPaths = new Set<string>(GUARDED_STOREFRONT_FOOTER_PATHS);
   const footerLinkIsPublished = (item: { href: string }) => {
     const path = item.href.split(/[?#]/)[0] || "/";
+    if (isAidreamcapesFooter && path === "/state-privacy") {
+      return true;
+    }
     return !guardedPublishedFooterPaths.has(path) || !storefrontContext?.publishedPaths || storefrontContext.publishedPaths.includes(path);
   };
   const publishedLinks = links.filter(footerLinkIsPublished);
@@ -2089,7 +2094,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
     if (normalizedHref === "/cookies") return "Cookie Policy";
     if (normalizedHref === "/children-privacy" && (isDreamShootFooter || isAidreamcapesFooter) && !spanishXbyFooter) return "Children's Privacy";
     if (normalizedHref === "/state-privacy" && isDreamShootFooter && !spanishXbyFooter) return "State Privacy";
-    if (normalizedHref === "/state-privacy" && isAidreamcapesFooter && !spanishXbyFooter) return "CISA";
+    if (normalizedHref === "/state-privacy" && isAidreamcapesFooter && !spanishXbyFooter) return "State Privacy";
     if (normalizedHref === "/children-privacy") return "Children's Privacy";
     if (normalizedHref === "/state-privacy") return "State Privacy Rights";
     return label;
@@ -2097,7 +2102,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
   const bottomPolicyLinks = (isDreamShootFooter || isAidreamcapesFooter) && !spanishXbyFooter
     ? [
         ...(footerLinkIsPublished({ href: "/children-privacy" }) ? [{ label: "Children's Privacy", href: "/children-privacy" }] : []),
-        ...(footerLinkIsPublished({ href: "/state-privacy" }) ? [{ label: isAidreamcapesFooter ? "CISA" : "State Privacy", href: "/state-privacy" }] : [])
+        ...(footerLinkIsPublished({ href: "/state-privacy" }) ? [{ label: "State Privacy", href: "/state-privacy" }] : [])
       ]
     : [];
   const normalizedCopyright = `© ${new Date().getUTCFullYear()} ${readableFooterTitle}. All rights reserved.`;
@@ -17441,7 +17446,7 @@ function SectionView({
             ) : null}
             {!spanishXbyPolicy ? (
               <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/state-privacy")}>
-                {isAidreamcapesSite(site) ? "CISA" : "State Privacy"}
+                State Privacy
               </Link>
             ) : null}
             <Link className="rounded-full border border-[#e3dcca] bg-white px-4 py-2 text-[#14161a] transition hover:-translate-y-0.5" href={hrefFor(site, "/faq")}>

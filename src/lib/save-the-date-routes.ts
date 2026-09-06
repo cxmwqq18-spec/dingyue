@@ -1,4 +1,18 @@
 const SAVE_THE_DATE_ROUTE_PREFIX = "/ai-save-the-date/";
+const AIDREAMCAPES_LEGACY_VIDEO_SAVE_THE_DATE_SLUGS = new Set([
+  "christmas",
+  "halloween",
+  "thanksgiving",
+  "new-year",
+  "mothers-day",
+  "fathers-day",
+  "valentines-day",
+  "engagement",
+  "proposal",
+  "save-the-date",
+  "wedding-invitation",
+  "wedding-ceremony"
+]);
 export const MYDREAMSHOOTS_WEDDING_INVITATION_PATH = "/ai-save-the-date/wedding-invitation";
 export const MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH = "/ai-video-generation/wedding-invitation";
 export const MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH = "/holidays-events/wedding-invitation";
@@ -51,4 +65,17 @@ export function isSaveTheDatePath(pathname: string): boolean {
       ? pathname
       : `/${pathname}`;
   return normalized.startsWith(SAVE_THE_DATE_ROUTE_PREFIX) || normalized.startsWith("/holidays-events/");
+}
+
+export function aidreamcapesLegacyVideoSaveTheDatePath(pathname: string): string | undefined {
+  const normalized = !pathname || pathname === "/"
+    ? "/"
+    : pathname.startsWith("/")
+      ? pathname
+      : `/${pathname}`;
+  const match = normalized.match(/^\/ai-video-generation\/([^/?#]+)$/i);
+  const slug = match?.[1]?.toLowerCase();
+  return slug && AIDREAMCAPES_LEGACY_VIDEO_SAVE_THE_DATE_SLUGS.has(slug)
+    ? `${SAVE_THE_DATE_ROUTE_PREFIX}${slug}`
+    : undefined;
 }
