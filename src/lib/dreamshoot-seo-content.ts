@@ -1,10 +1,9 @@
 import type { SectionInstance, Site, ThemePageJson } from "@/lib/types";
 import { aiVideoTopicLandingContentFromSection } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection } from "@/lib/talking-photo-content";
-import { mydreamshootsPageCopyForRoute, type MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
+import { mydreamshootsPageCopyForRoute, mydreamshootsPageCopyForSlug, type MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import {
-  aidreamcapesCategoryUseCaseProfileForSlug,
   type PhotoPackageUseCaseProfile
 } from "@/lib/photo-package-use-case-profiles";
 import {
@@ -3121,6 +3120,32 @@ function truncateSeoDescription(value: string, maxLength = 220): string {
   return `${trimmed}.`;
 }
 
+function mapAidreamcapesProfileBrand(value: unknown): unknown {
+  if (typeof value === "string") {
+    return value
+      .replaceAll("https://www.mydreamshoots.com", "https://www.aidreamcapes.com")
+      .replaceAll("http://www.mydreamshoots.com", "https://www.aidreamcapes.com")
+      .replaceAll("www.mydreamshoots.com", "www.aidreamcapes.com")
+      .replaceAll("mydreamshoots.com", "aidreamcapes.com")
+      .replace(/mydreamshoots/gi, "aidreamcapes")
+      .replace(/myDreamShoots/gi, "Aidreamcapes")
+      .replace(/myDreamshoots/gi, "Aidreamcapes")
+      .replace(/MyDreamShoots/gi, "Aidreamcapes")
+      .replace(/MYDREAMSHOOTS/gi, "AIDREAMCAPES")
+      .replace(/pack_dreamshoot/gi, "pack_aidreamcapes");
+  }
+  if (Array.isArray(value)) return value.map(mapAidreamcapesProfileBrand);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, mapAidreamcapesProfileBrand(item)]));
+  }
+  return value;
+}
+
+function mirroredAidreamcapesCollectionProfile(slug: string): SeoUseCaseProfile | undefined {
+  const source = mydreamshootsPageCopyForSlug(slug);
+  return source ? mapAidreamcapesProfileBrand(source) as SeoUseCaseProfile : undefined;
+}
+
 function collectionSeedWithUseCaseProfile(seed: SeoDirectorySeed, profile: SeoUseCaseProfile, brandName: string): SeoDirectorySeed {
   const titleScenario = profile.tags.slice(0, 2).join(" and ");
   const title = profile.seoTitle || (titleScenario ? `${profile.metaLabel} for ${titleScenario} | ${brandName}` : `${profile.metaLabel} | ${brandName}`);
@@ -3195,7 +3220,7 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
       : toolSource[canonicalSlug] ?? missingToolDirectoryContent(canonicalSlug);
   const collectionProfile = kind === "collection" && !spanishXby
     ? aidreamcapes
-      ? aidreamcapesCategoryUseCaseProfileForSlug(canonicalSlug)
+      ? mirroredAidreamcapesCollectionProfile(canonicalSlug)
       : mydreamshootsPageCopyForRoute({
           siteId,
           routeKind: "ai-image-theme-leaf",
