@@ -71,6 +71,8 @@ type MyDreamshootsThemeTaxonomy = {
 };
 
 const mydreamshootsThemeTaxonomyData = mydreamshootsThemeTaxonomy as MyDreamshootsThemeTaxonomy;
+const mydreamshootsThemeRootSlugs = new Set(mydreamshootsThemeTaxonomyData.roots.map((root) => root.slug));
+const mydreamshootsThemeItemsBySlug = new Map(mydreamshootsThemeTaxonomyData.items.map((item) => [item.slug, item]));
 
 function isAidreamcapesSite(site?: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding?: Pick<Site["branding"], "logoText"> }): boolean {
   if (!site) return false;
@@ -2331,6 +2333,7 @@ const aidreamcapesCollectionAliases: Record<string, string> = {
 
 export function canonicalAidreamcapesDirectorySlug(kind: SeoDirectoryKind, slug: string): string {
   if (kind !== "collection") return slug;
+  if (mydreamshootsThemeItemsBySlug.has(slug) || mydreamshootsThemeRootSlugs.has(slug)) return slug;
   return aidreamcapesCollectionAliases[slug] ?? slug;
 }
 
@@ -3212,7 +3215,9 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
   const toolSource = aidreamcapes ? aidreamcapesToolDirectory : toolDirectory;
   const brandName = spanishXby ? spanishXbyBrandName(site) : aidreamcapes ? "Aidreamcapes" : "myDreamshoots";
   const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, slug);
-  const explicit = kind === "collection" ? Boolean(collectionSource[canonicalSlug]) : Boolean(toolSource[canonicalSlug]);
+  const explicit = kind === "collection"
+    ? Boolean(collectionSource[canonicalSlug]) || (aidreamcapes && mydreamshootsThemeItemsBySlug.has(canonicalSlug))
+    : Boolean(toolSource[canonicalSlug]);
   const source = spanishXby
     ? spanishDirectorySeed(kind, canonicalSlug, brandName, aidreamcapes)
     : kind === "collection"
