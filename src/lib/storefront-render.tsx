@@ -2714,7 +2714,7 @@ function renderThemePage({
         lightweightChrome={lightweightChrome}
         storefrontContext={storefrontContext}
       />
-      {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} preserveBodyMarker={pagePath === "/about-us"} /> : null}
+      {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} /> : null}
     </div>
   );
 }
