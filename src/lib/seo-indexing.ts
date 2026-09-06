@@ -609,6 +609,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       const path = canonicalDirectoryPathForSite(site, publicCollectionPathForSite(site, rawSlug));
       const route = parsePublicCollectionRouteForSite(site, path);
       if (route?.kind !== "item") continue;
+      if (LEGACY_OR_DUPLICATE_PATHS.has(path) || path.endsWith("/social-cards")) continue;
       const loc = sitemapUrl(site, path);
       if (entries.has(loc)) continue;
       entries.set(loc, {
