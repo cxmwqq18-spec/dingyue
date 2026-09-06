@@ -3130,11 +3130,11 @@ function mapAidreamcapesProfileBrand(value: unknown): unknown {
       .replaceAll("http://www.mydreamshoots.com", "https://www.aidreamcapes.com")
       .replaceAll("www.mydreamshoots.com", "www.aidreamcapes.com")
       .replaceAll("mydreamshoots.com", "aidreamcapes.com")
-      .replace(/mydreamshoots/gi, "aidreamcapes")
-      .replace(/myDreamShoots/gi, "Aidreamcapes")
-      .replace(/myDreamshoots/gi, "Aidreamcapes")
-      .replace(/MyDreamShoots/gi, "Aidreamcapes")
-      .replace(/MYDREAMSHOOTS/gi, "AIDREAMCAPES")
+      .replaceAll("MyDreamShoots", "Aidreamcapes")
+      .replaceAll("myDreamShoots", "Aidreamcapes")
+      .replaceAll("myDreamshoots", "Aidreamcapes")
+      .replaceAll("MYDREAMSHOOTS", "AIDREAMCAPES")
+      .replaceAll("mydreamshoots", "aidreamcapes")
       .replace(/pack_dreamshoot/gi, "pack_aidreamcapes");
   }
   if (Array.isArray(value)) return value.map(mapAidreamcapesProfileBrand);
@@ -3144,9 +3144,9 @@ function mapAidreamcapesProfileBrand(value: unknown): unknown {
   return value;
 }
 
-export function mirroredAidreamcapesCollectionProfileForSlug(slug: string): SeoUseCaseProfile | undefined {
+export function mirroredAidreamcapesCollectionProfileForSlug(slug: string): MyDreamshootsPageCopy | undefined {
   const source = mydreamshootsPageCopyForSlug(slug);
-  return source ? mapAidreamcapesProfileBrand(source) as SeoUseCaseProfile : undefined;
+  return source ? mapAidreamcapesProfileBrand(source) as MyDreamshootsPageCopy : undefined;
 }
 
 function collectionSeedWithUseCaseProfile(seed: SeoDirectorySeed, profile: SeoUseCaseProfile, brandName: string): SeoDirectorySeed {

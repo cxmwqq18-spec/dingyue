@@ -11639,7 +11639,11 @@ function SectionView({
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
     const selectedPacks = activeCreativePacksForCollectionSlug(creativePacks, selectedCollectionSlug, site);
     const selectedPack = selectedPacks.length === 1 ? selectedPacks[0] : undefined;
-    const selectedPageCopy = !aidreamcapes && !spanishXbyTaxonomy ? storefrontContext?.pageCopy : undefined;
+    const selectedPageCopy = spanishXbyTaxonomy
+      ? undefined
+      : aidreamcapes
+      ? mirroredAidreamcapesCollectionProfileForSlug(selectedCollectionSlug)
+      : storefrontContext?.pageCopy;
     const selectedProfile = selectedPageCopy ?? (aidreamcapes && !spanishXbyTaxonomy
       ? selectedPack ? aidreamcapesProfileForPack(site, selectedPack) : aidreamcapesProfileForSlug(site, selectedCollectionSlug)
       : selectedPack ? myDreamShootsProfileForPack(site, selectedPack) : myDreamShootsProfileForSlug(site, selectedCollectionSlug));
@@ -11974,7 +11978,11 @@ function SectionView({
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
     const selectedPack = activeCreativePackForCollectionSlug(creativePacks, selectedCollectionSlug, site);
     if (!selectedPack) return null;
-    const selectedPageCopy = !aidreamcapesThemeCta && !spanishXbyThemeCta ? storefrontContext?.pageCopy : undefined;
+    const selectedPageCopy = spanishXbyThemeCta
+      ? undefined
+      : aidreamcapesThemeCta
+      ? mirroredAidreamcapesCollectionProfileForSlug(selectedCollectionSlug)
+      : storefrontContext?.pageCopy;
     const packTitle = spanishXbyThemeCta ? spanishPhotoPackageLabel(selectedPack.name, aidreamcapesThemeCta) : selectedPack.name;
     const spanishThemeBrand = site.branding.logoText || site.name || (aidreamcapesThemeCta ? "AIdreamcapes" : "AIdreamshoots");
     const ctaHref = hrefFor(site, creativePackCreateHref(selectedPack, site));
@@ -12096,7 +12104,11 @@ function SectionView({
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
     const selectedPack = activeCreativePackForCollectionSlug(creativePacks, selectedCollectionSlug, site);
     if (!selectedPack) return null;
-    const selectedPageCopy = !aidreamcapesThemeFaq && !spanishXbyThemeFaq ? storefrontContext?.pageCopy : undefined;
+    const selectedPageCopy = spanishXbyThemeFaq
+      ? undefined
+      : aidreamcapesThemeFaq
+      ? mirroredAidreamcapesCollectionProfileForSlug(selectedCollectionSlug)
+      : storefrontContext?.pageCopy;
     const packTitle = spanishXbyThemeFaq ? spanishPhotoPackageLabel(selectedPack.name, aidreamcapesThemeFaq) : selectedPack.name;
     const outputCount = selectedPack.outputCount;
     const creditCost = selectedPack.creditCost;
@@ -12159,7 +12171,11 @@ function SectionView({
     const aidreamcapes = isAidreamcapesSite(site);
     const spanishXbyRelated = isSpanishXbySite(site);
     const selectedCollectionSlug = selectedCollectionSlugFromRenderContext(renderContext);
-    const selectedPageCopy = !aidreamcapes && !spanishXbyRelated ? storefrontContext?.pageCopy : undefined;
+    const selectedPageCopy = spanishXbyRelated
+      ? undefined
+      : aidreamcapes
+      ? mirroredAidreamcapesCollectionProfileForSlug(selectedCollectionSlug)
+      : storefrontContext?.pageCopy;
     const selectedPacks = activeCreativePacksForCollectionSlug(creativePacks, selectedCollectionSlug, site);
     const selectedPackIds = new Set(selectedPacks.map((pack) => pack.id));
     const relatedPacks = creativePacks
