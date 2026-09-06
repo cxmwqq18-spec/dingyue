@@ -3141,7 +3141,7 @@ function mapAidreamcapesProfileBrand(value: unknown): unknown {
   return value;
 }
 
-function mirroredAidreamcapesCollectionProfile(slug: string): SeoUseCaseProfile | undefined {
+export function mirroredAidreamcapesCollectionProfileForSlug(slug: string): SeoUseCaseProfile | undefined {
   const source = mydreamshootsPageCopyForSlug(slug);
   return source ? mapAidreamcapesProfileBrand(source) as SeoUseCaseProfile : undefined;
 }
@@ -3220,7 +3220,7 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
       : toolSource[canonicalSlug] ?? missingToolDirectoryContent(canonicalSlug);
   const collectionProfile = kind === "collection" && !spanishXby
     ? aidreamcapes
-      ? mirroredAidreamcapesCollectionProfile(canonicalSlug)
+      ? mirroredAidreamcapesCollectionProfileForSlug(canonicalSlug)
       : mydreamshootsPageCopyForRoute({
           siteId,
           routeKind: "ai-image-theme-leaf",

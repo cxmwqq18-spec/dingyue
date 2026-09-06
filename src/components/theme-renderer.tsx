@@ -34,8 +34,8 @@ import { TalkingPhotoLanding } from "@/components/storefront/talking-photo-landi
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
 import { cleanHost, hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
 import { mydreamshootsPageCopyForRoute, type MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
+import { mirroredAidreamcapesCollectionProfileForSlug } from "@/lib/dreamshoot-seo-content";
 import {
-  aidreamcapesCategoryUseCaseProfileForSlug,
   type PhotoPackageUseCaseProfile
 } from "@/lib/photo-package-use-case-profiles";
 import { mydreamshootsLegacyPublicPathTarget, shortPolicyPath } from "@/lib/site-route-canonical";
@@ -5560,7 +5560,7 @@ function aidreamcapesProfileForSlug(site: Site, slug: string | null | undefined)
     return undefined;
   }
 
-  return aidreamcapesCategoryUseCaseProfileForSlug(slug);
+  return slug ? mirroredAidreamcapesCollectionProfileForSlug(slug) : undefined;
 }
 
 function aidreamcapesProfileForPack(site: Site, pack: CreativePack | null | undefined): PhotoPackageUseCaseProfile | undefined {
@@ -5568,9 +5568,9 @@ function aidreamcapesProfileForPack(site: Site, pack: CreativePack | null | unde
     return undefined;
   }
 
-  return aidreamcapesCategoryUseCaseProfileForSlug(pack?.categoryRecord?.slug)
-    ?? aidreamcapesCategoryUseCaseProfileForSlug(pack?.categoryRecord?.parent?.slug)
-    ?? aidreamcapesCategoryUseCaseProfileForSlug(pack?.category);
+  return mirroredAidreamcapesCollectionProfileForSlug(pack?.categoryRecord?.slug ?? "")
+    ?? mirroredAidreamcapesCollectionProfileForSlug(pack?.categoryRecord?.parent?.slug ?? "")
+    ?? mirroredAidreamcapesCollectionProfileForSlug(pack?.category ?? "");
 }
 
 function dreamshootPackImageSet(site: Site, pack: CreativePack, limit = 2): string[] {
