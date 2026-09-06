@@ -17,8 +17,9 @@ const SITE_ID = assertAllowedSite(process.env.VALENTINES_VIDEO_SITE_ID || "site_
 assert.equal(SITE_ID, "site_dreamshoot", "This scoped sync only supports the MyDreamShoots storefront.");
 
 const PAGE_SLUG = "/ai-save-the-date/valentines-day";
-const VIDEO_URL = "/assets/dreamshoot/save-the-date/valentines-day/valentines-day-save-the-date.mp4";
-const VIDEO_FILE = path.join(process.cwd(), "public", VIDEO_URL.replace(/^\/+/, ""));
+const VIDEO_PATH = "/assets/dreamshoot/save-the-date/valentines-day/valentines-day-save-the-date.mp4";
+const VIDEO_URL = `${VIDEO_PATH}?v=20260906valentines1`;
+const VIDEO_FILE = path.join(process.cwd(), "public", VIDEO_PATH.replace(/^\/+/, ""));
 const target = String(argumentValue("--target") || process.env.DATABASE_TARGET || "local").trim().toLowerCase();
 const apply = hasArgument("--apply") && !hasArgument("--dry-run");
 const productionConfirmed = hasArgument("--confirm-production") && argumentValue("--confirm") === "mydreamshoots-valentines-day-video";
@@ -89,7 +90,7 @@ try {
     id: `media_${SITE_ID}_valentines_day_save_the_date_video`,
     siteId: SITE_ID,
     label: "Valentine's Day Save the Date hero video",
-    storageKey: VIDEO_URL,
+    storageKey: VIDEO_PATH,
     mimeType: "video/mp4",
     usageType: "theme",
     sourceType: "valentines-day-hero-video",
@@ -120,7 +121,7 @@ try {
       await tx.themePage.update({ where: { id: themePage.id }, data: { draftJson: draft.next, publishedJson: published.next, updatedAt: new Date() } });
       await tx.themeSettings.update({ where: { id: settings.id }, data: { draftJson: settingsDraft.next, publishedJson: settingsPublished.next, updatedAt: new Date() } });
       await tx.mediaAsset.upsert({
-        where: { siteId_storageKey: { siteId: SITE_ID, storageKey: VIDEO_URL } },
+        where: { siteId_storageKey: { siteId: SITE_ID, storageKey: VIDEO_PATH } },
         create: mediaAsset,
         update: {
           label: mediaAsset.label,
@@ -137,14 +138,14 @@ try {
     const [liveReadback, settingsReadback, assetReadback] = await Promise.all([
       prisma.livePage.findUnique({ where: { id: livePage.id }, select: { contentJson: true } }),
       prisma.themeSettings.findUnique({ where: { id: settings.id }, select: { draftJson: true, publishedJson: true } }),
-      prisma.mediaAsset.findUnique({ where: { siteId_storageKey: { siteId: SITE_ID, storageKey: VIDEO_URL } }, select: { storageKey: true, mimeType: true, altText: true } })
+      prisma.mediaAsset.findUnique({ where: { siteId_storageKey: { siteId: SITE_ID, storageKey: VIDEO_PATH } }, select: { storageKey: true, mimeType: true, altText: true } })
     ]);
     assert.equal(liveReadback?.contentJson?.sections?.save_date_hero?.settings?.videoUrl, VIDEO_URL, "LivePage hero video readback failed");
     for (const json of [settingsReadback?.draftJson, settingsReadback?.publishedJson]) {
       const item = json?.saveTheDateNavigation?.groups?.flatMap((group) => group.items || []).find((candidate) => candidate.href === PAGE_SLUG);
       assert.equal(item?.videoUrl, VIDEO_URL, "Save the Date homepage video readback failed");
     }
-    assert.equal(assetReadback?.storageKey, VIDEO_URL, "video media asset readback failed");
+    assert.equal(assetReadback?.storageKey, VIDEO_PATH, "video media asset readback failed");
     assert.equal(assetReadback?.mimeType, "video/mp4", "video media asset mime type readback failed");
   }
 
