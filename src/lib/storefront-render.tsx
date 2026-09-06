@@ -2669,10 +2669,11 @@ function renderThemePage({
       footerLinks: settings.navigation.footerLinks.filter((link) => navigationLinkIsPublished(link.href))
     }
   };
-  const activePackIds = storefrontContext
+  const usePublishedSnapshotFilters = storefrontContext && !isAidreamcapesStorefront(currentSite);
+  const activePackIds = usePublishedSnapshotFilters
     ? new Set(storefrontContext.catalog.activePacks.map((pack) => pack.id))
     : undefined;
-  const activeProductIds = storefrontContext
+  const activeProductIds = usePublishedSnapshotFilters
     ? new Set(storefrontContext.offers.active.map((offer) => offer.product.id))
     : undefined;
   // Best Photo is a public catalog view. Keep all database-backed themes visible
@@ -3023,7 +3024,7 @@ export async function renderStorefrontSectionNode({
 }): Promise<ReactElement | undefined> {
   const payload = await renderStorefrontSectionPayload({ siteSlug, slug, sectionId, query, routeMode });
   if (!payload) return undefined;
-  const activePackIds = payload.storefrontContext
+  const activePackIds = payload.storefrontContext && !isAidreamcapesStorefront(payload.clientSite)
     ? new Set(payload.storefrontContext.catalog.activePacks.map((pack) => pack.id))
     : undefined;
   const preserveBestPhotoCatalog = isPrimaryMydreamshootsCapabilitySite(payload.clientSite) && payload.renderContext.pagePath === "/best-ai-image";
