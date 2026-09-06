@@ -3308,7 +3308,7 @@ export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryK
 
 export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, options: { focused?: boolean; site?: Site; publishedCopy?: MyDreamshootsPageCopy } = {}): ThemePageJson {
   const canonicalSlug = canonicalSeoDirectorySlugForSite(options.site, kind, normalizeDirectorySlug(rawSlug));
-  const item = options.publishedCopy && kind === "collection"
+  const item = options.publishedCopy && kind === "collection" && !isAidreamcapesSite(options.site)
     ? seoDirectoryContentFromPublishedCopy(options.publishedCopy, canonicalSlug, options.site)
     : getSeoDirectoryContentForSite(options.site, kind, rawSlug);
   const sectionId = `seo_${kind}_${item.slug}`;
