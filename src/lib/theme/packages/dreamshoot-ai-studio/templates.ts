@@ -2910,6 +2910,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
         headingLevel: "h1",
         tone: "dark",
         imageUrl: assets.catalogHeadshotCard,
+        imageObjectPosition: "50% 10%",
         primaryCta: "Email support",
         primaryHref: "mailto:{LIVE_SUPPORT_EMAIL}"
       }, [

@@ -84,6 +84,7 @@ function updateContactPage(input) {
     body: "Need help with an account, an upload, credits, billing, privacy, or a finished result? Contact myDreamshoots and include the details below so we can understand the request and route it to the right support path.",
     headingLevel: "h1",
     tone: "dark",
+    imageObjectPosition: "50% 10%",
     primaryCta: "Email support",
     primaryHref: "mailto:support@mydreamshoots.com"
   };

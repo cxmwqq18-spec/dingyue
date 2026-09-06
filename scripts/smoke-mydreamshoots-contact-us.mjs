@@ -21,6 +21,7 @@ function assertContactJson(json, label) {
   assert.equal(intro.settings.body, "Need help with an account, an upload, credits, billing, privacy, or a finished result? Contact myDreamshoots and include the details below so we can understand the request and route it to the right support path.", `${label} intro copy changed`);
   assert.equal(intro.settings.primaryCta, "Email support", `${label} primary CTA changed`);
   assert.equal(intro.settings.primaryHref, "mailto:support@mydreamshoots.com", `${label} primary href changed`);
+  assert.equal(intro.settings.imageObjectPosition, "50% 10%", `${label} image crop position changed`);
   assert(!Object.hasOwn(intro.settings, "secondaryCta"), `${label} duplicate secondary CTA remains`);
   assert(!Object.hasOwn(intro.settings, "secondaryHref"), `${label} duplicate secondary href remains`);
   assert.deepEqual(intro.blocks.map((block) => [block.settings.meta, block.settings.title]), [

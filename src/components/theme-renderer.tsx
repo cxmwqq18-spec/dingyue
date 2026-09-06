@@ -17019,6 +17019,9 @@ function SectionView({
       : "";
     const body = `${storefrontPaidToolText(stripHtml(resolvedBody))}${operatorSuffix}`.trim();
     const configuredImage = setting(section, "imageUrl", firstImage(section));
+    const imageObjectPosition = renderContext.pagePath === "/contact-us" && isMyDreamShootsProfileSite(site)
+      ? setting(section, "imageObjectPosition", "50% 50%")
+      : "50% 50%";
     const workflowIntroFallbackImage = workflowIntroRichText
       ? aidreamcapesRichText
         ? aidreamcapesFallbackHeroImages[0]
@@ -17132,7 +17135,7 @@ function SectionView({
             </div>
             {applicationForm && formFields.length ? (
               <div className={dark ? "rounded-[28px] border border-white/10 bg-white/[0.06] p-5 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/80 p-5 shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"}>
-                {image ? <img className="mb-5 aspect-[16/8] w-full rounded-[20px] object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} /> : null}
+                {image ? <img className="mb-5 aspect-[16/8] w-full rounded-[20px] object-cover" style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} /> : null}
                 <PartnerApplicationForm
                   dark={dark}
                   siteId={site.id}
@@ -17150,7 +17153,7 @@ function SectionView({
               </div>
             ) : image ? (
               <div className={`${dark ? "overflow-hidden rounded-[28px] border border-white/10 bg-zinc-900 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "overflow-hidden rounded-[28px] border border-[#ded5ca] bg-[#efe6d9] shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"} ${workflowIntroRichText ? "relative aspect-[16/11] lg:aspect-auto lg:h-full lg:min-h-[34rem]" : ""}`}>
-                <img className={workflowIntroRichText ? "absolute inset-0 h-full w-full max-w-full object-cover" : "aspect-[16/11] h-full w-full max-w-full object-cover"} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} />
+                <img className={workflowIntroRichText ? "absolute inset-0 h-full w-full max-w-full object-cover" : "aspect-[16/11] h-full w-full max-w-full object-cover"} style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} />
               </div>
             ) : (
               <div className={`${dark ? "rounded-[28px] border border-white/10 bg-white/[0.05] p-6" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/76 p-6 shadow-[0_24px_70px_-58px_rgba(20,22,26,0.22)]"} ${noImageCardJourney ? "flex h-full flex-col" : ""}`}>
