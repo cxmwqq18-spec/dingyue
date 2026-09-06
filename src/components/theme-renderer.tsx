@@ -17020,7 +17020,7 @@ function SectionView({
     const body = `${storefrontPaidToolText(stripHtml(resolvedBody))}${operatorSuffix}`.trim();
     const configuredImage = setting(section, "imageUrl", firstImage(section));
     const imageObjectPosition = renderContext.pagePath === "/contact-us" && isMyDreamShootsProfileSite(site)
-      ? setting(section, "imageObjectPosition", "50% 50%")
+      ? setting(section, "imageObjectPosition", "50% 10%")
       : "50% 50%";
     const workflowIntroFallbackImage = workflowIntroRichText
       ? aidreamcapesRichText
