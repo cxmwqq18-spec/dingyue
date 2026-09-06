@@ -87,7 +87,7 @@ const MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS: Record<string, string> = {
 };
 
 const SEO_HEAD_TAG_RE =
-  /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>/gi;
+  /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?:(?=[^>]*type=["']application\/ld\+json["'])|(?=[^>]*data-storefront-json-ld=["'][^"']+["']))[^>]*>[\s\S]*?<\/script>/gi;
 const LEADING_SEO_HEAD_TAG_RE =
   /^(?:\s*(?:<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:charset=|name=["'](?:viewport|description|robots|twitter:(?:card|title|description|image))["']|http-equiv=["']Content-Language["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>))*/i;
 const ESSENTIAL_HEAD_TAG_RE =
@@ -381,6 +381,14 @@ function moveSeoTagsBeforeResources(html: string): string {
     return "";
   });
   const strippedAfterHead = afterHeadContent.replace(SEO_HEAD_TAG_RE, (tag) => {
+    if (/\sdata-storefront-json-ld=["']body-marker["']/i.test(tag)) {
+      const headTag = tag
+        .replace(/\sdata-storefront-json-ld=["'][^"']+["']/i, "")
+        .replace(/\stype=["']application\/json["']/i, ' type="application/ld+json"')
+        .replace(/\sid=["']storefront-json-ld-(\d+)["']/i, ' id="storefront-json-ld-head-$1"');
+      seoTags.push(headTag);
+      return tag;
+    }
     seoTags.push(tag);
     return "";
   });
