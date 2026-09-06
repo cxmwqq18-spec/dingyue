@@ -598,6 +598,42 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       });
     }
   }
+  if (isAidreamcapesSite(site)) {
+    // Aidreamcapes serves collection detail pages from the shared live
+    // catalogue rather than the MyDreamShoots publication manifest. Keep
+    // those canonical theme URLs discoverable without borrowing My's route
+    // ownership or publication IDs.
+    for (const pack of (state.creativePacks ?? []).filter((candidate) => candidate.siteId === site.id && candidate.status === "active" && candidate.creditCost > 0 && candidate.outputCount > 0)) {
+      const rawSlug = pack.categoryRecord?.slug || pack.category || pack.name;
+      const path = canonicalDirectoryPathForSite(site, publicCollectionPathForSite(site, rawSlug));
+      const route = parsePublicCollectionRouteForSite(site, path);
+      if (route?.kind !== "item") continue;
+      const loc = sitemapUrl(site, path);
+      if (entries.has(loc)) continue;
+      entries.set(loc, {
+        loc,
+        images: packSitemapImages(site, pack),
+        lastmod: pack.createdAt,
+        changefreq: sitemapChangeFrequencyForPath(path),
+        priority: sitemapPriorityForPath(path)
+      });
+    }
+    for (const page of snapshot.pages.filter((candidate) => candidate.slug.startsWith("/ai-save-the-date/"))) {
+      const path = canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page));
+      if (!path.startsWith("/ai-save-the-date/")) continue;
+      const context = resolvePublishedStorefrontContext(snapshot, page);
+      if (!context.seo.index || !context.seo.sitemapEligible) continue;
+      const loc = sitemapUrl(site, path);
+      if (entries.has(loc)) continue;
+      entries.set(loc, {
+        loc,
+        images: collectPageSitemapImages(site, page),
+        lastmod: pageContentLastModified(page, snapshot.publication?.publishedAt),
+        changefreq: sitemapChangeFrequencyForPath(path),
+        priority: sitemapPriorityForPath(path)
+      });
+    }
+  }
   return [...entries.values()].sort((left, right) => left.loc.localeCompare(right.loc));
 }
 
