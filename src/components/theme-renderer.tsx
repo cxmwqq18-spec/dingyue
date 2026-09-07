@@ -2811,13 +2811,23 @@ function dreamshootShowcaseImagePath(site: Site, slug: string): string {
     return spanishXbyPublicAssetUrl(site, `/assets/sites/site_aidreamcapes/homepage-showcase/images/${normalizedSlug}.webp?v=${dreamshootHomepageShowcaseVersion}`);
   }
   if (isAidreamcapesSite(site) && !isSpanishStorefrontSite(site)) {
-    return spanishXbyPublicAssetUrl(site, `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/${normalizedSlug}.webp?v=${dreamshootHomepageShowcaseVersion}`);
+    return aidreamcapesHomepageCategoryShowcaseImagePath(site, normalizedSlug);
   }
   return spanishXbyPublicAssetUrl(site, `/assets/dreamshoot/generated/homepage-showcase/images/${normalizedSlug}.webp?v=${dreamshootHomepageShowcaseVersion}`);
 }
 
 function aidreamcapesHomepageCategoryShowcaseImagePath(site: Site, slug: string): string {
-  return spanishXbyPublicAssetUrl(site, `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/${dreamshootCategorySlug(slug)}.webp?v=${aidreamcapesFanHolidayAssetVersion}`);
+  const normalizedSlug = dreamshootCategorySlug(slug);
+  const assetSlugAliases: Record<string, string> = {
+    "world-cup-fan-photos": "game-day-group-photos",
+    "christmas-couple": "christmas-holiday-albums",
+    "christmas-photos": "christmas-holiday-albums",
+    "creator-portraits": "premiere-style-portraits",
+    "gala-photos": "premiere-style-portraits",
+    "professional-headshots": "premiere-style-portraits"
+  };
+  const assetSlug = assetSlugAliases[normalizedSlug] ?? normalizedSlug;
+  return spanishXbyPublicAssetUrl(site, `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/${assetSlug}.webp?v=${aidreamcapesFanHolidayAssetVersion}`);
 }
 
 function generationShowcaseImageDedupeKey(site: Site, slug: string): string {
@@ -12930,7 +12940,7 @@ function SectionView({
       ? mydreamProfileSite ? "/ai-video-generation" : "/best-ai-video"
       : setting(section, "videoAllHref", "/best-ai-video");
     const primaryHref = canonicalGeneratorCopy ? "/app/create" : setting(section, "primaryHref", "/app/create");
-    const useMydreamShowcaseGrid = mydreamProfileSite && renderContext.pagePath === "/";
+    const useMydreamShowcaseGrid = (mydreamProfileSite || (aidreamcapes && !isSpanishXbySite(site))) && renderContext.pagePath === "/";
     const configuredVideoItemLimit = numberSetting(section, "videoItemLimit", numberSetting(section, "itemLimit", 8));
     const videoItemLimit = useMydreamShowcaseGrid
       ? Number.POSITIVE_INFINITY
@@ -12956,7 +12966,7 @@ function SectionView({
         role: "gallery",
         title: card.title
       });
-      return useMydreamShowcaseGrid ? MYDREAMSHOOTS_HOMEPAGE_SHOWCASE_ALTS[card.productIndex] ?? fallback : fallback;
+      return mydreamProfileSite ? MYDREAMSHOOTS_HOMEPAGE_SHOWCASE_ALTS[card.productIndex] ?? fallback : fallback;
     };
     const imageProductRowCount = Math.max(1, Math.ceil(imageProductCards.length / 7));
     type ImageProductWallCard = (typeof imageProductCards)[number] & { railKey: string };
