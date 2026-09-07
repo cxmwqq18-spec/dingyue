@@ -95,7 +95,7 @@ function Link(props: StorefrontInstantLinkProps) {
 }
 
 const dreamShootsVisibleTitle = "myᕲreamshoots";
-const aidreamcapesVisibleTitle = "ልiጋreamርapes";
+const aidreamcapesVisibleTitle = "Aidreamcapes";
 
 import { getSectionSchema, getThemeBlockSchema, readThemeFieldValue, resolveThemeFieldSchema } from "@/lib/section-schema";
 import { getSectionEntries } from "@/lib/theme";
