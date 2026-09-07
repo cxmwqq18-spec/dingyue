@@ -318,13 +318,13 @@ function buildSettings(source) {
       contactPhone: "",
       contactAddress: "",
       copyright: "© 2026 Aidreamcapes.com. All rights reserved.",
-      instagramUrl: "",
-      facebookUrl: "",
+      instagramUrl: "https://www.instagram.com/aidreamcapes",
+      facebookUrl: "https://www.facebook.com/aidreamcapes",
       threadsUrl: "",
-      pinterestUrl: "",
-      youtubeUrl: "",
-      twitterUrl: "",
-      xUrl: "",
+      pinterestUrl: "https://www.pinterest.com/aidreamcapes",
+      youtubeUrl: "https://www.youtube.com/@aidreamcapes",
+      twitterUrl: "https://x.com/aidreamcapes",
+      xUrl: "https://x.com/aidreamcapes",
       tiktokUrl: ""
     };
   }
