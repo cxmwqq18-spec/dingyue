@@ -2715,7 +2715,7 @@ function renderThemePage({
         lightweightChrome={lightweightChrome}
         storefrontContext={storefrontContext}
       />
-      {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} /> : null}
+      {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} preserveBodyMarker={isAidreamcapesStorefront(currentSite) || pagePath === "/about-us"} /> : null}
     </div>
   );
 }

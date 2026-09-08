@@ -10,7 +10,7 @@ const billingCycles = ["month", "quarter", "half_year"] as const;
 type PricingPlanPrice = {
   id: string; formattedAmount: string; formattedOriginalAmount: string; formattedEquivalentMonthly: string;
   periodLabel: string; planSubtitle: string; discountLabel: string; features: string[]; featured: boolean;
-  bestValue: boolean; badgeLabel: string; buttonLabel: string; cartHref: string;
+  bestValue: boolean; badgeLabel: string; buttonLabel: string; cartHref: string; checkoutEnabled: boolean;
 };
 type PricingPlan = { id: string; name: string; prices: Partial<Record<BillingCycle, PricingPlanPrice>> };
 type PricingSidePanel = { eyebrow: string; title: string; body: string; items: Array<readonly [string, string]> };
@@ -73,7 +73,13 @@ export function PricingBillingInteractive({
           {billingCycle !== "month" && price.formattedEquivalentMonthly ? <p className="mt-2 text-sm font-medium text-[#7f786f]">{locale === "es" ? `Equivale a ${price.formattedEquivalentMonthly} / mes` : `Equivalent to ${price.formattedEquivalentMonthly} / month`}</p> : null}
           {price.formattedOriginalAmount ? <div className="mt-3 flex flex-wrap items-center gap-2"><span className="text-sm text-[#8a837b] line-through">{price.formattedOriginalAmount}</span>{price.discountLabel ? <span className="rounded-full bg-[#f4e0c7] px-2.5 py-1 text-[0.72rem] font-semibold text-[#8a5728]">{price.discountLabel}</span> : null}</div> : null}
           <div className="mt-6 grid gap-2.5 text-[0.88rem] text-[#4f4944]">{price.features.map((feature, index) => <div className="flex items-start gap-3" key={`${id}_${feature}_${index}`}><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#b07b47]" strokeWidth={1.8} /><span className="min-w-0 break-words">{feature}</span></div>)}</div>
-          <StorefrontInstantLink className={`mt-6 inline-flex min-h-[48px] w-full items-center justify-center rounded-[10px] text-[0.95rem] font-semibold ${price.featured ? "bg-[#c99152] text-white" : "bg-[#171514] text-white"}`} href={price.cartHref}>{price.buttonLabel}</StorefrontInstantLink>
+          {price.checkoutEnabled ? (
+            <StorefrontInstantLink className={`mt-6 inline-flex min-h-[48px] w-full items-center justify-center rounded-[10px] text-[0.95rem] font-semibold ${price.featured ? "bg-[#c99152] text-white" : "bg-[#171514] text-white"}`} href={price.cartHref}>{price.buttonLabel}</StorefrontInstantLink>
+          ) : (
+            <span aria-disabled="true" className="mt-6 inline-flex min-h-[48px] w-full cursor-not-allowed items-center justify-center rounded-[10px] bg-[#e8e3dc] text-center text-[0.88rem] font-semibold text-[#71695f]" title="Checkout is being prepared for this storefront">
+              {price.buttonLabel}
+            </span>
+          )}
         </div>)}
       </div>
       <aside className={emphasizeBillingSwitch ? "relative min-w-0" : "relative hidden min-w-0 xl:block"}><div className="flex h-auto min-w-0 flex-col gap-6 rounded-[20px] border border-white/10 bg-white/[0.06] p-6"><div className="min-w-0"><p className="text-[0.8rem] font-semibold text-[#B86E36]">{activeSidePanel.eyebrow}</p>{activeSidePanel.title ? <h3 className="mt-3 max-w-full break-words text-[1.9rem] font-semibold leading-[1.02] [font-family:var(--site-title-font)]">{activeSidePanel.title}</h3> : null}<p className="mt-4 max-w-[26rem] break-words text-[0.94rem] leading-7 text-white/68">{activeSidePanel.body}</p></div><div className="grid gap-3">{activeSidePanel.items.map(([label, detail]) => <div className="min-w-0 rounded-[16px] border border-white/10 bg-white/[0.06] px-4 py-4" key={label}><p className="break-words text-sm font-semibold text-white">{label}</p><p className="mt-1 break-words text-sm leading-6 text-white/64">{detail}</p></div>)}</div></div></aside>

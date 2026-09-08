@@ -38,6 +38,8 @@ import { runThemePublishPreflight, summarizeThemeGlobalVisuals, type PublishPref
 import { mydreamshootsPageCopyForRoute } from "@/lib/mydreamshoots-page-copy";
 import {
   buildPublishedPageMediaProjection,
+  type MyDreamshootsPublishedRouteManifestRow,
+  type MyDreamshootsSiteId,
   mydreamshootsPublishedPageEntities,
   mydreamshootsPublishedRouteManifest,
   publishedLinkEntityId,
@@ -72,6 +74,69 @@ import type {
   ThemeSettings,
   ThemeSettingValue
 } from "@/lib/types";
+
+function usesDreamshootPublicationProjection(site: Pick<Site, "id" | "slug">): boolean {
+  const slug = site.slug.trim().toLowerCase();
+  return isPrimaryMydreamshootsSite(site) || site.id === "site_aidreamcapes" || slug === "aidreamcapes";
+}
+
+function dreamshootPublicationSiteId(site: Pick<Site, "id">): MyDreamshootsSiteId {
+  return site.id === "site_aidreamcapes" ? "site_aidreamcapes" : site.id === "site_grownstride_test" ? "site_grownstride_test" : "site_dreamshoot";
+}
+
+function dreamshootPublicationRoutesForSite(
+  site: Pick<Site, "id" | "slug">,
+  creativePacks: PublishPreflightCreativePack[]
+): MyDreamshootsPublishedRouteManifestRow[] {
+  const routes = mydreamshootsPublishedRouteManifest(dreamshootPublicationSiteId(site));
+  if (site.id !== "site_aidreamcapes" && site.slug.trim().toLowerCase() !== "aidreamcapes") return routes;
+  const packsByCategory = new Map<string, PublishPreflightCreativePack>(
+    creativePacks
+      .filter((pack) => pack.status === "active")
+      .map((pack): [string, PublishPreflightCreativePack] => [String(pack.category ?? "").trim().toLowerCase(), pack])
+      .filter(([category]) => Boolean(category))
+  );
+  return routes.map((route) => {
+    const mappedPack = packsByCategory.get(route.canonicalSlug);
+    if (!mappedPack) {
+      return {
+        ...route,
+        status: "review_required" as const,
+        indexable: false,
+        sitemapEligible: false,
+        reviewReason: route.reviewReason || "AIDREAMCAPES_PACK_MAPPING_REQUIRED"
+      };
+    }
+    return {
+      ...route,
+      expectedPackId: mappedPack.id
+    };
+  });
+}
+
+function normalizeMediaOwnershipPath(value: string | null | undefined): string {
+  const raw = String(value ?? "").trim().split(/[?#]/, 1)[0] ?? "";
+  if (!raw) return "";
+  if (/^https?:\/\//i.test(raw)) {
+    try {
+      return normalizeMediaOwnershipPath(new URL(raw).pathname);
+    } catch {
+      return raw;
+    }
+  }
+  if (raw.startsWith("/assets/")) return raw;
+  if (raw.startsWith("assets/")) return `/${raw}`;
+  if (raw.startsWith("sites/")) return `/assets/${raw}`;
+  return raw.startsWith("/") ? raw : `/${raw}`;
+}
+
+function mediaAssetOwnsManifestItem(site: Pick<Site, "id">, asset: MediaAsset, src: string, alt: string): boolean {
+  if (asset.siteId !== site.id || asset.altText !== alt) return false;
+  const expectedPath = normalizeMediaOwnershipPath(src);
+  return [asset.storageKey, asset.previewUrl, asset.originUrl]
+    .map((value) => normalizeMediaOwnershipPath(value))
+    .some((value) => value === expectedPath);
+}
 
 function asPublishedMediaPack(pack: PublishPreflightCreativePack | undefined): {
   id: string;
@@ -228,7 +293,7 @@ function buildPublishedStandardPageMedia(
   leafRoutes: ReturnType<typeof mydreamshootsPublishedRouteManifest>,
   leafMedia: ReturnType<typeof buildPublishedPageMediaProjection>[]
 ): PublishedStandardPageMediaProjection[] {
-  if (!isPrimaryMydreamshootsSite(site)) return [];
+  if (!usesDreamshootPublicationProjection(site)) return [];
   // Inventory is authoritative: a missing page still produces a
   // review_required projection instead of silently shrinking the expected set.
   const paths = MYDREAMSHOOTS_STANDARD_SEO_INVENTORY.map((item) => item.canonicalPath);
@@ -250,7 +315,7 @@ function buildPublishedStandardPageMedia(
     const expectedMediaCount = page?.publishedJson.contentContract?.mediaCount ?? 11;
     const manifestAssetsReady = !SAVE_THE_DATE_EDITORIAL_PATHS.includes(canonicalPath as (typeof SAVE_THE_DATE_EDITORIAL_PATHS)[number]) || (
       manifest.length === expectedMediaCount &&
-      manifest.every((item) => site.mediaAssets?.some((asset) => asset.siteId === site.id && asset.storageKey === item.src && asset.altText === item.alt))
+      manifest.every((item) => site.mediaAssets?.some((asset) => mediaAssetOwnsManifestItem(site, asset, item.src, item.alt)))
     );
     const status = page && primaryImage && primaryImageAlt && manifestAssetsReady ? "ready" as const : "review_required" as const;
     const revision = projectionRevision({ pageEntityId, pageId: page?.id, canonicalPath, primaryImage, primaryImageAlt, sitemapImages, status });
@@ -273,7 +338,7 @@ function buildPublishedStandardPageMedia(
 }
 
 function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStandardRouteProjection | undefined {
-  if (!isPrimaryMydreamshootsSite(site)) return undefined;
+  if (!usesDreamshootPublicationProjection(site)) return undefined;
   if (page.pageType === "ai_tool" && page.slug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH) return undefined;
   const canonicalPath = page.publishedJson.seo?.canonicalPath || page.publishedJson.seo?.canonical || page.slug;
   const standardPaths = new Set<string>(MYDREAMSHOOTS_STANDARD_SEO_ROUTES);
@@ -304,7 +369,7 @@ function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStan
   const manifest = page.publishedJson.mediaManifest ?? [];
   const mediaCount = contract?.mediaCount ?? 11;
   const manifestReady = manifest.length === mediaCount && new Set(manifest.map((item) => item.src)).size === mediaCount && manifest.every((item) => item.src && item.alt && item.width && item.height && ["hero", "content"].includes(item.role ?? "content"));
-  const mediaReady = !strictEditorial || (manifestReady && manifest.every((item) => site.mediaAssets?.some((asset) => asset.siteId === site.id && asset.storageKey === item.src && asset.altText === item.alt)));
+  const mediaReady = !strictEditorial || (manifestReady && manifest.every((item) => site.mediaAssets?.some((asset) => mediaAssetOwnsManifestItem(site, asset, item.src, item.alt))));
   const noRawMarkdown = !JSON.stringify(page.publishedJson).match(/---|```|`[^`]+`|\[[^\]]+\]\([^)]*\)/);
   const editorialReady = !strictEditorial || Boolean(
     contract?.schema === "editorial-page-v1" && contract.pageKey && contract.faqCount &&
@@ -326,7 +391,7 @@ function standardContentRouteForPage(site: Site, page: ThemePage): PublishedStan
   const publishable = editorialReady;
   return {
     disposition: "render",
-    siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
+    siteId: dreamshootPublicationSiteId(site),
     routeKind: "standard-content",
     canonicalPath,
     pageEntityId,
@@ -573,8 +638,9 @@ export function buildPublicationSnapshot(
   products: Product[] = []
 ): PublishedSeoSnapshot {
   const publishedAt = Date.now();
-  const isMydreamshootsPublicationSite = isPrimaryMydreamshootsSite(site);
-  const sourceRoutes = isMydreamshootsPublicationSite ? mydreamshootsPublishedRouteManifest(site.id as "site_dreamshoot" | "site_grownstride_test") : [];
+  const isMydreamshootsPublicationSite = usesDreamshootPublicationProjection(site);
+  const publicationSiteId = dreamshootPublicationSiteId(site);
+  const sourceRoutes = isMydreamshootsPublicationSite ? dreamshootPublicationRoutesForSite(site, creativePacks) : [];
   const imagePublishedPageCopy = sourceRoutes.map((route) => {
     const copy = mydreamshootsPageCopyForRoute({
       siteId: site.id,
@@ -640,7 +706,7 @@ export function buildPublicationSnapshot(
         const pageRevision = crypto.createHash("sha256").update(JSON.stringify(page.publishedJson)).digest("hex").slice(0, 20);
         const renderRoute: PublishedRouteProjection = {
           disposition: "render",
-          siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
+          siteId: publicationSiteId,
           routeKind: "policy",
           canonicalPath,
           pageEntityId: `mydreamshoots:policy:${canonicalPath.slice(1)}`,
@@ -652,7 +718,7 @@ export function buildPublicationSnapshot(
         };
         const redirects: PublishedRouteProjection[] = aliases.map((aliasPath) => ({
           disposition: "redirect",
-          siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
+          siteId: publicationSiteId,
           routeKind: "policy-alias",
           aliasPath,
           targetPath: canonicalPath,
@@ -665,14 +731,14 @@ export function buildPublicationSnapshot(
       })
     : [];
   const videoTopicPublication = isMydreamshootsPublicationSite
-    ? compileMydreamshootsVideoTopicPublication(site.pages, site.id as "site_dreamshoot" | "site_grownstride_test")
+    ? compileMydreamshootsVideoTopicPublication(site.pages, publicationSiteId)
     : { routes: [], pageEntities: [], pageCopy: [], pageMedia: [], linkRefs: [], navigation: [] };
   const legacyPublicRedirects: PublishedRouteProjection[] = isMydreamshootsPublicationSite
     ? MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS
       .filter(({ targetPath }) => site.pages.some((page) => page.slug === targetPath || page.publishedJson.seo?.canonicalPath === targetPath) || videoTopicPublication.routes.some((route) => route.disposition === "render" && route.canonicalPath === targetPath && route.status === "published"))
       .map(({ aliasPath, targetPath }) => ({
         disposition: "redirect" as const,
-        siteId: site.id as "site_dreamshoot" | "site_grownstride_test",
+        siteId: publicationSiteId,
         routeKind: "legacy-public-alias" as const,
         aliasPath,
         targetPath,
@@ -684,7 +750,7 @@ export function buildPublicationSnapshot(
     : [];
   const publishedRoutes: PublishedRouteProjection[] = [...leafRoutes, ...standardContentRoutes, ...policyRoutes, ...videoTopicPublication.routes, ...legacyPublicRedirects];
   const sourcePageEntities = isMydreamshootsPublicationSite
-    ? mydreamshootsPublishedPageEntities(site.id as "site_dreamshoot" | "site_grownstride_test")
+    ? mydreamshootsPublishedPageEntities(publicationSiteId)
     : [];
   const imagePublishedPageEntities = sourcePageEntities.map((entity) => {
     const route = leafRoutes.find((candidate) => candidate.pageEntityId === entity.pageEntityId);

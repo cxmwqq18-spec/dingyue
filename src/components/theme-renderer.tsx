@@ -530,9 +530,6 @@ type PhotoPackageMegaGroup = {
 };
 
 function visibleSectionEntriesForRoute(entries: Array<[string, SectionInstance]>, pagePath: string, site: Site): Array<[string, SectionInstance]> {
-  if (pagePath === "/" && !isSpanishXbySite(site) && isAidreamcapesSite(site)) {
-    return entries.filter(([, section]) => canonicalSectionType(section.type) !== "video_feature");
-  }
   if (pagePath === "/collections" || pagePath === "/ai-image-generation") {
     let keptTaxonomy = false;
     return entries.filter(([, section]) => {
@@ -1373,7 +1370,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	              ? isDreamShoot
 		                ? "order-1 inline-flex min-w-0 max-w-[13.2rem] shrink items-center gap-2 text-white min-[1536px]:max-w-[16rem] min-[1800px]:max-w-[24rem] min-[1800px]:gap-3"
 	                : isAidreamcapes
-	                  ? "order-1 inline-flex min-w-0 max-w-[12.8rem] shrink items-center gap-2 px-0 py-0 text-white min-[1536px]:max-w-[15rem] min-[1800px]:max-w-[23rem] min-[1800px]:gap-3"
+	                  ? "order-1 inline-flex min-w-[14rem] max-w-[17rem] shrink-0 items-center gap-2 px-0 py-0 text-white min-[1536px]:min-w-[16rem] min-[1536px]:max-w-[20rem] min-[1800px]:min-w-[18rem] min-[1800px]:max-w-[24rem] min-[1800px]:gap-3"
 	                  : "inline-flex items-center gap-3 rounded-[16px] border border-white/10 bg-white px-3 py-2 text-zinc-950 shadow-[0_22px_60px_-38px_rgba(0,0,0,0.75)]"
               : airyCommerceHeader
                 ? isAidreamcapes
@@ -1432,11 +1429,11 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                  {brandMark}
 	                </span>
 	              )}
-              <span className="min-w-0 shrink" title={readableBrandTitle}>
+              <span className={isAidreamcapes && dark ? "min-w-0 shrink-0" : "min-w-0 shrink"} title={readableBrandTitle}>
                 {isDreamShoot && !spanishXby ? (
 	                  <DreamShootsWordmark className={`block truncate text-[1.18rem] font-semibold leading-none tracking-normal [font-family:var(--site-title-font)] min-[1440px]:text-[1.28rem] min-[1536px]:text-[1.4rem] min-[1800px]:text-[1.52rem] ${darkHeaderControls ? "text-white" : "text-[#171514]"}`} label={readableBrandTitle} />
                 ) : (
-                  <span aria-label={readableBrandTitle} className={isDreamShoot && spanishXby ? "block max-w-[min(36vw,19rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.08rem,1.9vw,1.64rem)] font-semibold leading-none text-white [font-family:var(--site-title-font)]" : isAidreamcapes && dark ? "block max-w-[min(42vw,19rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.08rem,1.9vw,1.64rem)] font-semibold leading-none text-white [font-family:var(--site-title-font)]" : lightCommerce || isAidreamcapes ? "block max-w-[min(35vw,18rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1rem,1.72vw,1.42rem)] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)]" : "block text-lg font-semibold tracking-tight text-zinc-950"} title={readableBrandTitle}>
+                  <span aria-label={readableBrandTitle} className={isDreamShoot && spanishXby ? "block max-w-[min(36vw,19rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1.08rem,1.9vw,1.64rem)] font-semibold leading-none text-white [font-family:var(--site-title-font)]" : isAidreamcapes && dark ? "block whitespace-nowrap text-[1.14rem] font-semibold leading-none text-white [font-family:var(--site-title-font)] min-[1536px]:text-[1.3rem] min-[1800px]:text-[1.48rem]" : lightCommerce || isAidreamcapes ? "block max-w-[min(35vw,18rem)] overflow-hidden text-ellipsis whitespace-nowrap text-[clamp(1rem,1.72vw,1.42rem)] font-semibold leading-none text-zinc-950 [font-family:var(--site-title-font)]" : "block text-lg font-semibold tracking-tight text-zinc-950"} title={readableBrandTitle}>
                     <span aria-hidden={isAidreamcapes && !spanishXby ? "true" : undefined}>{visualBrandTitle}</span>
                   </span>
                 )}
@@ -8448,12 +8445,14 @@ function renderLegacySaasSection({
 function PricingTableSectionView({
   section,
   site,
+  products,
   renderContext,
   storefrontContext,
   embedded = false
 }: {
   section: SectionInstance;
   site: Site;
+  products: SiteProduct[];
   renderContext: RenderContext;
   storefrontContext?: StorefrontContext;
   embedded?: boolean;
@@ -8461,21 +8460,38 @@ function PricingTableSectionView({
   const aidreamcapes = isAidreamcapesSite(site);
   const spanishXbyPricing = isSpanishXbySite(site);
   const configuredFeaturedProductId = selectorIdSetting(section, "featuredProductId", "");
-  const displayProducts = Array.from(new Map(
-    projectPublicPricingOffers(storefrontContext).map((offer) => [offer.product.id, offer.product] as const)
-  ).values());
+  const publicPricingOffers = projectPublicPricingOffers(storefrontContext);
+  const planRank = (name: string) => {
+    const normalized = name.trim().toLowerCase();
+    if (normalized === "starter") return 0;
+    if (normalized === "pro") return 1;
+    if (normalized === "premium") return 2;
+    return 99;
+  };
+  const fallbackAidreamcapesProducts = aidreamcapes && publicPricingOffers.length === 0
+    ? products
+        .filter((product) => product.status === "active" && product.type === "subscription")
+        .sort((left, right) => planRank(left.name) - planRank(right.name) || left.name.localeCompare(right.name))
+        .slice(0, 3)
+    : [];
+  const displayProducts = Array.from(new Map([
+    ...publicPricingOffers.map((offer) => [offer.product.id, offer.product] as const),
+    ...fallbackAidreamcapesProducts.map((product) => [product.id, product] as const)
+  ]).values());
   const offerFor = (productId: string, cycle: BillingCycle) => storefrontContext
     ? selectOfferPrice(storefrontContext, productId, cycle)
     : undefined;
+  const priceFor = (product: SiteProduct, cycle: BillingCycle) =>
+    offerFor(product.id, cycle)?.price ?? (aidreamcapes ? product.prices.find((price) => price.interval === cycle && price.status !== "archived") : undefined);
   const billingCycle = billingCycleFromQuery(renderContext.query);
   const canShowBillingSwitch = displayProducts.some((product) =>
-    offerFor(product.id, "quarter") || offerFor(product.id, "half_year")
+    priceFor(product, "quarter") || priceFor(product, "half_year")
   );
   const featuredProductIdsByCycle = billingCycles.reduce<Record<BillingCycle, string | undefined>>((acc, cycle) => {
     acc[cycle] =
-      displayProducts.find((product) => product.id === configuredFeaturedProductId && offerFor(product.id, cycle))?.id ??
-      displayProducts.find((product) => priceMetaBool(offerFor(product.id, cycle)?.price, "featured", false))?.id ??
-      displayProducts.find((product) => offerFor(product.id, cycle))?.id;
+      displayProducts.find((product) => product.id === configuredFeaturedProductId && priceFor(product, cycle))?.id ??
+      displayProducts.find((product) => priceMetaBool(priceFor(product, cycle), "featured", false))?.id ??
+      displayProducts.find((product) => priceFor(product, cycle))?.id;
     return acc;
   }, { month: undefined, quarter: undefined, half_year: undefined });
   const pricingPlans = displayProducts.map((product) => {
@@ -8493,8 +8509,10 @@ function PricingTableSectionView({
       badgeLabel: string;
       buttonLabel: string;
       cartHref: string;
+      checkoutEnabled: boolean;
     }>>>((acc, cycle) => {
-      const price = offerFor(product.id, cycle)?.price;
+      const offer = offerFor(product.id, cycle);
+      const price = offer?.price ?? (aidreamcapes ? product.prices.find((candidate) => candidate.interval === cycle && candidate.status !== "archived") : undefined);
       if (!price) return acc;
       const featured = product.id === featuredProductIdsByCycle[cycle];
       const originalAmountCents = priceMetaNumber(price, "originalAmountCents", 0);
@@ -8513,6 +8531,9 @@ function PricingTableSectionView({
       const planSubtitle = product.metadata?.summary ?? "";
       const features = [localizedPriceCreditsLabel(site, price), ...(product.metadata?.features ?? [])].filter(Boolean);
       const badgeLabel = product.metadata?.badgeLabel ?? (featured ? setting(section, "featuredBadgeLabel", "Most Popular") : "");
+      // Aidreamcapes may show its own unverified plan rows as read-only cards;
+      // keep the established MyDreamShoots checkout behavior untouched.
+      const checkoutEnabled = aidreamcapes ? offer?.checkoutEnabled ?? false : true;
       acc[cycle] = {
         id: price.id,
         formattedAmount: formatCurrency(price.amountCents, price.currency),
@@ -8525,8 +8546,11 @@ function PricingTableSectionView({
         featured,
         bestValue,
         badgeLabel,
-        buttonLabel: product.metadata?.buttonLabel ?? (isSpanishXbySite(site) ? "Seleccionar plan" : "Select plan"),
-        cartHref: publicCartHref(site, product, price)
+        buttonLabel: checkoutEnabled
+          ? product.metadata?.buttonLabel ?? (isSpanishXbySite(site) ? "Seleccionar plan" : "Select plan")
+          : (isSpanishXbySite(site) ? "Proximamente" : "Checkout coming soon"),
+        cartHref: checkoutEnabled ? publicCartHref(site, product, price) : hrefFor(site, "/login"),
+        checkoutEnabled
       };
       return acc;
     }, {});
@@ -12932,12 +12956,12 @@ function SectionView({
     const mydreamProfileSite = isMyDreamShootsProfileSite(site);
     const canonicalGeneratorCopy = !isSpanishXbySite(site) && (mydreamProfileSite || aidreamcapes);
     const imageTitle = canonicalGeneratorCopy ? mydreamProfileSite ? mydreamshootsHomepageCopy.photoTitle : "Featured AI Photo Generators" : setting(section, "imageTitle", "Featured AI Photo Generators");
-    const imageAllLabel = canonicalGeneratorCopy ? mydreamProfileSite ? "VIEW ALL PHOTO" : "View all photos" : setting(section, "imageAllLabel", "View all photos");
+    const imageAllLabel = canonicalGeneratorCopy ? "VIEW ALL PHOTO" : setting(section, "imageAllLabel", "View all photos");
     const imageAllHref = canonicalGeneratorCopy ? "/best-ai-image" : setting(section, "imageAllHref", "/best-ai-image");
     const videoTitle = canonicalGeneratorCopy ? mydreamProfileSite ? mydreamshootsHomepageCopy.videoTitle : "Featured AI Video Generators" : setting(section, "videoTitle", "Featured AI Video Generators");
-    const videoAllLabel = canonicalGeneratorCopy ? mydreamProfileSite ? "VIEW ALL VIDEO" : "View all videos" : setting(section, "videoAllLabel", "View all videos");
+    const videoAllLabel = canonicalGeneratorCopy ? "VIEW ALL VIDEO" : setting(section, "videoAllLabel", "View all videos");
     const videoAllHref = canonicalGeneratorCopy
-      ? mydreamProfileSite ? "/ai-video-generation" : "/best-ai-video"
+      ? "/ai-video-generation"
       : setting(section, "videoAllHref", "/best-ai-video");
     const primaryHref = canonicalGeneratorCopy ? "/app/create" : setting(section, "primaryHref", "/app/create");
     const useMydreamShowcaseGrid = (mydreamProfileSite || (aidreamcapes && !isSpanishXbySite(site))) && renderContext.pagePath === "/";
@@ -13082,6 +13106,7 @@ function SectionView({
         renderContext={renderContext}
         section={embeddedPricingSection}
         site={site}
+        products={products}
         storefrontContext={storefrontContext}
       />
     ) : null;
@@ -13132,7 +13157,7 @@ function SectionView({
     const publishedHomepageItems = homepageShowcases
       .filter((item) => item.status === "published" && item.indexable && item.sitemapEligible)
       .sort((left, right) => left.sortOrder - right.sortOrder || left.title.localeCompare(right.title));
-    if (mydreamProfileSite && renderContext.pagePath === "/") {
+    if (useMydreamShowcaseGrid) {
       if (!publishedHomepageItems.length) {
         // Keep the existing database-backed showcase visible while an older active
         // publication is waiting for the homepage projection migration.
@@ -13287,8 +13312,8 @@ function SectionView({
           <div className={"absolute inset-0 opacity-38 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.72)_1px,transparent_1px)] [background-size:86px_86px]"} />
           <div className="relative mx-auto max-w-[var(--site-content-width)]">
             {trustedProof}
-            {renderPublishedSection(videoItems, videoTitle, mydreamProfileSite ? mydreamshootsHomepageCopy.videoIntro : setting(section, "videoIntro", ""), videoAllHref, videoAllLabel, "video")}
-            {renderPublishedSection(saveTheDateItems, mydreamProfileSite ? mydreamshootsHomepageCopy.saveTheDateTitle : setting(section, "saveTheDateTitle", "AI Save the Date Videos"), mydreamProfileSite ? mydreamshootsHomepageCopy.saveTheDateIntro : setting(section, "saveTheDateIntro", ""), canonicalSaveTheDatePath(setting(section, "saveTheDateAllHref", "/ai-save-the-date/save-the-date")), setting(section, "saveTheDateAllLabel", "VIEW ALL SAVE THE DATE"), "save_the_date")}
+            {renderPublishedSection(videoItems, videoTitle, canonicalGeneratorCopy ? mydreamshootsHomepageCopy.videoIntro : setting(section, "videoIntro", ""), videoAllHref, videoAllLabel, "video")}
+            {renderPublishedSection(saveTheDateItems, canonicalGeneratorCopy ? mydreamshootsHomepageCopy.saveTheDateTitle : setting(section, "saveTheDateTitle", "AI Save the Date Videos"), canonicalGeneratorCopy ? mydreamshootsHomepageCopy.saveTheDateIntro : setting(section, "saveTheDateIntro", ""), canonicalSaveTheDatePath(setting(section, "saveTheDateAllHref", "/ai-save-the-date/save-the-date")), setting(section, "saveTheDateAllLabel", "VIEW ALL SAVE THE DATE"), "save_the_date")}
             {renderPublishedSection(photoItems, imageTitle, setting(section, "photoIntro", ""), imageAllHref, imageAllLabel, "photo")}
             {embeddedPricing}
           </div>
@@ -14528,6 +14553,7 @@ function SectionView({
         renderContext={renderContext}
         section={section}
         site={site}
+        products={products}
         storefrontContext={storefrontContext}
       />
     );
@@ -16552,32 +16578,38 @@ function SectionView({
     const testimonialLimit = reviewMode || isPrimaryMydreamshootsCapabilitySite(site) ? 8 : 4;
     const featuredVoices = [...items, ...fallbackReviewItems].slice(0, testimonialLimit);
     const stackedReviewLayout = reviewMode && isPrimaryMyDreamShootsSite(site);
-    const summaryItems = stackedReviewLayout ? featuredVoices : items;
+    const aidreamcapesCenteredReviewLayout = reviewMode && isAidreamcapesSite(site);
+    const centeredReviewLayout = stackedReviewLayout || aidreamcapesCenteredReviewLayout;
+    const summaryItems = centeredReviewLayout ? featuredVoices : items;
     const spanishXbyUseCaseWall = isSpanishXbySite(site);
     const isDreamShootUseCaseWall = !reviewMode && !spanishXbyUseCaseWall && isPrimaryMydreamshootsCapabilitySite(site);
     const mydreamReviewCopyLayout = stackedReviewLayout && !spanishXbyUseCaseWall;
+    const centeredReviewCopyLayout = aidreamcapesCenteredReviewLayout || mydreamReviewCopyLayout;
+    const aidreamcapesReviewSummary = "Aidreamcapes is an AI photo and video creator platform with creativity creators from all over the world. Creators are not simply content distributors. At their best, they are brokers of trust.";
     return (
       <section className="relative overflow-hidden bg-[#fffaf3] px-5 py-16 text-[#14161a] md:py-18" id={sectionAnchor(section, id)}>
         <div className="mx-auto max-w-[var(--site-content-width)]">
-          <div className={stackedReviewLayout ? "flex flex-col gap-10" : "grid gap-8 lg:grid-cols-[minmax(250px,0.3fr)_minmax(0,0.7fr)]"}>
-            <div className={mydreamReviewCopyLayout ? "flex flex-col items-center gap-5 border-b border-[#e7dccf] pb-9 text-center" : stackedReviewLayout ? "flex flex-col gap-8 border-b border-[#e7dccf] pb-9 lg:flex-row lg:items-end lg:justify-between" : "pt-2"}>
-              <div className={mydreamReviewCopyLayout ? "mx-auto max-w-3xl" : stackedReviewLayout ? "min-w-0 flex-1" : undefined}>
-                {mydreamReviewCopyLayout ? null : <div className="h-px w-14 bg-[#b98a57]" />}
-                <h2 className={mydreamReviewCopyLayout ? "text-center text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-normal text-balance [font-family:var(--site-title-font)]" : `${stackedReviewLayout ? "max-w-[20ch]" : "max-w-[12ch]"} mt-4 text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]`}>
+          <div className={centeredReviewLayout ? "flex flex-col gap-10" : "grid gap-8 lg:grid-cols-[minmax(250px,0.3fr)_minmax(0,0.7fr)]"}>
+            <div className={centeredReviewCopyLayout ? "flex flex-col items-center gap-5 border-b border-[#e7dccf] pb-9 text-center" : stackedReviewLayout ? "flex flex-col gap-8 border-b border-[#e7dccf] pb-9 lg:flex-row lg:items-end lg:justify-between" : "pt-2"}>
+              <div className={centeredReviewCopyLayout ? "mx-auto max-w-3xl" : stackedReviewLayout ? "min-w-0 flex-1" : undefined}>
+                {centeredReviewCopyLayout ? null : <div className="h-px w-14 bg-[#b98a57]" />}
+                <h2 className={centeredReviewCopyLayout ? "text-center text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-normal text-balance [font-family:var(--site-title-font)]" : `${stackedReviewLayout ? "max-w-[20ch]" : "max-w-[12ch]"} mt-4 text-[clamp(2rem,3.4vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-balance [font-family:var(--site-title-font)]`}>
                   {mydreamReviewCopyLayout ? (
                     <DreamshootUnderlinedTitle>{sectionHeading(section, "What Our Customers Say")}</DreamshootUnderlinedTitle>
+                  ) : aidreamcapesCenteredReviewLayout ? (
+                    "What Our Customers Say"
                   ) : isDreamShootUseCaseWall ? (
                     "Ways people use myDreamshoots"
                   ) : (
                     headingSetting(section, "summaryTitle", sectionHeading(section, "Customer results"))
                   )}
                 </h2>
-                <p className={mydreamReviewCopyLayout ? "mx-auto mt-4 max-w-2xl text-[0.92rem] font-medium leading-6 text-[#7c7167]" : `${stackedReviewLayout ? "max-w-3xl" : "max-w-[17rem]"} mt-5 text-[0.94rem] leading-7 text-[#6d665f]`}>
-                  {mydreamReviewCopyLayout ? setting(section, "subtitle", "Our users love us and we love them!") : isDreamShootUseCaseWall ? "Plan sports fan meetups, VIP-style red-carpet looks, Christmas cards, and holiday group albums before spending credits." : setting(section, "summaryBody", setting(section, "subtitle"))}
+                <p className={centeredReviewCopyLayout ? "mx-auto mt-4 max-w-2xl text-[0.92rem] font-medium leading-6 text-[#7c7167]" : `${stackedReviewLayout ? "max-w-3xl" : "max-w-[17rem]"} mt-5 text-[0.94rem] leading-7 text-[#6d665f]`}>
+                  {mydreamReviewCopyLayout ? setting(section, "subtitle", "Our users love us and we love them!") : aidreamcapesCenteredReviewLayout ? aidreamcapesReviewSummary : isDreamShootUseCaseWall ? "Plan sports fan meetups, VIP-style red-carpet looks, Christmas cards, and holiday group albums before spending credits." : setting(section, "summaryBody", setting(section, "subtitle"))}
                 </p>
                 {mydreamReviewCopyLayout ? <p className="mx-auto mt-3 max-w-3xl text-[0.94rem] leading-7 text-[#6d665f]">{setting(section, "summaryBody", "myDreamshoots is an AI photo and video creator platform with creativity creators from all over the world. Creators are not simply content distributors. At their best, they are brokers of trust.")}</p> : null}
               </div>
-              {!isDreamShootUseCaseWall && !mydreamReviewCopyLayout ? (
+              {!isDreamShootUseCaseWall && !centeredReviewCopyLayout ? (
                 <div className={stackedReviewLayout ? "flex flex-wrap items-center gap-x-6 gap-y-4 lg:pb-1" : undefined}>
                   <div className={stackedReviewLayout ? "flex flex-col gap-2" : undefined}>
                     <div className={stackedReviewLayout ? "flex items-center gap-2 text-[#d59a4b]" : "mt-8 flex items-center gap-2 text-[#d59a4b]"}>
@@ -16590,7 +16622,7 @@ function SectionView({
                   </div>
                 </div>
               ) : null}
-              <div className={`${stackedReviewLayout ? "mt-0" : "mt-5"} flex flex-wrap items-center gap-2`}>
+              <div className={`${centeredReviewLayout ? "mt-0" : "mt-5"} flex flex-wrap items-center gap-2`}>
                 {summaryItems.slice(0, 5).map((item, index) => {
                   const name = isDreamShootUseCaseWall ? blockValue(item, "role", blockValue(item, "name", "Use case")) : blockValue(item, "name", "Customer");
                   const initials = name
@@ -16605,12 +16637,12 @@ function SectionView({
                     </div>
                   );
                 })}
-                <span className={`${stackedReviewLayout ? "ml-0" : "ml-1"} rounded-full border border-[#eadfce] bg-white px-3 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#7f786f]`}>
+                <span className={`${centeredReviewLayout ? "ml-0" : "ml-1"} rounded-full border border-[#eadfce] bg-white px-3 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#7f786f]`}>
                   {reviewMode ? (isSpanishXbySite(site) ? "Reseñas positivas" : "Positive reviews") : "Private examples"}
                 </span>
               </div>
             </div>
-            <div className={stackedReviewLayout ? "grid min-w-0 gap-5 sm:grid-cols-2 xl:grid-cols-4" : "grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3"}>
+            <div className={centeredReviewLayout ? "grid min-w-0 gap-5 sm:grid-cols-2 xl:grid-cols-4" : "grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3"}>
               {featuredVoices.map((item, index) => {
                 const avatar = mediaAssetUrl(site, blockValue(item, "avatarUrl", ""));
                 const resultImage = mediaAssetUrl(site, blockValue(item, "resultImageUrl", fallbackHeroImages[index % fallbackHeroImages.length]));
@@ -16643,8 +16675,8 @@ function SectionView({
                   ? `Open ${resultVideo ? "video" : "image"} example for ${cardTitle}`
                   : `Open ${resultVideo ? "video" : "image"} result from ${customerName}'s ${customerRole} review`;
                 return (
-                  <article className={`group flex ${stackedReviewLayout ? "min-h-[410px]" : "min-h-[380px]"} min-w-0 flex-col overflow-hidden rounded-[14px] border border-[#e7dccf] bg-white shadow-[0_22px_58px_-46px_rgba(20,22,26,0.16)]`} key={instanceKey(item, index, "testimonial")} {...xfcartBlockAttrs(mode, item, index, "testimonial")}>
-                    <div className={`flex flex-1 flex-col ${stackedReviewLayout ? "p-5" : "p-[18px]"}`}>
+                  <article className={`group flex ${centeredReviewLayout ? "min-h-[410px]" : "min-h-[380px]"} min-w-0 flex-col overflow-hidden rounded-[14px] border border-[#e7dccf] bg-white shadow-[0_22px_58px_-46px_rgba(20,22,26,0.16)]`} key={instanceKey(item, index, "testimonial")} {...xfcartBlockAttrs(mode, item, index, "testimonial")}>
+                    <div className={`flex flex-1 flex-col ${centeredReviewLayout ? "p-5" : "p-[18px]"}`}>
                       <div className="flex items-center gap-3">
                         {avatar ? (
 	                          <img
@@ -16676,7 +16708,7 @@ function SectionView({
 	                    </div>
 	                    <button
 	                      aria-label={previewAriaLabel}
-                      className={`group/result relative block w-full overflow-hidden bg-[#f2e8da] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b98a57] focus-visible:ring-inset ${stackedReviewLayout ? "aspect-[3/2]" : "h-[180px]"}`}
+                      className={`group/result relative block w-full overflow-hidden bg-[#f2e8da] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b98a57] focus-visible:ring-inset ${centeredReviewLayout ? "aspect-[3/2]" : "h-[180px]"}`}
                       data-dreamshoot-preview-meta={cardMeta}
                       data-dreamshoot-preview-poster={resultImage}
                       data-dreamshoot-preview-src={resultVideo || resultImage}
@@ -16703,7 +16735,7 @@ function SectionView({
 	                          className="absolute inset-0 bg-[#f2e8da]"
 	                          fetchPriority="low"
                           loading="lazy"
-                          sizes={stackedReviewLayout ? "(max-width: 640px) 100vw, (max-width: 1279px) 50vw, 25vw" : "(max-width: 640px) 100vw, 20rem"}
+                          sizes={centeredReviewLayout ? "(max-width: 640px) 100vw, (max-width: 1279px) 50vw, 25vw" : "(max-width: 640px) 100vw, 20rem"}
                           src={resultImage}
                         />
                       )}

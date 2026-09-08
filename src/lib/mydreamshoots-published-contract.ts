@@ -7,7 +7,7 @@ import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json"
 import { mydreamshootsKeywordsForPath } from "@/lib/mydreamshoots-tdk";
 import type { CreativePack, PublishedLinkRef, PublishedPageEntityProjection } from "@/lib/types";
 
-export type MyDreamshootsSiteId = "site_dreamshoot" | "site_grownstride_test";
+export type MyDreamshootsSiteId = "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes";
 const SITE_ID: MyDreamshootsSiteId = "site_dreamshoot";
 const ROUTE_KIND = "ai-image-theme-leaf";
 const DEFERRED_LEAF_SLUGS = new Set<string>();

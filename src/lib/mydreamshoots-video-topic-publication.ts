@@ -552,7 +552,7 @@ export function compileMydreamshootsVideoTopicPublication(
  */
 export function applyMydreamshootsVideoTopicPublication(
   snapshot: PublishedSeoSnapshot,
-  siteId: "site_dreamshoot" | "site_grownstride_test" = "site_dreamshoot"
+  siteId: "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes" = "site_dreamshoot"
 ): PublishedSeoSnapshot {
   const pages = snapshot.pages.map((page) => ({
     id: page.id,

@@ -68,7 +68,7 @@ const aidreamcapesPackageGroups = [
 const dreamshootLogoSrc = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
 const aidreamcapesLogoSrc = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
 const myDreamShootsDisplayName = "myᕲreamshoots";
-const aidreamcapesDisplayName = "ልiጋreamርapes";
+const aidreamcapesDisplayName = "Aidreamcapes";
 
 function iconForMenuGroup(seed: string): LucideIcon {
   const normalized = seed.toLowerCase();
@@ -255,6 +255,12 @@ export function CustomerShellHeader({
   const accountEmailClassName = dark
     ? "hidden max-w-[8.5rem] truncate text-[11px] text-white/72 sm:block min-[1800px]:max-w-[11rem] min-[1800px]:text-xs"
     : "hidden max-w-[8.5rem] truncate text-[11px] text-[#706961] sm:block min-[1800px]:max-w-[11rem] min-[1800px]:text-xs";
+  const logoLinkClassName = isAidreamcapes && !isSpanishXby
+    ? "order-1 flex min-w-[14rem] max-w-[17rem] shrink-0 items-center gap-2 min-[1536px]:min-w-[16rem] min-[1536px]:max-w-[20rem] min-[1800px]:min-w-[18rem] min-[1800px]:max-w-[24rem] min-[1800px]:gap-3"
+    : "order-1 flex min-w-0 max-w-[13.2rem] shrink items-center gap-2 min-[1536px]:max-w-[16rem] min-[1800px]:max-w-[24rem] min-[1800px]:gap-3";
+  const logoTextClassName = isAidreamcapes && !isSpanishXby
+    ? `block whitespace-nowrap text-[1.14rem] font-semibold leading-none tracking-normal [font-family:var(--site-title-font)] min-[1536px]:text-[1.3rem] min-[1800px]:text-[1.48rem] ${dark ? "text-white" : "text-[#171514]"}`
+    : `block truncate text-[1.18rem] font-semibold leading-none tracking-normal [font-family:var(--site-title-font)] min-[1440px]:text-[1.28rem] min-[1536px]:text-[1.4rem] min-[1800px]:text-[1.52rem] ${dark ? "text-white" : "text-[#171514]"}`;
   const accountHref = `${basePath}/account`;
   const accountAvatarUrl = customer.profile?.avatarUrl;
 
@@ -269,12 +275,12 @@ export function CustomerShellHeader({
             : isAidreamcapes ? "Create private fan-scene and holiday albums from approved photos." : "Create private AI photo sets from everyday selfies."}
         </p>
         <div className="flex h-[72px] min-w-0 flex-nowrap items-center justify-between gap-1.5 xl:gap-2 min-[1536px]:gap-2.5 min-[1800px]:h-[76px] min-[1800px]:gap-5">
-          <StorefrontInstantLink aria-label={`${readableLogoText} home`} className="order-1 flex min-w-0 max-w-[13.2rem] shrink items-center gap-2 min-[1536px]:max-w-[16rem] min-[1800px]:max-w-[24rem] min-[1800px]:gap-3" href={homeHref} title={`${readableLogoText} home`}>
+          <StorefrontInstantLink aria-label={`${readableLogoText} home`} className={logoLinkClassName} href={homeHref} title={`${readableLogoText} home`}>
             <span className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-[13px] bg-transparent min-[1800px]:h-12 min-[1800px]:w-12 min-[1800px]:rounded-[15px]">
               <img className="h-10 w-10 object-contain min-[1800px]:h-12 min-[1800px]:w-12" src={logoSrc} alt={logoAlt} width={48} height={48} />
             </span>
             <span className="min-w-0">
-              <span aria-label={readableLogoText} className={`block truncate text-[1.18rem] font-semibold leading-none tracking-normal [font-family:var(--site-title-font)] min-[1440px]:text-[1.28rem] min-[1536px]:text-[1.4rem] min-[1800px]:text-[1.52rem] ${dark ? "text-white" : "text-[#171514]"}`} title={readableLogoText}>
+              <span aria-label={readableLogoText} className={logoTextClassName} title={readableLogoText}>
                 <span aria-hidden="true">{logoText}</span>
               </span>
               <span className="sr-only">{readableLogoText}</span>
