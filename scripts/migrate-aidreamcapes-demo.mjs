@@ -1032,9 +1032,12 @@ function buildThemeSettings() {
   globalSections.footer.settings.bottomLine = "Source-photo planning, route-aware credits, and private album delivery.";
   globalSections.footer.settings.instagramUrl = "https://www.instagram.com/aidreamcapes";
   globalSections.footer.settings.facebookUrl = "https://www.facebook.com/aidreamcapes";
+  globalSections.footer.settings.threadsUrl = "https://www.threads.com/@aidreamcapes";
   globalSections.footer.settings.pinterestUrl = "https://www.pinterest.com/aidreamcapes";
   globalSections.footer.settings.youtubeUrl = "https://www.youtube.com/@aidreamcapes";
   globalSections.footer.settings.twitterUrl = "https://x.com/aidreamcapes";
+  globalSections.footer.settings.xUrl = "https://x.com/aidreamcapes";
+  globalSections.footer.settings.tiktokUrl = "https://www.tiktok.com/@aidreamcapes";
   globalSections.footer.settings.showPaymentIcons = true;
   globalSections.footer.settings.companyName = companyName;
   globalSections.footer.settings.contactAddress = companyAddress;
