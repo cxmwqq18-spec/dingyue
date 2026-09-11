@@ -16,7 +16,7 @@ export type JsonLdNode = Record<string, unknown>;
 
 type JsonLdInput = {
   site: Site;
-  page: Pick<ThemePage, "id" | "slug" | "title" | "pageType">;
+  page: Pick<ThemePage, "id" | "slug" | "title" | "pageType" | "updatedAt">;
   pageJson?: ThemePageJson;
   pagePath: string;
   routeMode: "host" | "path";
@@ -918,6 +918,11 @@ function normalizedUploadDate(value: unknown): string {
   return Number.isNaN(date.getTime()) ? "" : date.toISOString();
 }
 
+function numericSetting(value: unknown, fallback: number): number {
+  const parsed = typeof value === "number" ? value : Number(cleanText(value));
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
 function showcaseVideoSlugs(pageJson: ThemePageJson | undefined): string[] {
   const showcase = sectionOfType(pageJson, "dreamshoot_generation_showcase");
   return listText(showcase?.settings.videoSlugs).map(slugifySchemaPart).filter(Boolean);
@@ -935,6 +940,44 @@ function homeVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
   // MyDreamShoots video content now has dedicated /ai-video-generation pages.
   // Keep homepage JSON-LD focused on the storefront instead of emitting legacy theme video objects.
   return [];
+}
+
+function editorialVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
+  if (!isPrimaryMyDreamShootsSite(input.site)) return [];
+  const hero = sectionOfType(input.pageJson, "editorial_hero");
+  if (!hero) return [];
+  const firstVisual = hero.blocks?.find((block) => Boolean(blockValue(block, "imageUrl")));
+  const videoUrl = videoMediaPath(hero.settings.videoUrl) || videoMediaPath(firstVisual?.settings.videoUrl);
+  const thumbnailUrl = imageMediaPath(hero.settings.videoPosterUrl)
+    || imageMediaPath(hero.settings.imageUrl)
+    || imageMediaPath(firstVisual?.settings.imageUrl);
+  if (!videoUrl || !thumbnailUrl) return [];
+  const pageUrl = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath));
+  const pageTitleValue = pageTitle(input.site, input.page, input.context);
+  const pageDescriptionValue = pageDescription(input.site, input.page, input.context);
+  const name = cleanSchemaText(input.site, hero.settings.videoTitle, pageTitleValue);
+  const description = cleanSchemaText(input.site, hero.settings.videoDescription, pageDescriptionValue);
+  const uploadDate = normalizedUploadDate(hero.settings.videoUploadDate) || normalizedUploadDate(input.page.updatedAt);
+  if (!uploadDate) return [];
+  const duration = iso8601Duration(numericSetting(hero.settings.videoDurationSeconds, 15));
+  return [{
+    "@type": "VideoObject",
+    "@id": `${pageUrl}#video`,
+    name,
+    description,
+    thumbnailUrl: [absoluteUrl(input.site, input.routeMode, thumbnailUrl)],
+    uploadDate,
+    duration,
+    contentUrl: absoluteUrl(input.site, input.routeMode, videoUrl),
+    url: pageUrl,
+    mainEntityOfPage: pageUrl,
+    isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
+    publisher: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
+    potentialAction: {
+      "@type": "WatchAction",
+      target: pageUrl
+    }
+  }];
 }
 
 function collectionPageSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
@@ -1022,6 +1065,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     faqSchema(resolvedInput.site, resolvedInput.pageJson, resolvedInput),
     articleSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, description, resolvedInput.pageJson),
     ...collectionPageSchema(resolvedInput, title, description),
+    ...editorialVideoObjectSchemas(resolvedInput),
     ...homeVideoObjectSchemas(resolvedInput),
     ...serviceOrProductSchema(resolvedInput, title, description)
   ];

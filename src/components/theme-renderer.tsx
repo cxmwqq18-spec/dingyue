@@ -9689,27 +9689,19 @@ function SectionView({
       const heroVideoSource = setting(section, "videoUrl") || (heroVisuals[0] ? blockValue(heroVisuals[0], "videoUrl") : "");
       const heroPosterSource = setting(section, "imageUrl") || (heroVisuals[0] ? blockValue(heroVisuals[0], "imageUrl") : "");
       const heroVideo = heroVideoSource && heroPosterSource ? (
-        <DreamshootShowcasePreviewClient className="contents">
-          <div
-            aria-label={`Preview ${title || "hero video"}`}
-            className="h-full w-full"
-            data-dreamshoot-preview-meta={intro}
-            data-dreamshoot-preview-poster={mediaAssetUrl(site, heroPosterSource)}
-            data-dreamshoot-preview-src={mediaAssetUrl(site, heroVideoSource)}
-            data-dreamshoot-preview-title={title || "Hero video"}
-            data-dreamshoot-showcase-preview="video"
-            role="button"
-            tabIndex={0}
-          >
-            <DreamshootShowcaseVideo
-              className="h-full w-full object-cover"
-              label={setting(section, "imageAlt", title || "Christmas hero video")}
-              poster={mediaAssetUrl(site, heroPosterSource)}
-              priority
-              src={mediaAssetUrl(site, heroVideoSource)}
-            />
-          </div>
-        </DreamshootShowcasePreviewClient>
+        <div aria-label={`Watch ${title || "hero video"}`} className="h-full w-full">
+          <DreamshootShowcaseVideo
+            autoPlay={false}
+            className="h-full w-full object-cover"
+            controls
+            label={setting(section, "imageAlt", title || "Christmas hero video")}
+            loop={false}
+            muted={false}
+            poster={mediaAssetUrl(site, heroPosterSource)}
+            priority
+            src={mediaAssetUrl(site, heroVideoSource)}
+          />
+        </div>
       ) : null;
       const rawIntentChips = section.settings?.intentChips;
       const intentChips = Array.isArray(rawIntentChips) ? rawIntentChips.map((chip) => typeof chip === "string" ? chip.trim() : "").filter(Boolean) : [];
@@ -14371,7 +14363,7 @@ function SectionView({
             </article>
           );
         }
-        const media = item.videoUrl ? (
+        const media = item.videoUrl && item.kind !== "save_the_date" ? (
           <DreamshootShowcaseVideo className={mediaClassName} label={publishedImageAlt} poster={mediaAssetUrl(site, item.imageUrl)} priority={false} src={mediaAssetUrl(site, item.videoUrl)} />
         ) : (
           <StorefrontImage alt={publishedImageAlt} className={mediaClassName} loading="lazy" preview={false} sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw" src={mediaAssetUrl(site, item.imageUrl)} />

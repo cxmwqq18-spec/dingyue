@@ -243,9 +243,19 @@ type SitemapImageEntry = {
   caption?: string;
 };
 
+type SitemapVideoEntry = {
+  thumbnailLoc: string;
+  title: string;
+  description: string;
+  contentLoc: string;
+  publicationDate?: string;
+  duration?: string;
+};
+
 type SitemapEntry = {
   loc: string;
   images: SitemapImageEntry[];
+  video?: SitemapVideoEntry;
   lastmod?: string;
   changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
   priority?: string;
@@ -260,6 +270,33 @@ function normalizeSitemapDate(value: unknown): string | undefined {
 function pageContentLastModified(page: ThemePage, fallback: unknown): string | undefined {
   const articleUpdatedAt = page.publishedJson.sections?.blog_detail_1?.settings?.updatedAt;
   return normalizeSitemapDate(articleUpdatedAt ?? page.updatedAt ?? fallback);
+}
+
+function sitemapVideoDuration(value: unknown, fallback = 15): string {
+  const parsed = typeof value === "number" ? value : Number(cleanText(value));
+  const totalSeconds = Math.max(1, Math.floor(Number.isFinite(parsed) && parsed > 0 ? parsed : fallback));
+  return String(totalSeconds);
+}
+
+function pageSitemapVideoForSite(site: Site, page: ThemePage, path: string): SitemapVideoEntry | undefined {
+  if (!isDreamshootSite(site) || path !== "/ai-save-the-date/christmas") return undefined;
+  const hero = Object.values(page.publishedJson.sections ?? {}).find((section) => section?.type === "editorial_hero");
+  if (!hero) return undefined;
+  const firstVisual = hero.blocks?.find((block) => Boolean(cleanText(block.settings.imageUrl)));
+  const videoUrl = cleanText(hero.settings.videoUrl) || cleanText(firstVisual?.settings.videoUrl);
+  const thumbnailUrl = cleanText(hero.settings.videoPosterUrl) || cleanText(hero.settings.imageUrl) || cleanText(firstVisual?.settings.imageUrl);
+  if (!/\.(?:mp4|webm)(?:[?#]|$)/i.test(videoUrl) || !/\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i.test(thumbnailUrl)) return undefined;
+  const title = cleanText(hero.settings.videoTitle, cleanText(page.title, "AI Christmas family gift video"));
+  const description = cleanText(hero.settings.videoDescription, "A family opens a glowing Christmas gift together beside a decorated tree and fireplace.");
+  const publicationDate = normalizeSitemapDate(hero.settings.videoUploadDate ?? page.updatedAt);
+  return {
+    thumbnailLoc: absoluteMediaUrl(site, thumbnailUrl),
+    title,
+    description,
+    contentLoc: absoluteMediaUrl(site, videoUrl),
+    ...(publicationDate ? { publicationDate } : {}),
+    duration: sitemapVideoDuration(hero.settings.videoDurationSeconds)
+  };
 }
 
 function isCollectionDirectoryPath(path: string): boolean {
@@ -530,6 +567,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
         : isPrimaryMydreamshootsSite(site)
           ? []
           : collectPageSitemapImages(site, page),
+      video: pageSitemapVideoForSite(site, page, path),
       lastmod: pageContentLastModified(page, snapshot.publication?.publishedAt),
       changefreq: sitemapChangeFrequencyForPath(path),
       priority: sitemapPriorityForPath(path)

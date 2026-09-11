@@ -4,14 +4,28 @@ import fs from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
-import { assertAllowedSite, assertDatabaseTarget } from "./lib/database-target.mjs";
+import { argumentValue, assertAllowedSite, assertDatabaseTarget } from "./lib/database-target.mjs";
 
 const SITE_ID = assertAllowedSite(process.env.CHRISTMAS_VIDEO_SITE_ID || "site_dreamshoot");
 const VIDEO_URL = "/assets/dreamshoot/seasonal/christmas/christmas-hero-family-gift.mp4";
+const VIDEO_POSTER_URL = "/assets/dreamshoot/seasonal/christmas/hero-ai-christmas-family-gift.jpg";
+const VIDEO_TITLE = "Family opening a glowing Christmas gift together beside a decorated tree and fireplace";
+const VIDEO_DESCRIPTION = "A family opens a glowing Christmas gift together beside a decorated tree and fireplace.";
+const VIDEO_UPLOAD_DATE = "2026-09-05T02:29:04.000Z";
+const VIDEO_DURATION_SECONDS = 15;
 const VIDEO_FILE = path.join(process.cwd(), "public", VIDEO_URL.replace(/^\/+/, ""));
 const APPLY = process.argv.includes("--apply");
+const target = argumentValue("--target") || process.env.DATABASE_TARGET || "local";
+const productionConfirmed = process.argv.includes("--confirm-production") && argumentValue("--confirm") === "mydreamshoots-christmas-video";
 
-assertDatabaseTarget({ expectedTarget: "local" });
+assertDatabaseTarget({
+  expectedTarget: target,
+  requireProductionConfirmation: target === "production",
+  productionConfirmed
+});
+if (target === "production" && APPLY && !productionConfirmed) {
+  throw new Error("Production Christmas video sync requires --confirm-production --confirm=mydreamshoots-christmas-video.");
+}
 assert(fs.existsSync(VIDEO_FILE), `Missing Christmas hero video: ${VIDEO_FILE}`);
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
@@ -22,8 +36,22 @@ function updateHeroJson(source) {
   assert(hero, "Christmas hero section is required");
   const firstVisual = hero.blocks?.find((block) => block.id === "christmas-hero-1") || hero.blocks?.[0];
   assert(firstVisual, "Christmas hero visual block is required");
-  const changed = hero.settings?.videoUrl !== VIDEO_URL || firstVisual.settings?.videoUrl !== VIDEO_URL;
-  hero.settings = { ...hero.settings, videoUrl: VIDEO_URL };
+  const changed = hero.settings?.videoUrl !== VIDEO_URL ||
+    hero.settings?.videoPosterUrl !== VIDEO_POSTER_URL ||
+    hero.settings?.videoTitle !== VIDEO_TITLE ||
+    hero.settings?.videoDescription !== VIDEO_DESCRIPTION ||
+    hero.settings?.videoUploadDate !== VIDEO_UPLOAD_DATE ||
+    hero.settings?.videoDurationSeconds !== VIDEO_DURATION_SECONDS ||
+    firstVisual.settings?.videoUrl !== VIDEO_URL;
+  hero.settings = {
+    ...hero.settings,
+    videoUrl: VIDEO_URL,
+    videoPosterUrl: VIDEO_POSTER_URL,
+    videoTitle: VIDEO_TITLE,
+    videoDescription: VIDEO_DESCRIPTION,
+    videoUploadDate: VIDEO_UPLOAD_DATE,
+    videoDurationSeconds: VIDEO_DURATION_SECONDS
+  };
   firstVisual.settings = { ...firstVisual.settings, videoUrl: VIDEO_URL };
   if (changed) next.version = Number(next.version || 0) + 1;
   return { next, changed };
@@ -88,7 +116,8 @@ try {
   console.log(JSON.stringify({
     ok: true,
     siteId: SITE_ID,
-    mode: APPLY ? "applied-local" : "dry-run",
+    target,
+    mode: APPLY ? `applied-${target}` : "dry-run",
     videoUrl: VIDEO_URL,
     changed: { livePage: live.changed, themePageDraft: draft.changed, themePagePublished: published.changed, themeSettings: JSON.stringify(settingsDraft) !== JSON.stringify(settings.draftJson) },
     publicationRequired: true
