@@ -409,7 +409,7 @@ export function CustomerHeaderBootstrapControls({
         <p className={dark ? "mt-0.5 truncate text-xs text-white/58" : "mt-0.5 truncate text-xs text-[#64605a]"}>{customer.email}</p>
         <div className="mt-3 grid gap-2">
           <StorefrontInstantLink className={dark ? "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-white/14 px-3 py-2 text-xs font-semibold text-white" : "inline-flex justify-center whitespace-nowrap rounded-[14px] border border-[#ded5ca] px-3 py-2 text-xs font-semibold text-[#171514]"} href={accountHref} prefetch>
-            {signOutLabel === "Sign out" ? "Account" : "Cuenta"}
+             {signOutLabel === "Sign out" ? "Account" : signOutLabel === "Se déconnecter" ? "Compte" : "Cuenta"}
           </StorefrontInstantLink>
         </div>
         <CustomerSignOutButton className={`${signOutClassName} mt-3`} label={signOutLabel} logoutHref={logoutHref} pendingLabel={signingOutLabel} redirectHref={loginHref} siteId={siteId} />

@@ -21,6 +21,8 @@ import {
 import { shouldShowAssetOnSurface } from "@/lib/customer-asset-resource-agent";
 import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isFrenchStorefrontSite } from "@/lib/storefront-locale";
+import { frenchCopy } from "@/lib/french-copy";
 import type { CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import type { PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
 import { CUSTOMER_VIDEO_FRAME_LIMIT, trimVideoFrameSelection } from "@/lib/video-frame-config";
@@ -141,12 +143,13 @@ type WorkspaceOutputRecord = {
   mimeType?: string;
 };
 
-function isSpanishXbyWorkspaceSite(site: CustomerWorkspaceSite): boolean {
+function isSpanishXbyWorkspaceSite(site: CustomerWorkspaceSite): boolean | "fr" {
+  if (isFrenchStorefrontSite(site)) return "fr";
   return isSpanishStorefrontSite(site);
 }
 
-function t(spanish: boolean, english: string, spanishText: string): string {
-  return spanish ? spanishText : english;
+function t(spanish: boolean | "fr", english: string, spanishText: string): string {
+  return spanish === "fr" ? frenchCopy(english) : spanish ? spanishText : english;
 }
 
 function uploadLabelFor(file: File, index: number, fallback: string) {
@@ -1906,7 +1909,7 @@ export function CustomerWorkspaceShell({
         mediaKey={params.mediaKey}
         onOpen={params.onOpen}
         renderLoading={renderVideoPreviewLoading}
-        spanish={spanishXby}
+        spanish={spanishXby === true}
         src={params.src}
       />
     );
@@ -2385,7 +2388,7 @@ export function CustomerWorkspaceShell({
       setPreferredToolId(undefined);
       setPreferredCreateMode("theme");
       setPreferredCreateModeRequest((current) => current + 1);
-      setAppliedOperationContext({ action: studioConsoleLabel(section.id, spanishXby), source: studioConsoleLabel(section.id, spanishXby) });
+      setAppliedOperationContext({ action: studioConsoleLabel(section.id, spanishXby === true), source: studioConsoleLabel(section.id, spanishXby === true) });
       choosePanel("create", "step-create");
       return;
     }
@@ -2393,7 +2396,7 @@ export function CustomerWorkspaceShell({
       setPreferredToolId(section.id === "background" ? "background-changer" : "virtual-try-on");
       setPreferredCreateMode("tool");
       setPreferredCreateModeRequest((current) => current + 1);
-      setAppliedOperationContext({ action: studioConsoleLabel(section.id, spanishXby), source: studioConsoleLabel(section.id, spanishXby) });
+      setAppliedOperationContext({ action: studioConsoleLabel(section.id, spanishXby === true), source: studioConsoleLabel(section.id, spanishXby === true) });
       choosePanel("create", "step-create");
       return;
     }
@@ -2401,7 +2404,7 @@ export function CustomerWorkspaceShell({
       setPreferredToolId(undefined);
       setPreferredCreateMode("theme");
       setPreferredCreateModeRequest((current) => current + 1);
-      setAppliedOperationContext({ action: studioConsoleLabel(section.id, spanishXby), source: studioConsoleLabel(section.id, spanishXby) });
+      setAppliedOperationContext({ action: studioConsoleLabel(section.id, spanishXby === true), source: studioConsoleLabel(section.id, spanishXby === true) });
       choosePanel("create", "source-photos");
       return;
     }
@@ -2607,7 +2610,7 @@ export function CustomerWorkspaceShell({
         setRuntimeAssets((current) => current.map((asset) => asset.id === optimisticAsset.id ? { ...asset, localStatus: "failed" } : asset));
         setSelectedVideoFrameIds((current) => current.filter((assetId) => assetId !== optimisticAsset.id));
         setUploadingVideoFrames(false);
-        setVideoFrameMessage(customerImageUploadErrorMessage(file.name, result.error, spanishXby));
+        setVideoFrameMessage(customerImageUploadErrorMessage(file.name, result.error, spanishXby === true));
         return;
       }
       deletedVideoFrameIdsRef.current.delete(result.asset.id);
@@ -2939,7 +2942,7 @@ export function CustomerWorkspaceShell({
         setSampleAssets((current) => current.map((asset) => asset.id === optimisticId ? { ...asset, localStatus: "failed" } : asset));
         removeSampleId(optimisticId);
         setUploadingSampleTarget(null);
-        setSampleUploadMessage(customerImageUploadErrorMessage(file.name, result.error, spanishXby));
+        setSampleUploadMessage(customerImageUploadErrorMessage(file.name, result.error, spanishXby === true));
         return;
       }
       createdAssets.push(result.asset);
@@ -3365,7 +3368,7 @@ export function CustomerWorkspaceShell({
                     onClick={() => handleStudioConsoleSectionClick(section, expanded)}
                     type="button"
                   >
-                    <span>{studioConsoleLabel(section.id, spanishXby)}</span>
+                    <span>{studioConsoleLabel(section.id, spanishXby === true)}</span>
                     <ChevronDown className={`h-4 w-4 text-white/42 transition ${expanded ? "rotate-180 text-white/70" : ""}`} strokeWidth={1.8} />
                   </button>
                   {expanded ? (
@@ -3425,7 +3428,7 @@ export function CustomerWorkspaceShell({
                                       type="button"
                                     >
                                       <Icon className="h-5 w-5" strokeWidth={1.8} />
-                                      <span>{studioGenderLabel(option.id, spanishXby)}</span>
+                                      <span>{studioGenderLabel(option.id, spanishXby === true)}</span>
                                     </button>
                                   );
                                 })}
@@ -3448,7 +3451,7 @@ export function CustomerWorkspaceShell({
                                         type="button"
                                       >
                                         <Icon className="h-5 w-5" strokeWidth={1.8} />
-                                        <span>{studioGenderLabel(option.id, spanishXby)}</span>
+                                        <span>{studioGenderLabel(option.id, spanishXby === true)}</span>
                                       </button>
                                     );
                                   })}
@@ -3754,7 +3757,7 @@ export function CustomerWorkspaceShell({
                     selectedFrameIds={selectedVideoFrameIds}
                     setSelectedFrameIds={setSelectedVideoFrameIds}
                     siteId={site.id}
-                    spanish={spanishXby}
+                    spanish={spanishXby === true}
                     submissionPending={videoSubmissionPending}
                     subscriptionStatus={subscriptionStatus}
                   />
@@ -3896,7 +3899,7 @@ export function CustomerWorkspaceShell({
                           const retryDraft = failed ? videoRetryDraftFromJob(job) : undefined;
                           const directRetry = failed && canDirectRetryVideoJob(job, providerFailure);
                           const retryingThisJob = retryingVideoJobId === job.id;
-                          const timingBreakdown = workspaceVideoTimingBreakdown(job, spanishXby);
+                          const timingBreakdown = workspaceVideoTimingBreakdown(job, spanishXby === true);
                           return (
                             <div
                               className={`rounded-[14px] border p-4 ${
@@ -3907,14 +3910,14 @@ export function CustomerWorkspaceShell({
                             >
                               <div className="flex flex-wrap items-start justify-between gap-3">
                                 <div className="min-w-0">
-                                  <p className="truncate text-sm font-semibold text-white" title={workspaceJobTitle(job, spanishXby)}>{workspaceJobTitle(job, spanishXby)}</p>
-                                  <p className={`mt-1 text-xs font-semibold ${failed ? "text-rose-200" : "text-amber-100"}`}>{workspaceJobSlotStageLabel(job, slots, spanishXby)}</p>
+                              <p className="truncate text-sm font-semibold text-white" title={workspaceJobTitle(job, spanishXby === true)}>{workspaceJobTitle(job, spanishXby === true)}</p>
+                              <p className={`mt-1 text-xs font-semibold ${failed ? "text-rose-200" : "text-amber-100"}`}>{workspaceJobSlotStageLabel(job, slots, spanishXby === true)}</p>
                                 </div>
                                 <span className="rounded-full border border-white/10 bg-black/22 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/60">
                                   {workspaceJobStatusBadge(job, slots)}
                                 </span>
                               </div>
-                              <p className="mt-3 text-xs leading-5 text-white/54">{workspaceJobBody(job, spanishXby, slots)}</p>
+                              <p className="mt-3 text-xs leading-5 text-white/54">{workspaceJobBody(job, spanishXby === true, slots)}</p>
                               <div className="mt-3 border-t border-white/8 pt-3">
                                 <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-semibold text-white/58">
                                   <span>{t(spanishXby, "Time breakdown", "Desglose de tiempo")}</span>
@@ -3979,7 +3982,7 @@ export function CustomerWorkspaceShell({
                                   const slotPreviewAsset = slotPreviewAssetFor(job, slot, outputAssets, slotMediaLabel);
                                   const slotProgress = workspaceSlotProgress(slot);
                                   const slotFailure = slot.providerFailure ?? normalizeVideoProviderFailure({ error: slot.error });
-                                  const slotErrorText = slot.error || slotFailure ? workspaceGenerationErrorText(slot.error ?? "", spanishXby, slotFailure, isVideoRuntimeJob(job)) : "";
+                                  const slotErrorText = slot.error || slotFailure ? workspaceGenerationErrorText(slot.error ?? "", spanishXby === true, slotFailure, isVideoRuntimeJob(job)) : "";
                                   return (
                                     <div
                                       className={`overflow-hidden rounded-[10px] border ${
@@ -4030,7 +4033,7 @@ export function CustomerWorkspaceShell({
                                       ) : (
                                         <div className="grid aspect-[4/3] place-items-center bg-black/18 px-3 text-center">
                                           <span className={`text-xs font-semibold ${slotFailed ? "text-rose-100/72" : "text-white/44"}`}>
-                                            {workspaceSlotProgressText(slot, spanishXby)}
+                                            {workspaceSlotProgressText(slot, spanishXby === true)}
                                           </span>
                                         </div>
                                       )}
@@ -4043,7 +4046,7 @@ export function CustomerWorkspaceShell({
                                               ? "bg-rose-300/12 text-rose-100"
                                               : "bg-white/8 text-white/48"
                                         }`}>
-                                          {slotLabel(slot, spanishXby)}
+                                          {slotLabel(slot, spanishXby === true)}
                                         </span>
                                       </div>
                                       <div className="px-3 pb-3">
@@ -4060,7 +4063,7 @@ export function CustomerWorkspaceShell({
                                           />
                                         </div>
                                         <div className="mt-1.5 flex items-center justify-between gap-2 text-[10px] text-white/38">
-                                          <span className="truncate">{workspaceSlotProgressText(slot, spanishXby)}</span>
+                                          <span className="truncate">{workspaceSlotProgressText(slot, spanishXby === true)}</span>
                                           <span className="shrink-0">
                                             {slotFailed
                                               ? t(spanishXby, "Stopped", "Detenido")
@@ -4078,7 +4081,7 @@ export function CustomerWorkspaceShell({
                                 })}
                               </div>
                               <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-white/38">
-                                <span>{workspaceSlotSummary(slots, spanishXby)}</span>
+                                <span>{workspaceSlotSummary(slots, spanishXby === true)}</span>
                                 <span>{t(spanishXby, "Updated", "Actualizado")} {workspaceJobTime(job.updatedAt)}</span>
                               </div>
                             </div>
@@ -4245,14 +4248,14 @@ export function CustomerWorkspaceShell({
                           >
                             <div className="flex flex-wrap items-start justify-between gap-3">
                               <div className="min-w-0">
-                                <p className="truncate text-sm font-semibold text-white" title={workspaceJobTitle(job, spanishXby)}>{workspaceJobTitle(job, spanishXby)}</p>
-                                <p className={`mt-1 text-xs font-semibold ${failed ? "text-rose-200" : "text-amber-100"}`}>{workspaceJobSlotStageLabel(job, slots, spanishXby)}</p>
+                              <p className="truncate text-sm font-semibold text-white" title={workspaceJobTitle(job, spanishXby === true)}>{workspaceJobTitle(job, spanishXby === true)}</p>
+                                <p className={`mt-1 text-xs font-semibold ${failed ? "text-rose-200" : "text-amber-100"}`}>{workspaceJobSlotStageLabel(job, slots, spanishXby === true)}</p>
                               </div>
                               <span className="rounded-full border border-white/10 bg-black/22 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/60">
                                 {workspaceJobStatusBadge(job, slots)}
                               </span>
                             </div>
-                            <p className="mt-3 text-xs leading-5 text-white/54">{workspaceJobBody(job, spanishXby, slots)}</p>
+                            <p className="mt-3 text-xs leading-5 text-white/54">{workspaceJobBody(job, spanishXby === true, slots)}</p>
                             {failed ? (
                               <div className="mt-3 flex flex-wrap items-center gap-2">
                                 <button
@@ -4295,7 +4298,7 @@ export function CustomerWorkspaceShell({
                                 const slotPreviewAsset = slotPreviewAssetFor(job, slot, outputAssets, slotMediaLabel);
                                 const slotProgress = workspaceSlotProgress(slot);
                                 const slotFailure = slot.providerFailure ?? normalizeVideoProviderFailure({ error: slot.error });
-                                const slotErrorText = slot.error || slotFailure ? workspaceGenerationErrorText(slot.error ?? "", spanishXby, slotFailure, isVideoRuntimeJob(job)) : "";
+                                const slotErrorText = slot.error || slotFailure ? workspaceGenerationErrorText(slot.error ?? "", spanishXby === true, slotFailure, isVideoRuntimeJob(job)) : "";
                                 return (
                                   <div
                                     className={`overflow-hidden rounded-[10px] border ${
@@ -4346,7 +4349,7 @@ export function CustomerWorkspaceShell({
                                     ) : (
                                       <div className="grid aspect-[4/3] place-items-center bg-black/18 px-3 text-center">
                                         <span className={`text-xs font-semibold ${slotFailed ? "text-rose-100/72" : "text-white/44"}`}>
-                                          {workspaceSlotProgressText(slot, spanishXby)}
+                                          {workspaceSlotProgressText(slot, spanishXby === true)}
                                         </span>
                                       </div>
                                     )}
@@ -4359,7 +4362,7 @@ export function CustomerWorkspaceShell({
                                             ? "bg-rose-300/12 text-rose-100"
                                             : "bg-white/8 text-white/48"
                                       }`}>
-                                        {slotLabel(slot, spanishXby)}
+                                        {slotLabel(slot, spanishXby === true)}
                                       </span>
                                     </div>
                                     <div className="px-3 pb-3">
@@ -4376,7 +4379,7 @@ export function CustomerWorkspaceShell({
                                         />
                                       </div>
                                       <div className="mt-1.5 flex items-center justify-between gap-2 text-[10px] text-white/38">
-                                        <span className="truncate">{workspaceSlotProgressText(slot, spanishXby)}</span>
+                                      <span className="truncate">{workspaceSlotProgressText(slot, spanishXby === true)}</span>
                                         <span className="shrink-0">
                                           {slotFailed
                                             ? t(spanishXby, "Stopped", "Detenido")
@@ -4394,7 +4397,7 @@ export function CustomerWorkspaceShell({
                               })}
                             </div>
                             <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-white/38">
-                              <span>{workspaceSlotSummary(slots, spanishXby)}</span>
+                              <span>{workspaceSlotSummary(slots, spanishXby === true)}</span>
                               <span>{t(spanishXby, "Updated", "Actualizado")} {workspaceJobTime(job.updatedAt)}</span>
                             </div>
                           </div>
@@ -4472,7 +4475,7 @@ export function CustomerWorkspaceShell({
                   label={selectedPreviewLabel}
                   posterSrc={workspaceVideoPosterUrl(workspaceAssetPreviewUrl(selectedPreviewAsset))}
                   src={workspaceVideoPlaybackUrl(workspaceAssetPreviewUrl(selectedPreviewAsset))}
-                  spanish={spanishXby}
+                  spanish={spanishXby === true}
                 />
               ) : (
                 <img alt={selectedPreviewLabel} className="max-h-[82vh] w-full object-contain" src={workspaceAssetPreviewUrl(selectedPreviewAsset)} />

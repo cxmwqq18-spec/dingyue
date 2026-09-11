@@ -10,6 +10,7 @@ import { hostAwareSitePath } from "@/lib/domain-routing";
 import { isMydreamshootsVideoFrameworkSite, mydreamshootsVideoGenerationParentCategories, parentVideoGenerationCategorySlugForChild, videoGenerationCreatePath } from "@/lib/mydreamshoots-video-framework";
 import { getPhotoPackageMegaGroups, photoPackageSlug } from "@/lib/photo-package-taxonomy";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isFrenchStorefrontSite } from "@/lib/storefront-locale";
 import { isMydreamshootsRemovedLegacyRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
@@ -183,13 +184,16 @@ export function CustomerShellHeader({
   const basePath = pathModeBasePath ?? hostAwareSitePath(site, "/").replace(/\/$/, "");
   const isAidreamcapes = isAidreamcapesCapabilitySite(site);
   const isSpanishXby = isSpanishStorefrontSite(site);
+  const isFrenchXby = isFrenchStorefrontSite(site);
   const isMyDreamShoots = isPrimaryMydreamshootsCapabilitySite(site);
   const logoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? aidreamcapesDisplayName : isMyDreamShoots ? myDreamShootsDisplayName : site.branding.logoText || site.name;
   const readableLogoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? "Aidreamcapes" : isMyDreamShoots ? "MyDreamShoots" : logoText;
   const homeHref = basePath || "/";
   const workflowHref = `${basePath}/workflow`;
   const logoSrc = (site.branding as { logoImageUrl?: string }).logoImageUrl || (isAidreamcapes ? aidreamcapesLogoSrc : dreamshootLogoSrc);
-  const logoAlt = isSpanishXby
+  const logoAlt = isFrenchXby
+    ? `${readableLogoText} : logo pour les créations IA et les galeries privées`
+    : isSpanishXby
     ? isAidreamcapes
       ? `${readableLogoText} logo para albumes privados de fans y recuerdos festivos`
       : `${readableLogoText} logo para paquetes de fotos con IA y galerias privadas`
@@ -268,7 +272,9 @@ export function CustomerShellHeader({
     <header className={`sticky top-0 z-50 border-b font-sans backdrop-blur ${dark ? "border-white/10 bg-[#05070E]/[0.94] text-white" : "border-[#eadfce] bg-[#fbf6ee]/[0.96] text-[#171514]"}`}>
       <div className="mx-auto grid min-w-0 max-w-[1680px] gap-2 px-5 py-2">
         <p className={`text-center text-xs font-semibold ${dark ? "text-white/80" : "text-[#171514]/68"}`}>
-          {isSpanishXby
+          {isFrenchXby
+            ? "Créez des albums photo privés et des vidéos IA à partir de vos images approuvées."
+            : isSpanishXby
             ? isAidreamcapes
               ? "Crea albumes privados de fans y recuerdos festivos desde fotos aprobadas."
               : "Crea sets privados de fotos con IA desde selfies cotidianos."
@@ -290,7 +296,7 @@ export function CustomerShellHeader({
           <nav className="order-2 hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-1 text-[0.78rem] font-semibold xl:flex min-[1440px]:gap-1.5 min-[1536px]:gap-2 min-[1800px]:gap-2.5">
             <ClickMegaMenu
               buttonClassName={`rounded-[15px] border transition ${desktopNavClass}`}
-              label={isSpanishXby ? isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aiGenerationParity ? "AI Image Generation" : isAidreamcapes ? "Occasion Albums" : "Browse packages"}
+              label={isFrenchXby ? "Packs photo" : isSpanishXby ? isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aiGenerationParity ? "AI Image Generation" : isAidreamcapes ? "Occasion Albums" : "Browse packages"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={packagePrefetchPaths}
             >
@@ -304,7 +310,7 @@ export function CustomerShellHeader({
             </ClickMegaMenu>
             <ClickMegaMenu
               buttonClassName={`rounded-[15px] border transition ${desktopNavClass}`}
-              label={isSpanishXby ? "Herramientas" : useVideoGenerationToolsMenu || aiGenerationParity ? "AI Video Generation" : "Tools"}
+              label={isFrenchXby ? "Outils" : isSpanishXby ? "Herramientas" : useVideoGenerationToolsMenu || aiGenerationParity ? "AI Video Generation" : "Tools"}
               panelClassName="fixed left-1/2 top-[78px] z-[180] max-h-[calc(100dvh-6.5rem)] w-[min(92vw,1120px)] -translate-x-1/2 overflow-y-auto overscroll-contain transition duration-200 ease-out"
               prefetchPaths={toolPrefetchPaths}
             >
@@ -312,13 +318,13 @@ export function CustomerShellHeader({
                 <HeaderVideoGenerationMegaPanel
                   topics={videoGenerationMenuTopics}
                   ctaHref={`${basePath}/ai-video-generation`}
-                  ctaLabel="View all themes"
+                  ctaLabel={isFrenchXby ? "Voir tous les thèmes" : "View all themes"}
                   variantTone="dark"
                 />
               ) : (
                 <DreamShootMegaToolsPanel
                   ctaHref={toolRootHref}
-                  ctaLabel={isSpanishXby ? "Ver todas las herramientas" : aiGenerationParity ? "View all video generators" : "View all tools"}
+                  ctaLabel={isFrenchXby ? "Voir tous les outils" : isSpanishXby ? "Ver todas las herramientas" : aiGenerationParity ? "View all video generators" : "View all tools"}
                   site={menuSite}
                   tools={activeToolBlocks}
                   variant="popover"
@@ -331,8 +337,13 @@ export function CustomerShellHeader({
                 <HeaderSaveTheDateMegaPanel ctaHref={`${basePath}/best-save-the-date`} menuLabel={saveTheDateMenuLabel} groups={routedSaveTheDateGroups} variantTone="dark" />
               </ClickMegaMenu>
             ) : null}
+            {isAidreamcapes ? (
+              <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/best-packages`}>
+                {isFrenchXby ? "Meilleurs packs" : "Best Packages"}
+              </StorefrontInstantLink>
+            ) : null}
             <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={workflowHref}>
-              {isSpanishXby ? "Como funciona" : "How it works"}
+              {isFrenchXby ? "Comment ça marche" : isSpanishXby ? "Como funciona" : "How it works"}
             </StorefrontInstantLink>
             {!isSpanishXby ? (
               <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/blog`}>
@@ -340,10 +351,10 @@ export function CustomerShellHeader({
               </StorefrontInstantLink>
             ) : null}
             <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/pricing`}>
-              {isSpanishXby ? "Precios" : "Pricing"}
+              {isFrenchXby ? "Tarifs" : isSpanishXby ? "Precios" : "Pricing"}
             </StorefrontInstantLink>
             <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/app/create`} prefetch>
-              {isSpanishXby ? "Espacio privado" : "Workspace"}
+              {isFrenchXby ? "Espace privé" : isSpanishXby ? "Espacio privado" : "Workspace"}
             </StorefrontInstantLink>
             {isSpanishXby ? (
               <StorefrontInstantLink className={`rounded-full border transition ${desktopNavClass}`} href={`${basePath}/faq`}>
@@ -354,26 +365,27 @@ export function CustomerShellHeader({
 
           <details className="group relative order-2 shrink-0 xl:hidden" data-storefront-mobile-menu="">
             <summary
-              aria-label={isSpanishXby ? "Abrir navegacion" : "Open navigation"}
+              aria-label={isFrenchXby ? "Ouvrir la navigation" : isSpanishXby ? "Abrir navegacion" : "Open navigation"}
               className={`grid h-10 w-10 cursor-pointer list-none place-items-center rounded-full border transition [&::-webkit-details-marker]:hidden ${dark ? "border-white/18 text-white hover:bg-white/10" : "border-[#d8cbbb] text-[#171514] hover:bg-[#efe5d7]"}`}
-              title={isSpanishXby ? "Navegacion" : "Navigation"}
+              title={isFrenchXby ? "Navigation" : isSpanishXby ? "Navegacion" : "Navigation"}
             >
               <MenuIcon className="h-5 w-5" strokeWidth={1.8} />
             </summary>
             <nav className={`absolute right-0 top-12 z-[190] grid w-[min(19rem,calc(100vw-2rem))] gap-1 rounded-[8px] border p-2 shadow-2xl ${dark ? "border-white/12 bg-[#0b0f17] text-white" : "border-[#ded2c3] bg-[#fffaf3] text-[#171514]"}`}>
-              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}${packageRootHref}`}>{isSpanishXby ? "Imagenes con IA" : "AI Image Generation"}</StorefrontInstantLink>
-              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={videoGenerationMenuHref}>{isSpanishXby ? "Video con IA" : "AI Video Generation"}</StorefrontInstantLink>
+              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}${packageRootHref}`}>{isFrenchXby ? "Images IA" : isSpanishXby ? "Imagenes con IA" : "AI Image Generation"}</StorefrontInstantLink>
+              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={videoGenerationMenuHref}>{isFrenchXby ? "Vidéos IA" : isSpanishXby ? "Video con IA" : "AI Video Generation"}</StorefrontInstantLink>
               {!isSpanishXby && hasSaveTheDate ? <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold text-[#ffb15c] hover:bg-white/10" href={`${basePath}/best-save-the-date`}>{saveTheDateMenuLabel}</StorefrontInstantLink> : null}
-              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={workflowHref}>{isSpanishXby ? "Como funciona" : "How it works"}</StorefrontInstantLink>
+              {isAidreamcapes ? <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}/best-packages`}>{isFrenchXby ? "Meilleurs packs" : "Best Packages"}</StorefrontInstantLink> : null}
+              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={workflowHref}>{isFrenchXby ? "Comment ça marche" : isSpanishXby ? "Como funciona" : "How it works"}</StorefrontInstantLink>
               {!isSpanishXby ? <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}/blog`}>Blog</StorefrontInstantLink> : null}
-              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}/pricing`}>{isSpanishXby ? "Precios" : "Pricing"}</StorefrontInstantLink>
-              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}/app/create`}>{isSpanishXby ? "Espacio privado" : "Workspace"}</StorefrontInstantLink>
+              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}/pricing`}>{isFrenchXby ? "Tarifs" : isSpanishXby ? "Precios" : "Pricing"}</StorefrontInstantLink>
+              <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}/app/create`}>{isFrenchXby ? "Espace privé" : isSpanishXby ? "Espacio privado" : "Workspace"}</StorefrontInstantLink>
             </nav>
           </details>
 
           <div className="order-3 ml-auto min-w-0 shrink-0 min-[1800px]:ml-0" data-storefront-header-controls="">
             <div className={signedInClassName}>
-              <StorefrontInstantLink aria-label={isSpanishXby ? "Abrir cuenta" : "Open account"} className="inline-flex min-w-0 items-center gap-2 rounded-full pr-1 transition hover:opacity-80 min-[1800px]:gap-3" href={accountHref} prefetch>
+              <StorefrontInstantLink aria-label={isFrenchXby ? "Ouvrir le compte" : isSpanishXby ? "Abrir cuenta" : "Open account"} className="inline-flex min-w-0 items-center gap-2 rounded-full pr-1 transition hover:opacity-80 min-[1800px]:gap-3" href={accountHref} prefetch>
                 <span className={accountIconClassName}>
                   {accountAvatarUrl ? (
                     <img className="h-full w-full rounded-full object-cover" src={accountAvatarUrl} alt="" />
@@ -386,7 +398,7 @@ export function CustomerShellHeader({
                   <span className={accountEmailClassName}>{customer.email}</span>
                 </span>
               </StorefrontInstantLink>
-              <CustomerSignOutButton className={signOutClassName} label={isSpanishXby ? "Cerrar sesion" : "Sign out"} logoutHref={`/api/sites/${site.id}/auth/logout`} pendingLabel={isSpanishXby ? "Cerrando sesion..." : "Signing out..."} redirectHref={`${basePath}/login`} siteId={site.id} />
+              <CustomerSignOutButton className={signOutClassName} label={isFrenchXby ? "Se déconnecter" : isSpanishXby ? "Cerrar sesion" : "Sign out"} logoutHref={`/api/sites/${site.id}/auth/logout`} pendingLabel={isFrenchXby ? "Déconnexion..." : isSpanishXby ? "Cerrando sesion..." : "Signing out..."} redirectHref={`${basePath}/login`} siteId={site.id} />
             </div>
           </div>
         </div>

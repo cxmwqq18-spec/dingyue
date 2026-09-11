@@ -30,6 +30,7 @@ import { dispatchCustomerBootstrapInvalidation } from "@/components/storefront/c
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import type { PublicCustomer, ThemeRuntimeAsset, ThemeRuntimeData, ThemeRuntimePagination } from "@/lib/types";
 import { storefrontAccessibleMediaAlt, storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
+import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import type { LucideIcon } from "lucide-react";
 
 export type AccountSection =
@@ -483,9 +484,11 @@ function isImageMime(mimeType?: string) {
 }
 
 function accountAssetAlt(asset: Pick<ThemeRuntimeAsset, "altText" | "label" | "mimeType" | "previewUrl">, siteSlug: string): string {
-  const locale = /(?:aidreamshoots|aidreamcapes)(?:-eu)?$/i.test(siteSlug) ? "es" : "en";
+  const locale = storefrontLocaleForRequestIdentity(siteSlug);
   const label = asset.label.replace(/^mydreamshoots\s+/i, "").trim();
-  const fallback = locale === "es"
+  const fallback = locale === "fr"
+    ? label ? `${label} dans un album client privé` : asset.mimeType.startsWith("video/") ? "Vidéo livrée dans un album client privé" : "Image livrée dans un album client privé"
+    : locale === "es"
     ? label ? `${label} en un album privado del cliente` : asset.mimeType.startsWith("video/") ? "Video entregado en un album privado del cliente" : "Imagen entregada en un album privado del cliente"
     : label ? `${label} in a private customer album` : asset.mimeType.startsWith("video/") ? "Video delivered to a private customer album" : "Image delivered to a private customer album";
   return storefrontAccessibleMediaAlt({ fallback, imageUrl: asset.previewUrl, locale, value: storefrontMeaningfulAlt(asset.altText) || undefined });
