@@ -6064,7 +6064,12 @@ function spanishXbyUiText(site: Site, value: string): string {
     "Account, billing, upload, privacy, and delivery support.": "Soporte para cuenta, pagos, subidas, privacidad y entregas.",
     "Published business correspondence address.": "Dirección comercial publicada para correspondencia.",
     "Private model training": "Entrenamiento de modelo privado",
-    "IA image-to-video": "Imagen a vídeo con IA"
+    "IA image-to-video": "Imagen a vídeo con IA",
+    "motion-ready": "Listo para movimiento",
+    "image-to-video": "Imagen a vídeo",
+    "private-gallery": "Galería privada",
+    "photo-guide": "Guía de fotos IA",
+    "AI photo guide": "Guía de fotos IA"
   };
   return labels[value.trim()] ?? value;
 }
@@ -18735,7 +18740,7 @@ function SectionView({
                   <p className="mt-3 text-sm leading-6 text-zinc-600">{article.description}</p>
                   <div className="mt-5 flex flex-wrap gap-2">
                     {(article.tags.length ? article.tags : [article.guideType]).slice(0, 3).map((tag) => (
-                      <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] text-zinc-500" key={tag}>{tag}</span>
+                      <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] text-zinc-500" key={tag}>{spanishBlog ? spanishXbyUiText(site, tag) : tag}</span>
                     ))}
                   </div>
                 </article>
