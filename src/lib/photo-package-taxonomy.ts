@@ -316,7 +316,7 @@ export function parsePublicVideoGenerationRouteForSite(site: CollectionRouteSite
     if (segments[0] !== MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT) return undefined;
     if (segments.length === 1) return { root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT, canonicalPath: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH, kind: "directory" };
     if (segments.length === 2) {
-      const itemSlug = aidreamcapesEuRouteSlug(site, segments[1], aidreamcapesEuVideoRouteAliases);
+      const itemSlug = photoPackageSlug(segments[1]);
       return { root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT, itemSlug, canonicalPath: publicVideoGenerationPathForSite(site, itemSlug), kind: "item" };
     }
     return undefined;
