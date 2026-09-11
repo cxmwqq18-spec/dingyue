@@ -47,7 +47,6 @@ export async function metadataForPublishedStorefrontPage({
           ...context.seo,
           ...(targetPageSeo.title?.trim() ? { title: targetPageSeo.title.trim() } : {}),
           ...(targetPageSeo.description?.trim() ? { description: targetPageSeo.description.trim() } : {}),
-          ...(targetPageSeo.twitterDescription?.trim() ? { twitterDescription: targetPageSeo.twitterDescription.trim() } : {}),
           ...(targetPageSeo.keywords?.trim() ? { keywords: targetPageSeo.keywords.trim() } : {}),
           ...(targetPageSeo.canonicalPath?.trim()
             ? {
