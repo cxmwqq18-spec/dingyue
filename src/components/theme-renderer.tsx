@@ -3035,6 +3035,21 @@ function withStorefrontPublicWatermarkCacheVersion(value: string): string {
   return `${prefix}${pathname}${query ? `?${query}` : ""}${hash}`;
 }
 
+const aidreamshootsPublicAssetCacheVersion = "20260911assetfix1";
+
+function withAidreamshootsPublicAssetCacheVersion(site: Site, value: string): string {
+  if (!isSpanishXbySite(site)) return value;
+  const hashStart = value.indexOf("#");
+  const withoutHash = hashStart >= 0 ? value.slice(0, hashStart) : value;
+  const hash = hashStart >= 0 ? value.slice(hashStart) : "";
+  const queryStart = withoutHash.indexOf("?");
+  const pathname = queryStart >= 0 ? withoutHash.slice(0, queryStart) : withoutHash;
+  if (!pathname.startsWith("/assets/sites/site_aidreamshoots/") || pathname.includes("/brand/")) return value;
+  const params = new URLSearchParams(queryStart >= 0 ? withoutHash.slice(queryStart + 1) : "");
+  params.set("aidreamshoots", aidreamshootsPublicAssetCacheVersion);
+  return `${pathname}?${params.toString()}${hash}`;
+}
+
 const aidreamcapesMissingTrustedLogoFiles = new Set([
   "azazie.png",
   "bodas.png",
@@ -3096,7 +3111,7 @@ function mediaAssetUrl(site: Site, value: string): string {
   const euAwareValue = isFrenchStorefrontSite(site) ? mirroredFrenchEuDreamshootAssetUrl(value) : value;
   const resolved = siteScopedFallbackImage(site, cleanStorefrontImageSrc(resolveMediaAssetUrl(site, euAwareValue)));
   const preferred = isAidreamcapesSite(site) ? preferAidreamcapesPhotoAsset(resolved) : preferDreamshootOptimizedImage(resolved);
-  const publicUrl = withStorefrontPublicWatermarkCacheVersion(spanishXbyPublicAssetUrl(site, preferred));
+  const publicUrl = withAidreamshootsPublicAssetCacheVersion(site, withStorefrontPublicWatermarkCacheVersion(spanishXbyPublicAssetUrl(site, preferred)));
   const publicPath = publicUrl.split("?")[0]?.split("#")[0] ?? publicUrl;
   if (
     isMyDreamShootsProfileSite(site) &&
