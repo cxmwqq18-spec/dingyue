@@ -34,10 +34,28 @@ function categoryLabel(value: string): string {
   return photoPackageLabel(value);
 }
 
-function categoryLabelForLocale(value: string, locale: "en" | "es"): string {
+function categoryLabelForLocale(value: string, locale: "en" | "es" | "fr"): string {
   const label = categoryLabel(value);
-  if (locale !== "es") return label;
   const normalized = label.toLowerCase();
+  if (locale === "fr") {
+    const labels: Record<string, string> = {
+      "all": "Tout",
+      "headshots": "Portraits professionnels",
+      "sports": "Sports",
+      "creator": "Créateur",
+      "creative": "Créatif",
+      "beauty": "Beauté",
+      "avatar": "Avatar",
+      "seasonal": "Saisonnier",
+      "couple": "Couple",
+      "wedding": "Mariage",
+      "travel": "Voyage",
+      "cultural": "Culturel",
+      "video": "Vidéo"
+    };
+    return labels[normalized] ?? label;
+  }
+  if (locale !== "es") return label;
   const labels: Record<string, string> = {
     "all": "Todos",
     "headshots": "Retratos profesionales",
@@ -60,12 +78,12 @@ function cardLinkLabel(action: string, title: string) {
   return `${action} ${cleanTitle}`;
 }
 
-function cardActionLabel(card: DreamshootPackageCatalogCard, packageAction: string, locale: "en" | "es") {
-  if (card.kind === "collection") return locale === "es" ? "Abrir coleccion" : "Open collection";
+function cardActionLabel(card: DreamshootPackageCatalogCard, packageAction: string, locale: "en" | "es" | "fr") {
+  if (card.kind === "collection") return locale === "es" ? "Abrir colección" : locale === "fr" ? "Ouvrir la collection" : "Open collection";
   return packageAction;
 }
 
-function imageAlt(card: DreamshootPackageCatalogCard, imageUrl: string, imageIndex: number, locale: "en" | "es", brand: string) {
+function imageAlt(card: DreamshootPackageCatalogCard, imageUrl: string, imageIndex: number, locale: "en" | "es" | "fr", brand: string) {
   return storefrontCardImageAlt({
     brand,
     category: card.category,
@@ -172,7 +190,7 @@ function ReferencePackageCard({
   card: DreamshootPackageCatalogCard;
   categoryHrefOverrides?: DreamshootCategoryHrefOverrides;
   index: number;
-  locale: "en" | "es";
+  locale: "en" | "es" | "fr";
   packageAction: string;
   prioritizeFirstImage?: boolean;
   siteBasePath: string;
@@ -181,7 +199,7 @@ function ReferencePackageCard({
   const images = cardImages.slice(0, 2);
   const hasDistinctImages = images.length >= 2;
   const tags = (card.tags?.length ? card.tags : [card.metaLabel || card.meta, card.category]).filter(Boolean).slice(0, 3);
-  const photoCountLabel = card.photoCountLabel || card.credits || (locale === "es" ? "20 fotos" : "20 Photos");
+  const photoCountLabel = card.photoCountLabel || card.credits || (locale === "es" ? "20 fotos" : locale === "fr" ? "20 photos" : "20 Photos");
   const usesLabel = meaningfulUsesLabel(card.usesLabel) || card.trainingLabel || card.metaLabel || card.meta;
   return (
     <a
@@ -330,7 +348,7 @@ export function DreamshootPackageCatalogClient({
   openCollectionsHref: string;
   prioritizeFirstImage?: boolean;
   showDirectory?: boolean;
-  locale?: "en" | "es";
+  locale?: "en" | "es" | "fr";
   sectionId: string;
   siteBasePath: string;
   steps: string[];
@@ -347,18 +365,18 @@ export function DreamshootPackageCatalogClient({
   const directory = showDirectory ? displayCards.slice(featured.length) : [];
   const activeCount = displayCards.length;
   const activeCountLabel = displayCards.some((card) => card.kind === "collection")
-    ? locale === "es" ? "temas" : "themes"
-    : locale === "es" ? "paquetes activos" : "active packages";
+    ? locale === "es" ? "temas" : locale === "fr" ? "thèmes" : "themes"
+    : locale === "es" ? "paquetes activos" : locale === "fr" ? "packs actifs" : "active packages";
   const brandGradient = aidreamcapes
     ? "linear-gradient(90deg,#D88A4B 0%,#B86E36 100%)"
     : "linear-gradient(90deg,#ff9f43 0%,#ff5ebd 45%,#16dcf0 100%)";
   const accentGradient = aidreamcapes
     ? "linear-gradient(90deg,#16dcf0,#D88A4B)"
     : brandGradient;
-  const choosePackageLabel = locale === "es" ? "Elegir paquete" : "Choose package";
+  const choosePackageLabel = locale === "es" ? "Elegir paquete" : locale === "fr" ? "Choisir un pack" : "Choose package";
   const brandName = aidreamcapes ? "AIdreamcapes" : locale === "es" ? "AIdreamshoots" : "myDreamshoots";
-  const resolvedDirectoryLabel = directoryLabel?.trim() || (locale === "es" ? "Directorio completo" : "Full theme directory");
-  const resolvedDirectorySubtitle = directorySubtitle?.trim() || (locale === "es" ? "Explora todas las categorias y temas disponibles." : "Browse every available theme by category on the full collections page.");
+  const resolvedDirectoryLabel = directoryLabel?.trim() || (locale === "es" ? "Directorio completo" : locale === "fr" ? "Répertoire complet" : "Full theme directory");
+  const resolvedDirectorySubtitle = directorySubtitle?.trim() || (locale === "es" ? "Explora todas las categorias y temas disponibles." : locale === "fr" ? "Découvrez chaque thème disponible par catégorie sur la page complète des collections." : "Browse every available theme by category on the full collections page.");
 
   return (
     <DreamshootShowcasePreview>
@@ -476,7 +494,7 @@ export function DreamshootPackageCatalogClient({
                 {resolvedDirectorySubtitle ? <p className="mt-2 max-w-2xl text-sm leading-6 text-white/56">{resolvedDirectorySubtitle}</p> : null}
               </div>
               <a className="inline-flex items-center gap-2 rounded-full border border-white/14 px-4 py-2 text-sm font-semibold text-white/78 transition hover:border-white/28 hover:text-white" href={openCollectionsHref}>
-                {locale === "es" ? "Abrir colecciones" : "Open collections"}
+                {locale === "es" ? "Abrir colecciones" : locale === "fr" ? "Ouvrir les collections" : "Open collections"}
                 <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
               </a>
             </div>
@@ -515,7 +533,7 @@ export function DreamshootPackageCatalogClient({
                   <div className="p-4">
                     <div className="mb-3 flex flex-wrap items-center gap-2">
                       <span className={compactTagClass}>{categoryLabelForLocale(card.category, locale)}</span>
-                      {index < 3 ? <span className={compactTagClass}>{locale === "es" ? "Popular" : "Popular"}</span> : null}
+                      {index < 3 ? <span className={compactTagClass}>{locale === "fr" ? "Populaire" : "Popular"}</span> : null}
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="min-w-0">
@@ -545,7 +563,7 @@ export function DreamshootPackageCatalogClient({
               </p>
             </div>
             <a className="inline-flex shrink-0 items-center justify-center gap-2 rounded-[16px] border border-white/14 px-4 py-3 text-sm font-semibold text-white/82 transition hover:border-white/28 hover:text-white" href={openCollectionsHref}>
-              {locale === "es" ? "Ver todos los temas" : "View all themes"}
+              {locale === "es" ? "Ver todos los temas" : locale === "fr" ? "Voir tous les thèmes" : "View all themes"}
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </a>
           </div>

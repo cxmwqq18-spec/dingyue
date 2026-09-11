@@ -36,10 +36,11 @@ export function DreamshootToolDirectoryClient({
   primaryHref: string;
   secondaryCta: string;
   secondaryHref: string;
-  locale?: "en" | "es";
+   locale?: "en" | "es" | "fr";
   sectionId: string;
 }) {
   const spanish = locale === "es";
+  const french = locale === "fr";
   const allCategories = Array.from(new Set([...categories, ...cards.map((card) => card.category)]));
 
   return (
@@ -54,17 +55,17 @@ export function DreamshootToolDirectoryClient({
                 <div>
                   <h3 className={dark ? "text-2xl font-bold tracking-tight text-white sm:text-3xl" : "text-2xl font-bold tracking-tight text-[#18202d] sm:text-3xl"}>{category}</h3>
                   <p className={dark ? "mt-2 text-sm text-white/52" : "mt-2 text-sm text-[#637077]"}>
-                    {spanish ? `${grouped.length} herramientas con paginas claras y pasos guiados.` : `${grouped.length} tools with clear pages and guided next steps.`}
+                     {spanish ? `${grouped.length} herramientas con paginas claras y pasos guiados.` : french ? `${grouped.length} outils avec des pages claires et des étapes guidées.` : `${grouped.length} tools with clear pages and guided next steps.`}
                   </p>
                 </div>
                 <span className={dark ? "rounded-full border border-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-white/50" : "rounded-full border border-[#c6d8d3] bg-white px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#57706a]"}>
-                  {spanish ? `${grouped.length} entradas` : `${grouped.length} entries`}
+                   {spanish ? `${grouped.length} entradas` : french ? `${grouped.length} entrées` : `${grouped.length} entries`}
                 </span>
               </div>
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 {grouped.map((tool) => (
                   <a
-                    aria-label={cardLinkLabel(spanish ? "Abrir" : "Open", tool.title, spanish ? "esta herramienta" : "this tool")}
+                     aria-label={cardLinkLabel(spanish ? "Abrir" : french ? "Ouvrir" : "Open", tool.title, spanish ? "esta herramienta" : french ? "cet outil" : "this tool")}
                     className={dark ? "group flex min-h-[240px] flex-col rounded-[18px] border border-white/10 bg-white/[0.04] p-5 text-white transition hover:-translate-y-1 hover:bg-white/[0.08]" : "group flex min-h-[240px] flex-col rounded-[18px] border border-[#d9e5e1] bg-white p-5 text-[#151a24] shadow-[0_20px_60px_-56px_rgba(23,74,67,0.48)] transition hover:-translate-y-1 hover:border-[#88bdb2] hover:shadow-[0_26px_76px_-58px_rgba(23,74,67,0.65)]"}
                     href={tool.href}
                     key={tool.id}
@@ -81,7 +82,7 @@ export function DreamshootToolDirectoryClient({
                       {tool.description}
                     </p>
                     <span className={dark ? "mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-[#ffa45d]" : "mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-[#1d6f64]"}>
-                      {spanish ? "Abrir herramienta" : "Open tool"}
+                       {spanish ? "Abrir herramienta" : french ? "Ouvrir l’outil" : "Open tool"}
                       <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" strokeWidth={1.8} />
                     </span>
                   </a>

@@ -37,7 +37,7 @@ function taxonomyImageAlt(
   card: PackageTaxonomyCard,
   imageUrl: string,
   imageIndex: number,
-  locale: "en" | "es",
+  locale: "en" | "es" | "fr",
   role: "cover" | "gallery" | "card" = "card"
 ) {
   return storefrontCardImageAlt({
@@ -137,13 +137,13 @@ function SplitPackageTaxonomyCard({
 }: {
   card: PackageTaxonomyCard;
   index: number;
-  locale: "en" | "es";
+  locale: "en" | "es" | "fr";
 }) {
   const images = cardImageUrls(card);
   const tags = (card.tags?.length ? card.tags : card.keywords).filter(Boolean).slice(0, 3);
   return (
     <a
-      aria-label={cardLinkLabel("View collection", card.title)}
+      aria-label={cardLinkLabel(locale === "es" ? "Ver colección" : locale === "fr" ? "Voir la collection" : "View collection", card.title)}
       className={splitCardClass}
       href={card.href}
     >
@@ -199,7 +199,7 @@ export function PackageTaxonomyClient({
   cards: PackageTaxonomyCard[];
   grouped?: boolean;
   initialSlug?: string;
-  locale?: "en" | "es";
+  locale?: "en" | "es" | "fr";
   variant?: "dark" | "cream";
 }) {
   const initialCard = (() => {
@@ -212,7 +212,7 @@ export function PackageTaxonomyClient({
     const groups = new Map<string, { key: string; label: string; cards: PackageTaxonomyCard[] }>();
     cards.forEach((card) => {
       const key = card.groupKey?.trim() || "all-packages";
-      const label = card.groupLabel?.trim() || (locale === "es" ? "Todos los paquetes" : "All photo packages");
+      const label = card.groupLabel?.trim() || (locale === "es" ? "Todos los paquetes" : locale === "fr" ? "Tous les packs photo" : "All photo packages");
       const group = groups.get(key);
       if (group) {
         group.cards.push(card);
@@ -225,6 +225,7 @@ export function PackageTaxonomyClient({
 
   if (selected) {
     const spanish = locale === "es";
+    const french = locale === "fr";
     const detailBestFor = selected.detailBestFor ?? [];
     const detailReviewPoints = selected.detailReviewPoints ?? [];
     const detailStats = selected.detailStats ?? [];
@@ -245,12 +246,12 @@ export function PackageTaxonomyClient({
       <div data-package-taxonomy-client="ready">
         <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,0.75fr)] lg:items-start">
           <div className={selectedPanelClass}>
-            <p className={variant === "cream" ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#9B7A5D]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/[0.44]"}>{spanish ? "Paquete seleccionado" : "Selected package"}</p>
+            <p className={variant === "cream" ? "text-xs font-semibold uppercase tracking-[0.18em] text-[#9B7A5D]" : "text-xs font-semibold uppercase tracking-[0.18em] text-white/[0.44]"}>{spanish ? "Paquete seleccionado" : french ? "Pack sélectionné" : "Selected package"}</p>
             <h2 className={variant === "cream" ? "mt-4 text-[clamp(1.7rem,2.7vw,2.85rem)] font-semibold leading-[1.02] tracking-tight text-[#1E1712] [font-family:var(--site-title-font)]" : "mt-4 text-[clamp(1.7rem,2.7vw,2.85rem)] font-semibold leading-[1.02] tracking-tight text-white [font-family:var(--site-title-font)]"}>
               {selected.title}
             </h2>
             <p className={variant === "cream" ? "mt-4 max-w-2xl text-sm leading-7 text-[#6F6257]" : "mt-4 max-w-2xl text-sm leading-7 text-white/[0.66]"}>
-              {selected.description || (spanish ? "Revisa la direccion del paquete, las fotos fuente, el uso de creditos y el album privado antes de iniciar la generacion." : "Review this package direction, source-photo needs, credit use, and the private album experience before starting a generation request.")}
+              {selected.description || (spanish ? "Revisa la direccion del paquete, las fotos fuente, el uso de creditos y el album privado antes de iniciar la generacion." : french ? "Consultez l’orientation du pack, les besoins en photos sources, l’utilisation des crédits et l’expérience d’album privé avant de lancer une demande de création." : "Review this package direction, source-photo needs, credit use, and the private album experience before starting a generation request.")}
             </p>
             {detailStats.length ? (
               <div className="mt-6 grid gap-2 sm:grid-cols-2">
@@ -271,7 +272,7 @@ export function PackageTaxonomyClient({
               </div>
             ) : null}
             <a className={variant === "cream" ? "mt-7 inline-flex items-center gap-2 self-start rounded-full bg-[#1E1712] px-5 py-3 text-sm font-semibold text-[#FFF8ED] transition hover:-translate-y-0.5 hover:bg-[#2A211A]" : "mt-7 inline-flex items-center gap-2 self-start rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#101114] transition hover:-translate-y-0.5 hover:bg-white/90"} href={selected.appHref}>
-              {spanish ? "Empezar este paquete" : "Start this package"}
+              {spanish ? "Empezar este paquete" : french ? "Commencer ce pack" : "Start this package"}
               <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
             </a>
           </div>
@@ -299,7 +300,7 @@ export function PackageTaxonomyClient({
                 <div className="grid content-start gap-6">
                   {selected.detailCreates ? (
                     <div>
-                      <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Que crea" : "What this creates"}</h2>
+                      <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Que crea" : french ? "Ce que vous créez" : "What this creates"}</h2>
                       <p className={variant === "cream" ? "mt-2 text-sm leading-7 text-[#6F6257]" : "mt-2 text-sm leading-7 text-white/[0.58]"}>
                         {selected.detailCreates}
                       </p>
@@ -307,7 +308,7 @@ export function PackageTaxonomyClient({
                   ) : null}
                   {detailReviewPoints.length ? (
                     <div>
-                      <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Puntos de revision" : "Review points"}</h2>
+                      <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Puntos de revision" : french ? "Points à vérifier" : "Review points"}</h2>
                       <ul className="mt-3 grid gap-2">
                         {detailReviewPoints.map((item) => (
                           <li className={variant === "cream" ? "flex gap-2 text-sm leading-6 text-[#6F6257]" : "flex gap-2 text-sm leading-6 text-white/[0.58]"} key={item}>
@@ -324,7 +325,7 @@ export function PackageTaxonomyClient({
                 <div className="grid content-start gap-6 xl:grid-cols-2">
                   {detailBestFor.length ? (
                     <div>
-                      <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Mejor para" : "Best for"}</h2>
+                      <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Mejor para" : french ? "Idéal pour" : "Best for"}</h2>
                       <ul className="mt-3 grid gap-2">
                         {detailBestFor.map((item) => (
                           <li className={variant === "cream" ? "flex gap-2 text-sm leading-6 text-[#6F6257]" : "flex gap-2 text-sm leading-6 text-white/[0.58]"} key={item}>
@@ -337,7 +338,7 @@ export function PackageTaxonomyClient({
                   ) : null}
                   {detailWorkflow.length ? (
                     <div>
-                      <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Como funciona" : "How it works"}</h2>
+                      <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Como funciona" : french ? "Comment ça marche" : "How it works"}</h2>
                       <ol className="mt-3 grid gap-2">
                         {detailWorkflow.map((item, index) => (
                           <li className={variant === "cream" ? "grid grid-cols-[24px_1fr] gap-2 text-sm leading-6 text-[#6F6257]" : "grid grid-cols-[24px_1fr] gap-2 text-sm leading-6 text-white/[0.58]"} key={item}>
@@ -367,10 +368,10 @@ export function PackageTaxonomyClient({
               <section className="grid gap-5" data-package-taxonomy-group={group.key} key={group.key}>
                 <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/[0.42]">{locale === "es" ? "Categoria principal" : "Top-level category"}</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/[0.42]">{locale === "es" ? "Categoria principal" : locale === "fr" ? "Catégorie principale" : "Top-level category"}</p>
                     <h2 className="mt-2 text-[clamp(1.6rem,2.5vw,2.55rem)] font-semibold leading-tight tracking-tight text-white [font-family:var(--site-title-font)]">{group.label}</h2>
                   </div>
-                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-white/[0.42]">{group.cards.length} {locale === "es" ? "temas" : "themes"}</span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-white/[0.42]">{group.cards.length} {locale === "es" ? "temas" : locale === "fr" ? "thèmes" : "themes"}</span>
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                   {group.cards.map((card, index) => (
@@ -402,14 +403,15 @@ export function PackageTaxonomyClient({
             <section className="grid gap-5" data-package-taxonomy-group={group.key} key={group.key}>
               <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-4">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/[0.42]">{locale === "es" ? "Categoria principal" : "Top-level category"}</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/[0.42]">{locale === "es" ? "Categoria principal" : locale === "fr" ? "Catégorie principale" : "Top-level category"}</p>
                   <h2 className="mt-2 text-[clamp(1.6rem,2.5vw,2.55rem)] font-semibold leading-tight tracking-tight text-white [font-family:var(--site-title-font)]">{group.label}</h2>
                 </div>
-                <span className="text-xs font-semibold uppercase tracking-[0.14em] text-white/[0.42]">{group.cards.length} {locale === "es" ? "temas" : "themes"}</span>
+                <span className="text-xs font-semibold uppercase tracking-[0.14em] text-white/[0.42]">{group.cards.length} {locale === "es" ? "temas" : locale === "fr" ? "thèmes" : "themes"}</span>
               </div>
               <div className="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-12">
                 {group.cards.map((card, index) => {
                   const spanish = locale === "es";
+                  const french = locale === "fr";
                   const mosaicVariant = index % 10;
                   const cardSpanClass = mosaicVariant === 0
                     ? "lg:col-span-7"
@@ -435,7 +437,7 @@ export function PackageTaxonomyClient({
                     : `group relative block overflow-hidden rounded-[18px] border border-white/12 bg-white/[0.07] text-white shadow-[0_22px_46px_-38px_rgba(0,0,0,0.82)] transition hover:-translate-y-1 hover:border-white/24 sm:col-span-1 ${cardSpanClass}`;
                   return (
                     <a
-                      aria-label={cardLinkLabel(spanish ? "Ver coleccion" : "View collection", card.title)}
+                      aria-label={cardLinkLabel(spanish ? "Ver colección" : french ? "Voir la collection" : "View collection", card.title)}
                       className={cardClass}
                       href={card.href}
                       key={card.id}
@@ -485,6 +487,7 @@ export function PackageTaxonomyClient({
     <div className="mt-10 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-12" data-package-taxonomy-client="ready">
       {cards.map((card, index) => {
         const spanish = locale === "es";
+        const french = locale === "fr";
         const mosaicVariant = index % 10;
         const cardSpanClass = mosaicVariant === 0
           ? "lg:col-span-7"
@@ -510,7 +513,7 @@ export function PackageTaxonomyClient({
           : `group relative block overflow-hidden rounded-[18px] border border-white/12 bg-white/[0.07] text-white shadow-[0_22px_46px_-38px_rgba(0,0,0,0.82)] transition hover:-translate-y-1 hover:border-white/24 sm:col-span-1 ${cardSpanClass}`;
         return (
           <a
-            aria-label={cardLinkLabel(spanish ? "Ver coleccion" : "View collection", card.title)}
+            aria-label={cardLinkLabel(spanish ? "Ver colección" : french ? "Voir la collection" : "View collection", card.title)}
             className={cardClass}
             href={card.href}
             key={card.id}
