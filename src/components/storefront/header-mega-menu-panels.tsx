@@ -43,7 +43,7 @@ export type HeaderVideoGenerationTopic = {
   sortOrder?: number;
 };
 
-export function HeaderSaveTheDateMegaPanel({ groups, menuLabel, ctaHref, ctaLabel = "View all Save the Date themes", variantTone = "dark" }: { groups: SaveTheDateNavigationGroup[]; menuLabel: string; ctaHref?: string; ctaLabel?: string; variantTone?: "dark" | "warm" }) {
+export function HeaderSaveTheDateMegaPanel({ groups, menuLabel, ctaHref, ctaLabel = "View all Save the Date themes", french = false, variantTone = "dark" }: { groups: SaveTheDateNavigationGroup[]; menuLabel: string; ctaHref?: string; ctaLabel?: string; french?: boolean; variantTone?: "dark" | "warm" }) {
   const warm = variantTone === "warm";
   const visibleGroups = groups.map((group) => ({ ...group, items: group.items.filter((item) => item.status === "published" && Boolean(item.href.trim() && item.description?.trim() && item.imageUrl?.trim() && item.imageAlt?.trim())).sort((a, b) => a.sortOrder - b.sortOrder) })).filter((group) => group.items.length).sort((a, b) => a.sortOrder - b.sortOrder);
   const totalItems = visibleGroups.reduce((sum, group) => sum + group.items.length, 0);
@@ -53,7 +53,7 @@ export function HeaderSaveTheDateMegaPanel({ groups, menuLabel, ctaHref, ctaLabe
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
         <div>
           <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>{menuLabel}</span>
-          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{visibleGroups.length} groups · {totalItems} pages</p>
+          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{french ? `${visibleGroups.length} groupes · ${totalItems} thèmes` : `${visibleGroups.length} groups · ${totalItems} pages`}</p>
         </div>
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
       </div>
@@ -98,17 +98,20 @@ function splitColumns<T>(items: T[], columnCount = 3): T[][] {
   return columns;
 }
 
-function categoryCountLabel(count: number, spanish: boolean): string {
+function categoryCountLabel(count: number, spanish: boolean, french: boolean): string {
+  if (french) return count === 1 ? "catégorie" : "catégories";
   if (spanish) return count === 1 ? "categoria" : "categorias";
   return count === 1 ? "category" : "categories";
 }
 
-function themeCountLabel(count: number, spanish: boolean): string {
+function themeCountLabel(count: number, spanish: boolean, french: boolean): string {
+  if (french) return count === 1 ? "thème" : "thèmes";
   if (spanish) return count === 1 ? "tema" : "themes";
   return count === 1 ? "theme" : "themes";
 }
 
-function packagePanelTitle(aidreamcapes: boolean, spanish: boolean): string {
+function packagePanelTitle(aidreamcapes: boolean, spanish: boolean, french: boolean): string {
+  if (french) return "Packs photo";
   if (spanish) return aidreamcapes ? "Estudios de albumes de ocasion" : "Estudios de paquetes de fotos";
   return aidreamcapes ? "Occasion album studios" : "AI Image Generation";
 }
@@ -140,12 +143,14 @@ export function HeaderPhotoPackageMegaPanel({
   aidreamcapes = false,
   collectionsHref,
   groups,
+  french = false,
   spanish = false,
   variant = "dark"
 }: {
   aidreamcapes?: boolean;
   collectionsHref: string;
   groups: HeaderPhotoPackageMegaGroup[];
+  french?: boolean;
   spanish?: boolean;
   variant?: "dark" | "warm";
 }) {
@@ -157,9 +162,9 @@ export function HeaderPhotoPackageMegaPanel({
       <div className="mb-4 flex items-center justify-center gap-3 text-center">
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
         <div>
-          <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>{packagePanelTitle(aidreamcapes, spanish)}</span>
+          <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>{packagePanelTitle(aidreamcapes, spanish, french)}</span>
           <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>
-            {`${groups.length} ${categoryCountLabel(groups.length, spanish)} \u00b7 ${totalItems} ${themeCountLabel(totalItems, spanish)}`}
+            {`${groups.length} ${categoryCountLabel(groups.length, spanish, french)} \u00b7 ${totalItems} ${themeCountLabel(totalItems, spanish, french)}`}
           </p>
         </div>
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
@@ -195,7 +200,7 @@ export function HeaderPhotoPackageMegaPanel({
       </div>
       <div className={warm ? "mt-5 border-t border-[#eadfce] pt-3 text-center" : "mt-5 border-t border-[#263247] pt-3 text-center"}>
         <Link className={warm ? "inline-flex items-center gap-2 text-sm font-semibold text-[#b86e36] transition hover:text-[#8f5327]" : "inline-flex items-center gap-2 text-sm font-semibold text-[#ff8a2f] transition hover:text-[#ffa45d]"} href={collectionsHref} prefetch={false}>
-          {spanish ? "Ver todos los paquetes" : "View all packages"}
+          {french ? "Voir tous les packs" : spanish ? "Ver todos los paquetes" : "View all packages"}
           <ArrowRight className="h-4 w-4" strokeWidth={1.9} />
         </Link>
       </div>
@@ -270,12 +275,14 @@ export function HeaderVideoGenerationMegaPanel({
   topics = [],
   ctaHref,
   ctaLabel = "Open video workspace",
-  variantTone = "dark"
+  variantTone = "dark",
+  spanish = false
 }: {
   topics: HeaderVideoGenerationTopic[];
   ctaHref?: string;
   ctaLabel?: string;
   variantTone?: "dark" | "warm";
+  spanish?: boolean;
 }) {
   const warm = variantTone === "warm";
   const topicsByParent = new Map<string, { slug: string; label: string; sortOrder: number; topics: HeaderVideoGenerationTopic[] }>();
@@ -283,7 +290,7 @@ export function HeaderVideoGenerationMegaPanel({
     const parentSlug = topic.parentSlug ?? "ai-video-generation";
     const current = topicsByParent.get(parentSlug) ?? {
       slug: parentSlug,
-      label: topic.parentLabel ?? "AI Video Generation",
+      label: topic.parentLabel ?? (spanish ? "Generación de vídeo con IA" : "AI Video Generation"),
       sortOrder: topic.parentSortOrder ?? 999,
       topics: []
     };
@@ -304,8 +311,8 @@ export function HeaderVideoGenerationMegaPanel({
       <div className="mb-4 flex items-center justify-center gap-3 text-center">
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
         <div>
-          <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>AI Video Generation</span>
-          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{groups.length} categories · {topics.length} themes</p>
+          <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>{spanish ? "Generación de vídeo con IA" : "AI Video Generation"}</span>
+          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{spanish ? `${groups.length} categorías · ${topics.length} temas` : `${groups.length} categories · ${topics.length} themes`}</p>
         </div>
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
       </div>
@@ -365,6 +372,7 @@ export function HeaderMobilePhotoPackagesMenu({
   collectionsHref,
   dark,
   groups,
+  french = false,
   menuLabel,
   spanish = false
 }: {
@@ -372,11 +380,12 @@ export function HeaderMobilePhotoPackagesMenu({
   collectionsHref: string;
   dark: boolean;
   groups: HeaderPhotoPackageMegaGroup[];
+  french?: boolean;
   menuLabel?: string;
   spanish?: boolean;
 }) {
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
-  const resolvedMenuLabel = menuLabel ?? (spanish ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aidreamcapes ? "Occasion Albums" : "Browse packages");
+  const resolvedMenuLabel = menuLabel ?? (french ? "Packs photo" : spanish ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aidreamcapes ? "Occasion Albums" : "Browse packages");
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
       <summary className={mobileSummaryClass(dark)}>
@@ -404,7 +413,7 @@ export function HeaderMobilePhotoPackagesMenu({
           ))}
         </div>
         <Link className={dark ? "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-white/12 px-3 py-2.5 text-sm font-semibold text-white" : "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[14px] border border-[#ded5ca] bg-white px-3 py-2.5 text-sm font-semibold text-[#171514]"} href={collectionsHref} prefetch={false}>
-          {spanish ? "Ver todos los paquetes" : "View all packages"}
+          {french ? "Voir tous les packs" : spanish ? "Ver todos los paquetes" : "View all packages"}
           <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
         </Link>
       </div>
