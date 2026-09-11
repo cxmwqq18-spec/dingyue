@@ -9,23 +9,19 @@ type SpanishStorefrontIdentity = {
 };
 
 export const SPANISH_STOREFRONT_SITE_IDS = new Set([
-  "site_mydreamshoots_xby",
-  "site_aidreamcapes_xby"
+  "site_mydreamshoots_xby"
 ]);
 
 export const SPANISH_STOREFRONT_SLUGS = new Set([
   "aidreamshoots",
   "aidreamshoots-eu",
-  "aidreamcapes-eu",
   "mydreamshoots-xby",
   "aidreamcapes-xby"
 ]);
 
 export const SPANISH_STOREFRONT_DOMAINS = new Set([
   "aidreamshoots.eu",
-  "www.aidreamshoots.eu",
-  "aidreamcapes.eu",
-  "www.aidreamcapes.eu"
+  "www.aidreamshoots.eu"
 ]);
 
 export const SPANISH_STOREFRONT_SLUG_ALIASES: Record<string, string> = {
@@ -88,11 +84,18 @@ export function isSpanishStorefrontSite(site: SpanishStorefrontIdentity | undefi
   if (!site) return false;
   const host = cleanStorefrontHost(site.primaryDomain);
   const identity = spanishStorefrontIdentity(site);
+  if (
+    site.id === "site_aidreamcapes_xby" ||
+    site.slug?.toLowerCase() === "aidreamcapes-eu" ||
+    /(?:^|\.)aidreamcapes\.eu$/i.test(host)
+  ) {
+    return false;
+  }
   return (
     Boolean(site.id && SPANISH_STOREFRONT_SITE_IDS.has(site.id)) ||
     Boolean(site.slug && SPANISH_STOREFRONT_SLUGS.has(site.slug.toLowerCase())) ||
     SPANISH_STOREFRONT_DOMAINS.has(host) ||
-    /(?:-xby|_xby)/i.test(identity)
+    /(?:-xby|_xby)/i.test(identity) && !/aidreamcapes(?:-eu|\.eu)/i.test(identity)
   );
 }
 
@@ -101,8 +104,6 @@ export function isSpanishStorefrontRequestIdentity(identity: string): boolean {
   return (
     /\b(?:aidreamcapes|mydreamshoots)-xby\b/.test(normalized) ||
     /(?:^|[\s/])aidreamshoots(?:-eu)?(?:[\s/]|$)/.test(normalized) ||
-    /(?:^|[\s/])aidreamcapes-eu(?:[\s/]|$)/.test(normalized) ||
-    /\baidreamshoots(?:\.eu|\.localhost)\b/.test(normalized) ||
-    /\baidreamcapes\.eu\b/.test(normalized)
+    /\baidreamshoots(?:\.eu|\.localhost)\b/.test(normalized)
   );
 }
