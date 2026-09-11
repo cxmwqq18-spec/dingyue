@@ -2708,7 +2708,15 @@ function renderThemePage({
   // publication-backed offer/collection projection. Applying the English
   // publication filter here hides valid target products and packs, which is
   // why the pricing cards and homepage catalogue can render half-empty.
-  const usePublishedSnapshotFilters = storefrontContext && !isAidreamcapesStorefront(currentSite) && !isSpanishMydreamshootsStorefront(currentSite);
+  // The Spanish AIdreamshoots catalogue is intentionally relational until its
+  // provider-verified publication is ready. Keep the exact target ID out of
+  // the English publication filter even if a legacy site shell has a stale
+  // slug/domain value during host-mode rendering.
+  const isAidreamshootsSpanishTarget = currentSite.id === "site_mydreamshoots_xby";
+  const usePublishedSnapshotFilters = storefrontContext &&
+    !isAidreamcapesStorefront(currentSite) &&
+    !isSpanishMydreamshootsStorefront(currentSite) &&
+    !isAidreamshootsSpanishTarget;
   const activePackIds = usePublishedSnapshotFilters
     ? new Set(storefrontContext.catalog.activePacks.map((pack) => pack.id))
     : undefined;

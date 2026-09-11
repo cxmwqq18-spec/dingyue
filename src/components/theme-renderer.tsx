@@ -9225,7 +9225,9 @@ function PricingTableSectionView({
   embedded?: boolean;
 }) {
   const aidreamcapes = isAidreamcapesSite(site);
-  const spanishXbyPricing = isSpanishXbySite(site);
+  // Keep the exact AIdreamshoots target on the Spanish relational catalogue
+  // path even if a legacy shell arrives without its localized slug/domain.
+  const spanishXbyPricing = isSpanishXbySite(site) || site.id === "site_mydreamshoots_xby";
   const frenchXbyPricing = isFrenchStorefrontSite(site);
   const configuredFeaturedProductId = selectorIdSetting(section, "featuredProductId", "");
   const publicPricingOffers = projectPublicPricingOffers(storefrontContext);
