@@ -387,13 +387,21 @@ export function resolveStorefrontBindings(text: string, context: StorefrontConte
     LIVE_TRAINING_POLICY_STATEMENT: context.profile?.policyFacts.usesCustomerMediaForTraining === undefined
       ? undefined
       : context.profile.policyFacts.usesCustomerMediaForTraining
-        ? "Customer media may be used for model improvement under the published policy."
-        : "Customer media is not used to train models.",
+        ? context.site.id === "site_mydreamshoots_xby"
+          ? "Las fotos de clientes pueden utilizarse para mejorar los modelos según la política publicada."
+          : "Customer media may be used for model improvement under the published policy."
+        : context.site.id === "site_mydreamshoots_xby"
+          ? "Las fotos de clientes no se utilizan para entrenar modelos."
+          : "Customer media is not used to train models.",
     LIVE_REFUND_REVIEW_POLICY_STATEMENT: context.profile?.policyFacts.refundReviewRequired === undefined
       ? undefined
       : context.profile.policyFacts.refundReviewRequired
-        ? "Refund requests require review under the published refund policy."
-        : "Eligible refunds follow the published refund policy."
+        ? context.site.id === "site_mydreamshoots_xby"
+          ? "Las solicitudes de reembolso requieren revisión según la política publicada."
+          : "Refund requests require review under the published refund policy."
+        : context.site.id === "site_mydreamshoots_xby"
+          ? "Los reembolsos elegibles siguen la política publicada."
+          : "Eligible refunds follow the published refund policy."
     ,
     LIVE_CREDIT_RESERVE_STATEMENT: context.publishedFacts?.creditLifecycle?.reserve,
     LIVE_CREDIT_CONSUME_STATEMENT: context.publishedFacts?.creditLifecycle?.consume,

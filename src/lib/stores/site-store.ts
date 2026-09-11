@@ -2730,8 +2730,8 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
       publishedVideoGenerationTopics,
       publishedSaveTheDateGroups: completeSaveTheDateGroups,
       publishedSaveTheDateMenuLabel: String(
-        liveSnapshot?.themeSettings?.saveTheDateNavigation?.menuLabel || "Save the Date"
-      ).trim() || "Save the Date"
+        liveSnapshot?.themeSettings?.saveTheDateNavigation?.menuLabel || (site.id === "site_mydreamshoots_xby" ? "Guardar la fecha" : "Save the Date")
+      ).replace(site.id === "site_mydreamshoots_xby" ? /Save the Date/gi : /$^/g, site.id === "site_mydreamshoots_xby" ? "Guardar la fecha" : "Save the Date").trim() || (site.id === "site_mydreamshoots_xby" ? "Guardar la fecha" : "Save the Date")
     };
   }, Number(process.env.STOREFRONT_WORKSPACE_BOOTSTRAP_CACHE_TTL_MS ?? 60_000));
 }

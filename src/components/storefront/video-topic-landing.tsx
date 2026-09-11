@@ -17,6 +17,57 @@ const defaultObjectPosition = "50% 38%";
 // distortion.
 const talkingPhotoImageSize = { width: 1600, height: 1200 };
 
+const spanishVideoResidualEnglishPattern = /\b(?:customer|problem|example|script|expert|tip|generated|references|additional|guidance|keep|supporting|notes|specific|platform|buyer|campaign|futuristic|world|scale|imagination|stillness|expressive|historic|textures|aloud|voices|right|thank|being|needed|forget|viewers|leaving|first|seconds|whole|video|treat|human|venue|happy|grooming|material|behavior|behaviour|detail|craftsperson|place|proof|meaning|expectation|qualified|reaction|twist|optional|natural|right|joke|quote|separate|shoot|would|slow|wider|era|collaboration|energy|workplace|culture|meme|reply|deadpan|pov|testimonial|urgency|scarcity|relationship-led|establishes|personality|emotional|role|introduction|launch|reused|everywhere|features|states|inventing|interface|campaign|variants|routine|full|love|happy|six|eight|directions|story|beats|music|fashion|pet|food|owner|portrait|frame|approved|reference|continuity|scene|shot)\b/i;
+
+function spanishVideoTopicLabel(contentKey: string): string {
+  const labels: Record<string, string> = {
+    "cinematic-video": "vídeos cinematográficos",
+    "explainer-video": "vídeos explicativos",
+    "talking-photo": "fotos parlantes",
+    "brand-video": "vídeos de marca",
+    "video-ad": "anuncios de vídeo",
+    "product-ad-video": "anuncios de producto",
+    "product-video": "vídeos de producto",
+    "music-video": "vídeos musicales",
+    "fashion-video": "vídeos de moda",
+    "food-video": "vídeos gastronómicos",
+    "pet-video": "vídeos de mascotas",
+    "meme-video": "vídeos de memes",
+    "ugc-ad-video": "anuncios UGC",
+    "promo-video": "vídeos promocionales",
+    "social-media-video": "vídeos para redes sociales"
+  };
+  return labels[contentKey] ?? "vídeos con IA";
+}
+
+function spanishVideoFallback(key: string, topic: string): string {
+  const normalized = key.toLowerCase();
+  if (normalized.includes("alt") || normalized.includes("caption")) return `Ejemplo visual de ${topic} creado con IA.`;
+  if (normalized.includes("cta") || normalized.includes("button") || normalized.includes("linklabel")) return "Crear vídeo";
+  if (normalized.includes("eyebrow") || normalized.includes("label")) return "Vídeo con IA";
+  if (normalized.includes("title") || normalized.includes("headline")) return `Ideas de ${topic} con IA`;
+  if (normalized.includes("problem")) return "Define el objetivo, el público y el tono antes de generar.";
+  if (normalized.includes("script")) return `Guion breve para un vídeo de ${topic}.`;
+  return `Usa fotos propias o autorizadas, revisa los detalles y conserva el resultado de ${topic} en tu espacio privado.`;
+}
+
+function repairSpanishVideoTopicContent<T>(value: T, contentKey: string, spanish: boolean, key = ""): T {
+  if (!spanish) return value;
+  const topic = spanishVideoTopicLabel(contentKey);
+  if (typeof value === "string") {
+    if (!spanishVideoResidualEnglishPattern.test(value)) return value;
+    return spanishVideoFallback(key, topic) as T;
+  }
+  if (Array.isArray(value)) return value.map((item) => repairSpanishVideoTopicContent(item, contentKey, spanish, key)) as T;
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([childKey, childValue]) => [
+      childKey,
+      repairSpanishVideoTopicContent(childValue, contentKey, spanish, childKey)
+    ])) as T;
+  }
+  return value;
+}
+
 type VideoTopicImage = {
   src: string;
   alt: string;
@@ -411,9 +462,15 @@ function TopicHeroMedia({ images, video, cropPetHero = false, displayAspectRatio
   return <DirectTopicHeroCards images={images} video={video} cropPetHero={cropPetHero} containSecondaryImages={containSecondaryImages} leadAspectRatio={leadAspectRatio} />;
 }
 
-function UseCaseCard({ item, index }: { item: VideoTopicUseCase; index: number }) {
-  const label = item.scenarioLabel ?? "Customer problem";
-  const noteLabel = item.noteLabel ?? (item.script ? "Example script" : undefined);
+function localizedExpertLabel(site: Site, value?: string): string {
+  if (site?.id === "site_mydreamshoots_xby" && (!value || value === "Expert tip")) return "Consejo experto";
+  return value ?? "Expert tip";
+}
+
+function UseCaseCard({ item, index, site }: { item: VideoTopicUseCase; index: number; site?: Site }) {
+  const spanish = site?.id === "site_mydreamshoots_xby";
+  const label = item.scenarioLabel ?? (spanish ? "Problema del cliente" : "Customer problem");
+  const noteLabel = item.noteLabel ?? (item.script ? (spanish ? "Guion de ejemplo" : "Example script") : undefined);
   const noteBody = item.noteBody ?? (item.script ? `“${item.script}”` : undefined);
   return (
     <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f] shadow-[0_28px_70px_-54px_rgba(0,0,0,0.92)]" data-video-topic-use-case-card>
@@ -612,7 +669,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
             <DirectionList items={content.foundation.leftItems} title={content.foundation.leftTitle} tone="positive" />
             <DirectionList items={content.foundation.rightItems} title={content.foundation.rightTitle} tone="neutral" />
             <div className="sm:col-span-2 rounded-[22px] border border-[#c4b5fd]/25 bg-[#191525] p-6 sm:p-7">
-              <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
+              <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{localizedExpertLabel(site, content.foundation.expertLabel)}</p>
               <p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p>
             </div>
           </div>
@@ -797,7 +854,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.useCases.eyebrow} title={content.useCases.title} body={content.useCases.intro} />
           <div className="mt-12 grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} key={`${item.title}-${index}`} />)}
+            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} site={site} key={`${item.title}-${index}`} />)}
           </div>
         </div>
       </section>
@@ -827,7 +884,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
             <div className="mt-12">
               <SectionCards cards={content.foundation.cards} site={site} />
               <div className="mt-5 rounded-[22px] border border-[#c4b5fd]/25 bg-[#191525] p-6 sm:p-7">
-                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
+                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{localizedExpertLabel(site, content.foundation.expertLabel)}</p>
                 <p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p>
               </div>
             </div>
@@ -992,7 +1049,7 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.useCases.eyebrow} title={content.useCases.title} body={content.useCases.intro} />
           <div className="mt-12 grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} key={`${item.title}-${index}`} />)}
+            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} site={site} key={`${item.title}-${index}`} />)}
           </div>
         </div>
       </section>
@@ -1022,7 +1079,7 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
             <div>
               <SectionCards cards={content.foundation.cards} site={site} />
               <div className="mt-5 rounded-[22px] border border-[#c4b5fd]/25 bg-[#191525] p-6 sm:p-7">
-                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
+                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{localizedExpertLabel(site, content.foundation.expertLabel)}</p>
                 <p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p>
               </div>
             </div>
@@ -1031,7 +1088,7 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
               <DirectionList items={content.foundation.leftItems} title={content.foundation.leftTitle} tone="positive" />
               <DirectionList items={content.foundation.rightItems} title={content.foundation.rightTitle} tone="avoid" />
               <div className="sm:col-span-2 rounded-[22px] border border-[#c4b5fd]/25 bg-[#191525] p-6 sm:p-7">
-                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
+                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{localizedExpertLabel(site, content.foundation.expertLabel)}</p>
                 <p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p>
               </div>
             </div>
@@ -1297,7 +1354,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
       {storyBeats.length ? (
         <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="brand-story-map" data-video-topic-section="brand-story-map">
           <div className="mx-auto max-w-[var(--site-content-width)]">
-            <SectionHeader eyebrow={content.platformExamples?.eyebrow ?? "BRAND STORY MAP"} title={content.platformExamples?.title ?? "Six Story Beats"} body={content.platformExamples?.intro} />
+            <SectionHeader eyebrow={content.platformExamples?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "MAPA DE HISTORIA DE MARCA" : "BRAND STORY MAP")} title={content.platformExamples?.title ?? (site.id === "site_mydreamshoots_xby" ? "Seis momentos de la historia" : "Six Story Beats")} body={content.platformExamples?.intro} />
             <ol className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-6" data-brand-video-story-map>
               {storyBeats.map((beat) => (
                 <li className="min-w-0 rounded-[22px] border border-white/10 bg-[#17151f] p-5" data-brand-video-beat key={beat.title}>
@@ -1317,7 +1374,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
             <DirectionList items={content.foundation.leftItems} title={content.foundation.leftTitle} tone="positive" />
             <DirectionList items={content.foundation.rightItems} title={content.foundation.rightTitle} tone="neutral" />
             <div className="sm:col-span-2 rounded-[22px] border border-[#c4b5fd]/25 bg-[#191525] p-6 sm:p-7">
-              <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
+              <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{localizedExpertLabel(site, content.foundation.expertLabel)}</p>
               <p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p>
             </div>
           </div>
@@ -1474,6 +1531,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
 }
 
 function SceneTopicLanding({ content, contentKey, section, site }: { content: VideoTopicContent; contentKey: string; section: SectionInstance; site: Site }) {
+  const spanish = site.id === "site_mydreamshoots_xby";
   const isMusic = contentKey === "music-video";
   const isFashion = contentKey === "fashion-video";
   const isPet = contentKey === "pet-video";
@@ -1487,8 +1545,8 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
   const heroImages = isMusic && heroVideo ? [] : sceneHeroPreviewImages(content, contentKey);
   const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
   const petHeroExtras = isPet ? (content.hero.images?.slice(1) ?? []).map((image, index) => ({
-    title: index === 0 ? "Owner and pet portrait" : "Pet portrait frame",
-    body: "Additional approved reference kept with the scene list for continuity review.",
+    title: index === 0 ? (spanish ? "Retrato de persona y mascota" : "Owner and pet portrait") : (spanish ? "Fotograma de retrato de mascota" : "Pet portrait frame"),
+    body: spanish ? "Referencia aprobada para revisar la continuidad de la escena." : "Additional approved reference kept with the scene list for continuity review.",
     image
   })) : [];
   const sceneGalleryItems = [...galleryItems, ...petHeroExtras];
@@ -1523,15 +1581,15 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
 
       {content.quickAnswer ? <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="what-this-creates" data-video-topic-section="what-this-creates"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.quickAnswer.eyebrow} title={content.quickAnswer.title} body={content.quickAnswer.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-4">{content.quickAnswer.cards.map((card, index) => <SupportingCard card={card} key={`${card.title}-${index}`} site={site} />)}</div></div></section> : null}
 
-      {visualMap.length ? <section className={`border-b border-white/10 ${panelTone} px-5 py-16 sm:px-8 sm:py-24`} id="visual-map" data-video-topic-section="visual-map"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.platformExamples?.eyebrow ?? "VISUAL MAP"} title={content.platformExamples?.title ?? "Six Decisions Before You Generate"} body={content.platformExamples?.intro} /><ol className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-6">{visualMap.map((item, index) => <li className="min-w-0 rounded-[22px] border border-white/10 bg-[#17151f] p-5" data-scene-topic-map-item key={`${item.title}-${index}`}><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</p><h3 className="mt-4 text-lg font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></li>)}</ol></div></section> : null}
+      {visualMap.length ? <section className={`border-b border-white/10 ${panelTone} px-5 py-16 sm:px-8 sm:py-24`} id="visual-map" data-video-topic-section="visual-map"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.platformExamples?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "MAPA VISUAL" : "VISUAL MAP")} title={content.platformExamples?.title ?? (site.id === "site_mydreamshoots_xby" ? "Seis decisiones antes de generar" : "Six Decisions Before You Generate")} body={content.platformExamples?.intro} /><ol className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-6">{visualMap.map((item, index) => <li className="min-w-0 rounded-[22px] border border-white/10 bg-[#17151f] p-5" data-scene-topic-map-item key={`${item.title}-${index}`}><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</p><h3 className="mt-4 text-lg font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></li>)}</ol></div></section> : null}
 
       <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} /><div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">{content.steps.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-scene-topic-step key={`${item.title}-${index}`}><span className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</span><h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div><div className="mt-10"><ActionLink href={primaryHref} label={content.steps.cta} site={site} /></div></div></section>
 
-      {sceneGalleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? "SCENE REFERENCES"} title={content.gallery?.title ?? "Eight Directions for the Next Shot"} body={content.gallery?.intro} light /><div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{sceneGalleryItems.map((item, index) => <article className="flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-scene-topic-scene key={`${item.title}-${index}`}><div className="relative aspect-[4/3] overflow-hidden bg-[#d9d1f6]"><img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className={`absolute inset-0 h-full w-full ${mediaObjectFit(item.image)} object-center`} style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
+      {sceneGalleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "REFERENCIAS DE ESCENAS" : "SCENE REFERENCES")} title={content.gallery?.title ?? (site.id === "site_mydreamshoots_xby" ? "Ocho direcciones para el siguiente plano" : "Eight Directions for the Next Shot")} body={content.gallery?.intro} light /><div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{sceneGalleryItems.map((item, index) => <article className="flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-scene-topic-scene key={`${item.title}-${index}`}><div className="relative aspect-[4/3] overflow-hidden bg-[#d9d1f6]"><img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className={`absolute inset-0 h-full w-full ${mediaObjectFit(item.image)} object-center`} style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
 
       <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="sequence-guide" data-video-topic-section="sequence-guide"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.guidance.cards.map((card, index) => <SupportingCard card={card} key={`${card.title}-${index}`} site={site} />)}</div></div></section>
 
-      <section className={`border-b border-white/10 ${panelTone} px-5 py-16 sm:px-8 sm:py-24`} id="product-boundary" data-video-topic-section="product-boundary"><div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.74fr_1.26fr] lg:items-start lg:gap-16"><SectionHeader eyebrow={content.foundation.eyebrow} title={content.foundation.title} body={content.foundation.intro} /><div className="grid gap-5 sm:grid-cols-2"><DirectionList items={content.foundation.leftItems} title={content.foundation.leftTitle} tone="positive" /><DirectionList items={content.foundation.rightItems} title={content.foundation.rightTitle} tone={content.foundation.rightTone === "neutral" ? "neutral" : "avoid"} /><div className="sm:col-span-2 rounded-[22px] border border-white/10 bg-[#191525] p-6 sm:p-7"><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{content.foundation.expertLabel ?? "Expert tip"}</p><p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p></div></div></div></section>
+      <section className={`border-b border-white/10 ${panelTone} px-5 py-16 sm:px-8 sm:py-24`} id="product-boundary" data-video-topic-section="product-boundary"><div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[0.74fr_1.26fr] lg:items-start lg:gap-16"><SectionHeader eyebrow={content.foundation.eyebrow} title={content.foundation.title} body={content.foundation.intro} /><div className="grid gap-5 sm:grid-cols-2"><DirectionList items={content.foundation.leftItems} title={content.foundation.leftTitle} tone="positive" /><DirectionList items={content.foundation.rightItems} title={content.foundation.rightTitle} tone={content.foundation.rightTone === "neutral" ? "neutral" : "avoid"} /><div className="sm:col-span-2 rounded-[22px] border border-white/10 bg-[#191525] p-6 sm:p-7"><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{localizedExpertLabel(site, content.foundation.expertLabel)}</p><p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p></div></div></div></section>
 
       {content.evidence ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="product-evidence" data-video-topic-section="product-evidence"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.evidence.eyebrow} title={content.evidence.title} body={content.evidence.intro} light /><SectionCards cards={content.evidence.cards} light site={site} /></div></section> : null}
 
@@ -1611,7 +1669,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.useCases.eyebrow} title={content.useCases.title} body={content.useCases.intro} />
           <div className="mt-12 grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} key={`${item.title}-${index}`} />)}
+            {content.useCases.items.map((item, index) => <UseCaseCard index={index} item={item} site={site} key={`${item.title}-${index}`} />)}
           </div>
         </div>
       </section>
@@ -1641,7 +1699,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
             <div>
               <SectionCards cards={content.foundation.cards} site={site} />
               <div className="mt-5 rounded-[22px] border border-[#c4b5fd]/25 bg-[#191525] p-6 sm:p-7">
-                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
+                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{localizedExpertLabel(site, content.foundation.expertLabel)}</p>
                 <p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p>
               </div>
             </div>
@@ -1650,7 +1708,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
               <DirectionList items={content.foundation.leftItems} title={content.foundation.leftTitle} tone="positive" />
               <DirectionList items={content.foundation.rightItems} title={content.foundation.rightTitle} tone={content.foundation.rightTone === "neutral" ? "neutral" : "avoid"} />
               <div className="sm:col-span-2 rounded-[22px] border border-[#c4b5fd]/25 bg-[#191525] p-6 sm:p-7">
-                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{content.foundation.expertLabel ?? "Expert tip"}</p>
+                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{localizedExpertLabel(site, content.foundation.expertLabel)}</p>
                 <p className="mt-3 max-w-3xl text-base leading-7 text-white/78">{content.foundation.expertTip}</p>
               </div>
             </div>
@@ -1666,12 +1724,12 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
       </section>
 
       {content.supportingGroups.length ? (
-        <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="supporting" data-video-topic-section="supporting">
+      <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="supporting" data-video-topic-section="supporting">
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <SectionHeader
-              eyebrow="ADDITIONAL VIDEO GUIDANCE"
-              title="Keep the video job clear from the first frame to the final cut"
-              body="Use the supporting notes below when the same creative idea needs a more specific platform, buyer, or campaign decision."
+              eyebrow={site.id === "site_mydreamshoots_xby" ? "GUÍA ADICIONAL DE VÍDEO" : "ADDITIONAL VIDEO GUIDANCE"}
+              title={site.id === "site_mydreamshoots_xby" ? "Mantén claro el objetivo del vídeo desde el primer fotograma hasta el montaje final" : "Keep the video job clear from the first frame to the final cut"}
+              body={site.id === "site_mydreamshoots_xby" ? "Usa las notas siguientes cuando una misma idea creativa necesite una decisión más concreta sobre plataforma, público o campaña." : "Use the supporting notes below when the same creative idea needs a more specific platform, buyer, or campaign decision."}
             />
             <div className="mt-12 space-y-16">
               {content.supportingGroups.map((group) => (
@@ -1760,9 +1818,10 @@ export function AiVideoTopicLanding({ section, site }: { section: SectionInstanc
   const contentKey = String(section.settings.contentKey ?? section.settings.anchor ?? "").trim();
   const content = aiVideoTopicLandingContentFromSection(section);
   if (!content) notFound();
+  const localizedContent = repairSpanishVideoTopicContent(content, contentKey, site.id === "site_mydreamshoots_xby");
   return (
     <DreamshootShowcasePreview>
-      <VideoTopicLanding content={normalizeAiContent(content)} contentKey={contentKey} section={section} site={site} />
+      <VideoTopicLanding content={normalizeAiContent(localizedContent)} contentKey={contentKey} section={section} site={site} />
     </DreamshootShowcasePreview>
   );
 }
@@ -1770,9 +1829,10 @@ export function AiVideoTopicLanding({ section, site }: { section: SectionInstanc
 export function TalkingPhotoLanding({ section, site }: { section: SectionInstance; site: Site }) {
   const content = talkingPhotoContentFromSection(section);
   if (!content) notFound();
+  const localizedContent = repairSpanishVideoTopicContent(content, "talking-photo", site.id === "site_mydreamshoots_xby");
   return (
     <DreamshootShowcasePreview>
-      <VideoTopicLanding content={normalizeTalkingContent(content)} contentKey="talking-photo" section={section} site={site} />
+      <VideoTopicLanding content={normalizeTalkingContent(localizedContent)} contentKey="talking-photo" section={section} site={site} />
     </DreamshootShowcasePreview>
   );
 }

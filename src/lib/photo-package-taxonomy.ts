@@ -134,6 +134,10 @@ function isAidreamcapesRouteSite(site: CollectionRouteSiteIdentity | undefined):
 
 export function isMydreamshootsCollectionRouteSite(site: CollectionRouteSiteIdentity | undefined): boolean {
   if (!site || isAidreamcapesRouteSite(site)) return false;
+  const siteId = site.siteId ?? site.id ?? "";
+  const slug = site.slug ?? "";
+  const domain = site.primaryDomain ?? "";
+  if (siteId === "site_mydreamshoots_xby" || slug === "mydreamshoots-xby" || domain === "aidreamshoots.eu") return false;
   return isPrimaryMydreamshootsCapabilitySite({ id: site.siteId ?? site.id ?? "", slug: site.slug ?? "" });
 }
 
@@ -258,6 +262,31 @@ export function parsePublicCollectionRouteForSite(site: CollectionRouteSiteIdent
     }
     return undefined;
   }
+  if (isSpanishStorefrontSite(site)) {
+    const isCanonicalRoot = segments[0] === MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT;
+    const isLegacyRoot = segments[0] === "collections";
+    if (!isCanonicalRoot && !isLegacyRoot) return undefined;
+    if (segments.length === 1) {
+      return {
+        root: isCanonicalRoot ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT : "collections",
+        collectionSlug: "",
+        canonicalPath: COLLECTIONS_ROOT_PATH,
+        kind: "directory"
+      };
+    }
+    if (segments.length === 2) {
+      const rawItemSlug = photoPackageSlug(segments[1]);
+      const itemSlug = canonicalSpanishXbyCollectionSlug(rawItemSlug);
+      return {
+        root: isCanonicalRoot ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT : "collections",
+        itemSlug,
+        collectionSlug: itemSlug,
+        canonicalPath: `${COLLECTIONS_ROOT_PATH}/${itemSlug}`,
+        kind: "item"
+      };
+    }
+    return undefined;
+  }
   if (segments[0] !== "collections") return undefined;
   if (segments.length === 1) {
     return {
@@ -287,8 +316,35 @@ export function parsePublicVideoGenerationRouteForSite(site: CollectionRouteSite
     if (segments[0] !== MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT) return undefined;
     if (segments.length === 1) return { root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT, canonicalPath: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH, kind: "directory" };
     if (segments.length === 2) {
-      const itemSlug = photoPackageSlug(segments[1]);
+      const itemSlug = aidreamcapesEuRouteSlug(site, segments[1], aidreamcapesEuVideoRouteAliases);
       return { root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT, itemSlug, canonicalPath: publicVideoGenerationPathForSite(site, itemSlug), kind: "item" };
+    }
+    return undefined;
+  }
+  // The Spanish AIdreamshoots storefront keeps the shared video-generation
+  // URL family, while its localized collection URLs intentionally use
+  // `/collections`. Keep this route parser separate from the image-collection
+  // capability check so the target storefront's video directory and topic
+  // pages remain reachable without changing the English or Aidreamcapes
+  // routing rules.
+  if (isSpanishStorefrontSite(site)) {
+    if (segments[0] !== MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT) return undefined;
+    if (segments.length === 1) {
+      return {
+        root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT,
+        canonicalPath: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH,
+        kind: "directory"
+      };
+    }
+    if (segments.length === 2) {
+      const itemSlug = photoPackageSlug(segments[1]);
+      if (!isMydreamshootsVideoGenerationSlug(itemSlug)) return undefined;
+      return {
+        root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT,
+        itemSlug,
+        canonicalPath: publicVideoGenerationPathForSite(site, itemSlug),
+        kind: "item"
+      };
     }
     return undefined;
   }

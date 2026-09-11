@@ -34,6 +34,30 @@ export async function metadataForPublishedStorefrontPage({
     ? page
     : snapshot.pages.find((candidate) => candidate.id === page.id) ?? page;
   const context = resolvePublishedStorefrontContext(snapshot, snapshotPage);
+  // AIdreamshoots keeps its translated SEO in the target LivePage JSON. The
+  // shared storefront context may still derive a generic title from an older
+  // route projection (notably for policy pages), so prefer the target page's
+  // explicit SEO fields for this site only. Other storefronts retain the
+  // existing projection and metadata behavior.
+  const targetPageSeo = snapshot.site.id === "site_mydreamshoots_xby" ? snapshotPage.publishedJson.seo : undefined;
+  const metadataContext = targetPageSeo
+    ? {
+        ...context,
+        seo: {
+          ...context.seo,
+          ...(targetPageSeo.title?.trim() ? { title: targetPageSeo.title.trim() } : {}),
+          ...(targetPageSeo.description?.trim() ? { description: targetPageSeo.description.trim() } : {}),
+          ...(targetPageSeo.twitterDescription?.trim() ? { twitterDescription: targetPageSeo.twitterDescription.trim() } : {}),
+          ...(targetPageSeo.keywords?.trim() ? { keywords: targetPageSeo.keywords.trim() } : {}),
+          ...(targetPageSeo.canonicalPath?.trim()
+            ? {
+                canonicalPath: targetPageSeo.canonicalPath,
+                canonicalUrl: `${snapshot.site.primaryDomain?.startsWith("http") ? snapshot.site.primaryDomain.replace(/\/$/, "") : `https://${snapshot.site.primaryDomain}`}${targetPageSeo.canonicalPath.startsWith("/") ? targetPageSeo.canonicalPath : `/${targetPageSeo.canonicalPath}`}`
+              }
+            : {})
+        }
+      }
+    : context;
   const approvedDirectoryImage = isPrimaryMydreamshootsSite(snapshot.site) && snapshotPage.slug === "/ai-image-generation" &&
     context.publishedStandardPageMedia?.status === "ready"
     ? context.publishedStandardPageMedia.ogImage?.trim()
@@ -42,8 +66,8 @@ export async function metadataForPublishedStorefrontPage({
   const defaultOgImage = context.settings.seo?.defaultOgImage?.trim();
   const useApprovedDirectoryImage = Boolean(approvedDirectoryImage && (!configuredOgImage || configuredOgImage === defaultOgImage));
   return metadataForSingleThemePage(snapshot.site, snapshotPage, useApprovedDirectoryImage
-    ? { ...context, seo: { ...context.seo, ogImage: approvedDirectoryImage } }
-    : context
+    ? { ...metadataContext, seo: { ...metadataContext.seo, ogImage: approvedDirectoryImage } }
+    : metadataContext
   );
 }
 
@@ -69,9 +93,15 @@ export async function metadataForPublishedStorefrontDirectoryPage({
   const publishedBasePage = snapshot?.pages.find((candidate) => candidate.id === page.id) ?? page;
   const publishedSite = snapshot?.site ?? site;
   const projectionPath = path ?? (kind === "collection" ? `/ai-image-generation/${directorySlug}` : `/ai-video-generation/${directorySlug}`);
+  const spanishTargetPage = publishedSite.id === "site_mydreamshoots_xby" && snapshot
+    ? snapshot.pages.find((candidate) => candidate.slug === projectionPath || candidate.publishedJson?.seo?.canonicalPath === projectionPath)
+    : undefined;
+  const seoSourcePage = spanishTargetPage ?? publishedBasePage;
   // Dedicated video topic pages own their SEO in LivePage.contentJson. Resolve
   // that first so they never require a generic tool-directory seed.
-  const pageJsonWithDirectorySeo = withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite);
+  const pageJsonWithDirectorySeo = spanishTargetPage
+    ? spanishTargetPage.publishedJson
+    : withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite);
   const resolved = isPrimaryMydreamshootsSite(publishedSite) && snapshot
     ? resolvePublishedSeoEntity(snapshot, projectionPath)
     : undefined;
@@ -108,7 +138,7 @@ export async function metadataForPublishedStorefrontDirectoryPage({
         }
       : pageJsonWithDirectorySeo;
   const resolvedPage = {
-    ...publishedBasePage,
+    ...seoSourcePage,
     publishedJson: directoryPageJson
   };
   return metadataForPublishedStorefrontPage({

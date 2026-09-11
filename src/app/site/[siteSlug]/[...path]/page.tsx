@@ -29,6 +29,21 @@ type HeaderReader = {
   get(name: string): string | null;
 };
 
+const spanishVideoSaveTheDateAliases: Record<string, string> = {
+  christmas: "christmas",
+  engagement: "engagement",
+  "fathers-day": "fathers-day",
+  halloween: "halloween",
+  "mothers-day": "mothers-day",
+  "new-year": "new-year",
+  proposal: "proposal",
+  "save-the-date": "save-the-date",
+  thanksgiving: "thanksgiving",
+  "valentines-day": "valentines-day",
+  "wedding-ceremony": "wedding-ceremony",
+  "wedding-invitation": "wedding-ceremony"
+};
+
 function publicHostCandidates(headers: HeaderReader): Array<string | null> {
   return [
     headers.get("x-forwarded-host"),
@@ -228,6 +243,12 @@ function searchParamsSuffix(query: Record<string, string | string[] | undefined>
 }
 
 function fallbackCollectionRootPathForPublicSlug(publicSlug: string): string {
+  // AIdreamshoots uses the Spanish storefront's localized collection URLs.
+  // Keep the legacy AI root for the primary English storefronts and other
+  // capability sites; this exception is deliberately scoped to this site.
+  if (publicSlug === "aidreamshoots" || publicSlug === "aidreamshoots-eu" || publicSlug === "mydreamshoots-xby") {
+    return "/collections";
+  }
   return usesAiGenerationPublicSlug(publicSlug)
     ? "/ai-image-generation"
     : "/collections";
@@ -328,6 +349,31 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const site = state?.sites[0];
   if (!site) return {};
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
+  const spanishAliasSlug = site.id === "site_mydreamshoots_xby" && isVideoGenerationRequest
+    ? spanishVideoSaveTheDateAliases[videoLookupSlug]
+    : undefined;
+  if (spanishAliasSlug) {
+    const aliasPath = `/ai-save-the-date/${spanishAliasSlug}`;
+    // A video alias request loads the legacy video route projection, which
+    // intentionally does not include the newer Save the Date page row. Read
+    // the canonical page projection before generating metadata so the alias
+    // cannot fall through to a misleading 404/empty head.
+    const aliasState = routeMode === "host"
+      ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, aliasPath)
+      : await readPathModePublicRuntimeState(siteSlug, aliasPath);
+    const aliasSite = aliasState?.sites[0] ?? site;
+    const page = findPage(aliasSite, aliasPath);
+    return page
+      ? metadataForPublishedStorefrontPage({
+          site: aliasSite,
+          page,
+          path: aliasPath,
+          products: aliasState?.products ?? state.products,
+          creativePacks: aliasState?.creativePacks ?? state.creativePacks,
+          snapshot: createPublishedSiteSnapshot(aliasState ?? state, aliasSite, { source: "platform-state" })
+        })
+      : {};
+  }
   const videoGenerationRoute = isVideoGenerationRequest ? parsePublicVideoGenerationRouteForSite(site, path) : undefined;
   if (isVideoGenerationRequest) {
     if (!videoGenerationRoute) return {};
@@ -423,7 +469,8 @@ export default async function SiteCatchAllPage({
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);
     if (legacySaveTheDateTarget) permanentRedirect(routePath(legacySaveTheDateTarget));
   }
-  if (isPrimaryMydreamshootsSlug(publicSlug) && ["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"].includes(slug)) {
+  const isSpanishAIdreamshoots = publicSlug === "aidreamshoots" || publicSlug === "aidreamshoots-eu" || publicSlug === "mydreamshoots-xby";
+  if ((isPrimaryMydreamshootsSlug(publicSlug) || isSpanishAIdreamshoots) && ["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"].includes(slug)) {
     permanentRedirect(routePath("/digital-delivery"));
   }
   if (isPrimaryMydreamshootsSlug(publicSlug) && isMydreamshootsRetiredPublicPath(slug)) notFound();
@@ -511,6 +558,27 @@ export default async function SiteCatchAllPage({
     notFound();
   }
   const snapshot = createPublishedSiteSnapshot(state, publicSite, { source: "platform-state" });
+  const spanishVideoAliasSlug = isSpanishAIdreamshoots && isVideoGenerationRequest
+    ? spanishVideoSaveTheDateAliases[videoLookupSlug]
+    : undefined;
+  if (spanishVideoAliasSlug) {
+    const aliasPath = `/ai-save-the-date/${spanishVideoAliasSlug}`;
+    // The legacy video projection is route-scoped and may omit the canonical
+    // Save the Date page. Switch to that page's own published projection
+    // before rendering the target-only alias.
+    const aliasState = await readPathModePublicRuntimeState(publicSlug, aliasPath);
+    const aliasSite = aliasState?.sites[0];
+    if (!aliasState || !aliasSite || !findPage(aliasSite, aliasPath)) notFound();
+    return renderStorefrontPage({
+      site: aliasSite,
+      slug: aliasPath,
+      publicPath: aliasPath,
+      query,
+      routeMode,
+      state: aliasState,
+      deferCustomerRuntime: true
+    });
+  }
   const publishedDisposition = resolvePublishedRouteDisposition(snapshot, slug);
   if (publishedDisposition.kind === "redirect" && publishedDisposition.targetPath) permanentRedirect(routePath(publishedDisposition.targetPath));
   const legacyTarget = legacyPublicPathTarget(slug, fallbackCollectionRootPathForPublicSlug(publicSlug));
