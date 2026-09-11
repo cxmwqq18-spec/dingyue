@@ -278,8 +278,8 @@ function sitemapVideoDuration(value: unknown, fallback = 15): string {
   return String(totalSeconds);
 }
 
-function pageSitemapVideoForSite(site: Site, page: ThemePage, path: string): SitemapVideoEntry | undefined {
-  if (!isDreamshootSite(site) || path !== "/ai-save-the-date/christmas") return undefined;
+function pageSitemapVideoForSite(site: Site, page: ThemePage): SitemapVideoEntry | undefined {
+  if (!isDreamshootSite(site)) return undefined;
   const hero = Object.values(page.publishedJson.sections ?? {}).find((section) => section?.type === "editorial_hero");
   if (!hero) return undefined;
   const firstVisual = hero.blocks?.find((block) => Boolean(cleanText(block.settings.imageUrl)));
@@ -567,7 +567,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
         : isPrimaryMydreamshootsSite(site)
           ? []
           : collectPageSitemapImages(site, page),
-      video: pageSitemapVideoForSite(site, page, path),
+      video: pageSitemapVideoForSite(site, page),
       lastmod: pageContentLastModified(page, snapshot.publication?.publishedAt),
       changefreq: sitemapChangeFrequencyForPath(path),
       priority: sitemapPriorityForPath(path)

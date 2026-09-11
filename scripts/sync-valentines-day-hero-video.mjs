@@ -19,6 +19,11 @@ assert.equal(SITE_ID, "site_dreamshoot", "This scoped sync only supports the MyD
 const PAGE_SLUG = "/ai-save-the-date/valentines-day";
 const VIDEO_PATH = "/assets/dreamshoot/save-the-date/valentines-day/valentines-day-save-the-date.mp4";
 const VIDEO_URL = `${VIDEO_PATH}?v=20260906valentines1`;
+const VIDEO_POSTER_URL = "/assets/dreamshoot/save-the-date/valentines-day/hero-valentines-day-save-the-date-city-couple.jpg";
+const VIDEO_TITLE = "A couple reveals a romantic Valentine's Day Save the Date in evening city light";
+const VIDEO_DESCRIPTION = "A couple reveals a romantic Valentine's Day Save the Date in evening city light.";
+const VIDEO_UPLOAD_DATE = "2026-09-05T19:01:26.000Z";
+const VIDEO_DURATION_SECONDS = 30;
 const VIDEO_FILE = path.join(process.cwd(), "public", VIDEO_PATH.replace(/^\/+/, ""));
 const target = String(argumentValue("--target") || process.env.DATABASE_TARGET || "local").trim().toLowerCase();
 const apply = hasArgument("--apply") && !hasArgument("--dry-run");
@@ -45,8 +50,21 @@ function updateHeroJson(source) {
   const next = clone(source);
   const hero = next?.sections?.save_date_hero;
   assert(hero, `${PAGE_SLUG} hero section is required`);
-  const changed = hero.settings?.videoUrl !== VIDEO_URL;
-  hero.settings = { ...(hero.settings || {}), videoUrl: VIDEO_URL };
+  const changed = hero.settings?.videoUrl !== VIDEO_URL ||
+    hero.settings?.videoPosterUrl !== VIDEO_POSTER_URL ||
+    hero.settings?.videoTitle !== VIDEO_TITLE ||
+    hero.settings?.videoDescription !== VIDEO_DESCRIPTION ||
+    hero.settings?.videoUploadDate !== VIDEO_UPLOAD_DATE ||
+    hero.settings?.videoDurationSeconds !== VIDEO_DURATION_SECONDS;
+  hero.settings = {
+    ...(hero.settings || {}),
+    videoUrl: VIDEO_URL,
+    videoPosterUrl: VIDEO_POSTER_URL,
+    videoTitle: VIDEO_TITLE,
+    videoDescription: VIDEO_DESCRIPTION,
+    videoUploadDate: VIDEO_UPLOAD_DATE,
+    videoDurationSeconds: VIDEO_DURATION_SECONDS
+  };
   if (changed) next.version = Number(next.version || 0) + 1;
   return { next, changed };
 }
