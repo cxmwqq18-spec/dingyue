@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
+import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -11,7 +12,11 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const requestHeaders = await headers();
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "";
-  const language = isSpanishStorefrontRequestIdentity(host) ? "es" : "en";
+  const language = storefrontLocaleForRequestIdentity(host) === "fr"
+    ? "fr"
+    : isSpanishStorefrontRequestIdentity(host)
+      ? "es"
+      : "en";
   return (
     <html lang={language} suppressHydrationWarning translate="yes">
       <head>

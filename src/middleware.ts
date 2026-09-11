@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
+import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS as MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS, isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
 
@@ -229,6 +230,20 @@ function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse
   return NextResponse.redirect(publicRedirectUrlForRequest(request, scopedPath === "/" ? "/" : scopedPath), 301);
 }
 
+function aidreamcapesEuWwwRedirect(request: NextRequest): NextResponse | undefined {
+  const host = String(request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "")
+    .split(",")[0]
+    .trim()
+    .toLowerCase()
+    .split(":")[0];
+  if (host !== "www.aidreamcapes.eu") return undefined;
+  const target = new URL(request.nextUrl);
+  target.protocol = "https:";
+  target.hostname = "aidreamcapes.eu";
+  target.port = "";
+  return NextResponse.redirect(target, 301);
+}
+
 function mydreamshootsLegacySiteSlugRedirect(request: NextRequest): NextResponse | undefined {
   const match = request.nextUrl.pathname.match(/^\/site\/([^/]+)(\/.*)?$/i);
   const legacySlug = match?.[1]?.toLowerCase();
@@ -276,7 +291,7 @@ function shouldReorderStorefrontHead(request: NextRequest): boolean {
   if (request.headers.get(REORDER_SKIP_HEADER) === "1") return false;
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
-  if (INTERNAL_PATH_RE.test(pathname) || (!isSpanishXbyRequest(request) && (PRIVATE_STORE_PATH_RE.test(pathname) || (TARGET_HOST_RE.test(host) && HOST_PRIVATE_STORE_PATH_RE.test(pathname))))) return false;
+  if (INTERNAL_PATH_RE.test(pathname) || (!isSpanishXbyRequest(request) && !isFrenchXbyRequest(request) && (PRIVATE_STORE_PATH_RE.test(pathname) || (TARGET_HOST_RE.test(host) && HOST_PRIVATE_STORE_PATH_RE.test(pathname))))) return false;
 
   const accept = request.headers.get("accept") ?? "";
   if (accept && !accept.includes("text/html") && !accept.includes("*/*")) return false;
@@ -289,6 +304,11 @@ function isSpanishXbyRequest(request: NextRequest): boolean {
   return isSpanishStorefrontRequestIdentity(identity);
 }
 
+function isFrenchXbyRequest(request: NextRequest): boolean {
+  const identity = `${request.nextUrl.pathname} ${request.headers.get("x-forwarded-host") ?? ""} ${request.headers.get("host") ?? ""}`.toLowerCase();
+  return storefrontLocaleForRequestIdentity(identity) === "fr";
+}
+
 function shouldRewriteStorefrontHtml(request: NextRequest): boolean {
   const shouldReorder = shouldReorderStorefrontHead(request);
   if (!shouldReorder && !storefrontEdgeHtmlRewriteEnabled(request)) return false;
@@ -299,7 +319,7 @@ function shouldRewriteStorefrontHtml(request: NextRequest): boolean {
   const accept = request.headers.get("accept") ?? "";
   if (accept && !accept.includes("text/html") && !accept.includes("*/*")) return false;
 
-  return shouldReorder || isSpanishXbyRequest(request);
+  return shouldReorder || isSpanishXbyRequest(request) || isFrenchXbyRequest(request);
 }
 
 function isPrivateStorefrontHtmlRequest(request: NextRequest): boolean {
@@ -337,6 +357,16 @@ function applyStorefrontHtmlCacheHeaders(headers: Headers, request: NextRequest,
 }
 
 function withStorefrontLocale(html: string, request: NextRequest): string {
+  if (isFrenchXbyRequest(request)) {
+    const withFrenchLang = html.replace(/<html\b([^>]*)>/i, (tag, attrs: string) => {
+      if (/\slang=(['"]).*?\1/i.test(tag)) return tag.replace(/\slang=(['"]).*?\1/i, ' lang="fr"');
+      return `<html lang="fr"${attrs}>`;
+    });
+    if (/<meta\b(?=[^>]*http-equiv=(['"])Content-Language\1)[^>]*>/i.test(withFrenchLang)) {
+      return withFrenchLang.replace(/<meta\b(?=[^>]*http-equiv=(['"])Content-Language\1)[^>]*>/i, (tag) => tag.replace(/\scontent=(['"]).*?\1/i, ' content="fr"'));
+    }
+    return withFrenchLang.replace(/<head\b[^>]*>/i, (tag) => `${tag}<meta http-equiv="Content-Language" content="fr">`);
+  }
   if (!isSpanishXbyRequest(request)) return html;
   const withSpanishLang = html.replace(/<html\b([^>]*)>/i, (tag, attrs: string) => {
     if (/\slang=(["']).*?\1/i.test(tag)) return tag.replace(/\slang=(["']).*?\1/i, ' lang="es"');
@@ -413,6 +443,9 @@ type StorefrontIconSet = {
 
 function siteIconForRequest(request: NextRequest): StorefrontIconSet | undefined {
   const identity = `${request.nextUrl.pathname} ${request.headers.get("x-forwarded-host") ?? ""} ${request.headers.get("host") ?? ""}`.toLowerCase();
+  if (storefrontLocaleForRequestIdentity(identity) === "fr") {
+    return { png: AIDREAMCAPES_EU_ICON, svg: AIDREAMCAPES_EU_ICON_SVG, apple: AIDREAMCAPES_EU_APPLE_ICON };
+  }
   if (isSpanishXbyRequest(request)) {
     if (identity.includes("aidreamcapes")) return { png: AIDREAMCAPES_EU_ICON, svg: AIDREAMCAPES_EU_ICON_SVG, apple: AIDREAMCAPES_EU_APPLE_ICON };
     return { png: AIDREAMSHOOTS_ICON, svg: AIDREAMSHOOTS_ICON_SVG, apple: AIDREAMSHOOTS_APPLE_ICON };
@@ -725,7 +758,7 @@ export async function middleware(request: NextRequest) {
   const skipInternalRewrite = request.headers.get(REORDER_SKIP_HEADER) === "1";
   if (skipInternalRewrite) return applyGrownstrideNoindex(nextWithPathname(request), request);
 
-  const redirectResponse = grownstrideLegacyHostRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request);
+  const redirectResponse = grownstrideLegacyHostRedirect(request) ?? aidreamcapesEuWwwRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request);
   if (redirectResponse) return finalizeStorefrontResponse(redirectResponse, request);
   if (!shouldRewriteStorefrontHtml(request)) return finalizeStorefrontResponse(nextWithPathname(request), request);
 
@@ -766,7 +799,9 @@ export async function middleware(request: NextRequest) {
   const headers = new Headers(upstreamResponse.headers);
   headers.delete("content-length");
   applyStorefrontHtmlCacheHeaders(headers, request, upstreamResponse.headers);
-  if (isSpanishXbyRequest(request)) {
+  if (isFrenchXbyRequest(request)) {
+    headers.set("content-language", "fr");
+  } else if (isSpanishXbyRequest(request)) {
     headers.set("content-language", "es");
   }
   if (isGrownstrideRequest(request)) headers.set("X-Robots-Tag", "noindex, nofollow");
