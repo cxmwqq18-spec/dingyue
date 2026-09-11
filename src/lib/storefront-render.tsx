@@ -46,6 +46,7 @@ import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings } from "@/lib/dreamshoot-tool-faq";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isFrenchStorefrontSite } from "@/lib/storefront-locale";
 import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection, withSeoDirectorySeo } from "@/lib/dreamshoot-seo-content";
 import { isMydreamshootsCollectionItemSlug, isMydreamshootsPublicVideoGenerationSlug, isMydreamshootsVideoGenerationSlug, parsePublicCollectionRouteForSite, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
@@ -1005,6 +1006,10 @@ function isSpanishXbyStorefront(site: Site): boolean {
   return isSpanishStorefrontSite(site);
 }
 
+function isFrenchXbyStorefront(site: Site): boolean {
+  return isFrenchStorefrontSite(site);
+}
+
 async function getStateForStorefrontRender(site: Site, routeMode: "host" | "path", providedState?: PlatformState): Promise<PlatformState> {
   if (providedState) {
     return providedState;
@@ -1510,7 +1515,24 @@ function withLightweightCollectionIntroPage(pageJson: ThemePageJson, site: Site)
   const introSectionId = "collections_intro_1";
   const isAidreamcapes = isAidreamcapesStorefront(site);
   const isSpanishXby = isSpanishXbyStorefront(site);
+  const isFrenchXby = isFrenchXbyStorefront(site);
   const isMyDreamShoots = !isAidreamcapes && !isSpanishXby;
+  const frenchDirectoryCopy = {
+    eyebrow: "Outils IA",
+    choosePlan: "Choisir une formule",
+    details: "Détails de l’outil",
+    step: "Étape",
+    useCase: "Cas d’usage",
+    bestFor: "Idéal pour",
+    guide: "Guide de l’outil",
+    title: "outil photo IA"
+  };
+  const frenchIntroCopy = {
+    eyebrow: "Bibliothèque de packs photo",
+    title: "Packs photo IA pour chaque style et chaque projet",
+    body: "Découvrez les thèmes disponibles, comparez les styles et vérifiez le coût en crédits avant de commencer.",
+    primaryCta: "Découvrir les packs photo"
+  };
   const myDreamShootsIntroCopy = {
     eyebrow: "AI photo package library",
     title: "AI Photo Packages for Every Style and Goal",
@@ -1518,7 +1540,7 @@ function withLightweightCollectionIntroPage(pageJson: ThemePageJson, site: Site)
     primaryCta: "Browse photo packages"
   };
   if (pageJson.sections[introSectionId]) {
-    if (!isMyDreamShoots) return pageJson;
+    if (!isMyDreamShoots && !isFrenchXby) return pageJson;
     return {
       ...pageJson,
       sections: {
@@ -1527,10 +1549,10 @@ function withLightweightCollectionIntroPage(pageJson: ThemePageJson, site: Site)
           ...pageJson.sections[introSectionId],
           settings: {
             ...pageJson.sections[introSectionId].settings,
-            eyebrow: myDreamShootsIntroCopy.eyebrow,
-            title: myDreamShootsIntroCopy.title,
-            subtitle: myDreamShootsIntroCopy.body,
-            primaryCta: myDreamShootsIntroCopy.primaryCta,
+            eyebrow: isFrenchXby ? frenchIntroCopy.eyebrow : myDreamShootsIntroCopy.eyebrow,
+            title: isFrenchXby ? frenchIntroCopy.title : myDreamShootsIntroCopy.title,
+            subtitle: isFrenchXby ? frenchIntroCopy.body : myDreamShootsIntroCopy.body,
+            primaryCta: isFrenchXby ? frenchIntroCopy.primaryCta : myDreamShootsIntroCopy.primaryCta,
             primaryHref: "#package-taxonomy"
           }
         }
@@ -1563,22 +1585,26 @@ function withLightweightCollectionIntroPage(pageJson: ThemePageJson, site: Site)
         type: "rich_text",
         settings: {
           anchor: "packages",
-          eyebrow: isSpanishXby ? isAidreamcapes ? "Biblioteca de albumes de ocasion" : "Biblioteca de paquetes de fotos" : isAidreamcapes ? "Occasion album library" : myDreamShootsIntroCopy.eyebrow,
+          eyebrow: isFrenchXby ? frenchIntroCopy.eyebrow : isSpanishXby ? isAidreamcapes ? "Biblioteca de albumes de ocasion" : "Biblioteca de paquetes de fotos" : isAidreamcapes ? "Occasion album library" : myDreamShootsIntroCopy.eyebrow,
           title: isSpanishXby
-            ? isAidreamcapes
+            ? isFrenchXby
+              ? frenchIntroCopy.title
+              : isAidreamcapes
               ? "Albumes privados de fans y recuerdos festivos por ocasion."
               : "Paquetes de fotos con IA por estilo, uso y entrega."
             : myDreamShootsIntroCopy.title,
           body: isSpanishXby
-            ? isAidreamcapes
+            ? isFrenchXby
+              ? frenchIntroCopy.body
+              : isAidreamcapes
               ? "Explora albumes de fans, grupos de partido, estrenos, Navidad, Accion de Gracias y Halloween antes de gastar creditos."
               : "Compara retratos profesionales, retratos de creador, fotos de hincha, belleza, albumes tematicos y video antes de gastar creditos."
             : isAidreamcapes
               ? "Browse fan-scene albums, game-day group portraits, premiere-inspired sets, Christmas, Thanksgiving, Halloween, and seasonal memories before you spend credits."
               : myDreamShootsIntroCopy.body,
-          primaryCta: isSpanishXby ? isAidreamcapes ? "Ver albumes de ocasion" : "Ver paquetes de fotos" : isAidreamcapes ? "Browse occasion albums" : myDreamShootsIntroCopy.primaryCta,
+          primaryCta: isFrenchXby ? frenchIntroCopy.primaryCta : isSpanishXby ? isAidreamcapes ? "Ver albumes de ocasion" : "Ver paquetes de fotos" : isAidreamcapes ? "Browse occasion albums" : myDreamShootsIntroCopy.primaryCta,
           primaryHref: "#package-taxonomy",
-          secondaryCta: isSpanishXby ? "Ver precios" : "View pricing",
+          secondaryCta: isFrenchXby ? "Voir les tarifs" : isSpanishXby ? "Ver precios" : "View pricing",
           secondaryHref: "/pricing",
           layout: "compact",
           headingLevel: "h1"
@@ -2128,9 +2154,11 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
       toolsBySlug.set(slug, aidreamcapesToolBlockForSlug(site, slug));
     }
   }
-  for (const block of blocks) {
-    const slug = toolSlugFromBlock(block);
-    toolsBySlug.set(slug, block);
+  if (!isAidreamcapes) {
+    for (const block of blocks) {
+      const slug = toolSlugFromBlock(block);
+      toolsBySlug.set(slug, block);
+    }
   }
   const tools = Array.from(toolsBySlug.values()).map((tool) => isSpanishXby ? spanishXbyToolBlockForSite(site, tool) : tool);
   return {
@@ -2169,10 +2197,11 @@ function withDreamShootToolsDirectoryPage(pageJson: ThemePageJson, site: Site): 
   };
 }
 
-function withDreamShootVideoGenerationDirectoryPage(pageJson: ThemePageJson): ThemePageJson {
+function withDreamShootVideoGenerationDirectoryPage(pageJson: ThemePageJson, site?: Site): ThemePageJson {
   // The root video directory has a dedicated presentation contract. Keep it
   // independent from any legacy photo-tool sections that may remain in a
   // publication snapshot while its topic pages are being updated.
+  const spanishTarget = site ? isSpanishMydreamshootsStorefront(site) : false;
   return {
     ...pageJson,
     sectionsOrder: ["video_theme_directory_1"],
@@ -2181,8 +2210,10 @@ function withDreamShootVideoGenerationDirectoryPage(pageJson: ThemePageJson): Th
         type: "dreamshoot_tool_collection",
         settings: {
           anchor: "video-themes",
-          title: "AI Video Generation",
-          subtitle: "Browse every public AI video theme and open the dedicated guide for the direction you want.",
+          title: spanishTarget ? "Generadores de vídeo con IA" : "AI Video Generation",
+          subtitle: spanishTarget
+            ? "Explora todos los temas públicos de vídeo con IA y abre la guía del estilo que quieras."
+            : "Browse every public AI video theme and open the dedicated guide for the direction you want.",
           layout: "video_theme_grid",
           headingLevel: "h1"
         },
@@ -2208,6 +2239,10 @@ function isAidreamcapesStorefront(site: Pick<Site, "id" | "slug" | "name" | "pri
 
 function isPrimaryMydreamshootsStorefront(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
   return isPrimaryMydreamshootsCapabilitySite(site);
+}
+
+function isSpanishMydreamshootsStorefront(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
+  return isSpanishStorefrontSite(site) && !isAidreamcapesStorefront(site);
 }
 
 function usesSharedDreamShootNavigation(site: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding: Pick<Site["branding"], "logoText"> }): boolean {
@@ -2669,7 +2704,11 @@ function renderThemePage({
       footerLinks: settings.navigation.footerLinks.filter((link) => navigationLinkIsPublished(link.href))
     }
   };
-  const usePublishedSnapshotFilters = storefrontContext && !isAidreamcapesStorefront(currentSite);
+  // AIdreamshoots has a live relational catalogue but no English
+  // publication-backed offer/collection projection. Applying the English
+  // publication filter here hides valid target products and packs, which is
+  // why the pricing cards and homepage catalogue can render half-empty.
+  const usePublishedSnapshotFilters = storefrontContext && !isAidreamcapesStorefront(currentSite) && !isSpanishMydreamshootsStorefront(currentSite);
   const activePackIds = usePublishedSnapshotFilters
     ? new Set(storefrontContext.catalog.activePacks.map((pack) => pack.id))
     : undefined;
@@ -2715,7 +2754,7 @@ function renderThemePage({
         lightweightChrome={lightweightChrome}
         storefrontContext={storefrontContext}
       />
-      {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} preserveBodyMarker={isAidreamcapesStorefront(currentSite) || pagePath === "/about-us"} /> : null}
+      {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} preserveBodyMarker={isAidreamcapesStorefront(currentSite) || (currentSite.id !== "site_mydreamshoots_xby" && pagePath === "/about-us")} /> : null}
     </div>
   );
 }
@@ -2859,11 +2898,11 @@ export async function renderStorefrontPage({
   const usesDreamShootToolsDirectory =
     slug === "/tools" &&
     (usesAiGenerationPublicRoutes(currentSite) || isAidreamcapesStorefront(currentSite));
-  const usesDreamShootVideoGenerationDirectory = slug === "/ai-video-generation" && isPrimaryMydreamshootsStorefront(currentSite);
+  const usesDreamShootVideoGenerationDirectory = slug === "/ai-video-generation" && (isPrimaryMydreamshootsStorefront(currentSite) || isSpanishMydreamshootsStorefront(currentSite));
   const basePageJson = slug === "/account"
     ? withAccountDashboardPage(page.publishedJson)
     : usesDreamShootVideoGenerationDirectory
-    ? withDreamShootVideoGenerationDirectoryPage(page.publishedJson)
+    ? withDreamShootVideoGenerationDirectoryPage(page.publishedJson, currentSite)
     : usesDreamShootToolsDirectory
     ? withDreamShootToolsDirectoryPage(page.publishedJson, currentSite)
     : isFocusedCollectionPage
@@ -3116,7 +3155,7 @@ export async function renderStorefrontSectionPayloads({
   const usesDreamShootToolsDirectory =
     internalSlug === "/tools" &&
     (usesAiGenerationPublicRoutes(currentSite) || isAidreamcapesStorefront(currentSite));
-  const usesDreamShootVideoGenerationDirectory = internalSlug === "/ai-video-generation" && isPrimaryMydreamshootsStorefront(currentSite);
+  const usesDreamShootVideoGenerationDirectory = internalSlug === "/ai-video-generation" && (isPrimaryMydreamshootsStorefront(currentSite) || isSpanishMydreamshootsStorefront(currentSite));
   const pageJson: ThemePageJson = withoutMydreamshootsHomepagePackageCatalog(
     currentSite,
     internalSlug,
@@ -3125,7 +3164,7 @@ export async function renderStorefrontSectionPayloads({
       : toolDetailSlug && resolvedToolDetail?.matched
       ? withSeoDirectorySection(directPage.publishedJson, "tool", toolDetailSlug, { site: currentSite })
       : usesDreamShootVideoGenerationDirectory
-      ? withDreamShootVideoGenerationDirectoryPage(directPage.publishedJson)
+      ? withDreamShootVideoGenerationDirectoryPage(directPage.publishedJson, currentSite)
       : usesDreamShootToolsDirectory
       ? withDreamShootToolsDirectoryPage(directPage.publishedJson, currentSite)
       : isFocusedCollectionPage
@@ -3535,7 +3574,7 @@ export async function renderCustomerWorkspacePage({
         initialVideoThemeCategories={bootstrap?.videoThemeCategories ?? []}
         initialPublishedVideoGenerationTopics={bootstrap?.publishedVideoGenerationTopics ?? []}
         initialPublishedSaveTheDateGroups={bootstrap?.publishedSaveTheDateGroups ?? []}
-        initialPublishedSaveTheDateMenuLabel={bootstrap?.publishedSaveTheDateMenuLabel ?? "Save the Date"}
+        initialPublishedSaveTheDateMenuLabel={bootstrap?.publishedSaveTheDateMenuLabel ?? (currentSite.id === "site_mydreamshoots_xby" ? "Guardar la fecha" : "Save the Date")}
         siteSlug={publicSiteSlug(currentSite.slug)}
       />
     );
@@ -3622,7 +3661,7 @@ export async function renderCustomerWorkspacePageBySlug({
         initialVideoThemeCategories={bootstrap?.videoThemeCategories ?? []}
         initialPublishedVideoGenerationTopics={bootstrap?.publishedVideoGenerationTopics ?? []}
         initialPublishedSaveTheDateGroups={bootstrap?.publishedSaveTheDateGroups ?? []}
-        initialPublishedSaveTheDateMenuLabel={bootstrap?.publishedSaveTheDateMenuLabel ?? "Save the Date"}
+        initialPublishedSaveTheDateMenuLabel={bootstrap?.publishedSaveTheDateMenuLabel ?? (site.id === "site_mydreamshoots_xby" ? "Guardar la fecha" : "Save the Date")}
         siteSlug={routeSlug}
       />
     );
