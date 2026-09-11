@@ -33,6 +33,22 @@ function cardLinkLabel(action: string, title: string) {
   return `${action}: ${title || "this package"}`;
 }
 
+function taxonomyTagLabel(value: string, locale: "en" | "es" | "fr"): string {
+  if (locale !== "es") return value;
+  const labels: Record<string, string> = {
+    "gala-photo": "Fotos de gala",
+    "portrait-photo": "Fotos de retrato",
+    "photo-enhancer": "Mejorador de fotos",
+    "old-photo-restoration": "Restauración de fotos antiguas",
+    "before-and-after": "Antes y después",
+    "before and after": "Antes y después",
+    "private gallery": "Galería privada",
+    "private model": "Modelo privado",
+    "ready workflow": "Flujo listo"
+  };
+  return labels[value.trim().toLowerCase()] ?? value;
+}
+
 function taxonomyImageAlt(
   card: PackageTaxonomyCard,
   imageUrl: string,
@@ -87,6 +103,7 @@ function SafeTaxonomyImage({
   decoding = "async",
   fetchPriority,
   loading,
+  locale,
   src
 }: {
   alt: string;
@@ -94,13 +111,14 @@ function SafeTaxonomyImage({
   decoding?: "async" | "auto" | "sync";
   fetchPriority?: "high" | "low" | "auto";
   loading?: "eager" | "lazy";
+  locale: "en" | "es" | "fr";
   src: string;
 }) {
-  const safeAlt = alt.trim() || "AI-generated private package visual showing a styled subject and intended gallery use";
+  const safeAlt = alt.trim() || (locale === "es" ? "Visual de paquete privado generado con IA para una galería personal" : "AI-generated private package visual showing a styled subject and intended gallery use");
   return (
     <img
       alt={safeAlt}
-      aria-label={`View ${safeAlt} full screen`}
+      aria-label={locale === "es" ? `Ver ${safeAlt} en pantalla completa` : locale === "fr" ? `Voir ${safeAlt} en plein écran` : `View ${safeAlt} full screen`}
       className={`block w-full cursor-zoom-in object-center ${className}`}
       data-dreamshoot-preview-meta=""
       data-dreamshoot-preview-src={src}
@@ -140,7 +158,7 @@ function SplitPackageTaxonomyCard({
   locale: "en" | "es" | "fr";
 }) {
   const images = cardImageUrls(card);
-  const tags = (card.tags?.length ? card.tags : card.keywords).filter(Boolean).slice(0, 3);
+  const tags = (card.tags?.length ? card.tags : card.keywords).filter(Boolean).slice(0, 3).map((tag) => taxonomyTagLabel(tag, locale));
   return (
     <a
       aria-label={cardLinkLabel(locale === "es" ? "Ver colección" : locale === "fr" ? "Voir la collection" : "View collection", card.title)}
@@ -155,9 +173,10 @@ function SplitPackageTaxonomyCard({
 	                alt={taxonomyImageAlt(card, image, imageIndex, locale, imageIndex === 0 ? "card" : "gallery")}
                 className="h-full object-cover transition duration-500"
                 decoding="async"
-                fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
-                loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
-                src={image}
+	                fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
+	                loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
+	                locale={locale}
+	                src={image}
               />
             </div>
           ))}
@@ -284,9 +303,10 @@ export function PackageTaxonomyClient({
 	                    alt={taxonomyImageAlt(selected, image, index, locale, "cover")}
                     className="transition duration-500"
                     decoding="async"
-                    fetchPriority={index === 0 ? "low" : "auto"}
-                    loading={index === 0 ? "eager" : "lazy"}
-                    src={image}
+	                    fetchPriority={index === 0 ? "low" : "auto"}
+	                    loading={index === 0 ? "eager" : "lazy"}
+	                    locale={locale}
+	                    src={image}
                   />
                 </div>
               ))}
@@ -449,6 +469,7 @@ export function PackageTaxonomyClient({
                           decoding="async"
                           fetchPriority="low"
                           loading="lazy"
+                          locale={locale}
                           src={card.imageUrl}
                         />
                       </div>
@@ -523,9 +544,10 @@ export function PackageTaxonomyClient({
 	                alt={taxonomyImageAlt(card, card.imageUrl, 0, locale, "card")}
                 className="transition duration-700"
                 decoding="async"
-                fetchPriority="low"
-                loading="lazy"
-                src={card.imageUrl}
+	                fetchPriority="low"
+	                loading="lazy"
+	                locale={locale}
+	                src={card.imageUrl}
               />
               {index === 0 ? <span className="absolute inset-x-0 top-0 h-1" style={{ background: "linear-gradient(90deg,#ffa644,#ec4bdd,#16dcf0)" }} /> : null}
             </div>

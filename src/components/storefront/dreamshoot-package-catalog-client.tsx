@@ -129,6 +129,7 @@ function SafeCatalogImage({
   decoding = "async",
   fetchPriority,
   loading,
+  locale,
   sizes,
   src
 }: {
@@ -137,14 +138,15 @@ function SafeCatalogImage({
   decoding?: "async" | "auto" | "sync";
   fetchPriority?: "high" | "low" | "auto";
   loading?: "eager" | "lazy";
+  locale: "en" | "es" | "fr";
   sizes?: string;
   src: string;
 }) {
-  const safeAlt = alt.trim() || "AI-generated private package visual showing a styled subject and intended gallery use";
+  const safeAlt = alt.trim() || (locale === "es" ? "Visual de paquete privado generado con IA para una galería personal" : "AI-generated private package visual showing a styled subject and intended gallery use");
   return (
     <img
       alt={safeAlt}
-      aria-label={`View ${safeAlt} full screen`}
+      aria-label={locale === "es" ? `Ver ${safeAlt} en pantalla completa` : locale === "fr" ? `Voir ${safeAlt} en plein écran` : `View ${safeAlt} full screen`}
       className={`block w-full cursor-zoom-in object-center ${className}`}
       data-dreamshoot-preview-meta=""
       data-dreamshoot-preview-src={src}
@@ -218,6 +220,7 @@ function ReferencePackageCard({
                 decoding="async"
                 fetchPriority={prioritizeFirstImage && index === 0 && imageIndex === 0 ? "high" : "low"}
                 loading={prioritizeFirstImage && index === 0 && imageIndex === 0 ? "eager" : "lazy"}
+                locale={locale}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 12vw"
                 src={image}
               />
@@ -459,11 +462,12 @@ export function DreamshootPackageCatalogClient({
             >
               <div className="relative overflow-hidden bg-white/[0.04]">
 	                <SafeCatalogImage
-		                  alt={imageAlt(card, card.imageUrl, 0, locale, brandName)}
+	                  alt={imageAlt(card, card.imageUrl, 0, locale, brandName)}
                   className="transition duration-700"
                   decoding="async"
                   fetchPriority={prioritizeFirstImage && index === 0 ? "auto" : "low"}
                   loading={prioritizeFirstImage && index === 0 ? "eager" : "lazy"}
+                  locale={locale}
                   sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 20vw"
                   src={card.imageUrl}
                 />
@@ -526,6 +530,7 @@ export function DreamshootPackageCatalogClient({
                       decoding="async"
                       fetchPriority="low"
                       loading="lazy"
+                      locale={locale}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
                       src={card.imageUrl}
                     />

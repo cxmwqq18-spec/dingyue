@@ -220,9 +220,9 @@ function meaningfulAltForStorefront(
   } else {
     const englishMarkers = languageMarkerCount(
       cleaned.toLowerCase(),
-      /\b(?:portrait|gallery|scene|showing|package|supporter|stadium|generated|private|cover|frame|customer|review|download|with|for)\b/g
+      /\b(?:portrait|portraits|gallery|galleries|scene|scenes|showing|package|packages|supporter|stadium|generated|private|cover|frame|customer|review|download|with|for|from|before|after|source|quality|result|fit|delivery|business|headshot|neon|cyberpunk|travel|lifestyle|football|fan|avatar|creator|product|motion|ready|subscription|pricing|panel|album|options|image|images|photo|photos|video|videos|full|screen|view)\b/g
     );
-    if (englishMarkers >= 3) return "";
+    if (locale === "es" ? englishMarkers > 0 : englishMarkers >= 3) return "";
   }
   return cleaned;
 }
@@ -290,6 +290,20 @@ const galleryFallbackScenes = [
   "portrait during a social moment",
   "distinctive pose that highlights the theme",
   "natural portrait with an inviting atmosphere"
+];
+const spanishGalleryFallbackScenes = [
+  "retrato con rasgos faciales nítidos sobre un fondo suavemente desenfocado",
+  "retrato sonriente en un entorno relajado",
+  "retrato de tres cuartos con el entorno visible",
+  "retrato espontáneo con una expresión natural",
+  "retrato sentado en un entorno cómodo",
+  "retrato de perfil con un fondo suavemente iluminado",
+  "retrato seguro con un entorno lleno de color",
+  "retrato centrado en el rostro y la expresión",
+  "retrato de estilo de vida en un entorno cotidiano",
+  "retrato durante un momento social",
+  "pose distintiva que resalta el tema",
+  "retrato natural con un ambiente acogedor"
 ];
 const frenchGalleryFallbackScenes = [
   "portrait montrant des traits nets sur un arrière-plan doucement flouté",
@@ -562,19 +576,26 @@ export function storefrontAccessibleMediaAlt({
   locale?: StorefrontMediaAltLocale;
   value?: string;
 }): string {
-  const explicit = locale === "fr" ? frenchCopy(meaningfulAlt(value)) : meaningfulAlt(value);
-  const fallbackAlt = locale === "fr" ? frenchCopy(meaningfulAlt(fallback)) : meaningfulAlt(fallback);
+  const cleanedValue = meaningfulAlt(value);
+  const spanishEnglishMediaAltPattern = /\b(?:portrait|portraits|gallery|scene|showing|package|supporter|stadium|generated|private|cover|frame|customer|review|download|with|for|from|before|after|source|quality|result|fit|delivery|business|headshot|neon|cyberpunk|travel|lifestyle|football|fan|avatar|creator|product|motion|ready|subscription|pricing|panel|album|options|image|images|photo|photos|video|videos|full|screen|view)\b/i;
+  const localizedValue = locale === "es" && spanishEnglishMediaAltPattern.test(cleanedValue)
+    ? ""
+    : locale === "fr" ? frenchCopy(cleanedValue) : cleanedValue;
+  const cleanedFallback = meaningfulAlt(fallback);
+  const localizedFallback = locale === "es" && spanishEnglishMediaAltPattern.test(cleanedFallback)
+    ? ""
+    : locale === "fr" ? frenchCopy(cleanedFallback) : cleanedFallback;
   const imageThemeKey = themeImageSlugParts(imageUrl).join(" ");
   const themedAlt = locale === "es"
     ? spanishThemeSubject(imageThemeKey)
     : locale === "fr"
       ? frenchThemeSubject(imageThemeKey)
       : englishThemeSubject(imageThemeKey);
-  const genericFileAlt = explicit && filenameLikeAltPattern.test(explicit);
-  if (explicit && !genericFileAlt) return explicit;
+  const genericFileAlt = localizedValue && filenameLikeAltPattern.test(localizedValue);
+  if (localizedValue && !genericFileAlt) return localizedValue;
   const base = genericFileAlt
-    ? themedAlt || explicit
-    : explicit || fallbackAlt || themedAlt || (locale === "es" ? "imagen de escaparate" : locale === "fr" ? "image de présentation" : "Storefront image");
+    ? themedAlt || localizedValue
+    : localizedValue || localizedFallback || themedAlt || (locale === "es" ? "imagen de escaparate" : locale === "fr" ? "image de présentation" : "Storefront image");
   return compactMediaAltSentence(base, locale);
 }
 
@@ -629,7 +650,9 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
   if (usableExplicit) return compactMediaAltSentence(usableExplicit, locale);
   if (usableGalleryAlt && !galleryAltRepeatsEarlier) return compactMediaAltSentence(usableGalleryAlt, locale);
   if (isPackGalleryImage && (input.galleryImageAlts?.length ?? 0) > 0 && typeof input.index === "number") {
-    const fallbackScenes = locale === "fr" ? frenchGalleryFallbackScenes : galleryFallbackScenes;
+    const fallbackScenes = locale === "es"
+      ? spanishGalleryFallbackScenes
+      : locale === "fr" ? frenchGalleryFallbackScenes : galleryFallbackScenes;
     const fallback = fallbackScenes[input.index % fallbackScenes.length];
     return compactMediaAltSentence(`${scene}, ${fallback}`, locale);
   }

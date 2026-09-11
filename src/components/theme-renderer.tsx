@@ -1451,7 +1451,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
     ? settings.aidreamcapesZipNavigation?.actions.getStarted.href ?? ""
     : header ? setting(header, "ctaHref", "/app/create") : "/app/create";
   const ctaHref = configuredCtaHref === "/login" || configuredCtaHref.startsWith("/login?") ? "/app/create" : configuredCtaHref;
-  const mobileLabel = header ? setting(header, "mobileLabel", frenchXby ? "Menu" : "Menu") : "Menu";
+  const mobileLabel = header ? setting(header, "mobileLabel", spanishXby ? "Menú" : frenchXby ? "Menu" : "Menu") : spanishXby ? "Menú" : "Menu";
   const configuredLogoImageUrl = header ? setting(header, "logoImageUrl", "") : "";
   const brandingLogoImageUrl = (site.branding as { logoImageUrl?: string }).logoImageUrl || "";
   const dreamshootDefaultLogoImageUrl = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
@@ -1468,7 +1468,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
         ? site.branding.logoText || site.name
         : title;
   const visualBrandTitle = spanishXby ? readableBrandTitle : isDreamShoot ? dreamShootsVisibleTitle : isAidreamcapesCom ? readableBrandTitle : isAidreamcapes ? aidreamcapesVisibleTitle : readableBrandTitle;
-  const brandDescription = `${readableBrandTitle} home`;
+  const brandDescription = spanishXby ? `${readableBrandTitle} inicio` : `${readableBrandTitle} home`;
   const logoAlt = spanishXby
     ? isAidreamcapes
       ? `${readableBrandTitle} logo`
@@ -2503,7 +2503,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
                     const Icon = item.icon;
                     return (
                       <a
-                        aria-label={`${item.label} for ${readableFooterTitle}`}
+                        aria-label={spanishXbyFooter ? `${item.label} de ${readableFooterTitle}` : `${item.label} for ${readableFooterTitle}`}
                         className={dark ? "inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/74 transition hover:border-white/24 hover:bg-white/[0.1] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#101014]" : "inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ddd2c5] bg-white/80 text-[#171514] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#171514] focus-visible:ring-offset-2"}
                         data-social-platform={item.key}
                         href={item.href}
@@ -3906,11 +3906,15 @@ function storefrontImagePreviewAttrs(src: string, alt: string, preview?: Storefr
   if (preview === false) return {};
   const previewSrc = preview?.src?.trim() || src;
   if (!previewSrc.trim()) return {};
+  const spanishPreview = /\/assets\/sites\/site_(?:aidreamshoots|aidreamcapes_eu)\//i.test(`${src} ${previewSrc}`);
+  const previewTitle = spanishPreview
+    ? previewTitleFromAlt(alt)
+    : previewTitleFromAlt(preview?.title || alt);
   return {
-    "aria-label": `View ${previewTitleFromAlt(preview?.title || alt)} full screen`,
+    "aria-label": spanishPreview ? `Ver ${previewTitle} en pantalla completa` : `View ${previewTitle} full screen`,
     "data-dreamshoot-preview-meta": preview?.meta || "",
     "data-dreamshoot-preview-src": previewSrc,
-    "data-dreamshoot-preview-title": previewTitleFromAlt(preview?.title || alt),
+    "data-dreamshoot-preview-title": previewTitle,
     "data-dreamshoot-showcase-preview": "image",
     role: "button",
     tabIndex: 0
@@ -5553,21 +5557,21 @@ function blogArticleSection(page: Site["pages"][number]): SectionInstance | unde
     (/^\/blog\//.test(page.slug) || page.pageType === "article" ? orderedSections.find((section) => section.type === "rich_text") : undefined);
 }
 
-function articleDateLabel(value: string): string {
+function articleDateLabel(value: string, locale: "en" | "es" | "fr" = "en"): string {
   const text = stripHtml(value);
   if (!text) return "";
   const parsed = new Date(text);
   if (Number.isNaN(parsed.getTime())) return text;
-  return new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(parsed);
+  return new Intl.DateTimeFormat(locale === "es" ? "es-ES" : locale === "fr" ? "fr-FR" : "en-US", { month: "long", day: "numeric", year: "numeric" }).format(parsed);
 }
 
-function articleReadTimeLabel(value: string, fallback = "6"): string {
+function articleReadTimeLabel(value: string, fallback = "6", locale: "en" | "es" | "fr" = "en"): string {
   const text = stripHtml(value || fallback);
   if (!text) return "";
-  if (/read/i.test(text)) return text;
+  if (/read/i.test(text)) return locale === "es" ? text.replace(/\bmin\s+read\b/i, "min de lectura") : text;
   const minutes = Number.parseInt(text, 10);
   if (!Number.isFinite(minutes) || minutes <= 0) return text;
-  return `${minutes} min read`;
+  return locale === "es" ? `${minutes} min de lectura` : locale === "fr" ? `${minutes} min de lecture` : `${minutes} min read`;
 }
 
 function articleTags(value: string): string[] {
@@ -5654,9 +5658,9 @@ function blogArticleCardsForSite(site: Site, currentPath = ""): BlogArticleCard[
           title
         }),
         author: setting(article, "author", isAidreamcapesSite(site) ? "Aidreamcapes editorial team" : "myDreamshoots editorial team"),
-        publishedAt: articleDateLabel(publishedAt),
-        updatedAt: articleDateLabel(updatedAt),
-        readMinutes: articleReadTimeLabel(setting(article, "readMinutes", "6")),
+        publishedAt: articleDateLabel(publishedAt, storefrontMediaAltLocaleForSite(site)),
+        updatedAt: articleDateLabel(updatedAt, storefrontMediaAltLocaleForSite(site)),
+        readMinutes: articleReadTimeLabel(setting(article, "readMinutes", "6"), "6", storefrontMediaAltLocaleForSite(site)),
         tags: articleTags(setting(article, "tags", setting(article, "guideType", ""))),
         guideType,
         targetHref: setting(article, "targetHref", ""),
@@ -6028,6 +6032,41 @@ function isAidreamcapesSite(site: Site): boolean {
 
 function isSpanishXbySite(site: Site): boolean {
   return isSpanishStorefrontSite(site);
+}
+
+function spanishXbyUiText(site: Site, value: string): string {
+  if (!isSpanishXbySite(site)) return value;
+  const labels: Record<string, string> = {
+    "before and after": "antes y después",
+    "Before and after photo examples": "Ejemplos de fotos de antes y después",
+    "Compare source photos with finished private album results.": "Compara las fotos originales con los resultados terminados de tu álbum privado.",
+    "Source quality": "Calidad de la foto original",
+    "Use clear, permission-safe uploads before choosing another package run.": "Usa fotos claras y autorizadas antes de elegir otro paquete.",
+    "Result fit": "Adecuación del resultado",
+    "Compare composition, crop, styling, and channel readiness before downloading.": "Compara la composición, el encuadre, el estilo y el formato antes de descargar.",
+    "Private delivery": "Entrega privada",
+    "Finished files return to your signed-in gallery for review and download.": "Los archivos terminados vuelven a tu galería privada para revisarlos y descargarlos.",
+    "Finished results stay in your account gallery for comparison.": "Los resultados terminados permanecen en la galería de tu cuenta para compararlos.",
+    "Return anytime to track progress and download finished photo sets.": "Vuelve cuando quieras para seguir el progreso y descargar tus conjuntos de fotos terminados.",
+    "Private model": "Modelo privado",
+    "Ready workflow": "Flujo listo",
+    "Private gallery": "Galería privada",
+    "Visible credits": "Créditos visibles",
+    "Model options": "Opciones de modelo",
+    "Package themes": "Temas de paquetes",
+    "gala-photo": "Fotos de gala",
+    "portrait-photo": "Fotos de retrato",
+    "photo-enhancer": "Mejorador de fotos",
+    "old-photo-restoration": "Restauración de fotos antiguas",
+    "before-and-after": "Antes y después",
+    "Start this theme": "Iniciar este tema",
+    "Start this package": "Iniciar este paquete",
+    "Account, billing, upload, privacy, and delivery support.": "Soporte para cuenta, pagos, subidas, privacidad y entregas.",
+    "Published business correspondence address.": "Dirección comercial publicada para correspondencia.",
+    "Private model training": "Entrenamiento de modelo privado",
+    "IA image-to-video": "Imagen a vídeo con IA"
+  };
+  return labels[value.trim()] ?? value;
 }
 
 function isMyDreamShootsProfileSite(site: Site): boolean {
@@ -8737,9 +8776,10 @@ function renderLegacySaasSection({
     const title = setting(section, "title", "Photo guide");
     const summary = setting(section, "summary", truncateText(setting(section, "body", ""), 180));
     const author = setting(section, "author", isAidreamcapesSite(site) ? "Aidreamcapes editorial team" : "myDreamshoots editorial team");
-    const publishedAt = articleDateLabel(setting(section, "publishedAt", ""));
-    const updatedAt = articleDateLabel(setting(section, "updatedAt", ""));
-    const readMinutes = articleReadTimeLabel(setting(section, "readMinutes", "6"));
+    const articleLocale = storefrontMediaAltLocaleForSite(site);
+    const publishedAt = articleDateLabel(setting(section, "publishedAt", ""), articleLocale);
+    const updatedAt = articleDateLabel(setting(section, "updatedAt", ""), articleLocale);
+    const readMinutes = articleReadTimeLabel(setting(section, "readMinutes", "6"), "6", articleLocale);
     const body = setting(section, "body", "<p>Photo planning guidance appears here.</p>");
     const routedBody = blogArticleBodyHtmlForSite(site, body);
     const tags = articleTags(setting(section, "tags", setting(section, "guideType", "")));
@@ -8760,7 +8800,7 @@ function renderLegacySaasSection({
     const secondaryTargetHref = setting(section, "secondaryTargetHref", "");
     const secondaryTargetLabel = setting(section, "secondaryTargetLabel", "");
     const evidenceType = setting(section, "evidenceType", "");
-    const evidenceDate = articleDateLabel(setting(section, "evidenceDate", ""));
+    const evidenceDate = articleDateLabel(setting(section, "evidenceDate", ""), articleLocale);
     const reviewOwner = setting(section, "reviewOwner", author);
 
     return (
@@ -10130,7 +10170,7 @@ function SectionView({
                   <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[14px] border border-white/70 bg-white px-5 text-sm font-semibold text-[#090b13] shadow-[inset_0_0_0_1px_rgba(236,75,221,0.14),0_16px_42px_-34px_rgba(22,220,240,0.7)] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))}>
                     {authPrimaryUsesGoogle ? (
                       <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white shadow-[0_8px_22px_-14px_rgba(9,11,19,0.45)] ring-1 ring-black/[0.06]">
-                        <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt="Google sign-in icon" loading="lazy" decoding="async" />
+                        <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isSpanishXbySite(site) ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" />
                       </span>
                     ) : (
                       <Mail className="h-5 w-5" strokeWidth={1.8} />
@@ -11948,12 +11988,19 @@ function SectionView({
                 const title = blockValue(item, "title");
                 const text = blockValue(item, "text");
                 const meta = blockValue(item, "meta");
-                const supportNotes = [
-                  ["Check ownership", "Use only photos you own or have permission to use."],
-                  ["Compare direction", "Review package fit, style references, and expected credit use."],
-                  ["Credits stay clear", "Credits are shown before generation and released if a request fails."],
-                  ["Private delivery", "Finished files return to your signed-in gallery for review and download."]
-                ];
+                const supportNotes = spanishXbyFeatureGrid
+                  ? [
+                      ["Comprueba los permisos", "Usa solo fotos que te pertenezcan o para las que tengas permiso."],
+                      ["Compara el enfoque", "Revisa el paquete, las referencias de estilo y el uso previsto de créditos."],
+                      ["Créditos claros", "Los créditos se muestran antes de generar y se liberan si una solicitud falla."],
+                      ["Entrega privada", "Los archivos terminados vuelven a tu galería privada para revisarlos y descargarlos."]
+                    ]
+                  : [
+                      ["Check ownership", "Use only photos you own or have permission to use."],
+                      ["Compare direction", "Review package fit, style references, and expected credit use."],
+                      ["Credits stay clear", "Credits are shown before generation and released if a request fails."],
+                      ["Private delivery", "Finished files return to your signed-in gallery for review and download."]
+                    ];
                 const [supportTitle, supportBody] = supportNotes[index % supportNotes.length];
                 const icons = [UploadCloud, Layers3, Sparkles, Download];
                 const Icon = icons[index % icons.length];
@@ -12131,7 +12178,7 @@ function SectionView({
           <div className={useReferencePackageWall ? "mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" : "mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"}>
             {displayCards.map((card, index) => {
               const splitImages = uniqueImageUrlList([...(card.imageUrls ?? []), card.imageUrl]).slice(0, 2);
-              const themeTags = (card.tags.length ? card.tags : [card.meta, card.category]).filter(Boolean).slice(0, 3);
+              const themeTags = (card.tags.length ? card.tags : [card.meta, card.category]).filter(Boolean).slice(0, 3).map((tag) => spanishXbyUiText(site, tag));
               return useReferencePackageWall ? (
                 <Link
                   aria-label={cardLinkLabel("Open package", card.title)}
@@ -12545,7 +12592,9 @@ function SectionView({
           selectedPack ? `${selectedPack.creditCost} credits` : "Visible credits",
           selectedPack?.trainingRequired ? "Private model" : selectedPacks.some((pack) => pack.trainingRequired) ? "Model options" : "Ready workflow",
           selectedPack ? dreamshootDefaultToolTitle(selectedPack.aiAppSlug || "image-studio") : selectedPacks.length ? `${selectedPacks.length} package themes` : "Package themes"
-        ]).filter((stat): stat is string => Boolean(stat));
+        ]).filter((stat): stat is string => Boolean(stat)).map((stat) => spanishXbyTaxonomy
+          ? spanishXbyUiText(site, stat).replace(/\bcredits\b/gi, "créditos").replace(/\bimages\b/gi, "imágenes").replace(/\bpackage themes\b/gi, "temas de paquete")
+          : stat);
     const detailUseCases = spanishXbyTaxonomy
       ? aidreamcapes
         ? [
@@ -12865,6 +12914,7 @@ function SectionView({
           { label: "Delivery", value: "Private download", Icon: Download }
         ];
     const defaultThemeEyebrow = selectedPageCopy?.ctaEyebrow ?? (spanishXbyThemeCta ? (aidreamcapesThemeCta ? "Iniciar este album" : "Iniciar este tema") : aidreamcapesThemeCta ? "Start this album" : "Start this theme");
+    const themeEyebrow = spanishXbyThemeCta ? spanishXbyUiText(site, setting(section, "eyebrow", defaultThemeEyebrow)) : setting(section, "eyebrow", defaultThemeEyebrow);
     const defaultThemeTitle = selectedPageCopy?.ctaTitle ?? (spanishXbyThemeCta
       ? aidreamcapesThemeCta
         ? `Crea albumes ${packTitle} en tu estudio privado.`
@@ -12885,7 +12935,7 @@ function SectionView({
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(47,111,237,0.24),transparent_30%),radial-gradient(circle_at_84%_28%,rgba(22,220,240,0.16),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0))]" />
         <div className="relative mx-auto grid max-w-[var(--site-content-width)] gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-center">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/46">{setting(section, "eyebrow", defaultThemeEyebrow)}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/46">{themeEyebrow}</p>
             <h2 className="mt-4 max-w-3xl text-[clamp(2rem,4.5vw,4rem)] font-semibold leading-[1.02] tracking-tight text-white [font-family:var(--site-title-font)]">
               {setting(section, "title", defaultThemeTitle)}
             </h2>
@@ -17503,12 +17553,13 @@ function SectionView({
   }
 
   if (section.type === "before_after_gallery") {
+    const spanishBeforeAfter = isSpanishXbySite(site);
     const items = settingListBlocks(
       section,
       "items",
-      [`Selfie intake|Editorial output|${fallbackHeroImages[1]}|${fallbackHeroImages[0]}`],
+      [`${spanishBeforeAfter ? "Foto original" : "Selfie intake"}|${spanishBeforeAfter ? "Resultado editorial" : "Editorial output"}|${fallbackHeroImages[1]}|${fallbackHeroImages[0]}`],
       (item, index) => {
-        const [beforeLabel = "Before", afterLabel = "After", beforeImage = fallbackHeroImages[1], afterImage = fallbackHeroImages[0]] = item.split("|");
+        const [beforeLabel = spanishBeforeAfter ? "Antes" : "Before", afterLabel = spanishBeforeAfter ? "Después" : "After", beforeImage = fallbackHeroImages[1], afterImage = fallbackHeroImages[0]] = item.split("|");
         return { id: `legacy_before_after_${index}`, type: "before_after", settings: { beforeLabel, afterLabel, beforeImage, afterImage } };
       }
     );
@@ -17516,25 +17567,29 @@ function SectionView({
       <section className="px-5 py-16" id={sectionAnchor(section, id)}>
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 lg:grid-cols-[minmax(280px,0.38fr)_minmax(0,0.62fr)] lg:items-start">
           <div className="lg:sticky lg:top-28">
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">before and after</p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{sectionHeading(section, "Before and after photo examples")}</h2>
-            <p className="mt-4 max-w-xl text-sm leading-7 text-zinc-600">{setting(section, "subtitle", "Compare source photos with finished private album results.")}</p>
+            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{spanishXbyUiText(site, "before and after")}</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{spanishXbyUiText(site, sectionHeading(section, "Before and after photo examples"))}</h2>
+            <p className="mt-4 max-w-xl text-sm leading-7 text-zinc-600">{spanishXbyUiText(site, setting(section, "subtitle", "Compare source photos with finished private album results."))}</p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
               {[
                 ["Source quality", "Use clear, permission-safe uploads before choosing another package run."],
                 ["Result fit", "Compare composition, crop, styling, and channel readiness before downloading."]
-              ].map(([title, body]) => (
-                <div className="rounded-[18px] border border-black/10 bg-white/80 p-4 shadow-[0_20px_60px_-54px_rgba(24,24,27,0.4)]" key={title}>
-                  <p className="text-sm font-semibold text-zinc-950">{title}</p>
-                  <p className="mt-2 text-xs leading-5 text-zinc-600">{body}</p>
+              ].map(([title, body]) => {
+                const localizedTitle = spanishXbyUiText(site, title);
+                const localizedBody = spanishXbyUiText(site, body);
+                return (
+                <div className="rounded-[18px] border border-black/10 bg-white/80 p-4 shadow-[0_20px_60px_-54px_rgba(24,24,27,0.4)]" key={localizedTitle}>
+                  <p className="text-sm font-semibold text-zinc-950">{localizedTitle}</p>
+                  <p className="mt-2 text-xs leading-5 text-zinc-600">{localizedBody}</p>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
           <div className="grid gap-5 xl:grid-cols-2">
             {items.map((item, index) => {
-              const beforeLabel = blockValue(item, "beforeLabel", "Before");
-              const afterLabel = blockValue(item, "afterLabel", "After");
+              const beforeLabel = spanishXbyUiText(site, blockValue(item, "beforeLabel", spanishBeforeAfter ? "Antes" : "Before"));
+              const afterLabel = spanishXbyUiText(site, blockValue(item, "afterLabel", spanishBeforeAfter ? "Después" : "After"));
               const beforeImage = mediaAssetUrl(site, blockValue(item, "beforeImage", fallbackHeroImages[1]));
               const afterImage = mediaAssetUrl(site, blockValue(item, "afterImage", fallbackHeroImages[0]));
               return (
@@ -17551,7 +17606,7 @@ function SectionView({
 	                          src: image,
 	                          fallback: isSpanishXbySite(site)
 	                            ? `${label} ${stage === "AI-generated result" ? "resultado generado con IA" : "carga fuente"} en la galeria de antes y despues de ${storefrontMediaBrandName(site)}.`
-	                            : `${label} ${stage} image in the before and after gallery for ${storefrontMediaBrandName(site)}.`
+                            : `${label} ${stage} image in the before and after gallery for ${storefrontMediaBrandName(site)}.`
 	                        }))}
 	                      />
 	                      <span className="absolute left-3 top-3 rounded-full bg-white/82 px-3 py-1 text-xs font-medium backdrop-blur">{label}</span>
@@ -18183,9 +18238,9 @@ function SectionView({
     const configuredMydreamshootsContactCards = renderContext.pagePath === "/contact-us" && isMyDreamShootsProfileSite(site);
     const richCards = renderContext.pagePath === "/contact-us" && profileIdentity && !configuredMydreamshootsContactCards
       ? [
-          { id: "profile_contact_email", type: "rich_text_card", settings: { meta: "Support", title: profileIdentity.supportEmail ?? "", description: "Account, billing, upload, privacy, and delivery support." } },
+          { id: "profile_contact_email", type: "rich_text_card", settings: { meta: spanishXbyRichText ? "Soporte" : "Support", title: profileIdentity.supportEmail ?? "", description: spanishXbyRichText ? "Soporte para cuenta, pagos, subidas, privacidad y entregas." : "Account, billing, upload, privacy, and delivery support." } },
           { id: "profile_contact_company", type: "rich_text_card", settings: { meta: "WEB", title: isMyDreamShootsProfileSite(site) ? "myDreamshoots.com" : site.primaryDomain.replace(/^www\./i, ""), description: profileIdentity.entityType ?? "", secondaryTitle: profileIdentity.legalName ?? "" } },
-          { id: "profile_contact_address", type: "rich_text_card", settings: { meta: "Address", title: profileAddress, description: "Published business correspondence address." } }
+          { id: "profile_contact_address", type: "rich_text_card", settings: { meta: spanishXbyRichText ? "Dirección" : "Address", title: profileAddress, description: spanishXbyRichText ? "Dirección comercial publicada para correspondencia." : "Published business correspondence address." } }
         ].filter((card) => Boolean(card.settings.title)) as SectionBlockInstance[]
       : configuredRichCards;
     const primaryCta = setting(section, "primaryCta", "");
@@ -18655,7 +18710,7 @@ function SectionView({
               {setting(section, "body") ? <p className="mt-4 text-sm leading-7 text-zinc-600">{setting(section, "body")}</p> : null}
             </div>
             <span className="inline-flex w-fit rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs text-zinc-500">
-              {visibleArticles.length} {visibleArticles.length === 1 ? "article" : "articles"}
+              {visibleArticles.length} {spanishBlog ? visibleArticles.length === 1 ? "artículo" : "artículos" : visibleArticles.length === 1 ? "article" : "articles"}
             </span>
           </div>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
