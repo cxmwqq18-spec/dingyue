@@ -15,15 +15,15 @@ type PricingPlanPrice = {
 type PricingPlan = { id: string; name: string; prices: Partial<Record<BillingCycle, PricingPlanPrice>> };
 type PricingSidePanel = { eyebrow: string; title: string; body: string; items: Array<readonly [string, string]> };
 
-function cycleLabel(cycle: BillingCycle, locale: "en" | "es") {
-  if (cycle === "month") return locale === "es" ? "Mensual" : "Monthly";
-  if (cycle === "quarter") return locale === "es" ? "Trimestral" : "Quarterly";
-  return locale === "es" ? "Semestral" : "Semiannually";
+function cycleLabel(cycle: BillingCycle, locale: "en" | "es" | "fr") {
+  if (cycle === "month") return locale === "es" ? "Mensual" : locale === "fr" ? "Mensuel" : "Monthly";
+  if (cycle === "quarter") return locale === "es" ? "Trimestral" : locale === "fr" ? "Trimestriel" : "Quarterly";
+  return locale === "es" ? "Semestral" : locale === "fr" ? "Semestriel" : "Semiannually";
 }
 
 export type PricingBillingTableProps = {
   canShowBillingSwitch: boolean; emphasizeBillingSwitch?: boolean; initialBillingCycle: BillingCycle;
-  plans: PricingPlan[]; sidePanels: Record<BillingCycle, PricingSidePanel>; aidreamcapes: boolean; locale?: "en" | "es";
+  plans: PricingPlan[]; sidePanels: Record<BillingCycle, PricingSidePanel>; aidreamcapes: boolean; locale?: "en" | "es" | "fr";
 };
 
 export function PricingBillingInteractive({
@@ -70,13 +70,13 @@ export function PricingBillingInteractive({
           <p className="mt-4 text-[1.72rem] font-semibold leading-none [font-family:var(--site-title-font)]">{name}</p>
           <p className="mt-2 min-h-[2.75rem] text-[0.92rem] text-[#6d665f]">{price.planSubtitle}</p>
           <div className="mt-6 flex items-end gap-2"><p className="text-[2.65rem] font-semibold leading-none [font-family:var(--site-title-font)]">{price.formattedAmount}</p><p className="pb-2 text-[0.88rem] text-[#7f786f]">{price.periodLabel}</p></div>
-          {billingCycle !== "month" && price.formattedEquivalentMonthly ? <p className="mt-2 text-sm font-medium text-[#7f786f]">{locale === "es" ? `Equivale a ${price.formattedEquivalentMonthly} / mes` : `Equivalent to ${price.formattedEquivalentMonthly} / month`}</p> : null}
+           {billingCycle !== "month" && price.formattedEquivalentMonthly ? <p className="mt-2 text-sm font-medium text-[#7f786f]">{locale === "es" ? `Equivale a ${price.formattedEquivalentMonthly} / mes` : locale === "fr" ? `Équivalent à ${price.formattedEquivalentMonthly} / mois` : `Equivalent to ${price.formattedEquivalentMonthly} / month`}</p> : null}
           {price.formattedOriginalAmount ? <div className="mt-3 flex flex-wrap items-center gap-2"><span className="text-sm text-[#8a837b] line-through">{price.formattedOriginalAmount}</span>{price.discountLabel ? <span className="rounded-full bg-[#f4e0c7] px-2.5 py-1 text-[0.72rem] font-semibold text-[#8a5728]">{price.discountLabel}</span> : null}</div> : null}
           <div className="mt-6 grid gap-2.5 text-[0.88rem] text-[#4f4944]">{price.features.map((feature, index) => <div className="flex items-start gap-3" key={`${id}_${feature}_${index}`}><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#b07b47]" strokeWidth={1.8} /><span className="min-w-0 break-words">{feature}</span></div>)}</div>
           {price.checkoutEnabled ? (
             <StorefrontInstantLink className={`mt-6 inline-flex min-h-[48px] w-full items-center justify-center rounded-[10px] text-[0.95rem] font-semibold ${price.featured ? "bg-[#c99152] text-white" : "bg-[#171514] text-white"}`} href={price.cartHref}>{price.buttonLabel}</StorefrontInstantLink>
           ) : (
-            <span aria-disabled="true" className="mt-6 inline-flex min-h-[48px] w-full cursor-not-allowed items-center justify-center rounded-[10px] bg-[#e8e3dc] text-center text-[0.88rem] font-semibold text-[#71695f]" title="Checkout is being prepared for this storefront">
+             <span aria-disabled="true" className="mt-6 inline-flex min-h-[48px] w-full cursor-not-allowed items-center justify-center rounded-[10px] bg-[#e8e3dc] text-center text-[0.88rem] font-semibold text-[#71695f]" title={locale === "fr" ? "Le paiement est en préparation pour cette boutique" : locale === "es" ? "El pago se está preparando para esta tienda" : "Checkout is being prepared for this storefront"}>
               {price.buttonLabel}
             </span>
           )}
@@ -86,8 +86,8 @@ export function PricingBillingInteractive({
     </div>;
   };
   return <div data-pricing-ssr="true">
-    {canShowBillingSwitch ? <nav aria-label="Billing periods" className={emphasizeBillingSwitch ? "mt-7 flex flex-col items-center gap-3" : "mt-7 flex flex-wrap gap-3"}><div className="inline-flex flex-wrap gap-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1" role="tablist">{billingCycles.map((cycle) => <button aria-selected={cycle === activeBillingCycle} className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold ${cycle === activeBillingCycle ? "bg-white text-[#171514]" : "text-white/80 hover:bg-white hover:text-[#171514]"}`} data-storefront-instant-filter="true" key={cycle} onClick={() => selectBillingCycle(cycle)} role="tab" type="button">{cycleLabel(cycle, locale)}</button>)}</div></nav> : null}
-    <section className="scroll-mt-24" id={`pricing-${activeBillingCycle}`}><h3 className="sr-only">{cycleLabel(activeBillingCycle, locale)} pricing</h3>{renderCycle(activeBillingCycle)}</section>
+     {canShowBillingSwitch ? <nav aria-label={locale === "fr" ? "Périodes de facturation" : locale === "es" ? "Periodos de facturación" : "Billing periods"} className={emphasizeBillingSwitch ? "mt-7 flex flex-col items-center gap-3" : "mt-7 flex flex-wrap gap-3"}><div className="inline-flex flex-wrap gap-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1" role="tablist">{billingCycles.map((cycle) => <button aria-selected={cycle === activeBillingCycle} className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold ${cycle === activeBillingCycle ? "bg-white text-[#171514]" : "text-white/80 hover:bg-white hover:text-[#171514]"}`} data-storefront-instant-filter="true" key={cycle} onClick={() => selectBillingCycle(cycle)} role="tab" type="button">{cycleLabel(cycle, locale)}</button>)}</div></nav> : null}
+     <section className="scroll-mt-24" id={`pricing-${activeBillingCycle}`}><h3 className="sr-only">{locale === "fr" ? `${cycleLabel(activeBillingCycle, locale)} tarifs` : locale === "es" ? `${cycleLabel(activeBillingCycle, locale)} precios` : `${cycleLabel(activeBillingCycle, locale)} pricing`}</h3>{renderCycle(activeBillingCycle)}</section>
     <span className="sr-only" data-initial-billing-cycle={initialBillingCycle} data-active-billing-cycle={activeBillingCycle} />
   </div>;
 }
