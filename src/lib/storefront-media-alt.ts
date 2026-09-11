@@ -1,8 +1,10 @@
 import type { CreativePack, Site } from "@/lib/types";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite } from "@/lib/storefront-context/capabilities";
+import { isFrenchStorefrontSite } from "@/lib/storefront-locale";
+import { frenchCopy } from "@/lib/french-copy";
 
-export type StorefrontMediaAltLocale = "en" | "es";
+export type StorefrontMediaAltLocale = "en" | "es" | "fr";
 export type StorefrontMediaAltRole = "cover" | "gallery" | "card" | "featured" | "related" | "poster" | "article";
 
 type AltSite = Pick<Site, "id" | "slug" | "name" | "primaryDomain" | "branding">;
@@ -121,6 +123,25 @@ function imageTopicFromUrl(imageUrl: string | undefined): string {
     .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
+function frenchThemeSubject(key: string): string | undefined {
+  if (/\b(?:credit|subscription|plan|pricing|checkout)\b/.test(key)) return "Panneau de crédits pour galeries photo privées";
+  if (/(christmas|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume|holiday|seasonal|winter|new-year)/.test(key)) return "Portrait de fête de saison";
+  if (/(fan-scene|supporter|fan-letter|fan-keepsake|backstage|meetup|birthday-fan|fan-card|private-fan)/.test(key)) return "Portrait de supporter pour un album privé";
+  if (/(gala|red-carpet|premiere|vip|award|spotlight|formal|evening)/.test(key)) return "Portrait d’événement de style tapis rouge";
+  if (/(anime-avatar|avatar)/.test(key)) return "Portrait d’avatar anime stylisé";
+  if (/(cyberpunk|neon|noir|mafia)/.test(key)) return "Portrait de personnage au style cinématographique";
+  if (/(profile-cards|social-cards|profile|social)/.test(key)) return "Portrait pour une carte de profil social";
+  if (/(headshot|professional|business|linkedin|executive)/.test(key)) return "Portrait professionnel";
+  if (/(video|motion|clip|animation|teaser)/.test(key)) return "Aperçu de portrait prêt pour la vidéo";
+  if (/(product-style|product|upscaler|enhance|utility)/.test(key)) return "Aperçu de produit dans un contexte de vie";
+  if (/(creator|media-kit|personal-brand)/.test(key)) return "Portrait de créateur";
+  if (/(world-cup|football|soccer|stadium|match-day|game-day|watch-party|championship|tunnel-entrance)/.test(key)) return "Portrait de supporter dans un stade";
+  if (/(wedding|engagement|couple|valentine|desi|indian)/.test(key)) return "Portrait de couple souvenir";
+  if (/(travel|nature|route|coastal|destination|outdoor|road|mountain|cafe|island|villa)/.test(key)) return "Portrait de voyage dans un décor naturel";
+  if (/(beauty|hairstyle|hair|try-on|fashion|boudoir)/.test(key)) return "Portrait beauté";
+  return undefined;
+}
+
 function sourceSpecificAlt(
   imageUrl: string | undefined,
   locale: StorefrontMediaAltLocale,
@@ -128,13 +149,15 @@ function sourceSpecificAlt(
 ): string {
   const canonical = canonicalSourceAltByPath[imageIdentity(imageUrl).toLowerCase()];
   if (canonical && locale === "en") return canonical;
-  const sourceTopic = imageTopicFromUrl(imageUrl);
+  const sourceTopic = locale === "fr" ? frenchCopy(imageTopicFromUrl(imageUrl)) : imageTopicFromUrl(imageUrl);
   const genericTheme = /^(?:warm festive portrait for a seasonal card album|couple keepsake portrait|professional headshot|creator profile portrait)\.?$/i.test(cleanAltText(theme));
   const themeSubject = genericTheme
     ? ""
     : locale === "en" && /(?:^|-)edit-by-prompt(?:-|$)/.test(normalizeSlug(String(theme ?? "")))
     ? "AI photo edit preview"
-    : cleanAltText(theme);
+    : locale === "fr"
+      ? frenchThemeSubject(normalizeSlug(String(theme ?? ""))) || frenchCopy(cleanAltText(theme))
+      : cleanAltText(theme);
   const subjectBase = themeSubject || (sourceTopic === "Storefront portrait" ? sourceTopic : sourceTopic);
   const subject = /\b(?:portrait|photo|image|avatar|logo|scene|video|poster)\b/i.test(subjectBase)
     ? subjectBase
@@ -178,7 +201,7 @@ function meaningfulAltForStorefront(
   locale: StorefrontMediaAltLocale,
   brand: string
 ): string {
-  const cleaned = meaningfulAlt(value);
+  const cleaned = locale === "fr" ? frenchCopy(meaningfulAlt(value)) : meaningfulAlt(value);
   if (!cleaned) return "";
 
   const knownBrands = ["MyDreamShoots", "AIdreamshoots", "AIdreamcapes"];
@@ -268,6 +291,20 @@ const galleryFallbackScenes = [
   "distinctive pose that highlights the theme",
   "natural portrait with an inviting atmosphere"
 ];
+const frenchGalleryFallbackScenes = [
+  "portrait montrant des traits nets sur un arrière-plan doucement flouté",
+  "portrait souriant dans un cadre détendu",
+  "portrait de trois-quarts laissant voir le décor",
+  "portrait spontané à l’expression naturelle",
+  "portrait assis dans un cadre confortable",
+  "portrait de profil sur un arrière-plan légèrement éclairé",
+  "portrait assuré dans un décor vivant",
+  "portrait centré sur le visage et l’expression",
+  "portrait lifestyle dans un cadre quotidien",
+  "portrait pris pendant un moment convivial",
+  "pose distinctive qui souligne le thème",
+  "portrait naturel à l’atmosphère accueillante"
+];
 
 export function storefrontMeaningfulAlt(value: string | undefined): string {
   return meaningfulAlt(value);
@@ -299,6 +336,7 @@ export function storefrontGalleryMediaPairs(
 }
 
 export function storefrontMediaAltLocaleForSite(site: AltSite | undefined): StorefrontMediaAltLocale {
+  if (isFrenchStorefrontSite(site)) return "fr";
   return isSpanishStorefrontSite(site) ? "es" : "en";
 }
 
@@ -504,7 +542,7 @@ function compactMediaAltSentence(
   value: string,
   locale: StorefrontMediaAltLocale
 ): string {
-  const fallback = locale === "es" ? "imagen de escaparate" : "Storefront image";
+  const fallback = locale === "es" ? "imagen de escaparate" : locale === "fr" ? "image de présentation" : "Storefront image";
   const base = cleanAltText(value)
     .replace(/\s*,\s*,/g, ",")
     .replace(/\s+/g, " ")
@@ -524,21 +562,25 @@ export function storefrontAccessibleMediaAlt({
   locale?: StorefrontMediaAltLocale;
   value?: string;
 }): string {
-  const explicit = meaningfulAlt(value);
-  const fallbackAlt = meaningfulAlt(fallback);
+  const explicit = locale === "fr" ? frenchCopy(meaningfulAlt(value)) : meaningfulAlt(value);
+  const fallbackAlt = locale === "fr" ? frenchCopy(meaningfulAlt(fallback)) : meaningfulAlt(fallback);
   const imageThemeKey = themeImageSlugParts(imageUrl).join(" ");
-  const themedAlt = locale === "es" ? spanishThemeSubject(imageThemeKey) : englishThemeSubject(imageThemeKey);
+  const themedAlt = locale === "es"
+    ? spanishThemeSubject(imageThemeKey)
+    : locale === "fr"
+      ? frenchThemeSubject(imageThemeKey)
+      : englishThemeSubject(imageThemeKey);
   const genericFileAlt = explicit && filenameLikeAltPattern.test(explicit);
   if (explicit && !genericFileAlt) return explicit;
   const base = genericFileAlt
     ? themedAlt || explicit
-    : explicit || fallbackAlt || themedAlt || (locale === "es" ? "imagen de escaparate" : "Storefront image");
+    : explicit || fallbackAlt || themedAlt || (locale === "es" ? "imagen de escaparate" : locale === "fr" ? "image de présentation" : "Storefront image");
   return compactMediaAltSentence(base, locale);
 }
 
 export function storefrontPackMediaAlt(input: PackAltInput): string {
   const locale = input.locale ?? "en";
-  const brand = cleanAltText(input.brand) || (locale === "es" ? "AIdreamshoots" : "MyDreamShoots");
+  const brand = cleanAltText(input.brand) || (locale === "es" ? "AIdreamshoots" : locale === "fr" ? "AIdreamcapes" : "MyDreamShoots");
   const explicit = meaningfulThemeAlignedAltForStorefront(input.explicitAlt, locale, brand, input.imageUrl);
   const isPackGalleryImage = /\/pack-galleries\//i.test(String(input.imageUrl ?? ""));
   const rawGalleryAlt = (input.role === "gallery" || isPackGalleryImage)
@@ -556,9 +598,9 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
   const specificKey = themeKey(input);
   const imageKey = themeImageSlugParts(input.imageUrl).join(" ");
   const contextKey = contextualThemeKey(input);
-  const specificScene = locale === "es" ? spanishThemeSubject(specificKey) : englishThemeSubject(specificKey);
-  const imageScene = locale === "es" ? spanishThemeSubject(imageKey) : englishThemeSubject(imageKey);
-  const contextScene = locale === "es" ? spanishThemeSubject(contextKey) : englishThemeSubject(contextKey);
+  const specificScene = locale === "es" ? spanishThemeSubject(specificKey) : locale === "fr" ? frenchThemeSubject(specificKey) : englishThemeSubject(specificKey);
+  const imageScene = locale === "es" ? spanishThemeSubject(imageKey) : locale === "fr" ? frenchThemeSubject(imageKey) : englishThemeSubject(imageKey);
+  const contextScene = locale === "es" ? spanishThemeSubject(contextKey) : locale === "fr" ? frenchThemeSubject(contextKey) : englishThemeSubject(contextKey);
   const scene = imageScene && (imageSlugHasSpecificTheme(imageKey) || !specificScene || genericSceneSubject(specificScene))
     ? imageScene
     : specificScene
@@ -566,7 +608,7 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
       ?? contextScene
       ?? (locale === "es"
         ? "retrato estilizado para una galeria privada"
-        : "Portrait image");
+        : locale === "fr" ? "portrait stylisé pour une galerie privée" : "Portrait image");
   const sourceAlt = sourceSpecificAlt(input.imageUrl, locale, input.title || imageScene || specificScene || contextScene);
   const normalizedExplicit = cleanAltText(explicit).toLowerCase();
   const genericSceneAlts = [specificScene, imageScene, contextScene]
@@ -587,13 +629,14 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
   if (usableExplicit) return compactMediaAltSentence(usableExplicit, locale);
   if (usableGalleryAlt && !galleryAltRepeatsEarlier) return compactMediaAltSentence(usableGalleryAlt, locale);
   if (isPackGalleryImage && (input.galleryImageAlts?.length ?? 0) > 0 && typeof input.index === "number") {
-    const fallback = galleryFallbackScenes[input.index % galleryFallbackScenes.length];
+    const fallbackScenes = locale === "fr" ? frenchGalleryFallbackScenes : galleryFallbackScenes;
+    const fallback = fallbackScenes[input.index % fallbackScenes.length];
     return compactMediaAltSentence(`${scene}, ${fallback}`, locale);
   }
   if (stableSourceImagePattern.test(imageIdentity(input.imageUrl))) return sourceAlt;
   const fallbackScene = locale === "es"
     ? "retrato"
-    : "Portrait image";
+    : locale === "fr" ? "portrait" : "Portrait image";
   const naturalScene = scene || fallbackScene;
   return compactMediaAltSentence(naturalScene, locale);
 }
@@ -722,9 +765,9 @@ export function storefrontVideoPosterAlt({
 }): string {
   const cleanTitle = locale === "es"
     ? spanishVideoAltPhrase(title, "video con IA")
-    : cleanAltText(title) || "AI video";
+    : cleanAltText(title) || (locale === "fr" ? "vidéo IA" : "AI video");
   return compactMediaAltSentence(
-    locale === "es" ? `Imagen de portada para ${cleanTitle}` : `Poster frame for ${cleanTitle}`,
+    locale === "es" ? `Imagen de portada para ${cleanTitle}` : locale === "fr" ? `Image de couverture pour ${cleanTitle}` : `Poster frame for ${cleanTitle}`,
     locale
   );
 }
