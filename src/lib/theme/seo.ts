@@ -102,12 +102,12 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
       ...(isArticle ? { type: "article" as const } : {}),
       ...(articlePublishedTime ? { publishedTime: articlePublishedTime } : {}),
       ...(articleModifiedTime ? { modifiedTime: articleModifiedTime } : {}),
-      images: ogImage ? [{ url: ogImage, ...(articleImageAlt ? { alt: articleImageAlt } : {}) }] : undefined
+      images: ogImage ? [{ url: ogImage, ...((articleImageAlt ?? settingText(seo.ogImageAlt)) ? { alt: articleImageAlt ?? settingText(seo.ogImageAlt) } : {}) }] : undefined
     },
     twitter: {
       card: ogImage ? "summary_large_image" : "summary",
       title: seo.title,
-      description: seo.description,
+      description: seo.twitterDescription ?? seo.description,
       images: ogImage ? [ogImage] : undefined
     },
     icons: siteIcons(site, context.settings)

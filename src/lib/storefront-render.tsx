@@ -3046,6 +3046,7 @@ export async function renderStorefrontSectionNode({
       videoThemeCategories={payload.renderData.videoThemeCategories ?? []}
       videoThemes={payload.renderData.videoThemes ?? []}
       homepageShowcases={payload.renderData.homepageShowcases ?? []}
+      saveTheDateNavigationGroups={payload.renderData.saveTheDateNavigationGroups ?? []}
     />
   );
 }
@@ -3226,6 +3227,8 @@ export async function renderStorefrontSectionPayloads({
     const routedSite = clientSiteForSectionRender(currentSite, singleSectionPageJson, internalSlug) as Site & { __storefrontBasePath?: string };
     routedSite.__storefrontBasePath = routeMode === "host" ? "" : `/site/${publicSiteSlug(currentSite.slug)}`;
     const renderContext = {
+      siteId: currentSite.id,
+      siteSlug: currentSite.slug,
       pagePath: renderPagePath,
       query: requestQuery,
       page: pageJson,
@@ -3246,7 +3249,8 @@ export async function renderStorefrontSectionPayloads({
         toolMenuItems: pageRenderData.toolMenuItems,
         videoThemeCategories: pageRenderData.videoThemeCategories,
         videoThemes: pageRenderData.videoThemes,
-        homepageShowcases: pageRenderData.homepageShowcases
+        homepageShowcases: pageRenderData.homepageShowcases,
+        saveTheDateNavigationGroups: settings.saveTheDateNavigation?.groups ?? []
       },
       renderContext,
       storefrontContext,
@@ -3412,6 +3416,8 @@ export async function renderStorefrontSectionPayload({
   const routedSite = clientSiteForSectionRender(currentSite, singleSectionPageJson, internalSlug) as Site & { __storefrontBasePath?: string };
   routedSite.__storefrontBasePath = routeMode === "host" ? "" : `/site/${publicSiteSlug(currentSite.slug)}`;
   const renderContext = {
+    siteId: currentSite.id,
+    siteSlug: currentSite.slug,
     pagePath: renderPagePath,
     query: requestQuery,
     page: pageJson,
@@ -3432,7 +3438,8 @@ export async function renderStorefrontSectionPayload({
       toolMenuItems: pageRenderData.toolMenuItems,
       videoThemeCategories: pageRenderData.videoThemeCategories,
       videoThemes: pageRenderData.videoThemes,
-      homepageShowcases: pageRenderData.homepageShowcases
+      homepageShowcases: pageRenderData.homepageShowcases,
+      saveTheDateNavigationGroups: settings.saveTheDateNavigation?.groups ?? []
     },
     renderContext,
     storefrontContext,

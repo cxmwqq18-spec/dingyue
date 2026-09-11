@@ -9,6 +9,13 @@ export type GenerationEntryPoint = "customer_workspace" | "site_admin" | "platfo
 export type PlatformAiProviderType = "image" | "video" | "text";
 
 export type SectionType =
+  | "aidreamcapes_home_hero"
+  | "aidreamcapes_video_grid"
+  | "aidreamcapes_ad_testing"
+  | "aidreamcapes_photo_grid"
+  | "aidreamcapes_scenario_grid"
+  | "aidreamcapes_how_it_works"
+  | "aidreamcapes_credit_rules"
   | "hero"
   | "story_mosaic"
   | "video_feature"
@@ -63,6 +70,30 @@ export interface ThemeNavLink {
   group?: string;
 }
 
+export interface AidreamcapesZipNavigationGroup {
+  label: string;
+  items: ThemeNavLink[];
+}
+
+export interface AidreamcapesZipNavigationMenu {
+  label: string;
+  groups: AidreamcapesZipNavigationGroup[];
+  collection?: ThemeNavLink;
+}
+
+export interface AidreamcapesZipNavigation {
+  actions: {
+    pricing: ThemeNavLink;
+    login: ThemeNavLink;
+    getStarted: ThemeNavLink;
+  };
+  video: AidreamcapesZipNavigationMenu;
+  image: AidreamcapesZipNavigationMenu;
+  marketing: AidreamcapesZipNavigationMenu;
+  scenarios: AidreamcapesZipNavigationMenu;
+  footerGroups: AidreamcapesZipNavigationGroup[];
+}
+
 export interface SaveTheDateNavigationItem {
   label: string;
   slug: string;
@@ -108,8 +139,10 @@ export interface ThemePageJson {
   seo?: {
     title?: string;
     description?: string;
+    twitterDescription?: string;
     keywords?: string;
     ogImage?: string;
+    ogImageAlt?: string;
     canonical?: string;
     canonicalPath?: string;
     robots?: {
@@ -218,6 +251,7 @@ export interface ThemeSettings {
     headerLinks: ThemeNavLink[];
     footerLinks: ThemeNavLink[];
   };
+  aidreamcapesZipNavigation?: AidreamcapesZipNavigation;
   saveTheDateNavigation?: SaveTheDateNavigationConfig;
   globalSections?: {
     header?: SectionInstance;
@@ -239,8 +273,10 @@ export interface ThemeSettings {
       {
         title: string;
         description: string;
+        twitterDescription?: string;
         keywords?: string;
         ogImage?: string;
+        ogImageAlt?: string;
         canonicalPath?: string;
         index?: boolean;
         follow?: boolean;

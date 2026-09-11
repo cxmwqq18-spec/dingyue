@@ -30,10 +30,12 @@ export type StorefrontContextMode = "draft" | "published";
 export type ResolvedPageSeo = {
   title: string;
   description: string;
+  twitterDescription?: string;
   keywords?: string;
   canonicalPath: string;
   canonicalUrl: string;
   ogImage?: string;
+  ogImageAlt?: string;
   index: boolean;
   follow: boolean;
   maxImagePreview?: "none" | "standard" | "large";

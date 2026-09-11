@@ -454,7 +454,215 @@ const benefitBlock: ThemeBlockSchema = {
   }
 };
 
+const aidreamcapesZipMediaBlock: ThemeBlockSchema = {
+  type: "zip_media_card",
+  label: "ZIP media card",
+  maxBlocks: 32,
+  settings: [
+    text("title", "Title"),
+    textarea("description", "Description"),
+    text("href", "Link", ""),
+    text("badge", "Badge", ""),
+    image("imageUrl", "Image URL"),
+    text("imageAlt", "Image alt"),
+    text("imageWidth", "Image width", "720"),
+    text("imageHeight", "Image height", "900"),
+    select(
+      "imageLoading",
+      "Image loading",
+      [
+        ["eager", "Eager"],
+        ["lazy", "Lazy"]
+      ],
+      "lazy"
+    ),
+    select(
+      "imageFetchPriority",
+      "Image priority",
+      [
+        ["high", "High"],
+        ["auto", "Auto"],
+        ["low", "Low"]
+      ],
+      "auto"
+    )
+  ],
+  preset: {
+    label: "ZIP media card",
+    settings: {
+      title: "New media card",
+      description: "",
+      href: "",
+      badge: "",
+      imageUrl: "",
+      imageAlt: "",
+      imageWidth: "720",
+      imageHeight: "900",
+      imageLoading: "lazy",
+      imageFetchPriority: "auto"
+    }
+  }
+};
+
+const aidreamcapesZipStepBlock: ThemeBlockSchema = {
+  type: "zip_step",
+  label: "ZIP step",
+  maxBlocks: 8,
+  settings: [text("title", "Title"), textarea("description", "Description")],
+  preset: {
+    label: "ZIP step",
+    settings: { title: "New step", description: "Describe the step." }
+  }
+};
+
+const aidreamcapesZipRuleBlock: ThemeBlockSchema = {
+  type: "zip_rule",
+  label: "ZIP credit rule",
+  maxBlocks: 8,
+  settings: [text("title", "Title"), textarea("description", "Description")],
+  preset: {
+    label: "ZIP credit rule",
+    settings: { title: "New rule", description: "Describe the credit rule." }
+  }
+};
+
+const aidreamcapesZipSectionSettings = [
+  text("anchor", "Anchor", ""),
+  text("eyebrow", "Eyebrow", ""),
+  text("title", "Title", ""),
+  textarea("intro", "Intro", ""),
+  text("ctaLabel", "CTA label", ""),
+  url("ctaHref", "CTA link", "")
+];
+
 export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = {
+  aidreamcapes_home_hero: {
+    type: "aidreamcapes_home_hero",
+    label: "Aidreamcapes ZIP hero",
+    category: "Storefront",
+    description: "ZIP source-of-truth Product Image to AI UGC Video hero.",
+    maxBlocks: 8,
+    settings: [
+      text("anchor", "Anchor", "home"),
+      text("eyebrow", "Eyebrow", "Marketing UGC studio is live"),
+      text("title", "Title", "Create AI Videos, Professional AI Ads & Photo Sets."),
+      textarea("intro", "Intro"),
+      text("primaryCta", "Primary CTA", "Create Marketing UGC"),
+      url("primaryHref", "Primary link", "/ai-video-generation/product-ad-video"),
+      text("secondaryCta", "Secondary CTA", "Explore video tools"),
+      url("secondaryHref", "Secondary link", "/ai-video-generation"),
+      image("imageUrl", "Product image"),
+      text("imageAlt", "Product image alt"),
+      image("outputImageUrl", "UGC output image"),
+      text("outputImageAlt", "UGC output image alt"),
+      url("outputHref", "UGC output link", "/ai-video-generation/product-ad-video"),
+      text("outputCta", "UGC output CTA", "Turn product into video →")
+    ],
+    blocks: [
+      {
+        type: "trust_item",
+        label: "Trust item",
+        maxBlocks: 4,
+        settings: [text("label", "Label", "Private uploads")],
+        preset: {
+          label: "Trust item",
+          settings: { label: "Private uploads" }
+        }
+      }
+    ]
+  },
+  aidreamcapes_video_grid: {
+    type: "aidreamcapes_video_grid",
+    label: "Aidreamcapes ZIP video grid",
+    category: "Storefront",
+    description: "ZIP eight-card Explore AI Video Generation grid.",
+    settings: [...aidreamcapesZipSectionSettings],
+    blocks: [aidreamcapesZipMediaBlock]
+  },
+  aidreamcapes_ad_testing: {
+    type: "aidreamcapes_ad_testing",
+    label: "Aidreamcapes ZIP ad testing",
+    category: "Storefront",
+    description: "ZIP Ad Testing Hub with URL to Ad two-step workflow.",
+    settings: [...aidreamcapesZipSectionSettings, text("workflowTitle", "Workflow title", "URL to Ad Workflow"), textarea("workflowIntro", "Workflow intro", "")],
+    blocks: [
+      {
+        type: "url_to_ad",
+        label: "URL to Ad",
+        maxBlocks: 1,
+        settings: [
+          text("urlPlaceholder", "URL placeholder", "https://yourstore.com/product"),
+          image("imageUrl", "Image URL"),
+          text("imageAlt", "Image alt"),
+          text("imageWidth", "Image width", "800"),
+          text("imageHeight", "Image height", "1000")
+        ],
+        preset: {
+          label: "URL to Ad",
+          settings: { urlPlaceholder: "https://yourstore.com/product" }
+        }
+      },
+      {
+        ...aidreamcapesZipMediaBlock,
+        type: "workflow_output",
+        label: "Workflow output"
+      },
+      {
+        ...aidreamcapesZipMediaBlock,
+        type: "ad_feature",
+        label: "Ad testing feature",
+        maxBlocks: 4
+      }
+    ]
+  },
+  aidreamcapes_photo_grid: {
+    type: "aidreamcapes_photo_grid",
+    label: "Aidreamcapes ZIP photo grid",
+    category: "Storefront",
+    description: "ZIP nine-card Professional AI Photo Sets grid.",
+    settings: [...aidreamcapesZipSectionSettings],
+    blocks: [aidreamcapesZipMediaBlock]
+  },
+  aidreamcapes_scenario_grid: {
+    type: "aidreamcapes_scenario_grid",
+    label: "Aidreamcapes ZIP scenario grid",
+    category: "Content",
+    description: "ZIP approved occasion scenario links.",
+    settings: [...aidreamcapesZipSectionSettings],
+    blocks: [
+      {
+        type: "scenario_card",
+        label: "Scenario card",
+        maxBlocks: 16,
+        settings: [text("title", "Title"), text("category", "Category"), textarea("description", "Description"), url("href", "Link", "")],
+        preset: {
+          label: "Scenario card",
+          settings: {
+            title: "New scenario",
+            category: "Celebrate",
+            description: "Describe the scenario.",
+            href: ""
+          }
+        }
+      }
+    ]
+  },
+  aidreamcapes_how_it_works: {
+    type: "aidreamcapes_how_it_works",
+    label: "Aidreamcapes ZIP how it works",
+    category: "Storefront",
+    description: "ZIP four-step creation workflow.",
+    settings: [...aidreamcapesZipSectionSettings],
+    blocks: [aidreamcapesZipStepBlock]
+  },
+  aidreamcapes_credit_rules: {
+    type: "aidreamcapes_credit_rules",
+    label: "Aidreamcapes ZIP credit rules",
+    category: "Commerce",
+    description: "ZIP credit transparency rules.",
+    settings: [...aidreamcapesZipSectionSettings],
+    blocks: [aidreamcapesZipRuleBlock]
+  },
   hero: {
     type: "hero",
     label: "Editorial Hero",

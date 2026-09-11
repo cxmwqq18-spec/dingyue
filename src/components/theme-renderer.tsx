@@ -21,6 +21,9 @@ import { HeaderMobilePhotoPackagesMenu, HeaderMobileToolsMenu, HeaderMobileVideo
 import { resolvePublishedSaveTheDateGroups, resolvePublishedSaveTheDateNavigationGroups } from "@/lib/save-the-date-publication";
 import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
+import { AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation } from "@/components/storefront/aidreamcapes-zip-navigation";
+import { AidreamcapesZipHomepageSection } from "@/components/storefront/aidreamcapes-zip-homepage";
+import { AidreamcapesZipFooter } from "@/components/storefront/aidreamcapes-zip-footer";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
@@ -247,6 +250,8 @@ export function ThemeRenderer({
     __storefrontBasePath: routeMode === "host" ? "" : `/site/${publicSlug}`
   };
   const renderContext = {
+    siteId: displaySite.id,
+    siteSlug: displaySite.slug,
     pagePath: normalizedPath,
     query,
     page: displayPage,
@@ -313,6 +318,7 @@ export function ThemeRenderer({
                 videoThemeCategories={videoThemeCategories}
                 videoThemes={videoThemes}
                 homepageShowcases={homepageShowcases}
+                saveTheDateNavigationGroups={settings.saveTheDateNavigation?.groups ?? []}
                 videoGenerationTopics={navigationVideoGenerationTopics}
               />
             );
@@ -362,6 +368,7 @@ type ThemeSectionFrameProps = {
   videoThemeCategories: VideoThemeCategory[];
   videoThemes: VideoTheme[];
   homepageShowcases: PublishedHomepageShowcaseItem[];
+  saveTheDateNavigationGroups?: SaveTheDateNavigationGroup[];
   videoGenerationTopics?: HeaderVideoGenerationTopic[];
   runtime?: ThemeRuntimeData;
   lazyRender?: boolean;
@@ -375,6 +382,8 @@ type ThemeSectionFrameProps = {
 };
 
 type RenderContext = {
+  siteId: string;
+  siteSlug: string;
   pagePath: string;
   query: Record<string, string | string[] | undefined>;
   page: ThemePageJson;
@@ -396,6 +405,7 @@ export type StorefrontSectionPayload = {
     videoThemeCategories?: VideoThemeCategory[];
     videoThemes?: VideoTheme[];
     homepageShowcases?: PublishedHomepageShowcaseItem[];
+    saveTheDateNavigationGroups?: SaveTheDateNavigationGroup[];
   };
   renderContext: RenderContext;
   storefrontContext?: StorefrontContext;
@@ -577,6 +587,7 @@ function isPolicyPage(renderContext: RenderContext): boolean {
 
 function sectionRendersMainHeading(sectionId: string, section: SectionInstance, renderContext: RenderContext): boolean {
   const sectionType = canonicalSectionType(section.type);
+  if (sectionType === "aidreamcapes_home_hero") return true;
   if (sectionType === "rich_text") {
     return normalizedHeadingLevel(setting(section, "headingLevel"), primaryRichTextFallbackHeadingLevel(sectionId, renderContext.page, renderContext.pagePath)) === "h1";
   }
@@ -701,6 +712,7 @@ const sectionTypesUsingCustomerRuntime = new Set([
 // flag is enforced here as a final renderer boundary so callers cannot
 // accidentally re-introduce lazy placeholders for SEO-critical content.
 const publicSeoCriticalSectionTypes = new Set([
+  "aidreamcapes_home_hero",
   "pricing_table",
   "testimonial_wall",
   "reviews",
@@ -731,7 +743,7 @@ function runtimeWithOnlyShellState(runtime: ThemeRuntimeData): ThemeRuntimeData 
   };
 }
 
-export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, homepageShowcases, videoGenerationTopics, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection }: ThemeSectionFrameProps) {
+export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, homepageShowcases, saveTheDateNavigationGroups = [], videoGenerationTopics, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection }: ThemeSectionFrameProps) {
   const sectionType = canonicalSectionType(section.type);
   const pagePath = renderContext.pagePath;
   const allowLazyRender = lazyRender && !(isPublicSeoRoute(pagePath) && publicSeoCriticalSectionTypes.has(sectionType));
@@ -766,6 +778,7 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
           videoThemeCategories={videoThemeCategories}
           videoThemes={sectionTypesUsingVideoThemes.has(sectionType) ? videoThemes : []}
           homepageShowcases={homepageShowcases}
+          saveTheDateNavigationGroups={saveTheDateNavigationGroups}
           videoGenerationTopics={videoGenerationTopics}
         />
       </DreamshootShowcasePreview>
@@ -1039,6 +1052,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const spanishXby = isSpanishXbySite(site);
   const isDreamShoot = usesAiGenerationPublicRoutes(site) && !isAidreamcapesCapabilitySite(site);
   const isAidreamcapes = isAidreamcapesSite(site);
+  const isAidreamcapesCom = isAidreamcapes && !spanishXby;
   const isMyDreamShootsCom = isDreamShoot && !isAidreamcapes && !spanishXby;
   const disablePublicSeoPrefetch = disablePrefetch || isPublicSeoRoute(pagePath);
   const pricingLabel = spanishXby ? "Precios" : "Pricing";
@@ -1273,8 +1287,12 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const clientPhotoPackageMegaGroups = deferMegaMenuPanels ? headerPhotoPackageMegaGroupsForClient(site, photoPackageMegaGroups) : [];
   const clientToolMegaItems = deferMegaMenuPanels ? headerToolMegaItemsForClient(site, toolMegaBlocks, spanishXby) : [];
   const market = site.branding.market || "AI photo subscriptions, private uploads, and customer galleries";
-  const ctaLabel = spanishXby ? "Comenzar" : header ? setting(header, "ctaLabel", "Get Started") : "Get Started";
-  const configuredCtaHref = header ? setting(header, "ctaHref", "/app/create") : "/app/create";
+  const ctaLabel = isAidreamcapesCom
+    ? settings.aidreamcapesZipNavigation?.actions.getStarted.label ?? "Get Started"
+    : spanishXby ? "Comenzar" : header ? setting(header, "ctaLabel", "Get Started") : "Get Started";
+  const configuredCtaHref = isAidreamcapesCom
+    ? settings.aidreamcapesZipNavigation?.actions.getStarted.href ?? "/app/create"
+    : header ? setting(header, "ctaHref", "/app/create") : "/app/create";
   const ctaHref = configuredCtaHref === "/login" || configuredCtaHref.startsWith("/login?") ? "/app/create" : configuredCtaHref;
   const mobileLabel = header ? setting(header, "mobileLabel", "Menu") : "Menu";
   const configuredLogoImageUrl = header ? setting(header, "logoImageUrl", "") : "";
@@ -1292,7 +1310,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
       : isAidreamcapes
         ? "Aidreamcapes"
         : title;
-  const visualBrandTitle = spanishXby ? readableBrandTitle : isDreamShoot ? dreamShootsVisibleTitle : isAidreamcapes ? aidreamcapesVisibleTitle : readableBrandTitle;
+  const visualBrandTitle = spanishXby ? readableBrandTitle : isDreamShoot ? dreamShootsVisibleTitle : isAidreamcapesCom ? readableBrandTitle : isAidreamcapes ? aidreamcapesVisibleTitle : readableBrandTitle;
   const brandDescription = `${readableBrandTitle} home`;
   const logoAlt = spanishXby
     ? isAidreamcapes
@@ -1335,8 +1353,10 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const desktopCtaClassName = darkHeaderControls
     ? isDreamShoot
       ? `hidden rounded-[15px] border border-white/80 bg-white px-3 py-2 text-xs font-semibold text-[#171514] shadow-[0_18px_48px_-34px_rgba(236,75,221,0.72)] transition hover:-translate-y-0.5 hover:border-white hover:bg-white/90 active:scale-[0.98] ${unifiedDreamShootHeader ? "xl:inline-flex min-[1800px]:rounded-[18px] min-[1800px]:px-5 min-[1800px]:py-2.5 min-[1800px]:text-sm" : "lg:inline-flex"}`
-      : isAidreamcapes
-        ? `hidden rounded-full border border-transparent bg-[linear-gradient(90deg,#6D3DFF_0%,#D85AEF_48%,#FF7A59_100%)] px-3 py-2 text-xs font-semibold text-white shadow-[0_18px_52px_-28px_rgba(139,92,246,0.78)] transition hover:-translate-y-0.5 active:scale-[0.98] ${unifiedDreamShootHeader ? "xl:inline-flex min-[1800px]:px-5 min-[1800px]:py-2.5 min-[1800px]:text-sm" : "lg:inline-flex"}`
+      : isAidreamcapesCom
+        ? "hidden rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-gray-200 lg:inline-flex"
+        : isAidreamcapes
+          ? `hidden rounded-full border border-transparent bg-[linear-gradient(90deg,#6D3DFF_0%,#D85AEF_48%,#FF7A59_100%)] px-3 py-2 text-xs font-semibold text-white shadow-[0_18px_52px_-28px_rgba(139,92,246,0.78)] transition hover:-translate-y-0.5 active:scale-[0.98] ${unifiedDreamShootHeader ? "xl:inline-flex min-[1800px]:px-5 min-[1800px]:py-2.5 min-[1800px]:text-sm" : "lg:inline-flex"}`
         : `hidden rounded-[14px] border border-white/30 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10 active:scale-[0.98] ${unifiedDreamShootHeader ? "min-[1800px]:inline-flex" : "lg:inline-flex"}`
     : lightCommerce
       ? `hidden rounded-[10px] bg-[#171514] px-5 py-3 text-[0.98rem] font-semibold text-white transition hover:-translate-y-0.5 active:scale-[0.98] ${unifiedDreamShootHeader ? "xl:inline-flex min-[1800px]:px-6" : "lg:inline-flex"}`
@@ -1347,7 +1367,9 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
       className={
         [
           "storefront-global-header",
-          dark
+          isAidreamcapesCom
+            ? "storefront-global-header aidreamcapes-zip-header fixed top-0 z-[120] w-full border-b border-white/[0.08] bg-[rgba(10,10,10,0.85)] text-white backdrop-blur-[20px]"
+            : dark
             ? `${sticky ? "sticky top-0" : "relative"} z-[120] border-b border-white/10 ${isDreamShoot ? "bg-[#05070E]/[0.94]" : "bg-[#0b0b0d]/90"} text-white backdrop-blur-xl`
             : lightCommerce
               ? `${sticky ? "sticky top-0" : "relative"} z-[120] border-b border-[#eadfce] bg-[linear-gradient(180deg,rgba(255,252,248,0.98)_0%,rgba(252,246,238,0.94)_100%)] text-[#14161a] backdrop-blur`
@@ -1360,7 +1382,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
           {announceText}
         </div>
       ) : null}
-      <div className={airyCommerceHeader ? "mx-auto grid h-[84px] max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:gap-6 sm:px-5" : unifiedDreamShootHeader ? "mx-auto flex h-[72px] max-w-[1680px] flex-nowrap items-center gap-1.5 px-3 py-0 xl:gap-2 min-[1536px]:gap-2.5 min-[1800px]:h-[76px] min-[1800px]:gap-4 min-[1800px]:px-5" : "mx-auto grid max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-5 py-4 xl:gap-5"}>
+      <div className={isAidreamcapesCom ? "relative mx-auto flex h-20 max-w-[1400px] items-center justify-between px-6" : airyCommerceHeader ? "mx-auto grid h-[84px] max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:gap-6 sm:px-5" : unifiedDreamShootHeader ? "mx-auto flex h-[72px] max-w-[1680px] flex-nowrap items-center gap-1.5 px-3 py-0 xl:gap-2 min-[1536px]:gap-2.5 min-[1800px]:h-[76px] min-[1800px]:gap-4 min-[1800px]:px-5" : "mx-auto grid max-w-[var(--site-content-width)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-5 py-4 xl:gap-5"}>
         <HeaderLink
           href={hrefFor(site, "/")}
           aria-label={brandDescription}
@@ -1379,7 +1401,9 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                 : "font-mono text-sm uppercase tracking-[0.22em]"
           }
         >
-          {dark || lightCommerce || isAidreamcapes || isDreamShoot ? (
+          {isAidreamcapesCom ? (
+            <span>{visualBrandTitle}</span>
+          ) : dark || lightCommerce || isAidreamcapes || isDreamShoot ? (
             <>
               {isAidreamcapes && !spanishXby ? (
                 <span
@@ -1442,6 +1466,9 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
             </>
           ) : visualBrandTitle}
         </HeaderLink>
+        {isAidreamcapesCom ? (
+          <AidreamcapesZipDesktopNavigation navigation={settings.aidreamcapesZipNavigation} resolveHref={(href) => hrefFor(site, href)} />
+        ) : (
         <nav className={dark ? (unifiedDreamShootHeader ? "order-2 hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-1 text-[0.78rem] font-semibold xl:flex min-[1440px]:gap-1.5 min-[1536px]:gap-2 min-[1800px]:gap-2.5" : "hidden min-w-0 items-center justify-center gap-2 lg:flex xl:gap-3") : airyCommerceHeader ? "hidden min-w-0 items-center justify-center gap-4 xl:flex 2xl:gap-7" : "hidden min-w-0 items-center justify-center gap-5 text-sm text-[var(--site-body)] md:flex"}>
           {links.map((link, index) => {
             const navClass = dark
@@ -1528,6 +1555,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
             );
           })}
         </nav>
+        )}
         <div className={darkHeaderControls ? (unifiedDreamShootHeader ? "order-3 ml-auto flex min-w-0 shrink-0 items-center justify-end gap-1 rounded-full border border-white/10 bg-transparent p-1 lg:gap-1.5 xl:rounded-none xl:border-0 xl:p-0 min-[1800px]:gap-3" : "flex items-center justify-end gap-1.5 rounded-full border border-white/10 bg-transparent p-1 lg:gap-3 lg:border-0 lg:p-0") : unifiedDreamShootHeader ? "order-3 ml-auto flex min-w-0 shrink-0 items-center justify-end gap-1 rounded-full border border-black/10 bg-transparent p-1 lg:gap-1.5 xl:rounded-none xl:border-0 xl:p-0 min-[1800px]:gap-3" : "flex items-center justify-end gap-1.5 rounded-full border border-black/10 bg-transparent p-1 lg:gap-3 lg:border-0 lg:p-0"} data-storefront-header-controls="">
           {customer ? (
             <div className={signedInClassName}>
@@ -1592,7 +1620,9 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
               </HeaderLink>
             </>
           )}
-          {links.length ? (
+          {isAidreamcapesCom ? (
+            <AidreamcapesZipMobileNavigation mobileLabel={mobileLabel} navigation={settings.aidreamcapesZipNavigation} resolveHref={(href) => hrefFor(site, href)} />
+          ) : links.length ? (
             <details className={`group relative z-[70] ${mobileHeaderVisibilityClass}`} data-storefront-mobile-menu>
               <summary
                 aria-label={mobileLabel}
@@ -1770,6 +1800,10 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", sit
   const isDreamShootFooter = usesAiGenerationPublicRoutes(site) && !isAidreamcapesCapabilitySite(site);
   const isAidreamcapesFooter = isAidreamcapesCapabilitySite(site);
   const spanishXbyFooter = isSpanishStorefrontSite(site);
+  const isAidreamcapesComFooter = isAidreamcapesFooter && !spanishXbyFooter;
+  if (isAidreamcapesComFooter && !lightweight) {
+    return <AidreamcapesZipFooter footer={footer} groups={settings.aidreamcapesZipNavigation?.footerGroups ?? []} resolveHref={(href) => hrefFor(site, href)} />;
+  }
   const hasPublishedSaveTheDateProjection = homepageShowcases.some((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
   const hasPublishedSaveTheDateConfig = settings.saveTheDateNavigation?.groups?.some((group) => group.items.some((item) => item.status === "published" && Boolean(item.href?.trim()))) ?? false;
   const hasPublishedSaveTheDate = hasPublishedSaveTheDateProjection || hasPublishedSaveTheDateConfig;
@@ -6120,6 +6154,15 @@ function isPairedStoreFooterLinkToHide(href: string): boolean {
 
 function canonicalSectionType(type: string): string {
   const normalizedType = type.trim().replace(/[\s-]+/g, "_").toLowerCase();
+  if ([
+    "aidreamcapes_home_hero",
+    "aidreamcapes_video_grid",
+    "aidreamcapes_ad_testing",
+    "aidreamcapes_photo_grid",
+    "aidreamcapes_scenario_grid",
+    "aidreamcapes_how_it_works",
+    "aidreamcapes_credit_rules"
+  ].includes(normalizedType)) return normalizedType;
   if (normalizedType === "mobile_video_showcase" || normalizedType.endsWith("_mobile_video_showcase")) {
     return "mobile_video_showcase";
   }
@@ -8697,6 +8740,7 @@ function SectionView({
   videoThemeCategories,
   videoThemes,
   homepageShowcases,
+  saveTheDateNavigationGroups,
   videoGenerationTopics,
   runtime,
   mode,
@@ -8714,6 +8758,7 @@ function SectionView({
   videoThemeCategories: VideoThemeCategory[];
   videoThemes: VideoTheme[];
   homepageShowcases: PublishedHomepageShowcaseItem[];
+  saveTheDateNavigationGroups?: SaveTheDateNavigationGroup[];
   videoGenerationTopics?: HeaderVideoGenerationTopic[];
   runtime?: ThemeRuntimeData;
   mode: "published" | "preview";
@@ -8739,9 +8784,14 @@ function SectionView({
         videoThemeCategories={videoThemeCategories}
         videoThemes={videoThemes}
         homepageShowcases={homepageShowcases}
+        saveTheDateNavigationGroups={saveTheDateNavigationGroups}
         videoGenerationTopics={videoGenerationTopics}
       />
     );
+  }
+  const isAidreamcapesComHomepage = isAidreamcapesSite(site) && !isSpanishXbySite(site) && renderContext.pagePath === "/";
+  if (isAidreamcapesComHomepage && ["aidreamcapes_home_hero", "aidreamcapes_video_grid", "aidreamcapes_ad_testing", "aidreamcapes_photo_grid", "aidreamcapes_scenario_grid", "aidreamcapes_how_it_works", "aidreamcapes_credit_rules", "pricing_table", "testimonial_wall", "faq", "conversion_panel"].includes(section.type)) {
+    return <AidreamcapesZipHomepageSection id={id} products={products} resolveAsset={(value) => mediaAssetUrl(site, value)} resolveHref={(value) => hrefFor(site, value)} section={section} site={site} storefrontContext={storefrontContext} />;
   }
   const usesNativeDreamShootRenderer = section.type.startsWith("dreamshoot_");
   const legacySaasSection = usesNativeDreamShootRenderer ? null : renderLegacySaasSection({ id, section, site, products, creativePacks, mode, renderContext, storefrontContext, siteAiApps });
