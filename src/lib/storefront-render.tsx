@@ -132,6 +132,57 @@ function canonicalizeSaveTheDateRoutes<T>(value: T): T {
   return Object.fromEntries(Object.entries(value as Record<string, unknown>).map(([key, child]) => [key, canonicalizeSaveTheDateRoutes(child)])) as T;
 }
 
+const spanishPublicCopyMachineKeyPattern = /^(?:id|siteId|href|url|imageUrl|videoUrl|posterUrl|src|type|layout|tone|surface|anchor|pageType|productType|billingCycle|defaultBillingCycle|aiAppSlug|source|status|variant|fieldType|headingLevel|index|limit|count|sortOrder|slug|canonicalPath|canonical)$/i;
+
+function localizeSpanishPublicCopyValue(value: string, key: string): string {
+  if (!value || !key || spanishPublicCopyMachineKeyPattern.test(key)) return value;
+  const normalized = value.replace(/\s+/g, " ").trim();
+  const exact: Record<string, string> = {
+    "Aprende un preparar fotos fuente, elegir paquetes y revisar tus resultados privados. Gestionado por MRNARUEBET LLC.": "Aprende a preparar fotos fuente, elegir paquetes y revisar tus resultados privados. Gestionado por MRNARUEBET LLC.",
+    "Guia de fotos IAs": "Guía de fotos con IA",
+    "clientes ver la paquete coste antes un privado solicitud reserves créditos.": "Compara el coste del paquete y reserva créditos antes de iniciar una solicitud privada.",
+    "Generard imágenes volver para un galeríun privada para revisa y descargar.": "Los resultados generados aparecen en una galería privada para revisarlos y descargarlos.",
+    "IDENTIDAD CONSISTENCY": "CONSISTENCIA DE IDENTIDAD",
+    "tu subidas stay privado": "Tus subidas permanecen privadas",
+    "terminados conjuntos land en tu galeríun privada dónde tú puede revisa, approve, y descargar resultados.": "Los conjuntos terminados llegan a tu galería privada, donde puedes revisarlos, aprobarlos y descargar los resultados.",
+    "IA IMAGE-TO-VIDEO": "IMAGEN A VÍDEO CON IA",
+    "Subir, elige, revisa créditos, generar.": "Sube, elige, revisa los créditos y genera.",
+    "01. Subir claro fotos": "01. Sube fotos claras",
+    "02. Elegir un foto paquete": "02. Elige un paquete de fotos",
+    "03. Revisar la coste en créditose": "03. Revisa el coste en créditos",
+    "04. Descargar desde tu galeríun": "04. Descarga desde tu galería",
+    "Listo para probar AIdreamshoots?": "¿Listo para probar AIdreamshoots?",
+    "Crea vídeos con IA, vídeos personalizados de Guardar la fecha y conjuntos de fotos profesionales desde tus imágenes, todo en un espacio privado.": "Crea vídeos con IA, vídeos personalizados para guardar la fecha y conjuntos de fotos profesionales a partir de tus imágenes, todo en un espacio privado."
+  };
+  if (exact[normalized]) return exact[normalized];
+  return value
+    .replace(/\bIA\s+IMAGE-TO-VIDEO\b/gi, "IMAGEN A VÍDEO CON IA")
+    .replace(/\bIMAGE-TO-VIDEO\b/gi, "IMAGEN A VÍDEO CON IA")
+    .replace(/\bmotion-ready\b/gi, "listo para movimiento")
+    .replace(/\bpermission-safe\b/gi, "autorizado")
+    .replace(/\bfocused\b/gi, "centrada")
+    .replace(/\bidentity stability\b/gi, "estabilidad de la identidad")
+    .replace(/\bcrop quality\b/gi, "calidad del encuadre")
+    .replace(/\bapprove\b/gi, "aprobar")
+    .replace(/\bapproval\b/gi, "aprobación")
+    .replace(/\bconsistency\b/gi, "consistencia")
+    .replace(/\bdefault\b/gi, "por defecto")
+    .replace(/\b stay privado\b/gi, " permanecen privadas")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function localizeSpanishPublicPageJson(site: Site, pageJson: ThemePageJson): ThemePageJson {
+  if (!isSpanishStorefrontSite(site)) return pageJson;
+  const visit = (value: unknown, key = ""): unknown => {
+    if (typeof value === "string") return localizeSpanishPublicCopyValue(value, key);
+    if (Array.isArray(value)) return value.map((item) => visit(item, key));
+    if (!value || typeof value !== "object") return value;
+    return Object.fromEntries(Object.entries(value as Record<string, unknown>).map(([childKey, child]) => [childKey, visit(child, childKey)]));
+  };
+  return visit(pageJson) as ThemePageJson;
+}
+
 function publishedImagePackIds(snapshot: ReturnType<typeof createPublishedSiteSnapshot>): Set<string> {
   const imagePageEntityIds = new Set(
     snapshot.publishedRoutes
@@ -2925,7 +2976,7 @@ export async function renderStorefrontPage({
   const canonicalRenderPath = isPrimaryMydreamshootsStorefront(currentSite) && (renderPagePath.startsWith("/holidays-events/") || renderPagePath.startsWith("/ai-save-the-date/"))
     ? canonicalSaveTheDatePath(renderPagePath)
     : renderPagePath;
-  const pageJson = withoutMydreamshootsHomepagePackageCatalog(
+  const pageJson = localizeSpanishPublicPageJson(currentSite, withoutMydreamshootsHomepagePackageCatalog(
     currentSite,
     slug,
     isPrimaryMydreamshootsStorefront(currentSite) && canonicalRenderPath.startsWith("/ai-save-the-date/")
@@ -2938,7 +2989,7 @@ export async function renderStorefrontPage({
           }
         }
       : basePageJson
-  );
+  ));
   const renderDataForPage = isFocusedCollectionPage ? focusedCollectionRenderData : publicDirectoryRenderData;
   let pageRenderData = withPageMediaAssets(
     currentSite,
@@ -3164,7 +3215,7 @@ export async function renderStorefrontSectionPayloads({
     internalSlug === "/tools" &&
     (usesAiGenerationPublicRoutes(currentSite) || isAidreamcapesStorefront(currentSite));
   const usesDreamShootVideoGenerationDirectory = internalSlug === "/ai-video-generation" && (isPrimaryMydreamshootsStorefront(currentSite) || isSpanishMydreamshootsStorefront(currentSite));
-  const pageJson: ThemePageJson = withoutMydreamshootsHomepagePackageCatalog(
+  const pageJson: ThemePageJson = localizeSpanishPublicPageJson(currentSite, withoutMydreamshootsHomepagePackageCatalog(
     currentSite,
     internalSlug,
     internalSlug === "/account"
@@ -3184,7 +3235,7 @@ export async function renderStorefrontSectionPayloads({
       : internalSlug === "/collections"
       ? withDreamShootCollectionsDirectoryPage(directPage.publishedJson, currentSite)
       : directPage.publishedJson
-  );
+  ));
 
   const settings = currentSite.themeSettings.publishedJson;
   const renderedPage = { ...directPage, publishedJson: pageJson };

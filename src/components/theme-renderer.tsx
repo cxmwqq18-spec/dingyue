@@ -2577,7 +2577,10 @@ function spanishRuntimeCopy(value: string, key = "", site?: Site): string {
     "Use this page to explain the photo experience, packages, delivery timing, and private customer journey.": "Usa esta página para explicar la experiencia de fotos, los paquetes, los plazos de entrega y el recorrido privado del cliente.",
     "Crear creador subscription perfil fotos, tasteful promocional retratos, bio imágenes, y privado content-safe visual conjuntos para consenting adults.": "Crea fotos de perfil y promocionales para creadores, con retratos cuidados, biografías visuales y conjuntos privados para adultos con consentimiento.",
     "Crear tasteful privado boudoir-inspired retratos con soft editorial luz, elegant styling, y consent-first revisa.": "Crea retratos boudoir privados con luz editorial suave, estilo elegante y revisión centrada en el consentimiento.",
-    "usa un written instrucciones para solicitud safe foto edits, escena changes, estilo adjustments, y privado imagen variations.": "Usa instrucciones escritas para solicitar ediciones seguras de fotos, cambios de escena, ajustes de estilo y variaciones privadas de imagen."
+    "usa un written instrucciones para solicitud safe foto edits, escena changes, estilo adjustments, y privado imagen variations.": "Usa instrucciones escritas para solicitar ediciones seguras de fotos, cambios de escena, ajustes de estilo y variaciones privadas de imagen.",
+    "Aprende un preparar fotos fuente, elegir paquetes y revisar tus resultados privados. Gestionado por MRNARUEBET LLC.": "Aprende a preparar fotos fuente, elegir paquetes y revisar tus resultados privados. Gestionado por MRNARUEBET LLC.",
+    "Guia de fotos IAs": "Guía de fotos con IA",
+    "plan un motion-ready foto fotograma o corto vídeo add-on con uno claro movimiento idea, permission-safe fuente imágenes, y un focused revisa de identidad stability y crop calidad.": "Planifica una foto lista para movimiento o un vídeo corto con una idea de movimiento clara, imágenes fuente autorizadas y una revisión centrada en la estabilidad de la identidad y la calidad del encuadre."
   };
   if (exact[normalized]) return exact[normalized];
   return normalized
@@ -2599,6 +2602,16 @@ function spanishRuntimeCopy(value: string, key = "", site?: Site): string {
     .replace(/\bwebsite\b/gi, "sitio web")
     .replace(/\bcustomers?\b/gi, "clientes")
     .replace(/\bpartners?\b/gi, "colaboradores")
+    .replace(/\bIMAGE-TO-VIDEO\b/gi, "IMAGEN A VÍDEO CON IA")
+    .replace(/\bmotion-ready\b/gi, "listo para movimiento")
+    .replace(/\bpermission-safe\b/gi, "autorizado")
+    .replace(/\bfocused\b/gi, "centrada")
+    .replace(/\bidentity stability\b/gi, "estabilidad de la identidad")
+    .replace(/\bcrop quality\b/gi, "calidad del encuadre")
+    .replace(/\bapprove\b/gi, "aprobar")
+    .replace(/\bapproval\b/gi, "aprobación")
+    .replace(/\bconsistency\b/gi, "consistencia")
+    .replace(/\bdefault\b/gi, "por defecto")
     .replace(/\brecommended usage\b/gi, "uso recomendado")
     .replace(/\broute\b/gi, "ruta")
     .replace(/\btravel\b/gi, "viaje")
@@ -5629,9 +5642,9 @@ function blogArticleCardsForSite(site: Site, currentPath = ""): BlogArticleCard[
       const contentIdentity = publishedBlogContentIdentity(page, article);
       if (seenContent.has(contentIdentity)) return undefined;
       seenContent.add(contentIdentity);
-      const title = setting(article, "title", page.title);
-      const body = setting(article, "body", "");
-      const description = setting(article, "summary", page.publishedJson.seo?.description ?? truncateText(body, 160));
+      const title = spanishRuntimeCopy(setting(article, "title", spanishRuntimeCopy(page.title, "title", site)), "title", site);
+      const body = spanishRuntimeCopy(setting(article, "body", ""), "body", site);
+      const description = spanishRuntimeCopy(setting(article, "summary", page.publishedJson.seo?.description ?? truncateText(body, 160)), "summary", site);
       const imageSetting = setting(article, "imageUrl", "");
       const imageUrl = imageSetting
         ? mediaAssetUrl(site, imageSetting)
@@ -5639,7 +5652,7 @@ function blogArticleCardsForSite(site: Site, currentPath = ""): BlogArticleCard[
       const publishedAt = setting(article, "publishedAt", "");
       const updatedAt = setting(article, "updatedAt", "");
       const sortDate = new Date(updatedAt || publishedAt).getTime();
-      const guideType = setting(article, "guideType", isAidreamcapesSite(site) ? "Travel guide" : "AI photo guide");
+      const guideType = spanishRuntimeCopy(setting(article, "guideType", isAidreamcapesSite(site) ? "Travel guide" : "AI photo guide"), "guideType", site);
       const explicitImageAlt = setting(article, "imageAlt", "");
       return {
         id: page.id,
@@ -5657,11 +5670,11 @@ function blogArticleCardsForSite(site: Site, currentPath = ""): BlogArticleCard[
           role: "article",
           title
         }),
-        author: setting(article, "author", isAidreamcapesSite(site) ? "Aidreamcapes editorial team" : "myDreamshoots editorial team"),
+        author: spanishRuntimeCopy(setting(article, "author", isAidreamcapesSite(site) ? "Aidreamcapes editorial team" : "myDreamshoots editorial team"), "author", site),
         publishedAt: articleDateLabel(publishedAt, storefrontMediaAltLocaleForSite(site)),
         updatedAt: articleDateLabel(updatedAt, storefrontMediaAltLocaleForSite(site)),
         readMinutes: articleReadTimeLabel(setting(article, "readMinutes", "6"), "6", storefrontMediaAltLocaleForSite(site)),
-        tags: articleTags(setting(article, "tags", setting(article, "guideType", ""))),
+        tags: articleTags(spanishRuntimeCopy(setting(article, "tags", setting(article, "guideType", "")), "tags", site)),
         guideType,
         targetHref: setting(article, "targetHref", ""),
         targetLabel: setting(article, "targetLabel", ""),
