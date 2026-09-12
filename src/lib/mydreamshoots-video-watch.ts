@@ -219,7 +219,10 @@ function addCandidate(records: Map<string, MyDreamShootsVideoWatchPage>, candida
     return;
   }
   const thumbnailPath = candidate.thumbnailPath || "";
-  const uploadDate = normalizeUploadDate(candidate.uploadDate);
+  // Public theme media can be rendered without a separate editorial date.
+  // Keep those videos indexable with a stable fallback instead of dropping
+  // an otherwise valid, publicly rendered video from the watch-page registry.
+  const uploadDate = normalizeUploadDate(candidate.uploadDate, "2026-01-01T00:00:00.000Z");
   if (!thumbnailPath || !uploadDate) return;
   const slug = stableSlug(contentPath, usedSlugs);
   usedSlugs.add(slug);
