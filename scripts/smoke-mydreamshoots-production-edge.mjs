@@ -3,8 +3,16 @@ import assert from "node:assert/strict";
 const origin = (process.env.SMOKE_PUBLIC_ORIGIN || "https://www.mydreamshoots.com").replace(/\/$/, "");
 const publicCacheControl = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
 const publicCdnCacheControl = "public, s-maxage=300, stale-while-revalidate=1800";
+const publicSitemapCacheControl = "public, max-age=300, s-maxage=900, stale-while-revalidate=86400";
+const publicSitemapCdnCacheControl = "public, s-maxage=900, stale-while-revalidate=86400";
+const legacyWatchPaths = [
+  "/watch/ai-video-creation-tutorial",
+  "/watch/christmas-family-gift",
+  "/watch/valentines-day-save-the-date"
+];
 const publicPaths = [
   "/",
+  ...legacyWatchPaths,
   "/pricing",
   "/state-privacy",
   "/terms",
@@ -60,6 +68,9 @@ async function fetchTimed(path) {
 async function sitemapPaths() {
   const response = await fetch(`${origin}/sitemap.xml`, { redirect: "follow" });
   assert.equal(response.status, 200, "sitemap.xml must return HTTP 200");
+  assert.equal(response.headers.get("cache-control"), publicSitemapCacheControl, "sitemap.xml must expose a public cache policy");
+  assert.equal(response.headers.get("cdn-cache-control"), publicSitemapCdnCacheControl, "sitemap.xml must expose a public CDN cache policy");
+  assert.equal(response.headers.get("cloudflare-cdn-cache-control"), publicSitemapCdnCacheControl, "sitemap.xml must expose a Cloudflare cache policy");
   const xml = await response.text();
   const paths = [...xml.matchAll(/<loc>([^<]+)<\/loc>/gi)]
     .map((match) => xmlDecode(match[1]))
@@ -87,6 +98,9 @@ async function assertPublicPage(path) {
 }
 
 const discoveredPublicPaths = await sitemapPaths();
+const discoveredWatchPaths = discoveredPublicPaths.filter((path) => path.startsWith("/watch/"));
+assert(discoveredWatchPaths.length >= legacyWatchPaths.length, "sitemap.xml must expose dynamically discovered watch pages");
+for (const path of legacyWatchPaths) assert(discoveredWatchPaths.includes(path), `${path} must remain in sitemap.xml`);
 const allPublicPaths = [...new Set([...publicPaths, ...discoveredPublicPaths])];
 const publicConcurrency = 8;
 for (let index = 0; index < allPublicPaths.length; index += publicConcurrency) {

@@ -698,6 +698,10 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
   const upstreamUrl = sameServerUrl(request);
   const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
   if (!hostSlug || upstreamUrl.pathname.startsWith("/site/")) return upstreamUrl;
+  // Video watch pages are standalone MyDreamShoots routes. Keep them on the
+  // top-level App Router path so they do not fall through to the database-backed
+  // storefront catch-all and lose their static video indexing contract.
+  if (hostSlug === "mydreamshoots" && upstreamUrl.pathname.startsWith("/watch/")) return upstreamUrl;
   // Keep the directory renderer for its complete published shell, while the
   // category query lets its metadata resolve the requested image theme.
   const imageThemeMatch = upstreamUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/);

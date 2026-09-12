@@ -2,6 +2,9 @@ import { getStorefrontSitemapPayloadForHost } from "@/lib/seo-indexing";
 
 export const dynamic = "force-dynamic";
 
+const SITEMAP_CACHE_CONTROL = "public, max-age=300, s-maxage=900, stale-while-revalidate=86400";
+const SITEMAP_CDN_CACHE_CONTROL = "public, s-maxage=900, stale-while-revalidate=86400";
+
 function escapeXml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
@@ -77,7 +80,9 @@ export async function GET(request: Request): Promise<Response> {
   return new Response(sitemapXml(entries), {
     headers: {
       "content-type": "application/xml; charset=utf-8",
-      "cache-control": "no-store, max-age=0",
+      "cache-control": SITEMAP_CACHE_CONTROL,
+      "cdn-cache-control": SITEMAP_CDN_CACHE_CONTROL,
+      "cloudflare-cdn-cache-control": SITEMAP_CDN_CACHE_CONTROL,
       "vary": "Host, X-Forwarded-Host, RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
       ...(isGrownstrideHost(forwardedHost) || isGrownstrideHost(host)
         ? { "x-robots-tag": "noindex, nofollow" }

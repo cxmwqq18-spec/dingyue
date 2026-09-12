@@ -43,6 +43,7 @@ import {
 } from "@/lib/photo-package-use-case-profiles";
 import { mydreamshootsLegacyPublicPathTarget, shortPolicyPath } from "@/lib/site-route-canonical";
 import { isMydreamshootsRemovedLegacyRoute } from "@/lib/mydreamshoots-editorial-routes";
+import { isMydreamshootsVideoContentPath, mydreamshootsVideoWatchPathForContentPath } from "@/lib/mydreamshoots-video-watch";
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { isSpanishStorefrontSite, SPANISH_XBY_COLLECTION_ALIASES } from "@/lib/spanish-storefronts";
 import { isFrenchStorefrontSite, storefrontLocaleForSite } from "@/lib/storefront-locale";
@@ -10673,6 +10674,9 @@ function SectionView({
       : videoUrl.includes("mydreamshoots-ai-video-tutorial-20260814.mp4")
         ? mediaAssetUrl(site, `/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-video-tutorial-20260814-cover-v2.jpg?v=${dreamshootHomepageShowcaseVersion}`)
         : image;
+    const videoWatchPath = isPrimaryMydreamshootsCapabilitySite(site) && isMydreamshootsVideoContentPath(videoUrl)
+      ? mydreamshootsVideoWatchPathForContentPath(videoUrl)
+      : undefined;
     const compactHomepageSpacing = isMyDreamShootsProfileSite(site) && renderContext.pagePath === "/";
     return (
       <section className={`bg-[#0a0a0b] px-5 py-14 text-white md:py-20${compactHomepageSpacing ? " pt-8 md:pt-12" : ""}`} id={sectionAnchor(section, "how-it-works")}>
@@ -10715,6 +10719,11 @@ function SectionView({
                 </div>
               ) : null}
             </div>
+            {videoWatchPath ? (
+              <Link className="mt-4 inline-flex text-sm font-semibold text-white/78 underline decoration-white/30 underline-offset-4 transition hover:text-white" href={hrefFor(site, videoWatchPath)}>
+                Open the dedicated video page →
+              </Link>
+            ) : null}
           </div>
         </div>
       </section>
@@ -10821,6 +10830,11 @@ function SectionView({
                       </div>
                     )}
                   </div>
+                  {isPrimaryMydreamshootsCapabilitySite(site) && isMydreamshootsVideoContentPath(item.videoUrl) && mydreamshootsVideoWatchPathForContentPath(item.videoUrl) ? (
+                    <Link className="mt-4 inline-flex text-sm font-semibold text-white/78 underline decoration-white/30 underline-offset-4 transition hover:text-white" href={hrefFor(site, mydreamshootsVideoWatchPathForContentPath(item.videoUrl)!)}>
+                      Open the dedicated video page →
+                    </Link>
+                  ) : null}
                 </div>
               ))}
             </div>
@@ -13794,6 +13808,11 @@ function SectionView({
                       <figcaption className="border-t border-white/10 bg-[#090B12] p-3">
                         <span className="block truncate text-sm font-semibold text-white">{card.title}</span>
                         <span className="mt-1 block truncate text-xs text-white/52">{card.meta}</span>
+                        {isPrimaryMydreamshootsCapabilitySite(site) && isMydreamshootsVideoContentPath(card.videoUrl) && mydreamshootsVideoWatchPathForContentPath(card.videoUrl) ? (
+                          <Link className="mt-2 inline-flex text-xs font-semibold text-white/72 underline decoration-white/25 underline-offset-4 hover:text-white" href={hrefFor(site, mydreamshootsVideoWatchPathForContentPath(card.videoUrl)!)}>
+                            Open video page →
+                          </Link>
+                        ) : null}
                       </figcaption>
                     </figure>
                   ))}
@@ -14308,6 +14327,10 @@ function SectionView({
         const compactCard = item.kind === "save_the_date";
         const hasVideo = Boolean(item.videoUrl);
         const videoUrl = item.videoUrl ?? "";
+        const videoWatchPath = isPrimaryMydreamshootsCapabilitySite(site) && isMydreamshootsVideoContentPath(videoUrl)
+          ? mydreamshootsVideoWatchPathForContentPath(videoUrl)
+          : undefined;
+        const videoHref = videoWatchPath ? hrefFor(site, videoWatchPath) : href;
         const mediaClassName = "h-full w-full object-cover";
         const publishedImageAlt = item.kind === "photo"
           ? cardImageAltForSite(site, {
@@ -14356,7 +14379,7 @@ function SectionView({
               </div>
               <div className="border-t border-white/10 p-3">
                 <h3 className="truncate text-sm font-semibold text-white">
-                  <Link className="transition hover:text-white/72 focus:outline-none focus-visible:underline" href={href}>{item.title}</Link>
+                  <Link className="transition hover:text-white/72 focus:outline-none focus-visible:underline" href={videoHref}>{item.title}</Link>
                 </h3>
                 <p className="mt-1 line-clamp-2 text-xs leading-5 text-white/60">{item.subtitle}</p>
               </div>
@@ -14388,7 +14411,7 @@ function SectionView({
             <Link
               aria-label={`Open ${item.title}`}
               className={compactCard ? "block border-t border-white/10 p-2 outline-none transition hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/80 sm:p-2.5" : "block border-t border-white/10 p-3 outline-none transition hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/80"}
-              href={href}
+              href={videoHref}
             >
               <h3 className={compactCard ? "truncate text-xs font-semibold text-white sm:text-sm" : "truncate text-sm font-semibold text-white"}>{item.title}</h3>
               <p className={compactCard ? "mt-1 line-clamp-2 text-[11px] leading-4 text-white/60 sm:text-xs" : "mt-1 line-clamp-2 text-xs leading-5 text-white/60"}>{item.subtitle}</p>
@@ -14556,6 +14579,11 @@ function SectionView({
                           <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: accent }} />
                           {card.meta}
                         </span>
+                        {isPrimaryMydreamshootsCapabilitySite(site) && isMydreamshootsVideoContentPath(card.videoUrl) && mydreamshootsVideoWatchPathForContentPath(card.videoUrl) ? (
+                          <Link className="mt-2 inline-flex text-xs font-semibold text-white/72 underline decoration-white/25 underline-offset-4 hover:text-white" href={hrefFor(site, mydreamshootsVideoWatchPathForContentPath(card.videoUrl)!)}>
+                            Open video page →
+                          </Link>
+                        ) : null}
                       </figcaption>
                     </figure>
                   ))}
@@ -14577,7 +14605,14 @@ function SectionView({
                       tabIndex={0}
                     >
                       <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
-                      <figcaption className="sr-only">{`${card.meta} video preview.`}</figcaption>
+                      <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-black/80 to-transparent p-4 pt-12 text-sm text-white">
+                        <span className="sr-only">{`${card.meta} video preview.`}</span>
+                        {isPrimaryMydreamshootsCapabilitySite(site) && isMydreamshootsVideoContentPath(card.videoUrl) && mydreamshootsVideoWatchPathForContentPath(card.videoUrl) ? (
+                          <Link className="ml-auto rounded-full bg-black/55 px-3 py-1.5 text-xs font-semibold underline decoration-white/35 underline-offset-4 backdrop-blur transition hover:bg-black/75" href={hrefFor(site, mydreamshootsVideoWatchPathForContentPath(card.videoUrl)!)}>
+                            Open video page →
+                          </Link>
+                        ) : null}
+                      </figcaption>
                     </figure>
                   ))}
                 </DreamshootShowcaseRail>

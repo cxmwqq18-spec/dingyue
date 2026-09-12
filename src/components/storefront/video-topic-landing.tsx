@@ -7,6 +7,7 @@ import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import { aiVideoTopicLandingContentFromSection, type AiVideoTopicLandingContent } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/talking-photo-content";
+import { isMydreamshootsVideoContentPath, mydreamshootsVideoWatchPathForContentPath } from "@/lib/mydreamshoots-video-watch";
 
 type RoutedSite = Site & { __storefrontBasePath?: string };
 
@@ -359,7 +360,10 @@ function heroMediaSizingClass(video?: VideoTopicVideo): string {
   return isPortraitVideo(video) ? "w-full max-w-full md:w-fit" : "w-full";
 }
 
-function TopicHeroVideo({ video }: { video: VideoTopicVideo }) {
+function TopicHeroVideo({ video, site }: { video: VideoTopicVideo; site?: Site }) {
+  const watchPath = site?.id === "site_dreamshoot" && isMydreamshootsVideoContentPath(video.src)
+    ? mydreamshootsVideoWatchPathForContentPath(video.src)
+    : undefined;
   return (
     <DreamshootShowcasePreview className="h-full">
       <div
@@ -386,12 +390,17 @@ function TopicHeroVideo({ video }: { video: VideoTopicVideo }) {
           width={video.width}
         />
         <span aria-hidden="true" className="absolute inset-0 bg-black/0 transition group-hover:bg-black/[0.08]" />
+        {watchPath ? (
+          <StorefrontInstantLink className="absolute bottom-4 right-4 z-10 rounded-full border border-white/30 bg-black/55 px-3 py-1.5 text-xs font-semibold text-white underline decoration-white/35 underline-offset-4 backdrop-blur transition hover:bg-black/75" href={watchPath}>
+            Open video page →
+          </StorefrontInstantLink>
+        ) : null}
       </div>
     </DreamshootShowcasePreview>
   );
 }
 
-function DirectTopicHeroCards({ images, video, cropPetHero = false, containSecondaryImages = false, leadAspectRatio }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean; containSecondaryImages?: boolean; leadAspectRatio?: string }) {
+function DirectTopicHeroCards({ images, video, site, cropPetHero = false, containSecondaryImages = false, leadAspectRatio }: { images: VideoTopicImage[]; video?: VideoTopicVideo; site?: Site; cropPetHero?: boolean; containSecondaryImages?: boolean; leadAspectRatio?: string }) {
   const cards = images.slice(0, 3);
   const hasThreeCards = cards.length >= 3;
   return (
@@ -422,7 +431,7 @@ function DirectTopicHeroCards({ images, video, cropPetHero = false, containSecon
               }
             : {})}
         >
-          {video && index === 0 ? <TopicHeroVideo video={video} /> : <img
+          {video && index === 0 ? <TopicHeroVideo site={site} video={video} /> : <img
               src={optimizedTopicImageSrc(item.src)}
               alt={item.alt}
               className={`absolute ${hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item) ? "top-0 left-1/2 h-auto max-w-none" : "inset-0 h-full w-full"} ${shouldContainImage ? "object-contain object-center" : hasThreeCards && index === 0 && !hasEmbeddedVideoLetterbox(item) ? "object-cover object-top" : hasThreeCards ? "object-cover object-center" : `${mediaObjectFit(item)} object-center`}`}
@@ -446,7 +455,7 @@ function DirectTopicHeroCards({ images, video, cropPetHero = false, containSecon
   );
 }
 
-function TopicHeroMedia({ images, video, cropPetHero = false, displayAspectRatio, containSecondaryImages = false, leadAspectRatio }: { images: VideoTopicImage[]; video?: VideoTopicVideo; cropPetHero?: boolean; displayAspectRatio?: string; containSecondaryImages?: boolean; leadAspectRatio?: string }) {
+function TopicHeroMedia({ images, video, site, cropPetHero = false, displayAspectRatio, containSecondaryImages = false, leadAspectRatio }: { images: VideoTopicImage[]; video?: VideoTopicVideo; site?: Site; cropPetHero?: boolean; displayAspectRatio?: string; containSecondaryImages?: boolean; leadAspectRatio?: string }) {
   if (video && images.length < 3) {
     const portraitSizing = isPortraitVideo(video);
     // Some landscape exports are delivered on a 4:3 canvas with 16:9 content
@@ -455,11 +464,11 @@ function TopicHeroMedia({ images, video, cropPetHero = false, displayAspectRatio
     const videoAspectRatio = displayAspectRatio ?? (portraitSizing ? `${video.width} / ${video.height}` : "16 / 9");
     return (
       <div className={`mx-auto max-w-full ${portraitSizing ? "h-auto max-h-full w-auto md:h-[min(78vh,54rem)]" : "w-full"}`} style={{ aspectRatio: videoAspectRatio }}>
-        <TopicHeroVideo video={video} />
+        <TopicHeroVideo site={site} video={video} />
       </div>
     );
   }
-  return <DirectTopicHeroCards images={images} video={video} cropPetHero={cropPetHero} containSecondaryImages={containSecondaryImages} leadAspectRatio={leadAspectRatio} />;
+  return <DirectTopicHeroCards images={images} site={site} video={video} cropPetHero={cropPetHero} containSecondaryImages={containSecondaryImages} leadAspectRatio={leadAspectRatio} />;
 }
 
 function localizedExpertLabel(site: Site, value?: string): string {
@@ -1012,7 +1021,7 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
               <div className="relative aspect-[9/16] overflow-hidden rounded-[21px]" data-video-topic-hero-media>
                 {content.hero.video ? (
-                  <TopicHeroVideo video={content.hero.video} />
+                  <TopicHeroVideo site={site} video={content.hero.video} />
                 ) : (
                   <img
                     src={content.hero.image.src}
@@ -1572,7 +1581,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
           </div>
           <figure className={`relative min-w-0 ${heroMediaSizingClass(heroVideo)} lg:justify-self-end`} data-video-topic-hero-media>
             <div className={`relative ${heroMediaSizingClass(heroVideo)} overflow-hidden rounded-[8px] border ${accentBorder} bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]`}>
-              <TopicHeroMedia containSecondaryImages cropPetHero={isPet} images={heroImages} video={heroVideo} leadAspectRatio={heroLeadAspectRatio} />
+              <TopicHeroMedia containSecondaryImages cropPetHero={isPet} images={heroImages} site={site} video={heroVideo} leadAspectRatio={heroLeadAspectRatio} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60"><Sparkles className={`mt-1 h-4 w-4 shrink-0 ${accentClass}`} strokeWidth={1.8} /><span>{content.hero.caption}</span></figcaption>
           </figure>
@@ -1646,7 +1655,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
           </div>
           <figure className={`relative min-w-0 ${heroMediaSizingClass(heroVideo)} lg:justify-self-end`}>
             <div className={`relative ${heroMediaSizingClass(heroVideo)} overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]`} data-video-topic-hero-media>
-              <TopicHeroMedia displayAspectRatio={heroDisplayAspectRatio} images={heroImages} video={heroVideo} />
+              <TopicHeroMedia displayAspectRatio={heroDisplayAspectRatio} images={heroImages} site={site} video={heroVideo} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
               <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />

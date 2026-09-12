@@ -19,6 +19,10 @@ import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePubl
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import type { CreativePack, PlatformState, PublishedLeafRouteProjection, PublishedSeoSnapshot, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
 import { canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import {
+  mydreamshootsVideoWatchPagesForState,
+  type MyDreamShootsVideoWatchPage
+} from "@/lib/mydreamshoots-video-watch";
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
 export const MYDREAMSHOOTS_SITEMAP_URL = `${MYDREAMSHOOTS_ORIGIN}/sitemap.xml`;
@@ -533,8 +537,25 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
     : "";
 }
 
+function mydreamshootsVideoWatchPagesForSnapshot(
+  state: PlatformState,
+  site: Site,
+  snapshot: ReturnType<typeof createPublishedSiteSnapshot>
+): readonly MyDreamShootsVideoWatchPage[] {
+  if (!isPrimaryMydreamshootsSite(site)) return [];
+  return mydreamshootsVideoWatchPagesForState(state, site, {
+    pages: snapshot.pages.map((page) => ({
+      ...page,
+      slug: page.publishedJson.seo?.canonicalPath ?? page.publishedJson.seo?.canonical ?? page.slug
+    })),
+    homepageShowcases: snapshot.publishedHomepageShowcases
+  });
+}
+
 export function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[] {
   const snapshot = createPublishedSiteSnapshot(state, site);
+  const videoWatchPages = mydreamshootsVideoWatchPagesForSnapshot(state, site, snapshot);
+  const videoWatchSourcePaths = new Set(videoWatchPages.flatMap((video) => video.sourcePaths));
   const collectionItems = resolvePublicCollectionItems(snapshot);
   const entries = new Map<string, SitemapEntry>();
   for (const page of snapshot.pages) {
@@ -567,7 +588,9 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
         : isPrimaryMydreamshootsSite(site)
           ? []
           : collectPageSitemapImages(site, page),
-      video: pageSitemapVideoForSite(site, page),
+      video: videoWatchSourcePaths.has(path)
+        ? undefined
+        : pageSitemapVideoForSite(site, page),
       lastmod: pageContentLastModified(page, snapshot.publication?.publishedAt),
       changefreq: sitemapChangeFrequencyForPath(path),
       priority: sitemapPriorityForPath(path)
@@ -671,6 +694,26 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
         lastmod: pageContentLastModified(page, snapshot.publication?.publishedAt),
         changefreq: sitemapChangeFrequencyForPath(path),
         priority: sitemapPriorityForPath(path)
+      });
+    }
+  }
+  if (site.id === DREAMSHOOT_SITE_ID || site.primaryDomain === "www.mydreamshoots.com") {
+    for (const video of videoWatchPages) {
+      const loc = sitemapUrl(site, video.watchPath);
+      entries.set(loc, {
+        loc,
+        images: [{ loc: absoluteMediaUrl(site, video.thumbnailPath), title: video.name }].filter((image) => image.loc),
+        video: {
+          thumbnailLoc: absoluteMediaUrl(site, video.thumbnailPath),
+          title: video.name,
+          description: video.description,
+          contentLoc: absoluteMediaUrl(site, video.contentPath),
+          publicationDate: video.uploadDate,
+          duration: String(video.durationSeconds)
+        },
+        lastmod: video.uploadDate,
+        changefreq: "monthly",
+        priority: "0.8"
       });
     }
   }
@@ -1169,6 +1212,30 @@ function normalizeFirstHost(hosts: string | null | undefined | Array<string | nu
 function normalizeHostCandidates(hosts: string | null | undefined | Array<string | null | undefined>): string[] {
   const candidates = Array.isArray(hosts) ? hosts : [hosts];
   return candidates.map(normalizeHostCandidate).filter(Boolean);
+}
+
+export async function getMydreamshootsVideoWatchPagesForHost(
+  hosts: string | null | undefined | Array<string | null | undefined>
+): Promise<readonly MyDreamShootsVideoWatchPage[]> {
+  const normalizedHosts = normalizeHostCandidates(hosts);
+  const isMydreamshootsRequest = normalizedHosts.some((host) =>
+    host === "www.mydreamshoots.com"
+    || host === "mydreamshoots.com"
+    || host === "www.mydreamshoots.localhost"
+    || host === "mydreamshoots.localhost"
+  );
+  if (!isMydreamshootsRequest) return [];
+
+  const localRequest = normalizedHosts.some(isLocalDevelopmentHost);
+  const runtime = localRequest
+    ? await readIndexableStateAndSites()
+    : await readIndexableStateAndSitesForHosts(normalizedHosts);
+  if (!runtime) return [];
+  const site = runtime.sites.find(isDreamshootSite)
+    ?? getSiteByHostCandidatesFromState(runtime.state, normalizedHosts);
+  if (!site || !isDreamshootSite(site)) return [];
+  const snapshot = createPublishedSiteSnapshot(runtime.state, site, { source: "postgres" });
+  return mydreamshootsVideoWatchPagesForSnapshot(runtime.state, site, snapshot);
 }
 
 function isLocalDevelopmentHost(host: string): boolean {

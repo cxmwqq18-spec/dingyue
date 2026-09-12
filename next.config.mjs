@@ -100,6 +100,9 @@ const nextConfig = {
     const publicStorefrontCache = { key: "Cache-Control", value: "public, max-age=60, s-maxage=300, stale-while-revalidate=1800" };
     const publicStorefrontCdnCache = { key: "CDN-Cache-Control", value: "public, s-maxage=300, stale-while-revalidate=1800" };
     const publicStorefrontCloudflareCache = { key: "Cloudflare-CDN-Cache-Control", value: "public, s-maxage=300, stale-while-revalidate=1800" };
+    const publicSitemapCache = { key: "Cache-Control", value: "public, max-age=300, s-maxage=900, stale-while-revalidate=86400" };
+    const publicSitemapCdnCache = { key: "CDN-Cache-Control", value: "public, s-maxage=900, stale-while-revalidate=86400" };
+    const publicSitemapCloudflareCache = { key: "Cloudflare-CDN-Cache-Control", value: "public, s-maxage=900, stale-while-revalidate=86400" };
     const privateStorefrontCache = { key: "Cache-Control", value: "private, no-store, max-age=0, must-revalidate" };
     const securityHeaders = [
       { key: "X-Content-Type-Options", value: "nosniff" },
@@ -144,6 +147,16 @@ const nextConfig = {
         ]
       },
       {
+        source: "/sitemap.xml",
+        headers: [
+          ...securityHeaders,
+          publicSitemapCache,
+          publicSitemapCdnCache,
+          publicSitemapCloudflareCache,
+          { key: "Vary", value: "Host, X-Forwarded-Host" }
+        ]
+      },
+      {
         source: "/api/site-slugs/:siteSlug/storefront-section",
         headers: publicApiHeaders
       },
@@ -160,6 +173,10 @@ const nextConfig = {
       },
       {
         source: "/",
+        headers: publicStorefrontHeaders
+      },
+      {
+        source: "/watch/:path*",
         headers: publicStorefrontHeaders
       },
       {

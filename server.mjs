@@ -81,19 +81,34 @@ function splitTitleAndSeoTags(tags) {
 }
 
 function reorderHtmlHead(html) {
-  const headOpen = html.indexOf("<head>");
-  const headClose = html.indexOf("</head>");
+  const bodyJsonLdTags = [];
+  const withoutBodyJsonLd = html.replace(/<script\b(?=[^>]*data-storefront-json-ld=["']body-marker["'])[^>]*>[\s\S]*?<\/script>/gi, (tag) => {
+    bodyJsonLdTags.push(
+      tag
+        .replace(/\sdata-storefront-json-ld=["'][^"']+["']/i, "")
+        .replace(/\stype=["']application\/json["']/i, ' type="application/ld+json"')
+        .replace(/\sid=["']storefront-json-ld-(\d+)["']/i, ' id="storefront-json-ld-head-$1"')
+    );
+    return "";
+  });
+  const headOpen = withoutBodyJsonLd.indexOf("<head>");
+  const headClose = withoutBodyJsonLd.indexOf("</head>");
   if (headOpen === -1 || headClose === -1 || headClose <= headOpen) return html;
 
   const headStart = headOpen + "<head>".length;
-  const head = html.slice(headStart, headClose);
+  const head = withoutBodyJsonLd.slice(headStart, headClose);
   const { remaining, tags } = pullSeoTags(head);
-  if (!tags.length) return html;
+  if (!tags.length && !bodyJsonLdTags.length) return html;
 
   const { remaining: headWithoutEssentials, tags: essentialTags } = pullEssentialTags(remaining);
   const { titleTag, seoTags } = splitTitleAndSeoTags(tags);
-  const reorderedHead = `${titleTag}${essentialTags.join("")}${seoTags.join("")}${headWithoutEssentials}`;
-  return `${html.slice(0, headStart)}${reorderedHead}${html.slice(headClose)}`;
+  const existingHeadJsonLdIds = new Set([...head.matchAll(/id=["']storefront-json-ld-head-(\d+)["']/gi)].map((match) => match[1]));
+  const uniqueBodyJsonLdTags = bodyJsonLdTags.filter((tag) => {
+    const id = tag.match(/id=["']storefront-json-ld-head-(\d+)["']/i)?.[1];
+    return !id || !existingHeadJsonLdIds.has(id);
+  });
+  const reorderedHead = `${titleTag}${essentialTags.join("")}${seoTags.join("")}${uniqueBodyJsonLdTags.join("")}${headWithoutEssentials}`;
+  return `${withoutBodyJsonLd.slice(0, headStart)}${reorderedHead}${withoutBodyJsonLd.slice(headClose)}`;
 }
 
 function interceptHtmlResponse(response) {

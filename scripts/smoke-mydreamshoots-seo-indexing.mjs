@@ -57,6 +57,8 @@ const robots = readText("src/app/robots.txt/route.ts");
 const nextConfig = readText("next.config.mjs");
 const middleware = readText("src/middleware.ts");
 const sitemapRoute = readText("src/app/sitemap.xml/route.ts");
+const videoWatchRegistry = readText("src/lib/mydreamshoots-video-watch.ts");
+const videoWatchPage = readText("src/app/watch/[videoSlug]/page.tsx");
 const hostCatchAllPage = readText("src/app/[...path]/page.tsx");
 const siteCatchAllPage = readText("src/app/site/[siteSlug]/[...path]/page.tsx");
 const siteToolPage = readText("src/app/site/[siteSlug]/tools/[toolSlug]/page.tsx");
@@ -721,9 +723,23 @@ assert(
     sitemapRoute.includes("xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\"") &&
     sitemapRoute.includes('"cache-control"') &&
     !sitemapRoute.includes("unstable_cache") &&
-    sitemapRoute.includes('"cache-control": "no-store, max-age=0"') &&
+    sitemapRoute.includes("SITEMAP_CACHE_CONTROL") &&
+    sitemapRoute.includes("SITEMAP_CDN_CACHE_CONTROL") &&
+    sitemapRoute.includes('"cloudflare-cdn-cache-control"') &&
+    jsonLd.includes("homeVideoObjectSchemas") &&
+    seoIndexing.includes("mydreamshootsVideoWatchPagesForState") &&
     !sitemapRoute.includes('"x-sitemap-generation-ms"'),
-  "live-draft sitemap must select URLs using the request host, emit per-entry metadata, avoid request-time lastmod, and bypass cross-request caching"
+  "live-draft sitemap must select URLs using the request host, emit per-entry video metadata, avoid request-time lastmod, and expose safe public caching"
+);
+assert(
+  videoWatchRegistry.includes("mydreamshootsVideoWatchPagesForState") &&
+    videoWatchRegistry.includes("isMydreamshootsVideoContentPath") &&
+    videoWatchRegistry.includes("sourcePaths") &&
+    videoWatchRegistry.includes("new Map<string, MyDreamShootsVideoWatchPage>") &&
+    videoWatchPage.includes("getMydreamshootsVideoWatchPagesForHost") &&
+    videoWatchPage.includes("<video") &&
+    videoWatchPage.includes("preserveBodyMarker"),
+  "MyDreamShoots must use one dynamic watch-page template backed by the complete deduplicated video registry"
 );
 assert(
   siteStore.includes('envPositiveInt("STOREFRONT_PUBLIC_TX_CONCURRENCY", 6)') &&
