@@ -243,6 +243,7 @@ export function mydreamshootsVideoWatchPagesForState(
   options: {
     pages?: readonly VideoWatchSourcePage[];
     homepageShowcases?: readonly PublishedHomepageShowcaseItem[];
+    themeSettingsJson?: unknown;
   } = {}
 ): readonly MyDreamShootsVideoWatchPage[] {
   const records = new Map<string, MyDreamShootsVideoWatchPage>();
@@ -260,7 +261,7 @@ export function mydreamshootsVideoWatchPagesForState(
     };
     collectVideoCandidates(page.publishedJson, fallback, (candidate) => addCandidate(records, candidate, usedSlugs));
   }
-  collectVideoCandidates(site.themeSettings?.publishedJson, {
+  collectVideoCandidates(options.themeSettingsJson ?? site.themeSettings?.publishedJson, {
     contentPath: "",
     sourcePath: "/",
     name: "How myDreamshoots AI Video Creation Works",

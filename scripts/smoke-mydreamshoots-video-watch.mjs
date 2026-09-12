@@ -5,10 +5,6 @@ const origin = (process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/
 const host = process.env.SMOKE_PUBLIC_HOST || "www.mydreamshoots.com";
 const legacyWatchPaths = [
   "/watch/ai-video-creation-tutorial",
-  "/watch/ai-video-generation-tutorial",
-  "/watch/image-to-video-mobile-tutorial-45s",
-  "/watch/ai-image-mobile-tutorial-55s",
-  "/watch/image-to-video-mobile-tutorial-55s",
   "/watch/christmas-family-gift",
   "/watch/valentines-day-save-the-date"
 ];

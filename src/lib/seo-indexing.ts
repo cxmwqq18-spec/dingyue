@@ -548,7 +548,8 @@ function mydreamshootsVideoWatchPagesForSnapshot(
       ...page,
       slug: page.publishedJson.seo?.canonicalPath ?? page.publishedJson.seo?.canonical ?? page.slug
     })),
-    homepageShowcases: snapshot.publishedHomepageShowcases
+    homepageShowcases: snapshot.publishedHomepageShowcases,
+    themeSettingsJson: snapshot.themeSettings
   });
 }
 
