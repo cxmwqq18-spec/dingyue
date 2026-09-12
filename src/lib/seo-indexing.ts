@@ -1227,7 +1227,11 @@ export async function getMydreamshootsVideoWatchPagesForHost(
   );
   if (!isMydreamshootsRequest) return [];
 
-  const localRequest = normalizedHosts.some(isLocalDevelopmentHost);
+  // Reverse proxies can provide both a public x-forwarded-host and an
+  // internal loopback host. A request is local only when every candidate is
+  // local; otherwise the public host must use the same published projection
+  // as the sitemap.
+  const localRequest = normalizedHosts.length > 0 && normalizedHosts.every(isLocalDevelopmentHost);
   const runtime = localRequest
     ? await readIndexableStateAndSites()
     : await readIndexableStateAndSitesForHosts(normalizedHosts);
