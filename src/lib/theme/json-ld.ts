@@ -10,6 +10,10 @@ import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
+import {
+  AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY,
+  isAidreamshootsEngagementFrenchPage
+} from "@/lib/aidreamshoots-engagement-photo-french";
 import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue, VideoTheme } from "@/lib/types";
 
 export type JsonLdNode = Record<string, unknown>;
@@ -423,12 +427,13 @@ function pageDescription(site: Site, page: Pick<ThemePage, "id" | "title">, cont
 
 function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, title: string, publishedRoutePaths: readonly string[] = []): JsonLdNode {
   const parts = pagePath.split("/").filter(Boolean);
+  const frenchEngagementPage = isAidreamshootsEngagementFrenchPage(site, pagePath);
   const finalLabel = isMydreamshootsComSite(site) && pagePath === "/digital-delivery" ? "Digital Delivery Policy" : title;
   const items = [
     {
       "@type": "ListItem",
       position: 1,
-      name: isSpanishXbySite(site) ? "Inicio" : "Home",
+      name: frenchEngagementPage ? "Inicio" : isSpanishXbySite(site) ? "Inicio" : "Home",
       item: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, "/"))
     }
   ];
@@ -440,7 +445,7 @@ function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, t
     items.push({
       "@type": "ListItem",
       position: items.length + 1,
-      name: isFinal ? finalLabel : schemaPathLabel(site, part),
+      name: isFinal ? finalLabel : frenchEngagementPage && part === "ai-image-generation" ? "Generación de imágenes con IA" : schemaPathLabel(site, part),
       item: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, current))
     });
   });
@@ -532,7 +537,14 @@ function faqSchema(site: Site, pageJson: ThemePageJson | undefined, input?: Json
       .map((block) => faqQuestionNode(site, blockValue(block, "question", blockValue(block, "title")), faqAnswerText(block)))
       .filter(Boolean) as JsonLdNode[];
   });
-  return questions.length ? { "@type": "FAQPage", mainEntity: questions } : undefined;
+  const seenNames = new Set<string>();
+  const uniqueQuestions = questions.filter((question) => {
+    const name = typeof question.name === "string" ? question.name : "";
+    if (!name || seenNames.has(name)) return false;
+    seenNames.add(name);
+    return true;
+  });
+  return uniqueQuestions.length ? { "@type": "FAQPage", mainEntity: uniqueQuestions } : undefined;
 }
 
 function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string, title: string, description: string, pageJson: ThemePageJson | undefined): JsonLdNode | undefined {
@@ -1185,11 +1197,24 @@ export function buildCollectionDirectoryJsonLd({
   context: StorefrontContext;
 }): JsonLdNode[] {
   const pageSlug = canonicalCollectionSlugForCandidate(site, collectionSlug) || slugifySchemaPart(collectionSlug);
-  const pagePath = pageSlug ? canonicalSeoDirectoryPathForSite(site, "collection", pageSlug) : canonicalSeoDirectoryPathForSite(site, "collection", "");
+  const frenchEngagementPage = pageSlug === "engagement-photo" && isAidreamshootsEngagementFrenchPage(site, AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.canonicalPath);
+  const pagePath = frenchEngagementPage
+    ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.canonicalPath
+    : pageSlug ? canonicalSeoDirectoryPathForSite(site, "collection", pageSlug) : canonicalSeoDirectoryPathForSite(site, "collection", "");
   if (isPrimaryMyDreamShootsSite(site) && !context.pageCopy) return [];
   const collectionLabel = cleanText(collectionSlug, pageSlug).replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()) || "Photo Packages";
   const fallbackCollectionLabel = isSpanishXbySite(site) ? "Paquetes de fotos" : collectionLabel;
-  const item = context.pageCopy && isPrimaryMyDreamShootsSite(site)
+  const item = frenchEngagementPage
+    ? {
+        slug: "engagement-photo",
+        canonicalPath: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.canonicalPath,
+        label: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.label,
+        title: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoTitle,
+        description: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoDescription,
+        intro: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.detailIntro,
+        useCases: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.bestFor
+      }
+    : context.pageCopy && isPrimaryMyDreamShootsSite(site)
     ? {
         slug: pageSlug,
         canonicalPath: context.seo.canonicalPath,
@@ -1221,21 +1246,30 @@ export function buildCollectionDirectoryJsonLd({
   const path = schemaPagePath(site, routeMode, pagePath);
   const url = absoluteUrl(site, routeMode, path);
   const siteName = siteBrandName(site);
-  const title = context.seo.title;
-  const description = context.seo.description;
+  const title = frenchEngagementPage ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoTitle : context.seo.title;
+  const description = frenchEngagementPage ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoDescription : context.seo.description;
   const pageMedia = isPrimaryMyDreamShootsSite(site) ? context.publishedPageMedia : undefined;
   const matchingPacks = projectPublicCreativePacks(context, creativePacks)
     .filter((pack) => packMatchesCollectionSlug(site, pack, item.slug))
     .filter((pack) => !pageMedia || pack.id === pageMedia.packId);
-  const faqPack = matchingPacks[0];
+  const schemaPacks = frenchEngagementPage && !matchingPacks.length
+    ? creativePacks.filter((pack) => pack.status === "active" && (!pageMedia || pack.id === pageMedia.packId)).slice(0, 1)
+    : matchingPacks;
+  const faqPack = schemaPacks[0];
   const faqLabel = cleanText(faqPack?.name, item.label);
   const faqOutputCount = faqPack?.outputCount;
   const faqCreditCost = faqPack?.creditCost;
-  const collectionPageCopy = pageSlug && !isSpanishXbySite(site) && isPrimaryMyDreamShootsSite(site)
+  const collectionPageCopy = frenchEngagementPage
+    ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY
+    : pageSlug && !isSpanishXbySite(site) && isPrimaryMyDreamShootsSite(site)
     ? context.pageCopy
     : undefined;
-  const collectionFaqItems = collectionPageCopy
-    ? collectionPageCopy.faqItems.map((faqItem) => [faqItem.question, faqItem.answer] as [string, string])
+  const collectionFaqItems = frenchEngagementPage
+    ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.faqItems.map(([question, answer]) => [question, answer] as [string, string])
+    : collectionPageCopy
+    ? collectionPageCopy.faqItems.map((faqItem) => "question" in faqItem
+      ? [faqItem.question, faqItem.answer] as [string, string]
+      : [faqItem[0], faqItem[1]] as [string, string])
     : !faqPack ? [] : isSpanishXbySite(site)
     ? [
         [`Que es el paquete ${faqLabel}?`, isAidreamcapesSite(site)
@@ -1260,7 +1294,8 @@ export function buildCollectionDirectoryJsonLd({
         [isAidreamcapesSite(site) ? "Where do finished albums go?" : "Where do finished images go?", isAidreamcapesSite(site) ? "Finished Aidreamcapes images stay inside your signed-in private gallery, where you can review faces, hands, marks, crops, and overall realism before downloading the results that fit your occasion." : "Finished results stay inside your signed-in private gallery, where you can review identity details, hands, backgrounds, crops, and overall realism before downloading the images that fit your intended channel."],
         ["What happens if generation fails?", "If a provider request is interrupted before delivery, reserved credits are released or returned according to the request status so you can retry from the workspace. Keep the job reference if you contact support about a failed generation, missing gallery, or credit question."]
       ];
-  const itemListElement = matchingPacks.map((entry, index) => {
+  const uniqueCollectionFaqItems = Array.from(new Map(collectionFaqItems.map((entry) => [entry[0], entry])).values());
+  const itemListElement = schemaPacks.map((entry, index) => {
     const pack = entry as CreativePack;
     const name = cleanText(pack.name, item.label);
     const image = cleanText(pack.imageUrl);
@@ -1291,23 +1326,23 @@ export function buildCollectionDirectoryJsonLd({
     },
     {
       "@type": "ItemList",
-      name: isSpanishXbySite(site) ? `${item.label} opciones de foto` : `${item.label} photo options`,
+      name: frenchEngagementPage ? `${item.label}: ejemplos y opciones` : isSpanishXbySite(site) ? `${item.label} opciones de foto` : `${item.label} photo options`,
       description: item.intro,
       url,
       itemListElement
     },
     {
       "@type": "FAQPage",
-      mainEntity: collectionFaqItems
+      mainEntity: uniqueCollectionFaqItems
         .map(([question, answer]) => faqQuestionNode(site, question, answer))
         .filter(Boolean)
     },
-    ...(matchingPacks.length === 1
+    ...(schemaPacks.length === 1
       ? [packProductSchema({
           site,
           routeMode,
           pagePath,
-          pack: matchingPacks[0],
+          pack: schemaPacks[0],
           description: item.description
         })].filter(Boolean) as JsonLdNode[]
       : [])

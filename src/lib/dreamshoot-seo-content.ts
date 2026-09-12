@@ -15,6 +15,10 @@ import {
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import { mydreamshootsPublishedRouteForSlug } from "@/lib/mydreamshoots-published-contract";
+import {
+  AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY,
+  isAidreamshootsEngagementFrenchPage
+} from "@/lib/aidreamshoots-engagement-photo-french";
 
 export type SeoDirectoryKind = "collection" | "tool";
 
@@ -3280,6 +3284,23 @@ export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryK
       }
     };
   }
+  const frenchEngagementPage = kind === "collection" && normalizeDirectorySlug(rawSlug) === "engagement-photo" && isAidreamshootsEngagementFrenchPage(site, AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.canonicalPath);
+  if (frenchEngagementPage) {
+    return {
+      ...pageJson,
+      seo: {
+        ...pageJson.seo,
+        title: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoTitle,
+        description: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoDescription,
+        keywords: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoKeywords,
+        canonicalPath: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.canonicalPath,
+        canonical: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.canonicalPath,
+        index: true,
+        follow: true,
+        robots: { index: true, follow: true, maxImagePreview: "large" }
+      }
+    };
+  }
   const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, normalizeDirectorySlug(rawSlug));
   const item = kind === "collection"
     ? getSeoDirectoryContentForSite(site, kind, rawSlug)
@@ -3316,7 +3337,27 @@ export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryK
 
 export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, options: { focused?: boolean; site?: Site; publishedCopy?: MyDreamshootsPageCopy } = {}): ThemePageJson {
   const canonicalSlug = canonicalSeoDirectorySlugForSite(options.site, kind, normalizeDirectorySlug(rawSlug));
-  const item = options.publishedCopy && kind === "collection" && !isAidreamcapesSite(options.site)
+  const frenchEngagementPage = kind === "collection" && canonicalSlug === "engagement-photo" && isAidreamshootsEngagementFrenchPage(options.site, AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.canonicalPath);
+  const item: SeoDirectoryContent = frenchEngagementPage
+    ? {
+        slug: "engagement-photo",
+        explicit: true,
+        label: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.label,
+        title: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoTitle,
+        description: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoDescription,
+        keywords: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoKeywords,
+        canonicalPath: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.canonicalPath,
+        h2: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.headline,
+        h3: ["Qué puedes crear", "Ideal para", "Cómo funciona"],
+        intro: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.detailIntro,
+        details: [...AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.workflow],
+        useCases: [...AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.bestFor],
+        workflow: [...AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.workflow],
+        internalLinks: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.relatedLinks.map((link) => ({ ...link })),
+        ctaLabel: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.ctaLabel,
+        ctaHref: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.ctaHref
+      }
+    : options.publishedCopy && kind === "collection" && !isAidreamcapesSite(options.site)
     ? seoDirectoryContentFromPublishedCopy(options.publishedCopy, canonicalSlug, options.site)
     : getSeoDirectoryContentForSite(options.site, kind, rawSlug);
   const sectionId = `seo_${kind}_${item.slug}`;
@@ -3352,9 +3393,9 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
       anchor: `related-${item.slug}`,
       kind,
       label: item.label,
-      title: "Related photo packages",
-      subtitle: "Keep exploring adjacent package themes before you upload source photos or spend credits.",
-      ctaLabel: "View all packages",
+      title: frenchEngagementPage ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.relatedTitle : "Related photo packages",
+      subtitle: frenchEngagementPage ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.relatedSubtitle : "Keep exploring adjacent package themes before you upload source photos or spend credits.",
+      ctaLabel: frenchEngagementPage ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.relatedCtaLabel : "View all packages",
       ctaHref: kind === "collection" ? publicCollectionPathForSite(options.site, "") : "/tools"
     },
     blocks: []
@@ -3365,8 +3406,8 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
       anchor: `start-${item.slug}`,
       kind,
       label: item.label,
-      eyebrow: "Start this theme",
-      ctaLabel: `Create ${item.label}`,
+      eyebrow: frenchEngagementPage ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.ctaEyebrow : "Start this theme",
+      ctaLabel: frenchEngagementPage ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.ctaLabel : `Create ${item.label}`,
       ctaHref: item.ctaHref
     },
     blocks: []
@@ -3377,7 +3418,7 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
       anchor: `faq-${item.slug}`,
       kind,
       label: item.label,
-      eyebrow: "Theme FAQ"
+      eyebrow: frenchEngagementPage ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.faqEyebrow : "Theme FAQ"
     },
     blocks: []
   };

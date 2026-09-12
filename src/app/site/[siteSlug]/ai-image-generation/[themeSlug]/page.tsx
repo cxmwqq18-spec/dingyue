@@ -8,6 +8,7 @@ import { renderStorefrontPage } from "@/lib/storefront-render";
 import { createPublishedSiteSnapshot } from "@/lib/storefront-context";
 import { metadataForPublishedStorefrontDirectoryPage } from "@/lib/storefront-metadata";
 import { canResolveCollectionSlugForSite } from "@/lib/storefront-render";
+import { AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY, isAidreamshootsEngagementFrenchPage } from "@/lib/aidreamshoots-engagement-photo-french";
 import type { PlatformState, Site } from "@/lib/types";
 
 type RouteParams = Promise<{ siteSlug: string; themeSlug: string }>;
@@ -40,22 +41,27 @@ export async function generateMetadata({ params }: { params: RouteParams }): Pro
     snapshot
   });
   const directoryContent = getSeoDirectoryContentForSite(site, "collection", route.collectionSlug);
-  const engagementPhotoMeta = route.collectionSlug === "engagement-photo"
-    ? {
-        title: "AI Engagement Photos for Proposals & Announcements | myDreamshoots",
-        description: "Create proposal-inspired engagement portraits, announcement images, ring reveal scenes, and romantic couple story photos."
-      }
+  const engagementPhotoMeta = route.collectionSlug === "engagement-photo" && isAidreamshootsEngagementFrenchPage(site, route.canonicalPath)
+    ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY
     : undefined;
-  const finalTitle = engagementPhotoMeta?.title ?? directoryContent.title;
-  const finalDescription = engagementPhotoMeta?.description ?? directoryContent.description;
+  const finalTitle = engagementPhotoMeta?.seoTitle ?? directoryContent.title;
+  const finalDescription = engagementPhotoMeta?.seoDescription ?? directoryContent.description;
   return {
     ...metadata,
     title: finalTitle,
     description: finalDescription,
+    ...(engagementPhotoMeta ? {
+      keywords: engagementPhotoMeta.seoKeywords,
+      alternates: {
+        ...(metadata.alternates ?? {}),
+        canonical: engagementPhotoMeta.canonicalPath
+      }
+    } : {}),
     openGraph: {
       ...(metadata.openGraph ?? {}),
       title: finalTitle,
-      description: finalDescription
+      description: finalDescription,
+      ...(engagementPhotoMeta ? { url: engagementPhotoMeta.canonicalPath, locale: "es_ES" } : {})
     },
     twitter: {
       ...(metadata.twitter ?? {}),

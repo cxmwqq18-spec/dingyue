@@ -46,6 +46,10 @@ import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings } from "@/lib/dreamshoot-tool-faq";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import {
+  isAidreamshootsEngagementFrenchPage,
+  localizeAidreamshootsEngagementFrenchPageJson
+} from "@/lib/aidreamshoots-engagement-photo-french";
 import { isFrenchStorefrontSite } from "@/lib/storefront-locale";
 import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection, withSeoDirectorySeo } from "@/lib/dreamshoot-seo-content";
 import { isMydreamshootsCollectionItemSlug, isMydreamshootsPublicVideoGenerationSlug, isMydreamshootsVideoGenerationSlug, parsePublicCollectionRouteForSite, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
@@ -569,9 +573,19 @@ function lightweightCreativePack(pack: CreativePack): CreativePack {
     createdAt: "",
     imageUrl: pack.imageUrl,
     galleryImages: (pack.galleryImages ?? []).filter(Boolean).slice(0, 12),
-    galleryImageAlts: (pack.galleryImageAlts ?? []).map((alt) => alt.trim()).slice(0, 12),
+    galleryImageAlts: trimCreativePackGalleryImageAlts(pack),
     categoryRecord: lightweightCategoryRecord(pack.categoryRecord)
   };
+}
+
+function trimCreativePackGalleryImageAlts(pack: CreativePack): string[] {
+  const galleryImages = (pack.galleryImages ?? []).filter(Boolean);
+  const alts = (pack.galleryImageAlts ?? []).map((alt) => alt.trim());
+  // A focused theme may store one cover alt followed by twelve gallery alts.
+  // Preserve that 13-entry contract so the cover does not fall back to the
+  // generic category subject while older 12-entry packs remain unchanged.
+  const maxEntries = alts.length === galleryImages.length + 1 ? galleryImages.length + 1 : 12;
+  return alts.slice(0, maxEntries);
 }
 
 function lightweightCreativePackForFocusedCollection(pack: CreativePack): CreativePack {
@@ -2976,7 +2990,7 @@ export async function renderStorefrontPage({
   const canonicalRenderPath = isPrimaryMydreamshootsStorefront(currentSite) && (renderPagePath.startsWith("/holidays-events/") || renderPagePath.startsWith("/ai-save-the-date/"))
     ? canonicalSaveTheDatePath(renderPagePath)
     : renderPagePath;
-  const pageJson = localizeSpanishPublicPageJson(currentSite, withoutMydreamshootsHomepagePackageCatalog(
+  const localizedPageJson = localizeSpanishPublicPageJson(currentSite, withoutMydreamshootsHomepagePackageCatalog(
     currentSite,
     slug,
     isPrimaryMydreamshootsStorefront(currentSite) && canonicalRenderPath.startsWith("/ai-save-the-date/")
@@ -2990,6 +3004,9 @@ export async function renderStorefrontPage({
         }
       : basePageJson
   ));
+  const pageJson = isAidreamshootsEngagementFrenchPage(currentSite, renderPagePath)
+    ? localizeAidreamshootsEngagementFrenchPageJson(localizedPageJson)
+    : localizedPageJson;
   const renderDataForPage = isFocusedCollectionPage ? focusedCollectionRenderData : publicDirectoryRenderData;
   let pageRenderData = withPageMediaAssets(
     currentSite,
@@ -3024,7 +3041,7 @@ export async function renderStorefrontPage({
         ...pack,
         prompt: undefined,
         galleryImages: (pack.galleryImages ?? []).filter(Boolean).slice(0, 12),
-        galleryImageAlts: (pack.galleryImageAlts ?? []).map((alt) => alt.trim()).slice(0, 12)
+        galleryImageAlts: trimCreativePackGalleryImageAlts(pack)
       }))
     };
   }

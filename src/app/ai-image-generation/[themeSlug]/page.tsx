@@ -9,6 +9,10 @@ import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storef
 import { canResolveCollectionSlugForSite, renderStorefrontPage } from "@/lib/storefront-render";
 import { createPublishedSiteSnapshot } from "@/lib/storefront-context";
 import { metadataForPublishedStorefrontDirectoryPage } from "@/lib/storefront-metadata";
+import {
+  AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY,
+  isAidreamshootsEngagementFrenchPage
+} from "@/lib/aidreamshoots-engagement-photo-french";
 import type { PlatformState, Site } from "@/lib/types";
 
 type Params = Promise<{ themeSlug: string }>;
@@ -46,22 +50,26 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     snapshot
   });
   const directoryContent = getSeoDirectoryContentForSite(site, "collection", route.collectionSlug);
-  const engagementPhotoMeta = route.collectionSlug === "engagement-photo"
-    ? {
-        title: "AI Engagement Photos for Proposals & Announcements | myDreamshoots",
-        description: "Create proposal-inspired engagement portraits, announcement images, ring reveal scenes, and romantic couple story photos."
-      }
+  const engagementPhotoMeta = isAidreamshootsEngagementFrenchPage(site, route.canonicalPath)
+    ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY
     : undefined;
-  const finalTitle = engagementPhotoMeta?.title ?? directoryContent.title;
-  const finalDescription = engagementPhotoMeta?.description ?? directoryContent.description;
+  const finalTitle = engagementPhotoMeta?.seoTitle ?? directoryContent.title;
+  const finalDescription = engagementPhotoMeta?.seoDescription ?? directoryContent.description;
   return {
     ...metadata,
     title: finalTitle,
     description: finalDescription,
+    keywords: engagementPhotoMeta?.seoKeywords ?? metadata.keywords,
+    alternates: {
+      ...(metadata.alternates ?? {}),
+      canonical: engagementPhotoMeta?.canonicalPath ?? metadata.alternates?.canonical
+    },
     openGraph: {
       ...(metadata.openGraph ?? {}),
       title: finalTitle,
-      description: finalDescription
+      description: finalDescription,
+      url: engagementPhotoMeta?.canonicalPath ?? metadata.openGraph?.url,
+      locale: engagementPhotoMeta ? "es_ES" : metadata.openGraph?.locale
     },
     twitter: {
       ...(metadata.twitter ?? {}),
