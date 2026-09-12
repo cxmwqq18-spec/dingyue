@@ -1232,8 +1232,11 @@ export async function getMydreamshootsVideoWatchPagesForHost(
     ? await readIndexableStateAndSites()
     : await readIndexableStateAndSitesForHosts(normalizedHosts);
   if (!runtime) return [];
-  const site = runtime.sites.find(isDreamshootSite)
-    ?? getSiteByHostCandidatesFromState(runtime.state, normalizedHosts);
+  // Keep the watch-page registry on the same host-resolved site as the
+  // sitemap. In multi-site runtime snapshots, taking the first DreamShoot
+  // site can silently produce watch pages from a different site's content.
+  const site = getSiteByHostCandidatesFromState(runtime.state, normalizedHosts)
+    ?? runtime.sites.find(isDreamshootSite);
   if (!site || !isDreamshootSite(site)) return [];
   const snapshot = createPublishedSiteSnapshot(runtime.state, site, { source: "postgres" });
   return mydreamshootsVideoWatchPagesForSnapshot(runtime.state, site, snapshot);
