@@ -1,9 +1,10 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
+import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS as MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS, isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
+import { isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
@@ -15,6 +16,7 @@ const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamsho
 const HOST_PRIVATE_STORE_PATH_RE = /^\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
 const IMAGE_THEME_CONTEXT_HEADER = "x-storefront-image-theme";
+const STOREFRONT_ROUTE_MODE_HEADER = "x-storefront-route-mode";
 const PUBLIC_STOREFRONT_CACHE_CONTROL = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
 const PUBLIC_STOREFRONT_CDN_CACHE_CONTROL = "public, s-maxage=300, stale-while-revalidate=1800";
 const PRIVATE_STOREFRONT_CACHE_CONTROL = "private, no-store, max-age=0, must-revalidate";
@@ -252,6 +254,35 @@ function mydreamshootsLegacySiteSlugRedirect(request: NextRequest): NextResponse
   const target = request.nextUrl.clone();
   target.pathname = `/site/mydreamshoots${match?.[2] ?? ""}`;
   return NextResponse.redirect(target, 301);
+}
+
+function spanishXbyCanonicalCollectionRedirect(request: NextRequest): NextResponse | undefined {
+  if (!isSpanishXbyRequest(request)) return undefined;
+  const normalizedPath = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
+  const sitePathMatch = normalizedPath.match(/^\/site\/([^/]+)(\/.*)?$/i);
+  const scopedPath = sitePathMatch?.[2] || normalizedPath;
+  const normalizedScopedPath = scopedPath.replace(/\/+$/, "") || "/";
+  let targetScopedPath: string | undefined;
+  if (normalizedScopedPath === "/collections" || normalizedScopedPath === "/collections/engagement-photo" || normalizedScopedPath === "/engagement-photo") {
+    if (normalizedScopedPath === "/collections") {
+      targetScopedPath = "/ai-image-generation";
+    } else {
+      targetScopedPath = "/ai-image-generation/engagement-photo";
+    }
+  } else {
+    const aliasMatch = normalizedScopedPath.match(/^\/collections\/([^/]+)$/i);
+    if (aliasMatch?.[1]) {
+      const canonical = canonicalSpanishXbyCollectionSlug(aliasMatch[1]);
+      if (canonical) targetScopedPath = `/ai-image-generation/${canonical}`;
+    }
+  }
+  if (!targetScopedPath) return undefined;
+  const targetPath = sitePathMatch
+    ? `/site/${sitePathMatch[1]}${targetScopedPath}`
+    : targetScopedPath;
+  const target = publicRedirectUrlForRequest(request, targetPath);
+  target.search = request.nextUrl.search;
+  return NextResponse.redirect(target, 308);
 }
 
 function mydreamshootsLegacyPublicRedirect(request: NextRequest): NextResponse | undefined {
@@ -631,6 +662,14 @@ function isLocalStorefrontHost(host: string): boolean {
   return /(?:^|\.)(?:localhost)(?::\d+)?$/i.test(host);
 }
 
+function isNonProductionStorefrontRequest(request: NextRequest): boolean {
+  const hosts = [request.headers.get("x-forwarded-host"), request.headers.get("host")]
+    .map(headerHost)
+    .filter(Boolean);
+  if (!hosts.length) return false;
+  return hosts.every((host) => isInternalOriginHost(host) || isLocalStorefrontHost(host) || /(?:^|[.-])(staging|preview)(?:[.-]|$)/i.test(host));
+}
+
 function publicOriginForRequest(request: NextRequest): URL {
   const publicHost = [
     headerHost(request.headers.get("x-forwarded-host")),
@@ -684,8 +723,22 @@ function mydreamshootsWorkspaceRedirect(request: NextRequest): Response | undefi
   return NextResponse.redirect(publicRedirectUrlForRequest(request, `${target.pathname}${target.search}`), 301);
 }
 
+function retiredAidreamcapesImageToolResponse(request: NextRequest): Response | undefined {
+  const normalizedPath = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
+  const pathMatch = normalizedPath.match(/^\/site\/([^/]+)(\/.*)?$/i);
+  const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
+  const siteSlug = pathMatch?.[1]?.toLowerCase() === "aidreamcapes" ? "aidreamcapes" : hostSlug;
+  const publicPath = pathMatch ? pathMatch[2] || "/" : normalizedPath;
+  if (!isRetiredAidreamcapesImageToolPath(siteSlug, publicPath)) return undefined;
+  return new NextResponse(null, {
+    status: 404,
+    headers: { "cache-control": "public, max-age=60" }
+  });
+}
+
 function applyGrownstrideNoindex(response: Response, request: NextRequest): Response {
   if (isGrownstrideRequest(request)) response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  if (isNonProductionStorefrontRequest(request)) response.headers.set("X-Robots-Tag", "noindex, nofollow");
   return response;
 }
 
@@ -750,10 +803,14 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 }
 
 export async function middleware(request: NextRequest) {
+  const retiredImageToolResponse = retiredAidreamcapesImageToolResponse(request);
+  if (retiredImageToolResponse) return finalizeStorefrontResponse(retiredImageToolResponse, request);
   const workspaceRedirect = mydreamshootsWorkspaceRedirect(request);
   if (workspaceRedirect) return finalizeStorefrontResponse(workspaceRedirect, request);
   const legacySiteSlugRedirect = mydreamshootsLegacySiteSlugRedirect(request);
   if (legacySiteSlugRedirect) return finalizeStorefrontResponse(legacySiteSlugRedirect, request);
+  const spanishXbyRedirect = spanishXbyCanonicalCollectionRedirect(request);
+  if (spanishXbyRedirect) return finalizeStorefrontResponse(spanishXbyRedirect, request);
   const legacyPublicRedirect = mydreamshootsLegacyPublicRedirect(request);
   if (legacyPublicRedirect) return finalizeStorefrontResponse(legacyPublicRedirect, request);
   const iconResponse = await storefrontIconResponse(request);
@@ -768,6 +825,10 @@ export async function middleware(request: NextRequest) {
 
   const upstreamHeaders = new Headers(request.headers);
   upstreamHeaders.set(REORDER_SKIP_HEADER, "1");
+  upstreamHeaders.set(
+    "x-storefront-request-identity",
+    `${request.nextUrl.pathname} ${request.headers.get("x-forwarded-host") ?? ""} ${request.headers.get("host") ?? ""}`
+  );
   const imageThemeMatch = request.nextUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/);
   if (imageThemeMatch?.[1] && storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host")) === "mydreamshoots") {
     upstreamHeaders.set(IMAGE_THEME_CONTEXT_HEADER, imageThemeMatch[1]);
@@ -775,6 +836,7 @@ export async function middleware(request: NextRequest) {
   const upstreamUrl = sameServerStorefrontUrl(request);
   const usesInternalSitePath = upstreamUrl.pathname.startsWith("/site/") && !request.nextUrl.pathname.startsWith("/site/");
   if (usesInternalSitePath) {
+    upstreamHeaders.set(STOREFRONT_ROUTE_MODE_HEADER, "host");
     const publicHost = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
     if (TARGET_HOST_RE.test(publicHost)) upstreamHeaders.set("x-forwarded-host", publicHost);
   } else {

@@ -1,7 +1,7 @@
 import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json";
 import type { CreativePack, CreativePackCategory, Site } from "@/lib/types";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
-import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { canonicalSpanishXbyCollectionSlug, isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 
 export type PhotoPackageMegaGroup = {
   label: string;
@@ -168,7 +168,9 @@ export function isMydreamshootsPublicVideoGenerationSlug(slug: string | undefine
 }
 
 export function publicCollectionRootPathForSite(site: CollectionRouteSiteIdentity | undefined): string {
-  return isMydreamshootsCollectionRouteSite(site) || isAidreamcapesRouteSite(site) ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH : COLLECTIONS_ROOT_PATH;
+  return isMydreamshootsCollectionRouteSite(site) || isAidreamcapesRouteSite(site) || isAidreamshootsStorefrontSite(site)
+    ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT_PATH
+    : COLLECTIONS_ROOT_PATH;
 }
 
 export function publicCollectionPathForSite(site: CollectionRouteSiteIdentity | undefined, rawSlug?: string): string {
@@ -270,7 +272,7 @@ export function parsePublicCollectionRouteForSite(site: CollectionRouteSiteIdent
       return {
         root: isCanonicalRoot ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT : "collections",
         collectionSlug: "",
-        canonicalPath: COLLECTIONS_ROOT_PATH,
+        canonicalPath: publicCollectionPathForSite(site, ""),
         kind: "directory"
       };
     }
@@ -281,7 +283,7 @@ export function parsePublicCollectionRouteForSite(site: CollectionRouteSiteIdent
         root: isCanonicalRoot ? MYDREAMSHOOTS_AI_IMAGE_GENERATION_ROOT : "collections",
         itemSlug,
         collectionSlug: itemSlug,
-        canonicalPath: `${COLLECTIONS_ROOT_PATH}/${itemSlug}`,
+        canonicalPath: publicCollectionPathForSite(site, itemSlug),
         kind: "item"
       };
     }

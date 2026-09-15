@@ -7,7 +7,7 @@ import { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
 import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
 import { applyTitleTemplate, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 import { robotsForPage } from "@/lib/theme/seo";
-import { getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
+import { canonicalSeoDirectoryPathForSite, getDreamshootPublicSeoPageMetadataForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 import { MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 
@@ -33,17 +33,27 @@ function revisionHash(value: string): string {
     .slice(0, 20);
 }
 
+function canonicalSeoPathForSite(site: StorefrontContextBundle["site"], path: string): string {
+  return /^\/(?:collections|ai-image-generation)(?:\/|$)/i.test(path)
+    ? canonicalSeoDirectoryPathForSite(site, "collection", path)
+    : path;
+}
+
 function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, settings: ThemeSettings): ResolvedPageSeo {
   const pageSeo = pageJson.seo;
   const brand = clean(bundle.site.branding.logoText) || clean(bundle.site.name);
-  const path = normalizeCanonicalPath(pageSeo?.canonical ?? pageSeo?.canonicalPath, bundle.page.slug);
+  const normalizedPath = normalizeCanonicalPath(pageSeo?.canonical ?? pageSeo?.canonicalPath, bundle.page.slug);
+  const path = canonicalSeoPathForSite(bundle.site, normalizedPath);
   const primaryMydreamshoots = isPrimaryMydreamshootsSite(bundle.site);
+  const publicRouteSeo = bundle.site.id === "site_mydreamshoots_xby"
+    ? getDreamshootPublicSeoPageMetadataForSite(bundle.site, path)
+    : undefined;
   const collectionPageSlug = primaryMydreamshoots ? path.match(/^\/ai-image-generation\/([^/?#]+)$/)?.[1] : undefined;
   const collectionDirectoryContent = collectionPageSlug
     ? getSeoDirectoryContentForSite(bundle.site, "collection", collectionPageSlug)
     : undefined;
-  const rawTitle = clean(collectionDirectoryContent?.title) || clean(pageSeo?.title) || clean(bundle.page.title) || brand;
-  const description = clean(collectionDirectoryContent?.description) || clean(pageSeo?.description);
+  const rawTitle = clean(collectionDirectoryContent?.title) || clean(publicRouteSeo?.title) || clean(pageSeo?.title) || clean(bundle.page.title) || brand;
+  const description = clean(collectionDirectoryContent?.description) || clean(publicRouteSeo?.description) || clean(pageSeo?.description);
   const standardMedia = primaryMydreamshoots
     ? bundle.publishedStandardPageMedia?.[path]
     : undefined;
@@ -60,7 +70,9 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
     description,
     // MyDreamshoots requires page-scoped keywords. Do not silently inherit the
     // homepage list for an unrelated public route.
-    keywords: primaryMydreamshoots ? clean(pageSeo?.keywords) || undefined : clean(pageSeo?.keywords) || clean(settings.seo?.siteKeywords) || undefined,
+    keywords: primaryMydreamshoots
+      ? clean(publicRouteSeo?.keywords) || clean(pageSeo?.keywords) || undefined
+      : clean(pageSeo?.keywords) || clean(settings.seo?.siteKeywords) || undefined,
     canonicalPath: path,
     canonicalUrl: canonicalUrlForSite(bundle.site, path),
     ogImage: standardMedia?.status === "ready"

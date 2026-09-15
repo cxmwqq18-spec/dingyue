@@ -12,13 +12,15 @@ import {
 } from "@/lib/photo-package-taxonomy";
 import { resolveMediaAssetUrl } from "@/lib/media";
 import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
-import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isAidreamcapesImageThemePath, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
+import { imageThemeDetailContentFromPage } from "@/lib/aidreamcapes-image-theme-content";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS, MYDREAMSHOOTS_RETIRED_PUBLIC_PATHS } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import type { CreativePack, PlatformState, PublishedLeafRouteProjection, PublishedSeoSnapshot, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
-import { canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import { aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import {
   mydreamshootsVideoWatchPagesForState,
   type MyDreamShootsVideoWatchPage
@@ -120,7 +122,6 @@ const AIDREAMCAPES_LEGACY_TOOL_CANONICAL_PATHS = new Map([
   ["/tools/image-studio", "/tools"],
   ["/tools/portrait-generator", "/tools/fan-scene-album-builder"],
   ["/tools/portrait-maker", "/tools/fan-scene-album-builder"],
-  ["/tools/product-reverie", "/tools/permission-safe-photo-planner"],
   ["/tools/soft-glam", "/tools/premiere-portrait-set-builder"],
   ["/tools/couple-escape-album", "/tools/birthday-fan-moment-maker"],
   ["/tools/wedding-portraits", "/tools/birthday-fan-moment-maker"],
@@ -134,7 +135,6 @@ const AIDREAMCAPES_LEGACY_TOOL_CANONICAL_PATHS = new Map([
   ["/tools/editorial-getaway", "/tools/premiere-portrait-set-builder"],
   ["/tools/cafe-street-story", "/tools/premiere-portrait-set-builder"],
   ["/tools/cinematic-travel", "/tools/game-day-group-portrait-maker"],
-  ["/tools/route-moodboard", "/tools/permission-safe-photo-planner"],
   ["/tools/social-keepsake", "/tools/birthday-fan-moment-maker"],
   ["/tools/family-travel-keepsakes", "/tools/thanksgiving-keepsake-set-maker"],
   ["/tools/seasonal-celebration-album-maker", "/tools/new-year-countdown-album-maker"],
@@ -206,7 +206,6 @@ const AIDREAMCAPES_LEGACY_BLOG_TOOL_CANONICAL_PATHS: Record<string, string> = {
   "halloween-party-portrait-maker": "/blog/halloween-party-portrait-set-photo-package-guide",
   "costume-cast-album-builder": "/blog/costume-cast-photo-album-photo-package-guide",
   "birthday-fan-moment-maker": "/blog/birthday-fan-moment-set-photo-package-guide",
-  "permission-safe-photo-planner": "/blog/family-occasion-portrait-album-photo-package-guide"
 };
 const AIDREAMCAPES_LEGACY_BLOG_VIDEO_CANONICAL_PATHS: Record<string, string> = {
   "coastal-motion": "/blog/private-fan-scene-album-photo-package-guide",
@@ -256,7 +255,15 @@ type SitemapVideoEntry = {
   duration?: string;
 };
 
-type SitemapEntry = {
+export type SeoPageEntry = {
+  path: string;
+  canonicalPath: string;
+  pageType: "home" | "theme" | "blog" | "marketing" | "auth" | "error";
+  indexable: boolean;
+  lastModified?: string;
+};
+
+export type SitemapEntry = {
   loc: string;
   images: SitemapImageEntry[];
   video?: SitemapVideoEntry;
@@ -378,13 +385,27 @@ function absoluteMediaUrl(site: Site, value: string | undefined): string {
   return `${origin}${resolved.startsWith("/") ? resolved : `/${resolved}`}`;
 }
 
+function sitemapMediaUrl(site: Site, value: string | undefined): string {
+  const resolved = absoluteMediaUrl(site, value);
+  const isAidreamcapesMediaSite = site.id === AIDREAMCAPES_SITE_ID || site.id === "site_aidreamcapes_xby";
+  if (!resolved || !isAidreamcapesMediaSite) return resolved;
+  try {
+    const parsed = new URL(resolved);
+    const expectedHost = originHost(siteOrigin(site));
+    if (!expectedHost || parsed.host.toLowerCase() !== expectedHost) return "";
+    return parsed.pathname.startsWith(`/assets/sites/${site.id}/`) ? resolved : "";
+  } catch {
+    return "";
+  }
+}
+
 function comparableSitemapImageUrl(value: string): string {
   return cleanText(value).split(/[?#]/)[0];
 }
 
 function packSitemapImages(site: Site, pack: CreativePack, limit = 8): SitemapImageEntry[] {
   const imagePaths = [pack.imageUrl, ...(pack.galleryImages ?? [])]
-    .map((value) => absoluteMediaUrl(site, value))
+    .map((value) => sitemapMediaUrl(site, value))
     .filter(Boolean);
   const seen = new Set<string>();
   const images: SitemapImageEntry[] = [];
@@ -452,7 +473,7 @@ function appendSitemapImages(entry: SitemapEntry, images: SitemapImageEntry[]): 
 }
 
 function imageSitemapUrl(site: Site, value: string | undefined): string {
-  const resolved = absoluteMediaUrl(site, value);
+  const resolved = sitemapMediaUrl(site, value);
   if (!resolved) return "";
   const pathname = cleanText(resolved).split(/[?#]/)[0].toLowerCase();
   return /\.(?:avif|jpe?g|png|webp)(?:$)/i.test(pathname) ? resolved : "";
@@ -469,6 +490,18 @@ function sitemapImageTitleForPage(page: ThemePage): string {
 }
 
 function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): SitemapImageEntry[] {
+  const themeManifest = isAidreamcapesImageThemePath(site.slug, normalizePath(page.slug))
+    ? page.publishedJson.mediaManifest
+    : undefined;
+  if (themeManifest?.length) {
+    return themeManifest
+      .map((image) => ({
+        loc: imageSitemapUrl(site, image.src),
+        ...(cleanText(image.alt) ? { title: cleanText(image.alt), caption: cleanText(image.alt) } : {})
+      }))
+      .filter((image) => image.loc)
+      .slice(0, themeManifest.length);
+  }
   const images: SitemapImageEntry[] = [];
   const seen = new Set<string>();
   const title = sitemapImageTitleForPage(page);
@@ -524,10 +557,10 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   const pageSeo = page.publishedJson.seo;
   const canonicalValue = pageSeo?.canonical ?? pageSeo?.canonicalPath ?? page.slug;
   const canonicalPath = canonicalPublicPath(normalizePath(/^https?:\/\//i.test(canonicalValue) ? new URL(canonicalValue).pathname : canonicalValue));
+  if (isRetiredAidreamcapesImageToolPath(site.slug, normalizePath(page.slug)) || isRetiredAidreamcapesImageToolPath(site.slug, canonicalPath)) return "";
   // Legacy video ThemePage rows can remain in relational data during a route
   // migration, but unsupported video slugs must not become sitemap URLs.
   if (isDreamshootSite(site) && canonicalPath.startsWith("/ai-video-generation/") && !isPublicVideoGenerationSitemapPath(site, canonicalPath)) return "";
-  if (isAidreamcapesSite(site) && canonicalPath.startsWith("/ai-video-generation/") && !MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS.includes(canonicalPath.slice("/ai-video-generation/".length) as typeof MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS[number])) return "";
   const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug)) || (isDreamshootSite(site) && (MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(normalizePath(page.slug)) || MYDREAMSHOOTS_RETIRED_PUBLIC_PATH_SET.has(normalizePath(page.slug))));
   // SEO eligibility is resolved once below by resolveEffectivePublishedPage().
   // Reading raw page flags here creates a second owner that can disagree with
@@ -560,13 +593,17 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
   const collectionItems = resolvePublicCollectionItems(snapshot);
   const entries = new Map<string, SitemapEntry>();
   for (const page of snapshot.pages) {
+    if (isAidreamcapesImageThemePath(site.slug, page.slug) && !imageThemeDetailContentFromPage(page)) continue;
     const sitemapPath = pageSitemapPathForSite(site, page);
     if (!sitemapPath) continue;
     const canonicalPath = canonicalDirectoryPathForSite(site, sitemapPath);
     if (resolvePublishedRouteDisposition(snapshot, canonicalPath).kind !== "render") continue;
     const effective = resolveEffectivePublishedPage(snapshot, canonicalPath);
     if (effective.routeDisposition.kind !== "render" || !effective.indexability.sitemapEligible) continue;
-    const loc = effective.context.seo.canonicalUrl;
+    const configuredCanonical = page.publishedJson.seo?.canonical?.trim();
+    const loc = isAidreamcapesImageThemePath(site.slug, page.slug) && configuredCanonical && /^https?:\/\//i.test(configuredCanonical)
+      ? configuredCanonical
+      : effective.context.seo.canonicalUrl;
     const path = effective.context.seo.canonicalPath;
     const standardMedia = isPrimaryMydreamshootsSite(site)
       ? resolvePublishedSeoEntity(snapshot, path).standardPageMedia
@@ -578,12 +615,12 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       loc,
       images: standardMedia?.status === "ready"
         ? standardMedia.sitemapImages.map((image, index) => ({
-            loc: absoluteMediaUrl(site, image),
+            loc: sitemapMediaUrl(site, image),
             title: sitemapImageTitleForMedia(page, index === 0 ? standardMedia.primaryImageAlt : sitemapImageTitleForPage(page), index)
           })).filter((image) => image.loc)
         : pageMedia?.status === "ready"
           ? [pageMedia.primaryImage, ...pageMedia.galleryImages].map((image, index) => ({
-              loc: absoluteMediaUrl(site, image),
+              loc: sitemapMediaUrl(site, image),
               title: sitemapImageTitleForMedia(page, pageMedia.imageAlts[index] || sitemapImageTitleForPage(page), index)
             })).filter((image) => image.loc)
         : isPrimaryMydreamshootsSite(site)
@@ -596,6 +633,18 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       changefreq: sitemapChangeFrequencyForPath(path),
       priority: sitemapPriorityForPath(path)
       });
+  }
+  if (site.id === "site_aidreamcapes_xby") {
+    // EU owns all 39 photo themes under /ai-image-generation. Remove stale
+    // legacy video aliases that may still exist as relational ThemePage rows
+    // so they cannot win the sitemap entry before the CreativePack pass.
+    for (const [loc] of entries) {
+      try {
+        if (new URL(loc).pathname.startsWith("/ai-video-generation/")) entries.delete(loc);
+      } catch {
+        // Invalid entries are filtered by the normal sitemap serializer.
+      }
+    }
   }
   if (isPrimaryMydreamshootsSite(site) && snapshot.pages.some((page) => page.slug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH)) {
     const loc = `${siteOrigin(site) || MYDREAMSHOOTS_ORIGIN}${MYDREAMSHOOTS_WEDDING_INVITATION_PATH}`;
@@ -646,7 +695,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       const pack = snapshot.creativePacks.find((candidate) => candidate.id === media.packId);
       const mediaImages = [media.primaryImage, ...media.galleryImages]
         .map((value, index) => ({
-          loc: absoluteMediaUrl(site, value),
+          loc: sitemapMediaUrl(site, value),
           title: pack
             ? sitemapImageTitleForPack(pack, media.imageAlts[index] || "", index)
             : sitemapImageTitleForMedia(page, media.imageAlts[index] || "", index)
@@ -661,6 +710,51 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       });
     }
   }
+  if (isAidreamshootsStorefrontSite(site)) {
+    // AIdreamshoots theme leaves are catalogue-backed. Build their sitemap
+    // entries from the same canonical page index used by internal-link and
+    // SEO eligibility checks, then attach the active pack's current media.
+    for (const seoPage of indexableSeoPageEntriesForSite(state, site, snapshot)) {
+      const path = seoPage.canonicalPath;
+      const loc = sitemapUrl(site, path);
+      if (entries.has(loc)) continue;
+      const collectionRoute = parsePublicCollectionRouteForSite(site, path);
+      const pack = collectionRoute?.collectionSlug
+        ? state.creativePacks.find((candidate) => candidate.siteId === site.id && candidate.status === "active" &&
+            canonicalDirectoryPathForSite(site, publicCollectionPathForSite(site, candidate.categoryRecord?.slug || candidate.category || candidate.name)) === path)
+        : undefined;
+      const page = pageForCanonicalSeoPath(snapshot, site, path);
+      const images = pack
+        ? packSitemapImages(site, pack)
+        : page
+          ? collectPageSitemapImages(site, page)
+          : [];
+      entries.set(loc, {
+        loc,
+        images,
+        lastmod: seoPage.lastModified,
+        changefreq: sitemapChangeFrequencyForPath(path),
+        priority: sitemapPriorityForPath(path)
+      });
+    }
+    // A legacy page row can still carry the alias as its stored SEO value.
+    // Never serialize those aliases even if the row is otherwise indexable.
+    for (const [loc] of entries) {
+      try {
+        const path = new URL(loc).pathname;
+        const page = pageForCanonicalSeoPath(snapshot, site, path);
+        const collectionRoute = parsePublicCollectionRouteForSite(site, path);
+        const isUnbackedThemeLeaf = collectionRoute?.kind === "item" &&
+          !page &&
+          !hasAidreamshootsCatalogCollectionPath(state, site, path);
+        if (path === "/collections" || path.startsWith("/collections/") || aidreamshootsLegacyVideoSaveTheDatePath(path) || isUnbackedThemeLeaf) {
+          entries.delete(loc);
+        }
+      } catch {
+        entries.delete(loc);
+      }
+    }
+  }
   if (isAidreamcapesSite(site)) {
     // Aidreamcapes serves collection detail pages from the shared live
     // catalogue rather than the MyDreamShoots publication manifest. Keep
@@ -671,7 +765,8 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       const path = canonicalDirectoryPathForSite(site, publicCollectionPathForSite(site, rawSlug));
       const route = parsePublicCollectionRouteForSite(site, path);
       if (route?.kind !== "item") continue;
-      if (LEGACY_OR_DUPLICATE_PATHS.has(path) || path.endsWith("/social-cards")) continue;
+      const isAidreamcapesEu = site.id === "site_aidreamcapes_xby";
+      if (isAidreamcapesImageThemePath(site.slug, path) || (!isAidreamcapesEu && isRetiredAidreamcapesImageToolPath(site.slug, path)) || (!isAidreamcapesEu && LEGACY_OR_DUPLICATE_PATHS.has(path)) || (path.endsWith("/social-cards") && !isAidreamcapesEu)) continue;
       const loc = sitemapUrl(site, path);
       if (entries.has(loc)) continue;
       entries.set(loc, {
@@ -716,6 +811,22 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
         changefreq: "monthly",
         priority: "0.8"
       });
+    }
+  }
+  if (site.id === "site_mydreamshoots_xby" || site.primaryDomain.trim().toLowerCase() === "aidreamshoots.eu") {
+    // The AIdreamshoots catalogue uses one slug segment below the canonical
+    // image root. Filter malformed legacy projections even when they do not
+    // parse as a collection route (for example /collections-avatar).
+    for (const [loc] of entries) {
+      try {
+        const path = new URL(loc).pathname;
+        const canonicalThemeLeaf = path.match(/^\/ai-image-generation\/([^/]+)$/i);
+        const page = pageForCanonicalSeoPath(snapshot, site, path);
+        const isUnbackedCanonicalThemeLeaf = Boolean(canonicalThemeLeaf && !page && !hasAidreamshootsCatalogCollectionPath(state, site, path));
+        if (isUnbackedCanonicalThemeLeaf || path.startsWith("/ai-image-generation/collections-")) entries.delete(loc);
+      } catch {
+        entries.delete(loc);
+      }
     }
   }
   return [...entries.values()].sort((left, right) => left.loc.localeCompare(right.loc));
@@ -818,6 +929,10 @@ function canonicalDirectoryPathForSite(site: Site, path: string): string {
     if (canonicalSaveDate !== normalized) return canonicalSaveDate;
   }
   if (isCollectionDirectoryPath(normalized)) return publicCollectionPathForSite(site, collectionSlugFromDirectoryPath(site, normalized));
+  if (isAidreamshootsStorefrontSite(site) && normalized.startsWith("/ai-video-generation/")) {
+    const canonicalSaveDate = aidreamshootsLegacyVideoSaveTheDatePath(normalized);
+    if (canonicalSaveDate) return canonicalSaveDate;
+  }
   if (isVideoGenerationDirectoryPath(site, normalized)) return parsePublicVideoGenerationRouteForSite(site, normalized)?.canonicalPath ?? normalized;
   if (normalized.startsWith("/tools/")) return canonicalToolPathForSite(site, normalized);
   if (normalized === "/tools") return canonicalToolPathForSite(site, normalized);
@@ -832,6 +947,7 @@ function hasNonPageFileExtension(path: string): boolean {
 function isBlockedPublicPath(path: string, site?: Site): boolean {
   if (LEGACY_OR_DUPLICATE_PATHS.has(path)) return true;
   if (site && isDreamshootSite(site) && MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(path)) return true;
+  if (site && isRetiredAidreamcapesImageToolPath(site.slug, path)) return true;
   if (NON_INDEXABLE_TOOL_PATHS.has(path)) return true;
   if (hasNonPageFileExtension(path)) return true;
   if (BLOCKED_PATH_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`))) return true;
@@ -949,7 +1065,12 @@ function isDreamshootSite(site: Site): boolean {
 }
 
 function isAidreamcapesSite(site: Site): boolean {
-  return site.id === AIDREAMCAPES_SITE_ID || AIDREAMCAPES_SITE_SLUGS.has(site.slug) || site.primaryDomain === "www.aidreamcapes.com";
+  return site.id === AIDREAMCAPES_SITE_ID ||
+    site.id === "site_aidreamcapes_xby" ||
+    AIDREAMCAPES_SITE_SLUGS.has(site.slug) ||
+    site.primaryDomain === "www.aidreamcapes.com" ||
+    site.primaryDomain === "aidreamcapes.eu" ||
+    site.primaryDomain === "www.aidreamcapes.eu";
 }
 
 function isHostForSite(site: Site, host: string): boolean {
@@ -1050,6 +1171,22 @@ function canResolveCollectionPath(state: PlatformState, site: Site, path: string
   return state.creativePacks.some((pack) => pack.siteId === site.id && pack.status === "active" && collectionSlugsForPack(site, pack).includes(canonicalSlug));
 }
 
+function hasAidreamshootsCatalogCollectionPath(state: PlatformState, site: Site, path: string): boolean {
+  const normalized = canonicalDirectoryPathForSite(site, path);
+  const route = parsePublicCollectionRouteForSite(site, normalized);
+  if (!route?.collectionSlug) return route?.kind === "directory";
+  const canonicalSlug = canonicalSeoDirectorySlugForSite(site, "collection", route.collectionSlug);
+  return (state.creativePackCategories ?? []).some((category) =>
+    category.siteId === site.id &&
+    category.status === "active" &&
+    canonicalSeoDirectorySlugForSite(site, "collection", category.slug || category.label) === canonicalSlug
+  ) || state.creativePacks.some((pack) =>
+    pack.siteId === site.id &&
+    pack.status === "active" &&
+    collectionSlugsForPack(site, pack).includes(canonicalSlug)
+  );
+}
+
 function addCollectionPath(state: PlatformState, site: Site, paths: Set<string>, path: string): void {
   const normalized = canonicalDirectoryPathForSite(site, path);
   if (isCollectionDirectoryPath(normalized) && !isBlockedPublicPathForSite(site, normalized) && canResolveCollectionPath(state, site, normalized)) {
@@ -1140,7 +1277,83 @@ function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[
   collectInternalHrefPaths(state, site, paths, site.themeSettings.publishedJson);
   for (const page of sitePages) collectInternalHrefPaths(state, site, paths, page.publishedJson);
 
+  // Keep the public editorial inventory in the same candidate set as dynamic
+  // catalogue links. The final resolver below still requires a published
+  // page/route, so a missing draft cannot become a sitemap URL by declaration.
+  for (const path of [...REQUIRED_INDEXABLE_CONTENT_PATHS, ...REQUIRED_INDEXABLE_POLICY_PATHS]) {
+    addPublicPath(state, site, paths, path);
+  }
+
   return Array.from(paths);
+}
+
+function seoPageTypeForPath(path: string, page?: ThemePage): SeoPageEntry["pageType"] {
+  if (path === "/") return "home";
+  if (path.startsWith("/blog")) return "blog";
+  if (path.startsWith("/account") || path.startsWith("/app") || path.startsWith("/login")) return "auth";
+  if (path === "/404" || page?.pageType === "404" || page?.pageType === "not_found") return "error";
+  if (path.startsWith("/ai-image-generation/") || path.startsWith("/collections/") || path.startsWith("/ai-video-generation/") || path.startsWith("/tools/")) return "theme";
+  return "marketing";
+}
+
+function pageForCanonicalSeoPath(snapshot: ReturnType<typeof createPublishedSiteSnapshot>, site: Site, path: string): ThemePage | undefined {
+  return snapshot.pages.find((page) => canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page)) === path)
+    ?? snapshot.pages.find((page) => canonicalDirectoryPathForSite(site, normalizePath(page.slug)) === path);
+}
+
+/**
+ * The canonical SEO page index is shared by sitemap discovery and the
+ * dynamic catalogue pass. It deliberately resolves only published, reachable
+ * paths; menu links alone are never enough to create an indexable URL.
+ */
+export function indexableSeoPageEntriesForSite(state: PlatformState, site: Site, snapshot = createPublishedSiteSnapshot(state, site)): SeoPageEntry[] {
+  const candidates = new Set(collectDynamicIndexablePaths(state, site));
+  const collectionRoot = publicCollectionPathForSite(site, "");
+  const collectionPage = pageForCanonicalSeoPath(snapshot, site, collectionRoot);
+  for (const route of snapshot.publishedRoutes) {
+    if (route.disposition !== "render" || !route.status || !route.canonicalPath) continue;
+    candidates.add(canonicalDirectoryPathForSite(site, route.canonicalPath));
+  }
+
+  const entries: SeoPageEntry[] = [];
+  for (const candidate of candidates) {
+    const canonicalPath = canonicalDirectoryPathForSite(site, candidate);
+    if (!canonicalPath || isBlockedPublicPathForSite(site, canonicalPath)) continue;
+    const route = snapshot.publishedRoutes.find((item) => item.disposition === "render" && item.canonicalPath === canonicalPath);
+    const page = pageForCanonicalSeoPath(snapshot, site, canonicalPath);
+    let indexable = false;
+
+    if (route && "status" in route) {
+      indexable = route.status === "published" && route.indexable && route.sitemapEligible;
+    } else if (parsePublicCollectionRouteForSite(site, canonicalPath)) {
+      // AIdreamshoots collection leaves are generated from the active pack
+      // catalogue rather than individual ThemePage rows.
+      const collectionIsReachable = isAidreamshootsStorefrontSite(site)
+        ? hasAidreamshootsCatalogCollectionPath(state, site, canonicalPath)
+        : canResolveCollectionPath(state, site, canonicalPath);
+      indexable = Boolean(collectionPage && collectionIsReachable && isIndexablePage(collectionPage, site));
+    } else if (page) {
+      try {
+        const effective = resolveEffectivePublishedPage(snapshot, page.slug);
+        indexable = isIndexablePage(page, site)
+          && effective.routeDisposition.kind === "render"
+          && effective.indexability.index
+          && effective.indexability.sitemapEligible;
+      } catch {
+        indexable = false;
+      }
+    }
+    if (!indexable) continue;
+    entries.push({
+      path: canonicalPath,
+      canonicalPath,
+      pageType: seoPageTypeForPath(canonicalPath, page),
+      indexable: true,
+      lastModified: page ? pageContentLastModified(page, snapshot.publication?.publishedAt) : normalizeSitemapDate(snapshot.publication?.publishedAt)
+    });
+  }
+  return Array.from(new Map(entries.map((entry) => [entry.canonicalPath, entry])).values())
+    .sort((left, right) => left.canonicalPath.localeCompare(right.canonicalPath));
 }
 
 async function readIndexableStateAndSites(): Promise<{ state: PlatformState; sites: Site[] } | undefined> {

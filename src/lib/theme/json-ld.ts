@@ -6,6 +6,9 @@ import { projectPublicCreativePacks, projectPublicPricingOffers } from "@/lib/st
 import { storefrontBaseUrl, storefrontOrigin } from "@/lib/storefront-context/seo-projection";
 import { aiVideoTopicLandingContentFromSection } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection } from "@/lib/talking-photo-content";
+import { imageThemeDetailContentFromSection } from "@/lib/aidreamcapes-image-theme-content";
+import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
+import { AIDREAMCAPES_EU_THEME_SLUGS, aidreamcapesEuSeoContent } from "@/lib/aidreamcapes-eu-seo-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
@@ -79,6 +82,36 @@ const MYDREAMSHOOTS_VIDEO_SCHEMA_PATHS = new Set([
   "/ai-video-generation/youtube-video"
 ]);
 
+const AIDREAMCAPES_ADS_TESTING_PATHS = new Set([
+  "/ai-video-generation/ugc-ad-video",
+  "/ai-video-generation/url-to-ad",
+  "/ai-video-generation/hook-lab",
+  "/ai-video-generation/pas-formula-ads",
+  "/ai-video-generation/testimonial-ads",
+  "/ai-video-generation/before-after-showcases",
+  "/ai-video-generation/talking-photo-recs",
+  "/ai-video-generation/ai-actor-product-ads",
+  "/ai-video-generation/tiktok-reels-shorts",
+  "/ai-video-generation/native-spark-ads",
+  "/ai-video-generation/carousel-storytelling",
+  "/ai-video-generation/retargeting-urgency"
+]);
+
+const AIDREAMCAPES_BRAND_CREATOR_PATHS = new Set([
+  "/ai-video-generation/founder-update",
+  "/ai-video-generation/multilingual-video",
+  "/ai-video-generation/cinematic-video",
+  "/ai-video-generation/music-video"
+]);
+
+function isAidreamcapesAdsTestingPage(site: Site, pagePath: string): boolean {
+  return site.id === "site_aidreamcapes" && AIDREAMCAPES_ADS_TESTING_PATHS.has(pagePath);
+}
+
+function isAidreamcapesBrandCreatorPage(site: Site, pagePath: string): boolean {
+  return site.id === "site_aidreamcapes" && AIDREAMCAPES_BRAND_CREATOR_PATHS.has(pagePath);
+}
+
 function toolOfferAvailability(site: Site, pagePath: string, context: StorefrontContext): string {
   const publishedVideoToolIsAvailable =
     isMydreamshootsComSite(site) &&
@@ -96,6 +129,13 @@ function collapseSpanishXbyBrandRepeats(value: string): string {
 }
 
 function schemaServiceType(site: Site, pagePath: string): string {
+  if (isAidreamcapesAdsTestingPage(site, pagePath)) return "AI UGC product advertising video generation service";
+  if (isAidreamcapesBrandCreatorPage(site, pagePath)) {
+    if (pagePath.endsWith("/founder-update")) return "AI founder update video generation service";
+    if (pagePath.endsWith("/multilingual-video")) return "AI multilingual video localization service";
+    if (pagePath.endsWith("/cinematic-video")) return "AI cinematic product film generation service";
+    return "AI audio-synced short-form video generation service";
+  }
   if (isSpanishXbySite(site)) {
     if (isAidreamcapesSite(site)) {
       if (pagePath.includes("moodboard")) return "servicio de moodboard de viaje con IA";
@@ -396,7 +436,9 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
     ...(logo ? { logo: { "@type": "ImageObject", url: logo, contentUrl: logo } } : {}),
     description: isAboutPage
       ? "myDreamshoots.com is an AI image and video creation tool for AI-generated images, short videos, personalized Save the Date videos, photo packages, and private digital delivery."
-      : cleanSchemaText(site, site.branding.description),
+      : isAidreamshootsEngagementFrenchPage(site, pagePath)
+        ? aidreamshootsEngagementSpanishSchemaText(cleanSchemaText(site, site.branding.description))
+        : cleanSchemaText(site, site.branding.description),
     ...(isAboutPage ? { founder: { "@type": "Person", name: "NARUEBET NAKPHONG" } } : {}),
     ...(profile.email ? { email: profile.email } : {}),
     ...(profile.phone ? { telephone: profile.phone } : {}),
@@ -425,15 +467,33 @@ function pageDescription(site: Site, page: Pick<ThemePage, "id" | "title">, cont
   return context?.seo.description || cleanSchemaText(site, page.title);
 }
 
+function aidreamcapesEuThemeSlug(site: Site, pagePath: string): string | undefined {
+  if (site.id !== "site_aidreamcapes_xby") return undefined;
+  const parts = pagePath.split("/").filter(Boolean);
+  if (parts.length !== 2 || parts[0] !== "ai-image-generation") return undefined;
+  const slug = parts[1].toLowerCase();
+  return AIDREAMCAPES_EU_THEME_SLUGS.includes(slug) ? slug : undefined;
+}
+
+function isAidreamcapesEuSaveTheDatePage(site: Site, pagePath: string | undefined): boolean {
+  return site.id === "site_aidreamcapes_xby" && Boolean(pagePath && /^\/ai-save-the-date\/[^/]+$/.test(pagePath));
+}
+
+function aidreamcapesEuThemePack(input: JsonLdInput, slug: string): CreativePack | undefined {
+  const packs = input.creativePacks?.length ? input.creativePacks : input.context.catalog.activePacks;
+  return packs.find((pack) => pack.status === "active" && packMatchesCollectionSlug(input.site, pack, slug));
+}
+
 function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, title: string, publishedRoutePaths: readonly string[] = []): JsonLdNode {
   const parts = pagePath.split("/").filter(Boolean);
   const frenchEngagementPage = isAidreamshootsEngagementFrenchPage(site, pagePath);
+  const aidreamcapesEuPage = Boolean(aidreamcapesEuThemeSlug(site, pagePath));
   const finalLabel = isMydreamshootsComSite(site) && pagePath === "/digital-delivery" ? "Digital Delivery Policy" : title;
   const items = [
     {
       "@type": "ListItem",
       position: 1,
-      name: frenchEngagementPage ? "Inicio" : isSpanishXbySite(site) ? "Inicio" : "Home",
+      name: frenchEngagementPage || aidreamcapesEuPage ? "Accueil" : isSpanishXbySite(site) ? "Inicio" : "Home",
       item: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, "/"))
     }
   ];
@@ -445,7 +505,13 @@ function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, t
     items.push({
       "@type": "ListItem",
       position: items.length + 1,
-      name: isFinal ? finalLabel : frenchEngagementPage && part === "ai-image-generation" ? "Generación de imágenes con IA" : schemaPathLabel(site, part),
+      name: isFinal
+        ? finalLabel
+        : frenchEngagementPage && part === "ai-image-generation"
+          ? "Generación de imágenes con IA"
+          : aidreamcapesEuPage && part === "ai-image-generation"
+            ? "Création photo IA"
+            : schemaPathLabel(site, part),
       item: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, current))
     });
   });
@@ -464,6 +530,20 @@ function faqQuestionNode(site: Site, question: string, answer: string): JsonLdNo
       text
     }
   };
+}
+
+function aidreamshootsEngagementSpanishSchemaText(value: string): string {
+  return value
+    .replace(/\bespanol\b/gi, "español")
+    .replace(/\balbumes\b/gi, "álbumes")
+    .replace(/\bgaleria\b/gi, "galería")
+    .replace(/\bcreditos\b/gi, "créditos")
+    .replace(/\bimagenes\b/gi, "imágenes")
+    .replace(/\btematicos\b/gi, "temáticos")
+    .replace(/\btematicas\b/gi, "temáticas")
+    .replace(/\bdireccion\b/gi, "dirección")
+    .replace(/\bsegun\b/gi, "según")
+    .replace(/\bsesion\b/gi, "sesión");
 }
 
 function themeFaqQuestions(site: Site, input: JsonLdInput | undefined, section: ThemePageJson["sections"][string]): Array<[string, string]> {
@@ -505,6 +585,32 @@ function themeFaqQuestions(site: Site, input: JsonLdInput | undefined, section: 
 }
 
 function faqSchema(site: Site, pageJson: ThemePageJson | undefined, input?: JsonLdInput): JsonLdNode | undefined {
+  if (isAidreamshootsEngagementFrenchPage(site, input?.pagePath)) {
+    const mainEntity = AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.faqItems
+      .map(([question, answer]) => faqQuestionNode(site, question, answer))
+      .filter(Boolean) as JsonLdNode[];
+    return {
+      "@type": "FAQPage",
+      inLanguage: "es-ES",
+      mainEntity
+    };
+  }
+  const aidreamcapesEuSlug = input?.pagePath ? aidreamcapesEuThemeSlug(site, input.pagePath) : undefined;
+  if (aidreamcapesEuSlug) {
+    const content = aidreamcapesEuSeoContent(aidreamcapesEuSlug);
+    const mainEntity = (content?.faqItems ?? [])
+      .map(([question, answer]) => faqQuestionNode(site, question, answer))
+      .filter(Boolean) as JsonLdNode[];
+    return mainEntity.length ? { "@type": "FAQPage", inLanguage: "fr-FR", mainEntity } : undefined;
+  }
+  if (input?.pagePath && isAidreamcapesImageThemePath(site.slug, input.pagePath)) {
+    const section = sectionOfType(pageJson, "ai_image_theme_landing");
+    const content = section ? imageThemeDetailContentFromSection(section) : undefined;
+    const mainEntity = (content?.faq.items ?? [])
+      .map((item) => faqQuestionNode(site, item.question, item.answer))
+      .filter(Boolean) as JsonLdNode[];
+    return mainEntity.length ? { "@type": "FAQPage", inLanguage: "en", mainEntity } : undefined;
+  }
   if (!hasPageSections(pageJson)) return undefined;
   if (input?.pagePath.startsWith("/blog/")) return undefined;
   const questions = pageJson.sectionsOrder.flatMap((sectionId) => {
@@ -544,7 +650,13 @@ function faqSchema(site: Site, pageJson: ThemePageJson | undefined, input?: Json
     seenNames.add(name);
     return true;
   });
-  return uniqueQuestions.length ? { "@type": "FAQPage", mainEntity: uniqueQuestions } : undefined;
+  return uniqueQuestions.length
+    ? {
+        "@type": "FAQPage",
+        ...(isAidreamcapesEuSaveTheDatePage(site, input?.pagePath) ? { inLanguage: "fr-FR" } : {}),
+        mainEntity: uniqueQuestions
+      }
+    : undefined;
 }
 
 function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string, title: string, description: string, pageJson: ThemePageJson | undefined): JsonLdNode | undefined {
@@ -815,7 +927,7 @@ function uniqueMediaPaths(values: unknown[], mediaPath: (value: unknown) => stri
 }
 
 function packImagePaths(pack: CreativePack): string[] {
-  return uniqueMediaPaths([pack.imageUrl, ...(pack.galleryImages ?? [])], imageMediaPath, 8);
+  return uniqueMediaPaths([pack.imageUrl, ...(pack.galleryImages ?? [])], imageMediaPath, 13);
 }
 
 function primaryPackImage(pack: CreativePack): string {
@@ -837,8 +949,12 @@ function packMatchesCollectionSlug(site: Site, pack: CreativePack, slug: string)
     pack.name,
     pack.id
   ];
-  return candidates
+  const canonicalCandidates = candidates
     .map((candidate) => canonicalCollectionSlugForCandidate(site, candidate))
+    .filter(Boolean)
+  if (canonicalCandidates.includes(slug)) return true;
+  return isSpanishXbySite(site) && candidates
+    .map((candidate) => slugifySchemaPart(cleanText(candidate)))
     .filter(Boolean)
     .includes(slug);
 }
@@ -856,7 +972,7 @@ function packProductSchema({
   pack: CreativePack;
   description: string;
 }): JsonLdNode | undefined {
-  if (!isPrimaryMyDreamShootsSite(site)) return undefined;
+  if (!isPrimaryMyDreamShootsSite(site) && !isSpanishXbySite(site)) return undefined;
   const imagePaths = packImagePaths(pack);
   const image = imagePaths[0];
   if (!image) return undefined;
@@ -864,8 +980,11 @@ function packProductSchema({
   const url = absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, pagePath));
   const subjectImageUrl = absoluteUrl(site, routeMode, subjectImage);
   const primaryImageUrl = absoluteUrl(site, routeMode, image);
-  const productName = cleanSchemaText(site, pack.name, "MyDreamShoots AI photo package");
-  const productDescription = cleanSchemaText(site, pack.description, description);
+  const xbyContent = isSpanishXbySite(site)
+    ? getSeoDirectoryContentForSite(site, "collection", pack.categoryRecord?.slug || pack.category)
+    : undefined;
+  const productName = cleanSchemaText(site, xbyContent?.label || pack.name, "MyDreamShoots AI photo package");
+  const productDescription = cleanSchemaText(site, xbyContent?.description || pack.description, description);
   const subjectImageDimensions = imageDimensions(subjectImage);
   const additionalProperty: JsonLdNode[] = [
     {
@@ -889,20 +1008,21 @@ function packProductSchema({
       "@type": "Brand",
       name: siteBrandName(site)
     },
-    category: cleanSchemaText(site, pack.categoryRecord?.label || pack.category, "AI photo package"),
+    category: cleanSchemaText(site, xbyContent?.label || pack.categoryRecord?.label || pack.category, "AI photo package"),
     image: imagePaths.map((path) => absoluteUrl(site, routeMode, path)),
     url,
+    ...(isSpanishXbySite(site) ? { inLanguage: "es-ES" } : {}),
     mainEntityOfPage: url,
     additionalProperty,
     subjectOf: {
       "@type": "ImageObject",
       "@id": `${url}#image`,
-      name: `${productName} preview image`,
+      name: `${productName} ${isSpanishXbySite(site) ? "imagen de muestra" : "preview image"}`,
       url: subjectImageUrl,
       contentUrl: subjectImageUrl,
       thumbnailUrl: primaryImageUrl,
-      description: cleanSchemaText(site, `Example preview image for ${productName}`, productDescription),
-      caption: `${productName} AI generated preview`,
+      description: cleanSchemaText(site, isSpanishXbySite(site) ? `Imagen de muestra de ${productName}` : `Example preview image for ${productName}`, productDescription),
+      caption: isSpanishXbySite(site) ? `Muestra visual de ${productName}` : `${productName} AI generated preview`,
       encodingFormat: mediaEncodingFormat(subjectImage) || mediaEncodingFormat(image),
       representativeOfPage: true,
       ...(subjectImageDimensions ? subjectImageDimensions : {})
@@ -993,31 +1113,48 @@ function editorialVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
 }
 
 function collectionPageSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
+  if (isAidreamcapesImageThemePath(input.site.slug, input.pagePath) || aidreamcapesEuThemeSlug(input.site, input.pagePath)) return [];
   if (!input.pagePath.startsWith("/collections") && !input.pagePath.startsWith("/ai-image-generation")) return [];
   const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
   const url = absoluteUrl(input.site, input.routeMode, path);
   const activePacks = projectPublicCreativePacks(input.context, input.creativePacks ?? input.context.catalog.activePacks);
-  const itemListElement = activePacks.map((pack, index) => ({
-    "@type": "ListItem",
-    position: index + 1,
-    item: {
-      "@type": "Service",
-	      name: cleanSchemaText(input.site, pack.name, title),
-	      description: cleanSchemaText(input.site, pack.description, description),
-      url: absoluteUrl(
-        input.site,
-        input.routeMode,
-        schemaPagePath(input.site, input.routeMode, canonicalSeoDirectoryPathForSite(input.site, "collection", slugifySchemaPart(pack.categoryRecord?.slug || pack.category || pack.name)))
-      ),
-      ...(pack.imageUrl ? { image: absoluteUrl(input.site, input.routeMode, pack.imageUrl) } : {})
-    }
-  }));
+  const engagementPage = isAidreamshootsEngagementFrenchPage(input.site, input.pagePath);
+  const itemListElement = activePacks.length
+    ? activePacks.map((pack, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "Service",
+          name: cleanSchemaText(input.site, pack.name, title),
+          description: cleanSchemaText(input.site, pack.description, description),
+          url: absoluteUrl(
+            input.site,
+            input.routeMode,
+            schemaPagePath(input.site, input.routeMode, canonicalSeoDirectoryPathForSite(input.site, "collection", slugifySchemaPart(pack.categoryRecord?.slug || pack.category || pack.name)))
+          ),
+          ...(pack.imageUrl ? { image: absoluteUrl(input.site, input.routeMode, pack.imageUrl) } : {})
+        }
+      }))
+    : engagementPage
+      ? [{
+          "@type": "ListItem",
+          position: 1,
+          item: {
+            "@type": "Service",
+            name: "Fotos de compromiso con IA",
+            description,
+            url,
+            image: absoluteUrl(input.site, input.routeMode, "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-engagement-13-20260912-v1/occasion-2d7b23bf0f95.webp")
+          }
+        }]
+      : [];
   return [
     {
       "@type": "CollectionPage",
       name: title,
       description,
       url,
+      ...(engagementPage ? { inLanguage: "es-ES" } : {}),
       isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
       publisher: {
         "@type": "Organization",
@@ -1031,6 +1168,135 @@ function collectionPageSchema(input: JsonLdInput, title: string, description: st
       description,
       url,
       itemListElement
+    }
+  ];
+}
+
+function aidreamcapesVideoDirectorySchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
+  if (input.site.id !== "site_aidreamcapes" || input.pagePath !== "/ai-video-generation") return [];
+  const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
+  const url = absoluteUrl(input.site, input.routeMode, path);
+  const groups = input.site.themeSettings.publishedJson.aidreamcapesZipNavigation?.video?.groups ?? [];
+  const themes = groups.flatMap((group) => group.items ?? []);
+  return [
+    {
+      "@type": "CollectionPage",
+      "@id": `${url}#webpage`,
+      name: title,
+      description,
+      url,
+      inLanguage: "en",
+      isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
+      publisher: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` }
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${url}#themes`,
+      name: "Aidreamcapes AI video generation themes",
+      description,
+      url,
+      numberOfItems: themes.length,
+      itemListOrder: "https://schema.org/ItemListOrderAscending",
+      itemListElement: themes.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.label,
+        item: {
+          "@type": "Service",
+          name: item.label,
+          url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, item.href))
+        }
+      }))
+    }
+  ];
+}
+
+function aidreamcapesImageThemeDetailSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
+  if (!isAidreamcapesImageThemePath(input.site.slug, input.pagePath)) return [];
+  const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
+  const section = sectionOfType(input.pageJson, "ai_image_theme_landing");
+  const content = section ? imageThemeDetailContentFromSection(section) : undefined;
+  if (!content) return [];
+  const configuredCanonical = cleanText(content?.seo.canonical);
+  const url = configuredCanonical && /^https?:\/\//i.test(configuredCanonical)
+    ? configuredCanonical
+    : absoluteUrl(input.site, input.routeMode, path);
+  const primaryImage = content?.hero.outputImage;
+  const primaryImageNode = primaryImage
+    ? {
+        "@type": "ImageObject",
+        "@id": `${url}#primaryimage`,
+        url: absoluteUrl(input.site, input.routeMode, primaryImage.src),
+        contentUrl: absoluteUrl(input.site, input.routeMode, primaryImage.src),
+        caption: primaryImage.alt,
+        width: primaryImage.width,
+        height: primaryImage.height
+      }
+    : undefined;
+  return [
+    {
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      name: title,
+      description,
+      url,
+      inLanguage: "en",
+      ...(primaryImageNode ? { primaryImageOfPage: primaryImageNode } : {}),
+      isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
+      publisher: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": `${url}#application`,
+      name: content.schema.applicationName,
+      description,
+      applicationCategory: "BusinessApplication",
+      applicationSubCategory: content.schema.applicationSubCategory,
+      operatingSystem: "Web",
+      url,
+      provider: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` }
+    },
+    {
+      "@type": "Service",
+      "@id": `${url}#service`,
+      name: title,
+      description,
+      serviceType: content.schema.serviceType,
+      provider: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
+      url
+    }
+  ];
+}
+
+function aidreamcapesEuImageThemeDetailSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
+  const slug = aidreamcapesEuThemeSlug(input.site, input.pagePath);
+  if (!slug) return [];
+  const content = aidreamcapesEuSeoContent(slug);
+  if (!content) return [];
+  const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
+  const url = absoluteUrl(input.site, input.routeMode, path);
+  const pack = aidreamcapesEuThemePack(input, slug);
+  const image = pack?.imageUrl?.trim();
+  const primaryImage = image
+    ? {
+        "@type": "ImageObject",
+        "@id": `${url}#primaryimage`,
+        url: absoluteUrl(input.site, input.routeMode, image),
+        contentUrl: absoluteUrl(input.site, input.routeMode, image),
+        caption: content.label
+      }
+    : undefined;
+  return [
+    {
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      name: content.title || title,
+      description: content.description || description,
+      url,
+      inLanguage: "fr-FR",
+      ...(primaryImage ? { primaryImageOfPage: primaryImage } : {}),
+      isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
+      publisher: { "@type": "Organization", name: siteBrandName(input.site), url: storefrontBaseUrl(input.site, input.routeMode) }
     }
   ];
 }
@@ -1062,9 +1328,12 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
 }
 
 export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
-  const resolvedInput: JsonLdInput = input.context
+  const routeInput: JsonLdInput = input.context
     ? { ...input, pagePath: input.context.seo.canonicalPath }
     : input;
+  const resolvedInput: JsonLdInput = isAidreamcapesImageThemePath(routeInput.site.slug, routeInput.pagePath)
+    ? { ...routeInput, site: { ...routeInput.site, primaryDomain: "aidreamcapes.com" } }
+    : routeInput;
   const title = pageTitle(resolvedInput.site, resolvedInput.page, resolvedInput.context);
   const description = pageDescription(resolvedInput.site, resolvedInput.page, resolvedInput.context);
   const graph: Array<JsonLdNode | undefined> = [
@@ -1074,6 +1343,9 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     breadcrumbs(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, resolvedInput.publishedRoutePaths),
     publishedStandardPageSchema(resolvedInput, title, description),
     policyWebPageSchema(resolvedInput, title, description),
+    ...aidreamcapesImageThemeDetailSchema(resolvedInput, title, description),
+    ...aidreamcapesEuImageThemeDetailSchema(resolvedInput, title, description),
+    ...aidreamcapesVideoDirectorySchema(resolvedInput, title, description),
     faqSchema(resolvedInput.site, resolvedInput.pageJson, resolvedInput),
     articleSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, description, resolvedInput.pageJson),
     ...collectionPageSchema(resolvedInput, title, description),
@@ -1140,22 +1412,24 @@ export function buildToolDirectoryJsonLd({
   const label = topicContent?.hero.title ?? item!.label;
   const title = context.seo.title;
   const description = context.seo.description;
-  const graph: JsonLdNode[] = [
-    organizationSchema(site, routeMode, context, pagePath),
-    websiteSchema(site, routeMode),
-    breadcrumbs(site, routeMode, pagePath, label),
-    {
-      "@type": "SoftwareApplication",
-      name: title,
-      description,
-      applicationCategory: pagePath.includes("video") ? "MultimediaApplication" : "PhotographyApplication",
-      operatingSystem: "Web",
-      url,
-      provider: {
-        "@type": "Organization",
-        name: siteName,
-        url: storefrontBaseUrl(site, routeMode)
-      },
+  const isAdsTestingPage = isAidreamcapesAdsTestingPage(site, pagePath);
+  const isAidreamcapesBrandCreator = isAidreamcapesBrandCreatorPage(site, pagePath);
+  const softwareApplication: JsonLdNode = {
+    "@type": "SoftwareApplication",
+    name: title,
+    description,
+    applicationCategory: isAdsTestingPage
+      ? "AI UGC and product advertising tool"
+      : isAidreamcapesBrandCreator ? "AI brand and creator video tool"
+      : pagePath.includes("video") ? "MultimediaApplication" : "PhotographyApplication",
+    operatingSystem: "Web",
+    url,
+    provider: {
+      "@type": "Organization",
+      name: siteName,
+      url: storefrontBaseUrl(site, routeMode)
+    },
+    ...(!isAdsTestingPage && !isAidreamcapesBrandCreator ? {
       offers: {
         "@type": "Offer",
         availability: toolOfferAvailability(site, pagePath, context),
@@ -1164,7 +1438,13 @@ export function buildToolDirectoryJsonLd({
           : isAidreamcapesSite(site) ? "AI occasion portrait tool" : isMydreamshootsComSite(site) && MYDREAMSHOOTS_VIDEO_SCHEMA_PATHS.has(pagePath) ? "AI video tool" : "AI photo tool",
         url
       }
-    },
+    } : {})
+  };
+  const graph: JsonLdNode[] = [
+    organizationSchema(site, routeMode, context, pagePath),
+    websiteSchema(site, routeMode),
+    breadcrumbs(site, routeMode, pagePath, label),
+    softwareApplication,
     {
       "@type": "Service",
       name: label,
@@ -1197,6 +1477,59 @@ export function buildCollectionDirectoryJsonLd({
   context: StorefrontContext;
 }): JsonLdNode[] {
   const pageSlug = canonicalCollectionSlugForCandidate(site, collectionSlug) || slugifySchemaPart(collectionSlug);
+  const aidreamcapesEuSlug = site.id === "site_aidreamcapes_xby" && AIDREAMCAPES_EU_THEME_SLUGS.includes(pageSlug)
+    ? pageSlug
+    : undefined;
+  if (aidreamcapesEuSlug) {
+    const content = aidreamcapesEuSeoContent(aidreamcapesEuSlug);
+    if (!content) return [];
+    const pagePath = content.canonicalPath;
+    const url = absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, pagePath));
+    const packs = creativePacks.length ? creativePacks : context.catalog.activePacks;
+    const pack = packs.find((candidate) => candidate.status === "active" && packMatchesCollectionSlug(site, candidate, aidreamcapesEuSlug));
+    const image = pack?.imageUrl?.trim();
+    const primaryImage = image
+      ? {
+          "@type": "ImageObject",
+          "@id": `${url}#primaryimage`,
+          url: absoluteUrl(site, routeMode, image),
+          contentUrl: absoluteUrl(site, routeMode, image),
+          caption: content.label
+        }
+      : undefined;
+    const faq = content.faqItems
+      .map(([question, answer]) => faqQuestionNode(site, question, answer))
+      .filter(Boolean);
+    return [{
+      "@context": "https://schema.org",
+      "@graph": [
+        organizationSchema(site, routeMode, context, pagePath),
+        websiteSchema(site, routeMode),
+        breadcrumbs(site, routeMode, pagePath, content.label),
+        {
+          "@type": "WebPage",
+          "@id": `${url}#webpage`,
+          name: content.title,
+          description: content.description,
+          url,
+          inLanguage: "fr-FR",
+          ...(primaryImage ? { primaryImageOfPage: primaryImage } : {}),
+          isPartOf: { "@id": `${storefrontBaseUrl(site, routeMode)}#website` },
+          publisher: { "@type": "Organization", name: siteBrandName(site), url: storefrontBaseUrl(site, routeMode) }
+        },
+        {
+          "@type": "Service",
+          "@id": `${url}#service`,
+          name: content.label,
+          description: content.description,
+          serviceType: "service de création et retouche photo avec IA",
+          provider: { "@id": `${storefrontBaseUrl(site, routeMode)}#organization` },
+          url
+        },
+        ...(faq.length ? [{ "@type": "FAQPage", inLanguage: "fr-FR", mainEntity: faq }] : [])
+      ]
+    }];
+  }
   const frenchEngagementPage = pageSlug === "engagement-photo" && isAidreamshootsEngagementFrenchPage(site, AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.canonicalPath);
   const pagePath = frenchEngagementPage
     ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.canonicalPath
@@ -1246,14 +1579,37 @@ export function buildCollectionDirectoryJsonLd({
   const path = schemaPagePath(site, routeMode, pagePath);
   const url = absoluteUrl(site, routeMode, path);
   const siteName = siteBrandName(site);
-  const title = frenchEngagementPage ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoTitle : context.seo.title;
-  const description = frenchEngagementPage ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoDescription : context.seo.description;
+  const title = frenchEngagementPage
+    ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoTitle
+    : isSpanishXbySite(site)
+      ? item.title
+      : context.seo.title;
+  const description = frenchEngagementPage
+    ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.seoDescription
+    : isSpanishXbySite(site)
+      ? item.description
+      : context.seo.description;
   const pageMedia = isPrimaryMyDreamShootsSite(site) ? context.publishedPageMedia : undefined;
-  const matchingPacks = projectPublicCreativePacks(context, creativePacks)
+  const scopedCreativePacks = creativePacks.length ? creativePacks : context.catalog.activePacks;
+  // Focused collection renders can contain a non-empty scoped projection that
+  // belongs to a different legacy category. For XBY, use the full relational
+  // catalogue whenever that projection cannot resolve the requested theme, so
+  // the page still receives its real Product node instead of an empty list.
+  const sourceCreativePacks = isSpanishXbySite(site) && !scopedCreativePacks.some((pack) => packMatchesCollectionSlug(site, pack, item.slug))
+    ? context.catalog.activePacks
+    : scopedCreativePacks;
+  const projectedPacks = projectPublicCreativePacks(context, sourceCreativePacks);
+  const publicPacks = isSpanishXbySite(site)
+    ? sourceCreativePacks.filter((pack) => pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0)
+    : projectedPacks;
+  const matchingPacks = publicPacks
     .filter((pack) => packMatchesCollectionSlug(site, pack, item.slug))
     .filter((pack) => !pageMedia || pack.id === pageMedia.packId);
-  const schemaPacks = frenchEngagementPage && !matchingPacks.length
-    ? creativePacks.filter((pack) => pack.status === "active" && (!pageMedia || pack.id === pageMedia.packId)).slice(0, 1)
+  const specialEngagementPack = frenchEngagementPage
+    ? publicPacks.find((pack) => packMatchesCollectionSlug(site, pack, "engagement-photo"))
+    : undefined;
+  const schemaPacks = frenchEngagementPage
+    ? specialEngagementPack ? [specialEngagementPack] : matchingPacks
     : matchingPacks;
   const faqPack = schemaPacks[0];
   const faqLabel = cleanText(faqPack?.name, item.label);
@@ -1270,8 +1626,8 @@ export function buildCollectionDirectoryJsonLd({
     ? collectionPageCopy.faqItems.map((faqItem) => "question" in faqItem
       ? [faqItem.question, faqItem.answer] as [string, string]
       : [faqItem[0], faqItem[1]] as [string, string])
-    : !faqPack ? [] : isSpanishXbySite(site)
-    ? [
+    : isSpanishXbySite(site)
+    ? getSeoDirectoryContentForSite(site, "collection", item.slug).faqItems ?? (!faqPack ? [] : [
         [`Que es el paquete ${faqLabel}?`, isAidreamcapesSite(site)
           ? `${faqLabel} es un album privado que convierte fotos fuente aprobadas en una galeria de ocasion con creditos visibles y resultados listos para descargar.`
           : `${faqLabel} es un tema que convierte fotos fuente aprobadas en una galeria privada con estilo consistente, creditos visibles y resultados listos para descargar.`],
@@ -1279,7 +1635,7 @@ export function buildCollectionDirectoryJsonLd({
         [`Cuantas imagenes crea ${faqLabel}?`, `Este paquete esta configurado para ${faqOutputCount} imagenes, y el coste de ${faqCreditCost} creditos se muestra antes de iniciar la solicitud.`],
         [isAidreamcapesSite(site) ? "Donde quedan los albumes terminados?" : "Donde quedan las imagenes terminadas?", "Los resultados terminados permanecen en tu galeria privada para revisar, conservar y descargar."],
         ["Que ocurre si falla la generacion?", "Si una solicitud del proveedor se interrumpe antes de la entrega, los creditos reservados se liberan o se devuelven segun el estado."]
-      ]
+      ])
     : [
         [`What is the ${faqLabel} package?`, isAidreamcapesSite(site)
           ? `${faqLabel} is a focused Aidreamcapes private album that turns approved source photos into fan, game-day, premiere, holiday, creator, or occasion imagery with visible credit cost and download-ready results. It is designed for customers who want a private gallery around one clear moment instead of a generic image generator.`
@@ -1295,7 +1651,8 @@ export function buildCollectionDirectoryJsonLd({
         ["What happens if generation fails?", "If a provider request is interrupted before delivery, reserved credits are released or returned according to the request status so you can retry from the workspace. Keep the job reference if you contact support about a failed generation, missing gallery, or credit question."]
       ];
   const uniqueCollectionFaqItems = Array.from(new Map(collectionFaqItems.map((entry) => [entry[0], entry])).values());
-  const itemListElement = schemaPacks.map((entry, index) => {
+  const itemListElement = schemaPacks.length
+    ? schemaPacks.map((entry, index) => {
     const pack = entry as CreativePack;
     const name = cleanText(pack.name, item.label);
     const image = cleanText(pack.imageUrl);
@@ -1313,7 +1670,20 @@ export function buildCollectionDirectoryJsonLd({
         ...(image ? { image: absoluteUrl(site, routeMode, image) } : {})
       }
     };
-  });
+      })
+    : frenchEngagementPage
+      ? [{
+          "@type": "ListItem",
+          position: 1,
+          item: {
+            "@type": "Service",
+            name: item.label,
+            description: item.description,
+            url,
+            image: absoluteUrl(site, routeMode, "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-engagement-13-20260912-v1/occasion-2d7b23bf0f95.webp")
+          }
+        }]
+      : [];
   const graph: JsonLdNode[] = [
     breadcrumbs(site, routeMode, pagePath, item.label),
     {
@@ -1321,22 +1691,23 @@ export function buildCollectionDirectoryJsonLd({
       name: title,
       description,
       url,
+      ...(isSpanishXbySite(site) || frenchEngagementPage ? { inLanguage: "es-ES" } : {}),
       isPartOf: { "@id": `${storefrontBaseUrl(site, routeMode)}#website` },
       publisher: { "@type": "Organization", name: siteName, url: storefrontBaseUrl(site, routeMode) }
     },
-    {
+    ...(itemListElement.length ? [{
       "@type": "ItemList",
       name: frenchEngagementPage ? `${item.label}: ejemplos y opciones` : isSpanishXbySite(site) ? `${item.label} opciones de foto` : `${item.label} photo options`,
       description: item.intro,
       url,
       itemListElement
-    },
-    {
+    }] : []),
+    ...(uniqueCollectionFaqItems.length ? [{
       "@type": "FAQPage",
       mainEntity: uniqueCollectionFaqItems
         .map(([question, answer]) => faqQuestionNode(site, question, answer))
         .filter(Boolean)
-    },
+    }] : []),
     ...(schemaPacks.length === 1
       ? [packProductSchema({
           site,

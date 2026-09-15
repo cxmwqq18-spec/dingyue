@@ -3,6 +3,7 @@ import { cookies, headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost, publicSiteUrl, siteAdminPathForHost } from "@/lib/domain-routing";
 import { findPage } from "@/lib/data";
+import { imageThemeDetailContentFromPage } from "@/lib/aidreamcapes-image-theme-content";
 import {
   readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
   readStorefrontPlatformStateFromDatabase,
@@ -27,12 +28,13 @@ import { isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-pub
 import { customerSessionCookie } from "@/lib/session";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
+import { isAidreamcapesImageThemePath, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
-import { aidreamcapesLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -48,7 +50,6 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "image-studio": "/tools",
   "portrait-generator": "/tools/fan-scene-album-builder",
   "portrait-maker": "/tools/fan-scene-album-builder",
-  "product-reverie": "/tools/permission-safe-photo-planner",
   "soft-glam": "/tools/premiere-portrait-set-builder",
   "couple-escape-album": "/tools/birthday-fan-moment-maker",
   "wedding-portraits": "/tools/birthday-fan-moment-maker",
@@ -62,7 +63,6 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "editorial-getaway": "/tools/premiere-portrait-set-builder",
   "cafe-street-story": "/tools/premiere-portrait-set-builder",
   "cinematic-travel": "/tools/game-day-group-portrait-maker",
-  "route-moodboard": "/tools/permission-safe-photo-planner",
   "social-keepsake": "/tools/birthday-fan-moment-maker",
   "family-travel-keepsakes": "/tools/thanksgiving-keepsake-set-maker",
   "seasonal-celebration-album-maker": "/tools/new-year-countdown-album-maker",
@@ -173,7 +173,6 @@ const AIDREAMCAPES_LEGACY_BLOG_TOOL_REDIRECTS: Record<string, string> = {
   "halloween-party-portrait-maker": "/blog/halloween-party-portrait-set-photo-package-guide",
   "costume-cast-album-builder": "/blog/costume-cast-photo-album-photo-package-guide",
   "birthday-fan-moment-maker": "/blog/birthday-fan-moment-set-photo-package-guide",
-  "permission-safe-photo-planner": "/blog/family-occasion-portrait-album-photo-package-guide"
 };
 const AIDREAMCAPES_LEGACY_BLOG_VIDEO_REDIRECTS: Record<string, string> = {
   "coastal-motion": "/blog/private-fan-scene-album-photo-package-guide",
@@ -266,8 +265,14 @@ function isMydreamshootsPublicSlug(slug: string | undefined): boolean {
   return value === "grownstride" || value === "mydreamshoots";
 }
 
+function isAidreamshootsPublicSlug(slug: string | undefined): boolean {
+  const value = slug ?? "";
+  return value === "aidreamshoots" || value === "aidreamshoots-eu" || value === "mydreamshoots-xby";
+}
+
 function fallbackCollectionRootPathForHost(host: string | null | undefined): string {
-  return isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null])) || knownWorkspaceSiteSlugForHost([host ?? null]) === "aidreamcapes" ? "/ai-image-generation" : "/collections";
+  const siteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
+  return isMydreamshootsPublicSlug(siteSlug) || isAidreamshootsPublicSlug(siteSlug) || siteSlug === "aidreamcapes" ? "/ai-image-generation" : "/collections";
 }
 
 function redirectMydreamshootsLegacyTool(site: { slug: string; name: string; branding: { logoText: string } }, toolSlug: string): void {
@@ -438,6 +443,25 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const firstSegment = path[0] ?? "";
   const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
   const requestedPath = `/${path.join("/")}`;
+  const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
+  const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
+  if (isAidreamshootsPublicSlug(hostSiteSlug) && aidreamshootsLegacyVideoSaveTheDatePath(requestedPath)) return {};
+  if (isRetiredAidreamcapesImageToolPath(hostSiteSlug, requestedPath)) return {};
+  if (isAidreamcapesImageThemePath(hostSiteSlug, requestedPath)) {
+    const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, requestedPath);
+    const detailSite = (detailState ? getSiteByHostCandidatesFromState(detailState, hostCandidates) : undefined) ?? detailState?.sites[0];
+    const detailPage = detailSite ? findPage(detailSite, requestedPath) : undefined;
+    return detailState && detailSite && detailPage && imageThemeDetailContentFromPage(detailPage)
+      ? metadataForPublishedStorefrontPage({
+          site: detailSite,
+          page: detailPage,
+          path: requestedPath,
+          products: detailState.products,
+          creativePacks: detailState.creativePacks,
+          snapshot: createPublishedSiteSnapshot(detailState, detailSite, { source: "platform-state" })
+        })
+      : {};
+  }
   const isMydreamshootsHost = isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]));
   if (isMydreamshootsHost && isMydreamshootsRetiredPublicPath(requestedPath)) return {};
   if (isMydreamshootsHost && requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
@@ -446,6 +470,10 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if (firstSegment === "account") {
     const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
     return { title: spanishTitle ? "Cuenta" : "Account", robots: { index: false, follow: false } };
+  }
+  if (firstSegment === "login") {
+    const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
+    return { title: spanishTitle ? "Espacio privado" : "Private workspace", robots: { index: false, follow: false } };
   }
   if (firstSegment === "app" || firstSegment === "dashboard") {
     const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
@@ -463,7 +491,6 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     : isVideoGenerationRequest
     ? path[1] ? `/ai-video-generation/${path[1]}` : "/ai-video-generation"
     : path[0] === "tools" && path[1] ? `/tools/${path[1]}` : mydreamLegacyTarget ?? publicContentPageSlug(`/${path.join("/")}`);
-  const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const state = await getHostPublicRuntimeStateWithFallback(hostCandidates, metadataPageSlug);
   if (!state) return {};
   const site = getSiteByHostCandidatesFromState(state, hostCandidates) ?? state.sites[0];
@@ -582,6 +609,12 @@ export default async function HostStorefrontCatchAllPage({
   }
   const slug = `/${path.join("/")}`;
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
+  if (slug === "/404") notFound();
+  const aidreamshootsLegacySaveTheDateTarget = isAidreamshootsPublicSlug(hostSiteSlug)
+    ? aidreamshootsLegacyVideoSaveTheDatePath(slug)
+    : undefined;
+  if (aidreamshootsLegacySaveTheDateTarget) permanentRedirect(aidreamshootsLegacySaveTheDateTarget);
+  if (isRetiredAidreamcapesImageToolPath(hostSiteSlug, slug)) notFound();
   if (hostSiteSlug === "aidreamcapes") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);
     if (legacySaveTheDateTarget) permanentRedirect(legacySaveTheDateTarget);
@@ -642,6 +675,21 @@ export default async function HostStorefrontCatchAllPage({
     const siteSlug = await getHostSiteSlugShellWithFallback(hostCandidates);
     if (!siteSlug) notFound();
     return renderCustomerWorkspacePageBySlug({ siteSlug, slug, query, routeMode: "host" });
+  }
+  if (isAidreamcapesImageThemePath(hostSiteSlug, slug)) {
+    const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, slug);
+    const detailSite = (detailState ? getSiteByHostCandidatesFromState(detailState, hostCandidates) : undefined) ?? detailState?.sites[0];
+    const detailPage = detailSite ? findPage(detailSite, slug) : undefined;
+    if (!detailState || !detailSite || !detailPage || !imageThemeDetailContentFromPage(detailPage)) notFound();
+    return renderStorefrontPage({
+      site: detailSite,
+      slug,
+      publicPath: slug,
+      query: searchParams ? await searchParams : {},
+      routeMode: "host",
+      state: detailState,
+      deferCustomerRuntime: true
+    });
   }
   const isCollectionRequest = isCollectionRouteRequest(path);
   const isVideoGenerationRequest = isVideoGenerationRouteRequest(path);

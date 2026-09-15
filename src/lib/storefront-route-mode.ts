@@ -25,6 +25,7 @@ function publicHostMatchesSite(host: string | null | undefined, siteSlug: string
 }
 
 export function storefrontRouteModeForHeaders(headers: HeaderReader, siteSlug: string): StorefrontRouteMode {
+  if (headers.get("x-storefront-route-mode") === "host") return "host";
   if (publicHostMatchesSite(headers.get("x-forwarded-host"), siteSlug)) return "host";
   if (publicHostMatchesSite(headers.get("host"), siteSlug)) return "host";
   return "path";

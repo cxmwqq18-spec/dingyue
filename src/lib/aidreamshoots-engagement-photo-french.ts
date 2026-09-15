@@ -4,11 +4,11 @@ export const AIDREAMSHOOTS_ENGAGEMENT_FRENCH_PATH = "/ai-image-generation/engage
 const AIDREAMSHOOTS_ENGAGEMENT_LEGACY_PATH = "/collections/engagement-photo";
 
 export const AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY = {
-  seoTitle: "Fotos de compromiso con IA para pedidas de mano y anuncios | AIdreamshoots",
+  seoTitle: "Fotos de compromiso con IA | AIdreamshoots",
   seoDescription: "Crea fotos de compromiso con IA para una pedida de mano, un anuncio de pareja, un primer plano del anillo y recuerdos románticos en un álbum privado.",
   seoKeywords: "fotos de compromiso con IA, fotos de pedida de mano, anuncio de compromiso, fotos de pareja, álbum de fotos privado",
   canonicalPath: AIDREAMSHOOTS_ENGAGEMENT_FRENCH_PATH,
-  label: "Fotos de compromiso",
+  label: "Fotos de compromiso con IA",
   headline: "Fotos de compromiso con IA para tu pedida de mano",
   metaLabel: "Fotos de compromiso",
   tags: ["Pedida de mano", "Anuncio de compromiso", "Historia de pareja", "Anillo", "Álbum privado"],
@@ -107,6 +107,14 @@ const PAGE_TEXT_REPLACEMENTS: Record<string, string> = {
   "Paquetes de fotos para perfiles, pareja y álbumes.": "Paquetes de fotos para perfiles, parejas y álbumes privados.",
   "Ideas de fotos y vídeos con IA con IA": "Ideas de fotos y vídeos con IA para tus anuncios",
   "De selfie un album privado.": "Del selfie al álbum privado.",
+  "Convierte tus fotos en vídeos con IA, vídeos personalizados para guardar la fecha, retratos profesionales y conjuntos de fotos tematicos.": "Convierte tus fotos en vídeos con IA, vídeos personalizados para guardar la fecha, retratos profesionales y conjuntos de fotos temáticos.",
+  "Compara retratos profesionales, pareja, creador, belleza o álbumes tematicos.": "Compara retratos profesionales, fotos de pareja, creadores, belleza o álbumes temáticos.",
+  "Guarda favoritos desde tu galeríun privada.": "Guarda tus favoritos desde tu galería privada.",
+  "Los créditos se reservan cuando confirmas una generación. Si el pedido falla, el flujo devuelve el saldo segun el estado del trabajo.": "Los créditos se reservan cuando confirmas una generación. Si el pedido falla, el saldo se devuelve según el estado del trabajo.",
+  "CREACION DE VÍDEO Y FOTOS CON IA": "CREACIÓN DE VÍDEO Y FOTOS CON IA",
+  "Empezar un crear": "Empezar a crear",
+  "PAQUETE PREGUNTAS": "PREGUNTAS SOBRE EL PAQUETE",
+  "retrato estilizado para una galeria privada.": "Retrato de referencia para una galería privada de AIdreamshoots.",
   "Preguntas frecuentes": "Preguntas frecuentes",
   "¿Listo para probar AIdreamshoots?": "¿Listo para probar AIdreamshoots?",
   "Crear mi primer conjunto de fotos": "Crear mi primera serie de fotos",
@@ -126,6 +134,26 @@ const PAGE_TEXT_REPLACEMENTS: Record<string, string> = {
   "Puedo probar estilos distintos?": "¿Puedo probar distintos estilos?",
   "Donde veo mis álbumes?": "¿Dónde veo mis álbumes?"
 };
+
+function correctSpanishOrthography(value: string): string {
+  if (!value || value.includes("://") || value.startsWith("/")) return value;
+  return value
+    .replace(/\bgaleríun\b/gi, "galería")
+    .replace(/\bcreditos\b/g, "créditos")
+    .replace(/\bimagenes\b/g, "imágenes")
+    .replace(/\balbumes\b/g, "álbumes")
+    .replace(/\bgaleria\b/g, "galería")
+    .replace(/\btematicos\b/g, "temáticos")
+    .replace(/\btematicas\b/g, "temáticas")
+    .replace(/\bdireccion\b/g, "dirección")
+    .replace(/\bsegun\b/g, "según")
+    .replace(/\bdespues\b/g, "después")
+    .replace(/\bsesion\b/g, "sesión")
+    .replace(/\bSan Valentin\b/g, "San Valentín")
+    .replace(/\bAccion de Gracias\b/g, "Acción de Gracias")
+    .replace(/\bCATEGORIAS\b/g, "CATEGORÍAS")
+    .replace(/\bCREACION\b/g, "CREACIÓN");
+}
 
 function normalizePath(value: string | undefined): string {
   const path = String(value ?? "").split("?")[0].split("#")[0].replace(/\/+$/, "");
@@ -161,11 +189,11 @@ export function aidreamshootsEngagementFrenchRelatedLabel(value: string): string
 
 function localizeString(value: string): string {
   const exact = PAGE_TEXT_REPLACEMENTS[value.trim()];
-  if (exact) return exact;
-  return value
+  if (exact) return correctSpanishOrthography(exact);
+  return correctSpanishOrthography(value
     .split("|")
     .map((part) => PAGE_TEXT_REPLACEMENTS[part.trim()] ?? part)
-    .join("|");
+    .join("|"));
 }
 
 function localizeValue(value: ThemeSettingValue, key = ""): ThemeSettingValue {

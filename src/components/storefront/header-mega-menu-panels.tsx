@@ -2,11 +2,21 @@ import type { AnchorHTMLAttributes } from "react";
 import { ArrowRight, ChevronRight, PlayCircle } from "lucide-react";
 import { creativePackIconByName, suggestedCreativePackIconName } from "@/lib/creative-pack-icons";
 import type { SaveTheDateNavigationGroup } from "@/lib/types";
+import { canonicalSpanishXbyCollectionSlug } from "@/lib/spanish-storefronts";
 
 type NativeLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & { prefetch?: boolean };
 
 function Link({ prefetch: _prefetch, ...props }: NativeLinkProps) {
   return <a {...props} />;
+}
+
+function aidreamshootsCollectionHref(href: string, collectionsHref: string): string {
+  const [pathOnly, suffix = ""] = href.split(/([?#].*)/, 2);
+  const match = pathOnly.match(/(?:^|\/)\b(?:collections|ai-image-generation)(?:\/([^/]+))?\/?$/i);
+  if (!match) return href;
+  const slug = canonicalSpanishXbyCollectionSlug(match[1] ?? "");
+  const basePath = collectionsHref.replace(/\/ai-image-generation\/?$/i, "").replace(/\/$/, "");
+  return `${basePath}/ai-image-generation${slug ? `/${slug}` : ""}${suffix}`;
 }
 
 export type HeaderPhotoPackageMegaGroup = {
@@ -43,7 +53,7 @@ export type HeaderVideoGenerationTopic = {
   sortOrder?: number;
 };
 
-export function HeaderSaveTheDateMegaPanel({ groups, menuLabel, ctaHref, ctaLabel = "View all Save the Date themes", french = false, variantTone = "dark" }: { groups: SaveTheDateNavigationGroup[]; menuLabel: string; ctaHref?: string; ctaLabel?: string; french?: boolean; variantTone?: "dark" | "warm" }) {
+export function HeaderSaveTheDateMegaPanel({ groups, menuLabel, ctaHref, ctaLabel = "View all Save the Date themes", french = false, spanish = false, variantTone = "dark" }: { groups: SaveTheDateNavigationGroup[]; menuLabel: string; ctaHref?: string; ctaLabel?: string; french?: boolean; spanish?: boolean; variantTone?: "dark" | "warm" }) {
   const warm = variantTone === "warm";
   const visibleGroups = groups.map((group) => ({ ...group, items: group.items.filter((item) => item.status === "published" && Boolean(item.href.trim() && item.description?.trim() && item.imageUrl?.trim() && item.imageAlt?.trim())).sort((a, b) => a.sortOrder - b.sortOrder) })).filter((group) => group.items.length).sort((a, b) => a.sortOrder - b.sortOrder);
   const totalItems = visibleGroups.reduce((sum, group) => sum + group.items.length, 0);
@@ -53,7 +63,7 @@ export function HeaderSaveTheDateMegaPanel({ groups, menuLabel, ctaHref, ctaLabe
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
         <div>
           <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>{menuLabel}</span>
-          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{french ? `${visibleGroups.length} groupes · ${totalItems} thèmes` : `${visibleGroups.length} groups · ${totalItems} pages`}</p>
+          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{french ? `${visibleGroups.length} groupes · ${totalItems} thèmes` : spanish ? `${visibleGroups.length} grupos · ${totalItems} temas` : `${visibleGroups.length} groups · ${totalItems} pages`}</p>
         </div>
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
       </div>
@@ -98,22 +108,73 @@ function splitColumns<T>(items: T[], columnCount = 3): T[][] {
   return columns;
 }
 
-function categoryCountLabel(count: number, spanish: boolean, french: boolean): string {
+function categoryCountLabel(count: number, spanish: boolean, french: boolean, aidreamshoots = false): string {
   if (french) return count === 1 ? "catégorie" : "catégories";
-  if (spanish) return count === 1 ? "categoria" : "categorias";
+  if (spanish) return aidreamshoots ? (count === 1 ? "categoría" : "categorías") : (count === 1 ? "categoria" : "categorias");
   return count === 1 ? "category" : "categories";
 }
 
-function themeCountLabel(count: number, spanish: boolean, french: boolean): string {
+function themeCountLabel(count: number, spanish: boolean, french: boolean, aidreamshoots = false): string {
   if (french) return count === 1 ? "thème" : "thèmes";
-  if (spanish) return count === 1 ? "tema" : "themes";
+  if (spanish) return count === 1 ? "tema" : (aidreamshoots ? "temas" : "themes");
   return count === 1 ? "theme" : "themes";
 }
 
-function packagePanelTitle(aidreamcapes: boolean, spanish: boolean, french: boolean): string {
+function packagePanelTitle(aidreamcapes: boolean, spanish: boolean, french: boolean, aidreamshoots = false): string {
   if (french) return "Packs photo";
-  if (spanish) return aidreamcapes ? "Estudios de albumes de ocasion" : "Estudios de paquetes de fotos";
+  if (spanish) return aidreamcapes
+    ? aidreamshoots ? "Estudios de álbumes de ocasión" : "Estudios de albumes de ocasion"
+    : "Estudios de paquetes de fotos";
   return aidreamcapes ? "Occasion album studios" : "AI Image Generation";
+}
+
+function aidreamshootsSpanishPackageLabel(value: string): string {
+  const normalized = value.trim().toLowerCase().replace(/&/g, "and").replace(/[-_]+/g, " ").replace(/\s+/g, " ");
+  const labels: Record<string, string> = {
+    "best themes and presets": "Mejores temas y preajustes",
+    "mejores temas preajustes": "Mejores temas y preajustes",
+    "photo tools": "Herramientas de fotos",
+    "foto herramientas": "Herramientas de fotos",
+    "compromiso foto": "Fotos de compromiso",
+    "boda foto": "Fotos de boda",
+    "gala foto": "Fotos de gala",
+    "retrato profesional": "Retratos profesionales",
+    "retrato foto": "Fotos de retrato",
+    "peinado generador": "Generador de peinados",
+    "movimiento generador": "Generador de movimiento",
+    "festivos": "Fiestas",
+    "premium estilo de vida": "Estilo de vida premium",
+    "calle estilo": "Estilo callejero",
+    "cambiador de fondo": "Cambiador de fondo",
+    "eliminador de fondo": "Eliminador de fondo",
+    "mejorador de fotos": "Mejorador de fotos",
+    "retoque de retrato": "Retoque de retrato",
+    "enfocar imagen": "Enfocar imagen",
+    "editar con instrucciones": "Editar con instrucciones",
+    "tarjetas para redes": "Tarjetas para redes",
+    "san valentin foto": "Fotos de San Valentín",
+    "valentine photos": "Fotos de San Valentín",
+    "navidad foto": "Fotos de Navidad",
+    "christmas photos": "Fotos de Navidad",
+    "accion de gracias foto": "Fotos de Acción de Gracias",
+    "thanksgiving photo": "Fotos de Acción de Gracias",
+    "magico": "Mágico",
+    "mágico": "Mágico",
+    "profesional": "Profesional",
+    "estilo de vida creativo": "Estilo de vida creativo",
+    "borrador magico": "Borrador mágico",
+    "borrador mágico": "Borrador mágico",
+    "correccion de color": "Corrección de color",
+    "restauracion de fotos antiguas": "Restauración de fotos antiguas",
+    "banador": "Bañador",
+    "futbol": "Fútbol",
+    "halloween foto": "Halloween",
+    "fotos y videos con ia": "Halloween",
+    "fotos y vídeos con ia": "Halloween",
+    "solteros conciencia dia": "Día de la Conciencia de la Soltería",
+    "noir cinematografico": "Noir cinematográfico"
+  };
+  return labels[normalized] ?? value;
 }
 
 const photoPackageAccentPalette = ["#c958f2", "#ff7b2f", "#38a8ff", "#36d399", "#f4c542", "#ff5f8f"];
@@ -140,6 +201,7 @@ function photoPackageGroupVisual(group: HeaderPhotoPackageMegaGroup, index: numb
 }
 
 export function HeaderPhotoPackageMegaPanel({
+  aidreamshoots = false,
   aidreamcapes = false,
   collectionsHref,
   groups,
@@ -147,6 +209,7 @@ export function HeaderPhotoPackageMegaPanel({
   spanish = false,
   variant = "dark"
 }: {
+  aidreamshoots?: boolean;
   aidreamcapes?: boolean;
   collectionsHref: string;
   groups: HeaderPhotoPackageMegaGroup[];
@@ -157,14 +220,15 @@ export function HeaderPhotoPackageMegaPanel({
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
   const columns = splitColumns(groups, 3);
   const warm = variant === "warm";
+  const useAidreamshootsRoutes = aidreamshoots || /\/ai-image-generation(?:\/|$)/i.test(collectionsHref);
   return (
     <div className={warm ? "flex max-h-[var(--storefront-mega-panel-max-height,calc(100dvh-6.5rem))] flex-col overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffaf3]/[0.99] p-4 text-[#1e1712] shadow-[0_34px_110px_-62px_rgba(114,82,48,0.34)] ring-1 ring-[#d8b17e]/20 backdrop-blur-xl" : "flex max-h-[var(--storefront-mega-panel-max-height,calc(100dvh-6.5rem))] flex-col overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl"}>
       <div className="mb-4 flex items-center justify-center gap-3 text-center">
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
         <div>
-          <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>{packagePanelTitle(aidreamcapes, spanish, french)}</span>
+          <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>{packagePanelTitle(aidreamcapes, spanish, french, aidreamshoots)}</span>
           <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>
-            {`${groups.length} ${categoryCountLabel(groups.length, spanish, french)} \u00b7 ${totalItems} ${themeCountLabel(totalItems, spanish, french)}`}
+            {`${groups.length} ${categoryCountLabel(groups.length, spanish, french, aidreamshoots)} \u00b7 ${totalItems} ${themeCountLabel(totalItems, spanish, french, aidreamshoots)}`}
           </p>
         </div>
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
@@ -180,14 +244,14 @@ export function HeaderPhotoPackageMegaPanel({
                   <span className={warm ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#f6eadc] text-[#b86e36]" : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/[0.06]"} style={{ color: warm ? "#b86e36" : accent }}>
                     <Icon className="h-4 w-4" strokeWidth={1.9} />
                   </span>
-                  <span className="min-w-0 truncate text-[0.94rem] font-semibold leading-none">{group.label}</span>
+                  <span className="min-w-0 truncate text-[0.94rem] font-semibold leading-none">{aidreamshoots ? aidreamshootsSpanishPackageLabel(group.label) : group.label}</span>
                   <span className={warm ? "ml-auto text-[11px] font-medium text-[#9b8877]" : "ml-auto text-[11px] font-medium text-white/36"}>{group.items.length}</span>
                   <ChevronRight className={warm ? "h-3.5 w-3.5 shrink-0 rotate-90 text-[#9b8877] transition group-open/category:-rotate-90" : "h-3.5 w-3.5 shrink-0 rotate-90 text-white/36 transition group-open/category:-rotate-90"} strokeWidth={2} />
                 </summary>
                 <div className="mt-3 grid gap-2">
                   {group.items.map((item) => (
-                    <Link className={warm ? "group/package flex min-w-0 min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/package flex min-w-0 min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"} href={item.href} key={item.slug} prefetch={false}>
-                      <span className="min-w-0 flex-1 break-words text-[0.94rem] font-semibold leading-6">{item.label}</span>
+                    <Link className={warm ? "group/package flex min-w-0 min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/package flex min-w-0 min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"} href={useAidreamshootsRoutes ? aidreamshootsCollectionHref(item.href, collectionsHref) : item.href} key={item.slug} prefetch={false}>
+                      <span className="min-w-0 flex-1 break-words text-[0.94rem] font-semibold leading-6">{aidreamshoots ? aidreamshootsSpanishPackageLabel(item.label) : item.label}</span>
                       <ChevronRight className={warm ? "ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-[#b99675] transition group-hover/package:translate-x-0.5 group-hover/package:text-[#8f5327]" : "ml-auto mt-1 h-3.5 w-3.5 shrink-0 text-white/28 transition group-hover/package:translate-x-0.5 group-hover/package:text-white/56"} strokeWidth={2} />
                     </Link>
                   ))}
@@ -368,6 +432,7 @@ function mobileSummaryClass(dark: boolean): string {
 }
 
 export function HeaderMobilePhotoPackagesMenu({
+  aidreamshoots = false,
   aidreamcapes = false,
   collectionsHref,
   dark,
@@ -376,6 +441,7 @@ export function HeaderMobilePhotoPackagesMenu({
   menuLabel,
   spanish = false
 }: {
+  aidreamshoots?: boolean;
   aidreamcapes?: boolean;
   collectionsHref: string;
   dark: boolean;
@@ -385,6 +451,7 @@ export function HeaderMobilePhotoPackagesMenu({
   spanish?: boolean;
 }) {
   const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
+  const useAidreamshootsRoutes = aidreamshoots || /\/ai-image-generation(?:\/|$)/i.test(collectionsHref);
   const resolvedMenuLabel = menuLabel ?? (french ? "Packs photo" : spanish ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aidreamcapes ? "Occasion Albums" : "Browse packages");
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
@@ -398,14 +465,14 @@ export function HeaderMobilePhotoPackagesMenu({
           {groups.map((group) => (
             <details className={dark ? "group/mobile-category rounded-[12px] bg-black/16 px-2 py-1 open:bg-black/22" : "group/mobile-category rounded-[12px] bg-[#f8f2eb] px-2 py-1 open:bg-[#f3eadf]"} key={group.slug}>
               <summary className="flex min-h-10 cursor-pointer list-none items-center gap-2 text-sm font-semibold marker:hidden">
-                <span className="min-w-0 flex-1 truncate text-sm font-semibold leading-none">{group.label}</span>
+                <span className="min-w-0 flex-1 truncate text-sm font-semibold leading-none">{aidreamshoots ? aidreamshootsSpanishPackageLabel(group.label) : group.label}</span>
                 <span className={dark ? "text-[11px] text-white/36" : "text-[11px] text-[#8a7e72]"}>{group.items.length}</span>
                 <ChevronRight className={dark ? "h-3.5 w-3.5 rotate-90 text-white/36 transition group-open/mobile-category:-rotate-90" : "h-3.5 w-3.5 rotate-90 text-[#8a7e72] transition group-open/mobile-category:-rotate-90"} strokeWidth={2} />
               </summary>
               <div className="grid gap-1 pb-1 pl-3 pt-1">
                 {group.items.map((item) => (
-                  <Link className={dark ? "rounded-[10px] px-2 py-2 text-sm text-white/74 hover:bg-white/[0.06] hover:text-white" : "rounded-[10px] px-2 py-2 text-sm text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={item.href} key={item.slug} prefetch={false}>
-                    <span className="text-sm font-semibold leading-5">{item.label}</span>
+                  <Link className={dark ? "rounded-[10px] px-2 py-2 text-sm text-white/74 hover:bg-white/[0.06] hover:text-white" : "rounded-[10px] px-2 py-2 text-sm text-[#4f4944] hover:bg-white hover:text-[#171514]"} href={useAidreamshootsRoutes ? aidreamshootsCollectionHref(item.href, collectionsHref) : item.href} key={item.slug} prefetch={false}>
+                    <span className="text-sm font-semibold leading-5">{aidreamshoots ? aidreamshootsSpanishPackageLabel(item.label) : item.label}</span>
                   </Link>
                 ))}
               </div>

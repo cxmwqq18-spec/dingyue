@@ -52,6 +52,7 @@ export type SectionType =
   | "media_banner"
   | "talking_photo_landing"
   | "ai_video_topic_landing"
+  | "ai_image_theme_landing"
   | "before_after_gallery"
   | "header"
   | "footer"

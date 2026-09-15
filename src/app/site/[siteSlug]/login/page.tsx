@@ -16,7 +16,10 @@ export async function generateMetadata({ params }: { params: Promise<{ siteSlug:
   const site = state?.sites[0];
   const page = site?.pages.find((item) => item.slug === "/login");
   return site && page
-    ? metadataForPublishedStorefrontPage({ site, page, products: state?.products, creativePacks: state?.creativePacks })
+    ? {
+        ...metadataForPublishedStorefrontPage({ site, page, products: state?.products, creativePacks: state?.creativePacks }),
+        robots: { index: false, follow: false }
+      }
     : {};
 }
 

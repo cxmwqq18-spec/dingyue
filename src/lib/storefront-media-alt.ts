@@ -20,6 +20,7 @@ type PackAltInput = {
   locale?: StorefrontMediaAltLocale;
   meta?: string;
   role?: StorefrontMediaAltRole;
+  themeSlug?: string;
   title: string;
 };
 
@@ -32,6 +33,8 @@ const filenameLikeAltPattern = /^[a-z0-9][a-z0-9 -]{1,72}\s+image$/i;
 const urlLikePattern = /\bhttps?:\/\/\S+|(?:^|\s)\/assets\/\S+|(?:^|\s)[\w./-]+\.(?:png|jpe?g|webp|avif|svg)(?:\?\S+)?/gi;
 const templatedSceneAltPattern = /\b(?:portrait with polished|theme scene|representative cover image|enhanced portrait preview|ai video theme cover)\b/i;
 const productionDirectionAltPattern = /\b(?:scene\s*\d+|escena\s*\d+|framing|encuadre|crop|recorte|lighting|luz|studio\s+light|luz\s+de\s+estudio|visual\s+reference|referencia\s+visual|prompt|production|camera|camara|shot|toma|close[- ]?up|half[- ]?body|wide\s+view|cinematic\s+contrast|editorial\s+lighting)\b/i;
+const frenchAltEnglishLeakPattern = /\b(?:showing|against|softly|blurred|background|smiling|three-quarter|candid|seated|confident|focused|everyday|inviting|polished|prompt|custom|set)\b/i;
+const spanishAltPattern = /\b(?:imagen|escaparate|retrato|retratos|galeria|galerías|escena|portada|paquete|privad[oa]|generad[oa]|fotos?|videos?)\b/i;
 const genericImageParentPattern = /^(?:assets|sites|theme|generated|frames|media|images|20260622-homepage-unique|\d{8}-.+)$/i;
 const stableSourceImagePattern = /\/assets\/dreamshoot\/(?:generated\/(?:video-topic-media|pack-covers|pack-galleries|20260622-homepage-unique)|frames\/|seasonal\/|save-the-date\/|wedding-invitation\/)/i;
 const canonicalSourceAltByPath: Record<string, string> = {
@@ -125,11 +128,21 @@ function imageTopicFromUrl(imageUrl: string | undefined): string {
 
 function frenchThemeSubject(key: string): string | undefined {
   if (/\b(?:credit|subscription|plan|pricing|checkout)\b/.test(key)) return "Panneau de crédits pour galeries photo privées";
+  if (/(background-changer|background-replacement|product-style)/.test(key)) return "Sujet intégré dans un nouvel arrière-plan";
+  if (/(background-remover|cutout|remove-background)/.test(key)) return "Sujet détouré sur un fond neutre";
+  if (/(color-correction|colour-correction|color-grading)/.test(key)) return "Photo aux couleurs rééquilibrées";
+  if (/(edit-by-prompt|prompt-edit|custom-edit)/.test(key)) return "Portrait modifié selon une consigne";
   if (/(christmas|thanksgiving|friendsgiving|gratitude|halloween|spooky|costume|holiday|seasonal|winter|new-year)/.test(key)) return "Portrait de fête de saison";
   if (/(fan-scene|supporter|fan-letter|fan-keepsake|backstage|meetup|birthday-fan|fan-card|private-fan)/.test(key)) return "Portrait de supporter pour un album privé";
   if (/(gala|red-carpet|premiere|vip|award|spotlight|formal|evening)/.test(key)) return "Portrait d’événement de style tapis rouge";
   if (/(anime-avatar|avatar)/.test(key)) return "Portrait d’avatar anime stylisé";
   if (/(cyberpunk|neon|noir|mafia)/.test(key)) return "Portrait de personnage au style cinématographique";
+  if (/(magic-eraser|object-removal|erase-object)/.test(key)) return "Photo retouchée sans élément indésirable";
+  if (/(old-photo-restoration|photo-restoration|restore-photo)/.test(key)) return "Photo ancienne restaurée";
+  if (/(portrait-retouch|retouche-portrait|skin-retouch)/.test(key)) return "Portrait retouché au rendu naturel";
+  if (/(unblur-image|deblur|sharpen)/.test(key)) return "Photo rendue plus nette";
+  if (/(photo-enhancer|magic-upscaler|upscale)/.test(key)) return "Photo améliorée avec davantage de détails";
+  if (/(virtual-try-on|try-on|clothing)/.test(key)) return "Adulte présentant une tenue de mode";
   if (/(profile-cards|social-cards|profile|social)/.test(key)) return "Portrait pour une carte de profil social";
   if (/(headshot|professional|business|linkedin|executive)/.test(key)) return "Portrait professionnel";
   if (/(video|motion|clip|animation|teaser)/.test(key)) return "Aperçu de portrait prêt pour la vidéo";
@@ -140,6 +153,52 @@ function frenchThemeSubject(key: string): string | undefined {
   if (/(travel|nature|route|coastal|destination|outdoor|road|mountain|cafe|island|villa)/.test(key)) return "Portrait de voyage dans un décor naturel";
   if (/(beauty|hairstyle|hair|try-on|fashion|boudoir)/.test(key)) return "Portrait beauté";
   return undefined;
+}
+
+const frenchEuPackSubjects: Record<string, string> = {
+  avatar: "Portrait d’avatar pour profil social",
+  "background-changer": "Sujet intégré dans un nouvel arrière-plan",
+  "background-remover": "Sujet détouré sur un fond neutre",
+  bikini: "Adulte en tenue balnéaire dans un décor de vacances",
+  "black-friday": "Portrait de campagne commerciale Black Friday",
+  boudoir: "Portrait boudoir adulte à l’éclairage doux",
+  cannes: "Portrait adulte inspiré de Cannes et de la Riviera",
+  "christmas-photo": "Portrait adulte dans une scène de Noël chaleureuse",
+  "color-correction": "Photo aux couleurs rééquilibrées naturellement",
+  cyberpunk: "Portrait adulte dans une ville cyberpunk éclairée au néon",
+  "edit-by-prompt": "Portrait adulte modifié selon une consigne créative",
+  "engagement-photo": "Portrait de couple pour une séance de fiançailles",
+  "gala-photo": "Portrait adulte dans une ambiance de gala élégante",
+  "hairstyle-generator": "Portrait adulte montrant une coiffure contemporaine",
+  "halloween-photo": "Portrait adulte dans une scène de fête d’Halloween",
+  headshot: "Portrait professionnel d’un adulte dans un cadre crédible",
+  holiday: "Portrait adulte dans une scène festive de saison",
+  mafia: "Portrait adulte au style noir inspiré du cinéma",
+  "magic-eraser": "Photo retouchée sans élément indésirable",
+  "motion-generator": "Portrait adulte composé pour une séquence en mouvement",
+  nightlife: "Portrait adulte dans une ambiance nocturne urbaine",
+  "old-photo-restoration": "Photo ancienne restaurée avec ses détails préservés",
+  "only-fans": "Portrait adulte de créateur dans un style mode élégant",
+  "photo-enhancer": "Photo améliorée avec davantage de détails naturels",
+  "portrait-photo": "Portrait adulte naturel dans un décor éditorial",
+  "portrait-retouch": "Portrait adulte retouché avec un rendu naturel",
+  "rich-lifestyle": "Portrait adulte dans un décor lifestyle premium",
+  "singles-awareness-day": "Portrait adulte célébrant l’autonomie et le bien-être",
+  soccer: "Portrait adulte de supporter dans une ambiance de stade",
+  "social-cards": "Portrait adulte conçu pour une carte de profil social",
+  "street-style": "Portrait adulte de style urbain dans une rue contemporaine",
+  swimsuit: "Adulte en maillot dans un décor de plage ou de piscine",
+  "thanksgiving-photo": "Portrait adulte dans une scène chaleureuse d’Action de grâce",
+  travel: "Portrait adulte dans un décor de voyage reconnaissable",
+  "unblur-image": "Photo rendue plus nette avec des détails lisibles",
+  urban: "Portrait adulte dans une scène urbaine contemporaine",
+  "valentines-photo": "Portrait de couple adulte pour la Saint-Valentin",
+  "virtual-try-on": "Adulte présentant une tenue de mode",
+  "wedding-photo": "Portrait de couple adulte dans une ambiance de mariage"
+};
+
+function frenchEuPackSubject(themeSlug: string | undefined): string | undefined {
+  return frenchEuPackSubjects[normalizeSlug(String(themeSlug ?? ""))];
 }
 
 function sourceSpecificAlt(
@@ -220,10 +279,12 @@ function meaningfulAltForStorefront(
   } else {
     const englishMarkers = languageMarkerCount(
       cleaned.toLowerCase(),
-      /\b(?:portrait|portraits|gallery|galleries|scene|scenes|showing|package|packages|supporter|stadium|generated|private|cover|frame|customer|review|download|with|for|from|before|after|source|quality|result|fit|delivery|business|headshot|neon|cyberpunk|travel|lifestyle|football|fan|avatar|creator|product|motion|ready|subscription|pricing|panel|album|options|image|images|photo|photos|video|videos|full|screen|view)\b/g
+      /\b(?:portrait|portraits|gallery|galleries|scene|scenes|showing|package|packages|supporter|stadium|generated|private|cover|frame|customer|review|download|with|for|from|before|after|source|quality|result|fit|delivery|business|headshot|neon|travel|lifestyle|football|fan|creator|product|motion|ready|subscription|pricing|panel|album|options|image|images|photo|photos|video|videos|full|screen|view)\b/g
     );
     if (locale === "es" ? englishMarkers > 0 : englishMarkers >= 3) return "";
   }
+  if (locale === "fr" && frenchAltEnglishLeakPattern.test(cleaned)) return "";
+  if (locale === "fr" && spanishAltPattern.test(cleaned)) return "";
   return cleaned;
 }
 
@@ -625,14 +686,22 @@ export function storefrontAccessibleMediaAlt({
   value?: string;
 }): string {
   const cleanedValue = meaningfulAlt(value);
-  const spanishEnglishMediaAltPattern = /\b(?:portrait|portraits|gallery|scene|showing|package|supporter|stadium|generated|private|cover|frame|customer|review|download|with|for|from|before|after|source|quality|result|fit|delivery|business|headshot|neon|cyberpunk|travel|lifestyle|football|fan|avatar|creator|product|motion|ready|subscription|pricing|panel|album|options|image|images|photo|photos|video|videos|full|screen|view)\b/i;
+  const spanishEnglishMediaAltPattern = /\b(?:portrait|portraits|gallery|scene|showing|package|supporter|stadium|generated|private|cover|frame|customer|review|download|with|for|from|before|after|source|quality|result|fit|delivery|business|headshot|neon|travel|lifestyle|football|fan|creator|product|motion|ready|subscription|pricing|panel|album|options|image|images|photo|photos|video|videos|full|screen|view)\b/i;
   const localizedValue = locale === "es" && spanishEnglishMediaAltPattern.test(cleanedValue)
     ? ""
-    : locale === "fr" ? frenchCopy(cleanedValue) : cleanedValue;
+    : locale === "fr" && spanishAltPattern.test(cleanedValue)
+      ? ""
+      : locale === "fr" && frenchAltEnglishLeakPattern.test(cleanedValue)
+        ? ""
+      : locale === "fr" ? frenchCopy(cleanedValue) : cleanedValue;
   const cleanedFallback = meaningfulAlt(fallback);
   const localizedFallback = locale === "es" && spanishEnglishMediaAltPattern.test(cleanedFallback)
     ? ""
-    : locale === "fr" ? frenchCopy(cleanedFallback) : cleanedFallback;
+    : locale === "fr" && spanishAltPattern.test(cleanedFallback)
+      ? ""
+      : locale === "fr" && frenchAltEnglishLeakPattern.test(cleanedFallback)
+        ? ""
+      : locale === "fr" ? frenchCopy(cleanedFallback) : cleanedFallback;
   const imageThemeKey = themeImageSlugParts(imageUrl).join(" ");
   const themedAlt = locale === "es"
     ? spanishThemeSubject(imageThemeKey)
@@ -651,7 +720,7 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
   const locale = input.locale ?? "en";
   const brand = cleanAltText(input.brand) || (locale === "es" ? "AIdreamshoots" : locale === "fr" ? "AIdreamcapes" : "MyDreamShoots");
   const explicit = meaningfulThemeAlignedAltForStorefront(input.explicitAlt, locale, brand, input.imageUrl);
-  const isPackGalleryImage = /\/pack-galleries\//i.test(String(input.imageUrl ?? ""));
+  const isPackGalleryImage = input.role === "gallery" || /\/pack-galleries\//i.test(String(input.imageUrl ?? ""));
   const rawGalleryAlt = (input.role === "gallery" || isPackGalleryImage)
     && typeof input.index === "number"
     ? meaningfulThemeAlignedAltForStorefront(input.galleryImageAlts?.[input.index], locale, brand, input.imageUrl)
@@ -667,17 +736,19 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
   const specificKey = themeKey(input);
   const imageKey = themeImageSlugParts(input.imageUrl).join(" ");
   const contextKey = contextualThemeKey(input);
+  const euPackSubject = locale === "fr" ? frenchEuPackSubject(input.themeSlug) : undefined;
   const specificScene = locale === "es" ? spanishThemeSubject(specificKey) : locale === "fr" ? frenchThemeSubject(specificKey) : englishThemeSubject(specificKey);
   const imageScene = locale === "es" ? spanishThemeSubject(imageKey) : locale === "fr" ? frenchThemeSubject(imageKey) : englishThemeSubject(imageKey);
   const contextScene = locale === "es" ? spanishThemeSubject(contextKey) : locale === "fr" ? frenchThemeSubject(contextKey) : englishThemeSubject(contextKey);
-  const scene = imageScene && (imageSlugHasSpecificTheme(imageKey) || !specificScene || genericSceneSubject(specificScene))
-    ? imageScene
-    : specificScene
-      ?? imageScene
-      ?? contextScene
-      ?? (locale === "es"
-        ? "retrato estilizado para una galeria privada"
-        : locale === "fr" ? "portrait stylisé pour une galerie privée" : "Portrait image");
+  const scene = euPackSubject
+    ?? (imageScene && (imageSlugHasSpecificTheme(imageKey) || !specificScene || genericSceneSubject(specificScene))
+      ? imageScene
+      : specificScene
+        ?? imageScene
+        ?? contextScene
+        ?? (locale === "es"
+          ? "retrato estilizado para una galeria privada"
+          : locale === "fr" ? "portrait stylisé pour une galerie privée" : "Portrait image"));
   const sourceAlt = sourceSpecificAlt(input.imageUrl, locale, input.title || imageScene || specificScene || contextScene);
   const normalizedExplicit = cleanAltText(explicit).toLowerCase();
   const genericSceneAlts = [specificScene, imageScene, contextScene]
@@ -702,7 +773,10 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
       ? spanishGalleryFallbackScenes
       : locale === "fr" ? frenchGalleryFallbackScenes : galleryFallbackScenes;
     const fallback = fallbackScenes[input.index % fallbackScenes.length];
-    return compactMediaAltSentence(`${scene}, ${fallback}`, locale);
+    // Keep the scene qualifier in the first clause. The compacting helper
+    // intentionally trims comma-separated text when an alt is long; a dash
+    // prevents every fallback image from collapsing to the same theme label.
+    return compactMediaAltSentence(`${scene} — ${fallback}`, locale);
   }
   if (stableSourceImagePattern.test(imageIdentity(input.imageUrl))) return sourceAlt;
   const fallbackScene = locale === "es"
@@ -781,6 +855,7 @@ export function storefrontCreativePackImageAlt({
     locale,
     meta: pack.categoryRecord?.parent?.label,
     role,
+    themeSlug: pack.categoryRecord?.slug || pack.category,
     title: pack.name
   });
 }

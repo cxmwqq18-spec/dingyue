@@ -360,8 +360,7 @@ function aidreamcapesDefaultToolBlocks(): SectionBlockInstance[] {
     ["friendsgiving-memory-maker", "Friendsgiving Memory Maker", "Occasion Card Tools"],
     ["halloween-party-portrait-maker", "Halloween Party Portrait Maker", "Holiday Album Tools"],
     ["costume-cast-album-builder", "Costume Cast Album Builder", "Holiday Album Tools"],
-    ["birthday-fan-moment-maker", "Birthday Fan Moment Maker", "Occasion Card Tools"],
-    ["permission-safe-photo-planner", "Permission-Safe Photo Planner", "Safety Prep Tools"]
+    ["birthday-fan-moment-maker", "Birthday Fan Moment Maker", "Occasion Card Tools"]
   ].map(([slug, title, category]) => ({
     id: `default_tool_${slug}`,
     type: "tool_card",

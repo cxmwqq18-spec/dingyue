@@ -11,11 +11,19 @@ function isGrownstrideHost(value: string | null | undefined): boolean {
   return host === "grownstride.com" || host === "www.grownstride.com" || host === "test.grownstride.com";
 }
 
+function isNonProductionHost(value: string | null | undefined): boolean {
+  const host = normalizeHost(value);
+  return /^(?:localhost|127\.0\.0\.1|\[::1\])$/i.test(host)
+    || /(?:^|\.)(?:localhost)$/i.test(host)
+    || /(?:^|[.-])(staging|preview)(?:[.-]|$)/i.test(host);
+}
+
 export async function GET(request: Request): Promise<Response> {
   const hostCandidates = [request.headers.get("x-forwarded-host"), request.headers.get("host")];
   const grownstride = hostCandidates.some(isGrownstrideHost);
+  const localOrStaging = hostCandidates.some(isNonProductionHost);
   const sitemap = storefrontSitemapUrlForHost(hostCandidates);
-  const body = grownstride
+  const body = grownstride || localOrStaging
     ? ["User-agent: *", "Disallow: /"]
     : sitemap
       ? ["User-agent: *", "Allow: /", `Sitemap: ${sitemap}`]
@@ -26,7 +34,7 @@ export async function GET(request: Request): Promise<Response> {
       "content-type": "text/plain; charset=utf-8",
       "cache-control": "no-store, max-age=0",
       "vary": "Host, X-Forwarded-Host",
-      ...(grownstride ? { "x-robots-tag": "noindex, nofollow" } : {})
+      ...((grownstride || localOrStaging) ? { "x-robots-tag": "noindex, nofollow" } : {})
     }
   });
 }

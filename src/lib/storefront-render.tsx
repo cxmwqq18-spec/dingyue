@@ -51,6 +51,7 @@ import {
   localizeAidreamshootsEngagementFrenchPageJson
 } from "@/lib/aidreamshoots-engagement-photo-french";
 import { isFrenchStorefrontSite } from "@/lib/storefront-locale";
+import { isolateAidreamcapesEnglishCollection } from "@/lib/storefront-data-isolation";
 import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection, withSeoDirectorySeo } from "@/lib/dreamshoot-seo-content";
 import { isMydreamshootsCollectionItemSlug, isMydreamshootsPublicVideoGenerationSlug, isMydreamshootsVideoGenerationSlug, parsePublicCollectionRouteForSite, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
@@ -235,15 +236,15 @@ function isStorefrontMediaReferenceKey(key: string): boolean {
 
 function getSiteRenderData(state: PlatformState, siteId: string): SiteRenderData {
   return {
-    creativePackCategories: (state.creativePackCategories ?? []).filter((category) => category.siteId === siteId),
-    creativePacks: (state.creativePacks ?? []).filter((pack) => pack.siteId === siteId),
-    mediaAssets: (state.mediaAssets ?? []).filter((asset) => asset.siteId === siteId),
-    products: (state.products ?? []).filter((product) => product.siteId === siteId),
-    siteAiApps: (state.siteAiApps ?? []).filter((app) => app.siteId === siteId),
-    toolMenuItems: (state.toolMenuItems ?? []).filter((item) => item.siteId === siteId),
-    videoThemeCategories: (state.videoThemeCategories ?? []).filter((category) => category.siteId === siteId),
-    videoThemes: (state.videoThemes ?? []).filter((theme) => theme.siteId === siteId),
-    homepageShowcases: []
+    creativePackCategories: isolateAidreamcapesEnglishCollection(siteId, (state.creativePackCategories ?? []).filter((category) => category.siteId === siteId)),
+    creativePacks: isolateAidreamcapesEnglishCollection(siteId, (state.creativePacks ?? []).filter((pack) => pack.siteId === siteId)),
+    mediaAssets: isolateAidreamcapesEnglishCollection(siteId, (state.mediaAssets ?? []).filter((asset) => asset.siteId === siteId)),
+    products: isolateAidreamcapesEnglishCollection(siteId, (state.products ?? []).filter((product) => product.siteId === siteId)),
+    siteAiApps: isolateAidreamcapesEnglishCollection(siteId, (state.siteAiApps ?? []).filter((app) => app.siteId === siteId)),
+    toolMenuItems: isolateAidreamcapesEnglishCollection(siteId, (state.toolMenuItems ?? []).filter((item) => item.siteId === siteId)),
+    videoThemeCategories: isolateAidreamcapesEnglishCollection(siteId, (state.videoThemeCategories ?? []).filter((category) => category.siteId === siteId)),
+    videoThemes: isolateAidreamcapesEnglishCollection(siteId, (state.videoThemes ?? []).filter((theme) => theme.siteId === siteId)),
+    homepageShowcases: isolateAidreamcapesEnglishCollection(siteId, [])
   };
 }
 
@@ -1216,7 +1217,7 @@ async function getPublishedHomepageShowcasesForHeader(
   currentSite: Site
 ): Promise<PublishedHomepageShowcaseItem[]> {
   const scopedSnapshot = createPublishedSiteSnapshot(state, currentSite);
-  const scopedShowcases = scopedSnapshot.publishedHomepageShowcases ?? [];
+  const scopedShowcases = isolateAidreamcapesEnglishCollection(currentSite.id, scopedSnapshot.publishedHomepageShowcases ?? []);
   const expectedSaveTheDateItems = currentSite.themeSettings.publishedJson.saveTheDateNavigation?.groups
     ?.flatMap((group) => group.items)
     .filter((item) => item.status === "published").length ?? 0;
@@ -1232,7 +1233,9 @@ async function getPublishedHomepageShowcasesForHeader(
   const publicState = await readStorefrontPublicRuntimeStateForSiteFromDatabase(site.id)
     ?? await getStateForStorefrontRender(site, routeMode);
   const publicSite = publicState.sites.find((item) => item.id === site.id);
-  return publicSite ? createPublishedSiteSnapshot(publicState, publicSite).publishedHomepageShowcases ?? [] : [];
+  return publicSite
+    ? isolateAidreamcapesEnglishCollection(currentSite.id, createPublishedSiteSnapshot(publicState, publicSite).publishedHomepageShowcases ?? [])
+    : [];
 }
 
 function runtimeWithEmptyCollections(runtime: Partial<ThemeRuntimeData> = {}): ThemeRuntimeData {
@@ -2558,7 +2561,6 @@ const aidreamcapesToolAliases = new Map<string, string>([
   ["background-changer", "fan-scene-album-builder"],
   ["background-remover", "fan-scene-album-builder"],
   ["image-to-video", "new-year-countdown-album-maker"],
-  ["product-reverie", "permission-safe-photo-planner"],
   ["soft-glam", "premiere-portrait-set-builder"],
   ["couple-escape-album", "birthday-fan-moment-maker"],
   ["wedding-portraits", "birthday-fan-moment-maker"],
@@ -2571,7 +2573,6 @@ const aidreamcapesToolAliases = new Map<string, string>([
   ["editorial-getaway", "premiere-portrait-set-builder"],
   ["cafe-street-story", "premiere-portrait-set-builder"],
   ["cinematic-travel", "game-day-group-portrait-maker"],
-  ["route-moodboard", "permission-safe-photo-planner"],
   ["social-keepsake", "birthday-fan-moment-maker"],
   ["family-travel-keepsakes", "thanksgiving-keepsake-set-maker"],
   ["seasonal-celebration-album-maker", "new-year-countdown-album-maker"],
@@ -2799,31 +2800,49 @@ function renderThemePage({
   const resolvedNavigationCreativePacks = activePackIds && navigationCreativePacks && !preserveMydreamshootsPhotoMenu
     ? navigationCreativePacks.filter((pack) => activePackIds.has(pack.id))
     : navigationCreativePacks;
+  const isolatedRenderData: SiteRenderData = {
+    ...renderData,
+    creativePackCategories: isolateAidreamcapesEnglishCollection(currentSite.id, renderData.creativePackCategories),
+    creativePacks: isolateAidreamcapesEnglishCollection(currentSite.id, resolvedCreativePacks),
+    mediaAssets: isolateAidreamcapesEnglishCollection(currentSite.id, renderData.mediaAssets),
+    products: isolateAidreamcapesEnglishCollection(currentSite.id, renderData.products),
+    siteAiApps: isolateAidreamcapesEnglishCollection(currentSite.id, renderData.siteAiApps),
+    toolMenuItems: isolateAidreamcapesEnglishCollection(currentSite.id, renderData.toolMenuItems),
+    videoThemeCategories: isolateAidreamcapesEnglishCollection(currentSite.id, renderData.videoThemeCategories),
+    videoThemes: isolateAidreamcapesEnglishCollection(currentSite.id, renderData.videoThemes),
+    homepageShowcases: isolateAidreamcapesEnglishCollection(currentSite.id, renderData.homepageShowcases)
+  };
+  const isolatedNavigationCreativePackCategories = isolateAidreamcapesEnglishCollection(currentSite.id, navigationCreativePackCategories ?? []);
+  const isolatedNavigationCreativePacks = isolateAidreamcapesEnglishCollection(currentSite.id, resolvedNavigationCreativePacks ?? []);
+  const isolatedNavigationToolMenuItems = isolateAidreamcapesEnglishCollection(currentSite.id, navigationToolMenuItems ?? []);
+  const isolatedNavigationVideoThemeCategories = isolateAidreamcapesEnglishCollection(currentSite.id, navigationVideoThemeCategories ?? []);
+  const isolatedNavigationVideoThemes = isolateAidreamcapesEnglishCollection(currentSite.id, navigationVideoThemes ?? []);
+  const isolatedNavigationVideoGenerationTopics = isolateAidreamcapesEnglishCollection(currentSite.id, navigationVideoGenerationTopics ?? []);
 
   return (
     <div style={themeStyleVars(resolvedSettings)}>
       <ThemeRenderer
-        creativePackCategories={renderData.creativePackCategories}
-        creativePacks={resolvedCreativePacks}
+        creativePackCategories={isolatedRenderData.creativePackCategories}
+        creativePacks={isolatedRenderData.creativePacks}
         page={page}
         pagePath={pagePath}
-        products={activeProductIds ? renderData.products.filter((product) => activeProductIds.has(product.id)) : renderData.products}
+        products={activeProductIds ? isolatedRenderData.products.filter((product) => activeProductIds.has(product.id)) : isolatedRenderData.products}
         query={query}
         routeMode={routeMode}
         runtime={runtime}
         settings={resolvedSettings}
         site={clientSiteForThemeRender(currentSite, page, pagePath)}
-        siteAiApps={renderData.siteAiApps}
-        navigationCreativePackCategories={navigationCreativePackCategories}
-        navigationCreativePacks={resolvedNavigationCreativePacks}
-        navigationToolMenuItems={navigationToolMenuItems}
-        navigationVideoThemeCategories={navigationVideoThemeCategories}
-        navigationVideoThemes={navigationVideoThemes}
-        navigationVideoGenerationTopics={navigationVideoGenerationTopics}
-        toolMenuItems={renderData.toolMenuItems}
-        videoThemeCategories={renderData.videoThemeCategories}
-        videoThemes={renderData.videoThemes}
-        homepageShowcases={renderData.homepageShowcases}
+        siteAiApps={isolatedRenderData.siteAiApps}
+        navigationCreativePackCategories={isolatedNavigationCreativePackCategories}
+        navigationCreativePacks={isolatedNavigationCreativePacks}
+        navigationToolMenuItems={isolatedNavigationToolMenuItems}
+        navigationVideoThemeCategories={isolatedNavigationVideoThemeCategories}
+        navigationVideoThemes={isolatedNavigationVideoThemes}
+        navigationVideoGenerationTopics={isolatedNavigationVideoGenerationTopics}
+        toolMenuItems={isolatedRenderData.toolMenuItems}
+        videoThemeCategories={isolatedRenderData.videoThemeCategories}
+        videoThemes={isolatedRenderData.videoThemes}
+        homepageShowcases={isolatedRenderData.homepageShowcases}
         lightweightChrome={lightweightChrome}
         storefrontContext={storefrontContext}
       />
@@ -3078,6 +3097,9 @@ export async function renderStorefrontPage({
   };
   const renderedPage = { ...page, publishedJson: pageJson };
   const storefrontContext = resolvePublishedStorefrontContext(publishedSnapshot, renderedPage);
+  const jsonLdCreativePacks = isSpanishStorefrontSite(currentSite)
+    ? (await getStorefrontPublicCreativePacksForSite(currentSite.id)).map(lightweightCreativePack)
+    : trimCreativePacksForStorefront(focusedCollectionRenderData, publicDirectoryPackLimit);
 
   return renderThemePage({
     currentSite,
@@ -3101,7 +3123,11 @@ export async function renderStorefrontPage({
           site: currentSite,
           collectionSlug: collectionCategory,
           routeMode,
-          creativePacks: trimCreativePacksForStorefront(focusedCollectionRenderData, publicDirectoryPackLimit),
+          // The focused body projection is intentionally narrow and may omit
+          // the relational pack row needed by Product JSON-LD (notably the
+          // engagement legacy alias). XBY schema should resolve against the
+          // complete site catalogue while the visible body remains scoped.
+          creativePacks: jsonLdCreativePacks,
           context: storefrontContext
         })
       : buildStorefrontJsonLd({
@@ -3162,6 +3188,7 @@ export async function renderStorefrontSectionNode({
       videoThemes={payload.renderData.videoThemes ?? []}
       homepageShowcases={payload.renderData.homepageShowcases ?? []}
       saveTheDateNavigationGroups={payload.renderData.saveTheDateNavigationGroups ?? []}
+      aidreamcapesVideoNavigation={payload.renderData.aidreamcapesVideoNavigation}
     />
   );
 }
@@ -3365,7 +3392,8 @@ export async function renderStorefrontSectionPayloads({
         videoThemeCategories: pageRenderData.videoThemeCategories,
         videoThemes: pageRenderData.videoThemes,
         homepageShowcases: pageRenderData.homepageShowcases,
-        saveTheDateNavigationGroups: settings.saveTheDateNavigation?.groups ?? []
+        saveTheDateNavigationGroups: settings.saveTheDateNavigation?.groups ?? [],
+        aidreamcapesVideoNavigation: settings.aidreamcapesZipNavigation
       },
       renderContext,
       storefrontContext,
@@ -3554,7 +3582,8 @@ export async function renderStorefrontSectionPayload({
       videoThemeCategories: pageRenderData.videoThemeCategories,
       videoThemes: pageRenderData.videoThemes,
       homepageShowcases: pageRenderData.homepageShowcases,
-      saveTheDateNavigationGroups: settings.saveTheDateNavigation?.groups ?? []
+      saveTheDateNavigationGroups: settings.saveTheDateNavigation?.groups ?? [],
+      aidreamcapesVideoNavigation: settings.aidreamcapesZipNavigation
     },
     renderContext,
     storefrontContext,

@@ -2651,6 +2651,16 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       text("contentKey", "Content key", "cinematic-video", "Selects the database-backed topic content stored on the published ThemePage.")
     ]
   },
+  ai_image_theme_landing: {
+    type: "ai_image_theme_landing",
+    label: "AI Image Theme Landing Page",
+    category: "Storefront",
+    description: "Customer-first AI image theme detail page with versioned SEO copy, media manifest, workflow guidance, examples, and FAQ content.",
+    settings: [
+      text("anchor", "Anchor", "ecommerce-main-image"),
+      text("contentKey", "Content key", "ecommerce-main-image", "Selects the database-backed image theme content stored on the published ThemePage.")
+    ]
+  },
   before_after_gallery: {
     type: "before_after_gallery",
     label: "Before / After Gallery",

@@ -13,6 +13,8 @@ import {
   publicVideoGenerationPathForSite
 } from "@/lib/photo-package-taxonomy";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { aidreamshootsXbyThemeContent } from "@/lib/aidreamshoots-xby-seo-content";
+import { AIDREAMCAPES_EU_THEME_SLUGS, aidreamcapesEuSeoContent } from "@/lib/aidreamcapes-eu-seo-content";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import { mydreamshootsPublishedRouteForSlug } from "@/lib/mydreamshoots-published-contract";
 import {
@@ -39,6 +41,7 @@ export type SeoDirectoryContent = {
   internalLinks: Array<{ label: string; href: string }>;
   ctaLabel: string;
   ctaHref: string;
+  faqItems?: Array<[string, string]>;
 };
 
 type SeoDirectorySeed = Omit<SeoDirectoryContent, "slug" | "explicit" | "canonicalPath" | "internalLinks"> & {
@@ -81,6 +84,10 @@ const mydreamshootsThemeItemsBySlug = new Map(mydreamshootsThemeTaxonomyData.ite
 function isAidreamcapesSite(site?: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding?: Pick<Site["branding"], "logoText"> }): boolean {
   if (!site) return false;
   return isAidreamcapesCapabilitySite(site);
+}
+
+function isAidreamcapesEuSite(site?: Pick<Site, "id">): boolean {
+  return site?.id === "site_aidreamcapes_xby";
 }
 
 function isSpanishXbySite(site?: Pick<Site, "id" | "slug" | "name" | "primaryDomain"> & { branding?: Pick<Site["branding"], "logoText"> }): boolean {
@@ -355,6 +362,70 @@ const spanishMydreamshootsPublicSeoPageMetadata: Record<string, DreamshootRouteM
     description: "Solicita colaborar con AIdreamshoots y comparte tu audiencia, canales, objetivos y encaje para campanas de fotos con IA.",
     keywords: "partners AIdreamshoots, colaboracion IA, registro creadores",
     canonicalPath: "/partner-registration",
+    index: true,
+    follow: true
+  },
+  "/privacy": {
+    title: "Politica de privacidad | AIdreamshoots",
+    description: "Consulta como AIdreamshoots trata tus datos, fotos fuente, resultados generados, cuenta, pagos y solicitudes de privacidad.",
+    keywords: "politica de privacidad AIdreamshoots, datos fotos IA, privacidad galeria privada",
+    canonicalPath: "/privacy",
+    index: true,
+    follow: true
+  },
+  "/children-privacy": {
+    title: "Privacidad infantil | AIdreamshoots",
+    description: "Conoce las reglas de AIdreamshoots para proteger la privacidad de menores y gestionar solicitudes relacionadas con contenido y datos.",
+    keywords: "privacidad infantil AIdreamshoots, datos de menores, fotos IA seguras",
+    canonicalPath: "/children-privacy",
+    index: true,
+    follow: true
+  },
+  "/state-privacy": {
+    title: "Derechos estatales de privacidad | AIdreamshoots",
+    description: "Revisa los derechos estatales de privacidad aplicables a tus datos personales y como solicitar su ejercicio en AIdreamshoots.",
+    keywords: "derechos estatales privacidad AIdreamshoots, privacidad datos personales, solicitudes privacidad",
+    canonicalPath: "/state-privacy",
+    index: true,
+    follow: true
+  },
+  "/terms": {
+    title: "Terminos de servicio | AIdreamshoots",
+    description: "Lee los terminos de servicio de AIdreamshoots para cuentas, creditos, fotos fuente, generaciones con IA, pagos y galerias privadas.",
+    keywords: "terminos de servicio AIdreamshoots, condiciones fotos IA, creditos y galerias",
+    canonicalPath: "/terms",
+    index: true,
+    follow: true
+  },
+  "/cookies": {
+    title: "Politica de cookies | AIdreamshoots",
+    description: "Consulta como AIdreamshoots utiliza cookies y tecnologias similares para mantener la cuenta, medir el servicio y mejorar la experiencia.",
+    keywords: "politica de cookies AIdreamshoots, cookies sitio fotos IA, privacidad web",
+    canonicalPath: "/cookies",
+    index: true,
+    follow: true
+  },
+  "/refunds": {
+    title: "Politica de reembolsos | AIdreamshoots",
+    description: "Consulta la politica de reembolsos de AIdreamshoots para creditos, pedidos de fotos y videos con IA y entregas digitales.",
+    keywords: "politica de reembolsos AIdreamshoots, reembolso creditos IA, pedidos digitales",
+    canonicalPath: "/refunds",
+    index: true,
+    follow: true
+  },
+  "/content": {
+    title: "Politica de contenido | AIdreamshoots",
+    description: "Revisa las reglas de contenido de AIdreamshoots para fotos fuente autorizadas, generaciones con IA, seguridad y uso responsable.",
+    keywords: "politica de contenido AIdreamshoots, fotos autorizadas, uso responsable IA",
+    canonicalPath: "/content",
+    index: true,
+    follow: true
+  },
+  "/digital-delivery": {
+    title: "Entrega digital | AIdreamshoots",
+    description: "Conoce como AIdreamshoots entrega resultados de fotos y videos con IA, galerias privadas, descargas y avisos de disponibilidad.",
+    keywords: "entrega digital AIdreamshoots, galeria privada, descarga fotos IA",
+    canonicalPath: "/digital-delivery",
     index: true,
     follow: true
   }
@@ -2588,8 +2659,7 @@ const aidreamcapesGeneratedToolDefs = [
   ["friendsgiving-memory-maker", "Friendsgiving Memory Maker", "friend-group portraits, host moments, and share-ready seasonal album images"],
   ["halloween-party-portrait-maker", "Halloween Party Portrait Maker", "dramatic party portraits and original costume-friendly Halloween images"],
   ["costume-cast-album-builder", "Costume Cast Album Builder", "original costume-group portraits, cast-wall layouts, and private seasonal downloads"],
-  ["birthday-fan-moment-maker", "Birthday Fan Moment Maker", "birthday spotlight photos, fan-style greetings, and giftable private keepsakes"],
-  ["permission-safe-photo-planner", "Permission-Safe Photo Planner", "source-photo permission checks, protected-mark boundaries, and credit-aware album planning"]
+  ["birthday-fan-moment-maker", "Birthday Fan Moment Maker", "birthday spotlight photos, fan-style greetings, and giftable private keepsakes"]
 ] as const;
 
 const aidreamcapesGeneratedToolDirectory = Object.fromEntries(
@@ -2743,24 +2813,6 @@ const aidreamcapesToolDirectory: SeoDirectoryMap = {
     ctaLabel: "Start Seasonal Album Maker",
     ctaHref: "/app/create?tool_id=seasonal-celebration-album-maker"
   },
-  "permission-safe-photo-planner": {
-    label: "Permission-Safe Photo Planner",
-    title: "Permission-Safe Photo Planner for Aidreamcapes fan and holiday albums",
-    description: "Use Aidreamcapes Permission-Safe Photo Planner to check source-photo permissions, protected mark boundaries, credit cost, and album intent before generation.",
-    keywords: "Aidreamcapes Permission-Safe Photo Planner, source photo permission, AI photo safety planner, private fan-scene albums",
-    h2: "permission-safe photo planner",
-    h3: ["Source-photo checks", "Protected mark boundaries", "Credit-aware album planning"],
-    intro: "Permission-Safe Photo Planner gives customers a clear preparation step before creating fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, or seasonal Aidreamcapes albums.",
-    details: [
-      "The planner reminds customers to use only photos they own or have permission to use.",
-      "It also keeps real celebrity, real athlete, public figure, official team logo, event mark, brand logo, trademark, and protected-material boundaries visible.",
-      "Use it before opening a specific album builder when a request includes unclear references."
-    ],
-    useCases: ["Upload permission checks", "Fan-scene planning", "Holiday album preparation", "Credit cost review"],
-    workflow: ["Review the source photos.", "Clarify the occasion and audience.", "Remove unlicensed marks or protected references.", "Open the matching Aidreamcapes builder."],
-    ctaLabel: "Open Safety Planner",
-    ctaHref: "/app/create?tool_id=permission-safe-photo-planner"
-  },
   ...aidreamcapesGeneratedToolDirectory
 };
 
@@ -2796,6 +2848,7 @@ export function isExplicitSeoDirectoryContent(kind: SeoDirectoryKind, rawSlug: s
 export function isExplicitSeoDirectoryContentForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): boolean {
   const slug = canonicalSeoDirectorySlugForSite(site, kind, rawSlug);
   if (slug === "text-to-video" || slug === "image-to-video") return false;
+  if (isAidreamcapesEuSite(site) && kind === "collection") return Boolean(aidreamcapesEuSeoContent(slug));
   if (isAidreamcapesSite(site)) {
     return kind === "collection" ? Boolean(aidreamcapesCollectionDirectory[slug]) : Boolean(aidreamcapesToolDirectory[slug]);
   }
@@ -2806,6 +2859,7 @@ export function isExplicitSeoDirectoryContentForSite(site: Site | undefined, kin
 }
 
 export function getExplicitSeoDirectorySlugsForSite(site: Site | undefined, kind: SeoDirectoryKind): string[] {
+  if (isAidreamcapesEuSite(site) && kind === "collection") return [...AIDREAMCAPES_EU_THEME_SLUGS];
   if (isAidreamcapesSite(site)) {
     return Object.keys(kind === "collection" ? aidreamcapesCollectionDirectory : aidreamcapesToolDirectory);
   }
@@ -2852,6 +2906,42 @@ function singularTopicLabel(label: string): string {
 function spanishDirectoryLabel(kind: SeoDirectoryKind, slug: string, aidreamcapes: boolean): string {
   const normalized = normalizeDirectorySlug(slug);
   const common: Record<string, string> = {
+    avatar: "Avatar profesional",
+    bikini: "Bikini editorial",
+    "background-changer": "Cambiador de fondo",
+    "background-remover": "Eliminador de fondo",
+    "black-friday": "Black Friday",
+    boudoir: "Boudoir editorial",
+    cannes: "Cannes",
+    "color-correction": "Corrección de color",
+    cyberpunk: "Cyberpunk",
+    "engagement-photo": "Fotos de compromiso",
+    "gala-photo": "Fotos de gala",
+    "gala-photos": "Fotos de gala",
+    "hairstyle-generator": "Generador de peinados",
+    "halloween-photo": "Halloween",
+    holiday: "Fiestas y celebraciones",
+    mafia: "Noir cinematográfico",
+    nightlife: "Vida nocturna",
+    "old-photo-restoration": "Restauración de fotos antiguas",
+    "only-fans": "Contenido para creadores adultos",
+    "portrait-photo": "Retratos de pareja",
+    "portrait-retouch": "Retoque de retrato",
+    "rich-lifestyle": "Estilo de vida premium",
+    "singles-awareness-day": "Día de la Conciencia de la Soltería",
+    "social-cards": "Tarjetas para redes",
+    soccer: "Fútbol",
+    "street-style": "Estilo callejero",
+    swimsuit: "Bañador",
+    thanksgiving: "Fotos de Acción de Gracias",
+    "thanksgiving-photo": "Fotos de Acción de Gracias",
+    travel: "Viajes y destinos",
+    "unblur-image": "Enfoque de imagen",
+    urban: "Urbano",
+    "valentines-photo": "Fotos de San Valentín",
+    "virtual-try-on": "Probador virtual",
+    "wedding-photo": "Fotos de boda",
+    "christmas-photo": "Fotos de Navidad",
     "anime-avatar": "Avatar anime",
     beauty: "Belleza",
     "christmas-couple": "Pareja navidena",
@@ -2861,30 +2951,24 @@ function spanishDirectoryLabel(kind: SeoDirectoryKind, slug: string, aidreamcape
     creator: "Creador",
     "creator-portrait": "Retratos para creadores",
     "cyberpunk-portrait": "Retrato cyberpunk",
-    "edit-by-prompt": "Edicion por instrucciones",
+    "edit-by-prompt": "Edición por instrucciones",
     engagement: "Compromiso",
     "fashion-editorial": "Editorial de moda",
-    "gala-photo": "Fotos de gala",
-    "gala-photos": "Fotos de gala",
     headshot: "Retratos profesionales",
     headshots: "Retratos profesionales",
     "headshot-generator": "Retratos profesionales",
     "image-to-video": "Imagen a video",
-    "magic-eraser": "Borrador magico",
+    "magic-eraser": "Borrador mágico",
     "magic-upscaler": "Escalado magico",
     "nature-adventure": "Aventura natural",
     "noir-portrait": "Retrato noir",
-    "old-photo-restoration": "Restauracion de fotos",
-    "photo-enhancer": "Mejora de foto",
-    "portrait-retouch": "Retoque de retrato",
+    "photo-enhancer": "Mejorador de fotos",
     "product-lifestyle": "Producto lifestyle",
     "profile-clip": "Clip de perfil",
     sports: "Deportes",
     "travel-scene-pack": "Pack de escenas de viaje",
-    "unblur-image": "Enfoque de imagen",
     valentine: "San Valentin",
-    "valentine-photos": "Fotos de San Valentin",
-    "virtual-try-on": "Probador virtual",
+    "valentine-photos": "Fotos de San Valentín",
     "wedding-portraits": "Retratos de boda",
     "world-cup-fan-photos": "Fotos de hincha del Mundial"
   };
@@ -3094,6 +3178,25 @@ function enrichCollectionGuide(seed: SeoDirectorySeed, brandName: string): SeoDi
 type SeoUseCaseProfile = PhotoPackageUseCaseProfile;
 
 function spanishDirectorySeed(kind: SeoDirectoryKind, slug: string, brandName: string, aidreamcapes: boolean): SeoDirectorySeed {
+  const catalog = kind === "collection" ? aidreamshootsXbyThemeContent(slug) : undefined;
+  if (catalog) {
+    return {
+      label: catalog.label,
+      title: catalog.title.replace("AIdreamshoots", brandName),
+      description: catalog.description.replaceAll("AIdreamshoots", brandName),
+      keywords: catalog.keywords.replaceAll("AIdreamshoots", brandName),
+      h2: catalog.h2,
+      h3: [...catalog.h3],
+      intro: catalog.intro,
+      details: [...catalog.details],
+      useCases: [...catalog.useCases],
+      workflow: [...catalog.workflow],
+      internalLinks: catalog.internalLinks.map((link) => ({ ...link })),
+      ctaLabel: catalog.ctaLabel,
+      ctaHref: catalog.ctaHref,
+      faqItems: catalog.faqItems.map(([question, answer]) => [question, answer] as [string, string])
+    };
+  }
   const label = spanishDirectoryLabel(kind, slug, aidreamcapes);
   const lower = label.toLowerCase();
   const collection = kind === "collection";
@@ -3215,6 +3318,15 @@ function normalizeSeoDirectoryInternalLinks(links: SeoDirectorySeed["internalLin
 
 export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): SeoDirectoryContent {
   const slug = normalizeDirectorySlug(rawSlug);
+  if (isAidreamcapesEuSite(site) && kind === "collection") {
+    const euContent = aidreamcapesEuSeoContent(canonicalSeoDirectorySlugForSite(site, kind, slug));
+    if (euContent) {
+      return {
+        ...euContent,
+        internalLinks: normalizeSeoDirectoryInternalLinks(euContent.internalLinks)
+      };
+    }
+  }
   const aidreamcapes = isAidreamcapesSite(site);
   const spanishXby = isSpanishXbySite(site);
   const siteId = site?.id;
