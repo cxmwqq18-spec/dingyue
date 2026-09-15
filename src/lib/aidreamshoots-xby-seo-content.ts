@@ -1,4 +1,4 @@
-import { aidreamshootsFunctionalAlt } from "./aidreamshoots-functional-alt.ts";
+import { aidreamshootsFunctionalAlt } from "./aidreamshoots-functional-alt";
 
 export type AidreamshootsXbyThemeContent = {
   label: string;
