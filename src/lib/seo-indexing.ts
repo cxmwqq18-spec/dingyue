@@ -14,6 +14,7 @@ import { resolveMediaAssetUrl } from "@/lib/media";
 import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
 import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesImageThemePath, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import { imageThemeDetailContentFromPage } from "@/lib/aidreamcapes-image-theme-content";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS, MYDREAMSHOOTS_RETIRED_PUBLIC_PATHS } from "@/lib/mydreamshoots-legacy-public-redirects";
@@ -554,9 +555,11 @@ function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): Sitem
 
 function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   if (page.siteId !== site.id) return "";
+  if (isAidreamcapesEuRetiredPublicPath(site.id, page.slug)) return "";
   const pageSeo = page.publishedJson.seo;
   const canonicalValue = pageSeo?.canonical ?? pageSeo?.canonicalPath ?? page.slug;
   const canonicalPath = canonicalPublicPath(normalizePath(/^https?:\/\//i.test(canonicalValue) ? new URL(canonicalValue).pathname : canonicalValue));
+  if (isAidreamcapesEuRetiredPublicPath(site.id, canonicalPath)) return "";
   if (isRetiredAidreamcapesImageToolPath(site.slug, normalizePath(page.slug)) || isRetiredAidreamcapesImageToolPath(site.slug, canonicalPath)) return "";
   // Legacy video ThemePage rows can remain in relational data during a route
   // migration, but unsupported video slugs must not become sitemap URLs.
@@ -780,6 +783,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
     for (const page of snapshot.pages.filter((candidate) => candidate.slug.startsWith("/ai-save-the-date/"))) {
       const path = canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page));
       if (!path.startsWith("/ai-save-the-date/")) continue;
+      if (isAidreamcapesEuRetiredPublicPath(site.id, path)) continue;
       const context = resolvePublishedStorefrontContext(snapshot, page);
       if (!context.seo.index || !context.seo.sitemapEligible) continue;
       const loc = sitemapUrl(site, path);

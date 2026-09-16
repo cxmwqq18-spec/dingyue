@@ -491,14 +491,16 @@ function TopicHeroMedia({ images, video, site, cropPetHero = false, displayAspec
 }
 
 function localizedExpertLabel(site: Site, value?: string): string {
+  if (site?.id === "site_aidreamcapes_xby" && (!value || value === "Expert tip")) return "Conseil expert";
   if (site?.id === "site_mydreamshoots_xby" && (!value || value === "Expert tip")) return "Consejo experto";
   return value ?? "Expert tip";
 }
 
 function UseCaseCard({ item, index, site }: { item: VideoTopicUseCase; index: number; site?: Site }) {
   const spanish = site?.id === "site_mydreamshoots_xby";
-  const label = item.scenarioLabel ?? (spanish ? "Problema del cliente" : "Customer problem");
-  const noteLabel = item.noteLabel ?? (item.script ? (spanish ? "Guion de ejemplo" : "Example script") : undefined);
+  const french = site?.id === "site_aidreamcapes_xby";
+  const label = item.scenarioLabel ?? (spanish ? "Problema del cliente" : french ? "Besoin du client" : "Customer problem");
+  const noteLabel = item.noteLabel ?? (item.script ? (spanish ? "Guion de ejemplo" : french ? "Script d’exemple" : "Example script") : undefined);
   const noteBody = item.noteBody ?? (item.script ? `“${item.script}”` : undefined);
   return (
     <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f] shadow-[0_28px_70px_-54px_rgba(0,0,0,0.92)]" data-video-topic-use-case-card>
@@ -1490,7 +1492,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
             </div>
           </div>
           <div className="rounded-[24px] border border-white/10 bg-[#17151f] p-6 sm:p-7" data-brand-video-workspace>
-            <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">Workspace review model</p>
+            <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{site.id === "site_aidreamcapes_xby" ? "Modèle de vérification dans l’espace de travail" : "Workspace review model"}</p>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {content.value.items.map((item, index) => (
                 <article className="rounded-[18px] border border-white/10 bg-white/[0.035] p-5" key={`${item.title}-${index}`}>
@@ -1614,7 +1616,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
 
       <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} /><div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">{content.steps.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-scene-topic-step key={`${item.title}-${index}`}><span className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</span><h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div><div className="mt-10"><ActionLink href={primaryHref} label={content.steps.cta} site={site} /></div></div></section>
 
-      {sceneGalleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "REFERENCIAS DE ESCENAS" : "SCENE REFERENCES")} title={content.gallery?.title ?? (site.id === "site_mydreamshoots_xby" ? "Ocho direcciones para el siguiente plano" : "Eight Directions for the Next Shot")} body={content.gallery?.intro} light /><div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{sceneGalleryItems.map((item, index) => <article className="flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-scene-topic-scene key={`${item.title}-${index}`}><div className="relative overflow-hidden bg-[#d9d1f6]" style={{ aspectRatio: cardMediaAspectRatio(item.image) }}><img src={optimizedTopicImageSrc(item.image.src)} data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
+      {sceneGalleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "REFERENCIAS DE ESCENAS" : site.id === "site_aidreamcapes_xby" ? "RÉFÉRENCES DE SCÈNES" : "SCENE REFERENCES")} title={content.gallery?.title ?? (site.id === "site_mydreamshoots_xby" ? "Ocho direcciones para el siguiente plano" : site.id === "site_aidreamcapes_xby" ? "Huit directions pour le prochain plan" : "Eight Directions for the Next Shot")} body={content.gallery?.intro} light /><div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{sceneGalleryItems.map((item, index) => <article className="flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-scene-topic-scene key={`${item.title}-${index}`}><div className="relative overflow-hidden bg-[#d9d1f6]" style={{ aspectRatio: cardMediaAspectRatio(item.image) }}><img src={optimizedTopicImageSrc(item.image.src)} data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
 
       <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="sequence-guide" data-video-topic-section="sequence-guide"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.guidance.cards.map((card, index) => <SupportingCard card={card} key={`${card.title}-${index}`} site={site} />)}</div></div></section>
 
@@ -1756,9 +1758,9 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
       <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="supporting" data-video-topic-section="supporting">
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <SectionHeader
-              eyebrow={site.id === "site_mydreamshoots_xby" ? "GUÍA ADICIONAL DE VÍDEO" : "ADDITIONAL VIDEO GUIDANCE"}
-              title={site.id === "site_mydreamshoots_xby" ? "Mantén claro el objetivo del vídeo desde el primer fotograma hasta el montaje final" : "Keep the video job clear from the first frame to the final cut"}
-              body={site.id === "site_mydreamshoots_xby" ? "Usa las notas siguientes cuando una misma idea creativa necesite una decisión más concreta sobre plataforma, público o campaña." : "Use the supporting notes below when the same creative idea needs a more specific platform, buyer, or campaign decision."}
+              eyebrow={site.id === "site_mydreamshoots_xby" ? "GUÍA ADICIONAL DE VÍDEO" : site.id === "site_aidreamcapes_xby" ? "CONSEILS VIDÉO COMPLÉMENTAIRES" : "ADDITIONAL VIDEO GUIDANCE"}
+              title={site.id === "site_mydreamshoots_xby" ? "Mantén claro el objetivo del vídeo desde el primer fotograma hasta el montaje final" : site.id === "site_aidreamcapes_xby" ? "Gardez un objectif vidéo clair du premier plan au montage final" : "Keep the video job clear from the first frame to the final cut"}
+              body={site.id === "site_mydreamshoots_xby" ? "Usa las notas siguientes cuando una misma idea creativa necesite una decisión más concreta sobre plataforma, público o campaña." : site.id === "site_aidreamcapes_xby" ? "Utilisez ces conseils lorsqu’une même idée créative demande une décision plus précise sur le canal, le public ou la campagne." : "Use the supporting notes below when the same creative idea needs a more specific platform, buyer, or campaign decision."}
             />
             <div className="mt-12 space-y-16">
               {content.supportingGroups.map((group) => (

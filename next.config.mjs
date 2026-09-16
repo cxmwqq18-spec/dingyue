@@ -30,6 +30,9 @@ const nextConfig = {
   poweredByHeader: false,
   devIndicators: false,
   typedRoutes: false,
+  // Retired storefront URLs must be able to return a direct 404 even when a
+  // crawler requests the legacy spelling with a trailing slash.
+  skipTrailingSlashRedirect: true,
   htmlLimitedBots: /.*/,
   experimental: {
     webpackMemoryOptimizations: true
@@ -62,7 +65,18 @@ const nextConfig = {
     // Remote database development can reference newly published media before
     // the corresponding files have been copied into this checkout. Keep local
     // assets authoritative and use the public storefront only as a dev fallback.
-    if (process.env.NODE_ENV !== "development" || process.env.STOREFRONT_ASSET_REMOTE_FALLBACK === "0") return [];
+    const localEuMirrorAssetFallback = {
+      // The EU database still contains historical mirror URLs for assets
+      // that are already present in the shared local DreamShoot asset tree.
+      // Resolve those missing local files before falling back to the remote
+      // EU origin, while allowing a real EU mirror file to win via the
+      // filesystem check performed by Next's afterFiles phase.
+      source: "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/:path*",
+      destination: "/assets/dreamshoot/:path*"
+    };
+    if (process.env.NODE_ENV !== "development" || process.env.STOREFRONT_ASSET_REMOTE_FALLBACK === "0") {
+      return { afterFiles: [localEuMirrorAssetFallback] };
+    }
 
     const origins = {
       mydreamshoots: process.env.MYDREAMSHOOTS_ASSET_REMOTE_ORIGIN?.trim() || "https://www.mydreamshoots.com",
@@ -73,6 +87,7 @@ const nextConfig = {
 
     return {
       afterFiles: [
+        localEuMirrorAssetFallback,
         {
           source: "/assets/sites/site_aidreamcapes_eu/:path*",
           destination: `${origins.aidreamcapesEu}/assets/sites/site_aidreamcapes_eu/:path*`

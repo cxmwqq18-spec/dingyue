@@ -57,6 +57,7 @@ import { isMydreamshootsCollectionItemSlug, isMydreamshootsPublicVideoGeneration
 import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirectoryJsonLd, type JsonLdNode } from "@/lib/theme/json-ld";
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
+import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
 import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, PublishedLeafRouteProjection, PublishedVideoNavigationProjection, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
@@ -2159,6 +2160,7 @@ const dreamshootToolDirectorySlugs = [
 
 function toolsDirectoryFaqSectionForSite(site: Site): SectionInstance {
   const isAidreamcapes = isAidreamcapesStorefront(site);
+  const isAidreamcapesEu = site.id === "site_aidreamcapes_xby";
   const isSpanishXby = isSpanishXbyStorefront(site);
   const items = isSpanishXby
     ? isAidreamcapes
@@ -2174,15 +2176,8 @@ function toolsDirectoryFaqSectionForSite(site: Site): SectionInstance {
           ["Puedo usar resultados en redes o paginas de negocio?", "Si, cuando tienes permiso para las fotos fuente y cumples las reglas de la plataforma."],
           ["Que debo revisar antes de descargar?", "Revisa caras, manos, recortes, marcas, texto accidental y calidad general antes de publicar."]
         ]
-    : isAidreamcapes
-      ? [
-          ["Which Aidreamcapes occasion tool should I use?", "Choose the tool that matches the private album moment: fan-scene atmosphere, game-day group energy, holiday cards, creator occasion portraits, premiere-inspired photos, or permission-safe content planning."],
-          ["Do tools recreate real public figures or official marks?", "No. Aidreamcapes tools focus on original occasion atmosphere and approved source photos, not unauthorized celebrity likenesses, athlete identities, official logos, league marks, venue marks, or misleading affiliation."],
-          ["What source photos work best for occasion tools?", "Use clear, well-lit photos with permission from every person shown. Group tools work better when faces are visible and not heavily overlapping; holiday and fan-scene tools work better when the source photos have enough detail for a private album concept."],
-          ["Are source photos and finished albums private?", "Uploads, request details, credit records, generation status, and finished albums remain connected to the signed-in Aidreamcapes account. Results are delivered to a private gallery for review and download rather than a public listing."],
-          ["How are credits handled for Aidreamcapes tools?", "Supported tools show the credit requirement before generation starts, reserve credits while processing, and settle or release credits according to the recorded request status. Review the cost before starting an album or motion request."],
-          ["Can I use results on social pages?", "Yes, when every person shown approved the use, the content avoids misleading endorsement or official affiliation, and the post follows platform and AI disclosure rules."]
-        ]
+    : isAidreamcapesEu
+      ? [...AIDREAMCAPES_EU_TOOLS_FAQ]
       : [
           ["Which AI photo tool should I start with?", "Start with the tool that matches the final asset you need. Use headshot tools for LinkedIn, resumes, founder bios, and team pages; creator portrait tools for media kits and campaign images; edit tools for cleanup or enhancement; and AI video tools when you want a short motion concept from an approved still image."],
           ["What source photos work best for AI tools?", "Use sharp, recent, well-lit photos where the subject is visible and the intended edit is clear. Avoid screenshots, heavy beauty filters, tiny crops, sunglasses, blurred faces, extreme compression, and any photo you do not own or have permission to process."],
@@ -2196,12 +2191,12 @@ function toolsDirectoryFaqSectionForSite(site: Site): SectionInstance {
     settings: {
       anchor: "faq",
       layout: "visual_faq",
-      eyebrow: isSpanishXby ? "Preguntas de herramientas" : isAidreamcapes ? "Occasion tools FAQ" : "Tools FAQ",
-      title: isSpanishXby ? "Preguntas antes de usar herramientas" : isAidreamcapes ? "Aidreamcapes tool questions" : "AI tool questions before upload",
+      eyebrow: isSpanishXby ? "Preguntas de herramientas" : isAidreamcapesEu ? "Questions sur les outils" : "Tools FAQ",
+      title: isSpanishXby ? "Preguntas antes de usar herramientas" : isAidreamcapesEu ? "Questions sur les outils Aidreamcapes" : "AI tool questions before upload",
       subtitle: isSpanishXby
         ? "Respuestas sobre fotos fuente, creditos, privacidad y entrega."
-        : isAidreamcapes
-          ? "Answers about Aidreamcapes occasion tools, approved source photos, protected-identity boundaries, credits, privacy, social use, and private album delivery."
+        : isAidreamcapesEu
+          ? "Réponses sur les outils Aidreamcapes, les photos source autorisées, la confidentialité, les crédits et le partage des créations."
           : "Answers about myDreamshoots AI photo tools, source photos, credits, privacy, quality review, and publishing use."
     },
     blocks: items.map(([question, answer], index) => ({

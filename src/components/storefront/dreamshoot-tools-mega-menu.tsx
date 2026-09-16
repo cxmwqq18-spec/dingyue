@@ -22,6 +22,7 @@ import { isMydreamshootsVideoFrameworkSite } from "@/lib/mydreamshoots-video-fra
 import { isMydreamshootsVideoGenerationSlug, publicVideoGenerationPathForSite } from "@/lib/photo-package-taxonomy";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isFrenchStorefrontSite } from "@/lib/storefront-locale";
 import { themeValueToString } from "@/lib/theme-values";
 import type { SectionBlockInstance, Site, ToolMenuItem } from "@/lib/types";
 
@@ -536,6 +537,67 @@ function spanishToolCategoryDescription(value: string, aidreamcapes: boolean): s
     : "Crea retratos, escenas y paquetes de fotos con tus subidas.";
 }
 
+function frenchToolCategoryLabel(value: string): string {
+  const normalized = value.toLowerCase();
+  if (normalized.includes("fan-scene") || normalized.includes("fan")) return "Scènes de fans";
+  if (normalized.includes("game-day") || normalized.includes("game")) return "Jour de match";
+  if (normalized.includes("premiere")) return "Outils de première";
+  if (normalized.includes("occasion") || normalized.includes("card")) return "Cartes d’occasion";
+  if (normalized.includes("holiday") || normalized.includes("season")) return "Albums de fêtes";
+  if (normalized.includes("video")) return "Vidéo IA";
+  if (normalized.includes("edit")) return "Édition photo IA";
+  if (normalized.includes("photo") || normalized.includes("portrait")) return "Photo IA";
+  return value;
+}
+
+function frenchToolCategoryDescription(value: string): string {
+  const normalized = value.toLowerCase();
+  if (normalized.includes("video")) return "Animez une image autorisée pour créer des clips courts et des aperçus à vérifier.";
+  if (normalized.includes("edit")) return "Nettoyez, restaurez et retouchez vos photos avant de préparer le résultat final.";
+  if (normalized.includes("fan") || normalized.includes("game")) return "Préparez des portraits de groupe et des souvenirs de match dans une galerie privée.";
+  if (normalized.includes("holiday") || normalized.includes("season") || normalized.includes("occasion")) return "Créez des cartes et des albums de saison à partir de photos que vous pouvez utiliser.";
+  return "Créez des portraits, des scènes et des séries photo avec une direction claire.";
+}
+
+function frenchToolTitle(block: SectionBlockInstance): string {
+  const titles: Record<string, string> = {
+    "fan-scene-album-builder": "Créer un album de scène de fan",
+    "backstage-meetup-scene-builder": "Créer une rencontre en coulisses",
+    "supporter-photo-wall-maker": "Créer un mur de photos de supporters",
+    "fan-keepsake-card-maker": "Créer une carte souvenir de fan",
+    "game-day-group-portrait-maker": "Créer un portrait de groupe de match",
+    "stadium-night-fan-set-maker": "Créer une série de fans au stade",
+    "watch-party-album-builder": "Créer un album de soirée de match",
+    "premiere-portrait-set-builder": "Créer une série de portraits de première",
+    "vip-arrival-photo-maker": "Créer une photo d’arrivée VIP",
+    "award-night-album-studio": "Créer un album de soirée de remise de prix",
+    "new-year-countdown-album-maker": "Créer un album de compte à rebours",
+    "christmas-group-album-studio": "Créer un album de groupe de Noël",
+    "cozy-card-portrait-maker": "Créer un portrait pour une carte chaleureuse",
+    "winter-fan-greeting-maker": "Créer un message de fête hivernal",
+    "thanksgiving-keepsake-set-maker": "Créer une série souvenir de Thanksgiving",
+    "friendsgiving-memory-maker": "Créer un souvenir de Friendsgiving",
+    "halloween-party-portrait-maker": "Créer un portrait de fête d’Halloween",
+    "costume-cast-album-builder": "Créer un album de groupe costumé",
+    "birthday-fan-moment-maker": "Créer un moment d’anniversaire de fan",
+    headshot: "Créer un portrait professionnel",
+    "creator-portrait": "Créer un portrait de créateur",
+    "world-cup-fan-photos": "Créer des photos de supporters",
+    "cyberpunk-portrait": "Créer un portrait cyberpunk",
+    "gala-photo": "Créer une photo de gala",
+    "background-changer": "Changer l’arrière-plan",
+    "background-remover": "Supprimer l’arrière-plan",
+    "magic-eraser": "Effacer un élément",
+    "photo-enhancer": "Améliorer une photo",
+    "portrait-retouch": "Retoucher un portrait",
+    "unblur-image": "Rendre une image plus nette",
+    "color-correction": "Corriger les couleurs",
+    "old-photo-restoration": "Restaurer une ancienne photo",
+    "edit-by-prompt": "Modifier une photo par consigne"
+  };
+  return titles[toolBlockSlug(block)] ?? blockValue(block, "title", "Outil photo IA");
+}
+
 function orderedToolCategories(categories: string[]): string[] {
   const preferred = ["Photo AI", "Video AI", "AI Photo Edit"];
   const ordered = preferred.filter((category) => categories.includes(category));
@@ -562,6 +624,7 @@ export function DreamShootMegaToolsPanel({
   const warm = variantTone === "warm";
   const aidreamcapes = isAidreamcapesSite(site);
   const spanishXby = isSpanishXbySite(site);
+  const frenchXby = isFrenchStorefrontSite(site);
   const normalizedTools = tools.map((tool) => withNormalizedToolCategory(tool));
   const categories = Array.from(new Set(normalizedTools.map((tool) => blockValue(tool, "category", "Photo AI"))));
   const allCategories = orderedToolCategories(categories);
@@ -572,6 +635,18 @@ export function DreamShootMegaToolsPanel({
     meta: dreamshootMegaCategoryMeta(category)
   })).map((group) => {
     const meta = dreamshootToolGroupMeta(group.category, group.items);
+    if (frenchXby) {
+      const title = frenchToolCategoryLabel(group.category);
+      return {
+        ...group,
+        meta: {
+          ...meta,
+          description: frenchToolCategoryDescription(group.category),
+          panelTitle: title,
+          title
+        }
+      };
+    }
     if (!spanishXby) return { ...group, meta };
     const title = spanishToolCategoryLabel(group.category, aidreamcapes);
     return {
@@ -617,7 +692,7 @@ export function DreamShootMegaToolsPanel({
       }
     >
       <span className={warm ? "mb-4 block text-center text-[0.98rem] font-semibold tracking-tight text-[#1e1712] sm:text-[1.02rem]" : "mb-4 block text-center text-[0.98rem] font-semibold tracking-tight text-white sm:text-[1.02rem]"}>
-        {spanishXby ? "Herramientas del estudio" : "Studio tools"}
+        {frenchXby ? "Outils du studio" : spanishXby ? "Herramientas del estudio" : "Studio tools"}
       </span>
       <div className="flex flex-wrap items-stretch gap-3">
         {summaryGroups.map((group, index) => {
@@ -629,7 +704,7 @@ export function DreamShootMegaToolsPanel({
             <Fragment key={`mega_card_${group.category}`}>
               {index > 0 && <span className={warm ? "self-center text-sm font-bold text-[#a79078]" : "self-center text-sm font-bold text-white/28"}>/</span>}
               <StorefrontInstantLink
-                aria-label={cardLinkLabel(spanishXby ? "Explorar" : "Browse", group.meta.title, spanishXby ? "esta categoria" : "this tool category")}
+                aria-label={cardLinkLabel(frenchXby ? "Parcourir" : spanishXby ? "Explorar" : "Browse", group.meta.title, frenchXby ? "cette catégorie" : spanishXby ? "esta categoria" : "this tool category")}
                 className={warm ? "group flex min-h-[110px] min-w-[240px] flex-1 basis-[250px] gap-3 rounded-[14px] border border-[#eadfce] bg-white px-4 py-4 text-left transition hover:border-[#d8b17e] hover:bg-[#fff8ed]" : "group flex min-h-[110px] min-w-[240px] flex-1 basis-[250px] gap-3 rounded-[14px] border border-[#2b374c] bg-[#090a0c] px-4 py-4 text-left transition hover:border-white/28 hover:bg-white/[0.04]"}
                 data-storefront-document-navigation={categoryHref.includes("#") ? "true" : undefined}
                 href={categoryHref}
@@ -663,14 +738,14 @@ export function DreamShootMegaToolsPanel({
                     const toolPrefix = aidreamcapes ? "aidreamcapes_mega_tool" : "dreamshoot_mega_tool";
                     return (
                       <StorefrontInstantLink
-                        aria-label={cardLinkLabel(spanishXby ? "Abrir herramienta" : "Open tool", storefrontPaidToolBlockValue(tool, "title", spanishXby ? "herramienta IA" : "AI photo tool"), spanishXby ? "esta herramienta" : "this tool")}
+                        aria-label={cardLinkLabel(frenchXby ? "Ouvrir l’outil" : spanishXby ? "Abrir herramienta" : "Open tool", frenchXby ? frenchToolTitle(tool) : storefrontPaidToolBlockValue(tool, "title", spanishXby ? "herramienta IA" : "AI photo tool"), frenchXby ? "cet outil" : spanishXby ? "esta herramienta" : "this tool")}
                         className={warm ? "group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/tool flex min-h-10 items-start gap-2.5 rounded-[10px] px-2 py-2 text-[0.94rem] leading-6 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"}
                         href={toolActionHref(site, blockValue(tool, "href", "/tools"), tool.id)}
                         key={instanceKey(tool, index, toolPrefix)}
                         {...xfcartBlockAttrs(editorMode, tool, index, toolPrefix)}
                       >
                         <Icon className={warm ? "mt-0.5 h-4.5 w-4.5 shrink-0 text-[#b86e36] transition group-hover/tool:text-[#8f5327]" : "mt-0.5 h-4.5 w-4.5 shrink-0 text-white/72 transition group-hover/tool:text-white"} strokeWidth={1.8} />
-                        <span className="text-[0.94rem] font-semibold leading-6">{storefrontPaidToolBlockValue(tool, "title", "AI photo tool")}</span>
+                        <span className="text-[0.94rem] font-semibold leading-6">{frenchXby ? frenchToolTitle(tool) : storefrontPaidToolBlockValue(tool, "title", "AI photo tool")}</span>
                       </StorefrontInstantLink>
                     );
                   })}

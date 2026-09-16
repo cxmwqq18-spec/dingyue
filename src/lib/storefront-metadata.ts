@@ -6,6 +6,7 @@ import { canonicalUrlForSite, normalizeCanonicalPath } from "@/lib/storefront-co
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
+import { AIDREAMCAPES_EU_THEME_SLUGS, aidreamcapesEuSeoContent } from "@/lib/aidreamcapes-eu-seo-content";
 import type { CreativePack, PlatformState, Product, Site, ThemePage } from "@/lib/types";
 
 function canonicalMetadataPath(site: Site, value: unknown, fallback = "/"): string {
@@ -13,6 +14,13 @@ function canonicalMetadataPath(site: Site, value: unknown, fallback = "/"): stri
   return /^\/(?:collections|ai-image-generation)(?:\/|$)/i.test(normalized)
     ? canonicalSeoDirectoryPathForSite(site, "collection", normalized)
     : normalized;
+}
+
+function isAidreamcapesEuImageThemePath(site: Site, value: unknown): boolean {
+  if (site.id !== "site_aidreamcapes_xby") return false;
+  const normalized = normalizeCanonicalPath(value, "");
+  const parts = normalized.split("/").filter(Boolean);
+  return parts.length === 2 && parts[0] === "ai-image-generation" && AIDREAMCAPES_EU_THEME_SLUGS.includes(parts[1]);
 }
 
 export async function metadataForPublishedStorefrontPage({
@@ -49,9 +57,10 @@ export async function metadataForPublishedStorefrontPage({
   // explicit SEO fields for this site only. Other storefronts retain the
   // existing projection and metadata behavior.
   const isAidreamcapesEuSaveTheDatePage = snapshot.site.id === "site_aidreamcapes_xby" && snapshotPage.slug.startsWith("/ai-save-the-date/");
+  const isAidreamcapesEuImagePage = isAidreamcapesEuImageThemePath(snapshot.site, path) || isAidreamcapesEuImageThemePath(snapshot.site, snapshotPage.slug);
   const targetPageSeo = snapshot.site.id === "site_mydreamshoots_xby" ||
     ((snapshot.site.id === "site_aidreamcapes" || snapshot.site.id === "site_aidreamcapes_xby") &&
-      (isAidreamcapesImageThemePath(snapshot.site.slug, snapshotPage.slug) || isAidreamcapesEuSaveTheDatePage))
+      (isAidreamcapesImageThemePath(snapshot.site.slug, snapshotPage.slug) || isAidreamcapesEuSaveTheDatePage || isAidreamcapesEuImagePage))
     ? snapshotPage.publishedJson.seo
     : undefined;
   const metadataPath = canonicalMetadataPath(
@@ -122,11 +131,14 @@ export async function metadataForPublishedStorefrontDirectoryPage({
         canonicalMetadataPath(publishedSite, candidate.publishedJson?.seo?.canonicalPath, candidate.slug) === projectionPath
       )
     : undefined;
-  const seoSourcePage = spanishTargetPage ?? publishedBasePage;
+  const euVideoTargetPage = publishedSite.id === "site_aidreamcapes_xby" && kind === "tool" && snapshot
+    ? snapshot.pages.find((candidate) => candidate.slug === projectionPath || candidate.publishedJson?.seo?.canonicalPath === projectionPath)
+    : undefined;
+  const seoSourcePage = spanishTargetPage ?? euVideoTargetPage ?? publishedBasePage;
   // Dedicated video topic pages own their SEO in LivePage.contentJson. Resolve
   // that first so they never require a generic tool-directory seed.
-  const pageJsonWithDirectorySeo = spanishTargetPage
-    ? spanishTargetPage.publishedJson
+  const pageJsonWithDirectorySeo = spanishTargetPage || euVideoTargetPage
+    ? seoSourcePage.publishedJson
     : withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite);
   const resolved = (isPrimaryMydreamshootsSite(publishedSite) || publishedSite.id === "site_aidreamcapes_xby" || publishedSite.id === "site_mydreamshoots_xby") && snapshot
     ? resolvePublishedSeoEntity(snapshot, projectionPath)
@@ -143,6 +155,7 @@ export async function metadataForPublishedStorefrontDirectoryPage({
     : undefined;
   const euCoverImage = euPack?.imageUrl?.trim() || undefined;
   const isAidreamcapesEuCollection = publishedSite.id === "site_aidreamcapes_xby" && kind === "collection";
+  const euSeoContent = isAidreamcapesEuCollection ? aidreamcapesEuSeoContent(directorySlug) : undefined;
   const directoryPageJson = pageEntity
     ? {
         ...publishedBasePage.publishedJson,
@@ -180,14 +193,21 @@ export async function metadataForPublishedStorefrontDirectoryPage({
         ...publishedBasePage.publishedJson,
         seo: {
           ...pageJsonWithDirectorySeo.seo,
+          ...(euSeoContent ? {
+            title: euSeoContent.title,
+            description: euSeoContent.description,
+            keywords: euSeoContent.keywords,
+            ogImageAlt: `Illustration de ${euSeoContent.label.toLowerCase()} pour Aidreamcapes.`
+          } : {}),
           canonicalPath: path ?? projectionPath,
           canonical: path ?? projectionPath,
           index: true,
           follow: true,
-          robots: { index: true, follow: true },
+          robots: { index: true, follow: true, maxImagePreview: "large" as const },
           // Do not inherit the root directory's shared/default image on an
           // EU leaf page. Its CreativePack cover is the page's OG source.
-          ogImage: euCoverImage
+          ogImage: euCoverImage,
+          twitterImage: euCoverImage
         }
       }
     : directoryPageJson;

@@ -10,6 +10,7 @@ import { imageThemeDetailContentFromSection } from "@/lib/aidreamcapes-image-the
 import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
 import { AIDREAMCAPES_EU_THEME_SLUGS, aidreamcapesEuSeoContent } from "@/lib/aidreamcapes-eu-seo-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
+import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
@@ -192,6 +193,25 @@ function cleanSchemaText(site: Site, value: unknown, fallback = ""): string {
 
 function schemaPathLabel(site: Site, part: string): string {
   const normalized = part.toLowerCase();
+  if (site.id === "site_aidreamcapes_xby") {
+    const frenchLabels: Record<string, string> = {
+      "ai-image-generation": "Création photo IA",
+      "ai-video-generation": "Création vidéo IA",
+      tools: "Outils",
+      collections: "Collections",
+      pricing: "Tarifs",
+      privacy: "Confidentialité",
+      terms: "Conditions d’utilisation",
+      cookies: "Cookies",
+      refunds: "Remboursements",
+      content: "Contenu",
+      "digital-delivery": "Livraison numérique",
+      help: "Aide",
+      "about-us": "À propos",
+      "contact-us": "Contact"
+    };
+    return frenchLabels[normalized] ?? part.replace(/[-_]+/g, " ");
+  }
   if (!isSpanishXbySite(site)) {
     const englishLabels: Record<string, string> = {
       "ai-image-generation": "AI Image Generation",
@@ -515,7 +535,7 @@ function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, t
       item: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, current))
     });
   });
-  return { "@type": "BreadcrumbList", itemListElement: items };
+  return { "@type": "BreadcrumbList", ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}), itemListElement: items };
 }
 
 function faqQuestionNode(site: Site, question: string, answer: string): JsonLdNode | undefined {
@@ -595,10 +615,34 @@ function faqSchema(site: Site, pageJson: ThemePageJson | undefined, input?: Json
       mainEntity
     };
   }
+  if (site.id === "site_aidreamcapes_xby" && input?.pagePath === "/tools") {
+    return {
+      "@type": "FAQPage",
+      inLanguage: "fr-FR",
+      mainEntity: AIDREAMCAPES_EU_TOOLS_FAQ
+        .map(([question, answer]) => faqQuestionNode(site, question, answer))
+        .filter(Boolean) as JsonLdNode[]
+    };
+  }
   const aidreamcapesEuSlug = input?.pagePath ? aidreamcapesEuThemeSlug(site, input.pagePath) : undefined;
   if (aidreamcapesEuSlug) {
+    const section = pageJson?.sectionsOrder
+      ?.map((sectionId) => pageJson.sections[sectionId])
+      .find((candidate) => candidate?.type === "faq");
+    const visibleItems = section?.blocks?.map((block) => [
+      blockValue(block, "question", blockValue(block, "title")),
+      faqAnswerText(block)
+    ] as [string, string]) ?? [];
     const content = aidreamcapesEuSeoContent(aidreamcapesEuSlug);
-    const mainEntity = (content?.faqItems ?? [])
+    const sourceItems = visibleItems.length ? visibleItems : (content?.faqItems ?? []);
+    const seen = new Set<string>();
+    const mainEntity = sourceItems
+      .filter(([question, answer]) => {
+        const signature = `${cleanText(question)}\n${cleanText(answer)}`;
+        if (!question || !answer || seen.has(signature)) return false;
+        seen.add(signature);
+        return true;
+      })
       .map(([question, answer]) => faqQuestionNode(site, question, answer))
       .filter(Boolean) as JsonLdNode[];
     return mainEntity.length ? { "@type": "FAQPage", inLanguage: "fr-FR", mainEntity } : undefined;
@@ -653,6 +697,7 @@ function faqSchema(site: Site, pageJson: ThemePageJson | undefined, input?: Json
   return uniqueQuestions.length
     ? {
         "@type": "FAQPage",
+        ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
         ...(isAidreamcapesEuSaveTheDatePage(site, input?.pagePath) ? { inLanguage: "fr-FR" } : {}),
         mainEntity: uniqueQuestions
       }
@@ -708,6 +753,7 @@ function publishedStandardPageSchema(input: JsonLdInput, title: string, descript
     name: title,
     description,
     url,
+    ...(input.site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
     primaryImageOfPage: {
       "@type": "ImageObject",
       "@id": `${url}#primaryimage`,
@@ -715,6 +761,21 @@ function publishedStandardPageSchema(input: JsonLdInput, title: string, descript
       contentUrl: absoluteUrl(input.site, input.routeMode, media.jsonLdImage),
       caption: media.primaryImageAlt
     }
+  };
+}
+
+function aidreamcapesEuPublicWebPageSchema(input: JsonLdInput, title: string, description: string): JsonLdNode | undefined {
+  if (input.site.id !== "site_aidreamcapes_xby" || aidreamcapesEuThemeSlug(input.site, input.pagePath)) return undefined;
+  const url = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath));
+  return {
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    name: title,
+    description,
+    url,
+    inLanguage: "fr-FR",
+    isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
+    publisher: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` }
   };
 }
 
@@ -1154,7 +1215,7 @@ function collectionPageSchema(input: JsonLdInput, title: string, description: st
       name: title,
       description,
       url,
-      ...(engagementPage ? { inLanguage: "es-ES" } : {}),
+      ...(input.site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : engagementPage ? { inLanguage: "es-ES" } : {}),
       isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
       publisher: {
         "@type": "Organization",
@@ -1342,6 +1403,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     storefrontApplicationSchema(resolvedInput, title, description),
     breadcrumbs(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, resolvedInput.publishedRoutePaths),
     publishedStandardPageSchema(resolvedInput, title, description),
+    aidreamcapesEuPublicWebPageSchema(resolvedInput, title, description),
     policyWebPageSchema(resolvedInput, title, description),
     ...aidreamcapesImageThemeDetailSchema(resolvedInput, title, description),
     ...aidreamcapesEuImageThemeDetailSchema(resolvedInput, title, description),
@@ -1368,6 +1430,7 @@ function toolDirectoryFaqSchema(site: Site, item: ReturnType<typeof getSeoDirect
   });
   return {
     "@type": "FAQPage",
+    ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
     mainEntity: items
       .map(([question, answer]) => faqQuestionNode(site, question, answer))
       .filter(Boolean)
@@ -1404,6 +1467,7 @@ export function buildToolDirectoryJsonLd({
   const faq = topicContent
     ? {
         "@type": "FAQPage",
+        ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
         mainEntity: topicContent.faq.items
           .map((faqItem) => faqQuestionNode(site, faqItem.question, faqItem.answer))
           .filter(Boolean)
@@ -1443,6 +1507,16 @@ export function buildToolDirectoryJsonLd({
   const graph: JsonLdNode[] = [
     organizationSchema(site, routeMode, context, pagePath),
     websiteSchema(site, routeMode),
+    ...(site.id === "site_aidreamcapes_xby" ? [{
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      name: title,
+      description,
+      url,
+      inLanguage: "fr-FR",
+      isPartOf: { "@id": `${storefrontBaseUrl(site, routeMode)}#website` },
+      publisher: { "@id": `${storefrontBaseUrl(site, routeMode)}#organization` }
+    }] : []),
     breadcrumbs(site, routeMode, pagePath, label),
     softwareApplication,
     {

@@ -123,6 +123,15 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
     subject: "un adulte, un objet ou un décor transformé par une instruction visuelle précise",
     scene: "jardin botanique, atelier, terrasse côtière, musée ou rue pluvieuse selon la consigne"
   },
+  "estilo-y-fantasia": {
+    label: "Style et fantasy",
+    title: "Photos style et fantasy avec l’IA | Aidreamcapes",
+    description: "Créez des photos style et fantasy avec l’IA : portraits de voyage, univers cinématographiques et décors imaginaires pour vos projets créatifs privés.",
+    keywords: "photo style fantasy IA, portrait cinématographique, décor imaginaire, photo voyage créative, Aidreamcapes",
+    h2: "Photos style et fantasy pour projets créatifs",
+    subject: "un adulte dans un portrait créatif où le style, le décor et l’expression restent lisibles",
+    scene: "ville futuriste, forêt brumeuse, côte lumineuse, galerie contemporaine ou décor de voyage imaginaire"
+  },
   "engagement-photo": {
     label: "Photos de fiançailles",
     title: "Photos de fiançailles IA : couple et annonce | Aidreamcapes",
@@ -377,14 +386,60 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   }
 };
 
-export const AIDREAMCAPES_EU_THEME_SLUGS = Object.freeze(Object.keys(SEEDS));
+// The five category URLs below are public directory landing pages, not image
+// theme leaves. Keep their copy separate from SEEDS so they can be indexed and
+// localized without changing the 39-theme asset registry.
+const DIRECTORY_SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
+  "best-themes-presets": {
+    label: "Meilleurs thèmes et préréglages",
+    title: "Meilleurs thèmes photo IA | Aidreamcapes",
+    description: "Comparez les meilleurs thèmes photo IA d’Aidreamcapes : portraits, fêtes, voyages et styles créatifs avant de choisir votre galerie privée.",
+    keywords: "meilleurs thèmes photo IA, préréglages photo, galerie photo IA, styles créatifs, Aidreamcapes",
+    h2: "Choisir un thème photo adapté à votre projet",
+    subject: "une sélection de portraits et de scènes photo organisés par intention visuelle",
+    scene: "portraits professionnels, fêtes de saison, voyages, mode et créations cinématographiques"
+  },
+  professional: {
+    label: "Portraits professionnels",
+    title: "Portraits professionnels avec l’IA | Aidreamcapes",
+    description: "Explorez des portraits professionnels créés avec l’IA pour profils, équipes, CV et projets personnels, avec des styles crédibles et une galerie privée.",
+    keywords: "portrait professionnel IA, photo CV, portrait LinkedIn, photo d’équipe, Aidreamcapes",
+    h2: "Créer un portrait professionnel avec l’IA",
+    subject: "des adultes dans des portraits professionnels aux visages, tenues et expressions lisibles",
+    scene: "bureau contemporain, studio neutre, architecture moderne et lumière naturelle"
+  },
+  "lifestyle-creative": {
+    label: "Lifestyle et créations",
+    title: "Photos lifestyle et créatives avec l’IA | Aidreamcapes",
+    description: "Découvrez des thèmes photo lifestyle et créatifs avec l’IA : voyage, mode, plage, ville et univers originaux pour des galeries privées distinctives.",
+    keywords: "photo lifestyle IA, photo créative, portrait voyage, mode IA, galerie privée, Aidreamcapes",
+    h2: "Explorer des photos lifestyle et créatives",
+    subject: "des adultes dans des scènes lifestyle, de voyage, de mode et d’expression personnelle",
+    scene: "côte lumineuse, rue urbaine, intérieur éditorial, paysage de voyage et décor de vacances"
+  },
+  magic: {
+    label: "Créations magiques",
+    title: "Créations photo magiques avec l’IA | Aidreamcapes",
+    description: "Explorez des créations photo magiques avec l’IA : mouvement, coiffure, essayage virtuel et transformations visuelles pour des projets créatifs privés.",
+    keywords: "création photo IA, générateur de mouvement, coiffure IA, essayage virtuel, Aidreamcapes",
+    h2: "Transformer une idée en création photo",
+    subject: "des adultes et des portraits transformés par une direction visuelle créative",
+    scene: "studio de mode, scène en mouvement, miroir, décor urbain et lumière cinématographique"
+  },
+  "photo-tools": {
+    label: "Outils photo",
+    title: "Outils photo IA : retoucher et améliorer une image | Aidreamcapes",
+    description: "Utilisez les outils photo IA d’Aidreamcapes pour détourer, retoucher, améliorer, restaurer ou modifier vos images avant une galerie privée.",
+    keywords: "outils photo IA, retouche photo, supprimer arrière-plan, améliorer image, restaurer photo, Aidreamcapes",
+    h2: "Préparer et retoucher vos images avec l’IA",
+    subject: "des portraits, objets et scènes préparés avec des corrections visuelles ciblées",
+    scene: "fond neutre, intérieur lumineux, arrière-plan remplacé, détails restaurés et couleurs équilibrées"
+  }
+};
 
-export function aidreamcapesEuSeoContent(slug: string): AidreamcapesEuSeoContent | undefined {
-  const normalized = slug.trim().toLowerCase();
-  const seed = SEEDS[normalized];
-  if (!seed) return undefined;
+function contentFromSeed(seed: AidreamcapesEuSeoSeed, normalized: string, canonicalPath: string): AidreamcapesEuSeoContent {
   const relatedLinks = [
-    { label: "Voir tous les packs photo", href: "/ai-image-generation" },
+    { label: "Voir tous les thèmes photo", href: "/ai-image-generation" },
     { label: "Consulter les tarifs", href: "/pricing" },
     { label: "Comprendre le fonctionnement", href: "/workflow" }
   ];
@@ -392,24 +447,39 @@ export function aidreamcapesEuSeoContent(slug: string): AidreamcapesEuSeoContent
     ...seed,
     slug: normalized,
     explicit: true,
-    canonicalPath: `/ai-image-generation/${normalized}`,
-    h3: [`Créer ${seed.label.toLowerCase()}`, `Idéal pour ${seed.subject.replace(/^un |^une |^des /i, "")}`, "Préparer une galerie privée"],
-    intro: `${seed.label} permet de créer ${seed.subject} dans ${seed.scene}. La page présente des directions visuelles distinctes avant de lancer une galerie privée.`,
+    canonicalPath,
+    h3: [`Explorer ${seed.label.toLowerCase()}`, `Idéal pour ${seed.subject.replace(/^un |^une |^des /i, "")}`, "Préparer une galerie privée"],
+    intro: `La catégorie « ${seed.label} » présente ${seed.subject} dans des décors tels que ${seed.scene}. La page présente des directions visuelles distinctes avant de lancer une galerie privée.`,
     details: [
-      `Le thème privilégie ${seed.subject} et conserve un cadrage lisible pour que le résultat corresponde réellement à son usage.`,
-      `Les scènes proposées explorent ${seed.scene}, avec des lumières, matières, focales et compositions différentes d’une image à l’autre.`,
-      "Utilisez des photos source nettes dont vous détenez les droits ou l’autorisation, puis vérifiez le rendu avant téléchargement."
+      `Cette catégorie rassemble ${seed.subject} avec des compositions lisibles adaptées à différents usages personnels et créatifs.`,
+      `Les directions visuelles explorent ${seed.scene}, avec des lumières, matières et cadrages différents d’une image à l’autre.`,
+      "Utilisez des photos source nettes dont vous détenez les droits ou l’autorisation, puis vérifiez chaque résultat avant téléchargement."
     ],
     useCases: [`Profils et publications liés à ${seed.label.toLowerCase()}`, "Moodboards et idées de direction artistique", "Albums privés à conserver ou à partager", "Visuels de créateur ou de campagne"],
-    workflow: ["Choisir la direction du thème.", "Importer des photos source autorisées et lisibles.", "Vérifier le nombre d’images et les crédits avant de commencer.", "Examiner la galerie privée puis télécharger les favoris."],
+    workflow: ["Choisir une direction visuelle.", "Importer des photos source autorisées et lisibles.", "Comparer le nombre d’images et les crédits avant de commencer.", "Examiner la galerie privée puis télécharger les favoris."],
     internalLinks: relatedLinks,
-    ctaLabel: `Créer ${seed.label.toLowerCase()}`,
+    ctaLabel: `Explorer ${seed.label.toLowerCase()}`,
     ctaHref: "/app/create",
     faqItems: [
-      [`Que permet le thème « ${seed.label} » ?`, `Ce thème crée ${seed.subject} dans ${seed.scene}, avec plusieurs compositions destinées à une galerie privée.`],
+      [`Que trouve-t-on dans « ${seed.label} » ?`, `Cette catégorie rassemble ${seed.subject} dans des décors tels que ${seed.scene}, avec plusieurs directions destinées à une galerie privée.`],
       [`Quelles photos source utiliser pour ${seed.label.toLowerCase()} ?`, "Utilisez des photos nettes et bien éclairées que vous possédez ou que vous êtes autorisé à utiliser. Évitez les captures, les petits recadrages et les visages non consentants."],
-      [`Combien d’images la formule ${seed.label.toLowerCase()} produit-elle ?`, "La formule affiche le nombre d’images et le coût en crédits avant le lancement. Vérifiez ces informations avant de confirmer."],
+      ["Comment choisir le bon thème ?", "Comparez la scène, le cadrage, le nombre d’images et le coût en crédits avant d’ouvrir le thème qui correspond à votre projet."],
       ["Où retrouver les images terminées ?", "Les résultats restent dans votre espace privé pour être examinés, conservés et téléchargés lorsque la galerie vous convient."]
     ]
   };
+}
+
+export const AIDREAMCAPES_EU_THEME_SLUGS = Object.freeze(Object.keys(SEEDS));
+
+export function aidreamcapesEuSeoContent(slug: string): AidreamcapesEuSeoContent | undefined {
+  const normalized = slug.trim().toLowerCase();
+  const seed = SEEDS[normalized];
+  if (!seed) return undefined;
+  return contentFromSeed(seed, normalized, `/ai-image-generation/${normalized}`);
+}
+
+export function aidreamcapesEuSeoDirectoryContent(slug: string): AidreamcapesEuSeoContent | undefined {
+  const normalized = slug.trim().toLowerCase();
+  const seed = DIRECTORY_SEEDS[normalized];
+  return seed ? contentFromSeed(seed, normalized, `/ai-image-generation/${normalized}`) : undefined;
 }

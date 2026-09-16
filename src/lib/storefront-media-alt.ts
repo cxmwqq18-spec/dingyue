@@ -128,6 +128,16 @@ function imageTopicFromUrl(imageUrl: string | undefined): string {
 
 function frenchThemeSubject(key: string): string | undefined {
   if (/\b(?:credit|subscription|plan|pricing|checkout)\b/.test(key)) return "Panneau de crédits pour galeries photo privées";
+  if (/(black-friday|commercial|sale-campaign|promo)/.test(key)) return "Portrait de campagne commerciale Black Friday";
+  if (/(bikini|swimsuit|beach|pool|vacation)/.test(key)) return "Adulte en tenue balnéaire dans un décor de vacances";
+  if (/(cannes|riviera)/.test(key)) return "Portrait adulte inspiré de Cannes et de la Riviera";
+  if (/(nightlife|night-life|urban-night)/.test(key)) return "Portrait adulte dans une ambiance nocturne urbaine";
+  if (/(only-fans|creator-premium)/.test(key)) return "Portrait adulte de créateur dans un style mode élégant";
+  if (/(street-style|urban-style)/.test(key)) return "Portrait adulte de style urbain dans une rue contemporaine";
+  if (/(rich-lifestyle|premium-lifestyle)/.test(key)) return "Portrait adulte dans un décor lifestyle premium";
+  if (/(singles-awareness-day|independence)/.test(key)) return "Portrait adulte célébrant l’autonomie et le bien-être";
+  if (/(valentines-photo|valentine)/.test(key)) return "Portrait de couple adulte pour la Saint-Valentin";
+  if (/(wedding-photo|wedding)/.test(key)) return "Portrait de couple adulte dans une ambiance de mariage";
   if (/(background-changer|background-replacement|product-style)/.test(key)) return "Sujet intégré dans un nouvel arrière-plan";
   if (/(background-remover|cutout|remove-background)/.test(key)) return "Sujet détouré sur un fond neutre";
   if (/(color-correction|colour-correction|color-grading)/.test(key)) return "Photo aux couleurs rééquilibrées";
@@ -737,10 +747,17 @@ export function storefrontPackMediaAlt(input: PackAltInput): string {
   const imageKey = themeImageSlugParts(input.imageUrl).join(" ");
   const contextKey = contextualThemeKey(input);
   const euPackSubject = locale === "fr" ? frenchEuPackSubject(input.themeSlug) : undefined;
+  const imageEuPackSlug = locale === "fr"
+    ? Object.keys(frenchEuPackSubjects)
+      .sort((left, right) => right.length - left.length)
+      .find((slug) => imageKey.includes(slug))
+    : undefined;
+  const imageEuPackSubject = locale === "fr" ? frenchEuPackSubject(imageEuPackSlug) : undefined;
   const specificScene = locale === "es" ? spanishThemeSubject(specificKey) : locale === "fr" ? frenchThemeSubject(specificKey) : englishThemeSubject(specificKey);
   const imageScene = locale === "es" ? spanishThemeSubject(imageKey) : locale === "fr" ? frenchThemeSubject(imageKey) : englishThemeSubject(imageKey);
   const contextScene = locale === "es" ? spanishThemeSubject(contextKey) : locale === "fr" ? frenchThemeSubject(contextKey) : englishThemeSubject(contextKey);
   const scene = euPackSubject
+    ?? imageEuPackSubject
     ?? (imageScene && (imageSlugHasSpecificTheme(imageKey) || !specificScene || genericSceneSubject(specificScene))
       ? imageScene
       : specificScene

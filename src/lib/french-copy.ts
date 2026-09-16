@@ -284,7 +284,10 @@ export function frenchCopy(value: string): string {
   const protectedValueResult = protectEmbeddedValues(value);
   const phraseResult = replaceFrenchPhrases(protectedValueResult.value);
   let translated = phraseResult.value;
-  translated = translated.replace(/\b[A-Za-z][A-Za-z'-]*\b/g, (word) => FRENCH_WORDS[word.toLowerCase()] ?? word);
+  // Include accented French letters in one token. The previous ASCII-only
+  // matcher split words such as "allée" into "all" + "ée", then translated
+  // the first fragment to "tout" and produced invalid copy like "toutée".
+  translated = translated.replace(/\p{L}[\p{L}'-]*/gu, (word) => FRENCH_WORDS[word.toLowerCase()] ?? word);
   translated = translated
     .replace(/\bUploading\b/gi, "Importation en cours")
     .replace(/\bUpload\b/gi, "Importer")
