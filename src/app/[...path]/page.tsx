@@ -26,7 +26,7 @@ import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStoref
 import { legacyPublicPathTarget, mydreamshootsLegacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
 import { isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { customerSessionCookie } from "@/lib/session";
-import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
 import { isAidreamcapesImageThemePath, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
@@ -652,7 +652,7 @@ export default async function HostStorefrontCatchAllPage({
     if (isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]))) notFound();
     redirect("/tools");
   }
-  if (hostSiteSlug === "aidreamcapes" && slug === "/collections") permanentRedirect("/ai-image-generation");
+  if ((hostSiteSlug === "aidreamcapes" || hostSiteSlug === "aidreamcapes-eu") && slug === "/collections") permanentRedirect("/ai-image-generation");
   if (hostSiteSlug === "aidreamcapes" && slug === "/tools") permanentRedirect("/ai-video-generation");
   if (slug === "/app" || slug === "/dashboard") {
     const query = searchParams ? await searchParams : {};
@@ -724,6 +724,12 @@ export default async function HostStorefrontCatchAllPage({
     permanentRedirect("/ai-image-generation");
   }
   if (isMydreamshootsSite(site) && isVideoGenerationRequest && ["text-to-video", "image-to-video"].includes(path[1] ?? "")) {
+    notFound();
+  }
+  // AIdreamshoots and the primary myDreamshoots storefronts retired the old
+  // /tools namespace. Check this before published-route dispositions so a
+  // stale self-redirect row cannot turn the retired URL into a 308 loop.
+  if (firstSegment === "tools" && (isMydreamshootsSite(site) || isAidreamshootsStorefrontSite(site)) && !isAidreamcapesSite(site)) {
     notFound();
   }
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
