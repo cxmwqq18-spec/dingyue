@@ -3339,6 +3339,31 @@ const aidreamshootsReviewMediaById: Record<string, { avatarUrl: string; resultIm
 };
 
 const aidreamshootsLegacyMediaReplacements: Record<string, string> = {
+  // The video directory keeps presentation-ready cover overrides in code.
+  // Keep those overrides scoped to the Spanish storefront while pointing at
+  // the same vendor-generated batch used by its detail pages.
+  "generated/homepage-showcase/posters/first-frame-talking-photo.jpg": aidreamshootsLatestMedia.talkingPhoto,
+  "generated/homepage-showcase/posters/prompt-directed-motion.webp": aidreamshootsLatestMedia.talkingPhoto,
+  "generated/homepage-showcase/posters/first-frame-cinematic-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/cinematic-video/cinematic-video-01-create-a-more-cinematic-video-without-a-full-film-cr-84e9edc816.webp",
+  "generated/homepage-showcase/posters/first-frame-tiktok-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/tiktok-video/tiktok-video-01-turn-your-photos-and-ideas-into-tiktok-first-videos-7a108dbe77.webp",
+  "generated/homepage-showcase/posters/first-frame-instagram-reels.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/instagram-reels/instagram-reels-01-turn-photos-and-ideas-into-reels-that-fit-your-feed-0f724d6c63.webp",
+  "generated/homepage-showcase/posters/first-frame-product-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/product-video/product-video-01-feature-led-product-showcase-3765370633.webp",
+  "generated/homepage-showcase/posters/first-frame-product-ad-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/product-ad-video/product-ad-video-01-build-the-ad-around-one-buyer-decision-90e0edcd71.webp",
+  "generated/homepage-showcase/posters/first-frame-promo-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/promo-video/promo-video-01-promo-video-launch-teaser-73271ed69f.webp",
+  "generated/homepage-showcase/posters/first-frame-music-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/music-video/music-video-01-ai-music-video-generator-for-artist-visuals-and-perf-c12d6d69b3.webp",
+  "generated/video-topic-clean/social-media-video/social-media-video-cross-platform-creator.webp": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/social-media-video/social-media-video-01-social-media-video-01-df13318f8b.webp",
+  "generated/video-topic-clean/story-video/story-video-story-hero-library-restoration-v2.webp": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/story-video/story-video-01-story-video-story-hero-library-restoration-v2-b2cee36692.webp",
+  "fashion-video/fashion-video-duo-frame.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/fashion-video/fashion-video-01-hero-fashion-video-editorial-frame-ade2d87dc8.webp",
+  "food-video/hero-food-video-creator-frame.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/food-video/food-video-01-hero-food-video-creator-frame-83586f593c.webp",
+  "pet-video/hero-pet-video-portrait-frame.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/pet-video/pet-video-01-hero-pet-video-portrait-frame-51a16ee4e0.webp",
+  "explainer-video/hero-explainer-video-product-concept.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/explainer-video/explainer-video-01-hero-explainer-video-product-concept-bf97a49961.webp",
+  "how-to-video/hero-how-to-video-hands-on-step.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/how-to-video/how-to-video-01-hero-how-to-video-hands-on-step-e87a607079.webp",
+  "talking-head-video/hero-talking-head-video-professional-presenter.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/talking-head-video/talking-head-video-01-hero-talking-head-video-professional-presenter-250b467b5d.webp",
+  "youtube-video/youtube-video-expert-presenter.webp": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/youtube-video/youtube-video-01-youtube-video-expert-presenter-f7f4af4d36.webp",
+  "video-ad/video-ad-editing-variant-workflow.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/video-ad/video-ad-01-video-ad-creator-phone-tripod-04ae179621.webp",
+  "brand-video/brand-video-customer-community.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/brand-video/brand-video-01-brand-video-founder-story-e3d14ccb38.webp",
+  "ugc-ad-video/ugc-ad-video-creator-conversation-recording.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/ugc-ad-video/ugc-ad-video-01-ai-ugc-video-creator-lip-product-hook-a7f343e3e1.webp",
+  "meme-video/meme-video-message-overload.webp": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/meme-video/meme-video-01-meme-video-message-overload-37bdac7a62.webp",
   // Homepage hero, proof, catalog, pricing, and workflow visuals.
   "generated/20260622-homepage-unique/hero-package-wall.png": aidreamshootsLatestMedia.beauty,
   "generated/20260622-homepage-unique/hero-credit-studio-card.png": aidreamshootsLatestMedia.headshot,
