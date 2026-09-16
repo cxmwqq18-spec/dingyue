@@ -23,7 +23,8 @@ import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-vid
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation, aidreamcapesZipFooterItems } from "@/components/storefront/aidreamcapes-zip-navigation";
 import { AidreamcapesZipHomepageSection } from "@/components/storefront/aidreamcapes-zip-homepage";
-import { AidreamcapesZipFooter } from "@/components/storefront/aidreamcapes-zip-footer";
+import { AidreamcapesPublicSection } from "@/components/storefront/aidreamcapes-public-section";
+import { AidreamcapesZipFooter, type AidreamcapesZipSocialLink } from "@/components/storefront/aidreamcapes-zip-footer";
 import { AidreamcapesVideoDirectory, type AidreamcapesVideoDirectoryCopy } from "@/components/storefront/aidreamcapes-video-directory";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
@@ -260,7 +261,10 @@ export function ThemeRenderer({
   const displayPage = mode === "published"
     ? preserveVendorImageAlts(storefrontBrandPageCopy(displaySite, localizedPage), localizedPage)
     : localizedPage;
-  const entries = visibleSectionEntriesForRoute(getSectionEntries(displayPage), normalizedPath, displaySite);
+  const isAidreamcapesComPublicPage = displaySite.id === "site_aidreamcapes" && isAidreamcapesComPublicRedesignPath(normalizedPath);
+  const entries = isAidreamcapesComPublicPage
+    ? getSectionEntries(displayPage)
+    : visibleSectionEntriesForRoute(getSectionEntries(displayPage), normalizedPath, displaySite);
   const publicSlug = publicSiteSlug(site.slug);
   const isAidreamcapesImageThemeDetail = isAidreamcapesImageThemePath(displaySite.slug, normalizedPath);
   const imageThemeSlug = normalizedPath.split("/").filter(Boolean).pop();
@@ -332,8 +336,12 @@ export function ThemeRenderer({
         </div>
         <main
           id={mainContentId}
-          className={previewHasEmptyBody ? "flex min-h-0 flex-1 flex-col" : undefined}
+          className={[
+            previewHasEmptyBody ? "flex min-h-0 flex-1 flex-col" : "",
+            isAidreamcapesComPublicPage ? "bg-[#06070b] text-white" : ""
+          ].filter(Boolean).join(" ") || undefined}
           data-theme-sections-root=""
+          data-aidreamcapes-public-page={isAidreamcapesComPublicPage ? "true" : undefined}
           {...(isAidreamcapesImageThemeDetail ? {
             "data-page-key": `aidreamcapes/image-theme/${normalizedPath.replace(/^\/ai-image-generation\//, "")}`,
             "data-layout": "aidreamcapes-image-theme"
@@ -900,6 +908,19 @@ function isPublicSeoRoute(pagePath: string): boolean {
 function isPrivateStorefrontPath(pagePath: string): boolean {
   return ["/account", "/album", "/app", "/cart", "/checkout", "/dashboard", "/job", "/login"]
     .some((prefix) => pagePath === prefix || pagePath.startsWith(`${prefix}/`));
+}
+
+function isAidreamcapesComPublicRedesignPath(pagePath: string): boolean {
+  return pagePath === "/login" ||
+    pagePath === "/pricing" ||
+    pagePath === "/workflow" ||
+    pagePath === "/creators-circle" ||
+    pagePath === "/blog" ||
+    pagePath === "/about-us" ||
+    pagePath === "/contact-us" ||
+    pagePath === "/privacy" ||
+    pagePath === "/terms" ||
+    pagePath.startsWith("/blog/");
 }
 
 function previewSelectedAttrs(previewSelection: { sectionId?: string; blockId?: string } | undefined, sectionId: string) {
@@ -2065,8 +2086,43 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
   const frenchEngagementPage = isAidreamshootsEngagementFrenchPage(site, pagePath);
   const frenchPageFooter = frenchXbyFooter;
   const isAidreamcapesComFooter = isAidreamcapesFooter && !spanishXbyFooter && !frenchXbyFooter;
+  const zipIdentity = storefrontContext?.profile?.identity;
+  const zipConfiguredSocialKeys = ["instagramUrl", "facebookUrl", "threadsUrl", "pinterestUrl", "youtubeUrl", "xUrl", "twitterUrl", "tiktokUrl"];
+  const zipHasConfiguredSocialFields = Boolean(footer && zipConfiguredSocialKeys.some((key) => Object.prototype.hasOwnProperty.call(footer.settings, key)));
+  const zipSocialUrls = [
+    ...[
+      footer ? setting(footer, "instagramUrl", "") : "",
+      footer ? setting(footer, "facebookUrl", "") : "",
+      footer ? setting(footer, "threadsUrl", "") : "",
+      footer ? setting(footer, "pinterestUrl", "") : "",
+      footer ? setting(footer, "youtubeUrl", "") : "",
+      footer ? setting(footer, "xUrl", setting(footer, "twitterUrl", "")) : "",
+      footer ? setting(footer, "tiktokUrl", "") : "",
+    ],
+    ...(zipHasConfiguredSocialFields ? [] : (zipIdentity?.sameAs ?? []))
+  ].filter((url): url is string => typeof url === "string" && /^https?:\/\//i.test(url));
+  const zipSocialHref = (pattern: RegExp) => zipSocialUrls.find((url) => pattern.test(url)) ?? "";
+  const zipSocialLinks: AidreamcapesZipSocialLink[] = [
+    { key: "instagram", label: "Instagram", href: zipSocialHref(/instagram\.com/i) },
+    { key: "facebook", label: "Facebook", href: zipSocialHref(/facebook\.com/i) },
+    { key: "threads", label: "Threads", href: zipSocialHref(/threads\.(?:com|net)/i) },
+    { key: "pinterest", label: "Pinterest", href: zipSocialHref(/pinterest\./i) },
+    { key: "youtube", label: "YouTube", href: zipSocialHref(/youtube\.com/i) },
+    { key: "x", label: "X", href: zipSocialHref(/(?:^|https?:\/\/)(?:www\.)?x\.com/i) },
+    { key: "tiktok", label: "TikTok", href: zipSocialHref(/tiktok\.com/i) },
+  ];
+  const zipShowPaymentIconsValue = footer?.settings.showPaymentIcons;
+  const zipShowPaymentIcons = zipShowPaymentIconsValue === undefined ? true : zipShowPaymentIconsValue !== false && zipShowPaymentIconsValue !== "false";
   if (isAidreamcapesComFooter && !lightweight) {
-    return <AidreamcapesZipFooter footer={footer} groups={settings.aidreamcapesZipNavigation?.footerGroups ?? []} resolveHref={(href) => hrefFor(site, href)} />;
+    return (
+      <AidreamcapesZipFooter
+        footer={footer}
+        groups={settings.aidreamcapesZipNavigation?.footerGroups ?? []}
+        resolveHref={(href) => hrefFor(site, href)}
+        showPaymentIcons={zipShowPaymentIcons}
+        socialLinks={zipSocialLinks}
+      />
+    );
   }
   const hasPublishedSaveTheDateProjection = homepageShowcases.some((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
   const hasPublishedSaveTheDateConfig = settings.saveTheDateNavigation?.groups?.some((group) => group.items.some((item) => item.status === "published" && Boolean(item.href?.trim()))) ?? false;
@@ -9907,7 +9963,8 @@ function PricingTableSectionView({
   products,
   renderContext,
   storefrontContext,
-  embedded = false
+  embedded = false,
+  aidreamcapesEditorial = false
 }: {
   section: SectionInstance;
   site: Site;
@@ -9915,6 +9972,7 @@ function PricingTableSectionView({
   renderContext: RenderContext;
   storefrontContext?: StorefrontContext;
   embedded?: boolean;
+  aidreamcapesEditorial?: boolean;
 }) {
   const aidreamcapes = isAidreamcapesSite(site);
   // Keep the exact AIdreamshoots target on the Spanish relational catalogue
@@ -10114,6 +10172,31 @@ function PricingTableSectionView({
     quarter: { eyebrow: "", title: "", body: "", items: [] },
     half_year: { eyebrow: "", title: "", body: "", items: [] }
   });
+  if (aidreamcapesEditorial) {
+    return (
+      <section className="ac-section ac-section-tight ac-pricing-table-section" data-dreamshoot-embedded-pricing={embedded ? "true" : undefined} id={sectionAnchor(section, "plans")}>
+        <div className="ac-container">
+          <div className="ac-pricing-bridge">
+            <div>
+              {setting(section, "eyebrow") ? <p className="ac-eyebrow ac-eyebrow-amber">{setting(section, "eyebrow")}</p> : null}
+              <h2>{pricingTitle}</h2>
+            </div>
+            <p>{pricingSubtitle}</p>
+          </div>
+          <PricingBillingTable
+            aidreamcapes={aidreamcapes}
+            variant="aidreamcapes-editorial"
+            canShowBillingSwitch={canShowBillingSwitch}
+            initialBillingCycle={billingCycle}
+            emphasizeBillingSwitch={false}
+            locale={storefrontLocaleForSite(site)}
+            plans={pricingPlans}
+            sidePanels={sidePanels}
+          />
+        </div>
+      </section>
+    );
+  }
   const compactHomepageSpacing = embedded && mydreamPricingCopyLayout && renderContext.pagePath === "/";
   const sectionClassName = embedded
     ? `relative mt-16 overflow-hidden border-t border-white/10 py-14 text-white${compactHomepageSpacing ? " pb-6" : ""}`
@@ -10156,6 +10239,7 @@ function PricingTableSectionView({
         </div>
         <PricingBillingTable
           aidreamcapes={aidreamcapes}
+          variant={aidreamcapesEditorial ? "aidreamcapes-editorial" : "default"}
           canShowBillingSwitch={canShowBillingSwitch}
           initialBillingCycle={billingCycle}
           emphasizeBillingSwitch={mydreamPricingCopyLayout}
@@ -10211,6 +10295,7 @@ function SectionView({
   const spanishXby = isSpanishXbySite(site);
   const frenchEngagementPage = isAidreamshootsEngagementFrenchPage(site, renderContext.pagePath);
   const isAidreamcapesComHomepage = isAidreamcapesSite(site) && !isSpanishXbySite(site) && !isFrenchStorefrontSite(site) && renderContext.pagePath === "/";
+  const isAidreamcapesComPublicPage = site.id === "site_aidreamcapes" && isAidreamcapesComPublicRedesignPath(renderContext.pagePath);
   if (isAidreamcapesComHomepage && ["aidreamcapes_home_hero", "aidreamcapes_video_grid", "aidreamcapes_ad_testing", "aidreamcapes_photo_grid", "aidreamcapes_scenario_grid", "aidreamcapes_how_it_works", "aidreamcapes_credit_rules", "pricing_table", "testimonial_wall", "faq", "conversion_panel"].includes(section.type)) {
     return <AidreamcapesZipHomepageSection id={id} products={products} resolveAsset={(value) => mediaAssetUrl(site, value)} resolveHref={(value) => hrefFor(site, value)} section={section} site={site} storefrontContext={storefrontContext} />;
   }
@@ -10236,6 +10321,23 @@ function SectionView({
         saveTheDateNavigationGroups={resolvedSaveTheDateNavigationGroups}
         aidreamcapesVideoNavigation={aidreamcapesVideoNavigation}
         videoGenerationTopics={videoGenerationTopics}
+      />
+    );
+  }
+  if (isAidreamcapesComPublicPage && section.type !== "pricing_table") {
+    return (
+      <AidreamcapesPublicSection
+        id={id}
+        mode={mode}
+        page={renderContext.page}
+        pagePath={renderContext.pagePath}
+        query={renderContext.query}
+        resolveAsset={(value) => mediaAssetUrl(site, value)}
+        resolveHref={(value) => hrefFor(site, value)}
+        runtime={runtime}
+        section={section}
+        site={site as RoutedSite}
+        storefrontContext={storefrontContext}
       />
     );
   }
@@ -16537,6 +16639,7 @@ function SectionView({
         site={site}
         products={products}
         storefrontContext={storefrontContext}
+        aidreamcapesEditorial={isAidreamcapesComPublicPage}
       />
     );
   }

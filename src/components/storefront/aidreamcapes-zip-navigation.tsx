@@ -130,17 +130,6 @@ export function AidreamcapesZipDesktopNavigation({
           resolveHref={resolveHref}
         />
       </ClickMegaMenu>
-      <ClickMegaMenu
-        buttonClassName={desktopLinkClass}
-        label={navigation.scenarios.label}
-        panelClassName={panelClass}
-      >
-        <ZipMenuPanel
-          groups={navigation.scenarios.groups}
-          collection={navigation.scenarios.collection}
-          resolveHref={resolveHref}
-        />
-      </ClickMegaMenu>
       <a className={desktopLinkClass} href={resolveHref(navigation.actions.pricing.href)}>
         {navigation.actions.pricing.label}
       </a>
@@ -161,7 +150,6 @@ export function AidreamcapesZipMobileNavigation({
     ...navigation.video.groups,
     ...navigation.image.groups,
     ...navigation.marketing.groups,
-    ...navigation.scenarios.groups,
   ];
   return (
     <details className="relative z-[70] order-2 shrink-0 lg:hidden">

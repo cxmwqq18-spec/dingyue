@@ -6,6 +6,7 @@ import { AidreamcapesImageAsset } from "@/components/storefront/aidreamcapes-ima
 import type { AidreamcapesImageThemeDetailContent } from "@/lib/aidreamcapes-image-theme-content";
 
 type GalleryItems = AidreamcapesImageThemeDetailContent["examples"]["items"];
+type GalleryItem = GalleryItems[number];
 export type AidreamcapesImageThemeGalleryMode = "masonry" | "storyboard" | "portrait-set" | "comparison" | "catalog";
 
 type GalleryProps = {
@@ -14,22 +15,60 @@ type GalleryProps = {
 };
 
 function gridClass(mode: AidreamcapesImageThemeGalleryMode): string {
-  if (mode === "masonry") return "columns-2 gap-3 sm:columns-3 lg:columns-4";
-  if (mode === "portrait-set") return "grid grid-cols-2 items-start gap-3 sm:grid-cols-3 lg:grid-cols-5";
-  if (mode === "comparison") return "grid grid-cols-2 items-start gap-3 lg:grid-cols-4";
-  if (mode === "catalog") return "grid grid-cols-2 items-start gap-3 sm:grid-cols-4";
-  return "grid grid-cols-2 items-start gap-3 lg:grid-cols-4";
+  if (mode === "storyboard") return "grid grid-cols-2 items-start gap-3 sm:grid-cols-3 lg:grid-cols-3";
+  if (mode === "portrait-set") return "grid grid-cols-2 items-start gap-3 sm:grid-cols-3 lg:grid-cols-4";
+  return "grid grid-cols-2 items-start gap-3 sm:grid-cols-3 lg:grid-cols-4";
 }
 
-function cardClass(mode: AidreamcapesImageThemeGalleryMode, index: number): string {
-  if (mode === "masonry") return "mb-3 break-inside-avoid";
-  if (mode === "storyboard" && index === 0) return "lg:col-span-2";
-  if (mode === "comparison" && index < 2) return "lg:col-span-2";
-  return "";
+function estimatedCardHeight(item: GalleryItem): number {
+  return (item.image.height / item.image.width) * 320 + Math.min(160, item.body.length * 1.8) + 72;
+}
+
+function balancedColumns(items: GalleryItems, count: number): Array<Array<{ item: GalleryItem; index: number }>> {
+  const columnCount = Math.max(2, Math.min(4, count));
+  const columns = Array.from({ length: columnCount }, () => ({ items: [] as Array<{ item: GalleryItem; index: number }>, height: 0 }));
+  const indexedItems = items.map((item, index) => ({ item, index, height: estimatedCardHeight(item) }));
+  const first = indexedItems.shift();
+  if (first) {
+    columns[0].items.push(first);
+    columns[0].height += first.height;
+  }
+  indexedItems.sort((left, right) => right.height - left.height);
+  for (const entry of indexedItems) {
+    const target = columns.reduce((shortest, column) => column.height < shortest.height ? column : shortest, columns[0]);
+    target.items.push(entry);
+    target.height += entry.height;
+  }
+  return columns.map((column) => column.items);
+}
+
+function GalleryCard({ item, index, className = "", onOpen }: { item: GalleryItem; index: number; className?: string; onOpen: (index: number, trigger: HTMLElement) => void }) {
+  return (
+    <figure className={`group h-fit min-w-0 self-start overflow-hidden rounded-[20px] border border-white/10 bg-[#0b0c10] ${className}`}>
+      <button
+        aria-label={`Open ${item.title}`}
+        className="relative block w-full cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#c4b5fd]"
+        onClick={(event) => onOpen(index, event.currentTarget)}
+        type="button"
+      >
+        <div className="relative overflow-hidden bg-[#111217]">
+          <AidreamcapesImageAsset className="block h-auto w-full object-contain transition duration-700 group-hover:scale-[1.02]" image={item.image} />
+          <span className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-black/90 via-black/35 to-transparent px-4 pb-4 pt-14 text-white">
+            <span className="min-w-0 truncate text-sm font-semibold tracking-[-0.01em]">{item.title}</span>
+            <span className="shrink-0 font-mono text-[10px] tracking-[0.2em] text-white/55">{String(index + 1).padStart(2, "0")}</span>
+          </span>
+        </div>
+      </button>
+      <figcaption className="border-t border-white/10 px-4 py-3">
+        <p className="text-xs leading-5 text-white/48">{item.body}</p>
+      </figcaption>
+    </figure>
+  );
 }
 
 export function AidreamcapesImageThemeGallery({ items, mode }: GalleryProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [galleryColumnCount, setGalleryColumnCount] = useState(2);
   const triggerRef = useRef<HTMLElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const scrollYRef = useRef(0);
@@ -54,33 +93,44 @@ export function AidreamcapesImageThemeGallery({ items, mode }: GalleryProps) {
   }, [activeIndex, items.length]);
 
   useEffect(() => {
+    const updateColumnCount = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setGalleryColumnCount(2);
+        return;
+      }
+      if (width < 1024) {
+        setGalleryColumnCount(3);
+        return;
+      }
+      setGalleryColumnCount(mode === "storyboard" ? 3 : 4);
+    };
+    updateColumnCount();
+    window.addEventListener("resize", updateColumnCount);
+    return () => window.removeEventListener("resize", updateColumnCount);
+  }, [mode]);
+
+  useEffect(() => {
     if (activeIndex === null) triggerRef.current?.focus();
   }, [activeIndex]);
 
+  const openImage = (index: number, trigger: HTMLElement) => {
+    triggerRef.current = trigger;
+    setActiveIndex(index);
+  };
+
   return (
     <>
-      <div className={gridClass(mode)} data-image-gallery-mode={mode}>
-        {items.map((item, index) => (
-          <figure className={`group h-fit min-w-0 self-start overflow-hidden rounded-[20px] border border-white/10 bg-[#0b0c10] ${cardClass(mode, index)}`} key={`${item.title}-${index}`}>
-            <button
-              aria-label={`Open ${item.title}`}
-              className="relative block w-full cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#c4b5fd]"
-              onClick={(event) => { triggerRef.current = event.currentTarget; setActiveIndex(index); }}
-              type="button"
-            >
-              <div className="relative overflow-hidden bg-[#111217]">
-                <AidreamcapesImageAsset className="block h-auto w-full object-contain transition duration-700 group-hover:scale-[1.02]" image={item.image} />
-                <span className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-black/90 via-black/35 to-transparent px-4 pb-4 pt-14 text-white">
-                  <span className="min-w-0 truncate text-sm font-semibold tracking-[-0.01em]">{item.title}</span>
-                  <span className="shrink-0 font-mono text-[10px] tracking-[0.2em] text-white/55">{String(index + 1).padStart(2, "0")}</span>
-                </span>
-              </div>
-            </button>
-            <figcaption className="border-t border-white/10 px-4 py-3">
-              <p className="text-xs leading-5 text-white/48">{item.body}</p>
-            </figcaption>
-          </figure>
-        ))}
+      <div data-image-gallery-layout="balanced-columns" data-image-gallery-mode={mode}>
+        <div className={gridClass(mode)}>
+          {balancedColumns(items, galleryColumnCount).map((column, columnIndex) => (
+            <div className="min-w-0 space-y-3" key={`${mode}-column-${columnIndex}`}>
+              {column.map(({ item, index }) => (
+                <GalleryCard index={index} item={item} key={`${item.title}-${index}`} onOpen={openImage} />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
 
       {activeIndex !== null ? (
