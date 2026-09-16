@@ -23,7 +23,7 @@ const codeCommit = process.env.GIT_COMMIT_SHA || execFileSync("git", ["rev-parse
 
 const entitySpecs = {
   theme_page: { model: "themePage", key: "id", lookup: ["id", "slug"], json: ["draftJson"], fields: ["id", "siteId", "pageType", "templateKey", "slug", "title", "draftJson"] },
-  live_page: { model: "livePage", key: "id", lookup: ["id", "slug"], json: ["contentJson"], fields: ["id", "siteId", "slug", "title", "contentJson"] },
+  live_page: { model: "livePage", key: "id", lookup: ["id", "slug"], json: ["contentJson"], fields: ["id", "siteId", "pageType", "templateKey", "slug", "title", "contentJson"] },
   theme_settings: { model: "themeSettings", key: "siteId", lookup: ["siteId"], json: ["draftJson"], fields: ["id", "siteId", "draftJson"] },
   storefront_profile: { model: "storefrontProfile", key: "siteId", lookup: ["siteId"], json: ["draftJson"], fields: ["id", "siteId", "draftJson"] },
   creative_pack: { model: "creativePack", key: "id", lookup: ["id"], fields: ["id", "siteId", "name", "headline", "description", "category", "categoryId", "aiAppSlug", "status", "creditCost", "outputCount", "trainingRequired", "imageUrl", "galleryImages", "galleryImageAlts"] },
