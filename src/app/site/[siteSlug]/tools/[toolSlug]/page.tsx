@@ -82,7 +82,7 @@ const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; toolSlug: string }> }): Promise<Metadata> {
   const { siteSlug, toolSlug } = await params;
-  if (normalizePublicSiteSlug(siteSlug) === "mydreamshoots") return {};
+  if (["mydreamshoots", "aidreamshoots"].includes(normalizePublicSiteSlug(siteSlug))) return {};
   if (isRetiredAidreamcapesImageToolPath(normalizePublicSiteSlug(siteSlug), `/tools/${toolSlug}`)) return {};
   if (legacyToolRedirectPath(siteSlug, toolSlug)) return {};
   const { state, site, page, matched } = await resolveToolPage(siteSlug, toolSlug);
@@ -105,7 +105,7 @@ export default async function ToolPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug, toolSlug } = await params;
-  if (normalizePublicSiteSlug(siteSlug) === "mydreamshoots") notFound();
+  if (["mydreamshoots", "aidreamshoots"].includes(normalizePublicSiteSlug(siteSlug))) notFound();
   if (isRetiredAidreamcapesImageToolPath(normalizePublicSiteSlug(siteSlug), `/tools/${toolSlug}`)) notFound();
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
