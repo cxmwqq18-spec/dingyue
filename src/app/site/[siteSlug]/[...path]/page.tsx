@@ -21,7 +21,7 @@ import { storefrontPathForRouteMode, storefrontRouteModeForHeaders, type Storefr
 import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 import { isAidreamcapesImageThemePath, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
-import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
+import { canonicalUrlForSite, createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 
@@ -474,7 +474,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const page = findPage(site, resolvedSlug);
   if (!page) return {};
   if (resolvedSlug !== slug && canonicalRequestedSlug !== requestedSlug) {
-    const canonicalPage = { ...page, publishedJson: { ...page.publishedJson, seo: { ...page.publishedJson.seo, canonicalPath: canonicalRequestedSlug, canonical: `https://www.mydreamshoots.com${canonicalRequestedSlug}` } } };
+    const canonicalPage = { ...page, publishedJson: { ...page.publishedJson, seo: { ...page.publishedJson.seo, canonicalPath: canonicalRequestedSlug, canonical: canonicalUrlForSite(site, canonicalRequestedSlug) } } };
     return metadataForPublishedStorefrontPage({ site, page: canonicalPage, products: state.products, creativePacks: state.creativePacks, snapshot });
   }
   return metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot });
@@ -562,7 +562,7 @@ export default async function SiteCatchAllPage({
     return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode });
   }
   if (path[0] === "job" && path[1]) redirect(routePath(`/app/jobs/${path[1]}`));
-  if (path[0] === "tools" && (isPrimaryMydreamshootsSlug(publicSlug) || isAidreamshootsStorefrontSite({ slug: publicSlug }))) notFound();
+  if (path[0] === "tools" && path[1] && (isPrimaryMydreamshootsSlug(publicSlug) || isAidreamshootsStorefrontSite({ slug: publicSlug }))) notFound();
   if (isAidreamcapesImageThemePath(publicSlug, slug)) {
     const detailState = routeMode === "host"
       ? await readRoutePublicRuntimeState(headerStore, routeMode, publicSlug, slug)

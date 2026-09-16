@@ -964,6 +964,7 @@ function isBlockedPublicPath(path: string, site?: Site): boolean {
 
 function isBlockedPublicPathForSite(site: Site, path: string): boolean {
   if (isAidreamshootsStorefrontSite(site) && path.startsWith("/ai-image-generation/collections-")) return true;
+  if (isAidreamshootsStorefrontSite(site) && path.startsWith("/tools/")) return true;
   if (isDreamshootSite(site)) {
     if (path === "/collections" || path.startsWith("/collections/") || path === "/tools" || path.startsWith("/tools/") || path === "/ai-photoshoot" || path.startsWith("/ai-photoshoot/")) return true;
     if (path.startsWith("/ai-image-generation/") && !parsePublicCollectionRouteForSite(site, path)) return true;
@@ -985,6 +986,7 @@ function isIndexableSeoDirectoryPath(site: Site, path: string): boolean {
   }
   if (isVideoGenerationDirectoryPath(site, normalized)) return isPublicVideoGenerationSitemapPath(site, normalized);
   if (normalized.startsWith("/tools/")) {
+    if (isAidreamshootsStorefrontSite(site)) return false;
     if (isDreamshootSite(site)) return false;
     if (isExplicitSeoDirectoryContentForSite(site, "tool", normalized)) return true;
     return false;
@@ -1141,7 +1143,7 @@ function isIndexablePage(page: ThemePage, site?: Site): boolean {
 
 function isIndexableToolPath(site: Site, path: string): boolean {
   const normalized = canonicalToolPathForSite(site, path);
-  if (isDreamshootSite(site)) return false;
+  if (isDreamshootSite(site) || isAidreamshootsStorefrontSite(site)) return false;
   return (normalized === "/tools" || normalized.startsWith("/tools/")) && !isBlockedPublicPath(normalized);
 }
 
@@ -1214,6 +1216,10 @@ function addPublicPath(state: PlatformState, site: Site, paths: Set<string>, hre
   }
   if (isVideoGenerationDirectoryPath(site, normalized)) {
     if (isPublicVideoGenerationSitemapPath(site, normalized)) paths.add(normalized);
+    return;
+  }
+  if (normalized === "/tools") {
+    paths.add(normalized);
     return;
   }
   if (normalized.startsWith("/tools/")) {

@@ -13,7 +13,7 @@ import { storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string }> }): Promise<Metadata> {
   const { siteSlug } = await params;
   const publicSlug = publicSiteSlug(siteSlug);
-  if (["mydreamshoots", "aidreamshoots"].includes(publicSlug)) return {};
+  if (publicSlug === "mydreamshoots") return {};
   const state = await readPathModePublicRuntimeState(publicSlug, "/tools");
   const site = state?.sites[0];
   const page = site?.pages.find((item) => item.slug === "/tools");
@@ -31,7 +31,7 @@ export default async function SiteToolsPage({
 }) {
   const { siteSlug } = await params;
   const publicSlug = publicSiteSlug(siteSlug);
-  if (["mydreamshoots", "aidreamshoots"].includes(publicSlug)) notFound();
+  if (publicSlug === "mydreamshoots") notFound();
   if (publicSlug === "aidreamcapes") permanentRedirect(`/site/${publicSlug}/ai-video-generation`);
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);

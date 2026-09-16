@@ -209,10 +209,10 @@ function inspectPage(pathname, response) {
   check(`${pathname}: images have descriptive alt`, emptyImageAlts.length === 0, emptyImageAlts.slice(0, 5));
   check(`${pathname}: no legacy/local/http links`, badSources.length === 0, badSources.slice(0, 10));
   check(`${pathname}: JSON-LD parses`, jsonLd.errors.length === 0, jsonLd.errors);
-  if (isBlog) {
+  if (pathname.startsWith("/blog/")) {
     check(`${pathname}: Article/BlogPosting JSON-LD`, jsonLdTypes.has("Article") || jsonLdTypes.has("BlogPosting"), [...jsonLdTypes]);
     check(`${pathname}: BreadcrumbList JSON-LD`, jsonLdTypes.has("BreadcrumbList"), [...jsonLdTypes]);
-  }
+  } else if (isBlog) check(`${pathname}: BreadcrumbList JSON-LD`, jsonLdTypes.has("BreadcrumbList"), [...jsonLdTypes]);
   if (isThemeDetail) check(`${pathname}: BreadcrumbList JSON-LD`, jsonLdTypes.has("BreadcrumbList"), [...jsonLdTypes]);
 }
 

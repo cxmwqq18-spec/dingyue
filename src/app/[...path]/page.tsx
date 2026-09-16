@@ -729,7 +729,7 @@ export default async function HostStorefrontCatchAllPage({
   // AIdreamshoots and the primary myDreamshoots storefronts retired the old
   // /tools namespace. Check this before published-route dispositions so a
   // stale self-redirect row cannot turn the retired URL into a 308 loop.
-  if (firstSegment === "tools" && (isMydreamshootsSite(site) || isAidreamshootsStorefrontSite(site)) && !isAidreamcapesSite(site)) {
+  if (firstSegment === "tools" && path[1] && (isMydreamshootsSite(site) || isAidreamshootsStorefrontSite(site)) && !isAidreamcapesSite(site)) {
     notFound();
   }
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
@@ -751,7 +751,7 @@ export default async function HostStorefrontCatchAllPage({
   }
   if (slug === "/help" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/faq");
   if (slug === "/how-it-works" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/workflow");
-  if (firstSegment === "tools" && (isMydreamshootsSite(site) || isAidreamshootsPublicSlug(hostSiteSlug)) && !isAidreamcapesSite(site)) notFound();
+  if (firstSegment === "tools" && path[1] && (isMydreamshootsSite(site) || isAidreamshootsPublicSlug(hostSiteSlug)) && !isAidreamcapesSite(site)) notFound();
   const routeQuery = searchParams ? await searchParams : {};
   redirectLegacyBlogArticle(site, slug, routeQuery);
   const resolvedToolPage = firstSegment === "tools" && path[1]
