@@ -29,7 +29,7 @@ export const AIDREAMSHOOTS_VIDEO_SAVE_THE_DATE_ALIASES: Record<string, string> =
   thanksgiving: "thanksgiving",
   "valentines-day": "valentines-day",
   "wedding-ceremony": "wedding-ceremony",
-  "wedding-invitation": "wedding-ceremony"
+  "wedding-invitation": "wedding-invitation"
 };
 
 export function aidreamshootsLegacyVideoSaveTheDatePath(pathname: string): string | undefined {

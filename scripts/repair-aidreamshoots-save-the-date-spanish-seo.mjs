@@ -3,6 +3,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { PrismaClient } from "@prisma/client";
 import { assertDatabaseTarget, assertNonProductionWriteTarget } from "./lib/database-target.mjs";
 import "./load-runtime-env.mjs";
@@ -721,7 +722,17 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+export {
+  copyReplacements,
+  profiles,
+  repairStandardPage,
+  repairWeddingInvitationPage,
+  assertDescriptiveAlts
+};
+
+if (import.meta.url === pathToFileURL(path.resolve(process.argv[1] ?? "")).href) {
+  main().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}

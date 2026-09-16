@@ -16,7 +16,7 @@ import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSi
 import { legacyPublicPathTarget, mydreamshootsLegacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
 import { isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { publicSiteSlug } from "@/lib/domain-routing";
-import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
 import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 import { isAidreamcapesImageThemePath, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
@@ -562,7 +562,7 @@ export default async function SiteCatchAllPage({
     return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode });
   }
   if (path[0] === "job" && path[1]) redirect(routePath(`/app/jobs/${path[1]}`));
-  if (path[0] === "tools" && isPrimaryMydreamshootsSlug(publicSlug)) notFound();
+  if (path[0] === "tools" && (isPrimaryMydreamshootsSlug(publicSlug) || isAidreamshootsStorefrontSite({ slug: publicSlug }))) notFound();
   if (isAidreamcapesImageThemePath(publicSlug, slug)) {
     const detailState = routeMode === "host"
       ? await readRoutePublicRuntimeState(headerStore, routeMode, publicSlug, slug)

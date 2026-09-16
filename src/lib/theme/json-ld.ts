@@ -12,7 +12,7 @@ import { AIDREAMCAPES_EU_THEME_SLUGS, aidreamcapesEuSeoContent } from "@/lib/aid
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
-import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import {
   AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY,
@@ -66,6 +66,10 @@ function isSpanishXbySite(site: Site): boolean {
 
 function isPrimaryMyDreamShootsSite(site: Site): boolean {
   return isPrimaryMydreamshootsCapabilitySite(site);
+}
+
+function hasAidreamshootsBranding(site: Site): boolean {
+  return isAidreamshootsStorefrontSite(site);
 }
 
 function isMydreamshootsComSite(site: Site): boolean {
@@ -446,7 +450,9 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
   const isAboutPage = pagePath === "/about-us" && isMydreamshootsComSite(site);
   const logo = isPrimaryMyDreamShootsSite(site)
     ? absoluteUrl(site, routeMode, "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
-    : undefined;
+    : hasAidreamshootsBranding(site)
+      ? absoluteUrl(site, routeMode, "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a")
+      : undefined;
   return {
     "@type": "Organization",
     "@id": `${storefrontBaseUrl(site, routeMode)}#organization`,
@@ -727,11 +733,15 @@ function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string,
       "@type": "Organization",
       name: siteBrandName(site),
       url: storefrontBaseUrl(site, routeMode),
-      ...(isPrimaryMyDreamShootsSite(site) ? {
+      ...(isPrimaryMyDreamShootsSite(site) || hasAidreamshootsBranding(site) ? {
         logo: {
           "@type": "ImageObject",
-          url: absoluteUrl(site, routeMode, "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b"),
-          contentUrl: absoluteUrl(site, routeMode, "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
+          url: absoluteUrl(site, routeMode, hasAidreamshootsBranding(site)
+            ? "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a"
+            : "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b"),
+          contentUrl: absoluteUrl(site, routeMode, hasAidreamshootsBranding(site)
+            ? "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a"
+            : "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
         }
       } : {})
     },
@@ -795,6 +805,16 @@ function policyWebPageSchema(input: JsonLdInput, title: string, description: str
 
 function serviceOrProductSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
   const path = input.pagePath;
+  if (hasAidreamshootsBranding(input.site) && path.startsWith("/ai-save-the-date/")) {
+    return [{
+      "@type": "Service",
+      name: title,
+      description,
+      provider: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
+      serviceType: "servicio de fotos y vídeos para celebraciones con IA",
+      url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, path))
+    }];
+  }
   if (path.startsWith("/tools/") || path.startsWith("/ai-video-generation/")) {
     return [{
       "@type": "Service",

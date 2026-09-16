@@ -301,6 +301,10 @@ function cardMediaAspectRatio(image: VideoTopicImage): string {
   return intrinsicAspectRatio(image);
 }
 
+function isRenderableTopicImage(image: VideoTopicImage | undefined): image is VideoTopicImage {
+  return Boolean(image?.src?.trim() && Number(image.width) > 0 && Number(image.height) > 0);
+}
+
 function optimizedTopicImageSrc(src: string): string {
   if (!src.startsWith("/assets/dreamshoot/")) return src;
   const youtubeMap: Record<string, string> = {
@@ -340,7 +344,7 @@ function heroPreviewImages(content: Pick<VideoTopicContent, "hero">): VideoTopic
   const seen = new Set<string>();
   return [content.hero.image, ...(content.hero.images ?? [])]
     .filter((image) => {
-      if (!image?.src || seen.has(image.src)) return false;
+      if (!isRenderableTopicImage(image) || seen.has(image.src)) return false;
       seen.add(image.src);
       return true;
     })
@@ -356,7 +360,7 @@ function sceneHeroPreviewImages(content: VideoTopicContent, contentKey: string):
     if (portrait && training && owner) return [portrait, training, owner];
   }
   if (contentKey === "music-video" && images.length >= 2) {
-    return [images[0], { src: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg", alt: "Female vocalist singing into a studio microphone under red and blue cinematic lighting, used as the dedicated hero performance frame.", width: 1800, height: 1200, objectPosition: "50% 42%" }, ...images.slice(2)];
+    return [images[0], { src: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg", alt: "Cantante interpretando una canción con micrófono en un estudio, con iluminación cinematográfica roja y azul.", width: 1800, height: 1200, objectPosition: "50% 42%" }, ...images.slice(2)];
   }
   return images;
 }
@@ -647,7 +651,7 @@ function ValueSection({ section, light = false }: { section: VideoTopicContent["
 
 function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicContent; section: SectionInstance; site: Site }) {
   const primaryHref = `/app/create?videoMode=${encodeURIComponent("video-ad")}#step-video`;
-  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
+  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => isRenderableTopicImage(item.image)) ?? [];
   const heroPreview = [galleryItems[0], galleryItems[5], galleryItems[6]].filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item));
   return (
     <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? "video-ad")} data-video-topic-page="video-ad">
@@ -1333,7 +1337,7 @@ function normalizeTalkingContent(content: TalkingPhotoContent): VideoTopicConten
 
 function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopicContent; section: SectionInstance; site: Site }) {
   const primaryHref = `/app/create?videoMode=${encodeURIComponent("brand-video")}#step-video`;
-  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
+  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => isRenderableTopicImage(item.image)) ?? [];
   // Keep the hero focused on one visual anchor. The gallery remains available
   // below for the broader set of brand-story scene references.
   const heroPreview = galleryItems[0]?.image ? [galleryItems[0].image] : [content.hero.image];
@@ -1574,7 +1578,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
   // supporting stills in the gallery below, but let the hero stay focused on
   // the single playable video.
   const heroImages = isMusic && heroVideo ? [] : sceneHeroPreviewImages(content, contentKey);
-  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
+  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => isRenderableTopicImage(item.image)) ?? [];
   const petHeroExtras = isPet ? (content.hero.images?.slice(1) ?? []).map((image, index) => ({
     title: index === 0 ? (spanish ? "Retrato de persona y mascota" : "Owner and pet portrait") : (spanish ? "Fotograma de retrato de mascota" : "Pet portrait frame"),
     body: spanish ? "Referencia aprobada para revisar la continuidad de la escena." : "Additional approved reference kept with the scene list for continuity review.",

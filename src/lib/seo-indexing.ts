@@ -21,7 +21,7 @@ import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS, MYDREAMSHOOTS_RETIRED_PUBLIC_PAT
 import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import type { CreativePack, PlatformState, PublishedLeafRouteProjection, PublishedSeoSnapshot, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
-import { aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import { AIDREAMSHOOTS_VIDEO_SAVE_THE_DATE_ALIASES, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import {
   mydreamshootsVideoWatchPagesForState,
   type MyDreamShootsVideoWatchPage
@@ -69,7 +69,11 @@ const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
   ...MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS.map((slug) => `/ai-video-generation/${slug}`)
 ];
 const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_SLUGS = new Set<string>(MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS);
-const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/creators-circle", "/best-packages", "/best-ai-image", "/best-ai-video", "/best-save-the-date"];
+const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/creators-circle", "/best-packages", "/best-ai-image", "/best-save-the-date", "/faq", "/pricing", "/workflow"];
+const REQUIRED_INDEXABLE_AIDREAMSHOOTS_PATHS = [
+  "/ai-image-generation/motion-generator",
+  ...Object.keys(AIDREAMSHOOTS_VIDEO_SAVE_THE_DATE_ALIASES).map((slug) => `/ai-save-the-date/${slug}`)
+];
 const REQUIRED_INDEXABLE_POLICY_PATHS = ["/privacy", "/terms", "/cookies", "/refunds", "/content", "/digital-delivery", "/children-privacy", "/state-privacy"];
 const CANONICAL_PUBLIC_PATHS = new Map([
   ["/about", "/about-us"],
@@ -564,7 +568,7 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   // Legacy video ThemePage rows can remain in relational data during a route
   // migration, but unsupported video slugs must not become sitemap URLs.
   if (isDreamshootSite(site) && canonicalPath.startsWith("/ai-video-generation/") && !isPublicVideoGenerationSitemapPath(site, canonicalPath)) return "";
-  const isLegacyDuplicate = LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug)) || (isDreamshootSite(site) && (MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(normalizePath(page.slug)) || MYDREAMSHOOTS_RETIRED_PUBLIC_PATH_SET.has(normalizePath(page.slug))));
+  const isLegacyDuplicate = (LEGACY_OR_DUPLICATE_PATHS.has(normalizePath(page.slug)) && !(isAidreamshootsStorefrontSite(site) && normalizePath(page.slug) === "/ai-image-generation/motion-generator")) || (isDreamshootSite(site) && (MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(normalizePath(page.slug)) || MYDREAMSHOOTS_RETIRED_PUBLIC_PATH_SET.has(normalizePath(page.slug))));
   // SEO eligibility is resolved once below by resolveEffectivePublishedPage().
   // Reading raw page flags here creates a second owner that can disagree with
   // the published route projection used by metadata and page rendering.
@@ -949,7 +953,7 @@ function hasNonPageFileExtension(path: string): boolean {
 }
 
 function isBlockedPublicPath(path: string, site?: Site): boolean {
-  if (LEGACY_OR_DUPLICATE_PATHS.has(path)) return true;
+  if (LEGACY_OR_DUPLICATE_PATHS.has(path) && !(site && isAidreamshootsStorefrontSite(site) && path === "/ai-image-generation/motion-generator")) return true;
   if (site && isDreamshootSite(site) && MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(path)) return true;
   if (site && isRetiredAidreamcapesImageToolPath(site.slug, path)) return true;
   if (NON_INDEXABLE_TOOL_PATHS.has(path)) return true;
@@ -959,6 +963,7 @@ function isBlockedPublicPath(path: string, site?: Site): boolean {
 }
 
 function isBlockedPublicPathForSite(site: Site, path: string): boolean {
+  if (isAidreamshootsStorefrontSite(site) && path.startsWith("/ai-image-generation/collections-")) return true;
   if (isDreamshootSite(site)) {
     if (path === "/collections" || path.startsWith("/collections/") || path === "/tools" || path.startsWith("/tools/") || path === "/ai-photoshoot" || path.startsWith("/ai-photoshoot/")) return true;
     if (path.startsWith("/ai-image-generation/") && !parsePublicCollectionRouteForSite(site, path)) return true;
@@ -1125,7 +1130,9 @@ function findIndexableSites(state: PlatformState): Site[] {
 function isIndexablePage(page: ThemePage, site?: Site): boolean {
   const path = canonicalPublicPath(normalizePath(page.slug));
   if (site && isDreamshootSite(site) && path === "/shipping") return false;
-  if (LEGACY_OR_DUPLICATE_PATHS.has(path)) return false;
+  // AIdreamshoots owns the motion-generator image collection route. The
+  // same path is an alias only on the primary MyDreamShoots storefront.
+  if (LEGACY_OR_DUPLICATE_PATHS.has(path) && !(site && isAidreamshootsStorefrontSite(site) && path === "/ai-image-generation/motion-generator")) return false;
   if (site && isDreamshootSite(site) && MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(path)) return false;
   if (NON_INDEXABLE_TOOL_PATHS.has(path)) return false;
   if (BLOCKED_PAGE_TYPES.has(page.pageType)) return false;
@@ -1284,7 +1291,7 @@ function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[
   // Keep the public editorial inventory in the same candidate set as dynamic
   // catalogue links. The final resolver below still requires a published
   // page/route, so a missing draft cannot become a sitemap URL by declaration.
-  for (const path of [...REQUIRED_INDEXABLE_CONTENT_PATHS, ...REQUIRED_INDEXABLE_POLICY_PATHS]) {
+  for (const path of [...REQUIRED_INDEXABLE_CONTENT_PATHS, ...REQUIRED_INDEXABLE_POLICY_PATHS, ...(isAidreamshootsStorefrontSite(site) ? REQUIRED_INDEXABLE_AIDREAMSHOOTS_PATHS : [])]) {
     addPublicPath(state, site, paths, path);
   }
 
@@ -1323,8 +1330,14 @@ export function indexableSeoPageEntriesForSite(state: PlatformState, site: Site,
   for (const candidate of candidates) {
     const canonicalPath = canonicalDirectoryPathForSite(site, candidate);
     if (!canonicalPath || isBlockedPublicPathForSite(site, canonicalPath)) continue;
+    // These were generated by an old collection-card serializer and are not
+    // real AIdreamshoots routes. Keep them out of both the canonical index and
+    // the sitemap so the two sets cannot drift apart.
+    if (isAidreamshootsStorefrontSite(site) && canonicalPath.startsWith("/ai-image-generation/collections-")) continue;
     const route = snapshot.publishedRoutes.find((item) => item.disposition === "render" && item.canonicalPath === canonicalPath);
     const page = pageForCanonicalSeoPath(snapshot, site, canonicalPath);
+    const explicitAidreamshootsPage = isAidreamshootsStorefrontSite(site) &&
+      [...REQUIRED_INDEXABLE_CONTENT_PATHS, ...REQUIRED_INDEXABLE_AIDREAMSHOOTS_PATHS].includes(canonicalPath);
     let indexable = false;
 
     if (route && "status" in route) {
@@ -1346,6 +1359,13 @@ export function indexableSeoPageEntriesForSite(state: PlatformState, site: Site,
       } catch {
         indexable = false;
       }
+    }
+    // AIdreamshoots editorial rows are served from the current LivePage
+    // projection and can legitimately exist without a historical publication
+    // route entity. Their own SEO flags remain authoritative.
+    if (!indexable && explicitAidreamshootsPage && page && isIndexablePage(page, site)) {
+      const seo = page.publishedJson.seo;
+      indexable = seo?.index !== false && seo?.robots?.index !== false && canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page)) === canonicalPath;
     }
     if (!indexable) continue;
     entries.push({
