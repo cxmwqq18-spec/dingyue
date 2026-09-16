@@ -4,6 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Keep AIdreamshoots detail-card media inside its reserved frame even when
+ * legacy width/height metadata differs from the current vendor asset. */
+[data-site-id="site_mydreamshoots_xby"] [data-video-topic-media] > img,
+[data-site-id="site_mydreamshoots_xby"] [data-video-topic-section="scene-gallery"] [data-scene-topic-gallery] > article > div:first-child > img,
+[data-site-id="site_mydreamshoots_xby"] [data-video-topic-section="scene-gallery"] [data-video-ad-scene] > div:first-child > img,
+[data-site-id="site_mydreamshoots_xby"] [data-video-topic-section="scene-gallery"] [data-brand-video-gallery] > article > div:first-child > img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 /* Aidreamcapes video detail themes: keep the shared information architecture
  * while giving each intent a distinct visual accent for scanning and wayfinding. */
 .aidreamcapes-ads-testing-detail,

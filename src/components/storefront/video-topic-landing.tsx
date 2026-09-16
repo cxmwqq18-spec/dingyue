@@ -508,7 +508,7 @@ function UseCaseCard({ item, index, site }: { item: VideoTopicUseCase; index: nu
             src={optimizedTopicImageSrc(item.image.src)}
             data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)}
             alt={item.image.alt}
-            className="block h-auto w-full"
+            className="block h-full w-full object-cover"
             width={item.image.width}
             height={item.image.height}
             loading="eager"
@@ -545,7 +545,7 @@ function SupportingCard({ card, light = false, site }: { card: VideoTopicSupport
             src={optimizedTopicImageSrc(card.image.src)}
             data-dreamshoot-preview-src={topicImagePreviewSrc(card.image)}
             alt={card.image.alt}
-            className="block h-auto w-full"
+            className="block h-full w-full object-cover"
             width={card.image.width}
             height={card.image.height}
             loading="lazy"
@@ -1584,7 +1584,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
   const accentBorder = isMusic ? "border-fuchsia-300/25" : isFashion ? "border-pink-300/25" : isPet ? "border-cyan-300/25" : "border-orange-300/25";
   const panelTone = isMusic ? "bg-[#15101f]" : isFashion ? "bg-[#11161d]" : isPet ? "bg-[#101c1d]" : "bg-[#1b1512]";
   return (
-    <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-video-topic-page={contentKey}>
+    <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-site-id={site.id} data-video-topic-page={contentKey}>
       <section className="border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:py-24">
           <div className="min-w-0">
@@ -1654,7 +1654,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
   const heroVideo = content.hero.video;
   const heroDisplayAspectRatio = isPortraitHero(content.hero.image, heroVideo) ? "9 / 16" : undefined;
   return (
-    <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-video-topic-page={contentKey}>
+    <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-site-id={site.id} data-video-topic-page={contentKey}>
       <section className="relative border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:py-24">
           <div>
