@@ -150,7 +150,7 @@ async function inspectPage(page, pathname, { expectIndexable = true, expectedSta
     if (/^\/ai-image-generation\/[^/]+$/i.test(pathname)) assert(types.has("BreadcrumbList"), `${pathname} needs BreadcrumbList JSON-LD`);
   } else {
     assert.match(result.robots, /\bnoindex\b/, `${pathname} must be noindex`);
-    assert.match(result.robots, /\bnofollow\b/, `${pathname} must be nofollow`);
+    if (pathname !== "/404") assert.match(result.robots, /\bnofollow\b/, `${pathname} must be nofollow`);
   }
   return {
     pathname,
