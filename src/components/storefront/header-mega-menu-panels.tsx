@@ -19,6 +19,29 @@ function aidreamshootsCollectionHref(href: string, collectionsHref: string): str
   return `${basePath}/ai-image-generation${slug ? `/${slug}` : ""}${suffix}`;
 }
 
+const AIDREAMCAPES_EU_REMOVED_MENU_PATHS = new Set([
+  "/ai-image-generation/estilo-y-fantasia",
+  "/collections/soccer",
+  "/collections/christmas-photo",
+  "/collections/thanksgiving-photo",
+  "/tools/seasonal-celebration-album-maker"
+]);
+
+function isAidreamcapesEuRemovedMenuHref(href: string, collectionsHref: string): boolean {
+  const euMenu = /(?:^|\/)site\/aidreamcapes-eu(?:\/|$)/i.test(collectionsHref)
+    || /(?:^|\/)aidreamcapes\.eu(?:\/|$)/i.test(collectionsHref)
+    || /(?:^|\/)site\/aidreamcapes-eu(?:\/|$)/i.test(href)
+    || /(?:^|\/)aidreamcapes\.eu(?:\/|$)/i.test(href);
+  if (!euMenu) return false;
+  const normalizedPath = String(href || "")
+    .replace(/^https?:\/\/[^/]+/i, "")
+    .split(/[?#]/, 1)[0]
+    .replace(/^\/site\/aidreamcapes-eu(?=\/|$)/i, "")
+    .replace(/^\/{2,}/, "/")
+    .replace(/\/$/, "") || "/";
+  return AIDREAMCAPES_EU_REMOVED_MENU_PATHS.has(normalizedPath);
+}
+
 export type HeaderPhotoPackageMegaGroup = {
   label: string;
   slug: string;
@@ -217,10 +240,19 @@ export function HeaderPhotoPackageMegaPanel({
   spanish?: boolean;
   variant?: "dark" | "warm";
 }) {
-  const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
-  const columns = splitColumns(groups, 3);
-  const warm = variant === "warm";
   const useAidreamshootsRoutes = aidreamshoots || /\/ai-image-generation(?:\/|$)/i.test(collectionsHref);
+  const visibleGroups = groups
+    .map((group) => ({
+      ...group,
+      items: group.items.filter((item) => {
+        const resolvedHref = useAidreamshootsRoutes ? aidreamshootsCollectionHref(item.href, collectionsHref) : item.href;
+        return !isAidreamcapesEuRemovedMenuHref(item.href, collectionsHref) && !isAidreamcapesEuRemovedMenuHref(resolvedHref, collectionsHref);
+      })
+    }))
+    .filter((group) => group.items.length > 0);
+  const totalItems = visibleGroups.reduce((sum, group) => sum + group.items.length, 0);
+  const columns = splitColumns(visibleGroups, 3);
+  const warm = variant === "warm";
   return (
     <div className={warm ? "flex max-h-[var(--storefront-mega-panel-max-height,calc(100dvh-6.5rem))] flex-col overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffaf3]/[0.99] p-4 text-[#1e1712] shadow-[0_34px_110px_-62px_rgba(114,82,48,0.34)] ring-1 ring-[#d8b17e]/20 backdrop-blur-xl" : "flex max-h-[var(--storefront-mega-panel-max-height,calc(100dvh-6.5rem))] flex-col overflow-hidden rounded-[18px] border border-[#263247] bg-[#070708]/[0.99] p-4 text-white shadow-[0_34px_110px_-52px_rgba(0,0,0,0.95)] ring-1 ring-white/[0.04] backdrop-blur-xl"}>
       <div className="mb-4 flex items-center justify-center gap-3 text-center">
@@ -395,11 +427,11 @@ export function HeaderVideoGenerationMegaPanel({
                 </summary>
                 {group.topics.length ? (
                   <div className="mt-3 grid gap-2 border-t border-white/10 pt-3">
-                    {group.topics.map((topic) => (
+                    {group.topics.map((topic, topicIndex) => (
                       <Link
                         className={warm ? "group/video-topic flex min-h-10 items-center gap-2 rounded-[10px] px-2 py-2 text-[0.94rem] font-semibold leading-5 text-[#4b4037] transition hover:bg-[#f5eadf] hover:text-[#1e1712] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d88a4b]/70" : "group/video-topic flex min-h-10 items-center gap-2 rounded-[10px] px-2 py-2 text-[0.94rem] font-semibold leading-5 text-white/82 transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#16DCF0]/70"}
                         href={topic.href}
-                        key={topic.id}
+                        key={`${topic.id}-${topic.slug}-${topicIndex}`}
                         prefetch={false}
                       >
                         <span className="min-w-0 flex-1 truncate">{topic.label}</span>
@@ -450,8 +482,17 @@ export function HeaderMobilePhotoPackagesMenu({
   menuLabel?: string;
   spanish?: boolean;
 }) {
-  const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
   const useAidreamshootsRoutes = aidreamshoots || /\/ai-image-generation(?:\/|$)/i.test(collectionsHref);
+  const visibleGroups = groups
+    .map((group) => ({
+      ...group,
+      items: group.items.filter((item) => {
+        const resolvedHref = useAidreamshootsRoutes ? aidreamshootsCollectionHref(item.href, collectionsHref) : item.href;
+        return !isAidreamcapesEuRemovedMenuHref(item.href, collectionsHref) && !isAidreamcapesEuRemovedMenuHref(resolvedHref, collectionsHref);
+      })
+    }))
+    .filter((group) => group.items.length > 0);
+  const totalItems = visibleGroups.reduce((sum, group) => sum + group.items.length, 0);
   const resolvedMenuLabel = menuLabel ?? (french ? "Packs photo" : spanish ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aidreamcapes ? "Occasion Albums" : "Browse packages");
   return (
     <details className={dark ? "group/mobile rounded-[16px] border border-white/10 bg-white/[0.035] open:bg-white/[0.055]" : "group/mobile rounded-[16px] border border-[#e2d7ca] bg-white/60 open:bg-white"}>
@@ -462,7 +503,7 @@ export function HeaderMobilePhotoPackagesMenu({
       </summary>
       <div className={dark ? "max-h-[48vh] overflow-y-auto border-t border-white/10 px-2 pb-3 pt-2" : "max-h-[48vh] overflow-y-auto border-t border-[#eadfce] px-2 pb-3 pt-2"}>
         <div className="grid gap-2">
-          {groups.map((group) => (
+          {visibleGroups.map((group) => (
             <details className={dark ? "group/mobile-category rounded-[12px] bg-black/16 px-2 py-1 open:bg-black/22" : "group/mobile-category rounded-[12px] bg-[#f8f2eb] px-2 py-1 open:bg-[#f3eadf]"} key={group.slug}>
               <summary className="flex min-h-10 cursor-pointer list-none items-center gap-2 text-sm font-semibold marker:hidden">
                 <span className="min-w-0 flex-1 truncate text-sm font-semibold leading-none">{aidreamshoots ? aidreamshootsSpanishPackageLabel(group.label) : group.label}</span>
@@ -564,11 +605,11 @@ export function HeaderMobileVideoGenerationMenu({
       </summary>
       <div className={dark ? "max-h-[48vh] overflow-y-auto border-t border-white/10 px-2 pb-3 pt-2" : "max-h-[48vh] overflow-y-auto border-t border-[#eadfce] px-2 pb-3 pt-2"}>
         <div className="grid gap-2">
-          {columns.flat().map((topic) => (
+          {columns.flat().map((topic, topicIndex) => (
             <Link
               className={dark ? "flex min-h-10 items-center gap-2 rounded-[12px] bg-black/16 px-3 py-2 text-sm font-semibold text-white/82 hover:bg-black/24 hover:text-white" : "flex min-h-10 items-center gap-2 rounded-[12px] bg-[#f8f2eb] px-3 py-2 text-sm font-semibold text-[#4f4944] hover:bg-white hover:text-[#171514]"}
               href={topic.href}
-              key={topic.id}
+              key={`${topic.id}-${topic.slug}-${topicIndex}`}
               prefetch={false}
             >
               <PlayCircle className={dark ? "h-4 w-4 shrink-0 text-[#38a8ff]" : "h-4 w-4 shrink-0 text-[#b86e36]"} strokeWidth={1.9} />

@@ -29,6 +29,23 @@ import {
   resolveTokengoMediaResultUrl
 } from "@/lib/tokengo-media-video";
 import {
+  TOKENGO_IMAGE_PROVIDER_CURRENCY,
+  isTokengoImageBaseUrl,
+  tokengoImageBase64FromBody,
+  tokengoImageCostRmbFromBody,
+  tokengoImageFileUrlFromBody,
+  tokengoImageFilesUrl,
+  tokengoImageResponseRequestId,
+  tokengoImageResultUrlFromBody,
+  tokengoImageRuntimeBody,
+  tokengoImageRuntimeInvokeUrl,
+  tokengoImageRuntimeTaskUrl,
+  tokengoImageTaskErrorFromBody,
+  tokengoImageTaskIdFromBody,
+  tokengoImageTaskIsFinal,
+  tokengoImageTaskStatusFromBody
+} from "@/lib/tokengo-image";
+import {
   signWorkerLocalAssetDownload,
   signWorkerCallback,
   getCachedWorkerProviderSecret,
@@ -125,8 +142,8 @@ function shouldUseSharpForVideoReferenceImages() {
 }
 
 type ImageGenerationResponse = {
-  data?: Array<{ b64_json?: string; image_base64?: string }>;
-  output?: Array<{ b64_json?: string; image_base64?: string }>;
+  data?: Array<{ b64_json?: string; image_base64?: string; url?: string; original_url?: string }>;
+  output?: Array<{ b64_json?: string; image_base64?: string; url?: string; original_url?: string }>;
   image_base64?: string;
   error?: unknown;
 };
@@ -187,6 +204,7 @@ type GeneratedOutput = {
   mimeType: string;
   providerLabel: string;
   index: number;
+  providerTaskId?: string;
   estimatedCostUsd?: number;
   providerCreditCost?: number;
   providerCurrency?: string;
@@ -605,7 +623,7 @@ function videoProviderPollIntervalMs(elapsedMs = 0) {
 }
 
 function providerAttempts() {
-  return Math.max(1, Math.min(Number(process.env.LOCAL_AI_WORKER_PROVIDER_ATTEMPTS ?? "2") || 2, 4));
+  return Math.max(1, Math.min(Number(process.env.LOCAL_AI_WORKER_PROVIDER_ATTEMPTS ?? "1") || 1, 4));
 }
 
 function videoProviderAttempts() {
@@ -681,9 +699,9 @@ function providerReferenceRolePriority(role: string) {
 }
 
 function providerImageReferenceLimit() {
-  const configured = Number(process.env.LOCAL_AI_WORKER_IMAGE_REFERENCE_LIMIT ?? "15");
-  if (!Number.isFinite(configured) || configured <= 0) return 15;
-  return Math.max(1, Math.min(Math.trunc(configured), 15));
+  const configured = Number(process.env.LOCAL_AI_WORKER_IMAGE_REFERENCE_LIMIT ?? "16");
+  if (!Number.isFinite(configured) || configured <= 0) return 16;
+  return Math.max(1, Math.min(Math.trunc(configured), 16));
 }
 
 function providerInputAssets(payload: WorkerPayload): ImageInputAsset[] {
@@ -1669,6 +1687,228 @@ async function buildImageEditForm(params: {
   return form;
 }
 
+type GeneratedImageResult = {
+  bytes: Buffer;
+  mimeType: string;
+  providerTaskId?: string;
+  providerCreditCost?: number;
+  providerCurrency?: string;
+};
+
+function isTokengoImageProvider(provider: WorkerImageProvider | undefined) {
+  return Boolean(provider?.providerType === "image" && isTokengoImageBaseUrl(normalizeBaseUrl(provider.aiUrl ?? "")));
+}
+
+function tokengoImageAspectRatioForSize(size: string) {
+  const match = /^(\d+)x(\d+)$/.exec(size.trim());
+  if (!match) return "1:1";
+  const width = Number(match[1]);
+  const height = Number(match[2]);
+  if (!width || !height) return "1:1";
+  const ratio = width / height;
+  const candidates: Array<[string, number]> = [
+    ["1:1", 1], ["16:9", 16 / 9], ["9:16", 9 / 16], ["4:3", 4 / 3], ["3:4", 3 / 4],
+    ["3:2", 3 / 2], ["2:3", 2 / 3], ["4:5", 4 / 5], ["5:4", 5 / 4], ["21:9", 21 / 9], ["9:21", 9 / 21]
+  ];
+  return candidates.sort((left, right) => Math.abs(left[1] - ratio) - Math.abs(right[1] - ratio))[0][0];
+}
+
+function tokengoImageRequestParams(payload: WorkerPayload, referenceCount: number, provider: WorkerImageProvider) {
+  const fields = recordValue(payload.params.fields) ?? {};
+  const configuredSize = textValue(payload.params.size) || textValue(fields.size) || process.env.LOCAL_AI_WORKER_IMAGE_SIZE || "1024x1024";
+  const configuredAspectRatio = textValue(payload.params.aspect_ratio) || textValue(payload.params.aspectRatio) || textValue(fields.aspect_ratio) || textValue(fields.aspectRatio) || textValue(provider.imageAspectRatio) || process.env.LOCAL_AI_WORKER_IMAGE_ASPECT_RATIO || "";
+  const supportedAspectRatios = new Set(["1:1", "auto", "3:2", "2:3", "4:3", "3:4", "5:4", "4:5", "16:9", "9:16", "21:9", "9:21"]);
+  const aspectRatio = supportedAspectRatios.has(configuredAspectRatio) ? configuredAspectRatio : tokengoImageAspectRatioForSize(configuredSize);
+  const configuredResolution = textValue(payload.params.resolution) || textValue(fields.resolution) || textValue(provider.imageResolution) || process.env.LOCAL_AI_WORKER_IMAGE_RESOLUTION || "1K";
+  const resolution = new Set(["1K", "2K", "4K"]).has(configuredResolution.toUpperCase()) ? configuredResolution.toUpperCase() : "1K";
+  const configuredQuality = textValue(payload.params.quality) || textValue(fields.quality) || textValue(provider.imageQuality) || process.env.LOCAL_AI_WORKER_IMAGE_QUALITY || "low";
+  const quality = new Set(["auto", "high", "medium", "low"]).has(configuredQuality.toLowerCase()) ? configuredQuality.toLowerCase() : "low";
+  const configuredOutputFormat = textValue(payload.params.output_format) || textValue(payload.params.outputFormat) || textValue(fields.output_format) || textValue(fields.outputFormat) || textValue(provider.imageOutputFormat) || process.env.LOCAL_AI_WORKER_IMAGE_OUTPUT_FORMAT || "png";
+  const outputFormat = configuredOutputFormat.toLowerCase() === "jpeg" ? "jpeg" as const : "png" as const;
+  const mode = referenceCount > 1 ? "multi-reference" as const : referenceCount === 1 ? "image-edit" as const : "text-to-image" as const;
+  return { aspectRatio, configuredSize, resolution, quality, outputFormat, mode };
+}
+
+function jsonPreview(value: unknown) {
+  try {
+    return JSON.stringify(value).slice(0, 240);
+  } catch {
+    return "{}";
+  }
+}
+
+async function downloadTokengoImageResult(params: {
+  url: string;
+  signal?: AbortSignal;
+  timeoutMs: number;
+  providerTaskId?: string;
+  providerCreditCost?: number;
+}): Promise<GeneratedImageResult> {
+  let parsed: URL;
+  try {
+    parsed = new URL(params.url);
+  } catch {
+    throw new Error("ai_provider_tokengo_image_result_url_invalid");
+  }
+  if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+    throw new Error("ai_provider_tokengo_image_result_url_invalid");
+  }
+  const response = await fetchWithTimeout(params.url, { method: "GET", cache: "no-store", signal: params.signal }, params.timeoutMs, `ai_provider_tokengo_image_result_timeout_${params.timeoutMs}`);
+  if (!response.ok) throw new Error(`ai_provider_tokengo_image_result_failed_${response.status}`);
+  const bytes = Buffer.from(await response.arrayBuffer());
+  return {
+    bytes,
+    mimeType: imageMimeTypeFromBytes(bytes, response.headers.get("content-type") || "image/png"),
+    providerTaskId: params.providerTaskId,
+    providerCreditCost: params.providerCreditCost,
+    providerCurrency: TOKENGO_IMAGE_PROVIDER_CURRENCY
+  };
+}
+
+async function generatedTokengoImageFromBody(params: {
+  body: unknown;
+  response?: Response;
+  signal?: AbortSignal;
+  timeoutMs: number;
+  providerTaskId?: string;
+  providerCreditCost?: number;
+}): Promise<GeneratedImageResult> {
+  const b64 = tokengoImageBase64FromBody(params.body);
+  const providerCreditCost = params.providerCreditCost ?? tokengoImageCostRmbFromBody(params.body);
+  const providerTaskId = params.providerTaskId || tokengoImageTaskIdFromBody(params.body) || (params.response ? tokengoImageResponseRequestId(params.response) : undefined);
+  if (b64) {
+    const bytes = Buffer.from(b64, "base64");
+    return { bytes, mimeType: imageMimeTypeFromBytes(bytes, "image/png"), providerTaskId, providerCreditCost, providerCurrency: TOKENGO_IMAGE_PROVIDER_CURRENCY };
+  }
+  const url = tokengoImageResultUrlFromBody(params.body);
+  if (!url) throw new Error(`ai_provider_tokengo_image_empty_result_${jsonPreview(params.body)}`);
+  return downloadTokengoImageResult({ url, signal: params.signal, timeoutMs: params.timeoutMs, providerTaskId, providerCreditCost });
+}
+
+async function uploadTokengoImageReferences(params: {
+  baseUrl: string;
+  apiKey: string;
+  payload: WorkerPayload;
+  signal?: AbortSignal;
+  timeoutMs: number;
+}): Promise<string[]> {
+  const assets = providerInputAssets(params.payload);
+  const urls: string[] = [];
+  for (const [index, asset] of assets.entries()) {
+    throwIfLocalWorkerAborted(params.signal);
+    const response = await fetchWithTimeout(asset.signedUrl, { method: "GET", cache: "no-store", signal: params.signal }, Math.min(params.timeoutMs, 30_000), `ai_provider_source_image_timeout_${asset.assetId}`);
+    if (!response.ok) throw new Error(`ai_provider_source_image_failed_${asset.assetId}_${response.status}`);
+    const sourceMimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || asset.mimeType || "image/png";
+    const prepared = await prepareProviderImage(new Uint8Array(await response.arrayBuffer()), sourceMimeType);
+    const form = new FormData();
+    const fileName = `reference-${index + 1}-${asset.assetId.replace(/[^a-zA-Z0-9_-]/g, "-")}.${extensionForMime(prepared.mimeType)}`;
+    form.append("file", new Blob([prepared.bytes], { type: prepared.mimeType }), fileName);
+    const uploadResponse = await fetchWithTimeout(tokengoImageFilesUrl(params.baseUrl), {
+      method: "POST",
+      headers: { Authorization: `Bearer ${params.apiKey}` },
+      body: form,
+      cache: "no-store",
+      signal: params.signal
+    }, params.timeoutMs, `ai_provider_tokengo_image_file_upload_timeout_${params.timeoutMs}`);
+    const body = await uploadResponse.json().catch(() => ({}));
+    if (!uploadResponse.ok) throw new Error(`ai_provider_tokengo_image_file_upload_failed_${uploadResponse.status}_${jsonPreview(body)}`);
+    const url = tokengoImageFileUrlFromBody(body);
+    if (!url) throw new Error(`ai_provider_tokengo_image_file_url_missing_${jsonPreview(body)}`);
+    urls.push(url);
+  }
+  return urls;
+}
+
+function tokengoImageTaskFailed(status: string | undefined) {
+  return Boolean(status && ["failed", "error", "cancelled", "canceled", "rejected"].includes(status.toLowerCase()));
+}
+
+async function waitForTokengoImageTask(params: {
+  baseUrl: string;
+  apiKey: string;
+  taskId: string;
+  providerCreditCost?: number;
+  signal?: AbortSignal;
+  timeoutMs: number;
+}): Promise<GeneratedImageResult> {
+  const startedAt = Date.now();
+  const pollIntervalMs = Math.max(1_000, Math.min(Number(process.env.LOCAL_AI_WORKER_TOKENGO_IMAGE_POLL_INTERVAL_MS ?? "3000") || 3_000, 10_000));
+  let lastBody: unknown = {};
+  while (Date.now() - startedAt < params.timeoutMs) {
+    throwIfLocalWorkerAborted(params.signal);
+    const response = await fetchWithTimeout(tokengoImageRuntimeTaskUrl(params.baseUrl, params.taskId), {
+      method: "GET",
+      headers: { Authorization: `Bearer ${params.apiKey}` },
+      cache: "no-store",
+      signal: params.signal
+    }, Math.min(params.timeoutMs, 30_000), `ai_provider_tokengo_image_poll_timeout_${params.timeoutMs}`);
+    lastBody = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(`ai_provider_tokengo_image_poll_failed_${response.status}_${jsonPreview(lastBody)}`);
+    const status = tokengoImageTaskStatusFromBody(lastBody);
+    if (tokengoImageTaskFailed(status)) {
+      throw new Error(`ai_provider_tokengo_image_task_failed_${tokengoImageTaskErrorFromBody(lastBody) || status}`);
+    }
+    const resultUrl = tokengoImageResultUrlFromBody(lastBody);
+    const b64 = tokengoImageBase64FromBody(lastBody);
+    if (resultUrl || b64 || tokengoImageTaskIsFinal(lastBody) === true) {
+      return generatedTokengoImageFromBody({ body: lastBody, signal: params.signal, timeoutMs: params.timeoutMs, providerTaskId: params.taskId, providerCreditCost: params.providerCreditCost });
+    }
+    await sleepWithLocalWorkerAbort(pollIntervalMs, params.signal);
+  }
+  throw new Error(`ai_provider_tokengo_image_timeout_${params.timeoutMs}_${tokengoImageTaskStatusFromBody(lastBody) || "unknown"}`);
+}
+
+async function generateTokengoImage(params: {
+  payload: WorkerPayload;
+  baseUrl: string;
+  apiKey: string;
+  model: string;
+  prompt: string;
+  slotIndex: number;
+  provider: WorkerImageProvider;
+  signal?: AbortSignal;
+  timeoutMs: number;
+}): Promise<GeneratedImageResult> {
+  const referenceCount = providerInputAssets(params.payload).length;
+  const imageParams = tokengoImageRequestParams(params.payload, referenceCount, params.provider);
+  const images = referenceCount
+    ? await uploadTokengoImageReferences({ baseUrl: params.baseUrl, apiKey: params.apiKey, payload: params.payload, signal: params.signal, timeoutMs: params.timeoutMs })
+    : undefined;
+  const idempotencyKey = `${params.payload.requestId}:image:${params.slotIndex}`;
+  const response = await fetchWithTimeout(tokengoImageRuntimeInvokeUrl(params.baseUrl), {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${params.apiKey}`,
+      "Idempotency-Key": idempotencyKey,
+      "X-Client-Request-Id": idempotencyKey
+    },
+    body: JSON.stringify(tokengoImageRuntimeBody({
+      model: params.model,
+      prompt: params.prompt,
+      count: 1,
+      mode: imageParams.mode,
+      aspectRatio: imageParams.aspectRatio,
+      resolution: imageParams.resolution,
+      quality: imageParams.quality,
+      outputFormat: imageParams.outputFormat,
+      images
+    })),
+    cache: "no-store",
+    signal: params.signal
+  }, Math.min(params.timeoutMs, 30_000), `ai_provider_tokengo_image_runtime_invoke_timeout_${params.timeoutMs}`);
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(`ai_provider_tokengo_image_runtime_invoke_failed_${response.status}_${jsonPreview(body)}`);
+  const taskId = tokengoImageTaskIdFromBody(body);
+  if (!taskId) {
+    return generatedTokengoImageFromBody({ body, response, signal: params.signal, timeoutMs: params.timeoutMs });
+  }
+  if (tokengoImageResultUrlFromBody(body) || tokengoImageBase64FromBody(body)) {
+    return generatedTokengoImageFromBody({ body, response, signal: params.signal, timeoutMs: params.timeoutMs, providerTaskId: taskId });
+  }
+  return waitForTokengoImageTask({ baseUrl: params.baseUrl, apiKey: params.apiKey, taskId, signal: params.signal, timeoutMs: params.timeoutMs, providerCreditCost: tokengoImageCostRmbFromBody(body) });
+}
+
 function originFromUrl(value: string | undefined): string {
   if (!value) return "";
   try {
@@ -2158,7 +2398,7 @@ async function postWorkerResult(
   payload: WorkerPayload,
   body: {
     status: "succeeded" | "failed";
-    outputs?: Array<{ storageKey: string; mimeType?: string }>;
+    outputs?: Array<{ storageKey: string; mimeType?: string; providerTaskId?: string }>;
     providerTrace?: Array<{ provider: string; attempts: number }>;
     costTrace?: { estimatedCostUsd?: number; providerCreditCost?: number; providerCurrency?: string; providerErrors?: Array<{ provider: string; error: string }>; providerFailure?: VideoProviderFailure; referenceFrameCount?: number; requestedReferenceFrameCount?: number; providerReferenceLimit?: number };
     providerFailure?: VideoProviderFailure;
@@ -3225,12 +3465,16 @@ async function generateWithProvider(params: {
 }) {
   throwIfLocalWorkerAborted(params.signal);
   const provider = await getPlatformAiProviderRelational(params.providerId);
+  if (!provider) {
+    throw new Error("ai_provider_not_found");
+  }
   if (provider?.enabled === false) {
     throw new Error("ai_provider_disabled");
   }
   if (!provider?.apiKey?.trim()) {
     throw new Error("ai_provider_api_key_missing");
   }
+  const selectedProvider = provider;
   const requestedModel = textValue(params.payload.params.modelOverride);
   const model = requestedModel && isImageGenerationModel(requestedModel) ? requestedModel : provider.modelType;
   if (!isImageGenerationModel(model)) {
@@ -3256,52 +3500,68 @@ async function generateWithProvider(params: {
       updatedAt: new Date().toISOString()
     });
     try {
-      const response = hasInputImages
-        ? await (async () => {
-          const form = await buildImageEditForm({ payload: params.payload, model, prompt: promptForSlot, signal: params.signal, timeoutMs });
-          if (!form) throw new Error("ai_provider_image_edit_missing_input");
-          return fetchWithTimeout(
-            `${baseUrl}/v1/images/edits`,
-            {
+      const generated = isTokengoImageProvider(selectedProvider)
+        ? await generateTokengoImage({
+          payload: params.payload,
+          baseUrl,
+          apiKey: providerApiKey,
+          model,
+          prompt: promptForSlot,
+          slotIndex,
+          provider: selectedProvider,
+          signal: params.signal,
+          timeoutMs
+        })
+        : await (async (): Promise<GeneratedImageResult> => {
+          const response = hasInputImages
+            ? await (async () => {
+              const form = await buildImageEditForm({ payload: params.payload, model, prompt: promptForSlot, signal: params.signal, timeoutMs });
+              if (!form) throw new Error("ai_provider_image_edit_missing_input");
+              return fetchWithTimeout(
+                `${baseUrl}/v1/images/edits`,
+                {
+                  method: "POST",
+                  headers: {
+                    Authorization: `Bearer ${providerApiKey}`
+                  },
+                  body: form,
+                  cache: "no-store",
+                  signal: params.signal
+                },
+                timeoutMs,
+                `ai_provider_image_edit_timeout_${timeoutMs}`
+              );
+            })()
+            : await fetchWithTimeout(`${baseUrl}/v1/images/generations`, {
               method: "POST",
               headers: {
+                "Content-Type": "application/json",
                 Authorization: `Bearer ${providerApiKey}`
               },
-              body: form,
+              body: JSON.stringify({
+                model,
+                prompt: promptForSlot,
+                size: process.env.LOCAL_AI_WORKER_IMAGE_SIZE ?? "1024x1024",
+                quality: process.env.LOCAL_AI_WORKER_IMAGE_QUALITY ?? "low",
+                response_format: "b64_json"
+              }),
               cache: "no-store",
               signal: params.signal
-            },
-            timeoutMs,
-            `ai_provider_image_edit_timeout_${timeoutMs}`
-          );
-        })()
-        : await fetchWithTimeout(`${baseUrl}/v1/images/generations`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${providerApiKey}`
-          },
-          body: JSON.stringify({
-            model,
-            prompt: promptForSlot,
-            size: process.env.LOCAL_AI_WORKER_IMAGE_SIZE ?? "1024x1024",
-            quality: process.env.LOCAL_AI_WORKER_IMAGE_QUALITY ?? "low",
-            response_format: "b64_json"
-          }),
-          cache: "no-store",
-          signal: params.signal
-        }, timeoutMs, `ai_provider_generation_timeout_${timeoutMs}`);
-      const body = (await response.json().catch(() => ({}))) as ImageGenerationResponse;
-      if (!response.ok) {
-        const mode = hasInputImages ? "image_edit" : "generation";
-        throw new Error(`ai_provider_${mode}_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
-      }
-      const [b64] = imageBase64List(body);
-      if (!b64) throw new Error("ai_provider_empty_image_payload");
+            }, timeoutMs, `ai_provider_generation_timeout_${timeoutMs}`);
+          const body = (await response.json().catch(() => ({}))) as ImageGenerationResponse;
+          if (!response.ok) {
+            const mode = hasInputImages ? "image_edit" : "generation";
+            throw new Error(`ai_provider_${mode}_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
+          }
+          const [b64] = imageBase64List(body);
+          if (!b64) throw new Error("ai_provider_empty_image_payload");
+          const bytes = Buffer.from(b64, "base64");
+          return { bytes, mimeType: imageMimeTypeFromBytes(bytes, "image/png") };
+        })();
       throwIfLocalWorkerAborted(params.signal);
       const preparedOutput = prepareCompressedCustomerImage({
-        bytes: Buffer.from(b64, "base64"),
-        mimeType: "image/png",
+        bytes: generated.bytes,
+        mimeType: generated.mimeType,
         fileName: `${params.payload.jobId}-output-${slotIndex}.png`,
         purpose: "output"
       });
@@ -3323,10 +3583,19 @@ async function generateWithProvider(params: {
         stage: "provider_response_received",
         storageKey,
         mimeType: preparedOutput.mimeType,
+        ...(generated.providerTaskId ? { providerTaskId: generated.providerTaskId } : {}),
         error: "",
         updatedAt: new Date().toISOString()
       });
-      return { storageKey, mimeType: preparedOutput.mimeType, providerLabel, index: slotIndex };
+      return {
+        storageKey,
+        mimeType: preparedOutput.mimeType,
+        providerLabel,
+        index: slotIndex,
+        ...(generated.providerTaskId ? { providerTaskId: generated.providerTaskId } : {}),
+        ...(generated.providerCreditCost !== undefined ? { providerCreditCost: generated.providerCreditCost } : {}),
+        ...(generated.providerCurrency ? { providerCurrency: generated.providerCurrency } : {})
+      };
     } catch (error) {
       await postWorkerSlotStatus(params.payload, "running", "provider_slot_failed", {
         index: slotIndex,
@@ -3348,6 +3617,16 @@ async function generateWithProvider(params: {
     .sort((left, right) => left.index - right.index);
   const firstError = slots.find((slot): slot is PromiseRejectedResult => slot.status === "rejected")?.reason;
   return { outputs, error: firstError };
+}
+
+function imageProviderCostTrace(outputs: GeneratedOutput[]) {
+  const estimatedCostUsd = outputs.reduce((total, output) => total + (output.estimatedCostUsd ?? 0), 0);
+  const providerCostOutputs = outputs.filter((output) => output.providerCreditCost !== undefined);
+  const providerCreditCost = providerCostOutputs.reduce((total, output) => total + (output.providerCreditCost ?? 0), 0);
+  return {
+    estimatedCostUsd,
+    ...(providerCostOutputs.length ? { providerCreditCost, providerCurrency: providerCostOutputs[0].providerCurrency } : {})
+  };
 }
 
 function videoProviderFailureContext(provider: WorkerImageProvider): { providerFamily: VideoModelFamily; providerProtocol: VideoProviderProtocol } {
@@ -3506,30 +3785,31 @@ async function runLocalImageWorker(payload: WorkerPayload, signal?: AbortSignal)
       }
       const outputs = Array.from(successfulOutputsByIndex.values())
         .sort((left, right) => left.index - right.index)
-        .map((output) => ({ storageKey: output.storageKey, mimeType: output.mimeType }));
+        .map((output) => ({ storageKey: output.storageKey, mimeType: output.mimeType, ...(output.providerTaskId ? { providerTaskId: output.providerTaskId } : {}) }));
       await postWorkerResult(payload, {
         status: "succeeded",
         outputs,
         providerTrace,
-        costTrace: { estimatedCostUsd: 0 }
+        costTrace: imageProviderCostTrace(Array.from(successfulOutputsByIndex.values()))
       });
       return;
     } catch (error) {
       lastError = errorMessage(error);
       providerErrors.push({ provider: provider.label || provider.id, error: lastError });
+      if (isTokengoImageProvider(provider) && process.env.LOCAL_AI_WORKER_ALLOW_PAID_TOKENGO_IMAGE_FALLBACK !== "1") break;
     }
   }
 
   const partialOutputs = Array.from(successfulOutputsByIndex.values())
     .sort((left, right) => left.index - right.index)
-    .map((output) => ({ storageKey: output.storageKey, mimeType: output.mimeType }));
+    .map((output) => ({ storageKey: output.storageKey, mimeType: output.mimeType, ...(output.providerTaskId ? { providerTaskId: output.providerTaskId } : {}) }));
   if (partialOutputs.length) {
     await postWorkerResult(payload, {
       status: "succeeded",
       outputs: partialOutputs,
       providerTrace,
       error: lastError || "local_worker_partial_generation_failed",
-      costTrace: { estimatedCostUsd: 0, providerErrors }
+      costTrace: { ...imageProviderCostTrace(Array.from(successfulOutputsByIndex.values())), providerErrors }
     });
     return;
   }

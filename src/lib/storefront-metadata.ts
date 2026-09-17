@@ -60,7 +60,7 @@ export async function metadataForPublishedStorefrontPage({
   const isAidreamcapesEuImagePage = isAidreamcapesEuImageThemePath(snapshot.site, path) || isAidreamcapesEuImageThemePath(snapshot.site, snapshotPage.slug);
   const targetPageSeo = snapshot.site.id === "site_mydreamshoots_xby" ||
     ((snapshot.site.id === "site_aidreamcapes" || snapshot.site.id === "site_aidreamcapes_xby") &&
-      (isAidreamcapesImageThemePath(snapshot.site.slug, snapshotPage.slug) || isAidreamcapesEuSaveTheDatePage || isAidreamcapesEuImagePage))
+      ((isAidreamcapesImageThemePath(snapshot.site.slug, snapshotPage.slug) || isAidreamcapesEuSaveTheDatePage || isAidreamcapesEuImagePage) && !isAidreamcapesEuImagePage))
     ? snapshotPage.publishedJson.seo
     : undefined;
   const metadataPath = canonicalMetadataPath(

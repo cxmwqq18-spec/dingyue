@@ -796,7 +796,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#c4b5fd] transition group-open:rotate-90" strokeWidth={1.8} />
                 </summary>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-white/65">{item.answer}</p>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-white/65" data-faq-answer="video-topic">{item.answer}</p>
               </details>
             ))}
           </div>
@@ -998,7 +998,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
                 </summary>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p>
               </details>
             ))}
           </div>
@@ -1201,7 +1201,7 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
                 </summary>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p>
               </details>
             ))}
           </div>
@@ -1391,8 +1391,8 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <SectionHeader eyebrow={content.platformExamples?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "MAPA DE HISTORIA DE MARCA" : "BRAND STORY MAP")} title={content.platformExamples?.title ?? (site.id === "site_mydreamshoots_xby" ? "Seis momentos de la historia" : "Six Story Beats")} body={content.platformExamples?.intro} />
             <ol className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-6" data-brand-video-story-map>
-              {storyBeats.map((beat) => (
-                <li className="min-w-0 rounded-[22px] border border-white/10 bg-[#17151f] p-5" data-brand-video-beat key={beat.title}>
+              {storyBeats.map((beat, index) => (
+                <li className="min-w-0 rounded-[22px] border border-white/10 bg-[#17151f] p-5" data-brand-video-beat key={`${beat.title}-${index}`}>
                   <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{beat.title}</p>
                   <p className="mt-4 text-sm leading-6 text-white/68">{beat.body}</p>
                 </li>
@@ -1534,7 +1534,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
                 </summary>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p>
               </details>
             ))}
           </div>
@@ -1632,7 +1632,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
 
       <section className="border-b border-white/10 bg-[#191525] px-5 py-16 sm:px-8 sm:py-24" id="integrity-review" data-video-topic-section="integrity-review"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.trust.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" data-scene-topic-review-card key={`${item.title}-${index}`}><ShieldCheck className={`h-5 w-5 ${accentClass}`} strokeWidth={1.8} /><h3 className="mt-5 text-lg font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div></div></section>
 
-      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light /><div className="mt-10 grid gap-4 lg:grid-cols-2">{content.faq.items.map((item) => <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}><summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]"><span>{item.question}</span><ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} /></summary><p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p></details>)}</div></div></section>
+      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light /><div className="mt-10 grid gap-4 lg:grid-cols-2">{content.faq.items.map((item) => <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}><summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]"><span>{item.question}</span><ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} /></summary><p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p></details>)}</div></div></section>
       {content.comparison ? <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="related-pages" data-video-topic-section="related-pages"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.comparison.eyebrow} title={content.comparison.title} body={content.comparison.intro} /><SectionCards cards={content.comparison.items} site={site} /></div></section> : null}
       <section className="bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" data-video-topic-section="final-cta"><div className="mx-auto max-w-[var(--site-content-width)] rounded-[28px] border border-[#c4b5fd]/25 bg-[#191525] px-6 py-12 text-center sm:px-10 sm:py-16"><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{content.finalCta.eyebrow}</p><h2 className="mx-auto mt-4 max-w-3xl text-balance text-3xl font-semibold leading-[1.03] tracking-normal text-white sm:text-5xl">{content.finalCta.title}</h2><p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/68">{content.finalCta.body}</p><div className="mt-8 flex justify-center"><ActionLink href={primaryHref} label={content.finalCta.cta} site={site} /></div><p className="mt-5 text-xs leading-5 text-white/48">{content.finalCta.microcopy}</p></div></section>
     </main>
@@ -1767,8 +1767,8 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
               body={site.id === "site_mydreamshoots_xby" ? "Usa las notas siguientes cuando una misma idea creativa necesite una decisión más concreta sobre plataforma, público o campaña." : site.id === "site_aidreamcapes_xby" ? "Utilisez ces conseils lorsqu’une même idée créative demande une décision plus précise sur le canal, le public ou la campagne." : "Use the supporting notes below when the same creative idea needs a more specific platform, buyer, or campaign decision."}
             />
             <div className="mt-12 space-y-16">
-              {content.supportingGroups.map((group) => (
-                <div key={group.title}>
+              {content.supportingGroups.map((group, index) => (
+                <div key={`${group.title}-${index}`}>
                   <p className="text-xs font-semibold uppercase tracking-normal text-[#b8a7ff]">{group.eyebrow}</p>
                   <h3 className="mt-3 max-w-3xl text-2xl font-semibold leading-tight text-white sm:text-3xl">{group.title}</h3>
                   <p className="mt-3 max-w-2xl text-base leading-7 text-white/68">{group.intro}</p>
@@ -1827,7 +1827,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
                 </summary>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p>
               </details>
             ))}
           </div>

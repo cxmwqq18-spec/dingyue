@@ -46,7 +46,7 @@ export interface WorkerResultPayload {
   requestId: string;
   signature?: string;
   status: "succeeded" | "failed";
-  outputs?: Array<{ storageKey: string; mimeType?: string }>;
+  outputs?: Array<{ storageKey: string; mimeType?: string; providerTaskId?: string }>;
   providerTrace?: Array<{ provider: string; attempts: number }>;
   costTrace?: { estimatedCostUsd?: number; providerCreditCost?: number; providerCurrency?: string; providerErrors?: Array<{ provider: string; error: string }>; providerFailure?: VideoProviderFailure; referenceFrameCount?: number; requestedReferenceFrameCount?: number; providerReferenceLimit?: number };
   providerFailure?: VideoProviderFailure;

@@ -1,4 +1,5 @@
 import type { VideoModelFamily, VideoModelPricing } from "@/lib/video-frame-config";
+import type { ImageProviderAspectRatio, ImageProviderOutputFormat, ImageProviderQuality, ImageProviderResolution } from "@/lib/tokengo-image";
 
 export type SiteStatus = "active" | "draft" | "suspended";
 export type ConnectStatus = "not_started" | "pending" | "enabled" | "restricted";
@@ -762,6 +763,10 @@ export interface PlatformAiProvider {
   supportsGenerationN: boolean;
   supportsEditN: boolean;
   maxImagesPerRequest: number;
+  imageAspectRatio: ImageProviderAspectRatio;
+  imageResolution: ImageProviderResolution;
+  imageQuality: ImageProviderQuality;
+  imageOutputFormat: ImageProviderOutputFormat;
   createdAt: string;
   updatedAt: string;
   updatedBy?: string;

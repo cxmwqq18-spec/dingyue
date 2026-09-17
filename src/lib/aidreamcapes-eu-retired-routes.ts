@@ -6,12 +6,72 @@
  */
 export const AIDREAMCAPES_EU_SITE_ID = "site_aidreamcapes_xby";
 export const AIDREAMCAPES_EU_RETIRED_PUBLIC_PATHS = new Set<string>([
-  "/ai-save-the-date/easter"
+  "/ai-save-the-date/easter",
+  "/ai-image-generation/estilo-y-fantasia"
 ]);
+
+/**
+ * Routes that must not be emitted as EU internal navigation. They remain
+ * unavailable for this storefront; this list is intentionally site-scoped so
+ * another storefront can keep using the same path when it is published there.
+ */
+export const AIDREAMCAPES_EU_REMOVED_PUBLIC_NAVIGATION_PATHS = new Set<string>([
+  "/ai-image-generation/estilo-y-fantasia",
+  "/collections/soccer",
+  "/collections/christmas-photo",
+  "/collections/thanksgiving-photo",
+  "/tools/seasonal-celebration-album-maker"
+]);
+
+/**
+ * Legacy EU homepage showcase targets that still exist in older catalog
+ * records. Keep the catalog records intact and normalize only the public EU
+ * link projection to the current canonical detail routes.
+ */
+export const AIDREAMCAPES_EU_LEGACY_PUBLIC_PATH_TARGETS = new Map<string, string>([
+  ["/ai-image-generation/engagement", "/ai-image-generation/engagement-photo"],
+  ["/ai-image-generation/valentine-photos", "/ai-image-generation/valentines-photo"],
+  ["/ai-image-generation/christmas-photos", "/ai-image-generation/christmas-photo"],
+  ["/ai-image-generation/halloween-party-photos", "/ai-image-generation/halloween-photo"],
+  ["/ai-image-generation/thanksgiving-group-photos", "/ai-image-generation/thanksgiving-photo"],
+  ["/ai-image-generation/profile-cards", "/ai-image-generation/avatar"],
+  ["/ai-image-generation/professional-headshots", "/ai-image-generation/professional"]
+]);
+
+function normalizeAidreamcapesEuPath(path: string): string {
+  return String(path || "")
+    .replace(/^https?:\/\/[^/]+/i, "")
+    .split(/[?#]/, 1)[0]
+    .replace(/^\/site\/aidreamcapes-eu(?=\/|$)/i, "")
+    .replace(/\/{2,}/g, "/")
+    .replace(/\/$/, "") || "/";
+}
+
+export function canonicalAidreamcapesEuPublicPath(path: string): string {
+  const normalizedPath = normalizeAidreamcapesEuPath(path);
+  return AIDREAMCAPES_EU_LEGACY_PUBLIC_PATH_TARGETS.get(normalizedPath) ?? normalizedPath;
+}
 
 export function isAidreamcapesEuRetiredPublicPath(siteIdOrSlug: string | null | undefined, path: string): boolean {
   const site = String(siteIdOrSlug ?? "").trim().toLowerCase();
-  const normalizedPath = String(path || "").split(/[?#]/, 1)[0].replace(/\/{2,}/g, "/").replace(/\/$/, "") || "/";
+  const normalizedPath = normalizeAidreamcapesEuPath(path);
   return (site === AIDREAMCAPES_EU_SITE_ID || site === "aidreamcapes-eu" || site === "aidreamcapes.eu") &&
     AIDREAMCAPES_EU_RETIRED_PUBLIC_PATHS.has(normalizedPath);
+}
+
+export function isAidreamcapesEuRemovedPublicNavigationPath(
+  siteIdentity: string | { id?: string | null; slug?: string | null; primaryDomain?: string | null } | null | undefined,
+  path: string
+): boolean {
+  const explicitEuPath = /(?:^|\/)site\/aidreamcapes-eu(?:\/|$)/i.test(String(path || ""))
+    || /(?:^|\/)aidreamcapes\.eu(?:\/|$)/i.test(String(path || ""));
+  const identities = typeof siteIdentity === "string" || siteIdentity == null
+    ? [String(siteIdentity ?? "")]
+    : [siteIdentity.id, siteIdentity.slug, siteIdentity.primaryDomain];
+  const isAidreamcapesEu = identities.some((identity) => {
+    const value = String(identity ?? "").trim().toLowerCase();
+    return value === AIDREAMCAPES_EU_SITE_ID || value === "aidreamcapes-eu" || value === "aidreamcapes.eu";
+  });
+  return (isAidreamcapesEu || explicitEuPath) &&
+    AIDREAMCAPES_EU_REMOVED_PUBLIC_NAVIGATION_PATHS.has(normalizeAidreamcapesEuPath(path));
 }

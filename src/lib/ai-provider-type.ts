@@ -14,6 +14,7 @@ export function inferPlatformAiProviderType(provider: {
   modelType?: string | null;
 }): PlatformAiProviderType {
   const text = [provider.modelType, provider.label, provider.aiUrl].filter(Boolean).join(" ").toLowerCase();
+  if (text.includes("buming001.token6688.com")) return "image";
   return isVideoProviderModel(provider.modelType) ||
     text.includes("smartpicklid") ||
     text.includes("magic666") ||

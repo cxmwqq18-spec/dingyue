@@ -26,7 +26,7 @@ type AidreamcapesEuSeoContent = Omit<AidreamcapesEuSeoSeed, "subject" | "scene">
 const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   avatar: {
     label: "Avatar professionnel",
-    title: "Avatar IA : portrait professionnel pour profil | Aidreamcapes",
+    title: "Avatar professionnel IA | Aidreamcapes",
     description: "Créez un avatar professionnel avec l’IA : portrait naturel, style éditorial et cadrage adapté aux profils, communautés et projets personnels sur Aidreamcapes.",
     keywords: "avatar IA, portrait professionnel, photo de profil IA, avatar réaliste, Aidreamcapes",
     h2: "Avatar professionnel créé avec l’IA",
@@ -44,7 +44,7 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   },
   "background-remover": {
     label: "Suppression d’arrière-plan",
-    title: "Supprimer l’arrière-plan d’une photo avec l’IA | Aidreamcapes",
+    title: "Supprimer un fond avec l’IA | Aidreamcapes",
     description: "Supprimez l’arrière-plan d’un portrait, d’un produit ou d’un objet avec une silhouette nette, des contours propres et une présentation prête pour votre projet.",
     keywords: "supprimer arrière-plan IA, détourage photo, fond transparent, détourage produit, Aidreamcapes",
     h2: "Supprimer un arrière-plan proprement",
@@ -89,7 +89,7 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   },
   "christmas-photo": {
     label: "Photos de Noël",
-    title: "Photos de Noël avec l’IA : portraits et cartes | Aidreamcapes",
+    title: "Photos de Noël avec l’IA | Aidreamcapes",
     description: "Créez des photos de Noël avec l’IA pour cartes, vœux et albums privés : intérieurs chaleureux, scènes d’hiver et détails festifs aux styles variés.",
     keywords: "photos de Noël IA, portrait de Noël, carte de vœux photo, album de fêtes, Aidreamcapes",
     h2: "Photos de Noël pour cartes et souvenirs",
@@ -107,7 +107,7 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   },
   cyberpunk: {
     label: "Cyberpunk",
-    title: "Portrait cyberpunk IA : néons et ville futuriste | Aidreamcapes",
+    title: "Portrait cyberpunk avec l’IA | Aidreamcapes",
     description: "Créez des portraits cyberpunk avec l’IA : néons, pluie, architecture futuriste et ambiance nocturne pour des images originales, lisibles et cinématographiques.",
     keywords: "portrait cyberpunk IA, photo néon, ville futuriste, portrait nocturne, Aidreamcapes",
     h2: "Portrait cyberpunk dans une ville néon",
@@ -206,7 +206,7 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   },
   "motion-generator": {
     label: "Générateur de mouvement",
-    title: "Générateur de mouvement IA pour photos dynamiques | Aidreamcapes",
+    title: "Animation photo avec l’IA | Aidreamcapes",
     description: "Créez des photos de mouvement avec l’IA : danse, sport et gestes spontanés, avec une anatomie lisible et une énergie visuelle variée.",
     keywords: "générateur mouvement IA, photo dynamique, portrait sportif, photo danse, Aidreamcapes",
     h2: "Photos dynamiques de mouvement",
@@ -242,7 +242,7 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   },
   "photo-enhancer": {
     label: "Amélioration photo",
-    title: "Améliorer une photo avec l’IA : netteté et détails | Aidreamcapes",
+    title: "Améliorer une photo avec l’IA | Aidreamcapes",
     description: "Améliorez une photo avec l’IA : netteté naturelle, dynamique équilibrée et détails récupérés pour portraits, paysages et objets.",
     keywords: "améliorer photo IA, netteté image, restaurer détails photo, qualité image, Aidreamcapes",
     h2: "Amélioration naturelle de la qualité photo",
@@ -260,7 +260,7 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   },
   "portrait-retouch": {
     label: "Retouche de portrait",
-    title: "Retouche de portrait avec l’IA : rendu naturel | Aidreamcapes",
+    title: "Retouche de portrait IA | Aidreamcapes",
     description: "Retouchez un portrait avec l’IA en préservant l’identité, les traits et la texture de peau : lumière raffinée, corrections discrètes et résultat crédible.",
     keywords: "retouche portrait IA, retouche beauté naturelle, peau réaliste, améliorer portrait, Aidreamcapes",
     h2: "Retouche de portrait sans perdre l’identité",
@@ -323,7 +323,7 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   },
   "thanksgiving-photo": {
     label: "Photos de Thanksgiving",
-    title: "Photos de Thanksgiving IA : repas et souvenirs | Aidreamcapes",
+    title: "Photos de Thanksgiving IA | Aidreamcapes",
     description: "Créez des photos de Thanksgiving avec l’IA : cuisine, repas, amitié et promenade d’automne pour cartes, albums privés et souvenirs chaleureux.",
     keywords: "photos Thanksgiving IA, repas automne, souvenir famille adulte, portrait saisonnier, Aidreamcapes",
     h2: "Souvenirs de Thanksgiving",
@@ -332,7 +332,7 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   },
   travel: {
     label: "Voyage",
-    title: "Photos de voyage IA : portraits et destinations | Aidreamcapes",
+    title: "Photos de voyage avec l’IA | Aidreamcapes",
     description: "Créez des photos de voyage avec l’IA : villes, montagnes, côtes et trajets avec un lieu identifiable, une lumière naturelle et un style documentaire.",
     keywords: "photos de voyage IA, portrait destination, photo vacances, carnet de voyage, Aidreamcapes",
     h2: "Portraits de voyage et destinations",
@@ -350,7 +350,7 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   },
   urban: {
     label: "Urbain",
-    title: "Photos urbaines IA : portraits et architecture | Aidreamcapes",
+    title: "Photos urbaines avec l’IA | Aidreamcapes",
     description: "Créez des portraits urbains avec l’IA : architecture, métro, rues, lumière de ville et textures de quartier pour des images documentaires originales.",
     keywords: "photo urbaine IA, portrait architecture, style urbain, photo ville, Aidreamcapes",
     h2: "Portraits urbains et architecture",
@@ -377,7 +377,7 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   },
   "wedding-photo": {
     label: "Photos de mariage",
-    title: "Photos de mariage avec l’IA : cérémonie et couple | Aidreamcapes",
+    title: "Photos de mariage avec l’IA | Aidreamcapes",
     description: "Créez des photos de mariage avec l’IA : cérémonie, préparatifs et portraits de couple pour moodboards et souvenirs, sans les présenter comme un reportage.",
     keywords: "photos mariage IA, portrait mariés, cérémonie mariage, moodboard mariage, Aidreamcapes",
     h2: "Photos de mariage pour cérémonie et couple",
@@ -428,7 +428,7 @@ const DIRECTORY_SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   },
   "photo-tools": {
     label: "Outils photo",
-    title: "Outils photo IA : retoucher et améliorer une image | Aidreamcapes",
+    title: "Outils photo IA : retoucher et améliorer | Aidreamcapes",
     description: "Utilisez les outils photo IA d’Aidreamcapes pour détourer, retoucher, améliorer, restaurer ou modifier vos images avant une galerie privée.",
     keywords: "outils photo IA, retouche photo, supprimer arrière-plan, améliorer image, restaurer photo, Aidreamcapes",
     h2: "Préparer et retoucher vos images avec l’IA",

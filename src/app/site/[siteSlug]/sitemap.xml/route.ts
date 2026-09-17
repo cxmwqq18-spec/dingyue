@@ -29,10 +29,22 @@ export async function GET(request: Request, { params }: { params: RouteParams })
   const { siteSlug } = await params;
   const host = SITE_HOSTS[siteSlug.toLowerCase()];
   if (!host) return new Response("Not found\n", { status: 404 });
-  const { entries } = await getStorefrontSitemapPayloadForHost([host]);
+  const payload = await getStorefrontSitemapPayloadForHost([host]);
   const requestHosts = [hostValue(request, "x-forwarded-host"), hostValue(request, "host")].filter(Boolean);
   const localOrStaging = requestHosts.length > 0 && requestHosts.every(isNonProductionHost);
-  return new Response(sitemapXml(entries), {
+  if (!payload.resolved) {
+    return new Response("Sitemap temporarily unavailable\n", {
+      status: 503,
+      headers: {
+        "content-type": "text/plain; charset=utf-8",
+        "cache-control": "no-store",
+        "retry-after": "60",
+        "vary": "Host, X-Forwarded-Host",
+        ...(localOrStaging ? { "x-robots-tag": "noindex, nofollow" } : {})
+      }
+    });
+  }
+  return new Response(sitemapXml(payload.entries), {
     headers: {
       "content-type": "application/xml; charset=utf-8",
       "cache-control": "public, max-age=300, s-maxage=900, stale-while-revalidate=86400",

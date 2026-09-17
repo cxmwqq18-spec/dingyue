@@ -24,18 +24,21 @@ function cycleLabel(cycle: BillingCycle, locale: "en" | "es" | "fr") {
 export type PricingBillingTableProps = {
   canShowBillingSwitch: boolean; emphasizeBillingSwitch?: boolean; initialBillingCycle: BillingCycle;
   plans: PricingPlan[]; sidePanels: Record<BillingCycle, PricingSidePanel>; aidreamcapes: boolean; locale?: "en" | "es" | "fr";
+  availableBillingCycles?: readonly BillingCycle[];
   variant?: "default" | "aidreamcapes-editorial";
 };
 
 export function PricingBillingInteractive({
-  canShowBillingSwitch, emphasizeBillingSwitch = false, initialBillingCycle, plans, sidePanels, aidreamcapes, locale = "en", variant = "default"
+  canShowBillingSwitch, emphasizeBillingSwitch = false, initialBillingCycle, plans, sidePanels, aidreamcapes, locale = "en", availableBillingCycles, variant = "default"
 }: PricingBillingTableProps) {
-  const [activeBillingCycle, setActiveBillingCycle] = useState<BillingCycle>(initialBillingCycle);
+  const cycles = availableBillingCycles?.length ? availableBillingCycles : billingCycles;
+  const firstAvailableCycle = cycles.includes(initialBillingCycle) ? initialBillingCycle : cycles[0] ?? initialBillingCycle;
+  const [activeBillingCycle, setActiveBillingCycle] = useState<BillingCycle>(firstAvailableCycle);
   const pendingScrollY = useRef<number | null>(null);
 
   useEffect(() => {
-    setActiveBillingCycle(initialBillingCycle);
-  }, [initialBillingCycle]);
+    setActiveBillingCycle(cycles.includes(initialBillingCycle) ? initialBillingCycle : cycles[0] ?? initialBillingCycle);
+  }, [cycles, initialBillingCycle]);
 
   useEffect(() => {
     const targetScrollY = pendingScrollY.current;
@@ -49,7 +52,7 @@ export function PricingBillingInteractive({
   }, [activeBillingCycle]);
 
   function selectBillingCycle(cycle: BillingCycle) {
-    if (cycle === activeBillingCycle) return;
+    if (cycle === activeBillingCycle || !cycles.includes(cycle)) return;
     if (typeof window !== "undefined") pendingScrollY.current = window.scrollY;
     setActiveBillingCycle(cycle);
     if (typeof window === "undefined") return;
@@ -88,7 +91,7 @@ export function PricingBillingInteractive({
     </div>;
   };
   return <div data-pricing-ssr="true">
-     {canShowBillingSwitch ? <nav aria-label={locale === "fr" ? "Périodes de facturation" : locale === "es" ? "Periodos de facturación" : "Billing periods"} className={(emphasizeBillingSwitch ? "mt-7 flex flex-col items-center gap-3" : "mt-7 flex flex-wrap gap-3") + (variant === "aidreamcapes-editorial" ? " ac-billing-nav" : "")}><div className="inline-flex flex-wrap gap-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1" role="tablist">{billingCycles.map((cycle) => <button aria-selected={cycle === activeBillingCycle} className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold ${cycle === activeBillingCycle ? "bg-white text-[#171514]" : "text-white/80 hover:bg-white hover:text-[#171514]"}`} data-storefront-instant-filter="true" key={cycle} onClick={() => selectBillingCycle(cycle)} role="tab" type="button">{cycleLabel(cycle, locale)}</button>)}</div></nav> : null}
+     {canShowBillingSwitch && cycles.length > 1 ? <nav aria-label={locale === "fr" ? "Périodes de facturation" : locale === "es" ? "Periodos de facturación" : "Billing periods"} className={(emphasizeBillingSwitch ? "mt-7 flex flex-col items-center gap-3" : "mt-7 flex flex-wrap gap-3") + (variant === "aidreamcapes-editorial" ? " ac-billing-nav" : "")}><div className="inline-flex flex-wrap gap-2 rounded-[12px] border border-white/14 bg-white/[0.08] p-1" role="tablist">{cycles.map((cycle) => <button aria-selected={cycle === activeBillingCycle} className={`inline-flex min-h-[44px] min-w-[132px] items-center justify-center rounded-[9px] px-5 text-sm font-semibold ${cycle === activeBillingCycle ? "bg-white text-[#171514]" : "text-white/80 hover:bg-white hover:text-[#171514]"}`} data-storefront-instant-filter="true" key={cycle} onClick={() => selectBillingCycle(cycle)} role="tab" type="button">{cycleLabel(cycle, locale)}</button>)}</div></nav> : null}
      <section className="scroll-mt-24" id={`pricing-${activeBillingCycle}`}><h3 className="sr-only">{locale === "fr" ? `${cycleLabel(activeBillingCycle, locale)} tarifs` : locale === "es" ? `${cycleLabel(activeBillingCycle, locale)} precios` : `${cycleLabel(activeBillingCycle, locale)} pricing`}</h3>{renderCycle(activeBillingCycle)}</section>
     <span className="sr-only" data-initial-billing-cycle={initialBillingCycle} data-active-billing-cycle={activeBillingCycle} />
   </div>;

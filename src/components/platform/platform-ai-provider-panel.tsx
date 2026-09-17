@@ -25,6 +25,16 @@ import {
 import { StatusPill } from "@/components/ui";
 import { platformAiProviderTypeLabel, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { platformJsonHeaders } from "@/lib/client-csrf";
+import {
+  IMAGE_PROVIDER_ASPECT_RATIOS,
+  IMAGE_PROVIDER_OUTPUT_FORMATS,
+  IMAGE_PROVIDER_QUALITIES,
+  IMAGE_PROVIDER_RESOLUTIONS,
+  type ImageProviderAspectRatio,
+  type ImageProviderOutputFormat,
+  type ImageProviderQuality,
+  type ImageProviderResolution
+} from "@/lib/tokengo-image";
 
 type AiProviderRow = {
   id: string;
@@ -42,6 +52,10 @@ type AiProviderRow = {
   supportsGenerationN: boolean;
   supportsEditN: boolean;
   maxImagesPerRequest: number;
+  imageAspectRatio: ImageProviderAspectRatio;
+  imageResolution: ImageProviderResolution;
+  imageQuality: ImageProviderQuality;
+  imageOutputFormat: ImageProviderOutputFormat;
   status: {
     configured: boolean;
     enabled: boolean;
@@ -104,6 +118,10 @@ type ProviderFormState = {
   supportsGenerationN: boolean;
   supportsEditN: boolean;
   maxImagesPerRequest: number;
+  imageAspectRatio: ImageProviderAspectRatio;
+  imageResolution: ImageProviderResolution;
+  imageQuality: ImageProviderQuality;
+  imageOutputFormat: ImageProviderOutputFormat;
 };
 
 const defaultProviderForm: ProviderFormState = {
@@ -118,7 +136,11 @@ const defaultProviderForm: ProviderFormState = {
   enabled: true,
   supportsGenerationN: false,
   supportsEditN: false,
-  maxImagesPerRequest: 1
+  maxImagesPerRequest: 1,
+  imageAspectRatio: "auto",
+  imageResolution: "1K",
+  imageQuality: "low",
+  imageOutputFormat: "png"
 };
 
 function errorLabel(code?: string): string {
@@ -154,6 +176,7 @@ function providerProtocolText(provider: Pick<AiProviderRow, "status">) {
     "openai-videos": "OpenAI videos",
     "huitu-openapi": "Huitu OpenAPI",
     "tokengo-media": "Buming / TokenGo media",
+    "tokengo-image": "Buming / TokenGo Images",
     "openai-compatible": "OpenAI compatible"
   }[provider.status.protocol] ?? provider.status.protocol ?? "unknown";
 }
@@ -276,7 +299,11 @@ export function PlatformAiProviderPanel({
       enabled: provider.enabled,
       supportsGenerationN: provider.supportsGenerationN,
       supportsEditN: provider.supportsEditN,
-      maxImagesPerRequest: provider.maxImagesPerRequest || 1
+      maxImagesPerRequest: provider.maxImagesPerRequest || 1,
+      imageAspectRatio: provider.imageAspectRatio ?? "auto",
+      imageResolution: provider.imageResolution ?? "1K",
+      imageQuality: provider.imageQuality ?? "low",
+      imageOutputFormat: provider.imageOutputFormat ?? "png"
     });
     setEditCustomModelType(modelTypes.includes(provider.modelType) ? "" : provider.modelType);
     setEditMessage("API Key 默认隐藏；点击“显示”可查看当前保存的密钥。AI URL 可以清空保存。");
@@ -291,7 +318,7 @@ export function PlatformAiProviderPanel({
     setCustomModelType("");
     setEditForm(null);
     setMessage(providerType === "image"
-      ? "已切换到新增生图供应商。填写名称、URL 和 API Key；如果支持 /images/edits，请保持“支持图生图”勾选。"
+      ? "已切换到新增生图供应商。填写名称、URL 和 API Key；如果支持参考图生图，请保持“支持图生图”勾选。"
       : providerType === "video"
         ? "已切换到新增视频供应商。填写名称、URL 和 API Key 后保存。"
         : "已切换到新增文本供应商。填写 OpenAI-compatible Chat Completions URL、模型和 API Key 后保存。");
@@ -683,6 +710,36 @@ export function PlatformAiProviderPanel({
                 />
               </ErpField>
             </ErpFormGrid>
+            {form.providerType === "image" ? (
+              <div className="rounded-[8px] border border-[#e7edf3] bg-[#fbfcfe] p-4">
+                <div className="mb-3">
+                  <div className="text-[13px] font-semibold text-[#18212f]">图片生成参数</div>
+                  <div className="mt-1 text-[12px] leading-5 text-[#667085]">按生图供应商文档传参；任务自身传入的参数会优先覆盖这里的默认配置。</div>
+                </div>
+                <ErpFormGrid>
+                  <ErpField label="图片比例" hint="TokenGo 的 aspect_ratio">
+                    <ErpSelect onChange={(event) => setForm((draft) => ({ ...draft, imageAspectRatio: event.target.value as ImageProviderAspectRatio }))} value={form.imageAspectRatio}>
+                      {IMAGE_PROVIDER_ASPECT_RATIOS.map((ratio) => <option key={ratio} value={ratio}>{ratio === "auto" ? "自动" : ratio}</option>)}
+                    </ErpSelect>
+                  </ErpField>
+                  <ErpField label="图片清晰度 / 分辨率" hint="支持 1K、2K、4K">
+                    <ErpSelect onChange={(event) => setForm((draft) => ({ ...draft, imageResolution: event.target.value as ImageProviderResolution }))} value={form.imageResolution}>
+                      {IMAGE_PROVIDER_RESOLUTIONS.map((resolution) => <option key={resolution} value={resolution}>{resolution}</option>)}
+                    </ErpSelect>
+                  </ErpField>
+                  <ErpField label="生成质量" hint="TokenGo 的 quality">
+                    <ErpSelect onChange={(event) => setForm((draft) => ({ ...draft, imageQuality: event.target.value as ImageProviderQuality }))} value={form.imageQuality}>
+                      {IMAGE_PROVIDER_QUALITIES.map((quality) => <option key={quality} value={quality}>{({ auto: "自动", low: "低", medium: "中", high: "高" } as Record<ImageProviderQuality, string>)[quality]}</option>)}
+                    </ErpSelect>
+                  </ErpField>
+                  <ErpField label="输出格式" hint="生成文件格式">
+                    <ErpSelect onChange={(event) => setForm((draft) => ({ ...draft, imageOutputFormat: event.target.value as ImageProviderOutputFormat }))} value={form.imageOutputFormat}>
+                      {IMAGE_PROVIDER_OUTPUT_FORMATS.map((format) => <option key={format} value={format}>{format.toUpperCase()}</option>)}
+                    </ErpSelect>
+                  </ErpField>
+                </ErpFormGrid>
+              </div>
+            ) : null}
             <div className="flex flex-wrap gap-4">
               <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                 <input checked={form.supportsGenerationN} onChange={(event) => setForm((draft) => ({ ...draft, supportsGenerationN: event.target.checked }))} type="checkbox" />
@@ -690,7 +747,7 @@ export function PlatformAiProviderPanel({
               </label>
               <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                 <input checked={form.supportsEditN} onChange={(event) => setForm((draft) => ({ ...draft, supportsEditN: event.target.checked }))} type="checkbox" />
-                支持图生图 /images/edits
+                支持图生图（参考图）
               </label>
               <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                 <input checked={form.makeCurrent} onChange={(event) => setForm((draft) => ({ ...draft, makeCurrent: event.target.checked, enabled: event.target.checked ? true : draft.enabled }))} type="checkbox" />
@@ -860,6 +917,36 @@ export function PlatformAiProviderPanel({
                   />
                 </ErpField>
               </ErpFormGrid>
+              {editForm.providerType === "image" ? (
+                <div className="rounded-[8px] border border-[#e7edf3] bg-[#fbfcfe] p-4">
+                  <div className="mb-3">
+                    <div className="text-[13px] font-semibold text-[#18212f]">图片生成参数</div>
+                    <div className="mt-1 text-[12px] leading-5 text-[#667085]">保存后会作为该供应商的默认生图参数传给 worker。</div>
+                  </div>
+                  <ErpFormGrid>
+                    <ErpField label="图片比例" hint="TokenGo 的 aspect_ratio">
+                      <ErpSelect onChange={(event) => setEditForm((draft) => draft ? { ...draft, imageAspectRatio: event.target.value as ImageProviderAspectRatio } : draft)} value={editForm.imageAspectRatio}>
+                        {IMAGE_PROVIDER_ASPECT_RATIOS.map((ratio) => <option key={ratio} value={ratio}>{ratio === "auto" ? "自动" : ratio}</option>)}
+                      </ErpSelect>
+                    </ErpField>
+                    <ErpField label="图片清晰度 / 分辨率" hint="支持 1K、2K、4K">
+                      <ErpSelect onChange={(event) => setEditForm((draft) => draft ? { ...draft, imageResolution: event.target.value as ImageProviderResolution } : draft)} value={editForm.imageResolution}>
+                        {IMAGE_PROVIDER_RESOLUTIONS.map((resolution) => <option key={resolution} value={resolution}>{resolution}</option>)}
+                      </ErpSelect>
+                    </ErpField>
+                    <ErpField label="生成质量" hint="TokenGo 的 quality">
+                      <ErpSelect onChange={(event) => setEditForm((draft) => draft ? { ...draft, imageQuality: event.target.value as ImageProviderQuality } : draft)} value={editForm.imageQuality}>
+                        {IMAGE_PROVIDER_QUALITIES.map((quality) => <option key={quality} value={quality}>{({ auto: "自动", low: "低", medium: "中", high: "高" } as Record<ImageProviderQuality, string>)[quality]}</option>)}
+                      </ErpSelect>
+                    </ErpField>
+                    <ErpField label="输出格式" hint="生成文件格式">
+                      <ErpSelect onChange={(event) => setEditForm((draft) => draft ? { ...draft, imageOutputFormat: event.target.value as ImageProviderOutputFormat } : draft)} value={editForm.imageOutputFormat}>
+                        {IMAGE_PROVIDER_OUTPUT_FORMATS.map((format) => <option key={format} value={format}>{format.toUpperCase()}</option>)}
+                      </ErpSelect>
+                    </ErpField>
+                  </ErpFormGrid>
+                </div>
+              ) : null}
               <div className="flex flex-wrap gap-4">
                 <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                   <input checked={editForm.supportsGenerationN} onChange={(event) => setEditForm((draft) => draft ? { ...draft, supportsGenerationN: event.target.checked } : draft)} type="checkbox" />
@@ -867,7 +954,7 @@ export function PlatformAiProviderPanel({
                 </label>
                 <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                   <input checked={editForm.supportsEditN} onChange={(event) => setEditForm((draft) => draft ? { ...draft, supportsEditN: event.target.checked } : draft)} type="checkbox" />
-                  支持图生图 /images/edits
+                  支持图生图（参考图）
                 </label>
                 <label className="inline-flex items-center gap-2 text-[12px] text-[#667085]">
                   <input checked={editForm.makeCurrent} onChange={(event) => setEditForm((draft) => draft ? { ...draft, makeCurrent: event.target.checked, enabled: event.target.checked ? true : draft.enabled } : draft)} type="checkbox" />

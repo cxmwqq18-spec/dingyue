@@ -17,6 +17,40 @@ function clean(value: unknown): string {
 
 const MYDREAMSHOOTS_STANDARD_SEO_PATHS = new Set<string>(MYDREAMSHOOTS_STANDARD_SEO_ROUTES);
 
+const AIDREAMCAPES_EU_SEO_TITLE_OVERRIDES: Record<string, string> = {
+  "/ai-image-generation/avatar": "Avatar professionnel IA | Aidreamcapes",
+  "/ai-image-generation/background-remover": "Supprimer un fond avec l’IA | Aidreamcapes",
+  "/ai-image-generation/christmas-photo": "Photos de Noël avec l’IA | Aidreamcapes",
+  "/ai-image-generation/cyberpunk": "Portrait cyberpunk avec l’IA | Aidreamcapes",
+  "/ai-image-generation/motion-generator": "Animation photo avec l’IA | Aidreamcapes",
+  "/ai-image-generation/photo-enhancer": "Améliorer une photo avec l’IA | Aidreamcapes",
+  "/ai-image-generation/portrait-retouch": "Retouche de portrait IA | Aidreamcapes",
+  "/ai-image-generation/thanksgiving-photo": "Photos de Thanksgiving avec l’IA | Aidreamcapes",
+  "/ai-image-generation/travel": "Photos de voyage avec l’IA | Aidreamcapes",
+  "/ai-image-generation/urban": "Photos urbaines avec l’IA | Aidreamcapes",
+  "/ai-image-generation/wedding-photo": "Photos de mariage avec l’IA | Aidreamcapes",
+  "/ai-image-generation/photo-tools": "Outils de retouche photo IA | Aidreamcapes"
+};
+
+function normalizeAidreamcapesEuTitle(title: string, path: string, indexable: boolean): string {
+  if (!indexable) return title;
+  const override = AIDREAMCAPES_EU_SEO_TITLE_OVERRIDES[path];
+  if (override) return override;
+  if (title.length <= 60) return title;
+  const brandSuffix = " | Aidreamcapes";
+  if (title.toLowerCase().endsWith(brandSuffix.toLowerCase())) {
+    const prefixLimit = 60 - brandSuffix.length;
+    const prefix = title.slice(0, prefixLimit).replace(/\s+\S*$/, "").trim();
+    return `${prefix}${brandSuffix}`;
+  }
+  return `${title.slice(0, 59).replace(/\s+\S*$/, "").trim()}…`;
+}
+
+function normalizeAidreamcapesEuDescription(description: string, indexable: boolean): string {
+  if (!indexable || description.length <= 160) return description;
+  return `${description.slice(0, 159).replace(/\s+\S*$/, "").trim()}…`;
+}
+
 function revisionHash(value: string): string {
   let first = 0x811c9dc5;
   let second = 0x9e3779b9;
@@ -61,13 +95,16 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
   const standardMediaReady = !standardMediaRequired || standardMedia?.status === "ready";
   const defaultIndex = bundle.page.pageType !== "not_found" && bundle.page.slug !== "/404";
   const pageRobots = robotsForPage(bundle.page);
+  const indexable = defaultIndex && pageRobots.index && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true);
+  const followable = pageRobots.follow && (pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true);
+  const euIndexable = bundle.site.id === "site_aidreamcapes_xby" && indexable;
   const pageScopedSocial = primaryMydreamshoots && (
     path === "/about-us" || path === "/faq" || path === "/pricing" || path === "/workflow" ||
     path === "/best-ai-image" || path === "/ai-image-generation" || /^\/ai-image-generation\//.test(path)
   );
   return {
-    title: applyTitleTemplate(rawTitle, settings, brand),
-    description,
+    title: normalizeAidreamcapesEuTitle(applyTitleTemplate(rawTitle, settings, brand), path, euIndexable),
+    description: normalizeAidreamcapesEuDescription(description, euIndexable),
     // MyDreamshoots requires page-scoped keywords. Do not silently inherit the
     // homepage list for an unrelated public route.
     keywords: primaryMydreamshoots
@@ -78,10 +115,10 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
     ogImage: standardMedia?.status === "ready"
       ? standardMedia.ogImage
       : clean(pageSeo?.ogImage) || (pageScopedSocial ? undefined : clean(settings.seo?.defaultOgImage) || undefined),
-    index: defaultIndex && pageRobots.index && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true),
-    follow: pageRobots.follow && (pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true),
-    maxImagePreview: pageSeo?.robots?.maxImagePreview,
-    sitemapEligible: defaultIndex && pageRobots.index && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true)
+    index: indexable,
+    follow: followable,
+    maxImagePreview: euIndexable ? "large" : pageSeo?.robots?.maxImagePreview,
+    sitemapEligible: indexable
   };
 }
 

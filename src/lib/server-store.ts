@@ -85,6 +85,7 @@ import { aiProviderStatus } from "@/lib/ai-provider-config";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { resolveMediaAssetUrl } from "@/lib/media";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
+import { normalizeImageProviderAspectRatio, normalizeImageProviderOutputFormat, normalizeImageProviderQuality, normalizeImageProviderResolution } from "@/lib/tokengo-image";
 import type { SaasThemeRecord, SaasThemeSettingsRecord, SaasThemeTemplates } from "@/lib/theme/saas-theme-model";
 
 const sessionTtlMs = 1000 * 60 * 60 * 24 * 30;
@@ -778,7 +779,11 @@ function normalizeState(state: PlatformState): PlatformState {
   next.platformAiProviders = next.platformAiProviders.map((provider) => ({
     ...provider,
     providerType: normalizePlatformAiProviderType(provider.providerType, inferPlatformAiProviderType(provider)),
-    enabled: provider.enabled ?? true
+    enabled: provider.enabled ?? true,
+    imageAspectRatio: normalizeImageProviderAspectRatio(provider.imageAspectRatio),
+    imageResolution: normalizeImageProviderResolution(provider.imageResolution),
+    imageQuality: normalizeImageProviderQuality(provider.imageQuality),
+    imageOutputFormat: normalizeImageProviderOutputFormat(provider.imageOutputFormat)
   }));
   for (const providerType of platformAiProviderTypes) {
     const typedProviders = next.platformAiProviders
@@ -4302,14 +4307,14 @@ export function recordStripeWebhook(payload: {
   return result;
 }
 
-export function getPlatformAiProviderFallbackQueue(providerType?: PlatformAiProviderType): Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "providerType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest">> {
+export function getPlatformAiProviderFallbackQueue(providerType?: PlatformAiProviderType): Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "providerType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest" | "imageAspectRatio" | "imageResolution" | "imageQuality" | "imageOutputFormat">> {
   const state = readPlatformState();
   const providers = state.platformAiProviders ?? [];
   return providers
     .filter((provider) => aiProviderStatus(provider).runnable && (!providerType || provider.providerType === providerType))
     .slice()
     .sort(comparePlatformAiProviderPriority)
-    .map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
+    .map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest, imageAspectRatio, imageResolution, imageQuality, imageOutputFormat }) => ({
       id,
       label,
       aiUrl,
@@ -4320,7 +4325,11 @@ export function getPlatformAiProviderFallbackQueue(providerType?: PlatformAiProv
       enabled,
       supportsGenerationN,
       supportsEditN,
-      maxImagesPerRequest
+      maxImagesPerRequest,
+      imageAspectRatio,
+      imageResolution,
+      imageQuality,
+      imageOutputFormat
     }));
 }
 
@@ -4533,6 +4542,10 @@ export function upsertPlatformAiProvider(params: {
   supportsGenerationN?: boolean;
   supportsEditN?: boolean;
   maxImagesPerRequest?: number;
+  imageAspectRatio?: string;
+  imageResolution?: string;
+  imageQuality?: string;
+  imageOutputFormat?: string;
   actor?: string;
 }): PlatformAiProvider {
   let result: PlatformAiProvider | undefined;
@@ -4566,6 +4579,10 @@ export function upsertPlatformAiProvider(params: {
       existing.supportsGenerationN = Boolean(params.supportsGenerationN);
       existing.supportsEditN = Boolean(params.supportsEditN);
       existing.maxImagesPerRequest = Math.max(1, Math.min(Math.trunc(Number(params.maxImagesPerRequest) || 1), 20));
+      existing.imageAspectRatio = normalizeImageProviderAspectRatio(params.imageAspectRatio ?? existing.imageAspectRatio);
+      existing.imageResolution = normalizeImageProviderResolution(params.imageResolution ?? existing.imageResolution);
+      existing.imageQuality = normalizeImageProviderQuality(params.imageQuality ?? existing.imageQuality);
+      existing.imageOutputFormat = normalizeImageProviderOutputFormat(params.imageOutputFormat ?? existing.imageOutputFormat);
       existing.updatedAt = now;
       existing.updatedBy = params.actor;
       result = existing;
@@ -4583,6 +4600,10 @@ export function upsertPlatformAiProvider(params: {
         supportsGenerationN: Boolean(params.supportsGenerationN),
         supportsEditN: Boolean(params.supportsEditN),
         maxImagesPerRequest: Math.max(1, Math.min(Math.trunc(Number(params.maxImagesPerRequest) || 1), 20)),
+        imageAspectRatio: normalizeImageProviderAspectRatio(params.imageAspectRatio),
+        imageResolution: normalizeImageProviderResolution(params.imageResolution),
+        imageQuality: normalizeImageProviderQuality(params.imageQuality),
+        imageOutputFormat: normalizeImageProviderOutputFormat(params.imageOutputFormat),
         createdAt: now,
         updatedAt: now,
         updatedBy: params.actor

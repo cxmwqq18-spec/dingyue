@@ -96,6 +96,11 @@ function resolved(value: string, storefrontContext?: StorefrontContext): string 
   return storefrontContext ? resolveStorefrontBindings(value, storefrontContext).value ?? value : value;
 }
 
+function sectionWithPrototypeAnchor(section: SectionInstance, pagePath: string): SectionInstance {
+  if (pagePath !== "/workflow" || setting(section, "layout") !== "prompt_guide" || setting(section, "anchor")) return section;
+  return { ...section, settings: { ...section.settings, anchor: "prompt-guide" } };
+}
+
 function Eyebrow({ children, tone = "cyan" }: { children: string; tone?: "cyan" | "pink" | "amber" | "violet" }) {
   if (!children) return null;
   return <p className={["ac-eyebrow", "ac-eyebrow-" + tone].join(" ")}>{children}</p>;
@@ -164,10 +169,11 @@ function PageHero({ section, page, resolveAsset, resolveHref }: { section: Secti
   const title = setting(section, "title");
   const subtitle = setting(section, "subtitle", setting(section, "body"));
   const image = setting(section, "imageUrl");
+  const hasImage = Boolean(image && resolveAsset(image));
   return (
     <section className="ac-page-hero" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="hero">
       <div className="ac-container">
-        {image ? (
+        {hasImage ? (
           <div className="ac-hero-grid">
             <div className="ac-hero-copy">
               <Eyebrow tone={setting(section, "eyebrowTone", "cyan") as "cyan" | "pink" | "amber" | "violet"}>{setting(section, "eyebrow")}</Eyebrow>
@@ -179,7 +185,7 @@ function PageHero({ section, page, resolveAsset, resolveHref }: { section: Secti
             <HeroOrbit page={page} section={section} resolveAsset={resolveAsset} />
           </div>
         ) : (
-          <div className="ac-directory-header">
+          <div className={subtitle ? "ac-directory-header" : "ac-directory-header ac-directory-header-single"}>
             <div className="ac-directory-copy">
               <Eyebrow tone={setting(section, "eyebrowTone", "cyan") as "cyan" | "pink" | "amber" | "violet"}>{setting(section, "eyebrow")}</Eyebrow>
               <h1 className="ac-display-lg">{title}</h1>
@@ -199,10 +205,12 @@ function FeatureSection({ section, resolveAsset, resolveHref }: { section: Secti
   const body = setting(section, "body", setting(section, "subtitle"));
   const cards = blocks(section, "rich_text_card").length ? blocks(section, "rich_text_card") : blocks(section, "card");
   const image = setting(section, "imageUrl") ? resolveAsset(setting(section, "imageUrl")) : "";
+  const hasQuote = Boolean(body);
+  if (!title && !body && !paragraphs.length && !cards.length && !image) return null;
   return (
     <section className="ac-section" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="feature">
       <div className="ac-container">
-        <div className="ac-feature-split">
+        <div className={image || hasQuote ? "ac-feature-split" : "ac-feature-split ac-feature-split-single"}>
           <div className="ac-feature-copy">
             <Eyebrow tone={setting(section, "eyebrowTone", "pink") as "cyan" | "pink" | "amber" | "violet"}>{setting(section, "eyebrow")}</Eyebrow>
             <h2 className="ac-display-md">{title}</h2>
@@ -210,7 +218,7 @@ function FeatureSection({ section, resolveAsset, resolveHref }: { section: Secti
             <ActionButtons section={section} resolveHref={resolveHref} />
             <RichTextCards items={cards} />
           </div>
-          {image ? <div className="ac-feature-media"><ImageFrame src={image} alt={setting(section, "imageAlt", title)} /></div> : <div className="ac-quote-panel"><p>{body}</p><span>{setting(section, "eyebrow")}</span></div>}
+          {image ? <div className="ac-feature-media"><ImageFrame src={image} alt={setting(section, "imageAlt", title)} /></div> : hasQuote ? <div className="ac-quote-panel"><p>{body}</p><span>{setting(section, "eyebrow")}</span></div> : null}
         </div>
       </div>
     </section>
@@ -249,6 +257,7 @@ function ApplicationSection({ section, siteId, resolveAsset, resolveHref }: { se
     fieldType: blockValue(field, "fieldType", "text") as PartnerApplicationField["fieldType"],
     required: blockValue(field, "required") === "true" || Boolean(field.settings.required)
   }));
+  if (!fields.length) return null;
   return (
     <section className="ac-section" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="application_form">
       <div className="ac-container">
@@ -309,17 +318,20 @@ function TrustSection({ section, storefrontContext, resolveHref }: { section: Se
 
 function StepsSection({ section }: { section: SectionInstance }) {
   const items = blocks(section, "card");
+  if (!items.length) return null;
   return <section className="ac-section" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="steps"><div className="ac-container"><div className="ac-directory-header"><div><Eyebrow tone="violet">{setting(section, "eyebrow")}</Eyebrow><h2 className="ac-display-md">{setting(section, "title")}</h2></div>{setting(section, "subtitle") ? <p>{setting(section, "subtitle")}</p> : null}</div><div className="ac-number-list">{items.map((item, index) => <div className="ac-number-row" key={item.id + "-" + index}><span>{blockValue(item, "meta", String(index + 1).padStart(2, "0"))}</span><h3>{blockValue(item, "title")}</h3><p>{blockValue(item, "text", blockValue(item, "description"))}</p></div>)}</div></div></section>;
 }
 
 function FeatureGridSection({ section, resolveAsset }: { section: SectionInstance; resolveAsset: Resolve }) {
   const items = blocks(section, "card");
+  if (!items.length) return null;
   return <section className="ac-section ac-section-tight" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="feature_grid"><div className="ac-container"><div className="ac-section-head"><div><Eyebrow tone="pink">{setting(section, "eyebrow")}</Eyebrow><h2 className="ac-display-md">{setting(section, "title")}</h2></div>{setting(section, "subtitle") ? <p>{setting(section, "subtitle")}</p> : null}</div><div className="ac-grid-3">{items.map((item, index) => <article className="ac-card ac-image-card" key={item.id + "-" + index}>{blockValue(item, "imageUrl") ? <div className="ac-card-image"><ImageFrame src={resolveAsset(blockValue(item, "imageUrl"))} alt={blockValue(item, "imageAlt", blockValue(item, "title"))} /></div> : null}<p className="ac-card-index">{blockValue(item, "meta", String(index + 1).padStart(2, "0"))}</p><h3>{blockValue(item, "title")}</h3><p>{blockValue(item, "description", blockValue(item, "text"))}</p></article>)}</div></div></section>;
 }
 
 function VideoSection({ section, resolveAsset }: { section: SectionInstance; resolveAsset: Resolve }) {
   const video = setting(section, "videoUrl");
   const poster = setting(section, "imageUrl");
+  if (!video && !poster) return null;
   return <section className="ac-section ac-section-tight" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="video"><div className="ac-container"><div className="ac-video-layout"><div><Eyebrow tone="cyan">{setting(section, "eyebrow")}</Eyebrow><h2 className="ac-display-md">{setting(section, "title")}</h2>{setting(section, "subtitle") ? <p className="ac-copy">{setting(section, "subtitle")}</p> : null}</div>{video || poster ? <div className="ac-video-frame">{video ? <video controls poster={poster ? resolveAsset(poster) : undefined} preload="metadata"><source src={resolveAsset(video)} /></video> : <ImageFrame src={resolveAsset(poster)} alt={setting(section, "title")} />}</div> : null}</div></div></section>;
 }
 
@@ -351,6 +363,7 @@ function articleCards(site: Site, currentPath: string, resolveAsset: Resolve): A
 
 function BlogListSection({ section, site, pagePath, resolveAsset, resolveHref }: { section: SectionInstance; site: Site; pagePath: string; resolveAsset: Resolve; resolveHref: Resolve }) {
   const cards = articleCards(site, pagePath, resolveAsset).map((card) => ({ ...card, href: resolveHref(card.href) }));
+  if (!cards.length) return null;
   return <section className="ac-section ac-section-tight" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="blog_list"><div className="ac-container"><div className="ac-section-head"><div><Eyebrow tone="violet">{setting(section, "guideType")}</Eyebrow><h2 className="ac-display-md">{setting(section, "title")}</h2></div>{setting(section, "subtitle") ? <p>{setting(section, "subtitle")}</p> : null}</div><AidreamcapesBlogFilter cards={cards} /></div></section>;
 }
 
@@ -385,38 +398,40 @@ function PolicySection({ section, page, pagePath, storefrontContext, resolveHref
   const contactEmail = setting(section, "contactEmail", storefrontContext?.profile?.identity.supportEmail ?? "");
   const isContact = pagePath === "/contact-us";
   return <>
-    {!isContact ? <section className="ac-page-hero" data-aidreamcapes-public-section="policy_intro"><div className="ac-container"><div className="ac-directory-header"><div><Eyebrow tone={pagePath === "/terms" ? "amber" : "cyan"}>{setting(section, "eyebrow")}</Eyebrow><h1 className="ac-display-lg">{title}</h1></div>{subtitle ? <p>{subtitle}</p> : null}</div></div></section> : null}
-    <section className="ac-section ac-section-tight" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="policy"><div className="ac-container">{isContact ? <div className="ac-contact-layout"><div className="ac-feature-copy"><Eyebrow tone="pink">{setting(section, "eyebrow")}</Eyebrow><h2 className="ac-display-md">{setting(section, "title")}</h2>{setting(section, "body") ? <p className="ac-copy">{htmlText(setting(section, "body"))}</p> : null}{contactEmail ? <a className="ac-button" href={"mailto:" + contactEmail}>Email support<ArrowUpRight size={15} /></a> : null}</div><div className="ac-form-card"><div className="ac-policy-notice"><strong>Support details</strong><span>{contactEmail || "Use the published support channel."}</span></div><div className="ac-article-prose" dangerouslySetInnerHTML={{ __html: addHeadingIds(body) }} /></div></div> : <div className="ac-policy-layout">{headings.length ? <aside className="ac-policy-aside"><h2>On this page</h2><nav aria-label="Policy contents">{headings.map((heading) => <a href={"#" + heading.id} key={heading.id}>{heading.label}</a>)}</nav></aside> : null}<article className="ac-policy-paper"><div className="ac-policy-notice"><strong>Last updated:</strong><span>{setting(section, "lastUpdated")}</span>{contactEmail ? <span>Contact: <a href={"mailto:" + contactEmail}>{contactEmail}</a></span> : null}</div><div className="ac-article-prose" dangerouslySetInnerHTML={{ __html: addHeadingIds(body) }} /></article></div>}{!isContact ? <div className="ac-policy-links">{[["Privacy Policy", "/privacy"], ["Terms of Service", "/terms"], ["Contact Us", "/contact-us"]].filter(([, href]) => href !== pagePath).map(([label, href]) => <a href={resolveHref(href)} key={href}>{label}</a>)}</div> : null}</div></section>
+    {!isContact ? <section className="ac-page-hero" data-aidreamcapes-public-section="policy_intro"><div className="ac-container"><div className={subtitle ? "ac-directory-header" : "ac-directory-header ac-directory-header-single"}><div><Eyebrow tone={pagePath === "/terms" ? "amber" : "cyan"}>{setting(section, "eyebrow")}</Eyebrow><h1 className="ac-display-lg">{title}</h1></div>{subtitle ? <p>{subtitle}</p> : null}</div></div></section> : null}
+    <section className="ac-section ac-section-tight" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="policy"><div className="ac-container">{isContact ? <div className="ac-contact-layout"><div className="ac-feature-copy"><Eyebrow tone="pink">{setting(section, "eyebrow")}</Eyebrow><h2 className="ac-display-md">{setting(section, "title")}</h2>{setting(section, "body") ? <p className="ac-copy">{htmlText(setting(section, "body"))}</p> : null}{contactEmail ? <a className="ac-button" href={"mailto:" + contactEmail}>Email support<ArrowUpRight size={15} /></a> : null}</div><div className="ac-form-card">{contactEmail ? <div className="ac-policy-notice"><strong>Support details</strong><span>{contactEmail}</span></div> : null}<div className="ac-article-prose" dangerouslySetInnerHTML={{ __html: addHeadingIds(body) }} /></div></div> : <div className="ac-policy-layout">{headings.length ? <aside className="ac-policy-aside"><h2>On this page</h2><nav aria-label="Policy contents">{headings.map((heading) => <a href={"#" + heading.id} key={heading.id}>{heading.label}</a>)}</nav></aside> : null}<article className="ac-policy-paper"><div className="ac-policy-notice"><strong>Last updated:</strong><span>{setting(section, "lastUpdated")}</span>{contactEmail ? <span>Contact: <a href={"mailto:" + contactEmail}>{contactEmail}</a></span> : null}</div><div className="ac-article-prose" dangerouslySetInnerHTML={{ __html: addHeadingIds(body) }} /></article></div>}{!isContact ? <div className="ac-policy-links">{[["Privacy Policy", "/privacy"], ["Terms of Service", "/terms"], ["Contact Us", "/contact-us"]].filter(([, href]) => href !== pagePath).map(([label, href]) => <a href={resolveHref(href)} key={href}>{label}</a>)}</div> : null}</div></section>
   </>;
 }
 
 export function AidreamcapesPublicSection(props: AidreamcapesPublicSectionProps) {
   const { section, page, pagePath, site, storefrontContext, resolveAsset, resolveHref } = props;
+  const routedSection = sectionWithPrototypeAnchor(section, pagePath);
   const isFirstRichText = pageSections(page).find((item) => item.type === "rich_text") === section;
-  if (section.type === "rich_text") {
+  if (routedSection.type === "rich_text") {
     if (pagePath === "/privacy" || pagePath === "/terms") return null;
-    if (setting(section, "layout") === "application_form") return <ApplicationSection section={section} siteId={site.id} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
+    if (setting(routedSection, "layout") === "application_form") return <ApplicationSection section={routedSection} siteId={site.id} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
     if (isFirstRichText) {
       if (pagePath === "/blog" || pagePath === "/contact-us" || pagePath === "/pricing") {
-        return <PageHero section={{ ...section, settings: { ...section.settings, imageUrl: "" } }} page={page} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
+        return <PageHero section={{ ...routedSection, settings: { ...routedSection.settings, imageUrl: "" } }} page={page} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
       }
-      return <PageHero section={section} page={page} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
+      return <PageHero section={routedSection} page={page} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
     }
-    const paragraphs = textList(section.settings.bodyParagraphs);
-    if (paragraphs.length || setting(section, "layout") === "about_story" || setting(section, "layout") === "about_company") return <StorySection section={section} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
-    return <FeatureSection section={section} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
+    const paragraphs = textList(routedSection.settings.bodyParagraphs);
+    if (setting(routedSection, "layout") === "prompt_guide") return <FeatureSection section={routedSection} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
+    if (paragraphs.length || setting(routedSection, "layout") === "about_story" || setting(routedSection, "layout") === "about_company") return <StorySection section={routedSection} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
+    return <FeatureSection section={routedSection} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
   }
-  if (section.type === "login_method_panel") return <LoginSection {...props} />;
-  if (section.type === "trust_signal_bar") return <TrustSection section={section} storefrontContext={storefrontContext} resolveHref={resolveHref} />;
-  if (section.type === "studio_steps") return <StepsSection section={section} />;
-  if (section.type === "video_feature") return <VideoSection section={section} resolveAsset={resolveAsset} />;
-  if (section.type === "conversion_panel") return <ConversionSection section={section} resolveHref={resolveHref} />;
-  if (section.type === "faq") return <FaqSection section={section} />;
-  if (section.type === "feature_grid") return <FeatureGridSection section={section} resolveAsset={resolveAsset} />;
-  if (section.type === "blog_list") return <BlogListSection section={section} site={site} pagePath={pagePath} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
-  if (section.type === "blog_article") return <ArticleSection section={section} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
-  if (section.type === "policy_content") return <PolicySection section={section} page={page} pagePath={pagePath} storefrontContext={storefrontContext} resolveHref={resolveHref} />;
-  if (section.type === "application_form") return <ApplicationSection section={section} siteId={site.id} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
-  if (section.type === "footer" || section.type === "header") return null;
+  if (routedSection.type === "login_method_panel") return <LoginSection {...props} section={routedSection} />;
+  if (routedSection.type === "trust_signal_bar") return <TrustSection section={routedSection} storefrontContext={storefrontContext} resolveHref={resolveHref} />;
+  if (routedSection.type === "studio_steps") return <StepsSection section={routedSection} />;
+  if (routedSection.type === "video_feature") return <VideoSection section={routedSection} resolveAsset={resolveAsset} />;
+  if (routedSection.type === "conversion_panel") return <ConversionSection section={routedSection} resolveHref={resolveHref} />;
+  if (routedSection.type === "faq") return <FaqSection section={routedSection} />;
+  if (routedSection.type === "feature_grid") return <FeatureGridSection section={routedSection} resolveAsset={resolveAsset} />;
+  if (routedSection.type === "blog_list") return <BlogListSection section={routedSection} site={site} pagePath={pagePath} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
+  if (routedSection.type === "blog_article") return <ArticleSection section={routedSection} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
+  if (routedSection.type === "policy_content") return <PolicySection section={routedSection} page={page} pagePath={pagePath} storefrontContext={storefrontContext} resolveHref={resolveHref} />;
+  if (routedSection.type === "application_form") return <ApplicationSection section={routedSection} siteId={site.id} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
+  if (routedSection.type === "footer" || routedSection.type === "header") return null;
   return null;
 }

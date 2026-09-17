@@ -52,6 +52,7 @@ import { validatePublicDraftMediaReferences } from "@/lib/public-draft-validatio
 import { isMydreamshootsRemovedLegacyRoute, MYDREAMSHOOTS_EDITORIAL_THEME_ROUTES, MYDREAMSHOOTS_STANDARD_SEO_INVENTORY, MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 import { MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS } from "@/lib/mydreamshoots-legacy-public-redirects";
+import { canonicalAidreamcapesEuPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import type {
   MediaAsset,
   Product,
@@ -229,7 +230,9 @@ function buildHomepageShowcases(params: {
       id: `homepage-photo-${collection.collectionSlug}`,
       kind: "photo",
       pageEntityId: collection.pageEntityId,
-      canonicalPath: collection.canonicalPath,
+      canonicalPath: site.id === "site_aidreamcapes_xby"
+        ? canonicalAidreamcapesEuPublicPath(collection.canonicalPath)
+        : collection.canonicalPath,
       title: collection.label,
       subtitle: collection.summary,
       category: collection.categorySlug,

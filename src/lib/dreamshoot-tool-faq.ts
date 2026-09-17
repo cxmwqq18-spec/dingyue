@@ -122,6 +122,43 @@ function toolUseCase(input: DreamshootToolFaqInput) {
   };
 }
 
+function frenchToolUseCase(input: DreamshootToolFaqInput) {
+  const haystack = `${input.toolSlug} ${input.label} ${input.description ?? ""}`.toLowerCase();
+  if (/christmas|winter|holiday/.test(haystack)) {
+    return {
+      noun: "un album photo de saison",
+      upload: "Importez des portraits ou des photos de groupe nettes, avec l’accord des personnes représentées et une ambiance festive précise.",
+      review: "Vérifiez les visages, les mains, les éléments décoratifs et les recadrages avant de télécharger la série."
+    };
+  }
+  if (/thanksgiving|friendsgiving/.test(haystack)) {
+    return {
+      noun: "un album souvenir de groupe",
+      upload: "Importez des photos de groupe lumineuses dont vous détenez les droits, puis indiquez l’ambiance chaleureuse recherchée.",
+      review: "Vérifiez les visages, les mains, la table, les détails d’automne et la cohérence de chaque souvenir."
+    };
+  }
+  if (/halloween|costume|birthday|new-year|countdown/.test(haystack)) {
+    return {
+      noun: "un album de célébration privé",
+      upload: "Importez des portraits clairs et autorisés, puis décrivez les couleurs, les costumes ou l’ambiance originale souhaitée.",
+      review: "Vérifiez les visages, les mains, les accessoires, les recadrages et l’absence de marques ou de personnages protégés."
+    };
+  }
+  if (/stadium|game-day|watch-party|supporter|fan|backstage/.test(haystack)) {
+    return {
+      noun: "un album privé pour fans",
+      upload: "Importez des portraits ou des photos de groupe dont vous avez l’autorisation, avec des visages visibles et une direction claire.",
+      review: "Vérifiez les visages, les groupes, les mains, les symboles et l’absence de logo officiel ou d’affiliation trompeuse."
+    };
+  }
+  return {
+    noun: "un album photo privé",
+    upload: "Importez des photos nettes dont vous détenez les droits ou l’autorisation de traitement, avec un sujet bien visible.",
+    review: "Vérifiez les visages, les mains, les arrière-plans, les recadrages et les éventuels artefacts avant le partage."
+  };
+}
+
 export function dreamshootToolDetailFaqItems(input: DreamshootToolFaqInput): DreamshootToolFaqItem[] {
   const label = cleanText(input.label) || "this AI tool";
   const useCase = toolUseCase({ ...input, label });
@@ -129,6 +166,18 @@ export function dreamshootToolDetailFaqItems(input: DreamshootToolFaqInput): Dre
   const aidreamcapes = isAidreamcapesSite(input.site);
   const spanish = isSpanishSite(input.site);
   const description = toolDescription({ ...input, label });
+  if (input.site?.id === "site_aidreamcapes_xby") {
+    const frenchUseCase = frenchToolUseCase({ ...input, label });
+    const workspace = "votre galerie privée Aidreamcapes";
+    return [
+      [`À quoi sert ${label} ?`, `${label} permet de créer ${frenchUseCase.noun} à partir de photos autorisées. ${description} Vous pouvez vérifier le résultat, les crédits et la confidentialité avant le téléchargement.`],
+      [`Quelles photos importer pour ${label} ?`, `${frenchUseCase.upload} Évitez les captures d’écran, les images trop petites et les personnes dont l’utilisation n’est pas autorisée.`],
+      [`Comment décrire le résultat de ${label} ?`, "Indiquez l’usage final, le cadrage, l’ambiance, les couleurs et les éléments à éviter. Préférez une direction originale aux références à une personne publique ou à une marque protégée."],
+      [`Comment les crédits sont-ils gérés avec ${label} ?`, "Le coût en crédits est affiché avant le lancement de la demande. Les crédits réservés sont ensuite débités ou libérés selon l’état enregistré de la génération."],
+      [`Où trouver les résultats de ${label} ?`, `Les résultats terminés restent liés à votre compte et apparaissent dans ${workspace}, où vous pouvez les vérifier et les télécharger.`],
+      [`Que vérifier avant de partager les résultats de ${label} ?`, `${frenchUseCase.review} Confirmez également les autorisations, les règles de la plateforme et l’éventuelle mention de contenu généré par IA avant toute publication.`]
+    ];
+  }
   if (spanish) {
     const workspace = aidreamcapes ? "galeria privada de Aidreamcapes" : `galeria privada de ${brand}`;
     return [

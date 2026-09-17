@@ -1720,6 +1720,8 @@ export function buildCollectionDirectoryJsonLd({
     ? collectionPageCopy.faqItems.map((faqItem) => "question" in faqItem
       ? [faqItem.question, faqItem.answer] as [string, string]
       : [faqItem[0], faqItem[1]] as [string, string])
+    : site.id === "site_aidreamcapes_xby"
+    ? getSeoDirectoryContentForSite(site, "collection", item.slug).faqItems ?? []
     : isSpanishXbySite(site)
     ? getSeoDirectoryContentForSite(site, "collection", item.slug).faqItems ?? (!faqPack ? [] : [
         [`Que es el paquete ${faqLabel}?`, isAidreamcapesSite(site)
@@ -1785,19 +1787,20 @@ export function buildCollectionDirectoryJsonLd({
       name: title,
       description,
       url,
-      ...(isSpanishXbySite(site) || frenchEngagementPage ? { inLanguage: "es-ES" } : {}),
+      ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : isSpanishXbySite(site) || frenchEngagementPage ? { inLanguage: "es-ES" } : {}),
       isPartOf: { "@id": `${storefrontBaseUrl(site, routeMode)}#website` },
       publisher: { "@type": "Organization", name: siteName, url: storefrontBaseUrl(site, routeMode) }
     },
     ...(itemListElement.length ? [{
       "@type": "ItemList",
-      name: frenchEngagementPage ? `${item.label}: ejemplos y opciones` : isSpanishXbySite(site) ? `${item.label} opciones de foto` : `${item.label} photo options`,
+      name: frenchEngagementPage ? `${item.label}: ejemplos y opciones` : site.id === "site_aidreamcapes_xby" ? `${item.label} : exemples et options` : isSpanishXbySite(site) ? `${item.label} opciones de foto` : `${item.label} photo options`,
       description: item.intro,
       url,
       itemListElement
     }] : []),
     ...(uniqueCollectionFaqItems.length ? [{
       "@type": "FAQPage",
+      ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
       mainEntity: uniqueCollectionFaqItems
         .map(([question, answer]) => faqQuestionNode(site, question, answer))
         .filter(Boolean)

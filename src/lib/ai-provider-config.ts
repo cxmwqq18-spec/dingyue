@@ -1,6 +1,7 @@
 import "server-only";
 import { FetchTimeoutError, fetchWithTimeout } from "@/lib/fetch-timeout";
 import type { PlatformAiProvider } from "@/lib/types";
+import { isTokengoImageBaseUrl } from "@/lib/tokengo-image";
 import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, type VideoProviderProtocol } from "@/lib/video-provider-family";
 
 export function maskAiProviderKey(apiKey?: string): string {
@@ -10,11 +11,12 @@ export function maskAiProviderKey(apiKey?: string): string {
   return `${value.slice(0, 6)}...${value.slice(-4)}`;
 }
 
-export function aiProviderProtocol(provider?: Pick<PlatformAiProvider, "aiUrl" | "modelType">): VideoProviderProtocol | "openai-compatible" {
+export function aiProviderProtocol(provider?: Pick<PlatformAiProvider, "aiUrl" | "modelType" | "providerType">): VideoProviderProtocol | "tokengo-image" | "openai-compatible" {
   const aiUrl = provider?.aiUrl?.trim() ?? "";
   try {
     const hostname = new URL(aiUrl).hostname.toLowerCase();
     if (isHuituOpenApiBaseUrl(aiUrl)) return "huitu-openapi";
+    if (provider?.providerType === "image" && isTokengoImageBaseUrl(aiUrl)) return "tokengo-image";
     if (isTokengoMediaBaseUrl(aiUrl)) return "tokengo-media";
     if (hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com") return "openai-videos";
     if (hostname === "api.lk888.ai" || hostname === "api.lk666.ai" || hostname === "api.lingkeai.ai") return "lk888-media";
@@ -91,7 +93,7 @@ function tokengoModelsCatalogUrl(aiUrl: string) {
   return parsed.toString();
 }
 
-export async function testAiProviderConnection(provider: Pick<PlatformAiProvider, "aiUrl" | "apiKey">): Promise<{
+export async function testAiProviderConnection(provider: Pick<PlatformAiProvider, "aiUrl" | "apiKey" | "modelType" | "providerType">): Promise<{
   ok: boolean;
   status?: number;
   method?: "HEAD" | "GET";
@@ -105,7 +107,7 @@ export async function testAiProviderConnection(provider: Pick<PlatformAiProvider
   }
 
   const headers = { Authorization: `Bearer ${apiKey}` };
-  const protocol = aiProviderProtocol({ ...provider, modelType: "" });
+  const protocol = aiProviderProtocol(provider);
   if (protocol === "lk888-media") {
     const skills = await fetchWithTimeout(lk888SkillsUrl(aiUrl), { method: "GET", headers, cache: "no-store", timeoutMs: aiProviderGetTimeoutMs });
     return { ok: skills.ok, status: skills.status, method: "GET", message: skills.ok ? "provider reachable" : `provider returned ${skills.status}` };
@@ -122,6 +124,11 @@ export async function testAiProviderConnection(provider: Pick<PlatformAiProvider
   }
 
   if (protocol === "tokengo-media") {
+    const models = await fetchWithTimeout(tokengoModelsCatalogUrl(aiUrl), { method: "GET", headers, cache: "no-store", timeoutMs: aiProviderGetTimeoutMs });
+    return { ok: models.ok, status: models.status, method: "GET", message: models.ok ? "provider reachable" : `provider returned ${models.status}` };
+  }
+
+  if (protocol === "tokengo-image") {
     const models = await fetchWithTimeout(tokengoModelsCatalogUrl(aiUrl), { method: "GET", headers, cache: "no-store", timeoutMs: aiProviderGetTimeoutMs });
     return { ok: models.ok, status: models.status, method: "GET", message: models.ok ? "provider reachable" : `provider returned ${models.status}` };
   }

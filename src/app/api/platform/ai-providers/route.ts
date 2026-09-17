@@ -80,6 +80,10 @@ async function payload(extra: Record<string, unknown> = {}) {
       supportsGenerationN: provider.supportsGenerationN,
       supportsEditN: provider.supportsEditN,
       maxImagesPerRequest: provider.maxImagesPerRequest,
+      imageAspectRatio: provider.imageAspectRatio,
+      imageResolution: provider.imageResolution,
+      imageQuality: provider.imageQuality,
+      imageOutputFormat: provider.imageOutputFormat,
       createdAt: provider.createdAt,
       updatedAt: provider.updatedAt,
       updatedBy: provider.updatedBy,
@@ -98,12 +102,14 @@ async function payload(extra: Record<string, unknown> = {}) {
   };
 }
 
-async function providerFromBody(body: { id?: string; aiUrl?: string; apiKey?: string }): Promise<Pick<PlatformAiProvider, "aiUrl" | "apiKey">> {
+async function providerFromBody(body: { id?: string; aiUrl?: string; apiKey?: string; modelType?: string; providerType?: string }): Promise<Pick<PlatformAiProvider, "aiUrl" | "apiKey" | "modelType" | "providerType">> {
   const existing = await getPlatformAiProviderRelational(body.id);
   if (!body.aiUrl?.trim()) throw new Error("missing_ai_provider_url");
   return {
     aiUrl: body.aiUrl,
-    apiKey: body.apiKey?.trim() || existing?.apiKey || undefined
+    apiKey: body.apiKey?.trim() || existing?.apiKey || undefined,
+    modelType: body.modelType?.trim() || existing?.modelType || "",
+    providerType: normalizePlatformAiProviderType(body.providerType, existing?.providerType ?? "image")
   };
 }
 
@@ -129,6 +135,10 @@ export async function PUT(request: NextRequest) {
     supportsGenerationN?: boolean;
     supportsEditN?: boolean;
     maxImagesPerRequest?: number;
+    imageAspectRatio?: string;
+    imageResolution?: string;
+    imageQuality?: string;
+    imageOutputFormat?: string;
     priority?: unknown;
   };
   if (!body.label?.trim()) return NextResponse.json({ error: "missing_ai_provider_label" }, { status: 400 });
@@ -160,6 +170,10 @@ export async function PUT(request: NextRequest) {
     supportsGenerationN: Boolean(body.supportsGenerationN),
     supportsEditN: Boolean(body.supportsEditN),
     maxImagesPerRequest: body.maxImagesPerRequest,
+    imageAspectRatio: body.imageAspectRatio,
+    imageResolution: body.imageResolution,
+    imageQuality: body.imageQuality,
+    imageOutputFormat: body.imageOutputFormat,
     priority: body.priority,
     actor: permission.current.platformAdmin.id
   });
@@ -177,6 +191,8 @@ export async function POST(request: NextRequest) {
     id?: string;
     aiUrl?: string;
     apiKey?: string;
+    modelType?: string;
+    providerType?: string;
   };
   try {
     if (body.action === "reveal") {

@@ -13,6 +13,7 @@ import { canResolveCollectionSlugForSite } from "@/lib/storefront-render";
 import { storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 import { AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY, isAidreamshootsEngagementFrenchPage } from "@/lib/aidreamshoots-engagement-photo-french";
 import { AIDREAMCAPES_IMAGE_THEME_ROOT_PATH, isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
+import { isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import type { PlatformState, Site } from "@/lib/types";
 
 type RouteParams = Promise<{ siteSlug: string; themeSlug: string }>;
@@ -20,6 +21,7 @@ type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 async function loadImageThemeState(siteSlug: string, themeSlug: string): Promise<{ state: PlatformState; site: Site } | undefined> {
   const requestedPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`;
+  if (isAidreamcapesEuRetiredPublicPath(siteSlug, requestedPath)) return undefined;
   if (isAidreamcapesImageThemePath(siteSlug, requestedPath)) {
     const state = await readPathModePublicRuntimeState(siteSlug, requestedPath);
     const site = state?.sites[0];

@@ -22,9 +22,21 @@ export async function GET(request: Request): Promise<Response> {
   const host = request.headers.get("host");
   const forwardedHost = request.headers.get("x-forwarded-host");
   const localOrStaging = [forwardedHost, host].some(isNonProductionHost);
-  const { entries } = await getStorefrontSitemapPayloadForHost([forwardedHost, host]);
+  const payload = await getStorefrontSitemapPayloadForHost([forwardedHost, host]);
+  if (!payload.resolved) {
+    return new Response("Sitemap temporarily unavailable\n", {
+      status: 503,
+      headers: {
+        "content-type": "text/plain; charset=utf-8",
+        "cache-control": "no-store",
+        "retry-after": "60",
+        "vary": "Host, X-Forwarded-Host",
+        ...(localOrStaging ? { "x-robots-tag": "noindex, nofollow" } : {})
+      }
+    });
+  }
 
-  return new Response(sitemapXml(entries), {
+  return new Response(sitemapXml(payload.entries), {
     headers: {
       "content-type": "application/xml; charset=utf-8",
       "cache-control": SITEMAP_CACHE_CONTROL,

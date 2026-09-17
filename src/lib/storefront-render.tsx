@@ -2985,6 +2985,8 @@ export async function renderStorefrontPage({
   const usesDreamShootToolsDirectory =
     slug === "/tools" &&
     (usesAiGenerationPublicRoutes(currentSite) || isAidreamcapesStorefront(currentSite));
+  const isAidreamcapesEuToolDetailPage =
+    currentSite.id === "site_aidreamcapes_xby" && /^\/tools\/[^/]+$/.test(slug);
   const usesDreamShootVideoGenerationDirectory = slug === "/ai-video-generation" && (isPrimaryMydreamshootsStorefront(currentSite) || isSpanishMydreamshootsStorefront(currentSite));
   const basePageJson = slug === "/account"
     ? withAccountDashboardPage(page.publishedJson)
@@ -2992,6 +2994,8 @@ export async function renderStorefrontPage({
     ? withDreamShootVideoGenerationDirectoryPage(page.publishedJson, currentSite)
     : usesDreamShootToolsDirectory
     ? withDreamShootToolsDirectoryPage(page.publishedJson, currentSite)
+    : isAidreamcapesEuToolDetailPage
+    ? withSeoDirectorySection(page.publishedJson, "tool", slug.slice("/tools/".length), { site: currentSite })
     : isFocusedCollectionPage
     ? withSeoDirectorySection(page.publishedJson, "collection", collectionCategory, {
         focused: true,

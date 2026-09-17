@@ -1500,6 +1500,9 @@ export async function getStorefrontSitemapUrlsForHost(hosts: string | null | und
 
 export type StorefrontSitemapPayload = {
   entries: SitemapEntry[];
+  /** Whether the requested host/site was resolved from the live database state. */
+  resolved: boolean;
+  siteId?: string;
   identity?: {
     publicationId?: string;
     publicationVersion?: number;
@@ -1523,16 +1526,16 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
   const normalizedHosts = normalizeHostCandidates(hosts);
   const normalizedHost = normalizedHosts[0] ?? "";
   if (!normalizedHost) {
-    return { entries: [] };
+    return { entries: [], resolved: false };
   }
   const publicHostCandidates = normalizedHosts.filter((host) => !isLocalDevelopmentHost(host));
   const siteHostCandidates = publicHostCandidates.length ? publicHostCandidates : normalizedHosts;
   const isLocalHostRequest = !publicHostCandidates.length && normalizedHosts.some(isLocalDevelopmentHost);
-  if (siteHostCandidates.some(isReservedGrownstrideHost)) return { entries: [] };
+  if (siteHostCandidates.some(isReservedGrownstrideHost)) return { entries: [], resolved: false };
   const runtime = publicHostCandidates.length
     ? await readIndexableStateAndSitesForHosts(siteHostCandidates)
     : await readIndexableStateAndSites();
-  if (!runtime) return { entries: [] };
+  if (!runtime) return { entries: [], resolved: false };
   const site =
     isLocalHostRequest
       ? runtime.sites[0]
@@ -1540,11 +1543,13 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
   const entries = isLocalHostRequest
     ? runtime.sites.flatMap((item) => sitemapEntriesForSite(runtime.state, item))
     : site ? sitemapEntriesForSite(runtime.state, site) : [];
-  if (!site) return { entries };
+  if (!site) return { entries, resolved: false };
   const live = createPublishedSiteSnapshot(runtime.state, site, { source: "postgres" });
   const revisions = live.snapshotRevisions;
   return {
     entries,
+    resolved: true,
+    siteId: site.id,
     identity: {
       publicationId: undefined,
       publicationVersion: undefined,

@@ -545,7 +545,7 @@ export default async function SiteCatchAllPage({
     if (isPrimaryMydreamshootsSlug(publicSlug)) notFound();
     redirect(routePath("/tools"));
   }
-  if (publicSlug === "aidreamcapes" && slug === "/collections") permanentRedirect(routePath("/ai-image-generation"));
+  if ((publicSlug === "aidreamcapes" || publicSlug === "aidreamcapes-eu") && slug === "/collections") permanentRedirect(routePath("/ai-image-generation"));
   if (publicSlug === "aidreamcapes" && slug === "/tools") permanentRedirect(routePath("/ai-video-generation"));
   if (slug === "/dashboard") {
     redirect(routePath("/app/create"));

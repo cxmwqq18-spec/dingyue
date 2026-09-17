@@ -117,12 +117,10 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
   const articleModifiedTime = isArticle ? settingText(articleSettings?.updatedAt) : undefined;
   const articleImageAlt = isArticle ? settingText(articleSettings?.imageAlt) : undefined;
   const ogImageAlt = articleImageAlt ?? settingText(seo.ogImageAlt) ?? settingText(page.publishedJson.seo?.ogImageAlt);
-  const aidreamcapesDarkTheme = isAidreamcapesSite(site);
+  const isAidreamcapesEu = site.id === "site_aidreamcapes_xby";
   return {
     title: seo.title,
     description: seo.description,
-    keywords: seo.keywords,
-    ...(aidreamcapesDarkTheme ? { themeColor: "#050505", colorScheme: "dark" as const } : {}),
     alternates: canonical ? { canonical } : undefined,
     robots: {
       index: seo.index,
@@ -134,7 +132,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
       description: seo.description,
       url: canonical,
       siteName: cleanText(context.settings.seo?.siteTitle, brandName(site)),
-      ...(isArticle || isAidreamcapesAdsTestingPage(site, page) || isAidreamcapesEuSaveTheDatePage(site, page) ? { type: isArticle ? "article" as const : "website" as const } : {}),
+      ...(isArticle || isAidreamcapesAdsTestingPage(site, page) || isAidreamcapesEuSaveTheDatePage(site, page) || isAidreamcapesEu ? { type: isAidreamcapesEu ? "website" as const : isArticle ? "article" as const : "website" as const } : {}),
       ...(articlePublishedTime ? { publishedTime: articlePublishedTime } : {}),
       ...(articleModifiedTime ? { modifiedTime: articleModifiedTime } : {}),
       images: ogImage ? [{ url: ogImage, ...(ogImageAlt ? { alt: ogImageAlt } : {}) }] : undefined

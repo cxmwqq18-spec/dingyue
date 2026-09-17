@@ -14,7 +14,7 @@ import {
 } from "@/lib/photo-package-taxonomy";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { aidreamshootsXbyThemeContent } from "@/lib/aidreamshoots-xby-seo-content";
-import { AIDREAMCAPES_EU_THEME_SLUGS, aidreamcapesEuSeoContent } from "@/lib/aidreamcapes-eu-seo-content";
+import { AIDREAMCAPES_EU_THEME_SLUGS, aidreamcapesEuSeoContent, aidreamcapesEuSeoDirectoryContent } from "@/lib/aidreamcapes-eu-seo-content";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import { mydreamshootsPublishedRouteForSlug } from "@/lib/mydreamshoots-published-contract";
 import {
@@ -2662,6 +2662,28 @@ const aidreamcapesGeneratedToolDefs = [
   ["birthday-fan-moment-maker", "Birthday Fan Moment Maker", "birthday spotlight photos, fan-style greetings, and giftable private keepsakes"]
 ] as const;
 
+const aidreamcapesEuFrenchToolProfiles: Record<string, { label: string; focus: string }> = {
+  "fan-scene-album-builder": { label: "Créateur d’album de fans", focus: "des albums privés pour fans" },
+  "backstage-meetup-scene-builder": { label: "Créateur de scènes de rencontre", focus: "des scènes privées de rencontre entre fans" },
+  "supporter-photo-wall-maker": { label: "Créateur de murs photo de fans", focus: "des murs photo pour communautés de fans" },
+  "fan-keepsake-card-maker": { label: "Créateur de cartes souvenir", focus: "des cartes souvenir personnalisées pour fans" },
+  "game-day-group-portrait-maker": { label: "Créateur de portraits de groupe", focus: "des portraits de groupe pour jours de match" },
+  "stadium-night-fan-set-maker": { label: "Créateur de séries de fans au stade", focus: "des portraits de fans sous les lumières du stade" },
+  "watch-party-album-builder": { label: "Créateur d’albums de soirée", focus: "des albums privés de soirées entre supporters" },
+  "premiere-portrait-set-builder": { label: "Créateur de portraits de première", focus: "des séries de portraits inspirées des avant-premières" },
+  "vip-arrival-photo-maker": { label: "Créateur de photos d’arrivée VIP", focus: "des portraits élégants d’arrivée VIP" },
+  "award-night-album-studio": { label: "Studio d’album de remise de prix", focus: "des souvenirs privés de soirées de remise de prix" },
+  "new-year-countdown-album-maker": { label: "Créateur d’album du compte à rebours", focus: "des albums privés de compte à rebours du Nouvel An" },
+  "christmas-group-album-studio": { label: "Studio d’album de groupe de Noël", focus: "des albums chaleureux de groupes pour Noël" },
+  "cozy-card-portrait-maker": { label: "Créateur de portraits pour carte", focus: "des portraits chaleureux prêts pour une carte" },
+  "winter-fan-greeting-maker": { label: "Créateur de vœux d’hiver", focus: "des cartes de vœux d’hiver pour groupes de fans" },
+  "thanksgiving-keepsake-set-maker": { label: "Créateur de souvenirs de Thanksgiving", focus: "des souvenirs chaleureux de Thanksgiving" },
+  "friendsgiving-memory-maker": { label: "Créateur de souvenirs Friendsgiving", focus: "des albums privés de moments Friendsgiving" },
+  "halloween-party-portrait-maker": { label: "Créateur de portraits de fête Halloween", focus: "des portraits originaux pour une fête Halloween" },
+  "costume-cast-album-builder": { label: "Créateur d’album de costumes", focus: "des albums de groupes en costumes originaux" },
+  "birthday-fan-moment-maker": { label: "Créateur de moments d’anniversaire", focus: "des souvenirs privés pour un anniversaire de fan" }
+};
+
 const aidreamcapesGeneratedToolDirectory = Object.fromEntries(
   aidreamcapesGeneratedToolDefs.map(([slug, label, description]) => [
     slug,
@@ -2685,6 +2707,34 @@ const aidreamcapesGeneratedToolDirectory = Object.fromEntries(
     }
   ])
 ) as SeoDirectoryMap;
+
+function aidreamcapesEuFrenchToolContent(slug: string): SeoDirectoryContent | undefined {
+  const profile = aidreamcapesEuFrenchToolProfiles[slug];
+  if (!profile) return undefined;
+  const { label, focus } = profile;
+  return {
+    slug,
+    explicit: true,
+    label,
+    title: `${label} | Aidreamcapes`,
+    description: `Créez ${focus} avec des photos autorisées, des crédits visibles, un parcours privé et une galerie prête à télécharger.`,
+    keywords: `${focus}, outil photo IA, galerie privée Aidreamcapes, création d’images pour fans`,
+    canonicalPath: `/tools/${slug}`,
+    h2: label,
+    h3: ["Photos autorisées", "Direction visuelle", "Galerie privée"],
+    intro: `Concevez ${focus} avec une direction visuelle claire et un espace privé pour vérifier chaque résultat avant le téléchargement.`,
+    details: [
+      `Définissez l’ambiance et le cadrage souhaités pour ${focus}, sans demander de personne publique ni de marque protégée.`,
+      "Utilisez des photos dont vous détenez les droits et vérifiez le coût en crédits avant de lancer la création.",
+      "Les résultats terminés restent dans votre galerie Aidreamcapes afin de faciliter la vérification et le téléchargement."
+    ],
+    useCases: [focus, "Albums privés à partager", "Visuels de communauté", "Souvenirs personnalisés"],
+    workflow: ["Importez des photos autorisées.", "Choisissez l’ambiance de l’album.", "Vérifiez les crédits et les limites d’utilisation.", "Contrôlez puis téléchargez les résultats."],
+    internalLinks: [{ label: "Découvrir les outils IA", href: "/tools" }],
+    ctaLabel: `Commencer avec ${label}`,
+    ctaHref: `/app/create?tool_id=${slug}`
+  };
+}
 
 const aidreamcapesToolDirectory: SeoDirectoryMap = {
   "fan-scene-album-builder": {
@@ -2848,7 +2898,7 @@ export function isExplicitSeoDirectoryContent(kind: SeoDirectoryKind, rawSlug: s
 export function isExplicitSeoDirectoryContentForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): boolean {
   const slug = canonicalSeoDirectorySlugForSite(site, kind, rawSlug);
   if (slug === "text-to-video" || slug === "image-to-video") return false;
-  if (isAidreamcapesEuSite(site) && kind === "collection") return Boolean(aidreamcapesEuSeoContent(slug));
+  if (isAidreamcapesEuSite(site) && kind === "collection") return Boolean(aidreamcapesEuSeoContent(slug) || aidreamcapesEuSeoDirectoryContent(slug));
   if (isAidreamcapesSite(site)) {
     return kind === "collection" ? Boolean(aidreamcapesCollectionDirectory[slug]) : Boolean(aidreamcapesToolDirectory[slug]);
   }
@@ -3319,13 +3369,19 @@ function normalizeSeoDirectoryInternalLinks(links: SeoDirectorySeed["internalLin
 export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): SeoDirectoryContent {
   const slug = normalizeDirectorySlug(rawSlug);
   if (isAidreamcapesEuSite(site) && kind === "collection") {
-    const euContent = aidreamcapesEuSeoContent(canonicalSeoDirectorySlugForSite(site, kind, slug));
+    const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, slug);
+    const euContent = aidreamcapesEuSeoContent(canonicalSlug) || aidreamcapesEuSeoDirectoryContent(canonicalSlug);
     if (euContent) {
       return {
         ...euContent,
         internalLinks: normalizeSeoDirectoryInternalLinks(euContent.internalLinks)
       };
     }
+  }
+  if (isAidreamcapesEuSite(site) && kind === "tool") {
+    const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, slug);
+    const euToolContent = aidreamcapesEuFrenchToolContent(canonicalSlug);
+    if (euToolContent) return euToolContent;
   }
   const aidreamcapes = isAidreamcapesSite(site);
   const spanishXby = isSpanishXbySite(site);
@@ -3476,16 +3532,19 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
   const themeCtaSectionId = `theme_cta_${kind}_${item.slug}`;
   const themeFaqSectionId = `theme_faq_${kind}_${item.slug}`;
   const relatedSectionId = `related_${kind}_${item.slug}`;
+  const euToolPage = isAidreamcapesEuSite(options.site) && kind === "tool";
   const detailSectionIds = kind === "collection"
     ? [sectionId, themeCtaSectionId, themeFaqSectionId]
-    : [sectionId];
+    : isAidreamcapesEuSite(options.site)
+      ? [sectionId, themeFaqSectionId]
+      : [sectionId];
   const injectedSectionIds = [...detailSectionIds, relatedSectionId];
   const seoSection: SectionInstance = {
     type: "seo_directory_content",
     settings: {
       anchor: `${kind}-${item.slug}`,
       kind,
-      headingLevel: "h2",
+      headingLevel: euToolPage ? "h1" : "h2",
       label: item.label,
       title: item.h2,
       subtitle: item.intro,
@@ -3530,7 +3589,9 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
       anchor: `faq-${item.slug}`,
       kind,
       label: item.label,
-      eyebrow: frenchEngagementPage ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.faqEyebrow : "Theme FAQ"
+      eyebrow: frenchEngagementPage
+        ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.faqEyebrow
+        : isAidreamcapesEuSite(options.site) ? "FAQ de l’outil" : "Theme FAQ"
     },
     blocks: []
   };
@@ -3554,14 +3615,25 @@ export function withSeoDirectorySection(pageJson: ThemePageJson, kind: SeoDirect
     : undefined;
   const existingSections = options.focused && firstSection
     ? { [firstSection]: focusedFirstSection ?? pageJson.sections[firstSection] }
-    : pageJson.sections;
+    : euToolPage && firstSection && pageJson.sections[firstSection]
+      ? {
+          ...pageJson.sections,
+          [firstSection]: {
+            ...pageJson.sections[firstSection],
+            settings: {
+              ...pageJson.sections[firstSection].settings,
+              headingLevel: "h2"
+            }
+          }
+        }
+      : pageJson.sections;
   return {
     ...withSeoDirectorySeo(pageJson, kind, rawSlug, options.site, options.publishedCopy),
     sectionsOrder,
     sections: {
       ...existingSections,
       [sectionId]: seoSection,
-      ...(kind === "collection" ? { [themeCtaSectionId]: themeCtaSection, [themeFaqSectionId]: themeFaqSection } : {}),
+      ...(kind === "collection" || euToolPage ? { [themeCtaSectionId]: themeCtaSection, [themeFaqSectionId]: themeFaqSection } : {}),
       [relatedSectionId]: relatedSection
     }
   };

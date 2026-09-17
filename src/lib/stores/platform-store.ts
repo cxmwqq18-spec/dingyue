@@ -15,6 +15,7 @@ import {
 import type { AiGatewayGroup, AuditLogEntry, Order, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailConfig, PlatformEmailSettings, PlatformEmailTestResult, PublicSiteAdmin, Site, SiteDomain, SiteEmailConfigAssignment, Subscription } from "@/lib/types";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
+import { normalizeImageProviderAspectRatio, normalizeImageProviderOutputFormat, normalizeImageProviderQuality, normalizeImageProviderResolution } from "@/lib/tokengo-image";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 
 import {
@@ -1011,6 +1012,10 @@ function buildPlatformAiProviderStatus(inputProviders: PlatformAiProvider[], opt
         supportsGenerationN: provider.supportsGenerationN,
         supportsEditN: provider.supportsEditN,
         maxImagesPerRequest: provider.maxImagesPerRequest,
+        imageAspectRatio: provider.imageAspectRatio,
+        imageResolution: provider.imageResolution,
+        imageQuality: provider.imageQuality,
+        imageOutputFormat: provider.imageOutputFormat,
         createdAt: provider.createdAt,
         updatedAt: provider.updatedAt,
         updatedBy: provider.updatedBy,
@@ -1588,7 +1593,7 @@ export async function deletePlatformCloudflareAccountRelational(params: {
   return toPlatformCloudflareAccount(account);
 }
 
-export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "providerType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest">>;
+export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "providerType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest" | "imageAspectRatio" | "imageResolution" | "imageQuality" | "imageOutputFormat">>;
 
 function normalizeProviderMaxImagesPerRequest(value: unknown) {
   const numeric = Number(value);
@@ -1670,7 +1675,7 @@ export async function getPlatformAiProviderRelational(providerId?: string): Prom
 
 export async function getPlatformAiProviderFallbackQueueRelational(providerType?: PlatformAiProviderType): Promise<PlatformAiProviderFallbackQueue> {
   const providers = await listPlatformAiProvidersRelational({ providerType });
-  return providers.filter((provider) => aiProviderStatus(provider).runnable).map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest }) => ({
+  return providers.filter((provider) => aiProviderStatus(provider).runnable).map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest, imageAspectRatio, imageResolution, imageQuality, imageOutputFormat }) => ({
     id,
     label,
     aiUrl,
@@ -1681,7 +1686,11 @@ export async function getPlatformAiProviderFallbackQueueRelational(providerType?
     enabled,
     supportsGenerationN,
     supportsEditN,
-    maxImagesPerRequest
+    maxImagesPerRequest,
+    imageAspectRatio,
+    imageResolution,
+    imageQuality,
+    imageOutputFormat
   }));
 }
 
@@ -1712,6 +1721,10 @@ export async function upsertPlatformAiProviderRelational(params: {
   supportsGenerationN?: boolean;
   supportsEditN?: boolean;
   maxImagesPerRequest?: number;
+  imageAspectRatio?: string;
+  imageResolution?: string;
+  imageQuality?: string;
+  imageOutputFormat?: string;
   actor?: string;
 }): Promise<PlatformAiProvider> {
   const existing = params.id ? await prisma.platformAiProvider.findUnique({ where: { id: params.id } }) : null;
@@ -1748,6 +1761,10 @@ export async function upsertPlatformAiProviderRelational(params: {
             supportsGenerationN: params.supportsGenerationN ?? existing.supportsGenerationN,
             supportsEditN: params.supportsEditN ?? existing.supportsEditN,
             maxImagesPerRequest: normalizeProviderMaxImagesPerRequest(params.maxImagesPerRequest ?? existing.maxImagesPerRequest),
+            imageAspectRatio: normalizeImageProviderAspectRatio(params.imageAspectRatio ?? existing.imageAspectRatio),
+            imageResolution: normalizeImageProviderResolution(params.imageResolution ?? existing.imageResolution),
+            imageQuality: normalizeImageProviderQuality(params.imageQuality ?? existing.imageQuality),
+            imageOutputFormat: normalizeImageProviderOutputFormat(params.imageOutputFormat ?? existing.imageOutputFormat),
             updatedBy: params.actor
           }
         })
@@ -1765,6 +1782,10 @@ export async function upsertPlatformAiProviderRelational(params: {
             supportsGenerationN: Boolean(params.supportsGenerationN),
             supportsEditN: Boolean(params.supportsEditN),
             maxImagesPerRequest: normalizeProviderMaxImagesPerRequest(params.maxImagesPerRequest),
+            imageAspectRatio: normalizeImageProviderAspectRatio(params.imageAspectRatio),
+            imageResolution: normalizeImageProviderResolution(params.imageResolution),
+            imageQuality: normalizeImageProviderQuality(params.imageQuality),
+            imageOutputFormat: normalizeImageProviderOutputFormat(params.imageOutputFormat),
             updatedBy: params.actor
           }
         });

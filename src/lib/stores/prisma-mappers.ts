@@ -31,6 +31,7 @@ import { StoreError } from "@/lib/server-store";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType } from "@/lib/ai-provider-type";
 import { storefrontGalleryMediaPairs } from "@/lib/storefront-media-alt";
 import { normalizeVideoFrameLimit, normalizeVideoModelPricing } from "@/lib/video-frame-config";
+import { normalizeImageProviderAspectRatio, normalizeImageProviderOutputFormat, normalizeImageProviderQuality, normalizeImageProviderResolution } from "@/lib/tokengo-image";
 
 type ProductWithPrices = Prisma.ProductGetPayload<{ include: { prices: true } }>;
 type CustomerWithBalance = Prisma.CustomerGetPayload<{ include: { balance: true } }>;
@@ -1399,6 +1400,10 @@ export function toPlatformAiProvider(record: {
   supportsGenerationN?: boolean | null;
   supportsEditN?: boolean | null;
   maxImagesPerRequest?: number | null;
+  imageAspectRatio?: string | null;
+  imageResolution?: string | null;
+  imageQuality?: string | null;
+  imageOutputFormat?: string | null;
   createdAt: Date | string;
   updatedAt: Date | string;
   updatedBy?: string | null;
@@ -1417,6 +1422,10 @@ export function toPlatformAiProvider(record: {
     supportsGenerationN: Boolean(record.supportsGenerationN),
     supportsEditN: Boolean(record.supportsEditN),
     maxImagesPerRequest: Number.isFinite(maxImagesPerRequest) ? Math.max(1, Math.min(Math.trunc(maxImagesPerRequest), 20)) : 1,
+    imageAspectRatio: normalizeImageProviderAspectRatio(record.imageAspectRatio),
+    imageResolution: normalizeImageProviderResolution(record.imageResolution),
+    imageQuality: normalizeImageProviderQuality(record.imageQuality),
+    imageOutputFormat: normalizeImageProviderOutputFormat(record.imageOutputFormat),
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
     updatedAt: toIsoString(record.updatedAt) ?? new Date().toISOString(),
     updatedBy: record.updatedBy ?? undefined
