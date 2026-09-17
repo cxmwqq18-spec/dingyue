@@ -7,6 +7,7 @@ import assert from "node:assert/strict";
 const origin = process.env.AIDREAMSHOOTS_SMOKE_ORIGIN || "http://127.0.0.1:3002";
 const productionHost = process.env.AIDREAMSHOOTS_SMOKE_HOST || "aidreamshoots.eu";
 const productionOrigin = `https://${productionHost}`;
+const localSmokeOrigin = /^(?:https?:\/\/)?(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/i.test(new URL(origin).host);
 const requestTimeoutMs = Number(process.env.AIDREAMSHOOTS_SMOKE_TIMEOUT_MS || 20000);
 const retryCount = Number(process.env.AIDREAMSHOOTS_SMOKE_RETRIES || 2);
 const skipSitemapStatus = process.env.AIDREAMSHOOTS_SMOKE_SKIP_SITEMAP_STATUS === "1";
@@ -264,11 +265,13 @@ async function run() {
     check("unknown public path: request completed", false, String(error?.message ?? error));
   }
 
-  try {
-    const local = await requestWithRetry("/site/aidreamshoots", { host: "localhost:3002" });
-    check("local storefront: noindex header", /\bnoindex\b/i.test(local.headers["x-robots-tag"] || "") && /\bnofollow\b/i.test(local.headers["x-robots-tag"] || ""), local.headers["x-robots-tag"]);
-  } catch (error) {
-    check("local storefront: request completed", false, String(error?.message ?? error));
+  if (localSmokeOrigin) {
+    try {
+      const local = await requestWithRetry("/site/aidreamshoots", { host: "localhost:3002" });
+      check("local storefront: noindex header", /\bnoindex\b/i.test(local.headers["x-robots-tag"] || "") && /\bnofollow\b/i.test(local.headers["x-robots-tag"] || ""), local.headers["x-robots-tag"]);
+    } catch (error) {
+      check("local storefront: request completed", false, String(error?.message ?? error));
+    }
   }
 
   const result = {
