@@ -421,6 +421,7 @@ const promoVideoGenerationGraph = graphNodes(promoVideoGeneration);
 const videoAdGenerationGraph = graphNodes(videoAdGeneration);
 const homepageVideos = homepageGraph.filter((node) => node?.["@type"] === "VideoObject");
 const collectionProducts = collectionGraph.filter((node) => node?.["@type"] === "Product");
+const collectionPageNodes = collectionGraph.filter((node) => node?.["@type"] === "CollectionPage");
 const talkingPhotoGenerationProducts = talkingPhotoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const storyVideoGenerationProducts = storyVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const memeVideoGenerationProducts = memeVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
@@ -429,8 +430,7 @@ const productAdVideoGenerationProducts = productAdVideoGenerationGraph.filter((n
 const ugcAdVideoGenerationProducts = ugcAdVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const promoVideoGenerationProducts = promoVideoGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
 const videoAdGenerationProducts = videoAdGenerationGraph.filter((node) => node?.["@type"] === "Product" || node?.["@type"] === "Service");
-const collectionProduct = collectionProducts[0];
-const collectionOffer = collectionProduct?.offers;
+const collectionPageNode = collectionPageNodes[0];
 const packageFacts = {
   "background-changer": { outputCount: 12, creditCost: 12 },
   "background-remover": { outputCount: 10, creditCost: 10 },
@@ -451,27 +451,34 @@ for (const [slug, facts] of Object.entries(packageFacts)) {
   assert.match(text, new RegExp(`\\b${facts.outputCount} (?:Photos|outputs)\\b`, "i"), `${pathname} visible copy must show its output count`);
   assert.match(text, new RegExp(`\\b${facts.creditCost} credits\\b`, "i"), `${pathname} visible copy must show its credit cost`);
   const graph = graphNodes(html);
-  const products = graph.filter((node) => node?.["@type"] === "Product");
-  assert.equal(products.length, 1, `${pathname} must expose one Product node`);
-  const product = products[0];
+  // Credit-redeemed theme packs are not fiat SKUs. A Product here can never satisfy
+  // offers/review/aggregateRating, so the page node carries the theme instead.
+  assert.equal(
+    graph.filter((node) => node?.["@type"] === "Product").length,
+    0,
+    `${pathname} must not expose a Product node for a credit-redeemed theme pack`
+  );
+  const pages = graph.filter((node) => node?.["@type"] === "CollectionPage");
+  assert.equal(pages.length, 1, `${pathname} must expose one page node`);
+  const page = pages[0];
   const canonical = canonicalHref(html);
   const ogUrl = firstMatch(html, /<meta\s+property=["']og:url["']\s+content=["']([^"']*)["']/i);
-  assert.equal(sitemapHasLoc(product.url), true, `${pathname} canonical Product URL must be present in the sitemap`);
-  assert.equal(product.offers, undefined, `${pathname} Product must not inherit a site-level subscription Offer`);
-  assert.equal(product.price, undefined, `${pathname} Product must not expose a subscription price`);
-  assert.equal(product.priceCurrency, undefined, `${pathname} Product must not expose a subscription currency`);
-  assert.equal(JSON.stringify(product).includes("Starter"), false, `${pathname} Product must not expose Starter`);
-  assert.equal(JSON.stringify(product).includes("24.50"), false, `${pathname} Product must not expose the Starter price`);
-  assert.equal(JSON.stringify(product).includes("/pricing"), false, `${pathname} Product must not reference /pricing`);
-  assert.equal(product.url, `https://www.mydreamshoots.com${pathname}`, `${pathname} Product URL must match the visible page`);
-  assert.equal(product.mainEntityOfPage, product.url, `${pathname} Product mainEntityOfPage must match its URL`);
-  assert.equal(canonical, product.url, `${pathname} canonical must match its Product URL`);
-  assert.equal(ogUrl, product.url, `${pathname} og:url must match its Product URL`);
-  const additionalProperties = new Map((product.additionalProperty ?? []).map((property) => [property.name, property.value]));
-  assert.deepEqual(Object.fromEntries(additionalProperties), {
-    "Credit cost": facts.creditCost,
-    "Output count": facts.outputCount
-  }, `${pathname} Product additionalProperty facts must match the visible package facts`);
+  assert.equal(sitemapHasLoc(page.url), true, `${pathname} canonical page URL must be present in the sitemap`);
+  const graphJson = JSON.stringify(graph);
+  assert.equal(graphJson.includes("\"price\""), false, `${pathname} must not expose a price`);
+  assert.equal(graphJson.includes("priceCurrency"), false, `${pathname} must not expose a price currency`);
+  assert.equal(graphJson.includes("\"sku\""), false, `${pathname} must not expose a sku`);
+  assert.equal(graphJson.includes("Credit cost"), false, `${pathname} must not expose credit cost as a structured property`);
+  assert.equal(graphJson.includes("Output count"), false, `${pathname} must not expose output count as a structured property`);
+  assert.equal(graphJson.includes("Starter"), false, `${pathname} must not expose Starter`);
+  assert.equal(graphJson.includes("24.50"), false, `${pathname} must not expose the Starter price`);
+  assert.equal(graphJson.includes("/pricing"), false, `${pathname} must not reference /pricing`);
+  assert.equal(page.url, `https://www.mydreamshoots.com${pathname}`, `${pathname} page URL must match the visible page`);
+  assert.equal(canonical, page.url, `${pathname} canonical must match its page URL`);
+  assert.equal(ogUrl, page.url, `${pathname} og:url must match its page URL`);
+  // Image coverage must survive the Product removal.
+  assert.ok(Array.isArray(page.image) && page.image.length > 0, `${pathname} page node must carry the package images`);
+  assert.equal(page.primaryImageOfPage?.["@type"], "ImageObject", `${pathname} page node must carry a primaryImageOfPage`);
 }
 assert.match(visibleText(pricing), /Starter/i, "pricing visible copy must retain the Starter subscription");
 assert.match(pricing, /\$24\.50/, "pricing visible copy must retain the $24.50 price");
@@ -951,17 +958,20 @@ if (productAdIsPublished) assert.equal(productAdFaq?.mainEntity?.length, 8, "Pro
 const ugcFaq = ugcAdVideoGenerationGraph.find((node) => node?.["@type"] === "FAQPage");
 if (ugcAdIsPublished) assert.equal(ugcFaq?.mainEntity?.length, 7, "UGC Ad Video JSON-LD must expose seven FAQ entries");
 if (headshotIsPublished) {
-  assert.equal(collectionProducts.length, 1, "collection SSR must contain one Product node");
-  assert.ok(Array.isArray(collectionProduct?.image) && collectionProduct.image.length >= 2, "collection Product must contain page-owned image URLs");
-  assert.equal(new Set(collectionProduct.image).size, collectionProduct.image.length, "collection Product image URLs must be unique");
-  assert.equal(collectionProduct?.mainEntityOfPage, collectionProduct?.url, "collection Product must link to its visible page");
-  assert.equal(collectionProduct?.subjectOf?.["@type"], "ImageObject", "collection Product must contain an ImageObject subject");
-  assert.equal(collectionProduct?.subjectOf?.url, collectionProduct?.subjectOf?.contentUrl, "collection ImageObject url should match contentUrl");
-  assert.equal(collectionProduct?.subjectOf?.thumbnailUrl, collectionProduct?.image?.[0], "collection ImageObject thumbnail should use the Product cover");
-  assert.match(collectionProduct?.subjectOf?.encodingFormat ?? "", /^image\//, "collection ImageObject must expose image encodingFormat");
-  assert.equal(collectionOffer, undefined, "collection Product must not expose a site-level subscription Offer");
-  assert.ok((collectionProduct?.additionalProperty ?? []).some((property) => property?.name === "Credit cost"), "collection Product must expose credit cost");
-  assert.ok((collectionProduct?.additionalProperty ?? []).some((property) => property?.name === "Output count"), "collection Product must expose output count");
+  assert.equal(collectionProducts.length, 0, "collection SSR must not contain a Product node for a credit-redeemed theme pack");
+  assert.equal(collectionPageNodes.length, 1, "collection SSR must contain one page node");
+  assert.ok(Array.isArray(collectionPageNode?.image) && collectionPageNode.image.length >= 2, "collection page node must contain page-owned image URLs");
+  assert.equal(new Set(collectionPageNode.image).size, collectionPageNode.image.length, "collection page image URLs must be unique");
+  assert.equal(collectionPageNode?.primaryImageOfPage?.["@type"], "ImageObject", "collection page node must contain an ImageObject primary image");
+  assert.equal(collectionPageNode?.primaryImageOfPage?.url, collectionPageNode?.primaryImageOfPage?.contentUrl, "collection ImageObject url should match contentUrl");
+  assert.equal(collectionPageNode?.primaryImageOfPage?.thumbnailUrl, collectionPageNode?.image?.[0], "collection ImageObject thumbnail should use the package cover");
+  assert.match(collectionPageNode?.primaryImageOfPage?.encodingFormat ?? "", /^image\//, "collection ImageObject must expose image encodingFormat");
+  const collectionJson = JSON.stringify(collectionGraph);
+  assert.equal(collectionJson.includes("\"price\""), false, "collection SSR must not expose a price");
+  assert.equal(collectionJson.includes("priceCurrency"), false, "collection SSR must not expose a price currency");
+  assert.equal(collectionJson.includes("\"sku\""), false, "collection SSR must not expose a sku");
+  assert.equal(collectionJson.includes("Credit cost"), false, "collection SSR must not expose credit cost as a structured property");
+  assert.equal(collectionJson.includes("Output count"), false, "collection SSR must not expose output count as a structured property");
 }
 assert.ok(sitemapHasLoc("https://www.mydreamshoots.com/pricing"), "sitemap must contain the canonical pricing URL");
 assert.equal(sitemapHasLoc("https://www.mydreamshoots.com/ai-image-generation/headshot"), headshotIsPublished, "headshot sitemap membership must match the active immutable snapshot");
@@ -1001,6 +1011,6 @@ console.log(JSON.stringify({
   productVideoGenerationSchemaObjects: productVideoGenerationProducts.length,
   productAdVideoGenerationSchemaObjects: productAdVideoGenerationProducts.length,
   collectionProductObjects: collectionProducts.length,
-  collectionOfferPrice: collectionOffer?.price ?? null,
+  collectionPageImageCount: Array.isArray(collectionPageNode?.image) ? collectionPageNode.image.length : 0,
   providerBackedPrice: hasProviderBackedPrice
 }, null, 2));
