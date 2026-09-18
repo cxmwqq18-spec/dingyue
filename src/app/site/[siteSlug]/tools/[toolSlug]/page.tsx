@@ -109,11 +109,17 @@ export default async function ToolPage({
   if (isRetiredAidreamcapesImageToolPath(normalizePublicSiteSlug(siteSlug), `/tools/${toolSlug}`)) notFound();
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
-  const publicSiteSlug = redirectPublicSitePathToCanonicalHost({
-    host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
-    pathname: `/tools/${toolSlug}`,
-    siteSlug
-  });
+  // A host-based storefront is already on its public URL. Calling
+  // redirectPublicSitePathToCanonicalHost here would redirect the request to
+  // the same /tools/... path and create a permanent-redirect loop. Path-mode
+  // requests still need the normal canonical-host redirect.
+  const publicSiteSlug = routeMode === "host"
+    ? normalizePublicSiteSlug(siteSlug)
+    : redirectPublicSitePathToCanonicalHost({
+        host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
+        pathname: `/tools/${toolSlug}`,
+        siteSlug
+      });
   const redirectPath = legacyToolRedirectPath(publicSiteSlug, toolSlug);
   if (redirectPath) permanentRedirect(storefrontPathForRouteMode(publicSiteSlug, redirectPath, routeMode));
   const query = searchParams ? await searchParams : {};
