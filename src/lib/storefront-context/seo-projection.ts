@@ -12,8 +12,34 @@ export function storefrontOrigin(site: Pick<Site, "primaryDomain">): string {
   return `https://${domain}`;
 }
 
-export function storefrontBaseUrl(site: Pick<Site, "primaryDomain" | "slug">, routeMode: "host" | "path" = "host"): string {
-  const origin = storefrontOrigin(site);
+type CanonicalSite = Pick<Site, "primaryDomain"> & Partial<Pick<Site, "id" | "slug">>;
+
+export function canonicalOriginForSite(site: CanonicalSite): string {
+  // Aidreamcapes keeps both hostnames reachable, but uses the non-www host as
+  // the single canonical origin. Other storefronts retain their configured
+  // origin.
+  if (site.id === "site_aidreamcapes") return "https://aidreamcapes.com";
+  return storefrontOrigin(site);
+}
+
+export function canonicalAbsoluteUrlForSite(site: CanonicalSite, value: string | undefined): string | undefined {
+  const cleaned = clean(value);
+  if (!cleaned) return undefined;
+  const origin = canonicalOriginForSite(site);
+  if (!/^https?:\/\//i.test(cleaned)) return `${origin}${cleaned.startsWith("/") ? cleaned : `/${cleaned}`}`;
+  try {
+    const parsed = new URL(cleaned);
+    if (site.id === "site_aidreamcapes" && ["aidreamcapes.com", "www.aidreamcapes.com"].includes(parsed.hostname.toLowerCase())) {
+      return `${origin}${parsed.pathname}${parsed.search}${parsed.hash}`;
+    }
+    return cleaned;
+  } catch {
+    return cleaned;
+  }
+}
+
+export function storefrontBaseUrl(site: Pick<Site, "primaryDomain" | "slug"> & Partial<Pick<Site, "id">>, routeMode: "host" | "path" = "host"): string {
+  const origin = canonicalOriginForSite(site);
   if (routeMode === "host") return `${origin}/`;
   const domain = clean(site.primaryDomain);
   return domain && !/localhost|127\.0\.0\.1/i.test(domain) ? `${origin}/` : `${origin}/site/${site.slug}/`;
@@ -40,9 +66,9 @@ export function canonicalPathForPage(page: Pick<ThemePage, "slug" | "publishedJs
   return normalizeCanonicalPath(seo?.canonical ?? seo?.canonicalPath, page.slug);
 }
 
-export function canonicalUrlForSite(site: Pick<Site, "primaryDomain">, path: string): string {
+export function canonicalUrlForSite(site: CanonicalSite, path: string): string {
   const canonicalPath = normalizeCanonicalPath(path);
-  return `${storefrontOrigin(site)}${canonicalPath === "/" ? "/" : canonicalPath}`;
+  return `${canonicalOriginForSite(site)}${canonicalPath === "/" ? "/" : canonicalPath}`;
 }
 
 export function applyTitleTemplate(title: string, settings: Pick<ThemeSettings, "seo">, brand: string): string {

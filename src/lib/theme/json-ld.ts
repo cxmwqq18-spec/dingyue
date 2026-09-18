@@ -3,7 +3,7 @@ import path from "node:path";
 
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { projectPublicCreativePacks, projectPublicPricingOffers } from "@/lib/storefront-context/core";
-import { storefrontBaseUrl, storefrontOrigin } from "@/lib/storefront-context/seo-projection";
+import { canonicalAbsoluteUrlForSite, canonicalOriginForSite, storefrontBaseUrl } from "@/lib/storefront-context/seo-projection";
 import { aiVideoTopicLandingContentFromSection } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection } from "@/lib/talking-photo-content";
 import { imageThemeDetailContentFromSection } from "@/lib/aidreamcapes-image-theme-content";
@@ -340,9 +340,7 @@ function withStorefrontPublicWatermarkCacheVersion(value: string): string {
 
 function absoluteUrl(site: Site, routeMode: "host" | "path", pathOrUrl = "/"): string {
   const value = withStorefrontPublicWatermarkCacheVersion(cleanText(pathOrUrl, "/"));
-  if (value.startsWith("http://") || value.startsWith("https://")) return value;
-  const base = storefrontOrigin(site).replace(/\/$/, "");
-  return `${base}${value.startsWith("/") ? value : `/${value}`}`;
+  return canonicalAbsoluteUrlForSite(site, value) ?? `${canonicalOriginForSite(site)}/`;
 }
 
 type StorefrontCompanyProfile = {
@@ -1342,7 +1340,7 @@ function aidreamcapesImageThemeDetailSchema(input: JsonLdInput, title: string, d
   const section = sectionOfType(input.pageJson, "ai_image_theme_landing");
   const content = section ? imageThemeDetailContentFromSection(section) : undefined;
   if (!content) return [];
-  const configuredCanonical = cleanText(content?.seo.canonical);
+  const configuredCanonical = canonicalAbsoluteUrlForSite(input.site, cleanText(content?.seo.canonical));
   const url = configuredCanonical && /^https?:\/\//i.test(configuredCanonical)
     ? configuredCanonical
     : absoluteUrl(input.site, input.routeMode, path);
@@ -1860,7 +1858,11 @@ export function buildCollectionDirectoryJsonLd({
         .map(([question, answer]) => faqQuestionNode(site, question, answer))
         .filter(Boolean)
     }] : []),
-    ...(schemaPacks.length === 1 && !dropPackProduct
+    // AIdreamshoots packs are credit-based creative packs, not standalone
+    // products with a persisted monetary offer. Do not emit Product markup
+    // without a truthful Offer price/currency; the CollectionPage, Service
+    // and ItemList nodes above describe the public page accurately.
+    ...(site.id !== "site_mydreamshoots_xby" && schemaPacks.length === 1 && !dropPackProduct
       ? [packProductSchema({
           site,
           routeMode,

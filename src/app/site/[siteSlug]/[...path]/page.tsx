@@ -19,7 +19,7 @@ import { publicSiteSlug } from "@/lib/domain-routing";
 import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
 import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
-import { isAidreamcapesImageThemePath, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { aidreamcapesImageThemePathForRequest, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { canonicalUrlForSite, createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
@@ -308,6 +308,26 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const metadataQuery = searchParams ? await searchParams : {};
   const hintedCollectionSlug = (await headers()).get("x-storefront-image-theme")?.trim();
   const requestedSlug = `/${path.join("/")}`;
+  const imageThemePath = aidreamcapesImageThemePathForRequest(publicSiteSlug(siteSlug), requestedSlug);
+  if (imageThemePath) {
+    const headerStore = await headers();
+    const routeMode = storefrontRouteModeForHeaders(headerStore, publicSiteSlug(siteSlug));
+    const detailState = routeMode === "host"
+      ? await readRoutePublicRuntimeState(headerStore, routeMode, publicSiteSlug(siteSlug), imageThemePath)
+      : await readPathModePublicRuntimeState(publicSiteSlug(siteSlug), imageThemePath);
+    const detailSite = detailState?.sites[0];
+    const detailPage = detailSite ? findPage(detailSite, imageThemePath) : undefined;
+    return detailState && detailSite && detailPage && imageThemeDetailContentFromPage(detailPage)
+      ? metadataForPublishedStorefrontPage({
+          site: detailSite,
+          page: detailPage,
+          path: imageThemePath,
+          products: detailState.products,
+          creativePacks: detailState.creativePacks,
+          snapshot: createPublishedSiteSnapshot(detailState, detailSite, { source: "platform-state" })
+        })
+      : {};
+  }
   if (isAidreamcapesEuRetiredPublicPath(publicSiteSlug(siteSlug), requestedSlug)) return { robots: { index: false, follow: false } };
   if (publicSiteSlug(siteSlug) === "aidreamcapes") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(requestedSlug);
@@ -340,23 +360,6 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   }
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
-  if (isAidreamcapesImageThemePath(publicSiteSlug(siteSlug), requestedSlug)) {
-    const detailState = routeMode === "host"
-      ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, requestedSlug)
-      : await readPathModePublicRuntimeState(siteSlug, requestedSlug);
-    const detailSite = detailState?.sites[0];
-    const detailPage = detailSite ? findPage(detailSite, requestedSlug) : undefined;
-    return detailState && detailSite && detailPage && imageThemeDetailContentFromPage(detailPage)
-      ? metadataForPublishedStorefrontPage({
-          site: detailSite,
-          page: detailPage,
-          path: requestedSlug,
-          products: detailState.products,
-          creativePacks: detailState.creativePacks,
-          snapshot: createPublishedSiteSnapshot(detailState, detailSite, { source: "platform-state" })
-        })
-      : {};
-  }
   const metadataSourceSlug = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
     ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
     : slug;
@@ -494,6 +497,24 @@ export default async function SiteCatchAllPage({
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
   if (slug === "/404") notFound();
+  const imageThemePath = aidreamcapesImageThemePathForRequest(publicSlug, slug);
+  if (imageThemePath) {
+    const detailState = routeMode === "host"
+      ? await readRoutePublicRuntimeState(headerStore, routeMode, publicSlug, imageThemePath)
+      : await readPathModePublicRuntimeState(publicSlug, imageThemePath);
+    const detailSite = detailState?.sites[0];
+    const detailPage = detailSite ? findPage(detailSite, imageThemePath) : undefined;
+    if (!detailState || !detailSite || !detailPage || !imageThemeDetailContentFromPage(detailPage)) notFound();
+    return renderStorefrontPage({
+      site: detailSite,
+      slug: imageThemePath,
+      publicPath: imageThemePath,
+      query: searchParams ? await searchParams : {},
+      routeMode,
+      state: detailState,
+      deferCustomerRuntime: true
+    });
+  }
   if (isAidreamcapesEuRetiredPublicPath(publicSlug, slug)) notFound();
   if (isRetiredAidreamcapesImageToolPath(publicSlug, slug)) notFound();
   if (publicSlug === "aidreamcapes") {
@@ -563,23 +584,6 @@ export default async function SiteCatchAllPage({
   }
   if (path[0] === "job" && path[1]) redirect(routePath(`/app/jobs/${path[1]}`));
   if (path[0] === "tools" && path[1] && (isPrimaryMydreamshootsSlug(publicSlug) || isAidreamshootsStorefrontSite({ slug: publicSlug }))) notFound();
-  if (isAidreamcapesImageThemePath(publicSlug, slug)) {
-    const detailState = routeMode === "host"
-      ? await readRoutePublicRuntimeState(headerStore, routeMode, publicSlug, slug)
-      : await readPathModePublicRuntimeState(publicSlug, slug);
-    const detailSite = detailState?.sites[0];
-    const detailPage = detailSite ? findPage(detailSite, slug) : undefined;
-    if (!detailState || !detailSite || !detailPage || !imageThemeDetailContentFromPage(detailPage)) notFound();
-    return renderStorefrontPage({
-      site: detailSite,
-      slug,
-      publicPath: slug,
-      query: searchParams ? await searchParams : {},
-      routeMode,
-      state: detailState,
-      deferCustomerRuntime: true
-    });
-  }
   const isCollectionRequest = isCollectionRouteRequest(path);
   const isVideoGenerationRequest = isVideoGenerationRouteRequest(path);
   const collectionRootPageSlug = fallbackCollectionRootPathForPublicSlug(publicSlug);

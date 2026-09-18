@@ -70,11 +70,23 @@ export function aidreamcapesImageThemePath(slug: string): string {
 }
 
 export function aidreamcapesImageThemeDefinitionForPath(path: string): AidreamcapesImageThemeDefinition | undefined {
-  return imageThemeByPath.get(path.replace(/\/$/, ""));
+  const pathname = path.split("?")[0]?.split("#")[0] ?? path;
+  return imageThemeByPath.get(pathname.replace(/\/$/, ""));
+}
+
+/**
+ * Resolve an Aidreamcapes image-theme request before any collection or legacy
+ * route fallback can reinterpret it. Returning the registered path also
+ * gives metadata and rendering one immutable path key to use.
+ */
+export function aidreamcapesImageThemePathForRequest(siteSlug: string | undefined, path: string): string | undefined {
+  if (siteSlug !== "aidreamcapes") return undefined;
+  const definition = aidreamcapesImageThemeDefinitionForPath(path);
+  return definition ? `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${definition.slug}` : undefined;
 }
 
 export function isAidreamcapesImageThemePath(siteSlug: string | undefined, path: string): boolean {
-  return siteSlug === "aidreamcapes" && Boolean(aidreamcapesImageThemeDefinitionForPath(path));
+  return Boolean(aidreamcapesImageThemePathForRequest(siteSlug, path));
 }
 
 export function isAidreamcapesEcommerceMainImagePath(siteSlug: string | undefined, path: string): boolean {

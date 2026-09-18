@@ -21,7 +21,7 @@ import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS, MYDREAMSHOOTS_RETIRED_PUBLIC_PAT
 import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import type { CreativePack, PlatformState, PublishedLeafRouteProjection, PublishedSeoSnapshot, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue } from "@/lib/types";
-import { AIDREAMSHOOTS_VIDEO_SAVE_THE_DATE_ALIASES, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import { AIDREAMSHOOTS_VIDEO_SAVE_THE_DATE_ALIASES, aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import {
   mydreamshootsVideoWatchPagesForState,
   type MyDreamShootsVideoWatchPage
@@ -29,7 +29,7 @@ import {
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
 export const MYDREAMSHOOTS_SITEMAP_URL = `${MYDREAMSHOOTS_ORIGIN}/sitemap.xml`;
-export const AIDREAMCAPES_ORIGIN = "https://www.aidreamcapes.com";
+export const AIDREAMCAPES_ORIGIN = "https://aidreamcapes.com";
 export const AIDREAMCAPES_SITEMAP_URL = `${AIDREAMCAPES_ORIGIN}/sitemap.xml`;
 export const AIDREAMSHOOTS_EU_ORIGIN = "https://aidreamshoots.eu";
 export const AIDREAMSHOOTS_EU_SITEMAP_URL = `${AIDREAMSHOOTS_EU_ORIGIN}/sitemap.xml`;
@@ -241,7 +241,7 @@ function originHost(origin: string): string {
 }
 
 function sitemapUrl(site: Site, path: string): string {
-  const origin = siteOrigin(site) || MYDREAMSHOOTS_ORIGIN;
+  const origin = site.id === AIDREAMCAPES_SITE_ID ? AIDREAMCAPES_ORIGIN : siteOrigin(site) || MYDREAMSHOOTS_ORIGIN;
   return path === "/" ? `${origin}/` : `${origin}${path}`;
 }
 
@@ -563,6 +563,7 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   const pageSeo = page.publishedJson.seo;
   const canonicalValue = pageSeo?.canonical ?? pageSeo?.canonicalPath ?? page.slug;
   const canonicalPath = canonicalPublicPath(normalizePath(/^https?:\/\//i.test(canonicalValue) ? new URL(canonicalValue).pathname : canonicalValue));
+  if (site.id === AIDREAMCAPES_SITE_ID && (canonicalPath === "/tools" || aidreamcapesLegacyVideoSaveTheDatePath(canonicalPath))) return "";
   if (isAidreamcapesEuRetiredPublicPath(site.id, canonicalPath)) return "";
   if (isRetiredAidreamcapesImageToolPath(site.slug, normalizePath(page.slug)) || isRetiredAidreamcapesImageToolPath(site.slug, canonicalPath)) return "";
   // Legacy video ThemePage rows can remain in relational data during a route
@@ -608,10 +609,12 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
     const effective = resolveEffectivePublishedPage(snapshot, canonicalPath);
     if (effective.routeDisposition.kind !== "render" || !effective.indexability.sitemapEligible) continue;
     const configuredCanonical = page.publishedJson.seo?.canonical?.trim();
-    const loc = isAidreamcapesImageThemePath(site.slug, page.slug) && configuredCanonical && /^https?:\/\//i.test(configuredCanonical)
-      ? configuredCanonical
-      : effective.context.seo.canonicalUrl;
     const path = effective.context.seo.canonicalPath;
+    const loc = site.id === AIDREAMCAPES_SITE_ID
+      ? sitemapUrl(site, path)
+      : isAidreamcapesImageThemePath(site.slug, page.slug) && configuredCanonical && /^https?:\/\//i.test(configuredCanonical)
+        ? configuredCanonical
+        : effective.context.seo.canonicalUrl;
     const standardMedia = isPrimaryMydreamshootsSite(site)
       ? resolvePublishedSeoEntity(snapshot, path).standardPageMedia
       : undefined;
@@ -773,7 +776,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       const route = parsePublicCollectionRouteForSite(site, path);
       if (route?.kind !== "item") continue;
       const isAidreamcapesEu = site.id === "site_aidreamcapes_xby";
-      if (isAidreamcapesImageThemePath(site.slug, path) || (!isAidreamcapesEu && isRetiredAidreamcapesImageToolPath(site.slug, path)) || (!isAidreamcapesEu && LEGACY_OR_DUPLICATE_PATHS.has(path)) || (path.endsWith("/social-cards") && !isAidreamcapesEu)) continue;
+      if (isAidreamcapesImageThemePath(site.slug, path) || (!isAidreamcapesEu && isRetiredAidreamcapesImageToolPath(site.slug, path)) || (!isAidreamcapesEu && LEGACY_OR_DUPLICATE_PATHS.has(path)) || (!isAidreamcapesEu && (path === "/tools" || aidreamcapesLegacyVideoSaveTheDatePath(path))) || (path.endsWith("/social-cards") && !isAidreamcapesEu)) continue;
       const loc = sitemapUrl(site, path);
       if (entries.has(loc)) continue;
       entries.set(loc, {
@@ -835,6 +838,29 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       } catch {
         entries.delete(loc);
       }
+    }
+  }
+  if (site.id === AIDREAMCAPES_SITE_ID) {
+    // Keep every Aidreamcapes page URL on the non-www canonical origin and
+    // apply the same retirement rules to entries added by catalogue passes.
+    // This final guard is intentionally scoped to the main Aidreamcapes site;
+    // other storefront sitemap hosts and aliases remain untouched.
+    for (const [loc, entry] of entries) {
+      let path: string;
+      try {
+        path = new URL(loc).pathname;
+      } catch {
+        entries.delete(loc);
+        continue;
+      }
+      if (path === "/tools" || aidreamcapesLegacyVideoSaveTheDatePath(path)) {
+        entries.delete(loc);
+        continue;
+      }
+      const canonicalLoc = sitemapUrl(site, path);
+      if (canonicalLoc === loc) continue;
+      entries.delete(loc);
+      if (!entries.has(canonicalLoc)) entries.set(canonicalLoc, { ...entry, loc: canonicalLoc });
     }
   }
   return [...entries.values()].sort((left, right) => left.loc.localeCompare(right.loc));
