@@ -277,7 +277,16 @@ function spanishXbyCanonicalCollectionRedirect(request: NextRequest): NextRespon
     }
   }
   if (!targetScopedPath) return undefined;
-  const targetPath = sitePathMatch
+  const requestHost = String(request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "")
+    .split(",")[0]
+    .trim()
+    .toLowerCase();
+  const isAidreamshootsPublicAlias = Boolean(
+    sitePathMatch &&
+      /^aidreamshoots(?:-xby|-eu)?$/i.test(sitePathMatch[1] ?? "") &&
+      /(?:^|\.)aidreamshoots\.eu(?::\d+)?$/i.test(requestHost)
+  );
+  const targetPath = sitePathMatch && !isAidreamshootsPublicAlias
     ? `/site/${sitePathMatch[1]}${targetScopedPath}`
     : targetScopedPath;
   const target = publicRedirectUrlForRequest(request, targetPath);
