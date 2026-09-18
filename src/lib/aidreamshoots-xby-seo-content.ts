@@ -55,15 +55,16 @@ function content(input: Omit<AidreamshootsXbyThemeContent, "title" | "descriptio
       : input.label;
   const titleCandidate = `${titleTerm} con IA para fotos | ${brand}`;
   const title = titleCandidate.length <= 60 ? titleCandidate : `${titleTerm} con IA | ${brand}`;
-  const longDescription = `Crea ${input.seoTerm} con IA a partir de fotos propias: explora escenas, revisa créditos y guarda una galería privada lista para descargar en ${brand}.`;
+  const seoTerm = input.seoTerm.replace(/\s+con IA$/i, "").trim();
+  const longDescription = `Crea ${seoTerm} con IA a partir de fotos propias: explora escenas, revisa créditos y guarda una galería privada lista para descargar en ${brand}.`;
   const description = longDescription.length <= 160
     ? longDescription
-    : `Crea ${input.seoTerm} con IA a partir de fotos propias: compara escenas, revisa créditos y guarda tus resultados en ${brand}.`;
+    : `Crea ${seoTerm} con IA a partir de fotos propias: compara escenas, revisa créditos y guarda tus resultados en ${brand}.`;
   return {
     ...input,
     title,
     description,
-    keywords: `${input.seoTerm} con IA, fotos ${input.label.toLowerCase()}, paquete de fotos IA, ${brand}`,
+    keywords: `${seoTerm} con IA, fotos ${input.label.toLowerCase()}, paquete de fotos IA, ${brand}`,
     ctaHref: "/app/create",
     faqItems: faqItems(input.label, input.faqAnswer)
   };

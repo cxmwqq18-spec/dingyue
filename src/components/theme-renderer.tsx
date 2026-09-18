@@ -4915,6 +4915,13 @@ function settingListBlocks(
 function routedSitePath(site: Site, path = "/"): string {
   const normalizedPath = !path || path === "/" ? "/" : path.startsWith("/") ? path : `/${path}`;
   const basePath = (site as RoutedSite).__storefrontBasePath;
+  // The production AIdreamshoots domain is canonical even when an upstream
+  // rewrite reaches the path-mode route. Never emit its internal /site alias
+  // into public HTML, while preserving path-mode links for local previews.
+  const forceAidreamshootsCanonicalHostLinks = process.env.NODE_ENV === "production"
+    && isAidreamshootsStorefrontSite(site)
+    && cleanHost(site.primaryDomain) === "aidreamshoots.eu";
+  if (forceAidreamshootsCanonicalHostLinks) return normalizedPath;
   if (typeof basePath === "string") {
     if (!basePath) return normalizedPath;
     return normalizedPath === "/" ? basePath : `${basePath}${normalizedPath}`;
@@ -5519,7 +5526,28 @@ function galleryImageAltForPack(site: Site, pack: CreativePack, index: number, i
   });
 }
 
-function galleryFallbackAltForIndex(title: string, index: number): string {
+function galleryFallbackAltForIndex(title: string, index: number, site?: Site): string {
+  if (site && isAidreamshootsStorefrontSite(site)) {
+    const localizedTitle = title
+      .replace(/\bBest Themes Presets\b/gi, "los mejores temas y estilos")
+      .replace(/\bMagic\b/gi, "edición mágica")
+      .replace(/\bProfessional\b/gi, "retratos profesionales");
+    const spanishScenes = [
+      "retrato con rasgos faciales nítidos sobre un fondo suavemente desenfocado",
+      "retrato sonriente en un entorno relajado",
+      "retrato de tres cuartos con el entorno visible",
+      "retrato espontáneo con una expresión natural",
+      "retrato sentado en un entorno cómodo",
+      "retrato de perfil con un fondo suavemente iluminado",
+      "retrato seguro con un entorno lleno de color",
+      "retrato centrado en el rostro y la expresión",
+      "retrato de estilo de vida en un entorno cotidiano",
+      "retrato durante un momento social",
+      "pose distintiva que resalta el tema",
+      "retrato natural con un ambiente acogedor"
+    ];
+    return `${localizedTitle}, ${spanishScenes[index % spanishScenes.length]}`;
+  }
   const scenes = [
     "portrait showing clear facial detail against a softly blurred background",
     "smiling portrait in a relaxed setting",
@@ -13649,7 +13677,7 @@ function SectionView({
 	                              // actual scene instead of passing the old English
 	                              // placeholder ("Professional, ...") through the
 	                              // alt sanitizer.
-	                              explicitAlt: frenchXbyTaxonomy ? undefined : galleryFallbackAltForIndex(localizedDynamicTitle, index),
+                              explicitAlt: frenchXbyTaxonomy ? undefined : galleryFallbackAltForIndex(localizedDynamicTitle, index, site),
 	                              imageUrl: image,
 	                              index,
 	                              meta: selectedCategory?.parent?.label,
@@ -13771,7 +13799,7 @@ function SectionView({
 	                          : cardImageAltForSite(site, {
 	                              category: selectedCategory?.label,
 	                              description: dynamicSubtitle,
-	                              explicitAlt: galleryFallbackAltForIndex(localizedDynamicTitle, index),
+                              explicitAlt: galleryFallbackAltForIndex(localizedDynamicTitle, index, site),
 	                              imageUrl: image,
 	                              index,
 	                              meta: selectedCategory?.parent?.label,
