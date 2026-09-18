@@ -128,7 +128,12 @@ async function inspectPage(page, pathname, { expectIndexable = true, expectedSta
       jsonLdErrors,
       topicMediaIssues: [...document.querySelectorAll("[data-video-topic-media], [data-video-topic-hero-media]")].flatMap((container) => {
         const image = container.querySelector("img");
-        if (!image) return ["media container without an image"];
+        const video = container.querySelector("video");
+        if (!image && video) {
+          const source = video.getAttribute("src") || video.querySelector("source[src]")?.getAttribute("src") || "";
+          return [!source.trim() ? "empty video source" : ""].filter(Boolean);
+        }
+        if (!image) return ["media container without an image or video"];
         const width = Number(image.getAttribute("width"));
         const height = Number(image.getAttribute("height"));
         return [
