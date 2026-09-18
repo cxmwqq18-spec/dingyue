@@ -9,6 +9,8 @@ import "./load-runtime-env.mjs";
 const SITE_ID = "site_aidreamcapes";
 const ASSET_ROOT = "/assets/sites/site_aidreamcapes/public-editorial/20260918-v1";
 const APPLY = process.argv.includes("--apply");
+const PRODUCTION_CONFIRMATION = "--confirm-production-aidreamcapes-public-editorial-images";
+const APPLY_PRODUCTION = process.argv.includes(PRODUCTION_CONFIRMATION);
 const OPTIONAL_SECTION_IDS = new Set(["partner_form_1", "partner_expectations_1"]);
 
 const assets = {
@@ -132,6 +134,23 @@ async function assertLocalDatabase() {
   assert(["127.0.0.1", "localhost", "::1"].includes(hostname), `Refusing non-local database: ${hostname}`);
 }
 
+async function assertDatabaseTarget(prisma) {
+  if (!APPLY_PRODUCTION) {
+    await assertLocalDatabase();
+    return;
+  }
+  assert(APPLY, `${PRODUCTION_CONFIRMATION} requires --apply`);
+  assert.equal(process.env.DINGYUE_ENV, "production", "Production migration requires DINGYUE_ENV=production");
+  assert.equal(process.env.DATABASE_TARGET, "production", "Production migration requires DATABASE_TARGET=production");
+  const site = await prisma.site.findUnique({
+    where: { id: SITE_ID },
+    select: { primaryDomain: true, domains: { select: { domain: true, status: true } } }
+  });
+  assert(site, `Missing site: ${SITE_ID}`);
+  assert.equal(site.primaryDomain?.toLowerCase(), "www.aidreamcapes.com", "Production migration target is not www.aidreamcapes.com");
+  assert(site.domains.some((domain) => domain.domain.toLowerCase() === "www.aidreamcapes.com" && domain.status === "active"), "Active Aidreamcapes production domain mapping is missing");
+}
+
 async function assertAssets() {
   const refs = Object.values(assets).flatMap((asset) => [asset.url, asset.secondaryUrl]).filter(Boolean);
   for (const ref of refs) {
@@ -162,7 +181,7 @@ function validatePublicJson(json, pageSlug) {
 const prisma = new PrismaClient();
 try {
   if (APPLY) {
-    await assertLocalDatabase();
+    await assertDatabaseTarget(prisma);
     await assertAssets();
   } else {
     const missing = [];
