@@ -11,3 +11,9 @@ Treat the people and scenes as synthetic editorial concepts. Do not present them
 
 ## Rights gate
 This package does not independently establish model releases, trademark clearance, or commercial rights for a live campaign. Confirm your production policy and the provenance/rights status of the original generated assets before external publication.
+
+## Current AIdreamshoots vendor replacement — 2026-09-15
+
+The published AIdreamshoots Valentine's Day page now uses the vendor batch `valentines-day-vendor-no-crop-20260915-v1`. The provider was `buming-image` with model `gpt-image-2`; the 11 provider responses are preserved byte-for-byte under the page asset directory's `originals/` folder. The customer-facing files are `3840`-pixel-wide derivatives at the provider response aspect ratio (`3840×2560` from `1536×1024`). They were resized without crop, cover fit, extraction, stretching, or composition changes.
+
+The page's image preview and original-image link resolve to the preserved `originals/` files. The generation audit is recorded at `releases/provider-results/aidreamshoots/save-the-date/valentines-day-vendor-no-crop-20260915-v1.json`. Do not replace this source/derivative relationship with a screenshot, contact-sheet crop, or a derivative that overwrites the provider original.

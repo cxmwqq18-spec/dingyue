@@ -80,6 +80,10 @@ try {
         supportsGenerationN: provider.supportsGenerationN,
         supportsEditN: provider.supportsEditN,
         maxImagesPerRequest: provider.maxImagesPerRequest,
+        imageAspectRatio: provider.imageAspectRatio,
+        imageResolution: provider.imageResolution,
+        imageQuality: provider.imageQuality,
+        imageOutputFormat: provider.imageOutputFormat,
         updatedBy: provider.updatedBy,
       },
     })));

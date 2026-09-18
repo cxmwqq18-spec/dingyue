@@ -9,6 +9,7 @@ const hostCatchAll = readFileSync(new URL("../src/app/[...path]/page.tsx", impor
 const siteCatchAll = readFileSync(new URL("../src/app/site/[siteSlug]/[...path]/page.tsx", import.meta.url), "utf8");
 const robotsRoute = readFileSync(new URL("../src/app/robots.txt/route.ts", import.meta.url), "utf8");
 const sitemapRoute = readFileSync(new URL("../src/app/sitemap.xml/route.ts", import.meta.url), "utf8");
+const sitemapXml = readFileSync(new URL("../src/lib/sitemap-xml.ts", import.meta.url), "utf8");
 const middleware = readFileSync(new URL("../src/middleware.ts", import.meta.url), "utf8");
 const packageJson = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
 const publicStorefrontCdnCache = "public, s-maxage=300, stale-while-revalidate=1800";
@@ -178,9 +179,9 @@ assert.match(
 );
 assert.doesNotMatch(sitemapRoute, /x-(?:storefront|sitemap)-[a-z-]+["']\s*:/i, "sitemap route must not expose internal diagnostic headers");
 assert.match(
-  sitemapRoute,
+  sitemapXml,
   /xmlns:image="http:\/\/www\.google\.com\/schemas\/sitemap-image\/1\.1"/,
-  "sitemap route should expose the image sitemap namespace"
+  "sitemap XML serializer should expose the image sitemap namespace"
 );
 assert.match(
   middleware,

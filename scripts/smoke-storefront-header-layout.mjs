@@ -27,8 +27,8 @@ const stores = [
   {
     slug: "aidreamcapes",
     siteId: "site_aidreamcapes",
-    publicLabels: ["Occasion Albums", "Tools", "Best Packages", "How it works", ["Guides", "Blog"], "Pricing", "Workspace"],
-    appLabels: ["Occasion Albums", "Tools", "Best Packages", "How it works", "Workspace", "Pricing"],
+    publicLabels: ["Video", "Image", "Marketing", "Pricing", "Log in"],
+    appLabels: ["Video", "Image", "Marketing", "Pricing"],
     credentials: [
       {
         email: process.env.SMOKE_AIDREAMCAPES_CUSTOMER_EMAIL || "aria@aidreamcapes.localhost",
@@ -179,7 +179,7 @@ async function assertHeaderLayout(page, store, viewport, { scope = "public", exp
     assert(matchesLabel(snapshot.navText, label), `${store.slug} ${scope} ${viewport.name}: desktop navigation is missing ${Array.isArray(label) ? label.join(" / ") : label}; nav text: ${snapshot.navText}`);
   }
   assert(!/FAQ/.test(snapshot.navText), `${store.slug} ${scope} ${viewport.name}: FAQ returned to top navigation`);
-  if (store.slug !== "mydreamshoots") {
+  if (store.slug !== "mydreamshoots" && store.slug !== "aidreamcapes") {
     assert(snapshot.navText.indexOf("Tools") < snapshot.navText.indexOf("Best Packages"), `${store.slug} ${scope} ${viewport.name}: Best Packages is not after Tools`);
   }
 }
