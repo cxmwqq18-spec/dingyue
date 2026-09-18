@@ -508,7 +508,7 @@ function UseCaseCard({ item, index, site }: { item: VideoTopicUseCase; index: nu
   const noteBody = item.noteBody ?? (item.script ? `“${item.script}”` : undefined);
   return (
     <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f] shadow-[0_28px_70px_-54px_rgba(0,0,0,0.92)]" data-video-topic-use-case-card>
-      {item.image ? (
+      {isRenderableTopicImage(item.image) ? (
         <div className="relative overflow-hidden bg-[#292438]" data-video-topic-media style={{ aspectRatio: cardMediaAspectRatio(item.image) }}>
           <img
             src={optimizedTopicImageSrc(item.image.src)}
@@ -545,7 +545,7 @@ function UseCaseCard({ item, index, site }: { item: VideoTopicUseCase; index: nu
 function SupportingCard({ card, light = false, site }: { card: VideoTopicSupportingCard; light?: boolean; site?: Site }) {
   return (
     <article className={`flex h-full flex-col rounded-[22px] border p-6 sm:p-7 ${light ? "border-[#d2c9ef] bg-white/55" : "border-white/10 bg-[#17151f]"}`}>
-      {card.image ? (
+      {isRenderableTopicImage(card.image) ? (
         <div className="relative mb-6 overflow-hidden rounded-[16px] bg-[#292438]" style={{ aspectRatio: cardMediaAspectRatio(card.image) }}>
           <img
             src={optimizedTopicImageSrc(card.image.src)}
@@ -621,7 +621,7 @@ function ValueSection({ section, light = false }: { section: VideoTopicContent["
     <section className={`border-b px-5 py-16 sm:px-8 sm:py-24 ${light ? "border-[#d9d1f6] bg-[#e9e5f7] text-[#191622]" : "border-white/10 bg-[#0d0b13] text-white"}`} id="value" data-video-topic-section="value">
       <div className="mx-auto max-w-[var(--site-content-width)]">
         <SectionHeader eyebrow={section.eyebrow} title={section.title} body={section.intro} light={light} />
-        {section.image ? (
+        {isRenderableTopicImage(section.image) ? (
           <figure className="mt-12 overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f]">
             <img
               src={optimizedTopicImageSrc(section.image.src)}
