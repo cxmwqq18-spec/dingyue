@@ -547,8 +547,8 @@ export default async function SiteCatchAllPage({
   if (legacyAliasTarget && (slug === "/engagement-photo" || slug === "/collections/engagement-photo" || slug === "/collections/headshot")) {
     permanentRedirect(routePath(legacyAliasTarget));
   }
-  if (slug === "/help" && usesAiGenerationPublicSlug(publicSlug)) redirect(routePath("/faq"));
-  if (slug === "/how-it-works" && usesAiGenerationPublicSlug(publicSlug)) redirect(routePath("/workflow"));
+  if (slug === "/help" && isSpanishAIdreamshootsSlug(publicSlug)) permanentRedirect(routePath("/faq"));
+  if (slug === "/how-it-works" && isSpanishAIdreamshootsSlug(publicSlug)) permanentRedirect(routePath("/workflow"));
   const aidreamcapesBlogRedirect = aidreamcapesLegacyBlogRedirectPath(publicSlug, slug);
   if (aidreamcapesBlogRedirect && aidreamcapesBlogRedirect !== slug) redirect(routePath(aidreamcapesBlogRedirect));
   if (slug === "/checkout") {

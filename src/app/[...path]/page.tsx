@@ -751,8 +751,8 @@ export default async function HostStorefrontCatchAllPage({
     const query = searchParams ? await searchParams : {};
     redirect(safeHostCustomerNextPath(query.next));
   }
-  if (slug === "/help" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/faq");
-  if (slug === "/how-it-works" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/workflow");
+  if (slug === "/help" && isAidreamshootsStorefrontSite(site)) permanentRedirect("/faq");
+  if (slug === "/how-it-works" && isAidreamshootsStorefrontSite(site)) permanentRedirect("/workflow");
   if (firstSegment === "tools" && path[1] && (isMydreamshootsSite(site) || isAidreamshootsPublicSlug(hostSiteSlug)) && !isAidreamcapesSite(site)) notFound();
   const routeQuery = searchParams ? await searchParams : {};
   redirectLegacyBlogArticle(site, slug, routeQuery);

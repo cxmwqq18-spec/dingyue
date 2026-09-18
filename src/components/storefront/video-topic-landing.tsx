@@ -5,6 +5,7 @@ import type { SectionInstance, Site } from "@/lib/types";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
 import { hostAwareSitePath } from "@/lib/domain-routing";
+import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { adsTestingDetailFromLegacyUgcContent, aiVideoTopicLandingContentFromSection, type AiVideoTopicLandingContent } from "@/lib/ai-video-topic-content";
 import { AdsTestingDetail } from "@/components/storefront/ads-testing-detail";
 import { BrandCreatorDetail } from "@/components/storefront/brand-creator-detail";
@@ -243,12 +244,44 @@ type VideoTopicContent = {
   };
 };
 
+const AIDREAMSHOOTS_SAVE_DATE_ALIASES = new Set([
+  "christmas", "engagement", "fathers-day", "halloween", "mothers-day", "new-year", "proposal",
+  "save-the-date", "thanksgiving", "valentines-day", "wedding-ceremony", "wedding-invitation"
+]);
+
+function aidreamshootsCanonicalHref(site: Site, href: string): string {
+  if (site.id !== "site_mydreamshoots_xby" || !href.startsWith("/")) return href;
+  let parsed: URL;
+  try {
+    parsed = new URL(href, "https://aidreamshoots.eu");
+  } catch {
+    return href;
+  }
+  let pathname = parsed.pathname.replace(/^\/site\/(?:aidreamshoots|aidreamshoots-eu|mydreamshoots-xby)(?=\/|$)/i, "") || "/";
+  if (pathname === "/help") pathname = "/faq";
+  if (pathname === "/how-it-works") pathname = "/workflow";
+  if (pathname === "/collections" || pathname.startsWith("/collections/")) {
+    pathname = canonicalSeoDirectoryPathForSite(site, "collection", pathname.slice("/collections".length).replace(/^\//, ""));
+  }
+  if (pathname === "/ai-video-generation/wedding-invitation") pathname = "/ai-save-the-date/wedding-invitation";
+  const saveDateMatch = pathname.match(/^\/ai-video-generation\/([^/]+)$/i);
+  if (saveDateMatch && AIDREAMSHOOTS_SAVE_DATE_ALIASES.has(saveDateMatch[1].toLowerCase())) {
+    pathname = `/ai-save-the-date/${saveDateMatch[1].toLowerCase()}`;
+  }
+  if (pathname === "/ai-video-generation/image-to-video" || pathname === "/ai-video-generation/text-to-video") {
+    pathname = "/ai-video-generation/motion-generator";
+  }
+  return `${pathname}${parsed.search}${parsed.hash}`;
+}
+
 function hrefFor(site: Site, href: string): string {
   if (href.startsWith("#")) return href;
+  const canonicalHref = aidreamshootsCanonicalHref(site, href);
   const routedSite = site as RoutedSite;
   const basePath = routedSite.__storefrontBasePath;
-  if (typeof basePath === "string") return basePath ? `${basePath}${href}` : href;
-  return hostAwareSitePath(site, href);
+  if (site.id === "site_mydreamshoots_xby") return canonicalHref;
+  if (typeof basePath === "string") return basePath ? `${basePath}${canonicalHref}` : canonicalHref;
+  return hostAwareSitePath(site, canonicalHref);
 }
 
 function InternalLink({ site, href, children, className }: { site: Site; href: string; children: ReactNode; className: string }) {

@@ -26,7 +26,7 @@ const sceneLabels = [
   "picnic botánico",
   "restaurante retro",
   "librería luminosa",
-  "andén de tren",
+  "escena urbana",
   "estudio de cerámica",
   "azotea lluviosa",
   "cola del cine",
