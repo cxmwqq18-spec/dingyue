@@ -1109,6 +1109,50 @@ function packProductSchema({
   };
 }
 
+// www.mydreamshoots.com theme packs are redeemed with credits, not sold as fiat SKUs, so the
+// pack page no longer emits Product. These are the image fields Product used to carry; they move
+// onto the page node so image structured data is not lost with it.
+function packPageImagery({
+  site,
+  routeMode,
+  pagePath,
+  pack,
+  description
+}: {
+  site: Site;
+  routeMode: "host" | "path";
+  pagePath: string;
+  pack: CreativePack;
+  description: string;
+}): JsonLdNode | undefined {
+  const imagePaths = packImagePaths(pack);
+  const image = imagePaths[0];
+  if (!image) return undefined;
+  const subjectImage = subjectImageForPack(pack) || image;
+  const url = absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, pagePath));
+  const subjectImageUrl = absoluteUrl(site, routeMode, subjectImage);
+  const primaryImageUrl = absoluteUrl(site, routeMode, image);
+  const packName = cleanSchemaText(site, pack.name, "MyDreamShoots AI photo package");
+  const packDescription = cleanSchemaText(site, pack.description, description);
+  const subjectImageDimensions = imageDimensions(subjectImage);
+  return {
+    image: imagePaths.map((path) => absoluteUrl(site, routeMode, path)),
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      "@id": `${url}#image`,
+      name: `${packName} preview image`,
+      url: subjectImageUrl,
+      contentUrl: subjectImageUrl,
+      thumbnailUrl: primaryImageUrl,
+      description: cleanSchemaText(site, `Example preview image for ${packName}`, packDescription),
+      caption: `${packName} AI generated preview`,
+      encodingFormat: mediaEncodingFormat(subjectImage) || mediaEncodingFormat(image),
+      representativeOfPage: true,
+      ...(subjectImageDimensions ? subjectImageDimensions : {})
+    }
+  };
+}
+
 function iso8601Duration(seconds: number): string {
   const totalSeconds = Math.max(1, Math.floor(seconds));
   const hours = Math.floor(totalSeconds / 3600);
@@ -1511,7 +1555,11 @@ export function buildToolDirectoryJsonLd({
       name: siteName,
       url: storefrontBaseUrl(site, routeMode)
     },
-    ...(!isAdsTestingPage && !isAidreamcapesBrandCreator ? {
+    // www.mydreamshoots.com tool/theme pages are redeemed with credits, not sold as fiat SKUs,
+    // so they must not carry an Offer at all. An Offer with no price is invalid, and a price here
+    // would contradict the page, which shows no fiat amount. Fiat pricing stays on /pricing.
+    // Other storefronts keep their existing Offer unchanged.
+    ...(!isAdsTestingPage && !isAidreamcapesBrandCreator && !isMydreamshootsComSite(site) ? {
       offers: {
         "@type": "Offer",
         availability: toolOfferAvailability(site, pagePath, context),
@@ -1778,6 +1826,12 @@ export function buildCollectionDirectoryJsonLd({
           }
         }]
       : [];
+  // Live www.mydreamshoots.com only: drop the credit-redeemed pack Product (it has no offers,
+  // review, or aggregateRating and cannot truthfully get one) and keep its imagery on the page node.
+  const dropPackProduct = isMydreamshootsComSite(site);
+  const packImagery = dropPackProduct && schemaPacks.length === 1
+    ? packPageImagery({ site, routeMode, pagePath, pack: schemaPacks[0], description: item.description })
+    : undefined;
   const graph: JsonLdNode[] = [
     breadcrumbs(site, routeMode, pagePath, item.label),
     {
@@ -1787,7 +1841,8 @@ export function buildCollectionDirectoryJsonLd({
       url,
       ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : isSpanishXbySite(site) || frenchEngagementPage ? { inLanguage: "es-ES" } : {}),
       isPartOf: { "@id": `${storefrontBaseUrl(site, routeMode)}#website` },
-      publisher: { "@type": "Organization", name: siteName, url: storefrontBaseUrl(site, routeMode) }
+      publisher: { "@type": "Organization", name: siteName, url: storefrontBaseUrl(site, routeMode) },
+      ...(packImagery ?? {})
     },
     ...(itemListElement.length ? [{
       "@type": "ItemList",
@@ -1807,7 +1862,7 @@ export function buildCollectionDirectoryJsonLd({
     // products with a persisted monetary offer. Do not emit Product markup
     // without a truthful Offer price/currency; the CollectionPage, Service
     // and ItemList nodes above describe the public page accurately.
-    ...(site.id !== "site_mydreamshoots_xby" && schemaPacks.length === 1
+    ...(site.id !== "site_mydreamshoots_xby" && schemaPacks.length === 1 && !dropPackProduct
       ? [packProductSchema({
           site,
           routeMode,
