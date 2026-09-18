@@ -48,10 +48,11 @@ function spanishVideoTopicLabel(contentKey: string): string {
 
 function spanishVideoFallback(key: string, topic: string): string {
   const normalized = key.toLowerCase();
+  const topicWithoutAiSuffix = topic.replace(/\s+con IA$/i, "").trim();
   if (normalized.includes("alt") || normalized.includes("caption")) return `Ejemplo visual de ${topic} creado con IA.`;
   if (normalized.includes("cta") || normalized.includes("button") || normalized.includes("linklabel")) return "Crear vídeo";
   if (normalized.includes("eyebrow") || normalized.includes("label")) return "Vídeo con IA";
-  if (normalized.includes("title") || normalized.includes("headline")) return `Ideas de ${topic} con IA`;
+  if (normalized.includes("title") || normalized.includes("headline")) return `Ideas de ${topicWithoutAiSuffix} con IA`;
   if (normalized.includes("problem")) return "Define el objetivo, el público y el tono antes de generar.";
   if (normalized.includes("script")) return `Guion breve para un vídeo de ${topic}.`;
   return `Usa fotos propias o autorizadas, revisa los detalles y conserva el resultado de ${topic} en tu espacio privado.`;
