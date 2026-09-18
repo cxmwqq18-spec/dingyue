@@ -14,9 +14,9 @@ const APPLY_PRODUCTION = process.argv.includes(PRODUCTION_CONFIRMATION);
 
 const replacements = {
   "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/generated/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-20260814.mp4":
-    "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/generated/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4",
+    "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-55s.mp4",
   "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/generated/homepage-showcase/videos/aidreamcapes-ai-video-tutorial-20260814.mp4":
-    "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/generated/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4"
+    "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4"
 };
 
 function clone(value) {
