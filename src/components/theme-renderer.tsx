@@ -4586,6 +4586,7 @@ function StorefrontImage({
         fetchPriority={resolvedFetchPriority}
         height={height}
         loading={resolvedLoading}
+        sizes={sizes}
         src={resolvedSrc}
         width={width}
         {...previewAttrs}

@@ -28,7 +28,7 @@ import { isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-pub
 import { customerSessionCookie } from "@/lib/session";
 import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
-import { isAidreamcapesImageThemePath, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { aidreamcapesImageThemePathForRequest, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
@@ -445,17 +445,18 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const requestedPath = `/${path.join("/")}`;
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
+  const imageThemePath = aidreamcapesImageThemePathForRequest(hostSiteSlug, requestedPath);
   if (isAidreamshootsPublicSlug(hostSiteSlug) && aidreamshootsLegacyVideoSaveTheDatePath(requestedPath)) return {};
   if (isRetiredAidreamcapesImageToolPath(hostSiteSlug, requestedPath)) return {};
-  if (isAidreamcapesImageThemePath(hostSiteSlug, requestedPath)) {
-    const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, requestedPath);
+  if (imageThemePath) {
+    const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, imageThemePath);
     const detailSite = (detailState ? getSiteByHostCandidatesFromState(detailState, hostCandidates) : undefined) ?? detailState?.sites[0];
-    const detailPage = detailSite ? findPage(detailSite, requestedPath) : undefined;
+    const detailPage = detailSite ? findPage(detailSite, imageThemePath) : undefined;
     return detailState && detailSite && detailPage && imageThemeDetailContentFromPage(detailPage)
       ? metadataForPublishedStorefrontPage({
           site: detailSite,
           page: detailPage,
-          path: requestedPath,
+          path: imageThemePath,
           products: detailState.products,
           creativePacks: detailState.creativePacks,
           snapshot: createPublishedSiteSnapshot(detailState, detailSite, { source: "platform-state" })
@@ -676,15 +677,16 @@ export default async function HostStorefrontCatchAllPage({
     if (!siteSlug) notFound();
     return renderCustomerWorkspacePageBySlug({ siteSlug, slug, query, routeMode: "host" });
   }
-  if (isAidreamcapesImageThemePath(hostSiteSlug, slug)) {
-    const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, slug);
+  const imageThemePath = aidreamcapesImageThemePathForRequest(hostSiteSlug, slug);
+  if (imageThemePath) {
+    const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, imageThemePath);
     const detailSite = (detailState ? getSiteByHostCandidatesFromState(detailState, hostCandidates) : undefined) ?? detailState?.sites[0];
-    const detailPage = detailSite ? findPage(detailSite, slug) : undefined;
+    const detailPage = detailSite ? findPage(detailSite, imageThemePath) : undefined;
     if (!detailState || !detailSite || !detailPage || !imageThemeDetailContentFromPage(detailPage)) notFound();
     return renderStorefrontPage({
       site: detailSite,
-      slug,
-      publicPath: slug,
+      slug: imageThemePath,
+      publicPath: imageThemePath,
       query: searchParams ? await searchParams : {},
       routeMode: "host",
       state: detailState,

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { isAidreamcapesSite } from "@/lib/storefront-context/capabilities";
-import { storefrontOrigin } from "@/lib/storefront-context/seo-projection";
+import { canonicalAbsoluteUrlForSite } from "@/lib/storefront-context/seo-projection";
 import type { Site, ThemePage, ThemeSettings } from "@/lib/types";
 
 function cleanText(value: string | undefined, fallback = ""): string {
@@ -35,10 +35,7 @@ export function robotsForPage(page: Pick<ThemePage, "slug" | "pageType">): { ind
 }
 
 function absoluteUrl(site: Site, pathOrUrl: string | undefined): string | undefined {
-  const value = cleanText(pathOrUrl);
-  if (!value) return undefined;
-  if (/^https?:\/\//i.test(value)) return value;
-  return `${storefrontOrigin(site)}${value.startsWith("/") ? value : `/${value}`}`;
+  return canonicalAbsoluteUrlForSite(site, cleanText(pathOrUrl));
 }
 
 function settingText(value: unknown): string | undefined {
@@ -118,6 +115,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
   const articleImageAlt = isArticle ? settingText(articleSettings?.imageAlt) : undefined;
   const ogImageAlt = articleImageAlt ?? settingText(seo.ogImageAlt) ?? settingText(page.publishedJson.seo?.ogImageAlt);
   const isAidreamcapesEu = site.id === "site_aidreamcapes_xby";
+  const isAidreamshoots = site.id === "site_mydreamshoots_xby";
   return {
     title: seo.title,
     description: seo.description,
@@ -132,7 +130,12 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
       description: seo.description,
       url: canonical,
       siteName: cleanText(context.settings.seo?.siteTitle, brandName(site)),
-      ...(isArticle || isAidreamcapesAdsTestingPage(site, page) || isAidreamcapesEuSaveTheDatePage(site, page) || isAidreamcapesEu ? { type: isAidreamcapesEu ? "website" as const : isArticle ? "article" as const : "website" as const } : {}),
+      // Keep the social graph explicit for every public AIdreamshoots page.
+      // Articles are the only pages that should be marked as article; all
+      // other public storefront pages are website shares.
+      ...(isArticle || isAidreamshoots || isAidreamcapesAdsTestingPage(site, page) || isAidreamcapesEuSaveTheDatePage(site, page) || isAidreamcapesEu
+        ? { type: isArticle ? "article" as const : "website" as const }
+        : {}),
       ...(articlePublishedTime ? { publishedTime: articlePublishedTime } : {}),
       ...(articleModifiedTime ? { modifiedTime: articleModifiedTime } : {}),
       images: ogImage ? [{ url: ogImage, ...(ogImageAlt ? { alt: ogImageAlt } : {}) }] : undefined
