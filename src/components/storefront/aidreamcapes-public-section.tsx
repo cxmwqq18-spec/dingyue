@@ -128,23 +128,24 @@ function pageImageSources(page: ThemePageJson, resolveAsset: Resolve): string[] 
   return Array.from(new Set(sources));
 }
 
-function ImageFrame({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
+function ImageFrame({ src, alt, className = "", objectPosition }: { src: string; alt: string; className?: string; objectPosition?: string }) {
   if (!src) return null;
-  return <img className={className} src={src} alt={alt} loading="lazy" />;
+  return <img className={className} src={src} alt={alt} loading="lazy" style={objectPosition ? { objectPosition } : undefined} />;
 }
 
 function HeroOrbit({ page, section, resolveAsset }: { page: ThemePageJson; section: SectionInstance; resolveAsset: Resolve }) {
   const sources = pageImageSources(page, resolveAsset);
   const current = setting(section, "imageUrl") ? resolveAsset(setting(section, "imageUrl")) : sources[0] ?? "";
-  const side = sources.find((source) => source !== current) ?? "";
+  const explicitSide = setting(section, "secondaryImageUrl") ? resolveAsset(setting(section, "secondaryImageUrl")) : "";
+  const side = explicitSide || sources.find((source) => source !== current) || "";
   if (!current) return null;
   return (
     <div className="ac-hero-orbit" aria-label={setting(section, "imageAlt", setting(section, "title"))}>
       <figure className="ac-orbit-card ac-orbit-main">
-        <ImageFrame src={current} alt={setting(section, "imageAlt", setting(section, "title"))} />
+        <ImageFrame src={current} alt={setting(section, "imageAlt", setting(section, "title"))} objectPosition={setting(section, "imageObjectPosition")} />
         {setting(section, "imageCaption") ? <figcaption className="ac-image-label">{setting(section, "imageCaption")}</figcaption> : null}
       </figure>
-      {side ? <figure className="ac-orbit-card ac-orbit-side"><ImageFrame src={side} alt={setting(section, "imageAlt", setting(section, "title"))} /><figcaption className="ac-image-label">{setting(section, "secondaryImageCaption", setting(section, "imageCaption"))}</figcaption></figure> : null}
+      {side ? <figure className="ac-orbit-card ac-orbit-side"><ImageFrame src={side} alt={setting(section, "secondaryImageAlt", setting(section, "imageAlt", setting(section, "title")))} objectPosition={setting(section, "secondaryImageObjectPosition")} /><figcaption className="ac-image-label">{setting(section, "secondaryImageCaption", setting(section, "imageCaption"))}</figcaption></figure> : null}
       {setting(section, "orbitNote") ? <span className="ac-orbit-note">{setting(section, "orbitNote")}</span> : null}
     </div>
   );
