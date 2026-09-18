@@ -109,6 +109,34 @@ const SEO_REPLACEMENTS = new Map([
     title: "AI Motion Generator for Product Ideas | Aidreamcapes",
     description: "Create a short motion concept from an approved image and direction. Review movement, edges, objects, faces, and timing before using the result in a project."
   }],
+  ["/ai-video-generation", {
+    title: "AI Video Generation Tools for Creators | Aidreamcapes",
+    description: "Explore Aidreamcapes video tools for image-to-video clips, creator intros, product teasers, fashion reels, animated portraits, and private stories."
+  }],
+  ["/ai-video-generation/cinematic-video", {
+    title: "AI Cinematic Video Generator for Brands | Aidreamcapes",
+    description: "Create cinematic video scenes with mood, lighting, pacing, and camera movement for short films, product launches, music visuals, and brand stories."
+  }],
+  ["/ai-video-generation/music-video", {
+    title: "AI Music Video Generator for Creators | Aidreamcapes",
+    description: "Create music video visuals from text or images for performances, artist promos, dance, and sequences. Review continuity and use licensed audio."
+  }],
+  ["/ai-video-generation/product-video", {
+    title: "AI Product Video Generator for Stores | Aidreamcapes",
+    description: "Turn product photos into videos that show scale, materials, features, real-world use, packaging, and the details shoppers need before they decide to buy."
+  }],
+  ["/ai-video-generation/promo-video", {
+    title: "AI Promo Video Generator for Campaigns | Aidreamcapes",
+    description: "Create promotional videos for launches, events, seasonal campaigns, and product updates. Keep offers, claims, terms, and calls to action under your control."
+  }],
+  ["/ai-video-generation/ugc-ad-video", {
+    title: "AI UGC Ad Video Generator for Brands | Aidreamcapes",
+    description: "Create creator-style product ads with clear hooks, product-in-use scenes, voiceover, and calls to action. Check every claim against approved product assets."
+  }],
+  ["/ai-save-the-date/proposal", {
+    title: "AI Proposal Video Maker for Couples | Aidreamcapes",
+    description: "Create a proposal video from approved photos and a clear story, with room for the setup, reveal, reaction, and final message before sharing."
+  }],
   ["/ai-video-generation/pet-video", {
     title: "AI Pet Video Generator for Stories | Aidreamcapes",
     description: "Create a playful pet video from approved photos while keeping the animal recognizable. Review movement, body shape, background, and framing before sharing."
@@ -195,6 +223,110 @@ const SEO_REPLACEMENTS = new Map([
   }]
 ]);
 
+// Replace only public route references in the Aidreamcapes content payload.
+// Asset filenames and ordinary prose are intentionally left untouched. The
+// target pages are the only rows passed through this function, so other
+// storefronts cannot inherit these route changes.
+const LEGACY_ROUTE_REPLACEMENTS = new Map([
+  ["/ai-image-generation/rich-lifestyle", "/ai-image-generation/lifestyle-scene"],
+  ["/ai-image-generation/social-cards", "/ai-image-generation/carousel-set"],
+  ["/ai-image-generation/black-friday", "/ai-image-generation/sale-campaign-key-visual"],
+  ["/ai-image-generation/street-style", "/ai-image-generation/fashion-editorial"],
+  ["/ai-image-generation/hairstyle-generator", "/ai-image-generation/hair-makeup-preview"],
+  ["/ai-image-generation/edit-by-prompt", "/ai-image-generation/enhance-upscale"],
+  ["/ai-image-generation/background-remover", "/ai-image-generation/background-remove-replace"],
+  ["/ai-image-generation/photo-enhancer", "/ai-image-generation/enhance-upscale"],
+  ["/ai-image-generation/old-photo-restoration", "/ai-image-generation/old-photo-restore"],
+  ["/ai-image-generation/headshot", "/ai-image-generation/professional-headshot"],
+  ["/ai-image-generation/avatar", "/ai-image-generation/creator-portrait"],
+  ["/ai-image-generation/portrait-photo", "/ai-image-generation/social-profile-photo"],
+  ["/tools/product-reverie", "/ai-image-generation/ecommerce-main-image"],
+  ["/tools/permission-safe-photo-planner", "/workflow"],
+  ["/ai-image-generation/background-changer", "/ai-image-generation"],
+  ["/ai-image-generation/bikini", "/ai-image-generation"],
+  ["/ai-image-generation/boudoir", "/ai-image-generation"],
+  ["/ai-image-generation/cannes", "/ai-image-generation"],
+  ["/ai-image-generation/christmas-photo", "/ai-image-generation"],
+  ["/ai-image-generation/color-correction", "/ai-image-generation"],
+  ["/ai-image-generation/cyberpunk", "/ai-image-generation"],
+  ["/ai-image-generation/engagement-photo", "/ai-image-generation"],
+  ["/ai-image-generation/gala-photo", "/ai-image-generation"],
+  ["/ai-image-generation/halloween-photo", "/ai-image-generation"],
+  ["/ai-image-generation/holiday", "/ai-image-generation"],
+  ["/ai-image-generation/mafia", "/ai-image-generation"],
+  ["/ai-image-generation/magic-eraser", "/ai-image-generation"],
+  ["/ai-image-generation/nightlife", "/ai-image-generation"],
+  ["/ai-image-generation/only-fans", "/ai-image-generation"],
+  ["/ai-image-generation/portrait-retouch", "/ai-image-generation"],
+  ["/ai-image-generation/singles-awareness-day", "/ai-image-generation"],
+  ["/ai-image-generation/soccer", "/ai-image-generation"],
+  ["/ai-image-generation/swimsuit", "/ai-image-generation"],
+  ["/ai-image-generation/thanksgiving-photo", "/ai-image-generation"],
+  ["/ai-image-generation/travel", "/ai-image-generation"],
+  ["/ai-image-generation/unblur-image", "/ai-image-generation"],
+  ["/ai-image-generation/urban", "/ai-image-generation"],
+  ["/ai-image-generation/valentines-photo", "/ai-image-generation"],
+  ["/ai-image-generation/wedding-photo", "/ai-image-generation"],
+  ["/ai-image-generation/premiere-style-portraits", "/ai-image-generation/fashion-editorial"]
+]);
+
+const LEGACY_IMAGE_SLUG_REPLACEMENTS = new Map([
+  ["rich-lifestyle", "lifestyle-scene"],
+  ["social-cards", "carousel-set"],
+  ["black-friday", "sale-campaign-key-visual"],
+  ["street-style", "fashion-editorial"],
+  ["hairstyle-generator", "hair-makeup-preview"],
+  ["edit-by-prompt", "enhance-upscale"],
+  ["background-remover", "background-remove-replace"],
+  ["photo-enhancer", "enhance-upscale"],
+  ["old-photo-restoration", "old-photo-restore"],
+  ["headshot", "professional-headshot"],
+  ["avatar", "creator-portrait"],
+  ["portrait-photo", "social-profile-photo"],
+  ["motion-generator", ""],
+  ["background-changer", ""],
+  ["bikini", ""],
+  ["boudoir", ""],
+  ["cannes", ""],
+  ["christmas-photo", ""],
+  ["color-correction", ""],
+  ["cyberpunk", ""],
+  ["engagement-photo", ""],
+  ["gala-photo", ""],
+  ["halloween-photo", ""],
+  ["holiday", ""],
+  ["mafia", ""],
+  ["magic-eraser", ""],
+  ["nightlife", ""],
+  ["only-fans", ""],
+  ["portrait-retouch", ""],
+  ["singles-awareness-day", ""],
+  ["soccer", ""],
+  ["swimsuit", ""],
+  ["thanksgiving-photo", ""],
+  ["travel", ""],
+  ["unblur-image", ""],
+  ["urban", ""],
+  ["valentines-photo", ""],
+  ["wedding-photo", ""],
+  ["premiere-style-portraits", "fashion-editorial"]
+]);
+
+const LEGACY_IMAGE_LABEL_REPLACEMENTS = new Map([
+  ["rich-lifestyle", "lifestyle scene"],
+  ["social-cards", "carousel ad"],
+  ["black-friday", "sale campaign"],
+  ["street-style", "fashion editorial"],
+  ["hairstyle-generator", "hair and makeup preview"],
+  ["edit-by-prompt", "image enhancement"],
+  ["background-remover", "background remove and replace"],
+  ["photo-enhancer", "image enhancer"],
+  ["old-photo-restoration", "old photo restore"],
+  ["headshot", "professional headshot"],
+  ["avatar", "creator portrait"],
+  ["portrait-photo", "social profile photo"]
+]);
+
 function clone(value) {
   return value === undefined ? undefined : structuredClone(value);
 }
@@ -225,8 +357,43 @@ function updateSeoValue(value) {
   ]));
 }
 
+function updateRouteReferenceValue(value, key) {
+  if (typeof value !== "string") return value;
+  if (key === "imageSlugs") {
+    return value
+      .split("|")
+      .map((slug) => slug.trim().toLowerCase())
+      .map((slug) => LEGACY_IMAGE_SLUG_REPLACEMENTS.has(slug) ? LEGACY_IMAGE_SLUG_REPLACEMENTS.get(slug) : slug)
+      .filter(Boolean)
+      .filter((slug, index, values) => values.indexOf(slug) === index)
+      .join("|");
+  }
+  if (/(?:meta|label)/i.test(key)) {
+    const replacement = LEGACY_IMAGE_LABEL_REPLACEMENTS.get(value.trim().toLowerCase());
+    if (replacement) return replacement;
+  }
+  if (!/(?:href|url|canonical|path|target|link|collectionSlug|categorySlug|rootSlug|themeSlug)/i.test(key)) return value;
+  let next = value;
+  const segmentReplacement = LEGACY_IMAGE_SLUG_REPLACEMENTS.get(next.trim().toLowerCase());
+  if (segmentReplacement !== undefined) return segmentReplacement;
+  for (const [from, to] of LEGACY_ROUTE_REPLACEMENTS) {
+    const escaped = from.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    next = next.replace(new RegExp(`(^|https?:\\/\\/[^\\s/]+|[\\s])${escaped}(?=$|[?#\\s])`, "gi"), `$1${to}`);
+  }
+  return next;
+}
+
+function updateContentValue(value, key = "") {
+  if (Array.isArray(value)) return value.map((item) => updateContentValue(item, key));
+  if (!value || typeof value !== "object") return updateRouteReferenceValue(value, key);
+  return Object.fromEntries(Object.entries(value).map(([childKey, child]) => [
+    childKey,
+    updateContentValue(child, childKey)
+  ]));
+}
+
 function nextPage(row) {
-  const contentJson = clone(row.contentJson) ?? {};
+  const contentJson = updateContentValue(clone(row.contentJson) ?? {});
   const seo = updateSeoValue(contentJson.seo ?? {});
   const replacement = SEO_REPLACEMENTS.get(row.slug);
   if (replacement) Object.assign(seo, replacement);
@@ -308,22 +475,24 @@ async function main() {
     assert.equal(site.primaryDomain.toLowerCase(), "www.aidreamcapes.com", `${SITE_ID}: unexpected primary domain.`);
 
     const staleRows = livePages.filter((row) => row.slug === STALE_SLUG);
-    assert.equal(staleRows.length, 1, `${SITE_ID}${STALE_SLUG}: expected exactly one stale LivePage row.`);
+    assert(staleRows.length <= 1, `${SITE_ID}${STALE_SLUG}: found more than one stale LivePage row.`);
     const stale = staleRows[0];
-    assert.equal(stale.id, STALE_ID, `${STALE_SLUG}: stale row id changed; refusing deletion.`);
-    assert.equal(stale.siteId, SITE_ID, `${STALE_SLUG}: stale row belongs to another site.`);
-    assert.equal(stale.templateKey, "product", `${STALE_SLUG}: unexpected template key; refusing deletion.`);
-    assert.equal(stale.contentJson?.contentContract, undefined, `${STALE_SLUG}: content contract exists; refusing deletion.`);
-    assert.equal(stale.contentJson?.mediaManifest, undefined, `${STALE_SLUG}: media manifest exists; refusing deletion.`);
-    const staleMediaReferences = [...new Set(collectStringReferences(stale.contentJson, "/assets/"))];
-    for (const mediaReference of staleMediaReferences) {
-      const shared = allLivePages.some((row) => row.id !== stale.id && collectStringReferences(row.contentJson, mediaReference).length > 0);
-      assert(shared, `${STALE_SLUG}: page-specific media reference ${mediaReference}; refusing deletion.`);
+    if (stale) {
+      assert.equal(stale.id, STALE_ID, `${STALE_SLUG}: stale row id changed; refusing deletion.`);
+      assert.equal(stale.siteId, SITE_ID, `${STALE_SLUG}: stale row belongs to another site.`);
+      assert.equal(stale.templateKey, "product", `${STALE_SLUG}: unexpected template key; refusing deletion.`);
+      assert.equal(stale.contentJson?.contentContract, undefined, `${STALE_SLUG}: content contract exists; refusing deletion.`);
+      assert.equal(stale.contentJson?.mediaManifest, undefined, `${STALE_SLUG}: media manifest exists; refusing deletion.`);
+      const staleMediaReferences = [...new Set(collectStringReferences(stale.contentJson, "/assets/"))];
+      for (const mediaReference of staleMediaReferences) {
+        const shared = allLivePages.some((row) => row.id !== stale.id && collectStringReferences(row.contentJson, mediaReference).length > 0);
+        assert(shared, `${STALE_SLUG}: page-specific media reference ${mediaReference}; refusing deletion.`);
+      }
+      const references = allLivePages.filter((row) => row.id !== stale.id && collectStringReferences(row.contentJson, STALE_ID).length > 0);
+      assert.equal(references.length, 0, `${STALE_ID}: referenced by another LivePage; refusing deletion.`);
     }
-    const references = allLivePages.filter((row) => row.id !== stale.id && collectStringReferences(row.contentJson, STALE_ID).length > 0);
-    assert.equal(references.length, 0, `${STALE_ID}: referenced by another LivePage; refusing deletion.`);
 
-    const prepared = livePages.filter((row) => row.id !== stale.id).map(nextPage);
+    const prepared = livePages.filter((row) => !stale || row.id !== stale.id).map(nextPage);
     const changes = prepared.filter((row) => {
       const before = livePages.find((candidate) => candidate.id === row.id);
       return before && (before.title !== row.title || hash(before.contentJson) !== hash(row.contentJson));
@@ -333,7 +502,9 @@ async function main() {
       ok: true,
       mode: apply ? "apply" : "dry-run",
       target: { siteId: SITE_ID, siteSlug: SITE_SLUG, databaseTarget: target },
-      staleDeletion: { id: stale.id, slug: stale.slug, templateKey: stale.templateKey },
+      staleDeletion: stale
+        ? { id: stale.id, slug: stale.slug, templateKey: stale.templateKey }
+        : { id: null, slug: STALE_SLUG, status: "already-clean" },
       beforeLivePageCount: livePages.length,
       afterLivePageCount: prepared.length,
       changedLivePageCount: changes.length,
@@ -359,16 +530,16 @@ async function main() {
       for (const row of changes) {
         await tx.livePage.update({ where: { id: row.id }, data: { title: row.title, contentJson: row.contentJson } });
       }
-      await tx.livePage.delete({ where: { id: stale.id } });
+      if (stale) await tx.livePage.delete({ where: { id: stale.id } });
     }, { maxWait: 10000, timeout: 120000 });
 
     const [afterPages, afterOtherSites, deletedRow] = await Promise.all([
       prisma.livePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, slug: true, title: true, contentJson: true } }),
       otherSiteSentinel(prisma),
-      prisma.livePage.findUnique({ where: { id: stale.id }, select: { id: true } })
+      stale ? prisma.livePage.findUnique({ where: { id: stale.id }, select: { id: true } }) : null
     ]);
     assert.equal(deletedRow, null, `${STALE_ID}: stale row still exists after migration.`);
-    assert.equal(afterPages.length, livePages.length - 1, `${SITE_ID}: unexpected LivePage count after migration.`);
+    assert.equal(afterPages.length, livePages.length - (stale ? 1 : 0), `${SITE_ID}: unexpected LivePage count after migration.`);
     assert.equal(afterOtherSites.hash, beforeOtherSites.hash, "A non-target site's data changed; migration is not considered safe.");
     const afterById = new Map(afterPages.map((row) => [row.id, row]));
     for (const row of prepared) {

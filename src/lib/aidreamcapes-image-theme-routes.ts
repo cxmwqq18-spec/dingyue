@@ -56,7 +56,43 @@ const retiredImageThemePaths = [
   "/tools/permission-safe-photo-planner"
 ] as const;
 
+// These are legacy collection/fallback paths that were still being exposed by
+// the shared catalogue projection. They are retired for Aidreamcapes only;
+// the same slugs remain available to other storefronts where they are valid.
+const retiredImageCollectionPaths = [
+  "/ai-image-generation/background-changer",
+  "/ai-image-generation/bikini",
+  "/ai-image-generation/boudoir",
+  "/ai-image-generation/cannes",
+  "/ai-image-generation/christmas-photo",
+  "/ai-image-generation/color-correction",
+  "/ai-image-generation/cyberpunk",
+  "/ai-image-generation/engagement-photo",
+  "/ai-image-generation/gala-photo",
+  "/ai-image-generation/halloween-photo",
+  "/ai-image-generation/holiday",
+  "/ai-image-generation/mafia",
+  "/ai-image-generation/magic-eraser",
+  "/ai-image-generation/nightlife",
+  "/ai-image-generation/only-fans",
+  "/ai-image-generation/portrait-retouch",
+  "/ai-image-generation/singles-awareness-day",
+  "/ai-image-generation/soccer",
+  "/ai-image-generation/swimsuit",
+  "/ai-image-generation/thanksgiving-photo",
+  "/ai-image-generation/travel",
+  "/ai-image-generation/unblur-image",
+  "/ai-image-generation/urban",
+  "/ai-image-generation/valentines-photo",
+  "/ai-image-generation/wedding-photo",
+  "/ai-image-generation/premiere-style-portraits"
+] as const;
+
 export const AIDREAMCAPES_RETIRED_IMAGE_TOOL_PATHS = new Set<string>(retiredImageThemePaths);
+export const AIDREAMCAPES_RETIRED_PUBLIC_PATHS = new Set<string>([
+  ...retiredImageThemePaths,
+  ...retiredImageCollectionPaths
+]);
 
 const imageThemeByPath = new Map(
   AIDREAMCAPES_IMAGE_THEME_DEFINITIONS.map((definition) => [
@@ -95,4 +131,8 @@ export function isAidreamcapesEcommerceMainImagePath(siteSlug: string | undefine
 
 export function isRetiredAidreamcapesImageToolPath(siteSlug: string | undefined, path: string): boolean {
   return siteSlug === "aidreamcapes" && AIDREAMCAPES_RETIRED_IMAGE_TOOL_PATHS.has(path.replace(/\/$/, ""));
+}
+
+export function isRetiredAidreamcapesPublicPath(siteSlug: string | undefined, path: string): boolean {
+  return siteSlug === "aidreamcapes" && AIDREAMCAPES_RETIRED_PUBLIC_PATHS.has(path.replace(/\/$/, ""));
 }

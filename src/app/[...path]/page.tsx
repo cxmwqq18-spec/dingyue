@@ -28,7 +28,7 @@ import { isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-pub
 import { customerSessionCookie } from "@/lib/session";
 import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
-import { aidreamcapesImageThemePathForRequest, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { aidreamcapesImageThemePathForRequest, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
@@ -447,7 +447,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
   const imageThemePath = aidreamcapesImageThemePathForRequest(hostSiteSlug, requestedPath);
   if (isAidreamshootsPublicSlug(hostSiteSlug) && aidreamshootsLegacyVideoSaveTheDatePath(requestedPath)) return {};
-  if (isRetiredAidreamcapesImageToolPath(hostSiteSlug, requestedPath)) return {};
+  if (isRetiredAidreamcapesPublicPath(hostSiteSlug, requestedPath)) return {};
   if (imageThemePath) {
     const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, imageThemePath);
     const detailSite = (detailState ? getSiteByHostCandidatesFromState(detailState, hostCandidates) : undefined) ?? detailState?.sites[0];
@@ -615,7 +615,7 @@ export default async function HostStorefrontCatchAllPage({
     ? aidreamshootsLegacyVideoSaveTheDatePath(slug)
     : undefined;
   if (aidreamshootsLegacySaveTheDateTarget) permanentRedirect(aidreamshootsLegacySaveTheDateTarget);
-  if (isRetiredAidreamcapesImageToolPath(hostSiteSlug, slug)) notFound();
+  if (isRetiredAidreamcapesPublicPath(hostSiteSlug, slug)) notFound();
   if (hostSiteSlug === "aidreamcapes") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);
     if (legacySaveTheDateTarget) permanentRedirect(legacySaveTheDateTarget);

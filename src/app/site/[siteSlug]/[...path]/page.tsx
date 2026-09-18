@@ -19,7 +19,7 @@ import { publicSiteSlug } from "@/lib/domain-routing";
 import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
 import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
-import { aidreamcapesImageThemePathForRequest, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { aidreamcapesImageThemePathForRequest, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { canonicalUrlForSite, createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
@@ -328,6 +328,9 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
         })
       : {};
   }
+  if (isRetiredAidreamcapesPublicPath(publicSiteSlug(siteSlug), requestedSlug)) {
+    return { robots: { index: false, follow: false } };
+  }
   if (isAidreamcapesEuRetiredPublicPath(publicSiteSlug(siteSlug), requestedSlug)) return { robots: { index: false, follow: false } };
   if (publicSiteSlug(siteSlug) === "aidreamcapes") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(requestedSlug);
@@ -516,7 +519,7 @@ export default async function SiteCatchAllPage({
     });
   }
   if (isAidreamcapesEuRetiredPublicPath(publicSlug, slug)) notFound();
-  if (isRetiredAidreamcapesImageToolPath(publicSlug, slug)) notFound();
+  if (isRetiredAidreamcapesPublicPath(publicSlug, slug)) notFound();
   if (publicSlug === "aidreamcapes") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);
     if (legacySaveTheDateTarget) permanentRedirect(routePath(legacySaveTheDateTarget));
