@@ -100,6 +100,10 @@ async function inspectPage(page, pathname, { expectIndexable = true, expectedSta
       src: image.currentSrc || image.src,
       rawSrc: image.getAttribute("src") || "",
       alt: image.getAttribute("alt"),
+      width: image.getAttribute("width"),
+      height: image.getAttribute("height"),
+      loading: image.getAttribute("loading"),
+      fetchPriority: image.getAttribute("fetchpriority"),
       decorative: image.getAttribute("aria-hidden") === "true" || ["presentation", "none"].includes(image.getAttribute("role") || "")
     }));
     const links = [...document.querySelectorAll("a[href]")].map((link) => link.getAttribute("href") || "");
@@ -114,13 +118,25 @@ async function inspectPage(page, pathname, { expectIndexable = true, expectedSta
       lang: document.documentElement.lang,
       title: document.title.trim(),
       description: document.querySelector('meta[name="description"]')?.getAttribute("content")?.trim() || "",
+      ogType: document.querySelector('meta[property="og:type"]')?.getAttribute("content")?.trim().toLowerCase() || "",
       robots: document.querySelector('meta[name="robots"]')?.getAttribute("content")?.toLowerCase() || "",
       canonical: document.querySelector('link[rel="canonical"]')?.href?.replace(/\/$/, "") || "",
       h1Count: document.querySelectorAll("main h1, body > h1").length,
       images,
       badSources,
       jsonLd,
-      jsonLdErrors
+      jsonLdErrors,
+      topicMediaIssues: [...document.querySelectorAll("[data-video-topic-media], [data-video-topic-hero-media]")].flatMap((container) => {
+        const image = container.querySelector("img");
+        if (!image) return ["media container without an image"];
+        const width = Number(image.getAttribute("width"));
+        const height = Number(image.getAttribute("height"));
+        return [
+          !image.getAttribute("src")?.trim() ? "empty image source" : "",
+          !(width > 0 && height > 0) ? "image dimensions missing" : "",
+          !image.getAttribute("loading") ? "image loading strategy missing" : ""
+        ].filter(Boolean);
+      })
     };
   });
   const responseRobots = response?.headers()["x-robots-tag"] || "";
@@ -131,12 +147,14 @@ async function inspectPage(page, pathname, { expectIndexable = true, expectedSta
   if (expectIndexable) {
     assert(result.title, `${pathname} needs a title`);
     assert(result.description, `${pathname} needs a meta description`);
+    assert(["website", "article"].includes(result.ogType), `${pathname} needs an explicit og:type`);
     assert.equal(result.canonical, canonicalFor(pathname), `${pathname} has the wrong canonical`);
     assert.match(result.robots, /\bindex\b/, `${pathname} must be indexable`);
     assert.match(result.robots, /\bfollow\b/, `${pathname} must be followable`);
     assert.equal(result.h1Count, 1, `${pathname} must have one H1`);
     assert.equal(result.jsonLdErrors.length, 0, `${pathname} has invalid JSON-LD: ${result.jsonLdErrors.join("; ")}`);
     assert.equal(result.images.filter((image) => !image.alt?.trim() && !image.decorative).length, 0, `${pathname} has an accidental empty image alt`);
+    assert.deepEqual(result.topicMediaIssues, [], `${pathname} has invalid or empty topic media: ${result.topicMediaIssues.join("; ")}`);
     assert.equal(result.badSources.length, 0, `${pathname} contains legacy, local, or HTTP media/link URLs: ${result.badSources.slice(0, 3).join(", ")}`);
     if (pathname === "/") {
       assert(types.has("Organization"), "homepage needs Organization JSON-LD");

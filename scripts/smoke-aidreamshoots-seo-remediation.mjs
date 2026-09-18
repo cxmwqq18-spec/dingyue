@@ -175,6 +175,9 @@ function inspectPage(pathname, response) {
   const descriptions = openTags(response.body.match(/<head\b[\s\S]*?<\/head>/i)?.[0] || response.body, "meta")
     .filter((tag) => hasAttr(tag, "name", "description"))
     .map((tag) => attr(tag, "content"));
+  const ogTypes = openTags(response.body.match(/<head\b[\s\S]*?<\/head>/i)?.[0] || response.body, "meta")
+    .filter((tag) => hasAttr(tag, "property", "og:type"))
+    .map((tag) => attr(tag, "content").toLowerCase());
   const canonicals = openTags(response.body, "link")
     .filter((tag) => /\brel=["']canonical["']/i.test(tag))
     .map((tag) => attr(tag, "href"));
@@ -204,6 +207,7 @@ function inspectPage(pathname, response) {
   check(`${pathname}: lang=es`, attr(htmlTag, "lang") === "es", attr(htmlTag, "lang"));
   check(`${pathname}: one non-empty title`, title.length > 0, title);
   check(`${pathname}: one non-empty description`, descriptions.length === 1 && descriptions[0].trim().length > 0, descriptions);
+  check(`${pathname}: explicit og:type`, ogTypes.length === 1 && (ogTypes[0] === "website" || ogTypes[0] === "article"), ogTypes);
   check(`${pathname}: canonical is production URL`, canonicals.length === 1 && canonicals[0].replace(/\/$/, "") === absoluteCanonical(pathname).replace(/\/$/, ""), canonicals);
   check(`${pathname}: indexable robots`, robots.length === 1 && /\bindex\b/i.test(robots[0]) && /\bfollow\b/i.test(robots[0]), robots);
   check(`${pathname}: one primary H1`, h1s.length === 1, h1s);
@@ -228,6 +232,7 @@ async function run() {
   check("sitemap.xml: absolute production HTTPS URLs", sitemapLocs.every((loc) => loc.startsWith(`${productionOrigin}/`)), sitemapLocs.filter((loc) => !loc.startsWith(`${productionOrigin}/`)).slice(0, 10));
   check("sitemap.xml: no alias URLs", sitemapPaths.every((path) => !/^\/collections(?:\/|$)/i.test(path) && !/^\/ai-image-generation\/collections-/i.test(path) && !/^\/ai-video-generation\/(christmas|engagement|fathers-day|halloween|mothers-day|new-year|proposal|save-the-date|thanksgiving|valentines-day|wedding-ceremony|wedding-invitation)$/i.test(path)), sitemapPaths.filter((path) => /^\/collections(?:\/|$)/i.test(path) || /^\/ai-image-generation\/collections-/i.test(path)));
   check("sitemap.xml: excludes private/error paths", sitemapPaths.every((path) => !/^\/(login|404|account|app|dashboard|gallery)(?:\/|$)/i.test(path)), sitemapPaths.filter((path) => /^\/(login|404|account|app|dashboard|gallery)(?:\/|$)/i.test(path)));
+  check("sitemap.xml: expected AIdreamshoots coverage", sitemapPaths.length === 135, { expected: 135, actual: sitemapPaths.length });
 
   if (!skipSitemapStatus) {
     for (const path of sitemapPaths) {
