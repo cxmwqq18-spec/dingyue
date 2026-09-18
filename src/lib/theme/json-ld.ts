@@ -1407,7 +1407,8 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
 }
 
 export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
-  const routeInput: JsonLdInput = input.context
+  const isImageThemeRoute = isAidreamcapesImageThemePath(input.site.slug, input.pagePath);
+  const routeInput: JsonLdInput = input.context && !isImageThemeRoute
     ? { ...input, pagePath: input.context.seo.canonicalPath }
     : input;
   const resolvedInput: JsonLdInput = isAidreamcapesImageThemePath(routeInput.site.slug, routeInput.pagePath)

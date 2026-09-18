@@ -11,6 +11,12 @@ import type { CreativePack, PlatformState, Product, Site, ThemePage } from "@/li
 
 function canonicalMetadataPath(site: Site, value: unknown, fallback = "/"): string {
   const normalized = normalizeCanonicalPath(value, fallback);
+  // Registered Aidreamcapes image themes own their public URL. Do not pass
+  // them through the collection-directory alias projection, which can map a
+  // current theme such as fashion-editorial to a legacy collection slug.
+  if (site.id === "site_aidreamcapes" && isAidreamcapesImageThemePath(site.slug, normalized)) {
+    return normalized;
+  }
   return /^\/(?:collections|ai-image-generation)(?:\/|$)/i.test(normalized)
     ? canonicalSeoDirectoryPathForSite(site, "collection", normalized)
     : normalized;
@@ -65,7 +71,13 @@ export async function metadataForPublishedStorefrontPage({
     : undefined;
   const metadataPath = canonicalMetadataPath(
     snapshot.site,
-    path === page.slug ? context.seo.canonicalPath : path,
+    // Image-theme routes are authoritative at their requested path. The
+    // generic storefront projection can still resolve an old collection
+    // alias for the same slug, which would leak a legacy canonical into the
+    // new theme detail page.
+    isAidreamcapesImageThemePath(snapshot.site.slug, path)
+      ? path
+      : path === page.slug ? context.seo.canonicalPath : path,
     snapshotPage.slug
   );
   const publicRouteSeo = snapshot.site.id === "site_mydreamshoots_xby"

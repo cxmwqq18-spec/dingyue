@@ -601,15 +601,22 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
   const collectionItems = resolvePublicCollectionItems(snapshot);
   const entries = new Map<string, SitemapEntry>();
   for (const page of snapshot.pages) {
-    if (isAidreamcapesImageThemePath(site.slug, page.slug) && !imageThemeDetailContentFromPage(page)) continue;
+    const isRegisteredImageTheme = isAidreamcapesImageThemePath(site.slug, page.slug);
+    if (isRegisteredImageTheme && !imageThemeDetailContentFromPage(page)) continue;
     const sitemapPath = pageSitemapPathForSite(site, page);
     if (!sitemapPath) continue;
     const canonicalPath = canonicalDirectoryPathForSite(site, sitemapPath);
-    if (resolvePublishedRouteDisposition(snapshot, canonicalPath).kind !== "render") continue;
+    // The Aidreamcapes image-theme registry owns these public routes. During
+    // the migration a legacy publication may not yet have a matching route
+    // projection, even though the LivePage is published and the page request
+    // resolves correctly through the registry.
+    if (!isRegisteredImageTheme && resolvePublishedRouteDisposition(snapshot, canonicalPath).kind !== "render") continue;
     const effective = resolveEffectivePublishedPage(snapshot, canonicalPath);
-    if (effective.routeDisposition.kind !== "render" || !effective.indexability.sitemapEligible) continue;
+    if ((!isRegisteredImageTheme && effective.routeDisposition.kind !== "render") || (!isRegisteredImageTheme && !effective.indexability.sitemapEligible)) continue;
     const configuredCanonical = page.publishedJson.seo?.canonical?.trim();
-    const path = effective.context.seo.canonicalPath;
+    const path = isRegisteredImageTheme
+      ? canonicalPath
+      : effective.context.seo.canonicalPath;
     const loc = site.id === AIDREAMCAPES_SITE_ID
       ? sitemapUrl(site, path)
       : isAidreamcapesImageThemePath(site.slug, page.slug) && configuredCanonical && /^https?:\/\//i.test(configuredCanonical)
@@ -955,6 +962,10 @@ function canonicalBlogPathForSite(site: Site, path: string): string {
 
 function canonicalDirectoryPathForSite(site: Site, path: string): string {
   const normalized = normalizePath(path);
+  // Registered Aidreamcapes image themes own their public route. Keep them
+  // out of the legacy collection projection so sitemap entries, route
+  // eligibility, and page metadata all resolve the same canonical path.
+  if (isAidreamcapesImageThemePath(site.slug, normalized)) return normalized;
   if (isDreamshootSite(site) && ["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"].includes(normalized)) {
     return "/digital-delivery";
   }

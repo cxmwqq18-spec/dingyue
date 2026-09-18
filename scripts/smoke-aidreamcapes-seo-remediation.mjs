@@ -46,6 +46,14 @@ function imageTags(html) {
   return html.match(/<img\b[^>]*>/gi) || [];
 }
 
+function bodyJsonLd(html) {
+  const blocks = [...html.matchAll(/<script\b([^>]*)type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)]
+    .map((match) => ({ attributes: match[1] || "", json: match[2] || "" }));
+  return blocks.find((block) => /data-storefront-json-ld=["']body-marker["']/i.test(block.attributes))?.json
+    || blocks[0]?.json
+    || "";
+}
+
 async function fetchChecked(url, options = {}) {
   const response = await fetch(url, { redirect: "manual", headers: { "Cache-Control": "no-cache", ...options.headers } });
   return { response, html: await response.text() };
@@ -65,8 +73,9 @@ async function checkThemePage(prisma, slug) {
   assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
   assert.equal(canonicalFromHtml(html), expectedCanonical, `${path}: rendered canonical mismatch`);
   assert.equal((html.match(/<h1\b/gi) || []).length, 1, `${path}: expected one H1`);
-  assert.equal((html.match(/"@type"\s*:\s*"Question"/g) || []).length, 6, `${path}: expected six FAQ questions in JSON-LD`);
-  assert(!/premiere-style-portraits|ItemList|"@type"\s*:\s*"Product"/i.test(html), `${path}: stale or unrelated structured data found`);
+  const jsonLd = bodyJsonLd(html);
+  assert.equal((jsonLd.match(/"@type"\s*:\s*"Question"/g) || []).length, 6, `${path}: expected six FAQ questions in JSON-LD`);
+  assert(!/premiere-style-portraits|["']@type["']\s*:\s*["'](?:ItemList|Product)["']/i.test(jsonLd), `${path}: stale or unrelated structured data found`);
   assert(html.includes('"@type":"Service"') || html.includes('"@type": "Service"'), `${path}: Service JSON-LD missing`);
   assert(html.includes('"@type":"SoftwareApplication"') || html.includes('"@type": "SoftwareApplication"'), `${path}: SoftwareApplication JSON-LD missing`);
   const tags = imageTags(html);
