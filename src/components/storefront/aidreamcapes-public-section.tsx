@@ -128,9 +128,9 @@ function pageImageSources(page: ThemePageJson, resolveAsset: Resolve): string[] 
   return Array.from(new Set(sources));
 }
 
-function ImageFrame({ src, alt, className = "", objectPosition }: { src: string; alt: string; className?: string; objectPosition?: string }) {
+function ImageFrame({ src, alt, className = "", objectPosition, loading = "lazy" }: { src: string; alt: string; className?: string; objectPosition?: string; loading?: "eager" | "lazy" }) {
   if (!src) return null;
-  return <img className={className} src={src} alt={alt} loading="lazy" style={objectPosition ? { objectPosition } : undefined} />;
+  return <img className={className} src={src} alt={alt} height={1000} loading={loading} sizes="(max-width: 768px) 100vw, 50vw" style={objectPosition ? { objectPosition } : undefined} width={1600} />;
 }
 
 function HeroOrbit({ page, section, resolveAsset }: { page: ThemePageJson; section: SectionInstance; resolveAsset: Resolve }) {
@@ -142,7 +142,7 @@ function HeroOrbit({ page, section, resolveAsset }: { page: ThemePageJson; secti
   return (
     <div className="ac-hero-orbit" aria-label={setting(section, "imageAlt", setting(section, "title"))}>
       <figure className="ac-orbit-card ac-orbit-main">
-        <ImageFrame src={current} alt={setting(section, "imageAlt", setting(section, "title"))} objectPosition={setting(section, "imageObjectPosition")} />
+        <ImageFrame src={current} alt={setting(section, "imageAlt", setting(section, "title"))} loading="eager" objectPosition={setting(section, "imageObjectPosition")} />
         {setting(section, "imageCaption") ? <figcaption className="ac-image-label">{setting(section, "imageCaption")}</figcaption> : null}
       </figure>
       {side ? <figure className="ac-orbit-card ac-orbit-side"><ImageFrame src={side} alt={setting(section, "secondaryImageAlt", setting(section, "imageAlt", setting(section, "title")))} objectPosition={setting(section, "secondaryImageObjectPosition")} /><figcaption className="ac-image-label">{setting(section, "secondaryImageCaption", setting(section, "imageCaption"))}</figcaption></figure> : null}

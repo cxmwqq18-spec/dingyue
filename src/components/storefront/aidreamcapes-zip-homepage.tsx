@@ -54,6 +54,7 @@ function Media({
       fetchPriority={fetchPriority ?? (loading === "eager" ? "high" : "auto")}
       height={height}
       loading={loading}
+      sizes="(max-width: 768px) 100vw, 50vw"
       src={resolveAsset(src)}
       width={width}
     />

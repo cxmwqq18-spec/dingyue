@@ -1720,8 +1720,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                     alt={logoAlt}
                     title={logoAlt}
                     width={isDreamShoot ? 36 : 56}
-                    height={isDreamShoot ? 36 : 56}
-                  />
+                    height={isDreamShoot ? 36 : 56} loading="lazy" sizes="100vw" />
                 </span>
               ) : (
 	                <span className={lightCommerce || isAidreamcapes ? "flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#171514] text-[10px] font-semibold tracking-[0.16em] text-white" : "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-950 text-[10px] font-semibold tracking-[0.16em] text-white"}>
@@ -1845,7 +1844,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
             <div className={signedInClassName}>
               <HeaderLink aria-label={spanishXby ? "Abrir cuenta" : "Open account"} className="inline-flex min-w-0 items-center gap-2 rounded-full pr-1 transition hover:opacity-80 min-[1800px]:gap-3" href={hrefFor(site, "/account")} prefetch={!disablePublicSeoPrefetch}>
                 <span className={darkHeaderControls ? "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white text-[#101114] min-[1800px]:h-9 min-[1800px]:w-9" : "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#15171a] text-white min-[1800px]:h-9 min-[1800px]:w-9"}>
-                  {customer.profile?.avatarUrl ? <img className="h-full w-full rounded-full object-cover" src={customer.profile.avatarUrl} alt="" /> : <UserRound className="h-4 w-4" strokeWidth={1.8} />}
+                  {customer.profile?.avatarUrl ? <img className="h-full w-full rounded-full object-cover" src={customer.profile.avatarUrl} alt="" width={1600} height={1000} loading="lazy" sizes="100vw" /> : <UserRound className="h-4 w-4" strokeWidth={1.8} />}
                 </span>
                 <span className="hidden min-w-0 text-left lg:block">
                   <span className="block max-w-[8rem] truncate text-[0.82rem] font-semibold min-[1800px]:max-w-[10rem] min-[1800px]:text-sm">{customer.name}</span>
@@ -2646,7 +2645,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
               {isAidreamcapesFooter && !spanishXbyFooter ? (
                 <AidreamcapesLogoMark ariaLabel={logoAlt} className="h-10 w-10 shrink-0 object-contain" />
               ) : logoImageUrl ? (
-                <img className={isAidreamcapesFooter ? "h-10 w-10 shrink-0 object-contain" : "h-12 w-12 shrink-0 rounded-[15px] object-contain"} src={mediaAssetUrl(site, logoImageUrl)} alt={logoAlt} width={isAidreamcapesFooter ? 40 : 48} height={isAidreamcapesFooter ? 40 : 48} />
+                <img className={isAidreamcapesFooter ? "h-10 w-10 shrink-0 object-contain" : "h-12 w-12 shrink-0 rounded-[15px] object-contain"} src={mediaAssetUrl(site, logoImageUrl)} alt={logoAlt} width={isAidreamcapesFooter ? 40 : 48} height={isAidreamcapesFooter ? 40 : 48} loading="lazy" sizes="100vw" />
               ) : (
                 <span className={dark ? "inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white text-[10px] font-semibold tracking-[0.18em] text-[#14161a]" : "inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#171514] text-[10px] font-semibold tracking-[0.18em] text-white"}>
                   {brandMark}
@@ -4570,6 +4569,8 @@ function StorefrontImage({
   preview
 }: StorefrontImageProps) {
   const resolvedSrc = withStorefrontPublicWatermarkCacheVersion(preferAidreamcapesPhotoAsset(src));
+  const resolvedWidth = width ?? 1600;
+  const resolvedHeight = height ?? 1000;
   const resolvedLoading = loading ?? (priority ? "eager" : "lazy");
   const resolvedFetchPriority = fetchPriority ?? (priority ? "high" : "low");
   const isLocalPublicAsset = resolvedSrc.startsWith("/assets/");
@@ -4584,11 +4585,11 @@ function StorefrontImage({
         className={resolvedClassName}
         decoding={priority ? "sync" : "async"}
         fetchPriority={resolvedFetchPriority}
-        height={height}
+        height={resolvedHeight}
         loading={resolvedLoading}
         sizes={sizes}
         src={resolvedSrc}
-        width={width}
+        width={resolvedWidth}
         {...previewAttrs}
       />
     );
@@ -4675,8 +4676,11 @@ function StorefrontNaturalImage({
         className={`block h-auto w-full object-center ${imageClassName}`}
         decoding={decoding}
         fetchPriority={fetchPriority}
+        height={1000}
         loading={loading}
+        sizes="100vw"
         src={resolvedSrc}
+        width={1600}
       />
     </div>
   );
@@ -9077,7 +9081,7 @@ function renderLegacySaasSection({
     const opacity = Math.max(0, Math.min(90, blockNumber(activeSlide, "opacity", numberSetting(section, "opacity", 35))));
     return (
       <section className={`relative overflow-hidden bg-zinc-950 px-5 text-white ${imageHeightClass(setting(section, "img_height", "large"))}`} data-saas-section-renderer={type} id={sectionAnchor(section, id)}>
-        <img className="absolute inset-0 h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: subtitle, role: "cover" })} />
+        <img className="absolute inset-0 h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: subtitle, role: "cover" })} width={1600} height={1000} loading="lazy" sizes="100vw" />
         <div className="absolute inset-0" style={{ backgroundColor: blockValue(activeSlide, "image_overlay_color", "#151515"), opacity: opacity / 100 }} />
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/82 via-zinc-950/22 to-transparent" />
         <div className="relative mx-auto flex min-h-[inherit] max-w-[var(--site-content-width)] items-center">
@@ -9143,8 +9147,7 @@ function renderLegacySaasSection({
                 <img
                   className="h-full min-h-[220px] w-full object-cover opacity-90"
                   src={mediaAssetUrl(site, blockValue(slide, "src", image))}
-                  alt={blockVisualAltForSite(site, section, slide, mediaAssetUrl(site, blockValue(slide, "src", image)), index, `Reveal slide ${index + 1}`)}
-                />
+                  alt={blockVisualAltForSite(site, section, slide, mediaAssetUrl(site, blockValue(slide, "src", image)), index, `Reveal slide ${index + 1}`)} width={1600} height={1000} loading="lazy" sizes="100vw" />
               </div>
             ))}
           </div>
@@ -9196,8 +9199,7 @@ function renderLegacySaasSection({
 	                      meta: card.price,
 	                      role: "card",
 	                      title: card.title
-	                    })}
-	                  />
+	                    })} width={1600} height={1000} loading="lazy" sizes="100vw" />
                 </div>
                 <div className="p-4">
                   <div className="flex items-center justify-between gap-3">
@@ -9235,8 +9237,7 @@ function renderLegacySaasSection({
                       imageUrl: product ? productImage(site, product, index) : fallbackImageForSeed(`${site.slug}-product-${index}`),
                       index,
                       title: product?.name ?? "Product image"
-                    })}
-                  />
+                    })} width={1600} height={1000} loading="lazy" sizes="100vw" />
                 </div>
               ))}
             </div>
@@ -9251,8 +9252,7 @@ function renderLegacySaasSection({
                   index: 4,
                   title: product?.name ?? "Product detail",
                   role: "cover"
-                })}
-              />
+                })} width={1600} height={1000} loading="lazy" sizes="100vw" />
             </div>
           </div>
           <div className="rounded-[1.45rem] border border-black/10 bg-white p-6 shadow-[0_24px_80px_-62px_rgba(24,24,27,0.45)]">
@@ -9319,8 +9319,7 @@ function renderLegacySaasSection({
 	                      meta: card.price,
 	                      role: "card",
 	                      title: card.title
-	                    })}
-	                  />
+	                    })} width={1200} height={900} loading="lazy" sizes="100vw" />
                   <span className="p-2">
                     <span className="font-mono text-xs uppercase tracking-[0.18em] text-zinc-400">{card.meta}</span>
                     <span className="mt-2 block text-xl font-semibold">{card.title}</span>
@@ -9376,8 +9375,7 @@ function renderLegacySaasSection({
 	                          meta: card.price,
 	                          role: "card",
 	                          title: card.title
-	                        })}
-	                      />
+	                        })} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     </div>
                     <div className="p-4">
                       <h3 className="font-semibold">{card.title}</h3>
@@ -9433,8 +9431,7 @@ function renderLegacySaasSection({
 	                    meta: card.meta,
 	                    role: "card",
 	                    title: card.title
-	                  })}
-	                />
+	                  })} width={1200} height={900} loading="lazy" sizes="100vw" />
                 <h3 className="mt-4 font-semibold">{card.title}</h3>
                 <p className="mt-1 text-xs text-zinc-500">{card.description}</p>
                 <p className="mt-3 font-mono text-[11px] text-zinc-400">{card.meta}</p>
@@ -9476,7 +9473,7 @@ function renderLegacySaasSection({
               {offersForCart.map(({ product, price }, index) => {
                 return (
                   <div className="grid gap-4 p-5 sm:grid-cols-[96px_1fr_auto] sm:items-center" key={product.id}>
-                    <img className="aspect-square rounded-[0.9rem] object-cover" src={productImage(site, product, index)} alt={productImageAltForSite(site, product, index, storefrontContext)} />
+                    <img className="aspect-square rounded-[0.9rem] object-cover" src={productImage(site, product, index)} alt={productImageAltForSite(site, product, index, storefrontContext)} width={1000} height={1000} loading="lazy" sizes="100vw" />
                     <div>
                       <p className="font-semibold">{product.name}</p>
                       <p className="mt-1 text-sm text-zinc-500">{price.creditsGranted} {spanishCart ? "creditos" : "credits"}</p>
@@ -9705,7 +9702,7 @@ function renderLegacySaasSection({
     const button = setting(section, "button_label");
     const content = (
       <div className="relative flex min-h-[520px] items-center justify-center px-5 py-16 text-center text-white">
-        <img className="absolute inset-0 h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: text, role: "cover" })} />
+        <img className="absolute inset-0 h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: text, role: "cover" })} width={1600} height={1000} loading="lazy" sizes="100vw" />
         <div className="absolute inset-0" style={{ backgroundColor: setting(section, "overlay_bg_color", "rgba(0,0,0,1)"), opacity: opacity / 100 }} />
         <div className="relative mx-auto max-w-3xl" style={{ color: setting(section, "text_color", "#ffffff") }}>
           <p className="font-mono text-xs uppercase tracking-[0.22em] opacity-70">Photo story</p>
@@ -9733,7 +9730,7 @@ function renderLegacySaasSection({
     const text = stripHtml(setting(section, "desc", setting(section, "text", site.branding.description)));
     const imageNode = (
       <div className="aspect-[4/3] overflow-hidden rounded-[1.45rem] border border-black/10 bg-zinc-200 shadow-diffusion">
-        <img className="h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", "Image with text"), { description: text })} />
+        <img className="h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", "Image with text"), { description: text })} width={1600} height={1000} loading="lazy" sizes="100vw" />
       </div>
     );
     const copyNode = (
@@ -9777,8 +9774,7 @@ function renderLegacySaasSection({
                     imageUrl: item.imageUrl,
                     index,
                     title: item.title
-                  })}
-                />
+                  })} width={1600} height={1000} loading="lazy" sizes="100vw" />
               </Link>
             ))}
           </div>
@@ -9802,7 +9798,7 @@ function renderLegacySaasSection({
                 <article className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-white" key={instanceKey(block, index, "feature_column")} {...xfcartBlockAttrs(mode, block, index, "feature_column")}>
                   {saasBool(block.settings.enable_image, true) ? (
                     <div className="aspect-[16/11] bg-zinc-200">
-                      <img className="h-full w-full object-cover" src={image} alt={blockVisualAltForSite(site, section, block, image, index, storefrontSectionLabel(block.type))} />
+                      <img className="h-full w-full object-cover" src={image} alt={blockVisualAltForSite(site, section, block, image, index, storefrontSectionLabel(block.type))} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     </div>
                   ) : null}
                   <div className="p-5">
@@ -9827,7 +9823,7 @@ function renderLegacySaasSection({
           <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6">
             {(blocks.length ? blocks : Array.from({ length: 6 }, (_, index) => ({ id: `logo_${index}`, type: "logo_image", settings: { image: "" } }))).map((block, index) => (
               <div className="grid h-24 place-items-center rounded-[1rem] border border-black/10 bg-zinc-50 p-4 text-center font-mono text-xs uppercase tracking-[0.18em] text-zinc-500" key={instanceKey(block, index, "logo")} {...xfcartBlockAttrs(mode, block, index, "logo")}>
-                {blockValue(block, "image") ? <img className="max-h-12 max-w-full object-contain" src={mediaAssetUrl(site, blockValue(block, "image"))} alt={`Logo ${index + 1}`} /> : `Brand ${index + 1}`}
+                {blockValue(block, "image") ? <img className="max-h-12 max-w-full object-contain" src={mediaAssetUrl(site, blockValue(block, "image"))} alt={`Logo ${index + 1}`} width={1600} height={1000} loading="lazy" sizes="100vw" /> : `Brand ${index + 1}`}
               </div>
             ))}
           </div>
@@ -9867,7 +9863,7 @@ function renderLegacySaasSection({
               const image = mediaAssetUrl(site, blockValue(block, "src", fallbackImageForSeed(`${site.slug}-${type}-${index}`)));
               return (
                 <Link className="group relative aspect-square overflow-hidden rounded-[1rem] border border-black/10 bg-zinc-200" href={hrefFor(site, blockValue(block, "link", "#"))} key={instanceKey(block, index, "gallery")} {...xfcartBlockAttrs(mode, block, index, "gallery")}>
-                  <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} alt={blockVisualAltForSite(site, section, block, image, index, blockValue(block, "account_id", "Gallery image"))} />
+                  <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} alt={blockVisualAltForSite(site, section, block, image, index, blockValue(block, "account_id", "Gallery image"))} width={1600} height={1000} loading="lazy" sizes="100vw" />
                   {blockValue(block, "account_id") ? <span className="absolute bottom-3 left-3 rounded-full bg-white/82 px-3 py-1 text-xs font-medium backdrop-blur">@{blockValue(block, "account_id")}</span> : null}
                 </Link>
               );
@@ -9921,8 +9917,7 @@ function renderLegacySaasSection({
               imageUrl: product ? productImage(site, product, 8) : fallbackHeroImages[0],
               title: product?.name ?? storefrontSectionLabel(type),
               role: "card"
-            })}
-          />
+            })} width={1200} height={900} loading="lazy" sizes="100vw" />
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{storefrontSectionLabel(type)}</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">{setting(section, "title", product?.name ?? "Featured product")}</h2>
@@ -9979,8 +9974,7 @@ function renderLegacySaasSection({
                       index,
                       title: blockValue(block, `title${index + 1}`, `Promotion ${index + 1}`),
                       role: "card"
-                    })}
-                  />
+                    })} width={1600} height={900} loading="lazy" sizes="100vw" />
                 </Link>
               ))}
             </div>
@@ -10728,7 +10722,7 @@ function SectionView({
         <section className="relative isolate overflow-hidden border-b border-[#eee3d7] bg-[radial-gradient(circle_at_0%_20%,rgba(230,223,214,0.58),transparent_24%),linear-gradient(180deg,#fffdfa_0%,#faf5ee_100%)] text-[#111318]">
           <div className="absolute inset-0 -z-10 hidden bg-[linear-gradient(90deg,#fffdfa_0%,#fffaf4_42%,rgba(255,250,244,0)_62%)] lg:block" />
           <div className="absolute inset-y-0 right-0 -z-20 hidden w-[58%] lg:block">
-            <img className="h-full w-full object-cover object-[58%_center]" src={primaryVisual} alt={primaryVisualAlt} />
+            <img className="h-full w-full object-cover object-[58%_center]" src={primaryVisual} alt={primaryVisualAlt} width={1600} height={1000} loading="lazy" sizes="100vw" />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,#fffdfa_0%,rgba(255,250,244,0.86)_17%,rgba(255,250,244,0.32)_38%,rgba(255,250,244,0.04)_62%)]" />
             <div className="absolute inset-y-0 left-0 w-[18%] bg-gradient-to-r from-[#fffdfa] to-transparent" />
           </div>
@@ -10773,7 +10767,7 @@ function SectionView({
             </div>
 
             <div className="relative z-10 min-h-[540px] overflow-hidden rounded-t-[24px] bg-[#efe6d9] lg:min-h-[640px] lg:rounded-none lg:bg-transparent">
-              <img className="absolute inset-0 h-full w-full object-cover object-[58%_center] lg:hidden" src={primaryVisual} alt={primaryVisualAlt} />
+              <img className="absolute inset-0 h-full w-full object-cover object-[58%_center] lg:hidden" src={primaryVisual} alt={primaryVisualAlt} width={1600} height={1000} loading="lazy" sizes="100vw" />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(250,245,237,0.04)_0%,rgba(20,18,15,0.06)_58%,rgba(20,18,15,0.12)_100%)] lg:hidden" />
               <div className="absolute bottom-7 right-4 w-[min(295px,calc(100%-2rem))] rounded-[24px] border border-[#ddd3c7] bg-white/92 p-5 text-[#171514] shadow-[0_32px_82px_-56px_rgba(20,22,26,0.26)] backdrop-blur sm:right-7 lg:bottom-[9.5rem] lg:right-0 xl:right-2">
                 <div className="flex items-center gap-1 text-[#d39a4a]">
@@ -10799,8 +10793,7 @@ function SectionView({
                           index,
                           meta: blockValue(item, "value", ""),
                           title: blockValue(item, "label", `Customer ${index + 1}`)
-                        })}
-                      />
+                        })} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     </div>
                   ))}
                 </div>
@@ -11009,7 +11002,7 @@ function SectionView({
                   <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[14px] border border-white/70 bg-white px-5 text-sm font-semibold text-[#090b13] shadow-[inset_0_0_0_1px_rgba(236,75,221,0.14),0_16px_42px_-34px_rgba(22,220,240,0.7)] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))}>
                     {authPrimaryUsesGoogle ? (
                       <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white shadow-[0_8px_22px_-14px_rgba(9,11,19,0.45)] ring-1 ring-black/[0.06]">
-                        <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isFrenchStorefrontSite(site) ? "Connexion avec Google" : isSpanishXbySite(site) ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" />
+                        <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isFrenchStorefrontSite(site) ? "Connexion avec Google" : isSpanishXbySite(site) ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" width={20} height={20} sizes="100vw" />
                       </span>
                     ) : (
                       <Mail className="h-5 w-5" strokeWidth={1.8} />
@@ -11123,7 +11116,7 @@ function SectionView({
             <div className="grid h-full grid-cols-[0.9fr_1.1fr] gap-4">
               <div className="flex flex-col justify-end gap-4 pt-20">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[1.7rem] border border-white/60 bg-zinc-200 shadow-diffusion">
-                  <img className="h-full w-full object-cover" src={displayImages[1] ?? fallbackHeroImages[1]} alt={genericVisualAltForSite(site, { category: "source photo intake", imageUrl: displayImages[1] ?? fallbackHeroImages[1], index: 1, title: "AI photo intake sample" })} />
+                  <img className="h-full w-full object-cover" src={displayImages[1] ?? fallbackHeroImages[1]} alt={genericVisualAltForSite(site, { category: "source photo intake", imageUrl: displayImages[1] ?? fallbackHeroImages[1], index: 1, title: "AI photo intake sample" })} width={1600} height={1000} loading="lazy" sizes="100vw" />
                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
                     <p className="font-mono text-xs uppercase tracking-[0.18em]">{aidreamshootsXby ? "subida" : "upload"}</p>
                     <p className="mt-1 text-sm">{aidreamshootsXby ? "Tus selfies claras se convierten en un modelo privado." : "Clear selfies become a private model."}</p>
@@ -11141,7 +11134,7 @@ function SectionView({
               </div>
               <div className="flex flex-col gap-4">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/70 bg-zinc-200 shadow-diffusion">
-                  <img className="h-full w-full object-cover" src={displayImages[0] ?? fallbackHeroImages[0]} alt={genericVisualAltForSite(site, { category: "private album result", imageUrl: displayImages[0] ?? fallbackHeroImages[0], index: 0, title: "Generated AI portrait album" })} />
+                  <img className="h-full w-full object-cover" src={displayImages[0] ?? fallbackHeroImages[0]} alt={genericVisualAltForSite(site, { category: "private album result", imageUrl: displayImages[0] ?? fallbackHeroImages[0], index: 0, title: "Generated AI portrait album" })} width={1600} height={1000} loading="lazy" sizes="100vw" />
                   <div className="absolute left-4 top-4 rounded-full bg-white/82 px-3 py-1.5 text-xs font-medium backdrop-blur">{aidreamshootsXby ? "Álbum de fotos privado" : "Private photo album"}</div>
                 </div>
                 <div className="grid grid-cols-[1fr_0.82fr] gap-4">
@@ -11151,7 +11144,7 @@ function SectionView({
                     <p className="mt-2 text-xs leading-5 text-stone-300">{aidreamshootsXby ? "Creado para entregar fotos privadas." : "Built for private photo delivery."}</p>
                   </div>
                   <div className="relative overflow-hidden rounded-2xl border border-white/70 bg-zinc-200">
-                    <img className="h-full min-h-40 w-full object-cover" src={displayImages[2] ?? fallbackHeroImages[2]} alt={genericVisualAltForSite(site, { category: "AI headshot sample", imageUrl: displayImages[2] ?? fallbackHeroImages[2], index: 2, title: "AI headshot sample" })} />
+                    <img className="h-full min-h-40 w-full object-cover" src={displayImages[2] ?? fallbackHeroImages[2]} alt={genericVisualAltForSite(site, { category: "AI headshot sample", imageUrl: displayImages[2] ?? fallbackHeroImages[2], index: 2, title: "AI headshot sample" })} width={1600} height={1000} loading="lazy" sizes="100vw" />
                   </div>
                 </div>
               </div>
@@ -11181,8 +11174,7 @@ function SectionView({
                       src={image}
                       alt={isSpanishStorefrontSite(site)
                         ? `${name} logo de marca mostrado en la franja de confianza de ${storefrontMediaBrandName(site)}.`
-                        : `${name} brand logo shown in the ${storefrontMediaBrandName(site)} trust strip.`}
-                    />
+                        : `${name} brand logo shown in the ${storefrontMediaBrandName(site)} trust strip.`} width={220} height={56} loading="lazy" sizes="100vw" />
                   ) : <span className="font-semibold tracking-tight">{name}</span>}
                 </div>
               );
@@ -11264,8 +11256,7 @@ function SectionView({
                 <img
                   className="aspect-[5/6] w-full object-cover lg:aspect-[4/4.6]"
                   src={mediaAssetUrl(site, blockValue(lead, "imageUrl", fallbackHeroImages[0]))}
-                  alt={blockVisualAltForSite(site, section, lead, mediaAssetUrl(site, blockValue(lead, "imageUrl", fallbackHeroImages[0])), 0, "Featured story")}
-                />
+                  alt={blockVisualAltForSite(site, section, lead, mediaAssetUrl(site, blockValue(lead, "imageUrl", fallbackHeroImages[0])), 0, "Featured story")} width={833} height={1000} loading="lazy" sizes="100vw" />
               </div>
             ) : null}
             <Link className="mt-8 inline-flex items-center gap-2 rounded-[16px] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5" style={{ background: `linear-gradient(90deg, ${accentCopper}, ${accentBlue})` }} href={hrefFor(site, setting(section, "ctaHref", "/login"))}>
@@ -11287,8 +11278,7 @@ function SectionView({
                 <img
                   className="aspect-[4/5] w-full object-cover"
                   src={mediaAssetUrl(site, blockValue(card, "imageUrl", fallbackHeroImages[(index + 1) % fallbackHeroImages.length]))}
-                  alt={blockVisualAltForSite(site, section, card, mediaAssetUrl(site, blockValue(card, "imageUrl", fallbackHeroImages[(index + 1) % fallbackHeroImages.length])), index + 1, "Story image")}
-                />
+                  alt={blockVisualAltForSite(site, section, card, mediaAssetUrl(site, blockValue(card, "imageUrl", fallbackHeroImages[(index + 1) % fallbackHeroImages.length])), index + 1, "Story image")} width={800} height={1000} loading="lazy" sizes="100vw" />
                 <div className="p-4">
                   <p className="font-medium">{blockValue(card, "label", "Story image")}</p>
                   <p className={dark ? "mt-1 text-xs text-white/55" : "mt-1 text-xs text-zinc-500"}>{blockValue(card, "meta", "Featured")}</p>
@@ -11367,8 +11357,7 @@ function SectionView({
                     <img
                       className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
                       src={mediaAssetUrl(site, blockValue(item, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length]))}
-                      alt={blockVisualAltForSite(site, section, item, mediaAssetUrl(site, blockValue(item, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length])), index, "Destination")}
-                    />
+                      alt={blockVisualAltForSite(site, section, item, mediaAssetUrl(site, blockValue(item, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length])), index, "Destination")} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,12,14,0.04)_0%,rgba(13,12,14,0.16)_42%,rgba(13,12,14,0.72)_100%)]" />
                     <div className="absolute left-4 top-4 rounded-full border border-white/36 bg-white/14 px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-white backdrop-blur">
                       {blockValue(item, "tag", "Destination")}
@@ -11440,8 +11429,7 @@ function SectionView({
                     <img
                       className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
                       src={mediaAssetUrl(site, blockValue(item, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length]))}
-                      alt={blockVisualAltForSite(site, section, item, mediaAssetUrl(site, blockValue(item, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length])), index, "Example")}
-                    />
+                      alt={blockVisualAltForSite(site, section, item, mediaAssetUrl(site, blockValue(item, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length])), index, "Example")} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,12,14,0.04)_0%,rgba(13,12,14,0.16)_42%,rgba(13,12,14,0.72)_100%)]" />
                     <div className="absolute inset-x-4 bottom-4 inline-flex items-center gap-2 rounded-full border border-white/36 bg-black/24 px-3 py-1.5 text-[11px] font-medium text-white backdrop-blur">
                       <MapPin className="h-3.5 w-3.5" strokeWidth={1.8} />
@@ -11517,7 +11505,7 @@ function SectionView({
                   src={videoUrl}
                 />
               ) : (
-                <img className="aspect-[16/9] w-full bg-black object-contain opacity-90" src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", "Video feature"), { role: "poster" })} />
+                <img className="aspect-[16/9] w-full bg-black object-contain opacity-90" src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", "Video feature"), { role: "poster" })} width={1600} height={900} loading="lazy" sizes="100vw" />
               )}
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0)_46%,rgba(0,0,0,0.48)_100%)]" />
               {videoBadge ? (
@@ -11658,7 +11646,7 @@ function SectionView({
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-1" style={{ background: accent }} />
                 <div className="mx-auto flex h-full max-w-[460px] items-center justify-center">
                   <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[30px] border-[10px] border-[#030409] bg-black shadow-[0_34px_100px_-58px_rgba(0,0,0,0.96)]">
-                    <img className="h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "placeholderTitle", "Mobile workflow preview"), { explicitAlt: setting(section, "imageAlt", ""), role: "poster" })} />
+                    <img className="h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "placeholderTitle", "Mobile workflow preview"), { explicitAlt: setting(section, "imageAlt", ""), role: "poster" })} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.0)_45%,rgba(0,0,0,0.48)_100%)]" />
                     <div className="pointer-events-none absolute left-4 top-4 rounded-full px-3 py-1.5 text-xs font-semibold text-white" style={{ background: badgeBg }}>
                       {setting(section, "videoBadge", "Mobile")}
@@ -11785,8 +11773,7 @@ function SectionView({
                       <img
                         className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
                         src={mediaAssetUrl(site, blockValue(item, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length]))}
-                        alt={blockVisualAltForSite(site, section, item, mediaAssetUrl(site, blockValue(item, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length])), index, "Example")}
-                      />
+                        alt={blockVisualAltForSite(site, section, item, mediaAssetUrl(site, blockValue(item, "imageUrl", fallbackHeroImages[index % fallbackHeroImages.length])), index, "Example")} width={1600} height={1000} loading="lazy" sizes="100vw" />
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,9,0.02)_0%,rgba(8,8,9,0.12)_42%,rgba(8,8,9,0.62)_100%)]" />
                       <div className="absolute inset-x-0 bottom-0 p-4">
                         <p className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.15em] text-white/66">
@@ -11911,7 +11898,7 @@ function SectionView({
               </span>
             </div>
             <div className={dark ? "relative min-h-[360px] overflow-hidden bg-zinc-900 md:min-h-[560px] xl:min-h-[620px]" : "relative min-h-[360px] overflow-hidden bg-[#efe6d9] md:min-h-[560px] xl:min-h-[620px]"}>
-	              <img className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={image} alt={bannerImageAlt} />
+	              <img className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={image} alt={bannerImageAlt} width={1600} height={1000} loading="lazy" sizes="100vw" />
               <div className={dark ? "absolute inset-0 bg-gradient-to-r from-[#15171c]/76 via-black/10 to-black/34" : "absolute inset-0 bg-gradient-to-r from-black/48 via-black/6 to-black/28"} />
               <div className={dark ? "absolute bottom-5 left-5 right-5 rounded-[24px] border border-white/14 bg-black/48 p-5 text-white shadow-[0_22px_70px_-46px_rgba(0,0,0,0.72)] backdrop-blur-md" : "absolute bottom-5 left-5 right-5 rounded-[24px] border border-white/24 bg-[#111114]/72 p-5 text-white shadow-[0_22px_70px_-46px_rgba(0,0,0,0.64)] backdrop-blur-md"}>
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/62">{spanishXbyBanner ? "coleccion destacada" : "featured collection"}</p>
@@ -12081,7 +12068,7 @@ function SectionView({
                           <span className="flex min-w-0 items-start gap-3">
                             {blockValue(method, "kind", "") === "google" ? (
                               <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white ring-1 ring-white/10">
-                                <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isFrenchStorefrontSite(site) ? "Connexion avec Google" : spanishXbyLogin ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" />
+                                <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isFrenchStorefrontSite(site) ? "Connexion avec Google" : spanishXbyLogin ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" width={20} height={20} sizes="100vw" />
                               </span>
                             ) : null}
                             <span className="min-w-0">
@@ -12435,8 +12422,7 @@ function SectionView({
                       src={workspaceImage}
                       alt={leadFeature
                         ? blockVisualAltForSite(site, section, leadFeature, workspaceImage, 0, "Customer workspace")
-                        : genericVisualAltForSite(site, { category: "customer workspace", imageUrl: workspaceImage, title: "Customer workspace", role: "featured" })}
-                    />
+                        : genericVisualAltForSite(site, { category: "customer workspace", imageUrl: workspaceImage, title: "Customer workspace", role: "featured" })} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,22,26,0.04)_0%,rgba(20,22,26,0.14)_38%,rgba(20,22,26,0.82)_100%)]" />
                     <div className="absolute inset-x-5 top-5 flex items-start justify-between gap-3 text-white">
                       <div>
@@ -12685,7 +12671,7 @@ function SectionView({
                     href={hrefFor(site, blockValue(leadFeature, "href", "/app"))}
                     {...xfcartBlockAttrs(mode, leadFeature, 0, "launcher_lead")}
                   >
-                    <img className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={workspaceImage} alt={blockVisualAltForSite(site, section, leadFeature, workspaceImage, 0, "Customer workspace")} />
+                    <img className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={workspaceImage} alt={blockVisualAltForSite(site, section, leadFeature, workspaceImage, 0, "Customer workspace")} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,22,26,0.06)_0%,rgba(20,22,26,0.16)_32%,rgba(20,22,26,0.82)_100%)]" />
                     <div className="absolute inset-x-5 top-5 flex items-start justify-between gap-4 text-white">
                       <div>
@@ -12817,8 +12803,7 @@ function SectionView({
 	                      alt={creativePackAltForSite({ imageUrl: packImage(site, pack), pack, role: "card", site })}
 	                      loading={index > 1 ? "lazy" : undefined}
                       decoding="async"
-                      fetchPriority={index > 1 ? "low" : "auto"}
-                    />
+                      fetchPriority={index > 1 ? "low" : "auto"} width={1600} height={1000} sizes="100vw" />
                   </div>
                     <div className="p-5">
                       <div className="flex items-center justify-between gap-3">
@@ -15154,8 +15139,7 @@ function SectionView({
               alt={duplicate ? "" : logoAlt}
               className={mydreamProfileSite ? undefined : "max-h-[3.25rem] max-w-[5.25rem] object-contain"}
               loading="lazy"
-              src={logoSrc}
-            />
+              src={logoSrc} width={1600} height={1000} sizes="100vw" />
           ) : (
             <span className={`text-center text-sm font-semibold leading-tight ${mydreamProfileSite ? "text-white" : "text-[#14161a]"}`}>{logoName}</span>
           )}
@@ -15972,12 +15956,12 @@ function SectionView({
                   <p className="mt-2 max-w-xl text-[1.05rem] leading-6 text-[#6f6257]">{spanishXbyFlowBridge ? "Muestra como una foto fuente clara se convierte en un album privado terminado." : "Show how a clear source upload becomes a finished private album."}</p>
                   <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
                     <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#efe6d9]">
-	                      <img className="h-full w-full object-cover" src={beforeImage} alt={spanishXbyImageAlt(site, manualImageAlt({ src: beforeImage, fallback: flowBeforeAlt }))} />
+	                      <img className="h-full w-full object-cover" src={beforeImage} alt={spanishXbyImageAlt(site, manualImageAlt({ src: beforeImage, fallback: flowBeforeAlt }))} width={1600} height={1000} loading="lazy" sizes="100vw" />
                       <span className="absolute left-4 top-4 rounded-full bg-[#1e1712]/58 px-3 py-1 text-xs font-semibold text-white backdrop-blur">{spanishXbyFlowBridge ? "Antes" : "Before"}</span>
                     </div>
                     <div className="hidden h-[104px] w-px bg-[#dfd0bd] sm:block" />
                     <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#efe6d9]">
-	                      <img className="h-full w-full object-cover" src={afterImage} alt={spanishXbyImageAlt(site, manualImageAlt({ src: afterImage, fallback: flowAfterAlt }))} />
+	                      <img className="h-full w-full object-cover" src={afterImage} alt={spanishXbyImageAlt(site, manualImageAlt({ src: afterImage, fallback: flowAfterAlt }))} width={1600} height={1000} loading="lazy" sizes="100vw" />
                       <span className="absolute left-4 top-4 rounded-full bg-[#b86e36] px-3 py-1 text-xs font-semibold text-white">{spanishXbyFlowBridge ? "Despues" : "After"}</span>
                     </div>
                   </div>
@@ -15988,7 +15972,7 @@ function SectionView({
                   <div className="mt-5 flex flex-wrap items-center gap-3">
                     {albumImages.map((image, index) => (
                       <div className="h-[86px] w-[132px] overflow-hidden rounded-[18px] bg-white" key={image}>
-	                        <img className="h-full w-full object-cover" src={image} alt={spanishXbyImageAlt(site, manualImageAlt({ src: image, fallback: flowAlbumAlt(index) }))} />
+	                        <img className="h-full w-full object-cover" src={image} alt={spanishXbyImageAlt(site, manualImageAlt({ src: image, fallback: flowAlbumAlt(index) }))} width={1600} height={1000} loading="lazy" sizes="100vw" />
                       </div>
                     ))}
                     <div className="ml-auto grid h-[86px] min-w-[86px] place-items-center rounded-[20px] border border-[#eadfce] bg-white px-4 text-center">
@@ -16047,12 +16031,12 @@ function SectionView({
                 <p className="mt-2 max-w-xl text-[1.05rem] leading-6 text-[#586071]">{spanishXbyFlowBridge ? "Mira como fotos fuente claras se convierten en resultados pulidos mientras tu modelo y album siguen privados." : "See how clear source photos become polished results while your model and album stay private."}</p>
                 <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
                   <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#101114]">
-	                    <img className="h-full w-full object-cover" src={beforeImage} alt={spanishXbyImageAlt(site, manualImageAlt({ src: beforeImage, fallback: flowBeforeAlt }))} />
+	                    <img className="h-full w-full object-cover" src={beforeImage} alt={spanishXbyImageAlt(site, manualImageAlt({ src: beforeImage, fallback: flowBeforeAlt }))} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     <span className="absolute left-4 top-4 rounded-full bg-black/42 px-3 py-1 text-xs font-semibold text-white backdrop-blur">{spanishXbyFlowBridge ? "Antes" : "Before"}</span>
                   </div>
                   <div className="hidden h-[104px] w-px bg-[#b8b2a9] sm:block" />
                   <div className="relative h-[96px] overflow-hidden rounded-[22px] bg-[#101114]">
-	                    <img className="h-full w-full object-cover" src={afterImage} alt={spanishXbyImageAlt(site, manualImageAlt({ src: afterImage, fallback: flowAfterAlt }))} />
+	                    <img className="h-full w-full object-cover" src={afterImage} alt={spanishXbyImageAlt(site, manualImageAlt({ src: afterImage, fallback: flowAfterAlt }))} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     <span className="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ background: dreamshootBrandGradient }}>{spanishXbyFlowBridge ? "Despues" : "After"}</span>
                   </div>
                 </div>
@@ -16063,7 +16047,7 @@ function SectionView({
                 <div className="mt-5 flex flex-wrap items-center gap-3">
                   {albumImages.map((image, index) => (
                     <div className="h-[86px] w-[132px] overflow-hidden rounded-[18px] bg-white/[0.06]" key={image}>
-	                      <img className="h-full w-full object-cover" src={image} alt={spanishXbyImageAlt(site, manualImageAlt({ src: image, fallback: flowAlbumAlt(index) }))} />
+	                      <img className="h-full w-full object-cover" src={image} alt={spanishXbyImageAlt(site, manualImageAlt({ src: image, fallback: flowAlbumAlt(index) }))} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     </div>
                   ))}
                   <div className="ml-auto grid h-[86px] min-w-[86px] place-items-center rounded-[20px] border border-white/12 bg-white/[0.06] px-4 text-center">
@@ -16176,8 +16160,7 @@ function SectionView({
                                 decoding="async"
                                 loading={index === 0 ? "eager" : "lazy"}
                                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                                src={coverImage.src}
-                              />
+                                src={coverImage.src} width={1600} height={1000} />
                             )}
                             <span className="absolute left-3 top-3 rounded-full border border-white/16 bg-black/44 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/82 backdrop-blur">
                               {String(index + 1).padStart(2, "0")}
@@ -16490,8 +16473,7 @@ function SectionView({
 	                    })}
 	                    loading="lazy"
 	                    decoding="async"
-	                    fetchPriority="low"
-	                  />
+	                    fetchPriority="low" width={1600} height={1000} sizes="100vw" />
                 </div>
                 <div className="p-5">
                   <div className="flex items-center justify-between gap-3">
@@ -16552,7 +16534,7 @@ function SectionView({
                 return (
                   <article className="group overflow-hidden rounded-[22px] border border-[#d8cdbf] bg-white shadow-[0_24px_60px_-54px_rgba(20,22,26,0.18)]" key={`${item.id}_${index}`} {...xfcartBlockAttrs(mode, item, index, "pain_point")}>
                     <div className="relative aspect-[1.18/1] overflow-hidden bg-[#272321] lg:aspect-[1.03/1]">
-                      <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} alt={problemAlt} />
+                      <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} alt={problemAlt} width={1600} height={1000} loading="lazy" sizes="100vw" />
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,8,9,0.16)_0%,rgba(8,8,9,0.28)_42%,rgba(8,8,9,0.64)_100%)]" />
                       <div className="absolute inset-x-0 bottom-0 p-4 text-white lg:p-5">
                         <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-black/22 backdrop-blur xl:mb-4">
@@ -16601,7 +16583,7 @@ function SectionView({
               return (
                   <article className="overflow-hidden rounded-[1.25rem] border border-[#e2ddcf] bg-[#fbfaf7] shadow-[0_24px_60px_-48px_rgba(20,22,26,0.22)]" key={`${item.id}_${index}`} {...xfcartBlockAttrs(mode, item, index, "sample")}>
                     <div className="aspect-[4/5] overflow-hidden bg-zinc-200">
-                      <img className="h-full w-full object-cover" src={image} alt={sampleAlt} />
+                      <img className="h-full w-full object-cover" src={image} alt={sampleAlt} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     </div>
                     <div className="flex items-start justify-between gap-3 p-4">
                       <h3 className="text-[1rem] font-medium leading-6">{label}</h3>
@@ -16630,7 +16612,7 @@ function SectionView({
                   return (
                     <article className="w-[230px] shrink-0 overflow-hidden rounded-[1.25rem] border border-[#e2ddcf] bg-[#fbfaf7] shadow-[0_24px_60px_-48px_rgba(20,22,26,0.22)] md:w-[300px]" key={`${item.id}_${index}`} {...xfcartBlockAttrs(mode, item, index, "sample")}>
                       <div className="aspect-[4/5] overflow-hidden bg-zinc-200">
-                        <img className="h-full w-full object-cover" src={image} alt={sampleAlt} />
+                        <img className="h-full w-full object-cover" src={image} alt={sampleAlt} width={1600} height={1000} loading="lazy" sizes="100vw" />
                       </div>
                       <div className="flex items-center justify-between gap-3 p-4">
                         <h3 className="font-medium">{label}</h3>
@@ -16891,7 +16873,7 @@ function SectionView({
           </div>
           <div className="rounded-[34px] border border-[#ded5ca] bg-[#fffdf8]/92 p-4 shadow-[0_34px_100px_-72px_rgba(20,22,26,0.32)]">
             <div className="relative min-h-[500px] overflow-hidden rounded-[30px] bg-[#efe6d9]">
-              <img className="absolute inset-0 h-full w-full object-cover" src={heroImage} alt={toolEntryHeroAlt} />
+              <img className="absolute inset-0 h-full w-full object-cover" src={heroImage} alt={toolEntryHeroAlt} width={1600} height={1000} loading="lazy" sizes="100vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/68 via-black/8 to-transparent" />
               <div className="absolute left-5 top-5 max-w-[220px] rounded-[22px] border border-white/30 bg-white/18 p-4 text-white backdrop-blur">
                 <Sparkles className="h-7 w-7" strokeWidth={1.6} />
@@ -17224,7 +17206,7 @@ function SectionView({
                 </div>
                 <div className="p-6 xl:p-8">
                   <div className="relative overflow-hidden rounded-[30px] border border-[#e4dace] bg-[#efe6d9] shadow-[0_24px_68px_-52px_rgba(20,22,26,0.16)]">
-                    <img className="aspect-[16/11] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                    <img className="aspect-[16/11] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,22,26,0.08)_0%,rgba(20,22,26,0.18)_42%,rgba(20,22,26,0.76)_100%)]" />
                     <div className="absolute left-5 top-5 rounded-full border border-white/52 bg-white/18 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white backdrop-blur">
                       Step 01 · intake
@@ -17290,7 +17272,7 @@ function SectionView({
                 </div>
                 <div className="p-6 xl:p-8">
                   <div className="relative overflow-hidden rounded-[28px] border border-[#e4dace] bg-[#efe6d9] shadow-[0_20px_56px_-44px_rgba(20,22,26,0.16)]">
-                    <img className="aspect-[16/11] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                    <img className="aspect-[16/11] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,22,26,0.12)_0%,rgba(20,22,26,0.18)_36%,rgba(20,22,26,0.72)_100%)]" />
                     <div className="absolute inset-x-0 bottom-0 p-6 text-white">
                       <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/60">{workflowLabel}</p>
@@ -17354,7 +17336,7 @@ function SectionView({
                 <div className="p-6 xl:p-8">
                   <div className="grid gap-4 lg:grid-cols-[0.92fr_1.08fr]">
                     <div className="relative overflow-hidden rounded-[26px] border border-white/10 bg-black/20">
-                      <img className="aspect-[4/5] w-full object-cover opacity-74" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                      <img className="aspect-[4/5] w-full object-cover opacity-74" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} width={800} height={1000} loading="lazy" sizes="100vw" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/76 via-black/16 to-transparent" />
                       <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white/82 backdrop-blur">
                         Step 02 · configure
@@ -17441,7 +17423,7 @@ function SectionView({
                 <div className="p-6 xl:p-8">
                   <div className="grid gap-4 lg:grid-cols-[0.92fr_1.08fr]">
                     <div className="relative overflow-hidden rounded-[24px] border border-white/10 bg-black/20">
-                      <img className="aspect-[4/5] w-full object-cover opacity-72" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                      <img className="aspect-[4/5] w-full object-cover opacity-72" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} width={800} height={1000} loading="lazy" sizes="100vw" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/18 to-transparent" />
                       <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/58">{workflowLabel}</p>
@@ -17532,7 +17514,7 @@ function SectionView({
                       ))}
                     </div>
                     <div className="mt-4 relative overflow-hidden rounded-[24px] border border-[#e4dace] bg-[#efe6d9]">
-                      <img className="aspect-[16/9] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                      <img className="aspect-[16/9] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} width={1600} height={900} loading="lazy" sizes="100vw" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/56 via-black/10 to-transparent" />
                       <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                         <p className="text-[1.45rem] font-semibold leading-tight text-balance [font-family:var(--site-title-font)]">
@@ -17597,7 +17579,7 @@ function SectionView({
                       ))}
                     </div>
                     <div className="mt-4 relative overflow-hidden rounded-[22px] border border-[#e4dace] bg-[#efe6d9]">
-                      <img className="aspect-[16/9] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                      <img className="aspect-[16/9] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} width={1600} height={900} loading="lazy" sizes="100vw" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/56 via-black/10 to-transparent" />
                       <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/60">{workflowLabel}</p>
@@ -17648,7 +17630,7 @@ function SectionView({
                 <div className="p-6 xl:p-8">
                   <div className="grid gap-4 lg:grid-cols-[1.02fr_0.98fr]">
                     <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-black/20">
-                      <img className="aspect-[4/5] w-full object-cover opacity-78" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                      <img className="aspect-[4/5] w-full object-cover opacity-78" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} width={800} height={1000} loading="lazy" sizes="100vw" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                       <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white/82 backdrop-blur">
                         {spanishXbyWorkspaceSection ? "Paso 04 · entrega" : "Step 04 · deliver"}
@@ -17675,8 +17657,7 @@ function SectionView({
                                 index,
                                 meta: status,
                                 title: label
-                              })}
-                            />
+                              })} width={1600} height={1000} loading="lazy" sizes="100vw" />
                           </div>
                           <div className="p-4">
                             <p className="font-semibold text-white">{label}</p>
@@ -17735,7 +17716,7 @@ function SectionView({
                 <div className="p-6 xl:p-8">
                   <div className="grid gap-4 lg:grid-cols-[1.06fr_0.94fr]">
                     <div className="relative overflow-hidden rounded-[26px] border border-white/10 bg-black/20">
-                      <img className="aspect-[4/5] w-full object-cover opacity-76" src={featureImage} alt={genericVisualAltForSite(site, { category: "private customer album", description: sectionSubtitle || guestGalleryText, imageUrl: featureImage, title: sectionTitle, role: "featured" })} />
+                      <img className="aspect-[4/5] w-full object-cover opacity-76" src={featureImage} alt={genericVisualAltForSite(site, { category: "private customer album", description: sectionSubtitle || guestGalleryText, imageUrl: featureImage, title: sectionTitle, role: "featured" })} width={800} height={1000} loading="lazy" sizes="100vw" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/12 to-transparent" />
                       <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/58">{workflowLabel}</p>
@@ -17758,8 +17739,7 @@ function SectionView({
                                 index,
                                 meta: status,
                                 title: label
-                              })}
-                            />
+                              })} width={1600} height={1000} loading="lazy" sizes="100vw" />
                           </div>
                           <div className="p-4">
                             <p className="font-semibold text-white">{label}</p>
@@ -17814,7 +17794,7 @@ function SectionView({
               </div>
               <div className="p-6 xl:p-8">
                 <div className="relative min-h-[300px] overflow-hidden rounded-[28px]">
-                  <img className="absolute inset-0 h-full w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                  <img className="absolute inset-0 h-full w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} width={1600} height={1000} loading="lazy" sizes="100vw" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/24 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                     <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/58">{workflowLabel}</p>
@@ -17878,7 +17858,7 @@ function SectionView({
                   ))}
                 </div>
                 <div className="mt-6 relative overflow-hidden rounded-[24px] border border-white/10 bg-black/20">
-                  <img className="aspect-[4/3] w-full object-cover opacity-70" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                  <img className="aspect-[4/3] w-full object-cover opacity-70" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} width={1200} height={900} loading="lazy" sizes="100vw" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                     <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/58">{workflowLabel}</p>
@@ -17938,7 +17918,7 @@ function SectionView({
                     ))}
                   </div>
                   <div className="mt-6 relative overflow-hidden rounded-[24px] border border-[#e4dace] bg-[#efe6d9]">
-                    <img className="aspect-[16/10] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                    <img className="aspect-[16/10] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} width={1600} height={1000} loading="lazy" sizes="100vw" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/56 via-black/12 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                       <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/60">{workflowLabel}</p>
@@ -18032,7 +18012,7 @@ function SectionView({
                 </div>
                 <div className="mt-6 grid gap-4 lg:grid-cols-[1.04fr_0.96fr]">
                   <div className="relative overflow-hidden rounded-[24px] border border-[#e4dace] bg-[#efe6d9]">
-                    <img className="aspect-[4/3] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                    <img className="aspect-[4/3] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} width={1200} height={900} loading="lazy" sizes="100vw" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/52 via-black/10 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                       <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/60">{workflowLabel}</p>
@@ -18195,7 +18175,7 @@ function SectionView({
               </div>
               <div className="mt-6 grid gap-4">
                 <div className="relative overflow-hidden rounded-[24px] border border-white/10 bg-black/20">
-                  <img className="aspect-[4/3] w-full object-cover opacity-70" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                  <img className="aspect-[4/3] w-full object-cover opacity-70" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} width={1200} height={900} loading="lazy" sizes="100vw" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                     <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/58">{workflowLabel}</p>
@@ -18270,7 +18250,7 @@ function SectionView({
                     return (
                       <Link className="group overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.04] transition hover:-translate-y-0.5 hover:bg-white/[0.06]" href={href}>
                         <div className="relative aspect-[16/9] overflow-hidden bg-white/6">
-                          <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={thumb} alt={imageAlt} />
+                          <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" src={thumb} alt={imageAlt} width={1600} height={1000} loading="lazy" sizes="100vw" />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/12 to-transparent" />
                           <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -18316,7 +18296,7 @@ function SectionView({
                       return (
                         <Link className="overflow-hidden rounded-[22px] border border-white/10 bg-white/[0.04] transition hover:-translate-y-0.5 hover:bg-white/[0.06]" href={href} key={item.id}>
                           <div className="aspect-[4/3] overflow-hidden bg-white/6">
-                            <img className="h-full w-full object-cover" src={thumb} alt={imageAlt} />
+                            <img className="h-full w-full object-cover" src={thumb} alt={imageAlt} width={1600} height={1000} loading="lazy" sizes="100vw" />
                           </div>
                           <div className="p-4">
                             <p className="font-semibold text-white">{title}</p>
@@ -18406,8 +18386,7 @@ function SectionView({
 	                    meta: card.meta,
 	                    role: "card",
 	                    title: card.title
-	                  })}
-	                />
+	                  })} width={1200} height={900} loading="lazy" sizes="100vw" />
                 <div className="mt-4 flex items-center justify-between gap-3">
                   <h3 className="font-semibold">{card.title}</h3>
                   <span className="rounded-full bg-zinc-100 px-2 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-zinc-500">{card.kind}</span>
@@ -18462,7 +18441,7 @@ function SectionView({
               {offersForCart.map(({ product, price }, index) => {
                 return (
                   <div className="grid gap-4 p-5 sm:grid-cols-[96px_1fr_auto] sm:items-center" key={product.id}>
-                    <img className="aspect-square rounded-[0.9rem] object-cover" src={productImage(site, product, index)} alt={productImageAltForSite(site, product, index, storefrontContext)} />
+                    <img className="aspect-square rounded-[0.9rem] object-cover" src={productImage(site, product, index)} alt={productImageAltForSite(site, product, index, storefrontContext)} width={1000} height={1000} loading="lazy" sizes="100vw" />
                     <div>
                       <p className="font-semibold">{product.name}</p>
               <p className="mt-1 text-sm text-zinc-500">{spanishCart || isFrenchStorefrontSite(site) ? localizedPriceCreditsLabel(site, price) : priceCreditsLabel(price)}</p>
@@ -18613,7 +18592,7 @@ function SectionView({
                       {jobDetail.assets.length ? jobDetail.assets.map((asset) => (
                         <div className="overflow-hidden rounded-[1rem] border border-black/10 bg-[#fbfaf7]" key={asset.id}>
                           {asset.previewUrl ? (
-                            <img alt={runtimeGeneratedAssetAlt(asset, customerRequestTitle(jobDetail.job, 0), site)} className="aspect-[4/3] w-full bg-zinc-100 object-cover" src={asset.previewUrl} />
+                            <img alt={runtimeGeneratedAssetAlt(asset, customerRequestTitle(jobDetail.job, 0), site)} className="aspect-[4/3] w-full bg-zinc-100 object-cover" src={asset.previewUrl} width={1200} height={900} loading="lazy" sizes="100vw" />
                           ) : (
                             <div className="flex aspect-[4/3] w-full items-center justify-center bg-zinc-100 px-4 text-center text-sm text-zinc-500">Image preview unavailable</div>
                           )}
@@ -18707,8 +18686,7 @@ function SectionView({
                               decoding="async"
                               fetchPriority={index === 0 && imageIndex === 0 ? "high" : "auto"}
                               loading="eager"
-                              src={mediaAssetUrl(site, image)}
-                            />
+                              src={mediaAssetUrl(site, image)} width={1600} height={1000} sizes="100vw" />
                           </div>
                           <figcaption className="mt-3 flex items-center justify-between gap-3 px-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-white/52">
                             <span>{label}</span>
@@ -18792,8 +18770,7 @@ function SectionView({
 	                          fallback: isSpanishXbySite(site)
 	                            ? `${label} ${stage === "AI-generated result" ? "resultado generado con IA" : "carga fuente"} en la galeria de antes y despues de ${storefrontMediaBrandName(site)}.`
                             : `${label} ${stage} image in the before and after gallery for ${storefrontMediaBrandName(site)}.`
-	                        }))}
-	                      />
+	                        }))} width={1600} height={1000} loading="lazy" sizes="100vw" />
 	                      <span className="absolute left-3 top-3 rounded-full bg-white/82 px-3 py-1 text-xs font-medium backdrop-blur">{label}</span>
 	                    </div>
 	                  ))}
@@ -18995,8 +18972,7 @@ function SectionView({
                             decoding="async"
                             fetchPriority="low"
                             loading="lazy"
-                            src={avatar}
-                          />
+                            src={avatar} width={56} height={56} sizes="100vw" />
                         ) : (
                           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#f4ebe0] text-sm font-semibold text-[#8c7156]">
                             {cardTitle.slice(0, 1) || "P"}
@@ -19213,8 +19189,7 @@ function SectionView({
                   src={inlineImageSrc}
                   alt={inlineImageAlt}
                   loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
-                  decoding="async"
-                />
+                  decoding="async" width={1600} height={1000} sizes="100vw" />
               </div>
             ) : null}
           </div>
@@ -19246,8 +19221,7 @@ function SectionView({
                           src={image.src}
                           alt={image.alt}
                           loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
-                          decoding="async"
-                        />
+                          decoding="async" width={1600} height={1000} sizes="100vw" />
                       </div>
                     );
                   })}
@@ -19382,7 +19356,7 @@ function SectionView({
               {image ? (
                 <figure className="min-w-0">
                   <div className={dark ? "overflow-hidden rounded-[28px] border border-white/10 bg-zinc-900 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "overflow-hidden rounded-[28px] border border-[#ded5ca] bg-[#efe6d9] shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"}>
-                    <img className="aspect-[16/11] h-full w-full max-w-full object-cover" src={image} alt={imageAlt} />
+                    <img className="aspect-[16/11] h-full w-full max-w-full object-cover" src={image} alt={imageAlt} width={1600} height={1000} loading="lazy" sizes="100vw" />
                   </div>
                   {imageCaption ? <figcaption className={dark ? "mt-3 text-xs leading-5 text-white/52" : "mt-3 text-xs leading-5 text-[#8a7a6d]"}>{imageCaption}</figcaption> : null}
                 </figure>
@@ -19541,7 +19515,7 @@ function SectionView({
             </div>
             {applicationForm && formFields.length ? (
               <div className={dark ? "rounded-[28px] border border-white/10 bg-white/[0.06] p-5 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/80 p-5 shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"}>
-                {image ? <img className="mb-5 aspect-[16/8] w-full rounded-[20px] object-cover" style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} /> : null}
+                {image ? <img className="mb-5 aspect-[16/8] w-full rounded-[20px] object-cover" style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} width={1600} height={1000} loading="lazy" sizes="100vw" /> : null}
                 <PartnerApplicationForm
                   dark={dark}
                   siteId={site.id}
@@ -19559,7 +19533,7 @@ function SectionView({
               </div>
             ) : image ? (
               <div className={`${dark ? "overflow-hidden rounded-[28px] border border-white/10 bg-zinc-900 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "overflow-hidden rounded-[28px] border border-[#ded5ca] bg-[#efe6d9] shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"} ${workflowIntroRichText ? "relative aspect-[16/11] lg:aspect-auto lg:h-full lg:min-h-[34rem]" : ""}`}>
-                <img className={workflowIntroRichText ? "absolute inset-0 h-full w-full max-w-full object-cover" : "aspect-[16/11] h-full w-full max-w-full object-cover"} style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} />
+                <img className={workflowIntroRichText ? "absolute inset-0 h-full w-full max-w-full object-cover" : "aspect-[16/11] h-full w-full max-w-full object-cover"} style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} width={1600} height={1000} loading="lazy" sizes="100vw" />
               </div>
             ) : (
               <div className={`${dark ? "rounded-[28px] border border-white/10 bg-white/[0.05] p-6" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/76 p-6 shadow-[0_24px_70px_-58px_rgba(20,22,26,0.22)]"} ${noImageCardJourney ? "flex h-full flex-col" : ""}`}>
@@ -19619,7 +19593,7 @@ function SectionView({
     const cta = activeSlide ? blockValue(activeSlide, "slide_cta", "Shop now") : "Shop now";
     return (
       <section className="relative min-h-[620px] overflow-hidden bg-zinc-950 px-5 text-white">
-        <img className="absolute inset-0 h-full w-full object-cover opacity-72" src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: subtitle, role: "cover" })} />
+        <img className="absolute inset-0 h-full w-full object-cover opacity-72" src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: subtitle, role: "cover" })} width={1600} height={1000} loading="lazy" sizes="100vw" />
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/80 via-zinc-950/30 to-transparent" />
         <div className="relative mx-auto flex min-h-[620px] max-w-[var(--site-content-width)] items-center">
           <div className="max-w-2xl py-20">
@@ -19656,8 +19630,7 @@ function SectionView({
 	                  <img
 	                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
 	                    src={packImage(site, pack)}
-	                    alt={creativePackAltForSite({ imageUrl: packImage(site, pack), pack, role: "card", site })}
-	                  />
+	                    alt={creativePackAltForSite({ imageUrl: packImage(site, pack), pack, role: "card", site })} width={1600} height={1000} loading="lazy" sizes="100vw" />
                 </div>
                 <h3 className="mt-4 font-semibold">{pack.name}</h3>
                 <p className="mt-1 text-xs leading-5 text-zinc-500">{isSpanishXbySite(site) ? `${pack.creditCost} creditos / galeria privada` : `${pack.creditCost} credits / private gallery`}</p>
@@ -19683,7 +19656,7 @@ function SectionView({
               return (
                 <article className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-white" key={instanceKey(block, index, "visual_block")} {...xfcartBlockAttrs(mode, block, index, "visual_block")}>
                   <div className="aspect-[16/11] bg-zinc-200">
-                    <img className="h-full w-full object-cover" src={image || packImages.fashion} alt={blockVisualAltForSite(site, section, block, image || packImages.fashion, index, storefrontSectionLabel(block.type))} />
+                    <img className="h-full w-full object-cover" src={image || packImages.fashion} alt={blockVisualAltForSite(site, section, block, image || packImages.fashion, index, storefrontSectionLabel(block.type))} width={1600} height={1000} loading="lazy" sizes="100vw" />
                   </div>
                   <div className="p-5">
                     <h3 className="text-lg font-semibold">{headingBlockValue(block, "title", headingBlockValue(block, "name", storefrontSectionLabel(block.type)))}</h3>
@@ -19963,7 +19936,7 @@ function SectionView({
       <div className="mx-auto grid max-w-[var(--site-content-width)] gap-6 rounded-[1.4rem] border border-black/10 bg-white p-6 md:grid-cols-[0.7fr_1fr]">
         {image ? (
           <div className="aspect-[16/10] overflow-hidden rounded-[1rem] bg-zinc-200">
-            <img className="h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, schema.label, { description: schema.description })} />
+            <img className="h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, schema.label, { description: schema.description })} width={1600} height={1000} loading="lazy" sizes="100vw" />
           </div>
         ) : null}
         <div>

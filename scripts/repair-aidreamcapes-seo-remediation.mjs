@@ -223,6 +223,119 @@ const SEO_REPLACEMENTS = new Map([
   }]
 ]);
 
+// The first remediation pass covered route-specific conflicts. These
+// additional replacements close the remaining length issues found in the
+// public Aidreamcapes sitemap audit without applying a generic SEO fallback
+// to pages that were not explicitly reviewed.
+const SEO_LENGTH_REPLACEMENTS = new Map([
+  ["/", {
+    description: "Create UGC ad concepts, product videos, and ecommerce image sets from product images or URLs in one private workspace. Review results before sharing."
+  }],
+  ["/ai-image-generation/background-remove-replace", {
+    description: "Remove a distracting background or place a product in a cleaner setting while keeping edges and important details easy to check before publishing."
+  }],
+  ["/ai-image-generation/bundle-sets", {
+    description: "Create clear bundle images that show every included item together with balanced spacing and a clean presentation for online stores and product pages."
+  }],
+  ["/ai-image-generation/carousel-set", {
+    description: "Plan a connected set of product ad images that introduce the item, show key details, and lead shoppers through a simple story from first view to action."
+  }],
+  ["/ai-image-generation/colorway-variations", {
+    description: "Create clear color options for one product so shoppers can compare finishes, see the collection together, and choose the version that fits their needs."
+  }],
+  ["/ai-image-generation/commercial-lighting", {
+    description: "Create product images with brighter, softer, or more dramatic lighting while keeping the item’s shape, color, and surface easy to judge before publishing."
+  }],
+  ["/ai-image-generation/creator-portrait", {
+    title: "AI Creator Portraits for Personal Brands | Aidreamcapes"
+  }],
+  ["/ai-image-generation/enhance-upscale", {
+    description: "Improve a small or soft product image for clearer viewing, then check fine details before using it on a store page, product listing, or campaign."
+  }],
+  ["/ai-image-generation/fashion-editorial", {
+    description: "Create fashion story images with strong styling, composition, and mood for lookbooks, campaigns, and editorial concepts. Review images before publishing."
+  }],
+  ["/ai-image-generation/feed-ad-still", {
+    title: "AI Feed Ad Image Generator for Social Media | Aidreamcapes",
+    description: "Create product ad images for social feeds with a strong focal point, readable space, and a clear next step for shoppers. Review each image before posting."
+  }],
+  ["/ai-image-generation/jewelry-positioning", {
+    description: "Preview how jewelry may look when worn, with close views that keep each piece visible and make placement easier to compare before you share the result."
+  }],
+  ["/ai-image-generation/macro-details", {
+    description: "Create close-up product images that make materials, texture, stitching, finishes, and small features easier to see before a customer buys or compares options."
+  }],
+  ["/ai-image-generation/old-photo-restore", {
+    title: "AI Old Photo Restoration Generator | Aidreamcapes"
+  }],
+  ["/ai-image-generation/on-model-generation", {
+    description: "Show a product on a person using a reference image, with clear attention to fit, color, pose, and the details shoppers need to see before buying."
+  }],
+  ["/ai-image-generation/packaging-mockup", {
+    title: "AI Packaging Mockup Generator for Products | Aidreamcapes",
+    description: "Show packaging in a realistic setting before production with clear views of the box, pouch, label area, and overall presentation for review."
+  }],
+  ["/ai-image-generation/professional-headshot", {
+    description: "Create a polished professional headshot from an approved portrait for profiles, team pages, bios, and career materials. Review the result before sharing."
+  }],
+  ["/ai-image-generation/story-ad-vertical", {
+    description: "Create vertical product ad images for Stories, Shorts, and full-screen mobile placements with strong framing and room for your own copy. Review before posting."
+  }],
+  ["/ai-image-generation/team-directory", {
+    description: "Create a consistent set of team portraits with matching framing and background so people are easy to recognize across a company directory and team page."
+  }],
+  ["/ai-image-generation/ugc-still-ad", {
+    title: "AI UGC Still Ad Image Generator | Aidreamcapes"
+  }],
+  ["/ai-save-the-date/fathers-day", {
+    description: "Create Father’s Day photos and videos with AI for family portraits, gifts, outdoor memories, dinners, and heartfelt appreciation. Review before sharing."
+  }],
+  ["/ai-save-the-date/mothers-day", {
+    description: "Create Mother’s Day photos and videos with AI for family celebrations, gifts, brunch, heartfelt greetings, and spring lifestyle stories. Review before sharing."
+  }],
+  ["/ai-save-the-date/save-the-date", {
+    title: "AI Save the Date Video Generator | Aidreamcapes"
+  }],
+  ["/ai-video-generation/food-video", {
+    title: "AI Food Video Generator for Cooking | Aidreamcapes"
+  }],
+  ["/best-ai-image", {
+    title: "AI Image Gallery for Product Ideas | Aidreamcapes",
+    description: "Browse the full Aidreamcapes AI image gallery with product scenes, portrait ideas, ad concepts, private album directions, and package examples before creating."
+  }],
+  ["/best-ai-video", {
+    title: "AI Video Gallery for Creator Ideas | Aidreamcapes",
+    description: "Browse the full Aidreamcapes AI video gallery with motion themes, short video cases, image-to-video examples, and creator workflows before choosing a direction."
+  }],
+  ["/best-packages", {
+    title: "AI Photo Packages for Seasonal Projects | Aidreamcapes",
+    description: "Compare Aidreamcapes recommended seasonal, holiday, and occasion AI photo packages in one place before choosing a private gallery direction for your project."
+  }],
+  ["/best-save-the-date", {
+    title: "Save the Date Themes for AI Announcements | Aidreamcapes",
+    description: "Browse every Aidreamcapes Save the Date theme for Valentine announcements, engagements, proposals, and wedding date stories before planning your next message."
+  }],
+  ["/blog/video-photo-package-guide", {
+    title: "AI Photo and Video Package Guide | Aidreamcapes",
+    description: "Plan motion-ready photo frames and short Motion Generator projects with focused source images, one movement direction, and a private review checklist."
+  }],
+  ["/blog", {
+    description: "Read Aidreamcapes guides for source photos, AI photo package planning, visible credits, private galleries, downloads, and delivery review before you create."
+  }],
+  ["/cookies", {
+    title: "Cookie Policy for AI Photo and Video Accounts | Aidreamcapes"
+  }],
+  ["/digital-delivery", {
+    title: "Digital Delivery for AI Photos and Videos | Aidreamcapes"
+  }],
+  ["/faq", {
+    description: "Get Aidreamcapes help for source photo preparation, package selection, credits, checkout, privacy, refunds, and private album delivery before you create."
+  }],
+  ["/workflow", {
+    title: "How Aidreamcapes AI Image and Video Workflows Work"
+  }]
+]);
+
 // Replace only public route references in the Aidreamcapes content payload.
 // Asset filenames and ordinary prose are intentionally left untouched. The
 // target pages are the only rows passed through this function, so other
@@ -395,7 +508,7 @@ function updateContentValue(value, key = "") {
 function nextPage(row) {
   const contentJson = updateContentValue(clone(row.contentJson) ?? {});
   const seo = updateSeoValue(contentJson.seo ?? {});
-  const replacement = SEO_REPLACEMENTS.get(row.slug);
+  const replacement = SEO_LENGTH_REPLACEMENTS.get(row.slug) ?? SEO_REPLACEMENTS.get(row.slug);
   if (replacement) Object.assign(seo, replacement);
   contentJson.seo = seo;
   return { ...row, title: replacement?.title ?? row.title, contentJson };
@@ -460,7 +573,7 @@ async function main() {
     productionConfirmed: confirmation === CONFIRMATION
   });
   if (apply) assert.equal(confirmation, CONFIRMATION, `Applying requires --confirm=${CONFIRMATION}.`);
-  for (const [slug, replacement] of SEO_REPLACEMENTS) validateReplacement(slug, replacement);
+  for (const [slug, replacement] of new Map([...SEO_REPLACEMENTS, ...SEO_LENGTH_REPLACEMENTS])) validateReplacement(slug, replacement);
 
   const prisma = new PrismaClient();
   try {

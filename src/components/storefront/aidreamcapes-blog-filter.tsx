@@ -42,7 +42,7 @@ export function AidreamcapesBlogFilter({ cards }: { cards: AidreamcapesBlogCard[
         {visibleCards.map((card) => (
           <a className="ac-article-card" href={card.href} key={card.id}>
             <div className="ac-article-image">
-              {card.imageUrl ? <img src={card.imageUrl} alt={card.imageAlt || card.title} loading="lazy" /> : null}
+              {card.imageUrl ? <img src={card.imageUrl} alt={card.imageAlt || card.title} height={1000} loading="lazy" sizes="(max-width: 768px) 100vw, 33vw" width={1600} /> : null}
               {card.tags[0] ? <span className="ac-article-tag">{card.tags[0]}</span> : null}
             </div>
             <div className="ac-article-body">
