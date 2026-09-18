@@ -330,8 +330,8 @@ export function PackageTaxonomyClient({
                     <div>
                       <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Puntos de revision" : french ? "Points à vérifier" : "Review points"}</h2>
                       <ul className="mt-3 grid gap-2">
-                        {detailReviewPoints.map((item) => (
-                          <li className={variant === "cream" ? "flex gap-2 text-sm leading-6 text-[#6F6257]" : "flex gap-2 text-sm leading-6 text-white/[0.58]"} key={item}>
+                        {detailReviewPoints.map((item, index) => (
+                          <li className={variant === "cream" ? "flex gap-2 text-sm leading-6 text-[#6F6257]" : "flex gap-2 text-sm leading-6 text-white/[0.58]"} key={`${item}-${index}`}>
                             <Sparkles className={variant === "cream" ? "mt-0.5 h-4 w-4 shrink-0 text-[#B86E36]" : "mt-0.5 h-4 w-4 shrink-0 text-blue-300"} strokeWidth={2} />
                             <span>{item}</span>
                           </li>
@@ -347,8 +347,8 @@ export function PackageTaxonomyClient({
                     <div>
                       <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Mejor para" : french ? "Idéal pour" : "Best for"}</h2>
                       <ul className="mt-3 grid gap-2">
-                        {detailBestFor.map((item) => (
-                          <li className={variant === "cream" ? "flex gap-2 text-sm leading-6 text-[#6F6257]" : "flex gap-2 text-sm leading-6 text-white/[0.58]"} key={item}>
+                        {detailBestFor.map((item, index) => (
+                          <li className={variant === "cream" ? "flex gap-2 text-sm leading-6 text-[#6F6257]" : "flex gap-2 text-sm leading-6 text-white/[0.58]"} key={`${item}-${index}`}>
                             <CheckCircle2 className={variant === "cream" ? "mt-0.5 h-4 w-4 shrink-0 text-[#B86E36]" : "mt-0.5 h-4 w-4 shrink-0 text-[#16dcf0]"} strokeWidth={2} />
                             <span>{item}</span>
                           </li>
@@ -361,7 +361,7 @@ export function PackageTaxonomyClient({
                       <h2 className={variant === "cream" ? "text-sm font-semibold text-[#1E1712]" : "text-sm font-semibold text-white"}>{spanish ? "Como funciona" : french ? "Comment ça marche" : "How it works"}</h2>
                       <ol className="mt-3 grid gap-2">
                         {detailWorkflow.map((item, index) => (
-                          <li className={variant === "cream" ? "grid grid-cols-[24px_1fr] gap-2 text-sm leading-6 text-[#6F6257]" : "grid grid-cols-[24px_1fr] gap-2 text-sm leading-6 text-white/[0.58]"} key={item}>
+                          <li className={variant === "cream" ? "grid grid-cols-[24px_1fr] gap-2 text-sm leading-6 text-[#6F6257]" : "grid grid-cols-[24px_1fr] gap-2 text-sm leading-6 text-white/[0.58]"} key={`${item}-${index}`}>
                             <span className={variant === "cream" ? "grid h-6 w-6 place-items-center rounded-full bg-[#1E1712]/10 text-[11px] font-bold text-[#1E1712]/[0.78]" : "grid h-6 w-6 place-items-center rounded-full bg-white/10 text-[11px] font-bold text-white/[0.78]"}>{index + 1}</span>
                             <span>{item}</span>
                           </li>

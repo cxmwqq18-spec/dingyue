@@ -89,7 +89,10 @@ function reorderHtmlHead(html) {
         .replace(/\stype=["']application\/json["']/i, ' type="application/ld+json"')
         .replace(/\sid=["']storefront-json-ld-(\d+)["']/i, ' id="storefront-json-ld-head-$1"')
     );
-    return "";
+    // Keep the original body marker in place for React hydration. The
+    // head copy above is for crawlers; removing the body node makes the
+    // server tree differ from the client tree on every JSON-LD storefront page.
+    return tag;
   });
   const headOpen = withoutBodyJsonLd.indexOf("<head>");
   const headClose = withoutBodyJsonLd.indexOf("</head>");
@@ -111,7 +114,7 @@ function reorderHtmlHead(html) {
   return `${withoutBodyJsonLd.slice(0, headStart)}${reorderedHead}${withoutBodyJsonLd.slice(headClose)}`;
 }
 
-function interceptHtmlResponse(response) {
+function interceptHtmlResponse(response, { reorderHead = true } = {}) {
   const chunks = [];
   const write = response.write.bind(response);
   const end = response.end.bind(response);
@@ -158,7 +161,7 @@ function interceptHtmlResponse(response) {
     const html = Buffer.concat(chunks).toString("utf8");
     // Semantic SEO content is owned by the active immutable publication.
     // The transport wrapper may reorder tags but must not rewrite copy.
-    const nextHtml = reorderHtmlHead(html);
+    const nextHtml = reorderHead ? reorderHtmlHead(html) : html;
     const body = Buffer.from(nextHtml, "utf8");
     if (!response.headersSent) {
       response.removeHeader("content-length");
@@ -174,7 +177,12 @@ await app.prepare();
 createServer(async (request, response) => {
   try {
     request.headers["accept-encoding"] = "identity";
-    interceptHtmlResponse(response);
+    const requestUrl = new URL(request.url || "/", `http://${request.headers.host || "localhost"}`);
+    const requestHost = requestUrl.host.split(":")[0].toLowerCase();
+    const isAidreamcapesEuRequest =
+      /^\/site\/aidreamcapes-eu(?:\/|$)/i.test(requestUrl.pathname) ||
+      /^(?:www\.)?aidreamcapes\.eu$/i.test(requestHost);
+    interceptHtmlResponse(response, { reorderHead: !isAidreamcapesEuRequest });
     await handle(request, response);
   } catch (error) {
     console.error(error);

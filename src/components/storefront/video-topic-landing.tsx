@@ -5,13 +5,15 @@ import type { SectionInstance, Site } from "@/lib/types";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
 import { hostAwareSitePath } from "@/lib/domain-routing";
-import { aiVideoTopicLandingContentFromSection, type AiVideoTopicLandingContent } from "@/lib/ai-video-topic-content";
+import { adsTestingDetailFromLegacyUgcContent, aiVideoTopicLandingContentFromSection, type AiVideoTopicLandingContent } from "@/lib/ai-video-topic-content";
+import { AdsTestingDetail } from "@/components/storefront/ads-testing-detail";
+import { BrandCreatorDetail } from "@/components/storefront/brand-creator-detail";
+import type { AidreamcapesAdsTestingDetailContent, AidreamcapesBrandCreatorDetailContent } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/talking-photo-content";
 import { isMydreamshootsVideoContentPath, mydreamshootsVideoWatchPathForContentPath } from "@/lib/mydreamshoots-video-watch";
 
 type RoutedSite = Site & { __storefrontBasePath?: string };
 
-const defaultObjectPosition = "50% 38%";
 // Generated topic-media files use a 4:3 canvas with a 16:9 scene and
 // letterbox bars baked into the pixels. Keep the source dimensions accurate;
 // embedded media uses a 16:9 cover frame to remove those bars without scaling
@@ -19,6 +21,8 @@ const defaultObjectPosition = "50% 38%";
 const talkingPhotoImageSize = { width: 1600, height: 1200 };
 
 const spanishVideoResidualEnglishPattern = /\b(?:customer|problem|example|script|expert|tip|generated|references|additional|guidance|keep|supporting|notes|specific|platform|buyer|campaign|futuristic|world|scale|imagination|stillness|expressive|historic|textures|aloud|voices|right|thank|being|needed|forget|viewers|leaving|first|seconds|whole|video|treat|human|venue|happy|grooming|material|behavior|behaviour|detail|craftsperson|place|proof|meaning|expectation|qualified|reaction|twist|optional|natural|right|joke|quote|separate|shoot|would|slow|wider|era|collaboration|energy|workplace|culture|meme|reply|deadpan|pov|testimonial|urgency|scarcity|relationship-led|establishes|personality|emotional|role|introduction|launch|reused|everywhere|features|states|inventing|interface|campaign|variants|routine|full|love|happy|six|eight|directions|story|beats|music|fashion|pet|food|owner|portrait|frame|approved|reference|continuity|scene|shot)\b/i;
+const meaningfulSpanishImageAltPattern = /\b(?:persona|adult[oa]|creador(?:a)?|presentador(?:a)?|fundador(?:a)?|modelo|especialista|equipo|manos|producto|perro|gato|mascota|cámara|camara|escena|espacio|entorno|estudio|hogar|cocina|mesa|marca|vídeo|video|redes|sociales|campaña|lanzamiento|historia|música|moda|preparando|mostrando|grabando|compartiendo|demostrando|contando|trabajando|revisando|explicando|jugando|paseando|sirviendo|cuidando|presentando|organizando)\b/i;
+const genericSpanishImageAltPattern = /\b(?:ejemplo visual|creado con ia|fotos propias|resultados de|contenido de aidreamshoots|contenido de mydreamshoots)\b/i;
 
 function spanishVideoTopicLabel(contentKey: string): string {
   const labels: Record<string, string> = {
@@ -56,6 +60,19 @@ function repairSpanishVideoTopicContent<T>(value: T, contentKey: string, spanish
   if (!spanish) return value;
   const topic = spanishVideoTopicLabel(contentKey);
   if (typeof value === "string") {
+    // Asset URLs are data, not customer-facing copy. A filename such as
+    // `talking-photo-social-video.webp` contains the English word "video" and
+    // must never be replaced by the Spanish copy fallback.
+    if (/^(?:src|poster|imageUrl|imageOriginalUrl|videoUrl|posterUrl|backgroundImage|beforeImage|resultImageUrl|secondaryImageUrl)$/i.test(key) && /^(?:https?:|\/)/i.test(value)) {
+      return value;
+    }
+    // Keep scene-specific Spanish alt text intact. The legacy residual-English
+    // list contains words such as `natural`, `story`, and `video` that can
+    // legitimately appear in an otherwise correct Spanish description. A
+    // generic fallback here would erase the accessibility meaning of the image.
+    if (/^(?:alt|caption)$/i.test(key) && value.length >= 30 && value.length <= 150 && meaningfulSpanishImageAltPattern.test(value) && !genericSpanishImageAltPattern.test(value)) {
+      return value;
+    }
     if (!spanishVideoResidualEnglishPattern.test(value)) return value;
     return spanishVideoFallback(key, topic) as T;
   }
@@ -71,6 +88,7 @@ function repairSpanishVideoTopicContent<T>(value: T, contentKey: string, spanish
 
 type VideoTopicImage = {
   src: string;
+  imageOriginalUrl?: string;
   alt: string;
   width: number;
   height: number;
@@ -266,11 +284,6 @@ function ActionLink({ site, href, label, variant = "primary" }: { site: Site; hr
   );
 }
 
-function imageStyle(image: VideoTopicImage): { objectPosition: string } {
-  if (image.objectPosition) return { objectPosition: image.objectPosition };
-  return { objectPosition: image.height / image.width > 1.3 ? "50% 50%" : defaultObjectPosition };
-}
-
 /** Keep media frames aligned with the real asset or its embedded scene crop. */
 function intrinsicAspectRatio(image: VideoTopicImage): string {
   const width = Number(image.width);
@@ -282,19 +295,14 @@ function hasEmbeddedVideoLetterbox(image: VideoTopicImage): boolean {
   return image.src.includes("/assets/dreamshoot/generated/video-topic-media/") || image.src.includes("/assets/dreamshoot/generated/video-topic-clean/");
 }
 
-function mediaAspectRatio(image: VideoTopicImage): string {
-  return hasEmbeddedVideoLetterbox(image) ? "16 / 9" : intrinsicAspectRatio(image);
-}
-
 function cardMediaAspectRatio(image: VideoTopicImage): string {
-  const ratio = image.width > 0 ? image.height / image.width : 1;
-  return ratio > 1.15 ? "4 / 3" : mediaAspectRatio(image);
+  // The frame must follow the delivered asset. A shared 3:2 frame makes
+  // 4:3, 16:10, and other source ratios crop at the edges.
+  return intrinsicAspectRatio(image);
 }
 
-function mediaObjectFit(image: VideoTopicImage): "object-cover" | "object-contain" {
-  // Detail-page media should fill its frame. Containment exposes baked-in
-  // letterbox/blurred background pixels on portrait source assets.
-  return "object-cover";
+function isRenderableTopicImage(image: VideoTopicImage | undefined): image is VideoTopicImage {
+  return Boolean(image?.src?.trim() && Number(image.width) > 0 && Number(image.height) > 0);
 }
 
 function optimizedTopicImageSrc(src: string): string {
@@ -327,11 +335,16 @@ function optimizedTopicImageSrc(src: string): string {
   return src.replace(/\.png(?=[?#]|$)/i, ".webp");
 }
 
+function topicImagePreviewSrc(image: VideoTopicImage): string {
+  const original = image.imageOriginalUrl?.trim() ?? "";
+  return /^(?:https?:|\/assets\/)/i.test(original) ? original : optimizedTopicImageSrc(image.src);
+}
+
 function heroPreviewImages(content: Pick<VideoTopicContent, "hero">): VideoTopicImage[] {
   const seen = new Set<string>();
   return [content.hero.image, ...(content.hero.images ?? [])]
     .filter((image) => {
-      if (!image?.src || seen.has(image.src)) return false;
+      if (!isRenderableTopicImage(image) || seen.has(image.src)) return false;
       seen.add(image.src);
       return true;
     })
@@ -347,13 +360,21 @@ function sceneHeroPreviewImages(content: VideoTopicContent, contentKey: string):
     if (portrait && training && owner) return [portrait, training, owner];
   }
   if (contentKey === "music-video" && images.length >= 2) {
-    return [images[0], { src: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg", alt: "Female vocalist singing into a studio microphone under red and blue cinematic lighting, used as the dedicated hero performance frame.", width: 1800, height: 1200, objectPosition: "50% 42%" }, ...images.slice(2)];
+    return [images[0], { src: "/assets/dreamshoot/music-video/hero-music-video-performance.jpg", alt: "Cantante interpretando una canción con micrófono en un estudio, con iluminación cinematográfica roja y azul.", width: 1800, height: 1200, objectPosition: "50% 42%" }, ...images.slice(2)];
   }
   return images;
 }
 
 function isPortraitVideo(video?: VideoTopicVideo): boolean {
   return Boolean(video && video.height > video.width);
+}
+
+function isPortraitImage(image: VideoTopicImage): boolean {
+  return image.height > image.width;
+}
+
+function isPortraitHero(image: VideoTopicImage, video?: VideoTopicVideo): boolean {
+  return video ? isPortraitVideo(video) : isPortraitImage(image);
 }
 
 function heroMediaSizingClass(video?: VideoTopicVideo): string {
@@ -379,7 +400,10 @@ function TopicHeroVideo({ video, site }: { video: VideoTopicVideo; site?: Site }
         <video
           aria-label={video.label}
           autoPlay
-          className={`absolute inset-0 h-full w-full ${video.fit === "contain" ? "object-contain" : "object-cover"}`}
+          // Keep every source pixel visible. The surrounding frame supplies the
+          // standard 9:16 or 16:9 canvas; object-cover would crop non-standard
+          // encoded dimensions such as 864x496.
+          className="absolute inset-0 h-full w-full object-contain"
           height={video.height}
           loop
           muted
@@ -400,7 +424,7 @@ function TopicHeroVideo({ video, site }: { video: VideoTopicVideo; site?: Site }
   );
 }
 
-function DirectTopicHeroCards({ images, video, site, cropPetHero = false, containSecondaryImages = false, leadAspectRatio }: { images: VideoTopicImage[]; video?: VideoTopicVideo; site?: Site; cropPetHero?: boolean; containSecondaryImages?: boolean; leadAspectRatio?: string }) {
+function DirectTopicHeroCards({ images, video, site, cropPetHero = false, leadAspectRatio }: { images: VideoTopicImage[]; video?: VideoTopicVideo; site?: Site; cropPetHero?: boolean; leadAspectRatio?: string }) {
   const cards = images.slice(0, 3);
   const hasThreeCards = cards.length >= 3;
   return (
@@ -410,20 +434,19 @@ function DirectTopicHeroCards({ images, video, site, cropPetHero = false, contai
       data-video-topic-hero-collage={hasThreeCards ? "stacked" : cards.length === 2 ? "split" : "single"}
     >
       {cards.map((item, index) => {
-        const shouldContainImage = containSecondaryImages && hasThreeCards && index > 0;
         return (
         <div
-          className="relative min-w-0 overflow-hidden rounded-[6px] bg-[#292438]"
+          className="relative min-w-0 self-start overflow-hidden rounded-[6px] bg-[#292438]"
           key={item.src}
           style={{
             ...(hasThreeCards && index === 0 ? { gridColumn: "1 / -1" } : {}),
             // Keep the lead frame prominent while preserving two compact side-by-side previews below.
-            aspectRatio: shouldContainImage ? intrinsicAspectRatio(item) : video && index === 0 ? `${video.width} / ${video.height}` : index === 0 && leadAspectRatio ? leadAspectRatio : "16 / 9"
+            aspectRatio: video && index === 0 ? (isPortraitVideo(video) ? "9 / 16" : "16 / 9") : index === 0 && leadAspectRatio ? leadAspectRatio : intrinsicAspectRatio(item)
           }}
           {...(hasThreeCards && index === 0 && !video
             ? {
                 "data-dreamshoot-showcase-preview": "image",
-                "data-dreamshoot-preview-src": optimizedTopicImageSrc(item.src),
+                "data-dreamshoot-preview-src": topicImagePreviewSrc(item),
                 "data-dreamshoot-preview-title": item.alt,
                 "aria-label": `View ${item.alt} full image`,
                 role: "button",
@@ -433,14 +456,15 @@ function DirectTopicHeroCards({ images, video, site, cropPetHero = false, contai
         >
           {video && index === 0 ? <TopicHeroVideo site={site} video={video} /> : <img
               src={optimizedTopicImageSrc(item.src)}
+              data-dreamshoot-preview-src={topicImagePreviewSrc(item)}
               alt={item.alt}
-              className={`absolute ${hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item) ? "top-0 left-1/2 h-auto max-w-none" : "inset-0 h-full w-full"} ${shouldContainImage ? "object-contain object-center" : hasThreeCards && index === 0 && !hasEmbeddedVideoLetterbox(item) ? "object-cover object-top" : hasThreeCards ? "object-cover object-center" : `${mediaObjectFit(item)} object-center`}`}
+              className={hasEmbeddedVideoLetterbox(item) ? "absolute top-0 left-1/2 h-auto max-w-none object-cover" : "block h-auto w-full"}
               style={
                 hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item)
                   ? { width: "200%", transform: cropPetHero ? "translate(-50%, -18%)" : "translateX(-50%)", objectPosition: cropPetHero ? "50% 50%" : "50% 0%" }
                   : hasThreeCards && index === 0
                     ? { objectPosition: "50% 0%" }
-                    : imageStyle(item)
+                    : undefined
               }
               width={item.width}
               height={item.height}
@@ -455,31 +479,32 @@ function DirectTopicHeroCards({ images, video, site, cropPetHero = false, contai
   );
 }
 
-function TopicHeroMedia({ images, video, site, cropPetHero = false, displayAspectRatio, containSecondaryImages = false, leadAspectRatio }: { images: VideoTopicImage[]; video?: VideoTopicVideo; site?: Site; cropPetHero?: boolean; displayAspectRatio?: string; containSecondaryImages?: boolean; leadAspectRatio?: string }) {
+function TopicHeroMedia({ images, video, site, cropPetHero = false, displayAspectRatio, leadAspectRatio }: { images: VideoTopicImage[]; video?: VideoTopicVideo; site?: Site; cropPetHero?: boolean; displayAspectRatio?: string; leadAspectRatio?: string }) {
   if (video && images.length < 3) {
     const portraitSizing = isPortraitVideo(video);
-    // Some landscape exports are delivered on a 4:3 canvas with 16:9 content
-    // letterboxed into the pixels. A 16:9 viewport lets object-cover crop those
-    // baked-in bars while keeping the actual video frame undistorted.
-    const videoAspectRatio = displayAspectRatio ?? (portraitSizing ? `${video.width} / ${video.height}` : "16 / 9");
+    // Use the publishing canvas requested by the topic while keeping the
+    // source video contained inside it, so no frame is cropped or distorted.
+    const videoAspectRatio = displayAspectRatio ?? (portraitSizing ? "9 / 16" : "16 / 9");
     return (
       <div className={`mx-auto max-w-full ${portraitSizing ? "h-auto max-h-full w-auto md:h-[min(78vh,54rem)]" : "w-full"}`} style={{ aspectRatio: videoAspectRatio }}>
         <TopicHeroVideo site={site} video={video} />
       </div>
     );
   }
-  return <DirectTopicHeroCards images={images} site={site} video={video} cropPetHero={cropPetHero} containSecondaryImages={containSecondaryImages} leadAspectRatio={leadAspectRatio} />;
+  return <DirectTopicHeroCards images={images} site={site} video={video} cropPetHero={cropPetHero} leadAspectRatio={leadAspectRatio} />;
 }
 
 function localizedExpertLabel(site: Site, value?: string): string {
+  if (site?.id === "site_aidreamcapes_xby" && (!value || value === "Expert tip")) return "Conseil expert";
   if (site?.id === "site_mydreamshoots_xby" && (!value || value === "Expert tip")) return "Consejo experto";
   return value ?? "Expert tip";
 }
 
 function UseCaseCard({ item, index, site }: { item: VideoTopicUseCase; index: number; site?: Site }) {
   const spanish = site?.id === "site_mydreamshoots_xby";
-  const label = item.scenarioLabel ?? (spanish ? "Problema del cliente" : "Customer problem");
-  const noteLabel = item.noteLabel ?? (item.script ? (spanish ? "Guion de ejemplo" : "Example script") : undefined);
+  const french = site?.id === "site_aidreamcapes_xby";
+  const label = item.scenarioLabel ?? (spanish ? "Problema del cliente" : french ? "Besoin du client" : "Customer problem");
+  const noteLabel = item.noteLabel ?? (item.script ? (spanish ? "Guion de ejemplo" : french ? "Script d’exemple" : "Example script") : undefined);
   const noteBody = item.noteBody ?? (item.script ? `“${item.script}”` : undefined);
   return (
     <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f] shadow-[0_28px_70px_-54px_rgba(0,0,0,0.92)]" data-video-topic-use-case-card>
@@ -487,9 +512,9 @@ function UseCaseCard({ item, index, site }: { item: VideoTopicUseCase; index: nu
         <div className="relative overflow-hidden bg-[#292438]" data-video-topic-media style={{ aspectRatio: cardMediaAspectRatio(item.image) }}>
           <img
             src={optimizedTopicImageSrc(item.image.src)}
+            data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)}
             alt={item.image.alt}
-            className={`absolute inset-0 h-full w-full ${mediaObjectFit(item.image)} object-center`}
-            style={{ objectPosition: "50% 50%" }}
+            className="block h-full w-full object-cover"
             width={item.image.width}
             height={item.image.height}
             loading="eager"
@@ -524,9 +549,9 @@ function SupportingCard({ card, light = false, site }: { card: VideoTopicSupport
         <div className="relative mb-6 overflow-hidden rounded-[16px] bg-[#292438]" style={{ aspectRatio: cardMediaAspectRatio(card.image) }}>
           <img
             src={optimizedTopicImageSrc(card.image.src)}
+            data-dreamshoot-preview-src={topicImagePreviewSrc(card.image)}
             alt={card.image.alt}
-            className={`h-full w-full ${mediaObjectFit(card.image)} object-center`}
-            style={imageStyle(card.image)}
+            className="block h-full w-full object-cover"
             width={card.image.width}
             height={card.image.height}
             loading="lazy"
@@ -597,12 +622,12 @@ function ValueSection({ section, light = false }: { section: VideoTopicContent["
       <div className="mx-auto max-w-[var(--site-content-width)]">
         <SectionHeader eyebrow={section.eyebrow} title={section.title} body={section.intro} light={light} />
         {section.image ? (
-          <figure className="relative mt-12 overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f]" style={{ aspectRatio: mediaAspectRatio(section.image) }}>
+          <figure className="mt-12 overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f]">
             <img
               src={optimizedTopicImageSrc(section.image.src)}
+              data-dreamshoot-preview-src={topicImagePreviewSrc(section.image)}
               alt={section.image.alt}
-              className={`absolute inset-0 h-full w-full ${mediaObjectFit(section.image)} object-center`}
-              style={imageStyle(section.image)}
+              className="block h-auto w-full"
               width={section.image.width}
               height={section.image.height}
               loading="lazy"
@@ -626,7 +651,7 @@ function ValueSection({ section, light = false }: { section: VideoTopicContent["
 
 function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicContent; section: SectionInstance; site: Site }) {
   const primaryHref = `/app/create?videoMode=${encodeURIComponent("video-ad")}#step-video`;
-  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
+  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => isRenderableTopicImage(item.image)) ?? [];
   const heroPreview = [galleryItems[0], galleryItems[5], galleryItems[6]].filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item));
   return (
     <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? "video-ad")} data-video-topic-page="video-ad">
@@ -710,8 +735,8 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
             <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {galleryItems.map((item, index) => (
                 <article className="flex h-full flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-video-ad-scene key={`${item.title}-${index}`}>
-                  <div className="relative overflow-hidden bg-[#d9d1f6]" style={{ aspectRatio: mediaAspectRatio(item.image) }}>
-                    <img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className={`absolute inset-0 h-full w-full ${mediaObjectFit(item.image)} object-center`} style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                  <div className="relative overflow-hidden bg-[#d9d1f6]" style={{ aspectRatio: cardMediaAspectRatio(item.image) }}>
+                    <img src={optimizedTopicImageSrc(item.image.src)} data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
@@ -771,7 +796,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#c4b5fd] transition group-open:rotate-90" strokeWidth={1.8} />
                 </summary>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-white/65">{item.answer}</p>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-white/65" data-faq-answer="video-topic">{item.answer}</p>
               </details>
             ))}
           </div>
@@ -828,12 +853,12 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end">
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <div className="relative aspect-video overflow-hidden rounded-[21px]" data-video-topic-hero-media>
+              <div className="relative overflow-hidden rounded-[21px]" data-video-topic-hero-media>
                 <img
                   src={optimizedTopicImageSrc(content.hero.image.src)}
+                  data-dreamshoot-preview-src={topicImagePreviewSrc(content.hero.image)}
                   alt={content.hero.image.alt}
-                  className={`absolute inset-0 h-full w-full ${mediaObjectFit(content.hero.image)} object-center`}
-                  style={imageStyle(content.hero.image)}
+                  className="block h-auto w-full"
                   width={content.hero.image.width}
                   height={content.hero.image.height}
                   loading="eager"
@@ -973,7 +998,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
                 </summary>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p>
               </details>
             ))}
           </div>
@@ -997,6 +1022,7 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
 
 function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopicContent; section: SectionInstance; site: Site }) {
   const primaryHref = "#how-it-works";
+  const portraitHero = isPortraitHero(content.hero.image, content.hero.video);
   return (
     <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? "promo-video")} data-video-topic-page="promo-video">
       <section className="relative border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
@@ -1019,15 +1045,15 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
           </div>
           <figure className="relative min-w-0 w-full max-w-[22rem] justify-self-center sm:max-w-[24rem] lg:max-w-[26rem] lg:justify-self-end">
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <div className="relative aspect-[9/16] overflow-hidden rounded-[21px]" data-video-topic-hero-media>
+              <div className={`relative overflow-hidden rounded-[21px] ${content.hero.video ? (portraitHero ? "aspect-[9/16]" : "aspect-[16/9]") : ""}`} data-video-topic-hero-media>
                 {content.hero.video ? (
                   <TopicHeroVideo site={site} video={content.hero.video} />
                 ) : (
                   <img
-                    src={content.hero.image.src}
+                    src={optimizedTopicImageSrc(content.hero.image.src)}
+                    data-dreamshoot-preview-src={topicImagePreviewSrc(content.hero.image)}
                     alt={content.hero.image.alt}
-                    className={`absolute inset-0 h-full w-full ${mediaObjectFit(content.hero.image)} object-center`}
-                    style={imageStyle(content.hero.image)}
+                    className="block h-auto w-full"
                     width={content.hero.image.width}
                     height={content.hero.image.height}
                     loading="eager"
@@ -1175,7 +1201,7 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
                 </summary>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p>
               </details>
             ))}
           </div>
@@ -1311,7 +1337,7 @@ function normalizeTalkingContent(content: TalkingPhotoContent): VideoTopicConten
 
 function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopicContent; section: SectionInstance; site: Site }) {
   const primaryHref = `/app/create?videoMode=${encodeURIComponent("brand-video")}#step-video`;
-  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
+  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => isRenderableTopicImage(item.image)) ?? [];
   // Keep the hero focused on one visual anchor. The gallery remains available
   // below for the broader set of brand-story scene references.
   const heroPreview = galleryItems[0]?.image ? [galleryItems[0].image] : [content.hero.image];
@@ -1337,9 +1363,9 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
               </div>
             ) : null}
           </div>
-          <figure className="relative min-w-0 w-full lg:max-w-[390px] lg:justify-self-end" data-video-topic-hero-media>
-            <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]" style={{ aspectRatio: "9 / 16" }}>
-              <DirectTopicHeroCards images={heroPreview} leadAspectRatio="9 / 16" />
+          <figure className="relative min-w-0 w-full lg:max-w-[540px] lg:justify-self-end" data-video-topic-hero-media>
+            <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
+              <DirectTopicHeroCards images={heroPreview} leadAspectRatio={cardMediaAspectRatio(heroPreview[0])} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
               <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />
@@ -1365,8 +1391,8 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <SectionHeader eyebrow={content.platformExamples?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "MAPA DE HISTORIA DE MARCA" : "BRAND STORY MAP")} title={content.platformExamples?.title ?? (site.id === "site_mydreamshoots_xby" ? "Seis momentos de la historia" : "Six Story Beats")} body={content.platformExamples?.intro} />
             <ol className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-6" data-brand-video-story-map>
-              {storyBeats.map((beat) => (
-                <li className="min-w-0 rounded-[22px] border border-white/10 bg-[#17151f] p-5" data-brand-video-beat key={beat.title}>
+              {storyBeats.map((beat, index) => (
+                <li className="min-w-0 rounded-[22px] border border-white/10 bg-[#17151f] p-5" data-brand-video-beat key={`${beat.title}-${index}`}>
                   <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{beat.title}</p>
                   <p className="mt-4 text-sm leading-6 text-white/68">{beat.body}</p>
                 </li>
@@ -1415,8 +1441,8 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-brand-video-gallery>
               {galleryItems.map((item, index) => (
                 <article className="flex min-w-0 flex-col overflow-hidden rounded-[16px] border border-[#d2c9ef] bg-white/70 shadow-[0_10px_28px_-20px_rgba(42,33,78,0.45)]" data-brand-video-scene key={`${item.title}-${index}`}>
-                  <div className="relative h-44 overflow-hidden bg-[#d9d1f6] sm:h-48" style={{ aspectRatio: "16 / 10" }}>
-                    <img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className="absolute inset-0 h-full w-full object-cover object-center" style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                  <div className="relative overflow-hidden bg-[#d9d1f6]" style={{ aspectRatio: cardMediaAspectRatio(item.image) }}>
+                    <img src={optimizedTopicImageSrc(item.image.src)} data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
@@ -1470,7 +1496,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
             </div>
           </div>
           <div className="rounded-[24px] border border-white/10 bg-[#17151f] p-6 sm:p-7" data-brand-video-workspace>
-            <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">Workspace review model</p>
+            <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{site.id === "site_aidreamcapes_xby" ? "Modèle de vérification dans l’espace de travail" : "Workspace review model"}</p>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {content.value.items.map((item, index) => (
                 <article className="rounded-[18px] border border-white/10 bg-white/[0.035] p-5" key={`${item.title}-${index}`}>
@@ -1508,7 +1534,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
                 </summary>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p>
               </details>
             ))}
           </div>
@@ -1552,7 +1578,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
   // supporting stills in the gallery below, but let the hero stay focused on
   // the single playable video.
   const heroImages = isMusic && heroVideo ? [] : sceneHeroPreviewImages(content, contentKey);
-  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => Boolean(item.image)) ?? [];
+  const galleryItems = content.gallery?.items.filter((item): item is VideoTopicSupportingCard & { image: VideoTopicImage } => isRenderableTopicImage(item.image)) ?? [];
   const petHeroExtras = isPet ? (content.hero.images?.slice(1) ?? []).map((image, index) => ({
     title: index === 0 ? (spanish ? "Retrato de persona y mascota" : "Owner and pet portrait") : (spanish ? "Fotograma de retrato de mascota" : "Pet portrait frame"),
     body: spanish ? "Referencia aprobada para revisar la continuidad de la escena." : "Additional approved reference kept with the scene list for continuity review.",
@@ -1564,7 +1590,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
   const accentBorder = isMusic ? "border-fuchsia-300/25" : isFashion ? "border-pink-300/25" : isPet ? "border-cyan-300/25" : "border-orange-300/25";
   const panelTone = isMusic ? "bg-[#15101f]" : isFashion ? "bg-[#11161d]" : isPet ? "bg-[#101c1d]" : "bg-[#1b1512]";
   return (
-    <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-video-topic-page={contentKey}>
+    <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-site-id={site.id} data-video-topic-page={contentKey}>
       <section className="border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:py-24">
           <div className="min-w-0">
@@ -1581,7 +1607,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
           </div>
           <figure className={`relative min-w-0 ${heroMediaSizingClass(heroVideo)} lg:justify-self-end`} data-video-topic-hero-media>
             <div className={`relative ${heroMediaSizingClass(heroVideo)} overflow-hidden rounded-[8px] border ${accentBorder} bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]`}>
-              <TopicHeroMedia containSecondaryImages cropPetHero={isPet} images={heroImages} site={site} video={heroVideo} leadAspectRatio={heroLeadAspectRatio} />
+              <TopicHeroMedia cropPetHero={isPet} images={heroImages} site={site} video={heroVideo} leadAspectRatio={heroLeadAspectRatio} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60"><Sparkles className={`mt-1 h-4 w-4 shrink-0 ${accentClass}`} strokeWidth={1.8} /><span>{content.hero.caption}</span></figcaption>
           </figure>
@@ -1594,7 +1620,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
 
       <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} /><div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">{content.steps.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-scene-topic-step key={`${item.title}-${index}`}><span className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</span><h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div><div className="mt-10"><ActionLink href={primaryHref} label={content.steps.cta} site={site} /></div></div></section>
 
-      {sceneGalleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "REFERENCIAS DE ESCENAS" : "SCENE REFERENCES")} title={content.gallery?.title ?? (site.id === "site_mydreamshoots_xby" ? "Ocho direcciones para el siguiente plano" : "Eight Directions for the Next Shot")} body={content.gallery?.intro} light /><div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{sceneGalleryItems.map((item, index) => <article className="flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-scene-topic-scene key={`${item.title}-${index}`}><div className="relative aspect-[4/3] overflow-hidden bg-[#d9d1f6]"><img src={optimizedTopicImageSrc(item.image.src)} alt={item.image.alt} className={`absolute inset-0 h-full w-full ${mediaObjectFit(item.image)} object-center`} style={imageStyle(item.image)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
+      {sceneGalleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "REFERENCIAS DE ESCENAS" : site.id === "site_aidreamcapes_xby" ? "RÉFÉRENCES DE SCÈNES" : "SCENE REFERENCES")} title={content.gallery?.title ?? (site.id === "site_mydreamshoots_xby" ? "Ocho direcciones para el siguiente plano" : site.id === "site_aidreamcapes_xby" ? "Huit directions pour le prochain plan" : "Eight Directions for the Next Shot")} body={content.gallery?.intro} light /><div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{sceneGalleryItems.map((item, index) => <article className="flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-scene-topic-scene key={`${item.title}-${index}`}><div className="relative overflow-hidden bg-[#d9d1f6]" style={{ aspectRatio: cardMediaAspectRatio(item.image) }}><img src={optimizedTopicImageSrc(item.image.src)} data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
 
       <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="sequence-guide" data-video-topic-section="sequence-guide"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.guidance.cards.map((card, index) => <SupportingCard card={card} key={`${card.title}-${index}`} site={site} />)}</div></div></section>
 
@@ -1606,7 +1632,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
 
       <section className="border-b border-white/10 bg-[#191525] px-5 py-16 sm:px-8 sm:py-24" id="integrity-review" data-video-topic-section="integrity-review"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.trust.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" data-scene-topic-review-card key={`${item.title}-${index}`}><ShieldCheck className={`h-5 w-5 ${accentClass}`} strokeWidth={1.8} /><h3 className="mt-5 text-lg font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div></div></section>
 
-      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light /><div className="mt-10 grid gap-4 lg:grid-cols-2">{content.faq.items.map((item) => <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}><summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]"><span>{item.question}</span><ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} /></summary><p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p></details>)}</div></div></section>
+      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light /><div className="mt-10 grid gap-4 lg:grid-cols-2">{content.faq.items.map((item) => <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}><summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]"><span>{item.question}</span><ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} /></summary><p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p></details>)}</div></div></section>
       {content.comparison ? <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="related-pages" data-video-topic-section="related-pages"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.comparison.eyebrow} title={content.comparison.title} body={content.comparison.intro} /><SectionCards cards={content.comparison.items} site={site} /></div></section> : null}
       <section className="bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" data-video-topic-section="final-cta"><div className="mx-auto max-w-[var(--site-content-width)] rounded-[28px] border border-[#c4b5fd]/25 bg-[#191525] px-6 py-12 text-center sm:px-10 sm:py-16"><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{content.finalCta.eyebrow}</p><h2 className="mx-auto mt-4 max-w-3xl text-balance text-3xl font-semibold leading-[1.03] tracking-normal text-white sm:text-5xl">{content.finalCta.title}</h2><p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/68">{content.finalCta.body}</p><div className="mt-8 flex justify-center"><ActionLink href={primaryHref} label={content.finalCta.cta} site={site} /></div><p className="mt-5 text-xs leading-5 text-white/48">{content.finalCta.microcopy}</p></div></section>
     </main>
@@ -1632,9 +1658,9 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
   const primaryHref = `/app/create?videoMode=${encodeURIComponent(contentKey)}#step-video`;
   const heroImages = heroPreviewImages(content);
   const heroVideo = content.hero.video;
-  const heroDisplayAspectRatio = contentKey === "product-video" || contentKey === "product-ad-video" ? "9 / 16" : undefined;
+  const heroDisplayAspectRatio = isPortraitHero(content.hero.image, heroVideo) ? "9 / 16" : undefined;
   return (
-    <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-video-topic-page={contentKey}>
+    <main className="overflow-hidden bg-[#0d0b13] text-white" id={String(section.settings.anchor ?? contentKey)} data-site-id={site.id} data-video-topic-page={contentKey}>
       <section className="relative border-b border-white/10 bg-[#0d0b13]" data-video-topic-section="hero">
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:py-24">
           <div>
@@ -1736,13 +1762,13 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
       <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="supporting" data-video-topic-section="supporting">
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <SectionHeader
-              eyebrow={site.id === "site_mydreamshoots_xby" ? "GUÍA ADICIONAL DE VÍDEO" : "ADDITIONAL VIDEO GUIDANCE"}
-              title={site.id === "site_mydreamshoots_xby" ? "Mantén claro el objetivo del vídeo desde el primer fotograma hasta el montaje final" : "Keep the video job clear from the first frame to the final cut"}
-              body={site.id === "site_mydreamshoots_xby" ? "Usa las notas siguientes cuando una misma idea creativa necesite una decisión más concreta sobre plataforma, público o campaña." : "Use the supporting notes below when the same creative idea needs a more specific platform, buyer, or campaign decision."}
+              eyebrow={site.id === "site_mydreamshoots_xby" ? "GUÍA ADICIONAL DE VÍDEO" : site.id === "site_aidreamcapes_xby" ? "CONSEILS VIDÉO COMPLÉMENTAIRES" : "ADDITIONAL VIDEO GUIDANCE"}
+              title={site.id === "site_mydreamshoots_xby" ? "Mantén claro el objetivo del vídeo desde el primer fotograma hasta el montaje final" : site.id === "site_aidreamcapes_xby" ? "Gardez un objectif vidéo clair du premier plan au montage final" : "Keep the video job clear from the first frame to the final cut"}
+              body={site.id === "site_mydreamshoots_xby" ? "Usa las notas siguientes cuando una misma idea creativa necesite una decisión más concreta sobre plataforma, público o campaña." : site.id === "site_aidreamcapes_xby" ? "Utilisez ces conseils lorsqu’une même idée créative demande une décision plus précise sur le canal, le public ou la campagne." : "Use the supporting notes below when the same creative idea needs a more specific platform, buyer, or campaign decision."}
             />
             <div className="mt-12 space-y-16">
-              {content.supportingGroups.map((group) => (
-                <div key={group.title}>
+              {content.supportingGroups.map((group, index) => (
+                <div key={`${group.title}-${index}`}>
                   <p className="text-xs font-semibold uppercase tracking-normal text-[#b8a7ff]">{group.eyebrow}</p>
                   <h3 className="mt-3 max-w-3xl text-2xl font-semibold leading-tight text-white sm:text-3xl">{group.title}</h3>
                   <p className="mt-3 max-w-2xl text-base leading-7 text-white/68">{group.intro}</p>
@@ -1801,7 +1827,7 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
                 </summary>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]">{item.answer}</p>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p>
               </details>
             ))}
           </div>
@@ -1827,6 +1853,15 @@ export function AiVideoTopicLanding({ section, site }: { section: SectionInstanc
   const contentKey = String(section.settings.contentKey ?? section.settings.anchor ?? "").trim();
   const content = aiVideoTopicLandingContentFromSection(section);
   if (!content) notFound();
+  if (content.layoutVariant === "brand-creator-detail") {
+    return <BrandCreatorDetail content={content as unknown as AidreamcapesBrandCreatorDetailContent} section={section} site={site} />;
+  }
+  if (content.layoutVariant === "ads-testing-detail" || content.layoutVariant === "conversion-seeding-detail" || content.layoutVariant === "promo-category-detail" || content.layoutVariant === "ugc-ad-detail") {
+    const detail = adsTestingDetailFromLegacyUgcContent(content);
+    if (detail) return <AdsTestingDetail content={detail} section={section} site={site} />;
+    if (content.layoutVariant === "ads-testing-detail" || content.layoutVariant === "conversion-seeding-detail" || content.layoutVariant === "promo-category-detail") return <AdsTestingDetail content={content as unknown as AidreamcapesAdsTestingDetailContent} section={section} site={site} />;
+    notFound();
+  }
   const localizedContent = repairSpanishVideoTopicContent(content, contentKey, site.id === "site_mydreamshoots_xby");
   return (
     <DreamshootShowcasePreview>

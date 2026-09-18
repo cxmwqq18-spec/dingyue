@@ -23,7 +23,7 @@ const codeCommit = process.env.GIT_COMMIT_SHA || execFileSync("git", ["rev-parse
 
 const entitySpecs = {
   theme_page: { model: "themePage", key: "id", lookup: ["id", "slug"], json: ["draftJson"], fields: ["id", "siteId", "pageType", "templateKey", "slug", "title", "draftJson"] },
-  live_page: { model: "livePage", key: "id", lookup: ["id", "slug"], json: ["contentJson"], fields: ["id", "siteId", "slug", "title", "contentJson"] },
+  live_page: { model: "livePage", key: "id", lookup: ["id", "slug"], json: ["contentJson"], fields: ["id", "siteId", "pageType", "templateKey", "slug", "title", "contentJson"] },
   theme_settings: { model: "themeSettings", key: "siteId", lookup: ["siteId"], json: ["draftJson"], fields: ["id", "siteId", "draftJson"] },
   storefront_profile: { model: "storefrontProfile", key: "siteId", lookup: ["siteId"], json: ["draftJson"], fields: ["id", "siteId", "draftJson"] },
   creative_pack: { model: "creativePack", key: "id", lookup: ["id"], fields: ["id", "siteId", "name", "headline", "description", "category", "categoryId", "aiAppSlug", "status", "creditCost", "outputCount", "trainingRequired", "imageUrl", "galleryImages", "galleryImageAlts"] },
@@ -131,7 +131,7 @@ function ensureTarget() {
   } else {
     assertDatabaseTarget({ expectedTarget: target, requireProductionConfirmation: target === "production", productionConfirmed: hasArgument("--confirm-production") });
   }
-  if (target === "production" && siteId !== "site_dreamshoot") fail("Production content must target site_dreamshoot.");
+  if (target === "production" && !["site_dreamshoot", "site_aidreamcapes_xby"].includes(siteId)) fail("Production content must target an approved production site.");
   if (target === "test" && siteId !== "site_grownstride_test") fail("Test content must target site_grownstride_test.");
 }
 function ensureSource() {
@@ -301,11 +301,16 @@ async function plan() {
         deletions.push({ entityType: deletion.entityType, entityKey: current ? identity(current, spec) : String(key), operation: "delete", baseHash: current ? hash(publicRow(current, spec)) : null, ...(current ? { previousValue: publicRow(current, spec) } : {}), reason: deletion.reason || "explicit_scope_deletion" });
       }
     }
-    const manifest = { formatVersion: 2, releaseId: argumentValue("--release-id") || `content-${Date.now()}`, codeCommit, target: manifestTarget, sourceTarget: "local", sourceSiteId, siteId, createdAt: new Date().toISOString(), operations, deletions, ...(scopeArgument ? { scopeFile: path.relative(process.cwd(), path.resolve(scopeArgument)) } : {}) };
+    // Keep planning and applying governed by the same public-only write policy.
+    // Without this filter, protected-looking fields could enter a manifest and
+    // make an otherwise valid production sync fail only after opening a write
+    // transaction.
+    const safeOperations = operations.filter((operation) => !forbiddenOperation(operation));
+    const manifest = { formatVersion: 2, releaseId: argumentValue("--release-id") || `content-${Date.now()}`, codeCommit, target: manifestTarget, sourceTarget: "local", sourceSiteId, siteId, createdAt: new Date().toISOString(), operations: safeOperations, deletions, ...(scopeArgument ? { scopeFile: path.relative(process.cwd(), path.resolve(scopeArgument)) } : {}) };
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, `${JSON.stringify(manifest, null, 2)}\n`);
-    const reportPath = writeReport(reportPathFor(outPath), "公开内容字段增量计划", { 目标: target, 站点: siteId, 来源站点: sourceSiteId, codeCommit, 生成时间: manifest.createdAt, 字段操作数: operations.length, 显式删除数: deletions.length }, [...operations, ...deletions]);
-    console.log(JSON.stringify({ ok: true, mode: "plan", target, siteId, outPath, reportPath, operations: operations.length, deletions: deletions.length }, null, 2));
+    const reportPath = writeReport(reportPathFor(outPath), "公开内容字段增量计划", { 目标: target, 站点: siteId, 来源站点: sourceSiteId, codeCommit, 生成时间: manifest.createdAt, 字段操作数: safeOperations.length, 过滤保护字段数: operations.length - safeOperations.length, 显式删除数: deletions.length }, [...safeOperations, ...deletions]);
+    console.log(JSON.stringify({ ok: true, mode: "plan", target, siteId, outPath, reportPath, operations: safeOperations.length, filteredProtectedFields: operations.length - safeOperations.length, deletions: deletions.length }, null, 2));
   } finally { await source.$disconnect(); await destination.$disconnect(); }
 }
 function readManifest() {
@@ -315,7 +320,7 @@ function readManifest() {
   if (manifest.formatVersion !== 2 || manifest.siteId !== siteId || manifest.target !== target || manifest.sourceTarget !== "local" || !manifest.sourceSiteId || !Array.isArray(manifest.operations) || !Array.isArray(manifest.deletions)) fail("Invalid content manifest v2.");
   if (!/^[0-9a-f]{40}$/i.test(manifest.codeCommit)) fail("Content manifest must pin a full code commit SHA.");
   if (target !== "local" && argumentValue("--deployed-commit") !== manifest.codeCommit) fail("--deployed-commit must match manifest.codeCommit.");
-  if (manifest.target === "production" && manifest.siteId !== "site_dreamshoot") fail("Production manifest site mismatch.");
+  if (manifest.target === "production" && !["site_dreamshoot", "site_aidreamcapes_xby"].includes(manifest.siteId)) fail("Production manifest site mismatch.");
   if (manifest.target === "test" && manifest.siteId !== "site_grownstride_test") fail("Test manifest site mismatch.");
   return manifest;
 }

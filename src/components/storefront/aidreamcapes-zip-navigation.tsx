@@ -14,7 +14,7 @@ type AidreamcapesZipNavigationProps = {
 };
 
 const desktopLinkClass =
-  "inline-flex h-full shrink-0 items-center gap-1 whitespace-nowrap py-8 text-sm font-medium text-gray-300 transition-colors hover:text-white";
+  "inline-flex h-full shrink-0 items-center gap-1 whitespace-nowrap py-0 text-sm font-medium text-gray-300 transition-colors hover:text-white";
 
 const panelClass =
   "fixed left-1/2 z-[180] max-h-[calc(100dvh-6.5rem)] w-full max-w-[1400px] -translate-x-1/2 overflow-y-auto overscroll-contain rounded-2xl border border-white/10 bg-[#0a0a0a] p-10 text-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] backdrop-blur-xl";
@@ -130,17 +130,6 @@ export function AidreamcapesZipDesktopNavigation({
           resolveHref={resolveHref}
         />
       </ClickMegaMenu>
-      <ClickMegaMenu
-        buttonClassName={desktopLinkClass}
-        label={navigation.scenarios.label}
-        panelClassName={panelClass}
-      >
-        <ZipMenuPanel
-          groups={navigation.scenarios.groups}
-          collection={navigation.scenarios.collection}
-          resolveHref={resolveHref}
-        />
-      </ClickMegaMenu>
       <a className={desktopLinkClass} href={resolveHref(navigation.actions.pricing.href)}>
         {navigation.actions.pricing.label}
       </a>
@@ -161,10 +150,9 @@ export function AidreamcapesZipMobileNavigation({
     ...navigation.video.groups,
     ...navigation.image.groups,
     ...navigation.marketing.groups,
-    ...navigation.scenarios.groups,
   ];
   return (
-    <details className="relative z-[70] order-2 shrink-0 lg:hidden">
+    <details className="group relative z-[70] order-2 shrink-0 lg:hidden" data-storefront-mobile-menu>
       <summary
         aria-label="Open navigation"
         className="grid h-11 w-11 cursor-pointer list-none place-items-center rounded-full border border-white/14 text-white transition hover:bg-white/[0.08] [&::-webkit-details-marker]:hidden"
@@ -174,7 +162,7 @@ export function AidreamcapesZipMobileNavigation({
           ≡
         </span>
       </summary>
-      <nav className="absolute right-0 top-[calc(100%+12px)] z-[86] grid max-h-[calc(100dvh-7rem)] w-[min(22rem,calc(100vw-2rem))] gap-2 overflow-y-auto rounded-[24px] border border-white/14 bg-[#101114]/[0.99] p-3 text-white shadow-[0_34px_88px_-52px_rgba(0,0,0,0.85)] backdrop-blur">
+      <nav className="absolute right-0 top-[calc(100%+12px)] z-[86] hidden max-h-[calc(100dvh-7rem)] w-[min(22rem,calc(100vw-2rem))] gap-2 overflow-y-auto rounded-[24px] border border-white/14 bg-[#101114]/[0.99] p-3 text-white shadow-[0_34px_88px_-52px_rgba(0,0,0,0.85)] backdrop-blur group-open:grid">
         {groups.map((group, groupIndex) => (
           <MobileGroup
             group={group}

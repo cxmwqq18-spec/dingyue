@@ -12,9 +12,10 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const requestHeaders = await headers();
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "";
-  const language = storefrontLocaleForRequestIdentity(host) === "fr"
+  const requestIdentity = `${host} ${requestHeaders.get("x-storefront-request-identity") ?? ""}`;
+  const language = storefrontLocaleForRequestIdentity(requestIdentity) === "fr"
     ? "fr"
-    : isSpanishStorefrontRequestIdentity(host)
+    : isSpanishStorefrontRequestIdentity(requestIdentity)
       ? "es"
       : "en";
   return (

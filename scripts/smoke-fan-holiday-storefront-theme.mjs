@@ -87,8 +87,7 @@ const aidreamcapesNewTools = [
   "friendsgiving-memory-maker",
   "halloween-party-portrait-maker",
   "costume-cast-album-builder",
-  "birthday-fan-moment-maker",
-  "permission-safe-photo-planner"
+  "birthday-fan-moment-maker"
 ];
 const aidreamcapesNewBlogs = [
   "/blog/private-fan-scene-album-photo-package-guide",

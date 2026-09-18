@@ -151,9 +151,9 @@ export function assertNonProductionWriteTarget(env = process.env) {
 }
 
 export function assertAllowedSite(siteId) {
-  const allowed = new Set(["site_dreamshoot", "site_grownstride_test"]);
+  const allowed = new Set(["site_dreamshoot", "site_grownstride_test", "site_aidreamcapes_xby"]);
   if (!allowed.has(siteId)) {
-    throw new Error(`Release content is restricted to MyDreamShoots sites; refusing site ${siteId}.`);
+    throw new Error(`Release content is restricted to approved site targets; refusing site ${siteId}.`);
   }
   return siteId;
 }

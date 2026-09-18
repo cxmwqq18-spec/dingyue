@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { findPage } from "@/lib/data";
+import { imageThemeDetailContentFromPage } from "@/lib/aidreamcapes-image-theme-content";
 import {
   readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
   readStorefrontPublicPageMetadataStateByHostFromDatabase,
@@ -15,33 +16,28 @@ import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSi
 import { legacyPublicPathTarget, mydreamshootsLegacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
 import { isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { publicSiteSlug } from "@/lib/domain-routing";
-import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
 import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
-import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
+import { isAidreamcapesImageThemePath, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
+import { canonicalUrlForSite, createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
-import { aidreamcapesLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+export async function generateViewport({ params }: { params: Promise<{ siteSlug: string; path: string[] }> }): Promise<Viewport> {
+  const { siteSlug } = await params;
+  const darkAidreamcapes = new Set(["aidreamcapes", "aidreamcapes-eu"]);
+  return darkAidreamcapes.has(siteSlug.trim().toLowerCase())
+    ? { colorScheme: "dark", themeColor: "#050505" }
+    : {};
+}
+
 type HeaderReader = {
   get(name: string): string | null;
-};
-
-const spanishVideoSaveTheDateAliases: Record<string, string> = {
-  christmas: "christmas",
-  engagement: "engagement",
-  "fathers-day": "fathers-day",
-  halloween: "halloween",
-  "mothers-day": "mothers-day",
-  "new-year": "new-year",
-  proposal: "proposal",
-  "save-the-date": "save-the-date",
-  thanksgiving: "thanksgiving",
-  "valentines-day": "valentines-day",
-  "wedding-ceremony": "wedding-ceremony",
-  "wedding-invitation": "wedding-ceremony"
 };
 
 function publicHostCandidates(headers: HeaderReader): Array<string | null> {
@@ -147,7 +143,6 @@ const aidreamcapesLegacyBlogToolRedirects: Record<string, string> = {
   "halloween-party-portrait-maker": "/blog/halloween-party-portrait-set-photo-package-guide",
   "costume-cast-album-builder": "/blog/costume-cast-photo-album-photo-package-guide",
   "birthday-fan-moment-maker": "/blog/birthday-fan-moment-set-photo-package-guide",
-  "permission-safe-photo-planner": "/blog/family-occasion-portrait-album-photo-package-guide"
 };
 const aidreamcapesLegacyBlogVideoRedirects: Record<string, string> = {
   "coastal-motion": "/blog/private-fan-scene-album-photo-package-guide",
@@ -158,6 +153,10 @@ const aidreamcapesLegacyBlogVideoRedirects: Record<string, string> = {
 
 function isSpanishXbyStorefrontSite(site: { slug: string; name: string; primaryDomain?: string | null; branding: { logoText: string } }): boolean {
   return isSpanishStorefrontSite(site);
+}
+
+function isSpanishAIdreamshootsSlug(slug: string): boolean {
+  return ["aidreamshoots", "aidreamshoots-eu", "mydreamshoots-xby"].includes(slug.trim().toLowerCase());
 }
 
 function aidreamcapesLegacyBlogRedirectPath(siteSlug: string, slug: string): string | undefined {
@@ -243,11 +242,10 @@ function searchParamsSuffix(query: Record<string, string | string[] | undefined>
 }
 
 function fallbackCollectionRootPathForPublicSlug(publicSlug: string): string {
-  // AIdreamshoots uses the Spanish storefront's localized collection URLs.
-  // Keep the legacy AI root for the primary English storefronts and other
-  // capability sites; this exception is deliberately scoped to this site.
+  // AIdreamshoots uses the shared AI image-generation root as its only
+  // canonical collection family. `/collections` remains a redirect alias.
   if (publicSlug === "aidreamshoots" || publicSlug === "aidreamshoots-eu" || publicSlug === "mydreamshoots-xby") {
-    return "/collections";
+    return "/ai-image-generation";
   }
   return usesAiGenerationPublicSlug(publicSlug)
     ? "/ai-image-generation"
@@ -291,9 +289,18 @@ async function readCollectionRouteState(
 async function readVideoGenerationRouteState(siteSlug: string, videoSlug: string) {
   if (videoSlug) {
     const detailState = await readPathModePublicRuntimeState(siteSlug, `/ai-video-generation/${videoSlug}`);
-    if (detailState) return detailState;
+    if (detailState) return isolateAidreamcapesVideoRouteState(siteSlug, detailState);
   }
-  return readPathModePublicRuntimeState(siteSlug, "/ai-video-generation");
+  return isolateAidreamcapesVideoRouteState(siteSlug, await readPathModePublicRuntimeState(siteSlug, "/ai-video-generation"));
+}
+
+function isolateAidreamcapesVideoRouteState(siteSlug: string, state: Awaited<ReturnType<typeof readPathModePublicRuntimeState>>) {
+  if (!state || publicSiteSlug(siteSlug) !== "aidreamcapes") return state;
+  // The Aidreamcapes ZIP header owns its visible video IA. Detail routes do
+  // not need the legacy relational video-theme catalogue, and excluding it
+  // here prevents contaminated historical EU rows from entering metadata
+  // RSC payloads. The .eu and all other storefronts keep their own state.
+  return { ...state, videoThemeCategories: [], videoThemes: [] };
 }
 
 export async function generateMetadata({ params, searchParams }: { params: Promise<{ siteSlug: string; path: string[] }>; searchParams?: Promise<Record<string, string | string[] | undefined>> }): Promise<Metadata> {
@@ -301,6 +308,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const metadataQuery = searchParams ? await searchParams : {};
   const hintedCollectionSlug = (await headers()).get("x-storefront-image-theme")?.trim();
   const requestedSlug = `/${path.join("/")}`;
+  if (isAidreamcapesEuRetiredPublicPath(publicSiteSlug(siteSlug), requestedSlug)) return { robots: { index: false, follow: false } };
   if (publicSiteSlug(siteSlug) === "aidreamcapes") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(requestedSlug);
     if (legacySaveTheDateTarget) return {};
@@ -327,9 +335,29 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   if (slug === "/account") {
     return { title: isSpanishStorefrontSite({ slug: siteSlug, name: siteSlug, branding: { logoText: siteSlug } }) ? "Cuenta" : "Account", robots: { index: false, follow: false } };
   }
+  if (slug === "/login" || slug === "/dashboard" || path[0] === "app") {
+    return { title: isSpanishStorefrontSite({ slug: siteSlug, name: siteSlug, branding: { logoText: siteSlug } }) ? "Espacio privado" : "Private workspace", robots: { index: false, follow: false } };
+  }
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
-  const metadataSourceSlug = canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+  if (isAidreamcapesImageThemePath(publicSiteSlug(siteSlug), requestedSlug)) {
+    const detailState = routeMode === "host"
+      ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, requestedSlug)
+      : await readPathModePublicRuntimeState(siteSlug, requestedSlug);
+    const detailSite = detailState?.sites[0];
+    const detailPage = detailSite ? findPage(detailSite, requestedSlug) : undefined;
+    return detailState && detailSite && detailPage && imageThemeDetailContentFromPage(detailPage)
+      ? metadataForPublishedStorefrontPage({
+          site: detailSite,
+          page: detailPage,
+          path: requestedSlug,
+          products: detailState.products,
+          creativePacks: detailState.creativePacks,
+          snapshot: createPublishedSiteSnapshot(detailState, detailSite, { source: "platform-state" })
+        })
+      : {};
+  }
+  const metadataSourceSlug = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
     ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
     : slug;
   const state = isVideoGenerationRequest
@@ -344,16 +372,16 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
       ? routeMode === "host"
         ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, "/ai-image-generation")
         : await readPathModePublicRuntimeState(siteSlug, "/ai-image-generation")
-    : await readRoutePublicMetadataState(headerStore, routeMode, siteSlug, metadataSourceSlug)
+      : await readRoutePublicMetadataState(headerStore, routeMode, siteSlug, metadataSourceSlug)
       || (legacyRequestedSlug ? await readRoutePublicMetadataState(headerStore, routeMode, siteSlug, legacyRequestedSlug) : undefined);
   const site = state?.sites[0];
   if (!site) return {};
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
-  const spanishAliasSlug = site.id === "site_mydreamshoots_xby" && isVideoGenerationRequest
-    ? spanishVideoSaveTheDateAliases[videoLookupSlug]
+  const spanishAliasPath = site.id === "site_mydreamshoots_xby" && isVideoGenerationRequest
+    ? aidreamshootsLegacyVideoSaveTheDatePath(`/ai-video-generation/${videoLookupSlug}`)
     : undefined;
-  if (spanishAliasSlug) {
-    const aliasPath = `/ai-save-the-date/${spanishAliasSlug}`;
+  if (spanishAliasPath) {
+    const aliasPath = spanishAliasPath;
     // A video alias request loads the legacy video route projection, which
     // intentionally does not include the newer Save the Date page row. Read
     // the canonical page projection before generating metadata so the alias
@@ -446,7 +474,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const page = findPage(site, resolvedSlug);
   if (!page) return {};
   if (resolvedSlug !== slug && canonicalRequestedSlug !== requestedSlug) {
-    const canonicalPage = { ...page, publishedJson: { ...page.publishedJson, seo: { ...page.publishedJson.seo, canonicalPath: canonicalRequestedSlug, canonical: `https://www.mydreamshoots.com${canonicalRequestedSlug}` } } };
+    const canonicalPage = { ...page, publishedJson: { ...page.publishedJson, seo: { ...page.publishedJson.seo, canonicalPath: canonicalRequestedSlug, canonical: canonicalUrlForSite(site, canonicalRequestedSlug) } } };
     return metadataForPublishedStorefrontPage({ site, page: canonicalPage, products: state.products, creativePacks: state.creativePacks, snapshot });
   }
   return metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot });
@@ -465,11 +493,14 @@ export default async function SiteCatchAllPage({
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
+  if (slug === "/404") notFound();
+  if (isAidreamcapesEuRetiredPublicPath(publicSlug, slug)) notFound();
+  if (isRetiredAidreamcapesImageToolPath(publicSlug, slug)) notFound();
   if (publicSlug === "aidreamcapes") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);
     if (legacySaveTheDateTarget) permanentRedirect(routePath(legacySaveTheDateTarget));
   }
-  const isSpanishAIdreamshoots = publicSlug === "aidreamshoots" || publicSlug === "aidreamshoots-eu" || publicSlug === "mydreamshoots-xby";
+  const isSpanishAIdreamshoots = isSpanishAIdreamshootsSlug(publicSlug);
   if ((isPrimaryMydreamshootsSlug(publicSlug) || isSpanishAIdreamshoots) && ["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"].includes(slug)) {
     permanentRedirect(routePath("/digital-delivery"));
   }
@@ -514,7 +545,7 @@ export default async function SiteCatchAllPage({
     if (isPrimaryMydreamshootsSlug(publicSlug)) notFound();
     redirect(routePath("/tools"));
   }
-  if (publicSlug === "aidreamcapes" && slug === "/collections") permanentRedirect(routePath("/ai-image-generation"));
+  if ((publicSlug === "aidreamcapes" || publicSlug === "aidreamcapes-eu") && slug === "/collections") permanentRedirect(routePath("/ai-image-generation"));
   if (publicSlug === "aidreamcapes" && slug === "/tools") permanentRedirect(routePath("/ai-video-generation"));
   if (slug === "/dashboard") {
     redirect(routePath("/app/create"));
@@ -531,7 +562,24 @@ export default async function SiteCatchAllPage({
     return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode });
   }
   if (path[0] === "job" && path[1]) redirect(routePath(`/app/jobs/${path[1]}`));
-  if (path[0] === "tools" && isPrimaryMydreamshootsSlug(publicSlug)) notFound();
+  if (path[0] === "tools" && path[1] && (isPrimaryMydreamshootsSlug(publicSlug) || isAidreamshootsStorefrontSite({ slug: publicSlug }))) notFound();
+  if (isAidreamcapesImageThemePath(publicSlug, slug)) {
+    const detailState = routeMode === "host"
+      ? await readRoutePublicRuntimeState(headerStore, routeMode, publicSlug, slug)
+      : await readPathModePublicRuntimeState(publicSlug, slug);
+    const detailSite = detailState?.sites[0];
+    const detailPage = detailSite ? findPage(detailSite, slug) : undefined;
+    if (!detailState || !detailSite || !detailPage || !imageThemeDetailContentFromPage(detailPage)) notFound();
+    return renderStorefrontPage({
+      site: detailSite,
+      slug,
+      publicPath: slug,
+      query: searchParams ? await searchParams : {},
+      routeMode,
+      state: detailState,
+      deferCustomerRuntime: true
+    });
+  }
   const isCollectionRequest = isCollectionRouteRequest(path);
   const isVideoGenerationRequest = isVideoGenerationRouteRequest(path);
   const collectionRootPageSlug = fallbackCollectionRootPathForPublicSlug(publicSlug);
@@ -543,7 +591,7 @@ export default async function SiteCatchAllPage({
   const legacyPathTarget = legacyPublicPathTarget(slug, collectionRootPageSlug);
   const pageSlug = isCollectionRequest ? collectionRootPageSlug : isVideoGenerationRequest ? "/ai-video-generation" : mydreamLegacyTarget ?? (legacyPathTarget ? publicContentPageSlug(legacyPathTarget) : publicContentPageSlug(canonicalSaveTheDatePath(slug)));
   const legacySaveDateSlug = isPrimaryMydreamshootsSlug(publicSlug) ? legacySaveTheDatePath(pageSlug) : undefined;
-  const sourcePageSlug = isPrimaryMydreamshootsSlug(publicSlug) && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+  const sourcePageSlug = (isPrimaryMydreamshootsSlug(publicSlug) || isSpanishAIdreamshoots) && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
     ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
     : pageSlug;
   const state = isVideoGenerationRequest
@@ -558,26 +606,14 @@ export default async function SiteCatchAllPage({
     notFound();
   }
   const snapshot = createPublishedSiteSnapshot(state, publicSite, { source: "platform-state" });
-  const spanishVideoAliasSlug = isSpanishAIdreamshoots && isVideoGenerationRequest
-    ? spanishVideoSaveTheDateAliases[videoLookupSlug]
+  const spanishVideoAliasPath = isSpanishAIdreamshoots && isVideoGenerationRequest
+    ? aidreamshootsLegacyVideoSaveTheDatePath(`/ai-video-generation/${videoLookupSlug}`)
     : undefined;
-  if (spanishVideoAliasSlug) {
-    const aliasPath = `/ai-save-the-date/${spanishVideoAliasSlug}`;
-    // The legacy video projection is route-scoped and may omit the canonical
-    // Save the Date page. Switch to that page's own published projection
-    // before rendering the target-only alias.
-    const aliasState = await readPathModePublicRuntimeState(publicSlug, aliasPath);
-    const aliasSite = aliasState?.sites[0];
-    if (!aliasState || !aliasSite || !findPage(aliasSite, aliasPath)) notFound();
-    return renderStorefrontPage({
-      site: aliasSite,
-      slug: aliasPath,
-      publicPath: aliasPath,
-      query,
-      routeMode,
-      state: aliasState,
-      deferCustomerRuntime: true
-    });
+  if (spanishVideoAliasPath) {
+    const aliasPath = spanishVideoAliasPath;
+    // Seasonal video URLs are aliases of the Save the Date pages. They must
+    // not render a second indexable document with a different canonical.
+    permanentRedirect(routePath(aliasPath));
   }
   const publishedDisposition = resolvePublishedRouteDisposition(snapshot, slug);
   if (publishedDisposition.kind === "redirect" && publishedDisposition.targetPath) permanentRedirect(routePath(publishedDisposition.targetPath));
@@ -627,7 +663,9 @@ export default async function SiteCatchAllPage({
       if (disposition.kind !== "render" && !knownLeafRoute) notFound();
     }
     const canonicalCollectionPath = canonicalSeoDirectoryPathForSite(publicSite, "collection", collectionRoute.collectionSlug);
-    if (canonicalCollectionPath !== collectionRoute.canonicalPath) redirect(routePath(canonicalCollectionPath));
+    if (canonicalCollectionPath !== collectionRoute.canonicalPath || canonicalCollectionPath !== slug) {
+      permanentRedirect(routePath(canonicalCollectionPath));
+    }
   }
   if (collectionCategory && !canResolveCollectionSlugForSite(state, publicSite, collectionCategory)) notFound();
   // During the route migration the draft site may already have the canonical

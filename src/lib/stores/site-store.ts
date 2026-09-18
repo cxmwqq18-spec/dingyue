@@ -15,6 +15,7 @@ import { policyPageSlug } from "@/lib/site-route-canonical";
 import { storefrontGalleryMediaPairs } from "@/lib/storefront-media-alt";
 import { storefrontGlobalShellPageSlugs } from "@/lib/storefront-global-shell";
 import { withStorefrontPublicWatermarkUrl } from "@/lib/storefront-public-watermark-url";
+import { isolateAidreamcapesEnglishCollection, isolateAidreamcapesEnglishValue } from "@/lib/storefront-data-isolation";
 import { getPlatformAiProviderFallbackQueueRelational } from "@/lib/stores/platform-store";
 import {
   isMydreamshootsVideoFrameworkSiteId,
@@ -401,16 +402,20 @@ export const getStorefrontPublicNavigationDataForSite = cache(async (siteId: str
         () => getStorefrontPublicCreativePackCategoriesForSite(siteId),
         () => loadToolCategoriesForSite(siteId, { activeOnly: true }),
         () => toolMenuTake === 0 ? Promise.resolve([]) : loadToolMenuItemsForSite(siteId, { activeOnly: true, take: toolMenuTake }),
-        () => getStorefrontPublicVideoThemeCategoriesForSite(siteId),
-        () => getStorefrontPublicVideoThemesForSite(siteId)
+        // Aidreamcapes' ZIP header owns the visible Video IA. Its public
+        // detail routes must not hydrate the legacy relational video-theme
+        // catalogue, which contains historical EU mirror rows. Other
+        // storefronts retain their existing relational navigation source.
+        () => siteId === "site_aidreamcapes" ? Promise.resolve([]) : getStorefrontPublicVideoThemeCategoriesForSite(siteId),
+        () => siteId === "site_aidreamcapes" ? Promise.resolve([]) : getStorefrontPublicVideoThemesForSite(siteId)
       ]);
       return {
-        creativePackCategories,
-        creativePacks,
-        toolCategories: toolCategories.map(toToolCategory),
-        toolMenuItems: toolMenuItems.map(toToolMenuItem),
-        videoThemeCategories,
-        videoThemes
+        creativePackCategories: isolateAidreamcapesEnglishCollection(siteId, creativePackCategories),
+        creativePacks: isolateAidreamcapesEnglishCollection(siteId, creativePacks),
+        toolCategories: isolateAidreamcapesEnglishCollection(siteId, toolCategories.map(toToolCategory)),
+        toolMenuItems: isolateAidreamcapesEnglishCollection(siteId, toolMenuItems.map(toToolMenuItem)),
+        videoThemeCategories: isolateAidreamcapesEnglishCollection(siteId, videoThemeCategories),
+        videoThemes: isolateAidreamcapesEnglishCollection(siteId, videoThemes)
       };
     },
     Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 0)
@@ -1412,7 +1417,7 @@ export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string
   const publicSlugWhere = isMydreamshootsVideoFrameworkSiteId(siteId)
     ? { slug: { notIn: ["text-to-video", "image-to-video"] } }
     : {};
-  return siteReadCache.get(
+  const themes = await siteReadCache.get(
     `public-video-themes:${siteId}:${takeKey}`,
     async () => {
       try {
@@ -1484,6 +1489,10 @@ export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string
     },
     0
   );
+  // This reader is also used directly by metadata and customer-shell paths,
+  // so keep its return value isolated in addition to filtering the navigation
+  // projection and page renderer.
+  return isolateAidreamcapesEnglishCollection(siteId, themes);
 });
 
 export const getStorefrontPublicCollectionDetailStateBySlug = cache(async (slug: string, collectionSlug: string): Promise<PlatformState | undefined> => {
@@ -1787,15 +1796,19 @@ async function loadStorefrontPublicRuntimeState(
       needs.mediaAssets ? tx.mediaAsset.findMany({ where: { siteId, usageType: { in: ["theme", "package", "sample"] } }, select: publicRuntimeMediaAssetSelect, orderBy: [{ createdAt: "desc" }, { id: "asc" }], ...(typeof limits.mediaAssets === "number" ? { take: limits.mediaAssets } : {}) }) : Promise.resolve([]),
       needs.toolMenus ? tx.toolCategory.findMany({ where: { siteId, status: "active" }, include: { parent: true }, orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }], ...(needs.profile === "indexing" ? {} : { take: 80 }) }) : Promise.resolve([]),
       needs.toolMenus ? tx.toolMenuItem.findMany({ where: { siteId, status: "active" }, include: { category: { include: { parent: true } } }, orderBy: [{ sortOrder: "asc" }, { title: "asc" }], ...(needs.profile === "indexing" ? {} : { take: 80 }) }) : Promise.resolve([]),
-      needs.videoThemes ? tx.videoThemeCategory.findMany({ where: { siteId, status: "active" }, include: { parent: true }, orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }] }) : Promise.resolve([]),
-      needs.videoThemes ? tx.videoTheme.findMany({ where: { siteId, status: "active" }, include: { category: { include: { parent: true } }, examples: { where: { status: "active" }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] } }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] }) : Promise.resolve([])
+      needs.videoThemes && siteId !== "site_aidreamcapes" ? tx.videoThemeCategory.findMany({ where: { siteId, status: "active" }, include: { parent: true }, orderBy: [{ parentId: "asc" }, { sortOrder: "asc" }, { label: "asc" }] }) : Promise.resolve([]),
+      needs.videoThemes && siteId !== "site_aidreamcapes" ? tx.videoTheme.findMany({ where: { siteId, status: "active" }, include: { category: { include: { parent: true } }, examples: { where: { status: "active" }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] } }, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] }) : Promise.resolve([])
     ]);
-    const runtimeCreativePackCategories = creativePackCategories.map(toCreativePackCategory);
-    const runtimeCreativePacks = creativePacks.map(toPublicRuntimeCreativePack);
-    const runtimeToolCategories = toolCategories.map(toToolCategory);
-    const runtimeToolMenuItems = toolMenuItems.map(toToolMenuItem);
-    const runtimeVideoThemeCategories = videoThemeCategories.map(toVideoThemeCategory);
-    const runtimeVideoThemes = videoThemes.map(toVideoTheme);
+    // Keep the public runtime state itself isolated, not only the final
+    // renderer props. Metadata generation and RSC can retain the route state
+    // promise, so a foreign relational row must be removed before that state
+    // leaves this storefront reader.
+    const runtimeCreativePackCategories = isolateAidreamcapesEnglishCollection(siteId, creativePackCategories.map(toCreativePackCategory));
+    const runtimeCreativePacks = isolateAidreamcapesEnglishCollection(siteId, creativePacks.map(toPublicRuntimeCreativePack));
+    const runtimeToolCategories = isolateAidreamcapesEnglishCollection(siteId, toolCategories.map(toToolCategory));
+    const runtimeToolMenuItems = isolateAidreamcapesEnglishCollection(siteId, toolMenuItems.map(toToolMenuItem));
+    const runtimeVideoThemeCategories = isolateAidreamcapesEnglishCollection(siteId, videoThemeCategories.map(toVideoThemeCategory));
+    const runtimeVideoThemes = isolateAidreamcapesEnglishCollection(siteId, videoThemes.map(toVideoTheme));
     storefrontPerfMark("collections", startedAt, {
     products: products.length,
     siteAiApps: siteAiApps.length,
@@ -1805,7 +1818,7 @@ async function loadStorefrontPublicRuntimeState(
       toolMenuItems: runtimeToolMenuItems.length
     });
 
-    const mappedMediaAssets = mediaAssets.map(toMediaAsset);
+    const mappedMediaAssets = isolateAidreamcapesEnglishCollection(siteId, mediaAssets.map(toMediaAsset));
     const mappedSite = toPublicSiteShell(siteWithNavigationPages, mappedMediaAssets);
     const state = emptyPlatformState({
     sites: [mappedSite],
@@ -2590,8 +2603,9 @@ export async function getPublishedVideoGenerationNavigationForSite(siteId: strin
     orderBy: { slug: "asc" },
     select: { id: true, siteId: true, pageType: true, templateKey: true, slug: true, title: true, contentJson: true }
   });
+  const isolatedPages = pages.filter((page) => isolateAidreamcapesEnglishValue(siteId, page.contentJson) !== undefined);
   return compileMydreamshootsVideoTopicPublication(
-    pages.map((page) => toThemePage({ ...page, draftJson: page.contentJson, publishedJson: page.contentJson })),
+    isolatedPages.map((page) => toThemePage({ ...page, draftJson: page.contentJson, publishedJson: page.contentJson })),
     siteId as "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes"
   ).navigation;
 }

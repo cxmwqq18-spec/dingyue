@@ -458,7 +458,6 @@ const toolCategoryDefs = [
   { slug: "premiere-creator-tools", label: "Premiere Creator Tools", description: "Flash-lit portrait, VIP arrival, and award-night builder tools.", icon: "star" },
   { slug: "holiday-album-tools", label: "Holiday Album Tools", description: "Christmas, Thanksgiving, Halloween, and winter album studios.", icon: "gift" },
   { slug: "occasion-card-tools", label: "Occasion Card Tools", description: "Birthday, New Year, cozy card, and Friendsgiving portrait makers.", icon: "calendar" },
-  { slug: "safety-prep-tools", label: "Safety Prep Tools", description: "Permission, credit, and album planning tools for original private photo sets.", icon: "shield" }
 ];
 
 const toolDefs = [
@@ -480,8 +479,7 @@ const toolDefs = [
   ["friendsgiving-memory-maker", "occasion-card-tools", "Friendsgiving Memory Maker", "Create friend-group portraits, host moments, and share-ready seasonal album images.", "friendsgiving-memory-set"],
   ["halloween-party-portrait-maker", "holiday-album-tools", "Halloween Party Portrait Maker", "Create dramatic party portraits and original costume-friendly Halloween images.", "halloween-party-portrait-set"],
   ["costume-cast-album-builder", "holiday-album-tools", "Costume Cast Album Builder", "Build original costume-group portraits, cast-wall layouts, and private seasonal downloads.", "costume-cast-photo-album"],
-  ["birthday-fan-moment-maker", "occasion-card-tools", "Birthday Fan Moment Maker", "Create birthday spotlight photos, fan-style greetings, and giftable private keepsake images.", "birthday-fan-moment-set"],
-  ["permission-safe-photo-planner", "safety-prep-tools", "Permission-Safe Photo Planner", "Check source-photo permissions, protected mark boundaries, credit cost, and album intent before generation.", "family-occasion-portrait-album"]
+  ["birthday-fan-moment-maker", "occasion-card-tools", "Birthday Fan Moment Maker", "Create birthday spotlight photos, fan-style greetings, and giftable private keepsake images.", "birthday-fan-moment-set"]
 ].map(([slug, categorySlug, title, description, packSlug], index) => ({ slug, categorySlug, title, description, packSlug, sortOrder: index + 1 }));
 
 function packDefsForCategorySlug(categorySlug) {
@@ -553,8 +551,8 @@ const legacyCollectionAliases = {
   "mountain-trails": "game-day-group-photos",
   "road-trip-frames": "game-day-group-photos",
   "cinematic-travel": "game-day-group-photos",
-  "itinerary-moodboards": "permission-safe-photo-planner",
-  "route-moodboards": "permission-safe-photo-planner",
+  "itinerary-moodboards": "seasonal-celebration-photos",
+  "route-moodboards": "seasonal-celebration-photos",
   "postcard-social-sets": "seasonal-celebration-photos",
   "postcard-story-sets": "seasonal-celebration-photos",
   "travel-profile-stories": "fan-scene-albums",
@@ -573,7 +571,6 @@ const legacyToolAliases = {
   "image-studio": "fan-scene-album-builder",
   "portrait-generator": "fan-scene-album-builder",
   "portrait-maker": "fan-scene-album-builder",
-  "product-reverie": "permission-safe-photo-planner",
   "soft-glam": "premiere-portrait-set-builder",
   "couple-escape-album": "birthday-fan-moment-maker",
   "wedding-portraits": "birthday-fan-moment-maker",
@@ -587,7 +584,7 @@ const legacyToolAliases = {
   "editorial-getaway": "premiere-portrait-set-builder",
   "cafe-street-story": "premiere-portrait-set-builder",
   "cinematic-travel": "game-day-group-portrait-maker",
-  "route-moodboard": "permission-safe-photo-planner",
+  "route-moodboard": "fan-scene-album-builder",
   "social-keepsake": "birthday-fan-moment-maker",
   "seasonal-celebration-album-maker": "new-year-countdown-album-maker",
   "family-travel-keepsakes": "thanksgiving-keepsake-set-maker",
@@ -1922,7 +1919,7 @@ function sanitizeString(value) {
     [/\/tools\/coastal-portrait/gi, "/tools/christmas-group-album-studio"],
     [/\/tools\/travel-profile-story/gi, "/tools/fan-scene-album-builder"],
     [/\/tools\/cinematic-travel/gi, "/tools/game-day-group-portrait-maker"],
-    [/\/tools\/route-moodboard/gi, "/tools/permission-safe-photo-planner"],
+    [/\/tools\/route-moodboard/gi, "/tools/fan-scene-album-builder"],
     [/\/tools\/family-travel-keepsakes/gi, "/tools/thanksgiving-keepsake-set-maker"],
     [/route-portrait-albums/gi, "fan-scene-albums"],
     [/destination-portrait-albums/gi, "fan-scene-albums"],

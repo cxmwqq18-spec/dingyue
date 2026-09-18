@@ -87,14 +87,14 @@ function homepageJson(existing) {
     card("video_promo", "video_card", "Promo / Sale", "Launch creatives", "/ai-video-generation/promo-video", image("promo"))
   ];
   const photoCards = [
-    card("photo_main", "photo_card", "Ecommerce Main Image", "", "", image("mainImage")),
-    card("photo_on_model", "photo_card", "On-Model Generation", "", "", image("onModel")),
-    card("photo_headshot", "photo_card", "Professional Headshot", "", "/ai-image-generation/headshot", image("headshot")),
-    card("photo_macro", "photo_card", "Macro Details", "", "", image("macro")),
-    card("photo_lookbook", "photo_card", "Lookbook Cover", "", "/ai-image-generation/street-style", image("lookbook")),
-    card("photo_lifestyle", "photo_card", "Lifestyle Scene", "", "/ai-image-generation/rich-lifestyle", image("lifestyle")),
-    card("photo_feed", "photo_card", "Feed Ad Still", "", "/ai-image-generation/social-cards", image("feed")),
-    card("photo_background", "photo_card", "BG Remove / Replace", "", "/ai-image-generation/background-remover", image("background")),
+    card("photo_main", "photo_card", "Ecommerce Main Image", "", "/ai-image-generation/ecommerce-main-image", image("mainImage")),
+    card("photo_on_model", "photo_card", "On-Model Generation", "", "/ai-image-generation/on-model-generation", image("onModel")),
+    card("photo_headshot", "photo_card", "Professional Headshot", "", "/ai-image-generation/professional-headshot", image("headshot")),
+    card("photo_macro", "photo_card", "Macro Details", "", "/ai-image-generation/macro-details", image("macro")),
+    card("photo_lookbook", "photo_card", "Lookbook Cover", "", "/ai-image-generation/lookbook-cover", image("lookbook")),
+    card("photo_lifestyle", "photo_card", "Lifestyle Scene", "", "/ai-image-generation/lifestyle-scene", image("lifestyle")),
+    card("photo_feed", "photo_card", "Feed Ad Still", "", "/ai-image-generation/feed-ad-still", image("feed")),
+    card("photo_background", "photo_card", "BG Remove / Replace", "", "/ai-image-generation/background-remove-replace", image("background")),
     card("photo_try_on", "photo_card", "Virtual Try-On", "", "/ai-image-generation/virtual-try-on", image("tryOn"))
   ];
   const scenarios = [

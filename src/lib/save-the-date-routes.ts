@@ -17,6 +17,29 @@ export const MYDREAMSHOOTS_WEDDING_INVITATION_PATH = "/ai-save-the-date/wedding-
 export const MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH = "/ai-video-generation/wedding-invitation";
 export const MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH = "/holidays-events/wedding-invitation";
 
+export const AIDREAMSHOOTS_VIDEO_SAVE_THE_DATE_ALIASES: Record<string, string> = {
+  christmas: "christmas",
+  engagement: "engagement",
+  "fathers-day": "fathers-day",
+  halloween: "halloween",
+  "mothers-day": "mothers-day",
+  "new-year": "new-year",
+  proposal: "proposal",
+  "save-the-date": "save-the-date",
+  thanksgiving: "thanksgiving",
+  "valentines-day": "valentines-day",
+  "wedding-ceremony": "wedding-ceremony",
+  "wedding-invitation": "wedding-invitation"
+};
+
+export function aidreamshootsLegacyVideoSaveTheDatePath(pathname: string): string | undefined {
+  const normalized = pathname.startsWith("/") ? pathname : `/${pathname}`;
+  const match = normalized.match(/^\/ai-video-generation\/([^/?#]+)$/i);
+  const slug = match?.[1]?.toLowerCase();
+  const targetSlug = slug ? AIDREAMSHOOTS_VIDEO_SAVE_THE_DATE_ALIASES[slug] : undefined;
+  return targetSlug ? `${SAVE_THE_DATE_ROUTE_PREFIX}${targetSlug}` : undefined;
+}
+
 /**
  * Save the Date owns every route previously published below /holidays-events.
  * Keeping this mapping in one place lets runtime links and legacy requests

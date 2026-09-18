@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import type { StorefrontContext } from "@/lib/storefront-context/types";
+import { isAidreamcapesSite } from "@/lib/storefront-context/capabilities";
 import { storefrontOrigin } from "@/lib/storefront-context/seo-projection";
 import type { Site, ThemePage, ThemeSettings } from "@/lib/types";
 
@@ -44,6 +45,36 @@ function settingText(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() ? value.trim() : undefined;
 }
 
+const AIDREAMCAPES_ADS_TESTING_PATHS = new Set([
+  "/ai-video-generation/ugc-ad-video",
+  "/ai-video-generation/url-to-ad",
+  "/ai-video-generation/hook-lab",
+  "/ai-video-generation/pas-formula-ads",
+  "/ai-video-generation/testimonial-ads",
+  "/ai-video-generation/before-after-showcases",
+  "/ai-video-generation/talking-photo-recs",
+  "/ai-video-generation/ai-actor-product-ads",
+  "/ai-video-generation/tiktok-reels-shorts",
+  "/ai-video-generation/native-spark-ads",
+  "/ai-video-generation/carousel-storytelling",
+  "/ai-video-generation/retargeting-urgency"
+]);
+
+const AIDREAMCAPES_BRAND_CREATOR_PATHS = new Set([
+  "/ai-video-generation/founder-update",
+  "/ai-video-generation/multilingual-video",
+  "/ai-video-generation/cinematic-video",
+  "/ai-video-generation/music-video"
+]);
+
+function isAidreamcapesAdsTestingPage(site: Site, page: Pick<ThemePage, "slug">): boolean {
+  return site.id === "site_aidreamcapes" && (AIDREAMCAPES_ADS_TESTING_PATHS.has(page.slug) || AIDREAMCAPES_BRAND_CREATOR_PATHS.has(page.slug));
+}
+
+function isAidreamcapesEuSaveTheDatePage(site: Site, page: Pick<ThemePage, "slug">): boolean {
+  return site.id === "site_aidreamcapes_xby" && page.slug.startsWith("/ai-save-the-date/");
+}
+
 function siteIcons(site: Site, settings: ThemeSettings): Metadata["icons"] | undefined {
   const icon = settingText((site.branding as { logoImageUrl?: string }).logoImageUrl)
     ?? settingText(settings.globalSections?.header?.settings.logoImageUrl)
@@ -85,6 +116,8 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
   const articlePublishedTime = isArticle ? settingText(articleSettings?.publishedAt) : undefined;
   const articleModifiedTime = isArticle ? settingText(articleSettings?.updatedAt) : undefined;
   const articleImageAlt = isArticle ? settingText(articleSettings?.imageAlt) : undefined;
+  const ogImageAlt = articleImageAlt ?? settingText(seo.ogImageAlt) ?? settingText(page.publishedJson.seo?.ogImageAlt);
+  const isAidreamcapesEu = site.id === "site_aidreamcapes_xby";
   return {
     title: seo.title,
     description: seo.description,
@@ -99,10 +132,10 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
       description: seo.description,
       url: canonical,
       siteName: cleanText(context.settings.seo?.siteTitle, brandName(site)),
-      ...(isArticle ? { type: "article" as const } : {}),
+      ...(isArticle || isAidreamcapesAdsTestingPage(site, page) || isAidreamcapesEuSaveTheDatePage(site, page) || isAidreamcapesEu ? { type: isAidreamcapesEu ? "website" as const : isArticle ? "article" as const : "website" as const } : {}),
       ...(articlePublishedTime ? { publishedTime: articlePublishedTime } : {}),
       ...(articleModifiedTime ? { modifiedTime: articleModifiedTime } : {}),
-      images: ogImage ? [{ url: ogImage, ...((articleImageAlt ?? settingText(seo.ogImageAlt)) ? { alt: articleImageAlt ?? settingText(seo.ogImageAlt) } : {}) }] : undefined
+      images: ogImage ? [{ url: ogImage, ...(ogImageAlt ? { alt: ogImageAlt } : {}) }] : undefined
     },
     twitter: {
       card: ogImage ? "summary_large_image" : "summary",
@@ -110,6 +143,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
       description: seo.twitterDescription ?? seo.description,
       images: ogImage ? [ogImage] : undefined
     },
+    ...(ogImageAlt ? { other: { "twitter:image:alt": ogImageAlt } } : {}),
     icons: siteIcons(site, context.settings)
   };
 }

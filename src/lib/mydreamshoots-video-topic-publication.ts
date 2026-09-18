@@ -246,7 +246,7 @@ function sourcesFromPages(pages: Array<Pick<ThemePage, "id" | "pageType" | "slug
     if (!isPublicVideoTopicPath(page.slug)) return [];
     const slug = page.slug.slice("/ai-video-generation/".length);
     const content = dedicatedVideoTopicContentFromPageJson(page.draftJson) ?? resolveWeddingInvitationTopicContent(page);
-    return content ? [{ page, slug, content }] : [];
+    return content && isProjectionCompatibleVideoTopicContent(content) ? [{ page, slug, content }] : [];
   });
 }
 
@@ -268,6 +268,16 @@ function topicImages(value: unknown, output: TopicImage[] = []): TopicImage[] {
 
 function isAiTopic(content: VideoTopicContent): content is AiVideoTopicLandingContent {
   return "foundation" in content && "guidance" in content;
+}
+
+function isProjectionCompatibleVideoTopicContent(content: VideoTopicContent): boolean {
+  // Aidreamcapes detail pages use the shared storefront renderer but do not
+  // use the legacy MyDreamShoots topic projection shape. Keep those pages out
+  // of this projection so navigation/snapshot compilation cannot dereference
+  // the legacy `hero.image` field on their Product/Output media contract.
+  const layoutVariant = "layoutVariant" in content ? content.layoutVariant : undefined;
+  if (layoutVariant === "ads-testing-detail" || layoutVariant === "conversion-seeding-detail" || layoutVariant === "promo-category-detail" || layoutVariant === "ugc-ad-detail") return false;
+  return Boolean(content.hero?.image && content.useCases?.items && content.steps?.items);
 }
 
 function contentItems(items: Array<{ title: string; body: string }> | undefined): string[] {

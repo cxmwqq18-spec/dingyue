@@ -12,6 +12,10 @@ function normalizedPathname(pathname: string): string {
   return !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
 }
 
+// Host-based storefront pages already use their public URL. Private pages
+// must render at that URL instead of permanently redirecting back to it.
+const PRIVATE_PUBLIC_ROUTE_RE = /^\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
+
 const POLICY_PUBLIC_TO_INTERNAL = new Map<string, string>([
   ["/privacy", "/policies/privacy"], ["/privacy-policy", "/policies/privacy"], ["/policies/privacy", "/policies/privacy"], ["/policies/privacy-policy", "/policies/privacy"],
   ["/terms", "/policies/terms"], ["/terms-of-service", "/policies/terms"], ["/policies/terms", "/policies/terms"], ["/policies/terms-of-service", "/policies/terms"],
@@ -163,7 +167,7 @@ export function redirectPublicSitePathToCanonicalHost({
   siteSlug: string;
 }): string {
   const publicSlug = redirectLegacySiteSlug(siteSlug, pathname);
-  if (isCanonicalPublicHost(host)) {
+  if (isCanonicalPublicHost(host) && !PRIVATE_PUBLIC_ROUTE_RE.test(pathname ?? "/")) {
     const requestedPath = !pathname || pathname === "/" ? "/" : pathname.startsWith("/") ? pathname : `/${pathname}`;
     const normalizedSiteSlug = canonicalSiteSlug(publicSlug);
     const sitePrefix = `/site/${publicSlug}`;

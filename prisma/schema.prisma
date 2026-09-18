@@ -112,6 +112,10 @@ model PlatformAiProvider {
   supportsGenerationN Boolean  @default(false)
   supportsEditN       Boolean  @default(false)
   maxImagesPerRequest Int      @default(1)
+  imageAspectRatio   String   @default("auto")
+  imageResolution    String   @default("1K")
+  imageQuality       String   @default("low")
+  imageOutputFormat  String   @default("png")
   updatedBy           String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt

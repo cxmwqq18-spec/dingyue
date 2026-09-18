@@ -12,6 +12,7 @@ import { metadataForPublishedStorefrontDirectoryPage } from "@/lib/storefront-me
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { publicSiteSlug as normalizePublicSiteSlug } from "@/lib/domain-routing";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
+import { isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
 
 const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "/tools",
@@ -23,7 +24,6 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "image-studio": "/tools",
   "portrait-generator": "/tools/fan-scene-album-builder",
   "portrait-maker": "/tools/fan-scene-album-builder",
-  "product-reverie": "/tools/permission-safe-photo-planner",
   "soft-glam": "/tools/premiere-portrait-set-builder",
   "couple-escape-album": "/tools/birthday-fan-moment-maker",
   "wedding-portraits": "/tools/birthday-fan-moment-maker",
@@ -37,7 +37,6 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "editorial-getaway": "/tools/premiere-portrait-set-builder",
   "cafe-street-story": "/tools/premiere-portrait-set-builder",
   "cinematic-travel": "/tools/game-day-group-portrait-maker",
-  "route-moodboard": "/tools/permission-safe-photo-planner",
   "social-keepsake": "/tools/birthday-fan-moment-maker",
   "seasonal-celebration-album-maker": "/tools/new-year-countdown-album-maker",
   "family-travel-keepsakes": "/tools/thanksgiving-keepsake-set-maker",
@@ -83,7 +82,8 @@ const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
 
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; toolSlug: string }> }): Promise<Metadata> {
   const { siteSlug, toolSlug } = await params;
-  if (normalizePublicSiteSlug(siteSlug) === "mydreamshoots") return {};
+  if (["mydreamshoots", "aidreamshoots"].includes(normalizePublicSiteSlug(siteSlug))) return {};
+  if (isRetiredAidreamcapesImageToolPath(normalizePublicSiteSlug(siteSlug), `/tools/${toolSlug}`)) return {};
   if (legacyToolRedirectPath(siteSlug, toolSlug)) return {};
   const { state, site, page, matched } = await resolveToolPage(siteSlug, toolSlug);
   if (!state || !site || !page || !matched) return {};
@@ -105,7 +105,8 @@ export default async function ToolPage({
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { siteSlug, toolSlug } = await params;
-  if (normalizePublicSiteSlug(siteSlug) === "mydreamshoots") notFound();
+  if (["mydreamshoots", "aidreamshoots"].includes(normalizePublicSiteSlug(siteSlug))) notFound();
+  if (isRetiredAidreamcapesImageToolPath(normalizePublicSiteSlug(siteSlug), `/tools/${toolSlug}`)) notFound();
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
   const publicSiteSlug = redirectPublicSitePathToCanonicalHost({

@@ -161,7 +161,7 @@ const allowedAidreamcapesRoutes = new Set([
   "/policies/state-privacy",
   "/tools/destination-portrait-engine",
   "/tools/soft-glam",
-  "/tools/product-reverie",
+  "/ai-image-generation/ecommerce-main-image",
   "/tools/couple-escape-album",
   "/collections/destination-portrait-albums"
 ]);

@@ -1,0 +1,19 @@
+{
+  "slug": "wedding-invitation",
+  "theme": "wedding invitation",
+  "palette": "ivory, blush pink, champagne gold, sage green, and warm candlelight",
+  "anchor": "an approved wedding invitation suite, readable stationery details, and a couple preparing to share the invitation",
+  "assets": [
+    ["hero-ai-wedding-invitation-garden-couple.jpg", "Un couple présentant une invitation de mariage fleurie dans un jardin baigné par la lumière dorée."],
+    ["hero-ai-wedding-invitation-couple-reviewing.jpg", "Un couple relisant des cartons d’invitation de mariage autour d’une table éclairée à la bougie."],
+    ["hero-ai-wedding-invitation-stationery-suite.jpg", "Suite d’invitation de mariage ivoire avec ruban satiné, sceau de cire, fleurs et alliance."],
+    ["ai-wedding-invitation-card-closeup.jpg", "Mains tenant une invitation de mariage ivoire et son enveloppe près de roses et de bougies."],
+    ["ai-wedding-invitation-design-selection.jpg", "Couple comparant des papiers, couleurs et maquettes d’invitation de mariage devant un ordinateur portable."],
+    ["ai-wedding-invitation-reception-table.jpg", "Invitation de mariage et enveloppe scellée disposées sur une table de réception avec fleurs poudrées et bougies."],
+    ["ai-wedding-invitation-bridesmaid-review.jpg", "Une mariée montrant une invitation de mariage fleurie à une demoiselle d’honneur dans une pièce lumineuse."],
+    ["ai-wedding-invitation-digital-share.jpg", "Main partageant une invitation de mariage numérique sur un smartphone posé dans une décoration de réception."],
+    ["ai-wedding-invitation-venue-display.jpg", "Invitation de mariage fleurie présentée sur un chevalet en bois dans une salle de réception éclairée à la bougie."],
+    ["ai-wedding-invitation-envelope-prep.jpg", "Couple préparant des enveloppes d’invitation de mariage avec sceaux de cire, rubans, fleurs et papeterie."],
+    ["ai-wedding-invitation-complete-suite.jpg", "Suite complète d’invitation de mariage avec carton, enveloppe, ruban, sceau de cire et fleurs sur une table ivoire."]
+  ]
+}

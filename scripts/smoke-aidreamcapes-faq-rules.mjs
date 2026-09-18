@@ -22,7 +22,6 @@ const requiredFaqSlugs = [
   "/tools/fan-scene-album-builder",
   "/tools/game-day-group-portrait-maker",
   "/tools/christmas-group-album-studio",
-  "/tools/permission-safe-photo-planner"
 ];
 
 const forbiddenFaqSlugs = [

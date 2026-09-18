@@ -75,6 +75,19 @@ export function cleanStorefrontHost(value: string | null | undefined): string {
     .toLowerCase();
 }
 
+/**
+ * AIdreamshoots is the Spanish storefront whose public image-theme root is
+ * `/ai-image-generation`. Keep this identity check narrower than
+ * `isSpanishStorefrontSite`, which also covers the Aidreamcapes XBY variant.
+ */
+export function isAidreamshootsStorefrontSite(site: SpanishStorefrontIdentity | undefined): boolean {
+  if (!site) return false;
+  const host = cleanStorefrontHost(site.primaryDomain);
+  return site.id === "site_mydreamshoots_xby"
+    || ["aidreamshoots", "aidreamshoots-eu", "mydreamshoots-xby"].includes(site.slug?.toLowerCase() ?? "")
+    || SPANISH_STOREFRONT_DOMAINS.has(host);
+}
+
 export function spanishStorefrontIdentity(site: SpanishStorefrontIdentity | undefined): string {
   if (!site) return "";
   return `${site.id ?? ""} ${site.slug ?? ""} ${site.name ?? ""} ${site.primaryDomain ?? ""} ${site.branding?.logoText ?? ""}`.toLowerCase();

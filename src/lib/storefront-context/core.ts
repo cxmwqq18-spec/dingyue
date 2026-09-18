@@ -7,7 +7,7 @@ import { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
 import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
 import { applyTitleTemplate, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 import { robotsForPage } from "@/lib/theme/seo";
-import { getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
+import { canonicalSeoDirectoryPathForSite, getDreamshootPublicSeoPageMetadataForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 import { MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 
@@ -16,6 +16,40 @@ function clean(value: unknown): string {
 }
 
 const MYDREAMSHOOTS_STANDARD_SEO_PATHS = new Set<string>(MYDREAMSHOOTS_STANDARD_SEO_ROUTES);
+
+const AIDREAMCAPES_EU_SEO_TITLE_OVERRIDES: Record<string, string> = {
+  "/ai-image-generation/avatar": "Avatar professionnel IA | Aidreamcapes",
+  "/ai-image-generation/background-remover": "Supprimer un fond avec l’IA | Aidreamcapes",
+  "/ai-image-generation/christmas-photo": "Photos de Noël avec l’IA | Aidreamcapes",
+  "/ai-image-generation/cyberpunk": "Portrait cyberpunk avec l’IA | Aidreamcapes",
+  "/ai-image-generation/motion-generator": "Animation photo avec l’IA | Aidreamcapes",
+  "/ai-image-generation/photo-enhancer": "Améliorer une photo avec l’IA | Aidreamcapes",
+  "/ai-image-generation/portrait-retouch": "Retouche de portrait IA | Aidreamcapes",
+  "/ai-image-generation/thanksgiving-photo": "Photos de Thanksgiving avec l’IA | Aidreamcapes",
+  "/ai-image-generation/travel": "Photos de voyage avec l’IA | Aidreamcapes",
+  "/ai-image-generation/urban": "Photos urbaines avec l’IA | Aidreamcapes",
+  "/ai-image-generation/wedding-photo": "Photos de mariage avec l’IA | Aidreamcapes",
+  "/ai-image-generation/photo-tools": "Outils de retouche photo IA | Aidreamcapes"
+};
+
+function normalizeAidreamcapesEuTitle(title: string, path: string, indexable: boolean): string {
+  if (!indexable) return title;
+  const override = AIDREAMCAPES_EU_SEO_TITLE_OVERRIDES[path];
+  if (override) return override;
+  if (title.length <= 60) return title;
+  const brandSuffix = " | Aidreamcapes";
+  if (title.toLowerCase().endsWith(brandSuffix.toLowerCase())) {
+    const prefixLimit = 60 - brandSuffix.length;
+    const prefix = title.slice(0, prefixLimit).replace(/\s+\S*$/, "").trim();
+    return `${prefix}${brandSuffix}`;
+  }
+  return `${title.slice(0, 59).replace(/\s+\S*$/, "").trim()}…`;
+}
+
+function normalizeAidreamcapesEuDescription(description: string, indexable: boolean): string {
+  if (!indexable || description.length <= 160) return description;
+  return `${description.slice(0, 159).replace(/\s+\S*$/, "").trim()}…`;
+}
 
 function revisionHash(value: string): string {
   let first = 0x811c9dc5;
@@ -33,17 +67,27 @@ function revisionHash(value: string): string {
     .slice(0, 20);
 }
 
+function canonicalSeoPathForSite(site: StorefrontContextBundle["site"], path: string): string {
+  return /^\/(?:collections|ai-image-generation)(?:\/|$)/i.test(path)
+    ? canonicalSeoDirectoryPathForSite(site, "collection", path)
+    : path;
+}
+
 function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, settings: ThemeSettings): ResolvedPageSeo {
   const pageSeo = pageJson.seo;
   const brand = clean(bundle.site.branding.logoText) || clean(bundle.site.name);
-  const path = normalizeCanonicalPath(pageSeo?.canonical ?? pageSeo?.canonicalPath, bundle.page.slug);
+  const normalizedPath = normalizeCanonicalPath(pageSeo?.canonical ?? pageSeo?.canonicalPath, bundle.page.slug);
+  const path = canonicalSeoPathForSite(bundle.site, normalizedPath);
   const primaryMydreamshoots = isPrimaryMydreamshootsSite(bundle.site);
+  const publicRouteSeo = bundle.site.id === "site_mydreamshoots_xby"
+    ? getDreamshootPublicSeoPageMetadataForSite(bundle.site, path)
+    : undefined;
   const collectionPageSlug = primaryMydreamshoots ? path.match(/^\/ai-image-generation\/([^/?#]+)$/)?.[1] : undefined;
   const collectionDirectoryContent = collectionPageSlug
     ? getSeoDirectoryContentForSite(bundle.site, "collection", collectionPageSlug)
     : undefined;
-  const rawTitle = clean(collectionDirectoryContent?.title) || clean(pageSeo?.title) || clean(bundle.page.title) || brand;
-  const description = clean(collectionDirectoryContent?.description) || clean(pageSeo?.description);
+  const rawTitle = clean(collectionDirectoryContent?.title) || clean(publicRouteSeo?.title) || clean(pageSeo?.title) || clean(bundle.page.title) || brand;
+  const description = clean(collectionDirectoryContent?.description) || clean(publicRouteSeo?.description) || clean(pageSeo?.description);
   const standardMedia = primaryMydreamshoots
     ? bundle.publishedStandardPageMedia?.[path]
     : undefined;
@@ -51,25 +95,30 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
   const standardMediaReady = !standardMediaRequired || standardMedia?.status === "ready";
   const defaultIndex = bundle.page.pageType !== "not_found" && bundle.page.slug !== "/404";
   const pageRobots = robotsForPage(bundle.page);
+  const indexable = defaultIndex && pageRobots.index && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true);
+  const followable = pageRobots.follow && (pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true);
+  const euIndexable = bundle.site.id === "site_aidreamcapes_xby" && indexable;
   const pageScopedSocial = primaryMydreamshoots && (
     path === "/about-us" || path === "/faq" || path === "/pricing" || path === "/workflow" ||
     path === "/best-ai-image" || path === "/ai-image-generation" || /^\/ai-image-generation\//.test(path)
   );
   return {
-    title: applyTitleTemplate(rawTitle, settings, brand),
-    description,
+    title: normalizeAidreamcapesEuTitle(applyTitleTemplate(rawTitle, settings, brand), path, euIndexable),
+    description: normalizeAidreamcapesEuDescription(description, euIndexable),
     // MyDreamshoots requires page-scoped keywords. Do not silently inherit the
     // homepage list for an unrelated public route.
-    keywords: primaryMydreamshoots ? clean(pageSeo?.keywords) || undefined : clean(pageSeo?.keywords) || clean(settings.seo?.siteKeywords) || undefined,
+    keywords: primaryMydreamshoots
+      ? clean(publicRouteSeo?.keywords) || clean(pageSeo?.keywords) || undefined
+      : clean(pageSeo?.keywords) || clean(settings.seo?.siteKeywords) || undefined,
     canonicalPath: path,
     canonicalUrl: canonicalUrlForSite(bundle.site, path),
     ogImage: standardMedia?.status === "ready"
       ? standardMedia.ogImage
       : clean(pageSeo?.ogImage) || (pageScopedSocial ? undefined : clean(settings.seo?.defaultOgImage) || undefined),
-    index: defaultIndex && pageRobots.index && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true),
-    follow: pageRobots.follow && (pageSeo?.robots?.follow ?? pageSeo?.follow ?? settings.seo?.robots?.follow ?? true),
-    maxImagePreview: pageSeo?.robots?.maxImagePreview,
-    sitemapEligible: defaultIndex && pageRobots.index && standardMediaReady && (pageSeo?.robots?.index ?? pageSeo?.index ?? settings.seo?.robots?.index ?? true)
+    index: indexable,
+    follow: followable,
+    maxImagePreview: euIndexable ? "large" : pageSeo?.robots?.maxImagePreview,
+    sitemapEligible: indexable
   };
 }
 
