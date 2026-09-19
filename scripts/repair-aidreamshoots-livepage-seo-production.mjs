@@ -890,7 +890,12 @@ async function main() {
     assert.equal(sha256(afterCrossSite), sha256(beforeCrossSite), "A non-target site's database sentinel changed; production write is not considered safe.");
     assert(afterLivePages.some((row) => row.slug === WEDDING_INVITATION_PUBLIC && row.contentJson?.seo?.index === true), "Public wedding invitation was not indexed after write.");
     assert(afterLivePages.some((row) => row.slug === WEDDING_INVITATION_SOURCE && row.contentJson?.seo?.index === false), "Wedding invitation alias was not noindexed after write.");
-    assert.equal(mediaDigest(livePages, { excludeLegacy: true }), mediaDigest(afterLivePages.filter((row) => !row.slug || row.slug !== WEDDING_INVITATION_PUBLIC), { excludeLegacy: true }), "Non-legacy target media references changed unexpectedly.");
+    const createdSlugs = new Set(prepared.filter((row) => row.__new).map((row) => row.slug));
+    assert.equal(
+      mediaDigest(livePages, { excludeLegacy: true }),
+      mediaDigest(afterLivePages.filter((row) => !createdSlugs.has(row.slug)), { excludeLegacy: true }),
+      "Non-legacy target media references changed unexpectedly."
+    );
     assert.equal(legacyMediaReferenceCount(afterLivePages), 0, "Legacy target media references remain after write.");
     assert.equal(afterCreativePacks.filter((pack) => JSON.stringify(pack.galleryImageAlts ?? []).match(/andén de tren|distinctive pose that highlights the theme/i)).length, 0, "Known CreativePack alt contamination remains after write.");
     if (legacyMediaAsset) assert(/retired by aidreamshoots seo\/media remediation/i.test(String(afterMediaAsset?.notes ?? "")), "Legacy MediaAsset was not marked retired.");
