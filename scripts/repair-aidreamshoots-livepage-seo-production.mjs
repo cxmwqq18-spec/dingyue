@@ -199,6 +199,12 @@ const AIDREAMSHOOTS_COPY_REPLACEMENTS = new Map([
   ["tu subidas stay privado", "Tus subidas permanecen privadas"]
 ]);
 
+const PRIVATE_COPY_REPLACEMENTS = new Map([
+  ["Iniciar sesion para crear, track, y descargar tu IA fotos", "Inicia sesión para crear, revisar y descargar tus fotos con IA"],
+  ["Subir fotos fuente, reserve créditos antes generación, track solicitudes, y descargar terminados albums desde uno secure cuenta.", "Sube fotos fuente, reserva créditos antes de generar, sigue tus solicitudes y descarga álbumes terminados desde tu cuenta segura."],
+  ["Track cada generación solicitud desde queue para entrega.", "Sigue el estado de cada solicitud de generación hasta su entrega."]
+]);
+
 const PACK_SCENES = new Map([
   ["soccer", "en un estadio lleno durante un partido"],
   ["futbol", "en un estadio lleno durante un partido"],
@@ -314,6 +320,17 @@ function sanitizeText(value, key = "") {
   if (Array.isArray(value)) return value.map((item) => sanitizeText(item, key));
   if (!value || typeof value !== "object") return value;
   return Object.fromEntries(Object.entries(value).map(([childKey, child]) => [childKey, sanitizeText(child, childKey)]));
+}
+
+function replaceExactText(value, replacements) {
+  if (typeof value === "string") return replacements.get(value) ?? value;
+  if (Array.isArray(value)) return value.map((item) => replaceExactText(item, replacements));
+  if (!value || typeof value !== "object") return value;
+  return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, replaceExactText(child, replacements)]));
+}
+
+function repairPrivatePageCopy(json) {
+  return sanitizeText(replaceExactText(deepClone(json), PRIVATE_COPY_REPLACEMENTS));
 }
 
 function collectMissingImageAlts(value, slug, pathName = "", output = []) {
@@ -571,7 +588,7 @@ function applyBlogCopy(json) {
 }
 
 function prepareContent(row) {
-  if (PRIVATE_LIVE_PAGE_PREFIXES.some((prefix) => normalizePath(row.slug).startsWith(prefix))) return deepClone(row.contentJson);
+  if (PRIVATE_LIVE_PAGE_PREFIXES.some((prefix) => normalizePath(row.slug).startsWith(prefix))) return repairPrivatePageCopy(row.contentJson);
   const canonicalPath = canonicalPathForPage(row.slug, row.contentJson?.seo ?? {});
   let content;
   if (profiles[canonicalPath]) {
