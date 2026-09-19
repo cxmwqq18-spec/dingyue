@@ -60,6 +60,7 @@ const retiredImageThemePaths = [
 // the shared catalogue projection. They are retired for Aidreamcapes only;
 // the same slugs remain available to other storefronts where they are valid.
 const retiredImageCollectionPaths = [
+  "/ai-image-generation/motion-generator",
   "/ai-image-generation/background-changer",
   "/ai-image-generation/bikini",
   "/ai-image-generation/boudoir",

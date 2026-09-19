@@ -435,6 +435,10 @@ const SEO_LENGTH_REPLACEMENTS = new Map([
 // target pages are the only rows passed through this function, so other
 // storefronts cannot inherit these route changes.
 const LEGACY_ROUTE_REPLACEMENTS = new Map([
+  // Motion Generator is a video topic and must not remain under the image
+  // generation collection. Keep this exact correction scoped to Aidreamcapes
+  // LivePage payloads processed by this migration.
+  ["/ai-image-generation/motion-generator", "/ai-video-generation/motion-generator"],
   ["/ai-image-generation/rich-lifestyle", "/ai-image-generation/lifestyle-scene"],
   ["/ai-image-generation/social-cards", "/ai-image-generation/carousel-set"],
   ["/ai-image-generation/black-friday", "/ai-image-generation/sale-campaign-key-visual"],

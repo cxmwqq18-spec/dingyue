@@ -21,6 +21,7 @@ const THEME_SLUGS = [
   "professional-headshot", "creator-portrait", "team-directory", "social-profile-photo", "fashion-editorial"
 ];
 const RETIRED_PATHS = [
+  "/ai-image-generation/motion-generator",
   "/ai-image-generation/rich-lifestyle", "/ai-image-generation/social-cards", "/ai-image-generation/black-friday", "/ai-image-generation/street-style",
   "/ai-image-generation/hairstyle-generator", "/ai-image-generation/edit-by-prompt", "/ai-image-generation/background-remover", "/ai-image-generation/photo-enhancer",
   "/ai-image-generation/old-photo-restoration", "/ai-image-generation/headshot", "/ai-image-generation/avatar", "/ai-image-generation/portrait-photo",
