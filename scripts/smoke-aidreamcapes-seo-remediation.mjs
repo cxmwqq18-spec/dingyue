@@ -93,7 +93,12 @@ async function fetchWithRetry(url, options = {}, attempts = 3) {
 }
 
 async function assertImageResponse(url) {
-  const response = await fetchWithRetry(url, { redirect: "manual", headers: { "Cache-Control": "no-cache" } });
+  let response;
+  try {
+    response = await fetchWithRetry(url, { redirect: "manual", headers: { "Cache-Control": "no-cache" } });
+  } catch (error) {
+    throw new Error(`${url}: ${error?.message || error}`);
+  }
   const contentType = response.headers.get("content-type") || "";
   assert.equal(response.status, 200, `${url}: image HTTP ${response.status}`);
   assert(contentType.toLowerCase().startsWith("image/"), `${url}: expected image MIME, received ${contentType || "missing"}`);
@@ -103,8 +108,8 @@ async function assertImageResponse(url) {
 
 async function checkImageUrls(urls) {
   const unique = [...new Set(urls.filter(Boolean).map(requestUrl))];
-  for (let start = 0; start < unique.length; start += 12) {
-    await Promise.all(unique.slice(start, start + 12).map(assertImageResponse));
+  for (let start = 0; start < unique.length; start += 4) {
+    await Promise.all(unique.slice(start, start + 4).map(assertImageResponse));
   }
   return unique.length;
 }
