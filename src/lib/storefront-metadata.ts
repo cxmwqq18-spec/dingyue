@@ -149,7 +149,8 @@ export async function metadataForPublishedStorefrontDirectoryPage({
   const seoSourcePage = spanishTargetPage ?? euVideoTargetPage ?? publishedBasePage;
   // Dedicated video topic pages own their SEO in LivePage.contentJson. Resolve
   // that first so they never require a generic tool-directory seed.
-  const pageJsonWithDirectorySeo = spanishTargetPage || euVideoTargetPage
+  const aidreamcapesVideoTargetPage = publishedSite.id === "site_aidreamcapes" && kind === "tool";
+  const pageJsonWithDirectorySeo = spanishTargetPage || euVideoTargetPage || aidreamcapesVideoTargetPage
     ? seoSourcePage.publishedJson
     : withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite);
   const resolved = (isPrimaryMydreamshootsSite(publishedSite) || publishedSite.id === "site_aidreamcapes_xby" || publishedSite.id === "site_mydreamshoots_xby") && snapshot

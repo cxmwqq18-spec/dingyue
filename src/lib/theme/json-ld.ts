@@ -7,7 +7,7 @@ import { canonicalAbsoluteUrlForSite, canonicalOriginForSite, storefrontBaseUrl 
 import { aiVideoTopicLandingContentFromSection } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection } from "@/lib/talking-photo-content";
 import { imageThemeDetailContentFromSection } from "@/lib/aidreamcapes-image-theme-content";
-import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
+import { isAidreamcapesImageThemePath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { AIDREAMCAPES_EU_THEME_SLUGS, aidreamcapesEuSeoContent } from "@/lib/aidreamcapes-eu-seo-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
@@ -257,6 +257,15 @@ function canonicalCollectionSlugForCandidate(site: Site, value: unknown): string
   const slug = slugifySchemaPart(cleanText(value));
   if (!slug) return "";
   return canonicalSeoDirectoryPathForSite(site, "collection", slug).split("/").pop() || slug;
+}
+
+function publicCreativePacksForSite(site: Site, packs: CreativePack[]): CreativePack[] {
+  if (site.id !== "site_aidreamcapes") return packs;
+  return packs.filter((pack) => {
+    const rawSlug = pack.categoryRecord?.slug || pack.category || pack.name;
+    const publicPath = canonicalSeoDirectoryPathForSite(site, "collection", canonicalCollectionSlugForCandidate(site, rawSlug));
+    return !isRetiredAidreamcapesPublicPath(site.slug, publicPath);
+  });
 }
 
 function listText(value: ThemeSettingValue | undefined): string[] {
@@ -1240,7 +1249,10 @@ function collectionPageSchema(input: JsonLdInput, title: string, description: st
   if (!input.pagePath.startsWith("/collections") && !input.pagePath.startsWith("/ai-image-generation")) return [];
   const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
   const url = absoluteUrl(input.site, input.routeMode, path);
-  const activePacks = projectPublicCreativePacks(input.context, input.creativePacks ?? input.context.catalog.activePacks);
+  const activePacks = publicCreativePacksForSite(
+    input.site,
+    projectPublicCreativePacks(input.context, input.creativePacks ?? input.context.catalog.activePacks)
+  );
   const engagementPage = isAidreamshootsEngagementFrenchPage(input.site, input.pagePath);
   const itemListElement = activePacks.length
     ? activePacks.map((pack, index) => ({

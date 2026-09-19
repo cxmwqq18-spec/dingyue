@@ -52,7 +52,7 @@ export function SaveTheDateDirectory({ groups, createHref = "/app/create", spani
                       prefetch={false}
                     >
                       <div className="relative aspect-[4/3] overflow-hidden bg-[#111827]">
-                        <img alt={imageAlt} className="block h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" decoding="async" loading={index === 0 ? "eager" : "lazy"} src={imageUrl} />
+                        <img alt={imageAlt} className="block h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" decoding="async" height={1200} loading={index === 0 ? "eager" : "lazy"} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" src={imageUrl} width={1600} />
                         <span className="absolute left-3 top-3 rounded-full border border-white/16 bg-black/44 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/82 backdrop-blur">{String(index + 1).padStart(2, "0")}</span>
                       </div>
                       <div className="flex flex-1 flex-col border-t border-white/10 p-5">
