@@ -632,6 +632,8 @@ function normalizedHeadingLevel(value: string, fallback: "h1" | "h2"): "h1" | "h
   return value === "h1" || value === "h2" ? value : fallback;
 }
 
+const aidreamshootsHeadingH2Pages = new Set(["/about-us", "/contact-us", "/creators-circle", "/tools", "/workflow"]);
+
 function primaryRichTextFallbackHeadingLevel(sectionId: string, page: ThemePageJson, pagePath: string): "h1" | "h2" {
   const semanticH1Paths = new Set(["/about-us", "/contact-us", "/digital-delivery", "/shipping", "/faq", "/help", "/search", "/cart", "/blog"]);
   const firstRichTextId = page.sectionsOrder.find((candidateId: string) => page.sections[candidateId]?.type === "rich_text");
@@ -5042,6 +5044,45 @@ function hrefFor(site: Site, href: string): string {
       "virtual-try-on": "virtual-try-on"
     };
     return routedSitePath(site, imageSlugByLegacyTool[toolSlug] ? `/ai-image-generation/${imageSlugByLegacyTool[toolSlug]}` : "/ai-image-generation");
+  }
+  if (isAidreamshootsStorefrontSite(site) && cleanHost(site.primaryDomain) === "aidreamshoots.eu" && href.startsWith("/tools/")) {
+    const toolSlug = href.slice("/tools/".length).split(/[?#]/)[0] ?? "";
+    const normalizedToolSlug = toolSlug.replace(/^ai-image-generation-/i, "");
+    const imageSlugByLegacyTool: Record<string, string> = {
+      headshot: "headshot",
+      "portrait-photo": "portrait-photo",
+      soccer: "soccer",
+      cyberpunk: "cyberpunk",
+      "gala-photo": "gala-photo",
+      mafia: "mafia",
+      avatar: "avatar",
+      travel: "viaje",
+      "street-style": "street-style",
+      "portrait-retouch": "portrait-retouch",
+      "background-changer": "background-changer",
+      "background-remover": "background-remover",
+      "magic-eraser": "magic-eraser",
+      "photo-enhancer": "photo-enhancer",
+      "unblur-image": "unblur-image",
+      "color-correction": "color-correction",
+      "old-photo-restoration": "old-photo-restoration",
+      "edit-by-prompt": "edit-by-prompt",
+      "animated-avatar": "avatar",
+      "magic-upscaler": "photo-enhancer",
+      "virtual-try-on": "virtual-try-on"
+    };
+    const videoSlugByLegacyTool: Record<string, string> = {
+      "fashion-reel": "fashion-video",
+      "image-to-video": "motion-generator",
+      "profile-clip": "motion-generator",
+      "fan-poster-motion": "motion-generator",
+      "creator-intro-video": "brand-video",
+      "product-teaser-clip": "product-video",
+      "album-story-video": "story-video"
+    };
+    if (videoSlugByLegacyTool[normalizedToolSlug]) return routedSitePath(site, `/ai-video-generation/${videoSlugByLegacyTool[normalizedToolSlug]}`);
+    if (imageSlugByLegacyTool[normalizedToolSlug]) return routedSitePath(site, `/ai-image-generation/${imageSlugByLegacyTool[normalizedToolSlug]}`);
+    return routedSitePath(site, "/tools");
   }
   if ((href === "/tools/image-studio" || href === "/tools/ai-image-studio") && isPrimaryMydreamshootsCapabilitySite(site)) {
     return routedSitePath(site, "/ai-image-generation");
@@ -16454,7 +16495,8 @@ function SectionView({
             primaryHref={hrefFor(site, setting(section, "primaryHref", "/login"))}
              secondaryCta={frenchXbyTools ? aidreamcapes ? "Albums d’occasion" : "Voir les packs photo" : spanishXbyTools ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : setting(section, "secondaryCta", aidreamcapes ? "Occasion Albums" : "View photo packages")}
             secondaryHref={hrefFor(site, setting(section, "secondaryHref", "/collections"))}
-             locale={frenchXbyTools ? "fr" : spanishXbyTools ? "es" : "en"}
+            locale={frenchXbyTools ? "fr" : spanishXbyTools ? "es" : "en"}
+            categoryHeadingLevel={site.id === "site_mydreamshoots_xby" && renderContext.pagePath === "/tools" ? "h2" : "h3"}
             sectionId={toolSectionId}
           />
         </div>
@@ -19490,6 +19532,12 @@ function SectionView({
       ? "h1"
       : primaryRichTextFallbackHeadingLevel(id, renderContext.page, renderContext.pagePath);
     const HeadingTag = !policyPage && normalizedHeadingLevel(setting(section, "headingLevel"), richTextHeadingLevel) === "h1" ? "h1" : "h2";
+    const firstRichTextSectionId = renderContext.page.sectionsOrder.find((candidateId) => renderContext.page.sections[candidateId]?.type === "rich_text");
+    const RichCardHeadingTag = site.id === "site_mydreamshoots_xby"
+      && aidreamshootsHeadingH2Pages.has(renderContext.pagePath)
+      && id === firstRichTextSectionId
+      ? "h2"
+      : "h3";
     const dark = tone === "dark";
     const compact = layout === "compact";
     const rawHeading = sectionHeading(section, storefrontSectionLabel(section.type));
@@ -19556,9 +19604,9 @@ function SectionView({
                     return (
                       <article className={dark ? "min-w-0 rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "min-w-0 rounded-[18px] border border-[#e4dace] bg-white/56 p-4 shadow-[0_18px_48px_-42px_rgba(20,22,26,0.18)]"} key={instanceKey(card, index, "rich_text_card")} {...xfcartBlockAttrs(mode, card, index, "rich_text_card")}>
                         <p className={dark ? "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-white/46 [overflow-wrap:anywhere]" : "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a7a6d] [overflow-wrap:anywhere]"}>{meta}</p>
-                        <h3 className="mt-3 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">
+                        <RichCardHeadingTag className="mt-3 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">
                           {isSupportEmail ? <a className="underline decoration-white/25 underline-offset-4 transition hover:decoration-white/70" href={`mailto:${cardTitle}`}>{cardTitle}</a> : cardTitle}
-                        </h3>
+                        </RichCardHeadingTag>
                         <p className={dark ? "mt-2 min-w-0 text-sm leading-6 text-white/62 [overflow-wrap:anywhere]" : "mt-2 min-w-0 text-sm leading-6 text-[#625d56] [overflow-wrap:anywhere]"}>{cardDescription}</p>
                         {blockValue(card, "secondaryTitle", "") ? <p className="mt-4 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">{blockValue(card, "secondaryTitle", "")}</p> : null}
                       </article>

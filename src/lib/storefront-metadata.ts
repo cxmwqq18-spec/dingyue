@@ -91,15 +91,19 @@ export async function metadataForPublishedStorefrontPage({
       // Derive the absolute URL from the normalized path. Stored canonical
       // strings can lag behind a route migration or point at the wrong host.
       canonicalUrl: canonicalUrlForSite(snapshot.site, metadataPath),
-      ...(publicRouteSeo?.title?.trim()
-        ? { title: publicRouteSeo.title.trim() }
-        : targetPageSeo?.title?.trim() ? { title: targetPageSeo.title.trim() } : {}),
-      ...(publicRouteSeo?.description?.trim()
-        ? { description: publicRouteSeo.description.trim() }
-        : targetPageSeo?.description?.trim() ? { description: targetPageSeo.description.trim() } : {}),
-      ...(publicRouteSeo?.keywords?.trim()
-        ? { keywords: publicRouteSeo.keywords.trim() }
-        : targetPageSeo?.keywords?.trim() ? { keywords: targetPageSeo.keywords.trim() } : {})
+      // AIdreamshoots metadata is owned by the current LivePage projection.
+      // Keep the static route catalogue as a fallback for other storefronts
+      // and for pages that do not carry explicit live SEO fields, but never
+      // let it overwrite fresh target-site SQL values.
+      ...(targetPageSeo?.title?.trim()
+        ? { title: targetPageSeo.title.trim() }
+        : publicRouteSeo?.title?.trim() ? { title: publicRouteSeo.title.trim() } : {}),
+      ...(targetPageSeo?.description?.trim()
+        ? { description: targetPageSeo.description.trim() }
+        : publicRouteSeo?.description?.trim() ? { description: publicRouteSeo.description.trim() } : {}),
+      ...(targetPageSeo?.keywords?.trim()
+        ? { keywords: targetPageSeo.keywords.trim() }
+        : publicRouteSeo?.keywords?.trim() ? { keywords: publicRouteSeo.keywords.trim() } : {})
     }
   };
   const approvedDirectoryImage = isPrimaryMydreamshootsSite(snapshot.site) && snapshotPage.slug === "/ai-image-generation" &&

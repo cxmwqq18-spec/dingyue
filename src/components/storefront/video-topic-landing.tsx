@@ -250,8 +250,22 @@ const AIDREAMSHOOTS_SAVE_DATE_ALIASES = new Set([
   "save-the-date", "thanksgiving", "valentines-day", "wedding-ceremony", "wedding-invitation"
 ]);
 
-function aidreamshootsCanonicalHref(site: Site, href: string): string {
-  if (site.id !== "site_mydreamshoots_xby" || !href.startsWith("/")) return href;
+function aidreamshootsCanonicalHref(site: Site, href: string, label = ""): string {
+  if (site.id !== "site_mydreamshoots_xby") return href;
+  if (!href.startsWith("/")) {
+    const normalizedLabel = label.toLowerCase();
+    const labelRoutes: Array<[RegExp, string]> = [
+      [/\bmarca\b/, "/ai-video-generation/brand-video"],
+      [/\bpromocional\b/, "/ai-video-generation/promo-video"],
+      [/\bmoda\b/, "/ai-video-generation/fashion-video"],
+      [/musical|music/, "/ai-video-generation/music-video"],
+      [/\bmascotas?\b/, "/ai-video-generation/pet-video"],
+      [/gastron[oó]mic/, "/ai-video-generation/food-video"],
+      [/\bexplicativ/, "/ai-video-generation/explainer-video"],
+      [/tutorial/, "/ai-video-generation/how-to-video"]
+    ];
+    return labelRoutes.find(([pattern]) => pattern.test(normalizedLabel))?.[1] ?? "/ai-video-generation";
+  }
   let parsed: URL;
   try {
     parsed = new URL(href, "https://aidreamshoots.eu");
@@ -275,9 +289,9 @@ function aidreamshootsCanonicalHref(site: Site, href: string): string {
   return `${pathname}${parsed.search}${parsed.hash}`;
 }
 
-function hrefFor(site: Site, href: string): string {
+function hrefFor(site: Site, href: string, label = ""): string {
   if (href.startsWith("#")) return href;
-  const canonicalHref = aidreamshootsCanonicalHref(site, href);
+  const canonicalHref = aidreamshootsCanonicalHref(site, href, label);
   const routedSite = site as RoutedSite;
   const basePath = routedSite.__storefrontBasePath;
   if (site.id === "site_mydreamshoots_xby") return canonicalHref;
@@ -285,9 +299,9 @@ function hrefFor(site: Site, href: string): string {
   return hostAwareSitePath(site, canonicalHref);
 }
 
-function InternalLink({ site, href, children, className }: { site: Site; href: string; children: ReactNode; className: string }) {
+function InternalLink({ site, href, children, className, label }: { site: Site; href: string; children: ReactNode; className: string; label?: string }) {
   return (
-    <StorefrontInstantLink className={className} href={hrefFor(site, href)}>
+    <StorefrontInstantLink className={className} href={hrefFor(site, href, label)}>
       {children}
     </StorefrontInstantLink>
   );
@@ -613,7 +627,7 @@ function SupportingCard({ card, light = false, site }: { card: VideoTopicSupport
       ) : null}
       {card.href && card.linkLabel && site ? (
         <div className="mt-5">
-          <InternalLink className={`inline-flex items-center gap-2 text-sm font-semibold ${light ? "text-[#6652bd]" : "text-[#c4b5fd]"}`} href={card.href} site={site}>
+          <InternalLink className={`inline-flex items-center gap-2 text-sm font-semibold ${light ? "text-[#6652bd]" : "text-[#c4b5fd]"}`} href={card.href} site={site} label={card.linkLabel}>
             {card.linkLabel}
             <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
           </InternalLink>

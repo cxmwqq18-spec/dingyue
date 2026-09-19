@@ -72,7 +72,7 @@ export const AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY = {
   relatedCtaLabel: "Ver todos los paquetes",
   relatedLinks: [
     { label: "Fotos de boda", href: "/ai-image-generation/wedding-photo" },
-    { label: "Fotos de San Valentín", href: "/ai-image-generation/valentines-day-photo" },
+    { label: "Fotos de San Valentín", href: "/ai-image-generation/valentines-photo" },
     { label: "Fotos de Navidad", href: "/ai-image-generation/christmas-photo" }
   ],
   ctaHref: "/app/create"

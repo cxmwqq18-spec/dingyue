@@ -158,6 +158,10 @@ const SEO_OVERRIDES = new Map([
     title: "Cómo funciona AIdreamshoots: fotos y vídeos con IA",
     description: "Prepara tus fotos, elige un estilo, revisa los créditos y conserva tus resultados privados en cuatro pasos claros."
   }],
+  ["/children-privacy", {
+    title: "Privacidad infantil | AIdreamshoots",
+    description: "Conoce las reglas de AIdreamshoots para proteger la privacidad de menores y gestionar solicitudes relacionadas con contenido y datos."
+  }],
   ["/ai-image-generation/futbol", {
     title: "Fotos de fútbol con IA para aficionados | AIdreamshoots"
   }],
@@ -186,6 +190,14 @@ const SEO_OVERRIDES = new Map([
 
 const HEADING_H2_PAGES = new Set(["/about-us", "/contact-us", "/creators-circle", "/tools", "/workflow"]);
 const PRIVATE_LIVE_PAGE_PREFIXES = ["/app/", "/account", "/login"];
+const AIDREAMSHOOTS_COPY_REPLACEMENTS = new Map([
+  ["Elegir la resultado primero", "Elegir primero el resultado"],
+  ["Crear un IA foto conjunto desde fotos fuente.", "Crear un conjunto de fotos con IA desde fotos fuente."],
+  ["Subir claro fotos", "Subir fotos claras"],
+  ["Elegir un foto paquete", "Elegir un paquete de fotos"],
+  ["Revisar la coste en créditose", "Revisar el coste en créditos"],
+  ["tu subidas stay privado", "Tus subidas permanecen privadas"]
+]);
 
 const PACK_SCENES = new Map([
   ["soccer", "en un estadio lleno durante un partido"],
@@ -273,6 +285,7 @@ function isLikelyImageReference(value) {
 }
 
 function mapText(value) {
+  if (AIDREAMSHOOTS_COPY_REPLACEMENTS.has(value)) return AIDREAMSHOOTS_COPY_REPLACEMENTS.get(value);
   if (Object.hasOwn(copyReplacements, value)) return copyReplacements[value];
   return value
     .replaceAll("unño", "año")
@@ -353,6 +366,9 @@ function canonicalPathForHref(pathname, search = "") {
   }
   if (normalized === "/ai-video-generation/image-to-video" || normalized === "/ai-video-generation/text-to-video") {
     normalized = "/ai-video-generation/motion-generator";
+  }
+  if (normalized === "/ai-image-generation/valentines-day-photo") {
+    normalized = "/ai-image-generation/valentines-photo";
   }
   const saveDateMatch = normalized.match(/^\/ai-video-generation\/([^/]+)$/i);
   if (saveDateMatch && SAVE_THE_DATE_ALIASES.has(saveDateMatch[1].toLowerCase())) {

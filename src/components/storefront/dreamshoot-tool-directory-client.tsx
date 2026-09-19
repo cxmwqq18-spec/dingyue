@@ -27,7 +27,8 @@ export function DreamshootToolDirectoryClient({
   secondaryCta,
   secondaryHref,
   locale = "en",
-  sectionId
+  sectionId,
+  categoryHeadingLevel = "h3"
 }: {
   cards: DreamshootToolDirectoryCard[];
   categories: string[];
@@ -38,10 +39,12 @@ export function DreamshootToolDirectoryClient({
   secondaryHref: string;
    locale?: "en" | "es" | "fr";
   sectionId: string;
+  categoryHeadingLevel?: "h2" | "h3";
 }) {
   const spanish = locale === "es";
   const french = locale === "fr";
   const allCategories = Array.from(new Set([...categories, ...cards.map((card) => card.category)]));
+  const CategoryHeading = categoryHeadingLevel;
 
   return (
     <>
@@ -53,7 +56,7 @@ export function DreamshootToolDirectoryClient({
             <div id={`${sectionId}-${slugify(category)}`} key={category}>
               <div className={dark ? "mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-white/10 pb-4" : "mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-[#d3e0dc] pb-4"}>
                 <div>
-                  <h3 className={dark ? "text-2xl font-bold tracking-tight text-white sm:text-3xl" : "text-2xl font-bold tracking-tight text-[#18202d] sm:text-3xl"}>{category}</h3>
+                  <CategoryHeading className={dark ? "text-2xl font-bold tracking-tight text-white sm:text-3xl" : "text-2xl font-bold tracking-tight text-[#18202d] sm:text-3xl"}>{category}</CategoryHeading>
                   <p className={dark ? "mt-2 text-sm text-white/52" : "mt-2 text-sm text-[#637077]"}>
                      {spanish ? `${grouped.length} herramientas con paginas claras y pasos guiados.` : french ? `${grouped.length} outils avec des pages claires et des étapes guidées.` : `${grouped.length} tools with clear pages and guided next steps.`}
                   </p>
