@@ -92,6 +92,21 @@ async function fetchWithRetry(url, options = {}, attempts = 3) {
   throw lastError;
 }
 
+async function readResponseWithTimeout(response, timeoutMs = 30_000) {
+  let timer;
+  try {
+    return await Promise.race([
+      response.arrayBuffer(),
+      new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error(`response body timeout after ${timeoutMs}ms`)), timeoutMs);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer);
+    if (response.body) response.body.cancel().catch(() => {});
+  }
+}
+
 async function assertImageResponse(url) {
   let response;
   try {
@@ -102,7 +117,12 @@ async function assertImageResponse(url) {
   const contentType = response.headers.get("content-type") || "";
   assert.equal(response.status, 200, `${url}: image HTTP ${response.status}`);
   assert(contentType.toLowerCase().startsWith("image/"), `${url}: expected image MIME, received ${contentType || "missing"}`);
-  const body = await response.arrayBuffer();
+  let body;
+  try {
+    body = await readResponseWithTimeout(response);
+  } catch (error) {
+    throw new Error(`${url}: ${error?.message || error}`);
+  }
   assert(body.byteLength > 64, `${url}: image response is empty or suspiciously small`);
 }
 
