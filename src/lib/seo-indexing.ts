@@ -52,7 +52,8 @@ function cleanText(value: unknown, fallback = ""): string {
 const BLOCKED_PAGE_TYPES = new Set(["account", "album", "cart", "job_detail", "job_progress", "login", "search", "workspace", "404"]);
 const BLOCKED_PATH_PREFIXES = ["/404", "/account", "/admin", "/album", "/api", "/app", "/cart", "/dashboard", "/job", "/login", "/platform", "/search", "/site"];
 const NON_PAGE_PATH_PREFIXES = ["/_next", "/assets", "/fonts", "/images", "/media", "/robots.txt", "/sitemap.xml", "/videos"];
-const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/state-privacy", "/policies/delivery", "/policies/delivery-policy", "/engagement-photo", "/ai-image-generation/profile-cards", "/ai-image-generation/motion-generator", "/ai-video-generation/wedding-invitation", "/holidays-events/wedding-invitation"]);
+const LEGACY_OR_DUPLICATE_PATHS = new Set(["/cookie-policy", "/privacy-policy", "/terms-of-service", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy", "/engagement-photo", "/ai-image-generation/profile-cards", "/ai-image-generation/motion-generator", "/ai-video-generation/wedding-invitation", "/holidays-events/wedding-invitation"]);
+const AIDREAMSHOOTS_LEGACY_ALIAS_PATHS = new Set(["/policies/state-privacy"]);
 const MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS = new Set<string>(MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS.map(({ aliasPath }) => aliasPath));
 const MYDREAMSHOOTS_RETIRED_PUBLIC_PATH_SET = new Set<string>(MYDREAMSHOOTS_RETIRED_PUBLIC_PATHS);
 const NON_INDEXABLE_TOOL_PATHS = new Set(["/tools/image-studio", "/tools/ai-image-studio", "/tools/image-generator", "/tools/image_generator", "/tools/travel-portraits"]);
@@ -1013,6 +1014,7 @@ function isBlockedPublicPath(path: string, site?: Site): boolean {
 }
 
 function isBlockedPublicPathForSite(site: Site, path: string): boolean {
+  if (isAidreamshootsStorefrontSite(site) && AIDREAMSHOOTS_LEGACY_ALIAS_PATHS.has(path)) return true;
   if (isAidreamshootsStorefrontSite(site) && path.startsWith("/ai-image-generation/collections-")) return true;
   if (isAidreamshootsStorefrontSite(site) && path.startsWith("/tools/")) return true;
   if (isDreamshootSite(site)) {
@@ -1182,6 +1184,7 @@ function findIndexableSites(state: PlatformState): Site[] {
 function isIndexablePage(page: ThemePage, site?: Site): boolean {
   const path = canonicalPublicPath(normalizePath(page.slug));
   if (site && isDreamshootSite(site) && path === "/shipping") return false;
+  if (site && isAidreamshootsStorefrontSite(site) && AIDREAMSHOOTS_LEGACY_ALIAS_PATHS.has(path)) return false;
   // AIdreamshoots owns the motion-generator image collection route. The
   // same path is an alias only on the primary MyDreamShoots storefront.
   if (LEGACY_OR_DUPLICATE_PATHS.has(path) && !(site && isAidreamshootsStorefrontSite(site) && path === "/ai-image-generation/motion-generator")) return false;
