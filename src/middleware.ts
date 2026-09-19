@@ -91,9 +91,9 @@ const MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS: Record<string, string> = {
 };
 
 const SEO_HEAD_TAG_RE =
-  /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?:(?=[^>]*type=["']application\/ld\+json["'])|(?=[^>]*data-storefront-json-ld=["'][^"']+["']))[^>]*>[\s\S]*?<\/script>/gi;
+  /<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:name=["'](?:description|robots|twitter:(?:card|title|description|image))["']|property=["']og:(?:title|description|type|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?:(?=[^>]*type=["']application\/ld\+json["'])|(?=[^>]*data-storefront-json-ld=["'][^"']+["']))[^>]*>[\s\S]*?<\/script>/gi;
 const LEADING_SEO_HEAD_TAG_RE =
-  /^(?:\s*(?:<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:charset=|name=["'](?:viewport|description|robots|twitter:(?:card|title|description|image))["']|http-equiv=["']Content-Language["']|property=["']og:(?:title|description|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>))*/i;
+  /^(?:\s*(?:<title\b[^>]*>[\s\S]*?<\/title>|<meta\b(?=[^>]*(?:charset=|name=["'](?:viewport|description|robots|twitter:(?:card|title|description|image))["']|http-equiv=["']Content-Language["']|property=["']og:(?:title|description|type|url|site_name|image)["']))[^>]*\/?>|<link\b(?=[^>]*rel=["']canonical["'])[^>]*\/?>|<script\b(?=[^>]*type=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>))*/i;
 const ESSENTIAL_HEAD_TAG_RE =
   /<meta\b(?=[^>]*(?:charset=|name=["']viewport["']|http-equiv=["']Content-Language["']))[^>]*\/?>/gi;
 const ICON_HEAD_TAG_RE = /<link\b(?=[^>]*rel=["'][^"']*(?:icon|apple-touch-icon)[^"']*["'])[^>]*\/?>/gi;
@@ -425,7 +425,7 @@ function leadingSeoHeadLength(headContent: string): number {
   return headContent.match(LEADING_SEO_HEAD_TAG_RE)?.[0].length ?? 0;
 }
 
-function moveSeoTagsBeforeResources(html: string): string {
+function moveSeoTagsBeforeResources(html: string, removeBodyStorefrontJsonLd = false): string {
   const headOpen = html.search(/<head\b[^>]*>/i);
   if (headOpen < 0) return html;
 
@@ -449,7 +449,7 @@ function moveSeoTagsBeforeResources(html: string): string {
         .replace(/\stype=["']application\/json["']/i, ' type="application/ld+json"')
         .replace(/\sid=["']storefront-json-ld-(\d+)["']/i, ' id="storefront-json-ld-head-$1"');
       seoTags.push(headTag);
-      return tag;
+      return removeBodyStorefrontJsonLd ? "" : tag;
     }
     seoTags.push(tag);
     return "";
@@ -464,6 +464,12 @@ function moveSeoTagsBeforeResources(html: string): string {
   const { titleTag, seoTags: nonTitleSeoTags } = splitTitleAndSeoTags(seoTags);
   const reorderedHead = `${titleTag}${essentialTags.join("")}${nonTitleSeoTags.join("")}${remainingHead}`;
   return `${beforeHeadContent}${reorderedHead}${strippedAfterHead}`;
+}
+
+function isAidreamcapesComRequest(request: NextRequest): boolean {
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  const hostSlug = storefrontSlugForHost(host);
+  return hostSlug === "aidreamcapes" || /^\/site\/aidreamcapes(?:\/|$)/i.test(request.nextUrl.pathname);
 }
 
 type StorefrontIconSet = {
@@ -550,7 +556,7 @@ function shouldInlineAidreamcapesLogo(request: NextRequest): boolean {
 }
 
 function rewriteStorefrontHtmlHead(html: string, request: NextRequest, shouldReorder: boolean): string {
-  const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
+  const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html, isAidreamcapesComRequest(request)) : html;
   return withStorefrontLocale(
     withMydreamshootsImageThemeSeo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request),
     request
@@ -558,7 +564,7 @@ function rewriteStorefrontHtmlHead(html: string, request: NextRequest, shouldReo
 }
 
 function rewriteStorefrontHtmlFull(html: string, request: NextRequest, shouldReorder: boolean): string {
-  const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
+  const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html, isAidreamcapesComRequest(request)) : html;
   return withStorefrontLocale(
     withMydreamshootsImageThemeSeo(withInlineAidreamcapesLogo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request), request),
     request

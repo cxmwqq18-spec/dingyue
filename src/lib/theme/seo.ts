@@ -114,6 +114,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
   const articleModifiedTime = isArticle ? settingText(articleSettings?.updatedAt) : undefined;
   const articleImageAlt = isArticle ? settingText(articleSettings?.imageAlt) : undefined;
   const ogImageAlt = articleImageAlt ?? settingText(seo.ogImageAlt) ?? settingText(page.publishedJson.seo?.ogImageAlt);
+  const isAidreamcapesCom = site.id === "site_aidreamcapes";
   const isAidreamcapesEu = site.id === "site_aidreamcapes_xby";
   const isAidreamshoots = site.id === "site_mydreamshoots_xby";
   return {
@@ -133,7 +134,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
       // Keep the social graph explicit for every public AIdreamshoots page.
       // Articles are the only pages that should be marked as article; all
       // other public storefront pages are website shares.
-      ...(isArticle || isAidreamshoots || isAidreamcapesAdsTestingPage(site, page) || isAidreamcapesEuSaveTheDatePage(site, page) || isAidreamcapesEu
+      ...(isArticle || isAidreamcapesCom || isAidreamshoots || isAidreamcapesAdsTestingPage(site, page) || isAidreamcapesEuSaveTheDatePage(site, page) || isAidreamcapesEu
         ? { type: isArticle ? "article" as const : "website" as const }
         : {}),
       ...(articlePublishedTime ? { publishedTime: articlePublishedTime } : {}),

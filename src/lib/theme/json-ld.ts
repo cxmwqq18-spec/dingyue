@@ -459,7 +459,9 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
     ? absoluteUrl(site, routeMode, "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
     : hasAidreamshootsBranding(site)
       ? absoluteUrl(site, routeMode, "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a")
-      : undefined;
+      : site.id === "site_aidreamcapes"
+        ? absoluteUrl(site, routeMode, "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg")
+        : undefined;
   return {
     "@type": "Organization",
     "@id": `${storefrontBaseUrl(site, routeMode)}#organization`,

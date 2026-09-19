@@ -92,12 +92,25 @@ async function checkImageUrls(urls) {
   return unique.length;
 }
 
-function bodyJsonLd(html) {
+function jsonLdGraphFromHtml(html, path) {
   const blocks = [...html.matchAll(/<script\b([^>]*)type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)]
     .map((match) => ({ attributes: match[1] || "", json: match[2] || "" }));
-  return blocks.find((block) => /data-storefront-json-ld=["']body-marker["']/i.test(block.attributes))?.json
-    || blocks[0]?.json
-    || "";
+  assert.equal(blocks.length, 1, `${path}: expected exactly one JSON-LD script`);
+  try {
+    return JSON.parse(blocks[0].json);
+  } catch (error) {
+    assert.fail(`${path}: invalid JSON-LD: ${error.message}`);
+  }
+}
+
+function metaByProperty(html, property) {
+  const tag = (html.match(new RegExp(`<meta\\b[^>]*property=["']${property}["'][^>]*>`, "i")) || [""])[0];
+  return attr(tag, "content");
+}
+
+function metaPropertyCount(html, property) {
+  const pattern = "<meta\\b[^>]*property=[\"']" + property + "[\"'][^>]*>";
+  return (html.match(new RegExp(pattern, "gi")) || []).length;
 }
 
 async function fetchChecked(url, options = {}) {
@@ -120,12 +133,16 @@ async function checkThemePage(prisma, slug) {
   assert.equal(canonicalFromHtml(html), expectedCanonical, `${path}: rendered canonical mismatch`);
   assert.equal((html.match(/<h1\b/gi) || []).length, 1, `${path}: expected one H1`);
   assert.equal((html.match(/<details class=["']group py-5["'][^>]*>/gi) || []).length, 6, `${path}: expected six FAQ details`);
-  const jsonLd = bodyJsonLd(html);
+  const jsonLdValue = jsonLdGraphFromHtml(html, path);
+  const jsonLd = JSON.stringify(jsonLdValue);
   assert.equal((jsonLd.match(/"@type"\s*:\s*"Question"/g) || []).length, 6, `${path}: expected six FAQ questions in JSON-LD`);
   assert(!/premiere-style-portraits|["']@type["']\s*:\s*["'](?:ItemList|Product)["']/i.test(jsonLd), `${path}: stale or unrelated structured data found`);
   assert(!/premiere-style-portraits|\/ai-image-generation\/(?:headshot|avatar|portrait-photo)/i.test(visibleHtml(html)), `${path}: stale route or theme reference found`);
   assert(html.includes('"@type":"Service"') || html.includes('"@type": "Service"'), `${path}: Service JSON-LD missing`);
   assert(html.includes('"@type":"SoftwareApplication"') || html.includes('"@type": "SoftwareApplication"'), `${path}: SoftwareApplication JSON-LD missing`);
+  const graph = Array.isArray(jsonLdValue?.["@graph"]) ? jsonLdValue["@graph"] : [];
+  const organization = graph.find((node) => node?.["@type"] === "Organization");
+  assert.equal(organization?.logo?.url, `${ORIGIN}/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg`, `${path}: Aidreamcapes Organization logo mismatch`);
   const tags = imageTags(html);
   assert(tags.length >= manifest.length, `${path}: rendered images ${tags.length} below manifest ${manifest.length}`);
   for (const tag of tags) {
@@ -143,6 +160,8 @@ async function main() {
     assert.equal(sitemap.response.status, 200, `sitemap: HTTP ${sitemap.response.status}`);
     const locs = [...sitemap.html.matchAll(/<loc>([^<]+)<\/loc>/gi)].map((match) => decode(match[1]));
     const locSet = new Set(locs);
+    const publicPageLocs = [...new Set(locs.filter((loc) => loc === ORIGIN || loc === `${ORIGIN}/` || loc.startsWith(`${ORIGIN}/`)))];
+    assert.equal(publicPageLocs.length, 86, "sitemap must contain exactly 86 Aidreamcapes public pages");
     for (const slug of THEME_SLUGS) assert(locSet.has(`${ORIGIN}/ai-image-generation/${slug}`), `sitemap missing image theme: ${slug}`);
     assert(!locs.some((loc) => loc.startsWith(`${WWW_ORIGIN}/`)), "sitemap contains a www Aidreamcapes page URL");
     assert(!locs.some((loc) => loc.includes("/tools")), "sitemap contains a /tools URL");
@@ -157,9 +176,22 @@ async function main() {
 
     const themeResults = [];
     for (const slug of THEME_SLUGS) themeResults.push(await checkThemePage(prisma, slug));
+    for (const pageUrl of publicPageLocs) {
+      const path = new URL(pageUrl).pathname || "/";
+      const { response, html } = await fetchChecked(requestUrl(pageUrl));
+      assert.equal(response.status, 200, `${path}: public page HTTP ${response.status}`);
+      assert.equal(response.headers.get("location"), null, `${path}: public page unexpectedly redirects`);
+      assert.equal(metaByProperty(html, "og:type"), path.startsWith("/blog/") ? "article" : "website", `${path}: og:type mismatch`);
+      assert.equal(metaPropertyCount(html, "og:type"), 1, path + ": expected exactly one og:type");
+      const jsonLdValue = jsonLdGraphFromHtml(html, path);
+      const graph = Array.isArray(jsonLdValue?.["@graph"]) ? jsonLdValue["@graph"] : [];
+      const organization = graph.find((node) => node?.["@type"] === "Organization");
+      assert.equal(organization?.logo?.url, ORIGIN + "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg", path + ": Aidreamcapes Organization logo mismatch");
+    }
     const sitemapImageUrls = [...sitemap.html.matchAll(/<image:loc>([^<]+)<\/image:loc>/gi)].map((match) => decode(match[1]));
     const themeImageUrls = themeResults.flatMap((result) => result.mediaUrls);
     const checkedImageCount = await checkImageUrls([...sitemapImageUrls, ...themeImageUrls]);
+    await assertImageResponse(`${REQUEST_ORIGIN}/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg`);
     const virtualTryOn = await fetchChecked(`${REQUEST_ORIGIN}/ai-image-generation/virtual-try-on`);
     assert.equal(virtualTryOn.response.status, 200, "virtual-try-on must remain published");
 
