@@ -6,6 +6,12 @@ import { chromium } from "playwright";
 const baseUrl = (process.env.AIDREAMSHOOTS_BROWSER_ORIGIN || "http://127.0.0.1:3002").replace(/\/$/, "");
 const productionHost = process.env.AIDREAMSHOOTS_SMOKE_HOST || "aidreamshoots.eu";
 const productionOrigin = `https://${productionHost}`;
+const expectedResidualTitles = new Map([
+  ["/ai-image-generation/futbol", "Fotos de fútbol con IA para aficionados | AIdreamshoots"],
+  ["/ai-image-generation/magic", "Herramientas mágicas de edición de fotos con IA | AIdreamshoots"],
+  ["/ai-image-generation/urbano", "Fotos urbanas con IA: retratos y escenas de ciudad | AIdreamshoots"],
+  ["/ai-image-generation/viaje", "Fotos de viaje con IA: retratos y destinos | AIdreamshoots"]
+]);
 const timeoutMs = Number(process.env.AIDREAMSHOOTS_BROWSER_TIMEOUT_MS || 60000);
 const baseHost = new URL(baseUrl).hostname;
 const localBrowserOrigin = /^(?:localhost|127\.0\.0\.1|::1)$/i.test(baseHost);
@@ -151,6 +157,7 @@ async function inspectPage(page, pathname, { expectIndexable = true, expectedSta
   assert.equal(result.lang, "es", `${pathname} must use lang=es`);
   if (expectIndexable) {
     assert(result.title, `${pathname} needs a title`);
+    if (expectedResidualTitles.has(pathname)) assert.equal(result.title, expectedResidualTitles.get(pathname), `${pathname} has the wrong residual SEO title`);
     assert(result.description, `${pathname} needs a meta description`);
     assert(["website", "article"].includes(result.ogType), `${pathname} needs an explicit og:type`);
     assert.equal(result.canonical, canonicalFor(pathname), `${pathname} has the wrong canonical`);

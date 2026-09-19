@@ -3250,9 +3250,17 @@ function spanishDirectorySeed(kind: SeoDirectoryKind, slug: string, brandName: s
   const label = spanishDirectoryLabel(kind, slug, aidreamcapes);
   const lower = label.toLowerCase();
   const collection = kind === "collection";
+  const aidreamshootsTitleOverrides: Record<string, string> = !aidreamcapes && collection
+    ? {
+        futbol: "Fotos de fútbol con IA para aficionados | AIdreamshoots",
+        magic: "Herramientas mágicas de edición de fotos con IA | AIdreamshoots",
+        urbano: "Fotos urbanas con IA: retratos y escenas de ciudad | AIdreamshoots",
+        viaje: "Fotos de viaje con IA: retratos y destinos | AIdreamshoots"
+      }
+    : {};
   return {
     label,
-    title: collection ? `${label} con IA | ${brandName}` : `Herramienta ${label} con IA | ${brandName}`,
+    title: aidreamshootsTitleOverrides[slug] ?? (collection ? `${label} con IA | ${brandName}` : `Herramienta ${label} con IA | ${brandName}`),
     description: collection
       ? `Explora el paquete ${label} en ${brandName}: fotos fuente privadas, creditos visibles, estilos creativos y entrega en galeria.`
       : `Usa ${label} en ${brandName} para transformar subidas privadas en fotos, retratos, vistas previas y albumes listos para descargar.`,

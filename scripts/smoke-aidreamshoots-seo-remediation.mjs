@@ -33,6 +33,8 @@ const aliasExpectations = [
   ["/collections", "/ai-image-generation"],
   ["/collections/headshot", "/ai-image-generation/headshot"],
   ["/collections/belleza", "/ai-image-generation/beauty"],
+  ["/policies/shipping", "/digital-delivery"],
+  ["/policies/state-privacy", "/state-privacy"],
   ["/ai-video-generation/christmas", "/ai-save-the-date/christmas"]
 ];
 
@@ -231,6 +233,7 @@ async function run() {
   check("sitemap.xml: no duplicate URLs", new Set(sitemapLocs).size === sitemapLocs.length, { total: sitemapLocs.length });
   check("sitemap.xml: absolute production HTTPS URLs", sitemapLocs.every((loc) => loc.startsWith(`${productionOrigin}/`)), sitemapLocs.filter((loc) => !loc.startsWith(`${productionOrigin}/`)).slice(0, 10));
   check("sitemap.xml: no alias URLs", sitemapPaths.every((path) => !/^\/collections(?:\/|$)/i.test(path) && !/^\/ai-image-generation\/collections-/i.test(path) && !/^\/ai-video-generation\/(christmas|engagement|fathers-day|halloween|mothers-day|new-year|proposal|save-the-date|thanksgiving|valentines-day|wedding-ceremony|wedding-invitation)$/i.test(path)), sitemapPaths.filter((path) => /^\/collections(?:\/|$)/i.test(path) || /^\/ai-image-generation\/collections-/i.test(path)));
+  check("sitemap.xml: excludes stale policy and private aliases", sitemapPaths.every((path) => !["/album", "/policies/shipping", "/policies/state-privacy"].includes(normalizePath(path))), sitemapPaths.filter((path) => ["/album", "/policies/shipping", "/policies/state-privacy"].includes(normalizePath(path))));
   check("sitemap.xml: excludes private/error paths", sitemapPaths.every((path) => !/^\/(login|404|account|app|dashboard|gallery)(?:\/|$)/i.test(path)), sitemapPaths.filter((path) => /^\/(login|404|account|app|dashboard|gallery)(?:\/|$)/i.test(path)));
   check("sitemap.xml: expected AIdreamshoots coverage", sitemapPaths.length === 135, { expected: 135, actual: sitemapPaths.length });
 
@@ -261,6 +264,17 @@ async function run() {
     } catch (error) {
       check(`${source}: redirect request completed`, false, String(error?.message ?? error));
     }
+  }
+
+  try {
+    const album = await requestWithRetry("/album", { host: productionHost });
+    const albumRobots = openTags(album.body, "meta")
+      .filter((tag) => hasAttr(tag, "name", "robots"))
+      .map((tag) => attr(tag, "content"));
+    check("/album: HTTP 200", album.status === 200, album.status);
+    check("/album: noindex robots", albumRobots.length === 1 && /\bnoindex\b/i.test(albumRobots[0]), albumRobots);
+  } catch (error) {
+    check("/album: request completed", false, String(error?.message ?? error));
   }
 
   try {

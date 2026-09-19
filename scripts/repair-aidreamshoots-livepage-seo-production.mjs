@@ -76,7 +76,9 @@ const POLICY_CANONICALS = new Map([
   ["/policies/children-privacy", "/children-privacy"],
   ["/state-privacy-rights", "/state-privacy"],
   ["/california-privacy", "/state-privacy"],
-  ["/ccpa", "/state-privacy"]
+  ["/ccpa", "/state-privacy"],
+  ["/policies/shipping", "/digital-delivery"],
+  ["/policies/state-privacy", "/state-privacy"]
 ]);
 
 const POLICY_H1S = new Map([
@@ -174,6 +176,9 @@ const SEO_OVERRIDES = new Map([
   ["/ai-image-generation/viaje", {
     title: "Fotos de viaje con IA: retratos y destinos | AIdreamshoots"
   }],
+  ["/state-privacy", {
+    description: "Consulta tus derechos de privacidad estatales, cómo enviar solicitudes sobre tus datos y las medidas que protegen tu cuenta en AIdreamshoots."
+  }],
   ["/best-packages", {
     description: "Compara los mejores paquetes de fotos con IA para retratos, perfiles, parejas y álbumes privados en AIdreamshoots."
   }],
@@ -190,6 +195,8 @@ const SEO_OVERRIDES = new Map([
 
 const HEADING_H2_PAGES = new Set(["/about-us", "/contact-us", "/creators-circle", "/tools", "/workflow"]);
 const PRIVATE_LIVE_PAGE_PREFIXES = ["/app/", "/account", "/login"];
+const NON_INDEXABLE_PRIVATE_PATHS = new Set(["/album"]);
+const STALE_SEO_FLAG_PATHS = new Set(["/album", "/policies/shipping", "/policies/state-privacy"]);
 const AIDREAMSHOOTS_COPY_REPLACEMENTS = new Map([
   ["Elegir la resultado primero", "Elegir primero el resultado"],
   ["Crear un IA foto conjunto desde fotos fuente.", "Crear un conjunto de fotos con IA desde fotos fuente."],
@@ -444,6 +451,8 @@ function canonicalPathForPage(slug, seo = {}) {
 function isAliasPage(slug) {
   const normalized = normalizePath(slug);
   return normalized === "/collections"
+    || normalized === "/policies/shipping"
+    || normalized === "/policies/state-privacy"
     || normalized === "/holidays-events/wedding-invitation"
     || normalized === WEDDING_INVITATION_SOURCE
     || (normalized.startsWith("/ai-video-generation/") && SAVE_THE_DATE_ALIASES.has(normalized.slice("/ai-video-generation/".length)));
@@ -453,7 +462,8 @@ function applySeo(json, slug) {
   const next = deepClone(json) ?? {};
   const currentSeo = next.seo && typeof next.seo === "object" ? next.seo : {};
   const canonicalPath = canonicalPathForPage(slug, currentSeo);
-  const alias = isAliasPage(slug) || NON_INDEXABLE_ORPHANS.has(normalizePath(slug));
+  const normalizedSlug = normalizePath(slug);
+  const alias = isAliasPage(normalizedSlug) || NON_INDEXABLE_ORPHANS.has(normalizedSlug) || NON_INDEXABLE_PRIVATE_PATHS.has(normalizedSlug);
   const index = alias ? false : currentSeo.index !== false;
   next.seo = {
     ...currentSeo,
@@ -588,10 +598,14 @@ function applyBlogCopy(json) {
 }
 
 function prepareContent(row) {
-  if (PRIVATE_LIVE_PAGE_PREFIXES.some((prefix) => normalizePath(row.slug).startsWith(prefix))) return repairPrivatePageCopy(row.contentJson);
+  const normalizedSlug = normalizePath(row.slug);
+  const isPrivatePage = PRIVATE_LIVE_PAGE_PREFIXES.some((prefix) => normalizedSlug.startsWith(prefix)) || NON_INDEXABLE_PRIVATE_PATHS.has(normalizedSlug);
+  if (isPrivatePage && !NON_INDEXABLE_PRIVATE_PATHS.has(normalizedSlug)) return repairPrivatePageCopy(row.contentJson);
   const canonicalPath = canonicalPathForPage(row.slug, row.contentJson?.seo ?? {});
   let content;
-  if (profiles[canonicalPath]) {
+  if (isPrivatePage) {
+    content = repairPrivatePageCopy(row.contentJson);
+  } else if (profiles[canonicalPath]) {
     content = repairStandardPage(row.contentJson, profiles[canonicalPath], canonicalPath);
   } else if (row.slug === WEDDING_INVITATION_SOURCE) {
     content = repairWeddingInvitationPage(row.contentJson);
@@ -706,9 +720,18 @@ function normalizeRows(rows) {
   return nextRows.sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
+function staleSeoFlagRows(rows) {
+  return rows
+    .filter((row) => STALE_SEO_FLAG_PATHS.has(normalizePath(row.slug)))
+    .filter((row) => row.contentJson?.seo?.index === true || row.contentJson?.seo?.robots?.index === true)
+    .map((row) => row.slug)
+    .sort();
+}
+
 function assertPreparedRows(beforeRows, afterRows) {
   const afterBySlug = new Map(afterRows.map((row) => [row.slug, row]));
   assert(afterBySlug.has(WEDDING_INVITATION_PUBLIC), "The public wedding invitation LivePage was not prepared.");
+  assert.deepEqual(staleSeoFlagRows(afterRows), [], "Stale target LivePage SEO index flags remain after preparation.");
   for (const row of afterRows) {
     assert(row.contentJson?.seo?.canonicalPath, `Missing canonicalPath for ${row.slug}.`);
     assert(/^https:\/\/aidreamshoots\.eu\//.test(row.contentJson.seo.canonical), `Non-production canonical for ${row.slug}.`);
@@ -844,6 +867,8 @@ async function main() {
       changedSlugs,
       changedCreativePacks: changedCreativePacks.length,
       changedCreativePackIds: changedCreativePacks.map((pack) => pack.id),
+      staleSeoFlagsBefore: staleSeoFlagRows(livePages),
+      staleSeoFlagsAfter: staleSeoFlagRows(prepared),
       legacyLiveMediaReferencesBefore: legacyMediaReferenceCount(livePages),
       legacyLiveMediaReferencesAfter: legacyMediaReferenceCount(prepared),
       retiredLegacyMediaAsset,
@@ -907,6 +932,7 @@ async function main() {
     assert.equal(sha256(afterCrossSite), sha256(beforeCrossSite), "A non-target site's database sentinel changed; production write is not considered safe.");
     assert(afterLivePages.some((row) => row.slug === WEDDING_INVITATION_PUBLIC && row.contentJson?.seo?.index === true), "Public wedding invitation was not indexed after write.");
     assert(afterLivePages.some((row) => row.slug === WEDDING_INVITATION_SOURCE && row.contentJson?.seo?.index === false), "Wedding invitation alias was not noindexed after write.");
+    assert.deepEqual(staleSeoFlagRows(afterLivePages), [], "Stale target LivePage SEO index flags remain after write.");
     const createdSlugs = new Set(prepared.filter((row) => row.__new).map((row) => row.slug));
     assert.equal(
       mediaDigest(livePages, { excludeLegacy: true }),
