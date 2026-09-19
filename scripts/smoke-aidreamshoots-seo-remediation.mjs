@@ -258,7 +258,7 @@ async function run() {
 
   for (const [source, target] of aliasExpectations) {
     try {
-      const response = await requestWithRetry(source, { method: "HEAD", host: productionHost, maxBytes: 20_000 });
+      const response = await requestWithRetry(source, { host: productionHost, maxBytes: 20_000 });
       check(`${source}: permanent redirect`, response.status === 308, response.status);
       check(`${source}: redirects to canonical`, locationHeader(response) === absoluteCanonical(target), locationHeader(response));
     } catch (error) {
