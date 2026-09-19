@@ -229,6 +229,7 @@ const SEO_REPLACEMENTS = new Map([
 // to pages that were not explicitly reviewed.
 const SEO_LENGTH_REPLACEMENTS = new Map([
   ["/", {
+    title: "AI UGC Ads, Product Videos and Images | Aidreamcapes",
     description: "Create UGC ad concepts, product videos, and ecommerce image sets from product images or URLs in one private workspace. Review results before sharing."
   }],
   ["/ai-image-generation/background-remove-replace", {
@@ -288,9 +289,11 @@ const SEO_LENGTH_REPLACEMENTS = new Map([
     title: "AI UGC Still Ad Image Generator | Aidreamcapes"
   }],
   ["/ai-save-the-date/fathers-day", {
+    title: "AI Fathers Day Photo and Video Maker | Aidreamcapes",
     description: "Create Father’s Day photos and videos with AI for family portraits, gifts, outdoor memories, dinners, and heartfelt appreciation. Review before sharing."
   }],
   ["/ai-save-the-date/mothers-day", {
+    title: "AI Mothers Day Photo and Video Maker | Aidreamcapes",
     description: "Create Mother’s Day photos and videos with AI for family celebrations, gifts, brunch, heartfelt greetings, and spring lifestyle stories. Review before sharing."
   }],
   ["/ai-save-the-date/save-the-date", {
@@ -329,10 +332,101 @@ const SEO_LENGTH_REPLACEMENTS = new Map([
     title: "Digital Delivery for AI Photos and Videos | Aidreamcapes"
   }],
   ["/faq", {
+    title: "Aidreamcapes Help Center | Uploads, Credits, Privacy",
     description: "Get Aidreamcapes help for source photo preparation, package selection, credits, checkout, privacy, refunds, and private album delivery before you create."
   }],
   ["/workflow", {
     title: "How Aidreamcapes AI Image and Video Workflows Work"
+  }],
+  ["/ai-save-the-date/christmas", {
+    title: "AI Christmas Photo and Video Maker | Aidreamcapes"
+  }],
+  ["/ai-save-the-date/halloween", {
+    title: "AI Halloween Photo and Video Maker | Aidreamcapes"
+  }],
+  ["/ai-save-the-date/valentines-day", {
+    title: "AI Valentines Day Save the Date | Aidreamcapes"
+  }],
+  ["/ai-video-generation/brand-video", {
+    description: "Create a brand video from approved images, product details, and a clear message. Keep claims under your control, then review every scene before publishing."
+  }],
+  ["/ai-video-generation/cinematic-video", {
+    title: "AI Cinematic Video Generator for Brands | Aidreamcapes",
+    description: "Create cinematic scenes with mood, lighting, pacing, and camera movement for films, launches, music visuals, and brand stories. Review before sharing."
+  }],
+  ["/ai-video-generation/explainer-video", {
+    title: "AI Explainer Video Generator for Teams | Aidreamcapes"
+  }],
+  ["/ai-video-generation/fashion-video", {
+    description: "Create fashion videos for editorials, lookbooks, runway concepts, styling, garment details, and campaigns. Review the result before sharing."
+  }],
+  ["/ai-video-generation/how-to-video", {
+    title: "AI How-To Video Generator for Guides | Aidreamcapes",
+    description: "Create a helpful how-to video from approved images and steps, with a sequence viewers can follow. Review each action and instruction before sharing."
+  }],
+  ["/ai-video-generation/instagram-reels", {
+    title: "AI Instagram Reels Generator for Creators | Aidreamcapes",
+    description: "Turn photos and ideas into Instagram Reels with a clear hook, mobile-safe framing, captions, sound-aware pacing, and a focused next step. Review before posting."
+  }],
+  ["/ai-video-generation/meme-video", {
+    description: "Turn an approved image or idea into a meme video with clear timing, reactions, POV setups, captions, and a punchline. Review the wording before sharing."
+  }],
+  ["/ai-video-generation/motion-generator", {
+    title: "AI Motion Generator for Creators | Aidreamcapes",
+    description: "Animate an approved photo into a short video with controlled subject movement, camera motion, pacing, and visual continuity. Review the result before sharing."
+  }],
+  ["/ai-video-generation/music-video", {
+    description: "Create music video visuals from text or images for performances, artist promos, dance, and cinematic sequences. Review continuity and use licensed audio."
+  }],
+  ["/ai-video-generation/pet-video", {
+    title: "AI Pet Video Generator for Creators | Aidreamcapes",
+    description: "Create a playful pet video from approved photos while keeping the animal recognizable. Review movement, body shape, background, and framing before sharing."
+  }],
+  ["/ai-video-generation/product-ad-video", {
+    title: "AI Product Ad Video Generator for Stores | Aidreamcapes",
+    description: "Create product ad videos around an audience, product promise, visual proof, offer, and call to action. Review claims and every scene before publishing."
+  }],
+  ["/ai-video-generation/product-video", {
+    title: "AI Product Video Generator for Stores | Aidreamcapes",
+    description: "Turn product photos into videos that show scale, materials, features, real-world use, packaging, and the details shoppers need before they decide to buy."
+  }],
+  ["/ai-video-generation/promo-video", {
+    title: "AI Promo Video Maker for Campaigns | Aidreamcapes",
+    description: "Create promotional videos for launches, offers, events, seasonal campaigns, and product updates. Keep terms, claims, and calls to action under your control."
+  }],
+  ["/ai-video-generation/social-media-video", {
+    title: "AI Social Media Video Maker for Creators | Aidreamcapes",
+    description: "Turn one core idea into social media videos with platform-aware hooks, crops, captions, pacing, and calls to action. Review each version before posting."
+  }],
+  ["/ai-video-generation/story-video", {
+    title: "AI Story Video Generator for Creators | Aidreamcapes",
+    description: "Create story videos from photos, clips, memories, and ideas with a clear setup, turning point, payoff, and meaning. Review before publishing."
+  }],
+  ["/ai-video-generation/talking-head-video", {
+    title: "AI Talking Head Video Generator | Aidreamcapes"
+  }],
+  ["/ai-video-generation/talking-photo", {
+    title: "AI Talking Photo Generator for Stories | Aidreamcapes",
+    description: "Make a photo talk from one clear portrait and a short script for messages, explainers, social intros, product pitches, and greetings. Review before sharing."
+  }],
+  ["/ai-video-generation/tiktok-video", {
+    title: "AI TikTok Video Generator for Creators | Aidreamcapes",
+    description: "Turn photos and ideas into TikTok-first vertical videos with a clear hook, mobile-safe framing, captions, and a focused close. Review before posting."
+  }],
+  ["/ai-video-generation/ugc-ad-video", {
+    title: "AI UGC Ad Video Generator for Brands | Aidreamcapes",
+    description: "Create creator-style product ads with clear hooks, product-in-use scenes, voiceover, and calls to action. Check claims against approved product assets."
+  }],
+  ["/ai-video-generation/video-ad", {
+    title: "AI Video Ad Generator for Campaigns | Aidreamcapes",
+    description: "Create video ad concepts for paid social, launches, and retargeting. Shape the hook, proof, and call to action, then review every scene before publishing."
+  }],
+  ["/ai-video-generation/youtube-video", {
+    title: "AI YouTube Video Generator for Creators | Aidreamcapes",
+    description: "Create a YouTube video concept from approved images, clips, and a clear outline. Review the opening, pacing, voice, and captions before publishing."
+  }],
+  ["/contact-us", {
+    title: "Contact Aidreamcapes Support | Account and Billing"
   }]
 ]);
 

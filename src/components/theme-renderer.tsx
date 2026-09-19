@@ -39,7 +39,7 @@ import { AidreamcapesImageThemeDetail } from "@/components/storefront/aidreamcap
 import { TalkingPhotoLanding } from "@/components/storefront/talking-photo-landing";
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
 import { cleanHost, hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
-import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
+import { isAidreamcapesImageThemePath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { mydreamshootsPageCopyForRoute, type MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 import { getSeoDirectoryContentForSite, mirroredAidreamcapesCollectionProfileForSlug } from "@/lib/dreamshoot-seo-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
@@ -13282,7 +13282,10 @@ function SectionView({
           href: blockValue(card, "href", "/collections"),
           block: card
         }));
-    const visibleTaxonomyCards = taxonomyCards.filter((card) => !isAidreamcapesEuRemovedPublicNavigationPath(site, card.href));
+    const visibleTaxonomyCards = taxonomyCards.filter((card) =>
+      !isAidreamcapesEuRemovedPublicNavigationPath(site, card.href)
+      && !isRetiredAidreamcapesPublicPath(site.slug, card.href)
+    );
     const taxonomyClientCards: PackageTaxonomyCard[] = visibleTaxonomyCards.map((card) => {
       const matchingPack = creativePacks.find((pack) =>
         pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0 &&

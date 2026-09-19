@@ -126,8 +126,11 @@ function SafeTaxonomyImage({
       data-dreamshoot-showcase-preview="image"
       decoding={decoding}
       fetchPriority={fetchPriority}
+      height={1000}
       loading={loading}
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
       src={src}
+      width={1600}
     />
   );
 }

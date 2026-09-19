@@ -154,9 +154,11 @@ function SafeCatalogImage({
       data-dreamshoot-showcase-preview="image"
       decoding={decoding}
       fetchPriority={fetchPriority}
+      height={1000}
       loading={loading}
       sizes={sizes}
       src={src}
+      width={1600}
     />
   );
 }
