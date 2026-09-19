@@ -75,8 +75,25 @@ function requestUrl(url) {
   return String(url).replace(ORIGIN, REQUEST_ORIGIN).replace(WWW_ORIGIN, WWW_REQUEST_ORIGIN);
 }
 
+async function fetchWithRetry(url, options = {}, attempts = 3) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 30_000);
+    try {
+      return await fetch(url, { ...options, signal: controller.signal });
+    } catch (error) {
+      lastError = error;
+      if (attempt < attempts) await new Promise((resolve) => setTimeout(resolve, attempt * 500));
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  throw lastError;
+}
+
 async function assertImageResponse(url) {
-  const response = await fetch(url, { redirect: "manual", headers: { "Cache-Control": "no-cache" } });
+  const response = await fetchWithRetry(url, { redirect: "manual", headers: { "Cache-Control": "no-cache" } });
   const contentType = response.headers.get("content-type") || "";
   assert.equal(response.status, 200, `${url}: image HTTP ${response.status}`);
   assert(contentType.toLowerCase().startsWith("image/"), `${url}: expected image MIME, received ${contentType || "missing"}`);
@@ -114,7 +131,7 @@ function metaPropertyCount(html, property) {
 }
 
 async function fetchChecked(url, options = {}) {
-  const response = await fetch(url, { redirect: "manual", headers: { "Cache-Control": "no-cache", ...options.headers } });
+  const response = await fetchWithRetry(url, { redirect: "manual", headers: { "Cache-Control": "no-cache", ...options.headers } });
   return { response, html: await response.text() };
 }
 
