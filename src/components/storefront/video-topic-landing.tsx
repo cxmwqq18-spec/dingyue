@@ -499,8 +499,8 @@ function UseCaseCard({ item, index, site }: { item: VideoTopicUseCase; index: nu
             className={french ? "block h-auto w-full object-center" : "block h-full w-full object-cover"}
             width={item.image.width}
             height={item.image.height}
-            loading="eager"
-            fetchPriority={index < 2 ? "high" : "auto"}
+            loading={index === 0 ? "eager" : "lazy"}
+            fetchPriority={index === 0 ? "high" : undefined}
             decoding="async"
           />
           <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-[#17151f]/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/80 backdrop-blur">
