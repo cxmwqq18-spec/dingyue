@@ -137,6 +137,20 @@ const copiedAssets = new Map();
 const missingAssets = new Set();
 const staticAssetsToCopy = new Set();
 const staticAssetsMissing = new Set();
+const DEDICATED_VIDEO_TOPIC_TYPES = new Set(["ai_video_topic_landing", "talking_photo_landing"]);
+
+function hasDedicatedVideoTopicCopy(value) {
+  return Object.values(value?.sections ?? {}).some((section) => DEDICATED_VIDEO_TOPIC_TYPES.has(section?.type));
+}
+
+function preserveDedicatedVideoTopicCopy(sourceJson, targetJson, slug) {
+  if (!hasDedicatedVideoTopicCopy(sourceJson)) return transformJsonSync(sourceJson);
+  if (!targetJson || !hasDedicatedVideoTopicCopy(targetJson)) {
+    throw new Error(`${slug}: dedicated video-topic copy must be repaired with repair:aidreamcapes-eu-video-french-local before it can be synced`);
+  }
+  return clone(targetJson);
+}
+
 const PROTECTED_TABLES = [
   ["customer", "Customer"],
   ["customerProfile", "CustomerProfile"],
@@ -389,8 +403,9 @@ function buildPageRows(source, target) {
   const targetThemeBySlug = new Map(target.themePages.map((row) => [row.slug, row]));
   for (const row of source.livePages) {
     const slug = targetPageSlug(row.slug);
-    const id = targetLiveBySlug.get(slug)?.id ?? targetId("live_page", slug);
-    const contentJson = transformJsonSync(row.contentJson);
+    const existingTarget = targetLiveBySlug.get(slug);
+    const id = existingTarget?.id ?? targetId("live_page", slug);
+    const contentJson = preserveDedicatedVideoTopicCopy(row.contentJson, existingTarget?.contentJson, slug);
     if (slug === "/") applyAidreamcapesEuHomepageCopy(contentJson);
     livePages.push({
       id,
@@ -398,7 +413,7 @@ function buildPageRows(source, target) {
       pageType: row.pageType,
       templateKey: row.templateKey,
       slug,
-      title: slug === "/" ? "Accueil — AIdreamcapes" : transformJsonSync(row.title),
+      title: slug === "/" ? "Accueil — AIdreamcapes" : hasDedicatedVideoTopicCopy(row.contentJson) ? existingTarget.title : transformJsonSync(row.title),
       contentJson
     });
   }
@@ -416,9 +431,10 @@ function buildPageRows(source, target) {
   }
   for (const row of source.themePages) {
     const slug = targetPageSlug(row.slug);
-    const id = targetThemeBySlug.get(slug)?.id ?? targetId("theme_page", slug);
-    const draftJson = transformJsonSync(row.draftJson);
-    const publishedJson = transformJsonSync(row.publishedJson);
+    const existingTarget = targetThemeBySlug.get(slug);
+    const id = existingTarget?.id ?? targetId("theme_page", slug);
+    const draftJson = preserveDedicatedVideoTopicCopy(row.draftJson, existingTarget?.draftJson, slug);
+    const publishedJson = preserveDedicatedVideoTopicCopy(row.publishedJson, existingTarget?.publishedJson, slug);
     if (slug === "/") {
       applyAidreamcapesEuHomepageCopy(draftJson);
       applyAidreamcapesEuHomepageCopy(publishedJson);
@@ -429,7 +445,7 @@ function buildPageRows(source, target) {
       pageType: row.pageType,
       templateKey: row.templateKey,
       slug,
-      title: slug === "/" ? "Accueil — AIdreamcapes" : transformJsonSync(row.title),
+      title: slug === "/" ? "Accueil — AIdreamcapes" : hasDedicatedVideoTopicCopy(row.publishedJson) ? existingTarget.title : transformJsonSync(row.title),
       draftJson,
       publishedJson,
       draftMeta: clone(row.draftMeta)

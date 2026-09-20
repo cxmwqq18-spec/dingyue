@@ -3985,8 +3985,12 @@ export async function renderToolPage({
   const basePageJson = pageHasDedicatedVideoLanding || !pageHasToolEntry
     ? page.publishedJson
     : withToolEntryFirst(page.publishedJson);
+  // Dedicated video topic pages own their SEO and copy in ThemePage. Sending
+  // them through the generic tool-directory injector makes routes such as
+  // talking-photo depend on a static tool template that does not exist and
+  // can turn an otherwise valid published page into a 500.
   const pageJson = pageHasDedicatedVideoLanding
-    ? withSeoDirectorySeo(basePageJson, "tool", toolSlug, currentSite)
+    ? basePageJson
     : withSeoDirectorySection(basePageJson, "tool", toolSlug, { site: currentSite });
   const pageRenderData = withPageMediaAssets(
     currentSite,
