@@ -17,6 +17,11 @@ const SOURCE_SITE_ID = "site_dreamshoot";
 const TARGET_SITE_ID = "site_aidreamcapes_xby";
 const TARGET_DOMAIN = "aidreamcapes.eu";
 const apply = process.argv.includes("--apply") || process.argv.includes("--apply-local");
+// The homepage has a separately approved French canonical copy. Preserve it
+// during ordinary source-copy repairs; changing it requires an explicit opt-in
+// so a broad translation run cannot silently roll the homepage backwards.
+const includeHomepage = process.argv.includes("--include-homepage");
+const preserveHomepage = !includeHomepage;
 const target = process.argv.find((arg) => arg.startsWith("--target="))?.slice("--target=".length) ?? "local";
 const productionConfirmation = "--confirm=aidreamcapes-eu-source-french-production";
 const BACKUP_ROOT = path.resolve(".tmp", "aidreamcapes-eu-source-french-copy");
@@ -300,12 +305,14 @@ async function main() {
     const themeRows = [];
     const sourceValues = [];
     for (const targetPage of targetLive) {
+      if (preserveHomepage && targetPage.slug === "/") continue;
       const mapping = mappedSource(sourceLiveBySlug, sourceThemeBySlug, targetPage.slug, "live");
       assert(mapping?.json, `${targetPage.slug}: no source live/theme payload available`);
       addPageSourceValues(sourceValues, mapping);
       liveRows.push({ targetPage, mapping, contentJson: rebuildPageJson(mapping.json, targetPage.contentJson, targetPage.slug, {}) });
     }
     for (const targetPage of targetTheme) {
+      if (preserveHomepage && targetPage.slug === "/") continue;
       const mapping = mappedSource(sourceLiveBySlug, sourceThemeBySlug, targetPage.slug, "theme");
       assert(mapping?.json, `${targetPage.slug}: no source theme/live payload available`);
       addPageSourceValues(sourceValues, mapping);
@@ -338,15 +345,18 @@ async function main() {
       row.draftJson = rebuildPageJson(row.mapping.draftJson ?? row.mapping.json, row.targetPage.draftJson, row.targetPage.slug, cache);
       row.publishedJson = rebuildPageJson(row.mapping.json, row.targetPage.publishedJson, row.targetPage.slug, cache);
     }
-    const nextSettings = {
-      draftJson: translateSourceValue(sourceSettings.draftJson, targetSettings.draftJson, "settings", cache),
-      publishedJson: translateSourceValue(sourceSettings.publishedJson, targetSettings.publishedJson, "settings", cache)
-    };
+    const nextSettings = preserveHomepage
+      ? { draftJson: targetSettings.draftJson, publishedJson: targetSettings.publishedJson }
+      : {
+          draftJson: translateSourceValue(sourceSettings.draftJson, targetSettings.draftJson, "settings", cache),
+          publishedJson: translateSourceValue(sourceSettings.publishedJson, targetSettings.publishedJson, "settings", cache)
+        };
     const nextProfile = {
       draftJson: translateSourceValue(sourceProfile.draftJson, targetProfile.draftJson, "profile", cache),
       publishedJson: translateSourceValue(sourceProfile.publishedJson, targetProfile.publishedJson, "profile", cache)
     };
     const nextSiteThemes = targetSiteThemes.map((targetTheme) => {
+      if (preserveHomepage) return { targetTheme };
       const sourceTheme = sourceThemeByKey.get(targetTheme.themeKey) ?? sourceSiteThemes.find((candidate) => candidate.themeId === targetTheme.themeId);
       if (!sourceTheme) return { targetTheme };
       return {
@@ -524,7 +534,7 @@ async function main() {
       translatedSourceStrings: Object.keys(cache).length,
       changedLivePages: liveRows.filter((row) => JSON.stringify(row.targetPage.contentJson) !== JSON.stringify(row.contentJson)).length,
       changedThemePages: themeRows.filter((row) => JSON.stringify(row.targetPage.draftJson) !== JSON.stringify(row.draftJson) || JSON.stringify(row.targetPage.publishedJson) !== JSON.stringify(row.publishedJson)).length,
-      changedSettings: JSON.stringify(sourceSettings.draftJson) !== JSON.stringify(nextSettings.draftJson) || JSON.stringify(sourceSettings.publishedJson) !== JSON.stringify(nextSettings.publishedJson),
+      changedSettings: JSON.stringify(targetSettings.draftJson) !== JSON.stringify(nextSettings.draftJson) || JSON.stringify(targetSettings.publishedJson) !== JSON.stringify(nextSettings.publishedJson),
       changedProfile: JSON.stringify(sourceProfile.draftJson) !== JSON.stringify(nextProfile.draftJson) || JSON.stringify(sourceProfile.publishedJson) !== JSON.stringify(nextProfile.publishedJson),
       changedSiteThemes: nextSiteThemes.filter((row) => row.name !== undefined).length,
       sourceProducts: sourceProducts.length,
@@ -536,6 +546,7 @@ async function main() {
       sourceVideoThemes: sourceVideoThemes.length,
       sourceVideoExamples: sourceVideoExamples.length,
       matchedCatalogRows: Object.fromEntries(Object.entries(catalog).map(([key, rows]) => [key, rows.length])),
+      homepagePreserved: preserveHomepage,
       translationService: "Google Translate Chrome endpoint"
     };
     if (apply) {

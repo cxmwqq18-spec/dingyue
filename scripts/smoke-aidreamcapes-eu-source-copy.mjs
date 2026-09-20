@@ -28,9 +28,12 @@ function dedicatedContent(page, field) {
   return page?.[field] ?? null;
 }
 
-function shape(value) {
-  if (Array.isArray(value)) return `[${value.length}:${value.map(shape).join("|")}]`;
-  if (value && typeof value === "object") return `{${Object.keys(value).filter((key) => key !== "canonical").sort().map((key) => `${key}:${shape(value[key])}`).join(",")}}`;
+function shape(value, options = {}) {
+  if (Array.isArray(value)) return `[${value.length}:${value.map((item) => shape(item, options)).join("|")}]`;
+  if (value && typeof value === "object") {
+    const keys = Object.keys(value).filter((key) => key !== "canonical" && !(options.ignoreHomepageExtensions && key === "featureCaption"));
+    return `{${keys.sort().map((key) => `${key}:${shape(value[key], options)}`).join(",")}}`;
+  }
   return typeof value;
 }
 
@@ -60,7 +63,10 @@ function findSource(sourceLiveBySlug, sourceThemeBySlug, targetSlug, field) {
 
 function assertPageCopy(sourceJson, targetJson, slug, field) {
   assert(sourceJson && targetJson, `${slug} (${field}): source or target payload is missing`);
-  assert.equal(shape(sourceJson), shape(targetJson), `${slug} (${field}): target structure diverged from source structure`);
+  // The EU homepage intentionally has one approved French-only caption field;
+  // all other homepage structure must still remain source-aligned.
+  const shapeOptions = slug === "/" ? { ignoreHomepageExtensions: true } : {};
+  assert.equal(shape(sourceJson, shapeOptions), shape(targetJson, shapeOptions), `${slug} (${field}): target structure diverged from source structure`);
   const generic = copyValues(targetJson).filter((value) => GENERIC_MARKERS.includes(value));
   assert.equal(generic.length, 0, `${slug} (${field}): generic fallback copy remains (${generic.length} nodes)`);
   const sourceValues = new Set(copyValues(sourceJson).filter((value) => value.length >= 40));
