@@ -13,7 +13,7 @@ import assert from "node:assert/strict";
 import { PrismaClient } from "@prisma/client";
 import sharp from "sharp";
 import "./load-runtime-env.mjs";
-import { assertDatabaseTarget } from "./lib/database-target.mjs";
+import { argumentValue, assertDatabaseTarget } from "./lib/database-target.mjs";
 
 const SITE_ID = "site_aidreamcapes_xby";
 const SITE_ORIGIN = "https://aidreamcapes.eu";
@@ -22,6 +22,8 @@ const PUBLIC_ROOT = "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/drea
 const VENDOR_ROOT = `${PUBLIC_ROOT}/vendor-api-gpt-image-2-4k-v1`;
 const LOCAL_PUBLIC_ROOT = path.resolve("public", PUBLIC_ROOT.slice(1));
 const APPLY = process.argv.includes("--apply");
+const DATABASE_TARGET = argumentValue("--target") || process.env.DATABASE_TARGET || "local";
+const PRODUCTION_CONFIRMATION = "apply-aidreamcapes-eu-save-the-date-production";
 
 const commonManifest = JSON.parse(await fsPromises.readFile(new URL("./data/aidreamcapes-eu-save-the-date-vendor-manifest.json", import.meta.url), "utf8"));
 const commonFrenchAlts = JSON.parse(await fsPromises.readFile(new URL("./data/aidreamcapes-eu-save-the-date-vendor-alt-fr.json", import.meta.url), "utf8"));
@@ -652,7 +654,12 @@ async function validateAssets() {
 
 function nonEmptyObject(value) { return Boolean(value && typeof value === "object" && Object.keys(value).length); }
 function hasLegacy(value) { return JSON.stringify(value ?? {}).includes("eu-regenerated"); }
-assertDatabaseTarget({ expectedTarget: "local" });
+assert(["local", "production"].includes(DATABASE_TARGET), `unsupported_database_target:${DATABASE_TARGET}`);
+assertDatabaseTarget({
+  expectedTarget: DATABASE_TARGET,
+  requireProductionConfirmation: APPLY && DATABASE_TARGET === "production",
+  productionConfirmed: argumentValue("--confirm") === PRODUCTION_CONFIRMATION
+});
 const assetAudit = await validateAssets();
 const prisma = new PrismaClient();
 try {
@@ -730,7 +737,7 @@ try {
     assert.equal(nav?.groups?.length, 2);
     assert.equal(nav.groups.reduce((count, group) => count + (group.items?.filter((item) => topicOrder.some((slug) => item.href === pagePath(slug))).length ?? 0), 0), 12);
   }
-  console.log(JSON.stringify({ ok: true, mode: APPLY ? "applied-local" : "dry-run", siteId: SITE_ID, pages: 12, totalAssets: allAssets.length, assetAudit, oldReferencesBefore, providerCalls: 0, provider: "buming-image / gpt-image-2 (existing local assets only)", pageManifestCounts: Object.fromEntries(topicOrder.map((slug) => [slug, assetsByPage.get(slug).length])), backupPath: backupPath ?? null, publication: APPLY ? "LivePage + ThemeSettings updated; ThemePage untouched" : "no database writes" }, null, 2));
+  console.log(JSON.stringify({ ok: true, mode: APPLY ? `applied-${DATABASE_TARGET}` : `dry-run-${DATABASE_TARGET}`, siteId: SITE_ID, databaseTarget: DATABASE_TARGET, pages: 12, totalAssets: allAssets.length, assetAudit, oldReferencesBefore, providerCalls: 0, provider: "buming-image / gpt-image-2 (existing local assets only)", pageManifestCounts: Object.fromEntries(topicOrder.map((slug) => [slug, assetsByPage.get(slug).length])), backupPath: backupPath ?? null, publication: APPLY ? "LivePage + ThemeSettings updated; ThemePage untouched" : "no database writes" }, null, 2));
 } finally {
   await prisma.$disconnect();
 }
