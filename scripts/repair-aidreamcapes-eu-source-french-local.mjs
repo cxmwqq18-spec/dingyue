@@ -17,6 +17,8 @@ const SOURCE_SITE_ID = "site_dreamshoot";
 const TARGET_SITE_ID = "site_aidreamcapes_xby";
 const TARGET_DOMAIN = "aidreamcapes.eu";
 const apply = process.argv.includes("--apply") || process.argv.includes("--apply-local");
+const target = process.argv.find((arg) => arg.startsWith("--target="))?.slice("--target=".length) ?? "local";
+const productionConfirmation = "--confirm=aidreamcapes-eu-source-french-production";
 const BACKUP_ROOT = path.resolve(".tmp", "aidreamcapes-eu-source-french-copy");
 const CACHE_PATH = path.join(BACKUP_ROOT, "translation-cache.json");
 const EXISTING_VIDEO_CACHE = path.resolve(".tmp", "aidreamcapes-eu-video-french-copy", "translation-cache.json");
@@ -245,8 +247,21 @@ function sourceThemeTargetId(sourceThemeId, sourceById, targetBySlug) {
 }
 
 async function main() {
-  assertDatabaseTarget({ expectedTarget: "local" });
-  if (apply) assertNonProductionWriteTarget();
+  if (target === "local") {
+    assertDatabaseTarget({ expectedTarget: "local" });
+    if (apply) assertNonProductionWriteTarget();
+  } else if (target === "production") {
+    assertDatabaseTarget({
+      expectedTarget: "production",
+      requireProductionConfirmation: true,
+      productionConfirmed: process.argv.includes(productionConfirmation)
+    });
+    if (apply && !process.argv.includes(productionConfirmation)) {
+      throw new Error(`Production Aidreamcapes writes require ${productionConfirmation}.`);
+    }
+  } else {
+    throw new Error(`Unsupported target ${target}; use --target=local or --target=production.`);
+  }
   const prisma = new PrismaClient();
   try {
     const [sourceLive, targetLive, sourceTheme, targetTheme, sourceSettings, targetSettings, sourceProfile, targetProfile, sourceSiteThemes, targetSiteThemes, sourceProducts, targetProducts, sourcePackCategories, targetPackCategories, sourcePacks, targetPacks, sourceToolCategories, targetToolCategories, sourceToolItems, targetToolItems, sourceVideoCategories, targetVideoCategories, sourceVideoThemes, targetVideoThemes, sourceVideoExamples, targetVideoExamples] = await Promise.all([
