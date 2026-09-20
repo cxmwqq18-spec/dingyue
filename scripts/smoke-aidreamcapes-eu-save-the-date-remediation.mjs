@@ -18,9 +18,9 @@ const PUBLIC_ROOT = "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/drea
 const LOCAL_ROOT = path.resolve("public", PUBLIC_ROOT.slice(1));
 const TOPICS = ["valentines-day", "engagement", "proposal", "save-the-date", "wedding-invitation", "wedding-ceremony", "christmas", "halloween", "thanksgiving", "new-year", "mothers-day", "fathers-day"];
 const SUPPLIER = /\/vendor-api-gpt-image-2-4k-v1\/|\/valentines-day-4k-vendor-v1\//;
+const UNIQUE_IMAGE_BLOCK_SECTION_TYPES = new Set(["editorial_steps", "editorial_story_grid", "editorial_scene_grid", "editorial_detail_list", "editorial_formats", "editorial_ideas"]);
 
 function sha256(buffer) { return crypto.createHash("sha256").update(buffer).digest("hex"); }
-function stableHash(value) { return sha256(Buffer.from(JSON.stringify(value ?? {}))); }
 function imageUrl(value) { return typeof value === "string" ? value.split("?")[0].split("#")[0] : ""; }
 function localFile(url) { return path.join("public", url.replace(/^\//, "")); }
 function collectPageImageRefs(value, refs = []) {
@@ -31,6 +31,27 @@ function collectPageImageRefs(value, refs = []) {
   if (Array.isArray(value.mediaManifest)) for (const item of value.mediaManifest) refs.push({ src: imageUrl(item.src), alt: String(item.alt ?? item.alt_text ?? "").trim() });
   for (const child of Object.values(value)) collectPageImageRefs(child, refs);
   return refs;
+}
+
+function assertSectionBlockImageUniqueness(json, slug) {
+  const manifestByUrl = new Map((json.mediaManifest ?? []).map((item) => [imageUrl(item.src), item]));
+  for (const [sectionId, section] of Object.entries(json.sections ?? {})) {
+    if (!UNIQUE_IMAGE_BLOCK_SECTION_TYPES.has(section.type) || !Array.isArray(section.blocks)) continue;
+    const seen = new Map();
+    for (const block of section.blocks) {
+      const src = imageUrl(block.settings?.imageUrl);
+      if (!src) continue;
+      const manifest = manifestByUrl.get(src);
+      assert(manifest, `${slug}:${sectionId}:${block.id}: image is not in the page manifest`);
+      assert.equal(String(block.settings?.imageAlt ?? block.settings?.alt ?? "").trim(), String(manifest.alt ?? manifest.alt_text ?? "").trim(), `${slug}:${sectionId}:${block.id}: image alt does not match manifest`);
+      const blockIds = seen.get(src) ?? [];
+      blockIds.push(block.id ?? "anonymous-block");
+      seen.set(src, blockIds);
+    }
+    for (const [src, blockIds] of seen) {
+      assert.equal(blockIds.length, 1, `${slug}:${sectionId}:${src}: duplicate block images ${blockIds.join(",")}`);
+    }
+  }
 }
 async function dHash(filePath) {
   const { data } = await sharp(filePath).resize(9, 8, { fit: "fill" }).grayscale().raw().toBuffer({ resolveWithObject: true });
@@ -44,29 +65,27 @@ assertDatabaseTarget({ expectedTarget: "local" });
 const prisma = new PrismaClient();
 try {
   const paths = TOPICS.map((slug) => PREFIX + slug);
-  const [pages, livePages, settings, mediaAssets, videoTheme] = await Promise.all([
-    prisma.themePage.findMany({ where: { siteId: SITE_ID, slug: { in: paths } }, select: { slug: true, title: true, draftJson: true, publishedJson: true } }),
+  // LivePage is the public source of page content. ThemePage is retired
+  // compatibility data and is intentionally excluded from this acceptance test.
+  const [livePages, settings, mediaAssets] = await Promise.all([
     prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: paths } }, select: { slug: true, title: true, contentJson: true } }),
     prisma.themeSettings.findUnique({ where: { siteId: SITE_ID }, select: { publishedJson: true } }),
-    prisma.mediaAsset.findMany({ where: { siteId: SITE_ID, storageKey: { contains: "/save-the-date/" } }, select: { storageKey: true, altText: true, mimeType: true, sourceType: true, previewUrl: true, originUrl: true } }),
-    prisma.videoTheme.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: "wedding-invitation" } }, select: { imageUrl: true, galleryImages: true } })
+    prisma.mediaAsset.findMany({ where: { siteId: SITE_ID, storageKey: { contains: "/save-the-date/" } }, select: { storageKey: true, altText: true, mimeType: true, sourceType: true, previewUrl: true, originUrl: true } })
   ]);
-  assert.equal(pages.length, 12, "ThemePage count");
   assert.equal(livePages.length, 12, "LivePage count");
-  const pageMap = new Map(pages.map((page) => [page.slug, page]));
   const liveMap = new Map(livePages.map((page) => [page.slug, page]));
   const allManifest = [];
   const sourceAltByUrl = new Map();
   const pageReports = [];
   for (const slug of TOPICS) {
-    const page = pageMap.get(PREFIX + slug);
     const live = liveMap.get(PREFIX + slug);
-    const json = page.publishedJson;
+    assert(live, `${slug}: LivePage row missing`);
+    const json = live.contentJson;
     const manifest = json.mediaManifest ?? [];
     assert(manifest.length === (slug === "proposal" ? 10 : 11), `${slug}: manifest count`);
-    assert.equal(stableHash(json), stableHash(live.contentJson), `${slug}: LivePage matches published JSON`);
+    assertSectionBlockImageUniqueness(json, slug);
     const heroTitle = json.sections[json.sectionsOrder.find((id) => json.sections[id]?.type === "editorial_hero")]?.settings?.title;
-    assert.equal(page.title, json.seo.title, `${slug}: database title/SEO title`);
+    assert.equal(live.title, heroTitle, `${slug}: LivePage title/hero title`);
     assert(heroTitle?.trim(), `${slug}: hero/H1 source`);
     assert.equal(json.seo.canonical, `${ORIGIN}${PREFIX}${slug}`, `${slug}: canonical`);
     assert.equal(json.seo.canonicalPath, PREFIX + slug, `${slug}: canonicalPath`);
@@ -124,11 +143,7 @@ try {
   const navItems = nav.groups.flatMap((group) => group.items ?? []).filter((item) => paths.includes(item.href));
   assert.equal(navItems.length, 12, "navigation topics");
   for (const item of navItems) assert(SUPPLIER.test(item.imageUrl) && item.imageAlt?.trim(), `navigation asset/alt ${item.href}`);
-  if (videoTheme) {
-    assert.equal(videoTheme.imageUrl, allManifest.find((item) => item.slug === "wedding-invitation").url, "wedding invitation VideoTheme cover");
-    assert.deepEqual(videoTheme.galleryImages, allManifest.filter((item) => item.slug === "wedding-invitation").slice(1).map((item) => item.url), "wedding invitation VideoTheme gallery");
-  }
-  console.log(JSON.stringify({ ok: true, siteId: SITE_ID, pages: pageReports, totalManifest: allManifest.length, actual4K: allManifest.length, exactDuplicates: 0, perceptualDuplicates: 0, emptyAlts: 0, legacyReferences: 0, mediaAssetMatches: allManifest.length, navigationGroups: nav.groups.length, navigationTopics: navItems.length, videoThemeUpdated: Boolean(videoTheme), mode: "read-only" }, null, 2));
+  console.log(JSON.stringify({ ok: true, siteId: SITE_ID, pages: pageReports, totalManifest: allManifest.length, actual4K: allManifest.length, exactDuplicates: 0, perceptualDuplicates: 0, emptyAlts: 0, legacyReferences: 0, mediaAssetMatches: allManifest.length, navigationGroups: nav.groups.length, navigationTopics: navItems.length, sourceOfTruth: "LivePage.contentJson", themePageRead: false, videoThemeRead: false, mode: "read-only" }, null, 2));
 } finally {
   await prisma.$disconnect();
 }

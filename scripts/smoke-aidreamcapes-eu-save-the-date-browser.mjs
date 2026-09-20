@@ -10,6 +10,7 @@ const argument = (name, fallback) => {
 };
 const BASE_URL = argument("--base-url", "http://127.0.0.1:3002/site/aidreamcapes-eu/ai-save-the-date");
 const TOPICS = ["valentines-day", "engagement", "proposal", "save-the-date", "wedding-invitation", "wedding-ceremony", "christmas", "halloween", "thanksgiving", "new-year", "mothers-day", "fathers-day"];
+const RETIRED_TOPICS = ["wedding-anniversary"];
 const SUPPLIER = /\/vendor-api-gpt-image-2-4k-v1\/|\/valentines-day-4k-vendor-v1\//;
 
 function faqNodes(value, found = []) {
@@ -55,6 +56,10 @@ try {
       ogImage: document.querySelector('meta[property="og:image"]')?.content ?? "",
       twitterImage: document.querySelector('meta[name="twitter:image"]')?.content ?? "",
       images: [...document.images].map((image) => ({ src: image.currentSrc || image.src, alt: image.alt, width: image.naturalWidth, height: image.naturalHeight })),
+      sectionImageReports: [...document.querySelectorAll("main section[id]")].map((section) => {
+        const images = [...section.querySelectorAll("article img")].map((image) => (image.currentSrc || image.src).split("?")[0].split("#")[0]);
+        return { id: section.id, count: images.length, unique: new Set(images).size, images };
+      }).filter((report) => report.count > 1),
       faq: [...document.querySelectorAll("[data-faq-answer]")].map((answer) => ({ answer: answer.textContent?.trim() ?? "", question: answer.previousElementSibling?.querySelector("h3")?.textContent?.trim() ?? "" })),
       schemas: [...document.querySelectorAll('script[type="application/ld+json"]')].map((script) => script.textContent ?? ""),
       mainText: document.querySelector("main")?.textContent ?? document.body.textContent ?? ""
@@ -77,6 +82,7 @@ try {
     assert.equal(imageFailures.length, 0, `${slug}: image request failures`);
     assert.equal(fatalFailures.length, 0, `${slug}: fatal request failures`);
     assert.equal(consoleErrors.length, 0, `${slug}: console errors ${JSON.stringify(consoleErrors.slice(0, 2))}`);
+    assert.equal(data.sectionImageReports.filter((report) => report.unique !== report.count).length, 0, `${slug}: duplicate image in editorial card section`);
     assert(!/\b(?:undefined|null|Frequently Asked Questions|Create a|with AI|from photos|and | or )\b/i.test(data.mainText), `${slug}: English or undefined copy leaked into main content`);
     const schemas = data.schemas.flatMap((raw) => { try { return faqNodes(JSON.parse(raw)); } catch { return []; } });
     const faqSchema = schemas.find((schema) => schema.inLanguage === "fr-FR");
@@ -86,6 +92,23 @@ try {
     reports.push({ slug, status: response.status(), images: data.images.length, supplierImages: data.images.filter(supplierImage).length, faqItems: data.faq.length, canonical: data.canonical });
     page.off("console", onConsole);
     page.off("requestfailed", onRequestFailed);
+  }
+  for (const slug of RETIRED_TOPICS) {
+    const response = await page.goto(`${BASE_URL}/${slug}?browser-smoke=20260915`, { waitUntil: "domcontentloaded", timeout: 60_000 });
+    const retired = await page.evaluate(() => ({
+      lang: document.documentElement.lang,
+      robots: document.querySelector('meta[name="robots"]')?.content ?? "",
+      canonical: document.querySelector('link[rel="canonical"]')?.href ?? "",
+      images: [...document.images].map((image) => image.currentSrc || image.src),
+      cardImages: [...document.querySelectorAll("main section[id] article img")].length
+    }));
+    assert.equal(response?.status(), 200, `${slug}: HTTP status`);
+    assert.equal(retired.lang, "fr", `${slug}: lang`);
+    assert.match(retired.robots, /^noindex, nofollow/i, `${slug}: retired route robots`);
+    assert.equal(retired.canonical, `https://aidreamcapes.eu/ai-save-the-date/${slug}`, `${slug}: canonical`);
+    assert.equal(retired.images.filter((src) => SUPPLIER.test(src)).length, 0, `${slug}: retired route should not render supplier images`);
+    assert.equal(retired.cardImages, 0, `${slug}: retired route should not render card images`);
+    reports.push({ slug, status: response.status(), retired: true, images: retired.images.length, cardImages: retired.cardImages, canonical: retired.canonical });
   }
 } finally {
   await browser.close();

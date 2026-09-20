@@ -26,6 +26,7 @@ const APPLY = process.argv.includes("--apply");
 const commonManifest = JSON.parse(await fsPromises.readFile(new URL("./data/aidreamcapes-eu-save-the-date-vendor-manifest.json", import.meta.url), "utf8"));
 const commonFrenchAlts = JSON.parse(await fsPromises.readFile(new URL("./data/aidreamcapes-eu-save-the-date-vendor-alt-fr.json", import.meta.url), "utf8"));
 const invitationManifest = JSON.parse(await fsPromises.readFile(new URL("./data/aidreamcapes-eu-wedding-invitation-vendor-manifest.json", import.meta.url), "utf8"));
+const sectionImageMap = JSON.parse(await fsPromises.readFile(new URL("./data/aidreamcapes-eu-save-the-date-section-image-map.json", import.meta.url), "utf8"));
 
 const valentineAssets = [
   ["hero-valentines-day-save-the-date-city-couple.jpg", "Couple fiancé en tenue de soirée élégante devant les lumières d'une ville au bord de l'eau."],
@@ -325,6 +326,47 @@ assert.equal(allAssets.length, 131, "expected 131 supplier assets");
 assert.equal(topicOrder.length, 12, "expected 12 topics");
 const assetsByPage = new Map(topicOrder.map((slug) => [slug, allAssets.filter((asset) => asset.pageSlug === slug)]));
 
+function imageSettings(asset) {
+  return {
+    imageUrl: asset.src,
+    imageOriginalUrl: asset.src,
+    imageAlt: asset.alt,
+    alt: asset.alt,
+    imageWidth: asset.width,
+    imageHeight: asset.height,
+    imageLoading: asset.loading,
+    imageFetchPriority: asset.fetchPriority
+  };
+}
+
+function applySectionImageMap(input, slug) {
+  const next = clone(input);
+  const assignmentsBySection = sectionImageMap.routes?.[slug] ?? {};
+  const assets = new Map((assetsByPage.get(slug) ?? []).map((asset) => [asset.filename, asset]));
+  for (const [sectionId, assignments] of Object.entries(assignmentsBySection)) {
+    const section = next.sections?.[sectionId];
+    assert(section, `mapped_section_missing:${slug}:${sectionId}`);
+    assert(Array.isArray(section.blocks), `mapped_section_blocks_missing:${slug}:${sectionId}`);
+    const sectionFilename = assignments._section;
+    if (sectionFilename) {
+      const sectionAsset = assets.get(sectionFilename);
+      assert(sectionAsset, `mapped_section_asset_missing:${slug}:${sectionId}:${sectionFilename}`);
+      section.settings = { ...(section.settings && typeof section.settings === "object" ? section.settings : {}), ...imageSettings(sectionAsset) };
+    }
+    const blockAssignments = Object.entries(assignments).filter(([blockId]) => blockId !== "_section");
+    const mappedFilenames = blockAssignments.map(([, filename]) => filename);
+    assert.equal(new Set(mappedFilenames).size, mappedFilenames.length, `duplicate_mapped_image:${slug}:${sectionId}`);
+    for (const [blockId, filename] of blockAssignments) {
+      const block = section.blocks.find((candidate) => candidate.id === blockId);
+      assert(block, `mapped_block_missing:${slug}:${sectionId}:${blockId}`);
+      const asset = assets.get(filename);
+      assert(asset, `mapped_asset_missing:${slug}:${sectionId}:${blockId}:${filename}`);
+      block.settings = { ...(block.settings && typeof block.settings === "object" ? block.settings : {}), ...imageSettings(asset) };
+    }
+  }
+  return next;
+}
+
 function sectionTitle(config, id, type) {
   if (id.includes("hero")) return config.h1;
   if (id.includes("faq") || type === "faq") return `Questions fréquentes sur ${config.subject}`;
@@ -479,40 +521,79 @@ function localizePageJson(input, slug) {
   return next;
 }
 
-function resolveAsset(pageSlug, value, state) {
+function normalizedImageUrl(value) {
+  return typeof value === "string" ? value.split("?")[0].split("#")[0] : "";
+}
+
+function resolveAsset(pageSlug, value) {
   const assets = assetsByPage.get(pageSlug);
   const filename = filenameFromUrl(value?.imageUrl) || filenameFromUrl(value?.imageOriginalUrl);
   const direct = assets.find((asset) => asset.filename === filename);
   if (direct) return direct;
-  const alt = String(value?.imageAlt ?? value?.alt ?? "").trim();
-  const byAlt = assets.find((asset) => asset.alt === alt);
-  if (byAlt) return byAlt;
-  const sourceKey = `${filename}|${alt}`;
-  if (state.sourceMap.has(sourceKey)) return state.sourceMap.get(sourceKey);
-  const fallback = assets[state.fallbackIndex % assets.length];
-  state.fallbackIndex += 1;
-  state.sourceMap.set(sourceKey, fallback);
-  return fallback;
+  throw new Error(`unmapped_image_reference:${pageSlug}:${filename || "missing-filename"}`);
 }
 
-function patchImageObjects(value, pageSlug, state) {
-  if (Array.isArray(value)) return value.map((item) => patchImageObjects(item, pageSlug, state));
+function patchImageObjects(value, pageSlug) {
+  if (Array.isArray(value)) return value.map((item) => patchImageObjects(item, pageSlug));
   if (!value || typeof value !== "object") return value;
-  const next = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, patchImageObjects(item, pageSlug, state)]));
+  const next = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, patchImageObjects(item, pageSlug)]));
   if (typeof next.imageUrl !== "string" && typeof next.imageOriginalUrl !== "string") return next;
-  const asset = resolveAsset(pageSlug, next, state);
-  return {
-    ...next,
-    imageUrl: asset.src, imageOriginalUrl: asset.src, imageAlt: asset.alt, alt: asset.alt,
-    imageWidth: asset.width, imageHeight: asset.height, imageLoading: asset.loading, imageFetchPriority: asset.fetchPriority
+  return { ...next, ...imageSettings(resolveAsset(pageSlug, next)) };
+}
+
+const uniqueImageBlockSectionTypes = new Set([
+  "editorial_steps",
+  "editorial_story_grid",
+  "editorial_scene_grid",
+  "editorial_detail_list",
+  "editorial_formats",
+  "editorial_ideas"
+]);
+
+function validatePageImageReferences(json, slug) {
+  const assets = assetsByPage.get(slug) ?? [];
+  const assetsBySrc = new Map(assets.map((asset) => [asset.src, asset]));
+  const imageObjects = [];
+  const collect = (value, pathParts = []) => {
+    if (Array.isArray(value)) {
+      value.forEach((item, index) => collect(item, [...pathParts, String(index)]));
+      return;
+    }
+    if (!value || typeof value !== "object") return;
+    if (typeof value.imageUrl === "string") imageObjects.push({ value, path: pathParts.join(".") });
+    Object.entries(value).forEach(([key, item]) => collect(item, [...pathParts, key]));
   };
+  collect(json);
+  for (const { value, path: imagePath } of imageObjects) {
+    const src = normalizedImageUrl(value.imageUrl);
+    const asset = assetsBySrc.get(src);
+    assert(asset, `image_not_in_manifest:${slug}:${imagePath}:${src}`);
+    assert.equal(normalizedImageUrl(value.imageOriginalUrl), src, `image_original_mismatch:${slug}:${imagePath}`);
+    assert.equal(String(value.imageAlt ?? value.alt ?? "").trim(), asset.alt, `image_alt_mismatch:${slug}:${imagePath}:${asset.filename}`);
+  }
+  for (const [sectionId, section] of Object.entries(json.sections ?? {})) {
+    if (!uniqueImageBlockSectionTypes.has(section.type) || !Array.isArray(section.blocks)) continue;
+    const seen = new Map();
+    for (const block of section.blocks) {
+      const src = normalizedImageUrl(block.settings?.imageUrl);
+      if (!src) continue;
+      const prior = seen.get(src) ?? [];
+      prior.push(block.id ?? "anonymous-block");
+      seen.set(src, prior);
+    }
+    for (const [src, blockIds] of seen) {
+      assert.equal(blockIds.length, 1, `duplicate_section_block_image:${slug}:${sectionId}:${src}:${blockIds.join(",")}`);
+    }
+  }
 }
 
 function patchPageJson(input, slug) {
   const config = themeConfigs[slug];
   const assets = assetsByPage.get(slug);
   const localized = localizePageJson(input, slug);
-  const next = patchImageObjects(localized, slug, { sourceMap: new Map(), fallbackIndex: 0 });
+  const mapped = applySectionImageMap(localized, slug);
+  const next = patchImageObjects(mapped, slug);
+  validatePageImageReferences(next, slug);
   next.mediaManifest = assets.map((asset) => ({
     filename: asset.filename, src: asset.src, alt: asset.alt, alt_text: asset.alt, caption: asset.caption,
     role: asset.role, width: asset.width, height: asset.height, format: asset.format,
@@ -571,39 +652,42 @@ async function validateAssets() {
 
 function nonEmptyObject(value) { return Boolean(value && typeof value === "object" && Object.keys(value).length); }
 function hasLegacy(value) { return JSON.stringify(value ?? {}).includes("eu-regenerated"); }
-function stableHash(value) { return crypto.createHash("sha256").update(JSON.stringify(value ?? {})).digest("hex"); }
-
 assertDatabaseTarget({ expectedTarget: "local" });
 const assetAudit = await validateAssets();
 const prisma = new PrismaClient();
 try {
   const targetSlugs = topicOrder.map(pagePath);
-  const [themePages, livePages, settings, weddingInvitationTheme] = await Promise.all([
-    prisma.themePage.findMany({ where: { siteId: SITE_ID, slug: { in: targetSlugs } }, select: { id: true, slug: true, title: true, draftJson: true, publishedJson: true } }),
+  // LivePage is the sole source of public page content. ThemePage is retired
+  // compatibility data and is intentionally neither read nor written here.
+  const [livePages, settings] = await Promise.all([
     prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: targetSlugs } }, select: { id: true, slug: true, title: true, contentJson: true } }),
-    prisma.themeSettings.findUnique({ where: { siteId: SITE_ID }, select: { id: true, draftJson: true, publishedJson: true } }),
-    prisma.videoTheme.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: "wedding-invitation" } }, select: { id: true, imageUrl: true, galleryImages: true } })
+    prisma.themeSettings.findUnique({ where: { siteId: SITE_ID }, select: { id: true, draftJson: true, publishedJson: true } })
   ]);
-  assert.equal(themePages.length, 12, `theme_page_count:${themePages.length}`);
   assert.equal(livePages.length, 12, `live_page_count:${livePages.length}`);
   assert(settings, "theme_settings_missing");
-  const themeBySlug = new Map(themePages.map((row) => [row.slug, row]));
   const liveBySlug = new Map(livePages.map((row) => [row.slug, row]));
   const results = [];
   for (const slug of topicOrder) {
-    const row = themeBySlug.get(pagePath(slug));
     const live = liveBySlug.get(pagePath(slug));
-    assert(row && live, `page_pair_missing:${slug}`);
-    const draftJson = patchPageJson(row.draftJson, slug);
-    const publishedJson = patchPageJson(nonEmptyObject(row.publishedJson) ? row.publishedJson : row.draftJson, slug);
-    const liveJson = patchPageJson(live.contentJson, slug);
-    results.push({ slug, row, live, draftJson, publishedJson, liveJson, assets: assetsByPage.get(slug) });
+    assert(live, `live_page_missing:${slug}`);
+    const contentJson = patchPageJson(live.contentJson, slug);
+    results.push({ slug, live, contentJson, assets: assetsByPage.get(slug) });
   }
   const nextDraftSettings = patchNavigation(settings.draftJson);
   const nextPublishedSettings = patchNavigation(nonEmptyObject(settings.publishedJson) ? settings.publishedJson : settings.draftJson);
-  const oldReferencesBefore = results.reduce((count, result) => count + Number(hasLegacy(result.row.draftJson) || hasLegacy(result.row.publishedJson) || hasLegacy(result.live.contentJson)), 0);
+  const oldReferencesBefore = results.reduce((count, result) => count + Number(hasLegacy(result.live.contentJson)), 0);
+  let backupPath;
 
   if (APPLY) {
+    const backupStamp = new Date().toISOString().replace(/[:.]/g, "-");
+    backupPath = path.resolve("reports", `aidreamcapes-eu-save-the-date-before-apply-${backupStamp}.json`);
+    await fsPromises.mkdir(path.dirname(backupPath), { recursive: true });
+    await fsPromises.writeFile(backupPath, `${JSON.stringify({
+      siteId: SITE_ID,
+      createdAt: new Date().toISOString(),
+      livePages,
+      settings
+    }, null, 2)}\n`, "utf8");
     await prisma.$transaction(async (tx) => {
       for (const asset of allAssets) {
         await tx.mediaAsset.upsert({
@@ -613,59 +697,40 @@ try {
         });
       }
       for (const result of results) {
-        await tx.themePage.update({ where: { id: result.row.id }, data: { title: themeConfigs[result.slug].h1, draftJson: result.draftJson, publishedJson: result.publishedJson } });
-        await tx.livePage.update({ where: { id: result.live.id }, data: { title: themeConfigs[result.slug].h1, contentJson: result.publishedJson } });
+        await tx.livePage.update({ where: { id: result.live.id }, data: { title: themeConfigs[result.slug].h1, contentJson: result.contentJson } });
       }
       await tx.themeSettings.update({ where: { id: settings.id }, data: { draftJson: nextDraftSettings, publishedJson: nextPublishedSettings } });
-      if (weddingInvitationTheme) {
-        const invitationAssets = assetsByPage.get("wedding-invitation");
-        await tx.videoTheme.update({ where: { id: weddingInvitationTheme.id }, data: { imageUrl: invitationAssets[0].src, galleryImages: invitationAssets.slice(1).map((asset) => asset.src), status: "active" } });
-      }
     }, { maxWait: 20_000, timeout: 120_000 });
   }
 
-  const [readThemePages, readLivePages, readSettings, readVideoTheme] = await Promise.all([
-    prisma.themePage.findMany({ where: { siteId: SITE_ID, slug: { in: targetSlugs } }, select: { slug: true, title: true, draftJson: true, publishedJson: true } }),
+  const [readLivePages, readSettings] = await Promise.all([
     prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: targetSlugs } }, select: { slug: true, title: true, contentJson: true } }),
-    prisma.themeSettings.findUnique({ where: { siteId: SITE_ID }, select: { publishedJson: true } }),
-    prisma.videoTheme.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: "wedding-invitation" } }, select: { imageUrl: true, galleryImages: true } })
+    prisma.themeSettings.findUnique({ where: { siteId: SITE_ID }, select: { publishedJson: true } })
   ]);
-  const readbackPages = APPLY ? readThemePages : results.map((result) => ({ slug: pagePath(result.slug), title: themeConfigs[result.slug].h1, draftJson: result.draftJson, publishedJson: result.publishedJson }));
-  const readbackLive = APPLY ? readLivePages : results.map((result) => ({ slug: pagePath(result.slug), title: themeConfigs[result.slug].h1, contentJson: result.publishedJson }));
-  for (const row of readbackPages) {
-    const slug = row.slug.slice(ROUTE_PREFIX.length);
-    const config = themeConfigs[slug];
-    assert(config, `unexpected_readback_page:${row.slug}`);
-    assert.equal(row.title, config.h1);
-    for (const json of [row.draftJson, row.publishedJson]) {
-      assert.equal(json.seo?.canonical, `${SITE_ORIGIN}${pagePath(slug)}`);
-      assert.equal(json.seo?.canonicalPath, pagePath(slug));
-      assert.equal(json.seo?.title, config.title);
-      assert.equal(json.seo?.description, config.description);
-      assert.equal(json.seo?.robots?.maxImagePreview, "large");
-      assert.equal(json.mediaManifest?.length, assetsByPage.get(slug).length);
-      assert(!hasLegacy(json), `legacy_image_reference_after_migration:${slug}`);
-      assert(json.mediaManifest.every((item) => item.src.startsWith(VENDOR_ROOT) || item.src.includes("valentines-day-4k-vendor-v1")), `non_supplier_manifest:${slug}`);
-      assert.equal(new Set(json.mediaManifest.map((item) => item.src)).size, json.mediaManifest.length, `duplicate_manifest:${slug}`);
-      assert(json.mediaManifest.every((item) => item.alt?.trim()), `empty_alt:${slug}`);
-    }
-  }
+  const readbackLive = APPLY ? readLivePages : results.map((result) => ({ slug: pagePath(result.slug), title: themeConfigs[result.slug].h1, contentJson: result.contentJson }));
   for (const row of readbackLive) {
     const slug = row.slug.slice(ROUTE_PREFIX.length);
-    assert.equal(stableHash(row.contentJson), stableHash(readbackPages.find((page) => page.slug === row.slug)?.publishedJson), `live_publication_mismatch:${slug}`);
+    const config = themeConfigs[slug];
+    assert(config, `unexpected_live_page:${row.slug}`);
+    assert.equal(row.title, config.h1);
+    const json = row.contentJson;
+    assert.equal(json.seo?.canonical, `${SITE_ORIGIN}${pagePath(slug)}`);
+    assert.equal(json.seo?.canonicalPath, pagePath(slug));
+    assert.equal(json.seo?.title, config.title);
+    assert.equal(json.seo?.description, config.description);
+    assert.equal(json.seo?.robots?.maxImagePreview, "large");
+    assert.equal(json.mediaManifest?.length, assetsByPage.get(slug).length);
     assert(!hasLegacy(row.contentJson), `legacy_live_image_reference:${slug}`);
+    assert(json.mediaManifest.every((item) => item.src.startsWith(VENDOR_ROOT) || item.src.includes("valentines-day-4k-vendor-v1")), `non_supplier_manifest:${slug}`);
+    assert.equal(new Set(json.mediaManifest.map((item) => item.src)).size, json.mediaManifest.length, `duplicate_manifest:${slug}`);
+    assert(json.mediaManifest.every((item) => item.alt?.trim()), `empty_alt:${slug}`);
   }
   if (APPLY) {
     const nav = readSettings?.publishedJson?.saveTheDateNavigation;
     assert.equal(nav?.groups?.length, 2);
     assert.equal(nav.groups.reduce((count, group) => count + (group.items?.filter((item) => topicOrder.some((slug) => item.href === pagePath(slug))).length ?? 0), 0), 12);
-    if (readVideoTheme) {
-      const invitationAssets = assetsByPage.get("wedding-invitation");
-      assert.equal(readVideoTheme.imageUrl, invitationAssets[0].src);
-      assert.deepEqual(readVideoTheme.galleryImages, invitationAssets.slice(1).map((asset) => asset.src));
-    }
   }
-  console.log(JSON.stringify({ ok: true, mode: APPLY ? "applied-local" : "dry-run", siteId: SITE_ID, pages: 12, totalAssets: allAssets.length, assetAudit, oldReferencesBefore, providerCalls: 0, provider: "buming-image / gpt-image-2 (existing local assets only)", pageManifestCounts: Object.fromEntries(topicOrder.map((slug) => [slug, assetsByPage.get(slug).length])), publication: APPLY ? "ThemePage + LivePage + ThemeSettings + Wedding Invitation VideoTheme updated" : "no database writes" }, null, 2));
+  console.log(JSON.stringify({ ok: true, mode: APPLY ? "applied-local" : "dry-run", siteId: SITE_ID, pages: 12, totalAssets: allAssets.length, assetAudit, oldReferencesBefore, providerCalls: 0, provider: "buming-image / gpt-image-2 (existing local assets only)", pageManifestCounts: Object.fromEntries(topicOrder.map((slug) => [slug, assetsByPage.get(slug).length])), backupPath: backupPath ?? null, publication: APPLY ? "LivePage + ThemeSettings updated; ThemePage untouched" : "no database writes" }, null, 2));
 } finally {
   await prisma.$disconnect();
 }
