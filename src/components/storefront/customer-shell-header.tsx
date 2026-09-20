@@ -3,6 +3,7 @@
 import { Camera, Coffee, Heart, ImageIcon, Map as MapIcon, Menu as MenuIcon, Mountain, PlayCircle, Scissors, Sparkles, Sun, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
+import { AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation } from "@/components/storefront/aidreamcapes-zip-navigation";
 import { DreamShootMegaToolsPanel, getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { HeaderPhotoPackageMegaPanel, HeaderSaveTheDateMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
@@ -14,8 +15,9 @@ import { isFrenchStorefrontSite } from "@/lib/storefront-locale";
 import { isMydreamshootsRemovedLegacyRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
+import { storefrontOriginalLogoUrl } from "@/lib/storefront-brand-assets";
 import type { PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
-import type { CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, SaveTheDateNavigationGroup, Site, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
+import type { AidreamcapesZipNavigation, CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, SaveTheDateNavigationGroup, Site, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 
@@ -67,7 +69,7 @@ const aidreamcapesPackageGroups = [
 ];
 
 const dreamshootLogoSrc = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
-const aidreamcapesLogoSrc = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
+const aidreamcapesLogoSrc = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919original";
 const myDreamShootsDisplayName = "myᕲreamshoots";
 const aidreamcapesDisplayName = "Aidreamcapes";
 
@@ -157,6 +159,7 @@ function publishedVideoGenerationTopicsForMenu(basePath: string, topics: Publish
 export function CustomerShellHeader({
   site,
   customer,
+  aidreamcapesZipNavigation,
   tone = "dark",
   creativePackCategories = [],
   creativePacks = [],
@@ -169,6 +172,7 @@ export function CustomerShellHeader({
 }: {
   site: CustomerShellHeaderSite;
   customer: PublicCustomer;
+  aidreamcapesZipNavigation?: AidreamcapesZipNavigation;
   tone?: "light" | "dark";
   creativePackCategories?: CreativePackCategory[];
   creativePacks?: CreativePack[];
@@ -190,7 +194,7 @@ export function CustomerShellHeader({
   const readableLogoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? "Aidreamcapes" : isMyDreamShoots ? "MyDreamShoots" : logoText;
   const homeHref = basePath || "/";
   const workflowHref = `${basePath}/workflow`;
-  const logoSrc = (site.branding as { logoImageUrl?: string }).logoImageUrl || (isAidreamcapes ? aidreamcapesLogoSrc : dreamshootLogoSrc);
+  const logoSrc = storefrontOriginalLogoUrl(site) || (site.branding as { logoImageUrl?: string }).logoImageUrl || (isAidreamcapes ? aidreamcapesLogoSrc : dreamshootLogoSrc);
   const logoAlt = isFrenchXby
     ? `${readableLogoText} : logo pour les créations IA et les galeries privées`
     : isSpanishXby
@@ -267,11 +271,16 @@ export function CustomerShellHeader({
     : `block truncate text-[1.18rem] font-semibold leading-none tracking-normal [font-family:var(--site-title-font)] min-[1440px]:text-[1.28rem] min-[1536px]:text-[1.4rem] min-[1800px]:text-[1.52rem] ${dark ? "text-white" : "text-[#171514]"}`;
   const accountHref = `${basePath}/account`;
   const accountAvatarUrl = customer.profile?.avatarUrl;
+  const isAidreamcapesZipHeader = isAidreamcapes && !isSpanishXby && Boolean(aidreamcapesZipNavigation);
+  const resolveZipHref = (href: string) => {
+    if (/^(?:https?:)?\//.test(href)) return href.startsWith("/") ? basePath + href : href;
+    return basePath + "/" + href.replace(/^\/+/, "");
+  };
 
   return (
-    <header className={`sticky top-0 z-50 border-b font-sans backdrop-blur ${dark ? "border-white/10 bg-[#05070E]/[0.94] text-white" : "border-[#eadfce] bg-[#fbf6ee]/[0.96] text-[#171514]"}`}>
-      <div className="mx-auto grid min-w-0 max-w-[1680px] gap-2 px-5 py-2">
-        <p className={`text-center text-xs font-semibold ${dark ? "text-white/80" : "text-[#171514]/68"}`}>
+    <header data-storefront-global-header="" className={`${isAidreamcapesZipHeader ? "relative" : "sticky top-0"} z-50 border-b font-sans backdrop-blur ${dark ? "border-white/10 bg-[#05070E]/[0.94] text-white" : "border-[#eadfce] bg-[#fbf6ee]/[0.96] text-[#171514]"}`}>
+      <div className={isAidreamcapesZipHeader ? "relative mx-auto flex h-20 max-w-[1400px] items-center justify-between gap-4 px-6" : "mx-auto grid min-w-0 max-w-[1680px] gap-2 px-5 py-2"}>
+        {!isAidreamcapesZipHeader ? <p className={`text-center text-xs font-semibold ${dark ? "text-white/80" : "text-[#171514]/68"}`}>
           {isFrenchXby
             ? "Créez des albums photo privés et des vidéos IA à partir de vos images approuvées."
             : isSpanishXby
@@ -279,8 +288,8 @@ export function CustomerShellHeader({
               ? "Crea albumes privados de fans y recuerdos festivos desde fotos aprobadas."
               : "Crea sets privados de fotos con IA desde selfies cotidianos."
             : isAidreamcapes ? "Create private fan-scene and holiday albums from approved photos." : "Create private AI photo sets from everyday selfies."}
-        </p>
-        <div className="flex h-[72px] min-w-0 flex-nowrap items-center justify-between gap-1.5 xl:gap-2 min-[1536px]:gap-2.5 min-[1800px]:h-[76px] min-[1800px]:gap-5">
+        </p> : null}
+        <div className={isAidreamcapesZipHeader ? "flex min-w-0 flex-1 flex-nowrap items-center justify-between gap-4" : "flex h-[72px] min-w-0 flex-nowrap items-center justify-between gap-1.5 xl:gap-2 min-[1536px]:gap-2.5 min-[1800px]:h-[76px] min-[1800px]:gap-5"}>
           <StorefrontInstantLink aria-label={`${readableLogoText} home`} className={logoLinkClassName} href={homeHref} title={`${readableLogoText} home`}>
             <span className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-[13px] bg-transparent min-[1800px]:h-12 min-[1800px]:w-12 min-[1800px]:rounded-[15px]">
               <img className="h-10 w-10 object-contain min-[1800px]:h-12 min-[1800px]:w-12" src={logoSrc} alt={logoAlt} width={48} height={48} />
@@ -293,7 +302,9 @@ export function CustomerShellHeader({
             </span>
           </StorefrontInstantLink>
 
-          <nav className="order-2 hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-1 text-[0.78rem] font-semibold xl:flex min-[1440px]:gap-1.5 min-[1536px]:gap-2 min-[1800px]:gap-2.5">
+          {isAidreamcapesZipHeader ? (
+            <AidreamcapesZipDesktopNavigation navigation={aidreamcapesZipNavigation} resolveHref={resolveZipHref} />
+          ) : <nav className="order-2 hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-1 text-[0.78rem] font-semibold xl:flex min-[1440px]:gap-1.5 min-[1536px]:gap-2 min-[1800px]:gap-2.5">
             <ClickMegaMenu
               buttonClassName={`rounded-[15px] border transition ${desktopNavClass}`}
               label={isFrenchXby ? "Packs photo" : isSpanishXby ? isAidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : aiGenerationParity ? "AI Image Generation" : isAidreamcapes ? "Occasion Albums" : "Browse packages"}
@@ -361,9 +372,9 @@ export function CustomerShellHeader({
                 Preguntas
               </StorefrontInstantLink>
             ) : null}
-          </nav>
+          </nav>}
 
-          <details className="group relative order-2 shrink-0 xl:hidden" data-storefront-mobile-menu="">
+          {isAidreamcapesZipHeader ? <AidreamcapesZipMobileNavigation mobileLabel="Open navigation" navigation={aidreamcapesZipNavigation} resolveHref={resolveZipHref} /> : <details className="group relative order-2 shrink-0 xl:hidden" data-storefront-mobile-menu="">
             <summary
               aria-label={isFrenchXby ? "Ouvrir la navigation" : isSpanishXby ? "Abrir navegacion" : "Open navigation"}
               className={`grid h-10 w-10 cursor-pointer list-none place-items-center rounded-full border transition [&::-webkit-details-marker]:hidden ${dark ? "border-white/18 text-white hover:bg-white/10" : "border-[#d8cbbb] text-[#171514] hover:bg-[#efe5d7]"}`}
@@ -381,7 +392,7 @@ export function CustomerShellHeader({
               <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}/pricing`}>{isFrenchXby ? "Tarifs" : isSpanishXby ? "Precios" : "Pricing"}</StorefrontInstantLink>
               <StorefrontInstantLink className="rounded-[6px] px-3 py-2.5 text-sm font-semibold hover:bg-white/10" href={`${basePath}/app/create`}>{isFrenchXby ? "Espace privé" : isSpanishXby ? "Espacio privado" : "Workspace"}</StorefrontInstantLink>
             </nav>
-          </details>
+          </details>}
 
           <div className="order-3 ml-auto min-w-0 shrink-0 min-[1800px]:ml-0" data-storefront-header-controls="">
             <div className={signedInClassName}>

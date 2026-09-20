@@ -363,7 +363,18 @@ export async function readCustomerAssetFileByStorageKey(params: {
 export function toThemeRuntimeAssetRelational(asset: AssetUpload): ThemeRuntimeAsset {
   const storageKey = asset.storageKey.replace(/^customer-assets\//, "");
   const altText = typeof asset.validationReport?.altText === "string" ? asset.validationReport.altText : undefined;
-  const hasReadablePreview = customerAssetFileExists(storageKey) || shouldAssumeRemoteCustomerAssetsReadable();
+  let hasSafeStorageKey = false;
+  try {
+    safeCustomerAssetStorageKey({
+      siteId: asset.siteId,
+      customerId: asset.customerId,
+      storageKey
+    });
+    hasSafeStorageKey = true;
+  } catch {
+    // Legacy records can still be listed, but must not render a broken preview URL.
+  }
+  const hasReadablePreview = hasSafeStorageKey && (customerAssetFileExists(storageKey) || shouldAssumeRemoteCustomerAssetsReadable());
   return {
     id: asset.id,
     jobId: asset.jobId,

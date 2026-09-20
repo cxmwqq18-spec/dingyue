@@ -13,6 +13,7 @@ import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { storefrontOriginalLogoUrl } from "@/lib/storefront-brand-assets";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import {
   AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY,
@@ -446,11 +447,14 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
   const identifiers = companyIdentifiers(profile);
   const sameAs = (context?.profile?.identity.sameAs ?? []).filter((url) => /^https?:\/\//i.test(url));
   const isAboutPage = pagePath === "/about-us" && isMydreamshootsComSite(site);
-  const logo = isPrimaryMyDreamShootsSite(site)
-    ? absoluteUrl(site, routeMode, "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
-    : hasAidreamshootsBranding(site)
-      ? absoluteUrl(site, routeMode, "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a")
-      : undefined;
+  const originalLogo = storefrontOriginalLogoUrl(site);
+  const logo = originalLogo
+    ? absoluteUrl(site, routeMode, originalLogo)
+    : isPrimaryMyDreamShootsSite(site)
+      ? absoluteUrl(site, routeMode, "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
+      : hasAidreamshootsBranding(site)
+        ? absoluteUrl(site, routeMode, "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260919original")
+        : undefined;
   return {
     "@type": "Organization",
     "@id": `${storefrontBaseUrl(site, routeMode)}#organization`,
@@ -731,15 +735,19 @@ function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string,
       "@type": "Organization",
       name: siteBrandName(site),
       url: storefrontBaseUrl(site, routeMode),
-      ...(isPrimaryMyDreamShootsSite(site) || hasAidreamshootsBranding(site) ? {
+      ...(storefrontOriginalLogoUrl(site) || isPrimaryMyDreamShootsSite(site) || hasAidreamshootsBranding(site) ? {
         logo: {
           "@type": "ImageObject",
-          url: absoluteUrl(site, routeMode, hasAidreamshootsBranding(site)
-            ? "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a"
-            : "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b"),
-          contentUrl: absoluteUrl(site, routeMode, hasAidreamshootsBranding(site)
-            ? "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a"
-            : "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
+          url: storefrontOriginalLogoUrl(site)
+            ? absoluteUrl(site, routeMode, storefrontOriginalLogoUrl(site))
+            : absoluteUrl(site, routeMode, hasAidreamshootsBranding(site)
+              ? "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260919original"
+              : "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b"),
+          contentUrl: storefrontOriginalLogoUrl(site)
+            ? absoluteUrl(site, routeMode, storefrontOriginalLogoUrl(site))
+            : absoluteUrl(site, routeMode, hasAidreamshootsBranding(site)
+              ? "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260919original"
+              : "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
         }
       } : {})
     },

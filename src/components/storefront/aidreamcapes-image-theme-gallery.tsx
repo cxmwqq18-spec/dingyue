@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AidreamcapesImageAsset } from "@/components/storefront/aidreamcapes-image-theme-media";
 import type { AidreamcapesImageThemeDetailContent } from "@/lib/aidreamcapes-image-theme-content";
 
@@ -13,6 +13,14 @@ type GalleryProps = {
   items: GalleryItems;
   mode: AidreamcapesImageThemeGalleryMode;
 };
+
+const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+
+function columnCountForWidth(width: number, mode: AidreamcapesImageThemeGalleryMode): number {
+  if (width < 640) return 2;
+  if (width < 1024) return 3;
+  return mode === "storyboard" ? 3 : 4;
+}
 
 function gridClass(mode: AidreamcapesImageThemeGalleryMode): string {
   if (mode === "storyboard") return "grid grid-cols-2 items-start gap-3 sm:grid-cols-3 lg:grid-cols-3";
@@ -68,7 +76,9 @@ function GalleryCard({ item, index, className = "", onOpen }: { item: GalleryIte
 
 export function AidreamcapesImageThemeGallery({ items, mode }: GalleryProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [galleryColumnCount, setGalleryColumnCount] = useState(2);
+  // Desktop is the SSR-safe default. The previous default of two columns
+  // painted a visibly incomplete desktop gallery before the resize effect ran.
+  const [galleryColumnCount, setGalleryColumnCount] = useState(4);
   const triggerRef = useRef<HTMLElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const scrollYRef = useRef(0);
@@ -92,18 +102,9 @@ export function AidreamcapesImageThemeGallery({ items, mode }: GalleryProps) {
     };
   }, [activeIndex, items.length]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const updateColumnCount = () => {
-      const width = window.innerWidth;
-      if (width < 640) {
-        setGalleryColumnCount(2);
-        return;
-      }
-      if (width < 1024) {
-        setGalleryColumnCount(3);
-        return;
-      }
-      setGalleryColumnCount(mode === "storyboard" ? 3 : 4);
+      setGalleryColumnCount(columnCountForWidth(window.innerWidth, mode));
     };
     updateColumnCount();
     window.addEventListener("resize", updateColumnCount);

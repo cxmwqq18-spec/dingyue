@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { isAidreamcapesSite } from "@/lib/storefront-context/capabilities";
+import { storefrontOriginalIconSet } from "@/lib/storefront-brand-assets";
 import { canonicalAbsoluteUrlForSite } from "@/lib/storefront-context/seo-projection";
 import type { Site, ThemePage, ThemeSettings } from "@/lib/types";
 
@@ -73,10 +74,12 @@ function isAidreamcapesEuSaveTheDatePage(site: Site, page: Pick<ThemePage, "slug
 }
 
 function siteIcons(site: Site, settings: ThemeSettings): Metadata["icons"] | undefined {
+  const originalIcons = storefrontOriginalIconSet(site);
+  if (originalIcons) return originalIcons;
   const icon = settingText((site.branding as { logoImageUrl?: string }).logoImageUrl)
     ?? settingText(settings.globalSections?.header?.settings.logoImageUrl)
     ?? settingText(settings.globalSections?.footer?.settings.logoImageUrl);
-  return icon ? { icon, shortcut: icon, apple: icon } : undefined;
+  return icon ? { icon, apple: icon } : undefined;
 }
 
 export type NormalizedThemeSeo = Omit<NonNullable<ThemeSettings["seo"]>, "pages">;

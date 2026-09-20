@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 import fs from "node:fs/promises";
 import path from "node:path";
-import sharp from "sharp";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { assertDatabaseTarget } from "./lib/database-target.mjs";
+import { writeProviderImageBundle } from "./lib/provider-image-output.mjs";
 
 const SITE_ID = "site_aidreamcapes_xby";
 const PROVIDER_LABEL = "buming-image";
@@ -12,7 +12,6 @@ const MODEL = "gpt-image-2";
 const REQUEST_SIZE = "1536x1024";
 const QUALITY = "high";
 const TARGET_WIDTH = 3840;
-const TARGET_HEIGHT = 2160;
 const PRICE_PER_REQUEST_USD = 0.0075;
 const PUBLIC_BASE = "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/save-the-date/vendor-api-gpt-image-2-4k-v1/wedding-invitation";
 const LOCAL_BASE = path.resolve("public", PUBLIC_BASE.slice(1));
@@ -76,14 +75,6 @@ function buildPrompt(task) {
   ].join("\n\n");
 }
 
-async function write4kJpeg(buffer, outputPath) {
-  await fs.mkdir(path.dirname(outputPath), { recursive: true });
-  await sharp(buffer)
-    .rotate()
-    .resize(TARGET_WIDTH, TARGET_HEIGHT, { fit: "cover", position: "centre" })
-    .jpeg({ quality: 92, chromaSubsampling: "4:4:4", mozjpeg: true })
-    .toFile(outputPath);
-}
 
 async function writeReport(report) {
   await fs.mkdir(path.dirname(REPORT_PATH), { recursive: true });
@@ -97,7 +88,7 @@ const plan = {
   endpoint: "/v1/images/generations",
   method: "POST",
   requestSize: REQUEST_SIZE,
-  outputSize: TARGET_WIDTH + "x" + TARGET_HEIGHT,
+  outputSize: TARGET_WIDTH + "px wide; provider aspect ratio preserved; original response retained",
   quality: QUALITY,
   pageSlug: MANIFEST.slug,
   maxPaidCreateAttempts: MAX_PAID_CREATE_ATTEMPTS,
@@ -129,7 +120,7 @@ try {
   });
   if (!provider?.apiKey || !provider.aiUrl) throw new Error("configured_vendor_provider_missing_api_credentials");
   const endpoint = providerBaseUrl(provider.aiUrl) + "/images/generations";
-  console.log("paid provider plan: POST " + endpoint + " model=" + MODEL + " quality=" + QUALITY + " requestSize=" + REQUEST_SIZE + " outputSize=" + TARGET_WIDTH + "x" + TARGET_HEIGHT + " maxPaidCreateAttempts=" + MAX_PAID_CREATE_ATTEMPTS + " attemptsPerImage=1 stopOnFirstError=true");
+  console.log("paid provider plan: POST " + endpoint + " model=" + MODEL + " quality=" + QUALITY + " requestSize=" + REQUEST_SIZE + " outputSize=" + TARGET_WIDTH + "px-wide-preserve-ratio maxPaidCreateAttempts=" + MAX_PAID_CREATE_ATTEMPTS + " attemptsPerImage=1 stopOnFirstError=true");
   console.log("using vendor API provider: " + provider.label);
 
   for (const task of TASKS) {
@@ -161,9 +152,14 @@ try {
     });
     await writeReport(plan);
     if (!response.ok) throw new Error(task.outputFilename + ":provider_create_failed:" + response.status);
-    await write4kJpeg(await responseImageBuffer(body), path.join(LOCAL_BASE, task.outputFilename));
-    const metadata = await sharp(path.join(LOCAL_BASE, task.outputFilename)).metadata();
-    if (metadata.width !== TARGET_WIDTH || metadata.height !== TARGET_HEIGHT) throw new Error(task.outputFilename + ":unexpected_output_dimensions:" + metadata.width + "x" + metadata.height);
+    const bundle = await writeProviderImageBundle({
+      buffer: await responseImageBuffer(body),
+      originalPathBase: path.join(LOCAL_BASE, "_provider-results", "originals", task.outputFilename),
+      displayPath: path.join(LOCAL_BASE, task.outputFilename),
+      displayWidth: TARGET_WIDTH,
+      label: task.outputFilename
+    });
+    console.log("generated vendor asset: " + task.outputFilename + " -> " + bundle.displayWidth + "x" + bundle.displayHeight + "; original=" + bundle.originalPath);
     await writeReport(plan);
   }
   plan.completed = true;

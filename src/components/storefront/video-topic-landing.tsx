@@ -21,73 +21,6 @@ type RoutedSite = Site & { __storefrontBasePath?: string };
 // distortion.
 const talkingPhotoImageSize = { width: 1600, height: 1200 };
 
-const spanishVideoResidualEnglishPattern = /\b(?:customer|problem|example|script|expert|tip|generated|references|additional|guidance|keep|supporting|notes|specific|platform|buyer|campaign|futuristic|world|scale|imagination|stillness|expressive|historic|textures|aloud|voices|right|thank|being|needed|forget|viewers|leaving|first|seconds|whole|video|treat|human|venue|happy|grooming|material|behavior|behaviour|detail|craftsperson|place|proof|meaning|expectation|qualified|reaction|twist|optional|natural|right|joke|quote|separate|shoot|would|slow|wider|era|collaboration|energy|workplace|culture|meme|reply|deadpan|pov|testimonial|urgency|scarcity|relationship-led|establishes|personality|emotional|role|introduction|launch|reused|everywhere|features|states|inventing|interface|campaign|variants|routine|full|love|happy|six|eight|directions|story|beats|music|fashion|pet|food|owner|portrait|frame|approved|reference|continuity|scene|shot)\b/i;
-const meaningfulSpanishImageAltPattern = /\b(?:persona|adult[oa]|creador(?:a)?|presentador(?:a)?|fundador(?:a)?|modelo|especialista|equipo|manos|producto|perro|gato|mascota|cámara|camara|escena|espacio|entorno|estudio|hogar|cocina|mesa|marca|vídeo|video|redes|sociales|campaña|lanzamiento|historia|música|moda|preparando|mostrando|grabando|compartiendo|demostrando|contando|trabajando|revisando|explicando|jugando|paseando|sirviendo|cuidando|presentando|organizando)\b/i;
-const genericSpanishImageAltPattern = /\b(?:ejemplo visual|creado con ia|fotos propias|resultados de|contenido de aidreamshoots|contenido de mydreamshoots)\b/i;
-
-function spanishVideoTopicLabel(contentKey: string): string {
-  const labels: Record<string, string> = {
-    "cinematic-video": "vídeos cinematográficos",
-    "explainer-video": "vídeos explicativos",
-    "talking-photo": "fotos parlantes",
-    "brand-video": "vídeos de marca",
-    "video-ad": "anuncios de vídeo",
-    "product-ad-video": "anuncios de producto",
-    "product-video": "vídeos de producto",
-    "music-video": "vídeos musicales",
-    "fashion-video": "vídeos de moda",
-    "food-video": "vídeos gastronómicos",
-    "pet-video": "vídeos de mascotas",
-    "meme-video": "vídeos de memes",
-    "ugc-ad-video": "anuncios UGC",
-    "promo-video": "vídeos promocionales",
-    "social-media-video": "vídeos para redes sociales"
-  };
-  return labels[contentKey] ?? "vídeos con IA";
-}
-
-function spanishVideoFallback(key: string, topic: string): string {
-  const normalized = key.toLowerCase();
-  const topicWithoutAiSuffix = topic.replace(/\s+con IA$/i, "").trim();
-  if (normalized.includes("alt") || normalized.includes("caption")) return `Ejemplo visual de ${topic} creado con IA.`;
-  if (normalized.includes("cta") || normalized.includes("button") || normalized.includes("linklabel")) return "Crear vídeo";
-  if (normalized.includes("eyebrow") || normalized.includes("label")) return "Vídeo con IA";
-  if (normalized.includes("title") || normalized.includes("headline")) return `Ideas de ${topicWithoutAiSuffix} con IA`;
-  if (normalized.includes("problem")) return "Define el objetivo, el público y el tono antes de generar.";
-  if (normalized.includes("script")) return `Guion breve para un vídeo de ${topic}.`;
-  return `Usa fotos propias o autorizadas, revisa los detalles y conserva el resultado de ${topic} en tu espacio privado.`;
-}
-
-function repairSpanishVideoTopicContent<T>(value: T, contentKey: string, spanish: boolean, key = ""): T {
-  if (!spanish) return value;
-  const topic = spanishVideoTopicLabel(contentKey);
-  if (typeof value === "string") {
-    // Asset URLs are data, not customer-facing copy. A filename such as
-    // `talking-photo-social-video.webp` contains the English word "video" and
-    // must never be replaced by the Spanish copy fallback.
-    if (/^(?:src|poster|imageUrl|imageOriginalUrl|videoUrl|posterUrl|backgroundImage|beforeImage|resultImageUrl|secondaryImageUrl)$/i.test(key) && /^(?:https?:|\/)/i.test(value)) {
-      return value;
-    }
-    // Keep scene-specific Spanish alt text intact. The legacy residual-English
-    // list contains words such as `natural`, `story`, and `video` that can
-    // legitimately appear in an otherwise correct Spanish description. A
-    // generic fallback here would erase the accessibility meaning of the image.
-    if (/^(?:alt|caption)$/i.test(key) && value.length >= 30 && value.length <= 150 && meaningfulSpanishImageAltPattern.test(value) && !genericSpanishImageAltPattern.test(value)) {
-      return value;
-    }
-    if (!spanishVideoResidualEnglishPattern.test(value)) return value;
-    return spanishVideoFallback(key, topic) as T;
-  }
-  if (Array.isArray(value)) return value.map((item) => repairSpanishVideoTopicContent(item, contentKey, spanish, key)) as T;
-  if (value && typeof value === "object") {
-    return Object.fromEntries(Object.entries(value).map(([childKey, childValue]) => [
-      childKey,
-      repairSpanishVideoTopicContent(childValue, contentKey, spanish, childKey)
-    ])) as T;
-  }
-  return value;
-}
-
 type VideoTopicImage = {
   src: string;
   imageOriginalUrl?: string;
@@ -840,8 +773,8 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} />
           <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            {content.faq.items.map((item) => (
-              <details className="group rounded-[20px] border border-white/10 bg-[#17151f] p-5 open:bg-[#211c2e]" key={item.question}>
+            {content.faq.items.map((item, index) => (
+              <details className="group rounded-[20px] border border-white/10 bg-[#17151f] p-5 open:bg-[#211c2e]" key={`${item.question}-${index}`}>
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-white">
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#c4b5fd] transition group-open:rotate-90" strokeWidth={1.8} />
@@ -1042,8 +975,8 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light />
           <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            {content.faq.items.map((item) => (
-              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}>
+            {content.faq.items.map((item, index) => (
+              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={`${item.question}-${index}`}>
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]">
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
@@ -1245,8 +1178,8 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light />
           <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            {content.faq.items.map((item) => (
-              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}>
+            {content.faq.items.map((item, index) => (
+              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={`${item.question}-${index}`}>
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]">
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
@@ -1578,8 +1511,8 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light />
           <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            {content.faq.items.map((item) => (
-              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}>
+            {content.faq.items.map((item, index) => (
+              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={`${item.question}-${index}`}>
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]">
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
@@ -1682,7 +1615,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
 
       <section className="border-b border-white/10 bg-[#191525] px-5 py-16 sm:px-8 sm:py-24" id="integrity-review" data-video-topic-section="integrity-review"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.trust.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" data-scene-topic-review-card key={`${item.title}-${index}`}><ShieldCheck className={`h-5 w-5 ${accentClass}`} strokeWidth={1.8} /><h3 className="mt-5 text-lg font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div></div></section>
 
-      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light /><div className="mt-10 grid gap-4 lg:grid-cols-2">{content.faq.items.map((item) => <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}><summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]"><span>{item.question}</span><ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} /></summary><p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p></details>)}</div></div></section>
+      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light /><div className="mt-10 grid gap-4 lg:grid-cols-2">{content.faq.items.map((item, index) => <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={`${item.question}-${index}`}><summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]"><span>{item.question}</span><ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} /></summary><p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p></details>)}</div></div></section>
       {content.comparison ? <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="related-pages" data-video-topic-section="related-pages"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.comparison.eyebrow} title={content.comparison.title} body={content.comparison.intro} /><SectionCards cards={content.comparison.items} site={site} /></div></section> : null}
       <section className="bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" data-video-topic-section="final-cta"><div className="mx-auto max-w-[var(--site-content-width)] rounded-[28px] border border-[#c4b5fd]/25 bg-[#191525] px-6 py-12 text-center sm:px-10 sm:py-16"><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{content.finalCta.eyebrow}</p><h2 className="mx-auto mt-4 max-w-3xl text-balance text-3xl font-semibold leading-[1.03] tracking-normal text-white sm:text-5xl">{content.finalCta.title}</h2><p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/68">{content.finalCta.body}</p><div className="mt-8 flex justify-center"><ActionLink href={primaryHref} label={content.finalCta.cta} site={site} /></div><p className="mt-5 text-xs leading-5 text-white/48">{content.finalCta.microcopy}</p></div></section>
     </main>
@@ -1871,8 +1804,8 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light />
           <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            {content.faq.items.map((item) => (
-              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}>
+            {content.faq.items.map((item, index) => (
+              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={`${item.question}-${index}`}>
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]">
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
@@ -1912,10 +1845,9 @@ export function AiVideoTopicLanding({ section, site }: { section: SectionInstanc
     if (content.layoutVariant === "ads-testing-detail" || content.layoutVariant === "conversion-seeding-detail" || content.layoutVariant === "promo-category-detail") return <AdsTestingDetail content={content as unknown as AidreamcapesAdsTestingDetailContent} section={section} site={site} />;
     notFound();
   }
-  const localizedContent = repairSpanishVideoTopicContent(content, contentKey, site.id === "site_mydreamshoots_xby");
   return (
     <DreamshootShowcasePreview>
-      <VideoTopicLanding content={normalizeAiContent(localizedContent)} contentKey={contentKey} section={section} site={site} />
+      <VideoTopicLanding content={normalizeAiContent(content)} contentKey={contentKey} section={section} site={site} />
     </DreamshootShowcasePreview>
   );
 }
@@ -1923,10 +1855,9 @@ export function AiVideoTopicLanding({ section, site }: { section: SectionInstanc
 export function TalkingPhotoLanding({ section, site }: { section: SectionInstance; site: Site }) {
   const content = talkingPhotoContentFromSection(section);
   if (!content) notFound();
-  const localizedContent = repairSpanishVideoTopicContent(content, "talking-photo", site.id === "site_mydreamshoots_xby");
   return (
     <DreamshootShowcasePreview>
-      <VideoTopicLanding content={normalizeTalkingContent(localizedContent)} contentKey="talking-photo" section={section} site={site} />
+      <VideoTopicLanding content={normalizeTalkingContent(content)} contentKey="talking-photo" section={section} site={site} />
     </DreamshootShowcasePreview>
   );
 }

@@ -40,6 +40,7 @@ import type {
   AiProviderConfig,
   AiWorkflowConfig,
   AiWorkflowStep,
+  AidreamcapesZipNavigation,
   AuditLogEntry,
   CreativePack,
   CreativePackCategory,
@@ -1308,6 +1309,10 @@ function fallbackCustomerWorkspaceSiteShell(slug: string): CustomerWorkspaceBoot
     primaryDomain: site.primaryDomain,
     branding: cloneJson(site.branding) as Site["branding"]
   };
+}
+
+function fallbackCustomerWorkspaceAidreamcapesNavigation(slug: string): AidreamcapesZipNavigation | undefined {
+  return fallbackSiteBySlug(slug)?.themeSettings?.publishedJson.aidreamcapesZipNavigation;
 }
 
 function fallbackCustomerWorkspaceSiteAiApps(siteId: string): SiteAiApp[] {
@@ -2585,6 +2590,7 @@ export async function getSiteIdBySlugRelational(slug: string): Promise<string | 
 
 export type CustomerWorkspaceBootstrapRelational = {
   site: Pick<Site, "id" | "name" | "slug" | "branding" | "primaryDomain">;
+  aidreamcapesZipNavigation?: AidreamcapesZipNavigation;
   siteAiApps: SiteAiApp[];
   creativePackCategories: CreativePackCategory[];
   creativePacks: CreativePack[];
@@ -2735,6 +2741,7 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
         primaryDomain: site.primaryDomain,
         branding: site.branding
       },
+      aidreamcapesZipNavigation: liveSnapshot?.themeSettings?.aidreamcapesZipNavigation ?? fallbackCustomerWorkspaceAidreamcapesNavigation(slug),
       siteAiApps,
       creativePackCategories: navigationData.creativePackCategories.map((category) => watermarkedCreativePackCategoryForWorkspace(category) ?? category),
       creativePacks: navigationData.creativePacks.map(watermarkedCreativePackForWorkspace),

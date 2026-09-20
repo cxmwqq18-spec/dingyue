@@ -213,10 +213,11 @@ function ReferencePackageCard({
         <div className={referenceImageShellClass}>
           <div className="grid grid-cols-2 items-stretch gap-0.5 p-3" data-dreamshoot-catalog-cover="split">
             {images.map((image, imageIndex) => (
-              <div className={referenceImageFrameClass} key={`${card.id}_split_${imageIndex}`}>
+
+              <div className={locale === "fr" ? "overflow-hidden rounded-[9px] bg-transparent" : referenceImageFrameClass} key={`${card.id}_split_${imageIndex}`}>
 	              <SafeCatalogImage
                 alt={imageAlt(card, image, imageIndex, locale, brandName)}
-                className="h-full object-cover transition duration-500"
+                className={locale === "fr" ? "h-auto object-contain transition duration-500" : "h-full object-cover transition duration-500"}
                 decoding="async"
                 fetchPriority={prioritizeFirstImage && index === 0 && imageIndex === 0 ? "high" : "low"}
                 loading={prioritizeFirstImage && index === 0 && imageIndex === 0 ? "eager" : "lazy"}

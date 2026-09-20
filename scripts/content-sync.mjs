@@ -6,6 +6,7 @@ import { execFileSync } from "node:child_process";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { argumentValue, assertAllowedSite, assertDatabaseTarget, hasArgument, parseDatabaseUrl } from "./lib/database-target.mjs";
+import { assertAidreamcapesEuHomepageIntegrity } from "./lib/aidreamcapes-eu-homepage-integrity.mjs";
 
 const mode = argumentValue("--mode") || "plan";
 const target = argumentValue("--target") || process.env.DATABASE_TARGET || "";
@@ -416,6 +417,7 @@ async function apply() {
         await tx.contentSyncBaseline.deleteMany({ where: { target, siteId, entityType: deletion.entityType, entityKey: deletion.entityKey } });
         report.deletions.push(deletion);
       }
+      if (siteId === "site_aidreamcapes_xby") await assertAidreamcapesEuHomepageIntegrity(tx);
       const after = await protectedFingerprint(tx);
       if (hash(before) !== hash(after)) fail("Protected business data changed during content apply; transaction rolled back.");
     }, { timeout: 600000, maxWait: 20000 });

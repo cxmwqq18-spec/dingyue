@@ -118,23 +118,32 @@ function loadSectionRuntime(params: {
     pageSize: String(params.pageSize)
   });
   if (params.list) query.set("list", params.list);
-  const request = fetch(`/api/sites/${params.siteId}/customer/runtime?${query.toString()}`, {
-    credentials: "same-origin"
-  })
-    .then(async (response) => {
-      const data = (await response.json().catch(() => ({}))) as {
-        ok?: boolean;
-        pagination?: ThemeRuntimePagination;
-        runtime?: ThemeRuntimeData;
-        error?: string;
-      };
-      if (!response.ok || !data.ok || !data.runtime) throw new Error(data.error || "account_data_unavailable");
-      const runtime = data.pagination && !data.runtime.pagination
-        ? { ...data.runtime, pagination: data.pagination }
-        : data.runtime;
-      writeCachedSection(params.cacheKey, runtime);
-      return runtime;
-    })
+  const request = (async () => {
+    let lastError: unknown = new Error("account_data_unavailable");
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      try {
+        const response = await fetch(`/api/sites/${params.siteId}/customer/runtime?${query.toString()}`, {
+          credentials: "same-origin"
+        });
+        const data = (await response.json().catch(() => ({}))) as {
+          ok?: boolean;
+          pagination?: ThemeRuntimePagination;
+          runtime?: ThemeRuntimeData;
+          error?: string;
+        };
+        if (!response.ok || !data.ok || !data.runtime) throw new Error(data.error || "account_data_unavailable");
+        const runtime = data.pagination && !data.runtime.pagination
+          ? { ...data.runtime, pagination: data.pagination }
+          : data.runtime;
+        writeCachedSection(params.cacheKey, runtime);
+        return runtime;
+      } catch (error) {
+        lastError = error;
+        if (attempt < 2) await new Promise((resolve) => window.setTimeout(resolve, 400 * (attempt + 1)));
+      }
+    }
+    throw lastError instanceof Error ? lastError : new Error("account_data_unavailable");
+  })()
     .finally(() => {
       sectionInflight.delete(params.cacheKey);
     });
@@ -220,6 +229,7 @@ function useAccountSectionRuntime(params: {
   list?: AccountList;
   page: number;
   pageSize: number;
+  retryNonce: number;
   section: AccountSection;
   siteId: string;
 }): LoadState {
@@ -260,7 +270,7 @@ function useAccountSectionRuntime(params: {
     return () => {
       cancelled = true;
     };
-  }, [cacheKey, params.initialRuntime, params.list, params.page, params.pageSize, params.section, params.siteId]);
+  }, [cacheKey, params.initialRuntime, params.list, params.page, params.pageSize, params.retryNonce, params.section, params.siteId]);
 
   return state;
 }
@@ -288,19 +298,21 @@ function AccountCard({
   section: AccountSection;
   siteId: string;
 }) {
+  const [retryNonce, setRetryNonce] = useState(0);
   const state = useAccountSectionRuntime({
     customerId,
     initialRuntime,
     list,
     page: pageState?.page ?? 1,
     pageSize: pageState?.pageSize ?? 20,
+    retryNonce,
     section,
     siteId
   });
   return (
-    <div className="scroll-mt-28 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface)] p-4 shadow-[var(--account-shadow)] sm:p-5" id={id}>
+    <div className={`ac-account-module-card ac-classic-module-card ${section === "overview" ? "ac-classic-overview-card" : "ac-classic-module-card-panel"} scroll-mt-28 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface)] p-4 shadow-[var(--account-shadow)] sm:p-5`} id={id}>
       {state.status === "loading" ? <LoadingBlock title={loadingTitle} /> : null}
-      {state.status === "error" ? <ErrorBlock /> : null}
+      {state.status === "error" ? <ErrorBlock onRetry={() => setRetryNonce((current) => current + 1)} /> : null}
       {state.status === "ready" ? children(state.runtime, state.runtime.pagination) : null}
       {state.status === "ready" && state.runtime.pagination && onPageChange ? (
         <PaginationControls onChange={onPageChange} pagination={state.runtime.pagination} />
@@ -322,11 +334,12 @@ function LoadingBlock({ title }: { title: string }) {
   );
 }
 
-function ErrorBlock() {
+function ErrorBlock({ onRetry }: { onRetry: () => void }) {
   return (
-    <p className="rounded-[8px] border border-dashed border-[var(--account-border)] bg-[var(--account-panel)] p-4 text-sm text-[var(--account-muted)]">
-      This account module could not load. Refresh the page or sign in again.
-    </p>
+    <div className="ac-account-load-error rounded-[8px] border border-dashed border-[var(--account-border)] bg-[var(--account-panel)] p-4 text-sm text-[var(--account-muted)]">
+      <p>This account module could not load. Try again or sign in again if the session has expired.</p>
+      <button className="mt-3 inline-flex min-h-9 items-center rounded-[8px] border border-[var(--account-button-border)] bg-[var(--account-button-bg)] px-3 text-sm font-semibold text-white" onClick={onRetry} type="button">Try again</button>
+    </div>
   );
 }
 
@@ -532,39 +545,80 @@ function MediaThumb({
   );
 }
 
-function isPrimaryMyDreamShootsSlug(siteSlug: string): boolean {
-  return siteSlug.trim().toLowerCase() === "mydreamshoots";
-}
-
-function OverviewCard({ basePath, fallbackCustomer, runtime, siteSlug }: { basePath: string; fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData; siteSlug: string }) {
-  const customer = accountCustomer(runtime, fallbackCustomer);
-  const activeSubscription = (runtime.subscriptions ?? []).find((subscription) => subscription.status === "active" || subscription.status === "trialing") ?? runtime.subscriptions?.[0];
-  const latestJob = runtime.jobs[0];
+function OverviewCard({ basePath, fallbackCustomer, runtime }: { basePath: string; fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData }) {
+  const account = accountCustomer(runtime, fallbackCustomer);
   const latestOrder = runtime.orders?.[0];
-  const balance = customer.balance.available ?? 0;
-  const videoGenerationHref = isPrimaryMyDreamShootsSlug(siteSlug) ? "/ai-video-generation" : "/tools";
+  const latestJob = runtime.jobs[0];
+  const downloads = runtime.downloads ?? [];
+  const albums = runtime.albums ?? [];
+  const activeSubscription = runtime.subscriptions?.find((subscription) => subscription.status === "active" || subscription.status === "trialing") ?? runtime.subscriptions?.[0];
+  const planLabel = activeSubscription?.productName ?? activeSubscription?.priceLabel ?? "No plan";
+  const activity = [
+    {
+      title: "Photo profile request",
+      subtitle: latestJob ? `${jobStatusLabel(latestJob.status)} · request history is ready` : "No request submitted yet",
+      time: latestJob ? dateLabel(latestJob.updatedAt) : "—",
+      active: Boolean(latestJob)
+    },
+    {
+      title: "Download center",
+      subtitle: downloads.length ? `${downloads.length} delivered file${downloads.length === 1 ? "" : "s"} in history` : "No delivered assets yet",
+      time: downloads[0] ? dateLabel(downloads[0].createdAt) : "—",
+      active: false
+    },
+    {
+      title: "Private album",
+      subtitle: albums.length ? `${albums.length} album${albums.length === 1 ? "" : "s"} connected to this account` : "No published albums yet",
+      time: albums[0] ? dateLabel(albums[0].updatedAt) : "—",
+      active: false
+    }
+  ];
   return (
-    <div className="grid gap-5">
-      <SectionHeader icon={WalletCards} kicker="Overview" title="Account command center" subtitle="Review your plan, credit balance, private requests, and delivered work from one place." />
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <StatTile label="Available credits" value={balance} hint={`${customer.balance.reserved ?? 0} credits reserved`} />
-        <StatTile label="Plan" value={activeSubscription?.productName ?? activeSubscription?.priceLabel ?? "No plan"} hint={activeSubscription ? `${statusLabel(activeSubscription.status)} - renews ${dateLabel(activeSubscription.currentPeriodEnd)}` : "Choose a package or subscription when ready"} />
-        <StatTile label="Recent request" value={latestJob ? jobStatusLabel(latestJob.status) : "None"} hint={latestJob ? dateLabel(latestJob.updatedAt) : "Generated photos will appear after your first request"} />
-        <StatTile label="Last checkout" value={latestOrder ? money(latestOrder.amountCents, latestOrder.currency) : "$0"} hint={latestOrder ? `${statusLabel(latestOrder.status)} - ${dateLabel(latestOrder.createdAt)}` : "No purchases yet"} />
+    <div className="ac-classic-overview">
+      <div className="ac-classic-section-header">
+        <div className="ac-classic-section-header-left">
+          <span className="ac-classic-section-icon"><WalletCards aria-hidden="true" strokeWidth={1.8} /></span>
+          <div><h2>Account command center</h2><p>Review your plan, credit balance, private requests, and delivered work from one place.</p></div>
+        </div>
+        <a className="ac-classic-section-link" href="#account-generation">View all →</a>
       </div>
-      <div className="grid gap-3 lg:grid-cols-3">
-        <StorefrontInstantLink className="inline-flex items-center justify-between rounded-[8px] border border-[var(--account-button-border)] bg-[var(--account-button-bg)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--account-button-hover)]" href={`${basePath}/app/create`}>
-          Open workspace
-          <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-        </StorefrontInstantLink>
-        <StorefrontInstantLink className="inline-flex items-center justify-between rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-4 py-3 text-sm font-semibold text-[var(--account-text)] transition hover:bg-[var(--account-hover-bg)]" href={`${basePath}/pricing`}>
-          View pricing
-          <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-        </StorefrontInstantLink>
-        <StorefrontInstantLink className="inline-flex items-center justify-between rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-4 py-3 text-sm font-semibold text-[var(--account-text)] transition hover:bg-[var(--account-hover-bg)]" href={`${basePath}${videoGenerationHref}`}>
-          {isPrimaryMyDreamShootsSlug(siteSlug) ? "Explore video generators" : "Explore tools"}
-          <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-        </StorefrontInstantLink>
+      <div className="ac-classic-stat-grid">
+        <article className="ac-classic-stat"><span>Available credits</span><strong>{account.balance.available ?? 0}</strong><small>Ready for your next request</small></article>
+        <article className="ac-classic-stat"><span>Current plan</span><strong>{planLabel}</strong><small>{activeSubscription ? `Status: ${statusLabel(activeSubscription.status)}` : "Choose a package when ready"}</small></article>
+        <article className="ac-classic-stat"><span>Recent request</span><strong>{latestJob ? jobStatusLabel(latestJob.status) : "None yet"}</strong><small>{latestJob ? `Submitted ${dateLabel(latestJob.updatedAt)}` : "No request history yet"}</small></article>
+        <article className="ac-classic-stat"><span>Last checkout</span><strong>{latestOrder ? money(latestOrder.amountCents, latestOrder.currency) : "$0"}</strong><small>{latestOrder ? "Latest purchase recorded" : "No purchase history yet"}</small></article>
+      </div>
+      <div className="ac-classic-quick-actions">
+        <StorefrontInstantLink className="ac-classic-button ac-classic-button-primary" href={`${basePath}/app/create`}>Open workspace <span>→</span></StorefrontInstantLink>
+        <StorefrontInstantLink className="ac-classic-button ac-classic-button-secondary" href={`${basePath}/pricing`}>View pricing <span>→</span></StorefrontInstantLink>
+        <StorefrontInstantLink className="ac-classic-button ac-classic-button-secondary" href={`${basePath}/tools`}>Explore tools <span>→</span></StorefrontInstantLink>
+      </div>
+      <div className="ac-classic-activity" id="account-activity">
+          {activity.map((item, index) => (
+            <div className="ac-classic-activity-row" key={item.title}>
+              <span className="ac-classic-activity-icon">{index === 0 ? <Sparkles aria-hidden="true" strokeWidth={1.8} /> : index === 1 ? <Download aria-hidden="true" strokeWidth={1.8} /> : <Layers3 aria-hidden="true" strokeWidth={1.8} />}</span>
+              <div><strong>{item.title}</strong><span>{item.subtitle}</span></div>
+              <time>{item.time}</time>
+            </div>
+          ))}
+      </div>
+      <div className="ac-classic-library">
+        <section className="ac-classic-card ac-classic-library-panel">
+          <h3>Recent creations</h3>
+          <p>Delivered assets and private albums stay connected to this account.</p>
+          <div className="ac-classic-visual-preview" aria-label="Private library preview"><div className="ac-classic-preview-card" aria-hidden="true" /></div>
+          <div className="ac-classic-privacy-strip"><ShieldCheck aria-hidden="true" strokeWidth={1.8} /><span><b>Private by design.</b> Only this customer session can see these records.</span></div>
+        </section>
+        <section className="ac-classic-card ac-classic-library-panel">
+          <h3>First studio request</h3>
+          <p>Choose a package, confirm your photos, and start your first private profile.</p>
+          <div className="ac-classic-module-meta">
+            <div><span>Progress</span><strong>{latestJob ? jobStatusLabel(latestJob.status) : "Ready"}</strong></div>
+            <div><span>Output</span><strong>{latestJob ? "1" : "—"}</strong></div>
+            <div><span>Photos</span><strong>{latestJob ? "Attached" : "1/15"}</strong></div>
+          </div>
+          <StorefrontInstantLink className="ac-classic-button ac-classic-button-primary ac-classic-library-action" href={`${basePath}/app/create`}>Continue in workspace <span>↗</span></StorefrontInstantLink>
+        </section>
       </div>
     </div>
   );
@@ -1097,7 +1151,7 @@ export function CustomerAccountDataIsland({
   }, [activeSection, customer.id, siteId]);
 
   return (
-    <div className="grid min-w-0 gap-5">
+    <div className="ac-account-data-island ac-classic-data-island grid min-w-0 gap-5">
       {checkoutNotice.success ? (
         <div className="rounded-[8px] border border-[var(--account-success-border)] bg-[var(--account-success-bg)] p-4 text-sm text-[var(--account-success-text)]">
           <div className="flex items-start gap-3">
@@ -1110,7 +1164,7 @@ export function CustomerAccountDataIsland({
       ) : null}
       {activeSection === "overview" ? (
         <AccountCard customerId={customer.id} id="account-overview" initialRuntime={initialRuntime} loadingTitle="Overview" section="overview" siteId={siteId}>
-          {(runtime) => <OverviewCard basePath={basePath} fallbackCustomer={customer} runtime={runtime} siteSlug={siteSlug} />}
+          {(runtime) => <OverviewCard basePath={basePath} fallbackCustomer={customer} runtime={runtime} />}
         </AccountCard>
       ) : null}
       {activeSection === "profile" ? (

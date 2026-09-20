@@ -8,6 +8,7 @@ import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { assertDatabaseTarget, buildTunneledDatabaseUrl } from "./lib/database-target.mjs";
 import { applyAidreamcapesEuGlobalCopy, applyAidreamcapesEuHomepageCopy, applyAidreamcapesEuProductCopy, applyAidreamcapesEuThemeHomepageCopy, applyAidreamcapesEuThemeSettingsCopy } from "./lib/aidreamcapes-eu-homepage-copy.mjs";
+import { assertAidreamcapesEuHomepageIntegrity, assertAidreamcapesEuHomepageJsonContract } from "./lib/aidreamcapes-eu-homepage-integrity.mjs";
 import { translateFrenchText } from "./lib/french-copy.mjs";
 
 const SOURCE_SITE_ID = "site_dreamshoot";
@@ -894,6 +895,7 @@ async function applyState(prisma, source, target, pages, settings, profile, them
     for (const row of pages.themePages) {
       await tx.themePage.upsert({ where: { siteId_slug: { siteId: TARGET_SITE_ID, slug: row.slug } }, create: row, update: { pageType: row.pageType, templateKey: row.templateKey, title: row.title, draftJson: row.draftJson, publishedJson: row.publishedJson, draftMeta: row.draftMeta } });
     }
+    await assertAidreamcapesEuHomepageIntegrity(tx);
     for (const row of themes) {
       await tx.siteTheme.upsert({ where: { id: row.id }, create: row, update: { name: row.name, themeId: row.themeId, themeKey: row.themeKey, status: row.status, templates: row.templates, settings: row.settings, source: row.source, createdBy: row.createdBy } });
     }
@@ -956,6 +958,11 @@ async function main() {
     const scopeBefore = await siteScopeSnapshot(prisma);
     registerMappings(source, targetState);
     const pages = buildPageRows(source, targetState);
+    const plannedLiveHomepage = pages.livePages.find((row) => row.slug === "/");
+    const plannedThemeHomepage = pages.themePages.find((row) => row.slug === "/");
+    assertAidreamcapesEuHomepageJsonContract(plannedLiveHomepage?.contentJson, "sync plan LivePage homepage");
+    assertAidreamcapesEuHomepageJsonContract(plannedThemeHomepage?.draftJson, "sync plan ThemePage draft homepage");
+    assertAidreamcapesEuHomepageJsonContract(plannedThemeHomepage?.publishedJson, "sync plan ThemePage published homepage");
     const duplicateLiveIds = pages.livePages.filter((row, index, rows) => rows.findIndex((candidate) => candidate.id === row.id) !== index).map((row) => ({ id: row.id, slug: row.slug }));
     if (duplicateLiveIds.length) throw new Error(`duplicate_live_page_ids:${JSON.stringify(duplicateLiveIds)}`);
     const liveIdConflicts = pages.livePages.flatMap((row) => targetState.livePages.filter((existing) => existing.id === row.id && existing.slug !== row.slug).map((existing) => ({ id: row.id, desiredSlug: row.slug, existingSlug: existing.slug })));

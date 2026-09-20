@@ -25,7 +25,8 @@ import { AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation, aidr
 import { AidreamcapesZipHomepageSection } from "@/components/storefront/aidreamcapes-zip-homepage";
 import { AidreamcapesPublicSection } from "@/components/storefront/aidreamcapes-public-section";
 import { AidreamcapesZipFooter, type AidreamcapesZipCompanyProfile, type AidreamcapesZipPaymentMethod, type AidreamcapesZipSocialLink } from "@/components/storefront/aidreamcapes-zip-footer";
-import { AidreamcapesVideoDirectory, type AidreamcapesVideoDirectoryCopy } from "@/components/storefront/aidreamcapes-video-directory";
+import { AidreamcapesVideoDirectory, type AidreamcapesVideoDirectoryCopy, type AidreamcapesVideoThemeCover } from "@/components/storefront/aidreamcapes-video-directory";
+import { AidreamcapesImageDirectory, type AidreamcapesImageDirectoryCard } from "@/components/storefront/aidreamcapes-image-directory";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
@@ -62,8 +63,7 @@ import {
   aidreamshootsEngagementFrenchCoverAlt,
   aidreamshootsEngagementFrenchImageAlt,
   aidreamshootsEngagementFrenchRelatedLabel,
-  isAidreamshootsEngagementFrenchPage,
-  localizeAidreamshootsEngagementFrenchPageJson
+  isAidreamshootsEngagementFrenchPage
 } from "@/lib/aidreamshoots-engagement-photo-french";
 import {
   storefrontCardImageAlt,
@@ -76,6 +76,7 @@ import {
   storefrontVideoPosterAlt
 } from "@/lib/storefront-media-alt";
 import { GUARDED_STOREFRONT_FOOTER_PATHS } from "@/lib/storefront-global-shell";
+import { storefrontOriginalLogoUrl } from "@/lib/storefront-brand-assets";
 import {
   AlertTriangle,
   ArrowRight,
@@ -214,6 +215,8 @@ export function ThemeRenderer({
   navigationVideoThemeCategories,
   navigationVideoThemes,
   navigationVideoGenerationTopics,
+  aidreamcapesImageDirectoryCards,
+  aidreamcapesVideoThemeCovers,
   toolMenuItems = [],
   runtime,
   mode = "published",
@@ -241,6 +244,8 @@ export function ThemeRenderer({
   navigationVideoThemeCategories?: VideoThemeCategory[];
   navigationVideoThemes?: VideoTheme[];
   navigationVideoGenerationTopics?: HeaderVideoGenerationTopic[];
+  aidreamcapesImageDirectoryCards?: AidreamcapesImageDirectoryCard[];
+  aidreamcapesVideoThemeCovers?: Record<string, AidreamcapesVideoThemeCover>;
   toolMenuItems?: ToolMenuItem[];
   runtime?: ThemeRuntimeData;
   mode?: "published" | "preview";
@@ -257,12 +262,9 @@ export function ThemeRenderer({
 }) {
   const displaySite = mode === "published" ? storefrontPaidSiteCopy(site) : site;
   const normalizedPath = pagePath ?? sitePathFromPage(displaySite, page.pageType);
-  const localizedPage = mode === "published" && isAidreamshootsEngagementFrenchPage(displaySite, normalizedPath)
-    ? localizeAidreamshootsEngagementFrenchPageJson(page)
-    : page;
   const displayPage = mode === "published"
-    ? preserveVendorImageAlts(storefrontBrandPageCopy(displaySite, localizedPage), localizedPage)
-    : localizedPage;
+    ? preserveVendorImageAlts(storefrontBrandPageCopy(displaySite, page), page)
+    : page;
   const isAidreamcapesComPublicPage = displaySite.id === "site_aidreamcapes" && isAidreamcapesComPublicRedesignPath(normalizedPath);
   const entries = isAidreamcapesComPublicPage
     ? getSectionEntries(displayPage)
@@ -291,6 +293,7 @@ export function ThemeRenderer({
     page: displayPage,
     pages: pageNeedsSearchEntries(displayPage) ? searchPageEntriesForSite(displaySite) : []
   };
+  const useAidreamcapesImageDirectory = displaySite.id === "site_aidreamcapes" && normalizedPath === "/ai-image-generation" && Boolean(aidreamcapesImageDirectoryCards?.length);
   const previewHasEmptyBody = mode === "preview" && entries.length === 0;
   return (
     <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
@@ -350,7 +353,9 @@ export function ThemeRenderer({
           } : {})}
         >
           <DreamshootShowcasePreviewClient className="contents">
-            {entries.length ? entries.map(([id, section]) => {
+            {useAidreamcapesImageDirectory ? (
+              <AidreamcapesImageDirectory cards={aidreamcapesImageDirectoryCards ?? []} sectionId="image-theme-directory" />
+            ) : entries.length ? entries.map(([id, section]) => {
               return (
                 <ThemeSectionFrame
                   creativePackCategories={creativePackCategories}
@@ -371,6 +376,8 @@ export function ThemeRenderer({
                   videoThemeCategories={videoThemeCategories}
                   videoThemes={videoThemes}
                   homepageShowcases={homepageShowcases}
+                  aidreamcapesImageDirectoryCards={aidreamcapesImageDirectoryCards}
+                  aidreamcapesVideoThemeCovers={aidreamcapesVideoThemeCovers}
                   saveTheDateNavigationGroups={settings.saveTheDateNavigation?.groups ?? []}
                   aidreamcapesVideoNavigation={settings.aidreamcapesZipNavigation}
                   videoGenerationTopics={navigationVideoGenerationTopics}
@@ -426,6 +433,8 @@ type ThemeSectionFrameProps = {
   saveTheDateNavigationGroups?: SaveTheDateNavigationGroup[];
   aidreamcapesVideoNavigation?: AidreamcapesZipNavigation;
   videoGenerationTopics?: HeaderVideoGenerationTopic[];
+  aidreamcapesImageDirectoryCards?: AidreamcapesImageDirectoryCard[];
+  aidreamcapesVideoThemeCovers?: Record<string, AidreamcapesVideoThemeCover>;
   runtime?: ThemeRuntimeData;
   lazyRender?: boolean;
   mode: "published" | "preview";
@@ -811,7 +820,7 @@ function runtimeWithOnlyShellState(runtime: ThemeRuntimeData): ThemeRuntimeData 
   };
 }
 
-export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, homepageShowcases, saveTheDateNavigationGroups = [], aidreamcapesVideoNavigation, videoGenerationTopics, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection }: ThemeSectionFrameProps) {
+export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, homepageShowcases, saveTheDateNavigationGroups = [], aidreamcapesVideoNavigation, videoGenerationTopics, aidreamcapesImageDirectoryCards, aidreamcapesVideoThemeCovers, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection }: ThemeSectionFrameProps) {
   const sectionType = canonicalSectionType(section.type);
   const pagePath = renderContext.pagePath;
   const allowLazyRender = lazyRender && !(isPublicSeoRoute(pagePath) && publicSeoCriticalSectionTypes.has(sectionType));
@@ -849,6 +858,8 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
           saveTheDateNavigationGroups={saveTheDateNavigationGroups}
           aidreamcapesVideoNavigation={aidreamcapesVideoNavigation}
           videoGenerationTopics={videoGenerationTopics}
+          aidreamcapesImageDirectoryCards={aidreamcapesImageDirectoryCards}
+          aidreamcapesVideoThemeCovers={aidreamcapesVideoThemeCovers}
         />
       </DreamshootShowcasePreview>
     </div>
@@ -943,11 +954,11 @@ function sectionEditorAttrs(mode: "published" | "preview", id: string, type: str
   };
 }
 
-function AidreamcapesLogoMark({ ariaLabel = "Aidreamcapes logo", className = "h-full w-full" }: { ariaLabel?: string; className?: string }) {
+function AidreamcapesLogoMark({ site, ariaLabel = "Aidreamcapes logo", className = "h-full w-full" }: { site: Pick<Site, "id" | "slug" | "primaryDomain">; ariaLabel?: string; className?: string }) {
   return (
     <img
       className={className}
-      src="/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919logo"
+      src={storefrontOriginalLogoUrl(site) ?? "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919original"}
       alt={ariaLabel}
       width={512}
       height={512}
@@ -1019,8 +1030,9 @@ function headerToolMegaItemsForClient(site: Site, tools: SectionBlockInstance[],
 
 function headerVideoGenerationTopicsForClient(site: Site, categories: VideoThemeCategory[], themes: VideoTheme[]): HeaderVideoGenerationTopic[] {
   const aidreamcapes = isAidreamcapesCapabilitySite(site);
+  const frenchXby = isFrenchStorefrontSite(site);
   const aidreamshootsXby = site.id === "site_mydreamshoots_xby";
-  if (site.id !== "site_dreamshoot" && !aidreamcapes && !aidreamshootsXby) return [];
+  if (site.id !== "site_dreamshoot" && !aidreamcapes && !frenchXby && !aidreamshootsXby) return [];
   const categoriesBySlug = new Map(categories.map((category) => [category.slug, category]));
   const categoriesById = new Map(categories.map((category) => [category.id, category]));
   const parentDefinitionsBySlug = new Map<string, (typeof mydreamshootsVideoGenerationParentCategories)[number]>(
@@ -1552,13 +1564,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const configuredLogoImageUrl = header ? setting(header, "logoImageUrl", "") : "";
   const brandingLogoImageUrl = (site.branding as { logoImageUrl?: string }).logoImageUrl || "";
   const dreamshootDefaultLogoImageUrl = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
-  const preferredBrandLogoImageUrl = site.id === "site_mydreamshoots_xby"
-    ? "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260919logo"
-    : site.id === "site_aidreamcapes_xby"
-      ? "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-logo-refined.svg?v=20260919logo"
-      : site.id === "site_aidreamcapes"
-        ? "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919logo"
-        : "";
+  const preferredBrandLogoImageUrl = storefrontOriginalLogoUrl(site) ?? "";
   const logoImageUrl = preferredBrandLogoImageUrl || (isAidreamcapes
     ? brandingLogoImageUrl || configuredLogoImageUrl
     : isDreamShoot
@@ -1674,7 +1680,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
         >
           {isAidreamcapesCom ? (
             <>
-              <AidreamcapesLogoMark ariaLabel={logoAlt} className="h-8 w-8 shrink-0 object-contain" />
+              <AidreamcapesLogoMark site={site} ariaLabel={logoAlt} className="h-8 w-8 shrink-0 object-contain" />
               <span>{visualBrandTitle}</span>
             </>
           ) : dark || lightCommerce || isAidreamcapes || isDreamShoot ? (
@@ -1687,7 +1693,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                       : "flex h-7 w-7 shrink-0 items-center justify-center sm:h-8 sm:w-8"
                   }
                 >
-                  <AidreamcapesLogoMark ariaLabel={logoAlt} className="h-full w-full object-contain" />
+                  <AidreamcapesLogoMark site={site} ariaLabel={logoAlt} className="h-full w-full object-contain" />
                 </span>
               ) : logoImageUrl ? (
                 <span
@@ -1809,11 +1815,11 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                    )
 	                  ) : showVideoGenerationMega ? (
                     <HeaderVideoGenerationMegaPanel
-                      topics={videoGenerationMenuTopics}
-                      ctaHref={hrefFor(site, "/ai-video-generation")}
+	                      topics={videoGenerationMenuTopics}
+	                      ctaHref={hrefFor(site, "/ai-video-generation")}
                       ctaLabel={frenchHeader ? "Voir tous les thèmes" : aidreamshootsXby ? "Ver todos los temas" : "View all themes"}
-                      french={frenchHeader}
-                      spanish={frenchHeader ? false : aidreamshootsXby}
+	                      french={frenchHeader}
+	                      spanish={frenchHeader ? false : aidreamshootsXby}
 	                      variantTone="dark"
 	                    />
 	                  ) : deferMegaMenuPanels ? (
@@ -2201,16 +2207,8 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
   const configuredFooterLogoImageUrl = footer ? setting(footer, "logoImageUrl", "") : "";
   const brandingFooterLogoImageUrl = (site.branding as { logoImageUrl?: string }).logoImageUrl || "";
   const defaultDreamShootFooterLogo = isDreamShootFooter ? "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b" : "";
-  const defaultAidreamcapesFooterLogo = isAidreamcapesFooter
-    ? (frenchXbyFooter ? "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-logo-refined.svg?v=20260919logo" : "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919logo")
-    : "";
-  const preferredFooterLogoImageUrl = site.id === "site_mydreamshoots_xby"
-    ? "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260919logo"
-    : site.id === "site_aidreamcapes_xby"
-      ? "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-logo-refined.svg?v=20260919logo"
-      : site.id === "site_aidreamcapes"
-        ? "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919logo"
-        : "";
+  const defaultAidreamcapesFooterLogo = isAidreamcapesFooter ? storefrontOriginalLogoUrl(site) ?? "" : "";
+  const preferredFooterLogoImageUrl = storefrontOriginalLogoUrl(site) ?? "";
   const logoImageUrl = preferredFooterLogoImageUrl || configuredFooterLogoImageUrl || brandingFooterLogoImageUrl || defaultDreamShootFooterLogo || defaultAidreamcapesFooterLogo;
   const defaultFooterLogoAlt = isDreamShootFooter
     ? "myDreamshoots heart camera logo"
@@ -2651,7 +2649,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
           <div className="max-w-[24rem]">
             <div className="flex items-center gap-3.5">
               {isAidreamcapesFooter && !spanishXbyFooter ? (
-                <AidreamcapesLogoMark ariaLabel={logoAlt} className="h-10 w-10 shrink-0 object-contain" />
+                <AidreamcapesLogoMark site={site} ariaLabel={logoAlt} className="h-10 w-10 shrink-0 object-contain" />
               ) : logoImageUrl ? (
                 <img className={isAidreamcapesFooter ? "h-10 w-10 shrink-0 object-contain" : "h-12 w-12 shrink-0 rounded-[15px] object-contain"} src={mediaAssetUrl(site, logoImageUrl)} alt={logoAlt} width={isAidreamcapesFooter ? 40 : 48} height={isAidreamcapesFooter ? 40 : 48} />
               ) : (
@@ -2802,7 +2800,12 @@ const spanishRuntimeVisibleKeyPattern = /(?:title|name|description|subtitle|body
 const spanishRuntimeMachineKeyPattern = /^(?:id|siteId|href|url|imageUrl|videoUrl|posterUrl|src|type|layout|tone|surface|anchor|pageType|productType|billingCycle|defaultBillingCycle|aiAppSlug|source|status|variant|fieldType|headingLevel|index|limit|count|sortOrder|slug|canonicalPath|routeKey)$/i;
 
 function spanishRuntimeCopy(value: string, key = "", site?: Site): string {
-  if (!value || !site || !isSpanishXbySite(site)) return value;
+  // Published page JSON is already translated by the source-preserving sync
+  // pipeline. Runtime rendering must not rewrite page-authored copy or invent
+  // a generic Spanish replacement when a source field is missing.
+  return value;
+  /* Legacy runtime repair rules intentionally remain unreachable until removed. */
+  if (!value || !site || !isSpanishXbySite(site as Site)) return value;
   if (!spanishRuntimeVisibleKeyPattern.test(key) || spanishRuntimeMachineKeyPattern.test(key)) return value;
   const normalized = value.replace(/\s+/g, " ").trim();
   const exact: Record<string, string> = {
@@ -4485,10 +4488,10 @@ function preferAidreamcapesPhotoAsset(src: string): string {
     return preferAidreamcapesPhotoAsset(`/assets/sites/site_aidreamcapes/creative-packs/${bareAidreamcapesPackMatch[1]}${bareAidreamcapesPackMatch[2] ?? ""}`);
   }
   if (cleanSrc.includes("/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919logo";
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919original";
   }
   if (cleanSrc.includes("/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919logo";
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919original";
   }
   if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/travel-profile-stories.")) {
     return "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260715ai";
@@ -7542,6 +7545,8 @@ function frenchPhotoPackageLabel(value: string): string {
     "virtual try on": "Essayage virtuel",
     "virtual try-on": "Essayage virtuel",
     "motion generator": "Générateur de mouvement",
+    "motion générateur": "Générateur de mouvement",
+    "lifestyle premium": "Style de vie premium",
     "background changer": "Changer l’arrière-plan",
     "background remover": "Supprimer l’arrière-plan",
     "magic eraser": "Gomme magique",
@@ -7551,6 +7556,7 @@ function frenchPhotoPackageLabel(value: string): string {
     "color correction": "Correction des couleurs",
     "old photo restoration": "Restaurer une ancienne photo",
     "edit by prompt": "Modifier avec une consigne",
+    "modifier avec une consigne": "Modifier avec une consigne",
     "social cards": "Cartes sociales",
     "rich lifestyle": "Lifestyle premium",
     "bikini": "Bikini",
@@ -10525,6 +10531,8 @@ function SectionView({
   saveTheDateNavigationGroups,
   aidreamcapesVideoNavigation,
   videoGenerationTopics,
+  aidreamcapesImageDirectoryCards,
+  aidreamcapesVideoThemeCovers,
   runtime,
   mode,
   renderContext,
@@ -10544,6 +10552,8 @@ function SectionView({
   saveTheDateNavigationGroups?: SaveTheDateNavigationGroup[];
   aidreamcapesVideoNavigation?: AidreamcapesZipNavigation;
   videoGenerationTopics?: HeaderVideoGenerationTopic[];
+  aidreamcapesImageDirectoryCards?: AidreamcapesImageDirectoryCard[];
+  aidreamcapesVideoThemeCovers?: Record<string, AidreamcapesVideoThemeCover>;
   runtime?: ThemeRuntimeData;
   mode: "published" | "preview";
   renderContext: RenderContext;
@@ -10576,6 +10586,8 @@ function SectionView({
         videoThemeCategories={videoThemeCategories}
         videoThemes={videoThemes}
         homepageShowcases={homepageShowcases}
+        aidreamcapesImageDirectoryCards={aidreamcapesImageDirectoryCards}
+        aidreamcapesVideoThemeCovers={aidreamcapesVideoThemeCovers}
         saveTheDateNavigationGroups={resolvedSaveTheDateNavigationGroups}
         aidreamcapesVideoNavigation={aidreamcapesVideoNavigation}
         videoGenerationTopics={videoGenerationTopics}
@@ -13747,6 +13759,9 @@ function SectionView({
       : selectedProfile
       ? selectedProfile.detailTags.slice(0, 8)
       : [];
+    if (site.id === "site_aidreamcapes" && renderContext.pagePath === "/ai-image-generation" && aidreamcapesImageDirectoryCards?.length) {
+      return <AidreamcapesImageDirectory cards={aidreamcapesImageDirectoryCards} sectionId={sectionAnchor(section, "image-themes")} />;
+    }
     const taxonomySectionClass = aidreamcapes
       ? "relative overflow-hidden border-y border-white/10 bg-[#05070E] px-5 py-16 text-white"
       : "relative overflow-hidden border-y border-white/10 bg-[#08080a] px-5 py-16 text-white";
@@ -15066,7 +15081,7 @@ function SectionView({
       ? mydreamProfileSite
         ? mydreamshootsHomepageCopy.photoTitle
         : frenchXby
-          ? "Générateurs de photos IA à la une"
+          ? "Générateurs photo IA à découvrir"
           : "Featured AI Photo Generators"
       : setting(section, "imageTitle", "Featured AI Photo Generators");
     const imageAllLabel = canonicalGeneratorCopy ? frenchXby ? "VOIR TOUTES LES PHOTOS" : "VIEW ALL PHOTO" : setting(section, "imageAllLabel", "View all photos");
@@ -15075,7 +15090,7 @@ function SectionView({
       ? mydreamProfileSite
         ? mydreamshootsHomepageCopy.videoTitle
         : frenchXby
-          ? "Générateurs de vidéos IA à la une"
+          ? "Générateurs vidéo IA à découvrir"
           : "Featured AI Video Generators"
       : setting(section, "videoTitle", "Featured AI Video Generators");
     const videoAllLabel = canonicalGeneratorCopy ? frenchXby ? "VOIR TOUTES LES VIDÉOS" : "VIEW ALL VIDEO" : setting(section, "videoAllLabel", "View all videos");
@@ -16277,7 +16292,8 @@ function SectionView({
     const aidreamshootsXby = site.id === "site_mydreamshoots_xby";
     const primaryMyDreamShoots = isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) && !aidreamcapes;
     const spanishMyDreamShootsVideo = isSpanishXbySite(site) && !aidreamcapes;
-    const frenchAidreamcapesVideo = isFrenchStorefrontSite(site);
+    const frenchXbyTools = isFrenchStorefrontSite(site);
+    const frenchAidreamcapesVideo = frenchXbyTools;
     const layout = setting(section, "layout", "directory");
     const mydreamshootsVideoFramework = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXbySite(site) && !aidreamcapes && !primaryMyDreamShoots;
     if (site.id === "site_aidreamcapes" && renderContext.pagePath === "/ai-video-generation" && layout === "aidreamcapes_video_directory") {
@@ -16290,12 +16306,16 @@ function SectionView({
           navigation={navigation}
           sectionId={sectionAnchor(section, "video-themes")}
           site={site}
+          themeCovers={aidreamcapesVideoThemeCovers}
         />
       );
     }
     if ((primaryMyDreamShoots || spanishMyDreamShootsVideo || frenchAidreamcapesVideo) && renderContext.pagePath === "/ai-video-generation" && (layout === "video_theme_grid" || frenchAidreamcapesVideo)) {
       const fallbackCoverImageUrl = setting(section, "imageUrl", defaultMydreamshootsVideoThemeCover);
-      const topics = (videoGenerationTopics ?? headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes))
+      const configuredTopics = videoGenerationTopics?.length
+        ? videoGenerationTopics
+        : headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes);
+      const topics = configuredTopics
         .filter((topic) => isMydreamshootsCurrentVideoMenuSlug(topic.slug))
         .map((topic) => frenchAidreamcapesVideo ? {
           ...topic,
@@ -16310,7 +16330,7 @@ function SectionView({
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <div className="flex flex-col gap-4 border-b border-white/10 pb-8 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{frenchAidreamcapesVideo ? "Génération de vidéos avec l’IA" : spanishMyDreamShootsVideo ? "Generación de vídeo con IA" : "AI Video Generation"}</p>
+            <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{frenchAidreamcapesVideo ? "Génération de vidéos avec l’IA" : spanishMyDreamShootsVideo ? "Generación de vídeo con IA" : "AI Video Generation"}</p>
                 <HeadingTag className="mt-4 max-w-3xl text-4xl font-semibold leading-none tracking-normal text-white sm:text-5xl lg:text-6xl [font-family:var(--site-title-font)]">
                   {setting(section, "title", "AI Video Generation")}
                 </HeadingTag>
@@ -16396,7 +16416,9 @@ function SectionView({
       );
     }
     if (mydreamshootsVideoFramework) {
-      const topics = videoGenerationTopics ?? headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes);
+      const topics = videoGenerationTopics?.length
+        ? videoGenerationTopics
+        : headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes);
       return (
         <section className="relative isolate overflow-hidden bg-[#08080a] px-4 py-10 text-white sm:px-5 sm:py-14" id={sectionAnchor(section, "video-generation")}>
           <div className="mx-auto max-w-[1180px]">
@@ -16438,7 +16460,6 @@ function SectionView({
           })
       : baseTools;
     const spanishXbyTools = isSpanishXbySite(site);
-    const frenchXbyTools = isFrenchStorefrontSite(site);
     const localizedTools = spanishXbyTools ? spanishToolBlocks(rawTools, aidreamcapes) : rawTools;
     const tools = localizedTools.filter((tool) => {
       const rawHref = blockValue(tool, "href", "/tools/image-studio");
@@ -18975,8 +18996,8 @@ function SectionView({
 	                  {[
 	                    { image: beforeImage, label: beforeLabel, stage: "source upload" },
 	                    { image: afterImage, label: afterLabel, stage: "AI-generated result" }
-	                  ].map(({ image, label, stage }) => (
-                    <div className={frenchXbyBeforeAfter ? "relative overflow-hidden rounded-[1rem] bg-transparent" : "relative aspect-[4/5] overflow-hidden rounded-[1rem] bg-zinc-200"} key={label}>
+                  ].map(({ image, label, stage }, imageIndex) => (
+                    <div className={frenchXbyBeforeAfter ? "relative overflow-hidden rounded-[1rem] bg-transparent" : "relative aspect-[4/5] overflow-hidden rounded-[1rem] bg-zinc-200"} key={`${label}-${stage}-${imageIndex}`}>
 	                      <img
 	                        className={frenchXbyBeforeAfter ? "block h-auto w-full object-center" : "h-full w-full object-cover"}
 	                        src={image}
@@ -19009,7 +19030,8 @@ function SectionView({
         return { id: `legacy_testimonial_${index}`, type: "testimonial", settings: { quote, name, role } };
       }
     );
-    const reviewMode = setting(section, "mode", "use_cases") === "reviews";
+    const configuredReviewMode = setting(section, "mode", "use_cases").trim().toLowerCase();
+    const reviewMode = configuredReviewMode === "reviews" || (isFrenchStorefrontSite(site) && configuredReviewMode === "avis");
     const fallbackReviewItems: SectionBlockInstance[] = reviewMode && !isAidreamcapesSite(site)
       ? [
           {
@@ -19427,17 +19449,15 @@ function SectionView({
               <div className="lg:sticky lg:top-28" data-faq-feature-image>
                 <div className="grid grid-cols-2 gap-2" data-faq-feature-gallery>
                   {featureGallery.map((image, index) => {
-                    const tileClassName = frenchXbyRichText
-                      ? featureGallery.length > 1 && index === featureGallery.length - 1 ? "col-span-2" : featureGallery.length > 1 && index === 0 ? "col-span-2" : ""
-                      : featureGallery.length > 1 && index === featureGallery.length - 1
-                        ? "col-span-2 aspect-[16/9]"
-                        : featureGallery.length > 1 && index === 0
-                          ? "col-span-2 aspect-[4/3]"
-                          : "aspect-[4/3]";
+                    const tileClassName = featureGallery.length > 1 && index === featureGallery.length - 1
+                      ? "col-span-2 aspect-[16/9]"
+                      : featureGallery.length > 1 && index === 0
+                        ? "col-span-2 aspect-[4/3]"
+                        : "aspect-[4/3]";
                     return (
-                      <div className={`${tileClassName} overflow-hidden rounded-[8px] border border-white/10 ${frenchXbyRichText ? "bg-transparent" : "bg-black/20 p-1"} shadow-[0_20px_50px_-36px_rgba(0,0,0,0.9)]`} data-faq-feature-tile key={`${image.src}_${index}`}>
+                      <div className={`${tileClassName} overflow-hidden rounded-[8px] border border-white/10 bg-black/20 p-1 shadow-[0_20px_50px_-36px_rgba(0,0,0,0.9)]`} data-faq-feature-tile key={`${image.src}_${index}`}>
                         <img
-                          className={frenchXbyRichText ? "block h-auto w-full max-w-full object-center" : "block h-full w-full max-w-full object-contain object-center"}
+                          className="block h-full w-full max-w-full object-contain object-center"
                           src={image.src}
                           alt={image.alt}
                           loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}

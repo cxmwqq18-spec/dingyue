@@ -5,7 +5,7 @@ import process from "node:process";
 const repoRoot = process.cwd();
 const port = String(Number(process.env.DEV_PORT || "3002") || 3002);
 const host = process.env.DEV_HOST || "127.0.0.1";
-const defaultMaxOldSpaceSize = process.env.DINGYUE_DEV_MAX_OLD_SPACE_SIZE || "6144";
+const defaultMaxOldSpaceSize = process.env.DINGYUE_DEV_MAX_OLD_SPACE_SIZE || "12288";
 const defaultNodeOptions = `--max-old-space-size=${defaultMaxOldSpaceSize}`;
 
 function output(command, args) {

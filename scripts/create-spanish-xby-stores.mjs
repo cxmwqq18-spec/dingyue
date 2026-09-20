@@ -1352,7 +1352,7 @@ function scrubEnglishJson(value, spec, context = {}) {
     const childContext = key === "slug" && typeof item === "string" ? { ...context, slug: item } : context;
     if (typeof item === "string") {
       if (shouldScrubText(key, item)) {
-        next[key] = lookupSpanishTitle(item) ?? genericSpanishText(key, spec, context);
+        next[key] = lookupSpanishTitle(item) ?? spanishizeString(item, spec, new Map());
       } else {
         next[key] = item;
       }

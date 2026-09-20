@@ -97,21 +97,14 @@ const LEADING_SEO_HEAD_TAG_RE =
 const ESSENTIAL_HEAD_TAG_RE =
   /<meta\b(?=[^>]*(?:charset=|name=["']viewport["']|http-equiv=["']Content-Language["']))[^>]*\/?>/gi;
 const ICON_HEAD_TAG_RE = /<link\b(?=[^>]*rel=["'][^"']*(?:icon|apple-touch-icon)[^"']*["'])[^>]*\/?>/gi;
-const AIDREAMCAPES_LOGO_IMG_RE =
-  /<img\b(?=[^>]*src=["']\/assets\/sites\/site_aidreamcapes\/brand\/aidreamcapesai-logo-refined\.svg[^"']*["'])(?=[^>]*alt=["'][^"']*Aidreamcapes[^"']*["'])([^>]*)\/?>/gi;
-const AIDREAMCAPES_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-192.png?v=20260708c";
-const AIDREAMCAPES_ICON_SVG = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
-const AIDREAMCAPES_APPLE_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-180.png?v=20260708c";
-const AIDREAMCAPES_EU_ICON = "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-icon-192.png?v=20260717a";
-const AIDREAMCAPES_EU_ICON_SVG = "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-logo-refined.svg?v=20260717a";
-const AIDREAMCAPES_EU_APPLE_ICON = "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-icon-180.png?v=20260717a";
-const AIDREAMSHOOTS_ICON = "/assets/sites/site_aidreamshoots/brand/aidreamshoots-icon-192.png?v=20260717a";
-const AIDREAMSHOOTS_ICON_SVG = "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a";
-const AIDREAMSHOOTS_APPLE_ICON = "/assets/sites/site_aidreamshoots/brand/aidreamshoots-icon-180.png?v=20260717a";
-const MYDREAMSHOOTS_ICON = "/assets/dreamshoot/brand/dreamshootai-icon-192.png?v=20260702";
-const MYDREAMSHOOTS_ICON_SVG = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260702";
+const AIDREAMCAPES_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260920favicon";
+const AIDREAMCAPES_APPLE_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-180.png?v=20260919original";
+const AIDREAMCAPES_EU_ICON = "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-logo-refined.svg?v=20260920favicon";
+const AIDREAMCAPES_EU_APPLE_ICON = "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-icon-180.png?v=20260919original";
+const AIDREAMSHOOTS_ICON = "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260920favicon";
+const AIDREAMSHOOTS_APPLE_ICON = "/assets/sites/site_aidreamshoots/brand/aidreamshoots-icon-180.png?v=20260919original";
+const MYDREAMSHOOTS_ICON = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260920favicon";
 const MYDREAMSHOOTS_APPLE_ICON = "/assets/dreamshoot/brand/dreamshootai-icon-180.png?v=20260702";
-const AIDREAMCAPES_INLINE_LOGO = `<svg class="h-full w-full object-contain" viewBox="0 0 512 512" role="img" aria-label="Aidreamcapes logo for private fan-scene and holiday photo albums"><defs><linearGradient id="aidreamcapes-header-logo" x1="84" y1="76" x2="424" y2="436" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff0b8"/><stop offset="0.38" stop-color="#ff75b7"/><stop offset="1" stop-color="#8a7cff"/></linearGradient><radialGradient id="aidreamcapes-header-aura" cx="0" cy="0" r="1" gradientTransform="matrix(176 0 0 176 250 232)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff" stop-opacity="0.9"/><stop offset="0.55" stop-color="#b8f7ff" stop-opacity="0.25"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient></defs><rect width="512" height="512" rx="118" fill="#080a12"/><circle cx="256" cy="256" r="162" fill="none" stroke="url(#aidreamcapes-header-logo)" stroke-width="30"/><circle cx="256" cy="256" r="82" fill="none" stroke="#ffffff" stroke-width="23" opacity="0.95"/><circle cx="256" cy="256" r="34" fill="url(#aidreamcapes-header-aura)"/><path d="M337 142v34M320 159h34M153 356v27M139 370h27" fill="none" stroke="url(#aidreamcapes-header-logo)" stroke-width="13" stroke-linecap="round"/><path d="M142 218h58M312 338h58" fill="none" stroke="#ffffff" stroke-width="17" stroke-linecap="round" opacity="0.76"/></svg>`;
 
 function envSwitch(value: string | undefined): boolean | undefined {
   const normalized = String(value ?? "").trim().toLowerCase();
@@ -476,23 +469,22 @@ function moveSeoTagsBeforeResources(html: string): string {
 }
 
 type StorefrontIconSet = {
-  png: string;
-  svg: string;
+  favicon: string;
   apple: string;
 };
 
 function siteIconForRequest(request: NextRequest): StorefrontIconSet | undefined {
   const identity = `${request.nextUrl.pathname} ${request.headers.get("x-forwarded-host") ?? ""} ${request.headers.get("host") ?? ""}`.toLowerCase();
   if (storefrontLocaleForRequestIdentity(identity) === "fr") {
-    return { png: AIDREAMCAPES_EU_ICON, svg: AIDREAMCAPES_EU_ICON_SVG, apple: AIDREAMCAPES_EU_APPLE_ICON };
+    return { favicon: AIDREAMCAPES_EU_ICON, apple: AIDREAMCAPES_EU_APPLE_ICON };
   }
   if (isSpanishXbyRequest(request)) {
-    if (identity.includes("aidreamcapes")) return { png: AIDREAMCAPES_EU_ICON, svg: AIDREAMCAPES_EU_ICON_SVG, apple: AIDREAMCAPES_EU_APPLE_ICON };
-    return { png: AIDREAMSHOOTS_ICON, svg: AIDREAMSHOOTS_ICON_SVG, apple: AIDREAMSHOOTS_APPLE_ICON };
+    if (identity.includes("aidreamcapes")) return { favicon: AIDREAMCAPES_EU_ICON, apple: AIDREAMCAPES_EU_APPLE_ICON };
+    return { favicon: AIDREAMSHOOTS_ICON, apple: AIDREAMSHOOTS_APPLE_ICON };
   }
-  if (identity.includes("aidreamcapes")) return { png: AIDREAMCAPES_ICON, svg: AIDREAMCAPES_ICON_SVG, apple: AIDREAMCAPES_APPLE_ICON };
-  if (identity.includes("mydreamshoots")) return { png: MYDREAMSHOOTS_ICON, svg: MYDREAMSHOOTS_ICON_SVG, apple: MYDREAMSHOOTS_APPLE_ICON };
-  if (BROWSER_ICON_PATH_RE.test(request.nextUrl.pathname)) return { png: MYDREAMSHOOTS_ICON, svg: MYDREAMSHOOTS_ICON_SVG, apple: MYDREAMSHOOTS_APPLE_ICON };
+  if (identity.includes("aidreamcapes")) return { favicon: AIDREAMCAPES_ICON, apple: AIDREAMCAPES_APPLE_ICON };
+  if (identity.includes("mydreamshoots")) return { favicon: MYDREAMSHOOTS_ICON, apple: MYDREAMSHOOTS_APPLE_ICON };
+  if (BROWSER_ICON_PATH_RE.test(request.nextUrl.pathname)) return { favicon: MYDREAMSHOOTS_ICON, apple: MYDREAMSHOOTS_APPLE_ICON };
   return undefined;
 }
 
@@ -508,16 +500,12 @@ function withStorefrontIcons(html: string, icons: StorefrontIconSet | undefined)
   const beforeHeadContent = html.slice(0, headOpenEnd + 1);
   const headContent = html.slice(headOpenEnd + 1, headClose).replace(ICON_HEAD_TAG_RE, "");
   const afterHeadContent = html.slice(headClose);
-  const iconTags = `<link rel="icon" href="${icons.png}" type="image/png" sizes="192x192"/><link rel="shortcut icon" href="${icons.png}" type="image/png"/><link rel="icon" href="${icons.svg}" type="image/svg+xml"/><link rel="apple-touch-icon" href="${icons.apple}" sizes="180x180"/>`;
+  // Keep one browser favicon candidate and point it to the same site-specific
+  // logo asset used by the visible storefront header. Apple touch icons remain
+  // separate because they have a different platform-specific size contract.
+  const iconTags = `<link rel="icon" href="${icons.favicon}" type="image/svg+xml"/><link rel="apple-touch-icon" href="${icons.apple}" sizes="180x180"/>`;
   const insertionPoint = leadingSeoHeadLength(headContent);
   return `${beforeHeadContent}${headContent.slice(0, insertionPoint)}${iconTags}${headContent.slice(insertionPoint)}${afterHeadContent}`;
-}
-
-function withInlineAidreamcapesLogo(html: string, request: NextRequest): string {
-  if (isSpanishXbyRequest(request)) return html;
-  const iconHref = siteIconForRequest(request);
-  if (iconHref?.png !== AIDREAMCAPES_ICON) return html;
-  return html.replace(AIDREAMCAPES_LOGO_IMG_RE, AIDREAMCAPES_INLINE_LOGO);
 }
 
 function mydreamshootsImageThemeSeo(request: NextRequest): { title: string; description: string; canonical: string } | undefined {
@@ -553,11 +541,6 @@ function withMydreamshootsImageThemeSeo(html: string, request: NextRequest): str
   return next;
 }
 
-function shouldInlineAidreamcapesLogo(request: NextRequest): boolean {
-  if (isSpanishXbyRequest(request)) return false;
-  return siteIconForRequest(request)?.png === AIDREAMCAPES_ICON;
-}
-
 function rewriteStorefrontHtmlHead(html: string, request: NextRequest, shouldReorder: boolean): string {
   const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
   return withStorefrontLocale(
@@ -569,7 +552,7 @@ function rewriteStorefrontHtmlHead(html: string, request: NextRequest, shouldReo
 function rewriteStorefrontHtmlFull(html: string, request: NextRequest, shouldReorder: boolean): string {
   const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
   return withStorefrontLocale(
-    withMydreamshootsImageThemeSeo(withInlineAidreamcapesLogo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request), request),
+    withMydreamshootsImageThemeSeo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request),
     request
   );
 }
@@ -791,8 +774,8 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
   if (!iconHref) return undefined;
 
   const upstreamUrl = sameServerUrl(request);
-  upstreamUrl.pathname = iconHref.png.split("?")[0] ?? iconHref.png;
-  upstreamUrl.search = "";
+  upstreamUrl.pathname = iconHref.favicon.split("?")[0] ?? iconHref.favicon;
+  upstreamUrl.search = iconHref.favicon.includes("?") ? iconHref.favicon.split("?")[1] ?? "" : "";
 
   const upstreamResponse = await fetch(upstreamUrl, {
     headers: sanitizeUpstreamHeaders(new Headers({ [REORDER_SKIP_HEADER]: "1" }))
@@ -801,7 +784,7 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 
   const headers = new Headers(upstreamResponse.headers);
   headers.delete("content-length");
-  headers.set("content-type", "image/png");
+  headers.set("content-type", iconHref.favicon.split("?", 1)[0]?.endsWith(".svg") ? "image/svg+xml" : "image/png");
   headers.set("cache-control", "no-store, max-age=0");
 
   return new Response(upstreamResponse.body, {
@@ -885,7 +868,7 @@ export async function middleware(request: NextRequest) {
   // route so the existing full HTML rewrite can relocate that schema into
   // <head>; keep streaming for the rest of the storefront for performance.
   const aboutUsRoute = /(?:^|\/)about-us\/?$/i.test(request.nextUrl.pathname);
-  if (upstreamResponse.body && !shouldInlineAidreamcapesLogo(request) && !aboutUsRoute) {
+  if (upstreamResponse.body && !aboutUsRoute) {
     return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlStream(upstreamResponse.body, request, shouldReorder), {
       status: upstreamResponse.status,
       statusText: upstreamResponse.statusText,

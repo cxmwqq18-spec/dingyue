@@ -8,13 +8,27 @@ import path from "node:path";
 import sharp from "sharp";
 import { PrismaClient } from "@prisma/client";
 import { assertDatabaseTarget, assertNonProductionWriteTarget } from "./lib/database-target.mjs";
+import { assertAidreamcapesEuHomepageIntegrity } from "./lib/aidreamcapes-eu-homepage-integrity.mjs";
 
 const siteId = "site_aidreamcapes_xby";
 const siteSlug = "aidreamcapes-eu";
 const assetSiteSlug = "site_aidreamcapes_eu";
 const expectedConfirmation = "aidreamcapes-eu-public-media-replacement";
 const publicVersion = "20260915eupublicmedia1";
-const reviewAvatarVersion = "20260915eureviewfix1";
+// Review avatars are identity assets. Keep them as independent headshots so a
+// future media replacement cannot turn them back into crops of the themed result.
+const reviewAvatarVersion = "20260919eureviewheadshot1";
+const reviewResultVersion = "20260919eureviewvendor1";
+const reviewResultUrlById = {
+  review_ava: `/assets/sites/${assetSiteSlug}/generated/public-media/reviews/vendor-20260919/review-ava-theme.webp?v=${reviewResultVersion}`,
+  review_lucas: `/assets/sites/${assetSiteSlug}/generated/public-media/reviews/vendor-20260919/review-lucas-theme.webp?v=${reviewResultVersion}`,
+  review_mia: `/assets/sites/${assetSiteSlug}/generated/public-media/reviews/vendor-20260919/review-mia-theme.webp?v=${reviewResultVersion}`,
+  review_noah: `/assets/sites/${assetSiteSlug}/generated/public-media/reviews/vendor-20260919/review-noah-theme.webp?v=${reviewResultVersion}`,
+  review_chloe: `/assets/sites/${assetSiteSlug}/generated/public-media/reviews/vendor-20260919/review-chloe-theme.webp?v=${reviewResultVersion}`,
+  review_eli: `/assets/sites/${assetSiteSlug}/generated/public-media/reviews/vendor-20260919/review-eli-theme.webp?v=${reviewResultVersion}`,
+  review_jordan: `/assets/sites/${assetSiteSlug}/generated/public-media/reviews/vendor-20260919/review-jordan-theme.webp?v=${reviewResultVersion}`,
+  review_riley: `/assets/sites/${assetSiteSlug}/generated/public-media/reviews/vendor-20260919/review-riley-theme.webp?v=${reviewResultVersion}`
+};
 const legacyBatchId = "aidreamcapes-eu-legacy-diverse-20260914-v1";
 const legacyManifestRoot = path.resolve(".tmp", "aidreamcapes-eu-legacy-regeneration", legacyBatchId, "manifests");
 const legacyFallbackRoot = path.resolve(".tmp", "aidreamshoots-image-regeneration", "aidreamshoots-magic-photo-tools-old-photo-restoration-diverse-20260913-v1", "outputs");
@@ -693,8 +707,9 @@ function buildReplacements(effectivePacks, reviewPairs) {
 
 function reviewSourceDefinitions(effectivePacks) {
   const source = (id, packSlug, slot) => {
-    const resultImageUrl = packAsset(effectivePacks, packSlug, slot);
-    return { id, packSlug, slot, resultImageUrl };
+    const sourceResultImageUrl = packAsset(effectivePacks, packSlug, slot);
+    const resultImageUrl = reviewResultUrlById[id] || sourceResultImageUrl;
+    return { id, packSlug, slot, sourceResultImageUrl, resultImageUrl };
   };
   return [
     source("review_ava", "soccer", 0),
@@ -708,45 +723,25 @@ function reviewSourceDefinitions(effectivePacks) {
   ];
 }
 
-const reviewAvatarCrops = {
-  review_ava: { left: 250, top: 470, size: 540 },
-  review_lucas: { left: 255, top: 90, size: 520 },
-  review_mia: { left: 235, top: 130, size: 580 },
-  review_noah: { left: 210, top: 100, size: 620 },
-  review_chloe: { left: 190, top: 100, size: 600 },
-  review_eli: { left: 150, top: 80, size: 600 },
-  review_jordan: { left: 170, top: 80, size: 600 },
-  review_riley: { left: 200, top: 80, size: 600 }
-};
-
-function reviewAvatarUrl(outputRelative) {
-  return `/assets/${outputRelative}?v=${reviewAvatarVersion}`;
+function reviewAvatarUrl(reviewId) {
+  const shortId = reviewId.replace(/^review_/, "");
+  return `${assetPrefix}generated/public-media/reviews/review-${shortId}-headshot.webp?v=${reviewAvatarVersion}`;
 }
 
-async function prepareReviewAvatars(effectivePacks, apply) {
+async function prepareReviewAvatars(effectivePacks) {
   const pairs = {};
   for (const item of reviewSourceDefinitions(effectivePacks)) {
-    const sourcePath = localPathForUrl(item.resultImageUrl);
+    const sourcePath = localPathForUrl(item.sourceResultImageUrl);
     assert(fs.existsSync(sourcePath), `Review source image is missing: ${sourcePath}`);
-    const shortId = item.id.replace(/^review_/, "");
-    const outputRelative = `sites/${assetSiteSlug}/generated/public-media/reviews/review-${shortId}-avatar.webp`;
-    const outputPath = path.resolve(publicRoot, "assets", outputRelative);
-    const avatarUrl = reviewAvatarUrl(outputRelative);
-    if (apply) {
-      fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-      const pending = `${outputPath}.pending`;
-      const crop = reviewAvatarCrops[item.id];
-      assert(crop, `${item.id}: missing face-led avatar crop.`);
-      await sharp(sourcePath)
-        .extract({ left: crop.left, top: crop.top, width: crop.size, height: crop.size })
-        .resize({ width: 640, height: 640, fit: "cover" })
-        .webp({ quality: 90 })
-        .toFile(pending);
-      fs.renameSync(pending, outputPath);
-      const meta = await sharp(outputPath).metadata();
-      assert.equal(meta.width, 640, `${item.id}: avatar crop width mismatch.`);
-      assert.equal(meta.height, 640, `${item.id}: avatar crop height mismatch.`);
-    }
+    const avatarUrl = reviewAvatarUrl(item.id);
+    const outputPath = localPathForUrl(avatarUrl);
+    const resultPath = localPathForUrl(item.resultImageUrl);
+    assert(fs.existsSync(resultPath), `${item.id}: vendor themed result is missing: ${resultPath}`);
+    assert(fs.existsSync(outputPath), `${item.id}: independent headshot is missing: ${outputPath}`);
+    const meta = await sharp(outputPath).metadata();
+    assert.equal(meta.width, 640, `${item.id}: independent headshot width mismatch.`);
+    assert.equal(meta.height, 640, `${item.id}: independent headshot height mismatch.`);
+    assert.notEqual(stripQuery(avatarUrl), stripQuery(item.resultImageUrl), `${item.id}: avatar and themed result must use different files.`);
     pairs[item.id] = {
       sourcePackSlug: item.packSlug,
       sourceSlot: item.slot,
@@ -808,7 +803,7 @@ function assetRowsForChanges(effectivePacks, replacements, reviewPairs, legacySo
   addPackAssets(rows, effectivePacks);
   for (const value of replacements.values()) addAsset(rows, value, "Aidreamcapes EU public media", "theme");
   for (const pair of Object.values(reviewPairs)) {
-    addAsset(rows, pair.avatarUrl, "Review avatar derived from its result image", "theme", "Avatar cropped from the matching review result image.");
+    addAsset(rows, pair.avatarUrl, "Review identity headshot", "theme", "Independent identity headshot paired with the matching themed review result.");
     addAsset(rows, pair.resultImageUrl, "Review result image", "theme", "Review result image paired with its matching avatar.");
   }
   for (const item of legacySources) {
@@ -899,7 +894,7 @@ async function main() {
     const videoExampleUpdates = buildVideoExampleUpdates(videoExamples, videoThemeUpdates);
     const videoCategoryUpdates = buildVideoCategoryUpdates(videoCategories, videoThemes, videoThemeUpdates, effectivePacks);
     const inactivePackUpdates = buildInactivePackUpdates(inactivePacks, effectivePacks);
-    const reviewPairs = await prepareReviewAvatars(effectivePacks, applyMode);
+    const reviewPairs = await prepareReviewAvatars(effectivePacks);
     const detailMediaByHref = new Map(
       livePages
         .map((page) => {
@@ -1045,6 +1040,7 @@ async function main() {
           update: { label: row.label, mimeType: "image/webp", usageType: row.usageType, sourceType: "aidreamcapes-eu-public-media-replacement", previewUrl: row.url, originUrl: row.url, altText: row.altText }
         });
       }
+      await assertAidreamcapesEuHomepageIntegrity(tx);
     }, { timeout: 180_000, maxWait: 30_000 });
 
     const report = { ...summary, backupPath, appliedAt: new Date().toISOString(), remainingMirrorReferencesAfterApply: countMirrorReferences(changedLivePages.map((item) => item.next).concat(nextSettingsDraft, videoThemeUpdates.updates.map((item) => item.next), videoExampleUpdates.map((item) => item.next), videoCategoryUpdates.map((item) => ({ imageUrl: item.nextImageUrl })))) };

@@ -222,6 +222,10 @@ function canRenderPublishedPublicPath(
   return (page?.pageType === "standard-content" || page?.pageType === "content") && page.publishedJson?.seo?.canonicalPath === internalPath;
 }
 
+function isSpanishWeddingInvitationCompatibilitySite(siteSlug: string): boolean {
+  return isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) || isSpanishAIdreamshootsSlug(publicSiteSlug(siteSlug));
+}
+
 function collectionRouteLookupSlug(path: string[]): string {
   if (path[0] === "ai-image-generation") return path[1] || "";
   if (path[0] === "collections") return path[1] || "";
@@ -332,7 +336,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     return { robots: { index: false, follow: false } };
   }
   if (isAidreamcapesEuRetiredPublicPath(publicSiteSlug(siteSlug), requestedSlug)) return { robots: { index: false, follow: false } };
-  if (publicSiteSlug(siteSlug) === "aidreamcapes") {
+  if (publicSiteSlug(siteSlug) === "aidreamcapes" || publicSiteSlug(siteSlug) === "aidreamcapes-eu") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(requestedSlug);
     if (legacySaveTheDateTarget) return {};
   }
@@ -340,11 +344,11 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const legacyPublicTarget = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) ? mydreamshootsLegacyPublicPathTarget(requestedSlug) : undefined;
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && (requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) return {};
-  const canonicalRequestedSlug = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug))
+  const canonicalRequestedSlug = isSpanishWeddingInvitationCompatibilitySite(siteSlug)
     ? canonicalSaveTheDatePath(legacyPublicTarget ?? requestedSlug)
     : requestedSlug;
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
-  const legacyRequestedSlug = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug))
+  const legacyRequestedSlug = isSpanishWeddingInvitationCompatibilitySite(siteSlug)
     ? legacySaveTheDatePath(canonicalRequestedSlug)
     : undefined;
   const isCollectionRequest = isCollectionRouteRequest(path);
@@ -363,7 +367,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   }
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
-  const metadataSourceSlug = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+  const metadataSourceSlug = isSpanishWeddingInvitationCompatibilitySite(siteSlug) && canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
     ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
     : slug;
   const state = isVideoGenerationRequest
@@ -520,7 +524,7 @@ export default async function SiteCatchAllPage({
   }
   if (isAidreamcapesEuRetiredPublicPath(publicSlug, slug)) notFound();
   if (isRetiredAidreamcapesPublicPath(publicSlug, slug)) notFound();
-  if (publicSlug === "aidreamcapes") {
+  if (publicSlug === "aidreamcapes" || publicSlug === "aidreamcapes-eu") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);
     if (legacySaveTheDateTarget) permanentRedirect(routePath(legacySaveTheDateTarget));
   }
@@ -613,6 +617,20 @@ export default async function SiteCatchAllPage({
     notFound();
   }
   const snapshot = createPublishedSiteSnapshot(state, publicSite, { source: "platform-state" });
+  if (isSpanishAIdreamshoots && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) {
+    const sourcePage = findPage(publicSite, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH);
+    if (sourcePage?.pageType === "ai_tool") {
+      return renderStorefrontPage({
+        site: publicSite,
+        slug: MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH,
+        publicPath: MYDREAMSHOOTS_WEDDING_INVITATION_PATH,
+        query,
+        routeMode,
+        state,
+        deferCustomerRuntime: true
+      });
+    }
+  }
   const spanishVideoAliasPath = isSpanishAIdreamshoots && isVideoGenerationRequest
     ? aidreamshootsLegacyVideoSaveTheDatePath(`/ai-video-generation/${videoLookupSlug}`)
     : undefined;
