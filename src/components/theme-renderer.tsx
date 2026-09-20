@@ -1809,9 +1809,10 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                    )
 	                  ) : showVideoGenerationMega ? (
                     <HeaderVideoGenerationMegaPanel
-	                      topics={videoGenerationMenuTopics}
-	                      ctaHref={hrefFor(site, "/ai-video-generation")}
+                      topics={videoGenerationMenuTopics}
+                      ctaHref={hrefFor(site, "/ai-video-generation")}
                       ctaLabel={frenchHeader ? "Voir tous les thèmes" : aidreamshootsXby ? "Ver todos los temas" : "View all themes"}
+                      french={frenchHeader}
                       spanish={frenchHeader ? false : aidreamshootsXby}
 	                      variantTone="dark"
 	                    />
@@ -16276,6 +16277,7 @@ function SectionView({
     const aidreamshootsXby = site.id === "site_mydreamshoots_xby";
     const primaryMyDreamShoots = isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) && !aidreamcapes;
     const spanishMyDreamShootsVideo = isSpanishXbySite(site) && !aidreamcapes;
+    const frenchAidreamcapesVideo = isFrenchStorefrontSite(site);
     const layout = setting(section, "layout", "directory");
     const mydreamshootsVideoFramework = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXbySite(site) && !aidreamcapes && !primaryMyDreamShoots;
     if (site.id === "site_aidreamcapes" && renderContext.pagePath === "/ai-video-generation" && layout === "aidreamcapes_video_directory") {
@@ -16291,10 +16293,15 @@ function SectionView({
         />
       );
     }
-    if ((primaryMyDreamShoots || spanishMyDreamShootsVideo) && renderContext.pagePath === "/ai-video-generation" && layout === "video_theme_grid") {
+    if ((primaryMyDreamShoots || spanishMyDreamShootsVideo || frenchAidreamcapesVideo) && renderContext.pagePath === "/ai-video-generation" && (layout === "video_theme_grid" || frenchAidreamcapesVideo)) {
       const fallbackCoverImageUrl = setting(section, "imageUrl", defaultMydreamshootsVideoThemeCover);
       const topics = (videoGenerationTopics ?? headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes))
-        .filter((topic) => isMydreamshootsCurrentVideoMenuSlug(topic.slug));
+        .filter((topic) => isMydreamshootsCurrentVideoMenuSlug(topic.slug))
+        .map((topic) => frenchAidreamcapesVideo ? {
+          ...topic,
+          label: frenchVideoGenerationTopicLabel(topic.slug, topic.label),
+          parentLabel: frenchVideoGenerationParentLabel(topic.parentSlug, topic.parentLabel)
+        } : topic);
       const topicGroups = groupedVideoGenerationTopicsForServer(topics);
       const HeadingTag = setting(section, "headingLevel", "h1") === "h1" ? "h1" : "h2";
       return (
@@ -16303,13 +16310,13 @@ function SectionView({
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <div className="flex flex-col gap-4 border-b border-white/10 pb-8 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{spanishMyDreamShootsVideo ? "Generación de vídeo con IA" : "AI Video Generation"}</p>
+                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{frenchAidreamcapesVideo ? "Génération de vidéos avec l’IA" : spanishMyDreamShootsVideo ? "Generación de vídeo con IA" : "AI Video Generation"}</p>
                 <HeadingTag className="mt-4 max-w-3xl text-4xl font-semibold leading-none tracking-normal text-white sm:text-5xl lg:text-6xl [font-family:var(--site-title-font)]">
                   {setting(section, "title", "AI Video Generation")}
                 </HeadingTag>
               </div>
               <div className="max-w-xl lg:text-right">
-                <p className="text-sm font-semibold uppercase tracking-normal text-white/42">{topics.length} {spanishMyDreamShootsVideo ? "temas" : "themes"}</p>
+                <p className="text-sm font-semibold uppercase tracking-normal text-white/42">{topics.length} {frenchAidreamcapesVideo ? "thèmes" : spanishMyDreamShootsVideo ? "temas" : "themes"}</p>
                 <p className="mt-3 text-base leading-7 text-white/68">
                   {setting(section, "subtitle", "Browse every public AI video theme and open the dedicated guide for the direction you want.")}
                 </p>
@@ -16322,7 +16329,7 @@ function SectionView({
                   <section key={group.slug}>
                     <div className="flex items-end justify-between gap-4 border-b border-white/10 pb-3">
                       <h2 className="text-2xl font-semibold tracking-normal text-white">{group.label}</h2>
-                      <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white/42">{group.topics.length} {spanishMyDreamShootsVideo ? "temas" : "themes"}</span>
+                      <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white/42">{group.topics.length} {frenchAidreamcapesVideo ? "thèmes" : spanishMyDreamShootsVideo ? "temas" : "themes"}</span>
                     </div>
                     <div className="mt-5 grid items-start gap-5 sm:grid-cols-2 lg:grid-cols-4">
                       {group.topics.map((topic, index) => {
@@ -16371,7 +16378,7 @@ function SectionView({
                             <h3 className="text-xl font-semibold leading-tight tracking-normal text-white">{topic.label}</h3>
                             {topic.description ? <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/66">{topic.description}</p> : null}
                             <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#ddd7ff] transition group-hover/theme:text-white">
-                              {spanishMyDreamShootsVideo ? "Abrir tema" : "Open theme"}
+                              {frenchAidreamcapesVideo ? "Ouvrir le thème" : spanishMyDreamShootsVideo ? "Abrir tema" : "Open theme"}
                               <ChevronRight className="h-4 w-4 shrink-0 transition group-hover/theme:translate-x-0.5" strokeWidth={1.9} />
                             </span>
                           </Link>
