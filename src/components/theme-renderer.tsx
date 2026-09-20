@@ -19347,6 +19347,19 @@ function SectionView({
           });
       const configuredImageList = listLines(setting(section, "imageList", ""));
       const configuredImageAltList = listLines(setting(section, "imageListAlt", ""));
+      const faqBlockImageAltBySource = new Map(
+        visibleFaqList
+          .map((item) => [blockValue(item, "imageUrl", "").trim(), blockValue(item, "imageAlt", "").trim()] as const)
+          .filter(([source]) => Boolean(source))
+      );
+      const faqBlockImageList = visibleFaqList
+        .map((item) => blockValue(item, "imageUrl", "").trim())
+        .filter(Boolean);
+      // Published FAQ content can carry the per-question images while an older
+      // section settings snapshot has only the cover in imageList. Preserve an
+      // explicitly configured gallery, but use those block images to fill any
+      // missing visual slots so the FAQ never collapses to a single image.
+      const effectiveImageList = Array.from(new Set([...configuredImageList, ...faqBlockImageList]));
       const featureCaptionFallback = aidreamcapesFaq
         ? isFrenchStorefrontSite(site)
           ? "Des directions de création originales, des photos sources autorisées et une livraison en galerie privée dans un seul compte."
@@ -19358,14 +19371,14 @@ function SectionView({
           : renderContext.pagePath === "/best-ai-video"
             ? "A guided place to compare AI video directions, review credits, and keep finished work organized."
             : "A guided place to compare AI photo directions, review credits, and keep finished work organized.";
-      const featureGallery = (configuredImageList.length ? configuredImageList : [configuredImage || fallbackImage])
+      const featureGallery = (effectiveImageList.length ? effectiveImageList : [configuredImage || fallbackImage])
         .map((image, index) => {
           const src = mediaAssetUrl(site, image);
 	          if (!src.startsWith("/assets/")) return undefined;
 	          return {
-	            src,
-	            alt: faqVisualAlt(src, index, configuredImageAltList[index])
-	          };
+            src,
+            alt: faqVisualAlt(src, index, configuredImageAltList[index] || faqBlockImageAltBySource.get(image) || "")
+          };
 	        })
         .filter((image): image is { src: string; alt: string } => Boolean(image))
         .slice(0, 6);
