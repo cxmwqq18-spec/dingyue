@@ -345,24 +345,32 @@ function applySectionImageMap(input, slug) {
   const next = clone(input);
   const assignmentsBySection = sectionImageMap.routes?.[slug] ?? {};
   const assets = new Map((assetsByPage.get(slug) ?? []).map((asset) => [asset.filename, asset]));
-  for (const [sectionId, assignments] of Object.entries(assignmentsBySection)) {
+  const sectionAliases = assignmentsBySection._sectionAliases ?? {};
+  const blockAliases = assignmentsBySection._blockAliases ?? {};
+  for (const [mappedSectionId, assignments] of Object.entries(assignmentsBySection)) {
+    if (mappedSectionId === "_sectionAliases" || mappedSectionId === "_blockAliases") continue;
+    const aliasedSectionId = sectionAliases[mappedSectionId];
+    const sectionId = aliasedSectionId && next.sections?.[aliasedSectionId] ? aliasedSectionId : mappedSectionId;
     const section = next.sections?.[sectionId];
-    assert(section, `mapped_section_missing:${slug}:${sectionId}`);
-    assert(Array.isArray(section.blocks), `mapped_section_blocks_missing:${slug}:${sectionId}`);
+    assert(section, `mapped_section_missing:${slug}:${mappedSectionId}->${sectionId}`);
+    assert(Array.isArray(section.blocks), `mapped_section_blocks_missing:${slug}:${mappedSectionId}->${sectionId}`);
     const sectionFilename = assignments._section;
     if (sectionFilename) {
       const sectionAsset = assets.get(sectionFilename);
-      assert(sectionAsset, `mapped_section_asset_missing:${slug}:${sectionId}:${sectionFilename}`);
+      assert(sectionAsset, `mapped_section_asset_missing:${slug}:${mappedSectionId}->${sectionId}:${sectionFilename}`);
       section.settings = { ...(section.settings && typeof section.settings === "object" ? section.settings : {}), ...imageSettings(sectionAsset) };
     }
     const blockAssignments = Object.entries(assignments).filter(([blockId]) => blockId !== "_section");
     const mappedFilenames = blockAssignments.map(([, filename]) => filename);
-    assert.equal(new Set(mappedFilenames).size, mappedFilenames.length, `duplicate_mapped_image:${slug}:${sectionId}`);
-    for (const [blockId, filename] of blockAssignments) {
+    assert.equal(new Set(mappedFilenames).size, mappedFilenames.length, `duplicate_mapped_image:${slug}:${mappedSectionId}->${sectionId}`);
+    const aliasesForSection = blockAliases[mappedSectionId] ?? {};
+    for (const [mappedBlockId, filename] of blockAssignments) {
+      const aliasedBlockId = aliasesForSection[mappedBlockId];
+      const blockId = aliasedBlockId && section.blocks.some((candidate) => candidate.id === aliasedBlockId) ? aliasedBlockId : mappedBlockId;
       const block = section.blocks.find((candidate) => candidate.id === blockId);
-      assert(block, `mapped_block_missing:${slug}:${sectionId}:${blockId}`);
+      assert(block, `mapped_block_missing:${slug}:${mappedSectionId}:${mappedBlockId}->${blockId}`);
       const asset = assets.get(filename);
-      assert(asset, `mapped_asset_missing:${slug}:${sectionId}:${blockId}:${filename}`);
+      assert(asset, `mapped_asset_missing:${slug}:${mappedSectionId}:${mappedBlockId}->${blockId}:${filename}`);
       block.settings = { ...(block.settings && typeof block.settings === "object" ? block.settings : {}), ...imageSettings(asset) };
     }
   }

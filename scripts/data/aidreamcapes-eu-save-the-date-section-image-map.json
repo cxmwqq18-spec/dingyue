@@ -93,6 +93,52 @@
         "save-the-date-scene_card-6": "ai-wedding-invitation-bridesmaid-review.jpg",
         "save-the-date-scene_card-7": "ai-wedding-invitation-digital-share.jpg",
         "save-the-date-scene_card-8": "ai-wedding-invitation-venue-display.jpg"
+      },
+      "_sectionAliases": {
+        "save_date_hero": "wedding_invitation_hero",
+        "save_date_formats": "wedding_invitation_formats",
+        "save_date_workflow": "wedding_invitation_workflow",
+        "save_date_definition": "wedding_invitation_definition",
+        "save_date_use_cases": "wedding_invitation_use_cases",
+        "save_date_scene_ideas": "wedding_invitation_scene_ideas"
+      },
+      "_blockAliases": {
+        "save_date_hero": {
+          "save-the-date-hero-visual-1": "wedding-invitation-hero-visual-1",
+          "save-the-date-hero-visual-2": "wedding-invitation-hero-visual-2",
+          "save-the-date-hero-visual-3": "wedding-invitation-hero-visual-3"
+        },
+        "save_date_formats": {
+          "save-the-date-format-1": "wedding-invitation-format-1",
+          "save-the-date-format-2": "wedding-invitation-format-2",
+          "save-the-date-format-3": "wedding-invitation-format-3"
+        },
+        "save_date_workflow": {
+          "save-the-date-step-1": "wedding-invitation-step-1",
+          "save-the-date-step-2": "wedding-invitation-step-2",
+          "save-the-date-step-3": "wedding-invitation-step-3",
+          "save-the-date-step-4": "wedding-invitation-step-4",
+          "save-the-date-step-5": "wedding-invitation-step-5",
+          "save-the-date-step-6": "wedding-invitation-step-6"
+        },
+        "save_date_use_cases": {
+          "save-the-date-scene_card-1": "wedding-invitation-use-case-1",
+          "save-the-date-scene_card-2": "wedding-invitation-use-case-2",
+          "save-the-date-scene_card-3": "wedding-invitation-use-case-3",
+          "save-the-date-scene_card-4": "wedding-invitation-use-case-4",
+          "save-the-date-scene_card-5": "wedding-invitation-use-case-5",
+          "save-the-date-scene_card-6": "wedding-invitation-use-case-6"
+        },
+        "save_date_scene_ideas": {
+          "save-the-date-scene_card-1": "wedding-invitation-scene-1",
+          "save-the-date-scene_card-2": "wedding-invitation-scene-2",
+          "save-the-date-scene_card-3": "wedding-invitation-scene-3",
+          "save-the-date-scene_card-4": "wedding-invitation-scene-4",
+          "save-the-date-scene_card-5": "wedding-invitation-scene-5",
+          "save-the-date-scene_card-6": "wedding-invitation-scene-6",
+          "save-the-date-scene_card-7": "wedding-invitation-scene-7",
+          "save-the-date-scene_card-8": "wedding-invitation-scene-8"
+        }
       }
     },
     "wedding-ceremony": {
