@@ -39,7 +39,7 @@ import { AidreamcapesImageThemeDetail } from "@/components/storefront/aidreamcap
 import { TalkingPhotoLanding } from "@/components/storefront/talking-photo-landing";
 import { CartCheckoutPanel } from "@/components/storefront/cart-checkout-panel";
 import { cleanHost, hostAwareSitePath, publicSiteSlug } from "@/lib/domain-routing";
-import { isAidreamcapesImageThemePath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { AIDREAMCAPES_IMAGE_THEME_ROOT_PATH, isAidreamcapesImageThemePath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { mydreamshootsPageCopyForRoute, type MyDreamshootsPageCopy } from "@/lib/mydreamshoots-page-copy";
 import { getSeoDirectoryContentForSite, mirroredAidreamcapesCollectionProfileForSlug } from "@/lib/dreamshoot-seo-content";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
@@ -4142,9 +4142,21 @@ function generationShowcaseCardsFromSources<T>(
     .filter((card): card is GenerationShowcaseImageCard => Boolean(card));
 }
 
-function generationShowcaseImageCardsForSite(site: Site, creativePacks: CreativePack[], selectedImageSlugs: string[]): GenerationShowcaseImageCard[] {
-  const activePacks = creativePacks.filter((pack) => pack.status === "active");
-  const uniqueSelectedImageSlugs = uniqueStringList(selectedImageSlugs.map((slug) => dreamshootCategorySlug(slug)));
+function generationShowcaseImageCardsForSite(
+  site: Site,
+  creativePacks: CreativePack[],
+  selectedImageSlugs: string[],
+  options: { excludeRetiredAidreamcapesPacks?: boolean } = {}
+): GenerationShowcaseImageCard[] {
+  const excludeRetiredAidreamcapesPacks = options.excludeRetiredAidreamcapesPacks === true && isAidreamcapesSite(site);
+  const isRetiredPack = (pack: CreativePack): boolean => {
+    if (!excludeRetiredAidreamcapesPacks) return false;
+    const slug = dreamshootCategorySlug(pack.categoryRecord?.slug || pack.category || pack.name);
+    return isRetiredAidreamcapesPublicPath(site.slug, `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${slug}`);
+  };
+  const activePacks = creativePacks.filter((pack) => pack.status === "active" && !isRetiredPack(pack));
+  const uniqueSelectedImageSlugs = uniqueStringList(selectedImageSlugs.map((slug) => dreamshootCategorySlug(slug)))
+    .filter((slug) => !excludeRetiredAidreamcapesPacks || !isRetiredAidreamcapesPublicPath(site.slug, `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${slug}`));
   const seenPackKeys = new Set<string>();
   const uniquePacks = activePacks.filter((pack) => {
     const key = generationShowcasePackDedupeKey(pack);
@@ -14728,7 +14740,9 @@ function SectionView({
     const selectedImageSlugs = fullGallery ? [] : listLines(setting(section, "imageSlugs"));
     const selectedVideoSlugs = fullGallery ? [] : listLines(setting(section, "videoSlugs"));
     const configuredImageItemLimit = numberSetting(section, "imageItemLimit", Number.POSITIVE_INFINITY);
-    const imageCards = generationShowcaseImageCardsForSite(site, creativePacks, selectedImageSlugs)
+    const imageCards = generationShowcaseImageCardsForSite(site, creativePacks, selectedImageSlugs, {
+      excludeRetiredAidreamcapesPacks: aidreamcapes && renderContext.pagePath === "/best-ai-image"
+    })
       .slice(0, Number.isFinite(configuredImageItemLimit) ? Math.max(1, Math.floor(configuredImageItemLimit)) : undefined)
       .map((card, index) => ({
         ...card,
