@@ -90,6 +90,7 @@ function replaceTargetBrand(value) {
     .replaceAll("mydreamshoots.com", "aidreamcapes.eu")
     .replaceAll("www.mydreamshoots.com", "aidreamcapes.eu")
     .replaceAll("www.aidreamcapes.com", "aidreamcapes.eu")
+    .replace(/(?<![/.])aidreamcapes\.com\b/gi, "Aidreamcapes EU")
     .replaceAll("support@mydreamshoots.com", "support@aidreamcapes.eu")
     .replaceAll("partners@mydreamshoots.com", "partners@aidreamcapes.eu")
     .replaceAll("mes shootings de rêves", "Aidreamcapes");
@@ -503,6 +504,8 @@ async function main() {
     for (const sourceThemeRow of sourceVideoThemes) {
       const targetThemeRow = targetVideoThemeBySlug.get(sourceThemeRow.slug);
       assert(targetThemeRow, `missing target video theme for ${sourceThemeRow.slug}`);
+      const normalizedVideoSlug = String(sourceThemeRow.slug).replace(/^\/+/, "");
+      const hasTargetPublicRoute = targetLive.some((page) => page.slug === `/ai-video-generation/${normalizedVideoSlug}` || page.slug === `/ai-save-the-date/${normalizedVideoSlug}`);
       catalog.videoThemes.push({
         targetThemeRow,
         data: {
@@ -510,7 +513,7 @@ async function main() {
           name: normalizeFrench(cache[sourceThemeRow.name] ?? sourceThemeRow.name),
           headline: normalizeFrench(cache[sourceThemeRow.headline] ?? sourceThemeRow.headline),
           description: normalizeFrench(cache[sourceThemeRow.description] ?? sourceThemeRow.description),
-          status: sourceThemeRow.status,
+          status: ["inactive", "archived"].includes(targetThemeRow.status) && !hasTargetPublicRoute ? targetThemeRow.status : sourceThemeRow.status,
           creditCost: sourceThemeRow.creditCost,
           durationSeconds: sourceThemeRow.durationSeconds,
           maxFrames: sourceThemeRow.maxFrames,
