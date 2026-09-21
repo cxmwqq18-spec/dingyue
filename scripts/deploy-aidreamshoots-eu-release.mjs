@@ -24,8 +24,10 @@ const allowedReleaseFiles = [
   "scripts/smoke-aidreamshoots-seo-remediation.mjs",
   "scripts/smoke-storefront-media-alt.mjs",
   "src/app/[...path]/page.tsx",
+  "src/components/storefront/save-the-date-directory.tsx",
   "src/components/theme-renderer.tsx",
   "src/lib/aidreamshoots-xby-seo-content.ts",
+  "src/lib/aidreamcapes-eu-retired-routes.ts",
   "src/lib/dreamshoot-seo-content.ts",
   "src/lib/seo-indexing.ts",
   "src/lib/spanish-storefronts.ts",
@@ -109,7 +111,12 @@ function releaseFiles() {
   const files = output ? output.split("\n").filter(Boolean) : [];
   if (!base) return files;
   const selected = files.filter((file) => allowedReleaseFiles.includes(file) || file.startsWith("public/assets/sites/site_aidreamshoots/"));
-  for (const required of ["scripts/build-production.mjs", "scripts/restore-next-env.mjs"]) {
+  for (const required of [
+    "scripts/build-production.mjs",
+    "scripts/restore-next-env.mjs",
+    "src/components/storefront/save-the-date-directory.tsx",
+    "src/lib/aidreamcapes-eu-retired-routes.ts"
+  ]) {
     if (!selected.includes(required)) selected.push(required);
   }
   return selected;
