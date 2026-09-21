@@ -19171,6 +19171,9 @@ function SectionView({
 	                            ? `${label} ${stage === "AI-generated result" ? "resultado generado con IA" : "carga fuente"} en la galeria de antes y despues de ${storefrontMediaBrandName(site)}.`
                             : `${label} ${stage} image in the before and after gallery for ${storefrontMediaBrandName(site)}.`
 	                        }))}
+	                        width={1024}
+	                        height={1024}
+	                        loading="lazy"
 	                      />
 	                      <span className="absolute left-3 top-3 rounded-full bg-white/82 px-3 py-1 text-xs font-medium backdrop-blur">{label}</span>
 	                    </div>
