@@ -157,6 +157,8 @@ function SafeCatalogImage({
       loading={loading}
       sizes={sizes}
       src={src}
+      width={1024}
+      height={1024}
     />
   );
 }
