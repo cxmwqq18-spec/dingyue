@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
-import { execFileSync, spawn } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import "./load-runtime-env.mjs";
 import { argumentValue, hasArgument } from "./lib/database-target.mjs";
 
@@ -75,6 +78,18 @@ function sshArgs(command) {
   return args;
 }
 
+function scpArgs(source, destination) {
+  const args = [];
+  if (process.env.SSH_CONFIG_PATH) args.push("-F", process.env.SSH_CONFIG_PATH);
+  args.push("-P", process.env.AI_PROJECT_SSH_PORT || "11765");
+  if (process.env.AI_PROJECT_SSH_KEY_PATH) args.push("-i", process.env.AI_PROJECT_SSH_KEY_PATH);
+  args.push(
+    source,
+    (process.env.AI_PROJECT_SSH_USER || "root") + "@" + (process.env.AI_PROJECT_SSH_HOST || "204.77.130.125") + ":" + destination
+  );
+  return args;
+}
+
 function changedFilesForCommit() {
   const output = git(["diff-tree", "--no-commit-id", "--name-only", "-r", "--diff-filter=ACMRT", commit, commit + "^"]);
   return output ? output.split("\n").filter(Boolean) : [];
@@ -139,6 +154,7 @@ function runRemote(changedFiles) {
   const release = config.root + "/releases/" + commit + "-" + config.domain.replaceAll(".", "-");
   const stage = release + ".install";
   const patch = "/tmp/" + commit + "-aidreamshoots-eu-patch";
+  const patchTar = patch + ".tar";
   const rootQ = shellQuote(config.root);
   const releaseQ = shellQuote(release);
   const stageQ = shellQuote(stage);
@@ -150,6 +166,7 @@ function runRemote(changedFiles) {
     "RELEASE=" + releaseQ,
     "STAGE=" + stageQ,
     "PATCH=" + patchQ,
+    "PATCH_TAR=" + shellQuote(patchTar),
     "BASE=$(readlink -f \"$ROOT/current\")",
     "if [ -f \"$RELEASE/.deployed-commit\" ] && [ \"$(cat \"$RELEASE/.deployed-commit\")\" = \"$COMMIT\" ] && [ \"$(readlink -f \"$ROOT/current\")\" = \"$RELEASE\" ]; then echo 'already deployed'; exit 0; fi",
     "test ! -e \"$RELEASE\"",
@@ -157,13 +174,14 @@ function runRemote(changedFiles) {
     "test -d \"$BASE\"",
     "test -f \"$BASE/.env.local\"",
     "mkdir -p \"$STAGE\" \"$PATCH\"",
-    "trap 'rm -rf \"$STAGE\" \"$PATCH\"' EXIT",
+    "trap 'rm -rf \"$STAGE\" \"$PATCH\"; rm -f \"$PATCH_TAR\"' EXIT",
     "rsync -a --link-dest=\"$BASE/\" --exclude='.next*' --exclude='node_modules' \"$BASE/\" \"$STAGE/\"",
     "cp -a \"$BASE/node_modules\" \"$STAGE/node_modules\"",
     "rm -f \"$STAGE/.env.local\" \"$STAGE/.env\" \"$STAGE/.deployed-commit\"",
     "cp \"$BASE/.env.local\" \"$STAGE/.env.local\"",
     "cp \"$BASE/.env.local\" \"$STAGE/.env\"",
-    "tar -xf - -C \"$PATCH\"",
+    "test -f \"$PATCH_TAR\"",
+    "tar -xf \"$PATCH_TAR\" -C \"$PATCH\"",
     "rsync -a \"$PATCH/\" \"$STAGE/\"",
     "cd \"$STAGE\"",
     "DINGYUE_ENV=production DATABASE_TARGET=production NEXT_DIST_DIR=.next-build ./node_modules/.bin/prisma generate",
@@ -171,14 +189,14 @@ function runRemote(changedFiles) {
     "DINGYUE_ENV=production DATABASE_TARGET=production ./node_modules/.bin/prisma migrate deploy",
     "printf '%s\\n' \"$COMMIT\" > \"$STAGE/.deployed-commit\"",
     "DINGYUE_ENV=production DATABASE_TARGET=production NEXT_DIST_DIR=.next-build ./node_modules/.bin/next start -p " + config.validationPort + " -H 127.0.0.1 >\"$STAGE/.candidate.log\" 2>&1 & CANDIDATE_PID=$!",
-    "trap 'kill \"$CANDIDATE_PID\" 2>/dev/null || true; rm -rf \"$STAGE\" \"$PATCH\"' EXIT",
+    "trap 'kill \"$CANDIDATE_PID\" 2>/dev/null || true; rm -rf \"$STAGE\" \"$PATCH\"; rm -f \"$PATCH_TAR\"' EXIT",
     "READY=0; for ATTEMPT in $(seq 1 40); do if curl -fsS --max-time 3 -H " + shellQuote("Host: " + config.domain) + " \"http://127.0.0.1:" + config.validationPort + "/\" > \"$STAGE/.candidate.html\"; then READY=1; break; fi; sleep 1; done; test \"$READY\" = 1",
     "grep -E '<title[^>]*>[^<]+</title>' \"$STAGE/.candidate.html\"",
     "grep -F 'lang=\"es\"' \"$STAGE/.candidate.html\"",
     "grep -F 'https://" + config.domain + "/' \"$STAGE/.candidate.html\"",
     "kill \"$CANDIDATE_PID\" 2>/dev/null || true; wait \"$CANDIDATE_PID\" 2>/dev/null || true",
     "mv \"$STAGE\" \"$RELEASE\"",
-    "trap 'rm -rf \"$STAGE\" \"$PATCH\"' EXIT",
+    "trap 'rm -rf \"$STAGE\" \"$PATCH\"; rm -f \"$PATCH_TAR\"' EXIT",
     "SERVICE_DROPIN=/etc/systemd/system/" + config.service + ".d/release.conf",
     "SERVICE_NEXT=\"$RELEASE/" + config.service + ".next\"",
     "cp \"$SERVICE_DROPIN\" \"$RELEASE/" + config.service + ".previous\"",
@@ -199,30 +217,26 @@ function runRemote(changedFiles) {
     "test \"$(cat \"$ROOT/current/.deployed-commit\")\" = \"$COMMIT\"",
     "PUBLIC_READY=0; for ATTEMPT in $(seq 1 15); do if curl -fsS --max-time 20 https://" + config.domain + "/ | grep -E '<title[^>]*>[^<]+</title>'; then PUBLIC_READY=1; break; fi; sleep 2; done; test \"$PUBLIC_READY\" = 1",
     "SWITCHED=0; trap - EXIT",
-    "rm -rf \"$PATCH\"",
+    "rm -rf \"$PATCH\"; rm -f \"$PATCH_TAR\"",
     "printf '%s\\n' 'deployed_commit='$COMMIT 'service='$(systemctl is-active " + config.service + ") 'current='$(readlink -f \"$ROOT/current\")"
   ].join("\n");
 
-  return new Promise((resolve, reject) => {
-    const archive = spawn("git", ["archive", "--format=tar", commit, "--", ...changedFiles], {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "aidreamshoots-eu-release-"));
+  const archivePath = path.join(tempDir, commit + ".tar");
+  try {
+    execFileSync("git", ["archive", "--format=tar", "--output=" + archivePath, commit, "--", ...changedFiles], {
       cwd: process.cwd(),
-      stdio: ["ignore", "pipe", "inherit"]
+      stdio: ["ignore", "inherit", "inherit"]
     });
-    const ssh = spawn("ssh", sshArgs(command), { stdio: ["pipe", "inherit", "inherit"] });
-    archive.stdout.pipe(ssh.stdin);
-    archive.on("error", reject);
-    ssh.on("error", reject);
-    let archiveStatus;
-    archive.on("close", (status) => {
-      archiveStatus = status;
-      ssh.stdin.end();
-    });
-    ssh.on("close", (status) => {
-      if (archiveStatus !== 0) reject(new Error("git archive exited with " + archiveStatus));
-      else if (status !== 0) reject(new Error("Remote deployment exited with " + status + "; current release was not switched after the failing step."));
-      else resolve();
-    });
-  });
+    const upload = spawnSync("scp", scpArgs(archivePath, patchTar), { stdio: "inherit" });
+    if (upload.status !== 0) fail("Patch upload failed before the remote release was touched.");
+    const remote = spawnSync("ssh", sshArgs(command), { stdio: "inherit" });
+    if (remote.status !== 0) {
+      fail("Remote deployment exited with " + remote.status + "; current release was not switched after the failing step.");
+    }
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
 }
 
 try {
