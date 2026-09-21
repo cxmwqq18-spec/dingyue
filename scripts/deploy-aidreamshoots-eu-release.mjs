@@ -9,6 +9,7 @@ import { argumentValue, hasArgument } from "./lib/database-target.mjs";
 
 const commit = argumentValue("--commit") || "";
 const base = argumentValue("--base") || "";
+const fullSource = hasArgument("--full-source");
 const apply = hasArgument("--apply");
 const confirm = argumentValue("--confirm");
 const branch = execFileSync("git", ["branch", "--show-current"], { encoding: "utf8" }).trim();
@@ -40,6 +41,21 @@ const allowedReleaseFiles = [
   "src/lib/theme/json-ld.ts",
   "src/lib/types.ts",
   "src/middleware.ts"
+];
+const fullSourcePaths = [
+  "package.json",
+  "package-lock.json",
+  "next.config.mjs",
+  "next-env.d.ts",
+  "postcss.config.mjs",
+  "tailwind.config.ts",
+  "tsconfig.json",
+  "tsconfig.typecheck.json",
+  "eslint.config.mjs",
+  "server.mjs",
+  "prisma",
+  "scripts",
+  "src"
 ];
 
 const config = {
@@ -152,7 +168,7 @@ function localPrecheck() {
     fail("Incremental release refuses deleted files because the remote release must be reviewed explicitly:\n" + deleted.join("\n"));
   }
   const changed = releaseFiles();
-  if (!changed.length) fail("Commit " + commit + " has no changed files to release.");
+  if (!changed.length && !fullSource) fail("Commit " + commit + " has no changed files to release.");
   return { changed, remoteHead };
 }
 
@@ -231,7 +247,10 @@ function runRemote(changedFiles) {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "aidreamshoots-eu-release-"));
   const archivePath = path.join(tempDir, commit + ".tar");
   try {
-    execFileSync("git", ["archive", "--format=tar", "--output=" + archivePath, commit, "--", ...changedFiles], {
+    const archivePaths = fullSource
+      ? [...new Set([...fullSourcePaths, ...changedFiles])]
+      : changedFiles;
+    execFileSync("git", ["archive", "--format=tar", "--output=" + archivePath, commit, "--", ...archivePaths], {
       cwd: process.cwd(),
       stdio: ["ignore", "inherit", "inherit"]
     });
