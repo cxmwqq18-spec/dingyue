@@ -13539,8 +13539,39 @@ function SectionView({
     const activePackageThemeCards = isMyDreamShootsProfileSite(site) && activePackThemeCards.length
       ? activePackThemeCards
       : categoryThemeCards.length ? categoryThemeCards : activePackThemeCards;
-    const taxonomyCards = (renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation") && activePackageThemeCards.length
-      ? activePackageThemeCards
+    const publishedSpanishImageThemeCards = spanishXbyTaxonomy && site.id === "site_mydreamshoots_xby" && (
+      renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation"
+    )
+      ? (publishedIndexablePaths ?? storefrontContext?.publishedPaths ?? [])
+          .filter((path) => /^\/ai-image-generation\/[^/]+$/.test(path))
+          .map((href) => {
+            const slug = href.slice("/ai-image-generation/".length);
+            const matchingPack = creativePacks.find((pack) => creativePackCollectionHref(pack) === href);
+            const content = getSeoDirectoryContentForSite(site, "collection", slug);
+            return {
+              id: `published_${slug}`,
+              groupKey: undefined as string | undefined,
+              groupLabel: "Temas de fotos",
+              title: content.label || spanishPhotoPackageLabel(slug, false),
+              description: content.description || "Explora este tema de fotos con IA y guarda tus resultados en una galería privada.",
+              meta: "Fotos con IA",
+              keywords: [content.label, slug, "fotos con IA"].filter((value): value is string => Boolean(value)),
+              imageUrl: matchingPack ? packImage(site, matchingPack) : fallbackHeroImages[0],
+              imageUrls: matchingPack ? dreamshootPackImageSet(site, matchingPack, 2) : undefined,
+              imageAlts: matchingPack?.galleryImageAlts,
+              photoCountLabel: matchingPack ? dreamshootPackPhotoCountLabel(matchingPack) : undefined,
+              tags: content.useCases ?? [],
+              usesLabel: undefined as string | undefined,
+              href,
+              block: undefined as SectionBlockInstance | undefined
+            };
+          })
+      : [];
+    const taxonomyCards = (renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation") && (activePackageThemeCards.length || publishedSpanishImageThemeCards.length)
+      ? [
+          ...activePackageThemeCards,
+          ...publishedSpanishImageThemeCards.filter((publishedCard) => !activePackageThemeCards.some((card) => card.href === publishedCard.href))
+        ]
       : cards.map((card) => ({
           id: card.id,
           groupKey: undefined as string | undefined,
