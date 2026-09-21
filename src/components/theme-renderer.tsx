@@ -9309,7 +9309,7 @@ function renderLegacySaasSection({
     const opacity = Math.max(0, Math.min(90, blockNumber(activeSlide, "opacity", numberSetting(section, "opacity", 35))));
     return (
       <section className={`relative overflow-hidden bg-zinc-950 px-5 text-white ${imageHeightClass(setting(section, "img_height", "large"))}`} data-saas-section-renderer={type} id={sectionAnchor(section, id)}>
-        <img className="absolute inset-0 h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: subtitle, role: "cover" })} />
+        <img className="absolute inset-0 h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: subtitle, role: "cover" })} width={1920} height={1080} loading="eager" fetchPriority="high" />
         <div className="absolute inset-0" style={{ backgroundColor: blockValue(activeSlide, "image_overlay_color", "#151515"), opacity: opacity / 100 }} />
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/82 via-zinc-950/22 to-transparent" />
         <div className="relative mx-auto flex min-h-[inherit] max-w-[var(--site-content-width)] items-center">
@@ -9376,6 +9376,9 @@ function renderLegacySaasSection({
                   className="h-full min-h-[220px] w-full object-cover opacity-90"
                   src={mediaAssetUrl(site, blockValue(slide, "src", image))}
                   alt={blockVisualAltForSite(site, section, slide, mediaAssetUrl(site, blockValue(slide, "src", image)), index, `Reveal slide ${index + 1}`)}
+                  width={1200}
+                  height={900}
+                  loading="lazy"
                 />
               </div>
             ))}
@@ -9428,7 +9431,10 @@ function renderLegacySaasSection({
 	                      meta: card.price,
 	                      role: "card",
 	                      title: card.title
-	                    })}
+	                      })}
+	                    width={1200}
+	                    height={1500}
+	                    loading="lazy"
 	                  />
                 </div>
                 <div className="p-4">
@@ -9468,6 +9474,9 @@ function renderLegacySaasSection({
                       index,
                       title: product?.name ?? "Product image"
                     })}
+                    width={1024}
+                    height={1024}
+                    loading="lazy"
                   />
                 </div>
               ))}
@@ -9484,6 +9493,9 @@ function renderLegacySaasSection({
                   title: product?.name ?? "Product detail",
                   role: "cover"
                 })}
+                width={1200}
+                height={1500}
+                loading="eager"
               />
             </div>
           </div>
@@ -9551,7 +9563,10 @@ function renderLegacySaasSection({
 	                      meta: card.price,
 	                      role: "card",
 	                      title: card.title
-	                    })}
+	                      })}
+	                    width={1200}
+	                    height={900}
+	                    loading="lazy"
 	                  />
                   <span className="p-2">
                     <span className="font-mono text-xs uppercase tracking-[0.18em] text-zinc-400">{card.meta}</span>
@@ -9609,6 +9624,9 @@ function renderLegacySaasSection({
 	                          role: "card",
 	                          title: card.title
 	                        })}
+	                        width={1200}
+	                        height={1500}
+	                        loading="lazy"
 	                      />
                     </div>
                     <div className="p-4">
@@ -9666,6 +9684,9 @@ function renderLegacySaasSection({
 	                    role: "card",
 	                    title: card.title
 	                  })}
+	                  width={1200}
+	                  height={900}
+	                  loading="lazy"
 	                />
                 <h3 className="mt-4 font-semibold">{card.title}</h3>
                 <p className="mt-1 text-xs text-zinc-500">{card.description}</p>
@@ -10010,6 +10031,9 @@ function renderLegacySaasSection({
                     index,
                     title: item.title
                   })}
+                  width={1200}
+                  height={1500}
+                  loading="lazy"
                 />
               </Link>
             ))}
@@ -10034,7 +10058,7 @@ function renderLegacySaasSection({
                 <article className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-white" key={instanceKey(block, index, "feature_column")} {...xfcartBlockAttrs(mode, block, index, "feature_column")}>
                   {saasBool(block.settings.enable_image, true) ? (
                     <div className="aspect-[16/11] bg-zinc-200">
-                      <img className="h-full w-full object-cover" src={image} alt={blockVisualAltForSite(site, section, block, image, index, storefrontSectionLabel(block.type))} />
+                      <img className="h-full w-full object-cover" src={image} alt={blockVisualAltForSite(site, section, block, image, index, storefrontSectionLabel(block.type))} width={1600} height={1100} loading="lazy" />
                     </div>
                   ) : null}
                   <div className="p-5">
@@ -10059,7 +10083,7 @@ function renderLegacySaasSection({
           <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6">
             {(blocks.length ? blocks : Array.from({ length: 6 }, (_, index) => ({ id: `logo_${index}`, type: "logo_image", settings: { image: "" } }))).map((block, index) => (
               <div className="grid h-24 place-items-center rounded-[1rem] border border-black/10 bg-zinc-50 p-4 text-center font-mono text-xs uppercase tracking-[0.18em] text-zinc-500" key={instanceKey(block, index, "logo")} {...xfcartBlockAttrs(mode, block, index, "logo")}>
-                {blockValue(block, "image") ? <img className="max-h-12 max-w-full object-contain" src={mediaAssetUrl(site, blockValue(block, "image"))} alt={`Logo ${index + 1}`} /> : `Brand ${index + 1}`}
+                {blockValue(block, "image") ? <img className="max-h-12 max-w-full object-contain" src={mediaAssetUrl(site, blockValue(block, "image"))} alt={`Logo ${index + 1}`} width={512} height={512} loading="lazy" /> : `Brand ${index + 1}`}
               </div>
             ))}
           </div>
@@ -10099,7 +10123,7 @@ function renderLegacySaasSection({
               const image = mediaAssetUrl(site, blockValue(block, "src", fallbackImageForSeed(`${site.slug}-${type}-${index}`)));
               return (
                 <Link className="group relative aspect-square overflow-hidden rounded-[1rem] border border-black/10 bg-zinc-200" href={hrefFor(site, blockValue(block, "link", "#"))} key={instanceKey(block, index, "gallery")} {...xfcartBlockAttrs(mode, block, index, "gallery")}>
-                  <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} alt={blockVisualAltForSite(site, section, block, image, index, blockValue(block, "account_id", "Gallery image"))} />
+                  <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} alt={blockVisualAltForSite(site, section, block, image, index, blockValue(block, "account_id", "Gallery image"))} width={1024} height={1024} loading="lazy" />
                   {blockValue(block, "account_id") ? <span className="absolute bottom-3 left-3 rounded-full bg-white/82 px-3 py-1 text-xs font-medium backdrop-blur">@{blockValue(block, "account_id")}</span> : null}
                 </Link>
               );
@@ -10154,6 +10178,9 @@ function renderLegacySaasSection({
               title: product?.name ?? storefrontSectionLabel(type),
               role: "card"
             })}
+            width={1200}
+            height={900}
+            loading="lazy"
           />
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{storefrontSectionLabel(type)}</p>
