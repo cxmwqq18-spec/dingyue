@@ -18,7 +18,10 @@ const targetIdsByKey = {
   "trending-audio-sync": "aidreamcapes_mirror_page_6a41c9686fb0a21c"
 };
 const expectedPageIds = pages.map((page) => targetIdsByKey[page.key]);
-const apply = hasArgument("--apply-local");
+const applyLocal = hasArgument("--apply-local");
+const applyProduction = hasArgument("--apply-production");
+assert.equal(!(applyLocal && applyProduction), true, "Choose exactly one database apply target.");
+const apply = applyLocal || applyProduction;
 const requestedSiteId = argumentValue("--site-id") ?? SITE_ID;
 const confirmation = argumentValue("--confirm") ?? "";
 const requestedPageIds = argumentValue("--page-ids") ?? "";
@@ -26,12 +29,16 @@ const backupRoot = argumentValue("--backup-dir") ?? path.resolve("releases/backu
 
 assert.equal(requestedSiteId, SITE_ID, `This migration is restricted to ${SITE_ID}.`);
 assert.equal(expectedPageIds.every(Boolean), true, "Every Brand / Creator page must have an explicit target page ID.");
-assertDatabaseTarget({ expectedTarget: "local" });
-await validateAidreamcapesBrandCreatorContent({ log: (line) => console.log(`[content] ${line}`), requireAssets: false });
+assertDatabaseTarget({
+  expectedTarget: applyProduction ? "production" : "local",
+  requireProductionConfirmation: applyProduction,
+  productionConfirmed: confirmation === "production"
+});
+await validateAidreamcapesBrandCreatorContent({ log: (line) => console.log(`[content] ${line}`), requireAssets: apply });
 if (apply) {
-  assert.equal(confirmation, SITE_ID, `Applying requires --confirm=${SITE_ID}.`);
+  assert.equal(confirmation, applyProduction ? "production" : SITE_ID, `Applying requires --confirm=${applyProduction ? "production" : SITE_ID}.`);
   assert.equal(requestedPageIds, expectedPageIds.join(","), "Applying requires the exact four target page IDs in --page-ids.");
-  assertNonProductionWriteTarget();
+  if (applyLocal) assertNonProductionWriteTarget();
 }
 
 function hashJson(value) {
@@ -175,7 +182,7 @@ try {
     assert.equal(checkDraft.changed, 0, "Draft navigation readback drift");
     assert.equal(checkPublished.changed, 0, "Published navigation readback drift");
     report.forEach((item) => { item.readback = "PASS"; });
-    console.log(JSON.stringify({ ok: true, mode: "applied", siteId: SITE_ID, backupPath, navigationChanges: navigationDraft.changed + navigationPublished.changed, pages: report }, null, 2));
+    console.log(JSON.stringify({ ok: true, mode: applyProduction ? "production-applied" : "applied", siteId: SITE_ID, backupPath, navigationChanges: navigationDraft.changed + navigationPublished.changed, pages: report }, null, 2));
   } else {
     console.log(JSON.stringify({ ok: true, mode: "dry-run", siteId: SITE_ID, existingPageCount: existingPages.length, navigationChanges: navigationDraft.changed + navigationPublished.changed, pages: report, applyCommand: `node scripts/migrate-aidreamcapes-brand-creator-pages.mjs --apply-local --site-id=${SITE_ID} --confirm=${SITE_ID} --page-ids=${expectedPageIds.join(",")}` }, null, 2));
   }

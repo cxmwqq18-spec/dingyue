@@ -12,7 +12,10 @@ import { argumentValue, assertDatabaseTarget, assertNonProductionWriteTarget, ha
 const SITE_ID = "site_aidreamcapes";
 const PAGE_ID = "aidreamcapes_mirror_page_04ef54dc4085da57";
 const PAGE_SLUG = "/ai-video-generation";
-const apply = hasArgument("--apply-local");
+const applyLocal = hasArgument("--apply-local");
+const applyProduction = hasArgument("--apply-production");
+assert.equal(!(applyLocal && applyProduction), true, "Choose exactly one database apply target.");
+const apply = applyLocal || applyProduction;
 const requestedSiteId = argumentValue("--site-id") ?? SITE_ID;
 const requestedPageId = argumentValue("--page-id") ?? PAGE_ID;
 const confirmation = argumentValue("--confirm") ?? "";
@@ -20,7 +23,11 @@ const backupRoot = argumentValue("--backup-dir") ?? path.resolve("releases/backu
 
 assert.equal(requestedSiteId, SITE_ID, `This migration is restricted to ${SITE_ID}.`);
 assert.equal(requestedPageId, PAGE_ID, `This migration requires the exact page ID ${PAGE_ID}.`);
-assertDatabaseTarget({ expectedTarget: "local" });
+assertDatabaseTarget({
+  expectedTarget: applyProduction ? "production" : "local",
+  requireProductionConfirmation: applyProduction,
+  productionConfirmed: confirmation === "production"
+});
 const copy = validateAidreamcapesVideoDirectoryContent();
 
 function hashJson(value) {
@@ -91,8 +98,8 @@ try {
   if (!apply) {
     console.log(JSON.stringify({ ok: true, mode: "dry-run", page: report, applyCommand: `node scripts/migrate-aidreamcapes-video-directory.mjs --apply-local --site-id=${SITE_ID} --confirm=${SITE_ID} --page-id=${PAGE_ID}` }, null, 2));
   } else {
-    assert.equal(confirmation, SITE_ID, `Applying requires --confirm=${SITE_ID}.`);
-    assertNonProductionWriteTarget();
+    assert.equal(confirmation, applyProduction ? "production" : SITE_ID, `Applying requires --confirm=${applyProduction ? "production" : SITE_ID}.`);
+    if (applyLocal) assertNonProductionWriteTarget();
     const stamp = new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14);
     const backupPath = path.resolve(backupRoot, `video-directory-${stamp}.json`);
     await mkdir(path.dirname(backupPath), { recursive: true });
@@ -111,7 +118,7 @@ try {
     assert.equal(readback.siteId, SITE_ID);
     assert.equal(readback.slug, PAGE_SLUG);
     assert.equal(hashJson(readback.contentJson), report.newHash, `${PAGE_ID}: content hash readback`);
-    console.log(JSON.stringify({ ok: true, mode: "applied", backupPath, page: { ...report, readback: "PASS" } }, null, 2));
+    console.log(JSON.stringify({ ok: true, mode: applyProduction ? "production-applied" : "applied", backupPath, page: { ...report, readback: "PASS" } }, null, 2));
   }
 } finally {
   await prisma.$disconnect();

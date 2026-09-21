@@ -1,15 +1,29 @@
 #!/usr/bin/env node
 
 import "./load-runtime-env.mjs";
+import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
 import { PrismaClient } from "@prisma/client";
 import ts from "typescript";
+import { argumentValue, assertDatabaseTarget, hasArgument } from "./lib/database-target.mjs";
 
 const repoRoot = process.cwd();
 const siteId = process.env.AIDREAMCAPES_SITE_ID || "site_aidreamcapes";
 const applyDraft = process.argv.includes("--apply-draft");
+const applyProduction = hasArgument("--apply-production");
+assert.equal(!(applyDraft && applyProduction), true, "Choose exactly one homepage apply target.");
+const apply = applyDraft || applyProduction;
+const confirmation = argumentValue("--confirm") ?? "";
+if (apply) {
+  assertDatabaseTarget({
+    expectedTarget: applyProduction ? "production" : "local",
+    requireProductionConfirmation: applyProduction,
+    productionConfirmed: confirmation === "production"
+  });
+  assert.equal(confirmation, applyProduction ? "production" : siteId, `Applying requires --confirm=${applyProduction ? "production" : siteId}.`);
+}
 const assetRoot = "/assets/sites/site_aidreamcapes/homepage-seo";
 
 function loadZipNavigation() {
@@ -78,12 +92,12 @@ function homepageJson(existing) {
   const output = image("productOutput", "hero");
   const videoCards = [
     card("video_ugc", "video_card", "UGC Product Ad", "Meta / TikTok tests", "/ai-video-generation/ugc-ad-video", image("ugc"), { badge: "#1 Ads" }),
-    card("video_url_ad", "video_card", "URL → Ad", "PDP link to creatives", "/ai-video-generation/product-ad-video", image("urlWorkflow")),
+    card("video_url_ad", "video_card", "URL → Ad", "PDP link to creatives", "/ai-video-generation/url-to-ad", image("urlWorkflow")),
     card("video_hooks", "video_card", "Hook variants", "First 3 seconds", "/ai-video-generation/video-ad", image("hooks")),
     card("video_talking", "video_card", "Talking Photo", "Pitch on camera", "/ai-video-generation/talking-photo", image("talkingPhoto")),
     card("video_demo", "video_card", "Product Demo", "Still to motion", "/ai-video-generation/product-video", image("productDemo")),
     card("video_unboxing", "video_card", "Unboxing", "Trust creatives", "/ai-video-generation/product-video", image("unboxing")),
-    card("video_before_after", "video_card", "Before–After", "Result ads", "/ai-video-generation/product-ad-video", image("beforeAfter")),
+    card("video_before_after", "video_card", "Before–After", "Result ads", "/ai-video-generation/before-after-showcases", image("beforeAfter")),
     card("video_promo", "video_card", "Promo / Sale", "Launch creatives", "/ai-video-generation/promo-video", image("promo"))
   ];
   const photoCards = [
@@ -135,7 +149,7 @@ function homepageJson(existing) {
     version: 1,
     sectionsOrder: ["aidreamcapes_hero", "aidreamcapes_video_grid", "aidreamcapes_ad_testing", "aidreamcapes_photo_grid", "aidreamcapes_scenarios", "aidreamcapes_how", "aidreamcapes_credits", "pricing_1", "proof_1", "faq_1", "conversion_1"],
     sections: {
-      aidreamcapes_hero: { type: "aidreamcapes_home_hero", settings: { anchor: "home", eyebrow: "Marketing UGC studio is live", title: "Create AI Videos, Professional AI Ads & Photo Sets.", titleLine1: "Create AI Videos,", titleAccent: "Professional AI Ads", titleLine3: "& Photo Sets.", intro: "Turn a simple URL or product image into high-converting UGC videos and studio-quality imagery. Perfect for scaling your e-commerce campaigns and marketing assets instantly.", primaryCta: "Create Marketing UGC", primaryHref: "/ai-video-generation/product-ad-video", secondaryCta: "Explore video tools", secondaryHref: "/ai-video-generation", trustEyebrow: "Review credits before generation", googleCta: "Continue with Google", googleHref: "/login?provider=google", emailSeparator: "or", emailPlaceholder: "Email address", emailCta: "Start with email", emailHref: "/login", studioUrl: "aidreamcapes.com/studio", studioWorkflowLabel: "Product → Video", studioWorkflowIntro: "Upload a product still. Get a vertical UGC ad clip.", studioProductLabel: "01 · Product", studioProductFilename: "product-watch.jpg", studioProcessLabel: "Rendering", studioOutputLabel: "02 · UGC Video", studioOutputMeta: "9:16 · Hook + demo · 8s", studioStep1: "1. Drop product photo", studioStep2: "2. Pick UGC style", studioStep3: "3. Export vertical ad", imageUrl: hero.src, imageAlt: hero.alt, imageWidth: hero.width, imageHeight: hero.height, outputImageUrl: output.src, outputImageAlt: output.alt, outputImageWidth: output.width, outputImageHeight: output.height, outputHref: "/ai-video-generation/product-ad-video", outputCta: "Turn product into video →" }, blocks: [block("hero_trust_private", "trust_item", { label: "Private uploads" }), block("hero_trust_credits", "trust_item", { label: "Credits visible" }), block("hero_trust_refund", "trust_item", { label: "Refund review" }), block("hero_stat_ugc", "stat", { value: "UGC-first", label: "Marketing hub for ad tests" }), block("hero_stat_video", "stat", { value: "22+", label: "AI video workflows" }), block("hero_stat_image", "stat", { value: "39+", label: "AI image workflows" }), block("hero_stat_private", "stat", { value: "Private", label: "Uploads, albums, checkout" })] },
+      aidreamcapes_hero: { type: "aidreamcapes_home_hero", settings: { anchor: "home", eyebrow: "Marketing UGC studio is live", title: "Create AI Videos, Professional AI Ads & Photo Sets.", titleLine1: "Create AI Videos,", titleAccent: "Professional AI Ads", titleLine3: "& Photo Sets.", intro: "Turn a simple URL or product image into high-converting UGC videos and studio-quality imagery. Perfect for scaling your e-commerce campaigns and marketing assets instantly.", primaryCta: "Create Marketing UGC", primaryHref: "/ai-video-generation/url-to-ad", secondaryCta: "Explore video tools", secondaryHref: "/ai-video-generation", trustEyebrow: "Review credits before generation", googleCta: "Continue with Google", googleHref: "/login?provider=google", emailSeparator: "or", emailPlaceholder: "Email address", emailCta: "Start with email", emailHref: "/login", studioUrl: "aidreamcapes.com/studio", studioWorkflowLabel: "Product → Video", studioWorkflowIntro: "Upload a product still. Get a vertical UGC ad clip.", studioProductLabel: "01 · Product", studioProductFilename: "product-watch.jpg", studioProcessLabel: "Rendering", studioOutputLabel: "02 · UGC Video", studioOutputMeta: "9:16 · Hook + demo · 8s", studioStep1: "1. Drop product photo", studioStep2: "2. Pick UGC style", studioStep3: "3. Export vertical ad", imageUrl: hero.src, imageAlt: hero.alt, imageWidth: hero.width, imageHeight: hero.height, outputImageUrl: output.src, outputImageAlt: output.alt, outputImageWidth: output.width, outputImageHeight: output.height, outputHref: "/ai-video-generation/url-to-ad", outputCta: "Turn product into video →" }, blocks: [block("hero_trust_private", "trust_item", { label: "Private uploads" }), block("hero_trust_credits", "trust_item", { label: "Credits visible" }), block("hero_trust_refund", "trust_item", { label: "Refund review" }), block("hero_stat_ugc", "stat", { value: "UGC-first", label: "Marketing hub for ad tests" }), block("hero_stat_video", "stat", { value: "22+", label: "AI video workflows" }), block("hero_stat_image", "stat", { value: "39+", label: "AI image workflows" }), block("hero_stat_private", "stat", { value: "Private", label: "Uploads, albums, checkout" })] },
       aidreamcapes_video_grid: { type: "aidreamcapes_video_grid", settings: { anchor: "video-generation", title: "Explore AI Video Generation", intro: "UGC ads, URL→Ad, hooks, demos, and social-ready formats.", ctaLabel: "View all video", ctaHref: "/ai-video-generation" }, blocks: videoCards },
       aidreamcapes_ad_testing: { type: "aidreamcapes_ad_testing", settings: { anchor: "ad-testing", eyebrow: "Ad Testing Hub", title: "High-Converting UGC Ads at Scale", intro: "Deploy tested ad frameworks (PAS, Hooks, Testimonials) optimized for social algorithms without shooting a single frame.", workflowTitle: "URL to Ad Workflow", workflowIntro: "Paste a product link. Aidreamcapes turns the product context into ad-ready creative directions you can review before publishing.", outputTitle: "Review UGC Ad Concepts", outputIntro: "Compare several creative directions before export." }, blocks: [block("url_to_ad", "url_to_ad", { title: "Paste Product URL", description: "Start from a product page or product image.", urlPlaceholder: "https://yourstore.com/product", ...imageSettings(image("product")) }), ...outputCards, ...adFeatures] },
       aidreamcapes_photo_grid: { type: "aidreamcapes_photo_grid", settings: { anchor: "photo-sets", title: "Professional AI Photo Sets", intro: "Listing heroes, lifestyle scenes, feed stills, on-model, try-on, and headshots.", ctaLabel: "View all photo", ctaHref: "/ai-image-generation" }, blocks: photoCards },
@@ -152,6 +166,36 @@ function homepageJson(existing) {
   };
 }
 
+const homepageImagePool = Object.values(imageData).map(([filename, alt, width, height]) => ({ src: src(filename), alt, width, height }));
+let homepageImageCursor = 0;
+function isLegacyHomepageImage(value) {
+  return typeof value === "string" && /\/assets\/sites\/site_aidreamcapes\/(?:fan-holiday-theme|creative-packs|homepage-showcase\/images)\/.*\.(?:avif|gif|jpe?g|png|webp)(?:[?#].*)?$/i.test(value);
+}
+function replaceLegacyHomepageImages(value) {
+  if (isLegacyHomepageImage(value)) {
+    const replacement = homepageImagePool[homepageImageCursor++ % homepageImagePool.length];
+    return replacement.src;
+  }
+  if (Array.isArray(value)) return value.map(replaceLegacyHomepageImages);
+  if (!value || typeof value !== "object") return value;
+  const next = {};
+  for (const [key, child] of Object.entries(value)) {
+    if (key === "src" && isLegacyHomepageImage(child)) {
+      const replacement = homepageImagePool[homepageImageCursor++ % homepageImagePool.length];
+      next[key] = replacement.src;
+      if (typeof value.alt === "string") next.alt = replacement.alt;
+      if (typeof value.width === "number") next.width = replacement.width;
+      if (typeof value.height === "number") next.height = replacement.height;
+    } else if ((key === "imageUrl" || key === "avatarUrl" || key === "resultImageUrl" || key === "backgroundImage" || key === "imageList") && isLegacyHomepageImage(child)) {
+      const replacement = homepageImagePool[homepageImageCursor++ % homepageImagePool.length];
+      next[key] = replacement.src;
+    } else {
+      next[key] = replaceLegacyHomepageImages(child);
+    }
+  }
+  return next;
+}
+
 const prisma = new PrismaClient();
 try {
   const site = await prisma.site.findUnique({ where: { id: siteId }, include: { settings: true, pages: true } });
@@ -159,7 +203,10 @@ try {
   const page = site.pages.find((item) => item.slug === "/");
   if (!page) throw new Error("Aidreamcapes homepage page record was not found");
   const current = page.draftJson || page.publishedJson || {};
-  const nextPage = homepageJson(current);
+  homepageImageCursor = 0;
+  const nextPage = replaceLegacyHomepageImages(homepageJson(current));
+  const nextPageSerialized = JSON.stringify(nextPage);
+  assert.equal(/\/assets\/sites\/site_aidreamcapes\/(?:fan-holiday-theme|creative-packs|homepage-showcase\/images)\/.*\.(?:avif|gif|jpe?g|png|webp)/i.test(nextPageSerialized), false, "homepage still contains a legacy image asset");
   const currentSettings = site.settings?.draftJson || site.settings?.publishedJson || {};
   const homeSeo = nextPage.seo;
   const currentFooter = currentSettings.globalSections?.footer || { type: "footer", blocks: [], settings: {} };
@@ -185,14 +232,24 @@ try {
     saasSettingsCurrent: { ...currentSettings.saasSettingsCurrent, skin_bg: "#050505", skin_text_color: "#d4d4d8", skin_title_color: "#ffffff", skin_primary_btn_bg_color: "linear-gradient(90deg,#8b5cf6 0%,#ec4899 52%,#3b82f6 100%)", skin_primary_btn_text_color: "#ffffff", general_layout_width: 1400 },
     seo: { ...currentSettings.seo, pages: { ...currentSettings.seo?.pages, site_aidreamcapes_home: homeSeo } }
   };
-  if (applyDraft) {
+  let backupPath = null;
+  if (apply) {
+    const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+    backupPath = path.resolve("releases/backups/aidreamcapes", `homepage-draft-${stamp}.json`);
+    fs.mkdirSync(path.dirname(backupPath), { recursive: true, mode: 0o700 });
+    fs.writeFileSync(backupPath, `${JSON.stringify({
+      createdAt: new Date().toISOString(),
+      siteId,
+      themePage: { id: page.id, slug: page.slug, title: page.title, draftJson: page.draftJson, publishedJson: page.publishedJson },
+      themeSettings: site.settings ? { id: site.settings.id, draftJson: site.settings.draftJson, publishedJson: site.settings.publishedJson } : null
+    }, null, 2)}\n`, { mode: 0o600 });
     await prisma.$transaction([
       prisma.themePage.update({ where: { id: page.id }, data: { draftJson: nextPage, title: "AI UGC Ads, Product Videos & Ecommerce Photos" } }),
       prisma.themeSettings.upsert({ where: { siteId }, create: { id: `settings_${siteId}`, siteId, draftJson: nextSettings, publishedJson: {} }, update: { draftJson: nextSettings } })
     ]);
   }
-  const readback = applyDraft ? await prisma.themePage.findUnique({ where: { id: page.id }, select: { draftJson: true, publishedJson: true, title: true } }) : null;
-  console.log(JSON.stringify({ siteId, domain: site.primaryDomain, mode: applyDraft ? "draft-only" : "dry-run", zipHomepage: { sections: nextPage.sectionsOrder, images: nextPage.mediaManifest.length, imageRoot: assetRoot, seo: nextPage.seo }, readback: readback ? { title: readback.title, draftSections: readback.draftJson?.sectionsOrder, publishedStillUnchanged: JSON.stringify(readback.publishedJson) === JSON.stringify(page.publishedJson) } : null }, null, 2));
+  const readback = apply ? await prisma.themePage.findUnique({ where: { id: page.id }, select: { draftJson: true, publishedJson: true, title: true } }) : null;
+  console.log(JSON.stringify({ siteId, domain: site.primaryDomain, mode: applyProduction ? "production-draft-only" : applyDraft ? "draft-only" : "dry-run", backupPath, zipHomepage: { sections: nextPage.sectionsOrder, images: nextPage.mediaManifest.length, imageRoot: assetRoot, seo: nextPage.seo }, readback: readback ? { title: readback.title, draftSections: readback.draftJson?.sectionsOrder, publishedStillUnchanged: JSON.stringify(readback.publishedJson) === JSON.stringify(page.publishedJson) } : null }, null, 2));
 } finally {
   await prisma.$disconnect();
 }
