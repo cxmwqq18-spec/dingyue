@@ -15,6 +15,8 @@ const SOURCE_SITE_ID = "site_dreamshoot";
 const TARGET_SITE_ID = "site_aidreamcapes_xby";
 const TARGET_DOMAIN = "aidreamcapes.eu";
 const apply = process.argv.includes("--apply") || process.argv.includes("--apply-local");
+const target = process.argv.find((arg) => arg.startsWith("--target="))?.slice("--target=".length) ?? "local";
+const productionConfirmation = "--confirm=aidreamcapes-eu-video-french-production";
 const BACKUP_ROOT = path.resolve(".tmp", "aidreamcapes-eu-video-french-copy");
 const CACHE_PATH = path.join(BACKUP_ROOT, "translation-cache.json");
 const DEDICATED_TYPES = new Set(["ai_video_topic_landing", "talking_photo_landing"]);
@@ -211,8 +213,17 @@ function copyPageTitle(sourcePage, cache) {
 }
 
 async function main() {
-  assertDatabaseTarget({ expectedTarget: "local" });
-  if (apply) assertNonProductionWriteTarget();
+  if (target === "local") {
+    assertDatabaseTarget({ expectedTarget: "local" });
+    if (apply) assertNonProductionWriteTarget();
+  } else if (target === "production") {
+    assertDatabaseTarget({ expectedTarget: "production", requireProductionConfirmation: apply, productionConfirmed: process.argv.includes(productionConfirmation) });
+    if (apply && !process.argv.includes(productionConfirmation)) {
+      throw new Error(`Production Aidreamcapes writes require ${productionConfirmation}.`);
+    }
+  } else {
+    throw new Error(`Unsupported target ${target}; use --target=local or --target=production.`);
+  }
   const prisma = new PrismaClient();
   try {
     const [sourceLive, targetLive, sourceTheme, targetTheme] = await Promise.all([
@@ -252,7 +263,8 @@ async function main() {
     });
     const report = {
       ok: true,
-      mode: apply ? "apply-local" : "dry-run",
+      mode: apply ? (target === "production" ? "apply-production" : "apply-local") : "dry-run",
+      target,
       sourceSiteId: SOURCE_SITE_ID,
       targetSiteId: TARGET_SITE_ID,
       pages: slugs.length,
