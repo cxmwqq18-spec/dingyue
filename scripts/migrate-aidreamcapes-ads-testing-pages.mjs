@@ -12,19 +12,30 @@ const SITE_ID = "site_aidreamcapes";
 const pages = aidreamcapesAdsTestingPagesForMigration();
 const fallbackPageId = (page) => `aidreamcapes_ads_testing_${page.key.replace(/[^a-z0-9]+/g, "_")}`;
 const expectedPageIds = pages.map(fallbackPageId);
-const apply = hasArgument("--apply-local");
+const applyLocal = hasArgument("--apply-local");
+const applyProduction = hasArgument("--apply-production");
+assert(!(applyLocal && applyProduction), "Choose one database write target.");
+const apply = applyLocal || applyProduction;
 const requestedSiteId = argumentValue("--site-id") ?? SITE_ID;
 const confirmation = argumentValue("--confirm") ?? "";
 const requestedPageIds = argumentValue("--page-ids") ?? "";
 const backupRoot = argumentValue("--backup-dir") ?? path.resolve("releases/backups/aidreamcapes");
 
 assert.equal(requestedSiteId, SITE_ID, `This migration is restricted to ${SITE_ID}.`);
-assertDatabaseTarget({ expectedTarget: "local" });
+if (applyProduction) {
+  assertDatabaseTarget({ expectedTarget: "production", requireProductionConfirmation: true, productionConfirmed: confirmation === "production" });
+} else {
+  assertDatabaseTarget({ expectedTarget: "local" });
+}
 validateAidreamcapesAdsTestingContent({ log: (line) => console.log(`[content] ${line}`) });
 if (apply) {
-  assert.equal(confirmation, SITE_ID, `Applying requires --confirm=${SITE_ID}.`);
+  if (applyProduction) {
+    assert.equal(confirmation, "production", "Production apply requires --confirm=production.");
+  } else {
+    assert.equal(confirmation, SITE_ID, `Applying requires --confirm=${SITE_ID}.`);
+  }
   assert.equal(requestedPageIds, expectedPageIds.join(","), "Applying requires the exact 11 target page IDs in --page-ids.");
-  assertNonProductionWriteTarget();
+  if (!applyProduction) assertNonProductionWriteTarget();
 }
 
 function hashJson(value) {
@@ -173,7 +184,7 @@ try {
     const readbackById = new Map(readback.map((page) => [page.id, page]));
     for (const page of nextPages) assert.equal(hashJson(readbackById.get(page.id)?.contentJson), hashJson(page.contentJson), `${page.id}: content hash readback`);
     report.forEach((item) => { item.readback = "PASS"; });
-    console.log(JSON.stringify({ ok: true, mode: "applied", siteId: SITE_ID, backupPath, navigationChanges: navigationDraft.changed + navigationPublished.changed, pages: report }, null, 2));
+    console.log(JSON.stringify({ ok: true, mode: applyProduction ? "production-applied" : "applied", siteId: SITE_ID, backupPath, navigationChanges: navigationDraft.changed + navigationPublished.changed, pages: report }, null, 2));
   } else {
     console.log(JSON.stringify({ ok: true, mode: "dry-run", siteId: SITE_ID, existingPageCount: existingPages.length, navigationChanges: navigationDraft.changed + navigationPublished.changed, pages: report, applyCommand: `node scripts/migrate-aidreamcapes-ads-testing-pages.mjs --apply-local --site-id=${SITE_ID} --confirm=${SITE_ID} --page-ids=${expectedPageIds.join(",")}` }, null, 2));
   }

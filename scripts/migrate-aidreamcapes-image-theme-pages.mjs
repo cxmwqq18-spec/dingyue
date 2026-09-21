@@ -11,7 +11,10 @@ import { argumentValue, assertDatabaseTarget, assertNonProductionWriteTarget, ha
 
 const SITE_ID = "site_aidreamcapes";
 const SOURCE_REVISION = "aidreamcapes-image-themes-v2-4k-independent";
-const apply = hasArgument("--apply-local");
+const applyLocal = hasArgument("--apply-local");
+const applyProduction = hasArgument("--apply-production");
+assert(!(applyLocal && applyProduction), "Choose one database write target.");
+const apply = applyLocal || applyProduction;
 const navigationOnly = hasArgument("--navigation-only");
 // Page availability is independent from provider media delivery. This flag
 // lets local staging publish the database-backed page contracts before all
@@ -23,7 +26,11 @@ const backupRoot = argumentValue("--backup-dir") ?? path.resolve("releases/backu
 const selectedSlugs = new Set(String(argumentValue("--slugs") ?? "").split(",").map((value) => value.trim()).filter(Boolean));
 
 assert.equal(requestedSiteId, SITE_ID, `This migration is restricted to ${SITE_ID}.`);
-assertDatabaseTarget({ expectedTarget: "local" });
+if (applyProduction) {
+  assertDatabaseTarget({ expectedTarget: "production", requireProductionConfirmation: true, productionConfirmed: confirmation === "production" });
+} else {
+  assertDatabaseTarget({ expectedTarget: "local" });
+}
 const allPages = validateAidreamcapesImageThemePages({ requireAssets: apply && !navigationOnly && !allowPendingAssets });
 const pages = allPages.filter((page) => !selectedSlugs.size || selectedSlugs.has(page.seo.canonicalPath.split("/").filter(Boolean).pop()));
 assert(pages.length > 0, "No matching image theme pages.");
@@ -317,8 +324,12 @@ try {
   }));
 
   if (apply) {
-    assert.equal(confirmation, SITE_ID, `Applying requires --confirm=${SITE_ID}.`);
-    assertNonProductionWriteTarget();
+    if (applyProduction) {
+      assert.equal(confirmation, "production", "Production apply requires --confirm=production.");
+    } else {
+      assert.equal(confirmation, SITE_ID, `Applying requires --confirm=${SITE_ID}.`);
+      assertNonProductionWriteTarget();
+    }
     const stamp = new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14);
     const backupPath = path.resolve(backupRoot, `image-theme-pages-${stamp}.json`);
     await mkdir(path.dirname(backupPath), { recursive: true });
