@@ -4794,7 +4794,7 @@ function StorefrontNaturalImage({
   const previewAttrs = storefrontImagePreviewAttrs(resolvedSrc, safeAlt, preview);
   const preserveAidreamcapesSourceFrame = /\/assets\/sites\/site_aidreamcapes_eu\//i.test(resolvedSrc);
   const responsiveSet = storefrontResponsiveImageSet(resolvedSrc);
-  const intrinsicDimensions = storefrontResponsiveImageDimensions(resolvedSrc);
+  const intrinsicDimensions = storefrontResponsiveImageDimensions(resolvedSrc) ?? (/^\/assets\/sites\/site_aidreamshoots\/generated\/regenerated\//i.test(resolvedSrc) ? { width: 1024, height: 1024 } : undefined);
   const image = (
     <img
       alt={safeAlt}
