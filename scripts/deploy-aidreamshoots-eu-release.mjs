@@ -112,8 +112,12 @@ function localPrecheck() {
   if (remoteHead !== commit) {
     fail("Commit " + commit + " is not the latest origin/" + branch + " (" + remoteHead + "). Push it before deploying.");
   }
-  if (base && git(["rev-parse", "--verify", base + "^{commit}"]) !== base) {
-    fail("Base commit " + base + " does not exist locally.");
+  if (base) {
+    try {
+      git(["rev-parse", "--verify", base + "^{commit}"]);
+    } catch {
+      fail("Base commit " + base + " does not exist locally.");
+    }
   }
   const deleted = deletedFilesForCommit().filter((file) => !base || allowedReleaseFiles.includes(file) || file.startsWith("public/assets/sites/site_aidreamshoots/"));
   if (deleted.length) {
