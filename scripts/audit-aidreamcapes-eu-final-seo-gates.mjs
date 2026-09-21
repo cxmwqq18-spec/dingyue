@@ -268,6 +268,7 @@ async function main() {
     });
   };
   const organizationNodes = uniqueSchemaNodes("Organization");
+  const siteOrganizationNodes = organizationNodes.filter((node) => node.id === `${origin}/#organization` || node.contactPoint || node.sameAs.length > 0);
   const websiteNodes = uniqueSchemaNodes("WebSite");
   const pageSchemaMissing = indexableRows.filter((row) => !row.jsonLdTypes.includes("WebPage") && !row.jsonLdTypes.includes("CollectionPage"));
   const jsonLdIssues = {
@@ -275,9 +276,9 @@ async function main() {
     parseErrors: rows.filter((row) => row.jsonLdParseErrors.length).map((row) => ({ route: row.route, errors: row.jsonLdParseErrors })),
     emptySchema: indexableRows.filter((row) => row.jsonLdBlockCount === 0).map((row) => row.route),
     missingPageSchema: pageSchemaMissing.map((row) => row.route),
-    organizationMissingSameAs: organizationNodes.length === 0
+    organizationMissingSameAs: siteOrganizationNodes.length === 0
       ? ["site-wide Organization"]
-      : organizationNodes.filter((node) => !node.sameAs.length || !node.contactPoint).map((node) => node.id || "Organization"),
+      : siteOrganizationNodes.filter((node) => !node.sameAs.length || !node.contactPoint).map((node) => node.id || "Organization"),
     websiteMissingFrenchLanguage: websiteNodes.length === 0 ? ["site-wide WebSite"] : websiteNodes.filter((node) => !/^fr(?:-|$)/i.test(String(node.inLanguage))).map((node) => node.id || "WebSite")
   };
 
@@ -317,7 +318,7 @@ async function main() {
       passed: Object.values(jsonLdIssues).every((value) => value.length === 0),
       issues: jsonLdIssues,
       allTypes,
-      organizationNodeCount: organizationNodes.length,
+      organizationNodeCount: siteOrganizationNodes.length,
       websiteNodeCount: websiteNodes.length
     },
     notFoundNoindex: {

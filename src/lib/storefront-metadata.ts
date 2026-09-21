@@ -9,6 +9,17 @@ import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-rou
 import { AIDREAMCAPES_EU_THEME_SLUGS, aidreamcapesEuSeoContent } from "@/lib/aidreamcapes-eu-seo-content";
 import type { CreativePack, PlatformState, Product, Site, ThemePage } from "@/lib/types";
 
+const AIDREAMCAPES_EU_SAVE_THE_DATE_SEO_OVERRIDES: Record<string, { title: string; description: string }> = {
+  "/ai-save-the-date/save-the-date": {
+    title: "Vidéo Save the Date avec IA | Aidreamcapes",
+    description: "Créez une vidéo Save the Date avec IA à partir de portraits de couple et d'une date de mariage confirmée, puis partagez une annonce claire avec vos proches."
+  },
+  "/ai-save-the-date/wedding-invitation": {
+    title: "Vidéo d’invitation de mariage avec l’IA | Aidreamcapes",
+    description: "Créez une vidéo d’invitation de mariage avec l’IA à partir de votre papeterie approuvée : noms, date, lieu et détails lisibles avant le partage."
+  }
+};
+
 function canonicalMetadataPath(site: Site, value: unknown, fallback = "/"): string {
   const normalized = normalizeCanonicalPath(value, fallback);
   // Registered Aidreamcapes image themes own their public URL. Do not pass
@@ -87,6 +98,9 @@ export async function metadataForPublishedStorefrontPage({
         keywords: "création vidéo IA, générateur vidéo IA, animation photo, vidéo produit, Aidreamcapes"
       }
     : undefined;
+  const euSaveTheDateSeo = snapshot.site.id === "site_aidreamcapes_xby"
+    ? AIDREAMCAPES_EU_SAVE_THE_DATE_SEO_OVERRIDES[metadataPath]
+    : undefined;
   const publicRouteSeo = snapshot.site.id === "site_mydreamshoots_xby"
     ? getDreamshootPublicSeoPageMetadataForSite(snapshot.site, metadataPath)
     : undefined;
@@ -102,10 +116,14 @@ export async function metadataForPublishedStorefrontPage({
       // Keep the static route catalogue as a fallback for other storefronts
       // and for pages that do not carry explicit live SEO fields, but never
       // let it overwrite fresh target-site SQL values.
-      ...(targetPageSeo?.title?.trim()
+      ...(euSaveTheDateSeo?.title
+        ? { title: euSaveTheDateSeo.title }
+        : targetPageSeo?.title?.trim()
         ? { title: targetPageSeo.title.trim() }
         : publicRouteSeo?.title?.trim() ? { title: publicRouteSeo.title.trim() } : {}),
-      ...(targetPageSeo?.description?.trim()
+      ...(euSaveTheDateSeo?.description
+        ? { description: euSaveTheDateSeo.description }
+        : targetPageSeo?.description?.trim()
         ? { description: targetPageSeo.description.trim() }
         : publicRouteSeo?.description?.trim() ? { description: publicRouteSeo.description.trim() } : {}),
       ...(targetPageSeo?.keywords?.trim()
