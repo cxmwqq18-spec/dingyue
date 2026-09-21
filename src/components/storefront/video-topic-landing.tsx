@@ -1,6 +1,6 @@
 import { ArrowRight, Check, ChevronRight, ShieldCheck, Sparkles, X } from "lucide-react";
 import { notFound } from "next/navigation";
-import type { ReactNode } from "react";
+import type { ImgHTMLAttributes, ReactNode } from "react";
 import type { SectionInstance, Site } from "@/lib/types";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
@@ -12,6 +12,7 @@ import { BrandCreatorDetail } from "@/components/storefront/brand-creator-detail
 import type { AidreamcapesAdsTestingDetailContent, AidreamcapesBrandCreatorDetailContent } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/talking-photo-content";
 import { isMydreamshootsVideoContentPath, mydreamshootsVideoWatchPathForContentPath } from "@/lib/mydreamshoots-video-watch";
+import { storefrontResponsiveImageDimensions, storefrontResponsiveImageSet } from "@/lib/storefront-responsive-images";
 
 type RoutedSite = Site & { __storefrontBasePath?: string };
 
@@ -316,6 +317,45 @@ function optimizedTopicImageSrc(src: string): string {
   return src.replace(/\.png(?=[?#]|$)/i, ".webp");
 }
 
+type StorefrontTopicImageProps = Pick<ImgHTMLAttributes<HTMLImageElement>, "alt" | "className" | "decoding" | "fetchPriority" | "height" | "loading" | "sizes" | "style" | "width"> & {
+  src: string;
+  previewSrc?: string;
+};
+
+/**
+ * Keep topic-media layout and preview behavior unchanged while allowing the
+ * published EU image manifest to select a smaller AVIF/WebP derivative.
+ * Assets outside that manifest intentionally keep the existing single-source
+ * rendering path.
+ */
+function StorefrontTopicImage({ src, previewSrc, ...props }: StorefrontTopicImageProps) {
+  const resolvedSrc = optimizedTopicImageSrc(src);
+  const responsive = storefrontResponsiveImageSet(resolvedSrc);
+  const dimensions = storefrontResponsiveImageDimensions(resolvedSrc);
+  const sizes = props.sizes ?? (responsive ? "(max-width: 768px) 100vw, 50vw" : undefined);
+  const image = (
+    <img
+      {...props}
+      alt={props.alt}
+      src={resolvedSrc}
+      srcSet={responsive?.fallbackSrcSet}
+      sizes={sizes}
+      width={props.width ?? dimensions?.width}
+      height={props.height ?? dimensions?.height}
+      data-dreamshoot-preview-src={previewSrc ?? resolvedSrc}
+    />
+  );
+
+  if (!responsive) return image;
+  return (
+    <picture className="block">
+      {responsive.avifSrcSet ? <source sizes={sizes} srcSet={responsive.avifSrcSet} type="image/avif" /> : null}
+      {responsive.webpSrcSet ? <source sizes={sizes} srcSet={responsive.webpSrcSet} type="image/webp" /> : null}
+      {image}
+    </picture>
+  );
+}
+
 function topicImagePreviewSrc(image: VideoTopicImage): string {
   const original = image.imageOriginalUrl?.trim() ?? "";
   return /^(?:https?:|\/assets\/)/i.test(original) ? original : optimizedTopicImageSrc(image.src);
@@ -438,9 +478,9 @@ function DirectTopicHeroCards({ images, video, site, cropPetHero = false, leadAs
               }
             : {})}
         >
-          {video && index === 0 ? <TopicHeroVideo site={site} video={video} /> : <img
-              src={optimizedTopicImageSrc(item.src)}
-              data-dreamshoot-preview-src={topicImagePreviewSrc(item)}
+          {video && index === 0 ? <TopicHeroVideo site={site} video={video} /> : <StorefrontTopicImage
+              src={item.src}
+              previewSrc={topicImagePreviewSrc(item)}
               alt={item.alt}
               className={preserveFrenchImageRatio ? "block h-auto w-full object-center" : hasEmbeddedVideoLetterbox(item) ? "absolute top-0 left-1/2 h-auto max-w-none object-cover" : "block h-auto w-full"}
               style={preserveFrenchImageRatio ? undefined : hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item)
@@ -492,9 +532,9 @@ function UseCaseCard({ item, index, site }: { item: VideoTopicUseCase; index: nu
     <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f] shadow-[0_28px_70px_-54px_rgba(0,0,0,0.92)]" data-video-topic-use-case-card>
       {isRenderableTopicImage(item.image) ? (
         <div className="relative overflow-hidden bg-[#292438]" data-video-topic-media style={french ? undefined : { aspectRatio: cardMediaAspectRatio(item.image) }}>
-          <img
-            src={optimizedTopicImageSrc(item.image.src)}
-            data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)}
+          <StorefrontTopicImage
+            src={item.image.src}
+            previewSrc={topicImagePreviewSrc(item.image)}
             alt={item.image.alt}
             className={french ? "block h-auto w-full object-center" : "block h-full w-full object-cover"}
             width={item.image.width}
@@ -530,9 +570,9 @@ function SupportingCard({ card, light = false, site }: { card: VideoTopicSupport
     <article className={`flex h-full flex-col rounded-[22px] border p-6 sm:p-7 ${light ? "border-[#d2c9ef] bg-white/55" : "border-white/10 bg-[#17151f]"}`}>
       {isRenderableTopicImage(card.image) ? (
         <div className="relative mb-6 overflow-hidden rounded-[16px] bg-[#292438]" style={french ? undefined : { aspectRatio: cardMediaAspectRatio(card.image) }}>
-          <img
-            src={optimizedTopicImageSrc(card.image.src)}
-            data-dreamshoot-preview-src={topicImagePreviewSrc(card.image)}
+          <StorefrontTopicImage
+            src={card.image.src}
+            previewSrc={topicImagePreviewSrc(card.image)}
             alt={card.image.alt}
             className={french ? "block h-auto w-full object-center" : "block h-full w-full object-cover"}
             width={card.image.width}
@@ -606,9 +646,9 @@ function ValueSection({ section, light = false }: { section: VideoTopicContent["
         <SectionHeader eyebrow={section.eyebrow} title={section.title} body={section.intro} light={light} />
         {isRenderableTopicImage(section.image) ? (
           <figure className="mt-12 overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f]">
-            <img
-              src={optimizedTopicImageSrc(section.image.src)}
-              data-dreamshoot-preview-src={topicImagePreviewSrc(section.image)}
+            <StorefrontTopicImage
+              src={section.image.src}
+              previewSrc={topicImagePreviewSrc(section.image)}
               alt={section.image.alt}
               className="block h-auto w-full"
               width={section.image.width}
@@ -719,7 +759,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
               {galleryItems.map((item, index) => (
                 <article className="flex h-full flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-video-ad-scene key={`${item.title}-${index}`}>
                   <div className="relative overflow-hidden bg-[#d9d1f6]" style={site.id === "site_aidreamcapes_xby" ? undefined : { aspectRatio: cardMediaAspectRatio(item.image) }}>
-                    <img src={optimizedTopicImageSrc(item.image.src)} data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                    <StorefrontTopicImage src={item.image.src} previewSrc={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
@@ -837,9 +877,9 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
           <figure className="relative min-w-0 w-full lg:justify-self-end">
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
               <div className="relative overflow-hidden rounded-[21px]" data-video-topic-hero-media>
-                <img
-                  src={optimizedTopicImageSrc(content.hero.image.src)}
-                  data-dreamshoot-preview-src={topicImagePreviewSrc(content.hero.image)}
+                <StorefrontTopicImage
+                  src={content.hero.image.src}
+                  previewSrc={topicImagePreviewSrc(content.hero.image)}
                   alt={content.hero.image.alt}
                   className="block h-auto w-full"
                   width={content.hero.image.width}
@@ -1032,9 +1072,9 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
                 {content.hero.video ? (
                   <TopicHeroVideo site={site} video={content.hero.video} />
                 ) : (
-                  <img
-                    src={optimizedTopicImageSrc(content.hero.image.src)}
-                    data-dreamshoot-preview-src={topicImagePreviewSrc(content.hero.image)}
+                  <StorefrontTopicImage
+                    src={content.hero.image.src}
+                    previewSrc={topicImagePreviewSrc(content.hero.image)}
                     alt={content.hero.image.alt}
                     className="block h-auto w-full"
                     width={content.hero.image.width}
@@ -1425,7 +1465,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
               {galleryItems.map((item, index) => (
                 <article className="flex min-w-0 flex-col overflow-hidden rounded-[16px] border border-[#d2c9ef] bg-white/70 shadow-[0_10px_28px_-20px_rgba(42,33,78,0.45)]" data-brand-video-scene key={`${item.title}-${index}`}>
                   <div className="relative overflow-hidden bg-[#d9d1f6]" style={site.id === "site_aidreamcapes_xby" ? undefined : { aspectRatio: cardMediaAspectRatio(item.image) }}>
-                    <img src={optimizedTopicImageSrc(item.image.src)} data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                    <StorefrontTopicImage src={item.image.src} previewSrc={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
@@ -1603,7 +1643,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
 
       <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} /><div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">{content.steps.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-scene-topic-step key={`${item.title}-${index}`}><span className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</span><h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div><div className="mt-10"><ActionLink href={primaryHref} label={content.steps.cta} site={site} /></div></div></section>
 
-      {sceneGalleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "REFERENCIAS DE ESCENAS" : site.id === "site_aidreamcapes_xby" ? "RÉFÉRENCES DE SCÈNES" : "SCENE REFERENCES")} title={content.gallery?.title ?? (site.id === "site_mydreamshoots_xby" ? "Ocho direcciones para el siguiente plano" : site.id === "site_aidreamcapes_xby" ? "Huit directions pour le prochain plan" : "Eight Directions for the Next Shot")} body={content.gallery?.intro} light /><div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{sceneGalleryItems.map((item, index) => <article className="flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-scene-topic-scene key={`${item.title}-${index}`}><div className="relative overflow-hidden bg-[#d9d1f6]" style={site.id === "site_aidreamcapes_xby" ? undefined : { aspectRatio: cardMediaAspectRatio(item.image) }}><img src={optimizedTopicImageSrc(item.image.src)} data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
+      {sceneGalleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "REFERENCIAS DE ESCENAS" : site.id === "site_aidreamcapes_xby" ? "RÉFÉRENCES DE SCÈNES" : "SCENE REFERENCES")} title={content.gallery?.title ?? (site.id === "site_mydreamshoots_xby" ? "Ocho direcciones para el siguiente plano" : site.id === "site_aidreamcapes_xby" ? "Huit directions pour le prochain plan" : "Eight Directions for the Next Shot")} body={content.gallery?.intro} light /><div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{sceneGalleryItems.map((item, index) => <article className="flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-scene-topic-scene key={`${item.title}-${index}`}><div className="relative overflow-hidden bg-[#d9d1f6]" style={site.id === "site_aidreamcapes_xby" ? undefined : { aspectRatio: cardMediaAspectRatio(item.image) }}><StorefrontTopicImage src={item.image.src} previewSrc={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
 
       <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="sequence-guide" data-video-topic-section="sequence-guide"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.guidance.cards.map((card, index) => <SupportingCard card={card} key={`${card.title}-${index}`} site={site} />)}</div></div></section>
 

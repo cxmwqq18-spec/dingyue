@@ -55,7 +55,14 @@ try {
       ogType: document.querySelector('meta[property="og:type"]')?.content ?? "",
       ogImage: document.querySelector('meta[property="og:image"]')?.content ?? "",
       twitterImage: document.querySelector('meta[name="twitter:image"]')?.content ?? "",
-      images: [...document.images].map((image) => ({ src: image.currentSrc || image.src, alt: image.alt, width: image.naturalWidth, height: image.naturalHeight })),
+      images: [...document.images].map((image) => ({
+        src: image.currentSrc || image.src,
+        previewSrc: image.getAttribute("data-dreamshoot-preview-src") || "",
+        alt: image.alt,
+        width: image.naturalWidth,
+        height: image.naturalHeight,
+        responsive: Boolean(image.closest("picture")?.querySelector("source[srcset]"))
+      })),
       sectionImageReports: [...document.querySelectorAll("main section[id]")].map((section) => {
         const images = [...section.querySelectorAll("article img")].map((image) => (image.currentSrc || image.src).split("?")[0].split("#")[0]);
         return { id: section.id, count: images.length, unique: new Set(images).size, images };
@@ -64,7 +71,7 @@ try {
       schemas: [...document.querySelectorAll('script[type="application/ld+json"]')].map((script) => script.textContent ?? ""),
       mainText: document.querySelector("main")?.textContent ?? document.body.textContent ?? ""
     }));
-    const supplierImage = (image) => SUPPLIER.test(image.src);
+    const supplierImage = (image) => SUPPLIER.test(image.previewSrc || image.src);
     const imageFailures = requestFailures.filter((item) => /\.(?:jpe?g|png|webp|avif)(?:\?|$)/i.test(item.url));
     const fatalFailures = requestFailures.filter((item) => !item.error.includes("ERR_ABORTED") && !/\.mp4(?:\?|$)/i.test(item.url));
     const jpegImages = data.images.filter((image) => /\.jpe?g(?:\?|$)/i.test(image.src));
@@ -77,7 +84,11 @@ try {
     assert(data.ogImage.includes("vendor-api-gpt-image-2-4k-v1") || data.ogImage.includes("valentines-day-4k-vendor-v1"), `${slug}: OG image is not supplier hero`);
     assert(data.twitterImage.includes("vendor-api-gpt-image-2-4k-v1") || data.twitterImage.includes("valentines-day-4k-vendor-v1"), `${slug}: Twitter image is not supplier hero`);
     assert.equal(jpegImages.filter((image) => !supplierImage(image)).length, 0, `${slug}: legacy JPEG in rendered page`);
-    assert.equal(data.images.filter((image) => supplierImage(image) && (image.width !== 3840 || image.height !== 2160)).length, 0, `${slug}: rendered supplier image is not real 4K`);
+    const supplierImages = data.images.filter(supplierImage);
+    assert(supplierImages.length > 0, `${slug}: supplier preview images missing`);
+    assert.equal(supplierImages.filter((image) => !image.previewSrc || /\/_responsive\//i.test(image.previewSrc)).length, 0, `${slug}: preview attribute must retain the original supplier image`);
+    assert(supplierImages.some((image) => image.responsive && /\/_responsive\//i.test(image.src)), `${slug}: supplier images did not select a responsive variant`);
+    assert.equal(supplierImages.filter((image) => image.width > 3840 || image.height > 2160).length, 0, `${slug}: responsive image upscaled beyond source`);
     assert.equal(data.images.filter((image) => !image.alt.trim()).length, 0, `${slug}: empty image alt`);
     assert.equal(imageFailures.length, 0, `${slug}: image request failures`);
     assert.equal(fatalFailures.length, 0, `${slug}: fatal request failures`);
@@ -89,7 +100,7 @@ try {
     assert(faqSchema, `${slug}: French FAQ schema`);
     const schemaFaq = (faqSchema.mainEntity ?? []).map((item) => ({ question: item.name?.trim() ?? "", answer: item.acceptedAnswer?.text?.trim() ?? "" }));
     assert.deepEqual(schemaFaq, data.faq, `${slug}: visible FAQ and JSON-LD FAQ differ`);
-    reports.push({ slug, status: response.status(), images: data.images.length, supplierImages: data.images.filter(supplierImage).length, faqItems: data.faq.length, canonical: data.canonical });
+    reports.push({ slug, status: response.status(), images: data.images.length, supplierImages: supplierImages.length, responsiveImages: data.images.filter((image) => image.responsive).length, faqItems: data.faq.length, canonical: data.canonical });
     page.off("console", onConsole);
     page.off("requestfailed", onRequestFailed);
   }

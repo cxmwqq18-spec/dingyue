@@ -77,6 +77,7 @@ import {
 } from "@/lib/storefront-media-alt";
 import { GUARDED_STOREFRONT_FOOTER_PATHS } from "@/lib/storefront-global-shell";
 import { storefrontOriginalLogoUrl } from "@/lib/storefront-brand-assets";
+import { storefrontResponsiveImageDimensions, storefrontResponsiveImageSet } from "@/lib/storefront-responsive-images";
 import {
   AlertTriangle,
   ArrowRight,
@@ -3705,13 +3706,20 @@ function repairAidreamcapesEuVisualAsset(site: Site, value: string): string {
 }
 
 type MediaAssetUrlOptions = {
+  // Save the Date editorial pages publish their own visual library. Do not
+  // route those images through the legacy pack fallback, which intentionally
+  // collapses old pack-galleries paths to one compatibility cover.
+  preserveAidreamshootsLegacyMedia?: boolean;
   skipEuVisualRepair?: boolean;
 };
 
 function mediaAssetUrl(site: Site, value: string, options: MediaAssetUrlOptions = {}): string {
   const euAwareValue = isFrenchStorefrontSite(site) ? mirroredFrenchEuDreamshootAssetUrl(value) : value;
   const euCommonImage = aidreamcapesEuCommonImageForSite(site, euAwareValue);
-  const resolvedBeforeVisualRepair = replaceAidreamshootsLegacyMedia(site, siteScopedFallbackImage(site, cleanStorefrontImageSrc(resolveMediaAssetUrl(site, euCommonImage ?? euAwareValue))));
+  const resolvedMedia = siteScopedFallbackImage(site, cleanStorefrontImageSrc(resolveMediaAssetUrl(site, euCommonImage ?? euAwareValue)));
+  const resolvedBeforeVisualRepair = options.preserveAidreamshootsLegacyMedia
+    ? resolvedMedia
+    : replaceAidreamshootsLegacyMedia(site, resolvedMedia);
   const resolved = options.skipEuVisualRepair
     ? resolvedBeforeVisualRepair
     : repairAidreamcapesEuVisualAsset(site, resolvedBeforeVisualRepair);
@@ -4517,6 +4525,7 @@ type StorefrontImageProps = {
   width?: number;
   height?: number;
   sizes?: string;
+  style?: CSSProperties;
   priority?: boolean;
   loading?: "eager" | "lazy";
   fetchPriority?: "high" | "low" | "auto";
@@ -4651,7 +4660,8 @@ function StorefrontImage({
   priority = false,
   loading,
   fetchPriority,
-  preview
+  preview,
+  style
 }: StorefrontImageProps) {
   const resolvedSrc = withStorefrontPublicWatermarkCacheVersion(preferAidreamcapesPhotoAsset(src));
   const resolvedLoading = loading ?? (priority ? "eager" : "lazy");
@@ -4661,20 +4671,34 @@ function StorefrontImage({
   const resolvedAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAlt });
   const previewAttrs = storefrontImagePreviewAttrs(resolvedSrc, resolvedAlt, preview);
   const resolvedClassName = previewableImageClassName(className, preview);
+  const responsiveSet = storefrontResponsiveImageSet(resolvedSrc);
+  const intrinsicDimensions = storefrontResponsiveImageDimensions(resolvedSrc);
+  const resolvedWidth = width ?? intrinsicDimensions?.width;
+  const resolvedHeight = height ?? intrinsicDimensions?.height;
   if (isLocalPublicAsset || !canUseNextImage(resolvedSrc)) {
-    return (
+    const image = (
       <img
         alt={resolvedAlt}
         className={resolvedClassName}
         decoding={priority ? "sync" : "async"}
         fetchPriority={resolvedFetchPriority}
-        height={height}
+        height={resolvedHeight}
         loading={resolvedLoading}
         sizes={sizes}
         src={resolvedSrc}
-        width={width}
+        srcSet={responsiveSet?.fallbackSrcSet}
+        style={style}
+        width={resolvedWidth}
         {...previewAttrs}
       />
+    );
+    if (!responsiveSet) return image;
+    return (
+      <picture>
+        {responsiveSet.avifSrcSet ? <source sizes={sizes} srcSet={responsiveSet.avifSrcSet} type="image/avif" /> : null}
+        {responsiveSet.webpSrcSet ? <source sizes={sizes} srcSet={responsiveSet.webpSrcSet} type="image/webp" /> : null}
+        {image}
+      </picture>
     );
   }
   return (
@@ -4688,6 +4712,7 @@ function StorefrontImage({
       priority={priority}
       sizes={sizes}
       src={resolvedSrc}
+      style={style}
       {...previewAttrs}
     />
   );
@@ -4734,6 +4759,7 @@ type StorefrontNaturalImageProps = {
   alt: string;
   className?: string;
   imageClassName?: string;
+  sizes?: string;
   loading?: "eager" | "lazy";
   fetchPriority?: "high" | "low" | "auto";
   decoding?: "async" | "auto" | "sync";
@@ -4745,6 +4771,7 @@ function StorefrontNaturalImage({
   alt,
   className = "",
   imageClassName = "",
+  sizes = "(max-width: 768px) 100vw, 50vw",
   loading = "lazy",
   fetchPriority = "low",
   decoding = "async",
@@ -4754,16 +4781,31 @@ function StorefrontNaturalImage({
   const safeAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAltFromImageSrc(resolvedSrc) });
   const previewAttrs = storefrontImagePreviewAttrs(resolvedSrc, safeAlt, preview);
   const preserveAidreamcapesSourceFrame = /\/assets\/sites\/site_aidreamcapes_eu\//i.test(resolvedSrc);
+  const responsiveSet = storefrontResponsiveImageSet(resolvedSrc);
+  const intrinsicDimensions = storefrontResponsiveImageDimensions(resolvedSrc);
+  const image = (
+    <img
+      alt={safeAlt}
+      className={`block h-auto w-full ${preserveAidreamcapesSourceFrame ? "object-contain" : ""} object-center ${imageClassName}`}
+      decoding={decoding}
+      fetchPriority={fetchPriority}
+      height={intrinsicDimensions?.height}
+      loading={loading}
+      sizes={sizes}
+      src={resolvedSrc}
+      srcSet={responsiveSet?.fallbackSrcSet}
+      width={intrinsicDimensions?.width}
+    />
+  );
   return (
     <div className={`overflow-hidden ${previewableImageClassName(className, preview)}`} {...previewAttrs}>
-      <img
-        alt={safeAlt}
-        className={`block h-auto w-full ${preserveAidreamcapesSourceFrame ? "object-contain" : ""} object-center ${imageClassName}`}
-        decoding={decoding}
-        fetchPriority={fetchPriority}
-        loading={loading}
-        src={resolvedSrc}
-      />
+      {responsiveSet ? (
+        <picture>
+          {responsiveSet.avifSrcSet ? <source sizes={sizes} srcSet={responsiveSet.avifSrcSet} type="image/avif" /> : null}
+          {responsiveSet.webpSrcSet ? <source sizes={sizes} srcSet={responsiveSet.webpSrcSet} type="image/webp" /> : null}
+          {image}
+        </picture>
+      ) : image}
     </div>
   );
 }
@@ -10623,20 +10665,22 @@ function SectionView({
     const support = setting(section, "support");
     const blocks = sectionBlocks(section);
     const frenchXbyRichText = isFrenchStorefrontSite(site);
+    const preserveAidreamshootsLegacyMedia = isSpanishXbySite(site) && /(?:^|\/)ai-save-the-date\//.test(renderContext.pagePath);
     const frenchEditorialImageFrame = (className: string) => frenchXbyRichText
       ? className.replace(/\baspect-\[[^\]]+\]\s*/g, "")
       : className;
-    const imageFor = (source: SectionInstance | SectionBlockInstance) => {
+    const imageFor = (source: SectionInstance | SectionBlockInstance, imageIndex = 0) => {
       const read = (key: string) => source.type === section.type ? setting(source as SectionInstance, key) : blockValue(source as SectionBlockInstance, key);
       const src = read("imageUrl");
       if (!src) return null;
       const width = Number(read("imageWidth")) || 1600;
       const height = Number(read("imageHeight")) || 1000;
       const originalSrc = read("imageOriginalUrl");
-      const originalPreviewSrc = originalSrc.trim().startsWith("/assets/") ? originalSrc.trim() : mediaAssetUrl(site, originalSrc);
-      const loading = read("imageLoading") === "eager" ? "eager" : "lazy";
-      const fetchPriority = read("imageFetchPriority") === "high" ? "high" : read("imageFetchPriority") === "low" ? "low" : "auto";
-      return <StorefrontImage alt={read("imageAlt")} className={frenchXbyRichText ? "block h-auto w-full object-center" : "h-full w-full object-contain"} fetchPriority={fetchPriority} height={frenchXbyRichText ? undefined : height} loading={loading} preview={originalPreviewSrc ? { src: originalPreviewSrc, meta: "Imagen original del proveedor" } : undefined} priority={loading === "eager"} sizes="(max-width: 760px) 100vw, 50vw" src={mediaAssetUrl(site, src)} width={frenchXbyRichText ? undefined : width} />;
+      const originalPreviewSrc = originalSrc.trim().startsWith("/assets/") ? originalSrc.trim() : mediaAssetUrl(site, originalSrc, { preserveAidreamshootsLegacyMedia });
+      const prioritizeHero = section.type === "editorial_hero" && imageIndex === 0;
+      const loading = read("imageLoading") === "eager" || prioritizeHero ? "eager" : "lazy";
+      const fetchPriority = read("imageFetchPriority") === "high" ? "high" : read("imageFetchPriority") === "low" ? "low" : prioritizeHero ? "high" : "auto";
+      return <StorefrontImage alt={read("imageAlt")} className={frenchXbyRichText ? "block h-auto w-full object-center" : "h-full w-full object-contain"} fetchPriority={fetchPriority} height={frenchXbyRichText ? undefined : height} loading={loading} preview={originalPreviewSrc ? { src: originalPreviewSrc, meta: "Imagen original del proveedor" } : undefined} priority={loading === "eager"} sizes="(max-width: 760px) 100vw, 50vw" src={mediaAssetUrl(site, src, { preserveAidreamshootsLegacyMedia })} width={frenchXbyRichText ? undefined : width} />;
     };
     const textBlock = (block: SectionBlockInstance, key = "text") => blockValue(block, key).trim();
     const headingClass = "text-balance font-semibold leading-[1.06] [font-family:var(--site-title-font)]";
@@ -10725,9 +10769,9 @@ function SectionView({
             </div>
             {heroVisuals.length > 1 ? (
               <div className="grid gap-3 p-5 sm:grid-cols-2 lg:p-8">
-                {heroVisuals.map((block, index) => <div className={frenchEditorialImageFrame(`${index === 0 ? "sm:col-span-2" : ""} aspect-[5/3] overflow-hidden rounded-[14px] bg-[#5c2930]`)} key={instanceKey(block, index, "hero_visual")} style={{ backgroundColor: editorialTheme.heroBg }}>{index === 0 && heroVideo ? heroVideo : imageFor(block)}</div>)}
+                {heroVisuals.map((block, index) => <div className={frenchEditorialImageFrame(`${index === 0 ? "sm:col-span-2" : ""} aspect-[5/3] overflow-hidden rounded-[14px] bg-[#5c2930]`)} key={instanceKey(block, index, "hero_visual")} style={{ backgroundColor: editorialTheme.heroBg }}>{index === 0 && heroVideo ? heroVideo : imageFor(block, index)}</div>)}
               </div>
-            ) : <div className={frenchEditorialImageFrame("aspect-[5/3] min-h-0 overflow-hidden")}>{heroVideo ?? imageFor(section)}</div>}
+            ) : <div className={frenchEditorialImageFrame("aspect-[5/3] min-h-0 overflow-hidden")}>{heroVideo ?? imageFor(section, 0)}</div>}
           </div>
         </section>
       );
@@ -19781,7 +19825,7 @@ function SectionView({
             </div>
             {applicationForm && formFields.length ? (
               <div className={dark ? "rounded-[28px] border border-white/10 bg-white/[0.06] p-5 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/80 p-5 shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"}>
-                {image ? <img className={frenchXbyRichText ? "mb-5 block h-auto w-full rounded-[20px] object-center" : "mb-5 aspect-[16/8] w-full rounded-[20px] object-cover"} style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} /> : null}
+                {image ? <StorefrontImage className={frenchXbyRichText ? "mb-5 block h-auto w-full rounded-[20px] object-center" : "mb-5 aspect-[16/8] w-full rounded-[20px] object-cover"} preview={false} sizes="(max-width: 1024px) 100vw, 50vw" style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} /> : null}
                 <PartnerApplicationForm
                   dark={dark}
                   siteId={site.id}
@@ -19799,7 +19843,7 @@ function SectionView({
               </div>
             ) : image ? (
               <div className={`${richTextImageShell} ${frenchXbyRichText ? "" : workflowIntroRichText ? "relative aspect-[16/11] lg:aspect-auto lg:h-full lg:min-h-[34rem]" : ""}`}>
-                <img className={richTextImageClass} style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} />
+                <StorefrontImage className={richTextImageClass} preview={false} sizes="(max-width: 1024px) 100vw, 50vw" style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} />
               </div>
             ) : (
               <div className={`${dark ? "rounded-[28px] border border-white/10 bg-white/[0.05] p-6" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/76 p-6 shadow-[0_24px_70px_-58px_rgba(20,22,26,0.22)]"} ${noImageCardJourney ? "flex h-full flex-col" : ""}`}>
@@ -19859,7 +19903,7 @@ function SectionView({
     const cta = activeSlide ? blockValue(activeSlide, "slide_cta", "Shop now") : "Shop now";
     return (
       <section className="relative min-h-[620px] overflow-hidden bg-zinc-950 px-5 text-white">
-        <img className="absolute inset-0 h-full w-full object-cover opacity-72" src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: subtitle, role: "cover" })} />
+        <StorefrontImage className="absolute inset-0 h-full w-full object-cover opacity-72" loading="eager" priority sizes="100vw" preview={false} src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: subtitle, role: "cover" })} />
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/80 via-zinc-950/30 to-transparent" />
         <div className="relative mx-auto flex min-h-[620px] max-w-[var(--site-content-width)] items-center">
           <div className="max-w-2xl py-20">
@@ -19923,7 +19967,7 @@ function SectionView({
               return (
                 <article className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-white" key={instanceKey(block, index, "visual_block")} {...xfcartBlockAttrs(mode, block, index, "visual_block")}>
                   <div className="aspect-[16/11] bg-zinc-200">
-                    <img className="h-full w-full object-cover" src={image || packImages.fashion} alt={blockVisualAltForSite(site, section, block, image || packImages.fashion, index, storefrontSectionLabel(block.type))} />
+                    <StorefrontImage className="h-full w-full object-cover" loading="lazy" preview={false} sizes="(max-width: 768px) 100vw, 33vw" src={image || packImages.fashion} alt={blockVisualAltForSite(site, section, block, image || packImages.fashion, index, storefrontSectionLabel(block.type))} />
                   </div>
                   <div className="p-5">
                     <h3 className="text-lg font-semibold">{headingBlockValue(block, "title", headingBlockValue(block, "name", storefrontSectionLabel(block.type)))}</h3>
