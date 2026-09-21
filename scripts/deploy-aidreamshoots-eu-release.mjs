@@ -13,6 +13,8 @@ const branch = execFileSync("git", ["branch", "--show-current"], { encoding: "ut
 const allowedReleaseFiles = [
   "package.json",
   "scripts/deploy-aidreamshoots-eu-release.mjs",
+  "scripts/build-production.mjs",
+  "scripts/restore-next-env.mjs",
   "scripts/generate-storefront-responsive-image-variants.mjs",
   "scripts/repair-aidreamshoots-livepage-seo-production.mjs",
   "scripts/smoke-aidreamshoots-seo-browser.mjs",
