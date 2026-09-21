@@ -367,7 +367,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   }
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
-  const metadataSourceSlug = isSpanishWeddingInvitationCompatibilitySite(siteSlug) && canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+  const metadataSourceSlug = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
     ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
     : slug;
   const state = isVideoGenerationRequest
@@ -602,7 +602,7 @@ export default async function SiteCatchAllPage({
   const legacyPathTarget = legacyPublicPathTarget(slug, collectionRootPageSlug);
   const pageSlug = isCollectionRequest ? collectionRootPageSlug : isVideoGenerationRequest ? "/ai-video-generation" : mydreamLegacyTarget ?? (legacyPathTarget ? publicContentPageSlug(legacyPathTarget) : publicContentPageSlug(canonicalSaveTheDatePath(slug)));
   const legacySaveDateSlug = isPrimaryMydreamshootsSlug(publicSlug) ? legacySaveTheDatePath(pageSlug) : undefined;
-  const sourcePageSlug = (isPrimaryMydreamshootsSlug(publicSlug) || isSpanishAIdreamshoots) && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+  const sourcePageSlug = isPrimaryMydreamshootsSlug(publicSlug) && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
     ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
     : pageSlug;
   const state = isVideoGenerationRequest
@@ -617,20 +617,9 @@ export default async function SiteCatchAllPage({
     notFound();
   }
   const snapshot = createPublishedSiteSnapshot(state, publicSite, { source: "platform-state" });
-  if (isSpanishAIdreamshoots && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) {
-    const sourcePage = findPage(publicSite, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH);
-    if (sourcePage?.pageType === "ai_tool") {
-      return renderStorefrontPage({
-        site: publicSite,
-        slug: MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH,
-        publicPath: MYDREAMSHOOTS_WEDDING_INVITATION_PATH,
-        query,
-        routeMode,
-        state,
-        deferCustomerRuntime: true
-      });
-    }
-  }
+  // The Spanish storefront has a published standard-content page at the
+  // canonical Save the Date URL. Only the primary myDreamshoots site needs
+  // the legacy ai_tool compatibility projection.
   const spanishVideoAliasPath = isSpanishAIdreamshoots && isVideoGenerationRequest
     ? aidreamshootsLegacyVideoSaveTheDatePath(`/ai-video-generation/${videoLookupSlug}`)
     : undefined;
