@@ -93,7 +93,11 @@ function releaseFiles() {
     : git(["diff-tree", "--no-commit-id", "--name-only", "-r", "--diff-filter=ACMRT", commit, commit + "^"]);
   const files = output ? output.split("\n").filter(Boolean) : [];
   if (!base) return files;
-  return files.filter((file) => allowedReleaseFiles.includes(file) || file.startsWith("public/assets/sites/site_aidreamshoots/"));
+  const selected = files.filter((file) => allowedReleaseFiles.includes(file) || file.startsWith("public/assets/sites/site_aidreamshoots/"));
+  for (const required of ["scripts/build-production.mjs", "scripts/restore-next-env.mjs"]) {
+    if (!selected.includes(required)) selected.push(required);
+  }
+  return selected;
 }
 
 function localPrecheck() {
