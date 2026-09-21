@@ -227,6 +227,7 @@ export function ThemeRenderer({
   lightweightChrome = false,
   previewSelection,
   previewEmptyState,
+  publishedIndexablePaths,
   storefrontContext
 }: {
   site: Site;
@@ -259,6 +260,7 @@ export function ThemeRenderer({
     blockId?: string;
   };
   previewEmptyState?: ReactNode;
+  publishedIndexablePaths?: string[];
   storefrontContext?: StorefrontContext;
 }) {
   const displaySite = mode === "published" ? storefrontPaidSiteCopy(site) : site;
@@ -367,6 +369,7 @@ export function ThemeRenderer({
                   mode={mode}
                   previewSelection={previewSelection}
                   products={products}
+                  publishedIndexablePaths={publishedIndexablePaths}
                   renderContext={renderContext}
                   storefrontContext={storefrontContext}
                   runtime={runtime}
@@ -445,6 +448,7 @@ type ThemeSectionFrameProps = {
     sectionId?: string;
     blockId?: string;
   };
+  publishedIndexablePaths?: string[];
 };
 
 type RenderContext = {
@@ -821,7 +825,7 @@ function runtimeWithOnlyShellState(runtime: ThemeRuntimeData): ThemeRuntimeData 
   };
 }
 
-export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, homepageShowcases, saveTheDateNavigationGroups = [], aidreamcapesVideoNavigation, videoGenerationTopics, aidreamcapesImageDirectoryCards, aidreamcapesVideoThemeCovers, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection }: ThemeSectionFrameProps) {
+export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, homepageShowcases, saveTheDateNavigationGroups = [], aidreamcapesVideoNavigation, videoGenerationTopics, aidreamcapesImageDirectoryCards, aidreamcapesVideoThemeCovers, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection, publishedIndexablePaths }: ThemeSectionFrameProps) {
   const sectionType = canonicalSectionType(section.type);
   const pagePath = renderContext.pagePath;
   const allowLazyRender = lazyRender && !(isPublicSeoRoute(pagePath) && publicSeoCriticalSectionTypes.has(sectionType));
@@ -846,6 +850,7 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
           id={id}
           mode={mode}
           products={sectionTypesUsingProducts.has(sectionType) ? products : []}
+          publishedIndexablePaths={publishedIndexablePaths}
           renderContext={renderContext}
           storefrontContext={storefrontContext}
           runtime={runtimeForSection(section, runtime)}
@@ -10585,7 +10590,8 @@ function SectionView({
   runtime,
   mode,
   renderContext,
-  storefrontContext
+  storefrontContext,
+  publishedIndexablePaths
 }: {
   id: string;
   section: SectionInstance;
@@ -10607,6 +10613,7 @@ function SectionView({
   mode: "published" | "preview";
   renderContext: RenderContext;
   storefrontContext?: StorefrontContext;
+  publishedIndexablePaths?: string[];
 }) {
   const resolvedSaveTheDateNavigationGroups = saveTheDateNavigationGroups ?? [];
   const spanishXby = isSpanishXbySite(site);
@@ -10625,6 +10632,7 @@ function SectionView({
         id={id}
         mode={mode}
         products={products}
+        publishedIndexablePaths={publishedIndexablePaths}
         renderContext={renderContext}
         storefrontContext={storefrontContext}
         runtime={runtime}
@@ -14455,28 +14463,42 @@ function SectionView({
       ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.relatedLinks.map((link) => ({ ...link }))
       : internalLinks;
     const aidreamshootsAutoDirectoryLinks = spanishXbyDirectory && site.id === "site_mydreamshoots_xby"
-      ? Array.from(new Map(
-          creativePacks
+      ? Array.from(new Map([
+          ...(publishedIndexablePaths ?? storefrontContext?.publishedPaths ?? [])
+            .filter((path) => /^\/ai-image-generation\/[^/]+$/.test(path))
+            .map((href) => {
+              const slug = href.slice("/ai-image-generation/".length);
+              const directoryContent = getSeoDirectoryContentForSite(site, "collection", slug);
+              return [href, {
+                href,
+                label: directoryContent.label || spanishPhotoPackageLabel(slug, false)
+              }] as const;
+            }),
+          ...creativePacks
             .filter((pack) => pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0)
             .map((pack) => {
               const href = creativePackCollectionHref(pack);
               return [href, {
                 href,
                 label: spanishPhotoPackageLabel(pack.categoryRecord?.label || pack.name, false)
-              }];
+              }] as const;
             })
-        ).values())
+        ]).values())
       : [];
     const currentDirectoryPath = renderContext.pagePath.replace(/\/+$/, "") || "/";
     const autoDirectoryLinks = aidreamshootsAutoDirectoryLinks.filter((link) => link.href !== currentDirectoryPath);
-    const visibleDirectoryLinks = Array.from(new Map([
+    const directoryLinks = Array.from(new Map([
       ...directoryInternalLinks,
       ...(focusedCollectionRoute && spanishXbyDirectory ? [{ label: "Explorar todos los temas", href: "/ai-image-generation" }] : []),
       ...autoDirectoryLinks
     ].map((link) => [link.href, link]))
       .values())
-      .filter((link) => link.href !== currentDirectoryPath)
-      .slice(0, focusedCollectionRoute ? 8 : spanishXbyDirectory ? 48 : directoryInternalLinks.length);
+      .filter((link) => link.href !== currentDirectoryPath);
+    const visibleDirectoryLinks = focusedCollectionRoute
+      ? directoryLinks.slice(0, 8)
+      : spanishXbyDirectory
+        ? directoryLinks
+        : directoryLinks.slice(0, directoryInternalLinks.length);
     const selectedPageCopy = kind === "collection" && !spanishXbyDirectory && !isAidreamcapesSite(site)
       ? storefrontContext?.pageCopy
       : undefined;

@@ -57,6 +57,7 @@ import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from 
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
 import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS } from "@/lib/aidreamcapes-image-theme-routes";
+import { indexableSeoPageEntriesForSite } from "@/lib/seo-indexing";
 import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, PublishedLeafRouteProjection, PublishedVideoNavigationProjection, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
@@ -2885,6 +2886,7 @@ function renderThemePage({
   jsonLd,
   storefrontContext,
   publishedPaths,
+  publishedIndexablePaths,
   lightweightChrome = false
 }: {
   currentSite: Site;
@@ -2906,6 +2908,7 @@ function renderThemePage({
   jsonLd?: JsonLdNode[];
   storefrontContext?: StorefrontContext;
   publishedPaths?: string[];
+  publishedIndexablePaths?: string[];
   lightweightChrome?: boolean;
 }) {
   const jsonLdNodes = jsonLd;
@@ -3014,6 +3017,7 @@ function renderThemePage({
         videoThemes={isolatedRenderData.videoThemes}
         homepageShowcases={isolatedRenderData.homepageShowcases}
         lightweightChrome={lightweightChrome}
+        publishedIndexablePaths={publishedIndexablePaths}
         storefrontContext={storefrontContext}
       />
       {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} preserveBodyMarker={isAidreamcapesStorefront(currentSite) || (currentSite.id !== "site_mydreamshoots_xby" && pagePath === "/about-us")} /> : null}
@@ -3282,6 +3286,8 @@ export async function renderStorefrontPage({
   };
   const renderedPage = { ...page, publishedJson: pageJson };
   const storefrontContext = resolvePublishedStorefrontContext(publishedSnapshot, renderedPage);
+  const publishedIndexablePaths = indexableSeoPageEntriesForSite(state, currentSite, publishedSnapshot)
+    .map((entry) => entry.canonicalPath);
   const jsonLdCreativePacks = isSpanishStorefrontSite(currentSite)
     ? (await getStorefrontPublicCreativePacksForSite(currentSite.id)).map(lightweightCreativePack)
     : trimCreativePacksForStorefront(focusedCollectionRenderData, publicDirectoryPackLimit);
@@ -3305,6 +3311,7 @@ export async function renderStorefrontPage({
     settings,
     storefrontContext,
     publishedPaths: publishedSnapshot.publishedPaths,
+    publishedIndexablePaths,
     jsonLd: isFocusedCollectionPage
       ? buildCollectionDirectoryJsonLd({
           site: currentSite,
