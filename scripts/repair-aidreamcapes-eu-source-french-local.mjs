@@ -50,6 +50,16 @@ function clone(value) {
   return value === undefined ? value : structuredClone(value);
 }
 
+function stableJson(value) {
+  if (Array.isArray(value)) return value.map(stableJson);
+  if (value && typeof value === "object") return Object.fromEntries(Object.keys(value).sort().map((key) => [key, stableJson(value[key])]));
+  return value;
+}
+
+function jsonEqual(left, right) {
+  return JSON.stringify(stableJson(left)) === JSON.stringify(stableJson(right));
+}
+
 function writeJson(filePath, value) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`);
@@ -532,10 +542,10 @@ async function main() {
       sourceThemePages: sourceTheme.length,
       targetThemePages: targetTheme.length,
       translatedSourceStrings: Object.keys(cache).length,
-      changedLivePages: liveRows.filter((row) => JSON.stringify(row.targetPage.contentJson) !== JSON.stringify(row.contentJson)).length,
-      changedThemePages: themeRows.filter((row) => JSON.stringify(row.targetPage.draftJson) !== JSON.stringify(row.draftJson) || JSON.stringify(row.targetPage.publishedJson) !== JSON.stringify(row.publishedJson)).length,
-      changedSettings: JSON.stringify(targetSettings.draftJson) !== JSON.stringify(nextSettings.draftJson) || JSON.stringify(targetSettings.publishedJson) !== JSON.stringify(nextSettings.publishedJson),
-      changedProfile: JSON.stringify(sourceProfile.draftJson) !== JSON.stringify(nextProfile.draftJson) || JSON.stringify(sourceProfile.publishedJson) !== JSON.stringify(nextProfile.publishedJson),
+      changedLivePages: liveRows.filter((row) => !jsonEqual(row.targetPage.contentJson, row.contentJson)).length,
+      changedThemePages: themeRows.filter((row) => !jsonEqual(row.targetPage.draftJson, row.draftJson) || !jsonEqual(row.targetPage.publishedJson, row.publishedJson)).length,
+      changedSettings: !jsonEqual(targetSettings.draftJson, nextSettings.draftJson) || !jsonEqual(targetSettings.publishedJson, nextSettings.publishedJson),
+      changedProfile: !jsonEqual(targetProfile.draftJson, nextProfile.draftJson) || !jsonEqual(targetProfile.publishedJson, nextProfile.publishedJson),
       changedSiteThemes: nextSiteThemes.filter((row) => row.name !== undefined).length,
       sourceProducts: sourceProducts.length,
       sourcePackCategories: sourcePackCategories.length,
