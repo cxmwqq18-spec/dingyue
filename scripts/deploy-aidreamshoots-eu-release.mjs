@@ -238,7 +238,8 @@ function runRemote(changedFiles) {
     "test \"$(systemctl is-active " + config.service + ")\" = active",
     "test \"$(systemctl show -p WorkingDirectory " + config.service + " | sed -n 's/^WorkingDirectory=//p')\" = \"$RELEASE\"",
     "test \"$(cat \"$ROOT/current/.deployed-commit\")\" = \"$COMMIT\"",
-    "PUBLIC_READY=0; for ATTEMPT in $(seq 1 15); do if curl -fsS --max-time 20 https://" + config.domain + "/ | grep -E '<title[^>]*>[^<]+</title>'; then PUBLIC_READY=1; break; fi; sleep 2; done; test \"$PUBLIC_READY\" = 1",
+    "ORIGIN_READY=0; for ATTEMPT in $(seq 1 30); do if curl -fsS --max-time 5 -H " + shellQuote("Host: " + config.domain) + " \"http://127.0.0.1:" + config.port + "/\" > \"$RELEASE/.origin.html\" && grep -E '<title[^>]*>[^<]+</title>' \"$RELEASE/.origin.html\" >/dev/null && grep -F 'lang=\"es\"' \"$RELEASE/.origin.html\" >/dev/null; then ORIGIN_READY=1; break; fi; sleep 2; done; test \"$ORIGIN_READY\" = 1",
+    "PUBLIC_READY=0; for ATTEMPT in $(seq 1 15); do if curl -fsS --max-time 20 https://" + config.domain + "/ > \"$RELEASE/.public.html\" && grep -E '<title[^>]*>[^<]+</title>' \"$RELEASE/.public.html\" >/dev/null; then PUBLIC_READY=1; break; fi; sleep 2; done; if [ \"$PUBLIC_READY\" -ne 1 ]; then echo 'warning: public HTTPS edge did not respond with a titled page during the release window'; fi",
     "SWITCHED=0; trap - EXIT",
     "rm -rf \"$PATCH\"; rm -f \"$PATCH_TAR\"",
     "printf '%s\\n' 'deployed_commit='$COMMIT 'service='$(systemctl is-active " + config.service + ") 'current='$(readlink -f \"$ROOT/current\")"
