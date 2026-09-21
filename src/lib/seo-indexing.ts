@@ -310,7 +310,7 @@ function latestPublishedContentDate(
   const dates = [
     ...state.creativePacks
       .filter((pack) => pack.siteId === site.id && pack.status === "active")
-      .flatMap((pack) => [pack.updatedAt, pack.createdAt]),
+      .flatMap((pack) => [pack.createdAt]),
     ...snapshot.pages.flatMap((page) => [page.updatedAt, page.createdAt]),
     snapshot.publication?.publishedAt
   ]
