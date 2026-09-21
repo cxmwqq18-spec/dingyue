@@ -294,11 +294,30 @@ function pageContentLastModified(page: ThemePage, fallback: unknown): string | u
 function activePackForSitemapPath(state: PlatformState, site: Site, path: string): CreativePack | undefined {
   const route = parsePublicCollectionRouteForSite(site, path);
   if (route?.kind !== "item" || !route.collectionSlug) return undefined;
+  const canonicalSlug = canonicalSeoDirectorySlugForSite(site, "collection", route.collectionSlug);
   return state.creativePacks.find((pack) =>
     pack.siteId === site.id
       && pack.status === "active"
-      && canonicalDirectoryPathForSite(site, creativePackCollectionHref(pack)) === path
+      && collectionSlugsForPack(site, pack).includes(canonicalSlug)
   );
+}
+
+function latestPublishedContentDate(
+  state: PlatformState,
+  site: Site,
+  snapshot: ReturnType<typeof createPublishedSiteSnapshot>
+): string | undefined {
+  const dates = [
+    ...state.creativePacks
+      .filter((pack) => pack.siteId === site.id && pack.status === "active")
+      .flatMap((pack) => [pack.updatedAt, pack.createdAt]),
+    ...snapshot.pages.flatMap((page) => [page.updatedAt, page.createdAt]),
+    snapshot.publication?.publishedAt
+  ]
+    .map(normalizeSitemapDate)
+    .filter((value): value is string => Boolean(value))
+    .sort();
+  return dates.at(-1);
 }
 
 function sitemapLastModifiedForPath(
@@ -309,8 +328,9 @@ function sitemapLastModifiedForPath(
   page?: ThemePage
 ): string | undefined {
   const pack = isAidreamshootsStorefrontSite(site) ? activePackForSitemapPath(state, site, path) : undefined;
-  return normalizeSitemapDate(pack?.updatedAt ?? pack?.createdAt)
-    ?? (page ? pageContentLastModified(page, snapshot.publication?.publishedAt) : normalizeSitemapDate(snapshot.publication?.publishedAt));
+  return normalizeSitemapDate(pack?.createdAt)
+    ?? (page ? pageContentLastModified(page, snapshot.publication?.publishedAt) : undefined)
+    ?? latestPublishedContentDate(state, site, snapshot);
 }
 
 function sitemapVideoDuration(value: unknown, fallback = 15): string {
