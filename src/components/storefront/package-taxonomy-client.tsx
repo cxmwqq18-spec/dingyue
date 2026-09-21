@@ -128,6 +128,9 @@ function SafeTaxonomyImage({
       fetchPriority={fetchPriority}
       loading={loading}
       src={src}
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      width={1200}
+      height={900}
     />
   );
 }
