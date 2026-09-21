@@ -35,10 +35,17 @@ try {
   for (const site of sites) {
     for (const pathname of pages) {
       const requestFailures = [];
+      const imageHttpFailures = [];
       const onRequestFailed = (request) => {
         if (imageRequestPattern.test(request.url())) requestFailures.push({ url: request.url(), error: request.failure()?.errorText ?? "" });
       };
+      const onResponse = (response) => {
+        if (imageRequestPattern.test(response.url()) && response.status() >= 400) {
+          imageHttpFailures.push({ url: response.url(), status: response.status() });
+        }
+      };
       page.on("requestfailed", onRequestFailed);
+      page.on("response", onResponse);
       const url = `${baseUrl}${site.path}${pathname}?responsive-browser-smoke=20260921`;
       const response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 120_000 });
       await page.evaluate(async () => {
@@ -68,12 +75,14 @@ try {
       assert.equal(response?.status(), 200, `${site.key}${pathname}: HTTP status`);
       assert.equal(data.lang, site.lang, `${site.key}${pathname}: language`);
       assert.equal(requestFailures.length, 0, `${site.key}${pathname}: image request failures ${JSON.stringify(requestFailures)}`);
+      assert.equal(imageHttpFailures.length, 0, `${site.key}${pathname}: image HTTP failures ${JSON.stringify(imageHttpFailures)}`);
       if (pagesWithSiteImages.has(pathname)) assert(responsiveImages.length > 0, `${site.key}${pathname}: no responsive site image selected`);
       assert(responsiveImages.every((image) => image.responsive && image.hasAvif && image.hasWebp), `${site.key}${pathname}: missing AVIF/WebP picture sources`);
       assert(siteImages.every((image) => !image.src.includes("/assets/sites/") || image.src.includes(site.assetPrefix)), `${site.key}${pathname}: cross-site image asset selected`);
       assert(siteImages.every((image) => !image.preview.includes("/_responsive/")), `${site.key}${pathname}: preview points to responsive derivative`);
       reports.push({ site: site.key, pathname, images: data.images.length, siteImages: siteImages.length, responsiveImages: responsiveImages.length, eagerImages: data.images.filter((image) => image.loading === "eager").length });
       page.off("requestfailed", onRequestFailed);
+      page.off("response", onResponse);
     }
   }
 } finally {
