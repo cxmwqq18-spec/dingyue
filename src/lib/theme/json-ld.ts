@@ -445,7 +445,16 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
   const profile = storefrontCompanyProfile(context);
   const address = companyAddressSchema(profile);
   const identifiers = companyIdentifiers(profile);
-  const sameAs = (context?.profile?.identity.sameAs ?? []).filter((url) => /^https?:\/\//i.test(url));
+  const profileSameAs = (context?.profile?.identity.sameAs ?? []).filter((url) => /^https?:\/\//i.test(url));
+  const footerSettings = context?.settings?.globalSections?.footer?.settings as Record<string, unknown> | undefined;
+  const euFooterSocialKeys = ["instagramUrl", "facebookUrl", "pinterestUrl", "youtubeUrl", "twitterUrl", "xUrl", "tiktokUrl"];
+  const footerSameAs = site.id === "site_aidreamcapes_xby"
+    ? euFooterSocialKeys
+      .map((key) => footerSettings?.[key])
+      .filter((value): value is string => typeof value === "string" && /^https?:\/\//i.test(value.trim()))
+      .map((value) => value.trim())
+    : [];
+  const sameAs = Array.from(new Set([...profileSameAs, ...footerSameAs]));
   const isAboutPage = pagePath === "/about-us" && isMydreamshootsComSite(site);
   const originalLogo = storefrontOriginalLogoUrl(site);
   const logo = originalLogo

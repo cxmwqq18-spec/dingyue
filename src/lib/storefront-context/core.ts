@@ -32,6 +32,11 @@ const AIDREAMCAPES_EU_SEO_TITLE_OVERRIDES: Record<string, string> = {
   "/ai-image-generation/photo-tools": "Outils de retouche photo IA | Aidreamcapes"
 };
 
+const AIDREAMCAPES_EU_SEO_DESCRIPTION_OVERRIDES: Record<string, string> = {
+  "/ai-save-the-date/save-the-date": "Créez une vidéo Save the Date avec IA à partir de portraits de couple et d'une date de mariage confirmée, puis partagez une annonce claire avec vos proches.",
+  "/ai-save-the-date/wedding-invitation": "Créez une vidéo d’invitation de mariage avec l’IA à partir de votre papeterie approuvée : noms, date, lieu et détails lisibles avant le partage."
+};
+
 function normalizeAidreamcapesEuTitle(title: string, path: string, indexable: boolean): string {
   if (!indexable) return title;
   const override = AIDREAMCAPES_EU_SEO_TITLE_OVERRIDES[path];
@@ -104,7 +109,7 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
   );
   return {
     title: normalizeAidreamcapesEuTitle(applyTitleTemplate(rawTitle, settings, brand), path, euIndexable),
-    description: normalizeAidreamcapesEuDescription(description, euIndexable),
+    description: normalizeAidreamcapesEuDescription(AIDREAMCAPES_EU_SEO_DESCRIPTION_OVERRIDES[path] ?? description, euIndexable),
     // MyDreamshoots requires page-scoped keywords. Do not silently inherit the
     // homepage list for an unrelated public route.
     keywords: primaryMydreamshoots
