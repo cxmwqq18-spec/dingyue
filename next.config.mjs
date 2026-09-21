@@ -14,6 +14,21 @@ const devWatchIgnored = [
   "**/work_pdf_translation/**"
 ];
 
+const aidreamcapesEuLegacyImageRewrites = [
+  {
+    source: "/assets/sites/site_aidreamcapes_eu/fan-holiday-theme/categories/portrait-professionnel.webp",
+    destination: "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/4916dfeaf3ca-polished-professional-headshot.webp"
+  },
+  {
+    source: "/assets/sites/site_aidreamcapes_eu/fan-holiday-theme/categories/virtuel-essai.webp",
+    destination: "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/beea80062dd5-virtual-try-on-01.webp"
+  },
+  {
+    source: "/assets/sites/site_aidreamcapes_eu/fan-holiday-theme/categories/noel-photo.webp",
+    destination: "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/a707445975aa-christmas-couple-cover.webp"
+  }
+];
+
 function mergeWatchIgnored(existingIgnored) {
   const existingGlobs = Array.isArray(existingIgnored)
     ? existingIgnored.filter((value) => typeof value === "string" && value.length > 0)
@@ -75,7 +90,7 @@ const nextConfig = {
       destination: "/assets/dreamshoot/:path*"
     };
     if (process.env.NODE_ENV !== "development" || process.env.STOREFRONT_ASSET_REMOTE_FALLBACK === "0") {
-      return { afterFiles: [localEuMirrorAssetFallback] };
+      return { afterFiles: [...aidreamcapesEuLegacyImageRewrites, localEuMirrorAssetFallback] };
     }
 
     const origins = {
@@ -87,6 +102,7 @@ const nextConfig = {
 
     return {
       afterFiles: [
+        ...aidreamcapesEuLegacyImageRewrites,
         localEuMirrorAssetFallback,
         {
           source: "/assets/sites/site_aidreamcapes_eu/:path*",

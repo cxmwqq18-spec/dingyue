@@ -80,6 +80,13 @@ export async function metadataForPublishedStorefrontPage({
       : path === page.slug ? context.seo.canonicalPath : path,
     snapshotPage.slug
   );
+  const euVideoDirectorySeo = snapshot.site.id === "site_aidreamcapes_xby" && metadataPath === "/ai-video-generation"
+    ? {
+        title: "Création vidéo avec l’IA | Aidreamcapes",
+        description: "Explorez les outils vidéo IA d’Aidreamcapes pour animer des portraits, présenter des produits, préparer des vidéos sociales et raconter des occasions dans un parcours privé.",
+        keywords: "création vidéo IA, générateur vidéo IA, animation photo, vidéo produit, Aidreamcapes"
+      }
+    : undefined;
   const publicRouteSeo = snapshot.site.id === "site_mydreamshoots_xby"
     ? getDreamshootPublicSeoPageMetadataForSite(snapshot.site, metadataPath)
     : undefined;
@@ -103,7 +110,8 @@ export async function metadataForPublishedStorefrontPage({
         : publicRouteSeo?.description?.trim() ? { description: publicRouteSeo.description.trim() } : {}),
       ...(targetPageSeo?.keywords?.trim()
         ? { keywords: targetPageSeo.keywords.trim() }
-        : publicRouteSeo?.keywords?.trim() ? { keywords: publicRouteSeo.keywords.trim() } : {})
+        : publicRouteSeo?.keywords?.trim() ? { keywords: publicRouteSeo.keywords.trim() } : {}),
+      ...(euVideoDirectorySeo ?? {})
     }
   };
   const approvedDirectoryImage = isPrimaryMydreamshootsSite(snapshot.site) && snapshotPage.slug === "/ai-image-generation" &&

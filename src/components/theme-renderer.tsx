@@ -3392,7 +3392,10 @@ const aidreamcapesEuCommonImageBySlug: Record<string, string> = {
   "valentine-photos": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/valentines-photo/cover-occasion-3cf2a1d4ea.webp?v=aidreamcapes-eu-no-crop-v1",
   "halloween-party-photos": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/halloween-photo/cover-seasonal-fd5c22148e.webp?v=aidreamcapes-eu-no-crop-v1",
   "thanksgiving-group-photos": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/thanksgiving-photo/cover-seasonal-2b3549dc37.webp?v=aidreamcapes-eu-no-crop-v1",
-  "profile-cards": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/avatar/cover-avatar-cover-cobalt-studio.webp?v=aidreamcapes-eu-no-crop-v1"
+  "profile-cards": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/avatar/cover-avatar-cover-cobalt-studio.webp?v=aidreamcapes-eu-no-crop-v1",
+  "portrait-professionnel": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/4916dfeaf3ca-polished-professional-headshot.webp?v=aidreamcapes-eu-provider-4k-20260916-v1",
+  "virtuel-essai": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/beea80062dd5-virtual-try-on-01.webp?v=aidreamcapes-eu-provider-4k-20260916-v1",
+  "noel-photo": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/a707445975aa-christmas-couple-cover.webp?v=aidreamcapes-eu-provider-4k-20260916-v1"
 };
 
 function aidreamcapesEuCommonImageForSite(site: Site, value: string): string | undefined {

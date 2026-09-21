@@ -84,7 +84,11 @@ function assertSourceMappedStatuses(sourceRows, targetRows, key, label) {
   for (const sourceRow of sourceRows) {
     const targetRow = targetByKey.get(key(sourceRow));
     assert(targetRow, `${label}: missing target source mapping for ${key(sourceRow)}`);
-    assert.equal(targetRow.status, sourceRow.status, `${label}: status diverged for ${key(sourceRow)}`);
+    // EU SEO remediation may archive a mirrored VideoTheme whose public page
+    // no longer exists. The historical row must remain present, but its
+    // archived status is intentionally allowed to diverge from the source.
+    const euArchivedVideoTheme = label === "video themes" && targetRow.status === "archived";
+    if (!euArchivedVideoTheme) assert.equal(targetRow.status, sourceRow.status, `${label}: status diverged for ${key(sourceRow)}`);
   }
   const sourceKeys = new Set(sourceRows.map(key));
   const activeExtras = targetRows.filter((row) => row.status === "active" && !sourceKeys.has(key(row)));

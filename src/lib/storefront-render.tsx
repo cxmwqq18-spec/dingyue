@@ -2395,23 +2395,62 @@ function withDreamShootVideoGenerationDirectoryPage(pageJson: ThemePageJson, sit
   // independent from any legacy photo-tool sections that may remain in a
   // publication snapshot while its topic pages are being updated.
   const spanishTarget = site ? isSpanishMydreamshootsStorefront(site) : false;
+  const frenchTarget = site?.id === "site_aidreamcapes_xby";
+  const frenchIntro = "Aidreamcapes vous aide à transformer une idée, une photo autorisée ou une direction de marque en une courte vidéo à relire avant le partage. Parcourez les thèmes pour choisir une intention claire : présenter un produit, animer un portrait, préparer une vidéo pour les réseaux sociaux, raconter une occasion ou donner du mouvement à une image fixe. Chaque page précise le type de source à préparer, le style visuel attendu et les points à vérifier lorsque le résultat est généré.\n\nCommencez par une photo nette et un objectif simple. Une source bien cadrée aide à préserver l’identité du sujet, la position des mains, les détails du produit et la continuité de l’arrière-plan. Pour une annonce ou un souvenir, décrivez le moment, le rythme et le message à transmettre. Pour un contenu commercial, vérifiez les noms, les prix, les promesses et les droits liés aux images, aux voix et à la musique avant toute publication. Les thèmes de cette bibliothèque conviennent aux créateurs, aux petites équipes, aux boutiques en ligne et aux personnes qui souhaitent préparer un souvenir privé sans perdre le contrôle de leurs fichiers.\n\nLe parcours reste volontairement lisible : choisissez un thème, consultez ses exemples, importez uniquement des fichiers que vous possédez ou que vous êtes autorisé à utiliser, puis examinez la vidéo finale dans votre espace privé. Portez une attention particulière aux visages, aux mains, au texte affiché, aux transitions, au cadrage vertical et à la durée. Si une scène paraît ambiguë, modifiez la consigne ou remplacez la source avant de partager. Pour comparer les directions photo, consultez aussi la génération d’images IA et le workflow de création. Vous pouvez ensuite revenir à cette bibliothèque pour tester un autre rythme ou une autre intention.";
+  const frenchFaq = "Questions fréquentes\n\nQuelle source faut-il préparer ? Utilisez une image nette ou un bref descriptif dont vous détenez les droits. Une lumière régulière, un visage visible et un sujet bien séparé de l’arrière-plan facilitent la génération.\n\nComment choisir un thème ? Commencez par le résultat attendu : présentation produit, portrait animé, vidéo sociale, annonce ou récit. Comparez ensuite les exemples, le cadrage et les éléments à vérifier.\n\nLe résultat est-il publié automatiquement ? Non. Relisez la vidéo dans votre espace privé, vérifiez les personnes, les objets, le texte et les droits, puis décidez vous-même où la partager.";
   return {
     ...pageJson,
-    sectionsOrder: ["video_theme_directory_1"],
+    sectionsOrder: frenchTarget ? ["video_intro_1", "video_theme_directory_1", "video_faq_1"] : ["video_theme_directory_1"],
     sections: {
+      ...(frenchTarget ? {
+        video_intro_1: {
+          type: "rich_text",
+          settings: {
+            anchor: "introduction",
+            eyebrow: "Bibliothèque vidéo IA",
+            title: "Des vidéos IA pensées pour votre projet",
+            body: frenchIntro,
+            primaryCta: "Découvrir les outils photo",
+            primaryHref: "/ai-image-generation",
+            secondaryCta: "Voir le workflow",
+            secondaryHref: "/workflow",
+            layout: "compact",
+            tone: "dark",
+            headingLevel: "h2"
+          },
+          blocks: []
+        },
+      } : {}),
       video_theme_directory_1: {
         type: "dreamshoot_tool_collection",
         settings: {
           anchor: "video-themes",
-          title: spanishTarget ? "Generadores de vídeo con IA" : "AI Video Generation",
-          subtitle: spanishTarget
-            ? "Explora todos los temas públicos de vídeo con IA y abre la guía del estilo que quieras."
+          title: frenchTarget ? "Création vidéo avec l’IA" : spanishTarget ? "Generadores de vídeo con IA" : "AI Video Generation",
+          subtitle: frenchTarget
+            ? "Explorez les thèmes vidéo publics, comparez les directions et ouvrez le guide qui correspond à votre projet."
+            : spanishTarget
+              ? "Explora todos los temas públicos de vídeo con IA y abre la guía del estilo que quieras."
             : "Browse every public AI video theme and open the dedicated guide for the direction you want.",
           layout: "video_theme_grid",
           headingLevel: "h1"
         },
         blocks: []
-      }
+      },
+      ...(frenchTarget ? {
+        video_faq_1: {
+          type: "rich_text",
+          settings: {
+            anchor: "questions",
+            eyebrow: "Questions fréquentes",
+            title: "Préparer et vérifier une vidéo IA",
+            body: frenchFaq,
+            layout: "compact",
+            tone: "dark",
+            headingLevel: "h2"
+          },
+          blocks: []
+        }
+      } : {})
     }
   };
 }
@@ -3133,7 +3172,11 @@ export async function renderStorefrontPage({
     (usesAiGenerationPublicRoutes(currentSite) || isAidreamcapesStorefront(currentSite));
   const isAidreamcapesEuToolDetailPage =
     currentSite.id === "site_aidreamcapes_xby" && /^\/tools\/[^/]+$/.test(slug);
-  const usesDreamShootVideoGenerationDirectory = slug === "/ai-video-generation" && (isPrimaryMydreamshootsStorefront(currentSite) || isSpanishMydreamshootsStorefront(currentSite));
+  const usesDreamShootVideoGenerationDirectory = slug === "/ai-video-generation" && (
+    isPrimaryMydreamshootsStorefront(currentSite)
+    || isSpanishMydreamshootsStorefront(currentSite)
+    || currentSite.id === "site_aidreamcapes_xby"
+  );
   const basePageJson = slug === "/account"
     ? withAccountDashboardPage(page.publishedJson)
     : usesDreamShootVideoGenerationDirectory

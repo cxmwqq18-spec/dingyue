@@ -470,6 +470,15 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
     ...(isAboutPage ? { founder: { "@type": "Person", name: "NARUEBET NAKPHONG" } } : {}),
     ...(profile.email ? { email: profile.email } : {}),
     ...(profile.phone ? { telephone: profile.phone } : {}),
+    ...(profile.email || profile.phone ? {
+      contactPoint: {
+        "@type": "ContactPoint",
+        ...(profile.email ? { email: profile.email } : {}),
+        ...(profile.phone ? { telephone: profile.phone } : {}),
+        contactType: "customer support",
+        availableLanguage: site.id === "site_aidreamcapes_xby" ? ["fr-FR", "en"] : ["en"]
+      }
+    } : {}),
     ...(address ? { address } : {}),
     ...(profile.taxId ? { taxID: profile.taxId } : {}),
     ...(identifiers.length ? { identifier: identifiers } : {}),
@@ -1437,7 +1446,8 @@ function websiteSchema(site: Site, routeMode: "host" | "path"): JsonLdNode {
     "@type": "WebSite",
     "@id": `${storefrontBaseUrl(site, routeMode)}#website`,
     name: siteBrandName(site),
-    url: storefrontBaseUrl(site, routeMode)
+    url: storefrontBaseUrl(site, routeMode),
+    ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {})
   };
 }
 
