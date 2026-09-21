@@ -29,7 +29,9 @@ const AIDREAMCAPES_EU_SEO_TITLE_OVERRIDES: Record<string, string> = {
   "/ai-image-generation/travel": "Photos de voyage avec l’IA | Aidreamcapes",
   "/ai-image-generation/urban": "Photos urbaines avec l’IA | Aidreamcapes",
   "/ai-image-generation/wedding-photo": "Photos de mariage avec l’IA | Aidreamcapes",
-  "/ai-image-generation/photo-tools": "Outils de retouche photo IA | Aidreamcapes"
+  "/ai-image-generation/photo-tools": "Outils de retouche photo IA | Aidreamcapes",
+  "/ai-save-the-date/save-the-date": "Vidéo Save the Date avec IA | Aidreamcapes",
+  "/ai-save-the-date/wedding-invitation": "Vidéo d’invitation de mariage avec l’IA | Aidreamcapes"
 };
 
 const AIDREAMCAPES_EU_SEO_DESCRIPTION_OVERRIDES: Record<string, string> = {
