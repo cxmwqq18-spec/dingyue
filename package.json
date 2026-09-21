@@ -311,6 +311,7 @@
     "promote:grownstride-to-mydreamshoots": "node scripts/promote-grownstride-to-mydreamshoots.mjs --dry-run",
     "deploy:precheck": "npm run typecheck && npm run guard:public-storefront-ssr && npm run guard:live-storefront-ssr && npm run guard:storefront-launch-seo-contract && npm run guard:mydreamshoots-production-release && npm run smoke:mydreamshoots-seo-indexing && npm run guard:mydreamshoots-content && node scripts/deploy-release.mjs --precheck",
     "deploy:release": "node scripts/deploy-release.mjs",
+    "deploy:aidreamshoots-eu": "node scripts/deploy-aidreamshoots-eu-release.mjs",
     "content:baseline": "node scripts/content-sync.mjs --mode=baseline",
     "content:plan": "node scripts/content-sync.mjs --mode=plan",
     "content:apply": "node scripts/content-sync.mjs --mode=apply",
