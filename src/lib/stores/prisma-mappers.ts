@@ -832,6 +832,7 @@ export function toCreativePack(record: {
     createdAt?: Date | string;
   } | null;
   createdAt?: Date | string;
+  updatedAt?: Date | string;
 }): CreativePack {
   const galleryMedia = Array.isArray(record.galleryImages)
     ? storefrontGalleryMediaPairs(record.galleryImages, record.galleryImageAlts, 24)
@@ -853,6 +854,7 @@ export function toCreativePack(record: {
     generationCount: record.generationCount,
     conversionRate: record.conversionRate,
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
+    updatedAt: toIsoString(record.updatedAt),
     imageUrl: record.imageUrl ?? undefined,
     galleryImages: galleryMedia?.galleryImages,
     galleryImageAlts: galleryMedia?.galleryImageAlts,

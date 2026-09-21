@@ -168,10 +168,18 @@ const SEO_OVERRIDES = new Map([
     title: "Fotos de fútbol con IA para aficionados | AIdreamshoots"
   }],
   ["/ai-image-generation/magic", {
-    title: "Herramientas mágicas de edición de fotos con IA | AIdreamshoots"
+    title: "Edición mágica de fotos con IA | AIdreamshoots"
   }],
   ["/ai-image-generation/urbano", {
-    title: "Fotos urbanas con IA: retratos y escenas de ciudad | AIdreamshoots"
+    title: "Fotos urbanas con IA | AIdreamshoots"
+  }],
+  ["/ai-image-generation/photo-tools", {
+    title: "Herramientas de fotos con IA | AIdreamshoots",
+    description: "Explora herramientas de fotos con IA para editar, mejorar y preparar imágenes antes de crear resultados privados en AIdreamshoots."
+  }],
+  ["/ai-image-generation/professional", {
+    title: "Retratos profesionales con IA | AIdreamshoots",
+    description: "Crea retratos profesionales con IA desde fotos autorizadas, compara estilos y conserva tus resultados en una galería privada."
   }],
   ["/ai-image-generation/viaje", {
     title: "Fotos de viaje con IA: retratos y destinos | AIdreamshoots"
@@ -312,6 +320,9 @@ function mapText(value) {
 
 function mapAlt(value) {
   const normalized = mapText(value).trim();
+  if (/^Gente\.?$/i.test(normalized)) {
+    return "Personas en una escena temática para crear fotos con IA en AIdreamshoots.";
+  }
   if (/^(?:Ejemplo visual|Contenido de AIdreamshoots|Imagen generada|Foto generada|Vídeo generado)\b/i.test(normalized)) {
     return "Vista previa de una creación fotográfica con IA para explorar los estilos de AIdreamshoots.";
   }
@@ -394,6 +405,9 @@ function canonicalPathForHref(pathname, search = "") {
   if (normalized === "/ai-image-generation/valentines-day-photo") {
     normalized = "/ai-image-generation/valentines-photo";
   }
+  if (normalized === "/ai-image-generation/urban") {
+    normalized = "/ai-image-generation/urbano";
+  }
   const saveDateMatch = normalized.match(/^\/ai-video-generation\/([^/]+)$/i);
   if (saveDateMatch && SAVE_THE_DATE_ALIASES.has(saveDateMatch[1].toLowerCase())) {
     normalized = `/ai-save-the-date/${SAVE_THE_DATE_ALIASES.get(saveDateMatch[1].toLowerCase())}`;
@@ -453,6 +467,8 @@ function isAliasPage(slug) {
   return normalized === "/collections"
     || normalized === "/policies/shipping"
     || normalized === "/policies/state-privacy"
+    || normalized === "/ai-image-generation/urban"
+    || POLICY_CANONICALS.has(normalized)
     || normalized === "/holidays-events/wedding-invitation"
     || normalized === WEDDING_INVITATION_SOURCE
     || (normalized.startsWith("/ai-video-generation/") && SAVE_THE_DATE_ALIASES.has(normalized.slice("/ai-video-generation/".length)));
@@ -607,7 +623,7 @@ function prepareContent(row) {
     content = repairPrivatePageCopy(row.contentJson);
   } else if (profiles[canonicalPath]) {
     content = repairStandardPage(row.contentJson, profiles[canonicalPath], canonicalPath);
-  } else if (row.slug === WEDDING_INVITATION_SOURCE) {
+  } else if (row.slug === WEDDING_INVITATION_SOURCE || canonicalPath === WEDDING_INVITATION_PUBLIC) {
     content = repairWeddingInvitationPage(row.contentJson);
   } else {
     content = deepClone(row.contentJson);
@@ -732,12 +748,27 @@ function assertPreparedRows(beforeRows, afterRows) {
   const afterBySlug = new Map(afterRows.map((row) => [row.slug, row]));
   assert(afterBySlug.has(WEDDING_INVITATION_PUBLIC), "The public wedding invitation LivePage was not prepared.");
   assert.deepEqual(staleSeoFlagRows(afterRows), [], "Stale target LivePage SEO index flags remain after preparation.");
+  const indexableRows = afterRows.filter((row) => row.contentJson?.seo?.index !== false && row.contentJson?.seo?.robots?.index !== false);
+  const seenTitles = new Map();
+  const seenDescriptions = new Map();
   for (const row of afterRows) {
     assert(row.contentJson?.seo?.canonicalPath, `Missing canonicalPath for ${row.slug}.`);
     assert(/^https:\/\/aidreamshoots\.eu\//.test(row.contentJson.seo.canonical), `Non-production canonical for ${row.slug}.`);
     assert.equal(collectInvalidHrefs(row.contentJson, row.slug).length, 0, `Invalid internal href remains on ${row.slug}.`);
     const imageAltIssues = collectMissingImageAlts(row.contentJson, row.slug);
     assert.equal(imageAltIssues.length, 0, `Image alt issues remain on ${row.slug}: ${JSON.stringify(imageAltIssues.slice(0, 3))}; sample=${JSON.stringify(row.contentJson?.sections?.ai_video_topic_landing_1?.settings?.content?.hero?.video ?? null)}`);
+    if (indexableRows.includes(row)) {
+      const title = String(row.contentJson?.seo?.title ?? row.title ?? "").replace(/\s+/g, " ").trim();
+      const description = String(row.contentJson?.seo?.description ?? "").replace(/\s+/g, " ").trim();
+      assert(title.length >= 30 && title.length <= 60, `Indexable title length is outside 30-60 for ${row.slug}: ${title.length}`);
+      assert(description.length >= 70 && description.length <= 160, `Indexable description length is outside 70-160 for ${row.slug}: ${description.length}`);
+      const titleOwner = seenTitles.get(title);
+      assert(!titleOwner || titleOwner === row.slug, `Duplicate indexable title between ${titleOwner} and ${row.slug}.`);
+      seenTitles.set(title, row.slug);
+      const descriptionOwner = seenDescriptions.get(description);
+      assert(!descriptionOwner || descriptionOwner === row.slug, `Duplicate indexable description between ${descriptionOwner} and ${row.slug}.`);
+      seenDescriptions.set(description, row.slug);
+    }
   }
   const beforeMedia = mediaDigest(beforeRows, { excludeLegacy: true });
   const afterExistingMedia = mediaDigest(afterRows.filter((row) => !row.__new), { excludeLegacy: true });

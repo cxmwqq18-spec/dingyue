@@ -30,6 +30,12 @@ vm.runInNewContext(compiled, {
           || ["aidreamcapes", "aidreamcapes-eu"].includes(String(site?.slug ?? "").trim().toLowerCase())
       };
     }
+    if (id === "@/lib/storefront-locale") {
+      return { isFrenchStorefrontSite: () => false };
+    }
+    if (id === "@/lib/french-copy") {
+      return { frenchCopy: (value) => String(value ?? "") };
+    }
     throw new Error(`Unexpected module import in smoke: ${id}`);
   }
 });

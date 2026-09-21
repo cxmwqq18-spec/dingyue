@@ -2403,7 +2403,9 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
               ["Política de privacidad", "/privacy", "support"],
               ["Política de contenido", "/content", "support"],
               ["Términos de servicio", "/terms", "support"],
-              ["Política de cookies", "/cookies", "support"]
+              ["Política de cookies", "/cookies", "support"],
+              ["Privacidad infantil", "/children-privacy", "support"],
+              ["Derechos de privacidad estatal", "/state-privacy", "support"]
             ]
         : isAidreamcapesFooter
         ? [
@@ -2610,8 +2612,10 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
     if (spanishXbyFooter && normalizedHref === "/faq") return "Preguntas frecuentes";
     if (spanishXbyFooter && normalizedHref === "/privacy") return "Política de privacidad";
 	    if (spanishXbyFooter && normalizedHref === "/terms") return "Términos de servicio";
-	    if (spanishXbyFooter && normalizedHref === "/cookies") return "Política de cookies";
+    if (spanishXbyFooter && normalizedHref === "/cookies") return "Política de cookies";
     if (spanishXbyFooter && normalizedHref === "/digital-delivery") return "Política de entrega digital";
+    if (spanishXbyFooter && normalizedHref === "/children-privacy") return "Privacidad infantil";
+    if (spanishXbyFooter && normalizedHref === "/state-privacy") return "Derechos de privacidad estatal";
     if (normalizedHref === "/privacy") return "Privacy Policy";
     if (normalizedHref === "/terms") return "Terms of Service";
     if (normalizedHref === "/cookies") return "Cookie Policy";
@@ -10968,7 +10972,7 @@ function SectionView({
         <section className="relative isolate overflow-hidden border-b border-[#eee3d7] bg-[radial-gradient(circle_at_0%_20%,rgba(230,223,214,0.58),transparent_24%),linear-gradient(180deg,#fffdfa_0%,#faf5ee_100%)] text-[#111318]">
           <div className="absolute inset-0 -z-10 hidden bg-[linear-gradient(90deg,#fffdfa_0%,#fffaf4_42%,rgba(255,250,244,0)_62%)] lg:block" />
           <div className="absolute inset-y-0 right-0 -z-20 hidden w-[58%] lg:block">
-            <img className="h-full w-full object-cover object-[58%_center]" src={primaryVisual} alt={primaryVisualAlt} />
+            <StorefrontImage className="h-full w-full object-cover object-[58%_center]" fetchPriority="high" loading="eager" preview={false} sizes="100vw" src={primaryVisual} alt={primaryVisualAlt} />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,#fffdfa_0%,rgba(255,250,244,0.86)_17%,rgba(255,250,244,0.32)_38%,rgba(255,250,244,0.04)_62%)]" />
             <div className="absolute inset-y-0 left-0 w-[18%] bg-gradient-to-r from-[#fffdfa] to-transparent" />
           </div>
@@ -11013,7 +11017,7 @@ function SectionView({
             </div>
 
             <div className="relative z-10 min-h-[540px] overflow-hidden rounded-t-[24px] bg-[#efe6d9] lg:min-h-[640px] lg:rounded-none lg:bg-transparent">
-              <img className="absolute inset-0 h-full w-full object-cover object-[58%_center] lg:hidden" src={primaryVisual} alt={primaryVisualAlt} />
+              <StorefrontImage className="absolute inset-0 h-full w-full object-cover object-[58%_center] lg:hidden" fetchPriority="high" loading="eager" preview={false} sizes="100vw" src={primaryVisual} alt={primaryVisualAlt} />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(250,245,237,0.04)_0%,rgba(20,18,15,0.06)_58%,rgba(20,18,15,0.12)_100%)] lg:hidden" />
               <div className="absolute bottom-7 right-4 w-[min(295px,calc(100%-2rem))] rounded-[24px] border border-[#ddd3c7] bg-white/92 p-5 text-[#171514] shadow-[0_32px_82px_-56px_rgba(20,22,26,0.26)] backdrop-blur sm:right-7 lg:bottom-[9.5rem] lg:right-0 xl:right-2">
                 <div className="flex items-center gap-1 text-[#d39a4a]">
@@ -11030,8 +11034,11 @@ function SectionView({
                 <div className="mt-4 flex -space-x-2.5">
                   {heroStats.slice(0, 5).map((item, index) => (
                     <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-white bg-[#f2e8da]" key={instanceKey(item, index, "hero_avatar")}>
-                      <img
+                      <StorefrontImage
                         className="h-full w-full object-cover"
+                        loading="lazy"
+                        preview={false}
+                        sizes="40px"
                         src={avatarPool[index % avatarPool.length]}
                         alt={genericVisualAltForSite(site, {
                           category: "customer proof avatar",
@@ -11249,7 +11256,7 @@ function SectionView({
                   <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[14px] border border-white/70 bg-white px-5 text-sm font-semibold text-[#090b13] shadow-[inset_0_0_0_1px_rgba(236,75,221,0.14),0_16px_42px_-34px_rgba(22,220,240,0.7)] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))}>
                     {authPrimaryUsesGoogle ? (
                       <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white shadow-[0_8px_22px_-14px_rgba(9,11,19,0.45)] ring-1 ring-black/[0.06]">
-                        <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isFrenchStorefrontSite(site) ? "Connexion avec Google" : isSpanishXbySite(site) ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" />
+                        <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isFrenchStorefrontSite(site) ? "Connexion avec Google" : isSpanishXbySite(site) ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" width={isSpanishXbySite(site) ? 20 : undefined} height={isSpanishXbySite(site) ? 20 : undefined} />
                       </span>
                     ) : (
                       <Mail className="h-5 w-5" strokeWidth={1.8} />
@@ -11757,7 +11764,14 @@ function SectionView({
                   src={videoUrl}
                 />
               ) : (
-                <img className="aspect-[16/9] w-full bg-black object-contain opacity-90" src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", "Video feature"), { role: "poster" })} />
+                <StorefrontImage
+                  alt={sectionVisualAltForSite(site, section, image, setting(section, "title", "Video feature"), { role: "poster" })}
+                  className="aspect-[16/9] w-full bg-black object-contain opacity-90"
+                  loading="lazy"
+                  preview={false}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  src={image}
+                />
               )}
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0)_46%,rgba(0,0,0,0.48)_100%)]" />
               {videoBadge ? (
@@ -12321,7 +12335,7 @@ function SectionView({
                           <span className="flex min-w-0 items-start gap-3">
                             {blockValue(method, "kind", "") === "google" ? (
                               <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white ring-1 ring-white/10">
-                                <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isFrenchStorefrontSite(site) ? "Connexion avec Google" : spanishXbyLogin ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" />
+                                <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isFrenchStorefrontSite(site) ? "Connexion avec Google" : spanishXbyLogin ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" width={spanishXbyLogin ? 20 : undefined} height={spanishXbyLogin ? 20 : undefined} />
                               </span>
                             ) : null}
                             <span className="min-w-0">
@@ -14440,6 +14454,29 @@ function SectionView({
     const directoryInternalLinks = frenchEngagementDirectory
       ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.relatedLinks.map((link) => ({ ...link }))
       : internalLinks;
+    const aidreamshootsAutoDirectoryLinks = spanishXbyDirectory && site.id === "site_mydreamshoots_xby"
+      ? Array.from(new Map(
+          creativePacks
+            .filter((pack) => pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0)
+            .map((pack) => {
+              const href = creativePackCollectionHref(pack);
+              return [href, {
+                href,
+                label: spanishPhotoPackageLabel(pack.categoryRecord?.label || pack.name, false)
+              }];
+            })
+        ).values())
+      : [];
+    const currentDirectoryPath = renderContext.pagePath.replace(/\/+$/, "") || "/";
+    const autoDirectoryLinks = aidreamshootsAutoDirectoryLinks.filter((link) => link.href !== currentDirectoryPath);
+    const visibleDirectoryLinks = Array.from(new Map([
+      ...directoryInternalLinks,
+      ...(focusedCollectionRoute && spanishXbyDirectory ? [{ label: "Explorar todos los temas", href: "/ai-image-generation" }] : []),
+      ...autoDirectoryLinks
+    ].map((link) => [link.href, link]))
+      .values())
+      .filter((link) => link.href !== currentDirectoryPath)
+      .slice(0, focusedCollectionRoute ? 8 : spanishXbyDirectory ? 48 : directoryInternalLinks.length);
     const selectedPageCopy = kind === "collection" && !spanishXbyDirectory && !isAidreamcapesSite(site)
       ? storefrontContext?.pageCopy
       : undefined;
@@ -14463,9 +14500,9 @@ function SectionView({
                 <p className="mt-4 max-w-3xl text-base leading-7 text-[#5d6572]">
                   {frenchEngagementDirectory ? "Descubre los temas relacionados antes de elegir el paquete que mejor encaje con tus fotos fuente y el resultado que buscas." : frenchXbyDirectory ? "Comparez les thèmes associés avant de choisir le pack qui correspond à vos photos source et à votre objectif." : spanishXbyDirectory ? "Revisa los temas relacionados antes de elegir el paquete que mejor encaje con tus fotos fuente y el resultado que buscas." : "Review adjacent themes before choosing the package that best matches your source photos and finished-image goal."}
                 </p>
-                {directoryInternalLinks.length ? (
+                {visibleDirectoryLinks.length ? (
                 <nav aria-label={frenchEngagementDirectory ? "Paquetes de fotos relacionados" : frenchXbyDirectory ? "Packs photo associés" : spanishXbyDirectory ? "Paquetes de fotos relacionados" : "Related photo packages"} className="mt-6 flex flex-wrap gap-2">
-                    {directoryInternalLinks.map((link) => (
+                    {visibleDirectoryLinks.map((link) => (
                       <Link className="group inline-flex items-center gap-2 rounded-full border border-[#eadbc7] bg-[#fffaf3] px-4 py-2 text-sm font-semibold text-[#4b5563] transition hover:border-[#e4561b]/35 hover:text-[#14161a]" href={hrefFor(site, link.href)} key={`${link.label}_${link.href}`}>
                         <span>{link.label}</span>
                         <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#e4561b] transition group-hover:translate-x-0.5" strokeWidth={2} />
@@ -14578,11 +14615,11 @@ function SectionView({
                   </ol>
                 </div>
               ) : null}
-              {directoryInternalLinks.length ? (
+              {visibleDirectoryLinks.length ? (
                 <div className="mt-6 border-t border-[#eee1cf] pt-5">
                   <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#8b6a4b]">{frenchXbyDirectory ? "Pages associées" : spanishXbyDirectory ? "Páginas relacionadas" : selectedPageCopy?.relatedTitle ?? "Related pages"}</p>
                   <nav aria-label={frenchXbyDirectory ? "Pages associées" : spanishXbyDirectory ? "Páginas relacionadas" : "Related pages"} className="mt-3 grid gap-2">
-                    {directoryInternalLinks.map((link) => (
+                    {visibleDirectoryLinks.map((link) => (
                       <Link className="group inline-flex items-center justify-between gap-3 rounded-[8px] border border-[#eadbc7] bg-[#fffaf3] px-3 py-2 text-sm font-semibold text-[#4b5563] transition hover:border-[#e4561b]/35 hover:text-[#14161a]" href={hrefFor(site, link.href)} key={`${link.label}_${link.href}`}>
                         <span>{link.label}</span>
                         <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#e4561b] transition group-hover:translate-x-0.5" strokeWidth={2} />
@@ -19251,12 +19288,13 @@ function SectionView({
                     <div className={`flex flex-1 flex-col ${centeredReviewLayout ? "p-5" : "p-[18px]"}`}>
                       <div className="flex items-center gap-3">
                         {avatar ? (
-	                          <img
-	                            alt={avatarAlt}
+                          <StorefrontImage
+                            alt={avatarAlt}
                             className="h-14 w-14 rounded-full border-[3px] border-white object-cover shadow-[0_16px_34px_-25px_rgba(20,22,26,0.35)]"
-                            decoding="async"
                             fetchPriority="low"
                             loading="lazy"
+                            preview={false}
+                            sizes="56px"
                             src={avatar}
                           />
                         ) : (
@@ -19483,12 +19521,14 @@ function SectionView({
             ) : null}
             {inlineImageSrc ? (
               <div className="mt-6 max-w-[34rem] overflow-hidden rounded-[8px] border border-white/10 bg-black/20 p-2" data-faq-item-image>
-                <img
-                  className="block h-auto w-full"
-                  src={inlineImageSrc}
+                <StorefrontImage
                   alt={inlineImageAlt}
+                  className="block h-auto w-full"
+                  fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "high" : "low"}
                   loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
-                  decoding="async"
+                  preview={false}
+                  sizes="(max-width: 1024px) 100vw, 34rem"
+                  src={inlineImageSrc}
                 />
               </div>
             ) : null}
@@ -19516,12 +19556,14 @@ function SectionView({
                         : "aspect-[4/3]";
                     return (
                       <div className={`${tileClassName} overflow-hidden rounded-[8px] border border-white/10 bg-black/20 p-1 shadow-[0_20px_50px_-36px_rgba(0,0,0,0.9)]`} data-faq-feature-tile key={`${image.src}_${index}`}>
-                        <img
-                          className="block h-full w-full max-w-full object-contain object-center"
-                          src={image.src}
+                        <StorefrontImage
                           alt={image.alt}
+                          className="block h-full w-full max-w-full object-contain object-center"
+                          fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "high" : "low"}
                           loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
-                          decoding="async"
+                          preview={false}
+                          sizes="(max-width: 1024px) 100vw, 34rem"
+                          src={image.src}
                         />
                       </div>
                     );

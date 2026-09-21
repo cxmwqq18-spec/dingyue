@@ -8,8 +8,8 @@ const productionHost = process.env.AIDREAMSHOOTS_SMOKE_HOST || "aidreamshoots.eu
 const productionOrigin = `https://${productionHost}`;
 const expectedResidualTitles = new Map([
   ["/ai-image-generation/futbol", "Fotos de fútbol con IA para aficionados | AIdreamshoots"],
-  ["/ai-image-generation/magic", "Herramientas mágicas de edición de fotos con IA | AIdreamshoots"],
-  ["/ai-image-generation/urbano", "Fotos urbanas con IA: retratos y escenas de ciudad | AIdreamshoots"],
+  ["/ai-image-generation/magic", "Edición mágica de fotos con IA | AIdreamshoots"],
+  ["/ai-image-generation/urbano", "Fotos urbanas con IA | AIdreamshoots"],
   ["/ai-image-generation/viaje", "Fotos de viaje con IA: retratos y destinos | AIdreamshoots"]
 ]);
 const timeoutMs = Number(process.env.AIDREAMSHOOTS_BROWSER_TIMEOUT_MS || 60000);
@@ -157,8 +157,10 @@ async function inspectPage(page, pathname, { expectIndexable = true, expectedSta
   assert.equal(result.lang, "es", `${pathname} must use lang=es`);
   if (expectIndexable) {
     assert(result.title, `${pathname} needs a title`);
+    assert(result.title.length >= 30 && result.title.length <= 60, `${pathname} title length must be 30-60 characters`);
     if (expectedResidualTitles.has(pathname)) assert.equal(result.title, expectedResidualTitles.get(pathname), `${pathname} has the wrong residual SEO title`);
     assert(result.description, `${pathname} needs a meta description`);
+    assert(result.description.length >= 70 && result.description.length <= 160, `${pathname} description length must be 70-160 characters`);
     assert(["website", "article"].includes(result.ogType), `${pathname} needs an explicit og:type`);
     assert.equal(result.canonical, canonicalFor(pathname), `${pathname} has the wrong canonical`);
     assert.match(result.robots, /\bindex\b/, `${pathname} must be indexable`);
@@ -166,6 +168,7 @@ async function inspectPage(page, pathname, { expectIndexable = true, expectedSta
     assert.equal(result.h1Count, 1, `${pathname} must have one H1`);
     assert.equal(result.jsonLdErrors.length, 0, `${pathname} has invalid JSON-LD: ${result.jsonLdErrors.join("; ")}`);
     assert.equal(result.images.filter((image) => !image.alt?.trim() && !image.decorative).length, 0, `${pathname} has an accidental empty image alt`);
+    assert.equal(result.images.filter((image) => !image.decorative && !(Number(image.width) > 0 && Number(image.height) > 0)).length, 0, `${pathname} has content images without intrinsic dimensions`);
     assert.deepEqual(result.topicMediaIssues, [], `${pathname} has invalid or empty topic media: ${result.topicMediaIssues.join("; ")}`);
     assert.equal(result.badSources.length, 0, `${pathname} contains legacy, local, or HTTP media/link URLs: ${result.badSources.slice(0, 3).join(", ")}`);
     if (pathname === "/") {

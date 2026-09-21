@@ -3253,8 +3253,8 @@ function spanishDirectorySeed(kind: SeoDirectoryKind, slug: string, brandName: s
   const aidreamshootsTitleOverrides: Record<string, string> = !aidreamcapes && collection
     ? {
         futbol: "Fotos de fútbol con IA para aficionados | AIdreamshoots",
-        magic: "Herramientas mágicas de edición de fotos con IA | AIdreamshoots",
-        urbano: "Fotos urbanas con IA: retratos y escenas de ciudad | AIdreamshoots",
+        magic: "Edición mágica de fotos con IA | AIdreamshoots",
+        urbano: "Fotos urbanas con IA | AIdreamshoots",
         viaje: "Fotos de viaje con IA: retratos y destinos | AIdreamshoots"
       }
     : {};

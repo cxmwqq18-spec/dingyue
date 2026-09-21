@@ -610,6 +610,9 @@ export default async function HostStorefrontCatchAllPage({
   }
   const slug = `/${path.join("/")}`;
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
+  if (cleanHost(host) === "aidreamshoots.eu" && slug === "/ai-image-generation/urban") {
+    permanentRedirect("/ai-image-generation/urbano");
+  }
   if (slug === "/404") notFound();
   const aidreamshootsLegacySaveTheDateTarget = isAidreamshootsPublicSlug(hostSiteSlug)
     ? aidreamshootsLegacyVideoSaveTheDatePath(slug)
@@ -733,6 +736,9 @@ export default async function HostStorefrontCatchAllPage({
   // stale self-redirect row cannot turn the retired URL into a 308 loop.
   if (firstSegment === "tools" && path[1] && (isMydreamshootsSite(site) || isAidreamshootsStorefrontSite(site)) && !isAidreamcapesSite(site)) {
     notFound();
+  }
+  if ((isAidreamshootsStorefrontSite(site) || isAidreamshootsPublicSlug(hostSiteSlug)) && slug === "/ai-image-generation/urban") {
+    permanentRedirect(publicSiteUrl(site, "/ai-image-generation/urbano"));
   }
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
   const publishedDisposition = resolvePublishedRouteDisposition(snapshot, slug);

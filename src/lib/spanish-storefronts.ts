@@ -43,7 +43,10 @@ export const SPANISH_XBY_COLLECTION_ALIASES: Record<string, string> = {
   retratos: "retratos-y-perfiles",
   temporada: "seasonal",
   utilidades: "video-y-utilidades",
-  video: "ai-video-add-ons"
+  video: "ai-video-add-ons",
+  // Keep the historical English route out of the Spanish index. The active
+  // catalogue pack is published under `/urbano`.
+  urban: "urbano"
 };
 
 export function canonicalSpanishXbyCollectionSlug(value: string): string {

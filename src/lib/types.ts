@@ -818,6 +818,7 @@ export interface CreativePack {
   generationCount: number;
   conversionRate: number;
   createdAt: string;
+  updatedAt?: string;
   imageUrl?: string;
   galleryImages?: string[];
   galleryImageAlts?: string[];

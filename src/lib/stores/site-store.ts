@@ -487,7 +487,8 @@ const collectionDetailSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
-      contentJson: true
+      contentJson: true,
+      updatedAt: true
     }
   },
   connect: {
@@ -535,7 +536,8 @@ const publicRuntimeSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
-      contentJson: true
+      contentJson: true,
+      updatedAt: true
     }
   },
   connect: {
@@ -584,7 +586,8 @@ const customerRuntimeSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
-      contentJson: true
+      contentJson: true,
+      updatedAt: true
     }
   },
   settings: {
@@ -702,6 +705,7 @@ const collectionDetailCreativePackSelect = {
   galleryImages: true,
   galleryImageAlts: true,
   createdAt: true,
+  updatedAt: true,
   categoryRecord: {
     select: {
       id: true,
@@ -756,6 +760,7 @@ const publicRuntimeCreativePackSelect = {
   galleryImages: true,
   galleryImageAlts: true,
   createdAt: true,
+  updatedAt: true,
   categoryRecord: collectionDetailCreativePackSelect.categoryRecord
 } satisfies Prisma.CreativePackSelect;
 type PublicRuntimeCreativePackRecord = Prisma.CreativePackGetPayload<{ select: typeof publicRuntimeCreativePackSelect }>;

@@ -37,6 +37,25 @@ const SITES = {
   }
 };
 
+// These four homepage video showcase posters are selected from the shared
+// renderer's approved static catalogue rather than a relational media row.
+// Keep them in the same responsive manifest as database-backed assets so the
+// public HTML has intrinsic dimensions and can reuse generated variants.
+const AIDREAMSHOOTS_STATIC_RESPONSIVE_IMAGE_URLS = [
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/cinematic-video/cinematic-video-01-create-a-more-cinematic-video-without-a-full-film-cr-84e9edc816.webp",
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/music-video/music-video-01-ai-music-video-generator-for-artist-visuals-and-perf-c12d6d69b3.webp",
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/tiktok-video/tiktok-video-01-turn-your-photos-and-ideas-into-tiktok-first-videos-7a108dbe77.webp",
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/instagram-reels/instagram-reels-01-turn-photos-and-ideas-into-reels-that-fit-your-feed-0f724d6c63.webp",
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/product-video/product-video-01-feature-led-product-showcase-3765370633.webp",
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/product-ad-video/product-ad-video-01-build-the-ad-around-one-buyer-decision-90e0edcd71.webp",
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/promo-video/promo-video-01-promo-video-launch-teaser-73271ed69f.webp",
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-rich-lifestyle-diverse-20260913-v1/rich-lifestyle-00-quiet-city-walk-907614798ac6.webp",
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-review-media-20260915-v1/ava-avatar.webp",
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-review-media-20260915-v1/lucas-avatar.webp",
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-review-media-20260915-v1/mia-avatar.webp",
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-review-media-20260915-v1/noah-avatar.webp"
+];
+
 const args = new Set(process.argv.slice(2));
 const siteArg = process.argv.find((arg) => arg.startsWith("--site="))?.slice("--site=".length) || "all";
 const minBytes = Number(process.argv.find((arg) => arg.startsWith("--min-bytes="))?.slice("--min-bytes=".length) || 262144);
@@ -178,6 +197,13 @@ async function collectSiteRefs(prisma, siteKey, config) {
       rowId: null,
       fieldPath: ""
     });
+  }
+  if (siteKey === "aidreamshoots-eu") {
+    for (const url of AIDREAMSHOOTS_STATIC_RESPONSIVE_IMAGE_URLS) {
+      const current = refs.get(url) || { url, refs: [] };
+      current.refs.push({ site: siteKey, model: "static-renderer-catalogue", rowId: null, fieldPath: "" });
+      refs.set(url, current);
+    }
   }
   return refs;
 }

@@ -249,6 +249,25 @@ function mydreamshootsLegacySiteSlugRedirect(request: NextRequest): NextResponse
   return NextResponse.redirect(target, 301);
 }
 
+function aidreamshootsUrbanCanonicalRedirect(request: NextRequest): NextResponse | undefined {
+  const normalizedPath = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
+  const sitePathMatch = normalizedPath.match(/^\/site\/([^/]+)(\/.*)?$/i);
+  const scopedPath = sitePathMatch?.[2] || normalizedPath;
+  const requestHost = String(request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "")
+    .split(",")[0]
+    .trim()
+    .toLowerCase();
+  const isAidreamshootsRequest = /(?:^|\.)aidreamshoots\.eu(?::\d+)?$/i.test(requestHost)
+    || Boolean(sitePathMatch && /^aidreamshoots(?:-xby|-eu)?$/i.test(sitePathMatch[1] ?? ""));
+  if (!isAidreamshootsRequest || scopedPath !== "/ai-image-generation/urban") return undefined;
+  const targetPath = sitePathMatch && !/(?:^|\.)aidreamshoots\.eu(?::\d+)?$/i.test(requestHost)
+    ? `/site/${sitePathMatch[1]}/ai-image-generation/urbano`
+    : "/ai-image-generation/urbano";
+  const target = publicRedirectUrlForRequest(request, targetPath);
+  target.search = request.nextUrl.search;
+  return NextResponse.redirect(target, 308);
+}
+
 function spanishXbyCanonicalCollectionRedirect(request: NextRequest): NextResponse | undefined {
   if (!isSpanishXbyRequest(request)) return undefined;
   const normalizedPath = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
@@ -801,6 +820,8 @@ export async function middleware(request: NextRequest) {
   if (workspaceRedirect) return finalizeStorefrontResponse(workspaceRedirect, request);
   const legacySiteSlugRedirect = mydreamshootsLegacySiteSlugRedirect(request);
   if (legacySiteSlugRedirect) return finalizeStorefrontResponse(legacySiteSlugRedirect, request);
+  const aidreamshootsUrbanRedirect = aidreamshootsUrbanCanonicalRedirect(request);
+  if (aidreamshootsUrbanRedirect) return finalizeStorefrontResponse(aidreamshootsUrbanRedirect, request);
   const spanishXbyRedirect = spanishXbyCanonicalCollectionRedirect(request);
   if (spanishXbyRedirect) return finalizeStorefrontResponse(spanishXbyRedirect, request);
   const legacyPublicRedirect = mydreamshootsLegacyPublicRedirect(request);
