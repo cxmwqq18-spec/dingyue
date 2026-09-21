@@ -4684,7 +4684,7 @@ function StorefrontImage({
   const previewAttrs = storefrontImagePreviewAttrs(resolvedSrc, resolvedAlt, preview);
   const resolvedClassName = previewableImageClassName(className, preview);
   const responsiveSet = storefrontResponsiveImageSet(resolvedSrc);
-  const intrinsicDimensions = storefrontResponsiveImageDimensions(resolvedSrc);
+  const intrinsicDimensions = storefrontResponsiveImageDimensions(resolvedSrc) ?? (/^\/assets\/sites\/site_aidreamshoots\/generated\/regenerated\//i.test(resolvedSrc) ? { width: 1024, height: 1024 } : undefined);
   const resolvedWidth = width ?? intrinsicDimensions?.width;
   const resolvedHeight = height ?? intrinsicDimensions?.height;
   if (isLocalPublicAsset || !canUseNextImage(resolvedSrc)) {
