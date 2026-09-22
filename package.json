@@ -17,6 +17,7 @@
     "typecheck": "tsc --project tsconfig.typecheck.json --noEmit",
     "generate:storefront-responsive-images": "node scripts/generate-storefront-responsive-image-variants.mjs",
     "smoke:storefront-responsive-images": "node scripts/smoke-storefront-responsive-images.mjs",
+    "smoke:eu-video-topic-layout": "node scripts/smoke-eu-video-topic-layout.mjs",
     "repair:aidreamshoots-xby-seo-media": "node --no-warnings --experimental-strip-types scripts/repair-aidreamshoots-xby-seo-media.mjs",
     "repair:aidreamshoots-xby-seo-media:apply": "node --no-warnings --experimental-strip-types scripts/repair-aidreamshoots-xby-seo-media.mjs --apply",
     "replace:aidreamshoots-public-media-local": "node scripts/replace-aidreamshoots-public-media-local.mjs",
