@@ -16,6 +16,8 @@ const SITE_ID = siteIdArg ? siteIdArg.slice("--site-id=".length) : process.env.S
 const UPDATE_TIMESTAMP = "2026-08-16T00:00:00.000Z";
 const RUN_TIMESTAMP = new Date().toISOString();
 const DB_TRANSACTION_TIMEOUT_MS = Math.max(120_000, Number(process.env.VIDEO_TOPIC_DB_TRANSACTION_TIMEOUT_MS || 300_000));
+const SPANISH_AIDREAMSHOOTS_SITE_ID = "site_mydreamshoots_xby";
+const AIDREAMSHOOTS_REGENERATED_TOPIC_MEDIA_PREFIX = "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/";
 const EMPTY_UNPUBLISHED_PAGE_JSON = {
   pageType: "content",
   version: 1,
@@ -472,6 +474,39 @@ function imageSource(value) {
   return value && typeof value === "object" && typeof value.src === "string" ? value.src : "";
 }
 
+function isAidreamshootsRegeneratedTopicMedia(value) {
+  return typeof value === "string" && value.startsWith(AIDREAMSHOOTS_REGENERATED_TOPIC_MEDIA_PREFIX);
+}
+
+function preserveSpanishAidreamshootsGeneratedMedia(nextValue, previousValue) {
+  if (SITE_ID !== SPANISH_AIDREAMSHOOTS_SITE_ID) return nextValue;
+  if (Array.isArray(nextValue)) {
+    return nextValue.map((item, index) => preserveSpanishAidreamshootsGeneratedMedia(item, previousValue?.[index]));
+  }
+  if (!nextValue || typeof nextValue !== "object" || Array.isArray(nextValue)) return nextValue;
+
+  const next = { ...nextValue };
+  for (const [key, child] of Object.entries(nextValue)) {
+    const previousChild = previousValue && typeof previousValue === "object" ? previousValue[key] : undefined;
+    if (["src", "poster", "imageUrl", "url"].includes(key) && isAidreamshootsRegeneratedTopicMedia(previousChild)) {
+      next[key] = previousChild;
+      for (const metadataKey of ["alt", "width", "height"]) {
+        if (previousValue && Object.prototype.hasOwnProperty.call(previousValue, metadataKey)) {
+          next[metadataKey] = previousValue[metadataKey];
+        }
+      }
+      continue;
+    }
+    next[key] = preserveSpanishAidreamshootsGeneratedMedia(child, previousChild);
+  }
+  return next;
+}
+
+function preserveSpanishAidreamshootsGeneratedThemeGallery(candidateGallery, existingGallery) {
+  if (SITE_ID !== SPANISH_AIDREAMSHOOTS_SITE_ID || !Array.isArray(existingGallery)) return candidateGallery;
+  return existingGallery.some(isAidreamshootsRegeneratedTopicMedia) ? existingGallery : candidateGallery;
+}
+
 function cleanVideoTopicImageSource(src) {
   return typeof src === "string"
     ? src.replace(
@@ -742,7 +777,9 @@ function syncStoredVideoTopicUseCaseImages(pageJson, slug) {
   // replacing user-authored titles, problems, or body copy.
   content.useCases.items = content.useCases.items.map((item, index) => {
     const canonicalImage = canonicalItems[index]?.image;
-    return canonicalImage ? { ...item, image: clone(canonicalImage) } : item;
+    return canonicalImage && !isAidreamshootsRegeneratedTopicMedia(imageSource(item?.image))
+      ? { ...item, image: clone(canonicalImage) }
+      : item;
   });
   if (slug === "meme-video" && content.gallery?.title === "Meme Video Examples") delete content.gallery;
   return next;
@@ -757,6 +794,12 @@ function syncStoredVideoTopicHeroImage(pageJson, slug) {
   const canonicalHero = videoTopicContentSeedForSlug(slug).hero;
   if (!content || typeof content !== "object" || Array.isArray(content) || !canonicalHero?.image) return next;
   const currentHero = content.hero && typeof content.hero === "object" && !Array.isArray(content.hero) ? content.hero : {};
+  if (
+    SITE_ID === SPANISH_AIDREAMSHOOTS_SITE_ID &&
+    [imageSource(currentHero.image), currentHero.video?.poster].some(isAidreamshootsRegeneratedTopicMedia)
+  ) {
+    return next;
+  }
   const previous = targetedHeroFieldManifest[slug] ?? {};
   const nextHero = { ...currentHero };
   if (videoMediaSyncSlugs.has(slug)) {
@@ -879,7 +922,7 @@ function syncPages(state, changes) {
       throw new Error(`missing_target_content:${slug}`);
     }
     const draftJson = refreshContent
-      ? pageJson(pageDefinition)
+      ? preserveSpanishAidreamshootsGeneratedMedia(pageJson(pageDefinition), page.draftJson)
       : isolateVideoTopicImages(
           syncStoredVideoTopicUseCaseImages(
             syncStoredVideoTopicHeroImage(page.draftJson, pageDefinition.slug),
@@ -944,7 +987,12 @@ function syncExistingVideoThemePreviews(state, changes, syncedPages = []) {
       theme,
       {
         imageUrl: heroImage,
-        galleryImages: refreshContent ? videoThemeGalleryImages({ ...page, imageUrl: heroImage }) : targetedVideoThemeGalleryImages({ ...page, imageUrl: heroImage }, theme.galleryImages)
+        galleryImages: refreshContent
+          ? preserveSpanishAidreamshootsGeneratedThemeGallery(
+              videoThemeGalleryImages({ ...page, imageUrl: heroImage }),
+              theme.galleryImages
+            )
+          : targetedVideoThemeGalleryImages({ ...page, imageUrl: heroImage }, theme.galleryImages)
       },
       changes,
       "VideoTheme"
@@ -1070,7 +1118,10 @@ async function updateDatabase(state, categories, syncedPages) {
             heroImage
           );
           const galleryImages = refreshContent
-            ? videoThemeGalleryImages({ ...page, imageUrl: heroImage })
+            ? preserveSpanishAidreamshootsGeneratedThemeGallery(
+                videoThemeGalleryImages({ ...page, imageUrl: heroImage }),
+                existingTheme?.galleryImages
+              )
             : targetedVideoThemeGalleryImages({ ...page, imageUrl: heroImage }, existingTheme?.galleryImages);
           if (existingTheme && (existingTheme.imageUrl !== heroImage || !sameJson(existingTheme.galleryImages, galleryImages))) {
             await tx.videoTheme.update({
