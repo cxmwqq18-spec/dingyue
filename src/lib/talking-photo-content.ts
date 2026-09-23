@@ -9,6 +9,8 @@ export type TalkingPhotoImage = {
 export type TalkingPhotoVideo = {
   src: string;
   poster: string;
+  /** Optional accessible description for the rendered video element. */
+  alt?: string;
   label: string;
   width: number;
   height: number;

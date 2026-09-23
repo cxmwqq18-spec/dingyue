@@ -3462,15 +3462,23 @@ const aidreamshootsLegacyMediaReplacements: Record<string, string> = {
   // The video directory keeps presentation-ready cover overrides in code.
   // Keep those overrides scoped to the Spanish storefront while pointing at
   // the same vendor-generated batch used by its detail pages.
-  "generated/homepage-showcase/posters/first-frame-talking-photo.jpg": aidreamshootsLatestMedia.talkingPhoto,
+  "talking-photo/make-a-photo-talk-without-recording-another-take.mp4": "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo.mp4",
+  "cinematic-video/create-a-more-cinematic-video-without-a-full-film-crew.mp4": "/assets/sites/site_aidreamshoots/visuals/cinematic-video/cinematic-video.mp4",
+  "music-video/ai-music-video-generator-for-artist-visuals-and-performance-concepts.mp4": "/assets/sites/site_aidreamshoots/visuals/music-video/music-video.mp4",
+  "tiktok-video/turn-your-photos-and-ideas-into-tiktok-first-videos.mp4": "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video.mp4",
+  "product-video/feature-led-product-showcase.mp4": "/assets/sites/site_aidreamshoots/visuals/product-video/product-video.mp4",
+  "promo-video/promo-video-launch-teaser.mp4": "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video.mp4",
+  "product-ad-video/build-the-ad-around-one-buyer-decision.mp4": "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video.mp4",
+  "instagram-reels/turn-photos-and-ideas-into-reels-that-fit-your-feed.mp4": "/assets/sites/site_aidreamshoots/visuals/instagram-reels/instagram-reels.mp4",
+  "generated/homepage-showcase/posters/first-frame-talking-photo.jpg": "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-cinematic-video.jpg": "/assets/sites/site_aidreamshoots/visuals/cinematic-video/cinematic-video-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-music-video.jpg": "/assets/sites/site_aidreamshoots/visuals/music-video/music-video-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-tiktok-video.jpg": "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-instagram-reels.jpg": "/assets/sites/site_aidreamshoots/visuals/instagram-reels/instagram-reels-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-product-video.jpg": "/assets/sites/site_aidreamshoots/visuals/product-video/product-video-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-product-ad-video.jpg": "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-promo-video.jpg": "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video-poster.jpg",
   "generated/homepage-showcase/posters/prompt-directed-motion.webp": aidreamshootsLatestMedia.talkingPhoto,
-  "generated/homepage-showcase/posters/first-frame-cinematic-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/cinematic-video/cinematic-video-01-create-a-more-cinematic-video-without-a-full-film-cr-84e9edc816.webp",
-  "generated/homepage-showcase/posters/first-frame-tiktok-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/tiktok-video/tiktok-video-01-turn-your-photos-and-ideas-into-tiktok-first-videos-7a108dbe77.webp",
-  "generated/homepage-showcase/posters/first-frame-instagram-reels.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/instagram-reels/instagram-reels-01-turn-photos-and-ideas-into-reels-that-fit-your-feed-0f724d6c63.webp",
-  "generated/homepage-showcase/posters/first-frame-product-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/product-video/product-video-01-feature-led-product-showcase-3765370633.webp",
-  "generated/homepage-showcase/posters/first-frame-product-ad-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/product-ad-video/product-ad-video-01-build-the-ad-around-one-buyer-decision-90e0edcd71.webp",
-  "generated/homepage-showcase/posters/first-frame-promo-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/promo-video/promo-video-01-promo-video-launch-teaser-73271ed69f.webp",
-  "generated/homepage-showcase/posters/first-frame-music-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/music-video/music-video-01-ai-music-video-generator-for-artist-visuals-and-perf-c12d6d69b3.webp",
   "generated/video-topic-clean/social-media-video/social-media-video-cross-platform-creator.webp": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/social-media-video/social-media-video-01-social-media-video-01-df13318f8b.webp",
   "generated/video-topic-clean/story-video/story-video-story-hero-library-restoration-v2.webp": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/story-video/story-video-01-story-video-story-hero-library-restoration-v2-b2cee36692.webp",
   "fashion-video/fashion-video-duo-frame.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/fashion-video/fashion-video-01-hero-fashion-video-editorial-frame-ade2d87dc8.webp",
@@ -3973,38 +3981,46 @@ const AIDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES: Record<string, string> = {
   "motion-generator": "Convierte tus fotos en vídeos con movimiento generado por IA."
 };
 
-const AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA: Record<string, { poster: string; video: string }> = {
+const AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA: Record<string, { poster: string; video: string; alt: string }> = {
   "talking-photo": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-talking-photo.jpg",
-    video: "/assets/dreamshoot/talking-photo/make-a-photo-talk-without-recording-another-take.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo.mp4",
+    alt: "Mujer mayor hablando a la cámara en un vídeo de fotografía parlante."
   },
   "cinematic-video": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-cinematic-video.jpg",
-    video: "/assets/dreamshoot/cinematic-video/create-a-more-cinematic-video-without-a-full-film-crew.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/cinematic-video/cinematic-video-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/cinematic-video/cinematic-video.mp4",
+    alt: "Persona adulta en una escena cinematográfica con iluminación dramática y composición cuidada."
   },
   "music-video": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-music-video.jpg",
-    video: "/assets/dreamshoot/music-video/ai-music-video-generator-for-artist-visuals-and-performance-concepts.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/music-video/music-video-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/music-video/music-video.mp4",
+    alt: "Artista adulta preparando una propuesta visual para una canción en un estudio de producción."
   },
   "tiktok-video": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-tiktok-video.jpg",
-    video: "/assets/dreamshoot/tiktok-video/turn-your-photos-and-ideas-into-tiktok-first-videos.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video.mp4",
+    alt: "Creadora adulta preparando un vídeo corto para TikTok con cámara y accesorios coloridos."
   },
   "instagram-reels": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-instagram-reels.jpg",
-    video: "/assets/dreamshoot/instagram-reels/turn-photos-and-ideas-into-reels-that-fit-your-feed.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/instagram-reels/instagram-reels-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/instagram-reels/instagram-reels.mp4",
+    alt: "Creadora adulta preparando un Reel en un estudio casero con cámara y accesorios de grabación."
   },
   "product-video": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-product-video.jpg",
-    video: "/assets/dreamshoot/product-video/feature-led-product-showcase.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/product-video/product-video-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/product-video/product-video.mp4",
+    alt: "Producto de consumo sin marca presentado en un estudio comercial con iluminación limpia y precisa."
   },
   "product-ad-video": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-product-ad-video.jpg",
-    video: "/assets/dreamshoot/product-ad-video/build-the-ad-around-one-buyer-decision.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video.mp4",
+    alt: "Presentadora adulta mostrando un producto sin marca en una escena centrada en una decisión de compra."
   },
   "promo-video": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-promo-video.jpg",
-    video: "/assets/dreamshoot/promo-video/promo-video-launch-teaser.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video.mp4",
+    alt: "Persona adulta presentando un adelanto de lanzamiento con iluminación promocional y ambiente dinámico."
   }
 };
 
@@ -15386,7 +15402,7 @@ function SectionView({
               category: "Vídeo con IA",
               sortOrder: index + 1,
               imageUrl: media.poster,
-              imageAlt: `${title} — ejemplo de vídeo creado con IA`,
+              imageAlt: media.alt,
               videoUrl: media.video,
               status: "published" as const,
               indexable: true as const,
