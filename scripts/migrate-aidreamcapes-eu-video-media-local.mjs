@@ -90,6 +90,10 @@ function topicUrl(topic) {
   return `${ASSET_ROOT}/${topic.slug}/${topic.slug}.mp4`;
 }
 
+function topicPosterUrl(topic) {
+  return `${ASSET_ROOT}/${topic.slug}/${topic.slug}-poster.jpg`;
+}
+
 function topicStorageKey(topic) {
   return topicUrl(topic).slice(1);
 }
@@ -105,16 +109,38 @@ function destinationPathFor(topic) {
   return filePath;
 }
 
+function destinationPosterPathFor(topic) {
+  const filePath = path.resolve("public", topicPosterUrl(topic).slice(1));
+  const publicRoot = path.resolve("public");
+  assert(filePath.startsWith(`${publicRoot}${path.sep}`), `${topic.slug}: poster path escaped public root`);
+  return filePath;
+}
+
 function isVideoObject(value, oldUrl) {
   return Boolean(value && typeof value === "object" && !Array.isArray(value) && value.src === oldUrl);
 }
 
-function rewriteVideoJson(value, oldUrl, nextUrl, alt) {
-  if (Array.isArray(value)) return value.map((item) => rewriteVideoJson(item, oldUrl, nextUrl, alt));
-  if (!value || typeof value !== "object") return value === oldUrl ? nextUrl : value;
-  const next = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, rewriteVideoJson(item, oldUrl, nextUrl, alt)]));
-  if (isVideoObject(value, oldUrl)) {
-    next.src = nextUrl;
+function isImageObject(value, oldUrl) {
+  return Boolean(value && typeof value === "object" && !Array.isArray(value) && value.src === oldUrl);
+}
+
+function rewriteVideoJson(value, oldVideoUrl, nextVideoUrl, oldImageUrl, nextPosterUrl, alt) {
+  if (Array.isArray(value)) return value.map((item) => rewriteVideoJson(item, oldVideoUrl, nextVideoUrl, oldImageUrl, nextPosterUrl, alt));
+  if (!value || typeof value !== "object") {
+    if (value === oldVideoUrl) return nextVideoUrl;
+    if (value === oldImageUrl) return nextPosterUrl;
+    return value;
+  }
+  const next = Object.fromEntries(Object.entries(value).map(([key, item]) => [key, rewriteVideoJson(item, oldVideoUrl, nextVideoUrl, oldImageUrl, nextPosterUrl, alt)]));
+  if (isVideoObject(value, oldVideoUrl)) {
+    next.src = nextVideoUrl;
+    next.alt = alt;
+    next.width = 1344;
+    next.height = 768;
+    next.fit = "contain";
+    next.poster = nextPosterUrl;
+  } else if (isImageObject(value, oldImageUrl)) {
+    next.src = nextPosterUrl;
     next.alt = alt;
     next.width = 1344;
     next.height = 768;
@@ -135,11 +161,15 @@ function changed(before, after) {
 function validateSourceFiles(sourceDir) {
   return topics.map((topic) => {
     const sourcePath = sourcePathFor(topic, sourceDir);
+    const posterPath = destinationPosterPathFor(topic);
     assert(fs.existsSync(sourcePath), `${topic.slug}: source video is missing: ${sourcePath}`);
     const stat = fs.statSync(sourcePath);
     assert(stat.isFile(), `${topic.slug}: source path is not a file: ${sourcePath}`);
     assert(stat.size > 1024, `${topic.slug}: source video is unexpectedly small`);
-    return { topic, sourcePath, bytes: stat.size, sha256: sha256(fs.readFileSync(sourcePath)) };
+    assert(fs.existsSync(posterPath), `${topic.slug}: poster image is missing: ${posterPath}`);
+    const posterStat = fs.statSync(posterPath);
+    assert(posterStat.isFile() && posterStat.size > 1024, `${topic.slug}: poster image is unexpectedly small`);
+    return { topic, sourcePath, posterPath, bytes: stat.size, posterBytes: posterStat.size, sha256: sha256(fs.readFileSync(sourcePath)), posterSha256: sha256(fs.readFileSync(posterPath)) };
   });
 }
 
@@ -170,10 +200,14 @@ async function main() {
   const sourceFiles = APPLY_PRODUCTION
     ? topics.map((topic) => {
         const sourcePath = destinationPathFor(topic);
+        const posterPath = destinationPosterPathFor(topic);
         assert(fs.existsSync(sourcePath), `${topic.slug}: production asset is missing from the release: ${sourcePath}`);
         const stat = fs.statSync(sourcePath);
         assert(stat.isFile() && stat.size > 1024, `${topic.slug}: production asset is unexpectedly small`);
-        return { topic, sourcePath, bytes: stat.size, sha256: sha256(fs.readFileSync(sourcePath)) };
+        assert(fs.existsSync(posterPath), `${topic.slug}: production poster is missing from the release: ${posterPath}`);
+        const posterStat = fs.statSync(posterPath);
+        assert(posterStat.isFile() && posterStat.size > 1024, `${topic.slug}: production poster is unexpectedly small`);
+        return { topic, sourcePath, posterPath, bytes: stat.size, posterBytes: posterStat.size, sha256: sha256(fs.readFileSync(sourcePath)), posterSha256: sha256(fs.readFileSync(posterPath)) };
       })
     : validateSourceFiles(sourceDir);
 
@@ -195,7 +229,7 @@ async function main() {
       prisma.site.findUnique({ where: { id: SITE_ID }, select: { id: true, slug: true, primaryDomain: true } }),
       prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: pageSlugs } }, select: { id: true, siteId: true, slug: true, contentJson: true } }),
       prisma.themePage.findMany({ where: { siteId: SITE_ID, slug: { in: pageSlugs } }, select: { id: true, siteId: true, slug: true, draftJson: true, publishedJson: true } }),
-      prisma.videoTheme.findMany({ where: { siteId: SITE_ID, slug: { in: slugs } }, select: { id: true, siteId: true, slug: true, galleryImages: true } }),
+      prisma.videoTheme.findMany({ where: { siteId: SITE_ID, slug: { in: slugs } }, select: { id: true, siteId: true, slug: true, imageUrl: true, galleryImages: true } }),
       prisma.mediaAsset.findMany({ where: { siteId: SITE_ID, mimeType: "video/mp4" }, select: { id: true, siteId: true, label: true, storageKey: true, mimeType: true, usageType: true, sourceType: true, previewUrl: true, originUrl: true, altText: true } }),
     ]);
     assert.deepEqual(site, { id: SITE_ID, slug: SITE_SLUG, primaryDomain: "aidreamcapes.eu" }, "French storefront identity check failed.");
@@ -208,24 +242,29 @@ async function main() {
     const mediaByStorageKey = new Map(mediaAssets.map((asset) => [asset.storageKey, asset]));
     const updates = [];
 
-    for (const { topic, sourcePath, bytes, sha256: sourceHash } of sourceFiles) {
+    for (const { topic, sourcePath, posterPath, bytes, posterBytes, sha256: sourceHash, posterSha256 } of sourceFiles) {
       const pageSlug = `/ai-video-generation/${topic.slug}`;
-      const oldUrl = liveBySlug.get(pageSlug)?.contentJson?.sections
-        ? Object.values(liveBySlug.get(pageSlug).contentJson.sections).find((section) => ["ai_video_topic_landing", "talking_photo_landing"].includes(section?.type))?.settings?.content?.hero?.video?.src
-        : undefined;
+      const liveContent = dedicatedContentJson(liveBySlug.get(pageSlug)?.contentJson);
+      const oldUrl = liveContent?.hero?.video?.src;
+      const oldImageUrl = liveContent?.hero?.image?.src;
       assert(typeof oldUrl === "string" && oldUrl.endsWith(".mp4"), `${topic.slug}: live hero video URL is missing`);
+      assert(typeof oldImageUrl === "string" && /\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i.test(oldImageUrl), `${topic.slug}: live hero image URL is missing`);
       const nextUrl = topicUrl(topic);
+      const nextPosterUrl = topicPosterUrl(topic);
       const live = liveBySlug.get(pageSlug);
       const theme = themeBySlug.get(pageSlug);
       const videoTheme = videoThemeBySlug.get(topic.slug);
       assert(live && videoTheme, `${topic.slug}: required database rows are missing`);
 
-      const nextLiveJson = rewriteVideoJson(live.contentJson, oldUrl, nextUrl, topic.alt);
-      const nextDraftJson = theme ? rewriteVideoJson(theme.draftJson, oldUrl, nextUrl, topic.alt) : undefined;
-      const nextPublishedJson = theme ? rewriteVideoJson(theme.publishedJson, oldUrl, nextUrl, topic.alt) : undefined;
+      const nextLiveJson = rewriteVideoJson(live.contentJson, oldUrl, nextUrl, oldImageUrl, nextPosterUrl, topic.alt);
+      const nextDraftJson = theme ? rewriteVideoJson(theme.draftJson, oldUrl, nextUrl, oldImageUrl, nextPosterUrl, topic.alt) : undefined;
+      const nextPublishedJson = theme ? rewriteVideoJson(theme.publishedJson, oldUrl, nextUrl, oldImageUrl, nextPosterUrl, topic.alt) : undefined;
       const nextGalleryImages = replaceVideoThemeGallery(videoTheme.galleryImages, oldUrl, nextUrl);
+      const nextVideoThemeImageUrl = nextPosterUrl;
       assert(JSON.stringify(nextLiveJson).includes(nextUrl), `${topic.slug}: live page did not receive new video URL`);
+      assert(JSON.stringify(nextLiveJson).includes(nextPosterUrl), `${topic.slug}: live page did not receive new poster URL`);
       assert(JSON.stringify(nextGalleryImages).includes(nextUrl), `${topic.slug}: homepage video theme did not receive new video URL`);
+      assert(nextVideoThemeImageUrl === nextPosterUrl, `${topic.slug}: homepage video theme did not receive new poster URL`);
 
       const media = mediaByStorageKey.get(oldUrl.replace(/^\//, ""))
         || mediaAssets.find((asset) => asset.previewUrl === oldUrl || asset.originUrl === oldUrl);
@@ -238,7 +277,7 @@ async function main() {
         originUrl: nextUrl,
         altText: topic.alt,
       };
-      updates.push({ topic, sourcePath, sourceBytes: bytes, sourceHash, oldUrl, nextUrl, live, theme, videoTheme, media, nextLiveJson, nextDraftJson, nextPublishedJson, nextGalleryImages, nextMedia });
+      updates.push({ topic, sourcePath, posterPath, sourceBytes: bytes, posterBytes, sourceHash, posterSha256, oldUrl, oldImageUrl, nextUrl, nextPosterUrl, live, theme, videoTheme, nextLiveJson, nextDraftJson, nextPublishedJson, nextGalleryImages, nextVideoThemeImageUrl, media, nextMedia });
     }
 
     const summary = {
@@ -246,13 +285,17 @@ async function main() {
       mode: APPLY_PRODUCTION ? "apply-production" : APPLY_LOCAL ? "apply-local" : "dry-run",
       target: { siteId: SITE_ID, siteSlug: SITE_SLUG, domain: site.primaryDomain },
       sourceDir,
-      topics: updates.map(({ topic, sourceBytes, sourceHash, oldUrl, nextUrl, media, nextMedia }) => ({
+      topics: updates.map(({ topic, sourceBytes, posterBytes, sourceHash, posterSha256, oldUrl, oldImageUrl, nextUrl, nextPosterUrl, media, nextMedia }) => ({
         slug: topic.slug,
         source: topic.source,
         sourceBytes,
         sourceSha256: sourceHash,
+        posterBytes,
+        posterSha256,
         oldUrl,
+        oldImageUrl,
         newUrl: nextUrl,
+        newPosterUrl: nextPosterUrl,
         alt: topic.alt,
         mediaAssetId: media.id,
         oldStorageKey: media.storageKey,
@@ -261,7 +304,7 @@ async function main() {
       changedLivePages: updates.filter(({ live, nextLiveJson }) => changed(live.contentJson, nextLiveJson)).length,
       changedThemeDrafts: updates.filter(({ theme, nextDraftJson }) => theme && changed(theme.draftJson, nextDraftJson)).length,
       changedThemePublished: updates.filter(({ theme, nextPublishedJson }) => theme && changed(theme.publishedJson, nextPublishedJson)).length,
-      changedVideoThemes: updates.filter(({ videoTheme, nextGalleryImages }) => changed(videoTheme.galleryImages, nextGalleryImages)).length,
+      changedVideoThemes: updates.filter(({ videoTheme, nextGalleryImages, nextVideoThemeImageUrl }) => changed({ imageUrl: videoTheme.imageUrl, galleryImages: videoTheme.galleryImages }, { imageUrl: nextVideoThemeImageUrl, galleryImages: nextGalleryImages })).length,
       changedMediaAssets: updates.filter(({ media, nextMedia }) => changed(media, nextMedia)).length,
       copiedAssets: 0,
     };
@@ -288,10 +331,14 @@ async function main() {
         const destinationPath = destinationPathFor(item.topic);
         item.copied = copyVideo(item.sourcePath, destinationPath);
         assert(fs.existsSync(destinationPath), `${item.topic.slug}: destination video is missing after copy`);
+        assert(fs.existsSync(item.posterPath), `${item.topic.slug}: destination poster is missing after copy`);
         summary.copiedAssets += item.copied ? 1 : 0;
       }
     } else {
-      for (const item of updates) assert(fs.existsSync(destinationPathFor(item.topic)), `${item.topic.slug}: production asset is missing from the release`);
+      for (const item of updates) {
+        assert(fs.existsSync(destinationPathFor(item.topic)), `${item.topic.slug}: production asset is missing from the release`);
+        assert(fs.existsSync(item.posterPath), `${item.topic.slug}: production poster is missing from the release`);
+      }
     }
 
     await prisma.$transaction(async (tx) => {
@@ -300,7 +347,7 @@ async function main() {
         if (item.theme && changed(item.theme.draftJson, item.nextDraftJson) || item.theme && changed(item.theme.publishedJson, item.nextPublishedJson)) {
           await tx.themePage.update({ where: { id: item.theme.id }, data: { draftJson: item.nextDraftJson, publishedJson: item.nextPublishedJson, updatedAt: new Date() } });
         }
-        await tx.videoTheme.update({ where: { id: item.videoTheme.id }, data: { galleryImages: item.nextGalleryImages, updatedAt: new Date() } });
+        await tx.videoTheme.update({ where: { id: item.videoTheme.id }, data: { imageUrl: item.nextVideoThemeImageUrl, galleryImages: item.nextGalleryImages, updatedAt: new Date() } });
         await tx.mediaAsset.update({ where: { id: item.media.id }, data: { label: item.nextMedia.label, storageKey: item.nextMedia.storageKey, previewUrl: item.nextMedia.previewUrl, originUrl: item.nextMedia.originUrl, altText: item.nextMedia.altText, updatedAt: new Date() } });
       }
     }, { maxWait: 20_000, timeout: 60_000 });

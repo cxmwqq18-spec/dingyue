@@ -16,6 +16,7 @@ const topics = [
 ];
 
 const expectedAsset = (slug) => `/assets/sites/site_aidreamcapes_eu/visuals/${slug}/${slug}.mp4`;
+const expectedPoster = (slug) => `/assets/sites/site_aidreamcapes_eu/visuals/${slug}/${slug}-poster.jpg`;
 const diagnostics = { consoleErrors: [], pageErrors: [], requestFailures: [], badResponses: [] };
 const browser = await chromium.launch({ headless: true });
 
@@ -67,6 +68,7 @@ try {
     await page.waitForTimeout(800);
     const videos = await page.locator("video").evaluateAll((elements) => elements.map((video) => ({
       src: video.currentSrc || video.getAttribute("src") || "",
+      poster: video.getAttribute("poster") || "",
       ariaLabel: video.getAttribute("aria-label") || "",
       title: video.getAttribute("title") || "",
       alt: video.getAttribute("alt") || "",
@@ -74,12 +76,14 @@ try {
     const normalized = videos.map((video) => ({ ...video, src: video.src.split("?")[0] }));
     const showcaseCards = await page.locator('[data-showcase-card-kind="video"] [data-dreamshoot-preview-src]').evaluateAll((elements) => elements.map((element) => ({
       src: (element.getAttribute("data-dreamshoot-preview-src") || "").split("?")[0],
+      poster: (element.getAttribute("data-dreamshoot-preview-poster") || "").split("?")[0],
       label: element.getAttribute("aria-label") || element.getAttribute("data-dreamshoot-preview-title") || "",
     })));
     assert(normalized.length > 0 || showcaseCards.length > 0, `${path}: no video element or showcase video card rendered`);
     if (slug) {
       const matches = [...normalized, ...showcaseCards].filter((video) => video.src.includes(expectedAsset(slug)));
       assert(matches.length > 0, `${path}: expected video asset missing`);
+      assert(matches.some((video) => video.poster.includes(expectedPoster(slug))), `${path}: expected video poster missing`);
       assert(
         matches.some((video) => video.title === alt || video.alt === alt || video.ariaLabel?.includes(alt) || video.label === alt || video.label?.includes(alt)),
         `${path}: expected French video label missing`,
@@ -91,6 +95,7 @@ try {
           matches.length > 0,
           `homepage: ${topic} video missing; rendered=${JSON.stringify({ videos: normalized, showcaseCards })}`,
         );
+        assert(matches.some((video) => video.poster.includes(expectedPoster(topic))), `homepage: ${topic} video poster missing`);
         assert(matches.some((video) => video.title === topicAlt || video.alt === topicAlt || video.ariaLabel?.includes(topicAlt) || video.label === topicAlt || video.label?.includes(topicAlt)), `${path}: ${topic} French video label missing`);
       }
     }
