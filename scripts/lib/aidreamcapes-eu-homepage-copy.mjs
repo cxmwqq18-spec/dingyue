@@ -4,7 +4,7 @@ const HOME_SEO = {
   keywords: "générateur photo IA, générateur vidéo IA, portraits IA, séries photo, galerie privée, AIdreamcapes"
 };
 
-const AIDREAMCAPES_EU_HOMEPAGE_VIDEO_SLUGS = [
+export const AIDREAMCAPES_EU_HOMEPAGE_VIDEO_SLUGS = [
   "talking-photo",
   "cinematic-video",
   "music-video",
@@ -14,7 +14,7 @@ const AIDREAMCAPES_EU_HOMEPAGE_VIDEO_SLUGS = [
   "product-ad-video",
   "promo-video"
 ];
-const AIDREAMCAPES_EU_HOMEPAGE_IMAGE_SLUGS = [
+export const AIDREAMCAPES_EU_HOMEPAGE_IMAGE_SLUGS = [
   "engagement",
   "wedding-photo",
   "valentine-photos",
@@ -23,6 +23,27 @@ const AIDREAMCAPES_EU_HOMEPAGE_IMAGE_SLUGS = [
   "thanksgiving-group-photos",
   "profile-cards",
   "professional-headshots"
+];
+
+export const AIDREAMCAPES_EU_HOMEPAGE_SECTION_ORDER = [
+  "hero_1",
+  "generation_showcase_1",
+  "tutorial_video_1",
+  "proof_1",
+  "faq_1",
+  "conversion_1",
+  "brand_strip_1"
+];
+
+export const AIDREAMCAPES_EU_HOMEPAGE_REVIEW_BLOCK_IDS = [
+  "review_ava",
+  "review_lucas",
+  "review_mia",
+  "review_noah",
+  "review_chloe",
+  "review_eli",
+  "review_jordan",
+  "review_riley"
 ];
 
 const AIDREAMCAPES_EU_EXCLUDED_FOOTER_HREFS = new Set(["/workflow", "/pricing"]);
@@ -65,6 +86,7 @@ const HOME_SECTION_COPY = {
     supportingCopy: "Choisissez un flux vidéo IA lorsque vous souhaitez transformer une image ou une série approuvée en courte séquence, puis vérifiez le résultat avant de le partager."
   },
   proof_1: {
+    mode: "reviews",
     title: "Ce que disent nos clients",
     subtitle: "Des créations personnelles, simples à préparer et à retrouver.",
     summaryBody: "AIdreamcapes est un studio photo et vidéo IA privé qui aide les créateurs, les familles et les petites équipes à explorer de nouvelles images à partir de photos qu’ils sont autorisés à utiliser.",
@@ -160,6 +182,99 @@ const HOME_BLOCK_COPY = {
   faq_privacy: { body: "La confidentialité dépend aussi de la manière dont vous partagez ou téléchargez une création. Utilisez la galerie privée pour vos vérifications, n’importez que des éléments que vous contrôlez et supprimez les contenus lorsque vous n’en avez plus besoin si les outils du compte le permettent.", answer: "Les importations, demandes de génération, albums, commandes et mouvements de crédits sont associés à votre compte connecté et ne sont pas publics par défaut.", question: "Mes photos et données personnelles sont-elles privées ?", bulletList: "Importer uniquement des contenus que vous êtes autorisé à utiliser|Protéger l’accès au compte|Vérifier les options de partage et de téléchargement|Lire la politique de confidentialité pour la conservation et vos droits", linkList: "Lire la politique de confidentialité::/privacy|Consulter les règles de contenu::/content" },
   faq_refunds: { body: "Les crédits utilisés pour un résultat livré ne sont généralement pas remboursables. Une demande échouée ou interrompue peut libérer sa réservation selon son état, tandis que les questions d’abonnement ou de paiement doivent être examinées au regard des conditions applicables.", answer: "L’éligibilité à un remboursement dépend de la politique en vigueur, des conditions de paiement et de l’état de la commande ou de la demande de génération concernée.", question: "Quelle est la politique de remboursement ?", bulletList: "Conserver la référence de la commande ou de la demande|Vérifier si la génération a réussi ou échoué|Contacter rapidement l’assistance en cas de débit ou de livraison incorrecte", linkList: "Lire la politique de remboursement::/refunds|Consulter les conditions d’achat::/terms" }
 };
+
+export const AIDREAMCAPES_EU_HOMEPAGE_REVIEW_BLOCKS = {
+  review_ava: {
+    name: "Ava M.",
+    role: "Série de supporters",
+    quote: "Je ne pensais pas que les scènes dans le stade seraient aussi convaincantes. La photo de football est devenue ma préférée.",
+    rating: "5",
+    location: "Série de fans",
+    avatarUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/review-ava-headshot.webp?v=20260919eureviewheadshot1",
+    resultImageUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/vendor-20260919/review-ava-theme.webp?v=20260919eureviewvendor1"
+  },
+  review_lucas: {
+    name: "Lucas R.",
+    role: "Série professionnelle",
+    quote: "J’avais besoin rapidement d’une nouvelle photo de profil. J’ai obtenu plusieurs portraits que je peux vraiment utiliser sur mon profil professionnel et mon site.",
+    rating: "5",
+    location: "Images de profil",
+    avatarUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/review-lucas-headshot.webp?v=20260919eureviewheadshot1",
+    resultImageUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/vendor-20260919/review-lucas-theme.webp?v=20260919eureviewvendor1"
+  },
+  review_mia: {
+    name: "Mia C.",
+    role: "Album de Noël",
+    quote: "Nous avons créé nos photos de Noël à partir de quelques photos prises avec nos téléphones. Le résultat a dépassé nos attentes et nous en avons choisi une pour notre carte.",
+    rating: "5",
+    location: "Cartes de fête",
+    avatarUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/review-mia-headshot.webp?v=20260919eureviewheadshot1",
+    resultImageUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/vendor-20260919/review-mia-theme.webp?v=20260919eureviewvendor1"
+  },
+  review_noah: {
+    name: "Noé P.",
+    role: "Parcours avec crédits",
+    quote: "C’est très simple. J’ai importé quelques photos, choisi le style qui me plaisait et tout était disponible dès que la création était prête.",
+    rating: "5",
+    location: "Galerie privée",
+    avatarUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/review-noah-headshot.webp?v=20260919eureviewheadshot1",
+    resultImageUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/vendor-20260919/review-noah-theme.webp?v=20260919eureviewvendor1"
+  },
+  review_chloe: {
+    name: "Chloé S.",
+    role: "Contenu de créateur",
+    quote: "Je voulais renouveler mes contenus sans refaire toujours la même séance. Certaines images étaient assez réussies pour être publiées dans la semaine.",
+    rating: "5",
+    location: "Scènes de créateur",
+    avatarUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/review-chloe-headshot.webp?v=20260919eureviewheadshot1",
+    resultImageUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/vendor-20260919/review-chloe-theme.webp?v=20260919eureviewvendor1"
+  },
+  review_eli: {
+    name: "Eli T.",
+    role: "Crédits transparents",
+    quote: "Les portraits professionnels m’ont le plus surpris. Ils me ressemblent, avec un rendu beaucoup plus soigné que mes selfies précédents.",
+    rating: "5",
+    location: "Portraits et cartes",
+    avatarUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/review-eli-headshot.webp?v=20260919eureviewheadshot1",
+    resultImageUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/vendor-20260919/review-eli-theme.webp?v=20260919eureviewvendor1"
+  },
+  review_jordan: {
+    name: "Jordan K.",
+    role: "Portraits d’équipe",
+    quote: "Nous avions besoin de photos cohérentes pour notre page d’équipe sans organiser une journée complète en studio. Le résultat a demandé beaucoup moins d’efforts.",
+    rating: "5",
+    location: "Mise à jour de profil",
+    avatarUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/review-jordan-headshot.webp?v=20260919eureviewheadshot1",
+    resultImageUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/vendor-20260919/review-jordan-theme.webp?v=20260919eureviewvendor1"
+  },
+  review_riley: {
+    name: "Riley W.",
+    role: "Aperçus animés",
+    quote: "Je l’ai d’abord essayé pour mes contenus Instagram et j’ai finalement conservé beaucoup plus d’images que prévu. C’est agréable d’avoir de nouvelles idées à publier.",
+    rating: "5",
+    location: "Contenu social",
+    avatarUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/review-riley-headshot.webp?v=20260919eureviewheadshot1",
+    resultImageUrl: "/assets/sites/site_aidreamcapes_eu/generated/public-media/reviews/vendor-20260919/review-riley-theme.webp?v=20260919eureviewvendor1"
+  }
+};
+
+const HOMEPAGE_FAQ_BLOCK_IDS = Object.keys(HOME_BLOCK_COPY).filter((id) => id.startsWith("faq_"));
+const HOMEPAGE_FAQ_IMAGE_BLOCK_IDS = [
+  "faq_about",
+  "faq_uploads",
+  "faq_couples",
+  "faq_photo_generator",
+  "faq_video",
+  "faq_styling"
+];
+export const DEFAULT_EU_HOMEPAGE_FAQ_IMAGES = [
+  "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/christmas-photo/cover-seasonal-be76f6d3ee.webp?v=aidreamcapes-eu-no-crop-v1",
+  "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/christmas-photo/gallery-01-seasonal-0444fe6334.webp?v=aidreamcapes-eu-no-crop-v1",
+  "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/christmas-photo/gallery-02-seasonal-a632f6e02c.webp?v=aidreamcapes-eu-no-crop-v1",
+  "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/thanksgiving-photo/cover-seasonal-2b3549dc37.webp?v=aidreamcapes-eu-no-crop-v1",
+  "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/halloween-photo/cover-seasonal-fd5c22148e.webp?v=aidreamcapes-eu-no-crop-v1",
+  "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/holiday/cover-holiday-cover-winter-window.webp?v=aidreamcapes-eu-no-crop-v1"
+];
 
 const HEADER_NAV_COPY = {
   global_header_1: "Création photo IA",
@@ -257,6 +372,70 @@ function setValues(target, values) {
   Object.assign(target, values);
 }
 
+function normalizeImageList(value) {
+  const values = Array.isArray(value) ? value : typeof value === "string" ? value.split("|") : [];
+  return [...new Set(values.filter((item) => typeof item === "string" && item.trim()).map((item) => item.trim()))];
+}
+
+function restoreHomepageReviewContent(proofSection) {
+  if (!proofSection || typeof proofSection !== "object") return;
+  const currentBlocks = Array.isArray(proofSection.blocks) ? proofSection.blocks : [];
+  const currentById = new Map(currentBlocks.filter((block) => block?.id).map((block) => [block.id, block]));
+  const restoredBlocks = AIDREAMCAPES_EU_HOMEPAGE_REVIEW_BLOCK_IDS.map((blockId) => {
+    const existing = currentById.get(blockId);
+    const block = existing
+      ? { ...existing, type: "testimonial", settings: { ...(existing.settings ?? {}) } }
+      : { id: blockId, type: "testimonial", settings: {} };
+    setValues(block.settings, AIDREAMCAPES_EU_HOMEPAGE_REVIEW_BLOCKS[blockId]);
+    return block;
+  });
+  const canonicalReviewIds = new Set(AIDREAMCAPES_EU_HOMEPAGE_REVIEW_BLOCK_IDS);
+  const preservedBlocks = currentBlocks.filter((block) => {
+    const id = String(block?.id ?? "");
+    return !canonicalReviewIds.has(id) && !/^review_/i.test(id);
+  });
+  proofSection.type = "testimonial_wall";
+  proofSection.blocks = [...restoredBlocks, ...preservedBlocks];
+  proofSection.settings = { ...(proofSection.settings ?? {}) };
+}
+
+function restoreHomepageFaqContent(faqSection, options = {}) {
+  if (!faqSection || typeof faqSection !== "object") return;
+  const currentBlocks = Array.isArray(faqSection.blocks) ? faqSection.blocks : [];
+  const currentById = new Map(currentBlocks.filter((block) => block?.id).map((block) => [block.id, block]));
+  const currentImageList = normalizeImageList(faqSection.settings?.imageList);
+  const optionImageList = normalizeImageList(options.faqImages);
+  const noCropOptionImageList = optionImageList.filter((image) => image.includes("/restored/originals/aidreamcapes-eu-no-crop-v1/"));
+  const noCropCurrentImageList = currentImageList.filter((image) => image.includes("/restored/originals/aidreamcapes-eu-no-crop-v1/"));
+  const imageList = (noCropOptionImageList.length >= HOMEPAGE_FAQ_IMAGE_BLOCK_IDS.length
+    ? noCropOptionImageList
+    : noCropCurrentImageList.length >= HOMEPAGE_FAQ_IMAGE_BLOCK_IDS.length
+      ? noCropCurrentImageList
+      : DEFAULT_EU_HOMEPAGE_FAQ_IMAGES).slice(0, 12);
+
+  let imageIndex = 0;
+  const restoredBlocks = HOMEPAGE_FAQ_BLOCK_IDS.map((blockId) => {
+    const existing = currentById.get(blockId);
+    const block = existing
+      ? { ...existing, settings: { ...(existing.settings ?? {}) } }
+      : { id: blockId, settings: {} };
+    setValues(block.settings, HOME_BLOCK_COPY[blockId]);
+    if (HOMEPAGE_FAQ_IMAGE_BLOCK_IDS.includes(blockId)) {
+      block.settings.imageUrl = imageList[imageIndex % imageList.length];
+      imageIndex += 1;
+    }
+    return block;
+  });
+  const preservedBlocks = currentBlocks.filter((block) => {
+    const id = String(block?.id ?? "");
+    return !HOMEPAGE_FAQ_BLOCK_IDS.includes(id) && !/^home_faq_\d+$/.test(id);
+  });
+  faqSection.blocks = [...restoredBlocks, ...preservedBlocks];
+  faqSection.settings = { ...(faqSection.settings ?? {}) };
+  faqSection.settings.imageUrl = imageList[0];
+  faqSection.settings.imageList = imageList.join("|");
+}
+
 function removeAidreamcapesEuExcludedFooterLinks(footer) {
   if (!footer || !Array.isArray(footer.blocks)) return;
   footer.blocks = footer.blocks.filter((block) => {
@@ -265,10 +444,12 @@ function removeAidreamcapesEuExcludedFooterLinks(footer) {
   });
 }
 
-function applySectionCopy(pageJson) {
+function applySectionCopy(pageJson, options = {}) {
   if (!pageJson || typeof pageJson !== "object") return pageJson;
   const sections = pageJson.sections;
   if (!sections || typeof sections !== "object") return pageJson;
+  restoreHomepageReviewContent(sections.proof_1);
+  restoreHomepageFaqContent(sections.faq_1, options);
   for (const [sectionId, values] of Object.entries(HOME_SECTION_COPY)) {
     setValues(sections[sectionId]?.settings, values);
   }
@@ -289,16 +470,16 @@ function applySectionCopy(pageJson) {
   return pageJson;
 }
 
-export function applyAidreamcapesEuHomepageCopy(pageJson) {
-  return applySectionCopy(pageJson);
+export function applyAidreamcapesEuHomepageCopy(pageJson, options = {}) {
+  return applySectionCopy(pageJson, options);
 }
 
-export function applyAidreamcapesEuThemeHomepageCopy(templates) {
+export function applyAidreamcapesEuThemeHomepageCopy(templates, options = {}) {
   if (!templates || typeof templates !== "object") return templates;
   for (const key of ["index", "home", "/"]) {
-    if (templates[key]) applySectionCopy(templates[key]);
+    if (templates[key]) applySectionCopy(templates[key], options);
   }
-  if (templates.sections) applySectionCopy(templates);
+  if (templates.sections) applySectionCopy(templates, options);
   return templates;
 }
 

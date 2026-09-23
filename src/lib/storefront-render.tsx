@@ -2,6 +2,8 @@ import { notFound, redirect } from "next/navigation";
 import { cache, type ReactElement } from "react";
 import { CustomerAccountClientPage, CustomerWorkspaceClientPage } from "@/components/storefront/customer-bootstrap-client";
 import type { HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
+import type { AidreamcapesImageDirectoryCard } from "@/components/storefront/aidreamcapes-image-directory";
+import type { AidreamcapesVideoThemeCover } from "@/components/storefront/aidreamcapes-video-directory";
 import { StorefrontJsonLd } from "@/components/storefront/storefront-json-ld";
 import { ThemeRenderer, ThemeSectionFrame, searchPageEntriesForSite, type StorefrontSectionPayload, type RoutedSite } from "@/components/theme-renderer";
 import { findPage, getPage } from "@/lib/data";
@@ -38,7 +40,7 @@ import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/custome
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
 import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getPublishedVideoGenerationNavigationForSite, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicNavigationDataForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
-import { assertLiveDraftPage, createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, resolvePublishedRouteDisposition, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
+import { assertLiveDraftPage, createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, loadPublishedSiteSnapshotBySiteId, resolvePublishedRouteDisposition, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
@@ -46,10 +48,6 @@ import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings } from "@/lib/dreamshoot-tool-faq";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
-import {
-  isAidreamshootsEngagementFrenchPage,
-  localizeAidreamshootsEngagementFrenchPageJson
-} from "@/lib/aidreamshoots-engagement-photo-french";
 import { isFrenchStorefrontSite } from "@/lib/storefront-locale";
 import { isolateAidreamcapesEnglishCollection } from "@/lib/storefront-data-isolation";
 import { canonicalSeoDirectorySlugForSite, getExplicitSeoDirectorySlugsForSite, getSeoDirectoryContentForSite, isExplicitSeoDirectoryContentForSite, withSeoDirectorySection, withSeoDirectorySeo } from "@/lib/dreamshoot-seo-content";
@@ -58,6 +56,8 @@ import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirecto
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
+import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS } from "@/lib/aidreamcapes-image-theme-routes";
+import { indexableSeoPageEntriesForSite } from "@/lib/seo-indexing";
 import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, PublishedLeafRouteProjection, PublishedVideoNavigationProjection, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
@@ -114,6 +114,137 @@ function publishedVideoNavigationTopics(topics: PublishedVideoNavigationProjecti
     parentSortOrder: item.parentSortOrder,
     sortOrder: item.sortOrder
   }));
+}
+
+type AidreamcapesDirectoryProjection = {
+  imageCards: AidreamcapesImageDirectoryCard[];
+  videoCovers: Record<string, AidreamcapesVideoThemeCover>;
+};
+
+function directoryPath(value: string): string {
+  const clean = value.trim().split(/[?#]/)[0] ?? "";
+  return clean.startsWith("/") ? clean : `/${clean}`;
+}
+
+function imageDirectoryLane(slug: string): { key: string; label: string } {
+  const value = slug.toLowerCase();
+  if (/(ecommerce|packshot|bundle|macro|size-reference|feature|comparison|ghost|colorway|background|enhance|commercial|packaging)/.test(value)) {
+    return { key: "commerce", label: "Product & commerce" };
+  }
+  if (/(feed-ad|ugc|story-ad|carousel|sale-campaign|lookbook|fashion-editorial)/.test(value)) {
+    return { key: "campaign", label: "Campaign & editorial" };
+  }
+  if (/(headshot|portrait|creator|team|social-profile|virtual-try-on|hair-makeup)/.test(value)) {
+    return { key: "people", label: "People & style" };
+  }
+  return { key: "utility", label: "Image utility" };
+}
+
+function contentImageForPage(snapshot: ReturnType<typeof createPublishedSiteSnapshot>, path: string, kind: "image" | "video"): { src: string; alt: string } | undefined {
+  const page = snapshot.pages.find((candidate) => directoryPath(candidate.slug) === directoryPath(path));
+  if (!page) return undefined;
+  const sections = Object.values(page.publishedJson.sections ?? {}) as Array<{ type?: string; settings?: { content?: unknown } }>;
+  const section = sections.find((candidate) => kind === "image"
+    ? candidate.type === "ai_image_theme_landing"
+    : candidate.type === "ai_video_topic_landing" || candidate.type === "talking_photo_landing");
+  const content = section?.settings?.content;
+  if (!content || typeof content !== "object" || Array.isArray(content)) return undefined;
+  const hero = (content as { hero?: unknown }).hero;
+  if (!hero || typeof hero !== "object" || Array.isArray(hero)) return undefined;
+  const heroRecord = hero as Record<string, unknown>;
+  const candidates = kind === "image"
+    ? [heroRecord.outputImage, heroRecord.image, heroRecord.productImage]
+    : [heroRecord.image, heroRecord.outputImage, heroRecord.productImage];
+  for (const candidate of candidates) {
+    if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) continue;
+    const image = candidate as Record<string, unknown>;
+    if (typeof image.src === "string" && image.src.trim()) {
+      return { src: image.src, alt: typeof image.alt === "string" ? image.alt : "" };
+    }
+  }
+  return undefined;
+}
+
+function landingContentForPage(snapshot: ReturnType<typeof createPublishedSiteSnapshot>, path: string, kind: "image" | "video") {
+  const page = snapshot.pages.find((candidate) => directoryPath(candidate.slug) === directoryPath(path));
+  if (!page) return undefined;
+  const sections = Object.values(page.publishedJson.sections ?? {}) as Array<{ type?: string; settings?: { content?: unknown } }>;
+  const section = sections.find((candidate) => kind === "image"
+    ? candidate.type === "ai_image_theme_landing"
+    : candidate.type === "ai_video_topic_landing" || candidate.type === "talking_photo_landing");
+  const content = section?.settings?.content;
+  if (!content || typeof content !== "object" || Array.isArray(content)) return undefined;
+  return content as Record<string, unknown>;
+}
+
+function buildAidreamcapesDirectoryProjection(
+  snapshot: ReturnType<typeof createPublishedSiteSnapshot>,
+  currentSite: Site,
+  routeMode: "host" | "path"
+): AidreamcapesDirectoryProjection {
+  const hrefForDirectoryPath = (path: string) => routeMode === "host"
+    ? path
+    : `/site/${publicSiteSlug(currentSite.slug)}${path}`;
+  const mediaForRoute = (route: { pageEntityId: string; routeKind: "ai-image-theme-leaf" | "ai-video-topic-leaf" }) => snapshot.publishedPageMedia.find((media) =>
+    media.pageEntityId === route.pageEntityId && media.status === "ready" && (!media.routeKind || media.routeKind === route.routeKind)
+  );
+  const imageCards = AIDREAMCAPES_IMAGE_THEME_DEFINITIONS
+    .map((definition): AidreamcapesImageDirectoryCard | undefined => {
+      const path = `/ai-image-generation/${definition.slug}`;
+      const pageContent = landingContentForPage(snapshot, path, "image");
+      const hero = pageContent?.hero && typeof pageContent.hero === "object" && !Array.isArray(pageContent.hero)
+        ? pageContent.hero as Record<string, unknown>
+        : undefined;
+      const entity = snapshot.publishedPageEntities.find((candidate) => candidate.canonicalPath === path);
+      const media = entity ? mediaForRoute({ pageEntityId: entity.pageEntityId, routeKind: "ai-image-theme-leaf" }) : undefined;
+      const contentImage = contentImageForPage(snapshot, path, "image");
+      const lane = imageDirectoryLane(definition.slug);
+      const title = definition.label;
+      const heroBody = typeof hero?.body === "string" ? hero.body.trim() : "";
+      const imageUrl = media?.primaryImage?.trim() || contentImage?.src || "";
+      if (!imageUrl) return undefined;
+      return {
+        slug: definition.slug,
+        href: hrefForDirectoryPath(path),
+        title,
+        description: entity?.content.detailIntro?.trim() || heroBody || entity?.metadata.description?.trim() || `Explore the ${title.toLowerCase()} direction in a private Aidreamcapes workflow.`,
+        group: lane.key,
+        groupLabel: lane.label,
+        imageUrl,
+        fallbackImageUrl: contentImage?.src?.trim() || undefined,
+        imageAlt: media?.imageAlts?.[0]?.trim() || contentImage?.alt?.trim() || `${title} cover image`,
+        tags: (entity?.content.tags ?? []).filter(Boolean).slice(0, 4)
+      };
+    })
+    .filter((card): card is AidreamcapesImageDirectoryCard => Boolean(card))
+    .sort((left, right) => left.title.localeCompare(right.title));
+
+  const videoCovers: Record<string, AidreamcapesVideoThemeCover> = {};
+  snapshot.pages
+    .filter((page) => directoryPath(page.slug).startsWith("/ai-video-generation/"))
+    .forEach((page) => {
+      const path = directoryPath(page.slug);
+      const contentImage = contentImageForPage(snapshot, path, "video");
+      if (!contentImage?.src) return;
+      videoCovers[path] = {
+        src: contentImage.src,
+        alt: contentImage.alt || `${path.split("/").at(-1)?.replace(/-/g, " ") ?? "AI video"} theme cover`
+      };
+    });
+  snapshot.publishedRoutes
+    .filter((route) => route.disposition === "render" && route.routeKind === "ai-video-topic-leaf")
+    .forEach((route) => {
+      const path = directoryPath(route.canonicalPath);
+      const media = mediaForRoute(route as { pageEntityId: string; routeKind: "ai-video-topic-leaf" });
+      const contentImage = contentImageForPage(snapshot, path, "video");
+      const src = media?.primaryImage?.trim() || contentImage?.src || "";
+      if (!src) return;
+      videoCovers[path] = {
+        src,
+        alt: media?.imageAlts?.[0]?.trim() || contentImage?.alt?.trim() || `${path.split("/").at(-1)?.replace(/-/g, " ") ?? "AI video"} theme cover`
+      };
+    });
+  return { imageCards, videoCovers };
 }
 
 function canonicalizeSaveTheDateRoutes<T>(value: T): T {
@@ -293,7 +424,7 @@ const productSectionTypes = new Set(["cart_summary", "dreamshoot_generation_show
 const siteAiAppSectionTypes = new Set(["ai_tool_entry", "ai_tool_grid", "aidreamcapes_tool_collection", "generation_form", "search_results"]);
 const creativePackSectionTypes = new Set(["aidreamcapes_package_catalog", "aidreamcapes_package_taxonomy", "collection_list_plus", "dreamshoot_featured_pack", "dreamshoot_generation_showcase", "dreamshoot_media_gallery", "dreamshoot_package_catalog", "dreamshoot_package_taxonomy", "dreamshoot_related_packages", "dreamshoot_theme_cta", "dreamshoot_theme_faq", "photo_package_wall", "products", "products_plus", "search_results"]);
 const toolMenuItemSectionTypes = new Set(["aidreamcapes_tool_collection", "dreamshoot_tool_collection", "search_results"]);
-const videoThemeSectionTypes = new Set(["dreamshoot_generation_showcase", "dreamshoot_media_gallery"]);
+const videoThemeSectionTypes = new Set(["dreamshoot_generation_showcase", "dreamshoot_media_gallery", "dreamshoot_tool_collection", "aidreamcapes_tool_collection"]);
 const customerRuntimeSectionTypes = new Set(["album_gallery", "cart_summary", "generation_form", "job_detail", "job_progress", "login_method_panel", "upload_panel"]);
 const publicDirectoryPackLimit = 128;
 const publicHomePackLimit = publicDirectoryPackLimit;
@@ -2265,23 +2396,62 @@ function withDreamShootVideoGenerationDirectoryPage(pageJson: ThemePageJson, sit
   // independent from any legacy photo-tool sections that may remain in a
   // publication snapshot while its topic pages are being updated.
   const spanishTarget = site ? isSpanishMydreamshootsStorefront(site) : false;
+  const frenchTarget = site?.id === "site_aidreamcapes_xby";
+  const frenchIntro = "Aidreamcapes vous aide à transformer une idée, une photo autorisée ou une direction de marque en une courte vidéo à relire avant le partage. Parcourez les thèmes pour choisir une intention claire : présenter un produit, animer un portrait, préparer une vidéo pour les réseaux sociaux, raconter une occasion ou donner du mouvement à une image fixe. Chaque page précise le type de source à préparer, le style visuel attendu et les points à vérifier lorsque le résultat est généré.\n\nCommencez par une photo nette et un objectif simple. Une source bien cadrée aide à préserver l’identité du sujet, la position des mains, les détails du produit et la continuité de l’arrière-plan. Pour une annonce ou un souvenir, décrivez le moment, le rythme et le message à transmettre. Pour un contenu commercial, vérifiez les noms, les prix, les promesses et les droits liés aux images, aux voix et à la musique avant toute publication. Les thèmes de cette bibliothèque conviennent aux créateurs, aux petites équipes, aux boutiques en ligne et aux personnes qui souhaitent préparer un souvenir privé sans perdre le contrôle de leurs fichiers.\n\nLe parcours reste volontairement lisible : choisissez un thème, consultez ses exemples, importez uniquement des fichiers que vous possédez ou que vous êtes autorisé à utiliser, puis examinez la vidéo finale dans votre espace privé. Portez une attention particulière aux visages, aux mains, au texte affiché, aux transitions, au cadrage vertical et à la durée. Si une scène paraît ambiguë, modifiez la consigne ou remplacez la source avant de partager. Pour comparer les directions photo, consultez aussi la génération d’images IA et le workflow de création. Vous pouvez ensuite revenir à cette bibliothèque pour tester un autre rythme ou une autre intention.";
+  const frenchFaq = "Questions fréquentes\n\nQuelle source faut-il préparer ? Utilisez une image nette ou un bref descriptif dont vous détenez les droits. Une lumière régulière, un visage visible et un sujet bien séparé de l’arrière-plan facilitent la génération.\n\nComment choisir un thème ? Commencez par le résultat attendu : présentation produit, portrait animé, vidéo sociale, annonce ou récit. Comparez ensuite les exemples, le cadrage et les éléments à vérifier.\n\nLe résultat est-il publié automatiquement ? Non. Relisez la vidéo dans votre espace privé, vérifiez les personnes, les objets, le texte et les droits, puis décidez vous-même où la partager.";
   return {
     ...pageJson,
-    sectionsOrder: ["video_theme_directory_1"],
+    sectionsOrder: frenchTarget ? ["video_intro_1", "video_theme_directory_1", "video_faq_1"] : ["video_theme_directory_1"],
     sections: {
+      ...(frenchTarget ? {
+        video_intro_1: {
+          type: "rich_text",
+          settings: {
+            anchor: "introduction",
+            eyebrow: "Bibliothèque vidéo IA",
+            title: "Des vidéos IA pensées pour votre projet",
+            body: frenchIntro,
+            primaryCta: "Découvrir les outils photo",
+            primaryHref: "/ai-image-generation",
+            secondaryCta: "Voir le workflow",
+            secondaryHref: "/workflow",
+            layout: "compact",
+            tone: "dark",
+            headingLevel: "h2"
+          },
+          blocks: []
+        },
+      } : {}),
       video_theme_directory_1: {
         type: "dreamshoot_tool_collection",
         settings: {
           anchor: "video-themes",
-          title: spanishTarget ? "Generadores de vídeo con IA" : "AI Video Generation",
-          subtitle: spanishTarget
-            ? "Explora todos los temas públicos de vídeo con IA y abre la guía del estilo que quieras."
+          title: frenchTarget ? "Création vidéo avec l’IA" : spanishTarget ? "Generadores de vídeo con IA" : "AI Video Generation",
+          subtitle: frenchTarget
+            ? "Explorez les thèmes vidéo publics, comparez les directions et ouvrez le guide qui correspond à votre projet."
+            : spanishTarget
+              ? "Explora todos los temas públicos de vídeo con IA y abre la guía del estilo que quieras."
             : "Browse every public AI video theme and open the dedicated guide for the direction you want.",
           layout: "video_theme_grid",
           headingLevel: "h1"
         },
         blocks: []
-      }
+      },
+      ...(frenchTarget ? {
+        video_faq_1: {
+          type: "rich_text",
+          settings: {
+            anchor: "questions",
+            eyebrow: "Questions fréquentes",
+            title: "Préparer et vérifier une vidéo IA",
+            body: frenchFaq,
+            layout: "compact",
+            tone: "dark",
+            headingLevel: "h2"
+          },
+          blocks: []
+        }
+      } : {})
     }
   };
 }
@@ -2708,12 +2878,15 @@ function renderThemePage({
   navigationVideoThemeCategories,
   navigationVideoThemes,
   navigationVideoGenerationTopics,
+  aidreamcapesImageDirectoryCards,
+  aidreamcapesVideoThemeCovers,
   routeMode,
   runtime,
   settings,
   jsonLd,
   storefrontContext,
   publishedPaths,
+  publishedIndexablePaths,
   lightweightChrome = false
 }: {
   currentSite: Site;
@@ -2727,12 +2900,15 @@ function renderThemePage({
   navigationVideoThemeCategories?: SiteRenderData["videoThemeCategories"];
   navigationVideoThemes?: SiteRenderData["videoThemes"];
   navigationVideoGenerationTopics?: HeaderVideoGenerationTopic[];
+  aidreamcapesImageDirectoryCards?: AidreamcapesImageDirectoryCard[];
+  aidreamcapesVideoThemeCovers?: Record<string, AidreamcapesVideoThemeCover>;
   routeMode: "host" | "path";
   runtime: ThemeRuntimeData;
   settings: Site["themeSettings"]["publishedJson"];
   jsonLd?: JsonLdNode[];
   storefrontContext?: StorefrontContext;
   publishedPaths?: string[];
+  publishedIndexablePaths?: string[];
   lightweightChrome?: boolean;
 }) {
   const jsonLdNodes = jsonLd;
@@ -2834,11 +3010,14 @@ function renderThemePage({
         navigationVideoThemeCategories={isolatedNavigationVideoThemeCategories}
         navigationVideoThemes={isolatedNavigationVideoThemes}
         navigationVideoGenerationTopics={isolatedNavigationVideoGenerationTopics}
+        aidreamcapesImageDirectoryCards={aidreamcapesImageDirectoryCards}
+        aidreamcapesVideoThemeCovers={aidreamcapesVideoThemeCovers}
         toolMenuItems={isolatedRenderData.toolMenuItems}
         videoThemeCategories={isolatedRenderData.videoThemeCategories}
         videoThemes={isolatedRenderData.videoThemes}
         homepageShowcases={isolatedRenderData.homepageShowcases}
         lightweightChrome={lightweightChrome}
+        publishedIndexablePaths={publishedIndexablePaths}
         storefrontContext={storefrontContext}
       />
       {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} preserveBodyMarker={isAidreamcapesStorefront(currentSite) || (currentSite.id !== "site_mydreamshoots_xby" && pagePath === "/about-us")} /> : null}
@@ -2870,6 +3049,16 @@ export async function renderStorefrontPage({
   if (!stateSite) notFound();
   const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
   const currentSite = publishedSnapshot.site;
+  const aidreamcapesDirectoryProjection = currentSite.id === "site_aidreamcapes" && (slug === "/ai-image-generation" || slug === "/ai-video-generation")
+    ? await (async () => {
+        try {
+          const fullSnapshot = await loadPublishedSiteSnapshotBySiteId(currentSite.id);
+          return buildAidreamcapesDirectoryProjection(fullSnapshot, currentSite, routeMode);
+        } catch {
+          return buildAidreamcapesDirectoryProjection(publishedSnapshot, currentSite, routeMode);
+        }
+      })()
+    : undefined;
   // Shared navigation and the Save the Date directory both require the full
   // published catalogue, even when the current route loaded a scoped page
   // projection for its body.
@@ -2987,7 +3176,11 @@ export async function renderStorefrontPage({
     (usesAiGenerationPublicRoutes(currentSite) || isAidreamcapesStorefront(currentSite));
   const isAidreamcapesEuToolDetailPage =
     currentSite.id === "site_aidreamcapes_xby" && /^\/tools\/[^/]+$/.test(slug);
-  const usesDreamShootVideoGenerationDirectory = slug === "/ai-video-generation" && (isPrimaryMydreamshootsStorefront(currentSite) || isSpanishMydreamshootsStorefront(currentSite));
+  const usesDreamShootVideoGenerationDirectory = slug === "/ai-video-generation" && (
+    isPrimaryMydreamshootsStorefront(currentSite)
+    || isSpanishMydreamshootsStorefront(currentSite)
+    || currentSite.id === "site_aidreamcapes_xby"
+  );
   const basePageJson = slug === "/account"
     ? withAccountDashboardPage(page.publishedJson)
     : usesDreamShootVideoGenerationDirectory
@@ -3008,7 +3201,7 @@ export async function renderStorefrontPage({
   const canonicalRenderPath = isPrimaryMydreamshootsStorefront(currentSite) && (renderPagePath.startsWith("/holidays-events/") || renderPagePath.startsWith("/ai-save-the-date/"))
     ? canonicalSaveTheDatePath(renderPagePath)
     : renderPagePath;
-  const localizedPageJson = localizeSpanishPublicPageJson(currentSite, withoutMydreamshootsHomepagePackageCatalog(
+  const pageJson = withoutMydreamshootsHomepagePackageCatalog(
     currentSite,
     slug,
     isPrimaryMydreamshootsStorefront(currentSite) && canonicalRenderPath.startsWith("/ai-save-the-date/")
@@ -3021,10 +3214,7 @@ export async function renderStorefrontPage({
           }
         }
       : basePageJson
-  ));
-  const pageJson = isAidreamshootsEngagementFrenchPage(currentSite, renderPagePath)
-    ? localizeAidreamshootsEngagementFrenchPageJson(localizedPageJson)
-    : localizedPageJson;
+  );
   const renderDataForPage = isFocusedCollectionPage ? focusedCollectionRenderData : publicDirectoryRenderData;
   let pageRenderData = withPageMediaAssets(
     currentSite,
@@ -3096,6 +3286,8 @@ export async function renderStorefrontPage({
   };
   const renderedPage = { ...page, publishedJson: pageJson };
   const storefrontContext = resolvePublishedStorefrontContext(publishedSnapshot, renderedPage);
+  const publishedIndexablePaths = indexableSeoPageEntriesForSite(state, currentSite, publishedSnapshot)
+    .map((entry) => entry.canonicalPath);
   const jsonLdCreativePacks = isSpanishStorefrontSite(currentSite)
     ? (await getStorefrontPublicCreativePacksForSite(currentSite.id)).map(lightweightCreativePack)
     : trimCreativePacksForStorefront(focusedCollectionRenderData, publicDirectoryPackLimit);
@@ -3111,12 +3303,15 @@ export async function renderStorefrontPage({
     navigationVideoThemeCategories,
     navigationVideoThemes,
     navigationVideoGenerationTopics,
+    aidreamcapesImageDirectoryCards: aidreamcapesDirectoryProjection?.imageCards,
+    aidreamcapesVideoThemeCovers: aidreamcapesDirectoryProjection?.videoCovers,
     renderData: pageRenderData,
     routeMode,
     runtime: runtimeWithAuth,
     settings,
     storefrontContext,
     publishedPaths: publishedSnapshot.publishedPaths,
+    publishedIndexablePaths,
     jsonLd: isFocusedCollectionPage
       ? buildCollectionDirectoryJsonLd({
           site: currentSite,
@@ -3258,7 +3453,7 @@ export async function renderStorefrontSectionPayloads({
     internalSlug === "/tools" &&
     (usesAiGenerationPublicRoutes(currentSite) || isAidreamcapesStorefront(currentSite));
   const usesDreamShootVideoGenerationDirectory = internalSlug === "/ai-video-generation" && (isPrimaryMydreamshootsStorefront(currentSite) || isSpanishMydreamshootsStorefront(currentSite));
-  const pageJson: ThemePageJson = localizeSpanishPublicPageJson(currentSite, withoutMydreamshootsHomepagePackageCatalog(
+  const pageJson: ThemePageJson = withoutMydreamshootsHomepagePackageCatalog(
     currentSite,
     internalSlug,
     internalSlug === "/account"
@@ -3278,7 +3473,7 @@ export async function renderStorefrontSectionPayloads({
       : internalSlug === "/collections"
       ? withDreamShootCollectionsDirectoryPage(directPage.publishedJson, currentSite)
       : directPage.publishedJson
-  ));
+  );
 
   const settings = currentSite.themeSettings.publishedJson;
   const renderedPage = { ...directPage, publishedJson: pageJson };
@@ -3669,6 +3864,7 @@ export async function renderCustomerWorkspacePage({
     ]);
     return (
       <CustomerAccountClientPage
+        initialAidreamcapesZipNavigation={bootstrap?.aidreamcapesZipNavigation}
         initialCreativePackCategories={bootstrap?.creativePackCategories ?? []}
         initialCreativePacks={bootstrap?.creativePacks ?? []}
         initialCustomer={accountRuntime.customer ?? current.customer}
@@ -3756,6 +3952,7 @@ export async function renderCustomerWorkspacePageBySlug({
     const accountRuntime = await getCustomerAccountSummaryRuntimeRelational({ customer: current.customer, siteId });
     return (
       <CustomerAccountClientPage
+        initialAidreamcapesZipNavigation={bootstrap?.aidreamcapesZipNavigation}
         initialCreativePackCategories={bootstrap?.creativePackCategories ?? []}
         initialCreativePacks={bootstrap?.creativePacks ?? []}
         initialCustomer={current.customer}

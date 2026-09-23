@@ -8,6 +8,7 @@ import path from "node:path";
 import sharp from "sharp";
 import { PrismaClient } from "@prisma/client";
 import { assertDatabaseTarget, assertNonProductionWriteTarget } from "./lib/database-target.mjs";
+import { assertAidreamcapesEuHomepageIntegrity } from "./lib/aidreamcapes-eu-homepage-integrity.mjs";
 
 const SITE_ID = "site_aidreamcapes_xby";
 const SITE_ASSET_SLUG = "site_aidreamcapes_eu";
@@ -164,6 +165,7 @@ async function main() {
             update: { previewUrl: url, originUrl: url, altText: altMap.get(url), sourceType: "aidreamcapes-eu-legacy-path-recovered" }
           });
         }
+        await assertAidreamcapesEuHomepageIntegrity(tx);
       }, { maxWait: 20_000, timeout: 120_000 });
       report.backupPath = backupPath;
     }

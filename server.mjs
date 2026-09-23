@@ -13,6 +13,13 @@ function isHtmlResponse(response) {
   return typeof contentType === "string" && contentType.toLowerCase().includes("text/html");
 }
 
+function shouldInterceptHtmlPath(pathname) {
+  return !(
+    /^\/(?:assets|_next)(?:\/|$)/i.test(pathname) ||
+    /^\/(?:favicon(?:\.ico|\.svg)?|robots\.txt|sitemap(?:\.xml)?)(?:$|\/)/i.test(pathname)
+  );
+}
+
 function tagKey(tag) {
   if (/^<title\b/i.test(tag)) return "title";
   if (/\bcharset=/i.test(tag)) return "meta:charset";
@@ -182,7 +189,9 @@ createServer(async (request, response) => {
     const isAidreamcapesEuRequest =
       /^\/site\/aidreamcapes-eu(?:\/|$)/i.test(requestUrl.pathname) ||
       /^(?:www\.)?aidreamcapes\.eu$/i.test(requestHost);
-    interceptHtmlResponse(response, { reorderHead: !isAidreamcapesEuRequest });
+    if (shouldInterceptHtmlPath(requestUrl.pathname)) {
+      interceptHtmlResponse(response, { reorderHead: !isAidreamcapesEuRequest });
+    }
     await handle(request, response);
   } catch (error) {
     console.error(error);

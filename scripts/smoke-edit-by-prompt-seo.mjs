@@ -77,11 +77,12 @@ const graph = buildCollectionDirectoryJsonLd({
   products: snapshot.products,
   context
 }).flatMap((node) => Array.isArray(node?.["@graph"]) ? node["@graph"] : []);
-const product = graph.find((node) => node?.["@type"] === "Product");
-assert.ok(product, "Edit By Prompt Product JSON-LD must exist");
-assert.equal(product.sku, "pack_dreamshoot_edit_by_prompt");
-assert.ok(Array.isArray(product.image) && product.image.length > 0);
-assert.ok(product.image.every((url) => /edit-by-prompt/i.test(url) && !/social-cards/i.test(url)));
+assert.ok(!graph.some((node) => node?.["@type"] === "Product"), "Edit By Prompt must not expose a Product node for a credit-redeemed theme pack");
+const pageNode = graph.find((node) => node?.["@type"] === "CollectionPage");
+assert.ok(pageNode, "Edit By Prompt page JSON-LD must exist");
+assert.ok(Array.isArray(pageNode.image) && pageNode.image.length > 0);
+assert.ok(pageNode.image.every((url) => /edit-by-prompt/i.test(url) && !/social-cards/i.test(url)));
+assert.equal(pageNode.primaryImageOfPage?.["@type"], "ImageObject", "Edit By Prompt page must carry a primaryImageOfPage");
 const sitemap = sitemapEntriesForSite(state, site);
 const sitemapEntry = sitemap.find((entry) => new URL(entry.loc).pathname === canonicalPath);
 assert.ok(sitemapEntry, "Edit By Prompt sitemap entry must exist");

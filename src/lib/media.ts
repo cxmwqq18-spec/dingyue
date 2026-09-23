@@ -7,7 +7,9 @@ export function fallbackImageForSeed(_seed: string): string {
 }
 
 export function siteMediaAssets(site: Site): MediaAsset[] {
-  return site.mediaAssets ?? [];
+  return (site.mediaAssets ?? []).filter((asset) =>
+    !(site.id === "site_aidreamcapes_xby" && String(asset.sourceType ?? "") === "aidreamcapes-eu-seo-isolated")
+  );
 }
 
 export function findSiteMediaAsset(site: Site, value: string | undefined): MediaAsset | undefined {

@@ -76,7 +76,9 @@ const POLICY_CANONICALS = new Map([
   ["/policies/children-privacy", "/children-privacy"],
   ["/state-privacy-rights", "/state-privacy"],
   ["/california-privacy", "/state-privacy"],
-  ["/ccpa", "/state-privacy"]
+  ["/ccpa", "/state-privacy"],
+  ["/policies/shipping", "/digital-delivery"],
+  ["/policies/state-privacy", "/state-privacy"]
 ]);
 
 const POLICY_H1S = new Map([
@@ -121,6 +123,142 @@ const BLOG_COPY = {
   imageAlt: "Guía de AIdreamshoots para preparar fotos fuente, elegir estilos y revisar resultados privados creados con IA."
 };
 
+const LEGACY_LIVE_MEDIA_URLS = new Set([
+  "/assets/sites/site_aidreamshoots/visuals/generated/homepage-showcase/videos/AIdreamshoots-ai-image-tutorial-20260814.mp4",
+  "/assets/sites/site_aidreamshoots/visuals/generated/homepage-showcase/videos/AIdreamshoots-ai-video-tutorial-20260814.mp4",
+  "/assets/sites/site_aidreamshoots/visuals/save-the-date/valentines-day/valentines-day-save-the-date.mp4?v=20260906valentines1",
+  "/assets/sites/site_aidreamshoots/visuals/cinematic-video/create-a-more-cinematic-video-without-a-full-film-crew.mp4",
+  "/assets/sites/site_aidreamshoots/visuals/instagram-reels/turn-photos-and-ideas-into-reels-that-fit-your-feed.mp4",
+  "/assets/sites/site_aidreamshoots/visuals/music-video/ai-music-video-generator-for-artist-visuals-and-performance-concepts.mp4",
+  "/assets/sites/site_aidreamshoots/visuals/product-ad-video/build-the-ad-around-one-buyer-decision.mp4",
+  "/assets/sites/site_aidreamshoots/visuals/product-video/feature-led-product-showcase.mp4",
+  "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video-launch-teaser.mp4",
+  "/assets/sites/site_aidreamshoots/visuals/talking-photo/make-a-photo-talk-without-recording-another-take.mp4",
+  "/assets/sites/site_aidreamshoots/visuals/tiktok-video/turn-your-photos-and-ideas-into-tiktok-first-videos.mp4"
+]);
+
+const LEGACY_MEDIA_ASSET_ID = "media_mydreamshoots_xby_0aa766ec211ed2d0";
+
+const PLANNED_REMOVED_MEDIA_PREFIXES = [
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/",
+  "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-talking-photo-20260914-v1/"
+];
+
+const SEO_OVERRIDES = new Map([
+  ["/", {
+    description: "Crea fotos y vídeos con IA desde tus selfies, compara estilos, revisa créditos y guarda resultados privados en AIdreamshoots."
+  }],
+  ["/about-us", {
+    title: "Sobre AIdreamshoots: fotos y vídeos privados con IA",
+    description: "Conoce AIdreamshoots, un estudio privado para crear retratos, vídeos y álbumes con IA desde tus fotos autorizadas."
+  }],
+  ["/contact-us", {
+    title: "Contacto y soporte de AIdreamshoots para fotos con IA",
+    description: "Contacta con AIdreamshoots para resolver dudas sobre cuenta, créditos, subidas, privacidad y entregas digitales."
+  }],
+  ["/workflow", {
+    title: "Cómo funciona AIdreamshoots: fotos y vídeos con IA",
+    description: "Prepara tus fotos, elige un estilo, revisa los créditos y conserva tus resultados privados en cuatro pasos claros."
+  }],
+  ["/children-privacy", {
+    title: "Privacidad infantil | AIdreamshoots",
+    description: "Conoce las reglas de AIdreamshoots para proteger la privacidad de menores y gestionar solicitudes relacionadas con contenido y datos."
+  }],
+  ["/ai-image-generation/futbol", {
+    title: "Fotos de fútbol con IA para aficionados | AIdreamshoots"
+  }],
+  ["/ai-image-generation/magic", {
+    title: "Edición mágica de fotos con IA | AIdreamshoots"
+  }],
+  ["/ai-image-generation/urbano", {
+    title: "Fotos urbanas con IA | AIdreamshoots"
+  }],
+  ["/ai-image-generation/photo-tools", {
+    title: "Herramientas de fotos con IA | AIdreamshoots",
+    description: "Explora herramientas de fotos con IA para editar, mejorar y preparar imágenes antes de crear resultados privados en AIdreamshoots."
+  }],
+  ["/ai-image-generation/professional", {
+    title: "Retratos profesionales con IA | AIdreamshoots",
+    description: "Crea retratos profesionales con IA desde fotos autorizadas, compara estilos y conserva tus resultados en una galería privada."
+  }],
+  ["/ai-image-generation/viaje", {
+    title: "Fotos de viaje con IA: retratos y destinos | AIdreamshoots"
+  }],
+  ["/state-privacy", {
+    description: "Consulta tus derechos de privacidad estatales, cómo enviar solicitudes sobre tus datos y las medidas que protegen tu cuenta en AIdreamshoots."
+  }],
+  ["/best-packages", {
+    description: "Compara los mejores paquetes de fotos con IA para retratos, perfiles, parejas y álbumes privados en AIdreamshoots."
+  }],
+  ["/best-save-the-date", {
+    description: "Descubre estilos de fotos y vídeos con IA para compromisos, bodas y celebraciones en AIdreamshoots."
+  }],
+  ["/pricing", {
+    description: "Consulta precios y créditos para crear fotos y vídeos con IA, revisar resultados y descargar tus álbumes privados."
+  }],
+  ["/tools", {
+    description: "Explora herramientas de fotos y vídeos con IA para preparar imágenes, crear estilos y revisar créditos en AIdreamshoots."
+  }]
+]);
+
+const HEADING_H2_PAGES = new Set(["/about-us", "/contact-us", "/creators-circle", "/tools", "/workflow"]);
+const PRIVATE_LIVE_PAGE_PREFIXES = ["/app/", "/account", "/login"];
+const NON_INDEXABLE_PRIVATE_PATHS = new Set(["/album"]);
+const STALE_SEO_FLAG_PATHS = new Set(["/album", "/policies/shipping", "/policies/state-privacy"]);
+const AIDREAMSHOOTS_COPY_REPLACEMENTS = new Map([
+  ["Elegir la resultado primero", "Elegir primero el resultado"],
+  ["Crear un IA foto conjunto desde fotos fuente.", "Crear un conjunto de fotos con IA desde fotos fuente."],
+  ["Subir claro fotos", "Subir fotos claras"],
+  ["Elegir un foto paquete", "Elegir un paquete de fotos"],
+  ["Revisar la coste en créditose", "Revisar el coste en créditos"],
+  ["tu subidas stay privado", "Tus subidas permanecen privadas"]
+]);
+
+const PRIVATE_COPY_REPLACEMENTS = new Map([
+  ["Iniciar sesion para crear, track, y descargar tu IA fotos", "Inicia sesión para crear, revisar y descargar tus fotos con IA"],
+  ["Subir fotos fuente, reserve créditos antes generación, track solicitudes, y descargar terminados albums desde uno secure cuenta.", "Sube fotos fuente, reserva créditos antes de generar, sigue tus solicitudes y descarga álbumes terminados desde tu cuenta segura."],
+  ["Track cada generación solicitud desde queue para entrega.", "Sigue el estado de cada solicitud de generación hasta su entrega."]
+]);
+
+const PACK_SCENES = new Map([
+  ["soccer", "en un estadio lleno durante un partido"],
+  ["futbol", "en un estadio lleno durante un partido"],
+  ["mafia", "en una escena noir urbana con luz dramática"],
+  ["thanksgiving", "alrededor de una mesa festiva"],
+  ["thanksgiving-photo", "alrededor de una mesa festiva"],
+  ["cyberpunk", "bajo luces de neón en una calle urbana"],
+  ["boudoir", "en un interior elegante con luz suave"],
+  ["valentines", "en una escena romántica con luces cálidas"],
+  ["wedding", "en una celebración de boda luminosa"],
+  ["rich-lifestyle", "en un entorno editorial sofisticado"],
+  ["premium-estilo-de-vida", "en un entorno editorial sofisticado"],
+  ["travel", "en un destino de viaje con paisaje visible"],
+  ["viaje", "en un destino de viaje con paisaje visible"],
+  ["bikini", "en un entorno costero luminoso"],
+  ["swimsuit", "en un entorno costero luminoso"],
+  ["engagement", "en una escena romántica de pareja"],
+  ["urban", "en una escena urbana con arquitectura y luces"],
+  ["urbano", "en una escena urbana con arquitectura y luces"],
+  ["street-style", "en una escena urbana con arquitectura y luces"],
+  ["nightlife", "en una escena urbana con arquitectura y luces"],
+  ["halloween", "en una fiesta nocturna con decoración de Halloween"],
+  ["christmas", "en un ambiente festivo con luces cálidas"],
+  ["holiday", "en un ambiente festivo con luces cálidas"],
+  ["cannes", "en un ambiente de gala y festival"],
+  ["gala", "en un ambiente de gala y festival"],
+  ["headshot", "en un retrato profesional con fondo limpio"],
+  ["avatar", "en un retrato profesional con fondo limpio"],
+  ["professional", "en un retrato profesional con fondo limpio"],
+  ["portrait", "en una escena cotidiana de pareja"],
+  ["only-fans", "en un retrato editorial para redes"],
+  ["solo-fans", "en un retrato editorial para redes"],
+  ["singles-awareness", "en un retrato editorial para redes"],
+  ["black-friday", "en una composición promocional con espacio para diseño"],
+  ["negro-viernes", "en una composición promocional con espacio para diseño"]
+]);
+
+const REMOVE_VALUE = Symbol("remove-value");
+
 function deepClone(value) {
   return value === undefined ? value : JSON.parse(JSON.stringify(value));
 }
@@ -148,6 +286,11 @@ function isHrefKey(key) {
   return /(?:href|targethref|ctahref|primaryhref|secondaryhref|actionhref|returnhref|videoallhref|imageallhref)$/i.test(key);
 }
 
+function isInternalLinkKey(key, value) {
+  if (isMediaReferenceKey(key) && isLikelyMediaReference(value)) return false;
+  return isHrefKey(key) || /(?:href|link|url)$/i.test(key);
+}
+
 function isMediaReferenceKey(key) {
   return /^(?:src|url|imageurl|image|poster|posterurl|thumbnail|thumbnailurl|avatar|avatarurl|logo|logourl|cover|coverurl|filename|filepath|path|storagekey|originurl|previewurl|downloadurl|contenturl|ogimage)$/i.test(key);
 }
@@ -163,6 +306,7 @@ function isLikelyImageReference(value) {
 }
 
 function mapText(value) {
+  if (AIDREAMSHOOTS_COPY_REPLACEMENTS.has(value)) return AIDREAMSHOOTS_COPY_REPLACEMENTS.get(value);
   if (Object.hasOwn(copyReplacements, value)) return copyReplacements[value];
   return value
     .replaceAll("unño", "año")
@@ -170,11 +314,15 @@ function mapText(value) {
     .replaceAll("galeríun", "galería")
     .replaceAll("unñade", "añade")
     .replaceAll("con IA con IA", "con IA")
-    .replaceAll("Guia", "Guía");
+    .replaceAll("Guia", "Guía")
+    .replaceAll("Track", "Seguimiento");
 }
 
 function mapAlt(value) {
   const normalized = mapText(value).trim();
+  if (/^Gente\.?$/i.test(normalized)) {
+    return "Personas en una escena temática para crear fotos con IA en AIdreamshoots.";
+  }
   if (/^(?:Ejemplo visual|Contenido de AIdreamshoots|Imagen generada|Foto generada|Vídeo generado)\b/i.test(normalized)) {
     return "Vista previa de una creación fotográfica con IA para explorar los estilos de AIdreamshoots.";
   }
@@ -190,6 +338,17 @@ function sanitizeText(value, key = "") {
   if (Array.isArray(value)) return value.map((item) => sanitizeText(item, key));
   if (!value || typeof value !== "object") return value;
   return Object.fromEntries(Object.entries(value).map(([childKey, child]) => [childKey, sanitizeText(child, childKey)]));
+}
+
+function replaceExactText(value, replacements) {
+  if (typeof value === "string") return replacements.get(value) ?? value;
+  if (Array.isArray(value)) return value.map((item) => replaceExactText(item, replacements));
+  if (!value || typeof value !== "object") return value;
+  return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, replaceExactText(child, replacements)]));
+}
+
+function repairPrivatePageCopy(json) {
+  return sanitizeText(replaceExactText(deepClone(json), PRIVATE_COPY_REPLACEMENTS));
 }
 
 function collectMissingImageAlts(value, slug, pathName = "", output = []) {
@@ -243,6 +402,12 @@ function canonicalPathForHref(pathname, search = "") {
   if (normalized === "/ai-video-generation/image-to-video" || normalized === "/ai-video-generation/text-to-video") {
     normalized = "/ai-video-generation/motion-generator";
   }
+  if (normalized === "/ai-image-generation/valentines-day-photo") {
+    normalized = "/ai-image-generation/valentines-photo";
+  }
+  if (normalized === "/ai-image-generation/urban") {
+    normalized = "/ai-image-generation/urbano";
+  }
   const saveDateMatch = normalized.match(/^\/ai-video-generation\/([^/]+)$/i);
   if (saveDateMatch && SAVE_THE_DATE_ALIASES.has(saveDateMatch[1].toLowerCase())) {
     normalized = `/ai-save-the-date/${SAVE_THE_DATE_ALIASES.get(saveDateMatch[1].toLowerCase())}`;
@@ -276,7 +441,7 @@ function normalizeHrefs(value) {
   if (!value || typeof value !== "object") return value;
   return Object.fromEntries(Object.entries(value).map(([key, child]) => [
     key,
-    typeof child === "string" && isHrefKey(key) ? normalizeHref(child) : normalizeHrefs(child)
+    typeof child === "string" && isInternalLinkKey(key, child) ? normalizeHref(child) : normalizeHrefs(child)
   ]));
 }
 
@@ -300,6 +465,10 @@ function canonicalPathForPage(slug, seo = {}) {
 function isAliasPage(slug) {
   const normalized = normalizePath(slug);
   return normalized === "/collections"
+    || normalized === "/policies/shipping"
+    || normalized === "/policies/state-privacy"
+    || normalized === "/ai-image-generation/urban"
+    || POLICY_CANONICALS.has(normalized)
     || normalized === "/holidays-events/wedding-invitation"
     || normalized === WEDDING_INVITATION_SOURCE
     || (normalized.startsWith("/ai-video-generation/") && SAVE_THE_DATE_ALIASES.has(normalized.slice("/ai-video-generation/".length)));
@@ -309,7 +478,8 @@ function applySeo(json, slug) {
   const next = deepClone(json) ?? {};
   const currentSeo = next.seo && typeof next.seo === "object" ? next.seo : {};
   const canonicalPath = canonicalPathForPage(slug, currentSeo);
-  const alias = isAliasPage(slug) || NON_INDEXABLE_ORPHANS.has(normalizePath(slug));
+  const normalizedSlug = normalizePath(slug);
+  const alias = isAliasPage(normalizedSlug) || NON_INDEXABLE_ORPHANS.has(normalizedSlug) || NON_INDEXABLE_PRIVATE_PATHS.has(normalizedSlug);
   const index = alias ? false : currentSeo.index !== false;
   next.seo = {
     ...currentSeo,
@@ -325,7 +495,96 @@ function applySeo(json, slug) {
     next.seo.keywords = "fotos con IA,vídeos con IA,créditos,galería privada,AIdreamshoots";
   }
   if (/^Vídeos con IA con IA\b/i.test(String(next.seo.title ?? ""))) next.seo.title = String(next.seo.title).replace(/^Vídeos con IA con IA/i, "Vídeos con IA");
+  const override = SEO_OVERRIDES.get(normalizePath(slug));
+  if (override) next.seo = { ...next.seo, ...override };
   return next;
+}
+
+function applyHeadingLevels(json, slug) {
+  if (!HEADING_H2_PAGES.has(normalizePath(slug))) return json;
+  const next = deepClone(json);
+  const sections = next.sections && typeof next.sections === "object" ? next.sections : {};
+  const orderedIds = Array.isArray(next.sectionsOrder) ? next.sectionsOrder : Object.keys(sections);
+  let mainHeadingAssigned = false;
+  for (const id of orderedIds) {
+    const section = sections[id];
+    if (!section || typeof section !== "object" || !section.settings || typeof section.settings !== "object") continue;
+    const sectionType = String(section.type ?? "").toLowerCase();
+    const isStructural = /(?:header|footer|nav|legal|cookie)/i.test(`${id} ${sectionType}`);
+    if (isStructural) continue;
+    const hasHeading = typeof section.settings.title === "string" && section.settings.title.trim();
+    if (!hasHeading && !["rich_text", "policy_content", "dreamshoot_tool_collection", "aidreamcapes_tool_collection", "seo_directory_content"].some((type) => sectionType.includes(type))) continue;
+    if (!mainHeadingAssigned) {
+      section.settings.headingLevel = "h1";
+      mainHeadingAssigned = true;
+    } else if (section.settings.headingLevel === "h3" || section.settings.headingLevel === "h1" || section.settings.headingLevel == null) {
+      section.settings.headingLevel = "h2";
+    }
+  }
+  return next;
+}
+
+function isLegacyLiveMediaUrl(value) {
+  const raw = String(value ?? "").trim();
+  return LEGACY_LIVE_MEDIA_URLS.has(raw);
+}
+
+function isPlannedRemovedMediaReference(value) {
+  const raw = String(value ?? "").trim();
+  return isLegacyLiveMediaUrl(raw) || PLANNED_REMOVED_MEDIA_PREFIXES.some((prefix) => raw.startsWith(prefix));
+}
+
+function removeLegacyLiveMedia(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => removeLegacyLiveMedia(item)).filter((item) => item !== REMOVE_VALUE);
+  }
+  if (!value || typeof value !== "object") return value;
+  const next = {};
+  for (const [key, child] of Object.entries(value)) {
+    if (typeof child === "string" && isLegacyLiveMediaUrl(child) && (isMediaReferenceKey(key) || /(?:video|media)/i.test(key))) continue;
+    if (key === "video" && child && typeof child === "object" && mediaReferences(child).some((reference) => isLegacyLiveMediaUrl(reference.split(":").slice(1).join(":")))) continue;
+    const rewritten = removeLegacyLiveMedia(child);
+    if (rewritten !== REMOVE_VALUE) next[key] = rewritten;
+  }
+  return next;
+}
+
+function applyLegacyMediaCleanup(json) {
+  return removeLegacyLiveMedia(json);
+}
+
+function packScene(pack) {
+  const identity = `${pack.category ?? ""} ${pack.name ?? ""} ${pack.headline ?? ""}`.toLowerCase();
+  for (const [key, scene] of PACK_SCENES) if (identity.includes(key)) return scene;
+  return "en una escena coherente con el estilo del tema";
+}
+
+function cleanPackAlt(value, pack) {
+  if (typeof value !== "string") return value;
+  let next = mapAlt(value);
+  if (/distinctive pose that highlights the theme/i.test(next)) {
+    const label = String(pack.name ?? pack.category ?? "tema").trim();
+    next = `Vista previa de ${label.toLowerCase()} con una pose distintiva y un entorno coherente.`;
+  }
+  if (/andén de tren/i.test(next)) next = next.replaceAll("andén de tren", packScene(pack));
+  return next;
+}
+
+function prepareCreativePacks(packs) {
+  return packs.map((pack) => {
+    if (!Array.isArray(pack.galleryImageAlts)) return { ...pack, galleryImageAlts: pack.galleryImageAlts };
+    return {
+      ...pack,
+      galleryImageAlts: pack.galleryImageAlts.map((alt) => cleanPackAlt(alt, pack))
+    };
+  });
+}
+
+function legacyMediaReferenceCount(rows) {
+  return rows.reduce((count, row) => count + mediaReferences(row.contentJson).filter((reference) => {
+    const value = reference.slice(reference.indexOf(":") + 1);
+    return isLegacyLiveMediaUrl(value);
+  }).length, 0);
 }
 
 function applyPolicyHeadings(json, slug) {
@@ -355,11 +614,16 @@ function applyBlogCopy(json) {
 }
 
 function prepareContent(row) {
+  const normalizedSlug = normalizePath(row.slug);
+  const isPrivatePage = PRIVATE_LIVE_PAGE_PREFIXES.some((prefix) => normalizedSlug.startsWith(prefix)) || NON_INDEXABLE_PRIVATE_PATHS.has(normalizedSlug);
+  if (isPrivatePage && !NON_INDEXABLE_PRIVATE_PATHS.has(normalizedSlug)) return repairPrivatePageCopy(row.contentJson);
   const canonicalPath = canonicalPathForPage(row.slug, row.contentJson?.seo ?? {});
   let content;
-  if (profiles[canonicalPath]) {
+  if (isPrivatePage) {
+    content = repairPrivatePageCopy(row.contentJson);
+  } else if (profiles[canonicalPath]) {
     content = repairStandardPage(row.contentJson, profiles[canonicalPath], canonicalPath);
-  } else if (row.slug === WEDDING_INVITATION_SOURCE) {
+  } else if (row.slug === WEDDING_INVITATION_SOURCE || canonicalPath === WEDDING_INVITATION_PUBLIC) {
     content = repairWeddingInvitationPage(row.contentJson);
   } else {
     content = deepClone(row.contentJson);
@@ -368,6 +632,8 @@ function prepareContent(row) {
   content = normalizeHrefs(content);
   content = ensureImageAlts(content);
   content = applyPolicyHeadings(content, row.slug);
+  content = applyHeadingLevels(content, row.slug);
+  content = applyLegacyMediaCleanup(content);
   if (normalizePath(row.slug) === "/blog/video-photo-package-guide") content = applyBlogCopy(content);
   content = applySeo(content, row.slug);
   return content;
@@ -386,8 +652,30 @@ function mediaReferences(value, output = []) {
   return output.sort();
 }
 
-function mediaDigest(rows) {
-  return sha256(rows.map((row) => ({ slug: row.slug, refs: mediaReferences(row.contentJson) })).sort((a, b) => a.slug.localeCompare(b.slug)));
+function mediaDigest(rows, { excludeLegacy = false } = {}) {
+  return sha256(rows.map((row) => ({
+    slug: row.slug,
+    refs: mediaReferences(row.contentJson).filter((reference) => !excludeLegacy || !isPlannedRemovedMediaReference(reference.slice(reference.indexOf(":") + 1)))
+  })).sort((a, b) => a.slug.localeCompare(b.slug)));
+}
+
+function mediaReferenceDiff(beforeRows, afterRows, { excludeLegacy = false } = {}) {
+  const refsFor = (row) => new Set(
+    mediaReferences(row.contentJson).filter((reference) =>
+      !excludeLegacy || !isPlannedRemovedMediaReference(reference.slice(reference.indexOf(":") + 1))
+    )
+  );
+  const beforeBySlug = new Map(beforeRows.map((row) => [row.slug, refsFor(row)]));
+  const afterBySlug = new Map(afterRows.map((row) => [row.slug, refsFor(row)]));
+  const slugs = new Set([...beforeBySlug.keys(), ...afterBySlug.keys()]);
+  return [...slugs].sort().flatMap((slug) => {
+    const before = beforeBySlug.get(slug) ?? new Set();
+    const after = afterBySlug.get(slug) ?? new Set();
+    return [
+      ...[...before].filter((reference) => !after.has(reference)).map((reference) => ({ slug, direction: "removed", reference })),
+      ...[...after].filter((reference) => !before.has(reference)).map((reference) => ({ slug, direction: "added", reference }))
+    ];
+  });
 }
 
 function collectInvalidHrefs(value, slug, pathName = "", output = []) {
@@ -398,7 +686,7 @@ function collectInvalidHrefs(value, slug, pathName = "", output = []) {
   if (!value || typeof value !== "object") return output;
   for (const [key, child] of Object.entries(value)) {
     const childPath = `${pathName}.${key}`;
-    if (typeof child === "string" && isHrefKey(key)) {
+    if (typeof child === "string" && isInternalLinkKey(key, child)) {
       const normalized = child.trim();
       if (normalized && !/^(?:#|javascript:|mailto:|sms:|tel:|https?:\/\/|\/)/i.test(normalized)) output.push({ slug, path: childPath, value: normalized });
       if (/^\/site\/aidreamshoots|^\/collections(?:\/|$)|^\/holidays-events\/wedding-invitation$|^\/ai-video-generation\/(?:image-to-video|text-to-video|wedding-invitation|christmas|engagement|fathers-day|halloween|mothers-day|new-year|proposal|save-the-date|thanksgiving|valentines-day|wedding-ceremony)$/i.test(normalized)) {
@@ -448,19 +736,44 @@ function normalizeRows(rows) {
   return nextRows.sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
+function staleSeoFlagRows(rows) {
+  return rows
+    .filter((row) => STALE_SEO_FLAG_PATHS.has(normalizePath(row.slug)))
+    .filter((row) => row.contentJson?.seo?.index === true || row.contentJson?.seo?.robots?.index === true)
+    .map((row) => row.slug)
+    .sort();
+}
+
 function assertPreparedRows(beforeRows, afterRows) {
   const afterBySlug = new Map(afterRows.map((row) => [row.slug, row]));
   assert(afterBySlug.has(WEDDING_INVITATION_PUBLIC), "The public wedding invitation LivePage was not prepared.");
+  assert.deepEqual(staleSeoFlagRows(afterRows), [], "Stale target LivePage SEO index flags remain after preparation.");
+  const indexableRows = afterRows.filter((row) => row.contentJson?.seo?.index !== false && row.contentJson?.seo?.robots?.index !== false);
+  const seenTitles = new Map();
+  const seenDescriptions = new Map();
   for (const row of afterRows) {
     assert(row.contentJson?.seo?.canonicalPath, `Missing canonicalPath for ${row.slug}.`);
     assert(/^https:\/\/aidreamshoots\.eu\//.test(row.contentJson.seo.canonical), `Non-production canonical for ${row.slug}.`);
     assert.equal(collectInvalidHrefs(row.contentJson, row.slug).length, 0, `Invalid internal href remains on ${row.slug}.`);
     const imageAltIssues = collectMissingImageAlts(row.contentJson, row.slug);
     assert.equal(imageAltIssues.length, 0, `Image alt issues remain on ${row.slug}: ${JSON.stringify(imageAltIssues.slice(0, 3))}; sample=${JSON.stringify(row.contentJson?.sections?.ai_video_topic_landing_1?.settings?.content?.hero?.video ?? null)}`);
+    if (indexableRows.includes(row)) {
+      const title = String(row.contentJson?.seo?.title ?? row.title ?? "").replace(/\s+/g, " ").trim();
+      const description = String(row.contentJson?.seo?.description ?? "").replace(/\s+/g, " ").trim();
+      assert(title.length >= 30 && title.length <= 60, `Indexable title length is outside 30-60 for ${row.slug}: ${title.length}`);
+      assert(description.length >= 70 && description.length <= 160, `Indexable description length is outside 70-160 for ${row.slug}: ${description.length}`);
+      const titleOwner = seenTitles.get(title);
+      assert(!titleOwner || titleOwner === row.slug, `Duplicate indexable title between ${titleOwner} and ${row.slug}.`);
+      seenTitles.set(title, row.slug);
+      const descriptionOwner = seenDescriptions.get(description);
+      assert(!descriptionOwner || descriptionOwner === row.slug, `Duplicate indexable description between ${descriptionOwner} and ${row.slug}.`);
+      seenDescriptions.set(description, row.slug);
+    }
   }
-  const beforeMedia = mediaDigest(beforeRows);
-  const afterExistingMedia = mediaDigest(afterRows.filter((row) => !row.__new));
-  assert.equal(afterExistingMedia, beforeMedia, "Existing LivePage media references changed; production script refuses to overwrite image assets.");
+  const beforeMedia = mediaDigest(beforeRows, { excludeLegacy: true });
+  const afterExistingMedia = mediaDigest(afterRows.filter((row) => !row.__new), { excludeLegacy: true });
+  assert.equal(afterExistingMedia, beforeMedia, `Non-legacy LivePage media references changed; production script only permits the audited legacy media migration. Diff=${JSON.stringify(mediaReferenceDiff(beforeRows, afterRows.filter((row) => !row.__new), { excludeLegacy: true }).slice(0, 20))}`);
+  assert.equal(legacyMediaReferenceCount(afterRows), 0, "Audited legacy LivePage media references remain after preparation.");
   return {
     changed: afterRows.filter((row) => {
       const before = beforeRows.find((candidate) => candidate.slug === row.slug);
@@ -496,7 +809,7 @@ async function crossSiteSentinel(prisma) {
   return sentinels;
 }
 
-function targetBackupPayload(site, livePages, themePages) {
+function targetBackupPayload(site, livePages, themePages, creativePacks, mediaAssets) {
   return {
     createdAt: new Date().toISOString(),
     site: { id: site.id, slug: site.slug, primaryDomain: site.primaryDomain, status: site.status },
@@ -507,7 +820,10 @@ function targetBackupPayload(site, livePages, themePages) {
       slugs: themePages.map((page) => page.slug).sort(),
       publishedJsonHash: sha256(themePages.map((page) => ({ slug: page.slug, publishedJson: page.publishedJson })).sort((a, b) => a.slug.localeCompare(b.slug)))
     },
-    mediaReferenceHash: mediaDigest(livePages)
+    creativePacks,
+    mediaAssets,
+    mediaReferenceHash: mediaDigest(livePages),
+    legacyMediaReferenceCount: legacyMediaReferenceCount(livePages)
   };
 }
 
@@ -549,14 +865,27 @@ async function main() {
     assert.equal(site.primaryDomain.toLowerCase(), PRODUCTION_DOMAIN, `Target site domain is not ${PRODUCTION_DOMAIN}.`);
     assert(site.domains.some((domain) => domain.domain.toLowerCase() === PRODUCTION_DOMAIN && domain.status === "active"), `Active ${PRODUCTION_DOMAIN} domain mapping is missing.`);
 
-    const [livePages, themePages, beforeCrossSite] = await Promise.all([
+    const [livePages, themePages, creativePacks, mediaAssets, beforeCrossSite] = await Promise.all([
       prisma.livePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" } }),
       prisma.themePage.findMany({ where: { siteId: SITE_ID }, select: { id: true, slug: true, publishedJson: true, updatedAt: true }, orderBy: { slug: "asc" } }),
+      prisma.creativePack.findMany({ where: { siteId: SITE_ID }, orderBy: { id: "asc" } }),
+      prisma.mediaAsset.findMany({ where: { siteId: SITE_ID }, orderBy: { id: "asc" } }),
       crossSiteSentinel(prisma)
     ]);
     assert(livePages.some((page) => page.slug === WEDDING_INVITATION_SOURCE), `Target source page ${WEDDING_INVITATION_SOURCE} is missing.`);
     const prepared = normalizeRows(livePages);
     const { changed } = assertPreparedRows(livePages, prepared);
+    const preparedCreativePacks = prepareCreativePacks(creativePacks);
+    const changedCreativePacks = preparedCreativePacks.filter((pack, index) => stableStringify(pack.galleryImageAlts) !== stableStringify(creativePacks[index]?.galleryImageAlts));
+    const legacyMediaAsset = mediaAssets.find((asset) => asset.id === LEGACY_MEDIA_ASSET_ID);
+    const retiredLegacyMediaAsset = legacyMediaAsset
+      ? {
+          id: legacyMediaAsset.id,
+          storageKey: legacyMediaAsset.storageKey,
+          alreadyRetired: /retired by aidreamshoots seo\/media remediation/i.test(String(legacyMediaAsset.notes ?? ""))
+        }
+      : { id: LEGACY_MEDIA_ASSET_ID, missing: true };
+    assert.equal(preparedCreativePacks.filter((pack) => JSON.stringify(pack.galleryImageAlts ?? []).match(/andén de tren|distinctive pose that highlights the theme/i)).length, 0, "Known CreativePack alt contamination remains after preparation.");
     const changedSlugs = changed.map((row) => row.slug);
 
     const summary = {
@@ -567,9 +896,16 @@ async function main() {
       afterLivePages: prepared.length,
       changedLivePages: changed.length,
       changedSlugs,
+      changedCreativePacks: changedCreativePacks.length,
+      changedCreativePackIds: changedCreativePacks.map((pack) => pack.id),
+      staleSeoFlagsBefore: staleSeoFlagRows(livePages),
+      staleSeoFlagsAfter: staleSeoFlagRows(prepared),
+      legacyLiveMediaReferencesBefore: legacyMediaReferenceCount(livePages),
+      legacyLiveMediaReferencesAfter: legacyMediaReferenceCount(prepared),
+      retiredLegacyMediaAsset,
       publicWeddingInvitation: prepared.some((row) => row.slug === WEDDING_INVITATION_PUBLIC),
       sourceWeddingInvitationAlias: prepared.find((row) => row.slug === WEDDING_INVITATION_SOURCE)?.contentJson?.seo,
-      existingMediaReferencesPreserved: true,
+      nonLegacyMediaReferencesPreserved: true,
       themePageReadOnly: true,
       crossSiteSentinelHash: sha256(beforeCrossSite),
       paidProviderCalls: 0,
@@ -580,7 +916,7 @@ async function main() {
       return;
     }
 
-    const backupPath = writeBackup(targetBackupPayload(site, livePages, themePages));
+    const backupPath = writeBackup(targetBackupPayload(site, livePages, themePages, creativePacks, mediaAssets));
     await prisma.$transaction(async (tx) => {
       for (const row of prepared.filter((candidate) => !candidate.__new)) {
         const before = livePages.find((candidate) => candidate.id === row.id);
@@ -601,17 +937,43 @@ async function main() {
           }
         });
       }
+      for (const pack of changedCreativePacks) {
+        await tx.creativePack.update({
+          where: { id: pack.id },
+          data: { galleryImageAlts: pack.galleryImageAlts }
+        });
+      }
+      if (legacyMediaAsset && !retiredLegacyMediaAsset.alreadyRetired) {
+        await tx.mediaAsset.update({
+          where: { id: legacyMediaAsset.id },
+          data: {
+            notes: `${legacyMediaAsset.notes ? `${legacyMediaAsset.notes} ` : ""}Retired by AIdreamshoots SEO/media remediation 2026-09-18; no LivePage reference after migration.`,
+            altText: "Recurso de vídeo antiguo retirado; no se utiliza en páginas públicas."
+          }
+        });
+      }
     }, { maxWait: 10000, timeout: 120000 });
 
-    const [afterLivePages, afterCrossSite] = await Promise.all([
+    const [afterLivePages, afterCreativePacks, afterMediaAsset, afterCrossSite] = await Promise.all([
       prisma.livePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" } }),
+      prisma.creativePack.findMany({ where: { siteId: SITE_ID }, orderBy: { id: "asc" } }),
+      prisma.mediaAsset.findUnique({ where: { id: LEGACY_MEDIA_ASSET_ID } }),
       crossSiteSentinel(prisma)
     ]);
     assert.equal(sha256(afterCrossSite), sha256(beforeCrossSite), "A non-target site's database sentinel changed; production write is not considered safe.");
     assert(afterLivePages.some((row) => row.slug === WEDDING_INVITATION_PUBLIC && row.contentJson?.seo?.index === true), "Public wedding invitation was not indexed after write.");
     assert(afterLivePages.some((row) => row.slug === WEDDING_INVITATION_SOURCE && row.contentJson?.seo?.index === false), "Wedding invitation alias was not noindexed after write.");
-    assert.equal(mediaDigest(livePages), mediaDigest(afterLivePages.filter((row) => !row.slug || row.slug !== WEDDING_INVITATION_PUBLIC)), "Existing target media references changed unexpectedly.");
-    console.log(JSON.stringify({ ...summary, mode: "applied", backupPath, afterCrossSiteSentinelHash: sha256(afterCrossSite) }, null, 2));
+    assert.deepEqual(staleSeoFlagRows(afterLivePages), [], "Stale target LivePage SEO index flags remain after write.");
+    const createdSlugs = new Set(prepared.filter((row) => row.__new).map((row) => row.slug));
+    assert.equal(
+      mediaDigest(livePages, { excludeLegacy: true }),
+      mediaDigest(afterLivePages.filter((row) => !createdSlugs.has(row.slug)), { excludeLegacy: true }),
+      "Non-legacy target media references changed unexpectedly."
+    );
+    assert.equal(legacyMediaReferenceCount(afterLivePages), 0, "Legacy target media references remain after write.");
+    assert.equal(afterCreativePacks.filter((pack) => JSON.stringify(pack.galleryImageAlts ?? []).match(/andén de tren|distinctive pose that highlights the theme/i)).length, 0, "Known CreativePack alt contamination remains after write.");
+    if (legacyMediaAsset) assert(/retired by aidreamshoots seo\/media remediation/i.test(String(afterMediaAsset?.notes ?? "")), "Legacy MediaAsset was not marked retired.");
+    console.log(JSON.stringify({ ...summary, mode: "applied", backupPath, afterCrossSiteSentinelHash: sha256(afterCrossSite), afterLegacyMediaAsset: afterMediaAsset ? { id: afterMediaAsset.id, notes: afterMediaAsset.notes } : null }, null, 2));
   } finally {
     await prisma.$disconnect();
   }

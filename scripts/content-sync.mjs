@@ -6,6 +6,7 @@ import { execFileSync } from "node:child_process";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { argumentValue, assertAllowedSite, assertDatabaseTarget, hasArgument, parseDatabaseUrl } from "./lib/database-target.mjs";
+import { assertAidreamcapesEuHomepageIntegrity } from "./lib/aidreamcapes-eu-homepage-integrity.mjs";
 
 const mode = argumentValue("--mode") || "plan";
 const target = argumentValue("--target") || process.env.DATABASE_TARGET || "";
@@ -131,7 +132,7 @@ function ensureTarget() {
   } else {
     assertDatabaseTarget({ expectedTarget: target, requireProductionConfirmation: target === "production", productionConfirmed: hasArgument("--confirm-production") });
   }
-  if (target === "production" && !["site_dreamshoot", "site_aidreamcapes_xby"].includes(siteId)) fail("Production content must target an approved production site.");
+  if (target === "production" && !["site_dreamshoot", "site_aidreamcapes", "site_aidreamcapes_xby"].includes(siteId)) fail("Production content must target an approved production site.");
   if (target === "test" && siteId !== "site_grownstride_test") fail("Test content must target site_grownstride_test.");
 }
 function ensureSource() {
@@ -320,7 +321,7 @@ function readManifest() {
   if (manifest.formatVersion !== 2 || manifest.siteId !== siteId || manifest.target !== target || manifest.sourceTarget !== "local" || !manifest.sourceSiteId || !Array.isArray(manifest.operations) || !Array.isArray(manifest.deletions)) fail("Invalid content manifest v2.");
   if (!/^[0-9a-f]{40}$/i.test(manifest.codeCommit)) fail("Content manifest must pin a full code commit SHA.");
   if (target !== "local" && argumentValue("--deployed-commit") !== manifest.codeCommit) fail("--deployed-commit must match manifest.codeCommit.");
-  if (manifest.target === "production" && !["site_dreamshoot", "site_aidreamcapes_xby"].includes(manifest.siteId)) fail("Production manifest site mismatch.");
+  if (manifest.target === "production" && !["site_dreamshoot", "site_aidreamcapes", "site_aidreamcapes_xby"].includes(manifest.siteId)) fail("Production manifest site mismatch.");
   if (manifest.target === "test" && manifest.siteId !== "site_grownstride_test") fail("Test manifest site mismatch.");
   return manifest;
 }
@@ -416,6 +417,7 @@ async function apply() {
         await tx.contentSyncBaseline.deleteMany({ where: { target, siteId, entityType: deletion.entityType, entityKey: deletion.entityKey } });
         report.deletions.push(deletion);
       }
+      if (siteId === "site_aidreamcapes_xby") await assertAidreamcapesEuHomepageIntegrity(tx);
       const after = await protectedFingerprint(tx);
       if (hash(before) !== hash(after)) fail("Protected business data changed during content apply; transaction rolled back.");
     }, { timeout: 600000, maxWait: 20000 });

@@ -12,7 +12,7 @@ import { metadataForPublishedStorefrontDirectoryPage } from "@/lib/storefront-me
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { publicSiteSlug as normalizePublicSiteSlug } from "@/lib/domain-routing";
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
-import { isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 
 const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "ai-image-studio": "/tools",
@@ -83,7 +83,7 @@ const resolveToolPage = cache(async (siteSlug: string, toolSlug: string) => {
 export async function generateMetadata({ params }: { params: Promise<{ siteSlug: string; toolSlug: string }> }): Promise<Metadata> {
   const { siteSlug, toolSlug } = await params;
   if (["mydreamshoots", "aidreamshoots"].includes(normalizePublicSiteSlug(siteSlug))) return {};
-  if (isRetiredAidreamcapesImageToolPath(normalizePublicSiteSlug(siteSlug), `/tools/${toolSlug}`)) return {};
+  if (isRetiredAidreamcapesPublicPath(normalizePublicSiteSlug(siteSlug), `/tools/${toolSlug}`)) return {};
   if (legacyToolRedirectPath(siteSlug, toolSlug)) return {};
   const { state, site, page, matched } = await resolveToolPage(siteSlug, toolSlug);
   if (!state || !site || !page || !matched) return {};
@@ -106,14 +106,20 @@ export default async function ToolPage({
 }) {
   const { siteSlug, toolSlug } = await params;
   if (["mydreamshoots", "aidreamshoots"].includes(normalizePublicSiteSlug(siteSlug))) notFound();
-  if (isRetiredAidreamcapesImageToolPath(normalizePublicSiteSlug(siteSlug), `/tools/${toolSlug}`)) notFound();
+  if (isRetiredAidreamcapesPublicPath(normalizePublicSiteSlug(siteSlug), `/tools/${toolSlug}`)) notFound();
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
-  const publicSiteSlug = redirectPublicSitePathToCanonicalHost({
-    host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
-    pathname: `/tools/${toolSlug}`,
-    siteSlug
-  });
+  // A host-based storefront is already on its public URL. Calling
+  // redirectPublicSitePathToCanonicalHost here would redirect the request to
+  // the same /tools/... path and create a permanent-redirect loop. Path-mode
+  // requests still need the normal canonical-host redirect.
+  const publicSiteSlug = routeMode === "host"
+    ? normalizePublicSiteSlug(siteSlug)
+    : redirectPublicSitePathToCanonicalHost({
+        host: headerStore.get("x-forwarded-host") ?? headerStore.get("host"),
+        pathname: `/tools/${toolSlug}`,
+        siteSlug
+      });
   const redirectPath = legacyToolRedirectPath(publicSiteSlug, toolSlug);
   if (redirectPath) permanentRedirect(storefrontPathForRouteMode(publicSiteSlug, redirectPath, routeMode));
   const query = searchParams ? await searchParams : {};

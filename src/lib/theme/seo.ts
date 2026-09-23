@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { isAidreamcapesSite } from "@/lib/storefront-context/capabilities";
-import { storefrontOrigin } from "@/lib/storefront-context/seo-projection";
+import { storefrontOriginalIconSet } from "@/lib/storefront-brand-assets";
+import { canonicalAbsoluteUrlForSite } from "@/lib/storefront-context/seo-projection";
 import type { Site, ThemePage, ThemeSettings } from "@/lib/types";
 
 function cleanText(value: string | undefined, fallback = ""): string {
@@ -35,10 +36,7 @@ export function robotsForPage(page: Pick<ThemePage, "slug" | "pageType">): { ind
 }
 
 function absoluteUrl(site: Site, pathOrUrl: string | undefined): string | undefined {
-  const value = cleanText(pathOrUrl);
-  if (!value) return undefined;
-  if (/^https?:\/\//i.test(value)) return value;
-  return `${storefrontOrigin(site)}${value.startsWith("/") ? value : `/${value}`}`;
+  return canonicalAbsoluteUrlForSite(site, cleanText(pathOrUrl));
 }
 
 function settingText(value: unknown): string | undefined {
@@ -76,10 +74,12 @@ function isAidreamcapesEuSaveTheDatePage(site: Site, page: Pick<ThemePage, "slug
 }
 
 function siteIcons(site: Site, settings: ThemeSettings): Metadata["icons"] | undefined {
+  const originalIcons = storefrontOriginalIconSet(site);
+  if (originalIcons) return originalIcons;
   const icon = settingText((site.branding as { logoImageUrl?: string }).logoImageUrl)
     ?? settingText(settings.globalSections?.header?.settings.logoImageUrl)
     ?? settingText(settings.globalSections?.footer?.settings.logoImageUrl);
-  return icon ? { icon, shortcut: icon, apple: icon } : undefined;
+  return icon ? { icon, apple: icon } : undefined;
 }
 
 export type NormalizedThemeSeo = Omit<NonNullable<ThemeSettings["seo"]>, "pages">;
@@ -118,6 +118,7 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
   const articleImageAlt = isArticle ? settingText(articleSettings?.imageAlt) : undefined;
   const ogImageAlt = articleImageAlt ?? settingText(seo.ogImageAlt) ?? settingText(page.publishedJson.seo?.ogImageAlt);
   const isAidreamcapesEu = site.id === "site_aidreamcapes_xby";
+  const isAidreamshoots = site.id === "site_mydreamshoots_xby";
   return {
     title: seo.title,
     description: seo.description,
@@ -132,7 +133,12 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
       description: seo.description,
       url: canonical,
       siteName: cleanText(context.settings.seo?.siteTitle, brandName(site)),
-      ...(isArticle || isAidreamcapesAdsTestingPage(site, page) || isAidreamcapesEuSaveTheDatePage(site, page) || isAidreamcapesEu ? { type: isAidreamcapesEu ? "website" as const : isArticle ? "article" as const : "website" as const } : {}),
+      // Keep the social graph explicit for every public AIdreamshoots page.
+      // Articles are the only pages that should be marked as article; all
+      // other public storefront pages are website shares.
+      ...(isArticle || isAidreamshoots || isAidreamcapesAdsTestingPage(site, page) || isAidreamcapesEuSaveTheDatePage(site, page) || isAidreamcapesEu
+        ? { type: isArticle ? "article" as const : "website" as const }
+        : {}),
       ...(articlePublishedTime ? { publishedTime: articlePublishedTime } : {}),
       ...(articleModifiedTime ? { modifiedTime: articleModifiedTime } : {}),
       images: ogImage ? [{ url: ogImage, ...(ogImageAlt ? { alt: ogImageAlt } : {}) }] : undefined

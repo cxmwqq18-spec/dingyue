@@ -3,12 +3,14 @@ import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { getSiteByHostCandidatesFromState } from "@/lib/domain-routing";
 import { findPage } from "@/lib/data";
+import { imageThemeDetailContentFromPage } from "@/lib/aidreamcapes-image-theme-content";
+import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
 import { parsePublicCollectionRouteForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storefront-state";
 import { canResolveCollectionSlugForSite, renderStorefrontPage } from "@/lib/storefront-render";
 import { createPublishedSiteSnapshot } from "@/lib/storefront-context";
-import { metadataForPublishedStorefrontDirectoryPage } from "@/lib/storefront-metadata";
+import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
 import {
   AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY,
   isAidreamshootsEngagementFrenchPage
@@ -21,8 +23,9 @@ type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 async function loadImageThemeState(themeSlug: string): Promise<{ state: PlatformState; site: Site } | undefined> {
   const headerStore = await headers();
   const hosts = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
+  const requestedPath = `/ai-image-generation/${themeSlug}`;
   const state = await Promise.all(hosts.map((host) =>
-    host ? readStorefrontPublicRuntimeStateByHostFromDatabase(host, "/ai-image-generation", themeSlug) : undefined
+    host ? readStorefrontPublicRuntimeStateByHostFromDatabase(host, requestedPath, themeSlug) : undefined
   )).then((states) => states.find(Boolean));
   if (!state) return undefined;
   const site = getSiteByHostCandidatesFromState(state, hosts) ?? state.sites[0];
@@ -34,6 +37,20 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const loaded = await loadImageThemeState(themeSlug);
   if (!loaded) return {};
   const { state, site } = loaded;
+  const requestedPath = `/ai-image-generation/${themeSlug}`;
+  if (isAidreamcapesImageThemePath(site.slug, requestedPath)) {
+    const page = findPage(site, requestedPath);
+    return page && imageThemeDetailContentFromPage(page)
+      ? metadataForPublishedStorefrontPage({
+          site,
+          page,
+          path: requestedPath,
+          products: state.products,
+          creativePacks: state.creativePacks,
+          snapshot: createPublishedSiteSnapshot(state, site, { source: "postgres" })
+        })
+      : {};
+  }
   const route = parsePublicCollectionRouteForSite(site, ["ai-image-generation", themeSlug]);
   if (!route?.collectionSlug || !canResolveCollectionSlugForSite(state, site, route.collectionSlug)) return {};
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "postgres" });
@@ -90,6 +107,20 @@ export default async function ImageThemePage({
   const loaded = await loadImageThemeState(themeSlug);
   if (!loaded) notFound();
   const { state, site } = loaded;
+  const requestedPath = `/ai-image-generation/${themeSlug}`;
+  if (isAidreamcapesImageThemePath(site.slug, requestedPath)) {
+    const page = findPage(site, requestedPath);
+    if (!page || !imageThemeDetailContentFromPage(page)) notFound();
+    return renderStorefrontPage({
+      site,
+      slug: requestedPath,
+      publicPath: requestedPath,
+      query: searchParams ? await searchParams : {},
+      routeMode: "host",
+      state,
+      deferCustomerRuntime: true
+    });
+  }
   const route = parsePublicCollectionRouteForSite(site, ["ai-image-generation", themeSlug]);
   if (!route?.collectionSlug || !canResolveCollectionSlugForSite(state, site, route.collectionSlug)) notFound();
   const query = searchParams ? await searchParams : {};

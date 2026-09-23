@@ -261,52 +261,50 @@ for (const pack of publishedPacks) {
       publishedPageMedia: undefined
     }
   }));
-  const products = graph.filter((node) => node?.["@type"] === "Product");
-  assert.equal(products.length, 1, `${canonicalPath} should expose one Product node`);
-  const product = products[0];
-  assertMydreamshootsEntityId(product["@id"], `${canonicalPath} Product @id`);
-  assert.equal(schemaSlug(product.name), schemaSlug(pack.name), `${canonicalPath} Product name should match the package`);
-  assertAbsoluteUrl(product.url, `${canonicalPath} Product url`);
-  assert.equal(product.mainEntityOfPage, product.url, `${canonicalPath} Product should link to its visible page`);
-  assert.ok(Array.isArray(product.image) && product.image.length === 8, `${canonicalPath} Product should include cover plus gallery image URLs`);
-  assertUnique(product.image, `${canonicalPath} Product images`);
-  for (const [index, imageUrl] of product.image.entries()) {
-    assertPublicAssetUrl(imageUrl, `${canonicalPath} Product image ${index + 1}`);
+  // Theme packs are redeemed with credits, not sold as fiat SKUs. They must not be
+  // declared as Product: a Product with no offers, review, or aggregateRating is a
+  // Rich Results error, and none of those three can be supplied truthfully here.
+  assert.equal(
+    graph.filter((node) => node?.["@type"] === "Product").length,
+    0,
+    `${canonicalPath} must not expose a Product node for a credit-redeemed theme pack`
+  );
+  const collectionPages = graph.filter((node) => node?.["@type"] === "CollectionPage");
+  assert.equal(collectionPages.length, 1, `${canonicalPath} should expose one page node`);
+  const page = collectionPages[0];
+  assert.equal(schemaSlug(page.name).includes(schemaSlug(pack.name)) || schemaSlug(pack.name).includes(schemaSlug(page.name)), true, `${canonicalPath} page name should match the package`);
+  assertAbsoluteUrl(page.url, `${canonicalPath} page url`);
+  // The imagery that used to hang off Product now hangs off the page node. These
+  // assertions exist so removing Product can never silently drop image coverage.
+  assert.ok(Array.isArray(page.image) && page.image.length === 8, `${canonicalPath} page should include cover plus gallery image URLs`);
+  assertUnique(page.image, `${canonicalPath} page images`);
+  for (const [index, imageUrl] of page.image.entries()) {
+    assertPublicAssetUrl(imageUrl, `${canonicalPath} page image ${index + 1}`);
   }
-  assert.ok(product.image[0].includes("/pack-covers/"), `${canonicalPath} first Product image should be the package cover`);
-  assert.ok(product.image.some((imageUrl) => imageUrl.includes("/pack-galleries/")), `${canonicalPath} Product images should include gallery previews`);
-  assert.equal(product.sku, pack.id, `${canonicalPath} Product sku should use pack id`);
-  assert.equal(product.brand?.name, "MyDreamShoots", `${canonicalPath} Product brand should use the plain SEO brand name`);
-  assert.equal(product.subjectOf?.["@type"], "ImageObject", `${canonicalPath} Product subjectOf should be ImageObject`);
-  assertMydreamshootsEntityId(product.subjectOf?.["@id"], `${canonicalPath} ImageObject @id`);
-  assertPublicAssetUrl(product.subjectOf.contentUrl, `${canonicalPath} ImageObject contentUrl`);
-  assert.equal(product.subjectOf.url, product.subjectOf.contentUrl, `${canonicalPath} ImageObject url should match contentUrl`);
-  assert.equal(product.subjectOf.thumbnailUrl, product.image[0], `${canonicalPath} ImageObject thumbnail should use the package cover`);
-  assert.match(product.subjectOf.encodingFormat, /^image\//, `${canonicalPath} ImageObject should declare an image encodingFormat`);
-  assert.equal(product.subjectOf.representativeOfPage, true, `${canonicalPath} ImageObject should be representative of the page`);
-  assertPositiveInteger(product.subjectOf.width, `${canonicalPath} ImageObject width`);
-  assertPositiveInteger(product.subjectOf.height, `${canonicalPath} ImageObject height`);
-  assert.equal(product.offers, undefined, `${canonicalPath} theme Product must not inherit a site-level subscription Offer`);
-  assert.equal(product.price, undefined, `${canonicalPath} theme Product must not expose a subscription price`);
-  assert.equal(product.priceCurrency, undefined, `${canonicalPath} theme Product must not expose a subscription currency`);
-  assert.equal(JSON.stringify(product).includes("/pricing"), false, `${canonicalPath} theme Product must not reference the pricing page`);
-  assert.equal(JSON.stringify(product).includes("Starter"), false, `${canonicalPath} theme Product must not reference the Starter subscription`);
-  assert.equal(JSON.stringify(product).includes("24.50"), false, `${canonicalPath} theme Product must not reference the Starter price`);
-  const propertyNames = new Set((product.additionalProperty ?? []).map((property) => property.name));
-  assert.ok(propertyNames.has("Credit cost"), `${canonicalPath} should expose credit cost as additionalProperty`);
-  assert.ok(propertyNames.has("Output count"), `${canonicalPath} should expose output count as additionalProperty`);
-  assert.equal(
-    (product.additionalProperty ?? []).find((property) => property.name === "Credit cost")?.value,
-    pack.creditCost,
-    `${canonicalPath} credit cost should match the package`
-  );
-  assert.equal(
-    (product.additionalProperty ?? []).find((property) => property.name === "Output count")?.value,
-    pack.outputCount,
-    `${canonicalPath} output count should match the package`
-  );
+  assert.ok(page.image[0].includes("/pack-covers/"), `${canonicalPath} first page image should be the package cover`);
+  assert.ok(page.image.some((imageUrl) => imageUrl.includes("/pack-galleries/")), `${canonicalPath} page images should include gallery previews`);
+  assert.equal(page.primaryImageOfPage?.["@type"], "ImageObject", `${canonicalPath} primaryImageOfPage should be ImageObject`);
+  assertMydreamshootsEntityId(page.primaryImageOfPage?.["@id"], `${canonicalPath} ImageObject @id`);
+  assertPublicAssetUrl(page.primaryImageOfPage.contentUrl, `${canonicalPath} ImageObject contentUrl`);
+  assert.equal(page.primaryImageOfPage.url, page.primaryImageOfPage.contentUrl, `${canonicalPath} ImageObject url should match contentUrl`);
+  assert.equal(page.primaryImageOfPage.thumbnailUrl, page.image[0], `${canonicalPath} ImageObject thumbnail should use the package cover`);
+  assert.match(page.primaryImageOfPage.encodingFormat, /^image\//, `${canonicalPath} ImageObject should declare an image encodingFormat`);
+  assert.equal(page.primaryImageOfPage.representativeOfPage, true, `${canonicalPath} ImageObject should be representative of the page`);
+  assertPositiveInteger(page.primaryImageOfPage.width, `${canonicalPath} ImageObject width`);
+  assertPositiveInteger(page.primaryImageOfPage.height, `${canonicalPath} ImageObject height`);
+  // Credits are not a currency and the pack page shows no fiat price, so no price
+  // of any kind may appear in this graph.
+  const graphJson = JSON.stringify(graph);
+  assert.equal(graphJson.includes("\"price\""), false, `${canonicalPath} theme page must not expose a price`);
+  assert.equal(graphJson.includes("priceCurrency"), false, `${canonicalPath} theme page must not expose a price currency`);
+  assert.equal(graphJson.includes("\"sku\""), false, `${canonicalPath} theme page must not expose a sku`);
+  assert.equal(graphJson.includes("Credit cost"), false, `${canonicalPath} credit cost must not be a structured property`);
+  assert.equal(graphJson.includes("Output count"), false, `${canonicalPath} output count must not be a structured property`);
+  assert.equal(graphJson.includes("/pricing"), false, `${canonicalPath} theme page must not reference the pricing page`);
+  assert.equal(graphJson.includes("Starter"), false, `${canonicalPath} theme page must not reference the Starter subscription`);
+  assert.equal(graphJson.includes("24.50"), false, `${canonicalPath} theme page must not reference the Starter price`);
 }
-assert.equal(productPaths.size, publishedPacks.length, "each published pack should map to a unique canonical Product detail path");
+assert.equal(productPaths.size, publishedPacks.length, "each published pack should map to a unique canonical theme detail path");
 assert.equal(homeGraph.some((node) => node?.["@type"] === "Review" || node?.["@type"] === "AggregateRating"), false, "homepage JSON-LD should not emit review rating schema without a real review source");
 
 const smokeSite = fixtureSite;

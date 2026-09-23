@@ -7,7 +7,7 @@ import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out
 import { CustomerWorkspaceShell, type CustomerWorkspacePanel } from "@/components/storefront/customer-workspace-shell";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { UserRound } from "lucide-react";
-import type { CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, Site, SiteAiApp, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
+import type { AidreamcapesZipNavigation, CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, Site, SiteAiApp, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import type { PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
 
 type CustomerBootstrapSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
@@ -15,6 +15,7 @@ export type CustomerBootstrap = {
   authenticated?: boolean;
   site?: CustomerBootstrapSite;
   customer?: PublicCustomer;
+  aidreamcapesZipNavigation?: AidreamcapesZipNavigation;
   siteAiApps: SiteAiApp[];
   creativePackCategories?: CreativePackCategory[];
   creativePacks: CreativePack[];
@@ -131,9 +132,11 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
       const publishedSaveTheDateMenuLabel = typeof data.publishedSaveTheDateMenuLabel === "string" && data.publishedSaveTheDateMenuLabel.trim()
         ? data.publishedSaveTheDateMenuLabel.trim()
         : "Save the Date";
+      const aidreamcapesZipNavigation = data.aidreamcapesZipNavigation;
       if (mode === "shell" && isLoginRequiredBootstrapError(response, data)) {
         const bootstrap = {
           authenticated: false,
+          aidreamcapesZipNavigation,
           siteAiApps,
           creativePackCategories,
           creativePacks,
@@ -157,6 +160,7 @@ async function loadCustomerBootstrap(siteSlug: string, signal?: AbortSignal, mod
         authenticated: data.authenticated ?? Boolean(data.customer),
         site: data.site,
         customer: data.customer,
+        aidreamcapesZipNavigation,
         siteAiApps,
         creativePackCategories,
         creativePacks,
@@ -441,6 +445,7 @@ export function CustomerAccountClientPage({
   initialCreativePackCategories = [],
   initialRuntime,
   initialSite,
+  initialAidreamcapesZipNavigation,
   initialCreativePacks = [],
   initialToolMenuItems = [],
   initialVideoThemeCategories = [],
@@ -453,6 +458,7 @@ export function CustomerAccountClientPage({
   initialCreativePackCategories?: CreativePackCategory[];
   initialRuntime?: ThemeRuntimeData;
   initialSite?: CustomerBootstrapSite;
+  initialAidreamcapesZipNavigation?: AidreamcapesZipNavigation;
   initialCreativePacks?: CreativePack[];
   initialToolMenuItems?: ToolMenuItem[];
   initialVideoThemeCategories?: VideoThemeCategory[];
@@ -463,12 +469,12 @@ export function CustomerAccountClientPage({
 }) {
   const hasInitialAccountData = Boolean(initialCustomer && initialSite);
   const state = useCustomerBootstrap(siteSlug, "account", !hasInitialAccountData);
-  if (initialCustomer && initialSite) return <CustomerAccountShell creativePackCategories={initialCreativePackCategories} creativePacks={initialCreativePacks} customer={initialCustomer} initialRuntime={initialRuntime} publishedSaveTheDateGroups={initialPublishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={initialPublishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={initialPublishedVideoGenerationTopics} site={initialSite} toolMenuItems={initialToolMenuItems} videoThemeCategories={initialVideoThemeCategories} />;
+  if (initialCustomer && initialSite) return <CustomerAccountShell aidreamcapesZipNavigation={initialAidreamcapesZipNavigation} creativePackCategories={initialCreativePackCategories} creativePacks={initialCreativePacks} customer={initialCustomer} initialRuntime={initialRuntime} publishedSaveTheDateGroups={initialPublishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={initialPublishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={initialPublishedVideoGenerationTopics} site={initialSite} toolMenuItems={initialToolMenuItems} videoThemeCategories={initialVideoThemeCategories} />;
   if (state.status === "loading") return <CustomerPageLocalLoading title="Opening your account center." />;
   if (state.status === "error" && state.loginPath) return <CustomerPageRedirect loginPath={state.loginPath} />;
   if (state.status === "error") return <CustomerPageError message="Your account session could not be verified from this browser." />;
   if (!state.data.customer || !state.data.site) return <CustomerPageRedirect loginPath={`/site/${siteSlug}/login`} />;
-  return <CustomerAccountShell creativePackCategories={state.data.creativePackCategories} creativePacks={state.data.creativePacks} customer={state.data.customer} initialRuntime={state.data.accountRuntime} publishedSaveTheDateGroups={state.data.publishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={state.data.publishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={state.data.publishedVideoGenerationTopics} site={state.data.site} toolMenuItems={state.data.toolMenuItems} videoThemeCategories={state.data.videoThemeCategories} />;
+  return <CustomerAccountShell aidreamcapesZipNavigation={state.data.aidreamcapesZipNavigation} creativePackCategories={state.data.creativePackCategories} creativePacks={state.data.creativePacks} customer={state.data.customer} initialRuntime={state.data.accountRuntime} publishedSaveTheDateGroups={state.data.publishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={state.data.publishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={state.data.publishedVideoGenerationTopics} site={state.data.site} toolMenuItems={state.data.toolMenuItems} videoThemeCategories={state.data.videoThemeCategories} />;
 }
 
 export function CustomerWorkspaceClientPage({
@@ -488,6 +494,7 @@ export function CustomerWorkspaceClientPage({
   if (initialBootstrap && isAuthenticatedBootstrap(initialBootstrap)) {
     return (
       <CustomerWorkspaceShell
+        aidreamcapesZipNavigation={initialBootstrap.aidreamcapesZipNavigation}
         assets={initialBootstrap.workspaceRuntime?.assets ?? []}
         creativePackCategories={initialBootstrap.creativePackCategories}
         creativePacks={initialBootstrap.creativePacks}
@@ -513,6 +520,7 @@ export function CustomerWorkspaceClientPage({
   if (!isAuthenticatedBootstrap(state.data)) return <CustomerPageRedirect loginPath={`/site/${siteSlug}/login`} />;
   return (
     <CustomerWorkspaceShell
+      aidreamcapesZipNavigation={state.data.aidreamcapesZipNavigation}
       assets={state.data.workspaceRuntime?.assets ?? []}
       creativePackCategories={state.data.creativePackCategories}
       creativePacks={state.data.creativePacks}

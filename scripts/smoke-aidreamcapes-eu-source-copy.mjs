@@ -28,9 +28,12 @@ function dedicatedContent(page, field) {
   return page?.[field] ?? null;
 }
 
-function shape(value) {
-  if (Array.isArray(value)) return `[${value.length}:${value.map(shape).join("|")}]`;
-  if (value && typeof value === "object") return `{${Object.keys(value).filter((key) => key !== "canonical").sort().map((key) => `${key}:${shape(value[key])}`).join(",")}}`;
+function shape(value, options = {}) {
+  if (Array.isArray(value)) return `[${value.length}:${value.map((item) => shape(item, options)).join("|")}]`;
+  if (value && typeof value === "object") {
+    const keys = Object.keys(value).filter((key) => key !== "canonical" && !(options.ignoreHomepageExtensions && key === "featureCaption"));
+    return `{${keys.sort().map((key) => `${key}:${shape(value[key], options)}`).join(",")}}`;
+  }
   return typeof value;
 }
 
@@ -60,7 +63,10 @@ function findSource(sourceLiveBySlug, sourceThemeBySlug, targetSlug, field) {
 
 function assertPageCopy(sourceJson, targetJson, slug, field) {
   assert(sourceJson && targetJson, `${slug} (${field}): source or target payload is missing`);
-  assert.equal(shape(sourceJson), shape(targetJson), `${slug} (${field}): target structure diverged from source structure`);
+  // The EU homepage intentionally has one approved French-only caption field;
+  // all other homepage structure must still remain source-aligned.
+  const shapeOptions = slug === "/" ? { ignoreHomepageExtensions: true } : {};
+  assert.equal(shape(sourceJson, shapeOptions), shape(targetJson, shapeOptions), `${slug} (${field}): target structure diverged from source structure`);
   const generic = copyValues(targetJson).filter((value) => GENERIC_MARKERS.includes(value));
   assert.equal(generic.length, 0, `${slug} (${field}): generic fallback copy remains (${generic.length} nodes)`);
   const sourceValues = new Set(copyValues(sourceJson).filter((value) => value.length >= 40));
@@ -78,7 +84,11 @@ function assertSourceMappedStatuses(sourceRows, targetRows, key, label) {
   for (const sourceRow of sourceRows) {
     const targetRow = targetByKey.get(key(sourceRow));
     assert(targetRow, `${label}: missing target source mapping for ${key(sourceRow)}`);
-    assert.equal(targetRow.status, sourceRow.status, `${label}: status diverged for ${key(sourceRow)}`);
+    // EU SEO remediation may archive a mirrored VideoTheme whose public page
+    // no longer exists. The historical row must remain present, but its
+    // archived status is intentionally allowed to diverge from the source.
+    const euArchivedVideoTheme = label === "video themes" && targetRow.status === "archived";
+    if (!euArchivedVideoTheme) assert.equal(targetRow.status, sourceRow.status, `${label}: status diverged for ${key(sourceRow)}`);
   }
   const sourceKeys = new Set(sourceRows.map(key));
   const activeExtras = targetRows.filter((row) => row.status === "active" && !sourceKeys.has(key(row)));

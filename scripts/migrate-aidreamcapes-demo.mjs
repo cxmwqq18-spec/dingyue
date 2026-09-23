@@ -2475,7 +2475,7 @@ state.assetUploads = replaceWhere(state.assetUploads ?? [], (item) => item.siteI
     customerId: "cust_aidreamcapes_aria",
     jobId: "job_aidreamcapes_1001",
     label: "Route portrait album cover",
-    storageKey: "sites/site_aidreamcapes/customers/cust_aidreamcapes_aria/jobs/job_aidreamcapes_1001/out_001.webp",
+    storageKey: "sites/site_aidreamcapes/customers/cust_aidreamcapes_aria/assets/asset_aidreamcapes_aria_out_001.webp",
     mimeType: "image/webp",
     role: "output",
     visibility: "private",

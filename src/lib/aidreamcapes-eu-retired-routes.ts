@@ -7,7 +7,14 @@
 export const AIDREAMCAPES_EU_SITE_ID = "site_aidreamcapes_xby";
 export const AIDREAMCAPES_EU_RETIRED_PUBLIC_PATHS = new Set<string>([
   "/ai-save-the-date/easter",
-  "/ai-image-generation/estilo-y-fantasia"
+  "/ai-save-the-date/wedding-anniversary",
+  "/ai-image-generation/estilo-y-fantasia",
+  "/ai-image-generation/urbano",
+  "/collections/soccer",
+  "/collections/christmas-photo",
+  "/collections/thanksgiving-photo",
+  "/tools/image-studio",
+  "/tools/seasonal-celebration-album-maker"
 ]);
 
 /**
@@ -17,10 +24,40 @@ export const AIDREAMCAPES_EU_RETIRED_PUBLIC_PATHS = new Set<string>([
  */
 export const AIDREAMCAPES_EU_REMOVED_PUBLIC_NAVIGATION_PATHS = new Set<string>([
   "/ai-image-generation/estilo-y-fantasia",
+  "/ai-image-generation/urbano",
   "/collections/soccer",
   "/collections/christmas-photo",
   "/collections/thanksgiving-photo",
+  "/tools/image-studio",
   "/tools/seasonal-celebration-album-maker"
+]);
+
+/**
+ * Dynamic EU tool leaves are rendered by the storefront tool renderer rather
+ * than by one LivePage row each. Keep their public inventory explicit so the
+ * sitemap cannot silently fall back to the smaller database projection.
+ */
+export const AIDREAMCAPES_EU_PUBLIC_DETAIL_PATHS = new Set<string>([
+  "/ai-image-generation/motion-generator",
+  "/tools/fan-scene-album-builder",
+  "/tools/backstage-meetup-scene-builder",
+  "/tools/supporter-photo-wall-maker",
+  "/tools/fan-keepsake-card-maker",
+  "/tools/game-day-group-portrait-maker",
+  "/tools/stadium-night-fan-set-maker",
+  "/tools/watch-party-album-builder",
+  "/tools/premiere-portrait-set-builder",
+  "/tools/vip-arrival-photo-maker",
+  "/tools/award-night-album-studio",
+  "/tools/new-year-countdown-album-maker",
+  "/tools/christmas-group-album-studio",
+  "/tools/cozy-card-portrait-maker",
+  "/tools/winter-fan-greeting-maker",
+  "/tools/thanksgiving-keepsake-set-maker",
+  "/tools/friendsgiving-memory-maker",
+  "/tools/halloween-party-portrait-maker",
+  "/tools/costume-cast-album-builder",
+  "/tools/birthday-fan-moment-maker"
 ]);
 
 /**

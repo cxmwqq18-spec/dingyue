@@ -1,0 +1,303 @@
+{
+  "siteId": "site_aidreamcapes_xby",
+  "version": 1,
+  "routes": {
+    "valentines-day": {
+      "save_date_details": {
+        "save-date-detail-1": "hero-valentines-day-save-the-date-city-couple.jpg",
+        "save-date-detail-2": "hero-valentines-day-save-the-date-couple-candlelight.jpg",
+        "save-date-detail-3": "hero-valentines-day-save-the-date-proposal.jpg",
+        "save-date-detail-4": "valentines-day-save-the-date-beach-couple.jpg",
+        "save-date-detail-5": "valentines-day-save-the-date-rose-garden-couple.jpg"
+      }
+    },
+    "engagement": {
+      "engagement_workflow_creates": {
+        "engagement-scene_card-1": "engagement-04.jpg",
+        "engagement-scene_card-2": "engagement-05.jpg",
+        "engagement-scene_card-3": "engagement-06.jpg",
+        "engagement-scene_card-4": "engagement-07.jpg",
+        "engagement-scene_card-5": "engagement-08.jpg",
+        "engagement-scene_card-6": "engagement-10.jpg",
+        "engagement-scene_card-7": "engagement-12.jpg"
+      }
+    },
+    "proposal": {
+      "proposal_use_cases": {
+        "proposal-scene_card-1": "hero-ai-proposal-rooftop-surprise-night.jpg",
+        "proposal-scene_card-2": "ai-proposal-ring-closeup.jpg",
+        "proposal-scene_card-3": "ai-proposal-city-rooftop-candlelight.jpg",
+        "proposal-scene_card-4": "hero-ai-proposal-beach-sunset.jpg",
+        "proposal-scene_card-5": "ai-proposal-memory-photos-planning.jpg",
+        "proposal-scene_card-6": "ai-proposal-after-yes-embrace.jpg",
+        "proposal-scene_card-7": "ai-proposal-video-recording.jpg"
+      }
+    },
+    "save-the-date": {
+      "save_date_workflow": {
+        "save-the-date-step-1": "save-the-date-planning-together.jpg",
+        "save-the-date-step-2": "save-the-date-couple-city-walk.jpg",
+        "save-the-date-step-3": "save-the-date-ring-detail.jpg",
+        "save-the-date-step-4": "save-the-date-proposal-memory.jpg",
+        "save-the-date-step-5": "save-the-date-outdoor-video-shoot.jpg",
+        "save-the-date-step-6": "save-the-date-destination-beach-portrait.jpg"
+      },
+      "save_date_use_cases": {
+        "save-the-date-scene_card-1": "save-the-date-planning-together.jpg",
+        "save-the-date-scene_card-2": "hero-ai-save-the-date-video-announcement.jpg",
+        "save-the-date-scene_card-3": "save-the-date-destination-beach-portrait.jpg",
+        "save-the-date-scene_card-4": "hero-ai-save-the-date-garden-portrait.jpg",
+        "save-the-date-scene_card-5": "hero-ai-save-the-date-couple-sunset.jpg",
+        "save-the-date-scene_card-6": "save-the-date-couple-city-walk.jpg"
+      }
+    },
+    "wedding-invitation": {
+      "save_date_hero": {
+        "_section": "hero-ai-wedding-invitation-garden-couple.jpg",
+        "save-the-date-hero-visual-1": "hero-ai-wedding-invitation-garden-couple.jpg",
+        "save-the-date-hero-visual-2": "hero-ai-wedding-invitation-couple-reviewing.jpg",
+        "save-the-date-hero-visual-3": "hero-ai-wedding-invitation-stationery-suite.jpg"
+      },
+      "save_date_formats": {
+        "_section": "ai-wedding-invitation-card-closeup.jpg",
+        "save-the-date-format-1": "ai-wedding-invitation-card-closeup.jpg",
+        "save-the-date-format-2": "ai-wedding-invitation-design-selection.jpg",
+        "save-the-date-format-3": "ai-wedding-invitation-digital-share.jpg"
+      },
+      "save_date_workflow": {
+        "_section": "hero-ai-wedding-invitation-couple-reviewing.jpg",
+        "save-the-date-step-1": "hero-ai-wedding-invitation-couple-reviewing.jpg",
+        "save-the-date-step-2": "ai-wedding-invitation-design-selection.jpg",
+        "save-the-date-step-3": "ai-wedding-invitation-card-closeup.jpg",
+        "save-the-date-step-4": "ai-wedding-invitation-reception-table.jpg",
+        "save-the-date-step-5": "ai-wedding-invitation-bridesmaid-review.jpg",
+        "save-the-date-step-6": "ai-wedding-invitation-digital-share.jpg"
+      },
+      "save_date_definition": {
+        "_section": "ai-wedding-invitation-complete-suite.jpg"
+      },
+      "save_date_use_cases": {
+        "save-the-date-scene_card-1": "hero-ai-wedding-invitation-garden-couple.jpg",
+        "save-the-date-scene_card-2": "ai-wedding-invitation-digital-share.jpg",
+        "save-the-date-scene_card-3": "ai-wedding-invitation-venue-display.jpg",
+        "save-the-date-scene_card-4": "ai-wedding-invitation-bridesmaid-review.jpg",
+        "save-the-date-scene_card-5": "ai-wedding-invitation-reception-table.jpg",
+        "save-the-date-scene_card-6": "ai-wedding-invitation-complete-suite.jpg"
+      },
+      "save_date_scene_ideas": {
+        "save-the-date-scene_card-1": "hero-ai-wedding-invitation-couple-reviewing.jpg",
+        "save-the-date-scene_card-2": "hero-ai-wedding-invitation-stationery-suite.jpg",
+        "save-the-date-scene_card-3": "ai-wedding-invitation-card-closeup.jpg",
+        "save-the-date-scene_card-4": "ai-wedding-invitation-design-selection.jpg",
+        "save-the-date-scene_card-5": "ai-wedding-invitation-reception-table.jpg",
+        "save-the-date-scene_card-6": "ai-wedding-invitation-bridesmaid-review.jpg",
+        "save-the-date-scene_card-7": "ai-wedding-invitation-digital-share.jpg",
+        "save-the-date-scene_card-8": "ai-wedding-invitation-venue-display.jpg"
+      },
+      "_sectionAliases": {
+        "save_date_hero": "wedding_invitation_hero",
+        "save_date_formats": "wedding_invitation_formats",
+        "save_date_workflow": "wedding_invitation_workflow",
+        "save_date_definition": "wedding_invitation_definition",
+        "save_date_use_cases": "wedding_invitation_use_cases",
+        "save_date_scene_ideas": "wedding_invitation_scene_ideas"
+      },
+      "_blockAliases": {
+        "save_date_hero": {
+          "save-the-date-hero-visual-1": "wedding-invitation-hero-visual-1",
+          "save-the-date-hero-visual-2": "wedding-invitation-hero-visual-2",
+          "save-the-date-hero-visual-3": "wedding-invitation-hero-visual-3"
+        },
+        "save_date_formats": {
+          "save-the-date-format-1": "wedding-invitation-format-1",
+          "save-the-date-format-2": "wedding-invitation-format-2",
+          "save-the-date-format-3": "wedding-invitation-format-3"
+        },
+        "save_date_workflow": {
+          "save-the-date-step-1": "wedding-invitation-step-1",
+          "save-the-date-step-2": "wedding-invitation-step-2",
+          "save-the-date-step-3": "wedding-invitation-step-3",
+          "save-the-date-step-4": "wedding-invitation-step-4",
+          "save-the-date-step-5": "wedding-invitation-step-5",
+          "save-the-date-step-6": "wedding-invitation-step-6"
+        },
+        "save_date_use_cases": {
+          "save-the-date-scene_card-1": "wedding-invitation-use-case-1",
+          "save-the-date-scene_card-2": "wedding-invitation-use-case-2",
+          "save-the-date-scene_card-3": "wedding-invitation-use-case-3",
+          "save-the-date-scene_card-4": "wedding-invitation-use-case-4",
+          "save-the-date-scene_card-5": "wedding-invitation-use-case-5",
+          "save-the-date-scene_card-6": "wedding-invitation-use-case-6"
+        },
+        "save_date_scene_ideas": {
+          "save-the-date-scene_card-1": "wedding-invitation-scene-1",
+          "save-the-date-scene_card-2": "wedding-invitation-scene-2",
+          "save-the-date-scene_card-3": "wedding-invitation-scene-3",
+          "save-the-date-scene_card-4": "wedding-invitation-scene-4",
+          "save-the-date-scene_card-5": "wedding-invitation-scene-5",
+          "save-the-date-scene_card-6": "wedding-invitation-scene-6",
+          "save-the-date-scene_card-7": "wedding-invitation-scene-7",
+          "save-the-date-scene_card-8": "wedding-invitation-scene-8"
+        }
+      }
+    },
+    "wedding-ceremony": {
+      "wedding_ceremony_reasons": {
+        "wedding-ceremony-reasons-1": "hero-ai-wedding-ceremony-recessional.jpg",
+        "wedding-ceremony-reasons-2": "hero-ai-wedding-ceremony-vows.jpg",
+        "wedding-ceremony-reasons-3": "wedding-ceremony-beach-processional.jpg",
+        "wedding-ceremony-reasons-4": "wedding-ceremony-church-atmosphere.jpg",
+        "wedding-ceremony-reasons-5": "wedding-ceremony-guests-reaction.jpg",
+        "wedding-ceremony-reasons-6": "wedding-ceremony-bouquet-detail.jpg"
+      },
+      "wedding_ceremony_scene_ideas": {
+        "wedding-ceremony-scene-ideas-1": "hero-ai-wedding-ceremony-first-kiss.jpg",
+        "wedding-ceremony-scene-ideas-2": "hero-ai-wedding-ceremony-recessional.jpg",
+        "wedding-ceremony-scene-ideas-3": "hero-ai-wedding-ceremony-vows.jpg",
+        "wedding-ceremony-scene-ideas-4": "wedding-ceremony-ring-exchange.jpg",
+        "wedding-ceremony-scene-ideas-5": "wedding-ceremony-church-atmosphere.jpg",
+        "wedding-ceremony-scene-ideas-6": "wedding-ceremony-bride-aisle.jpg",
+        "wedding-ceremony-scene-ideas-7": "wedding-ceremony-guests-reaction.jpg",
+        "wedding-ceremony-scene-ideas-8": "wedding-ceremony-bouquet-detail.jpg",
+        "wedding-ceremony-scene-ideas-9": "wedding-ceremony-venue-setup.jpg",
+        "wedding-ceremony-scene-ideas-10": "wedding-ceremony-officiant-wide.jpg",
+        "wedding-ceremony-scene-ideas-11": "wedding-ceremony-beach-processional.jpg"
+      }
+    },
+    "christmas": {
+      "christmas_workflow": {
+        "christmas-step-1": "ai-christmas-cozy-cocoa-portrait.jpg",
+        "christmas-step-2": "ai-christmas-dog-santa-hat.jpg",
+        "christmas-step-3": "ai-christmas-photo-capture.jpg",
+        "christmas-step-4": "hero-ai-christmas-family-gift.jpg",
+        "christmas-step-5": "ai-christmas-gift-wrapping.jpg",
+        "christmas-step-6": "ai-christmas-friends-selfie.jpg",
+        "christmas-step-7": "ai-christmas-kids-baking-cookies.jpg"
+      },
+      "christmas_scene_ideas": {
+        "christmas-scene-ideas-1": "hero-ai-christmas-family-gift.jpg",
+        "christmas-scene-ideas-2": "hero-ai-christmas-snowy-cabin.jpg",
+        "christmas-scene-ideas-3": "hero-ai-christmas-santa-lantern.jpg",
+        "christmas-scene-ideas-4": "ai-christmas-cozy-cocoa-portrait.jpg",
+        "christmas-scene-ideas-5": "ai-christmas-dog-santa-hat.jpg",
+        "christmas-scene-ideas-6": "ai-christmas-photo-capture.jpg",
+        "christmas-scene-ideas-7": "ai-christmas-gift-wrapping.jpg",
+        "christmas-scene-ideas-8": "ai-christmas-couple-market-lights.jpg",
+        "christmas-scene-ideas-9": "ai-christmas-kids-baking-cookies.jpg",
+        "christmas-scene-ideas-10": "ai-christmas-living-room-fireplace.jpg",
+        "christmas-scene-ideas-11": "ai-christmas-friends-selfie.jpg"
+      }
+    },
+    "halloween": {
+      "halloween_use_cases": {
+        "halloween-use_case-1": "ai-halloween-pumpkin-portrait.jpg",
+        "halloween-use_case-2": "hero-ai-halloween-costume-party.jpg",
+        "halloween-use_case-3": "hero-ai-halloween-couple-cosplay.jpg",
+        "halloween-use_case-4": "ai-halloween-bat-costume-child.jpg",
+        "halloween-use_case-5": "ai-halloween-vampire-dog.jpg",
+        "halloween-use_case-6": "ai-halloween-neon-party-costumes.jpg",
+        "halloween-use_case-7": "ai-halloween-haunted-house-night.jpg",
+        "halloween-use_case-8": "ai-halloween-pumpkin-wagon-night.jpg"
+      },
+      "halloween_scene_ideas": {
+        "halloween-scene-1": "hero-ai-halloween-costume-party.jpg",
+        "halloween-scene-2": "hero-ai-halloween-couple-cosplay.jpg",
+        "halloween-scene-3": "hero-ai-halloween-ghost-dog.jpg",
+        "halloween-scene-4": "ai-halloween-trick-or-treat-vintage.jpg",
+        "halloween-scene-5": "ai-halloween-pumpkin-portrait.jpg",
+        "halloween-scene-6": "ai-halloween-baby-skeleton-costumes.jpg",
+        "halloween-scene-7": "ai-halloween-haunted-house-night.jpg",
+        "halloween-scene-8": "ai-halloween-pumpkin-wagon-night.jpg",
+        "halloween-scene-9": "ai-halloween-neon-party-costumes.jpg"
+      }
+    },
+    "thanksgiving": {
+      "thanksgiving_workflow": {
+        "thanksgiving-step-1": "ai-thanksgiving-harvest-decor.jpg",
+        "thanksgiving-step-2": "ai-thanksgiving-family-cooking.jpg",
+        "thanksgiving-step-3": "ai-thanksgiving-friendsgiving-toast.jpg",
+        "thanksgiving-step-4": "ai-thanksgiving-home-decor.jpg",
+        "thanksgiving-step-5": "ai-thanksgiving-table-photo.jpg",
+        "thanksgiving-step-6": "ai-thanksgiving-family-autumn-walk.jpg"
+      },
+      "thanksgiving_use_cases": {
+        "thanksgiving-use-cases-1": "hero-ai-thanksgiving-family-dinner.jpg",
+        "thanksgiving-use-cases-2": "ai-thanksgiving-friendsgiving-toast.jpg",
+        "thanksgiving-use-cases-3": "ai-thanksgiving-turkey-feast.jpg",
+        "thanksgiving-use-cases-4": "hero-ai-thanksgiving-greeting-card.jpg",
+        "thanksgiving-use-cases-5": "ai-thanksgiving-home-decor.jpg",
+        "thanksgiving-use-cases-6": "ai-thanksgiving-family-cooking.jpg"
+      },
+      "thanksgiving_scene_ideas": {
+        "thanksgiving-scene-ideas-1": "hero-ai-thanksgiving-family-dinner.jpg",
+        "thanksgiving-scene-ideas-2": "hero-ai-thanksgiving-kids-pumpkins.jpg",
+        "thanksgiving-scene-ideas-3": "hero-ai-thanksgiving-greeting-card.jpg",
+        "thanksgiving-scene-ideas-4": "ai-thanksgiving-turkey-feast.jpg",
+        "thanksgiving-scene-ideas-5": "ai-thanksgiving-family-cooking.jpg",
+        "thanksgiving-scene-ideas-6": "ai-thanksgiving-harvest-decor.jpg",
+        "thanksgiving-scene-ideas-7": "ai-thanksgiving-table-photo.jpg",
+        "thanksgiving-scene-ideas-8": "ai-thanksgiving-friendsgiving-toast.jpg",
+        "thanksgiving-scene-ideas-9": "ai-thanksgiving-home-decor.jpg",
+        "thanksgiving-scene-ideas-10": "ai-thanksgiving-dog-porch.jpg",
+        "thanksgiving-scene-ideas-11": "ai-thanksgiving-family-autumn-walk.jpg"
+      }
+    },
+    "new-year": {
+      "new_year_workflow": {
+        "new-year-step-1": "ai-new-year-goals-planning.jpg",
+        "new-year-step-2": "ai-new-year-cozy-morning.jpg",
+        "new-year-step-3": "ai-new-year-city-countdown-crowd.jpg",
+        "new-year-step-4": "ai-new-year-sparkler-closeup.jpg",
+        "new-year-step-5": "hero-ai-new-year-party-sparklers.jpg",
+        "new-year-step-6": "ai-new-year-greeting-card-flatlay.jpg",
+        "new-year-step-7": "ai-new-year-champagne-toast.jpg"
+      },
+      "new_year_scene_ideas": {
+        "new-year-scene-1": "hero-ai-new-year-city-fireworks.jpg",
+        "new-year-scene-2": "hero-ai-new-year-party-sparklers.jpg",
+        "new-year-scene-3": "hero-ai-new-year-family-celebration.jpg",
+        "new-year-scene-4": "ai-new-year-cozy-morning.jpg",
+        "new-year-scene-5": "ai-new-year-goals-planning.jpg",
+        "new-year-scene-6": "ai-new-year-city-countdown-crowd.jpg",
+        "new-year-scene-7": "ai-new-year-greeting-card-flatlay.jpg",
+        "new-year-scene-8": "ai-new-year-new-beginnings.jpg"
+      }
+    },
+    "mothers-day": {
+      "mothers_day_use_cases": {
+        "mothers-day-editorial-story-grid-1": "ai-mothers-day-family-baking.jpg",
+        "mothers-day-editorial-story-grid-2": "ai-mothers-day-gift-still-life.jpg",
+        "mothers-day-editorial-story-grid-3": "ai-mothers-day-brunch-table.jpg",
+        "mothers-day-editorial-story-grid-4": "hero-ai-mothers-day-gift-breakfast.jpg",
+        "mothers-day-editorial-story-grid-5": "ai-mothers-day-spring-walk.jpg",
+        "mothers-day-editorial-story-grid-6": "ai-mothers-day-phone-photo.jpg"
+      },
+      "mothers_day_scene_ideas": {
+        "mothers-day-editorial-scene-grid-1": "hero-ai-mothers-day-family-breakfast.jpg",
+        "mothers-day-editorial-scene-grid-2": "hero-ai-mothers-day-garden-portrait.jpg",
+        "mothers-day-editorial-scene-grid-3": "hero-ai-mothers-day-gift-breakfast.jpg",
+        "mothers-day-editorial-scene-grid-4": "ai-mothers-day-brunch-table.jpg",
+        "mothers-day-editorial-scene-grid-5": "ai-mothers-day-family-baking.jpg",
+        "mothers-day-editorial-scene-grid-6": "ai-mothers-day-gift-still-life.jpg",
+        "mothers-day-editorial-scene-grid-7": "ai-mothers-day-phone-photo.jpg",
+        "mothers-day-editorial-scene-grid-8": "ai-mothers-day-family-toast.jpg",
+        "mothers-day-editorial-scene-grid-9": "ai-mothers-day-cozy-living-room.jpg",
+        "mothers-day-editorial-scene-grid-10": "ai-mothers-day-pet-portrait.jpg",
+        "mothers-day-editorial-scene-grid-11": "ai-mothers-day-spring-walk.jpg"
+      }
+    },
+    "fathers-day": {
+      "fathers_day_scene_ideas": {
+        "fathers-day-editorial-scene-grid-1": "hero-ai-fathers-day-family-portrait.jpg",
+        "fathers-day-editorial-scene-grid-2": "hero-ai-fathers-day-gift-moment.jpg",
+        "fathers-day-editorial-scene-grid-3": "ai-fathers-day-woodworking-bond.jpg",
+        "fathers-day-editorial-scene-grid-4": "ai-fathers-day-lakeside-fishing.jpg",
+        "fathers-day-editorial-scene-grid-5": "ai-fathers-day-baking-together.jpg",
+        "fathers-day-editorial-scene-grid-6": "ai-fathers-day-picnic-park.jpg",
+        "fathers-day-editorial-scene-grid-7": "ai-fathers-day-gift-flatlay.jpg",
+        "fathers-day-editorial-scene-grid-8": "ai-fathers-day-emotional-card.jpg",
+        "fathers-day-editorial-scene-grid-9": "ai-fathers-day-backyard-bbq.jpg"
+      }
+    }
+  }
+}

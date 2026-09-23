@@ -8,6 +8,8 @@ import path from "node:path";
 import sharp from "sharp";
 import { PrismaClient } from "@prisma/client";
 import { assertDatabaseTarget, assertNonProductionWriteTarget } from "./lib/database-target.mjs";
+import { assertProviderAspectRatio } from "./lib/provider-image-output.mjs";
+import { assertAidreamcapesEuHomepageIntegrity } from "./lib/aidreamcapes-eu-homepage-integrity.mjs";
 
 const SITE_ID = "site_aidreamcapes_xby";
 const SITE_ASSET_SLUG = "site_aidreamcapes_eu";
@@ -387,8 +389,17 @@ async function main() {
     if (APPLY) {
       fs.mkdirSync(RECOVERY_FS_ROOT, { recursive: true });
       for (const item of generated) {
+        await assertProviderAspectRatio({
+          filePath: item.item.task.stageFile,
+          expectedWidth: 3840,
+          expectedHeight: 2160,
+          label: item.item.task.stageFile
+        });
         if (!fs.existsSync(item.targetFile)) {
-          await sharp(item.item.task.stageFile).resize(3840, 2160, { fit: "cover", position: "centre" }).jpeg({ quality: 90, mozjpeg: true }).toFile(item.targetFile);
+          await sharp(item.item.task.stageFile)
+            .resize(3840, 2160, { fit: "inside", withoutEnlargement: false })
+            .jpeg({ quality: 90, mozjpeg: true })
+            .toFile(item.targetFile);
         }
         const metadata = await sharp(item.targetFile).metadata();
         assert.equal(metadata.width, 3840, `Recovered asset width mismatch: ${item.targetFile}`);
@@ -437,6 +448,7 @@ async function main() {
             update: { previewUrl: assetUrl, originUrl: assetUrl, altText: altMap.get(assetUrl), sourceType: "aidreamcapes-eu-existing-local-asset-reused" }
           });
         }
+        await assertAidreamcapesEuHomepageIntegrity(tx);
       }, { maxWait: 20_000, timeout: 120_000 });
       report.backupPath = backupPath;
     }

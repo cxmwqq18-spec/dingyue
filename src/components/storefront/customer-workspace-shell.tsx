@@ -23,7 +23,7 @@ import { generatedOutputCopy } from "@/lib/generation-output-labels";
 import { isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isFrenchStorefrontSite } from "@/lib/storefront-locale";
 import { frenchCopy } from "@/lib/french-copy";
-import type { CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
+import type { AidreamcapesZipNavigation, CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, Site, SiteAiApp, ThemeRuntimeAsset, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import type { PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
 import { CUSTOMER_VIDEO_FRAME_LIMIT, trimVideoFrameSelection } from "@/lib/video-frame-config";
 import {
@@ -1320,6 +1320,7 @@ function studioGenderLabel(id: string, spanish: boolean): string {
 }
 
 export function CustomerWorkspaceShell({
+  aidreamcapesZipNavigation,
   site,
   customer,
   assets,
@@ -1337,6 +1338,7 @@ export function CustomerWorkspaceShell({
   publishedSaveTheDateGroups,
   publishedSaveTheDateMenuLabel = "Save the Date"
 }: {
+  aidreamcapesZipNavigation?: AidreamcapesZipNavigation;
   site: CustomerWorkspaceSite;
   customer: PublicCustomer;
   assets: ThemeRuntimeAsset[];
@@ -3340,7 +3342,7 @@ export function CustomerWorkspaceShell({
   return (
     <div className="min-h-screen bg-[#07090d] font-sans text-white">
       <StorefrontNavigationFeedback />
-      <CustomerShellHeader creativePackCategories={creativePackCategories} creativePacks={creativePacks} customer={workspaceCustomer} publishedSaveTheDateGroups={publishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={publishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={publishedVideoGenerationTopics} site={site} tone="dark" toolMenuItems={toolMenuItems} videoThemeCategories={videoThemeCategories} videoThemes={videoThemes} />
+      <CustomerShellHeader aidreamcapesZipNavigation={aidreamcapesZipNavigation} creativePackCategories={creativePackCategories} creativePacks={creativePacks} customer={workspaceCustomer} publishedSaveTheDateGroups={publishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={publishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={publishedVideoGenerationTopics} site={site} tone="dark" toolMenuItems={toolMenuItems} videoThemeCategories={videoThemeCategories} videoThemes={videoThemes} />
 
       <main className="grid min-h-[calc(100vh-97px)] border-t border-white/8 lg:grid-cols-[430px_minmax(0,1fr)] xl:grid-cols-[450px_minmax(0,1fr)]">
         <aside className="border-b border-white/10 bg-[#0b0c0f] px-3 py-4 lg:sticky lg:top-[98px] lg:h-[calc(100vh-98px)] lg:overflow-y-auto lg:border-b-0 lg:border-r xl:px-4">

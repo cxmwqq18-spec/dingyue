@@ -25,7 +25,8 @@ import { AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation, aidr
 import { AidreamcapesZipHomepageSection } from "@/components/storefront/aidreamcapes-zip-homepage";
 import { AidreamcapesPublicSection } from "@/components/storefront/aidreamcapes-public-section";
 import { AidreamcapesZipFooter, type AidreamcapesZipCompanyProfile, type AidreamcapesZipPaymentMethod, type AidreamcapesZipSocialLink } from "@/components/storefront/aidreamcapes-zip-footer";
-import { AidreamcapesVideoDirectory, type AidreamcapesVideoDirectoryCopy } from "@/components/storefront/aidreamcapes-video-directory";
+import { AidreamcapesVideoDirectory, type AidreamcapesVideoDirectoryCopy, type AidreamcapesVideoThemeCover } from "@/components/storefront/aidreamcapes-video-directory";
+import { AidreamcapesImageDirectory, type AidreamcapesImageDirectoryCard } from "@/components/storefront/aidreamcapes-image-directory";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
@@ -62,8 +63,7 @@ import {
   aidreamshootsEngagementFrenchCoverAlt,
   aidreamshootsEngagementFrenchImageAlt,
   aidreamshootsEngagementFrenchRelatedLabel,
-  isAidreamshootsEngagementFrenchPage,
-  localizeAidreamshootsEngagementFrenchPageJson
+  isAidreamshootsEngagementFrenchPage
 } from "@/lib/aidreamshoots-engagement-photo-french";
 import {
   storefrontCardImageAlt,
@@ -76,6 +76,8 @@ import {
   storefrontVideoPosterAlt
 } from "@/lib/storefront-media-alt";
 import { GUARDED_STOREFRONT_FOOTER_PATHS } from "@/lib/storefront-global-shell";
+import { storefrontOriginalLogoUrl } from "@/lib/storefront-brand-assets";
+import { storefrontResponsiveImageDimensions, storefrontResponsiveImageSet } from "@/lib/storefront-responsive-images";
 import {
   AlertTriangle,
   ArrowRight,
@@ -214,6 +216,8 @@ export function ThemeRenderer({
   navigationVideoThemeCategories,
   navigationVideoThemes,
   navigationVideoGenerationTopics,
+  aidreamcapesImageDirectoryCards,
+  aidreamcapesVideoThemeCovers,
   toolMenuItems = [],
   runtime,
   mode = "published",
@@ -223,6 +227,7 @@ export function ThemeRenderer({
   lightweightChrome = false,
   previewSelection,
   previewEmptyState,
+  publishedIndexablePaths,
   storefrontContext
 }: {
   site: Site;
@@ -241,6 +246,8 @@ export function ThemeRenderer({
   navigationVideoThemeCategories?: VideoThemeCategory[];
   navigationVideoThemes?: VideoTheme[];
   navigationVideoGenerationTopics?: HeaderVideoGenerationTopic[];
+  aidreamcapesImageDirectoryCards?: AidreamcapesImageDirectoryCard[];
+  aidreamcapesVideoThemeCovers?: Record<string, AidreamcapesVideoThemeCover>;
   toolMenuItems?: ToolMenuItem[];
   runtime?: ThemeRuntimeData;
   mode?: "published" | "preview";
@@ -253,16 +260,14 @@ export function ThemeRenderer({
     blockId?: string;
   };
   previewEmptyState?: ReactNode;
+  publishedIndexablePaths?: string[];
   storefrontContext?: StorefrontContext;
 }) {
   const displaySite = mode === "published" ? storefrontPaidSiteCopy(site) : site;
   const normalizedPath = pagePath ?? sitePathFromPage(displaySite, page.pageType);
-  const localizedPage = mode === "published" && isAidreamshootsEngagementFrenchPage(displaySite, normalizedPath)
-    ? localizeAidreamshootsEngagementFrenchPageJson(page)
-    : page;
   const displayPage = mode === "published"
-    ? preserveVendorImageAlts(storefrontBrandPageCopy(displaySite, localizedPage), localizedPage)
-    : localizedPage;
+    ? preserveVendorImageAlts(storefrontBrandPageCopy(displaySite, page), page)
+    : page;
   const isAidreamcapesComPublicPage = displaySite.id === "site_aidreamcapes" && isAidreamcapesComPublicRedesignPath(normalizedPath);
   const entries = isAidreamcapesComPublicPage
     ? getSectionEntries(displayPage)
@@ -291,6 +296,7 @@ export function ThemeRenderer({
     page: displayPage,
     pages: pageNeedsSearchEntries(displayPage) ? searchPageEntriesForSite(displaySite) : []
   };
+  const useAidreamcapesImageDirectory = displaySite.id === "site_aidreamcapes" && normalizedPath === "/ai-image-generation" && Boolean(aidreamcapesImageDirectoryCards?.length);
   const previewHasEmptyBody = mode === "preview" && entries.length === 0;
   return (
     <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
@@ -350,7 +356,9 @@ export function ThemeRenderer({
           } : {})}
         >
           <DreamshootShowcasePreviewClient className="contents">
-            {entries.length ? entries.map(([id, section]) => {
+            {useAidreamcapesImageDirectory ? (
+              <AidreamcapesImageDirectory cards={aidreamcapesImageDirectoryCards ?? []} sectionId="image-theme-directory" />
+            ) : entries.length ? entries.map(([id, section]) => {
               return (
                 <ThemeSectionFrame
                   creativePackCategories={creativePackCategories}
@@ -361,6 +369,7 @@ export function ThemeRenderer({
                   mode={mode}
                   previewSelection={previewSelection}
                   products={products}
+                  publishedIndexablePaths={publishedIndexablePaths}
                   renderContext={renderContext}
                   storefrontContext={storefrontContext}
                   runtime={runtime}
@@ -371,6 +380,8 @@ export function ThemeRenderer({
                   videoThemeCategories={videoThemeCategories}
                   videoThemes={videoThemes}
                   homepageShowcases={homepageShowcases}
+                  aidreamcapesImageDirectoryCards={aidreamcapesImageDirectoryCards}
+                  aidreamcapesVideoThemeCovers={aidreamcapesVideoThemeCovers}
                   saveTheDateNavigationGroups={settings.saveTheDateNavigation?.groups ?? []}
                   aidreamcapesVideoNavigation={settings.aidreamcapesZipNavigation}
                   videoGenerationTopics={navigationVideoGenerationTopics}
@@ -426,6 +437,8 @@ type ThemeSectionFrameProps = {
   saveTheDateNavigationGroups?: SaveTheDateNavigationGroup[];
   aidreamcapesVideoNavigation?: AidreamcapesZipNavigation;
   videoGenerationTopics?: HeaderVideoGenerationTopic[];
+  aidreamcapesImageDirectoryCards?: AidreamcapesImageDirectoryCard[];
+  aidreamcapesVideoThemeCovers?: Record<string, AidreamcapesVideoThemeCover>;
   runtime?: ThemeRuntimeData;
   lazyRender?: boolean;
   mode: "published" | "preview";
@@ -435,6 +448,7 @@ type ThemeSectionFrameProps = {
     sectionId?: string;
     blockId?: string;
   };
+  publishedIndexablePaths?: string[];
 };
 
 type RenderContext = {
@@ -632,6 +646,8 @@ function normalizedHeadingLevel(value: string, fallback: "h1" | "h2"): "h1" | "h
   return value === "h1" || value === "h2" ? value : fallback;
 }
 
+const aidreamshootsHeadingH2Pages = new Set(["/about-us", "/contact-us", "/creators-circle", "/tools", "/workflow"]);
+
 function primaryRichTextFallbackHeadingLevel(sectionId: string, page: ThemePageJson, pagePath: string): "h1" | "h2" {
   const semanticH1Paths = new Set(["/about-us", "/contact-us", "/digital-delivery", "/shipping", "/faq", "/help", "/search", "/cart", "/blog"]);
   const firstRichTextId = page.sectionsOrder.find((candidateId: string) => page.sections[candidateId]?.type === "rich_text");
@@ -809,7 +825,7 @@ function runtimeWithOnlyShellState(runtime: ThemeRuntimeData): ThemeRuntimeData 
   };
 }
 
-export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, homepageShowcases, saveTheDateNavigationGroups = [], aidreamcapesVideoNavigation, videoGenerationTopics, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection }: ThemeSectionFrameProps) {
+export function ThemeSectionFrame({ id, section, site, products, siteAiApps, toolMenuItems, creativePackCategories, creativePacks, videoThemeCategories, videoThemes, homepageShowcases, saveTheDateNavigationGroups = [], aidreamcapesVideoNavigation, videoGenerationTopics, aidreamcapesImageDirectoryCards, aidreamcapesVideoThemeCovers, runtime, lazyRender = false, mode, renderContext, storefrontContext, previewSelection, publishedIndexablePaths }: ThemeSectionFrameProps) {
   const sectionType = canonicalSectionType(section.type);
   const pagePath = renderContext.pagePath;
   const allowLazyRender = lazyRender && !(isPublicSeoRoute(pagePath) && publicSeoCriticalSectionTypes.has(sectionType));
@@ -834,6 +850,7 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
           id={id}
           mode={mode}
           products={sectionTypesUsingProducts.has(sectionType) ? products : []}
+          publishedIndexablePaths={publishedIndexablePaths}
           renderContext={renderContext}
           storefrontContext={storefrontContext}
           runtime={runtimeForSection(section, runtime)}
@@ -847,6 +864,8 @@ export function ThemeSectionFrame({ id, section, site, products, siteAiApps, too
           saveTheDateNavigationGroups={saveTheDateNavigationGroups}
           aidreamcapesVideoNavigation={aidreamcapesVideoNavigation}
           videoGenerationTopics={videoGenerationTopics}
+          aidreamcapesImageDirectoryCards={aidreamcapesImageDirectoryCards}
+          aidreamcapesVideoThemeCovers={aidreamcapesVideoThemeCovers}
         />
       </DreamshootShowcasePreview>
     </div>
@@ -941,28 +960,15 @@ function sectionEditorAttrs(mode: "published" | "preview", id: string, type: str
   };
 }
 
-function AidreamcapesLogoMark({ ariaLabel = "Aidreamcapes logo", className = "h-full w-full" }: { ariaLabel?: string; className?: string }) {
+function AidreamcapesLogoMark({ site, ariaLabel = "Aidreamcapes logo", className = "h-full w-full" }: { site: Pick<Site, "id" | "slug" | "primaryDomain">; ariaLabel?: string; className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 512 512" role="img" aria-label={ariaLabel}>
-      <defs>
-        <linearGradient id="aidreamcapes-logo-mark-gradient" x1="84" y1="76" x2="424" y2="436" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#fff0b8" />
-          <stop offset="0.38" stopColor="#ff75b7" />
-          <stop offset="1" stopColor="#8a7cff" />
-        </linearGradient>
-        <radialGradient id="aidreamcapes-logo-mark-aura" cx="0" cy="0" r="1" gradientTransform="matrix(176 0 0 176 250 232)" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#ffffff" stopOpacity="0.9" />
-          <stop offset="0.55" stopColor="#b8f7ff" stopOpacity="0.25" />
-          <stop offset="1" stopColor="#22d3ee" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      <rect width="512" height="512" rx="118" fill="#080a12" />
-      <circle cx="256" cy="256" r="162" fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="30" />
-      <circle cx="256" cy="256" r="82" fill="none" stroke="#ffffff" strokeWidth="23" opacity="0.95" />
-      <circle cx="256" cy="256" r="34" fill="url(#aidreamcapes-logo-mark-aura)" />
-      <path d="M337 142v34M320 159h34M153 356v27M139 370h27" fill="none" stroke="url(#aidreamcapes-logo-mark-gradient)" strokeWidth="13" strokeLinecap="round" />
-      <path d="M142 218h58M312 338h58" fill="none" stroke="#ffffff" strokeWidth="17" strokeLinecap="round" opacity="0.76" />
-    </svg>
+    <img
+      className={className}
+      src={storefrontOriginalLogoUrl(site) ?? "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919original"}
+      alt={ariaLabel}
+      width={512}
+      height={512}
+    />
   );
 }
 
@@ -1030,8 +1036,9 @@ function headerToolMegaItemsForClient(site: Site, tools: SectionBlockInstance[],
 
 function headerVideoGenerationTopicsForClient(site: Site, categories: VideoThemeCategory[], themes: VideoTheme[]): HeaderVideoGenerationTopic[] {
   const aidreamcapes = isAidreamcapesCapabilitySite(site);
+  const frenchXby = isFrenchStorefrontSite(site);
   const aidreamshootsXby = site.id === "site_mydreamshoots_xby";
-  if (site.id !== "site_dreamshoot" && !aidreamcapes && !aidreamshootsXby) return [];
+  if (site.id !== "site_dreamshoot" && !aidreamcapes && !frenchXby && !aidreamshootsXby) return [];
   const categoriesBySlug = new Map(categories.map((category) => [category.slug, category]));
   const categoriesById = new Map(categories.map((category) => [category.id, category]));
   const parentDefinitionsBySlug = new Map<string, (typeof mydreamshootsVideoGenerationParentCategories)[number]>(
@@ -1563,11 +1570,12 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const configuredLogoImageUrl = header ? setting(header, "logoImageUrl", "") : "";
   const brandingLogoImageUrl = (site.branding as { logoImageUrl?: string }).logoImageUrl || "";
   const dreamshootDefaultLogoImageUrl = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b";
-  const logoImageUrl = isAidreamcapes
+  const preferredBrandLogoImageUrl = storefrontOriginalLogoUrl(site) ?? "";
+  const logoImageUrl = preferredBrandLogoImageUrl || (isAidreamcapes
     ? brandingLogoImageUrl || configuredLogoImageUrl
     : isDreamShoot
       ? configuredLogoImageUrl || brandingLogoImageUrl || dreamshootDefaultLogoImageUrl
-      : configuredLogoImageUrl || brandingLogoImageUrl;
+      : configuredLogoImageUrl || brandingLogoImageUrl);
   const readableBrandTitle = spanishXby
     ? site.branding.logoText || site.name
     : isDreamShoot
@@ -1677,7 +1685,10 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
           }
         >
           {isAidreamcapesCom ? (
-            <span>{visualBrandTitle}</span>
+            <>
+              <AidreamcapesLogoMark site={site} ariaLabel={logoAlt} className="h-8 w-8 shrink-0 object-contain" />
+              <span>{visualBrandTitle}</span>
+            </>
           ) : dark || lightCommerce || isAidreamcapes || isDreamShoot ? (
             <>
               {isAidreamcapes && !spanishXby ? (
@@ -1688,7 +1699,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                       : "flex h-7 w-7 shrink-0 items-center justify-center sm:h-8 sm:w-8"
                   }
                 >
-                  <AidreamcapesLogoMark ariaLabel={logoAlt} className="h-full w-full object-contain" />
+                  <AidreamcapesLogoMark site={site} ariaLabel={logoAlt} className="h-full w-full object-contain" />
                 </span>
               ) : logoImageUrl ? (
                 <span
@@ -1813,7 +1824,8 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                      topics={videoGenerationMenuTopics}
 	                      ctaHref={hrefFor(site, "/ai-video-generation")}
                       ctaLabel={frenchHeader ? "Voir tous les thèmes" : aidreamshootsXby ? "Ver todos los temas" : "View all themes"}
-                      spanish={frenchHeader ? false : aidreamshootsXby}
+	                      french={frenchHeader}
+	                      spanish={frenchHeader ? false : aidreamshootsXby}
 	                      variantTone="dark"
 	                    />
 	                  ) : deferMegaMenuPanels ? (
@@ -2201,10 +2213,9 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
   const configuredFooterLogoImageUrl = footer ? setting(footer, "logoImageUrl", "") : "";
   const brandingFooterLogoImageUrl = (site.branding as { logoImageUrl?: string }).logoImageUrl || "";
   const defaultDreamShootFooterLogo = isDreamShootFooter ? "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b" : "";
-  const defaultAidreamcapesFooterLogo = isAidreamcapesFooter
-    ? (frenchXbyFooter ? "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-logo-refined.svg?v=20260717a" : "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c")
-    : "";
-  const logoImageUrl = configuredFooterLogoImageUrl || brandingFooterLogoImageUrl || defaultDreamShootFooterLogo || defaultAidreamcapesFooterLogo;
+  const defaultAidreamcapesFooterLogo = isAidreamcapesFooter ? storefrontOriginalLogoUrl(site) ?? "" : "";
+  const preferredFooterLogoImageUrl = storefrontOriginalLogoUrl(site) ?? "";
+  const logoImageUrl = preferredFooterLogoImageUrl || configuredFooterLogoImageUrl || brandingFooterLogoImageUrl || defaultDreamShootFooterLogo || defaultAidreamcapesFooterLogo;
   const defaultFooterLogoAlt = isDreamShootFooter
     ? "myDreamshoots heart camera logo"
     : isAidreamcapesFooter
@@ -2397,7 +2408,9 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
               ["Política de privacidad", "/privacy", "support"],
               ["Política de contenido", "/content", "support"],
               ["Términos de servicio", "/terms", "support"],
-              ["Política de cookies", "/cookies", "support"]
+              ["Política de cookies", "/cookies", "support"],
+              ["Privacidad infantil", "/children-privacy", "support"],
+              ["Derechos de privacidad estatal", "/state-privacy", "support"]
             ]
         : isAidreamcapesFooter
         ? [
@@ -2604,8 +2617,10 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
     if (spanishXbyFooter && normalizedHref === "/faq") return "Preguntas frecuentes";
     if (spanishXbyFooter && normalizedHref === "/privacy") return "Política de privacidad";
 	    if (spanishXbyFooter && normalizedHref === "/terms") return "Términos de servicio";
-	    if (spanishXbyFooter && normalizedHref === "/cookies") return "Política de cookies";
+    if (spanishXbyFooter && normalizedHref === "/cookies") return "Política de cookies";
     if (spanishXbyFooter && normalizedHref === "/digital-delivery") return "Política de entrega digital";
+    if (spanishXbyFooter && normalizedHref === "/children-privacy") return "Privacidad infantil";
+    if (spanishXbyFooter && normalizedHref === "/state-privacy") return "Derechos de privacidad estatal";
     if (normalizedHref === "/privacy") return "Privacy Policy";
     if (normalizedHref === "/terms") return "Terms of Service";
     if (normalizedHref === "/cookies") return "Cookie Policy";
@@ -2644,7 +2659,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
           <div className="max-w-[24rem]">
             <div className="flex items-center gap-3.5">
               {isAidreamcapesFooter && !spanishXbyFooter ? (
-                <AidreamcapesLogoMark ariaLabel={logoAlt} className="h-10 w-10 shrink-0 object-contain" />
+                <AidreamcapesLogoMark site={site} ariaLabel={logoAlt} className="h-10 w-10 shrink-0 object-contain" />
               ) : logoImageUrl ? (
                 <img className={isAidreamcapesFooter ? "h-10 w-10 shrink-0 object-contain" : "h-12 w-12 shrink-0 rounded-[15px] object-contain"} src={mediaAssetUrl(site, logoImageUrl)} alt={logoAlt} width={isAidreamcapesFooter ? 40 : 48} height={isAidreamcapesFooter ? 40 : 48} />
               ) : (
@@ -2795,7 +2810,12 @@ const spanishRuntimeVisibleKeyPattern = /(?:title|name|description|subtitle|body
 const spanishRuntimeMachineKeyPattern = /^(?:id|siteId|href|url|imageUrl|videoUrl|posterUrl|src|type|layout|tone|surface|anchor|pageType|productType|billingCycle|defaultBillingCycle|aiAppSlug|source|status|variant|fieldType|headingLevel|index|limit|count|sortOrder|slug|canonicalPath|routeKey)$/i;
 
 function spanishRuntimeCopy(value: string, key = "", site?: Site): string {
-  if (!value || !site || !isSpanishXbySite(site)) return value;
+  // Published page JSON is already translated by the source-preserving sync
+  // pipeline. Runtime rendering must not rewrite page-authored copy or invent
+  // a generic Spanish replacement when a source field is missing.
+  return value;
+  /* Legacy runtime repair rules intentionally remain unreachable until removed. */
+  if (!value || !site || !isSpanishXbySite(site as Site)) return value;
   if (!spanishRuntimeVisibleKeyPattern.test(key) || spanishRuntimeMachineKeyPattern.test(key)) return value;
   const normalized = value.replace(/\s+/g, " ").trim();
   const exact: Record<string, string> = {
@@ -3362,26 +3382,29 @@ function mirroredFrenchEuDreamshootAssetUrl(value: string): string {
 }
 
 const aidreamcapesEuCommonImageBySlug: Record<string, string> = {
-  "fan-scene-albums": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/only-fans/cover-751be524992d-only-fans-cover-home-musician.jpg?v=20260916euimagepack4k1",
-  "private-fan-scene-album": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/only-fans/cover-751be524992d-only-fans-cover-home-musician.jpg?v=20260916euimagepack4k1",
-  "private-fan-scene-albums": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/only-fans/cover-751be524992d-only-fans-cover-home-musician.jpg?v=20260916euimagepack4k1",
-  "game-day-group-photos": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/soccer/cover-a21c7b9b1ad1-soccer-cover-stadium-scarf.jpg?v=20260916euimagepack4k1",
-  "game-day-group-portraits": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/soccer/cover-a21c7b9b1ad1-soccer-cover-stadium-scarf.jpg?v=20260916euimagepack4k1",
-  "premiere-style-portraits": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/gala-photo/cover-5b9863721f87-gala-photo-cover-red-carpet-steps.jpg?v=20260916euimagepack4k1",
-  "premiere-flash-portraits": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/gala-photo/cover-5b9863721f87-gala-photo-cover-red-carpet-steps.jpg?v=20260916euimagepack4k1",
-  "christmas-holiday-albums": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/christmas-photo/cover-414936c66db4-seasonal-be76f6d3ee.jpg?v=20260916euimagepack4k1",
-  "christmas-group-albums": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/christmas-photo/cover-414936c66db4-seasonal-be76f6d3ee.jpg?v=20260916euimagepack4k1",
-  "thanksgiving-memory-sets": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/cover-0787b71b581c-seasonal-2b3549dc37.jpg?v=20260916euimagepack4k1",
-  "thanksgiving-table-keepsakes": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/cover-0787b71b581c-seasonal-2b3549dc37.jpg?v=20260916euimagepack4k1",
-  "halloween-party-portraits": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/halloween-photo/cover-e45b5bb0a588-seasonal-fd5c22148e.jpg?v=20260916euimagepack4k1",
-  "halloween-party-portrait-sets": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/halloween-photo/cover-e45b5bb0a588-seasonal-fd5c22148e.jpg?v=20260916euimagepack4k1",
-  "seasonal-celebration-photos": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/holiday/cover-893fb697d662-holiday-cover-winter-window.jpg?v=20260916euimagepack4k1",
-  "birthday-fan-moment-sets": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/holiday/cover-893fb697d662-holiday-cover-winter-window.jpg?v=20260916euimagepack4k1",
-  engagement: "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/cover-be44f26040d5-occasion-6adcf48854.jpg?v=20260916euimagepack4k1",
-  "valentine-photos": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/valentines-photo/cover-54ae0fb62bf7-occasion-3cf2a1d4ea.jpg?v=20260916euimagepack4k1",
-  "halloween-party-photos": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/halloween-photo/cover-e45b5bb0a588-seasonal-fd5c22148e.jpg?v=20260916euimagepack4k1",
-  "thanksgiving-group-photos": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/cover-0787b71b581c-seasonal-2b3549dc37.jpg?v=20260916euimagepack4k1",
-  "profile-cards": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/avatar/cover-333df83b69eb-avatar-cover-cobalt-studio.jpg?v=20260916euimagepack4k1"
+  "fan-scene-albums": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/only-fans/cover-only-fans-cover-home-musician.webp?v=aidreamcapes-eu-no-crop-v1",
+  "private-fan-scene-album": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/only-fans/cover-only-fans-cover-home-musician.webp?v=aidreamcapes-eu-no-crop-v1",
+  "private-fan-scene-albums": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/only-fans/cover-only-fans-cover-home-musician.webp?v=aidreamcapes-eu-no-crop-v1",
+  "game-day-group-photos": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/soccer/cover-soccer-cover-stadium-scarf.webp?v=aidreamcapes-eu-no-crop-v1",
+  "game-day-group-portraits": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/soccer/cover-soccer-cover-stadium-scarf.webp?v=aidreamcapes-eu-no-crop-v1",
+  "premiere-style-portraits": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/gala-photo/cover-gala-photo-cover-red-carpet-steps.webp?v=aidreamcapes-eu-no-crop-v1",
+  "premiere-flash-portraits": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/gala-photo/cover-gala-photo-cover-red-carpet-steps.webp?v=aidreamcapes-eu-no-crop-v1",
+  "christmas-holiday-albums": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/christmas-photo/cover-seasonal-be76f6d3ee.webp?v=aidreamcapes-eu-no-crop-v1",
+  "christmas-group-albums": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/christmas-photo/cover-seasonal-be76f6d3ee.webp?v=aidreamcapes-eu-no-crop-v1",
+  "thanksgiving-memory-sets": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/thanksgiving-photo/cover-seasonal-2b3549dc37.webp?v=aidreamcapes-eu-no-crop-v1",
+  "thanksgiving-table-keepsakes": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/thanksgiving-photo/cover-seasonal-2b3549dc37.webp?v=aidreamcapes-eu-no-crop-v1",
+  "halloween-party-portraits": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/halloween-photo/cover-seasonal-fd5c22148e.webp?v=aidreamcapes-eu-no-crop-v1",
+  "halloween-party-portrait-sets": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/halloween-photo/cover-seasonal-fd5c22148e.webp?v=aidreamcapes-eu-no-crop-v1",
+  "seasonal-celebration-photos": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/holiday/cover-holiday-cover-winter-window.webp?v=aidreamcapes-eu-no-crop-v1",
+  "birthday-fan-moment-sets": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/holiday/cover-holiday-cover-winter-window.webp?v=aidreamcapes-eu-no-crop-v1",
+  engagement: "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/engagement-photo/cover-occasion-6adcf48854.webp?v=aidreamcapes-eu-no-crop-v1",
+  "valentine-photos": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/valentines-photo/cover-occasion-3cf2a1d4ea.webp?v=aidreamcapes-eu-no-crop-v1",
+  "halloween-party-photos": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/halloween-photo/cover-seasonal-fd5c22148e.webp?v=aidreamcapes-eu-no-crop-v1",
+  "thanksgiving-group-photos": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/thanksgiving-photo/cover-seasonal-2b3549dc37.webp?v=aidreamcapes-eu-no-crop-v1",
+  "profile-cards": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/avatar/cover-avatar-cover-cobalt-studio.webp?v=aidreamcapes-eu-no-crop-v1",
+  "portrait-professionnel": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/4916dfeaf3ca-polished-professional-headshot.webp?v=aidreamcapes-eu-provider-4k-20260916-v1",
+  "virtuel-essai": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/beea80062dd5-virtual-try-on-01.webp?v=aidreamcapes-eu-provider-4k-20260916-v1",
+  "noel-photo": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/a707445975aa-christmas-couple-cover.webp?v=aidreamcapes-eu-provider-4k-20260916-v1"
 };
 
 function aidreamcapesEuCommonImageForSite(site: Site, value: string): string | undefined {
@@ -3439,15 +3462,23 @@ const aidreamshootsLegacyMediaReplacements: Record<string, string> = {
   // The video directory keeps presentation-ready cover overrides in code.
   // Keep those overrides scoped to the Spanish storefront while pointing at
   // the same vendor-generated batch used by its detail pages.
-  "generated/homepage-showcase/posters/first-frame-talking-photo.jpg": aidreamshootsLatestMedia.talkingPhoto,
+  "talking-photo/make-a-photo-talk-without-recording-another-take.mp4": "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo.mp4",
+  "cinematic-video/create-a-more-cinematic-video-without-a-full-film-crew.mp4": "/assets/sites/site_aidreamshoots/visuals/cinematic-video/cinematic-video.mp4",
+  "music-video/ai-music-video-generator-for-artist-visuals-and-performance-concepts.mp4": "/assets/sites/site_aidreamshoots/visuals/music-video/music-video.mp4",
+  "tiktok-video/turn-your-photos-and-ideas-into-tiktok-first-videos.mp4": "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video.mp4",
+  "product-video/feature-led-product-showcase.mp4": "/assets/sites/site_aidreamshoots/visuals/product-video/product-video.mp4",
+  "promo-video/promo-video-launch-teaser.mp4": "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video.mp4",
+  "product-ad-video/build-the-ad-around-one-buyer-decision.mp4": "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video.mp4",
+  "instagram-reels/turn-photos-and-ideas-into-reels-that-fit-your-feed.mp4": "/assets/sites/site_aidreamshoots/visuals/instagram-reels/instagram-reels.mp4",
+  "generated/homepage-showcase/posters/first-frame-talking-photo.jpg": "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-cinematic-video.jpg": "/assets/sites/site_aidreamshoots/visuals/cinematic-video/cinematic-video-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-music-video.jpg": "/assets/sites/site_aidreamshoots/visuals/music-video/music-video-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-tiktok-video.jpg": "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-instagram-reels.jpg": "/assets/sites/site_aidreamshoots/visuals/instagram-reels/instagram-reels-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-product-video.jpg": "/assets/sites/site_aidreamshoots/visuals/product-video/product-video-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-product-ad-video.jpg": "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video-poster.jpg",
+  "generated/homepage-showcase/posters/first-frame-promo-video.jpg": "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video-poster.jpg",
   "generated/homepage-showcase/posters/prompt-directed-motion.webp": aidreamshootsLatestMedia.talkingPhoto,
-  "generated/homepage-showcase/posters/first-frame-cinematic-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/cinematic-video/cinematic-video-01-create-a-more-cinematic-video-without-a-full-film-cr-84e9edc816.webp",
-  "generated/homepage-showcase/posters/first-frame-tiktok-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/tiktok-video/tiktok-video-01-turn-your-photos-and-ideas-into-tiktok-first-videos-7a108dbe77.webp",
-  "generated/homepage-showcase/posters/first-frame-instagram-reels.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/instagram-reels/instagram-reels-01-turn-photos-and-ideas-into-reels-that-fit-your-feed-0f724d6c63.webp",
-  "generated/homepage-showcase/posters/first-frame-product-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/product-video/product-video-01-feature-led-product-showcase-3765370633.webp",
-  "generated/homepage-showcase/posters/first-frame-product-ad-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/product-ad-video/product-ad-video-01-build-the-ad-around-one-buyer-decision-90e0edcd71.webp",
-  "generated/homepage-showcase/posters/first-frame-promo-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/promo-video/promo-video-01-promo-video-launch-teaser-73271ed69f.webp",
-  "generated/homepage-showcase/posters/first-frame-music-video.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/music-video/music-video-01-ai-music-video-generator-for-artist-visuals-and-perf-c12d6d69b3.webp",
   "generated/video-topic-clean/social-media-video/social-media-video-cross-platform-creator.webp": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/social-media-video/social-media-video-01-social-media-video-01-df13318f8b.webp",
   "generated/video-topic-clean/story-video/story-video-story-hero-library-restoration-v2.webp": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/story-video/story-video-01-story-video-story-hero-library-restoration-v2-b2cee36692.webp",
   "fashion-video/fashion-video-duo-frame.jpg": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-other-topics-20260914-v1/fashion-video/fashion-video-01-hero-fashion-video-editorial-frame-ade2d87dc8.webp",
@@ -3627,10 +3658,91 @@ function replaceAidreamshootsLegacyMedia(site: Site, value: string): string {
   return replacement ?? value;
 }
 
-function mediaAssetUrl(site: Site, value: string): string {
+const aidreamcapesEuVisualRepairVersion = "20260918framing2";
+const aidreamcapesEuVisualRepairMap: Record<string, string> = {
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/cover-be44f26040d5-occasion-6adcf48854.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/gallery-12-e35e4615c170-occasion-3021c5800d.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/gallery-03-45ba56e2cbe6-occasion-1bd237fc3f.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/gallery-12-e35e4615c170-occasion-3021c5800d.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/wedding-photo/gallery-03-68cd9180096c-occasion-e9d0e234a7.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/wedding-photo/gallery-05-a9ee5f13ded8-occasion-c19b271be4.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/wedding-photo/gallery-02-2aaaf5436d24-occasion-0f24f72a39.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/wedding-photo/gallery-04-11b505719ac0-occasion-1b23cb461f.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/wedding-photo/gallery-08-f940bc5b1fc6-occasion-bd993fccae.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/wedding-photo/gallery-05-a9ee5f13ded8-occasion-c19b271be4.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/wedding-photo/gallery-09-e4d903840507-occasion-409540fb66.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/wedding-photo/gallery-01-b7e85001d26f-occasion-ad1354f9a1.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/wedding-photo/gallery-10-663e1da9b7ff-occasion-684e0688f3.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/wedding-photo/gallery-04-11b505719ac0-occasion-1b23cb461f.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/hairstyle-generator/cover-hairstyle-generator-00-quiet-city-walk-c452820dc22d.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/hairstyle-generator/gallery-02-hairstyle-generator-02-botanical-picnic-c4f3bc0df57d.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/hairstyle-generator/gallery-01-hairstyle-generator-01-coastal-wind-7bcc79e1fb25.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/hairstyle-generator/gallery-03-hairstyle-generator-03-retro-diner-29afc21a07ab.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/hairstyle-generator/gallery-12-hairstyle-generator-12-hands-wrapped-letter-fbe7071655e8.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/hairstyle-generator/gallery-04-hairstyle-generator-04-bookshop-browse-5b4aae5a52bb.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/halloween-photo/gallery-12-5b18bb346ef0-seasonal-cb5ba9afec.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/halloween-photo/cover-e45b5bb0a588-seasonal-fd5c22148e.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/holiday/gallery-02-be9493859ae8-holiday-02-summer-picnic.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/holiday/cover-893fb697d662-holiday-cover-winter-window.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/holiday/gallery-08-843bd2076c10-holiday-08-birthday-cake.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/holiday/gallery-01-4b6862f01ef4-holiday-01-market-lanterns.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/holiday/gallery-10-331c40ea3b88-holiday-10-harvest-table.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/holiday/gallery-03-b0ed04a88620-holiday-03-autumn-porch.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/urban/gallery-07-d531d8119b6a-urban-07-tram-reflection.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/urban/cover-e62bb0a86e32-urban-cover-concrete-plaza.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/cover-0787b71b581c-seasonal-2b3549dc37.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/gallery-01-5ce3c19744b5-seasonal-8a9525246c.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/gallery-02-597fe34e6384-seasonal-707736d13e.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/gallery-03-725cc6cf84a9-seasonal-acb13622af.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/gallery-08-b67193dd0443-seasonal-782dd22b19.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/gallery-04-d2807d4880ea-seasonal-33759f2f79.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/gallery-09-c3aeaef87de9-seasonal-3ede1a485e.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/gallery-05-430c414ab14a-seasonal-79cfe84188.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/gallery-12-12551209df8b-seasonal-291a7a06d7.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/thanksgiving-photo/gallery-06-bb8109bfcac3-seasonal-ef85a161ac.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/headshot/gallery-02-e7dc20fcba31-headshot-02-botanical-researcher.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/headshot/cover-6360dd7e005c-headshot-cover-architect-office.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/headshot/gallery-06-f67d87b2eb7b-headshot-06-florist-studio.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/headshot/gallery-01-924e481aaba7-headshot-01-chef-kitchen.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/background-remover/gallery-09-background-remover-09-mountain-cabin-0810f5270ed6.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/background-remover/cover-background-remover-00-quiet-city-walk-d85ac6d2b2af.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/only-fans/gallery-06-b951c631c734-only-fans-06-book-club-nook.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/only-fans/cover-751be524992d-only-fans-cover-home-musician.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/mafia/gallery-04-e0dd070017e1-mafia-04-train-compartment.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/mafia/cover-98242376be30-mafia-cover-1940s-diner.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/color-correction/cover-color-correction-00-quiet-city-walk-edf1177e9ab4.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/color-correction/gallery-01-color-correction-01-coastal-wind-7cb476b52991.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/color-correction/gallery-09-color-correction-09-mountain-cabin-913112ff1599.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/color-correction/gallery-02-color-correction-02-botanical-picnic-827733f8e875.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/portrait-photo/cover-19ef724d7001-portrait-photo-cover-analog-cafe.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/portrait-photo/gallery-01-02250f216051-portrait-photo-01-greenhouse-shadow.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/gallery-02-16cb447c5854-occasion-68a6e16a3e.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/gallery-01-eabba4a2efef-occasion-5052c2f0be.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/gallery-06-3a609cc1ccba-occasion-3b3eb72fa4.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/gallery-01-eabba4a2efef-occasion-5052c2f0be.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/gallery-08-42303d19827c-occasion-0b84b051a6.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/gallery-10-339cacf44ae2-occasion-2c36dcd1bc.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/gallery-09-be562067823e-occasion-4f48e44c8c.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/engagement-photo/gallery-07-9c25e405da14-occasion-63f6dfd229.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/singles-awareness-day/gallery-04-a2f02cd3e1be-singles-awareness-day-04-home-cooking.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/singles-awareness-day/cover-8967392ff7ad-singles-awareness-day-cover-sunrise-run.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/singles-awareness-day/gallery-05-d34144617fde-singles-awareness-day-05-pottery-class.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/singles-awareness-day/gallery-01-db9d2a021b92-singles-awareness-day-01-solo-cafe.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/unblur-image/gallery-02-unblur-image-02-botanical-picnic-ec81089b659d.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/unblur-image/cover-unblur-image-00-quiet-city-walk-cb790273c6f2.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/unblur-image/gallery-04-unblur-image-04-bookshop-browse-64442602def4.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/unblur-image/gallery-01-unblur-image-01-coastal-wind-95c252a1e9a6.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/unblur-image/gallery-11-unblur-image-11-sculpture-gallery-d82f302210ac.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/unblur-image/gallery-03-unblur-image-03-retro-diner-fe4d7c8f252e.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/unblur-image/gallery-12-unblur-image-12-hands-wrapped-letter-33a7ae4cb92a.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/unblur-image/gallery-05-unblur-image-05-train-platform-b5e5c68c4741.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/portrait-retouch/gallery-01-portrait-retouch-01-coastal-wind-49d83007ab14.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/portrait-retouch/cover-portrait-retouch-00-quiet-city-walk-93973d530e01.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/portrait-retouch/gallery-03-portrait-retouch-03-retro-diner-f81f1809301d.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/portrait-retouch/gallery-02-portrait-retouch-02-botanical-picnic-4deed22e6d1a.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/portrait-retouch/gallery-09-portrait-retouch-09-mountain-cabin-30c244b2ced9.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/portrait-retouch/gallery-04-portrait-retouch-04-bookshop-browse-f95cdb71bc8c.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/avatar/gallery-03-3433cc041dcd-avatar-03-ceramics-workshop.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/avatar/cover-333df83b69eb-avatar-cover-cobalt-studio.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/avatar/gallery-06-2ed299afe224-avatar-06-market-stall.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/avatar/gallery-01-e035fd3a0e0d-avatar-01-mirror-loft.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/avatar/gallery-09-7ecdd092bdc1-avatar-09-forest-trail.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/avatar/gallery-02-1e9db96cb9c1-avatar-02-bicycle-courier.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/avatar/gallery-11-f53e436b8410-avatar-11-sketchbook-desk.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/avatar/gallery-04-f73fe09c5db7-avatar-04-rooftop-dawn.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/edit-by-prompt/gallery-02-edit-by-prompt-02-botanical-picnic-178232ecfb61.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/edit-by-prompt/cover-edit-by-prompt-00-quiet-city-walk-4b0d75e03717.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/magic-eraser/gallery-04-magic-eraser-04-bookshop-browse-10dfc4bf306a.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/magic-eraser/cover-magic-eraser-00-quiet-city-walk-6e842a44c57a.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/social-cards/cover-social-cards-00-quiet-city-walk-30a15cc73c01.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/social-cards/gallery-01-social-cards-01-coastal-wind-41ab67697f87.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/social-cards/gallery-05-social-cards-05-train-platform-c73cf7eb60e2.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/social-cards/gallery-02-social-cards-02-botanical-picnic-6ea69cb612a6.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/rich-lifestyle/gallery-01-414cf5751d7b-rich-lifestyle-01-private-train.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/rich-lifestyle/cover-45d7051cc443-rich-lifestyle-cover-villa-breakfast.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/rich-lifestyle/gallery-07-6b6ea1d460f5-rich-lifestyle-07-rooftop-dinner.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/rich-lifestyle/gallery-02-dbad7040ea9b-rich-lifestyle-02-sailboat-sunset.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/black-friday/gallery-06-24c328ae14d1-black-friday-06-beauty-counter.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/black-friday/cover-d7b389e574c5-black-friday-cover-white-studio-bag.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/nightlife/gallery-02-cc0c261c3ff4-nightlife-02-diner-neon.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/nightlife/cover-4c08f56660a5-nightlife-cover-jazz-club.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/nightlife/gallery-05-325f045d884d-nightlife-05-night-bus.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/nightlife/gallery-01-5bbae49c8a96-nightlife-01-rooftop-dance.jpg",
+  "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/old-photo-restoration/gallery-05-old-photo-restoration-05-train-platform-ffebe835ffff.jpg": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/old-photo-restoration/cover-old-photo-restoration-00-quiet-city-walk-2a1bf9ddd8f9.jpg"
+};
+
+function repairAidreamcapesEuVisualAsset(site: Site, value: string): string {
+  if (site.id !== "site_aidreamcapes_xby") return value;
+  const cleanValue = cleanStorefrontImageSrc(value);
+  const pathname = cleanValue.split("?")[0]?.split("#")[0] ?? cleanValue;
+  const replacement = aidreamcapesEuVisualRepairMap[pathname];
+  return replacement ? `${replacement}?assetfix=${aidreamcapesEuVisualRepairVersion}` : value;
+}
+
+type MediaAssetUrlOptions = {
+  // Save the Date editorial pages publish their own visual library. Do not
+  // route those images through the legacy pack fallback, which intentionally
+  // collapses old pack-galleries paths to one compatibility cover.
+  preserveAidreamshootsLegacyMedia?: boolean;
+  skipEuVisualRepair?: boolean;
+};
+
+function mediaAssetUrl(site: Site, value: string, options: MediaAssetUrlOptions = {}): string {
   const euAwareValue = isFrenchStorefrontSite(site) ? mirroredFrenchEuDreamshootAssetUrl(value) : value;
   const euCommonImage = aidreamcapesEuCommonImageForSite(site, euAwareValue);
-  const resolved = replaceAidreamshootsLegacyMedia(site, siteScopedFallbackImage(site, cleanStorefrontImageSrc(resolveMediaAssetUrl(site, euCommonImage ?? euAwareValue))));
+  const resolvedMedia = siteScopedFallbackImage(site, cleanStorefrontImageSrc(resolveMediaAssetUrl(site, euCommonImage ?? euAwareValue)));
+  const resolvedBeforeVisualRepair = options.preserveAidreamshootsLegacyMedia
+    ? resolvedMedia
+    : replaceAidreamshootsLegacyMedia(site, resolvedMedia);
+  const resolved = options.skipEuVisualRepair
+    ? resolvedBeforeVisualRepair
+    : repairAidreamcapesEuVisualAsset(site, resolvedBeforeVisualRepair);
   const preferred = isAidreamcapesSite(site) ? preferAidreamcapesPhotoAsset(resolved) : preferDreamshootOptimizedImage(resolved);
   const publicUrl = withAidreamshootsPublicAssetCacheVersion(site, withStorefrontPublicWatermarkCacheVersion(spanishXbyPublicAssetUrl(site, preferred)));
   const publicPath = publicUrl.split("?")[0]?.split("#")[0] ?? publicUrl;
@@ -3869,38 +3981,46 @@ const AIDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES: Record<string, string> = {
   "motion-generator": "Convierte tus fotos en vídeos con movimiento generado por IA."
 };
 
-const AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA: Record<string, { poster: string; video: string }> = {
+const AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA: Record<string, { poster: string; video: string; alt: string }> = {
   "talking-photo": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-talking-photo.jpg",
-    video: "/assets/dreamshoot/talking-photo/make-a-photo-talk-without-recording-another-take.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo.mp4",
+    alt: "Mujer mayor hablando a la cámara en un vídeo de fotografía parlante."
   },
   "cinematic-video": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-cinematic-video.jpg",
-    video: "/assets/dreamshoot/cinematic-video/create-a-more-cinematic-video-without-a-full-film-crew.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/cinematic-video/cinematic-video-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/cinematic-video/cinematic-video.mp4",
+    alt: "Persona adulta en una escena cinematográfica con iluminación dramática y composición cuidada."
   },
   "music-video": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-music-video.jpg",
-    video: "/assets/dreamshoot/music-video/ai-music-video-generator-for-artist-visuals-and-performance-concepts.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/music-video/music-video-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/music-video/music-video.mp4",
+    alt: "Artista adulta preparando una propuesta visual para una canción en un estudio de producción."
   },
   "tiktok-video": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-tiktok-video.jpg",
-    video: "/assets/dreamshoot/tiktok-video/turn-your-photos-and-ideas-into-tiktok-first-videos.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video.mp4",
+    alt: "Creadora adulta preparando un vídeo corto para TikTok con cámara y accesorios coloridos."
   },
   "instagram-reels": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-instagram-reels.jpg",
-    video: "/assets/dreamshoot/instagram-reels/turn-photos-and-ideas-into-reels-that-fit-your-feed.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/instagram-reels/instagram-reels-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/instagram-reels/instagram-reels.mp4",
+    alt: "Creadora adulta preparando un Reel en un estudio casero con cámara y accesorios de grabación."
   },
   "product-video": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-product-video.jpg",
-    video: "/assets/dreamshoot/product-video/feature-led-product-showcase.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/product-video/product-video-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/product-video/product-video.mp4",
+    alt: "Producto de consumo sin marca presentado en un estudio comercial con iluminación limpia y precisa."
   },
   "product-ad-video": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-product-ad-video.jpg",
-    video: "/assets/dreamshoot/product-ad-video/build-the-ad-around-one-buyer-decision.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video.mp4",
+    alt: "Presentadora adulta mostrando un producto sin marca en una escena centrada en una decisión de compra."
   },
   "promo-video": {
-    poster: "/assets/dreamshoot/generated/homepage-showcase/posters/first-frame-promo-video.jpg",
-    video: "/assets/dreamshoot/promo-video/promo-video-launch-teaser.mp4"
+    poster: "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video-poster.jpg",
+    video: "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video.mp4",
+    alt: "Persona adulta presentando un adelanto de lanzamiento con iluminación promocional y ambiente dinámico."
   }
 };
 
@@ -4404,10 +4524,10 @@ function preferAidreamcapesPhotoAsset(src: string): string {
     return preferAidreamcapesPhotoAsset(`/assets/sites/site_aidreamcapes/creative-packs/${bareAidreamcapesPackMatch[1]}${bareAidreamcapesPackMatch[2] ?? ""}`);
   }
   if (cleanSrc.includes("/assets/dreamshoot/brand/aidreamcapesai-logo-refined.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919original";
   }
   if (cleanSrc.includes("/assets/sites/site_aidreamcapes/brand/aidreamcapes-wordmark.svg")) {
-    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260708c";
+    return "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919original";
   }
   if (cleanSrc.includes("/assets/sites/site_aidreamcapes/creative-packs/travel-profile-stories.")) {
     return "/assets/sites/site_aidreamcapes/creative-packs/celestial-profile-stories.webp?v=20260715ai";
@@ -4433,6 +4553,7 @@ type StorefrontImageProps = {
   width?: number;
   height?: number;
   sizes?: string;
+  style?: CSSProperties;
   priority?: boolean;
   loading?: "eager" | "lazy";
   fetchPriority?: "high" | "low" | "auto";
@@ -4567,7 +4688,8 @@ function StorefrontImage({
   priority = false,
   loading,
   fetchPriority,
-  preview
+  preview,
+  style
 }: StorefrontImageProps) {
   const resolvedSrc = withStorefrontPublicWatermarkCacheVersion(preferAidreamcapesPhotoAsset(src));
   const resolvedLoading = loading ?? (priority ? "eager" : "lazy");
@@ -4577,19 +4699,34 @@ function StorefrontImage({
   const resolvedAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAlt });
   const previewAttrs = storefrontImagePreviewAttrs(resolvedSrc, resolvedAlt, preview);
   const resolvedClassName = previewableImageClassName(className, preview);
+  const responsiveSet = storefrontResponsiveImageSet(resolvedSrc);
+  const intrinsicDimensions = storefrontResponsiveImageDimensions(resolvedSrc) ?? (/^\/assets\/sites\/site_aidreamshoots\/generated\/regenerated\//i.test(resolvedSrc) ? { width: 1024, height: 1024 } : undefined);
+  const resolvedWidth = width ?? intrinsicDimensions?.width;
+  const resolvedHeight = height ?? intrinsicDimensions?.height;
   if (isLocalPublicAsset || !canUseNextImage(resolvedSrc)) {
-    return (
+    const image = (
       <img
         alt={resolvedAlt}
         className={resolvedClassName}
         decoding={priority ? "sync" : "async"}
         fetchPriority={resolvedFetchPriority}
-        height={height}
+        height={resolvedHeight}
         loading={resolvedLoading}
+        sizes={sizes}
         src={resolvedSrc}
-        width={width}
+        srcSet={responsiveSet?.fallbackSrcSet}
+        style={style}
+        width={resolvedWidth}
         {...previewAttrs}
       />
+    );
+    if (!responsiveSet) return image;
+    return (
+      <picture>
+        {responsiveSet.avifSrcSet ? <source sizes={sizes} srcSet={responsiveSet.avifSrcSet} type="image/avif" /> : null}
+        {responsiveSet.webpSrcSet ? <source sizes={sizes} srcSet={responsiveSet.webpSrcSet} type="image/webp" /> : null}
+        {image}
+      </picture>
     );
   }
   return (
@@ -4603,6 +4740,7 @@ function StorefrontImage({
       priority={priority}
       sizes={sizes}
       src={resolvedSrc}
+      style={style}
       {...previewAttrs}
     />
   );
@@ -4627,11 +4765,12 @@ function StorefrontSafeImage({
 }: StorefrontSafeImageProps) {
   const resolvedSrc = withStorefrontPublicWatermarkCacheVersion(preferAidreamcapesPhotoAsset(src));
   const safeAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAltFromImageSrc(resolvedSrc) });
+  const preserveFrenchSourceFrame = /\/assets\/sites\/site_aidreamcapes_eu\//i.test(resolvedSrc);
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative overflow-hidden ${className}`} style={preserveFrenchSourceFrame ? { aspectRatio: "auto", height: "auto" } : undefined}>
       <StorefrontImage
         alt={safeAlt}
-        className={`relative z-10 h-full w-full object-cover object-center ${imageClassName}`}
+        className={`${preserveFrenchSourceFrame ? "relative z-10 block h-auto w-full object-contain object-center" : "relative z-10 h-full w-full object-cover object-center"} ${imageClassName}`}
         fetchPriority={fetchPriority}
         loading={loading}
         preview={preview}
@@ -4648,6 +4787,7 @@ type StorefrontNaturalImageProps = {
   alt: string;
   className?: string;
   imageClassName?: string;
+  sizes?: string;
   loading?: "eager" | "lazy";
   fetchPriority?: "high" | "low" | "auto";
   decoding?: "async" | "auto" | "sync";
@@ -4659,6 +4799,7 @@ function StorefrontNaturalImage({
   alt,
   className = "",
   imageClassName = "",
+  sizes = "(max-width: 768px) 100vw, 50vw",
   loading = "lazy",
   fetchPriority = "low",
   decoding = "async",
@@ -4667,16 +4808,32 @@ function StorefrontNaturalImage({
   const resolvedSrc = withStorefrontPublicWatermarkCacheVersion(preferAidreamcapesPhotoAsset(src));
   const safeAlt = manualImageAlt({ explicitAlt: alt, src: resolvedSrc, fallback: fallbackAltFromImageSrc(resolvedSrc) });
   const previewAttrs = storefrontImagePreviewAttrs(resolvedSrc, safeAlt, preview);
+  const preserveAidreamcapesSourceFrame = /\/assets\/sites\/site_aidreamcapes_eu\//i.test(resolvedSrc);
+  const responsiveSet = storefrontResponsiveImageSet(resolvedSrc);
+  const intrinsicDimensions = storefrontResponsiveImageDimensions(resolvedSrc) ?? (/^\/assets\/sites\/site_aidreamshoots\/generated\/regenerated\//i.test(resolvedSrc) ? { width: 1024, height: 1024 } : undefined);
+  const image = (
+    <img
+      alt={safeAlt}
+      className={`block h-auto w-full ${preserveAidreamcapesSourceFrame ? "object-contain" : ""} object-center ${imageClassName}`}
+      decoding={decoding}
+      fetchPriority={fetchPriority}
+      height={intrinsicDimensions?.height}
+      loading={loading}
+      sizes={sizes}
+      src={resolvedSrc}
+      srcSet={responsiveSet?.fallbackSrcSet}
+      width={intrinsicDimensions?.width}
+    />
+  );
   return (
     <div className={`overflow-hidden ${previewableImageClassName(className, preview)}`} {...previewAttrs}>
-      <img
-        alt={safeAlt}
-        className={`block h-auto w-full object-center ${imageClassName}`}
-        decoding={decoding}
-        fetchPriority={fetchPriority}
-        loading={loading}
-        src={resolvedSrc}
-      />
+      {responsiveSet ? (
+        <picture>
+          {responsiveSet.avifSrcSet ? <source sizes={sizes} srcSet={responsiveSet.avifSrcSet} type="image/avif" /> : null}
+          {responsiveSet.webpSrcSet ? <source sizes={sizes} srcSet={responsiveSet.webpSrcSet} type="image/webp" /> : null}
+          {image}
+        </picture>
+      ) : image}
     </div>
   );
 }
@@ -4914,6 +5071,13 @@ function settingListBlocks(
 function routedSitePath(site: Site, path = "/"): string {
   const normalizedPath = !path || path === "/" ? "/" : path.startsWith("/") ? path : `/${path}`;
   const basePath = (site as RoutedSite).__storefrontBasePath;
+  // The production AIdreamshoots domain is canonical even when an upstream
+  // rewrite reaches the path-mode route. Never emit its internal /site alias
+  // into public HTML, while preserving path-mode links for local previews.
+  const forceAidreamshootsCanonicalHostLinks = process.env.NODE_ENV === "production"
+    && isAidreamshootsStorefrontSite(site)
+    && cleanHost(site.primaryDomain) === "aidreamshoots.eu";
+  if (forceAidreamshootsCanonicalHostLinks) return normalizedPath;
   if (typeof basePath === "string") {
     if (!basePath) return normalizedPath;
     return normalizedPath === "/" ? basePath : `${basePath}${normalizedPath}`;
@@ -5034,6 +5198,45 @@ function hrefFor(site: Site, href: string): string {
       "virtual-try-on": "virtual-try-on"
     };
     return routedSitePath(site, imageSlugByLegacyTool[toolSlug] ? `/ai-image-generation/${imageSlugByLegacyTool[toolSlug]}` : "/ai-image-generation");
+  }
+  if (isAidreamshootsStorefrontSite(site) && cleanHost(site.primaryDomain) === "aidreamshoots.eu" && href.startsWith("/tools/")) {
+    const toolSlug = href.slice("/tools/".length).split(/[?#]/)[0] ?? "";
+    const normalizedToolSlug = toolSlug.replace(/^ai-image-generation-/i, "");
+    const imageSlugByLegacyTool: Record<string, string> = {
+      headshot: "headshot",
+      "portrait-photo": "portrait-photo",
+      soccer: "soccer",
+      cyberpunk: "cyberpunk",
+      "gala-photo": "gala-photo",
+      mafia: "mafia",
+      avatar: "avatar",
+      travel: "viaje",
+      "street-style": "street-style",
+      "portrait-retouch": "portrait-retouch",
+      "background-changer": "background-changer",
+      "background-remover": "background-remover",
+      "magic-eraser": "magic-eraser",
+      "photo-enhancer": "photo-enhancer",
+      "unblur-image": "unblur-image",
+      "color-correction": "color-correction",
+      "old-photo-restoration": "old-photo-restoration",
+      "edit-by-prompt": "edit-by-prompt",
+      "animated-avatar": "avatar",
+      "magic-upscaler": "photo-enhancer",
+      "virtual-try-on": "virtual-try-on"
+    };
+    const videoSlugByLegacyTool: Record<string, string> = {
+      "fashion-reel": "fashion-video",
+      "image-to-video": "motion-generator",
+      "profile-clip": "motion-generator",
+      "fan-poster-motion": "motion-generator",
+      "creator-intro-video": "brand-video",
+      "product-teaser-clip": "product-video",
+      "album-story-video": "story-video"
+    };
+    if (videoSlugByLegacyTool[normalizedToolSlug]) return routedSitePath(site, `/ai-video-generation/${videoSlugByLegacyTool[normalizedToolSlug]}`);
+    if (imageSlugByLegacyTool[normalizedToolSlug]) return routedSitePath(site, `/ai-image-generation/${imageSlugByLegacyTool[normalizedToolSlug]}`);
+    return routedSitePath(site, "/tools");
   }
   if ((href === "/tools/image-studio" || href === "/tools/ai-image-studio") && isPrimaryMydreamshootsCapabilitySite(site)) {
     return routedSitePath(site, "/ai-image-generation");
@@ -5269,7 +5472,29 @@ function isGeneratedDreamshootPackCoverUrl(value: string): boolean {
 
 function galleryImagesForPack(site: Site, pack: CreativePack, limit = 12, excludeImages: string[] = []): string[] {
   const excluded = new Set(excludeImages.map((image) => comparableImageUrl(image)).filter(Boolean));
-  const resolvedGalleryImages = uniqueImageUrlList((pack.galleryImages ?? []).map((image) => mediaAssetUrl(site, image)));
+  const rawGalleryImages = (pack.galleryImages ?? []).filter((image): image is string => typeof image === "string" && Boolean(image.trim()));
+  const configuredGalleryPaths = new Set(rawGalleryImages.map((image) => comparableImageUrl(image)).filter(Boolean));
+  const seenGalleryPaths = new Set<string>();
+  const resolvedGalleryImages: string[] = [];
+  for (const image of rawGalleryImages) {
+    const repairedImage = mediaAssetUrl(site, image);
+    const originalImage = mediaAssetUrl(site, image, { skipEuVisualRepair: true });
+    const repairedPath = comparableImageUrl(repairedImage);
+    const originalPath = comparableImageUrl(originalImage);
+    // A visual repair may point slot N at another configured gallery slot.
+    // Never let that repair collapse the gallery from 12 slots to 6: keep
+    // the original slot URL until a replacement asset exists for that slot.
+    const replacementCollidesWithConfiguredSlot = isFrenchStorefrontSite(site) && repairedPath !== originalPath && configuredGalleryPaths.has(repairedPath);
+    let candidate = replacementCollidesWithConfiguredSlot ? originalImage : repairedImage;
+    let candidatePath = comparableImageUrl(candidate);
+    if (seenGalleryPaths.has(candidatePath) && !seenGalleryPaths.has(originalPath)) {
+      candidate = originalImage;
+      candidatePath = originalPath;
+    }
+    if (!candidatePath || seenGalleryPaths.has(candidatePath)) continue;
+    seenGalleryPaths.add(candidatePath);
+    resolvedGalleryImages.push(candidate);
+  }
   const gallery = resolvedGalleryImages
     // EU's legacy mirror has a cover derivative in gallery slot 01. It is a
     // different URL, but not a different visual, so do not expose it as an
@@ -5518,7 +5743,28 @@ function galleryImageAltForPack(site: Site, pack: CreativePack, index: number, i
   });
 }
 
-function galleryFallbackAltForIndex(title: string, index: number): string {
+function galleryFallbackAltForIndex(title: string, index: number, site?: Site): string {
+  if (site && isAidreamshootsStorefrontSite(site)) {
+    const localizedTitle = title
+      .replace(/\bBest Themes Presets\b/gi, "los mejores temas y estilos")
+      .replace(/\bMagic\b/gi, "edición mágica")
+      .replace(/\bProfessional\b/gi, "retratos profesionales");
+    const spanishScenes = [
+      "retrato con rasgos faciales nítidos sobre un fondo suavemente desenfocado",
+      "retrato sonriente en un entorno relajado",
+      "retrato de tres cuartos con el entorno visible",
+      "retrato espontáneo con una expresión natural",
+      "retrato sentado en un entorno cómodo",
+      "retrato de perfil con un fondo suavemente iluminado",
+      "retrato seguro con un entorno lleno de color",
+      "retrato centrado en el rostro y la expresión",
+      "retrato de estilo de vida en un entorno cotidiano",
+      "retrato durante un momento social",
+      "pose distintiva que resalta el tema",
+      "retrato natural con un ambiente acogedor"
+    ];
+    return `${localizedTitle}, ${spanishScenes[index % spanishScenes.length]}`;
+  }
   const scenes = [
     "portrait showing clear facial detail against a softly blurred background",
     "smiling portrait in a relaxed setting",
@@ -6304,8 +6550,8 @@ function blogArticleCardsForSite(site: Site, currentPath = ""): BlogArticleCard[
     .sort((left, right) => right.sortTime - left.sortTime || left.title.localeCompare(right.title));
 }
 
-function blogCoverImageClassName(_site: Site, _hover = false): string {
-  return "h-full w-full object-contain object-center";
+function blogCoverImageClassName(site: Site, _hover = false): string {
+  return isFrenchStorefrontSite(site) ? "block h-auto w-full object-center" : "h-full w-full object-contain object-center";
 }
 
 export function searchPageEntriesForSite(site: Site): SearchPageEntry[] {
@@ -7369,6 +7615,8 @@ function frenchPhotoPackageLabel(value: string): string {
     "virtual try on": "Essayage virtuel",
     "virtual try-on": "Essayage virtuel",
     "motion generator": "Générateur de mouvement",
+    "motion générateur": "Générateur de mouvement",
+    "lifestyle premium": "Style de vie premium",
     "background changer": "Changer l’arrière-plan",
     "background remover": "Supprimer l’arrière-plan",
     "magic eraser": "Gomme magique",
@@ -7378,6 +7626,7 @@ function frenchPhotoPackageLabel(value: string): string {
     "color correction": "Correction des couleurs",
     "old photo restoration": "Restaurer une ancienne photo",
     "edit by prompt": "Modifier avec une consigne",
+    "modifier avec une consigne": "Modifier avec une consigne",
     "social cards": "Cartes sociales",
     "rich lifestyle": "Lifestyle premium",
     "bikini": "Bikini",
@@ -9076,7 +9325,7 @@ function renderLegacySaasSection({
     const opacity = Math.max(0, Math.min(90, blockNumber(activeSlide, "opacity", numberSetting(section, "opacity", 35))));
     return (
       <section className={`relative overflow-hidden bg-zinc-950 px-5 text-white ${imageHeightClass(setting(section, "img_height", "large"))}`} data-saas-section-renderer={type} id={sectionAnchor(section, id)}>
-        <img className="absolute inset-0 h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: subtitle, role: "cover" })} />
+        <img className="absolute inset-0 h-full w-full object-cover" src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: subtitle, role: "cover" })} width={1920} height={1080} loading="eager" fetchPriority="high" />
         <div className="absolute inset-0" style={{ backgroundColor: blockValue(activeSlide, "image_overlay_color", "#151515"), opacity: opacity / 100 }} />
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/82 via-zinc-950/22 to-transparent" />
         <div className="relative mx-auto flex min-h-[inherit] max-w-[var(--site-content-width)] items-center">
@@ -9143,6 +9392,9 @@ function renderLegacySaasSection({
                   className="h-full min-h-[220px] w-full object-cover opacity-90"
                   src={mediaAssetUrl(site, blockValue(slide, "src", image))}
                   alt={blockVisualAltForSite(site, section, slide, mediaAssetUrl(site, blockValue(slide, "src", image)), index, `Reveal slide ${index + 1}`)}
+                  width={1200}
+                  height={900}
+                  loading="lazy"
                 />
               </div>
             ))}
@@ -9195,7 +9447,10 @@ function renderLegacySaasSection({
 	                      meta: card.price,
 	                      role: "card",
 	                      title: card.title
-	                    })}
+	                      })}
+	                    width={1200}
+	                    height={1500}
+	                    loading="lazy"
 	                  />
                 </div>
                 <div className="p-4">
@@ -9235,6 +9490,9 @@ function renderLegacySaasSection({
                       index,
                       title: product?.name ?? "Product image"
                     })}
+                    width={1024}
+                    height={1024}
+                    loading="lazy"
                   />
                 </div>
               ))}
@@ -9251,6 +9509,9 @@ function renderLegacySaasSection({
                   title: product?.name ?? "Product detail",
                   role: "cover"
                 })}
+                width={1200}
+                height={1500}
+                loading="eager"
               />
             </div>
           </div>
@@ -9318,7 +9579,10 @@ function renderLegacySaasSection({
 	                      meta: card.price,
 	                      role: "card",
 	                      title: card.title
-	                    })}
+	                      })}
+	                    width={1200}
+	                    height={900}
+	                    loading="lazy"
 	                  />
                   <span className="p-2">
                     <span className="font-mono text-xs uppercase tracking-[0.18em] text-zinc-400">{card.meta}</span>
@@ -9376,6 +9640,9 @@ function renderLegacySaasSection({
 	                          role: "card",
 	                          title: card.title
 	                        })}
+	                        width={1200}
+	                        height={1500}
+	                        loading="lazy"
 	                      />
                     </div>
                     <div className="p-4">
@@ -9433,6 +9700,9 @@ function renderLegacySaasSection({
 	                    role: "card",
 	                    title: card.title
 	                  })}
+	                  width={1200}
+	                  height={900}
+	                  loading="lazy"
 	                />
                 <h3 className="mt-4 font-semibold">{card.title}</h3>
                 <p className="mt-1 text-xs text-zinc-500">{card.description}</p>
@@ -9627,7 +9897,7 @@ function renderLegacySaasSection({
             ) : null}
           </header>
 
-          <div className="mt-9 aspect-[4/3] overflow-hidden rounded-lg bg-white shadow-[0_18px_60px_-44px_rgba(15,23,42,0.45)]" data-dreamshoot-preview-disabled="true">
+          <div className={isFrenchStorefrontSite(site) ? "mt-9 overflow-hidden rounded-lg bg-white shadow-[0_18px_60px_-44px_rgba(15,23,42,0.45)]" : "mt-9 aspect-[4/3] overflow-hidden rounded-lg bg-white shadow-[0_18px_60px_-44px_rgba(15,23,42,0.45)]"} data-dreamshoot-preview-disabled="true">
             <StorefrontImage
               className={blogCoverImageClassName(site)}
               src={coverImage}
@@ -9777,6 +10047,9 @@ function renderLegacySaasSection({
                     index,
                     title: item.title
                   })}
+                  width={1200}
+                  height={1500}
+                  loading="lazy"
                 />
               </Link>
             ))}
@@ -9801,7 +10074,7 @@ function renderLegacySaasSection({
                 <article className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-white" key={instanceKey(block, index, "feature_column")} {...xfcartBlockAttrs(mode, block, index, "feature_column")}>
                   {saasBool(block.settings.enable_image, true) ? (
                     <div className="aspect-[16/11] bg-zinc-200">
-                      <img className="h-full w-full object-cover" src={image} alt={blockVisualAltForSite(site, section, block, image, index, storefrontSectionLabel(block.type))} />
+                      <img className="h-full w-full object-cover" src={image} alt={blockVisualAltForSite(site, section, block, image, index, storefrontSectionLabel(block.type))} width={1600} height={1100} loading="lazy" />
                     </div>
                   ) : null}
                   <div className="p-5">
@@ -9826,7 +10099,7 @@ function renderLegacySaasSection({
           <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6">
             {(blocks.length ? blocks : Array.from({ length: 6 }, (_, index) => ({ id: `logo_${index}`, type: "logo_image", settings: { image: "" } }))).map((block, index) => (
               <div className="grid h-24 place-items-center rounded-[1rem] border border-black/10 bg-zinc-50 p-4 text-center font-mono text-xs uppercase tracking-[0.18em] text-zinc-500" key={instanceKey(block, index, "logo")} {...xfcartBlockAttrs(mode, block, index, "logo")}>
-                {blockValue(block, "image") ? <img className="max-h-12 max-w-full object-contain" src={mediaAssetUrl(site, blockValue(block, "image"))} alt={`Logo ${index + 1}`} /> : `Brand ${index + 1}`}
+                {blockValue(block, "image") ? <img className="max-h-12 max-w-full object-contain" src={mediaAssetUrl(site, blockValue(block, "image"))} alt={`Logo ${index + 1}`} width={512} height={512} loading="lazy" /> : `Brand ${index + 1}`}
               </div>
             ))}
           </div>
@@ -9866,7 +10139,7 @@ function renderLegacySaasSection({
               const image = mediaAssetUrl(site, blockValue(block, "src", fallbackImageForSeed(`${site.slug}-${type}-${index}`)));
               return (
                 <Link className="group relative aspect-square overflow-hidden rounded-[1rem] border border-black/10 bg-zinc-200" href={hrefFor(site, blockValue(block, "link", "#"))} key={instanceKey(block, index, "gallery")} {...xfcartBlockAttrs(mode, block, index, "gallery")}>
-                  <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} alt={blockVisualAltForSite(site, section, block, image, index, blockValue(block, "account_id", "Gallery image"))} />
+                  <img className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" src={image} alt={blockVisualAltForSite(site, section, block, image, index, blockValue(block, "account_id", "Gallery image"))} width={1024} height={1024} loading="lazy" />
                   {blockValue(block, "account_id") ? <span className="absolute bottom-3 left-3 rounded-full bg-white/82 px-3 py-1 text-xs font-medium backdrop-blur">@{blockValue(block, "account_id")}</span> : null}
                 </Link>
               );
@@ -9921,6 +10194,9 @@ function renderLegacySaasSection({
               title: product?.name ?? storefrontSectionLabel(type),
               role: "card"
             })}
+            width={1200}
+            height={900}
+            loading="lazy"
           />
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--site-accent)]">{storefrontSectionLabel(type)}</p>
@@ -10288,10 +10564,14 @@ function PricingTableSectionView({
     <section className={sectionClassName} data-dreamshoot-embedded-pricing={embedded ? "true" : undefined} id={sectionAnchor(section, "plans")}>
       <div className="absolute inset-0">
         <div className={aidreamcapes ? "absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(216,138,75,0.18),transparent_20%),radial-gradient(circle_at_78%_8%,rgba(251,243,228,0.9),transparent_28%)]" : "absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(255,210,158,0.12),transparent_18%)]"} />
-        <div className={embedded ? "absolute right-0 top-0 hidden h-full w-[50%] overflow-hidden xl:block" : "absolute right-0 top-0 hidden h-full w-[52%] overflow-hidden lg:block"}>
+        <div className={
+          frenchXbyPricing
+            ? (embedded ? "absolute inset-y-0 right-0 hidden w-[50%] items-center overflow-hidden xl:flex" : "absolute inset-y-0 right-0 hidden w-[52%] items-center overflow-hidden lg:flex")
+            : (embedded ? "absolute right-0 top-0 hidden h-full w-[50%] overflow-hidden xl:block" : "absolute right-0 top-0 hidden h-full w-[52%] overflow-hidden lg:block")
+        }>
           <StorefrontImage
             alt={pricingImageAlt}
-            className={aidreamcapes ? "h-full w-full object-cover object-center opacity-[0.16]" : "h-full w-full object-cover object-center opacity-[0.9]"}
+            className={frenchXbyPricing ? "block h-auto max-h-full w-full object-contain object-center opacity-[0.16]" : aidreamcapes ? "h-full w-full object-cover object-center opacity-[0.16]" : "h-full w-full object-cover object-center opacity-[0.9]"}
             fetchPriority="low"
             sizes={embedded ? "50vw" : "52vw"}
             src={pricingImage}
@@ -10348,10 +10628,13 @@ function SectionView({
   saveTheDateNavigationGroups,
   aidreamcapesVideoNavigation,
   videoGenerationTopics,
+  aidreamcapesImageDirectoryCards,
+  aidreamcapesVideoThemeCovers,
   runtime,
   mode,
   renderContext,
-  storefrontContext
+  storefrontContext,
+  publishedIndexablePaths
 }: {
   id: string;
   section: SectionInstance;
@@ -10367,10 +10650,13 @@ function SectionView({
   saveTheDateNavigationGroups?: SaveTheDateNavigationGroup[];
   aidreamcapesVideoNavigation?: AidreamcapesZipNavigation;
   videoGenerationTopics?: HeaderVideoGenerationTopic[];
+  aidreamcapesImageDirectoryCards?: AidreamcapesImageDirectoryCard[];
+  aidreamcapesVideoThemeCovers?: Record<string, AidreamcapesVideoThemeCover>;
   runtime?: ThemeRuntimeData;
   mode: "published" | "preview";
   renderContext: RenderContext;
   storefrontContext?: StorefrontContext;
+  publishedIndexablePaths?: string[];
 }) {
   const resolvedSaveTheDateNavigationGroups = saveTheDateNavigationGroups ?? [];
   const spanishXby = isSpanishXbySite(site);
@@ -10389,6 +10675,7 @@ function SectionView({
         id={id}
         mode={mode}
         products={products}
+        publishedIndexablePaths={publishedIndexablePaths}
         renderContext={renderContext}
         storefrontContext={storefrontContext}
         runtime={runtime}
@@ -10399,6 +10686,8 @@ function SectionView({
         videoThemeCategories={videoThemeCategories}
         videoThemes={videoThemes}
         homepageShowcases={homepageShowcases}
+        aidreamcapesImageDirectoryCards={aidreamcapesImageDirectoryCards}
+        aidreamcapesVideoThemeCovers={aidreamcapesVideoThemeCovers}
         saveTheDateNavigationGroups={resolvedSaveTheDateNavigationGroups}
         aidreamcapesVideoNavigation={aidreamcapesVideoNavigation}
         videoGenerationTopics={videoGenerationTopics}
@@ -10433,17 +10722,23 @@ function SectionView({
     const intro = setting(section, "intro");
     const support = setting(section, "support");
     const blocks = sectionBlocks(section);
-    const imageFor = (source: SectionInstance | SectionBlockInstance) => {
+    const frenchXbyRichText = isFrenchStorefrontSite(site);
+    const preserveAidreamshootsLegacyMedia = isSpanishXbySite(site) && /(?:^|\/)ai-save-the-date\//.test(renderContext.pagePath);
+    const frenchEditorialImageFrame = (className: string) => frenchXbyRichText
+      ? className.replace(/\baspect-\[[^\]]+\]\s*/g, "")
+      : className;
+    const imageFor = (source: SectionInstance | SectionBlockInstance, imageIndex = 0) => {
       const read = (key: string) => source.type === section.type ? setting(source as SectionInstance, key) : blockValue(source as SectionBlockInstance, key);
       const src = read("imageUrl");
       if (!src) return null;
       const width = Number(read("imageWidth")) || 1600;
       const height = Number(read("imageHeight")) || 1000;
       const originalSrc = read("imageOriginalUrl");
-      const originalPreviewSrc = originalSrc.trim().startsWith("/assets/") ? originalSrc.trim() : mediaAssetUrl(site, originalSrc);
-      const loading = read("imageLoading") === "eager" ? "eager" : "lazy";
-      const fetchPriority = read("imageFetchPriority") === "high" ? "high" : read("imageFetchPriority") === "low" ? "low" : "auto";
-      return <StorefrontImage alt={read("imageAlt")} className="h-full w-full object-contain" fetchPriority={fetchPriority} height={height} loading={loading} preview={originalPreviewSrc ? { src: originalPreviewSrc, meta: "Imagen original del proveedor" } : undefined} priority={loading === "eager"} sizes="(max-width: 760px) 100vw, 50vw" src={mediaAssetUrl(site, src)} width={width} />;
+      const originalPreviewSrc = originalSrc.trim().startsWith("/assets/") ? originalSrc.trim() : mediaAssetUrl(site, originalSrc, { preserveAidreamshootsLegacyMedia });
+      const prioritizeHero = section.type === "editorial_hero" && imageIndex === 0;
+      const loading = read("imageLoading") === "eager" || prioritizeHero ? "eager" : "lazy";
+      const fetchPriority = read("imageFetchPriority") === "high" ? "high" : read("imageFetchPriority") === "low" ? "low" : prioritizeHero ? "high" : "auto";
+      return <StorefrontImage alt={read("imageAlt")} className={frenchXbyRichText ? "block h-auto w-full object-center" : "h-full w-full object-contain"} fetchPriority={fetchPriority} height={frenchXbyRichText ? undefined : height} loading={loading} preview={originalPreviewSrc ? { src: originalPreviewSrc, meta: "Imagen original del proveedor" } : undefined} priority={loading === "eager"} sizes="(max-width: 760px) 100vw, 50vw" src={mediaAssetUrl(site, src, { preserveAidreamshootsLegacyMedia })} width={frenchXbyRichText ? undefined : width} />;
     };
     const textBlock = (block: SectionBlockInstance, key = "text") => blockValue(block, key).trim();
     const headingClass = "text-balance font-semibold leading-[1.06] [font-family:var(--site-title-font)]";
@@ -10532,9 +10827,9 @@ function SectionView({
             </div>
             {heroVisuals.length > 1 ? (
               <div className="grid gap-3 p-5 sm:grid-cols-2 lg:p-8">
-                {heroVisuals.map((block, index) => <div className={`${index === 0 ? "sm:col-span-2" : ""} aspect-[5/3] overflow-hidden rounded-[14px] bg-[#5c2930]`} key={instanceKey(block, index, "hero_visual")} style={{ backgroundColor: editorialTheme.heroBg }}>{index === 0 && heroVideo ? heroVideo : imageFor(block)}</div>)}
+                {heroVisuals.map((block, index) => <div className={frenchEditorialImageFrame(`${index === 0 ? "sm:col-span-2" : ""} aspect-[5/3] overflow-hidden rounded-[14px] bg-[#5c2930]`)} key={instanceKey(block, index, "hero_visual")} style={{ backgroundColor: editorialTheme.heroBg }}>{index === 0 && heroVideo ? heroVideo : imageFor(block, index)}</div>)}
               </div>
-            ) : <div className="aspect-[5/3] min-h-0 overflow-hidden">{heroVideo ?? imageFor(section)}</div>}
+            ) : <div className={frenchEditorialImageFrame("aspect-[5/3] min-h-0 overflow-hidden")}>{heroVideo ?? imageFor(section, 0)}</div>}
           </div>
         </section>
       );
@@ -10550,7 +10845,7 @@ function SectionView({
               {intro ? <p className="text-base leading-8 sm:text-lg" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}
               {richTextList ? <ul className="mx-auto mt-5 max-w-[58ch] list-disc space-y-3 pl-6 text-left text-base leading-8" style={{ color: editorialTheme.mutedText }}>{blocks.map((block, index) => <li key={instanceKey(block, index, "editorial_list_item")} {...xfcartBlockAttrs(mode, block, index, "editorial_list_item")}>{blockValue(block, "text")}</li>)}</ul> : <div className="mt-5 space-y-5 text-base leading-8" style={{ color: editorialTheme.mutedText }}>{blocks.map((block, index) => <p key={instanceKey(block, index, "editorial_paragraph")} {...xfcartBlockAttrs(mode, block, index, "editorial_paragraph")}>{blockValue(block, "text")}</p>)}</div>}
             </div>
-            {setting(section, "imageUrl") ? <div className="mx-auto mt-10 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#eadbd3]">{imageFor(section)}</div> : null}
+            {setting(section, "imageUrl") ? <div className={frenchEditorialImageFrame("mx-auto mt-10 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#eadbd3]")}>{imageFor(section)}</div> : null}
           </div>
         </section>
       );
@@ -10563,7 +10858,7 @@ function SectionView({
             <h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>
             <div className="mt-10 grid gap-5 min-[760px]:grid-cols-3">
               {blocks.map((block, index) => <article className="overflow-hidden rounded-[8px] border" style={cardStyle} key={instanceKey(block, index, "story_card")} {...xfcartBlockAttrs(mode, block, index, "story_card")}>
-                {blockValue(block, "imageUrl") ? <div className="aspect-[5/3]">{imageFor(block)}</div> : null}
+                {blockValue(block, "imageUrl") ? <div className={frenchEditorialImageFrame("aspect-[5/3]")}>{imageFor(block)}</div> : null}
                 <div className="p-5"><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p></div>
               </article>)}
             </div>
@@ -10578,7 +10873,7 @@ function SectionView({
         return (
           <section className="bg-[#fffaf6] px-5 py-16 text-[#2b2021] sm:px-8 lg:py-24" id={anchor}>
             <div className="mx-auto grid max-w-[var(--site-content-width)] items-center gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16">
-              <div className="mx-auto aspect-[5/3] w-full max-w-2xl overflow-hidden rounded-[14px] bg-[#eadbd3]">{imageFor(section)}</div>
+              <div className={frenchEditorialImageFrame("mx-auto aspect-[5/3] w-full max-w-2xl overflow-hidden rounded-[14px] bg-[#eadbd3]")}>{imageFor(section)}</div>
               <div>
                 <h2 className={`${headingClass} max-w-[24ch] text-4xl sm:text-5xl`}>{title}</h2>
                 {intro ? <p className="mt-6 max-w-[62ch] text-base leading-8 text-[#665252]">{intro}</p> : null}
@@ -10596,7 +10891,7 @@ function SectionView({
             <div className="mx-auto max-w-[70ch] text-center"><h2 className={`${headingClass} max-w-[34ch] text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mt-6 text-base leading-8 text-[#665252]">{intro}</p> : null}</div>
             <dl className="divide-y divide-[#e4d1cb] border-y border-[#e4d1cb]">{blocks.map((block, index) => {
               const hasImage = Boolean(blockValue(block, "imageUrl"));
-              return <div className={`grid gap-4 py-5 sm:items-center sm:gap-6 ${hasImage ? "sm:grid-cols-[8rem_0.8fr_1fr]" : "sm:grid-cols-[8rem_1fr]"}`} key={instanceKey(block, index, "detail_item")} {...xfcartBlockAttrs(mode, block, index, "detail_item")}><dt className="font-semibold text-[#9a4b4b]">{blockValue(block, "label")}</dt>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[10px] bg-[#eadbd3]">{imageFor(block)}</div> : null}<dd className="text-base leading-7 text-[#665252]">{textBlock(block)}</dd></div>;
+              return <div className={`grid gap-4 py-5 sm:items-center sm:gap-6 ${hasImage ? "sm:grid-cols-[8rem_0.8fr_1fr]" : "sm:grid-cols-[8rem_1fr]"}`} key={instanceKey(block, index, "detail_item")} {...xfcartBlockAttrs(mode, block, index, "detail_item")}><dt className="font-semibold text-[#9a4b4b]">{blockValue(block, "label")}</dt>{hasImage ? <div className={frenchEditorialImageFrame("aspect-[5/3] overflow-hidden rounded-[10px] bg-[#eadbd3]")}>{imageFor(block)}</div> : null}<dd className="text-base leading-7 text-[#665252]">{textBlock(block)}</dd></div>;
             })}</dl>
           </div>
         </section>
@@ -10614,14 +10909,14 @@ function SectionView({
                 const stepTitle = blockValue(block, "title");
                 const stepImage = blockValue(block, "imageUrl") ? imageFor(block) : null;
                 return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "step")} {...xfcartBlockAttrs(mode, block, index, "step")}>
-                  {stepImage ? <div className="mb-5 aspect-[5/3] overflow-hidden rounded-[12px]">{stepImage}</div> : null}
+                  {stepImage ? <div className={frenchEditorialImageFrame("mb-5 aspect-[5/3] overflow-hidden rounded-[12px]")}>{stepImage}</div> : null}
                   <p className="text-sm font-semibold" style={{ color: editorialTheme.accent }}>{blockValue(block, "number", String(index + 1).padStart(2, "0"))}</p>
                   {stepTitle ? <h3 className={`${headingClass} mt-3 text-xl`}>{stepTitle}</h3> : null}
                   {textBlock(block) ? <p className="mt-3 text-sm leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p> : null}
                 </article>;
               })}
             </div>
-            {setting(section, "imageUrl") ? <div className="mx-auto mt-12 aspect-[5/3] w-full max-w-4xl overflow-hidden rounded-[14px]">{imageFor(section)}</div> : null}
+            {setting(section, "imageUrl") ? <div className={frenchEditorialImageFrame("mx-auto mt-12 aspect-[5/3] w-full max-w-4xl overflow-hidden rounded-[14px]")}>{imageFor(section)}</div> : null}
           </div>
         </section>
       );
@@ -10630,7 +10925,7 @@ function SectionView({
     if (["editorial_ideas", "editorial_formats", "editorial_scene_grid"].includes(section.type)) {
       return (
         <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={sectionStyle}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}<div className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">{blocks.map((block, index) => { const hasImage = Boolean(blockValue(block, "imageUrl")); return <article className={`grid gap-5 border-t pt-5 ${hasImage ? "sm:grid-cols-[0.72fr_1fr] lg:grid-cols-1" : "sm:grid-cols-1"}`} style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(mode, block, index, "editorial_item")}>{hasImage ? <div className="aspect-[5/3] overflow-hidden rounded-[12px]">{imageFor(block)}</div> : null}<div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p></div></article>; })}</div></div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}<div className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">{blocks.map((block, index) => { const hasImage = Boolean(blockValue(block, "imageUrl")); return <article className={`grid gap-5 border-t pt-5 ${hasImage ? "sm:grid-cols-[0.72fr_1fr] lg:grid-cols-1" : "sm:grid-cols-1"}`} style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_item")} {...xfcartBlockAttrs(mode, block, index, "editorial_item")}>{hasImage ? <div className={frenchEditorialImageFrame("aspect-[5/3] overflow-hidden rounded-[12px]")}>{imageFor(block)}</div> : null}<div><h3 className={`${headingClass} text-2xl`}>{blockValue(block, "title")}</h3><p className="mt-3 text-sm leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p></div></article>; })}</div></div>
         </section>
       );
     }
@@ -10642,7 +10937,7 @@ function SectionView({
         : blocks;
       return (
         <section className="px-5 py-16 sm:px-8 lg:py-24" id={anchor} style={sectionStyle}>
-          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}{renderedBlocks.length ? <div className="mt-10 grid gap-4 md:grid-cols-2">{renderedBlocks.map((block, index) => { const rawItems = block.settings?.items; const items: string[] | null = Array.isArray(rawItems) ? rawItems.map((item) => String(item)) : null; const guidanceTitle = blockValue(block, "title"); return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(mode, block, index, "editorial_guidance")}>{guidanceTitle ? <h3 className={`${headingClass} text-xl`}>{guidanceTitle}</h3> : null}{items ? <ul className="mt-3 space-y-2 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{items.map((item, itemIndex) => <li key={`${item}-${itemIndex}`}>{item}</li>)}</ul> : textBlock(block) ? <p className="mt-3 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p> : null}</article>; })}</div> : null}{guidanceImage ? <div className="mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px]">{guidanceImage}</div> : null}</div>
+          <div className="mx-auto max-w-[var(--site-content-width)]"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-center text-4xl sm:text-5xl`}>{title}</h2>{intro ? <p className="mx-auto mt-5 max-w-[70ch] text-center text-base leading-8" style={{ color: editorialTheme.mutedText }}>{intro}</p> : null}{renderedBlocks.length ? <div className="mt-10 grid gap-4 md:grid-cols-2">{renderedBlocks.map((block, index) => { const rawItems = block.settings?.items; const items: string[] | null = Array.isArray(rawItems) ? rawItems.map((item) => String(item)) : null; const guidanceTitle = blockValue(block, "title"); return <article className="border-t pt-4" style={{ borderColor: editorialTheme.border }} key={instanceKey(block, index, "editorial_guidance")} {...xfcartBlockAttrs(mode, block, index, "editorial_guidance")}>{guidanceTitle ? <h3 className={`${headingClass} text-xl`}>{guidanceTitle}</h3> : null}{items ? <ul className="mt-3 space-y-2 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{items.map((item, itemIndex) => <li key={`${item}-${itemIndex}`}>{item}</li>)}</ul> : textBlock(block) ? <p className="mt-3 text-base leading-7" style={{ color: editorialTheme.mutedText }}>{textBlock(block)}</p> : null}</article>; })}</div> : null}{guidanceImage ? <div className={frenchEditorialImageFrame("mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px]")}>{guidanceImage}</div> : null}</div>
         </section>
       );
     }
@@ -10658,7 +10953,7 @@ function SectionView({
     const ctaImage = imageFor(section);
     return (
       <section className="relative overflow-hidden bg-[#7f343d] px-5 py-16 text-[#fffaf6] sm:px-8 lg:py-24" id={anchor} style={{ backgroundColor: editorialTheme.ctaBg, color: editorialTheme.heroText }}>
-        <div className="relative z-10 mx-auto max-w-[var(--site-content-width)] text-center"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-4xl sm:text-5xl`} style={{ color: editorialTheme.heroText }}>{title}</h2>{intro ? <p className="mx-auto mt-6 max-w-[70ch] text-base leading-8 text-[#f7ded3]" style={{ color: editorialTheme.heroMuted }}>{intro}</p> : null}<div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">{setting(section, "primaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#f0c3a4] px-6 text-sm font-semibold text-[#32171c]" href={hrefFor(site, setting(section, "primaryHref"))} style={{ backgroundColor: editorialTheme.accent, color: editorialTheme.accentText }}>{setting(section, "primaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}{setting(section, "secondaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#f0c3a4] px-6 text-sm font-semibold text-white" href={hrefFor(site, setting(section, "secondaryHref"))} style={{ borderColor: editorialTheme.ctaBorder, color: editorialTheme.heroText }}>{setting(section, "secondaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}</div>{ctaImage ? <div className="mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#5c2930]" style={{ backgroundColor: editorialTheme.heroBg }}>{ctaImage}</div> : null}</div>
+        <div className="relative z-10 mx-auto max-w-[var(--site-content-width)] text-center"><h2 className={`${headingClass} mx-auto max-w-[34ch] text-4xl sm:text-5xl`} style={{ color: editorialTheme.heroText }}>{title}</h2>{intro ? <p className="mx-auto mt-6 max-w-[70ch] text-base leading-8 text-[#f7ded3]" style={{ color: editorialTheme.heroMuted }}>{intro}</p> : null}<div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">{setting(section, "primaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#f0c3a4] px-6 text-sm font-semibold text-[#32171c]" href={hrefFor(site, setting(section, "primaryHref"))} style={{ backgroundColor: editorialTheme.accent, color: editorialTheme.accentText }}>{setting(section, "primaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}{setting(section, "secondaryCta") ? <Link className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#f0c3a4] px-6 text-sm font-semibold text-white" href={hrefFor(site, setting(section, "secondaryHref"))} style={{ borderColor: editorialTheme.ctaBorder, color: editorialTheme.heroText }}>{setting(section, "secondaryCta")}<ArrowRight className="ml-2 h-4 w-4" strokeWidth={1.8} /></Link> : null}</div>{ctaImage ? <div className={frenchEditorialImageFrame("mx-auto mt-12 aspect-[5/3] max-w-4xl overflow-hidden rounded-[14px] bg-[#5c2930]")} style={{ backgroundColor: editorialTheme.heroBg }}>{ctaImage}</div> : null}</div>
       </section>
     );
   }
@@ -10678,6 +10973,7 @@ function SectionView({
   if (section.type === "hero") {
     const aidreamcapes = isAidreamcapesSite(site);
     const aidreamshootsXby = site.id === "site_mydreamshoots_xby";
+    const aidreamcapesEuXby = site.id === "site_aidreamcapes_xby";
     const mydreamHomepage = isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) && renderContext.pagePath === "/";
     const homepageMetrics = homepageMetricsForSite({ creativePackCategories, storefrontContext });
     const images = [
@@ -10727,7 +11023,7 @@ function SectionView({
         <section className="relative isolate overflow-hidden border-b border-[#eee3d7] bg-[radial-gradient(circle_at_0%_20%,rgba(230,223,214,0.58),transparent_24%),linear-gradient(180deg,#fffdfa_0%,#faf5ee_100%)] text-[#111318]">
           <div className="absolute inset-0 -z-10 hidden bg-[linear-gradient(90deg,#fffdfa_0%,#fffaf4_42%,rgba(255,250,244,0)_62%)] lg:block" />
           <div className="absolute inset-y-0 right-0 -z-20 hidden w-[58%] lg:block">
-            <img className="h-full w-full object-cover object-[58%_center]" src={primaryVisual} alt={primaryVisualAlt} />
+            <StorefrontImage className="h-full w-full object-cover object-[58%_center]" fetchPriority="high" loading="eager" preview={false} sizes="100vw" src={primaryVisual} alt={primaryVisualAlt} />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,#fffdfa_0%,rgba(255,250,244,0.86)_17%,rgba(255,250,244,0.32)_38%,rgba(255,250,244,0.04)_62%)]" />
             <div className="absolute inset-y-0 left-0 w-[18%] bg-gradient-to-r from-[#fffdfa] to-transparent" />
           </div>
@@ -10772,7 +11068,7 @@ function SectionView({
             </div>
 
             <div className="relative z-10 min-h-[540px] overflow-hidden rounded-t-[24px] bg-[#efe6d9] lg:min-h-[640px] lg:rounded-none lg:bg-transparent">
-              <img className="absolute inset-0 h-full w-full object-cover object-[58%_center] lg:hidden" src={primaryVisual} alt={primaryVisualAlt} />
+              <StorefrontImage className="absolute inset-0 h-full w-full object-cover object-[58%_center] lg:hidden" fetchPriority="high" loading="eager" preview={false} sizes="100vw" src={primaryVisual} alt={primaryVisualAlt} />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(250,245,237,0.04)_0%,rgba(20,18,15,0.06)_58%,rgba(20,18,15,0.12)_100%)] lg:hidden" />
               <div className="absolute bottom-7 right-4 w-[min(295px,calc(100%-2rem))] rounded-[24px] border border-[#ddd3c7] bg-white/92 p-5 text-[#171514] shadow-[0_32px_82px_-56px_rgba(20,22,26,0.26)] backdrop-blur sm:right-7 lg:bottom-[9.5rem] lg:right-0 xl:right-2">
                 <div className="flex items-center gap-1 text-[#d39a4a]">
@@ -10789,8 +11085,11 @@ function SectionView({
                 <div className="mt-4 flex -space-x-2.5">
                   {heroStats.slice(0, 5).map((item, index) => (
                     <div className="h-10 w-10 overflow-hidden rounded-full border-2 border-white bg-[#f2e8da]" key={instanceKey(item, index, "hero_avatar")}>
-                      <img
+                      <StorefrontImage
                         className="h-full w-full object-cover"
+                        loading="lazy"
+                        preview={false}
+                        sizes="40px"
                         src={avatarPool[index % avatarPool.length]}
                         alt={genericVisualAltForSite(site, {
                           category: "customer proof avatar",
@@ -10882,13 +11181,13 @@ function SectionView({
                   : spanishXbyImageAlt(site, manualImageAlt({ src: heroGridImage, fallback: `${motionHeroAltPrefix} ${index + 1}` }));
                 return (
                   <div
-                    className={`dreamshoot-hero-tile relative overflow-hidden rounded-[18px] bg-zinc-900 shadow-[0_28px_70px_-52px_rgba(0,0,0,0.95)] sm:rounded-[22px] ${index % 5 === 0 ? "translate-y-7 sm:translate-y-9" : ""} ${index % 4 === 0 ? "sm:scale-[1.04] lg:scale-[1.08]" : ""}`}
+                    className={`${aidreamcapesEuXby ? "self-start" : ""} dreamshoot-hero-tile relative overflow-hidden rounded-[18px] bg-zinc-900 shadow-[0_28px_70px_-52px_rgba(0,0,0,0.95)] sm:rounded-[22px] ${index % 5 === 0 ? "translate-y-7 sm:translate-y-9" : ""} ${index % 4 === 0 ? "sm:scale-[1.04] lg:scale-[1.08]" : ""}`}
                     key={`dreamshoot_hero_grid_${index}`}
                     style={{ animationDelay: `${-(index % 7) * 2.15}s` }}
                   >
                     <StorefrontImage
                       alt={heroGridAlt}
-                      className="dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"
+                      className={aidreamcapesEuXby ? "dreamshoot-hero-image block h-auto w-full object-center" : "dreamshoot-hero-image h-full min-h-[170px] w-full object-cover sm:min-h-[210px]"}
                       fetchPriority={index === 0 ? "high" : "low"}
                       loading={index === 0 ? "eager" : "lazy"}
                       priority={index === 0}
@@ -11008,7 +11307,7 @@ function SectionView({
                   <Link className="inline-flex min-h-[46px] items-center justify-center gap-3 rounded-[14px] border border-white/70 bg-white px-5 text-sm font-semibold text-[#090b13] shadow-[inset_0_0_0_1px_rgba(236,75,221,0.14),0_16px_42px_-34px_rgba(22,220,240,0.7)] transition hover:-translate-y-0.5 active:scale-[0.98] sm:min-h-[52px] sm:text-[1rem]" href={hrefFor(site, setting(section, "authPrimaryHref", "/login?mode=login"))}>
                     {authPrimaryUsesGoogle ? (
                       <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white shadow-[0_8px_22px_-14px_rgba(9,11,19,0.45)] ring-1 ring-black/[0.06]">
-                        <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isFrenchStorefrontSite(site) ? "Connexion avec Google" : isSpanishXbySite(site) ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" />
+                        <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isFrenchStorefrontSite(site) ? "Connexion avec Google" : isSpanishXbySite(site) ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" width={isSpanishXbySite(site) ? 20 : undefined} height={isSpanishXbySite(site) ? 20 : undefined} />
                       </span>
                     ) : (
                       <Mail className="h-5 w-5" strokeWidth={1.8} />
@@ -11516,7 +11815,14 @@ function SectionView({
                   src={videoUrl}
                 />
               ) : (
-                <img className="aspect-[16/9] w-full bg-black object-contain opacity-90" src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", "Video feature"), { role: "poster" })} />
+                <StorefrontImage
+                  alt={sectionVisualAltForSite(site, section, image, setting(section, "title", "Video feature"), { role: "poster" })}
+                  className="aspect-[16/9] w-full bg-black object-contain opacity-90"
+                  loading="lazy"
+                  preview={false}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  src={image}
+                />
               )}
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0)_46%,rgba(0,0,0,0.48)_100%)]" />
               {videoBadge ? (
@@ -12035,8 +12341,8 @@ function SectionView({
           <div className="min-w-0 rounded-[28px] border border-white/10 bg-[#11131a] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:p-4 md:p-5">
             <div className="min-w-0 overflow-hidden rounded-[24px] border border-white/10 bg-[#0c0e13] shadow-[0_24px_80px_-58px_rgba(0,0,0,0.9)]">
               <div className="relative overflow-hidden border-b border-white/10 bg-[#10131a]">
-                <div className="relative aspect-[16/9] w-full md:aspect-[16/10]">
-                  <StorefrontImage className="h-full w-full object-cover object-[50%_18%]" sizes="(max-width: 1024px) 100vw, 42vw" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, setting(section, "title"), { description: featureCaption, role: "featured" })} />
+                      <div className={site.id === "site_aidreamcapes_xby" ? "relative w-full" : "relative aspect-[16/9] w-full md:aspect-[16/10]"}>
+                  <StorefrontImage className={site.id === "site_aidreamcapes_xby" ? "block h-auto w-full object-center" : "h-full w-full object-cover object-[50%_18%]"} sizes="(max-width: 1024px) 100vw, 42vw" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, setting(section, "title"), { description: featureCaption, role: "featured" })} />
                 </div>
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,10,14,0.14)_0%,rgba(9,10,14,0.2)_38%,rgba(9,10,14,0.78)_100%)]" />
                 <div className="absolute left-4 top-4 rounded-full border border-white/12 bg-black/32 px-3 py-1.5 text-[11px] font-medium text-white/86 backdrop-blur">
@@ -12047,8 +12353,8 @@ function SectionView({
                   <p className="mt-2 max-w-lg text-xs leading-5 text-white/72 md:max-w-[calc(100%-8.5rem)] md:text-sm md:leading-6">{featureMeta}</p>
                 </div>
                 <div className="absolute bottom-4 right-4 hidden w-[108px] overflow-hidden rounded-[18px] border border-white/12 bg-black/28 shadow-[0_18px_48px_-36px_rgba(0,0,0,0.8)] backdrop-blur-sm md:block">
-                  <div className="relative aspect-[4/5] w-full">
-                    <StorefrontImage className="h-full w-full object-cover" sizes="108px" src={secondaryImage} alt={genericVisualAltForSite(site, { category: "customer login preview", description: featureMeta, imageUrl: secondaryImage, title: featureLabel, role: "gallery" })} />
+                <div className={site.id === "site_aidreamcapes_xby" ? "relative w-full" : "relative aspect-[4/5] w-full"}>
+                    <StorefrontImage className={site.id === "site_aidreamcapes_xby" ? "block h-auto w-full object-center" : "h-full w-full object-cover"} sizes="108px" src={secondaryImage} alt={genericVisualAltForSite(site, { category: "customer login preview", description: featureMeta, imageUrl: secondaryImage, title: featureLabel, role: "gallery" })} />
                   </div>
                 </div>
               </div>
@@ -12080,7 +12386,7 @@ function SectionView({
                           <span className="flex min-w-0 items-start gap-3">
                             {blockValue(method, "kind", "") === "google" ? (
                               <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white ring-1 ring-white/10">
-                                <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isFrenchStorefrontSite(site) ? "Connexion avec Google" : spanishXbyLogin ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" />
+                                <img className="h-5 w-5" src={isFrenchStorefrontSite(site) ? aidreamcapesEuGoogleIconPath : googleIconPath} alt={isFrenchStorefrontSite(site) ? "Connexion avec Google" : spanishXbyLogin ? "Icono de Google" : "Google sign-in icon"} loading="lazy" decoding="async" width={spanishXbyLogin ? 20 : undefined} height={spanishXbyLogin ? 20 : undefined} />
                               </span>
                             ) : null}
                             <span className="min-w-0">
@@ -13276,8 +13582,39 @@ function SectionView({
     const activePackageThemeCards = isMyDreamShootsProfileSite(site) && activePackThemeCards.length
       ? activePackThemeCards
       : categoryThemeCards.length ? categoryThemeCards : activePackThemeCards;
-    const taxonomyCards = (renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation") && activePackageThemeCards.length
-      ? activePackageThemeCards
+    const publishedSpanishImageThemeCards = spanishXbyTaxonomy && site.id === "site_mydreamshoots_xby" && (
+      renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation"
+    )
+      ? (publishedIndexablePaths ?? storefrontContext?.publishedPaths ?? [])
+          .filter((path) => /^\/ai-image-generation\/[^/]+$/.test(path))
+          .map((href) => {
+            const slug = href.slice("/ai-image-generation/".length);
+            const matchingPack = creativePacks.find((pack) => creativePackCollectionHref(pack) === href);
+            const content = getSeoDirectoryContentForSite(site, "collection", slug);
+            return {
+              id: `published_${slug}`,
+              groupKey: undefined as string | undefined,
+              groupLabel: "Temas de fotos",
+              title: content.label || spanishPhotoPackageLabel(slug, false),
+              description: content.description || "Explora este tema de fotos con IA y guarda tus resultados en una galería privada.",
+              meta: "Fotos con IA",
+              keywords: [content.label, slug, "fotos con IA"].filter((value): value is string => Boolean(value)),
+              imageUrl: matchingPack ? packImage(site, matchingPack) : fallbackHeroImages[0],
+              imageUrls: matchingPack ? dreamshootPackImageSet(site, matchingPack, 2) : undefined,
+              imageAlts: matchingPack?.galleryImageAlts,
+              photoCountLabel: matchingPack ? dreamshootPackPhotoCountLabel(matchingPack) : undefined,
+              tags: content.useCases ?? [],
+              usesLabel: undefined as string | undefined,
+              href,
+              block: undefined as SectionBlockInstance | undefined
+            };
+          })
+      : [];
+    const taxonomyCards = (renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation") && (activePackageThemeCards.length || publishedSpanishImageThemeCards.length)
+      ? [
+          ...activePackageThemeCards,
+          ...publishedSpanishImageThemeCards.filter((publishedCard) => !activePackageThemeCards.some((card) => card.href === publishedCard.href))
+        ]
       : cards.map((card) => ({
           id: card.id,
           groupKey: undefined as string | undefined,
@@ -13435,18 +13772,18 @@ function SectionView({
       ? packHeroImage(site, selectedPack) || galleryImagesForPack(site, selectedPack, 1)[0]
       : rawSelectedGalleryImages[0] || selectedCategoryImage || (selectedPacks[0] ? packImage(site, selectedPacks[0]) : fallbackHeroImages[0]);
     const selectedGalleryImages = selectedPack
-      ? galleryImagesForPack(site, selectedPack, galleryLimit, [selectedHeroImage])
-      : galleryImagesForCollection(site, selectedPacks, galleryLimit, [selectedHeroImage]);
+      ? galleryImagesForPack(site, selectedPack, galleryLimit, frenchXbyTaxonomy ? [] : [selectedHeroImage])
+      : galleryImagesForCollection(site, selectedPacks, galleryLimit, frenchXbyTaxonomy ? [] : [selectedHeroImage]);
     const selectedDetailPreviewImages = uniqueStringList([
       selectedHeroImage,
       ...selectedPacks.map((pack) => packImage(site, pack))
     ]);
     const selectedDetailImages = selectedDetailPreviewImages.slice(0, 1);
     const selectedDetailMediaFrameClass = isFrenchStorefrontSite(site)
-      ? "grid items-start gap-3 lg:flex lg:h-0 lg:min-h-0 lg:flex-1 lg:w-full lg:flex-col lg:items-stretch"
+      ? "grid w-full items-start gap-3"
       : selectedDetailImages.length === 1 ? "grid items-start gap-3" : "grid grid-cols-2 items-start gap-3";
     const selectedDetailCoverClass = isFrenchStorefrontSite(site)
-      ? "aspect-[2/3] w-full rounded-[18px] bg-zinc-900 lg:h-0 lg:min-h-0 lg:flex-1 lg:aspect-auto"
+      ? "w-full rounded-[18px] bg-transparent"
       : "aspect-[4/3] rounded-[18px] bg-zinc-900";
     const selectedGalleryDisplayImages = selectedGalleryImages.slice(0, galleryLimit);
     const selectedOutputCount = selectedPack?.outputCount ?? selectedPacks.reduce((sum, pack) => sum + pack.outputCount, 0);
@@ -13565,6 +13902,9 @@ function SectionView({
       : selectedProfile
       ? selectedProfile.detailTags.slice(0, 8)
       : [];
+    if (site.id === "site_aidreamcapes" && renderContext.pagePath === "/ai-image-generation" && aidreamcapesImageDirectoryCards?.length) {
+      return <AidreamcapesImageDirectory cards={aidreamcapesImageDirectoryCards} sectionId={sectionAnchor(section, "image-themes")} />;
+    }
     const taxonomySectionClass = aidreamcapes
       ? "relative overflow-hidden border-y border-white/10 bg-[#05070E] px-5 py-16 text-white"
       : "relative overflow-hidden border-y border-white/10 bg-[#08080a] px-5 py-16 text-white";
@@ -13599,7 +13939,7 @@ function SectionView({
           ) : null}
           {isCollectionDetail ? (
             <DreamshootShowcasePreviewClient>
-              <div className="grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,0.75fr)] lg:items-stretch">
+              <div className={`grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,0.75fr)] ${isFrenchStorefrontSite(site) ? "lg:items-start" : "lg:items-stretch"}`}>
                 <div className={selectedPanelClass}>
                   <p className={taxonomyEyebrowClass}>{frenchEngagementPage ? "FOTOS DE COMPROMISO" : frenchXbyTaxonomy ? "PACK PHOTO" : setting(section, "eyebrow", "Photo package library")}</p>
                   <HeadingTag className={aidreamcapes ? "mt-4 text-[clamp(2rem,4vw,4.15rem)] font-semibold leading-[0.98] tracking-tight text-white text-balance [font-family:var(--site-title-font)]" : "mt-4 text-[clamp(2rem,4vw,4.15rem)] font-semibold leading-[0.98] tracking-tight text-white text-balance [font-family:var(--site-title-font)]"}>
@@ -13632,7 +13972,7 @@ function SectionView({
                     <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
                   </Link>
                 </div>
-                <div className={`${isFrenchStorefrontSite(site) ? "lg:flex lg:h-full lg:min-h-0 lg:flex-col lg:[contain:size]" : ""} w-full overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] lg:max-w-[540px] lg:justify-self-end`}>
+                <div className="w-full overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] lg:max-w-[540px] lg:justify-self-end">
                   <div className={selectedDetailMediaFrameClass}>
                     {selectedDetailImages.map((image, index) => (
                       <StorefrontSafeImage
@@ -13648,7 +13988,7 @@ function SectionView({
 	                              // actual scene instead of passing the old English
 	                              // placeholder ("Professional, ...") through the
 	                              // alt sanitizer.
-	                              explicitAlt: frenchXbyTaxonomy ? undefined : galleryFallbackAltForIndex(localizedDynamicTitle, index),
+                              explicitAlt: frenchXbyTaxonomy ? undefined : galleryFallbackAltForIndex(localizedDynamicTitle, index, site),
 	                              imageUrl: image,
 	                              index,
 	                              meta: selectedCategory?.parent?.label,
@@ -13657,7 +13997,7 @@ function SectionView({
 	                            })}
                         className={selectedDetailCoverClass}
                         fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "high" : "low"}
-                        imageClassName={isFrenchStorefrontSite(site) ? "!object-top transition duration-500" : "transition duration-500"}
+                        imageClassName={isFrenchStorefrontSite(site) ? "!h-auto !w-full !object-contain transition duration-500" : "transition duration-500"}
                         key={`${image}_${index}_detail`}
                         loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
                         src={image}
@@ -13760,7 +14100,7 @@ function SectionView({
                       {frenchEngagementPage ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.galleryIntro : frenchXbyTaxonomy ? selectedSeoContent?.intro || `Explorez des scènes différentes de ${localizedDynamicTitle.toLowerCase()} avant de lancer le pack.` : spanishXbyTaxonomy ? selectedSeoContent?.intro || `Explora escenas diferentes de ${localizedDynamicTitle} antes de iniciar el paquete.` : selectedPageCopy?.galleryIntro ?? (detailCoverNote || "Review unique visual directions for this theme in a separate gallery, independent of the cover image.")}
                     </p>
                   </div>
-                  <div className="grid items-start gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="grid items-start gap-3 sm:grid-cols-2 lg:grid-cols-4" data-aidreamcapes-eu-theme-gallery={frenchXbyTaxonomy ? "true" : undefined}>
                     {selectedGalleryDisplayImages.map((image, index) => (
 	                      <StorefrontNaturalImage
 	                        alt={frenchEngagementPage
@@ -13770,7 +14110,7 @@ function SectionView({
 	                          : cardImageAltForSite(site, {
 	                              category: selectedCategory?.label,
 	                              description: dynamicSubtitle,
-	                              explicitAlt: galleryFallbackAltForIndex(localizedDynamicTitle, index),
+                              explicitAlt: galleryFallbackAltForIndex(localizedDynamicTitle, index, site),
 	                              imageUrl: image,
 	                              index,
 	                              meta: selectedCategory?.parent?.label,
@@ -14196,6 +14536,43 @@ function SectionView({
     const directoryInternalLinks = frenchEngagementDirectory
       ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY.relatedLinks.map((link) => ({ ...link }))
       : internalLinks;
+    const aidreamshootsAutoDirectoryLinks = spanishXbyDirectory && site.id === "site_mydreamshoots_xby"
+      ? Array.from(new Map([
+          ...(publishedIndexablePaths ?? storefrontContext?.publishedPaths ?? [])
+            .filter((path) => /^\/ai-image-generation\/[^/]+$/.test(path))
+            .map((href) => {
+              const slug = href.slice("/ai-image-generation/".length);
+              const directoryContent = getSeoDirectoryContentForSite(site, "collection", slug);
+              return [href, {
+                href,
+                label: directoryContent.label || spanishPhotoPackageLabel(slug, false)
+              }] as const;
+            }),
+          ...creativePacks
+            .filter((pack) => pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0)
+            .map((pack) => {
+              const href = creativePackCollectionHref(pack);
+              return [href, {
+                href,
+                label: spanishPhotoPackageLabel(pack.categoryRecord?.label || pack.name, false)
+              }] as const;
+            })
+        ]).values())
+      : [];
+    const currentDirectoryPath = renderContext.pagePath.replace(/\/+$/, "") || "/";
+    const autoDirectoryLinks = aidreamshootsAutoDirectoryLinks.filter((link) => link.href !== currentDirectoryPath);
+    const directoryLinks = Array.from(new Map([
+      ...directoryInternalLinks,
+      ...(focusedCollectionRoute && spanishXbyDirectory ? [{ label: "Explorar todos los temas", href: "/ai-image-generation" }] : []),
+      ...autoDirectoryLinks
+    ].map((link) => [link.href, link]))
+      .values())
+      .filter((link) => link.href !== currentDirectoryPath);
+    const visibleDirectoryLinks = focusedCollectionRoute
+      ? directoryLinks.slice(0, 8)
+      : spanishXbyDirectory
+        ? directoryLinks
+        : directoryLinks.slice(0, directoryInternalLinks.length);
     const selectedPageCopy = kind === "collection" && !spanishXbyDirectory && !isAidreamcapesSite(site)
       ? storefrontContext?.pageCopy
       : undefined;
@@ -14219,9 +14596,9 @@ function SectionView({
                 <p className="mt-4 max-w-3xl text-base leading-7 text-[#5d6572]">
                   {frenchEngagementDirectory ? "Descubre los temas relacionados antes de elegir el paquete que mejor encaje con tus fotos fuente y el resultado que buscas." : frenchXbyDirectory ? "Comparez les thèmes associés avant de choisir le pack qui correspond à vos photos source et à votre objectif." : spanishXbyDirectory ? "Revisa los temas relacionados antes de elegir el paquete que mejor encaje con tus fotos fuente y el resultado que buscas." : "Review adjacent themes before choosing the package that best matches your source photos and finished-image goal."}
                 </p>
-                {directoryInternalLinks.length ? (
+                {visibleDirectoryLinks.length ? (
                 <nav aria-label={frenchEngagementDirectory ? "Paquetes de fotos relacionados" : frenchXbyDirectory ? "Packs photo associés" : spanishXbyDirectory ? "Paquetes de fotos relacionados" : "Related photo packages"} className="mt-6 flex flex-wrap gap-2">
-                    {directoryInternalLinks.map((link) => (
+                    {visibleDirectoryLinks.map((link) => (
                       <Link className="group inline-flex items-center gap-2 rounded-full border border-[#eadbc7] bg-[#fffaf3] px-4 py-2 text-sm font-semibold text-[#4b5563] transition hover:border-[#e4561b]/35 hover:text-[#14161a]" href={hrefFor(site, link.href)} key={`${link.label}_${link.href}`}>
                         <span>{link.label}</span>
                         <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#e4561b] transition group-hover:translate-x-0.5" strokeWidth={2} />
@@ -14334,11 +14711,11 @@ function SectionView({
                   </ol>
                 </div>
               ) : null}
-              {directoryInternalLinks.length ? (
+              {visibleDirectoryLinks.length ? (
                 <div className="mt-6 border-t border-[#eee1cf] pt-5">
                   <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#8b6a4b]">{frenchXbyDirectory ? "Pages associées" : spanishXbyDirectory ? "Páginas relacionadas" : selectedPageCopy?.relatedTitle ?? "Related pages"}</p>
                   <nav aria-label={frenchXbyDirectory ? "Pages associées" : spanishXbyDirectory ? "Páginas relacionadas" : "Related pages"} className="mt-3 grid gap-2">
-                    {directoryInternalLinks.map((link) => (
+                    {visibleDirectoryLinks.map((link) => (
                       <Link className="group inline-flex items-center justify-between gap-3 rounded-[8px] border border-[#eadbc7] bg-[#fffaf3] px-3 py-2 text-sm font-semibold text-[#4b5563] transition hover:border-[#e4561b]/35 hover:text-[#14161a]" href={hrefFor(site, link.href)} key={`${link.label}_${link.href}`}>
                         <span>{link.label}</span>
                         <ArrowRight className="h-3.5 w-3.5 shrink-0 text-[#e4561b] transition group-hover:translate-x-0.5" strokeWidth={2} />
@@ -14729,11 +15106,12 @@ function SectionView({
         .filter((item) => !(isPrimaryMydreamshootsCapabilitySite(site) && isMydreamshootsRemovedLegacyRoute(canonicalSaveTheDatePath(item.href))))
         .map((item) => ({ ...item, href: hrefFor(site, item.href) }))
     }));
-    return <SaveTheDateDirectory createHref={hrefFor(site, "/app/create")} groups={groups} spanish={isSpanishXbySite(site)} />;
+    return <SaveTheDateDirectory createHref={hrefFor(site, "/app/create")} french={site.id === "site_aidreamcapes_xby"} groups={groups} spanish={isSpanishXbySite(site)} />;
   }
 
   if (section.type === "dreamshoot_media_gallery") {
     const aidreamcapes = isAidreamcapesSite(site);
+    const aidreamcapesEuXby = site.id === "site_aidreamcapes_xby";
     const kind = setting(section, "kind", "image").trim().toLowerCase() === "video" ? "video" : "image";
     const fullGallery = settingBool(section, "fullGallery", false);
     const selectedImageSlugs = fullGallery ? [] : listLines(setting(section, "imageSlugs"));
@@ -14793,13 +15171,13 @@ function SectionView({
                       role="button"
                       tabIndex={0}
                     >
-                      <div className={isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) ? "aspect-square" : "aspect-[3/4]"}>
+                      <div className={aidreamcapesEuXby ? "overflow-hidden" : isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) ? "aspect-square" : "aspect-[3/4]"}>
                         {card.videoUrl ? (
-                          <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
+                          <DreamshootShowcaseVideo className={aidreamcapesEuXby ? "block h-auto w-full max-w-full object-contain bg-[#05070e]" : "h-full w-full max-w-full object-cover"} label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
                         ) : (
                           <StorefrontImage
                             alt={videoPosterAltForSite(site, { meta: card.meta, title: card.title })}
-                            className="h-full w-full max-w-full object-cover"
+                            className={aidreamcapesEuXby ? "block h-auto w-full max-w-full object-contain bg-[#05070e]" : "h-full w-full max-w-full object-cover"}
                             loading="lazy"
                             preview={false}
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -14836,7 +15214,7 @@ function SectionView({
                     role="button"
                     tabIndex={0}
                   >
-                    <div className="aspect-square">
+                    <div className={aidreamcapesEuXby ? "overflow-hidden" : "aspect-square"}>
                       <StorefrontImage
 	                        alt={cardImageAltForSite(site, {
 	                          category: card.meta,
@@ -14846,7 +15224,7 @@ function SectionView({
 	                          role: "gallery",
 	                          title: card.title
 	                        })}
-                        className="h-full w-full bg-[#05070e] object-contain object-center transition duration-300 group-hover:brightness-105"
+                        className={aidreamcapesEuXby ? "block h-auto w-full object-center transition duration-300 group-hover:brightness-105" : "h-full w-full bg-[#05070e] object-contain object-center transition duration-300 group-hover:brightness-105"}
                         fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "high" : "low"}
                         loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
                         preview={false}
@@ -14883,7 +15261,7 @@ function SectionView({
       ? mydreamProfileSite
         ? mydreamshootsHomepageCopy.photoTitle
         : frenchXby
-          ? "Générateurs de photos IA à la une"
+          ? "Générateurs photo IA à découvrir"
           : "Featured AI Photo Generators"
       : setting(section, "imageTitle", "Featured AI Photo Generators");
     const imageAllLabel = canonicalGeneratorCopy ? frenchXby ? "VOIR TOUTES LES PHOTOS" : "VIEW ALL PHOTO" : setting(section, "imageAllLabel", "View all photos");
@@ -14892,7 +15270,7 @@ function SectionView({
       ? mydreamProfileSite
         ? mydreamshootsHomepageCopy.videoTitle
         : frenchXby
-          ? "Générateurs de vidéos IA à la une"
+          ? "Générateurs vidéo IA à découvrir"
           : "Featured AI Video Generators"
       : setting(section, "videoTitle", "Featured AI Video Generators");
     const videoAllLabel = canonicalGeneratorCopy ? frenchXby ? "VOIR TOUTES LES VIDÉOS" : "VIEW ALL VIDEO" : setting(section, "videoAllLabel", "View all videos");
@@ -15024,7 +15402,7 @@ function SectionView({
               category: "Vídeo con IA",
               sortOrder: index + 1,
               imageUrl: media.poster,
-              imageAlt: `${title} — ejemplo de vídeo creado con IA`,
+              imageAlt: media.alt,
               videoUrl: media.video,
               status: "published" as const,
               indexable: true as const,
@@ -15334,7 +15712,7 @@ function SectionView({
           ? mydreamshootsVideoWatchPathForContentPath(videoUrl)
           : undefined;
         const videoHref = videoWatchPath ? hrefFor(site, videoWatchPath) : href;
-        const mediaClassName = aidreamcapesEuXby ? "h-full w-full object-contain bg-[#05070e]" : "h-full w-full object-cover";
+        const mediaClassName = aidreamcapesEuXby ? "block h-auto w-full object-contain object-center" : "h-full w-full object-cover";
         const publishedImageAlt = item.kind === "photo"
           ? cardImageAltForSite(site, {
               category: "homepage photo package",
@@ -15358,7 +15736,7 @@ function SectionView({
             >
               <div
                 aria-label={`Play ${item.title}`}
-                className="relative aspect-square cursor-pointer overflow-hidden bg-[#05070e] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-inset"
+              className={`relative ${aidreamcapesEuXby ? "overflow-hidden" : "aspect-square"} cursor-pointer overflow-hidden bg-[#05070e] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-inset`}
                 data-dreamshoot-preview-meta={item.subtitle}
                 data-dreamshoot-preview-poster={mediaAssetUrl(site, item.imageUrl)}
                 data-dreamshoot-preview-src={mediaAssetUrl(site, item.videoUrl ?? "")}
@@ -15369,7 +15747,7 @@ function SectionView({
               >
                 <StorefrontImage
                   alt={publishedImageAlt}
-                  className={`h-full w-full ${containPoster ? "object-contain" : "object-cover"}`}
+                  className={aidreamcapesEuXby ? "block h-auto w-full object-contain" : `h-full w-full ${containPoster ? "object-contain" : "object-cover"}`}
                   loading="lazy"
                   preview={false}
                   sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
@@ -15402,7 +15780,7 @@ function SectionView({
           >
             <div
               aria-label={`Preview ${item.title}`}
-              className="aspect-square overflow-hidden"
+              className={aidreamcapesEuXby ? "aspect-video overflow-hidden" : "aspect-square overflow-hidden"}
               data-dreamshoot-preview-meta={item.subtitle}
               data-dreamshoot-preview-poster={mediaAssetUrl(site, item.imageUrl)}
               data-dreamshoot-preview-src={mediaAssetUrl(site, videoUrl)}
@@ -15428,7 +15806,7 @@ function SectionView({
             href={href}
             key={item.id}
           >
-            <div className="aspect-square overflow-hidden">{media}</div>
+            <div className={aidreamcapesEuXby ? "overflow-hidden" : "aspect-square overflow-hidden"}>{media}</div>
             <div className={compactCard ? "border-t border-white/10 p-2 sm:p-2.5" : "border-t border-white/10 p-3"}>
               <h3 className={compactCard ? "truncate text-xs font-semibold text-white sm:text-sm" : "truncate text-sm font-semibold text-white"}>{item.title}</h3>
               <p className={compactCard ? "mt-1 line-clamp-2 text-[11px] leading-4 text-white/60 sm:text-xs" : "mt-1 line-clamp-2 text-xs leading-5 text-white/60"}>{item.subtitle}</p>
@@ -15643,7 +16021,10 @@ function SectionView({
       ? storefrontContext?.catalog.activePacks.find((pack) => pack.id === configuredPackId)
       : undefined;
     const alignFeaturedPackGrid = shouldAlignFeaturedPackGrid(collage);
-    const useUniformFeaturedPackTiles = aidreamcapes || alignFeaturedPackGrid;
+    // EU storefront assets are authored as complete 16:9 frames. Keep their
+    // natural height so the shared 4:3 tile does not add black letterboxing or
+    // force object-cover cropping around faces and other subjects.
+    const useUniformFeaturedPackTiles = (aidreamcapes || alignFeaturedPackGrid) && site.id !== "site_aidreamcapes_xby";
     const includedTokens = listLines(
       setting(
         section,
@@ -16091,6 +16472,8 @@ function SectionView({
     const aidreamshootsXby = site.id === "site_mydreamshoots_xby";
     const primaryMyDreamShoots = isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) && !aidreamcapes;
     const spanishMyDreamShootsVideo = isSpanishXbySite(site) && !aidreamcapes;
+    const frenchXbyTools = isFrenchStorefrontSite(site);
+    const frenchAidreamcapesVideo = frenchXbyTools;
     const layout = setting(section, "layout", "directory");
     const mydreamshootsVideoFramework = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXbySite(site) && !aidreamcapes && !primaryMyDreamShoots;
     if (site.id === "site_aidreamcapes" && renderContext.pagePath === "/ai-video-generation" && layout === "aidreamcapes_video_directory") {
@@ -16103,13 +16486,22 @@ function SectionView({
           navigation={navigation}
           sectionId={sectionAnchor(section, "video-themes")}
           site={site}
+          themeCovers={aidreamcapesVideoThemeCovers}
         />
       );
     }
-    if ((primaryMyDreamShoots || spanishMyDreamShootsVideo) && renderContext.pagePath === "/ai-video-generation" && layout === "video_theme_grid") {
+    if ((primaryMyDreamShoots || spanishMyDreamShootsVideo || frenchAidreamcapesVideo) && renderContext.pagePath === "/ai-video-generation" && (layout === "video_theme_grid" || frenchAidreamcapesVideo)) {
       const fallbackCoverImageUrl = setting(section, "imageUrl", defaultMydreamshootsVideoThemeCover);
-      const topics = (videoGenerationTopics ?? headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes))
-        .filter((topic) => isMydreamshootsCurrentVideoMenuSlug(topic.slug));
+      const configuredTopics = videoGenerationTopics?.length
+        ? videoGenerationTopics
+        : headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes);
+      const topics = configuredTopics
+        .filter((topic) => isMydreamshootsCurrentVideoMenuSlug(topic.slug))
+        .map((topic) => frenchAidreamcapesVideo ? {
+          ...topic,
+          label: frenchVideoGenerationTopicLabel(topic.slug, topic.label),
+          parentLabel: frenchVideoGenerationParentLabel(topic.parentSlug, topic.parentLabel)
+        } : topic);
       const topicGroups = groupedVideoGenerationTopicsForServer(topics);
       const HeadingTag = setting(section, "headingLevel", "h1") === "h1" ? "h1" : "h2";
       return (
@@ -16118,13 +16510,13 @@ function SectionView({
           <div className="mx-auto max-w-[var(--site-content-width)]">
             <div className="flex flex-col gap-4 border-b border-white/10 pb-8 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{spanishMyDreamShootsVideo ? "Generación de vídeo con IA" : "AI Video Generation"}</p>
+            <p className="text-xs font-semibold uppercase tracking-normal text-[#c4b5fd]">{frenchAidreamcapesVideo ? "Génération de vidéos avec l’IA" : spanishMyDreamShootsVideo ? "Generación de vídeo con IA" : "AI Video Generation"}</p>
                 <HeadingTag className="mt-4 max-w-3xl text-4xl font-semibold leading-none tracking-normal text-white sm:text-5xl lg:text-6xl [font-family:var(--site-title-font)]">
                   {setting(section, "title", "AI Video Generation")}
                 </HeadingTag>
               </div>
               <div className="max-w-xl lg:text-right">
-                <p className="text-sm font-semibold uppercase tracking-normal text-white/42">{topics.length} {spanishMyDreamShootsVideo ? "temas" : "themes"}</p>
+                <p className="text-sm font-semibold uppercase tracking-normal text-white/42">{topics.length} {frenchAidreamcapesVideo ? "thèmes" : spanishMyDreamShootsVideo ? "temas" : "themes"}</p>
                 <p className="mt-3 text-base leading-7 text-white/68">
                   {setting(section, "subtitle", "Browse every public AI video theme and open the dedicated guide for the direction you want.")}
                 </p>
@@ -16137,7 +16529,7 @@ function SectionView({
                   <section key={group.slug}>
                     <div className="flex items-end justify-between gap-4 border-b border-white/10 pb-3">
                       <h2 className="text-2xl font-semibold tracking-normal text-white">{group.label}</h2>
-                      <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white/42">{group.topics.length} {spanishMyDreamShootsVideo ? "temas" : "themes"}</span>
+                      <span className="text-xs font-semibold uppercase tracking-[0.12em] text-white/42">{group.topics.length} {frenchAidreamcapesVideo ? "thèmes" : spanishMyDreamShootsVideo ? "temas" : "themes"}</span>
                     </div>
                     <div className="mt-5 grid items-start gap-5 sm:grid-cols-2 lg:grid-cols-4">
                       {group.topics.map((topic, index) => {
@@ -16186,7 +16578,7 @@ function SectionView({
                             <h3 className="text-xl font-semibold leading-tight tracking-normal text-white">{topic.label}</h3>
                             {topic.description ? <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/66">{topic.description}</p> : null}
                             <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#ddd7ff] transition group-hover/theme:text-white">
-                              {spanishMyDreamShootsVideo ? "Abrir tema" : "Open theme"}
+                              {frenchAidreamcapesVideo ? "Ouvrir le thème" : spanishMyDreamShootsVideo ? "Abrir tema" : "Open theme"}
                               <ChevronRight className="h-4 w-4 shrink-0 transition group-hover/theme:translate-x-0.5" strokeWidth={1.9} />
                             </span>
                           </Link>
@@ -16204,7 +16596,9 @@ function SectionView({
       );
     }
     if (mydreamshootsVideoFramework) {
-      const topics = videoGenerationTopics ?? headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes);
+      const topics = videoGenerationTopics?.length
+        ? videoGenerationTopics
+        : headerVideoGenerationTopicsForClient(site, videoThemeCategories, videoThemes);
       return (
         <section className="relative isolate overflow-hidden bg-[#08080a] px-4 py-10 text-white sm:px-5 sm:py-14" id={sectionAnchor(section, "video-generation")}>
           <div className="mx-auto max-w-[1180px]">
@@ -16246,7 +16640,6 @@ function SectionView({
           })
       : baseTools;
     const spanishXbyTools = isSpanishXbySite(site);
-    const frenchXbyTools = isFrenchStorefrontSite(site);
     const localizedTools = spanishXbyTools ? spanishToolBlocks(rawTools, aidreamcapes) : rawTools;
     const tools = localizedTools.filter((tool) => {
       const rawHref = blockValue(tool, "href", "/tools/image-studio");
@@ -16425,7 +16818,8 @@ function SectionView({
             primaryHref={hrefFor(site, setting(section, "primaryHref", "/login"))}
              secondaryCta={frenchXbyTools ? aidreamcapes ? "Albums d’occasion" : "Voir les packs photo" : spanishXbyTools ? aidreamcapes ? "Albumes de ocasion" : "Ver paquetes" : setting(section, "secondaryCta", aidreamcapes ? "Occasion Albums" : "View photo packages")}
             secondaryHref={hrefFor(site, setting(section, "secondaryHref", "/collections"))}
-             locale={frenchXbyTools ? "fr" : spanishXbyTools ? "es" : "en"}
+            locale={frenchXbyTools ? "fr" : spanishXbyTools ? "es" : "en"}
+            categoryHeadingLevel={site.id === "site_mydreamshoots_xby" && renderContext.pagePath === "/tools" ? "h2" : "h3"}
             sectionId={toolSectionId}
           />
         </div>
@@ -17223,7 +17617,7 @@ function SectionView({
                 </div>
                 <div className="p-6 xl:p-8">
                   <div className="relative overflow-hidden rounded-[30px] border border-[#e4dace] bg-[#efe6d9] shadow-[0_24px_68px_-52px_rgba(20,22,26,0.16)]">
-                    <img className="aspect-[16/11] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                    <img className={site.id === "site_aidreamcapes_xby" ? "block h-auto w-full object-center" : "aspect-[16/11] w-full object-cover"} src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,22,26,0.08)_0%,rgba(20,22,26,0.18)_42%,rgba(20,22,26,0.76)_100%)]" />
                     <div className="absolute left-5 top-5 rounded-full border border-white/52 bg-white/18 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white backdrop-blur">
                       Step 01 · intake
@@ -17289,7 +17683,7 @@ function SectionView({
                 </div>
                 <div className="p-6 xl:p-8">
                   <div className="relative overflow-hidden rounded-[28px] border border-[#e4dace] bg-[#efe6d9] shadow-[0_20px_56px_-44px_rgba(20,22,26,0.16)]">
-                    <img className="aspect-[16/11] w-full object-cover" src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
+                    <img className={site.id === "site_aidreamcapes_xby" ? "block h-auto w-full object-center" : "aspect-[16/11] w-full object-cover"} src={featureImage} alt={sectionVisualAltForSite(site, section, featureImage, sectionTitle)} />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,22,26,0.12)_0%,rgba(20,22,26,0.18)_36%,rgba(20,22,26,0.72)_100%)]" />
                     <div className="absolute inset-x-0 bottom-0 p-6 text-white">
                       <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/60">{workflowLabel}</p>
@@ -18747,6 +19141,7 @@ function SectionView({
         return { id: `legacy_before_after_${index}`, type: "before_after", settings: { beforeLabel, afterLabel, beforeImage, afterImage } };
       }
     );
+    const frenchXbyBeforeAfter = site.id === "site_aidreamcapes_xby";
     return (
       <section className="px-5 py-16" id={sectionAnchor(section, id)}>
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 lg:grid-cols-[minmax(280px,0.38fr)_minmax(0,0.62fr)] lg:items-start">
@@ -18781,10 +19176,10 @@ function SectionView({
 	                  {[
 	                    { image: beforeImage, label: beforeLabel, stage: "source upload" },
 	                    { image: afterImage, label: afterLabel, stage: "AI-generated result" }
-	                  ].map(({ image, label, stage }) => (
-	                    <div className="relative aspect-[4/5] overflow-hidden rounded-[1rem] bg-zinc-200" key={label}>
+                  ].map(({ image, label, stage }, imageIndex) => (
+                    <div className={frenchXbyBeforeAfter ? "relative overflow-hidden rounded-[1rem] bg-transparent" : "relative aspect-[4/5] overflow-hidden rounded-[1rem] bg-zinc-200"} key={`${label}-${stage}-${imageIndex}`}>
 	                      <img
-	                        className="h-full w-full object-cover"
+	                        className={frenchXbyBeforeAfter ? "block h-auto w-full object-center" : "h-full w-full object-cover"}
 	                        src={image}
 	                        alt={spanishXbyImageAlt(site, manualImageAlt({
 	                          src: image,
@@ -18792,6 +19187,9 @@ function SectionView({
 	                            ? `${label} ${stage === "AI-generated result" ? "resultado generado con IA" : "carga fuente"} en la galeria de antes y despues de ${storefrontMediaBrandName(site)}.`
                             : `${label} ${stage} image in the before and after gallery for ${storefrontMediaBrandName(site)}.`
 	                        }))}
+	                        width={1024}
+	                        height={1024}
+	                        loading="lazy"
 	                      />
 	                      <span className="absolute left-3 top-3 rounded-full bg-white/82 px-3 py-1 text-xs font-medium backdrop-blur">{label}</span>
 	                    </div>
@@ -18815,7 +19213,8 @@ function SectionView({
         return { id: `legacy_testimonial_${index}`, type: "testimonial", settings: { quote, name, role } };
       }
     );
-    const reviewMode = setting(section, "mode", "use_cases") === "reviews";
+    const configuredReviewMode = setting(section, "mode", "use_cases").trim().toLowerCase();
+    const reviewMode = configuredReviewMode === "reviews" || (isFrenchStorefrontSite(site) && configuredReviewMode === "avis");
     const fallbackReviewItems: SectionBlockInstance[] = reviewMode && !isAidreamcapesSite(site)
       ? [
           {
@@ -18882,7 +19281,7 @@ function SectionView({
     const aidreamshootsXbyReviewLayout = site.id === "site_mydreamshoots_xby" && renderContext.pagePath === "/";
     const stackedReviewLayout = reviewMode && (isPrimaryMyDreamShootsSite(site) || aidreamshootsXbyReviewLayout);
     const aidreamcapesCenteredReviewLayout = reviewMode && isAidreamcapesSite(site);
-    const aidreamcapesEuReviewImageClassName = site.id === "site_aidreamcapes_xby" ? "!object-contain !object-center" : "";
+    const aidreamcapesEuReviewImageClassName = site.id === "site_aidreamcapes_xby" ? "!h-auto !w-full !object-contain !object-center" : "";
     const centeredReviewLayout = stackedReviewLayout || aidreamcapesCenteredReviewLayout;
     const summaryItems = centeredReviewLayout ? featuredVoices : items;
     const spanishXbyUseCaseWall = isSpanishXbySite(site);
@@ -18988,12 +19387,13 @@ function SectionView({
                     <div className={`flex flex-1 flex-col ${centeredReviewLayout ? "p-5" : "p-[18px]"}`}>
                       <div className="flex items-center gap-3">
                         {avatar ? (
-	                          <img
-	                            alt={avatarAlt}
+                          <StorefrontImage
+                            alt={avatarAlt}
                             className="h-14 w-14 rounded-full border-[3px] border-white object-cover shadow-[0_16px_34px_-25px_rgba(20,22,26,0.35)]"
-                            decoding="async"
                             fetchPriority="low"
                             loading="lazy"
+                            preview={false}
+                            sizes="56px"
                             src={avatar}
                           />
                         ) : (
@@ -19017,7 +19417,7 @@ function SectionView({
 	                    </div>
 	                    <button
 	                      aria-label={previewAriaLabel}
-                      className={`group/result relative block w-full overflow-hidden bg-[#f2e8da] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b98a57] focus-visible:ring-inset ${centeredReviewLayout ? "aspect-[3/2]" : "h-[180px]"}`}
+                      className={`group/result relative block w-full overflow-hidden bg-[#f2e8da] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b98a57] focus-visible:ring-inset ${site.id === "site_aidreamcapes_xby" ? "" : centeredReviewLayout ? "aspect-[3/2]" : "h-[180px]"}`}
                       data-dreamshoot-preview-meta={cardMeta}
                       data-dreamshoot-preview-poster={resultImage}
                       data-dreamshoot-preview-src={resultVideo || resultImage}
@@ -19041,7 +19441,7 @@ function SectionView({
 	                      ) : (
 	                        <StorefrontSafeImage
 	                          alt={resultAlt}
-	                          className={`absolute inset-0 bg-[#f2e8da] ${site.id === "site_aidreamcapes_xby" ? "!absolute" : ""}`}
+	                          className={site.id === "site_aidreamcapes_xby" ? "bg-[#f2e8da]" : "absolute inset-0 bg-[#f2e8da]"}
 	                          fetchPriority="low"
 	                          imageClassName={aidreamcapesEuReviewImageClassName}
                           loading="lazy"
@@ -19131,6 +19531,19 @@ function SectionView({
           });
       const configuredImageList = listLines(setting(section, "imageList", ""));
       const configuredImageAltList = listLines(setting(section, "imageListAlt", ""));
+      const faqBlockImageAltBySource = new Map(
+        visibleFaqList
+          .map((item) => [blockValue(item, "imageUrl", "").trim(), blockValue(item, "imageAlt", "").trim()] as const)
+          .filter(([source]) => Boolean(source))
+      );
+      const faqBlockImageList = visibleFaqList
+        .map((item) => blockValue(item, "imageUrl", "").trim())
+        .filter(Boolean);
+      // Published FAQ content can carry the per-question images while an older
+      // section settings snapshot has only the cover in imageList. Preserve an
+      // explicitly configured gallery, but use those block images to fill any
+      // missing visual slots so the FAQ never collapses to a single image.
+      const effectiveImageList = Array.from(new Set([...configuredImageList, ...faqBlockImageList]));
       const featureCaptionFallback = aidreamcapesFaq
         ? isFrenchStorefrontSite(site)
           ? "Des directions de création originales, des photos sources autorisées et une livraison en galerie privée dans un seul compte."
@@ -19142,14 +19555,14 @@ function SectionView({
           : renderContext.pagePath === "/best-ai-video"
             ? "A guided place to compare AI video directions, review credits, and keep finished work organized."
             : "A guided place to compare AI photo directions, review credits, and keep finished work organized.";
-      const featureGallery = (configuredImageList.length ? configuredImageList : [configuredImage || fallbackImage])
+      const featureGallery = (effectiveImageList.length ? effectiveImageList : [configuredImage || fallbackImage])
         .map((image, index) => {
           const src = mediaAssetUrl(site, image);
 	          if (!src.startsWith("/assets/")) return undefined;
 	          return {
-	            src,
-	            alt: faqVisualAlt(src, index, configuredImageAltList[index])
-	          };
+            src,
+            alt: faqVisualAlt(src, index, configuredImageAltList[index] || faqBlockImageAltBySource.get(image) || "")
+          };
 	        })
         .filter((image): image is { src: string; alt: string } => Boolean(image))
         .slice(0, 6);
@@ -19207,12 +19620,14 @@ function SectionView({
             ) : null}
             {inlineImageSrc ? (
               <div className="mt-6 max-w-[34rem] overflow-hidden rounded-[8px] border border-white/10 bg-black/20 p-2" data-faq-item-image>
-                <img
-                  className="block h-auto w-full"
-                  src={inlineImageSrc}
+                <StorefrontImage
                   alt={inlineImageAlt}
+                  className="block h-auto w-full"
+                  fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "high" : "low"}
                   loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
-                  decoding="async"
+                  preview={false}
+                  sizes="(max-width: 1024px) 100vw, 34rem"
+                  src={inlineImageSrc}
                 />
               </div>
             ) : null}
@@ -19240,12 +19655,14 @@ function SectionView({
                         : "aspect-[4/3]";
                     return (
                       <div className={`${tileClassName} overflow-hidden rounded-[8px] border border-white/10 bg-black/20 p-1 shadow-[0_20px_50px_-36px_rgba(0,0,0,0.9)]`} data-faq-feature-tile key={`${image.src}_${index}`}>
-                        <img
-                          className="block h-full w-full max-w-full object-contain object-center"
-                          src={image.src}
+                        <StorefrontImage
                           alt={image.alt}
+                          className="block h-full w-full max-w-full object-contain object-center"
+                          fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "high" : "low"}
                           loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) ? "eager" : "lazy"}
-                          decoding="async"
+                          preview={false}
+                          sizes="(max-width: 1024px) 100vw, 34rem"
+                          src={image.src}
                         />
                       </div>
                     );
@@ -19461,6 +19878,12 @@ function SectionView({
       ? "h1"
       : primaryRichTextFallbackHeadingLevel(id, renderContext.page, renderContext.pagePath);
     const HeadingTag = !policyPage && normalizedHeadingLevel(setting(section, "headingLevel"), richTextHeadingLevel) === "h1" ? "h1" : "h2";
+    const firstRichTextSectionId = renderContext.page.sectionsOrder.find((candidateId) => renderContext.page.sections[candidateId]?.type === "rich_text");
+    const RichCardHeadingTag = site.id === "site_mydreamshoots_xby"
+      && aidreamshootsHeadingH2Pages.has(renderContext.pagePath)
+      && id === firstRichTextSectionId
+      ? "h2"
+      : "h3";
     const dark = tone === "dark";
     const compact = layout === "compact";
     const rawHeading = sectionHeading(section, storefrontSectionLabel(section.type));
@@ -19468,6 +19891,12 @@ function SectionView({
       ? rawHeading.replace(/^About\b/i, "Sobre").replace(/^Contact\b/i, "Contacto")
       : rawHeading;
     const noImageCardJourney = !applicationForm && !image && richCards.length > 0;
+    const richTextImageShell = dark ? "overflow-hidden rounded-[28px] border border-white/10 bg-zinc-900 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "overflow-hidden rounded-[28px] border border-[#ded5ca] bg-[#efe6d9] shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]";
+    const richTextImageClass = frenchXbyRichText
+      ? "block h-auto w-full max-w-full object-center"
+      : workflowIntroRichText
+        ? "absolute inset-0 h-full w-full max-w-full object-cover"
+        : "aspect-[16/11] h-full w-full max-w-full object-cover";
     const showInlineRichCards = richCards.length > 0 && !noImageCardJourney;
     const richTextGridClass = image
       ? `lg:grid-cols-[0.82fr_1.18fr] ${workflowIntroRichText ? "lg:items-stretch" : "lg:items-center"}`
@@ -19527,9 +19956,9 @@ function SectionView({
                     return (
                       <article className={dark ? "min-w-0 rounded-[18px] border border-white/10 bg-white/[0.05] p-4" : "min-w-0 rounded-[18px] border border-[#e4dace] bg-white/56 p-4 shadow-[0_18px_48px_-42px_rgba(20,22,26,0.18)]"} key={instanceKey(card, index, "rich_text_card")} {...xfcartBlockAttrs(mode, card, index, "rich_text_card")}>
                         <p className={dark ? "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-white/46 [overflow-wrap:anywhere]" : "min-w-0 font-mono text-[10px] uppercase tracking-[0.16em] text-[#8a7a6d] [overflow-wrap:anywhere]"}>{meta}</p>
-                        <h3 className="mt-3 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">
+                        <RichCardHeadingTag className="mt-3 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">
                           {isSupportEmail ? <a className="underline decoration-white/25 underline-offset-4 transition hover:decoration-white/70" href={`mailto:${cardTitle}`}>{cardTitle}</a> : cardTitle}
-                        </h3>
+                        </RichCardHeadingTag>
                         <p className={dark ? "mt-2 min-w-0 text-sm leading-6 text-white/62 [overflow-wrap:anywhere]" : "mt-2 min-w-0 text-sm leading-6 text-[#625d56] [overflow-wrap:anywhere]"}>{cardDescription}</p>
                         {blockValue(card, "secondaryTitle", "") ? <p className="mt-4 min-w-0 text-lg font-semibold tracking-tight [overflow-wrap:anywhere]">{blockValue(card, "secondaryTitle", "")}</p> : null}
                       </article>
@@ -19540,7 +19969,7 @@ function SectionView({
             </div>
             {applicationForm && formFields.length ? (
               <div className={dark ? "rounded-[28px] border border-white/10 bg-white/[0.06] p-5 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/80 p-5 shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"}>
-                {image ? <img className="mb-5 aspect-[16/8] w-full rounded-[20px] object-cover" style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} /> : null}
+                {image ? <StorefrontImage className={frenchXbyRichText ? "mb-5 block h-auto w-full rounded-[20px] object-center" : "mb-5 aspect-[16/8] w-full rounded-[20px] object-cover"} preview={false} sizes="(max-width: 1024px) 100vw, 50vw" style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} /> : null}
                 <PartnerApplicationForm
                   dark={dark}
                   siteId={site.id}
@@ -19557,8 +19986,8 @@ function SectionView({
                 />
               </div>
             ) : image ? (
-              <div className={`${dark ? "overflow-hidden rounded-[28px] border border-white/10 bg-zinc-900 shadow-[0_32px_92px_-58px_rgba(0,0,0,0.84)]" : "overflow-hidden rounded-[28px] border border-[#ded5ca] bg-[#efe6d9] shadow-[0_28px_90px_-62px_rgba(20,22,26,0.34)]"} ${workflowIntroRichText ? "relative aspect-[16/11] lg:aspect-auto lg:h-full lg:min-h-[34rem]" : ""}`}>
-                <img className={workflowIntroRichText ? "absolute inset-0 h-full w-full max-w-full object-cover" : "aspect-[16/11] h-full w-full max-w-full object-cover"} style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} />
+              <div className={`${richTextImageShell} ${frenchXbyRichText ? "" : workflowIntroRichText ? "relative aspect-[16/11] lg:aspect-auto lg:h-full lg:min-h-[34rem]" : ""}`}>
+                <StorefrontImage className={richTextImageClass} preview={false} sizes="(max-width: 1024px) 100vw, 50vw" style={{ objectPosition: imageObjectPosition }} src={image} alt={sectionVisualAltForSite(site, section, image, setting(section, "title", id), { role: "featured" })} />
               </div>
             ) : (
               <div className={`${dark ? "rounded-[28px] border border-white/10 bg-white/[0.05] p-6" : "rounded-[28px] border border-[#ded5ca] bg-[#fffdf8]/76 p-6 shadow-[0_24px_70px_-58px_rgba(20,22,26,0.22)]"} ${noImageCardJourney ? "flex h-full flex-col" : ""}`}>
@@ -19618,7 +20047,7 @@ function SectionView({
     const cta = activeSlide ? blockValue(activeSlide, "slide_cta", "Shop now") : "Shop now";
     return (
       <section className="relative min-h-[620px] overflow-hidden bg-zinc-950 px-5 text-white">
-        <img className="absolute inset-0 h-full w-full object-cover opacity-72" src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: subtitle, role: "cover" })} />
+        <StorefrontImage className="absolute inset-0 h-full w-full object-cover opacity-72" loading="eager" priority sizes="100vw" preview={false} src={image} alt={sectionVisualAltForSite(site, section, image, title, { description: subtitle, role: "cover" })} />
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/80 via-zinc-950/30 to-transparent" />
         <div className="relative mx-auto flex min-h-[620px] max-w-[var(--site-content-width)] items-center">
           <div className="max-w-2xl py-20">
@@ -19682,7 +20111,7 @@ function SectionView({
               return (
                 <article className="overflow-hidden rounded-[1.25rem] border border-black/10 bg-white" key={instanceKey(block, index, "visual_block")} {...xfcartBlockAttrs(mode, block, index, "visual_block")}>
                   <div className="aspect-[16/11] bg-zinc-200">
-                    <img className="h-full w-full object-cover" src={image || packImages.fashion} alt={blockVisualAltForSite(site, section, block, image || packImages.fashion, index, storefrontSectionLabel(block.type))} />
+                    <StorefrontImage className="h-full w-full object-cover" loading="lazy" preview={false} sizes="(max-width: 768px) 100vw, 33vw" src={image || packImages.fashion} alt={blockVisualAltForSite(site, section, block, image || packImages.fashion, index, storefrontSectionLabel(block.type))} />
                   </div>
                   <div className="p-5">
                     <h3 className="text-lg font-semibold">{headingBlockValue(block, "title", headingBlockValue(block, "name", storefrontSectionLabel(block.type)))}</h3>
@@ -19881,7 +20310,7 @@ function SectionView({
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {visibleArticles.map((article) => (
                 <Link className="group overflow-hidden rounded-lg border border-white/10 bg-[#1b2635] text-white shadow-[0_24px_80px_-64px_rgba(0,0,0,0.9)] transition hover:-translate-y-1 hover:border-white/24" data-dreamshoot-preview-disabled="true" href={hrefFor(site, article.href)} key={article.id}>
-                  <div className="aspect-[4/3] overflow-hidden bg-white/[0.08]">
+                  <div className={isFrenchStorefrontSite(site) ? "overflow-hidden bg-white/[0.08]" : "aspect-[4/3] overflow-hidden bg-white/[0.08]"}>
                     <StorefrontImage
                       className={blogCoverImageClassName(site, true)}
                       src={article.imageUrl}
@@ -19924,7 +20353,7 @@ function SectionView({
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {visibleArticles.map((article) => (
               <Link className="group overflow-hidden rounded-[1rem] border border-black/10 bg-white shadow-[0_24px_70px_-62px_rgba(24,24,27,0.35)] transition hover:-translate-y-1" data-dreamshoot-preview-disabled="true" href={hrefFor(site, article.href)} key={article.id}>
-                <div className="aspect-[4/3] overflow-hidden bg-zinc-100">
+                <div className={isFrenchStorefrontSite(site) ? "overflow-hidden bg-zinc-100" : "aspect-[4/3] overflow-hidden bg-zinc-100"}>
                   <StorefrontImage
                     className={blogCoverImageClassName(site, true)}
                     src={article.imageUrl}

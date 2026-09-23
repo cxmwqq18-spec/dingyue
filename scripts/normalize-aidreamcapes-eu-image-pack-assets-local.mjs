@@ -8,6 +8,8 @@ import path from "node:path";
 import sharp from "sharp";
 import { PrismaClient } from "@prisma/client";
 import { assertDatabaseTarget, assertNonProductionWriteTarget } from "./lib/database-target.mjs";
+import { assertProviderAspectRatio } from "./lib/provider-image-output.mjs";
+import { assertAidreamcapesEuHomepageIntegrity } from "./lib/aidreamcapes-eu-homepage-integrity.mjs";
 
 const SITE_ID = "site_aidreamcapes_xby";
 const SITE_ASSET_SLUG = "site_aidreamcapes_eu";
@@ -95,11 +97,17 @@ async function normalizeAsset(sourceUrl, targetUrl, apply) {
   const source = localPathForUrl(sourceUrl);
   const target = localPathForUrl(targetUrl);
   assert(fs.existsSync(source), `Missing image-pack source: ${source}`);
+  await assertProviderAspectRatio({
+    filePath: source,
+    expectedWidth: 3840,
+    expectedHeight: 2160,
+    label: source
+  });
   if (apply) {
     fs.mkdirSync(path.dirname(target), { recursive: true });
     const pending = `${target}.pending`;
     await sharp(source)
-      .resize(3840, 2160, { fit: "cover", position: "attention" })
+      .resize(3840, 2160, { fit: "inside", withoutEnlargement: false })
       .jpeg({ quality: 90, chromaSubsampling: "4:4:4" })
       .toFile(pending);
     fs.renameSync(pending, target);
@@ -276,6 +284,7 @@ async function main() {
       for (const { asset, update } of nextMediaAssets) {
         await tx.mediaAsset.update({ where: { id: asset.id }, data: update });
       }
+      await assertAidreamcapesEuHomepageIntegrity(tx);
     }, { timeout: 180_000, maxWait: 30_000 });
 
     const report = { ...summary, backupPath, appliedAt: new Date().toISOString() };

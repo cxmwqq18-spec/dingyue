@@ -2,8 +2,8 @@
 import "./load-runtime-env.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
-import sharp from "sharp";
 import { PrismaClient } from "@prisma/client";
+import { writeProviderImageBundle } from "./lib/provider-image-output.mjs";
 
 const SITE_ID = "site_aidreamcapes_xby";
 const PROVIDER_LABEL = "buming-image";
@@ -11,7 +11,6 @@ const MODEL = "gpt-image-2";
 const REQUEST_SIZE = "1536x1024";
 const QUALITY = "high";
 const TARGET_WIDTH = 3840;
-const TARGET_HEIGHT = 2160;
 const PRICE_PER_REQUEST_USD = 0.0075;
 const PAGE_DEFINITIONS = JSON.parse(
   await fs.readFile(new URL("./data/aidreamcapes-eu-save-the-date-vendor-manifest.json", import.meta.url), "utf8")
@@ -64,14 +63,6 @@ function buildPrompt(task) {
     "Constraints: family-safe or wedding-appropriate scene; physical objects only; no readable text, signage, logos, trademarks, watermarks, UI, border, collage, duplicated subjects, distorted anatomy, or extra limbs."
   ].join("\n\n");
 }
-async function write4kJpeg(buffer, outputPath) {
-  await fs.mkdir(path.dirname(outputPath), { recursive: true });
-  await sharp(buffer)
-    .rotate()
-    .resize(TARGET_WIDTH, TARGET_HEIGHT, { fit: "cover", position: "centre" })
-    .jpeg({ quality: 92, chromaSubsampling: "4:4:4", mozjpeg: true })
-    .toFile(outputPath);
-}
 async function writeReport(report) {
   await fs.mkdir(path.dirname(REPORT_PATH), { recursive: true });
   await fs.writeFile(REPORT_PATH, JSON.stringify(report, null, 2) + "\n");
@@ -85,7 +76,7 @@ const plan = {
   endpoint: "/v1/images/generations",
   method: "POST",
   requestSize: REQUEST_SIZE,
-  outputSize: TARGET_WIDTH + "x" + TARGET_HEIGHT,
+  outputSize: `${TARGET_WIDTH}px wide; provider aspect ratio preserved; original response retained`,
   quality: QUALITY,
   pageCounts,
   maxPaidCreateAttempts: MAX_PAID_CREATE_ATTEMPTS,
@@ -119,7 +110,7 @@ try {
   });
   if (!provider?.apiKey || !provider.aiUrl) throw new Error("configured_vendor_provider_missing_api_credentials");
   const endpoint = providerBaseUrl(provider.aiUrl) + "/images/generations";
-  console.log("paid provider plan: POST " + endpoint + " model=" + MODEL + " quality=" + QUALITY + " requestSize=" + REQUEST_SIZE + " outputSize=" + TARGET_WIDTH + "x" + TARGET_HEIGHT + " maxPaidCreateAttempts=" + MAX_PAID_CREATE_ATTEMPTS + " attemptsPerImage=1 stopOnFirstError=true");
+  console.log("paid provider plan: POST " + endpoint + " model=" + MODEL + " quality=" + QUALITY + " requestSize=" + REQUEST_SIZE + " outputSize=" + TARGET_WIDTH + "px-wide-preserve-ratio maxPaidCreateAttempts=" + MAX_PAID_CREATE_ATTEMPTS + " attemptsPerImage=1 stopOnFirstError=true");
   console.log("using vendor API provider: " + provider.label);
 
   for (const task of tasks) {
@@ -162,12 +153,14 @@ try {
     if (!response.ok) throw new Error(task.pageSlug + "/" + outputName + ":provider_create_failed:" + response.status);
     const sourceBuffer = await responseImageBuffer(body);
     const outputPath = path.join(LOCAL_BASE, task.pageSlug, outputName);
-    await write4kJpeg(sourceBuffer, outputPath);
-    const metadata = await sharp(outputPath).metadata();
-    if (metadata.width !== TARGET_WIDTH || metadata.height !== TARGET_HEIGHT) {
-      throw new Error(task.pageSlug + "/" + outputName + ":unexpected_output_dimensions:" + metadata.width + "x" + metadata.height);
-    }
-    console.log("generated vendor asset: " + PUBLIC_BASE + "/" + task.pageSlug + "/" + outputName + " -> " + TARGET_WIDTH + "x" + TARGET_HEIGHT);
+    const bundle = await writeProviderImageBundle({
+      buffer: sourceBuffer,
+      originalPathBase: path.join(LOCAL_BASE, "_provider-results", "originals", task.pageSlug, outputName),
+      displayPath: outputPath,
+      displayWidth: TARGET_WIDTH,
+      label: task.pageSlug + "/" + outputName
+    });
+    console.log("generated vendor asset: " + PUBLIC_BASE + "/" + task.pageSlug + "/" + outputName + " -> " + bundle.displayWidth + "x" + bundle.displayHeight + "; original=" + bundle.originalPath);
     await writeReport(plan);
   }
   plan.completed = true;

@@ -128,6 +128,9 @@ function SafeTaxonomyImage({
       fetchPriority={fetchPriority}
       loading={loading}
       src={src}
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      width={1200}
+      height={900}
     />
   );
 }
@@ -166,12 +169,12 @@ function SplitPackageTaxonomyCard({
       href={card.href}
     >
       <div className={splitImageShellClass}>
-        <div className={images.length > 1 ? "grid grid-cols-2 items-stretch gap-0.5 p-3" : "grid items-stretch p-3"}>
+        <div className={images.length > 1 ? "grid grid-cols-2 items-start gap-0.5 p-3" : "grid items-start p-3"}>
           {images.slice(0, 2).map((image, imageIndex) => (
-            <div className={images.length > 1 ? splitImageFrameClass : splitSingleImageFrameClass} key={`${card.id}_taxonomy_${imageIndex}`}>
+            <div className={locale === "fr" ? "overflow-hidden rounded-[9px] bg-transparent" : images.length > 1 ? splitImageFrameClass : splitSingleImageFrameClass} key={`${card.id}_taxonomy_${imageIndex}`}>
 	              <SafeTaxonomyImage
 	                alt={taxonomyImageAlt(card, image, imageIndex, locale, imageIndex === 0 ? "card" : "gallery")}
-                className="h-full object-cover transition duration-500"
+                className={locale === "fr" ? "block h-auto w-full object-center transition duration-500" : "h-full object-cover transition duration-500"}
                 decoding="async"
 	                fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
 	                loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
@@ -259,7 +262,7 @@ export function PackageTaxonomyClient({
     const selectedImageFrameClass = variant === "cream"
       ? "w-full overflow-hidden rounded-[24px] border border-[#E6D8C3] bg-[#FFF8ED] p-3 shadow-[0_28px_90px_-64px_rgba(70,46,24,0.28)] lg:max-w-[540px] lg:justify-self-end"
       : "w-full overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] lg:max-w-[540px] lg:justify-self-end";
-    const selectedImageBgClass = variant === "cream" ? "bg-[#EADFCF]" : "bg-zinc-900";
+    const selectedImageBgClass = locale === "fr" ? "bg-transparent" : variant === "cream" ? "bg-[#EADFCF]" : "bg-zinc-900";
     return (
       <DreamshootShowcasePreview>
       <div data-package-taxonomy-client="ready">
@@ -301,7 +304,7 @@ export function PackageTaxonomyClient({
                 <div className={`overflow-hidden rounded-[18px] ${selectedImageBgClass}`} key={`${selected.id}_detail_${image}_${index}`}>
 	                  <SafeTaxonomyImage
 	                    alt={taxonomyImageAlt(selected, image, index, locale, "cover")}
-                    className="transition duration-500"
+                    className={french ? "block h-auto w-full object-center transition duration-500" : "transition duration-500"}
                     decoding="async"
 	                    fetchPriority={index === 0 ? "low" : "auto"}
 	                    loading={index === 0 ? "eager" : "lazy"}

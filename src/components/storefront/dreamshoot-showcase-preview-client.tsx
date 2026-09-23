@@ -97,7 +97,7 @@ export function DreamshootShowcasePreviewClient({ children, className }: { child
               </div>
             </div>
             <div className="flex min-h-0 justify-center overflow-hidden rounded-[8px] bg-transparent">
-              {preview.kind === "video" ? <video autoPlay className="h-auto max-h-[calc(100vh-9rem)] w-auto max-w-full object-contain" controls playsInline poster={preview.poster || undefined} preload="metadata" src={preview.src} /> : <img alt={preview.title} className="max-h-[calc(100vh-9rem)] w-full object-contain" src={preview.src} />}
+              {preview.kind === "video" ? <video autoPlay className="h-auto max-h-[calc(100vh-9rem)] w-auto max-w-full object-contain" controls playsInline poster={preview.poster || undefined} preload="metadata" src={preview.src} /> : <img alt={preview.title} className="h-auto max-h-[calc(100vh-9rem)] w-auto max-w-full object-contain" src={preview.src} />}
             </div>
           </div>
         </div>

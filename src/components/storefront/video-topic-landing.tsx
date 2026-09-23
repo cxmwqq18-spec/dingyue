@@ -1,16 +1,20 @@
+/* eslint-disable @next/next/no-img-element */
+
 import { ArrowRight, Check, ChevronRight, ShieldCheck, Sparkles, X } from "lucide-react";
 import { notFound } from "next/navigation";
-import type { ReactNode } from "react";
+import type { ImgHTMLAttributes, ReactNode } from "react";
 import type { SectionInstance, Site } from "@/lib/types";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
 import { hostAwareSitePath } from "@/lib/domain-routing";
+import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { adsTestingDetailFromLegacyUgcContent, aiVideoTopicLandingContentFromSection, type AiVideoTopicLandingContent } from "@/lib/ai-video-topic-content";
 import { AdsTestingDetail } from "@/components/storefront/ads-testing-detail";
 import { BrandCreatorDetail } from "@/components/storefront/brand-creator-detail";
 import type { AidreamcapesAdsTestingDetailContent, AidreamcapesBrandCreatorDetailContent } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/talking-photo-content";
 import { isMydreamshootsVideoContentPath, mydreamshootsVideoWatchPathForContentPath } from "@/lib/mydreamshoots-video-watch";
+import { storefrontResponsiveImageDimensions, storefrontResponsiveImageSet } from "@/lib/storefront-responsive-images";
 
 type RoutedSite = Site & { __storefrontBasePath?: string };
 
@@ -19,72 +23,6 @@ type RoutedSite = Site & { __storefrontBasePath?: string };
 // embedded media uses a 16:9 cover frame to remove those bars without scaling
 // distortion.
 const talkingPhotoImageSize = { width: 1600, height: 1200 };
-
-const spanishVideoResidualEnglishPattern = /\b(?:customer|problem|example|script|expert|tip|generated|references|additional|guidance|keep|supporting|notes|specific|platform|buyer|campaign|futuristic|world|scale|imagination|stillness|expressive|historic|textures|aloud|voices|right|thank|being|needed|forget|viewers|leaving|first|seconds|whole|video|treat|human|venue|happy|grooming|material|behavior|behaviour|detail|craftsperson|place|proof|meaning|expectation|qualified|reaction|twist|optional|natural|right|joke|quote|separate|shoot|would|slow|wider|era|collaboration|energy|workplace|culture|meme|reply|deadpan|pov|testimonial|urgency|scarcity|relationship-led|establishes|personality|emotional|role|introduction|launch|reused|everywhere|features|states|inventing|interface|campaign|variants|routine|full|love|happy|six|eight|directions|story|beats|music|fashion|pet|food|owner|portrait|frame|approved|reference|continuity|scene|shot)\b/i;
-const meaningfulSpanishImageAltPattern = /\b(?:persona|adult[oa]|creador(?:a)?|presentador(?:a)?|fundador(?:a)?|modelo|especialista|equipo|manos|producto|perro|gato|mascota|cámara|camara|escena|espacio|entorno|estudio|hogar|cocina|mesa|marca|vídeo|video|redes|sociales|campaña|lanzamiento|historia|música|moda|preparando|mostrando|grabando|compartiendo|demostrando|contando|trabajando|revisando|explicando|jugando|paseando|sirviendo|cuidando|presentando|organizando)\b/i;
-const genericSpanishImageAltPattern = /\b(?:ejemplo visual|creado con ia|fotos propias|resultados de|contenido de aidreamshoots|contenido de mydreamshoots)\b/i;
-
-function spanishVideoTopicLabel(contentKey: string): string {
-  const labels: Record<string, string> = {
-    "cinematic-video": "vídeos cinematográficos",
-    "explainer-video": "vídeos explicativos",
-    "talking-photo": "fotos parlantes",
-    "brand-video": "vídeos de marca",
-    "video-ad": "anuncios de vídeo",
-    "product-ad-video": "anuncios de producto",
-    "product-video": "vídeos de producto",
-    "music-video": "vídeos musicales",
-    "fashion-video": "vídeos de moda",
-    "food-video": "vídeos gastronómicos",
-    "pet-video": "vídeos de mascotas",
-    "meme-video": "vídeos de memes",
-    "ugc-ad-video": "anuncios UGC",
-    "promo-video": "vídeos promocionales",
-    "social-media-video": "vídeos para redes sociales"
-  };
-  return labels[contentKey] ?? "vídeos con IA";
-}
-
-function spanishVideoFallback(key: string, topic: string): string {
-  const normalized = key.toLowerCase();
-  if (normalized.includes("alt") || normalized.includes("caption")) return `Ejemplo visual de ${topic} creado con IA.`;
-  if (normalized.includes("cta") || normalized.includes("button") || normalized.includes("linklabel")) return "Crear vídeo";
-  if (normalized.includes("eyebrow") || normalized.includes("label")) return "Vídeo con IA";
-  if (normalized.includes("title") || normalized.includes("headline")) return `Ideas de ${topic} con IA`;
-  if (normalized.includes("problem")) return "Define el objetivo, el público y el tono antes de generar.";
-  if (normalized.includes("script")) return `Guion breve para un vídeo de ${topic}.`;
-  return `Usa fotos propias o autorizadas, revisa los detalles y conserva el resultado de ${topic} en tu espacio privado.`;
-}
-
-function repairSpanishVideoTopicContent<T>(value: T, contentKey: string, spanish: boolean, key = ""): T {
-  if (!spanish) return value;
-  const topic = spanishVideoTopicLabel(contentKey);
-  if (typeof value === "string") {
-    // Asset URLs are data, not customer-facing copy. A filename such as
-    // `talking-photo-social-video.webp` contains the English word "video" and
-    // must never be replaced by the Spanish copy fallback.
-    if (/^(?:src|poster|imageUrl|imageOriginalUrl|videoUrl|posterUrl|backgroundImage|beforeImage|resultImageUrl|secondaryImageUrl)$/i.test(key) && /^(?:https?:|\/)/i.test(value)) {
-      return value;
-    }
-    // Keep scene-specific Spanish alt text intact. The legacy residual-English
-    // list contains words such as `natural`, `story`, and `video` that can
-    // legitimately appear in an otherwise correct Spanish description. A
-    // generic fallback here would erase the accessibility meaning of the image.
-    if (/^(?:alt|caption)$/i.test(key) && value.length >= 30 && value.length <= 150 && meaningfulSpanishImageAltPattern.test(value) && !genericSpanishImageAltPattern.test(value)) {
-      return value;
-    }
-    if (!spanishVideoResidualEnglishPattern.test(value)) return value;
-    return spanishVideoFallback(key, topic) as T;
-  }
-  if (Array.isArray(value)) return value.map((item) => repairSpanishVideoTopicContent(item, contentKey, spanish, key)) as T;
-  if (value && typeof value === "object") {
-    return Object.fromEntries(Object.entries(value).map(([childKey, childValue]) => [
-      childKey,
-      repairSpanishVideoTopicContent(childValue, contentKey, spanish, childKey)
-    ])) as T;
-  }
-  return value;
-}
 
 type VideoTopicImage = {
   src: string;
@@ -98,6 +36,7 @@ type VideoTopicImage = {
 type VideoTopicVideo = {
   src: string;
   poster: string;
+  alt?: string;
   label: string;
   width: number;
   height: number;
@@ -243,17 +182,63 @@ type VideoTopicContent = {
   };
 };
 
-function hrefFor(site: Site, href: string): string {
-  if (href.startsWith("#")) return href;
-  const routedSite = site as RoutedSite;
-  const basePath = routedSite.__storefrontBasePath;
-  if (typeof basePath === "string") return basePath ? `${basePath}${href}` : href;
-  return hostAwareSitePath(site, href);
+const AIDREAMSHOOTS_SAVE_DATE_ALIASES = new Set([
+  "christmas", "engagement", "fathers-day", "halloween", "mothers-day", "new-year", "proposal",
+  "save-the-date", "thanksgiving", "valentines-day", "wedding-ceremony", "wedding-invitation"
+]);
+
+function aidreamshootsCanonicalHref(site: Site, href: string, label = ""): string {
+  if (site.id !== "site_mydreamshoots_xby") return href;
+  if (!href.startsWith("/")) {
+    const normalizedLabel = label.toLowerCase();
+    const labelRoutes: Array<[RegExp, string]> = [
+      [/\bmarca\b/, "/ai-video-generation/brand-video"],
+      [/\bpromocional\b/, "/ai-video-generation/promo-video"],
+      [/\bmoda\b/, "/ai-video-generation/fashion-video"],
+      [/musical|music(al|al)/, "/ai-video-generation/music-video"],
+      [/\bmascotas?\b/, "/ai-video-generation/pet-video"],
+      [/\bgastron[oó]mic/, "/ai-video-generation/food-video"],
+      [/\bexplicativ/, "/ai-video-generation/explainer-video"],
+      [/\btutorial/, "/ai-video-generation/how-to-video"]
+    ];
+    return labelRoutes.find(([pattern]) => pattern.test(normalizedLabel))?.[1] ?? "/ai-video-generation";
+  }
+  let parsed: URL;
+  try {
+    parsed = new URL(href, "https://aidreamshoots.eu");
+  } catch {
+    return href;
+  }
+  let pathname = parsed.pathname.replace(/^\/site\/(?:aidreamshoots|aidreamshoots-eu|mydreamshoots-xby)(?=\/|$)/i, "") || "/";
+  if (pathname === "/help") pathname = "/faq";
+  if (pathname === "/how-it-works") pathname = "/workflow";
+  if (pathname === "/collections" || pathname.startsWith("/collections/")) {
+    pathname = canonicalSeoDirectoryPathForSite(site, "collection", pathname.slice("/collections".length).replace(/^\//, ""));
+  }
+  if (pathname === "/ai-video-generation/wedding-invitation") pathname = "/ai-save-the-date/wedding-invitation";
+  const saveDateMatch = pathname.match(/^\/ai-video-generation\/([^/]+)$/i);
+  if (saveDateMatch && AIDREAMSHOOTS_SAVE_DATE_ALIASES.has(saveDateMatch[1].toLowerCase())) {
+    pathname = `/ai-save-the-date/${saveDateMatch[1].toLowerCase()}`;
+  }
+  if (pathname === "/ai-video-generation/image-to-video" || pathname === "/ai-video-generation/text-to-video") {
+    pathname = "/ai-video-generation/motion-generator";
+  }
+  return `${pathname}${parsed.search}${parsed.hash}`;
 }
 
-function InternalLink({ site, href, children, className }: { site: Site; href: string; children: ReactNode; className: string }) {
+function hrefFor(site: Site, href: string, label = ""): string {
+  if (href.startsWith("#")) return href;
+  const canonicalHref = aidreamshootsCanonicalHref(site, href, label);
+  const routedSite = site as RoutedSite;
+  const basePath = routedSite.__storefrontBasePath;
+  if (site.id === "site_mydreamshoots_xby") return canonicalHref;
+  if (typeof basePath === "string") return basePath ? `${basePath}${canonicalHref}` : canonicalHref;
+  return hostAwareSitePath(site, canonicalHref);
+}
+
+function InternalLink({ site, href, children, className, label }: { site: Site; href: string; children: ReactNode; className: string; label?: string }) {
   return (
-    <StorefrontInstantLink className={className} href={hrefFor(site, href)}>
+    <StorefrontInstantLink className={className} href={hrefFor(site, href, label)}>
       {children}
     </StorefrontInstantLink>
   );
@@ -284,21 +269,25 @@ function ActionLink({ site, href, label, variant = "primary" }: { site: Site; hr
   );
 }
 
-/** Keep media frames aligned with the real asset or its embedded scene crop. */
-function intrinsicAspectRatio(image: VideoTopicImage): string {
-  const width = Number(image.width);
-  const height = Number(image.height);
-  return width > 0 && height > 0 ? `${width} / ${height}` : "16 / 9";
-}
+const STATIC_TOPIC_MEDIA_ASPECT_RATIO = "4 / 3";
 
 function hasEmbeddedVideoLetterbox(image: VideoTopicImage): boolean {
   return image.src.includes("/assets/dreamshoot/generated/video-topic-media/") || image.src.includes("/assets/dreamshoot/generated/video-topic-clean/");
 }
 
 function cardMediaAspectRatio(image: VideoTopicImage): string {
-  // The frame must follow the delivered asset. A shared 3:2 frame makes
-  // 4:3, 16:10, and other source ratios crop at the edges.
-  return intrinsicAspectRatio(image);
+  // Published topic assets are normalized to a shared static-card canvas.
+  // Keep the frame independent from stale source metadata so old portrait
+  // dimensions cannot reintroduce empty space or distorted media.
+  void image;
+  return STATIC_TOPIC_MEDIA_ASPECT_RATIO;
+}
+
+function heroStillMediaAspectRatio(image: VideoTopicImage): string {
+  // Static hero collages share the same 4:3 canvas as cards and galleries.
+  // Embedded motion references still use their dedicated crop styling below.
+  void image;
+  return STATIC_TOPIC_MEDIA_ASPECT_RATIO;
 }
 
 function isRenderableTopicImage(image: VideoTopicImage | undefined): image is VideoTopicImage {
@@ -333,6 +322,46 @@ function optimizedTopicImageSrc(src: string): string {
   const youtubeCard = src.match(/^\/assets\/dreamshoot\/youtube-video\/(youtube-card-[0-9]+)\.(?:png|webp)(?:[?#].*)?$/i);
   if (youtubeCard && youtubeMap[youtubeCard[1]]) return `/assets/dreamshoot/generated/video-topic-clean/youtube-video/${youtubeMap[youtubeCard[1]]}.webp`;
   return src.replace(/\.png(?=[?#]|$)/i, ".webp");
+}
+
+type StorefrontTopicImageProps = Pick<ImgHTMLAttributes<HTMLImageElement>, "alt" | "className" | "decoding" | "fetchPriority" | "height" | "loading" | "sizes" | "style" | "width"> & {
+  src: string;
+  previewSrc?: string;
+};
+
+/**
+ * Keep topic-media layout and preview behavior unchanged while allowing the
+ * published EU image manifest to select a smaller AVIF/WebP derivative.
+ * Assets outside that manifest intentionally keep the existing single-source
+ * rendering path.
+ */
+function StorefrontTopicImage({ src, previewSrc, ...props }: StorefrontTopicImageProps) {
+  const resolvedSrc = optimizedTopicImageSrc(src);
+  const responsive = storefrontResponsiveImageSet(resolvedSrc);
+  const dimensions = storefrontResponsiveImageDimensions(resolvedSrc);
+  const aidreamcapesAsset = resolvedSrc.startsWith("/assets/sites/site_aidreamcapes/");
+  const sizes = props.sizes ?? (responsive || aidreamcapesAsset ? "(max-width: 768px) 100vw, 50vw" : undefined);
+  const image = (
+    <img
+      {...props}
+      alt={props.alt}
+      src={resolvedSrc}
+      srcSet={responsive?.fallbackSrcSet ?? (resolvedSrc.startsWith("/assets/sites/site_aidreamcapes/") ? resolvedSrc : undefined)}
+      sizes={sizes}
+      width={props.width ?? dimensions?.width}
+      height={props.height ?? dimensions?.height}
+      data-dreamshoot-preview-src={previewSrc ?? resolvedSrc}
+    />
+  );
+
+  if (!responsive) return image;
+  return (
+    <picture className="block">
+      {responsive.avifSrcSet ? <source sizes={sizes} srcSet={responsive.avifSrcSet} type="image/avif" /> : null}
+      {responsive.webpSrcSet ? <source sizes={sizes} srcSet={responsive.webpSrcSet} type="image/webp" /> : null}
+      {image}
+    </picture>
+  );
 }
 
 function topicImagePreviewSrc(image: VideoTopicImage): string {
@@ -382,23 +411,24 @@ function heroMediaSizingClass(video?: VideoTopicVideo): string {
 }
 
 function TopicHeroVideo({ video, site }: { video: VideoTopicVideo; site?: Site }) {
+  const accessibleLabel = video.alt?.trim() || video.label;
   const watchPath = site?.id === "site_dreamshoot" && isMydreamshootsVideoContentPath(video.src)
     ? mydreamshootsVideoWatchPathForContentPath(video.src)
     : undefined;
   return (
     <DreamshootShowcasePreview className="h-full">
       <div
-        aria-label={`Open ${video.label}`}
+        aria-label={`Open ${accessibleLabel}`}
         className="group relative h-full w-full cursor-pointer overflow-hidden bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd] focus-visible:ring-inset"
         data-dreamshoot-preview-poster={video.poster}
         data-dreamshoot-preview-src={video.src}
-        data-dreamshoot-preview-title={video.label}
+        data-dreamshoot-preview-title={accessibleLabel}
         data-dreamshoot-showcase-preview="video"
         role="button"
         tabIndex={0}
       >
         <video
-          aria-label={video.label}
+          aria-label={accessibleLabel}
           autoPlay
           // Keep every source pixel visible. The surrounding frame supplies the
           // standard 9:16 or 16:9 canvas; object-cover would crop non-standard
@@ -411,6 +441,7 @@ function TopicHeroVideo({ video, site }: { video: VideoTopicVideo; site?: Site }
           poster={video.poster}
           preload="auto"
           src={video.src}
+          title={accessibleLabel}
           width={video.width}
         />
         <span aria-hidden="true" className="absolute inset-0 bg-black/0 transition group-hover:bg-black/[0.08]" />
@@ -440,8 +471,9 @@ function DirectTopicHeroCards({ images, video, site, cropPetHero = false, leadAs
           key={item.src}
           style={{
             ...(hasThreeCards && index === 0 ? { gridColumn: "1 / -1" } : {}),
-            // Keep the lead frame prominent while preserving two compact side-by-side previews below.
-            aspectRatio: video && index === 0 ? (isPortraitVideo(video) ? "9 / 16" : "16 / 9") : index === 0 && leadAspectRatio ? leadAspectRatio : intrinsicAspectRatio(item)
+            // Keep the lead frame prominent while giving every static still a
+            // predictable shared canvas. Video heroes retain their own ratio.
+            aspectRatio: video && index === 0 ? (isPortraitVideo(video) ? "9 / 16" : "16 / 9") : index === 0 && leadAspectRatio ? leadAspectRatio : heroStillMediaAspectRatio(item)
           }}
           {...(hasThreeCards && index === 0 && !video
             ? {
@@ -454,18 +486,14 @@ function DirectTopicHeroCards({ images, video, site, cropPetHero = false, leadAs
               }
             : {})}
         >
-          {video && index === 0 ? <TopicHeroVideo site={site} video={video} /> : <img
-              src={optimizedTopicImageSrc(item.src)}
-              data-dreamshoot-preview-src={topicImagePreviewSrc(item)}
+          {video && index === 0 ? <TopicHeroVideo site={site} video={video} /> : <StorefrontTopicImage
+              src={item.src}
+              previewSrc={topicImagePreviewSrc(item)}
               alt={item.alt}
-              className={hasEmbeddedVideoLetterbox(item) ? "absolute top-0 left-1/2 h-auto max-w-none object-cover" : "block h-auto w-full"}
-              style={
-                hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item)
-                  ? { width: "200%", transform: cropPetHero ? "translate(-50%, -18%)" : "translateX(-50%)", objectPosition: cropPetHero ? "50% 50%" : "50% 0%" }
-                  : hasThreeCards && index === 0
-                    ? { objectPosition: "50% 0%" }
-                    : undefined
-              }
+              className={hasEmbeddedVideoLetterbox(item) ? "absolute top-0 left-1/2 h-full max-w-none object-cover" : "block h-full w-full object-cover"}
+              style={hasThreeCards && index === 0 && hasEmbeddedVideoLetterbox(item)
+                ? { width: "200%", transform: cropPetHero ? "translate(-50%, -18%)" : "translateX(-50%)", objectPosition: item.objectPosition ?? (cropPetHero ? "50% 50%" : "50% 0%") }
+                : { objectPosition: item.objectPosition ?? "50% 50%" }}
               width={item.width}
               height={item.height}
               loading={index === 0 ? "eager" : "lazy"}
@@ -503,22 +531,24 @@ function localizedExpertLabel(site: Site, value?: string): string {
 function UseCaseCard({ item, index, site }: { item: VideoTopicUseCase; index: number; site?: Site }) {
   const spanish = site?.id === "site_mydreamshoots_xby";
   const french = site?.id === "site_aidreamcapes_xby";
+  const aidreamcapesPublic = site?.id === "site_aidreamcapes";
   const label = item.scenarioLabel ?? (spanish ? "Problema del cliente" : french ? "Besoin du client" : "Customer problem");
   const noteLabel = item.noteLabel ?? (item.script ? (spanish ? "Guion de ejemplo" : french ? "Script d’exemple" : "Example script") : undefined);
   const noteBody = item.noteBody ?? (item.script ? `“${item.script}”` : undefined);
   return (
-    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f] shadow-[0_28px_70px_-54px_rgba(0,0,0,0.92)]" data-video-topic-use-case-card>
-      {item.image ? (
+    <article className="group flex min-w-0 self-start flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f] shadow-[0_28px_70px_-54px_rgba(0,0,0,0.92)]" data-video-topic-use-case-card>
+      {isRenderableTopicImage(item.image) ? (
         <div className="relative overflow-hidden bg-[#292438]" data-video-topic-media style={{ aspectRatio: cardMediaAspectRatio(item.image) }}>
-          <img
-            src={optimizedTopicImageSrc(item.image.src)}
-            data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)}
+          <StorefrontTopicImage
+            src={item.image.src}
+            previewSrc={topicImagePreviewSrc(item.image)}
             alt={item.image.alt}
             className="block h-full w-full object-cover"
+            style={{ objectPosition: item.image.objectPosition ?? "50% 50%" }}
             width={item.image.width}
             height={item.image.height}
-            loading="eager"
-            fetchPriority={index < 2 ? "high" : "auto"}
+            loading={aidreamcapesPublic ? "lazy" : index === 0 ? "eager" : "lazy"}
+            fetchPriority={aidreamcapesPublic ? "low" : index === 0 ? "high" : undefined}
             decoding="async"
           />
           <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-[#17151f]/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-normal text-white/80 backdrop-blur">
@@ -544,14 +574,15 @@ function UseCaseCard({ item, index, site }: { item: VideoTopicUseCase; index: nu
 
 function SupportingCard({ card, light = false, site }: { card: VideoTopicSupportingCard; light?: boolean; site?: Site }) {
   return (
-    <article className={`flex h-full flex-col rounded-[22px] border p-6 sm:p-7 ${light ? "border-[#d2c9ef] bg-white/55" : "border-white/10 bg-[#17151f]"}`}>
-      {card.image ? (
+    <article className={`flex self-start flex-col rounded-[22px] border p-6 sm:p-7 ${light ? "border-[#d2c9ef] bg-white/55" : "border-white/10 bg-[#17151f]"}`}>
+      {isRenderableTopicImage(card.image) ? (
         <div className="relative mb-6 overflow-hidden rounded-[16px] bg-[#292438]" style={{ aspectRatio: cardMediaAspectRatio(card.image) }}>
-          <img
-            src={optimizedTopicImageSrc(card.image.src)}
-            data-dreamshoot-preview-src={topicImagePreviewSrc(card.image)}
+          <StorefrontTopicImage
+            src={card.image.src}
+            previewSrc={topicImagePreviewSrc(card.image)}
             alt={card.image.alt}
             className="block h-full w-full object-cover"
+            style={{ objectPosition: card.image.objectPosition ?? "50% 50%" }}
             width={card.image.width}
             height={card.image.height}
             loading="lazy"
@@ -579,7 +610,7 @@ function SupportingCard({ card, light = false, site }: { card: VideoTopicSupport
       ) : null}
       {card.href && card.linkLabel && site ? (
         <div className="mt-5">
-          <InternalLink className={`inline-flex items-center gap-2 text-sm font-semibold ${light ? "text-[#6652bd]" : "text-[#c4b5fd]"}`} href={card.href} site={site}>
+          <InternalLink className={`inline-flex items-center gap-2 text-sm font-semibold ${light ? "text-[#6652bd]" : "text-[#c4b5fd]"}`} href={card.href} label={card.linkLabel} site={site}>
             {card.linkLabel}
             <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
           </InternalLink>
@@ -621,11 +652,11 @@ function ValueSection({ section, light = false }: { section: VideoTopicContent["
     <section className={`border-b px-5 py-16 sm:px-8 sm:py-24 ${light ? "border-[#d9d1f6] bg-[#e9e5f7] text-[#191622]" : "border-white/10 bg-[#0d0b13] text-white"}`} id="value" data-video-topic-section="value">
       <div className="mx-auto max-w-[var(--site-content-width)]">
         <SectionHeader eyebrow={section.eyebrow} title={section.title} body={section.intro} light={light} />
-        {section.image ? (
+        {isRenderableTopicImage(section.image) ? (
           <figure className="mt-12 overflow-hidden rounded-[22px] border border-white/10 bg-[#17151f]">
-            <img
-              src={optimizedTopicImageSrc(section.image.src)}
-              data-dreamshoot-preview-src={topicImagePreviewSrc(section.image)}
+            <StorefrontTopicImage
+              src={section.image.src}
+              previewSrc={topicImagePreviewSrc(section.image)}
               alt={section.image.alt}
               className="block h-auto w-full"
               width={section.image.width}
@@ -675,7 +706,7 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end" data-video-topic-hero-media>
             <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <DirectTopicHeroCards images={heroPreview.map((item) => item.image)} />
+              <DirectTopicHeroCards images={heroPreview.map((item) => item.image)} site={site} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
               <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />
@@ -734,9 +765,9 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
             <SectionHeader eyebrow={content.gallery.eyebrow} title={content.gallery.title} body={content.gallery.intro} light />
             <div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {galleryItems.map((item, index) => (
-                <article className="flex h-full flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-video-ad-scene key={`${item.title}-${index}`}>
+                <article className="flex self-start flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-video-ad-scene key={`${item.title}-${index}`}>
                   <div className="relative overflow-hidden bg-[#d9d1f6]" style={{ aspectRatio: cardMediaAspectRatio(item.image) }}>
-                    <img src={optimizedTopicImageSrc(item.image.src)} data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                    <StorefrontTopicImage src={item.image.src} previewSrc={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-full w-full object-cover" style={{ objectPosition: item.image.objectPosition ?? "50% 50%" }} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
@@ -790,8 +821,8 @@ function VideoAdTopicLanding({ content, section, site }: { content: VideoTopicCo
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} />
           <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            {content.faq.items.map((item) => (
-              <details className="group rounded-[20px] border border-white/10 bg-[#17151f] p-5 open:bg-[#211c2e]" key={item.question}>
+            {content.faq.items.map((item, index) => (
+              <details className="group rounded-[20px] border border-white/10 bg-[#17151f] p-5 open:bg-[#211c2e]" key={`${item.question}-${index}`}>
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-white">
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#c4b5fd] transition group-open:rotate-90" strokeWidth={1.8} />
@@ -853,12 +884,13 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
           </div>
           <figure className="relative min-w-0 w-full lg:justify-self-end">
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <div className="relative overflow-hidden rounded-[21px]" data-video-topic-hero-media>
-                <img
-                  src={optimizedTopicImageSrc(content.hero.image.src)}
-                  data-dreamshoot-preview-src={topicImagePreviewSrc(content.hero.image)}
+              <div className="relative overflow-hidden rounded-[21px]" data-video-topic-hero-media style={{ aspectRatio: STATIC_TOPIC_MEDIA_ASPECT_RATIO }}>
+                <StorefrontTopicImage
+                  src={content.hero.image.src}
+                  previewSrc={topicImagePreviewSrc(content.hero.image)}
                   alt={content.hero.image.alt}
-                  className="block h-auto w-full"
+                  className="block h-full w-full object-cover"
+                  style={{ objectPosition: content.hero.image.objectPosition ?? "50% 50%" }}
                   width={content.hero.image.width}
                   height={content.hero.image.height}
                   loading="eager"
@@ -992,8 +1024,8 @@ function UgcVideoTopicLanding({ content, section, site }: { content: VideoTopicC
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light />
           <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            {content.faq.items.map((item) => (
-              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}>
+            {content.faq.items.map((item, index) => (
+              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={`${item.question}-${index}`}>
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]">
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
@@ -1045,15 +1077,16 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
           </div>
           <figure className="relative min-w-0 w-full max-w-[22rem] justify-self-center sm:max-w-[24rem] lg:max-w-[26rem] lg:justify-self-end">
             <div className="overflow-hidden rounded-[28px] border border-[#c4b5fd]/25 bg-[#221d30] p-2 shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <div className={`relative overflow-hidden rounded-[21px] ${content.hero.video ? (portraitHero ? "aspect-[9/16]" : "aspect-[16/9]") : ""}`} data-video-topic-hero-media>
+              <div className={`relative overflow-hidden rounded-[21px] ${content.hero.video ? (portraitHero ? "aspect-[9/16]" : "aspect-[16/9]") : ""}`} data-video-topic-hero-media style={content.hero.video ? undefined : { aspectRatio: STATIC_TOPIC_MEDIA_ASPECT_RATIO }}>
                 {content.hero.video ? (
                   <TopicHeroVideo site={site} video={content.hero.video} />
                 ) : (
-                  <img
-                    src={optimizedTopicImageSrc(content.hero.image.src)}
-                    data-dreamshoot-preview-src={topicImagePreviewSrc(content.hero.image)}
+                  <StorefrontTopicImage
+                    src={content.hero.image.src}
+                    previewSrc={topicImagePreviewSrc(content.hero.image)}
                     alt={content.hero.image.alt}
-                    className="block h-auto w-full"
+                    className="block h-full w-full object-cover"
+                    style={{ objectPosition: content.hero.image.objectPosition ?? "50% 50%" }}
                     width={content.hero.image.width}
                     height={content.hero.image.height}
                     loading="eager"
@@ -1195,8 +1228,8 @@ function PromoVideoTopicLanding({ content, section, site }: { content: VideoTopi
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light />
           <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            {content.faq.items.map((item) => (
-              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}>
+            {content.faq.items.map((item, index) => (
+              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={`${item.question}-${index}`}>
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]">
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
@@ -1365,7 +1398,7 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
           </div>
           <figure className="relative min-w-0 w-full lg:max-w-[540px] lg:justify-self-end" data-video-topic-hero-media>
             <div className="relative w-full overflow-hidden rounded-[8px] border border-[#c4b5fd]/25 bg-[#17151f] shadow-[0_40px_100px_-54px_rgba(196,181,253,0.72)]">
-              <DirectTopicHeroCards images={heroPreview} leadAspectRatio={cardMediaAspectRatio(heroPreview[0])} />
+              <DirectTopicHeroCards images={heroPreview} leadAspectRatio={cardMediaAspectRatio(heroPreview[0])} site={site} />
             </div>
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/60">
               <Sparkles className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} />
@@ -1440,9 +1473,9 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
             <SectionHeader eyebrow={content.gallery.eyebrow} title={content.gallery.title} body={content.gallery.intro} light />
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-brand-video-gallery>
               {galleryItems.map((item, index) => (
-                <article className="flex min-w-0 flex-col overflow-hidden rounded-[16px] border border-[#d2c9ef] bg-white/70 shadow-[0_10px_28px_-20px_rgba(42,33,78,0.45)]" data-brand-video-scene key={`${item.title}-${index}`}>
+                <article className="flex min-w-0 self-start flex-col overflow-hidden rounded-[16px] border border-[#d2c9ef] bg-white/70 shadow-[0_10px_28px_-20px_rgba(42,33,78,0.45)]" data-brand-video-scene key={`${item.title}-${index}`}>
                   <div className="relative overflow-hidden bg-[#d9d1f6]" style={{ aspectRatio: cardMediaAspectRatio(item.image) }}>
-                    <img src={optimizedTopicImageSrc(item.image.src)} data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                    <StorefrontTopicImage src={item.image.src} previewSrc={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-full w-full object-cover" style={{ objectPosition: item.image.objectPosition ?? "50% 50%" }} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
                   </div>
                   <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3>
@@ -1528,8 +1561,8 @@ function BrandVideoTopicLanding({ content, section, site }: { content: VideoTopi
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light />
           <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            {content.faq.items.map((item) => (
-              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}>
+            {content.faq.items.map((item, index) => (
+              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={`${item.question}-${index}`}>
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]">
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
@@ -1620,7 +1653,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
 
       <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="how-it-works" data-video-topic-section="how-it-works"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.steps.eyebrow} title={content.steps.title} /><div className="mt-12 grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">{content.steps.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-[#17151f] p-6" data-scene-topic-step key={`${item.title}-${index}`}><span className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>0{index + 1}</span><h3 className="mt-7 text-xl font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div><div className="mt-10"><ActionLink href={primaryHref} label={content.steps.cta} site={site} /></div></div></section>
 
-      {sceneGalleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "REFERENCIAS DE ESCENAS" : site.id === "site_aidreamcapes_xby" ? "RÉFÉRENCES DE SCÈNES" : "SCENE REFERENCES")} title={content.gallery?.title ?? (site.id === "site_mydreamshoots_xby" ? "Ocho direcciones para el siguiente plano" : site.id === "site_aidreamcapes_xby" ? "Huit directions pour le prochain plan" : "Eight Directions for the Next Shot")} body={content.gallery?.intro} light /><div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{sceneGalleryItems.map((item, index) => <article className="flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-scene-topic-scene key={`${item.title}-${index}`}><div className="relative overflow-hidden bg-[#d9d1f6]" style={{ aspectRatio: cardMediaAspectRatio(item.image) }}><img src={optimizedTopicImageSrc(item.image.src)} data-dreamshoot-preview-src={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-auto w-full" width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
+      {sceneGalleryItems.length ? <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="scene-gallery" data-video-topic-section="scene-gallery"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.gallery?.eyebrow ?? (site.id === "site_mydreamshoots_xby" ? "REFERENCIAS DE ESCENAS" : site.id === "site_aidreamcapes_xby" ? "RÉFÉRENCES DE SCÈNES" : "SCENE REFERENCES")} title={content.gallery?.title ?? (site.id === "site_mydreamshoots_xby" ? "Ocho direcciones para el siguiente plano" : site.id === "site_aidreamcapes_xby" ? "Huit directions pour le prochain plan" : "Eight Directions for the Next Shot")} body={content.gallery?.intro} light /><div className="mt-12 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4" data-scene-topic-gallery>{sceneGalleryItems.map((item, index) => <article className="flex min-w-0 self-start flex-col overflow-hidden rounded-[22px] border border-[#d2c9ef] bg-white/65" data-scene-topic-scene key={`${item.title}-${index}`}><div className="relative overflow-hidden bg-[#d9d1f6]" style={{ aspectRatio: cardMediaAspectRatio(item.image) }}><StorefrontTopicImage src={item.image.src} previewSrc={topicImagePreviewSrc(item.image)} alt={item.image.alt} className="block h-full w-full object-cover" style={{ objectPosition: item.image.objectPosition ?? "50% 50%" }} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" /></div><div className="flex flex-1 flex-col p-5"><h3 className="text-lg font-semibold leading-tight text-[#191622]">{item.title}</h3><p className="mt-3 flex-1 text-sm leading-6 text-[#625e6f]">{item.body}</p></div></article>)}</div></div></section> : null}
 
       <section className="border-b border-white/10 bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" id="sequence-guide" data-video-topic-section="sequence-guide"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.guidance.eyebrow} title={content.guidance.title} body={content.guidance.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.guidance.cards.map((card, index) => <SupportingCard card={card} key={`${card.title}-${index}`} site={site} />)}</div></div></section>
 
@@ -1632,7 +1665,7 @@ function SceneTopicLanding({ content, contentKey, section, site }: { content: Vi
 
       <section className="border-b border-white/10 bg-[#191525] px-5 py-16 sm:px-8 sm:py-24" id="integrity-review" data-video-topic-section="integrity-review"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.trust.eyebrow} title={content.trust.title} body={content.trust.intro} /><div className="mt-12 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">{content.trust.items.map((item, index) => <article className="h-full rounded-[22px] border border-white/10 bg-white/[0.045] p-6" data-scene-topic-review-card key={`${item.title}-${index}`}><ShieldCheck className={`h-5 w-5 ${accentClass}`} strokeWidth={1.8} /><h3 className="mt-5 text-lg font-semibold leading-tight text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-white/65">{item.body}</p></article>)}</div></div></section>
 
-      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light /><div className="mt-10 grid gap-4 lg:grid-cols-2">{content.faq.items.map((item) => <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}><summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]"><span>{item.question}</span><ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} /></summary><p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p></details>)}</div></div></section>
+      <section className="border-b border-[#d9d1f6] bg-[#e9e5f7] px-5 py-16 text-[#191622] sm:px-8 sm:py-24" id="faq" data-video-topic-section="faq"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light /><div className="mt-10 grid gap-4 lg:grid-cols-2">{content.faq.items.map((item, index) => <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={`${item.question}-${index}`}><summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]"><span>{item.question}</span><ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} /></summary><p className="mt-4 max-w-2xl text-sm leading-6 text-[#625e6f]" data-faq-answer="video-topic">{item.answer}</p></details>)}</div></div></section>
       {content.comparison ? <section className="border-b border-white/10 bg-[#12101a] px-5 py-16 sm:px-8 sm:py-24" id="related-pages" data-video-topic-section="related-pages"><div className="mx-auto max-w-[var(--site-content-width)]"><SectionHeader eyebrow={content.comparison.eyebrow} title={content.comparison.title} body={content.comparison.intro} /><SectionCards cards={content.comparison.items} site={site} /></div></section> : null}
       <section className="bg-[#0d0b13] px-5 py-16 sm:px-8 sm:py-24" data-video-topic-section="final-cta"><div className="mx-auto max-w-[var(--site-content-width)] rounded-[28px] border border-[#c4b5fd]/25 bg-[#191525] px-6 py-12 text-center sm:px-10 sm:py-16"><p className={`text-xs font-semibold uppercase tracking-normal ${accentClass}`}>{content.finalCta.eyebrow}</p><h2 className="mx-auto mt-4 max-w-3xl text-balance text-3xl font-semibold leading-[1.03] tracking-normal text-white sm:text-5xl">{content.finalCta.title}</h2><p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/68">{content.finalCta.body}</p><div className="mt-8 flex justify-center"><ActionLink href={primaryHref} label={content.finalCta.cta} site={site} /></div><p className="mt-5 text-xs leading-5 text-white/48">{content.finalCta.microcopy}</p></div></section>
     </main>
@@ -1821,8 +1854,8 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
         <div className="mx-auto max-w-[var(--site-content-width)]">
           <SectionHeader eyebrow={content.faq.eyebrow} title={content.faq.title} light />
           <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            {content.faq.items.map((item) => (
-              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={item.question}>
+            {content.faq.items.map((item, index) => (
+              <details className="group rounded-[20px] border border-[#d2c9ef] bg-white/55 p-5 open:bg-white/80" key={`${item.question}-${index}`}>
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-[#191622]">
                   <span>{item.question}</span>
                   <ChevronRight className="h-5 w-5 shrink-0 text-[#6652bd] transition group-open:rotate-90" strokeWidth={1.8} />
@@ -1849,10 +1882,47 @@ function VideoTopicLanding({ content, contentKey, section, site }: { content: Vi
   );
 }
 
+const LOCALIZED_VIDEO_TOPIC_KEYS: Record<string, string> = {
+  "video-comida": "food-video",
+  "video-cinematico": "cinematic-video",
+  "video-tiktok": "tiktok-video",
+  "video-instagram": "instagram-reels",
+  "video-redes-sociales": "social-media-video",
+  "video-youtube": "youtube-video",
+  "video-historia": "story-video",
+  "video-meme": "meme-video",
+  "video-producto": "product-video",
+  "video-anuncio-producto": "product-ad-video",
+  "video-promocional": "promo-video",
+  "video-ugc": "ugc-ad-video",
+  "anuncio-video": "video-ad",
+  "video-marca": "brand-video",
+  "video-musical": "music-video",
+  "video-moda": "fashion-video",
+  "video-mascotas": "pet-video",
+  "video-explicativo": "explainer-video",
+  "video-tutorial": "how-to-video",
+  "foto-parlante": "talking-photo"
+};
+
+function canonicalVideoTopicKey(content: AiVideoTopicLandingContent, fallback: string): string {
+  const canonicalPath = String(content.seo?.canonicalPath ?? "").trim();
+  const canonicalMatch = canonicalPath.match(/\/ai-video-generation\/([^/?#]+)/i);
+  if (canonicalMatch?.[1]) return canonicalMatch[1].toLowerCase();
+  const normalizedFallback = fallback
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+  return LOCALIZED_VIDEO_TOPIC_KEYS[normalizedFallback] ?? normalizedFallback;
+}
+
 export function AiVideoTopicLanding({ section, site }: { section: SectionInstance; site: Site }) {
-  const contentKey = String(section.settings.contentKey ?? section.settings.anchor ?? "").trim();
+  const fallbackContentKey = String(section.settings.contentKey ?? section.settings.anchor ?? "").trim();
   const content = aiVideoTopicLandingContentFromSection(section);
   if (!content) notFound();
+  const contentKey = canonicalVideoTopicKey(content, fallbackContentKey);
   if (content.layoutVariant === "brand-creator-detail") {
     return <BrandCreatorDetail content={content as unknown as AidreamcapesBrandCreatorDetailContent} section={section} site={site} />;
   }
@@ -1862,10 +1932,9 @@ export function AiVideoTopicLanding({ section, site }: { section: SectionInstanc
     if (content.layoutVariant === "ads-testing-detail" || content.layoutVariant === "conversion-seeding-detail" || content.layoutVariant === "promo-category-detail") return <AdsTestingDetail content={content as unknown as AidreamcapesAdsTestingDetailContent} section={section} site={site} />;
     notFound();
   }
-  const localizedContent = repairSpanishVideoTopicContent(content, contentKey, site.id === "site_mydreamshoots_xby");
   return (
     <DreamshootShowcasePreview>
-      <VideoTopicLanding content={normalizeAiContent(localizedContent)} contentKey={contentKey} section={section} site={site} />
+      <VideoTopicLanding content={normalizeAiContent(content)} contentKey={contentKey} section={section} site={site} />
     </DreamshootShowcasePreview>
   );
 }
@@ -1873,10 +1942,9 @@ export function AiVideoTopicLanding({ section, site }: { section: SectionInstanc
 export function TalkingPhotoLanding({ section, site }: { section: SectionInstance; site: Site }) {
   const content = talkingPhotoContentFromSection(section);
   if (!content) notFound();
-  const localizedContent = repairSpanishVideoTopicContent(content, "talking-photo", site.id === "site_mydreamshoots_xby");
   return (
     <DreamshootShowcasePreview>
-      <VideoTopicLanding content={normalizeTalkingContent(localizedContent)} contentKey="talking-photo" section={section} site={site} />
+      <VideoTopicLanding content={normalizeTalkingContent(content)} contentKey="talking-photo" section={section} site={site} />
     </DreamshootShowcasePreview>
   );
 }

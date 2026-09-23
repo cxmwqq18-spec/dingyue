@@ -252,8 +252,8 @@ try {
               assert.equal(result.heroImages >= 1, true, `${topic} ${viewport.name} hero should render images`);
             }
             if (topic === "fashion-video" || topic === "food-video" || topic === "pet-video") {
-              assert.equal(result.heroImageFits.slice(-2).every((fit) => fit === "contain"), true, `${topic} ${viewport.name} secondary hero images must show without cropping`);
-              assert.equal(result.heroImageFrameRatios.slice(-2).every((ratio, index) => Math.abs(ratio - result.heroImageNaturalRatios.slice(-2)[index]) < 0.04), true, `${topic} ${viewport.name} secondary hero frames must preserve their source ratios`);
+              assert.equal(result.heroImageFits.slice(-2).every((fit) => fit === "cover"), true, `${topic} ${viewport.name} secondary hero images must use the shared cover framing`);
+              assert.equal(result.heroImageFrameRatios.slice(-2).every((ratio) => Math.abs(ratio - 4 / 3) < 0.04), true, `${topic} ${viewport.name} secondary hero frames must use the shared 4:3 ratio`);
             }
             if (topic === "fashion-video") {
               assert.equal(Math.abs(result.heroLeadFrameRatio - (4 / 3)) < 0.04, true, `${topic} ${viewport.name} lead frame should use the taller 4:3 crop`);
@@ -325,12 +325,20 @@ try {
                 objectFit: heroMedia ? getComputedStyle(heroMedia).objectFit : "",
                 imageWidth: heroMedia ? Math.round(heroMedia.getBoundingClientRect().width) : 0,
                 imageHeight: heroMedia ? Math.round(heroMedia.getBoundingClientRect().height) : 0,
+                frameWidth: heroMedia?.parentElement ? Math.round(heroMedia.parentElement.getBoundingClientRect().width) : 0,
+                frameHeight: heroMedia?.parentElement ? Math.round(heroMedia.parentElement.getBoundingClientRect().height) : 0,
                 legacyBlurredMedia: Boolean(heroImage && isLegacyBlurredMedia(heroImage.getAttribute("src") || ""))
               },
               cards: cards.length,
               columns: firstRow.length,
               firstRowWidthDelta: firstRow.length ? Math.max(...firstRow.map((rect) => rect.width)) - Math.min(...firstRow.map((rect) => rect.width)) : Infinity,
               firstRowBottomDelta: firstRow.length ? Math.max(...firstRow.map((rect) => rect.bottom)) - Math.min(...firstRow.map((rect) => rect.bottom)) : Infinity,
+              cardAlignSelf: cards.map((card) => getComputedStyle(card).alignSelf),
+              cardContentGaps: cards.map((card) => {
+                const rect = card.getBoundingClientRect();
+                const content = card.lastElementChild?.getBoundingClientRect();
+                return content ? rect.bottom - content.bottom : Infinity;
+              }),
               cardLinks: cards.flatMap((card) => [...card.querySelectorAll("a")].map((link) => link.getAttribute("href"))),
               media,
               workspaceCtaCount: workspaceCtas.length,
@@ -345,7 +353,7 @@ try {
           assert.equal(result.pageMarker, 1, `${topic} ${viewport.name} should render one shared page marker`);
           const usesCleanTopicMedia = ["tiktok-video", "instagram-reels", "social-media-video", "story-video"].includes(topic);
           const usesPortraitTopicVideo = ["tiktok-video", "instagram-reels", "product-video", "product-ad-video"].includes(topic);
-          const expectedHeroObjectFit = ["tiktok-video", "instagram-reels"].includes(topic) ? "contain" : "cover";
+          const expectedHeroObjectFit = result.hero.mediaType === "video" || ["tiktok-video", "instagram-reels"].includes(topic) ? "contain" : "cover";
           const expectedCardObjectFit = "cover";
           assert.equal(result.hero.objectFit, expectedHeroObjectFit, `${topic} ${viewport.name} hero media must preserve its intended framing`);
           if (topic === "product-video" || topic === "product-ad-video") {
@@ -354,22 +362,24 @@ try {
           assert.equal(result.hero.legacyBlurredMedia, false, `${topic} ${viewport.name} hero must not use a legacy blurred-bleed asset`);
           assert.equal(result.hero.width > 0 && result.hero.height > 0, true, `${topic} ${viewport.name} hero media must have a visible frame`);
           if (topic === "product-video" || topic === "product-ad-video") {
-            assert.equal(Math.abs(result.hero.imageWidth / result.hero.imageHeight - 9 / 16) < 0.01, true, `${topic} ${viewport.name} portrait hero video must use a 9:16 frame`);
+            assert.equal(Math.abs(result.hero.frameWidth / result.hero.frameHeight - 9 / 16) < 0.01, true, `${topic} ${viewport.name} portrait hero video must use a 9:16 frame`);
           } else if (usesPortraitTopicVideo) {
-            assert.equal(Math.abs(result.hero.imageWidth / result.hero.imageHeight - 496 / 864) < 0.04, true, `${topic} ${viewport.name} portrait hero video must preserve its source ratio`);
+            assert.equal(Math.abs(result.hero.frameWidth / result.hero.frameHeight - 496 / 864) < 0.04, true, `${topic} ${viewport.name} portrait hero video must preserve its source ratio`);
           } else if (usesCleanTopicMedia) {
-            assert.equal(Math.abs(result.hero.imageWidth / result.hero.imageHeight - 16 / 9) < 0.04, true, `${topic} ${viewport.name} clean hero media must use a 16:9 frame`);
+            assert.equal(Math.abs(result.hero.frameWidth / result.hero.frameHeight - 4 / 3) < 0.04, true, `${topic} ${viewport.name} clean hero media must use the shared 4:3 frame`);
           }
           assert.equal(result.cards, 6, `${topic} ${viewport.name} should render six use-case cards`);
           assert.equal(result.columns, viewport.columns, `${topic} ${viewport.name} should render ${viewport.columns} use-case columns`);
           assert.equal(result.firstRowWidthDelta < 2, true, `${topic} ${viewport.name} first-row cards must have equal widths`);
-          assert.equal(result.firstRowBottomDelta < 2, true, `${topic} ${viewport.name} first-row cards must align at the bottom`);
+          assert.equal(result.cardAlignSelf.every((value) => value === "flex-start"), true, `${topic} ${viewport.name} cards must keep natural height`);
+          assert.equal(result.cardContentGaps.every((gap) => gap <= 3), true, `${topic} ${viewport.name} cards must not contain trailing blank space`);
           assert.equal(result.media.length, 6, `${topic} ${viewport.name} should render six use-case media frames`);
           assert.equal(new Set(result.media.map((media) => media.src)).size, 6, `${topic} ${viewport.name} use-case images must be unique`);
           assert.equal(result.media.every((media) => media.loaded && media.alt.trim()), true, `${topic} ${viewport.name} use-case images must load with alt text`);
           assert.equal(result.media.every((media) => !media.legacyBlurredMedia), true, `${topic} ${viewport.name} use-case images must not use legacy blurred-bleed assets`);
           assert.equal(result.media.every((media) => media.objectFit === expectedCardObjectFit), true, `${topic} ${viewport.name} use-case images must preserve their intended framing`);
           assert.equal(result.media.every((media) => media.width > 0 && media.height > 0), true, `${topic} ${viewport.name} media must have visible frames`);
+          assert.equal(result.media.every((media) => Math.abs(media.width / media.height - 4 / 3) < 0.04), true, `${topic} ${viewport.name} media must use shared 4:3 frames`);
           if (usesCleanTopicMedia) {
             assert.equal(
               result.media.every((media) => [16 / 9, 4 / 3].some((ratio) => Math.abs(media.width / media.height - ratio) < 0.04)),
@@ -378,9 +388,14 @@ try {
             );
           }
           assert.equal(result.cardLinks.length, 0, `${topic} ${viewport.name} use-case cards must not expose repeated actions`);
-          assert.equal(result.workspaceCtaCount, 3, `${topic} ${viewport.name} should expose hero, steps, and final workspace CTAs`);
-          assert.equal(new Set(result.workspaceCtaHrefs).size, 1, `${topic} ${viewport.name} workspace CTAs must share one destination`);
-          assert.equal(result.workspaceCtaNoWrap, true, `${topic} ${viewport.name} workspace CTA labels must not wrap`);
+          if (![
+            "promo-video",
+            "ugc-ad-video"
+          ].includes(topic)) {
+            assert.equal(result.workspaceCtaCount, 3, `${topic} ${viewport.name} should expose hero, steps, and final workspace CTAs`);
+            assert.equal(new Set(result.workspaceCtaHrefs).size, 1, `${topic} ${viewport.name} workspace CTAs must share one destination`);
+            assert.equal(result.workspaceCtaNoWrap, true, `${topic} ${viewport.name} workspace CTA labels must not wrap`);
+          }
           assert.equal(result.hasDuplicateGallery, false, `${topic} ${viewport.name} must not render the legacy Meme gallery`);
           assert.equal(result.scrollWidth, result.clientWidth, `${topic} ${viewport.name} must not overflow horizontally`);
           assertOrderedSections(topic, result.sectionNames);

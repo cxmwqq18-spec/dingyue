@@ -9,8 +9,10 @@ const apply = process.argv.includes("--apply");
 const skipAssets = process.argv.includes("--skip-assets");
 const target = process.argv.find((arg) => arg.startsWith("--target="))?.slice("--target=".length) ?? "local";
 const reportPathArg = process.argv.find((arg) => arg.startsWith("--report="))?.slice("--report=".length);
+const translationCachePathArg = process.argv.find((arg) => arg.startsWith("--translation-cache="))?.slice("--translation-cache=".length);
 const localConfirm = "--confirm=aidreamshoots-from-mydreamshoots";
 const productionConfirm = "--confirm=aidreamshoots-from-mydreamshoots-production";
+const publicSyncConfirm = "--allow-aidreamshoots-public-sync";
 if (target === "remote") {
   if (!process.argv.includes(productionConfirm)) throw new Error(`remote apply requires ${productionConfirm}`);
   process.env.DINGYUE_ENV = "remote";
@@ -23,12 +25,25 @@ assertDatabaseTarget({ expectedTarget: target });
 if (apply && !process.argv.includes(target === "remote" ? productionConfirm : localConfirm)) {
   throw new Error(`apply requires ${target === "remote" ? productionConfirm : localConfirm}`);
 }
+if (apply && !process.argv.includes(publicSyncConfirm)) {
+  throw new Error(`AIdreamshoots public sync is fail-closed; apply requires ${publicSyncConfirm}`);
+}
 // Resolve the target before Prisma is constructed. Prisma reads DATABASE_URL
 // during construction, so doing this in the reverse order would make a
 // remote run silently use the local database client.
 const prisma = new PrismaClient();
 const now = new Date();
 const nowIso = now.toISOString();
+const SOURCE_COPY_TRANSLATION_VERSION = "aidreamshoots-es-source-copy-v1";
+const defaultTranslationCachePath = path.join(process.cwd(), ".tmp", "aidreamshoots-spanish-copy", "translation-cache.json");
+const translationCachePath = translationCachePathArg ? path.resolve(process.cwd(), translationCachePathArg) : defaultTranslationCachePath;
+let sourceCopyTranslations = new Map();
+const untranslatedSourceCopy = new Set();
+const explicitNonPublicPaths = new Map([
+  ["/ai-video-generation/image-to-video", "source_route_not_found"],
+  ["/ai-video-generation/text-to-video", "source_route_not_found"],
+  ["/partner-registration", "source_route_not_found"]
+]);
 
 const specs = [
   {
@@ -1079,6 +1094,7 @@ function polishSpanishText(value) {
     .replace(/\bpeinados\b/gi, "peinados")
     .replace(/\bSenales\b/g, "Señales");
   next = next.replace(/\s{2,}/g, " ").replace(/\s+([,.!?;:])/g, "$1").trim();
+  next = next.replaceAll("galeríun", "galería");
   return protectedTokens.reduce((result, [marker, token]) => result.replaceAll(marker, token), next);
 }
 
@@ -1140,6 +1156,235 @@ function isFunctionalString(value) {
     value.includes("manual_") ||
     value.includes("sha256:")
   );
+}
+
+const sourceCopyStructuralKeys = new Set([
+  "id", "siteId", "themeId", "pageId", "sectionId", "blockId", "productId", "priceId", "categoryId", "parentId",
+  "mediaId", "assetId", "slug", "path", "href", "primaryHref", "secondaryHref", "canonicalPath", "canonical", "url",
+  "previewUrl", "originUrl", "src", "imageUrl", "videoUrl", "poster", "posterUrl", "thumbnail", "thumbnailUrl",
+  "storageKey", "filename", "mimeType", "contentType", "sourceType", "pageType", "templateKey", "routeKey", "appSlug",
+  "aiAppSlug", "sortOrder", "position", "order", "status", "currency", "interval", "type", "provider", "model", "modelId",
+  "createdAt", "updatedAt", "width", "height", "fit", "locale", "language", "inLanguage", "sectionsOrder", "className",
+  "themeKey", "version", "source", "createdBy", "fieldType", "headingLevel", "index", "limit", "count", "billingCycle",
+  "defaultBillingCycle", "productType", "creditCost", "outputCount", "durationSeconds", "maxFrames", "generationCount", "conversionRate",
+  "layout", "mode", "variant", "appearance", "displayMode", "objectFit", "objectPosition", "alignment", "direction"
+].map((key) => key.toLowerCase()));
+
+function isSourceCopyStructuralKey(key) {
+  return sourceCopyStructuralKeys.has(String(key ?? "").toLowerCase());
+}
+
+function isSourceReferenceString(value) {
+  const text = String(value ?? "").trim();
+  return /^(?:https?:|mailto:|data:|\/|assets\/|site_|prod_|price_|page_|media_|tool_|pack_|video_|ai_)/i.test(text) || /^[^\s<>"']+@[^\s<>"']+$/.test(text);
+}
+
+function isSourceCopyString(key, value) {
+  return typeof value === "string" && value.trim().length > 0 && !isSourceCopyStructuralKey(key) && !isSourceReferenceString(value);
+}
+
+function collectSourceCopyStrings(value, key = "", output = []) {
+  if (isSourceCopyString(key, value)) {
+    output.push(value);
+    return output;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectSourceCopyStrings(item, key, output));
+    return output;
+  }
+  if (value && typeof value === "object") {
+    for (const [childKey, childValue] of Object.entries(value)) collectSourceCopyStrings(childValue, childKey, output);
+  }
+  return output;
+}
+
+function protectSourceCopyTokens(value) {
+  const protectedValues = [];
+  const protectedValue = String(value ?? "").replace(
+    /<[^>]+>|https?:\/\/[^\s<>"']+|mailto:[^\s<>"']+|\/[^\s<>"']+|\{\{[^{}]+\}\}|\{[^{}]+\}|\$\{[^}]+\}/g,
+    (token) => {
+      const marker = `⟦XBY_COPY_TOKEN_${protectedValues.length}⟧`;
+      protectedValues.push([marker, token]);
+      return marker;
+    }
+  );
+  return { value: protectedValue, protectedValues };
+}
+
+function restoreSourceCopyTokens(value, protectedValues) {
+  return protectedValues.reduce((result, [marker, token]) => result.replaceAll(marker, token), value);
+}
+
+function normalizeTranslatedSourceCopy(value, spec, idMap = new Map(), applySourceCopyPhrases = true) {
+  let next = normalizeXbyArtifacts(
+    rewriteFunctionalHref(
+      rewriteIds(
+        rewriteBrandContactText(String(value ?? ""), spec),
+        idMap,
+        spec
+      ),
+      spec
+    ),
+    spec
+  ).replace(/\b(?:my|mi|mis)Dreamshoots\b/gi, spec.readableBrand);
+  if (!applySourceCopyPhrases) return next;
+  const sourceCopyPhrasePairs = [
+    ["Save the Date", "Guardar la fecha"],
+    ["Create New Year Visuals", "Crea imágenes de Año Nuevo"],
+    ["Browse all current", "Explora todos los"],
+    ["Brand Video", "Vídeo de marca"],
+    ["Talking Head Video", "Vídeo con presentador"],
+    ["Fashion Video", "Vídeo de moda"],
+    ["Music Video", "Vídeo musical"],
+    ["Food Video", "Vídeo gastronómico"],
+    ["Pet Video", "Vídeo de mascotas"],
+    ["Product Video", "Vídeo de producto"],
+    ["Explainer Video", "Vídeo explicativo"],
+    ["Image to Video", "Imagen a vídeo"],
+    ["Text to Video", "Texto a vídeo"],
+    ["Video Ad", "Anuncio de vídeo"],
+    ["Social Media Video", "Vídeo para redes sociales"],
+    ["UGC Ad Video", "Vídeo publicitario UGC"],
+    ["AI Video Generation", "Generación de vídeo con IA"],
+    ["AI Photo", "Foto con IA"],
+    ["Talking Photo", "Foto parlante"],
+    ["Analytics", "Analítica"],
+    ["Professional headshot maker", "Generador de retratos profesionales"],
+    ["Explore", "Explora"],
+    ["state", "estado"]
+  ];
+  for (const [from, to] of sourceCopyPhrasePairs) {
+    next = next.replace(new RegExp(from.replace(/[.*+?^${}()|[\\]\\]/g, "\\$&"), "gi"), to);
+  }
+  return next;
+}
+
+const sourceCopyManualTranslations = new Map([
+  [
+    "<h3>Company</h3><p>myDreamshoots.com</p><h3>Address</h3><p>8 THE GREEN STE B, DOVER, DE, 19901, US</p><h3>Contact Us</h3><p><a href=\"mailto:support@mydreamshoots.com\">support@mydreamshoots.com</a></p>",
+    "<h3>Empresa</h3><p>AIdreamshoots.eu</p><h3>Dirección</h3><p>8 THE GREEN STE B, DOVER, DE, 19901, EE. UU.</p><h3>Contacto</h3><p><a href=\"mailto:support@aidreamshoots.eu\">support@aidreamshoots.eu</a></p>"
+  ]
+]);
+
+function readSourceCopyTranslationCache() {
+  try {
+    const parsed = JSON.parse(fs.readFileSync(translationCachePath, "utf8"));
+    if (parsed?.version !== SOURCE_COPY_TRANSLATION_VERSION || !parsed.entries || typeof parsed.entries !== "object") return new Map();
+    return new Map(Object.entries(parsed.entries));
+  } catch {
+    return new Map();
+  }
+}
+
+function writeSourceCopyTranslationCache(cache) {
+  fs.mkdirSync(path.dirname(translationCachePath), { recursive: true });
+  fs.writeFileSync(translationCachePath, `${JSON.stringify({
+    version: SOURCE_COPY_TRANSLATION_VERSION,
+    sourceLocale: "en",
+    targetLocale: "es-ES",
+    updatedAt: new Date().toISOString(),
+    entries: Object.fromEntries(cache)
+  }, null, 2)}\n`, { mode: 0o600 });
+}
+
+function chunkSourceCopyValues(values) {
+  const chunks = [];
+  let current = [];
+  let chars = 0;
+  for (const value of values) {
+    const nextChars = chars + value.length + 64;
+    if (current.length && (current.length >= 10 || nextChars > 4200)) {
+      chunks.push(current);
+      current = [];
+      chars = 0;
+    }
+    current.push(value);
+    chars += value.length + 64;
+  }
+  if (current.length) chunks.push(current);
+  return chunks;
+}
+
+async function translateSourceCopyBatch(values) {
+  const protectedValues = values.map(protectSourceCopyTokens);
+  const markers = values.map((_, index) => `[[[XBY_COPY_${index}]]]`);
+  const query = protectedValues.map((item, index) => `${markers[index]}\n${item.value}`).join("\n\n");
+  const url = `https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=en&tl=es&q=${encodeURIComponent(query)}`;
+  const response = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } });
+  if (!response.ok) throw new Error(`Spanish translation service returned ${response.status}`);
+  const payload = await response.json();
+  const translated = Array.isArray(payload) ? String(payload[0] ?? "") : "";
+  const result = new Map();
+  for (let index = 0; index < markers.length; index += 1) {
+    const start = translated.indexOf(markers[index]);
+    if (start < 0) throw new Error(`Spanish translation response lost marker ${markers[index]}`);
+    const valueStart = start + markers[index].length + 1;
+    const nextMarker = index + 1 < markers.length ? translated.indexOf(markers[index + 1], valueStart) : translated.length;
+    if (nextMarker < 0) throw new Error(`Spanish translation response lost marker ${markers[index + 1]}`);
+    const rawTranslatedValue = translated.slice(valueStart, nextMarker).trim();
+    const expectedTokens = protectedValues[index].protectedValues.map(([marker]) => marker);
+    if (expectedTokens.some((marker) => !rawTranslatedValue.includes(marker))) {
+      result.set(values[index], { status: "untranslated", value: values[index], reason: "protected_token_changed" });
+    } else {
+      result.set(values[index], { status: "translated", value: restoreSourceCopyTokens(rawTranslatedValue, protectedValues[index].protectedValues) });
+    }
+  }
+  return result;
+}
+
+async function prepareSourceCopyTranslations(source) {
+  const values = [...new Set([
+    ...collectSourceCopyStrings(source.livePages ?? []),
+    ...collectSourceCopyStrings(source.pages ?? []),
+    ...collectSourceCopyStrings(source.settings ?? {}),
+    ...collectSourceCopyStrings(source.storefrontProfile ?? {}),
+    ...collectSourceCopyStrings(source.products ?? []),
+    ...collectSourceCopyStrings(source.creativePackCategories ?? []),
+    ...collectSourceCopyStrings(source.creativePacks ?? []),
+    ...collectSourceCopyStrings(source.toolCategories ?? []),
+    ...collectSourceCopyStrings(source.toolMenuItems ?? []),
+    ...collectSourceCopyStrings(source.videoThemeCategories ?? []),
+    ...collectSourceCopyStrings(source.videoThemes ?? []),
+    ...collectSourceCopyStrings(source.videoThemeExamples ?? []),
+    ...collectSourceCopyStrings(source.mediaAssets ?? [])
+  ])];
+  const cache = readSourceCopyTranslationCache();
+  for (const [sourceValue, translatedValue] of sourceCopyManualTranslations) {
+    if (values.includes(sourceValue)) cache.set(sourceValue, { status: "translated", value: translatedValue, reason: "manual_source_copy_translation" });
+  }
+  const missing = values.filter((value) => !cache.has(value));
+  const chunks = chunkSourceCopyValues(missing);
+  for (let offset = 0; offset < chunks.length; offset += 4) {
+    const batch = chunks.slice(offset, offset + 4);
+    const results = await Promise.all(batch.map((chunk) => translateSourceCopyBatch(chunk)));
+    for (const result of results) for (const [sourceValue, translatedValue] of result) cache.set(sourceValue, translatedValue);
+    writeSourceCopyTranslationCache(cache);
+    console.log(`translated ${Math.min(offset + batch.length, chunks.length)}/${chunks.length} Spanish source-copy batches`);
+  }
+  sourceCopyTranslations = cache;
+  const untranslated = [...cache.values()].filter((entry) => entry?.status !== "translated").length;
+  return { sourceCopyStrings: values.length, translated: values.length - untranslated, untranslated, cachePath: translationCachePath };
+}
+
+function translateSourceString(value, key, spec, idMap = new Map()) {
+  const isCopy = isSourceCopyString(key, value);
+  const rewritten = normalizeTranslatedSourceCopy(value, spec, idMap, isCopy);
+  if (!isCopy) return rewritten;
+  const manual = sourceCopyManualTranslations.get(value);
+  if (manual) return normalizeTranslatedSourceCopy(manual, spec, idMap);
+  const entry = sourceCopyTranslations.get(value);
+  if (entry?.status === "translated") return normalizeTranslatedSourceCopy(entry.value, spec, idMap);
+  untranslatedSourceCopy.add(value);
+  return rewritten;
+}
+
+function translateSourceJson(value, spec, idMap = new Map(), key = "") {
+  if (Array.isArray(value)) return value.map((item) => translateSourceJson(item, spec, idMap, key));
+  if (!value || typeof value !== "object") return typeof value === "string" ? translateSourceString(value, key, spec, idMap) : value;
+  return Object.fromEntries(Object.entries(value).map(([childKey, childValue]) => [
+    childKey,
+    translateSourceJson(childValue, spec, idMap, childKey)
+  ]));
 }
 
 function rewriteBrandContactText(value, spec) {
@@ -1331,6 +1576,9 @@ function spanishizeString(value, spec, idMap) {
     .replace(/\bmydreamshoots\b/gi, spec.readableBrand)
     .replace(/\bmydreamshootsai\b/gi, spec.readableBrand);
   if (isFunctionalString(next)) return next;
+  const cached = sourceCopyTranslations.get(value) ?? sourceCopyTranslations.get(next);
+  if (cached?.status === "translated") return normalizeTranslatedSourceCopy(cached.value, spec, idMap);
+  if (cached?.status === "untranslated") return normalizeTranslatedSourceCopy(value, spec, idMap);
   const exactBeforeWordTranslation = phrasePairs.find(([from]) => from.toLowerCase() === next.toLowerCase());
   if (exactBeforeWordTranslation) return polishSpanishText(exactBeforeWordTranslation[1]);
   const directTitle = lookupSpanishTitle(next);
@@ -1377,8 +1625,8 @@ function targetProfile(source, spec, idMap = new Map()) {
   return {
     id: `profile_${spec.targetSiteId}`,
     siteId: spec.targetSiteId,
-    draftJson: { ...spanishizeJson(clone(sourceDraft), spec, idMap), identity: { ...identity, supportEmail: spec.supportEmail }, policyFacts },
-    publishedJson: { ...spanishizeJson(clone(sourcePublished), spec, idMap), identity: { ...identity, supportEmail: spec.supportEmail }, policyFacts },
+    draftJson: { ...translateSourceJson(clone(sourceDraft), spec, idMap), identity: { ...identity, supportEmail: spec.supportEmail }, policyFacts },
+    publishedJson: { ...translateSourceJson(clone(sourcePublished), spec, idMap), identity: { ...identity, supportEmail: spec.supportEmail }, policyFacts },
     draftMeta: { revision: 1, updatedAt: nowIso, etag: `${spec.targetSlug}-sync` }
   };
 }
@@ -1555,37 +1803,11 @@ function spanishFooterSettings(spec) {
   return {
     title: spec.readableBrand,
     logoImageUrl: spec.logoImageUrl,
-    tagline: spec.sourceSiteId === "site_dreamshoot"
-      ? "Sets privados de fotos con IA, creditos visibles y galerias seguras."
-      : "Retratos de viaje con IA y albumes privados desde tus fotos.",
-    body: spec.description,
-    productHeading: "Explorar",
-    companyHeading: "Contenido",
-    supportHeading: "Soporte",
-    socialHeading: "Por que funciona",
-    socialBody: "Subidas privadas, creditos visibles, pago claro y entrega dentro de una sola cuenta.",
-    contactEmail: spec.supportEmail,
-    companyName: "",
-    contactAddress: "",
-    contactPhone: "",
-    taxId: "",
-    taxIdLabel: "",
-    salesEmail: "",
-    instagramUrl: "",
-    facebookUrl: "",
-    pinterestUrl: "",
-    youtubeUrl: "",
-    threadsUrl: "",
-    xUrl: "",
-    twitterUrl: "",
-    tiktokUrl: "",
-    bottomLine: "Creditos, generacion y galerias privadas en un solo espacio.",
-    copyright: `© 2026 ${spec.readableBrand}. Todos los derechos reservados.`
+    contactEmail: spec.supportEmail
   };
 }
 
 function spanishHeaderBlocks(blocks, spec) {
-  const my = spec.sourceSiteId === "site_dreamshoot";
   const labelForHref = (href) => {
     const exact = spec.headerLinks.find(([, linkHref]) => href === linkHref)?.[0];
     if (exact) return exact;
@@ -1596,24 +1818,8 @@ function spanishHeaderBlocks(blocks, spec) {
   return (blocks ?? []).map((block, index) => {
     const settings = block.settings ?? {};
     const href = typeof settings.href === "string" ? settings.href : "";
-    const description = typeof settings.description === "string" ? settings.description : "";
-    const looksLikeToolCard = block.type === "tool_card" || href.startsWith("/tools") || /Input:|Output:|Cost:|you own/i.test(description);
-    if (!looksLikeToolCard) {
-      const label = labelForHref(href);
-      return label ? { ...block, settings: { ...settings, label } } : block;
-    }
-    const title = spanishTitle(settings.title ?? settings.label ?? `Herramienta ${index + 1}`);
-    return {
-      ...block,
-      settings: {
-        ...settings,
-        title,
-        label: settings.label ? spanishTitle(settings.label) : title,
-        description: spanishToolCardDescription(title, spec),
-        category: my ? "Fotos IA" : "Retratos de viaje",
-        badge: spanishTitle(settings.badge ?? (my ? "Herramienta" : "Ruta"))
-      }
-    };
+    const label = labelForHref(href);
+    return label ? { ...block, settings: { ...settings, label } } : block;
   });
 }
 
@@ -1931,7 +2137,7 @@ function scrubEnglishJson(value, spec, context = {}) {
       const visibleEnglish = englishVisiblePattern.test(translated) &&
         (strongEnglishPattern.test(translated) || !looksSpanishText(translated) || looksMixedLanguage(translated));
       if (!visibleEnglish) return translated;
-      return genericSpanishText(context.fieldKey ?? "body", spec, context);
+      return translated;
     }
     return isFunctionalString(value) ? value : polishSpanishText(value);
   }
@@ -1949,7 +2155,7 @@ function scrubEnglishJson(value, spec, context = {}) {
       const visibleContainerEnglish = childContext.visibleContainer && !isFunctionalString(item) && englishVisiblePattern.test(item) &&
         (strongEnglishPattern.test(item) || !looksSpanishText(item) || looksMixedLanguage(item));
       if (shouldScrubText(key, item) || visibleContainerEnglish) {
-        next[key] = lookupSpanishTitle(item) ?? genericSpanishText(key, spec, childContext);
+        next[key] = lookupSpanishTitle(item) ?? spanishizeString(item, spec, childContext.idMap ?? new Map());
       } else {
         next[key] = isFunctionalString(item) ? item : polishSpanishText(item);
       }
@@ -3581,7 +3787,7 @@ function targetSeoForSlug(slug, spec) {
 }
 
 function targetPageTitleForSlug(slug, spec, fallback) {
-  return targetSeoForSlug(slug, spec).title || fallback;
+  return fallback;
 }
 
 function spanishResidualFallback(key, slug, spec) {
@@ -3622,101 +3828,9 @@ function spanishResidualFallback(key, slug, spec) {
 
 function patchSpanishTargetPageCopy(next, slug, spec) {
   if (spec.sourceSiteId !== "site_dreamshoot") return next;
-  const mixed = /\b(?:into|around|instead|rather|more|each|every|from|with|for|and|the|your|you|what|how|can|make|should|before|after|only|questions|answers|creator|brand|community|story|stories|source|gather|steps|step|film|crew|lookbook|runway|cooking|plating|culinary|process|editorial|campaign|channel|audience|apply|application|earn|actually|delivery|notice|state|frequently|asked|operated|guided|explore|generation)\b/i;
-  const machineKeys = new Set(["id", "siteId", "sectionsOrder", "slug", "href", "primaryHref", "secondaryHref", "imageUrl", "videoUrl", "posterUrl", "storageKey", "canonicalPath", "routeKey", "type", "status", "pageType", "layout", "anchor", "contentKey", "kind", "src", "url"]);
-  const visit = (node, key = "") => {
-    if (!node || typeof node !== "object") return;
-    if (Array.isArray(node)) return node.forEach((item) => visit(item, key));
-    for (const [childKey, value] of Object.entries(node)) {
-      if (typeof value === "string") {
-        if (!machineKeys.has(childKey) && !/^\/?(?:assets|site|api)\//i.test(value) && mixed.test(value)) node[childKey] = spanishResidualFallback(childKey, slug, spec);
-      } else visit(value, childKey);
-    }
-  };
-  visit(next);
-  if (slug.startsWith("/ai-video-generation/")) {
-    const topic = spanishVideoTopicName(slug);
-    const section = Object.values(next.sections ?? {}).find((item) => item?.type === "ai_video_topic_landing");
-    const content = section?.settings?.content;
-    if (content) {
-      content.hero = { ...(content.hero ?? {}), eyebrow: "Vídeo con IA", title: `Crea ${topic} con IA`, body: `Convierte tus fotos en ${topic} y guarda el resultado en una galería privada. Revisa los créditos antes de generar.`, primaryCta: "Crear vídeo", secondaryCta: "Ver precios", rightsCopy: "Usa solo fotos y materiales propios o autorizados. Revisa el resultado completo antes de compartirlo.", availabilityNote: "Consulta el espacio de vídeo para confirmar las opciones y créditos disponibles.", imageNote: `Ejemplo visual de ${topic} creado con IA.` };
-      content.steps = { ...(content.steps ?? {}), eyebrow: "Cómo funciona", title: `Crea ${topic} en pocos pasos`, items: ["Sube tus fotos.", "Elige el estilo.", "Revisa los créditos.", "Genera y revisa el resultado."].map((body, index) => ({ title: ["Sube tus fotos", "Define el estilo", "Confirma los créditos", "Revisa el vídeo"][index], body })) };
-      content.trust = { ...(content.trust ?? {}), eyebrow: "Uso responsable", title: "Revisa el resultado antes de compartir", intro: "Usa imágenes autorizadas y comprueba personas, marcas, texto y contexto.", items: ["Usa material con permiso.", "Comprueba personas y texto.", "Revisa la precisión visual.", "Comparte solo cuando esté listo."].map((body, index) => ({ title: ["Permisos claros", "Detalles correctos", "Revisión final", "Publicación responsable"][index], body })) };
-      content.value = { ...(content.value ?? {}), eyebrow: "Ventajas", title: `${topic} con una dirección clara`, items: ["Elige una idea visual.", "Añade notas de ambiente.", "Revisa los créditos.", "Guarda el resultado privado."].map((body, index) => ({ title: ["Idea visual", "Dirección sencilla", "Coste visible", "Álbum privado"][index], body })) };
-      content.finalCta = { ...(content.finalCta ?? {}), eyebrow: "Listo para crear", title: `Crea ${topic} con tus fotos`, body: `Prepara tus fotos, elige el estilo y revisa el resultado antes de compartirlo.`, cta: "Empezar ahora", microcopy: "Usa imágenes propias o autorizadas y revisa el resultado final." };
-      content.faq = { ...(content.faq ?? {}), eyebrow: "Preguntas frecuentes", title: "Preguntas frecuentes", items: ["¿Qué fotos debo subir?", "¿Cuándo se descuentan los créditos?", "¿Puedo revisar el resultado antes de compartirlo?", "¿Dónde se guarda el vídeo?"].map((question) => ({ question, answer: `Sube fotos claras y autorizadas, revisa el coste antes de generar y consulta el resultado en tu galería privada.` })) };
-      if (content.guidance) content.guidance = { ...content.guidance, eyebrow: "Guía de estilo", title: `Prepara mejores ${topic}`, intro: `Describe el ambiente, el encuadre y el movimiento que quieres conseguir.`, cards: (content.guidance.cards ?? []).map((card, index) => ({ ...card, title: ["Define la escena", "Elige el encuadre", "Marca el ritmo", "Añade movimiento", "Revisa la luz"][index] ?? "Define el estilo", body: "Añade una indicación clara y fácil de revisar.", exampleLabel: "Ejemplo", exampleBody: "Una dirección visual clara y breve." })) };
-    }
-  }
-  if (slug.startsWith("/ai-save-the-date/")) {
-    const occasion = spanishSaveTheDateName(slug);
-    for (const section of Object.values(next.sections ?? {})) {
-      if (!section || typeof section !== "object") continue;
-      const settings = section.settings ?? (section.settings = {});
-      if (/hero|editorial_hero|intro/i.test(section.type) || /hero|intro/i.test(section.id ?? "")) {
-        settings.eyebrow = "Guardar la fecha con IA";
-        settings.title = `Crea fotos y vídeos de ${occasion.toLowerCase()} con IA`;
-        settings.intro = `Convierte tus fotos en una historia de ${occasion.toLowerCase()}, revisa cada detalle y guarda el resultado en privado.`;
-        settings.subtitle = settings.intro;
-      }
-      if (section.type === "faq") settings.title = "Preguntas frecuentes";
-    }
-  }
-  const fixed = {
-    "/about-us": { about_intro_1: ["Sobre AIdreamshoots", "AIdreamshoots convierte tus fotos en retratos, vídeos y álbumes privados con IA."] },
-    "/faq": { intro_1: ["Preguntas frecuentes", "Encuentra respuestas sobre fotos fuente, paquetes, créditos, pagos, privacidad y entrega privada."] },
-    "/help": { intro_1: ["Centro de ayuda", "Encuentra respuestas sobre fotos fuente, paquetes, créditos, pagos, privacidad y entrega privada."] },
-    "/workflow": { workflow_intro_1: ["Cómo funciona AIdreamshoots", "Sube fotos autorizadas, elige un paquete, revisa los créditos y guarda los resultados en tu álbum privado."] },
-    "/best-ai-image": { best_ai_image_1: ["Mejores fotos con IA", "Explora retratos, perfiles, belleza y estilos de fotos con IA."] },
-    "/best-ai-video": { best_ai_video_1: ["Mejores vídeos con IA", "Explora estilos de vídeo con IA para convertir tus fotos en clips privados."] },
-    "/best-packages": { intro_1: ["Mejores paquetes de fotos con IA", "Elige paquetes privados para perfiles, pareja, creador, belleza y álbumes."] },
-    "/blog": { blog_intro_1: ["Guías de fotos con IA", "Aprende a preparar fotos fuente, elegir paquetes y revisar tus resultados privados."] },
-    "/creators-circle": { creators_intro_1: ["Círculo de creadores", "Prepara experiencias de fotos con IA para tu comunidad y tus clientes."] },
-    "/tools": { video_theme_directory_1: ["Generadores de vídeo con IA", "Explora todos los temas públicos de vídeo con IA y abre la guía del estilo que quieras."] }
-  }[slug];
-  for (const [sectionId, [title, body]] of Object.entries(fixed ?? {})) {
-    const section = next.sections?.[sectionId];
-    if (!section) continue;
-    section.settings = { ...(section.settings ?? {}), title, subtitle: body, body };
-  }
-  if (slug === "/" || slug === "/pricing") {
-    const pricing = next.sections?.pricing_1;
-    if (pricing) {
-      pricing.settings = {
-        ...(pricing.settings ?? {}),
-        title: "Planes de créditos para fotos y vídeos con IA",
-        subtitle: "Compra créditos para conjuntos privados, herramientas y álbumes de retrato.",
-        description: "Usa tus créditos en flujos de fotos y vídeo con IA compatibles. El coste necesario se muestra antes de generar.",
-        sidePanelEyebrow: "Por qué elegir créditos",
-        sidePanelTitle: "Créditos claros para paquetes privados flexibles.",
-        sidePanelBody: "Genera álbumes privados tras revisar créditos, mantener el saldo visible y recargar solo cuando necesites más sesiones."
-      };
-    }
-  }
-  if (slug === "/pricing") {
-    const intro = next.sections?.pricing_intro_1;
-    if (intro) {
-      intro.settings = {
-        ...(intro.settings ?? {}),
-        eyebrow: "Precios",
-        title: "Planes de créditos para fotos IA",
-        subtitle: "Elige créditos según los retratos, estilos, vídeos y álbumes que quieras terminar.",
-        body: "Los planes conectan saldo, pago, generación y entrega privada en una sola cuenta."
-      };
-    }
-  }
-  if (slug === "/digital-delivery") {
-    const policy = next.sections?.policy_1;
-    if (policy) {
-      policy.settings = {
-        ...(policy.settings ?? {}),
-        eyebrow: "Entrega digital",
-        title: "Política de entrega digital",
-        subtitle: "Tus conjuntos, vídeos, créditos y álbumes se entregan dentro de tu cuenta privada.",
-        lastUpdated: "9 de julio de 2026"
-      };
-    }
-  }
+  // Public page content is a translated source document. Keep every
+  // scenario-specific field from that document; policy-specific copy is
+  // handled by patchPolicyPage before this boundary.
   next.seo = targetSeoForSlug(slug, spec);
   return next;
 }
@@ -3888,7 +4002,7 @@ function repairSpanishTargetVisibleCopy(value, slug, spec, key = "") {
     ];
     const visibleKey = visibleTextKeys.has(key) || visibleContainerKeys.has(key) || /(?:text|title|description|body|intro|subtitle|question|answer|label|name|meta|eyebrow|headline|caption|alt|chip|list|item|cta|placeholder|note|tip|process|heading|problem|solution|script|highlight|support|usage|role|content)/i.test(key);
     if (!visibleKey || englishHits.length === 0) return polished;
-    return targetSpanishFallbackCopy(key, slug, spec);
+    return polished;
   }
   if (Array.isArray(value)) return value.map((item) => repairSpanishTargetVisibleCopy(item, slug, spec, key));
   return Object.fromEntries(Object.entries(value).map(([childKey, childValue]) => [
@@ -3905,14 +4019,7 @@ function patchPageJson(pageJson, slug, spec) {
   slug = spanishPageSlug(slug);
   const next = clone(pageJson) ?? {};
   next.locale = "es-ES";
-  next.seo = seoForSlug(slug, spec);
-  patchPolicyPage(next, slug, spec);
-  patchSpanishTargetPageCopy(next, slug, spec);
-  return repairSpanishTargetVisibleCopy(
-    normalizeSpanishCollectionReferences(scrubEnglishJson(next, spec, { slug }), spec),
-    slug,
-    spec
-  );
+  return translateSourcePageJson(next, slug, spec);
   /* Legacy targeted copy overrides intentionally remain below for reference only. */
   if (slug === "/pricing") {
     patchSection(next, "pricing_intro_1", {
@@ -4230,33 +4337,18 @@ function patchPageJson(pageJson, slug, spec) {
 }
 
 function translateSourcePageJson(pageJson, slug, spec, idMap = new Map()) {
-  const next = clone(pageJson) ?? {};
+  const next = translateSourceJson(clone(pageJson) ?? {}, spec, idMap);
   next.locale = "es-ES";
-  next.seo = targetSeoForSlug(slug, spec);
-  patchSpanishXbyCommonSections(next, slug, spec);
-  patchSpanishXbyVisibleResiduals(next, slug, spec);
-  const translated = spanishizeJson(next, spec, idMap);
-  const cleaned = scrubEnglishJson(translated, spec, { slug, idMap });
-  // Keep the source homepage section graph/order intact.  The Spanish site
-  // owns the locale, brand and copy translation above, but it must not replace
-  // the MyDreamShoots homepage with a different hand-authored layout.
-  const finalJson = repairSpanishTargetVisibleCopy(
-    normalizeSpanishCollectionReferences(patchSpanishTargetPageCopy(cleaned, slug, spec), spec),
-    slug,
-    spec
-  );
-  // The visible-copy repair walks every `title` field and can legitimately
-  // replace an English fragment in a payload. Re-assert the page-level SEO
-  // after that walk so a generic fallback title can never leak into the
-  // document head of the Spanish storefront.
-  finalJson.seo = targetSeoForSlug(slug, spec);
-  if (slug === "/" && finalJson.sections?.hero_1 && typeof finalJson.sections.hero_1 === "object") {
-    finalJson.sections.hero_1.type = "hero";
+  if (explicitNonPublicPaths.has(slug)) {
+    next.seo = {
+      ...(next.seo ?? {}),
+      canonicalPath: slug,
+      index: false,
+      follow: false,
+      robots: { ...(next.seo?.robots ?? {}), index: false, follow: false }
+    };
   }
-  if (slug === "/search" && finalJson.sections?.search_intro_1?.settings && typeof finalJson.sections.search_intro_1.settings === "object") {
-    finalJson.sections.search_intro_1.settings.title = "Ideas de fotos y vídeos con IA";
-  }
-  return finalJson;
+  return normalizeSpanishCollectionReferences(next, spec);
 }
 
 function templateSlugFromKey(key) {
@@ -4335,14 +4427,8 @@ function patchPublicationSnapshot(snapshot, spec, idMap, pages) {
 }
 
 function patchSettingsJson(settings, spec, idMap, pages) {
-  const next = spanishizeJson(clone(settings) ?? {}, spec, idMap);
+  const next = translateSourceJson(clone(settings) ?? {}, spec, idMap);
   next.locale = "es-ES";
-  if (next.saasSettingsCurrent && typeof next.saasSettingsCurrent === "object" && !Array.isArray(next.saasSettingsCurrent)) {
-    next.saasSettingsCurrent = patchSpanishLegacyGlobalSettings(next.saasSettingsCurrent, spec);
-  }
-  if (next.saveTheDateNavigation && typeof next.saveTheDateNavigation === "object" && !Array.isArray(next.saveTheDateNavigation)) {
-    next.saveTheDateNavigation = spanishSaveTheDateNavigation(next.saveTheDateNavigation);
-  }
   next.navigation = next.navigation ?? {};
   const existingHeaderLinks = Array.isArray(next.navigation.headerLinks) ? next.navigation.headerLinks : [];
   const existingFooterLinks = Array.isArray(next.navigation.footerLinks) ? next.navigation.footerLinks : [];
@@ -4357,7 +4443,6 @@ function patchSettingsJson(settings, spec, idMap, pages) {
     href,
     group
   }));
-  next.seo = spanishSiteSeo(spec, pages);
   next.globalSections = next.globalSections ?? {};
   next.globalSections.header = next.globalSections.header ?? { type: "header", settings: {}, blocks: [] };
   next.globalSections.header.settings = {
@@ -4381,16 +4466,9 @@ function patchSettingsJson(settings, spec, idMap, pages) {
     }
   }));
   next.globalSections = patchSpanishGlobalSections(next.globalSections, spec);
-  const globalSections = next.globalSections;
-  const saveTheDateNavigation = next.saveTheDateNavigation;
-  const scrubbed = scrubEnglishJson(
-    patchSiteSeoContainers(next, spec, pages),
-    spec,
-    { slug: "/" }
-  );
-  scrubbed.globalSections = globalSections;
-  if (saveTheDateNavigation) scrubbed.saveTheDateNavigation = saveTheDateNavigation;
-  return repairSpanishTargetVisibleCopy(scrubbed, "/", spec);
+  // The translated source settings, including SEO, remain the source of truth.
+  // Only system navigation and global UI labels are normalized here.
+  return next;
 }
 
 function sortByParent(rows) {
@@ -4487,11 +4565,23 @@ function buildDataset(source, spec, targetState = {}) {
   if (spec.targetSiteId === "site_mydreamshoots_xby") {
     const imageRoot = pages.find((page) => page.slug === "/ai-image-generation");
     if (imageRoot && !pages.some((page) => page.slug === "/collections")) {
-      pages.push({ ...imageRoot, id: `page_${spec.targetSiteId}_collections_alias`, slug: "/collections", title: "Paquetes de fotos IA", contentJson: { ...compatibilityAliasPageJson(imageRoot.contentJson, "/collections"), seo: targetSeoForSlug("/collections", spec) } });
+      pages.push({
+        ...imageRoot,
+        id: `page_${spec.targetSiteId}_collections_alias`,
+        slug: "/collections",
+        title: imageRoot.title,
+        contentJson: compatibilityAliasPageJson(imageRoot.contentJson, "/ai-image-generation")
+      });
     }
     const videoRoot = pages.find((page) => page.slug === "/ai-video-generation");
     if (videoRoot && !pages.some((page) => page.slug === "/tools")) {
-      pages.push({ ...videoRoot, id: `page_${spec.targetSiteId}_tools_alias`, slug: "/tools", title: "Herramientas de IA", contentJson: { ...compatibilityAliasPageJson(videoRoot.contentJson, "/tools"), seo: targetSeoForSlug("/tools", spec) } });
+      pages.push({
+        ...videoRoot,
+        id: `page_${spec.targetSiteId}_tools_alias`,
+        slug: "/tools",
+        title: videoRoot.title,
+        contentJson: compatibilityAliasPageJson(videoRoot.contentJson, "/ai-video-generation")
+      });
     }
   }
   const themePages = source.pages
@@ -4514,11 +4604,25 @@ function buildDataset(source, spec, targetState = {}) {
   if (spec.targetSiteId === "site_mydreamshoots_xby") {
     const imageRoot = themePages.find((page) => page.slug === "/ai-image-generation");
     if (imageRoot && !themePages.some((page) => page.slug === "/collections")) {
-      themePages.push({ ...imageRoot, id: `theme_page_${spec.targetSiteId}_collections_alias`, slug: "/collections", title: "Paquetes de fotos IA", draftJson: { ...compatibilityAliasPageJson(imageRoot.draftJson, "/collections"), seo: targetSeoForSlug("/collections", spec) }, publishedJson: { ...compatibilityAliasPageJson(imageRoot.publishedJson, "/collections"), seo: targetSeoForSlug("/collections", spec) } });
+      themePages.push({
+        ...imageRoot,
+        id: `theme_page_${spec.targetSiteId}_collections_alias`,
+        slug: "/collections",
+        title: imageRoot.title,
+        draftJson: compatibilityAliasPageJson(imageRoot.draftJson, "/ai-image-generation"),
+        publishedJson: compatibilityAliasPageJson(imageRoot.publishedJson, "/ai-image-generation")
+      });
     }
     const videoRoot = themePages.find((page) => page.slug === "/ai-video-generation");
     if (videoRoot && !themePages.some((page) => page.slug === "/tools")) {
-      themePages.push({ ...videoRoot, id: `theme_page_${spec.targetSiteId}_tools_alias`, slug: "/tools", title: "Herramientas de IA", draftJson: { ...compatibilityAliasPageJson(videoRoot.draftJson, "/tools"), seo: targetSeoForSlug("/tools", spec) }, publishedJson: { ...compatibilityAliasPageJson(videoRoot.publishedJson, "/tools"), seo: targetSeoForSlug("/tools", spec) } });
+      themePages.push({
+        ...videoRoot,
+        id: `theme_page_${spec.targetSiteId}_tools_alias`,
+        slug: "/tools",
+        title: videoRoot.title,
+        draftJson: compatibilityAliasPageJson(videoRoot.draftJson, "/ai-video-generation"),
+        publishedJson: compatibilityAliasPageJson(videoRoot.publishedJson, "/ai-video-generation")
+      });
     }
   }
   const settings = source.settings
@@ -4988,11 +5092,17 @@ function buildPlanManifest(source, targetCurrent, dataset, targetBefore, unrelat
       allowedSiteId: dataset.spec.targetSiteId,
       allowedDomain: dataset.spec.targetDomain,
       compatibilityAliases: { "/collections": "/ai-image-generation", "/tools": "/ai-video-generation" },
+      homepageProtection: {
+        enabled: dataset.spec.targetSiteId === "site_mydreamshoots_xby",
+        excludedFromWrite: ["LivePage:/", "ThemePage:/", "ThemeSettings"]
+      },
+      explicitNonPublicPaths: Object.fromEntries(explicitNonPublicPaths),
       publicEntities: collections.map((item) => item.entity),
       protectedTables: protectedModels,
-      excludedFromWrite: ["site_dreamshoot", "site_aidreamcapes", "customer", "order", "paymentEvent", "subscription", "creditLedger", "creditBalance", "generationJob", "assetUpload", "album", "session", "shared templates"]
+      excludedFromWrite: ["site_dreamshoot", "site_aidreamcapes", "customer", "order", "paymentEvent", "subscription", "creditLedger", "creditBalance", "generationJob", "assetUpload", "album", "session", "shared templates", "LivePage:/", "ThemePage:/", "ThemeSettings"]
     },
     collections,
+    translation: dataset.translation ?? null,
     protection: { targetProtectedFingerprint: targetBefore, unrelatedPublicFingerprint: unrelatedBefore },
     media: { targetNamespace: "/assets/sites/site_aidreamshoots/", sourceNamespace: "/assets/dreamshoot/", checksumRequired: true }
   };
@@ -5045,19 +5155,30 @@ async function upsertPublicRows(tx, rows, delegate, update, key = "id") {
 
 async function applyDataset(dataset, targetCurrent) {
   const targetId = dataset.site.id;
+  const preserveHomepage = targetId === "site_mydreamshoots_xby";
+  const writablePages = dataset.pages.filter((row) => !preserveHomepage || row.slug !== "/");
+  const writableThemePages = dataset.themePages.filter((row) => !preserveHomepage || row.slug !== "/");
+  if (preserveHomepage) {
+    if (writablePages.some((row) => row.slug === "/") || writableThemePages.some((row) => row.slug === "/")) throw new Error("homepage_protection_filter_failed");
+    if (!targetCurrent.livePages.some((row) => row.slug === "/")) throw new Error("homepage_protection_requires_existing_live_page");
+    if (!targetCurrent.pages.some((row) => row.slug === "/")) throw new Error("homepage_protection_requires_existing_theme_page");
+    if (!targetCurrent.settings) throw new Error("homepage_protection_requires_existing_theme_settings");
+  }
   await prisma.$transaction(async (tx) => {
     await tx.$queryRaw`SELECT "id" FROM "Site" WHERE "id" = ${targetId} FOR UPDATE`;
     await tx.site.update({ where: { id: targetId }, data: { name: dataset.site.name, slug: dataset.site.slug, status: dataset.site.status, primaryDomain: dataset.site.primaryDomain, timezone: dataset.site.timezone, currency: dataset.site.currency, signupCreditGrant: dataset.site.signupCreditGrant, branding: dataset.site.branding } });
     await tx.siteDomain.upsert({ where: { domain: dataset.spec.targetDomain }, create: dataset.domains[0], update: { isPrimary: true, status: "active", allowedAiProviderIds: [] } });
     await tx.siteDomain.updateMany({ where: { siteId: targetId, domain: { not: dataset.spec.targetDomain } }, data: { isPrimary: false } });
-    await tx.themeSettings.upsert({ where: { siteId: targetId }, create: dataset.settings, update: { draftJson: dataset.settings.draftJson, publishedJson: dataset.settings.publishedJson } });
+    if (!preserveHomepage) {
+      await tx.themeSettings.upsert({ where: { siteId: targetId }, create: dataset.settings, update: { draftJson: dataset.settings.draftJson, publishedJson: dataset.settings.publishedJson } });
+    }
     await tx.storefrontProfile.upsert({ where: { siteId: targetId }, create: dataset.profile, update: { draftJson: dataset.profile.draftJson, publishedJson: dataset.profile.publishedJson, draftMeta: dataset.profile.draftMeta } });
     const pageUpdate = (row) => ({ pageType: row.pageType, templateKey: row.templateKey, title: row.title, contentJson: row.contentJson });
-    await upsertPublicRows(tx, dataset.pages, tx.livePage, pageUpdate, "siteId_slug");
-    await tx.livePage.deleteMany({ where: { siteId: targetId, slug: { notIn: dataset.pages.map((row) => row.slug) } } });
+    await upsertPublicRows(tx, writablePages, tx.livePage, pageUpdate, "siteId_slug");
+    await tx.livePage.deleteMany({ where: { siteId: targetId, slug: { notIn: [...writablePages.map((row) => row.slug), ...(preserveHomepage ? ["/"] : [])] } } });
     const themePageUpdate = (row) => ({ pageType: row.pageType, templateKey: row.templateKey, title: row.title, draftJson: row.draftJson, publishedJson: row.publishedJson, draftMeta: row.draftMeta });
-    await upsertPublicRows(tx, dataset.themePages, tx.themePage, themePageUpdate, "siteId_slug");
-    await tx.themePage.deleteMany({ where: { siteId: targetId, slug: { notIn: dataset.themePages.map((row) => row.slug) } } });
+    await upsertPublicRows(tx, writableThemePages, tx.themePage, themePageUpdate, "siteId_slug");
+    await tx.themePage.deleteMany({ where: { siteId: targetId, slug: { notIn: [...writableThemePages.map((row) => row.slug), ...(preserveHomepage ? ["/"] : [])] } } });
     for (const product of dataset.products) {
       await tx.product.upsert({ where: { id: product.id }, create: { id: product.id, siteId: product.siteId, name: product.name, type: product.type, status: product.status, metadata: product.metadata }, update: { name: product.name, type: product.type, status: product.status, metadata: product.metadata } });
       for (const price of product.prices) await tx.price.upsert({ where: { id: price.id }, create: { ...price, stripePriceId: null, providerVerifiedAt: null, providerFingerprint: null, status: price.status ?? "draft" }, update: { productId: price.productId, label: price.label, amountCents: price.amountCents, currency: price.currency, interval: price.interval, creditsGranted: price.creditsGranted, metadata: price.metadata, status: price.status ?? "draft", stripePriceId: null, providerVerifiedAt: null, providerFingerprint: null } });
@@ -5111,7 +5232,7 @@ async function applyDataset(dataset, targetCurrent) {
         await tx.siteAiApp.create({ data: { id: app.id, siteId: app.siteId, aiAppId: app.aiAppId, enabled: app.enabled, creditCost: app.creditCost, routeKey: app.routeKey, workflowConfig: app.workflowConfig, providerConfig: null } });
       }
     }
-    await tx.auditLog.create({ data: { id: `audit_${dataset.spec.targetToken}_${Date.now()}`, siteId: targetId, actorId: "platform", actorType: "platform", action: "site.aidreamshoots.sync", targetType: "site", targetId, metadata: { sourceSiteId: dataset.spec.sourceSiteId, publicPages: dataset.pages.length, packages: dataset.creativePacks.length, videos: dataset.videoThemes.length, media: dataset.mediaAssets.length } } });
+    await tx.auditLog.create({ data: { id: `audit_${dataset.spec.targetToken}_${Date.now()}`, siteId: targetId, actorId: "platform", actorType: "platform", action: "site.aidreamshoots.sync", targetType: "site", targetId, metadata: { sourceSiteId: dataset.spec.sourceSiteId, publicPages: dataset.pages.length, writablePages: writablePages.length, packages: dataset.creativePacks.length, videos: dataset.videoThemes.length, media: dataset.mediaAssets.length, homepageProtection: preserveHomepage ? { enabled: true, excludedFromWrite: ["LivePage:/", "ThemePage:/", "ThemeSettings"] } : { enabled: false } } } });
   }, { timeout: 1800000, maxWait: 20000 });
 }
 
@@ -5139,14 +5260,19 @@ async function main() {
   const targetCurrent = await fetchSource(spec.targetSiteId);
   const targetBefore = await protectedFingerprint(prisma, spec.targetSiteId);
   const unrelatedBefore = await publicIsolationFingerprint(prisma, spec.targetSiteId);
+  const translation = await prepareSourceCopyTranslations(source);
   const dataset = buildDataset(source, spec, targetState);
   dataset.sourceMediaAssets = source.mediaAssets;
   dataset.sourceMediaReferences = [...collectSourceAssetReferences(source)];
+  dataset.translation = {
+    ...translation,
+    untranslatedFields: translation.untranslated
+  };
   const manifest = buildPlanManifest(source, targetCurrent, dataset, targetBefore, unrelatedBefore);
   manifest.summary = summary(dataset, targetBefore, targetCurrent);
   const planPath = writePlanManifest(manifest);
   if (!apply) {
-    console.log(JSON.stringify({ ok: true, mode: "dry-run", target, sourceSiteId: spec.sourceSiteId, targetSiteId: spec.targetSiteId, planPath, protectedFingerprint: targetBefore, summary: summary(dataset, targetBefore, targetCurrent) }, null, 2));
+    console.log(JSON.stringify({ ok: true, mode: "dry-run", target, sourceSiteId: spec.sourceSiteId, targetSiteId: spec.targetSiteId, planPath, protectedFingerprint: targetBefore, translation: dataset.translation, summary: summary(dataset, targetBefore, targetCurrent) }, null, 2));
     return;
   }
   if (target === "remote" && skipAssets) throw new Error("production_sync_cannot_skip_asset_preflight");
@@ -5163,7 +5289,7 @@ async function main() {
   if (stable(unrelatedBefore) !== stable(unrelatedAfter)) throw new Error("unrelated_site_public_records_changed");
   manifest.verification = { targetProtectedFingerprint: targetAfter, unrelatedPublicFingerprint: unrelatedAfter, media: assetChecksums };
   fs.writeFileSync(planPath, `${JSON.stringify(manifest, null, 2)}\n`, { mode: 0o600 });
-  console.log(JSON.stringify({ ok: true, mode: "applied", target, sourceSiteId: spec.sourceSiteId, targetSiteId: spec.targetSiteId, planPath, media, protectedFingerprint: targetAfter, unrelatedPublicFingerprint: unrelatedAfter, summary: summary(dataset, targetBefore, targetCurrent) }, null, 2));
+  console.log(JSON.stringify({ ok: true, mode: "applied", target, sourceSiteId: spec.sourceSiteId, targetSiteId: spec.targetSiteId, planPath, media, protectedFingerprint: targetAfter, unrelatedPublicFingerprint: unrelatedAfter, translation: dataset.translation, summary: summary(dataset, targetBefore, targetCurrent) }, null, 2));
 }
 
 main()

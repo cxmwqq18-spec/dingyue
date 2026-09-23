@@ -33,7 +33,10 @@ const aliasExpectations = [
   ["/collections", "/ai-image-generation"],
   ["/collections/headshot", "/ai-image-generation/headshot"],
   ["/collections/belleza", "/ai-image-generation/beauty"],
-  ["/ai-video-generation/christmas", "/ai-save-the-date/christmas"]
+  ["/policies/shipping", "/digital-delivery"],
+  ["/policies/state-privacy", "/state-privacy"],
+  ["/ai-video-generation/christmas", "/ai-save-the-date/christmas"],
+  ["/ai-image-generation/urban", "/ai-image-generation/urbano"]
 ];
 
 const failures = [];
@@ -169,12 +172,38 @@ function extractSitemapLocs(xml) {
   return [...String(xml).matchAll(/<loc>([\s\S]*?)<\/loc>/gi)].map((match) => decodeHtml(match[1]).trim()).filter(Boolean);
 }
 
+function extractSitemapEntries(xml) {
+  return [...String(xml).matchAll(/<url\b[^>]*>([\s\S]*?)<\/url>/gi)].map((match) => {
+    const loc = match[1].match(/<loc>([\s\S]*?)<\/loc>/i)?.[1];
+    const lastmod = match[1].match(/<lastmod>([\s\S]*?)<\/lastmod>/i)?.[1];
+    return { loc: decodeHtml(loc ?? "").trim(), lastmod: decodeHtml(lastmod ?? "").trim() };
+  }).filter((entry) => entry.loc);
+}
+
+function publicPathFromHref(value) {
+  try {
+    const url = new URL(value, productionOrigin);
+    if (url.hostname !== new URL(productionOrigin).hostname) return "";
+    let path = normalizePath(url.pathname);
+    for (const prefix of ["/site/aidreamshoots", "/site/aidreamshoots-eu", "/site/mydreamshoots-xby"]) {
+      if (path === prefix) path = "/";
+      else if (path.startsWith(`${prefix}/`)) path = normalizePath(path.slice(prefix.length));
+    }
+    return path;
+  } catch {
+    return "";
+  }
+}
+
 function inspectPage(pathname, response) {
   const htmlTag = response.body.match(/<html\b[^>]*>/i)?.[0] || "";
   const title = response.body.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.replace(/<[^>]+>/g, "").trim() || "";
   const descriptions = openTags(response.body.match(/<head\b[\s\S]*?<\/head>/i)?.[0] || response.body, "meta")
     .filter((tag) => hasAttr(tag, "name", "description"))
     .map((tag) => attr(tag, "content"));
+  const ogTypes = openTags(response.body.match(/<head\b[\s\S]*?<\/head>/i)?.[0] || response.body, "meta")
+    .filter((tag) => hasAttr(tag, "property", "og:type"))
+    .map((tag) => attr(tag, "content").toLowerCase());
   const canonicals = openTags(response.body, "link")
     .filter((tag) => /\brel=["']canonical["']/i.test(tag))
     .map((tag) => attr(tag, "href"));
@@ -199,15 +228,21 @@ function inspectPage(pathname, response) {
   const h1s = innerTexts(response.body.match(/<main\b[\s\S]*?<\/main>/i)?.[0] || response.body, "h1");
   const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
   const isThemeDetail = /^\/ai-image-generation\/[^/]+$/i.test(pathname);
+  const missingImageDimensions = images.filter((tag) => {
+    if (hasAttr(tag, "aria-hidden", "true") || /\brole=["'](?:presentation|none)["']/i.test(tag)) return false;
+    return !(Number(attr(tag, "width")) > 0 && Number(attr(tag, "height")) > 0);
+  });
 
   check(`${pathname}: HTTP 200`, response.status === 200, response.status);
   check(`${pathname}: lang=es`, attr(htmlTag, "lang") === "es", attr(htmlTag, "lang"));
   check(`${pathname}: one non-empty title`, title.length > 0, title);
   check(`${pathname}: one non-empty description`, descriptions.length === 1 && descriptions[0].trim().length > 0, descriptions);
+  check(`${pathname}: explicit og:type`, ogTypes.length === 1 && (ogTypes[0] === "website" || ogTypes[0] === "article"), ogTypes);
   check(`${pathname}: canonical is production URL`, canonicals.length === 1 && canonicals[0].replace(/\/$/, "") === absoluteCanonical(pathname).replace(/\/$/, ""), canonicals);
   check(`${pathname}: indexable robots`, robots.length === 1 && /\bindex\b/i.test(robots[0]) && /\bfollow\b/i.test(robots[0]), robots);
   check(`${pathname}: one primary H1`, h1s.length === 1, h1s);
   check(`${pathname}: images have descriptive alt`, emptyImageAlts.length === 0, emptyImageAlts.slice(0, 5));
+  check(`${pathname}: content images have dimensions`, missingImageDimensions.length === 0, missingImageDimensions.slice(0, 5));
   check(`${pathname}: no legacy/local/http links`, badSources.length === 0, badSources.slice(0, 10));
   check(`${pathname}: JSON-LD parses`, jsonLd.errors.length === 0, jsonLd.errors);
   if (pathname.startsWith("/blog/")) {
@@ -222,12 +257,17 @@ async function run() {
   check("sitemap.xml: HTTP 200", sitemapResponse.status === 200, sitemapResponse.status);
   check("sitemap.xml: XML content type", /application\/xml/i.test(sitemapResponse.headers["content-type"] || ""), sitemapResponse.headers["content-type"]);
   const sitemapLocs = extractSitemapLocs(sitemapResponse.body);
+  const sitemapEntries = extractSitemapEntries(sitemapResponse.body);
   const sitemapPaths = sitemapLocs.map((loc) => new URL(loc).pathname);
   check("sitemap.xml: has public URLs", sitemapLocs.length > 0, sitemapLocs.length);
   check("sitemap.xml: no duplicate URLs", new Set(sitemapLocs).size === sitemapLocs.length, { total: sitemapLocs.length });
   check("sitemap.xml: absolute production HTTPS URLs", sitemapLocs.every((loc) => loc.startsWith(`${productionOrigin}/`)), sitemapLocs.filter((loc) => !loc.startsWith(`${productionOrigin}/`)).slice(0, 10));
   check("sitemap.xml: no alias URLs", sitemapPaths.every((path) => !/^\/collections(?:\/|$)/i.test(path) && !/^\/ai-image-generation\/collections-/i.test(path) && !/^\/ai-video-generation\/(christmas|engagement|fathers-day|halloween|mothers-day|new-year|proposal|save-the-date|thanksgiving|valentines-day|wedding-ceremony|wedding-invitation)$/i.test(path)), sitemapPaths.filter((path) => /^\/collections(?:\/|$)/i.test(path) || /^\/ai-image-generation\/collections-/i.test(path)));
+  check("sitemap.xml: excludes stale policy and private aliases", sitemapPaths.every((path) => !["/album", "/policies/shipping", "/policies/state-privacy"].includes(normalizePath(path))), sitemapPaths.filter((path) => ["/album", "/policies/shipping", "/policies/state-privacy"].includes(normalizePath(path))));
   check("sitemap.xml: excludes private/error paths", sitemapPaths.every((path) => !/^\/(login|404|account|app|dashboard|gallery)(?:\/|$)/i.test(path)), sitemapPaths.filter((path) => /^\/(login|404|account|app|dashboard|gallery)(?:\/|$)/i.test(path)));
+  check("sitemap.xml: published coverage is non-empty", sitemapPaths.length > 0, { actual: sitemapPaths.length });
+  const invalidLastmods = sitemapEntries.filter((entry) => !entry.lastmod || !Number.isFinite(Date.parse(entry.lastmod))).map((entry) => entry.loc);
+  check("sitemap.xml: every URL has a valid lastmod", sitemapEntries.length === sitemapLocs.length && invalidLastmods.length === 0, { entries: sitemapEntries.length, missingOrInvalid: invalidLastmods.slice(0, 10) });
 
   if (!skipSitemapStatus) {
     for (const path of sitemapPaths) {
@@ -240,6 +280,24 @@ async function run() {
     }
   }
 
+  if (process.env.AIDREAMSHOOTS_SMOKE_CHECK_LINK_GRAPH !== "0") {
+    const sitemapPathSet = new Set(sitemapPaths.map(normalizePath));
+    const inbound = new Map(sitemapPaths.map((path) => [normalizePath(path), 0]));
+    for (const path of sitemapPaths) {
+      try {
+        const response = await requestWithRetry(path, { host: productionHost });
+        const links = [...response.body.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>/gi)]
+          .map((match) => publicPathFromHref(decodeHtml(match[1])))
+          .filter((href) => sitemapPathSet.has(href));
+        for (const href of new Set(links)) inbound.set(href, (inbound.get(href) ?? 0) + 1);
+      } catch (error) {
+        check(`link graph ${path}: request completed`, false, String(error?.message ?? error));
+      }
+    }
+    const orphanPaths = sitemapPaths.filter((path) => normalizePath(path) !== "/" && (inbound.get(normalizePath(path)) ?? 0) === 0);
+    check("sitemap pages have public inbound links", orphanPaths.length === 0, orphanPaths);
+  }
+
   for (const pathname of representativePaths) {
     try {
       inspectPage(pathname, await requestWithRetry(pathname, { host: productionHost }));
@@ -250,12 +308,23 @@ async function run() {
 
   for (const [source, target] of aliasExpectations) {
     try {
-      const response = await requestWithRetry(source, { method: "HEAD", host: productionHost, maxBytes: 20_000 });
+      const response = await requestWithRetry(source, { host: productionHost, maxBytes: 20_000 });
       check(`${source}: permanent redirect`, response.status === 308, response.status);
       check(`${source}: redirects to canonical`, locationHeader(response) === absoluteCanonical(target), locationHeader(response));
     } catch (error) {
       check(`${source}: redirect request completed`, false, String(error?.message ?? error));
     }
+  }
+
+  try {
+    const album = await requestWithRetry("/album", { host: productionHost });
+    const albumRobots = openTags(album.body, "meta")
+      .filter((tag) => hasAttr(tag, "name", "robots"))
+      .map((tag) => attr(tag, "content"));
+    check("/album: HTTP 200", album.status === 200, album.status);
+    check("/album: noindex robots", albumRobots.length === 1 && /\bnoindex\b/i.test(albumRobots[0]), albumRobots);
+  } catch (error) {
+    check("/album: request completed", false, String(error?.message ?? error));
   }
 
   try {

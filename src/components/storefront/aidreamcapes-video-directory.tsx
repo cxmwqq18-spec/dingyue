@@ -39,6 +39,11 @@ export type AidreamcapesVideoDirectoryCopy = {
   };
 };
 
+export type AidreamcapesVideoThemeCover = {
+  src: string;
+  alt: string;
+};
+
 type RoutedSite = Site & { __storefrontBasePath?: string };
 
 const laneAccents = [
@@ -81,18 +86,20 @@ function resolveHref(site: Site, href: string, localBasePath?: string): string {
 function AnchorLink({
   children,
   className,
+  dataVideoThemeCard,
   href,
   site,
   localBasePath
 }: {
   children: ReactNode;
   className: string;
+  dataVideoThemeCard?: string;
   href: string;
   site: Site;
   localBasePath?: string;
 }) {
   return (
-    <StorefrontInstantLink className={className} href={resolveHref(site, href, localBasePath)}>
+    <StorefrontInstantLink className={className} data-video-theme-card={dataVideoThemeCard} href={resolveHref(site, href, localBasePath)}>
       {children}
     </StorefrontInstantLink>
   );
@@ -102,16 +109,23 @@ function laneAnchor(groupLabel: string): string {
   return `video-lane-${groupLabel.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
 }
 
+function normalizedPath(value: string): string {
+  const clean = value.trim().split(/[?#]/)[0] ?? "";
+  return clean.startsWith("/") ? clean : `/${clean}`;
+}
+
 export function AidreamcapesVideoDirectory({
   copy,
   navigation,
   sectionId,
-  site
+  site,
+  themeCovers = {}
 }: {
   copy: AidreamcapesVideoDirectoryCopy;
   navigation: AidreamcapesZipNavigation;
   sectionId: string;
   site: Site;
+  themeCovers?: Record<string, AidreamcapesVideoThemeCover>;
 }) {
   const groups = navigation.video.groups;
   const items = groups.flatMap((group) => group.items);
@@ -247,28 +261,33 @@ export function AidreamcapesVideoDirectory({
                 </div>
 
                 <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                  {group.items.map((item, itemIndex) => (
+                  {group.items.map((item, itemIndex) => {
+                    const cover = themeCovers[normalizedPath(item.href)];
+                    return (
                     <AnchorLink
-                      className={`group relative overflow-hidden rounded-[20px] border ${accent.edge} bg-white/[0.035] p-5 transition duration-300 hover:-translate-y-1 hover:bg-white/[0.075] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c4b5fd]`}
+                      className={`group relative overflow-hidden rounded-[20px] border ${accent.edge} bg-white/[0.035] transition duration-300 hover:-translate-y-1 hover:bg-white/[0.075] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c4b5fd]`}
+                      dataVideoThemeCard={item.href}
                       href={item.href}
                       key={`${group.label}-${item.label}-${item.href}-${itemIndex}`}
                       localBasePath={localBasePath}
                       site={site}
                     >
-                      <span className={`absolute right-[-2rem] top-[-2rem] h-24 w-24 rounded-full blur-2xl ${accent.glow}`} />
-                      <span className="relative flex items-start justify-between gap-4">
-                        <span>
-                          <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/35">{String(itemIndex + 1).padStart(2, "0")}</span>
-                          <span className="mt-3 block text-lg font-semibold leading-tight tracking-[-0.02em] text-white/90">{item.label}</span>
-                        </span>
-                        <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-white/35 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" strokeWidth={1.8} />
+                      <span className="relative block aspect-[16/9] overflow-hidden bg-[#17131f]" data-video-theme-cover={item.href}>
+                        {cover ? <img alt={cover.alt || `${item.label} theme cover`} className="h-full w-full object-cover opacity-80 transition duration-700 group-hover:scale-[1.04] group-hover:opacity-100" decoding="async" loading={groupIndex === 0 && itemIndex < 3 ? "eager" : "lazy"} src={cover.src} /> : null}
+                        <span className={`absolute inset-0 ${cover ? "bg-gradient-to-t from-[#08090d]/80 via-transparent to-transparent" : accent.glow}`} />
+                        <span className="absolute left-4 top-4 rounded-full border border-white/[0.16] bg-black/[0.28] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/[0.74] backdrop-blur">{String(itemIndex + 1).padStart(2, "0")}</span>
+                        <ArrowUpRight className="absolute right-4 top-4 h-4 w-4 text-white/[0.62] transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" strokeWidth={1.8} />
                       </span>
-                      <span className="relative mt-7 inline-flex items-center gap-2 text-xs font-semibold text-white/48 transition group-hover:text-white">
-                        {copy.openLabel}
-                        <ChevronRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" strokeWidth={1.8} />
+                      <span className="relative block p-5">
+                        <span className="block text-lg font-semibold leading-tight tracking-[-0.02em] text-white/90">{item.label}</span>
+                        <span className="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-white/48 transition group-hover:text-white">
+                          {copy.openLabel}
+                          <ChevronRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" strokeWidth={1.8} />
+                        </span>
                       </span>
                     </AnchorLink>
-                  ))}
+                    );
+                  })}
                 </div>
               </section>
             );

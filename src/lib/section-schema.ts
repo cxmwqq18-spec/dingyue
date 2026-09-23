@@ -1584,7 +1584,8 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
           ["mega_menu", "Mega menu"],
           ["directory", "Directory"],
           ["compact", "Compact"],
-          ["dark", "Dark showcase"]
+          ["dark", "Dark showcase"],
+          ["video_theme_grid", "Video theme grid"]
         ],
         "directory"
       )

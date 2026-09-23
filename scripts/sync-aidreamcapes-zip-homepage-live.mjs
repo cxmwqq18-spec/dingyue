@@ -5,6 +5,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
+import { argumentValue, assertDatabaseTarget, hasArgument } from "./lib/database-target.mjs";
 
 const SITE_ID = "site_aidreamcapes";
 const HOME_SLUG = "/";
@@ -23,15 +24,12 @@ const EXPECTED_SECTION_IDS = [
   "conversion_1",
 ];
 
-const apply = process.argv.includes("--apply");
+const applyLocal = hasArgument("--apply");
+const applyProduction = hasArgument("--apply-production");
+assert.equal(!(applyLocal && applyProduction), true, "Choose exactly one homepage live apply target.");
+const apply = applyLocal || applyProduction;
+const confirmation = argumentValue("--confirm") ?? "";
 const clone = (value) => JSON.parse(JSON.stringify(value));
-const assertLocalDatabase = () => {
-  const value = process.env.DATABASE_URL;
-  assert(value, "DATABASE_URL is required");
-  const hostname = new URL(value).hostname;
-  assert(["127.0.0.1", "localhost", "::1"].includes(hostname), `Refusing non-local database: ${hostname}`);
-};
-
 function validateHomepage(contentJson) {
   assert(contentJson && typeof contentJson === "object", "homepage JSON is required");
   assert.deepEqual(contentJson.sectionsOrder, EXPECTED_SECTION_IDS, "homepage section order is not the ZIP order");
@@ -53,7 +51,14 @@ function validateHomepage(contentJson) {
 
 const prisma = new PrismaClient();
 try {
-  if (apply) assertLocalDatabase();
+  if (apply) {
+    assertDatabaseTarget({
+      expectedTarget: applyProduction ? "production" : "local",
+      requireProductionConfirmation: applyProduction,
+      productionConfirmed: confirmation === "production"
+    });
+    assert.equal(confirmation, applyProduction ? "production" : SITE_ID, `Applying requires --confirm=${applyProduction ? "production" : SITE_ID}.`);
+  }
   const [site, themePage, livePage] = await Promise.all([
     prisma.site.findUnique({ where: { id: SITE_ID }, select: { id: true, slug: true, primaryDomain: true } }),
     prisma.themePage.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: HOME_SLUG } }, select: { id: true, slug: true, draftJson: true, publishedJson: true } }),
@@ -69,7 +74,7 @@ try {
   const changed = JSON.stringify(livePage.contentJson) !== JSON.stringify(nextContent);
   const report = {
     ok: true,
-    mode: apply ? "apply" : "dry-run",
+    mode: applyProduction ? "production-apply" : applyLocal ? "apply" : "dry-run",
     scope: { siteId: SITE_ID, siteSlug: site.slug, domain: site.primaryDomain, slug: HOME_SLUG },
     source: { themePageId: themePage.id, source: "ThemePage.draftJson" },
     target: { livePageId: livePage.id, target: "LivePage.contentJson" },

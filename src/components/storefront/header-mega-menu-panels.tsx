@@ -372,13 +372,15 @@ export function HeaderVideoGenerationMegaPanel({
   ctaHref,
   ctaLabel = "Open video workspace",
   variantTone = "dark",
-  spanish = false
+  spanish = false,
+  french = false
 }: {
   topics: HeaderVideoGenerationTopic[];
   ctaHref?: string;
   ctaLabel?: string;
   variantTone?: "dark" | "warm";
   spanish?: boolean;
+  french?: boolean;
 }) {
   const warm = variantTone === "warm";
   const topicsByParent = new Map<string, { slug: string; label: string; sortOrder: number; topics: HeaderVideoGenerationTopic[] }>();
@@ -386,7 +388,7 @@ export function HeaderVideoGenerationMegaPanel({
     const parentSlug = topic.parentSlug ?? "ai-video-generation";
     const current = topicsByParent.get(parentSlug) ?? {
       slug: parentSlug,
-      label: topic.parentLabel ?? (spanish ? "Generación de vídeo con IA" : "AI Video Generation"),
+      label: topic.parentLabel ?? (french ? "Création vidéo IA" : spanish ? "Generación de vídeo con IA" : "AI Video Generation"),
       sortOrder: topic.parentSortOrder ?? 999,
       topics: []
     };
@@ -407,8 +409,8 @@ export function HeaderVideoGenerationMegaPanel({
       <div className="mb-4 flex items-center justify-center gap-3 text-center">
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
         <div>
-          <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>{spanish ? "Generación de vídeo con IA" : "AI Video Generation"}</span>
-          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{spanish ? `${groups.length} categorías · ${topics.length} temas` : `${groups.length} categories · ${topics.length} themes`}</p>
+          <span className={warm ? "block text-[1.02rem] font-semibold tracking-tight text-[#1e1712]" : "block text-[1.02rem] font-semibold tracking-tight text-white"}>{french ? "Création vidéo IA" : spanish ? "Generación de vídeo con IA" : "AI Video Generation"}</span>
+          <p className={warm ? "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-[#7b6a5b]" : "mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/38"}>{french ? `${groups.length} ${groups.length === 1 ? "catégorie" : "catégories"} · ${topics.length} ${topics.length === 1 ? "thème" : "thèmes"}` : spanish ? `${groups.length} categorías · ${topics.length} temas` : `${groups.length} categories · ${topics.length} themes`}</p>
         </div>
         <span className={warm ? "h-px w-16 bg-[#e5d6c5]" : "h-px w-16 bg-white/10"} />
       </div>
@@ -439,7 +441,7 @@ export function HeaderVideoGenerationMegaPanel({
                       </Link>
                     ))}
                   </div>
-                ) : <p className={warm ? "mt-3 border-t border-[#eadfce] pt-3 text-xs text-[#9b8877]" : "mt-3 border-t border-white/10 pt-3 text-xs text-white/40"}>No themes published yet.</p>}
+                ) : <p className={warm ? "mt-3 border-t border-[#eadfce] pt-3 text-xs text-[#9b8877]" : "mt-3 border-t border-white/10 pt-3 text-xs text-white/40"}>{french ? "Aucun thème publié pour le moment." : "No themes published yet."}</p>}
               </details>
             ))}
           </div>

@@ -17,6 +17,11 @@ const SOURCE_SITE_ID = "site_dreamshoot";
 const TARGET_SITE_ID = "site_aidreamcapes_xby";
 const TARGET_DOMAIN = "aidreamcapes.eu";
 const apply = process.argv.includes("--apply") || process.argv.includes("--apply-local");
+// The homepage has a separately approved French canonical copy. Preserve it
+// during ordinary source-copy repairs; changing it requires an explicit opt-in
+// so a broad translation run cannot silently roll the homepage backwards.
+const includeHomepage = process.argv.includes("--include-homepage");
+const preserveHomepage = !includeHomepage;
 const target = process.argv.find((arg) => arg.startsWith("--target="))?.slice("--target=".length) ?? "local";
 const productionConfirmation = "--confirm=aidreamcapes-eu-source-french-production";
 const BACKUP_ROOT = path.resolve(".tmp", "aidreamcapes-eu-source-french-copy");
@@ -43,6 +48,16 @@ const COPY_SEPARATOR = "\n\n";
 
 function clone(value) {
   return value === undefined ? value : structuredClone(value);
+}
+
+function stableJson(value) {
+  if (Array.isArray(value)) return value.map(stableJson);
+  if (value && typeof value === "object") return Object.fromEntries(Object.keys(value).sort().map((key) => [key, stableJson(value[key])]));
+  return value;
+}
+
+function jsonEqual(left, right) {
+  return JSON.stringify(stableJson(left)) === JSON.stringify(stableJson(right));
 }
 
 function writeJson(filePath, value) {
@@ -75,6 +90,7 @@ function replaceTargetBrand(value) {
     .replaceAll("mydreamshoots.com", "aidreamcapes.eu")
     .replaceAll("www.mydreamshoots.com", "aidreamcapes.eu")
     .replaceAll("www.aidreamcapes.com", "aidreamcapes.eu")
+    .replace(/(?<![/.])aidreamcapes\.com\b/gi, "Aidreamcapes EU")
     .replaceAll("support@mydreamshoots.com", "support@aidreamcapes.eu")
     .replaceAll("partners@mydreamshoots.com", "partners@aidreamcapes.eu")
     .replaceAll("mes shootings de rêves", "Aidreamcapes");
@@ -300,12 +316,14 @@ async function main() {
     const themeRows = [];
     const sourceValues = [];
     for (const targetPage of targetLive) {
+      if (preserveHomepage && targetPage.slug === "/") continue;
       const mapping = mappedSource(sourceLiveBySlug, sourceThemeBySlug, targetPage.slug, "live");
       assert(mapping?.json, `${targetPage.slug}: no source live/theme payload available`);
       addPageSourceValues(sourceValues, mapping);
       liveRows.push({ targetPage, mapping, contentJson: rebuildPageJson(mapping.json, targetPage.contentJson, targetPage.slug, {}) });
     }
     for (const targetPage of targetTheme) {
+      if (preserveHomepage && targetPage.slug === "/") continue;
       const mapping = mappedSource(sourceLiveBySlug, sourceThemeBySlug, targetPage.slug, "theme");
       assert(mapping?.json, `${targetPage.slug}: no source theme/live payload available`);
       addPageSourceValues(sourceValues, mapping);
@@ -338,15 +356,18 @@ async function main() {
       row.draftJson = rebuildPageJson(row.mapping.draftJson ?? row.mapping.json, row.targetPage.draftJson, row.targetPage.slug, cache);
       row.publishedJson = rebuildPageJson(row.mapping.json, row.targetPage.publishedJson, row.targetPage.slug, cache);
     }
-    const nextSettings = {
-      draftJson: translateSourceValue(sourceSettings.draftJson, targetSettings.draftJson, "settings", cache),
-      publishedJson: translateSourceValue(sourceSettings.publishedJson, targetSettings.publishedJson, "settings", cache)
-    };
+    const nextSettings = preserveHomepage
+      ? { draftJson: targetSettings.draftJson, publishedJson: targetSettings.publishedJson }
+      : {
+          draftJson: translateSourceValue(sourceSettings.draftJson, targetSettings.draftJson, "settings", cache),
+          publishedJson: translateSourceValue(sourceSettings.publishedJson, targetSettings.publishedJson, "settings", cache)
+        };
     const nextProfile = {
       draftJson: translateSourceValue(sourceProfile.draftJson, targetProfile.draftJson, "profile", cache),
       publishedJson: translateSourceValue(sourceProfile.publishedJson, targetProfile.publishedJson, "profile", cache)
     };
     const nextSiteThemes = targetSiteThemes.map((targetTheme) => {
+      if (preserveHomepage) return { targetTheme };
       const sourceTheme = sourceThemeByKey.get(targetTheme.themeKey) ?? sourceSiteThemes.find((candidate) => candidate.themeId === targetTheme.themeId);
       if (!sourceTheme) return { targetTheme };
       return {
@@ -483,6 +504,8 @@ async function main() {
     for (const sourceThemeRow of sourceVideoThemes) {
       const targetThemeRow = targetVideoThemeBySlug.get(sourceThemeRow.slug);
       assert(targetThemeRow, `missing target video theme for ${sourceThemeRow.slug}`);
+      const normalizedVideoSlug = String(sourceThemeRow.slug).replace(/^\/+/, "");
+      const hasTargetPublicRoute = targetLive.some((page) => page.slug === `/ai-video-generation/${normalizedVideoSlug}` || page.slug === `/ai-save-the-date/${normalizedVideoSlug}`);
       catalog.videoThemes.push({
         targetThemeRow,
         data: {
@@ -490,7 +513,7 @@ async function main() {
           name: normalizeFrench(cache[sourceThemeRow.name] ?? sourceThemeRow.name),
           headline: normalizeFrench(cache[sourceThemeRow.headline] ?? sourceThemeRow.headline),
           description: normalizeFrench(cache[sourceThemeRow.description] ?? sourceThemeRow.description),
-          status: sourceThemeRow.status,
+          status: ["inactive", "archived"].includes(targetThemeRow.status) && !hasTargetPublicRoute ? targetThemeRow.status : sourceThemeRow.status,
           creditCost: sourceThemeRow.creditCost,
           durationSeconds: sourceThemeRow.durationSeconds,
           maxFrames: sourceThemeRow.maxFrames,
@@ -522,10 +545,10 @@ async function main() {
       sourceThemePages: sourceTheme.length,
       targetThemePages: targetTheme.length,
       translatedSourceStrings: Object.keys(cache).length,
-      changedLivePages: liveRows.filter((row) => JSON.stringify(row.targetPage.contentJson) !== JSON.stringify(row.contentJson)).length,
-      changedThemePages: themeRows.filter((row) => JSON.stringify(row.targetPage.draftJson) !== JSON.stringify(row.draftJson) || JSON.stringify(row.targetPage.publishedJson) !== JSON.stringify(row.publishedJson)).length,
-      changedSettings: JSON.stringify(sourceSettings.draftJson) !== JSON.stringify(nextSettings.draftJson) || JSON.stringify(sourceSettings.publishedJson) !== JSON.stringify(nextSettings.publishedJson),
-      changedProfile: JSON.stringify(sourceProfile.draftJson) !== JSON.stringify(nextProfile.draftJson) || JSON.stringify(sourceProfile.publishedJson) !== JSON.stringify(nextProfile.publishedJson),
+      changedLivePages: liveRows.filter((row) => !jsonEqual(row.targetPage.contentJson, row.contentJson)).length,
+      changedThemePages: themeRows.filter((row) => !jsonEqual(row.targetPage.draftJson, row.draftJson) || !jsonEqual(row.targetPage.publishedJson, row.publishedJson)).length,
+      changedSettings: !jsonEqual(targetSettings.draftJson, nextSettings.draftJson) || !jsonEqual(targetSettings.publishedJson, nextSettings.publishedJson),
+      changedProfile: !jsonEqual(targetProfile.draftJson, nextProfile.draftJson) || !jsonEqual(targetProfile.publishedJson, nextProfile.publishedJson),
       changedSiteThemes: nextSiteThemes.filter((row) => row.name !== undefined).length,
       sourceProducts: sourceProducts.length,
       sourcePackCategories: sourcePackCategories.length,
@@ -536,6 +559,7 @@ async function main() {
       sourceVideoThemes: sourceVideoThemes.length,
       sourceVideoExamples: sourceVideoExamples.length,
       matchedCatalogRows: Object.fromEntries(Object.entries(catalog).map(([key, rows]) => [key, rows.length])),
+      homepagePreserved: preserveHomepage,
       translationService: "Google Translate Chrome endpoint"
     };
     if (apply) {

@@ -3,7 +3,7 @@ import path from "node:path";
 
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { projectPublicCreativePacks, projectPublicPricingOffers } from "@/lib/storefront-context/core";
-import { storefrontBaseUrl, storefrontOrigin } from "@/lib/storefront-context/seo-projection";
+import { canonicalAbsoluteUrlForSite, canonicalOriginForSite, storefrontBaseUrl } from "@/lib/storefront-context/seo-projection";
 import { aiVideoTopicLandingContentFromSection } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection } from "@/lib/talking-photo-content";
 import { imageThemeDetailContentFromSection } from "@/lib/aidreamcapes-image-theme-content";
@@ -13,6 +13,7 @@ import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { storefrontOriginalLogoUrl } from "@/lib/storefront-brand-assets";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import {
   AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY,
@@ -340,9 +341,7 @@ function withStorefrontPublicWatermarkCacheVersion(value: string): string {
 
 function absoluteUrl(site: Site, routeMode: "host" | "path", pathOrUrl = "/"): string {
   const value = withStorefrontPublicWatermarkCacheVersion(cleanText(pathOrUrl, "/"));
-  if (value.startsWith("http://") || value.startsWith("https://")) return value;
-  const base = storefrontOrigin(site).replace(/\/$/, "");
-  return `${base}${value.startsWith("/") ? value : `/${value}`}`;
+  return canonicalAbsoluteUrlForSite(site, value) ?? `${canonicalOriginForSite(site)}/`;
 }
 
 type StorefrontCompanyProfile = {
@@ -446,13 +445,25 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
   const profile = storefrontCompanyProfile(context);
   const address = companyAddressSchema(profile);
   const identifiers = companyIdentifiers(profile);
-  const sameAs = (context?.profile?.identity.sameAs ?? []).filter((url) => /^https?:\/\//i.test(url));
+  const profileSameAs = (context?.profile?.identity.sameAs ?? []).filter((url) => /^https?:\/\//i.test(url));
+  const footerSettings = context?.settings?.globalSections?.footer?.settings as Record<string, unknown> | undefined;
+  const euFooterSocialKeys = ["instagramUrl", "facebookUrl", "pinterestUrl", "youtubeUrl", "twitterUrl", "xUrl", "tiktokUrl"];
+  const footerSameAs = site.id === "site_aidreamcapes_xby"
+    ? euFooterSocialKeys
+      .map((key) => footerSettings?.[key])
+      .filter((value): value is string => typeof value === "string" && /^https?:\/\//i.test(value.trim()))
+      .map((value) => value.trim())
+    : [];
+  const sameAs = Array.from(new Set([...profileSameAs, ...footerSameAs]));
   const isAboutPage = pagePath === "/about-us" && isMydreamshootsComSite(site);
-  const logo = isPrimaryMyDreamShootsSite(site)
-    ? absoluteUrl(site, routeMode, "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
-    : hasAidreamshootsBranding(site)
-      ? absoluteUrl(site, routeMode, "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a")
-      : undefined;
+  const originalLogo = storefrontOriginalLogoUrl(site);
+  const logo = originalLogo
+    ? absoluteUrl(site, routeMode, originalLogo)
+    : isPrimaryMyDreamShootsSite(site)
+      ? absoluteUrl(site, routeMode, "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
+      : hasAidreamshootsBranding(site)
+        ? absoluteUrl(site, routeMode, "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260919original")
+        : undefined;
   return {
     "@type": "Organization",
     "@id": `${storefrontBaseUrl(site, routeMode)}#organization`,
@@ -468,6 +479,15 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
     ...(isAboutPage ? { founder: { "@type": "Person", name: "NARUEBET NAKPHONG" } } : {}),
     ...(profile.email ? { email: profile.email } : {}),
     ...(profile.phone ? { telephone: profile.phone } : {}),
+    ...(profile.email || profile.phone ? {
+      contactPoint: {
+        "@type": "ContactPoint",
+        ...(profile.email ? { email: profile.email } : {}),
+        ...(profile.phone ? { telephone: profile.phone } : {}),
+        contactType: "customer support",
+        availableLanguage: site.id === "site_aidreamcapes_xby" ? ["fr-FR", "en"] : ["en"]
+      }
+    } : {}),
     ...(address ? { address } : {}),
     ...(profile.taxId ? { taxID: profile.taxId } : {}),
     ...(identifiers.length ? { identifier: identifiers } : {}),
@@ -733,15 +753,19 @@ function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string,
       "@type": "Organization",
       name: siteBrandName(site),
       url: storefrontBaseUrl(site, routeMode),
-      ...(isPrimaryMyDreamShootsSite(site) || hasAidreamshootsBranding(site) ? {
+      ...(storefrontOriginalLogoUrl(site) || isPrimaryMyDreamShootsSite(site) || hasAidreamshootsBranding(site) ? {
         logo: {
           "@type": "ImageObject",
-          url: absoluteUrl(site, routeMode, hasAidreamshootsBranding(site)
-            ? "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a"
-            : "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b"),
-          contentUrl: absoluteUrl(site, routeMode, hasAidreamshootsBranding(site)
-            ? "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260717a"
-            : "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
+          url: storefrontOriginalLogoUrl(site)
+            ? absoluteUrl(site, routeMode, storefrontOriginalLogoUrl(site))
+            : absoluteUrl(site, routeMode, hasAidreamshootsBranding(site)
+              ? "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260919original"
+              : "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b"),
+          contentUrl: storefrontOriginalLogoUrl(site)
+            ? absoluteUrl(site, routeMode, storefrontOriginalLogoUrl(site))
+            : absoluteUrl(site, routeMode, hasAidreamshootsBranding(site)
+              ? "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260919original"
+              : "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260621b")
         }
       } : {})
     },
@@ -1111,6 +1135,50 @@ function packProductSchema({
   };
 }
 
+// www.mydreamshoots.com theme packs are redeemed with credits, not sold as fiat SKUs, so the
+// pack page no longer emits Product. These are the image fields Product used to carry; they move
+// onto the page node so image structured data is not lost with it.
+function packPageImagery({
+  site,
+  routeMode,
+  pagePath,
+  pack,
+  description
+}: {
+  site: Site;
+  routeMode: "host" | "path";
+  pagePath: string;
+  pack: CreativePack;
+  description: string;
+}): JsonLdNode | undefined {
+  const imagePaths = packImagePaths(pack);
+  const image = imagePaths[0];
+  if (!image) return undefined;
+  const subjectImage = subjectImageForPack(pack) || image;
+  const url = absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, pagePath));
+  const subjectImageUrl = absoluteUrl(site, routeMode, subjectImage);
+  const primaryImageUrl = absoluteUrl(site, routeMode, image);
+  const packName = cleanSchemaText(site, pack.name, "MyDreamShoots AI photo package");
+  const packDescription = cleanSchemaText(site, pack.description, description);
+  const subjectImageDimensions = imageDimensions(subjectImage);
+  return {
+    image: imagePaths.map((path) => absoluteUrl(site, routeMode, path)),
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      "@id": `${url}#image`,
+      name: `${packName} preview image`,
+      url: subjectImageUrl,
+      contentUrl: subjectImageUrl,
+      thumbnailUrl: primaryImageUrl,
+      description: cleanSchemaText(site, `Example preview image for ${packName}`, packDescription),
+      caption: `${packName} AI generated preview`,
+      encodingFormat: mediaEncodingFormat(subjectImage) || mediaEncodingFormat(image),
+      representativeOfPage: true,
+      ...(subjectImageDimensions ? subjectImageDimensions : {})
+    }
+  };
+}
+
 function iso8601Duration(seconds: number): string {
   const totalSeconds = Math.max(1, Math.floor(seconds));
   const hours = Math.floor(totalSeconds / 3600);
@@ -1298,7 +1366,7 @@ function aidreamcapesImageThemeDetailSchema(input: JsonLdInput, title: string, d
   const section = sectionOfType(input.pageJson, "ai_image_theme_landing");
   const content = section ? imageThemeDetailContentFromSection(section) : undefined;
   if (!content) return [];
-  const configuredCanonical = cleanText(content?.seo.canonical);
+  const configuredCanonical = canonicalAbsoluteUrlForSite(input.site, cleanText(content?.seo.canonical));
   const url = configuredCanonical && /^https?:\/\//i.test(configuredCanonical)
     ? configuredCanonical
     : absoluteUrl(input.site, input.routeMode, path);
@@ -1387,7 +1455,8 @@ function websiteSchema(site: Site, routeMode: "host" | "path"): JsonLdNode {
     "@type": "WebSite",
     "@id": `${storefrontBaseUrl(site, routeMode)}#website`,
     name: siteBrandName(site),
-    url: storefrontBaseUrl(site, routeMode)
+    url: storefrontBaseUrl(site, routeMode),
+    ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {})
   };
 }
 
@@ -1409,7 +1478,8 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
 }
 
 export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
-  const routeInput: JsonLdInput = input.context
+  const isImageThemeRoute = isAidreamcapesImageThemePath(input.site.slug, input.pagePath);
+  const routeInput: JsonLdInput = input.context && !isImageThemeRoute
     ? { ...input, pagePath: input.context.seo.canonicalPath }
     : input;
   const resolvedInput: JsonLdInput = isAidreamcapesImageThemePath(routeInput.site.slug, routeInput.pagePath)
@@ -1513,7 +1583,11 @@ export function buildToolDirectoryJsonLd({
       name: siteName,
       url: storefrontBaseUrl(site, routeMode)
     },
-    ...(!isAdsTestingPage && !isAidreamcapesBrandCreator ? {
+    // www.mydreamshoots.com tool/theme pages are redeemed with credits, not sold as fiat SKUs,
+    // so they must not carry an Offer at all. An Offer with no price is invalid, and a price here
+    // would contradict the page, which shows no fiat amount. Fiat pricing stays on /pricing.
+    // Other storefronts keep their existing Offer unchanged.
+    ...(!isAdsTestingPage && !isAidreamcapesBrandCreator && !isMydreamshootsComSite(site) ? {
       offers: {
         "@type": "Offer",
         availability: toolOfferAvailability(site, pagePath, context),
@@ -1780,6 +1854,12 @@ export function buildCollectionDirectoryJsonLd({
           }
         }]
       : [];
+  // Live www.mydreamshoots.com only: drop the credit-redeemed pack Product (it has no offers,
+  // review, or aggregateRating and cannot truthfully get one) and keep its imagery on the page node.
+  const dropPackProduct = isMydreamshootsComSite(site);
+  const packImagery = dropPackProduct && schemaPacks.length === 1
+    ? packPageImagery({ site, routeMode, pagePath, pack: schemaPacks[0], description: item.description })
+    : undefined;
   const graph: JsonLdNode[] = [
     breadcrumbs(site, routeMode, pagePath, item.label),
     {
@@ -1789,7 +1869,8 @@ export function buildCollectionDirectoryJsonLd({
       url,
       ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : isSpanishXbySite(site) || frenchEngagementPage ? { inLanguage: "es-ES" } : {}),
       isPartOf: { "@id": `${storefrontBaseUrl(site, routeMode)}#website` },
-      publisher: { "@type": "Organization", name: siteName, url: storefrontBaseUrl(site, routeMode) }
+      publisher: { "@type": "Organization", name: siteName, url: storefrontBaseUrl(site, routeMode) },
+      ...(packImagery ?? {})
     },
     ...(itemListElement.length ? [{
       "@type": "ItemList",
@@ -1805,7 +1886,11 @@ export function buildCollectionDirectoryJsonLd({
         .map(([question, answer]) => faqQuestionNode(site, question, answer))
         .filter(Boolean)
     }] : []),
-    ...(schemaPacks.length === 1
+    // AIdreamshoots packs are credit-based creative packs, not standalone
+    // products with a persisted monetary offer. Do not emit Product markup
+    // without a truthful Offer price/currency; the CollectionPage, Service
+    // and ItemList nodes above describe the public page accurately.
+    ...(site.id !== "site_mydreamshoots_xby" && schemaPacks.length === 1 && !dropPackProduct
       ? [packProductSchema({
           site,
           routeMode,

@@ -26,7 +26,7 @@ const sceneLabels = [
   "picnic botánico",
   "restaurante retro",
   "librería luminosa",
-  "andén de tren",
+  "escena urbana",
   "estudio de cerámica",
   "azotea lluviosa",
   "cola del cine",
@@ -55,15 +55,16 @@ function content(input: Omit<AidreamshootsXbyThemeContent, "title" | "descriptio
       : input.label;
   const titleCandidate = `${titleTerm} con IA para fotos | ${brand}`;
   const title = titleCandidate.length <= 60 ? titleCandidate : `${titleTerm} con IA | ${brand}`;
-  const longDescription = `Crea ${input.seoTerm} con IA a partir de fotos propias: explora escenas, revisa créditos y guarda una galería privada lista para descargar en ${brand}.`;
+  const seoTerm = input.seoTerm.replace(/\s+con IA$/i, "").trim();
+  const longDescription = `Crea ${seoTerm} con IA a partir de fotos propias: explora escenas, revisa créditos y guarda una galería privada lista para descargar en ${brand}.`;
   const description = longDescription.length <= 160
     ? longDescription
-    : `Crea ${input.seoTerm} con IA a partir de fotos propias: compara escenas, revisa créditos y guarda tus resultados en ${brand}.`;
+    : `Crea ${seoTerm} con IA a partir de fotos propias: compara escenas, revisa créditos y guarda tus resultados en ${brand}.`;
   return {
     ...input,
     title,
     description,
-    keywords: `${input.seoTerm} con IA, fotos ${input.label.toLowerCase()}, paquete de fotos IA, ${brand}`,
+    keywords: `${seoTerm} con IA, fotos ${input.label.toLowerCase()}, paquete de fotos IA, ${brand}`,
     ctaHref: "/app/create",
     faqItems: faqItems(input.label, input.faqAnswer)
   };
@@ -345,7 +346,7 @@ const themes: Record<string, AidreamshootsXbyThemeContent> = {
     details: ["Define si necesitas una imagen con sujeto lateral, espacio superior o composición centrada.", "Usa únicamente productos, logotipos y personas con permiso para aparecer en el diseño.", "Revisa el área libre, el contraste y el recorte en el formato donde publicarás."],
     useCases: ["Posts sociales", "Portadas de creador", "Tarjetas promocionales", "Moodboards de contenido"],
     workflow: ["Elige el canal y el formato.", "Sube referencias autorizadas.", "Compara el espacio de composición.", "Descarga la base más útil."],
-    internalLinks: [{ label: "Avatar profesional", href: "/collections/avatar" }, { label: "Editar con instrucciones", href: "/collections/edit-by-prompt" }, { label: "Estilo urbano", href: "/collections/urban" }],
+    internalLinks: [{ label: "Avatar profesional", href: "/collections/avatar" }, { label: "Editar con instrucciones", href: "/collections/edit-by-prompt" }, { label: "Estilo urbano", href: "/ai-image-generation/urbano" }],
     ctaLabel: "Crear tarjetas para redes",
     altSubject: "composición visual para tarjeta de redes sociales con espacio para diseño",
     faqAnswer: "Crea imágenes para redes con retratos, productos y espacio negativo pensado para posts, portadas y tarjetas promocionales."
@@ -401,7 +402,7 @@ const themes: Record<string, AidreamshootsXbyThemeContent> = {
     details: ["Usa fotos donde se vean rostro, ropa y postura para conservar una silueta creíble.", "Elige una dirección de moda minimalista, deportiva o editorial sin copiar marcas visibles.", "Comprueba el fondo y los textos urbanos antes de compartir la imagen."],
     useCases: ["Moda urbana", "Perfiles de creador", "Campañas personales", "Contenido social"],
     workflow: ["Carga fotos autorizadas.", "Elige una ruta urbana.", "Compara encuadres y ropa.", "Descarga las poses más naturales."],
-    internalLinks: [{ label: "Urbano", href: "/collections/urban" }, { label: "Cyberpunk", href: "/collections/cyberpunk" }, { label: "Vida nocturna", href: "/collections/nightlife" }],
+    internalLinks: [{ label: "Urbano", href: "/ai-image-generation/urbano" }, { label: "Cyberpunk", href: "/collections/cyberpunk" }, { label: "Vida nocturna", href: "/collections/nightlife" }],
     ctaLabel: "Crear fotos de estilo callejero",
     altSubject: "retrato de estilo callejero con moda urbana y arquitectura de ciudad",
     faqAnswer: "Crea fotos de estilo callejero con moda cotidiana, arquitectura urbana, movimiento natural y diferentes horas de luz."
@@ -429,7 +430,7 @@ const themes: Record<string, AidreamshootsXbyThemeContent> = {
     details: ["Usa fotos propias o autorizadas de las personas que aparecerán en la escena.", "Describe colores y ambiente de afición sin pedir logotipos oficiales o una relación con un club.", "Revisa camisetas, textos, manos y rostros antes de compartir."],
     useCases: ["Recuerdos de partido", "Fotos de afición", "Contenido deportivo", "Retratos de grupo"],
     workflow: ["Selecciona fotos del aficionado o grupo.", "Define la energía del partido.", "Revisa créditos y resultados.", "Elige las escenas más creíbles."],
-    internalLinks: [{ label: "Fiestas y celebraciones", href: "/collections/holiday" }, { label: "Estilo callejero", href: "/collections/street-style" }, { label: "Urbano", href: "/collections/urban" }],
+    internalLinks: [{ label: "Fiestas y celebraciones", href: "/collections/holiday" }, { label: "Estilo callejero", href: "/collections/street-style" }, { label: "Urbano", href: "/ai-image-generation/urbano" }],
     ctaLabel: "Crear fotos de fútbol",
     altSubject: "aficionado adulto de fútbol en un ambiente de estadio y día de partido",
     faqAnswer: "Crea fotos de fútbol con ambiente de estadio, reuniones de afición y retratos de partido sin añadir marcas oficiales no autorizadas."
@@ -597,7 +598,7 @@ const themes: Record<string, AidreamshootsXbyThemeContent> = {
     details: ["Usa fotos con rostro y postura claros para integrar a la persona en el nuevo destino.", "Elige entre costa, montaña, casco urbano, tren o interior acogedor según la historia del viaje.", "Revisa arquitectura, clima, manos y elementos de texto antes de compartir."],
     useCases: ["Álbumes de viaje", "Perfiles de creador", "Moodboards de destino", "Recuerdos de escapada"],
     workflow: ["Selecciona fotos propias.", "Define el destino visual.", "Compara escenas y luz.", "Descarga los recuerdos coherentes."],
-    internalLinks: [{ label: "Estilo de vida premium", href: "/collections/rich-lifestyle" }, { label: "Urbano", href: "/collections/urban" }, { label: "Fotos de compromiso", href: "/collections/engagement-photo" }],
+    internalLinks: [{ label: "Estilo de vida premium", href: "/collections/rich-lifestyle" }, { label: "Urbano", href: "/ai-image-generation/urbano" }, { label: "Fotos de compromiso", href: "/collections/engagement-photo" }],
     ctaLabel: "Crear fotos de viajes",
     altSubject: "retrato de viaje en un destino con paisaje y contexto visible",
     faqAnswer: "Crea fotos de viajes en costa, montaña, ciudad, tren y otros destinos para álbumes, moodboards y contenido de creador."
@@ -611,7 +612,7 @@ const themes: Record<string, AidreamshootsXbyThemeContent> = {
     details: ["Sube fotos autorizadas de las personas que quieras incluir en el ambiente.", "Elige una noche urbana, una terraza, una fiesta íntima o un retrato con luces desenfocadas.", "Comprueba que no aparezcan marcas, textos o personas de fondo que no deban compartirse."],
     useCases: ["Perfiles nocturnos", "Contenido social", "Recuerdos de fiesta", "Retratos de creador"],
     workflow: ["Selecciona referencias claras.", "Define el tono de la noche.", "Revisa cantidad y créditos.", "Aprueba cada retrato antes de compartir."],
-    internalLinks: [{ label: "Fiestas y celebraciones", href: "/collections/holiday" }, { label: "Noir cinematográfico", href: "/collections/mafia" }, { label: "Urbano", href: "/collections/urban" }],
+    internalLinks: [{ label: "Fiestas y celebraciones", href: "/collections/holiday" }, { label: "Noir cinematográfico", href: "/collections/mafia" }, { label: "Urbano", href: "/ai-image-generation/urbano" }],
     ctaLabel: "Crear fotos de vida nocturna",
     altSubject: "retrato de vida nocturna con luces de ciudad y ambiente social",
     faqAnswer: "Crea fotos nocturnas con luces urbanas, terrazas, retratos sociales y ambientes de fiesta para perfiles y recuerdos."

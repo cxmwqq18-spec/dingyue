@@ -28,7 +28,7 @@ import { isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-pub
 import { customerSessionCookie } from "@/lib/session";
 import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
-import { isAidreamcapesImageThemePath, isRetiredAidreamcapesImageToolPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { aidreamcapesImageThemePathForRequest, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
@@ -445,17 +445,18 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const requestedPath = `/${path.join("/")}`;
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
+  const imageThemePath = aidreamcapesImageThemePathForRequest(hostSiteSlug, requestedPath);
   if (isAidreamshootsPublicSlug(hostSiteSlug) && aidreamshootsLegacyVideoSaveTheDatePath(requestedPath)) return {};
-  if (isRetiredAidreamcapesImageToolPath(hostSiteSlug, requestedPath)) return {};
-  if (isAidreamcapesImageThemePath(hostSiteSlug, requestedPath)) {
-    const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, requestedPath);
+  if (isRetiredAidreamcapesPublicPath(hostSiteSlug, requestedPath)) return {};
+  if (imageThemePath) {
+    const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, imageThemePath);
     const detailSite = (detailState ? getSiteByHostCandidatesFromState(detailState, hostCandidates) : undefined) ?? detailState?.sites[0];
-    const detailPage = detailSite ? findPage(detailSite, requestedPath) : undefined;
+    const detailPage = detailSite ? findPage(detailSite, imageThemePath) : undefined;
     return detailState && detailSite && detailPage && imageThemeDetailContentFromPage(detailPage)
       ? metadataForPublishedStorefrontPage({
           site: detailSite,
           page: detailPage,
-          path: requestedPath,
+          path: imageThemePath,
           products: detailState.products,
           creativePacks: detailState.creativePacks,
           snapshot: createPublishedSiteSnapshot(detailState, detailSite, { source: "platform-state" })
@@ -609,12 +610,15 @@ export default async function HostStorefrontCatchAllPage({
   }
   const slug = `/${path.join("/")}`;
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
+  if (cleanHost(host) === "aidreamshoots.eu" && slug === "/ai-image-generation/urban") {
+    permanentRedirect("/ai-image-generation/urbano");
+  }
   if (slug === "/404") notFound();
   const aidreamshootsLegacySaveTheDateTarget = isAidreamshootsPublicSlug(hostSiteSlug)
     ? aidreamshootsLegacyVideoSaveTheDatePath(slug)
     : undefined;
   if (aidreamshootsLegacySaveTheDateTarget) permanentRedirect(aidreamshootsLegacySaveTheDateTarget);
-  if (isRetiredAidreamcapesImageToolPath(hostSiteSlug, slug)) notFound();
+  if (isRetiredAidreamcapesPublicPath(hostSiteSlug, slug)) notFound();
   if (hostSiteSlug === "aidreamcapes") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);
     if (legacySaveTheDateTarget) permanentRedirect(legacySaveTheDateTarget);
@@ -676,15 +680,16 @@ export default async function HostStorefrontCatchAllPage({
     if (!siteSlug) notFound();
     return renderCustomerWorkspacePageBySlug({ siteSlug, slug, query, routeMode: "host" });
   }
-  if (isAidreamcapesImageThemePath(hostSiteSlug, slug)) {
-    const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, slug);
+  const imageThemePath = aidreamcapesImageThemePathForRequest(hostSiteSlug, slug);
+  if (imageThemePath) {
+    const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, imageThemePath);
     const detailSite = (detailState ? getSiteByHostCandidatesFromState(detailState, hostCandidates) : undefined) ?? detailState?.sites[0];
-    const detailPage = detailSite ? findPage(detailSite, slug) : undefined;
+    const detailPage = detailSite ? findPage(detailSite, imageThemePath) : undefined;
     if (!detailState || !detailSite || !detailPage || !imageThemeDetailContentFromPage(detailPage)) notFound();
     return renderStorefrontPage({
       site: detailSite,
-      slug,
-      publicPath: slug,
+      slug: imageThemePath,
+      publicPath: imageThemePath,
       query: searchParams ? await searchParams : {},
       routeMode: "host",
       state: detailState,
@@ -732,6 +737,9 @@ export default async function HostStorefrontCatchAllPage({
   if (firstSegment === "tools" && path[1] && (isMydreamshootsSite(site) || isAidreamshootsStorefrontSite(site)) && !isAidreamcapesSite(site)) {
     notFound();
   }
+  if ((isAidreamshootsStorefrontSite(site) || isAidreamshootsPublicSlug(hostSiteSlug)) && slug === "/ai-image-generation/urban") {
+    permanentRedirect(publicSiteUrl(site, "/ai-image-generation/urbano"));
+  }
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
   const publishedDisposition = resolvePublishedRouteDisposition(snapshot, slug);
   if (publishedDisposition.kind === "redirect" && publishedDisposition.targetPath) {
@@ -749,8 +757,8 @@ export default async function HostStorefrontCatchAllPage({
     const query = searchParams ? await searchParams : {};
     redirect(safeHostCustomerNextPath(query.next));
   }
-  if (slug === "/help" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/faq");
-  if (slug === "/how-it-works" && (isMydreamshootsSite(site) || isAidreamcapesSite(site))) redirect("/workflow");
+  if (slug === "/help" && isAidreamshootsStorefrontSite(site)) permanentRedirect("/faq");
+  if (slug === "/how-it-works" && isAidreamshootsStorefrontSite(site)) permanentRedirect("/workflow");
   if (firstSegment === "tools" && path[1] && (isMydreamshootsSite(site) || isAidreamshootsPublicSlug(hostSiteSlug)) && !isAidreamcapesSite(site)) notFound();
   const routeQuery = searchParams ? await searchParams : {};
   redirectLegacyBlogArticle(site, slug, routeQuery);

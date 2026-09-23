@@ -40,6 +40,7 @@ import type {
   AiProviderConfig,
   AiWorkflowConfig,
   AiWorkflowStep,
+  AidreamcapesZipNavigation,
   AuditLogEntry,
   CreativePack,
   CreativePackCategory,
@@ -486,7 +487,8 @@ const collectionDetailSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
-      contentJson: true
+      contentJson: true,
+      updatedAt: true
     }
   },
   connect: {
@@ -534,7 +536,8 @@ const publicRuntimeSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
-      contentJson: true
+      contentJson: true,
+      updatedAt: true
     }
   },
   connect: {
@@ -583,7 +586,8 @@ const customerRuntimeSiteSelect = {
       templateKey: true,
       slug: true,
       title: true,
-      contentJson: true
+      contentJson: true,
+      updatedAt: true
     }
   },
   settings: {
@@ -701,6 +705,7 @@ const collectionDetailCreativePackSelect = {
   galleryImages: true,
   galleryImageAlts: true,
   createdAt: true,
+  updatedAt: true,
   categoryRecord: {
     select: {
       id: true,
@@ -755,6 +760,7 @@ const publicRuntimeCreativePackSelect = {
   galleryImages: true,
   galleryImageAlts: true,
   createdAt: true,
+  updatedAt: true,
   categoryRecord: collectionDetailCreativePackSelect.categoryRecord
 } satisfies Prisma.CreativePackSelect;
 type PublicRuntimeCreativePackRecord = Prisma.CreativePackGetPayload<{ select: typeof publicRuntimeCreativePackSelect }>;
@@ -1308,6 +1314,10 @@ function fallbackCustomerWorkspaceSiteShell(slug: string): CustomerWorkspaceBoot
     primaryDomain: site.primaryDomain,
     branding: cloneJson(site.branding) as Site["branding"]
   };
+}
+
+function fallbackCustomerWorkspaceAidreamcapesNavigation(slug: string): AidreamcapesZipNavigation | undefined {
+  return fallbackSiteBySlug(slug)?.themeSettings?.publishedJson.aidreamcapesZipNavigation;
 }
 
 function fallbackCustomerWorkspaceSiteAiApps(siteId: string): SiteAiApp[] {
@@ -2585,6 +2595,7 @@ export async function getSiteIdBySlugRelational(slug: string): Promise<string | 
 
 export type CustomerWorkspaceBootstrapRelational = {
   site: Pick<Site, "id" | "name" | "slug" | "branding" | "primaryDomain">;
+  aidreamcapesZipNavigation?: AidreamcapesZipNavigation;
   siteAiApps: SiteAiApp[];
   creativePackCategories: CreativePackCategory[];
   creativePacks: CreativePack[];
@@ -2735,6 +2746,7 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
         primaryDomain: site.primaryDomain,
         branding: site.branding
       },
+      aidreamcapesZipNavigation: liveSnapshot?.themeSettings?.aidreamcapesZipNavigation ?? fallbackCustomerWorkspaceAidreamcapesNavigation(slug),
       siteAiApps,
       creativePackCategories: navigationData.creativePackCategories.map((category) => watermarkedCreativePackCategoryForWorkspace(category) ?? category),
       creativePacks: navigationData.creativePacks.map(watermarkedCreativePackForWorkspace),

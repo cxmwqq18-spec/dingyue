@@ -2,12 +2,13 @@ import "server-only";
 
 import { readStorefrontPublicRuntimeStateByHostFromDatabase, readStorefrontPublicRuntimeStateForSiteFromDatabase } from "@/lib/storefront-state";
 import type { CreativePack, CreativePackCategory, MediaAsset, PlatformState, Product, PublishedLeafRouteProjection, PublishedRouteProjection, PublishedStandardRouteProjection, PublishedVideoTopicRouteProjection, Site, StorefrontProfileJson, ThemePage, VideoTheme } from "@/lib/types";
-import { isMydreamshootsPublicVideoGenerationSlug, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
+import { isMydreamshootsPublicVideoGenerationSlug, publicCollectionPathForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { legacyPublicPathTarget } from "@/lib/site-route-canonical";
 import { buildPublicationSnapshot } from "@/lib/stores/theme-store";
 import { projectPublicPricingOffers, resolveStorefrontContext } from "./core";
 import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
+import { isAidreamshootsStorefrontSite } from "@/lib/spanish-storefronts";
 import { canonicalPathForPage, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 import { canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
@@ -447,6 +448,12 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
     const sourcePage = snapshot.pages.find((candidate) => normalizePath(candidate.slug) === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH && candidate.pageType === "ai_tool");
     if (sourcePage) return { kind: "render", status: 200, path: requestedPath, pageId: sourcePage.id };
     return { kind: "not_found", status: 404, path: requestedPath };
+  }
+  if (isAidreamshootsStorefrontSite(snapshot.site) && requestedPath === "/ai-image-generation/urban") {
+    const canonicalPath = publicCollectionPathForSite(snapshot.site, "urbano");
+    if (canonicalPath !== requestedPath && snapshot.publishedPaths.includes(canonicalPath)) {
+      return resolvePublishedRedirectDisposition(snapshot, requestedPath, canonicalPath, 301);
+    }
   }
   // Resolve legacy Save the Date aliases before direct page lookup. Otherwise
   // an old ThemePage row can render at 200 and split the page's SEO identity.

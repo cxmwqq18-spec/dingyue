@@ -394,6 +394,13 @@ export function photoPackageLabel(value: string | undefined): string {
 function photoPackageMenuLabel(value: string | undefined): string {
   const normalized = (value ?? "").replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim();
   if (!normalized) return photoPackageLabel(value);
+  // Preserve already-localized labels. The old ASCII word-boundary rule
+  // treated the ASCII letters inside accented French words as new word
+  // starts (for example, "Générateur" became "GéNéRateur") and also
+  // title-cased French connectors such as "de".
+  if (/[À-ÖØ-öø-ÿ]/.test(normalized) || /\b(?:de|des|du|la|le|les|et|pour|avec|à|d')\b/i.test(normalized)) {
+    return normalized;
+  }
   return normalized.replace(/\b[a-z]/g, (letter) => letter.toUpperCase());
 }
 

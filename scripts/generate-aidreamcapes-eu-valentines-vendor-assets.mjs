@@ -2,8 +2,8 @@
 import "./load-runtime-env.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
-import sharp from "sharp";
 import { PrismaClient } from "@prisma/client";
+import { writeProviderImageBundle } from "./lib/provider-image-output.mjs";
 
 const SITE_ID = "site_aidreamcapes_xby";
 const PROVIDER_LABEL = "buming-image";
@@ -11,7 +11,6 @@ const MODEL = "gpt-image-2";
 const REQUEST_SIZE = "1536x1024";
 const QUALITY = "high";
 const TARGET_WIDTH = 3840;
-const TARGET_HEIGHT = 2160;
 const PRICE_PER_REQUEST_USD = 0.0075;
 const MAX_PAID_CREATE_ATTEMPTS = 11;
 const PUBLIC_BASE = "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/save-the-date/valentines-day-4k-vendor-v1";
@@ -145,14 +144,6 @@ async function responseImageBuffer(body) {
   return Buffer.from(await response.arrayBuffer());
 }
 
-async function write4kJpeg(buffer, outputPath) {
-  await fs.mkdir(path.dirname(outputPath), { recursive: true });
-  await sharp(buffer)
-    .rotate()
-    .resize(TARGET_WIDTH, TARGET_HEIGHT, { fit: "cover", position: "centre" })
-    .jpeg({ quality: 92, chromaSubsampling: "4:4:4", mozjpeg: true })
-    .toFile(outputPath);
-}
 
 async function writeReport(report) {
   await fs.mkdir(path.dirname(REPORT_PATH), { recursive: true });
@@ -170,7 +161,7 @@ const plan = {
   endpoint: "/v1/images/generations",
   method: "POST",
   requestSize: REQUEST_SIZE,
-  outputSize: `${TARGET_WIDTH}x${TARGET_HEIGHT}`,
+  outputSize: `${TARGET_WIDTH}px wide; provider aspect ratio preserved; original response retained`,
   quality: QUALITY,
   maxPaidCreateAttempts: MAX_PAID_CREATE_ATTEMPTS,
   estimatedMaxCostUsd: Number((MAX_PAID_CREATE_ATTEMPTS * PRICE_PER_REQUEST_USD).toFixed(4)),
@@ -203,7 +194,7 @@ try {
   });
   if (!provider?.apiKey || !provider.aiUrl) throw new Error("configured_vendor_provider_missing_api_credentials");
   const baseUrl = providerBaseUrl(provider.aiUrl);
-  console.log(`paid provider plan: POST ${baseUrl}/images/generations model=${MODEL} quality=${QUALITY} requestSize=${REQUEST_SIZE} outputSize=${TARGET_WIDTH}x${TARGET_HEIGHT} maxPaidCreateAttempts=${MAX_PAID_CREATE_ATTEMPTS} attemptsPerImage=1 stopOnFirstError=true`);
+  console.log(`paid provider plan: POST ${baseUrl}/images/generations model=${MODEL} quality=${QUALITY} requestSize=${REQUEST_SIZE} outputSize=${TARGET_WIDTH}px-wide-preserve-ratio maxPaidCreateAttempts=${MAX_PAID_CREATE_ATTEMPTS} attemptsPerImage=1 stopOnFirstError=true`);
   console.log(`using vendor API provider: ${provider.label}`);
 
   for (const task of tasks) {
@@ -243,12 +234,14 @@ try {
     if (!response.ok) throw new Error(`${task.filename}:provider_create_failed:${response.status}`);
     const sourceBuffer = await responseImageBuffer(body);
     const outputPath = path.join(LOCAL_BASE, task.filename);
-    await write4kJpeg(sourceBuffer, outputPath);
-    const metadata = await sharp(outputPath).metadata();
-    if (metadata.width !== TARGET_WIDTH || metadata.height !== TARGET_HEIGHT) {
-      throw new Error(`${task.filename}:unexpected_output_dimensions:${metadata.width}x${metadata.height}`);
-    }
-    console.log(`generated vendor asset: ${PUBLIC_BASE}/${task.filename} -> ${TARGET_WIDTH}x${TARGET_HEIGHT}`);
+    const bundle = await writeProviderImageBundle({
+      buffer: sourceBuffer,
+      originalPathBase: path.join(LOCAL_BASE, "_provider-results", "originals", task.filename),
+      displayPath: outputPath,
+      displayWidth: TARGET_WIDTH,
+      label: task.filename
+    });
+    console.log(`generated vendor asset: ${PUBLIC_BASE}/${task.filename} -> ${bundle.displayWidth}x${bundle.displayHeight}; original=${bundle.originalPath}`);
     await writeReport(plan);
   }
   plan.completed = true;
