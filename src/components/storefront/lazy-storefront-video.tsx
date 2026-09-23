@@ -131,14 +131,7 @@ export function LazyStorefrontVideo({
     <div className="relative block w-full">
       {video}
       {showPosterOverlay ? (
-        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center overflow-hidden rounded-[inherit] bg-black">
-          <img
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-contain"
-            decoding="async"
-            src={poster}
-          />
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center overflow-hidden rounded-[inherit]">
           <button
             aria-label={playButtonLabel}
             aria-busy={posterOverlayLoading}
