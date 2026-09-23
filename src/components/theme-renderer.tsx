@@ -11820,7 +11820,10 @@ function SectionView({
     const showEyebrow = settingBool(section, "showEyebrow", true);
     const supportingCopy = setting(section, "supportingCopy", "");
     const videoBadge = setting(section, "videoBadge", "");
-    const videoPoster = videoUrl.includes("mydreamshoots-ai-image-tutorial-20260814.mp4")
+    const isEuHowItWorksVideo = (isSpanishXbySite(site) || isFrenchStorefrontSite(site)) && /(?:how-it-works|tutorial)/i.test(setting(section, "anchor", ""));
+    const videoPoster = isEuHowItWorksVideo
+      ? ""
+      : videoUrl.includes("mydreamshoots-ai-image-tutorial-20260814.mp4")
       ? mediaAssetUrl(site, `/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814-cover-v2.jpg?v=${dreamshootHomepageShowcaseVersion}`)
       : videoUrl.includes("mydreamshoots-ai-video-tutorial-20260814.mp4")
         ? mediaAssetUrl(site, `/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-video-tutorial-20260814-cover-v2.jpg?v=${dreamshootHomepageShowcaseVersion}`)
