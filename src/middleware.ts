@@ -5,6 +5,7 @@ import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS as MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS, isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { aidreamcapesLegacyVideoSaveTheDatePath } from "@/lib/save-the-date-routes";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
@@ -740,7 +741,7 @@ function retiredAidreamcapesImageToolResponse(request: NextRequest): Response | 
   const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
   const siteSlug = pathMatch?.[1]?.toLowerCase() === "aidreamcapes" ? "aidreamcapes" : hostSlug;
   const publicPath = pathMatch ? pathMatch[2] || "/" : normalizedPath;
-  if (!isRetiredAidreamcapesPublicPath(siteSlug, publicPath)) return undefined;
+  if (!isRetiredAidreamcapesPublicPath(siteSlug, publicPath) && !(siteSlug === "aidreamcapes" && aidreamcapesLegacyVideoSaveTheDatePath(publicPath))) return undefined;
   return new NextResponse(null, {
     status: 404,
     headers: { "cache-control": "public, max-age=60" }

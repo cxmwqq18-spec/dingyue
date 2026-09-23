@@ -2,6 +2,7 @@
 
 import { ArrowUpRight, Search, SlidersHorizontal, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
 
 export type AidreamcapesImageDirectoryCard = {
   slug: string;
@@ -13,6 +14,8 @@ export type AidreamcapesImageDirectoryCard = {
   imageUrl: string;
   fallbackImageUrl?: string;
   imageAlt: string;
+  width: number;
+  height: number;
   tags: string[];
 };
 
@@ -42,7 +45,10 @@ function DirectoryImage({
   fallbackImageUrl,
   loading,
   priority,
-  src
+  src,
+  sizes,
+  width,
+  height
 }: {
   alt: string;
   className: string;
@@ -50,6 +56,9 @@ function DirectoryImage({
   loading: "eager" | "lazy";
   priority?: boolean;
   src: string;
+  sizes: string;
+  width: number;
+  height: number;
 }) {
   const [currentSrc, setCurrentSrc] = useState(src);
   const [failed, setFailed] = useState(false);
@@ -79,7 +88,20 @@ function DirectoryImage({
     );
   }
 
-  return <img alt={alt} className={className} decoding="async" fetchPriority={priority ? "high" : undefined} loading={loading} onError={useFallback} src={currentSrc} />;
+  return (
+    <AidreamcapesResponsiveImage
+      alt={alt}
+      className={className}
+      decoding="async"
+      fetchPriority={priority ? "high" : "low"}
+      height={height}
+      loading={loading}
+      onError={useFallback}
+      sizes={sizes}
+      src={currentSrc}
+      width={width}
+    />
+  );
 }
 
 export function AidreamcapesImageDirectory({ cards, sectionId }: AidreamcapesImageDirectoryProps) {
@@ -128,7 +150,7 @@ export function AidreamcapesImageDirectory({ cards, sectionId }: AidreamcapesIma
 
           {featured ? (
             <a className="group relative min-h-[330px] overflow-hidden rounded-[28px] border border-white/[0.14] bg-[#12141b] shadow-[0_38px_100px_-62px_rgba(245,180,109,0.5)]" data-image-theme-featured={featured.slug} href={featured.href}>
-              <DirectoryImage alt={coverAlt(featured)} className="absolute inset-0 h-full w-full object-cover opacity-85 transition duration-700 group-hover:scale-[1.035] group-hover:opacity-100" fallbackImageUrl={featured.fallbackImageUrl} loading="eager" priority src={featured.imageUrl} />
+              <DirectoryImage alt={coverAlt(featured)} className="absolute inset-0 h-full w-full object-cover opacity-85 transition duration-700 group-hover:scale-[1.035] group-hover:opacity-100" fallbackImageUrl={featured.fallbackImageUrl} height={featured.height} loading="eager" priority sizes="(max-width: 1023px) 100vw, 40vw" src={featured.imageUrl} width={featured.width} />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,6,10,0.05)_20%,rgba(5,6,10,0.9)_100%)]" />
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7">
                 <div className="flex items-center justify-between gap-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/[0.68]">
@@ -169,7 +191,7 @@ export function AidreamcapesImageDirectory({ cards, sectionId }: AidreamcapesIma
                 return (
                   <a className="group relative overflow-hidden rounded-[22px] border border-white/[0.12] bg-white/[0.045] transition duration-300 hover:-translate-y-1 hover:border-white/[0.28] hover:bg-white/[0.07]" data-image-theme-card={card.slug} data-image-theme-group={card.group} href={card.href} key={card.slug}>
                     <div className="relative aspect-[4/3] overflow-hidden bg-[#151821]">
-                      <DirectoryImage alt={coverAlt(card)} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" fallbackImageUrl={card.fallbackImageUrl} loading={index < 5 ? "eager" : "lazy"} src={card.imageUrl} />
+                      <DirectoryImage alt={coverAlt(card)} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]" fallbackImageUrl={card.fallbackImageUrl} height={card.height} loading="lazy" sizes="(max-width: 639px) 100vw, (max-width: 1279px) 50vw, 33vw" src={card.imageUrl} width={card.width} />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/[0.62] via-transparent to-transparent" />
                       <span className={`absolute left-4 top-4 rounded-full border border-white/[0.18] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-white/[0.82] ${accent.wash}`}>{card.groupLabel}</span>
                       <span className="absolute bottom-4 right-4 grid h-8 w-8 place-items-center rounded-full border border-white/[0.2] bg-black/[0.28] text-white/[0.8] backdrop-blur transition group-hover:bg-white group-hover:text-[#11131a]"><ArrowUpRight className="h-4 w-4" strokeWidth={1.8} /></span>

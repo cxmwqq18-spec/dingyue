@@ -1,5 +1,7 @@
 import type { SectionBlockInstance, SectionInstance, Site } from "@/lib/types";
 import type { StorefrontContext } from "@/lib/storefront-context/types";
+import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
+import { isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 
 type SqlProduct = ReturnType<typeof import("@/lib/data").getSiteProducts>[number];
 
@@ -46,16 +48,20 @@ function Media({
   width: string;
 }) {
   if (!src) return null;
+  const resolvedSrc = resolveAsset(src);
+  const numericWidth = Number(width);
+  const numericHeight = Number(height);
   return (
-    <img
+    <AidreamcapesResponsiveImage
       alt={alt}
       className={className}
       decoding="async"
       fetchPriority={fetchPriority ?? (loading === "eager" ? "high" : "auto")}
-      height={height}
+      height={numericHeight > 1 ? numericHeight : undefined}
       loading={loading}
-      src={resolveAsset(src)}
-      width={width}
+      sizes="(max-width: 1023px) 100vw, 50vw"
+      src={resolvedSrc}
+      width={numericWidth > 1 ? numericWidth : undefined}
     />
   );
 }
@@ -614,7 +620,13 @@ function PhotoGrid({
   );
 }
 
-function ScenarioGrid({ id, resolveHref, section }: AidreamcapesZipHomepageProps) {
+function ScenarioGrid({ id, resolveHref, section, site }: AidreamcapesZipHomepageProps) {
+  const isAidreamcapesCom = site.id === "site_aidreamcapes";
+  const configuredCtaHref = setting(section, "ctaHref");
+  const ctaHref = isAidreamcapesCom && isRetiredAidreamcapesPublicPath("aidreamcapes", configuredCtaHref) ? "" : configuredCtaHref;
+  const scenarioCards = blocks(section)
+    .filter((block) => block.type === "scenario_card")
+    .filter((block) => !isAidreamcapesCom || !isRetiredAidreamcapesPublicPath("aidreamcapes", blockValue(block, "href")));
   return (
     <section
       className="border-t border-white/5 bg-[#050505] px-6 py-24 text-white"
@@ -624,13 +636,13 @@ function ScenarioGrid({ id, resolveHref, section }: AidreamcapesZipHomepageProps
       <div className="mx-auto max-w-[1400px]">
         <SectionHeading
           cta={setting(section, "ctaLabel")}
-          ctaHref={setting(section, "ctaHref")}
+          ctaHref={ctaHref}
           intro={setting(section, "intro")}
           resolveHref={resolveHref}
           title={setting(section, "title")}
         />
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          {blocks(section).filter((block) => block.type === "scenario_card").map((block) => {
+          {scenarioCards.map((block) => {
             const tone = blockValue(block, "tone");
             return <a
               className="glass-card block rounded-2xl border border-white/10 p-5 transition-colors hover:border-white/20"

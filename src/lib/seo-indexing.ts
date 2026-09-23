@@ -853,7 +853,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
     for (const page of snapshot.pages.filter((candidate) => candidate.slug.startsWith("/ai-save-the-date/"))) {
       const path = canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page));
       if (!path.startsWith("/ai-save-the-date/")) continue;
-      if (isAidreamcapesEuRetiredPublicPath(site.id, path)) continue;
+      if (isAidreamcapesEuRetiredPublicPath(site.id, path) || isRetiredAidreamcapesPublicPath(site.slug, path)) continue;
       const context = resolvePublishedStorefrontContext(snapshot, page);
       if (!context.seo.index || !context.seo.sitemapEligible) continue;
       const loc = sitemapUrl(site, path);

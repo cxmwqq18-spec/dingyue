@@ -36,6 +36,7 @@ type VideoTopicImage = {
 type VideoTopicVideo = {
   src: string;
   poster: string;
+  alt?: string;
   label: string;
   width: number;
   height: number;
@@ -410,23 +411,24 @@ function heroMediaSizingClass(video?: VideoTopicVideo): string {
 }
 
 function TopicHeroVideo({ video, site }: { video: VideoTopicVideo; site?: Site }) {
+  const accessibleLabel = video.alt?.trim() || video.label;
   const watchPath = site?.id === "site_dreamshoot" && isMydreamshootsVideoContentPath(video.src)
     ? mydreamshootsVideoWatchPathForContentPath(video.src)
     : undefined;
   return (
     <DreamshootShowcasePreview className="h-full">
       <div
-        aria-label={`Open ${video.label}`}
+        aria-label={`Open ${accessibleLabel}`}
         className="group relative h-full w-full cursor-pointer overflow-hidden bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd] focus-visible:ring-inset"
         data-dreamshoot-preview-poster={video.poster}
         data-dreamshoot-preview-src={video.src}
-        data-dreamshoot-preview-title={video.label}
+        data-dreamshoot-preview-title={accessibleLabel}
         data-dreamshoot-showcase-preview="video"
         role="button"
         tabIndex={0}
       >
         <video
-          aria-label={video.label}
+          aria-label={accessibleLabel}
           autoPlay
           // Keep every source pixel visible. The surrounding frame supplies the
           // standard 9:16 or 16:9 canvas; object-cover would crop non-standard
@@ -439,6 +441,7 @@ function TopicHeroVideo({ video, site }: { video: VideoTopicVideo; site?: Site }
           poster={video.poster}
           preload="auto"
           src={video.src}
+          title={accessibleLabel}
           width={video.width}
         />
         <span aria-hidden="true" className="absolute inset-0 bg-black/0 transition group-hover:bg-black/[0.08]" />

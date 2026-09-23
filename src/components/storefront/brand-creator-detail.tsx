@@ -1,8 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
-
 import { ArrowRight, Check, ChevronRight, ShieldCheck, Sparkles } from "lucide-react";
 import type { ReactNode } from "react";
 import { AdsTestingDetailGallery } from "@/components/storefront/ads-testing-detail-gallery";
+import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import type { AidreamcapesAdsTestingImage, AidreamcapesBrandCreatorDetailContent } from "@/lib/ai-video-topic-content";
@@ -53,8 +52,8 @@ function GuidanceCards({ items }: { items: Array<{ title: string; body: string }
   );
 }
 
-function Media({ image, className = "" }: { image: AidreamcapesAdsTestingImage; className?: string }) {
-  return <img alt={image.alt} className={className} decoding="async" fetchPriority={image.fetchPriority} height={image.height} loading={image.loading} sizes={image.sizes} src={image.src} width={image.width} />;
+function Media({ image, className = "", priority = false }: { image: AidreamcapesAdsTestingImage; className?: string; priority?: boolean }) {
+  return <AidreamcapesResponsiveImage alt={image.alt} className={className} decoding="async" fetchPriority={priority ? "high" : "low"} height={image.height} loading={priority ? "eager" : "lazy"} sizes={image.sizes} src={image.src} width={image.width} />;
 }
 
 export function BrandCreatorDetail({ content, section, site }: { content: AidreamcapesBrandCreatorDetailContent; section: SectionInstance; site: Site }) {
@@ -87,7 +86,7 @@ export function BrandCreatorDetail({ content, section, site }: { content: Aidrea
                   <span className="mt-2 text-center text-[10px] font-semibold uppercase tracking-[0.12em] text-white/42">{content.hero.imageNote}</span>
                 </div>
                 <div className="overflow-hidden rounded-[18px] border border-[#ec4899]/30 bg-[#151020]">
-                  <Media className="aspect-square h-full w-full object-cover" image={content.hero.outputImage} />
+                  <Media className="aspect-square h-full w-full object-cover" image={content.hero.outputImage} priority />
                   <p className="border-t border-white/10 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/54">{content.hero.outputLabel}</p>
                 </div>
               </div>

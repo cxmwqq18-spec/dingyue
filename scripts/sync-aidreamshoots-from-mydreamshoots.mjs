@@ -45,6 +45,109 @@ const explicitNonPublicPaths = new Map([
   ["/partner-registration", "source_route_not_found"]
 ]);
 
+// The Spanish Save the Date pages are generated and reviewed independently
+// from the English source site. Keep the source-copy sync from replacing
+// their relational content or deleting their vendor-generated media.
+const AIDREAMSHOOTS_PROTECTED_SAVE_THE_DATE_PATHS = new Set([
+  "/ai-save-the-date/valentines-day",
+  "/ai-save-the-date/engagement",
+  "/ai-save-the-date/proposal",
+  "/ai-save-the-date/save-the-date",
+  "/ai-save-the-date/wedding-invitation",
+  "/ai-video-generation/wedding-invitation",
+  "/ai-save-the-date/wedding-ceremony",
+  "/ai-save-the-date/christmas",
+  "/ai-save-the-date/halloween",
+  "/ai-save-the-date/thanksgiving",
+  "/ai-save-the-date/new-year",
+  "/ai-save-the-date/mothers-day",
+  "/ai-save-the-date/fathers-day"
+]);
+
+function isAidreamshootsProtectedSaveTheDatePath(value) {
+  return AIDREAMSHOOTS_PROTECTED_SAVE_THE_DATE_PATHS.has(value);
+}
+
+function isAidreamshootsProtectedSaveTheDateAsset(value) {
+  return typeof value === "string"
+    && value.startsWith("assets/sites/site_aidreamshoots/");
+}
+
+function collectAidreamshootsTargetAssetReferences(value, output = new Set()) {
+  if (typeof value === "string") {
+    const normalized = value.split(/[?#]/)[0].replace(/^\//, "");
+    if (isAidreamshootsProtectedSaveTheDateAsset(normalized)) output.add(normalized);
+    return output;
+  }
+  if (Array.isArray(value)) {
+    for (const item of value) collectAidreamshootsTargetAssetReferences(item, output);
+    return output;
+  }
+  if (value && typeof value === "object") {
+    for (const item of Object.values(value)) collectAidreamshootsTargetAssetReferences(item, output);
+  }
+  return output;
+}
+
+function protectAidreamshootsSaveTheDateDataset(dataset, targetCurrent) {
+  if (dataset.spec.targetSiteId !== "site_mydreamshoots_xby") return dataset;
+
+  const currentLiveBySlug = new Map((targetCurrent.livePages ?? []).map((row) => [row.slug, row]));
+  const currentThemeBySlug = new Map((targetCurrent.pages ?? []).map((row) => [row.slug, row]));
+  dataset.pages = dataset.pages.map((row) => {
+    if (!isAidreamshootsProtectedSaveTheDatePath(row.slug)) return row;
+    const current = currentLiveBySlug.get(row.slug);
+    return current ? {
+      id: current.id,
+      siteId: current.siteId,
+      pageType: current.pageType,
+      templateKey: current.templateKey,
+      slug: current.slug,
+      title: current.title,
+      contentJson: current.contentJson
+    } : row;
+  });
+  dataset.themePages = dataset.themePages.map((row) => {
+    if (!isAidreamshootsProtectedSaveTheDatePath(row.slug)) return row;
+    const current = currentThemeBySlug.get(row.slug);
+    return current ? {
+      id: current.id,
+      siteId: current.siteId,
+      pageType: current.pageType,
+      templateKey: current.templateKey,
+      slug: current.slug,
+      title: current.title,
+      draftJson: current.draftJson,
+      publishedJson: current.publishedJson,
+      draftMeta: current.draftMeta
+    } : row;
+  });
+
+  const protectedReferences = new Set();
+  for (const page of currentLiveBySlug.values()) {
+    if (isAidreamshootsProtectedSaveTheDatePath(page.slug)) collectAidreamshootsTargetAssetReferences(page.contentJson, protectedReferences);
+  }
+  for (const page of currentThemeBySlug.values()) {
+    if (isAidreamshootsProtectedSaveTheDatePath(page.slug)) {
+      collectAidreamshootsTargetAssetReferences(page.draftJson, protectedReferences);
+      collectAidreamshootsTargetAssetReferences(page.publishedJson, protectedReferences);
+    }
+  }
+  const protectedMedia = (targetCurrent.mediaAssets ?? []).filter((row) => protectedReferences.has(row.storageKey));
+  const mediaByStorageKey = new Map((dataset.mediaAssets ?? []).map((row) => [row.storageKey, row]));
+  for (const row of protectedMedia) if (!mediaByStorageKey.has(row.storageKey)) mediaByStorageKey.set(row.storageKey, row);
+  dataset.mediaAssets = [...mediaByStorageKey.values()];
+  dataset.protection = {
+    saveTheDate: {
+      enabled: true,
+      paths: [...AIDREAMSHOOTS_PROTECTED_SAVE_THE_DATE_PATHS],
+      preservedPages: dataset.pages.filter((row) => isAidreamshootsProtectedSaveTheDatePath(row.slug)).length,
+      preservedMediaAssets: protectedMedia.length
+    }
+  };
+  return dataset;
+}
+
 const specs = [
   {
     sourceSiteId: "site_dreamshoot",
@@ -5096,6 +5199,7 @@ function buildPlanManifest(source, targetCurrent, dataset, targetBefore, unrelat
         enabled: dataset.spec.targetSiteId === "site_mydreamshoots_xby",
         excludedFromWrite: ["LivePage:/", "ThemePage:/", "ThemeSettings"]
       },
+      saveTheDateProtection: dataset.protection?.saveTheDate ?? { enabled: false },
       explicitNonPublicPaths: Object.fromEntries(explicitNonPublicPaths),
       publicEntities: collections.map((item) => item.entity),
       protectedTables: protectedModels,
@@ -5261,7 +5365,7 @@ async function main() {
   const targetBefore = await protectedFingerprint(prisma, spec.targetSiteId);
   const unrelatedBefore = await publicIsolationFingerprint(prisma, spec.targetSiteId);
   const translation = await prepareSourceCopyTranslations(source);
-  const dataset = buildDataset(source, spec, targetState);
+  const dataset = protectAidreamshootsSaveTheDateDataset(buildDataset(source, spec, targetState), targetCurrent);
   dataset.sourceMediaAssets = source.mediaAssets;
   dataset.sourceMediaReferences = [...collectSourceAssetReferences(source)];
   dataset.translation = {

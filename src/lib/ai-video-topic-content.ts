@@ -19,6 +19,8 @@ export type AidreamcapesAdsTestingImage = AiVideoTopicImage & {
 export type AiVideoTopicVideo = {
   src: string;
   poster: string;
+  /** Optional accessible description for the rendered video element. */
+  alt?: string;
   label: string;
   width: number;
   height: number;
