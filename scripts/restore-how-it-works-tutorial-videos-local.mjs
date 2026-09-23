@@ -223,12 +223,14 @@ try {
     report.backup = backupPath;
     report.assets = assetResults;
 
-    await prisma.$transaction(async (tx) => {
-      for (const { live, theme, nextLive, nextDraft, nextPublished } of pageRows) {
-        if (live) await tx.livePage.update({ where: { id: live.id }, data: { contentJson: nextLive } });
-        if (theme) await tx.themePage.update({ where: { id: theme.id }, data: { draftJson: nextDraft, publishedJson: nextPublished } });
-      }
-    });
+    // Use Prisma's batch transaction rather than an interactive transaction.
+    // The production database is behind a transaction-pooled connection, where
+    // interactive transaction IDs are not guaranteed to stay on one session.
+    const updates = pageRows.flatMap(({ live, theme, nextLive, nextDraft, nextPublished }) => [
+      ...(live ? [prisma.livePage.update({ where: { id: live.id }, data: { contentJson: nextLive } })] : []),
+      ...(theme ? [prisma.themePage.update({ where: { id: theme.id }, data: { draftJson: nextDraft, publishedJson: nextPublished } })] : [])
+    ]);
+    await prisma.$transaction(updates);
   }
 
   const readback = await Promise.all(TARGETS.map(async (target) => {
