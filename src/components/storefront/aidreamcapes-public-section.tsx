@@ -2,6 +2,7 @@ import { ArrowUpRight, ChevronRight, ShieldCheck } from "lucide-react";
 import { LoginForm } from "@/components/auth/login-form";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
 import { AidreamcapesBlogFilter, type AidreamcapesBlogCard } from "@/components/storefront/aidreamcapes-blog-filter";
+import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
 import type {
   SectionBlockInstance,
   SectionInstance,
@@ -128,9 +129,9 @@ function pageImageSources(page: ThemePageJson, resolveAsset: Resolve): string[] 
   return Array.from(new Set(sources));
 }
 
-function ImageFrame({ src, alt, className = "", objectPosition }: { src: string; alt: string; className?: string; objectPosition?: string }) {
+function ImageFrame({ src, alt, className = "", objectPosition, priority = false }: { src: string; alt: string; className?: string; objectPosition?: string; priority?: boolean }) {
   if (!src) return null;
-  return <img className={className} src={src} alt={alt} loading="lazy" style={objectPosition ? { objectPosition } : undefined} />;
+  return <AidreamcapesResponsiveImage alt={alt} className={className} decoding="async" fetchPriority={priority ? "high" : "low"} loading={priority ? "eager" : "lazy"} sizes="(max-width: 1023px) 100vw, 50vw" src={src} style={objectPosition ? { objectPosition } : undefined} />;
 }
 
 function HeroOrbit({ page, section, resolveAsset }: { page: ThemePageJson; section: SectionInstance; resolveAsset: Resolve }) {
@@ -142,7 +143,7 @@ function HeroOrbit({ page, section, resolveAsset }: { page: ThemePageJson; secti
   return (
     <div className="ac-hero-orbit" aria-label={setting(section, "imageAlt", setting(section, "title"))}>
       <figure className="ac-orbit-card ac-orbit-main">
-        <ImageFrame src={current} alt={setting(section, "imageAlt", setting(section, "title"))} objectPosition={setting(section, "imageObjectPosition")} />
+        <ImageFrame src={current} alt={setting(section, "imageAlt", setting(section, "title"))} objectPosition={setting(section, "imageObjectPosition")} priority />
         {setting(section, "imageCaption") ? <figcaption className="ac-image-label">{setting(section, "imageCaption")}</figcaption> : null}
       </figure>
       {side ? <figure className="ac-orbit-card ac-orbit-side"><ImageFrame src={side} alt={setting(section, "secondaryImageAlt", setting(section, "imageAlt", setting(section, "title")))} objectPosition={setting(section, "secondaryImageObjectPosition")} /><figcaption className="ac-image-label">{setting(section, "secondaryImageCaption", setting(section, "imageCaption"))}</figcaption></figure> : null}

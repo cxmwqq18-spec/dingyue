@@ -1,0 +1,24 @@
+[Unit]
+Description=Aidreamcapes EU Next.js Storefront
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/www/wwwroot/aidreamcapes.eu/releases/1079fe94-aidreamcapes-eu
+EnvironmentFile=/www/wwwroot/aidreamcapes.eu/releases/1079fe94-aidreamcapes-eu/.env.local
+Environment=NODE_ENV=production
+Environment=DINGYUE_ENV=production
+Environment=DATABASE_TARGET=production
+Environment=PLATFORM_STATE_POSTGRES_STRICT=1
+Environment=NEXT_DIST_DIR=.next-build
+Environment=PORT=3015
+Environment=GIT_COMMIT_SHA=1079fe94
+Environment=NEXT_PUBLIC_RELEASE_COMMIT=1079fe94
+ExecStart=/www/wwwroot/aidreamcapes.eu/releases/1079fe94-aidreamcapes-eu/node_modules/.bin/next start -p 3015 -H 127.0.0.1
+Restart=always
+RestartSec=5
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

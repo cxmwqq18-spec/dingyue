@@ -12,7 +12,9 @@ const PUBLIC_ROOT = path.resolve("public");
 const MANIFEST_PATH = path.resolve("src/lib/storefront-responsive-image-manifest.json");
 const TARGET_WIDTHS = [640, 1280, 1600];
 const IMAGE_EXTENSIONS = /\.(?:jpe?g|png|webp|avif)$/i;
+const GENERATED_VARIANT_FILENAME = /-\d+w\.(?:jpe?g|png|webp|avif)$/i;
 const EXCLUDED_PATH = /\/(?:_responsive|provider-results|originals|private|customer-assets|temp|tmp|video|videos)\//i;
+const AIDREAMCAPES_RETIRED_CONTENT_PATH = /\/assets\/sites\/site_aidreamcapes\/(?:[^/]+\/)*(?:save-the-date|wedding-invitation)(?:\/|[-_])/i;
 const MODEL_NAMES = [
   "livePage",
   "themePage",
@@ -27,6 +29,10 @@ const MODEL_NAMES = [
 ];
 
 const SITES = {
+  "aidreamcapes-com": {
+    siteId: "site_aidreamcapes",
+    assetPrefix: "/assets/sites/site_aidreamcapes/"
+  },
   "aidreamcapes-eu": {
     siteId: "site_aidreamcapes_xby",
     assetPrefix: "/assets/sites/site_aidreamcapes_eu/"
@@ -63,7 +69,7 @@ const apply = args.has("--apply");
 const force = args.has("--force");
 
 if (siteArg !== "all" && !SITES[siteArg]) {
-  throw new Error(`Unknown --site=${siteArg}. Use all, aidreamcapes-eu, or aidreamshoots-eu.`);
+  throw new Error(`Unknown --site=${siteArg}. Use all, aidreamcapes-com, aidreamcapes-eu, or aidreamshoots-eu.`);
 }
 
 function stripQuery(value) {
@@ -101,7 +107,9 @@ function collectAssetUrls(value, assetPrefix, refMap, ref) {
     const matches = value.match(/\/assets\/[^?#|"'\s]+/g) || [];
     for (const match of matches) {
       if (!isPublicImageUrl(match, assetPrefix)) continue;
+      if (GENERATED_VARIANT_FILENAME.test(stripQuery(match))) continue;
       const clean = stripQuery(match);
+      if (assetPrefix === SITES["aidreamcapes-com"].assetPrefix && AIDREAMCAPES_RETIRED_CONTENT_PATH.test(clean)) continue;
       const current = refMap.get(clean) || { url: clean, refs: [] };
       current.refs.push(ref);
       refMap.set(clean, current);
@@ -115,6 +123,29 @@ function collectAssetUrls(value, assetPrefix, refMap, ref) {
   if (value && typeof value === "object") {
     Object.entries(value).forEach(([key, item]) => collectAssetUrls(item, assetPrefix, refMap, { ...ref, fieldPath: `${ref.fieldPath || ""}/${key}` }));
   }
+}
+
+function collectPublicAssetInventory(siteKey, config, refMap) {
+  if (siteKey !== "aidreamcapes-com") return;
+  const root = localPathForUrl(config.assetPrefix);
+  if (!root || !fs.existsSync(root)) return;
+
+  function visit(directory) {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const filePath = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        visit(filePath);
+        continue;
+      }
+      const url = urlForLocalPath(filePath);
+      if (!url || !isPublicImageUrl(url, config.assetPrefix) || AIDREAMCAPES_RETIRED_CONTENT_PATH.test(url)) continue;
+      const current = refMap.get(url) || { url, refs: [] };
+      current.refs.push({ site: siteKey, model: "public-asset-inventory", rowId: null, fieldPath: url });
+      refMap.set(url, current);
+    }
+  }
+
+  visit(root);
 }
 
 async function findManyOptional(prisma, modelName, argsForQuery) {
@@ -198,6 +229,7 @@ async function collectSiteRefs(prisma, siteKey, config) {
       fieldPath: ""
     });
   }
+  collectPublicAssetInventory(siteKey, config, refs);
   if (siteKey === "aidreamshoots-eu") {
     for (const url of AIDREAMSHOOTS_STATIC_RESPONSIVE_IMAGE_URLS) {
       const current = refs.get(url) || { url, refs: [] };
@@ -212,7 +244,12 @@ async function main() {
   assertDatabaseTarget({ expectedTarget: "local" });
   const selectedSites = siteArg === "all" ? Object.entries(SITES) : [[siteArg, SITES[siteArg]]];
   const prisma = new PrismaClient();
-  const manifest = {};
+  const existingManifest = apply && siteArg !== "all" && fs.existsSync(MANIFEST_PATH)
+    ? JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf8"))
+    : {};
+  const manifest = siteArg === "all"
+    ? {}
+    : Object.fromEntries(Object.entries(existingManifest).filter(([, entry]) => entry?.site !== siteArg));
   const report = {
     generatedAt: new Date().toISOString(),
     mode: apply ? "apply" : "dry-run",
@@ -266,6 +303,18 @@ async function main() {
           if (report.skippedExamples.length < 20) {
             report.skippedExamples.push({ site: siteKey, url: ref.url, bytes: source.bytes, width: source.width, height: source.height });
           }
+          manifest[ref.url] = {
+            site: siteKey,
+            width: source.width,
+            height: source.height,
+            format: source.format,
+            bytes: source.bytes,
+            sha256: source.sha256,
+            original: ref.url,
+            variants: []
+          };
+          siteReport.entries += 1;
+          report.entries += 1;
           continue;
         }
         siteReport.eligible += 1;
@@ -299,7 +348,6 @@ async function main() {
           if (result.output) report.bytesAfter += result.output.bytes;
         }
         variants.push(...[...variantsByWidth.values()].sort((left, right) => left.width - right.width));
-        if (!variants.length) continue;
         const entry = {
           site: siteKey,
           width: source.width,

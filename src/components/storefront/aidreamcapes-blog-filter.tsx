@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
 
 export type AidreamcapesBlogCard = {
   id: string;
@@ -42,7 +43,7 @@ export function AidreamcapesBlogFilter({ cards }: { cards: AidreamcapesBlogCard[
         {visibleCards.map((card) => (
           <a className="ac-article-card" href={card.href} key={card.id}>
             <div className="ac-article-image">
-              {card.imageUrl ? <img src={card.imageUrl} alt={card.imageAlt || card.title} loading="lazy" /> : null}
+              {card.imageUrl ? <AidreamcapesResponsiveImage alt={card.imageAlt || card.title} decoding="async" fetchPriority="low" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw" src={card.imageUrl} /> : null}
               {card.tags[0] ? <span className="ac-article-tag">{card.tags[0]}</span> : null}
             </div>
             <div className="ac-article-body">

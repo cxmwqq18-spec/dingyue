@@ -8,8 +8,10 @@ const ROOT = path.resolve(".");
 const PUBLIC_ROOT = path.join(ROOT, "public");
 const MANIFEST_PATH = path.join(ROOT, "src/lib/storefront-responsive-image-manifest.json");
 const RENDERER_PATH = path.join(ROOT, "src/components/theme-renderer.tsx");
+const DIRECTORY_PATH = path.join(ROOT, "src/components/storefront/aidreamcapes-image-directory.tsx");
 const manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf8"));
 const renderer = fs.readFileSync(RENDERER_PATH, "utf8");
+const directory = fs.readFileSync(DIRECTORY_PATH, "utf8");
 const failures = [];
 
 function localPath(url) {
@@ -60,6 +62,9 @@ if (!entries.length) fail("empty-manifest", { path: MANIFEST_PATH });
 if (!renderer.includes("<picture>") || !renderer.includes("storefrontResponsiveImageSet") || !renderer.includes("srcSet=")) {
   fail("renderer-not-wired", { path: RENDERER_PATH });
 }
+if (!directory.includes("AidreamcapesResponsiveImage") || !directory.includes('loading="lazy"') || /index < 5 \? "eager"/.test(directory) || !directory.includes("sizes=")) {
+  fail("aidreamcapes-directory-not-wired", { path: DIRECTORY_PATH });
+}
 
 const siteCounts = {};
 const tasks = [];
@@ -94,6 +99,9 @@ for (const [originalUrl, entry] of entries) {
 }
 
 await runWithConcurrency(tasks);
+
+if (!siteCounts["aidreamcapes-com"]) fail("aidreamcapes-com-manifest-missing", { site: "aidreamcapes-com" });
+if (!siteCounts["aidreamcapes-eu"] || !siteCounts["aidreamshoots-eu"]) fail("existing-eu-manifest-dropped", { siteCounts });
 
 const result = {
   ok: failures.length === 0,

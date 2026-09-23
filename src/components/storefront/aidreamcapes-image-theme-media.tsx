@@ -1,17 +1,17 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
-
 import { useState } from "react";
+import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
 import type { AidreamcapesImageThemeImage } from "@/lib/aidreamcapes-image-theme-content";
 
 type AidreamcapesImageAssetProps = {
   image: AidreamcapesImageThemeImage;
   className?: string;
   fallbackLabel?: string;
+  priority?: boolean;
 };
 
-export function AidreamcapesImageAsset({ image, className = "", fallbackLabel = "Image preview pending" }: AidreamcapesImageAssetProps) {
+export function AidreamcapesImageAsset({ image, className = "", fallbackLabel = "Image preview pending", priority = false }: AidreamcapesImageAssetProps) {
   const versionedSrc = `${image.src}${image.src.includes("?") ? "&" : "?"}v=${image.width}x${image.height}`;
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
   const aspectRatio = `${image.width} / ${image.height}`;
@@ -30,13 +30,13 @@ export function AidreamcapesImageAsset({ image, className = "", fallbackLabel = 
   }
 
   return (
-    <img
+    <AidreamcapesResponsiveImage
       alt={image.alt}
       className={className}
       decoding="async"
-      fetchPriority={image.fetchPriority}
+      fetchPriority={priority ? "high" : "low"}
       height={image.height}
-      loading={image.loading}
+      loading={priority ? "eager" : "lazy"}
       onError={() => setFailedSrc(versionedSrc)}
       sizes={image.sizes}
       src={versionedSrc}

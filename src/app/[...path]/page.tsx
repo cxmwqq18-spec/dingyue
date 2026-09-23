@@ -448,6 +448,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const imageThemePath = aidreamcapesImageThemePathForRequest(hostSiteSlug, requestedPath);
   if (isAidreamshootsPublicSlug(hostSiteSlug) && aidreamshootsLegacyVideoSaveTheDatePath(requestedPath)) return {};
   if (isRetiredAidreamcapesPublicPath(hostSiteSlug, requestedPath)) return {};
+  if (hostSiteSlug === "aidreamcapes" && aidreamcapesLegacyVideoSaveTheDatePath(requestedPath)) return {};
   if (imageThemePath) {
     const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, imageThemePath);
     const detailSite = (detailState ? getSiteByHostCandidatesFromState(detailState, hostCandidates) : undefined) ?? detailState?.sites[0];
@@ -621,7 +622,7 @@ export default async function HostStorefrontCatchAllPage({
   if (isRetiredAidreamcapesPublicPath(hostSiteSlug, slug)) notFound();
   if (hostSiteSlug === "aidreamcapes") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);
-    if (legacySaveTheDateTarget) permanentRedirect(legacySaveTheDateTarget);
+    if (legacySaveTheDateTarget) notFound();
   }
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
   const isMydreamshootsHost = isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]));

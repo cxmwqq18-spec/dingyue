@@ -27,6 +27,7 @@ import { AidreamcapesPublicSection } from "@/components/storefront/aidreamcapes-
 import { AidreamcapesZipFooter, type AidreamcapesZipCompanyProfile, type AidreamcapesZipPaymentMethod, type AidreamcapesZipSocialLink } from "@/components/storefront/aidreamcapes-zip-footer";
 import { AidreamcapesVideoDirectory, type AidreamcapesVideoDirectoryCopy, type AidreamcapesVideoThemeCover } from "@/components/storefront/aidreamcapes-video-directory";
 import { AidreamcapesImageDirectory, type AidreamcapesImageDirectoryCard } from "@/components/storefront/aidreamcapes-image-directory";
+import { AidreamcapesMarketingDirectory, type AidreamcapesMarketingDirectoryCopy } from "@/components/storefront/aidreamcapes-marketing-directory";
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { PackageTaxonomyClient, type PackageTaxonomyCard } from "@/components/storefront/package-taxonomy-client";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
@@ -1387,10 +1388,11 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
   const rawLinksBase = requiredLinks.some((link) => isWorkspaceNavLink(link.label, link.href))
     ? requiredLinks.map((link) => isWorkspaceNavLink(link.label, link.href) ? { ...link, label: workspaceLabel, href: "/app/create" } : link)
     : [...requiredLinks, workspaceLink];
-  const saveTheDateConfig = settings.saveTheDateNavigation;
-  const publishedSaveTheDateShowcases = homepageShowcases.filter(
+  const saveTheDateEnabled = !isAidreamcapesCom;
+  const saveTheDateConfig = saveTheDateEnabled ? settings.saveTheDateNavigation : undefined;
+  const publishedSaveTheDateShowcases = saveTheDateEnabled ? homepageShowcases.filter(
     (item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible
-  );
+  ) : [];
   // Both sources are active-publication projections. The homepage projection is
   // a resilient recovery path for an older local snapshot that missed settings,
   // while still requiring a published route and media-backed showcase item.
@@ -1431,7 +1433,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
     ))
     .sort((left, right) => left.sortOrder - right.sortOrder)[0];
   const saveTheDateTargetHref = saveTheDateTarget?.href?.trim() || "";
-  const saveTheDateLink = saveTheDateTarget && saveTheDateMenuLabel
+  const saveTheDateLink = saveTheDateEnabled && saveTheDateTarget && saveTheDateMenuLabel
     ? { label: saveTheDateMenuLabel, href: saveTheDateTargetHref, block: { id: "dreamshoot_header_save_the_date", type: "menu_link", settings: { label: saveTheDateMenuLabel, href: saveTheDateTargetHref } } as SectionBlockInstance }
     : null;
   const configuredSaveTheDate = Boolean(saveTheDateLink);
@@ -2169,8 +2171,8 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
       />
     );
   }
-  const hasPublishedSaveTheDateProjection = homepageShowcases.some((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
-  const hasPublishedSaveTheDateConfig = settings.saveTheDateNavigation?.groups?.some((group) => group.items.some((item) => item.status === "published" && Boolean(item.href?.trim()))) ?? false;
+  const hasPublishedSaveTheDateProjection = !isAidreamcapesComFooter && homepageShowcases.some((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible);
+  const hasPublishedSaveTheDateConfig = !isAidreamcapesComFooter && (settings.saveTheDateNavigation?.groups?.some((group) => group.items.some((item) => item.status === "published" && Boolean(item.href?.trim()))) ?? false);
   const hasPublishedSaveTheDate = hasPublishedSaveTheDateProjection || hasPublishedSaveTheDateConfig;
   const readableFooterTitle = spanishXbyFooter || frenchPageFooter
     ? site.branding.logoText || site.name
@@ -3843,6 +3845,18 @@ function aidreamcapesHomepageCategoryShowcaseImagePath(site: Site, slug: string)
     "gala-photos": "premiere-style-portraits",
     "professional-headshots": "premiere-style-portraits"
   };
+  const aidreamcapesImageThemeHeroBySlug: Record<string, string> = {
+    "fashion-editorial": "/assets/sites/site_aidreamcapes/fashion-editorial-v1/fashion-editorial/hero-output.webp",
+    "professional-headshot": "/assets/sites/site_aidreamcapes/professional-headshot-v1/professional-headshot/hero-output.webp",
+    "virtual-try-on": "/assets/sites/site_aidreamcapes/virtual-try-on-v1/virtual-try-on/hero-output.webp",
+    "social-profile-photo": "/assets/sites/site_aidreamcapes/social-profile-photo-v1/social-profile-photo/hero-output.webp",
+    "hair-makeup-preview": "/assets/sites/site_aidreamcapes/hair-makeup-preview-v1/hair-makeup-preview/hero-output.webp",
+    "creator-portrait": "/assets/sites/site_aidreamcapes/creator-portrait-v1/creator-portrait/hero-output.webp",
+    "enhance-upscale": "/assets/sites/site_aidreamcapes/enhance-upscale-v1/enhance-upscale/hero-output.webp"
+  };
+  if (site.id === "site_aidreamcapes" && aidreamcapesImageThemeHeroBySlug[normalizedSlug]) {
+    return aidreamcapesImageThemeHeroBySlug[normalizedSlug];
+  }
   const assetSlug = assetSlugAliases[normalizedSlug] ?? normalizedSlug;
   const euCommonImage = aidreamcapesEuCommonImageForSite(site, `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/${assetSlug}.webp`);
   if (euCommonImage) return euCommonImage;
@@ -4700,6 +4714,7 @@ function StorefrontImage({
   const previewAttrs = storefrontImagePreviewAttrs(resolvedSrc, resolvedAlt, preview);
   const resolvedClassName = previewableImageClassName(className, preview);
   const responsiveSet = storefrontResponsiveImageSet(resolvedSrc);
+  const fallbackSrcSet = responsiveSet?.fallbackSrcSet ?? (resolvedSrc.startsWith("/assets/sites/site_aidreamcapes/") ? resolvedSrc : undefined);
   const intrinsicDimensions = storefrontResponsiveImageDimensions(resolvedSrc) ?? (/^\/assets\/sites\/site_aidreamshoots\/generated\/regenerated\//i.test(resolvedSrc) ? { width: 1024, height: 1024 } : undefined);
   const resolvedWidth = width ?? intrinsicDimensions?.width;
   const resolvedHeight = height ?? intrinsicDimensions?.height;
@@ -4714,7 +4729,7 @@ function StorefrontImage({
         loading={resolvedLoading}
         sizes={sizes}
         src={resolvedSrc}
-        srcSet={responsiveSet?.fallbackSrcSet}
+        srcSet={fallbackSrcSet}
         style={style}
         width={resolvedWidth}
         {...previewAttrs}
@@ -4840,6 +4855,10 @@ function StorefrontNaturalImage({
 
 function shouldPrioritizeStorefrontSectionImage(renderContext: RenderContext, sectionType: string, index = 0): boolean {
   if (index !== 0) return false;
+  if (renderContext.siteId === "site_aidreamcapes") {
+    if (renderContext.pagePath === "/") return sectionType === "hero_plus" || sectionType === "image_banner";
+    return ["ai_tool_entry", "ai_video_topic_landing", "dreamshoot_media_gallery", "hero_plus", "image_banner", "image_with_text"].includes(sectionType);
+  }
   if (renderContext.pagePath === "/") return sectionType === "hero_plus" || sectionType === "image_banner";
   return true;
 }
@@ -10736,8 +10755,13 @@ function SectionView({
       const originalSrc = read("imageOriginalUrl");
       const originalPreviewSrc = originalSrc.trim().startsWith("/assets/") ? originalSrc.trim() : mediaAssetUrl(site, originalSrc, { preserveAidreamshootsLegacyMedia });
       const prioritizeHero = section.type === "editorial_hero" && imageIndex === 0;
-      const loading = read("imageLoading") === "eager" || prioritizeHero ? "eager" : "lazy";
-      const fetchPriority = read("imageFetchPriority") === "high" ? "high" : read("imageFetchPriority") === "low" ? "low" : prioritizeHero ? "high" : "auto";
+      const aidreamcapesComEditorialPublicPage = site.id === "site_aidreamcapes" && !isPrivateStorefrontPath(renderContext.pagePath);
+      const loading = aidreamcapesComEditorialPublicPage
+        ? (prioritizeHero ? "eager" : "lazy")
+        : (read("imageLoading") === "eager" || prioritizeHero ? "eager" : "lazy");
+      const fetchPriority = aidreamcapesComEditorialPublicPage
+        ? (prioritizeHero ? "high" : "low")
+        : (read("imageFetchPriority") === "high" ? "high" : read("imageFetchPriority") === "low" ? "low" : prioritizeHero ? "high" : "auto");
       return <StorefrontImage alt={read("imageAlt")} className={frenchXbyRichText ? "block h-auto w-full object-center" : "h-full w-full object-contain"} fetchPriority={fetchPriority} height={frenchXbyRichText ? undefined : height} loading={loading} preview={originalPreviewSrc ? { src: originalPreviewSrc, meta: "Imagen original del proveedor" } : undefined} priority={loading === "eager"} sizes="(max-width: 760px) 100vw, 50vw" src={mediaAssetUrl(site, src, { preserveAidreamshootsLegacyMedia })} width={frenchXbyRichText ? undefined : width} />;
     };
     const textBlock = (block: SectionBlockInstance, key = "text") => blockValue(block, key).trim();
@@ -15095,6 +15119,7 @@ function SectionView({
   }
 
   if (section.type === "dreamshoot_save_the_date_directory") {
+    if (site.id === "site_aidreamcapes") return null;
     const publishedSaveTheDateShowcases = homepageShowcases
       .filter((item) => item.kind === "save_the_date" && item.status === "published" && item.indexable && item.sitemapEligible)
       .sort((left, right) => left.sortOrder - right.sortOrder);
@@ -15253,6 +15278,7 @@ function SectionView({
 
   if (section.type === "dreamshoot_generation_showcase") {
     const aidreamcapes = isAidreamcapesSite(site);
+    const aidreamcapesCom = site.id === "site_aidreamcapes";
     const frenchXby = isFrenchStorefrontSite(site);
     const aidreamshootsXby = site.id === "site_mydreamshoots_xby";
     const mydreamProfileSite = isMyDreamShootsProfileSite(site);
@@ -15681,9 +15707,11 @@ function SectionView({
           })
           .filter((item): item is PublishedHomepageShowcaseItem => Boolean(item))
           .slice(0, 8);
-      const saveTheDateItems = publishedHomepageItems
-        .filter((item) => item.kind === "save_the_date")
-        .slice(0, Math.max(1, Math.min(6, numberSetting(section, "saveTheDateItemLimit", 6))));
+      const saveTheDateItems = aidreamcapesCom
+        ? []
+        : publishedHomepageItems
+          .filter((item) => item.kind === "save_the_date")
+          .slice(0, Math.max(1, Math.min(6, numberSetting(section, "saveTheDateItemLimit", 6))));
       const photoItems = frenchXby && !aidreamcapesEuXby
         ? MYDREAMSHOOTS_HOMEPAGE_PHOTO_ITEMS.map((item, index) => ({
             id: `homepage-published-photo-${item.slug}`,
@@ -16475,6 +16503,21 @@ function SectionView({
     const frenchXbyTools = isFrenchStorefrontSite(site);
     const frenchAidreamcapesVideo = frenchXbyTools;
     const layout = setting(section, "layout", "directory");
+    if (site.id === "site_aidreamcapes" && renderContext.pagePath === "/marketing" && layout === "aidreamcapes_marketing_directory") {
+      const navigation = aidreamcapesVideoNavigation;
+      const directoryCopy = section.settings.marketingCopy as unknown as AidreamcapesMarketingDirectoryCopy | undefined;
+      if (!navigation || !directoryCopy) return null;
+      return (
+        <AidreamcapesMarketingDirectory
+          copy={directoryCopy}
+          imageCards={aidreamcapesImageDirectoryCards ?? []}
+          navigation={navigation}
+          sectionId={sectionAnchor(section, "marketing-directory")}
+          site={site}
+          themeCovers={aidreamcapesVideoThemeCovers}
+        />
+      );
+    }
     const mydreamshootsVideoFramework = isMydreamshootsVideoFrameworkSite(site) && !isSpanishXbySite(site) && !aidreamcapes && !primaryMyDreamShoots;
     if (site.id === "site_aidreamcapes" && renderContext.pagePath === "/ai-video-generation" && layout === "aidreamcapes_video_directory") {
       const navigation = aidreamcapesVideoNavigation;

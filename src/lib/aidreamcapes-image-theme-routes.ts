@@ -134,5 +134,12 @@ export function isRetiredAidreamcapesImageToolPath(siteSlug: string | undefined,
 }
 
 export function isRetiredAidreamcapesPublicPath(siteSlug: string | undefined, path: string): boolean {
-  return siteSlug === "aidreamcapes" && AIDREAMCAPES_RETIRED_PUBLIC_PATHS.has(path.replace(/\/$/, ""));
+  if (siteSlug !== "aidreamcapes") return false;
+  const normalizedPath = path.replace(/\/$/, "");
+  // Aidreamcapes.com no longer offers the Save the Date product. Keep this
+  // site-scoped so myDreamShoots and Aidreamcapes EU retain their routes.
+  if (normalizedPath === "/best-save-the-date" || normalizedPath.startsWith("/ai-save-the-date/") || normalizedPath.startsWith("/holidays-events/")) {
+    return true;
+  }
+  return AIDREAMCAPES_RETIRED_PUBLIC_PATHS.has(normalizedPath);
 }

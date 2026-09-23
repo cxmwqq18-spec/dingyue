@@ -4,6 +4,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
 import type { AidreamcapesAdsTestingImage } from "@/lib/ai-video-topic-content";
 
 export type AdsTestingGalleryImage = AidreamcapesAdsTestingImage;
@@ -79,7 +80,7 @@ export function AdsTestingDetailGallery({
               onClick={() => openPreview(index)}
               type="button"
             >
-              <img
+              <AidreamcapesResponsiveImage
                 alt={item.image.alt}
                 className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                 decoding="async"

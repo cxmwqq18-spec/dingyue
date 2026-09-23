@@ -3,6 +3,7 @@ import { cache, type ReactElement } from "react";
 import { CustomerAccountClientPage, CustomerWorkspaceClientPage } from "@/components/storefront/customer-bootstrap-client";
 import type { HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import type { AidreamcapesImageDirectoryCard } from "@/components/storefront/aidreamcapes-image-directory";
+import { storefrontResponsiveImageDimensions } from "@/lib/storefront-responsive-images";
 import type { AidreamcapesVideoThemeCover } from "@/components/storefront/aidreamcapes-video-directory";
 import { StorefrontJsonLd } from "@/components/storefront/storefront-json-ld";
 import { ThemeRenderer, ThemeSectionFrame, searchPageEntriesForSite, type StorefrontSectionPayload, type RoutedSite } from "@/components/theme-renderer";
@@ -140,7 +141,7 @@ function imageDirectoryLane(slug: string): { key: string; label: string } {
   return { key: "utility", label: "Image utility" };
 }
 
-function contentImageForPage(snapshot: ReturnType<typeof createPublishedSiteSnapshot>, path: string, kind: "image" | "video"): { src: string; alt: string } | undefined {
+function contentImageForPage(snapshot: ReturnType<typeof createPublishedSiteSnapshot>, path: string, kind: "image" | "video"): { src: string; alt: string; width?: number; height?: number } | undefined {
   const page = snapshot.pages.find((candidate) => directoryPath(candidate.slug) === directoryPath(path));
   if (!page) return undefined;
   const sections = Object.values(page.publishedJson.sections ?? {}) as Array<{ type?: string; settings?: { content?: unknown } }>;
@@ -159,7 +160,12 @@ function contentImageForPage(snapshot: ReturnType<typeof createPublishedSiteSnap
     if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) continue;
     const image = candidate as Record<string, unknown>;
     if (typeof image.src === "string" && image.src.trim()) {
-      return { src: image.src, alt: typeof image.alt === "string" ? image.alt : "" };
+      return {
+        src: image.src,
+        alt: typeof image.alt === "string" ? image.alt : "",
+        width: typeof image.width === "number" ? image.width : undefined,
+        height: typeof image.height === "number" ? image.height : undefined
+      };
     }
   }
   return undefined;
@@ -213,6 +219,8 @@ function buildAidreamcapesDirectoryProjection(
         imageUrl,
         fallbackImageUrl: contentImage?.src?.trim() || undefined,
         imageAlt: media?.imageAlts?.[0]?.trim() || contentImage?.alt?.trim() || `${title} cover image`,
+        width: storefrontResponsiveImageDimensions(imageUrl)?.width ?? contentImage?.width ?? 1600,
+        height: storefrontResponsiveImageDimensions(imageUrl)?.height ?? contentImage?.height ?? 1200,
         tags: (entity?.content.tags ?? []).filter(Boolean).slice(0, 4)
       };
     })
@@ -3049,7 +3057,7 @@ export async function renderStorefrontPage({
   if (!stateSite) notFound();
   const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
   const currentSite = publishedSnapshot.site;
-  const aidreamcapesDirectoryProjection = currentSite.id === "site_aidreamcapes" && (slug === "/ai-image-generation" || slug === "/ai-video-generation")
+  const aidreamcapesDirectoryProjection = currentSite.id === "site_aidreamcapes" && (slug === "/ai-image-generation" || slug === "/ai-video-generation" || slug === "/marketing")
     ? await (async () => {
         try {
           const fullSnapshot = await loadPublishedSiteSnapshotBySiteId(currentSite.id);
