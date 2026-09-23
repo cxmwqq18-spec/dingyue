@@ -135,6 +135,10 @@ function rewriteVideoJson(value, oldVideoUrl, nextVideoUrl, oldImageUrl, nextPos
   if (isVideoObject(value, oldVideoUrl)) {
     next.src = nextVideoUrl;
     next.alt = alt;
+    // The current production renderer reads `label` for the video element's
+    // accessible name. Keep it aligned with the descriptive alt text so both
+    // old and new French storefront renderers expose the topic description.
+    next.label = alt;
     next.width = 1344;
     next.height = 768;
     next.fit = "contain";
