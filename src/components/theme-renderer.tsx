@@ -5572,7 +5572,21 @@ function cardImageAltForSite(
   });
 }
 
-function videoPosterAltForSite(site: Site, input: { meta?: string; title: string }): string {
+const frenchVideoShowcaseAltBySlug: Record<string, string> = {
+  "talking-photo": "Vidéo de photo parlante montrant un portrait qui s’adresse à la caméra.",
+  "cinematic-video": "Vidéo cinématographique illustrant une scène narrative avec une lumière dramatique.",
+  "music-video": "Clip vidéo musical montrant une interprétation d’artiste sous des lumières de scène.",
+  "tiktok-video": "Vidéo TikTok horizontale présentant une création courte pensée pour le format mobile.",
+  "product-video": "Vidéo produit montrant un article dans une présentation commerciale soignée.",
+  "promo-video": "Vidéo promotionnelle annonçant un lancement ou une offre avec un appel à l’action.",
+  "product-ad-video": "Publicité vidéo produit mettant en scène une démonstration orientée vers une décision d’achat.",
+  "instagram-reels": "Instagram Reel horizontal présentant une histoire visuelle conçue pour le fil mobile."
+};
+
+function videoPosterAltForSite(site: Site, input: { meta?: string; slug?: string; title: string }): string {
+  if (site.id === "site_aidreamcapes_xby" && input.slug && frenchVideoShowcaseAltBySlug[input.slug]) {
+    return frenchVideoShowcaseAltBySlug[input.slug];
+  }
   return storefrontVideoPosterAlt({
     brand: storefrontMediaBrandName(site),
     locale: storefrontMediaAltLocaleForSite(site),
@@ -5649,6 +5663,7 @@ function customerReviewResultAltForSite(
 }
 
 function videoPlaybackAriaLabelForSite(site: Site, label: string): string {
+  if (isFrenchStorefrontSite(site)) return `Lire ${label} avec le son`;
   return isSpanishStorefrontSite(site) ? `Reproducir ${label} con sonido` : `Play ${label} with sound`;
 }
 
@@ -15184,12 +15199,12 @@ function SectionView({
                 <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" data-dreamshoot-media-gallery-grid="video">
 	                  {videoCards.map((card) => (
 	                    <figure
-	                      aria-label={videoPlaybackAriaLabelForSite(site, videoPosterAltForSite(site, { meta: card.meta, title: card.title }))}
+	                      aria-label={videoPlaybackAriaLabelForSite(site, videoPosterAltForSite(site, { meta: card.meta, slug: card.slug, title: card.title }))}
                       className="group relative min-w-0 cursor-pointer overflow-hidden rounded-[8px] border border-white/12 bg-black text-white shadow-[0_28px_84px_-66px_rgba(0,0,0,0.92)] transition hover:-translate-y-0.5 hover:border-white/24 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
                       data-dreamshoot-preview-meta={card.meta}
                       data-dreamshoot-preview-poster={mediaAssetUrl(site, card.posterUrl)}
                       data-dreamshoot-preview-src={mediaAssetUrl(site, card.videoUrl)}
-                      data-dreamshoot-preview-title={videoPosterAltForSite(site, { meta: card.meta, title: card.title })}
+                      data-dreamshoot-preview-title={videoPosterAltForSite(site, { meta: card.meta, slug: card.slug, title: card.title })}
                       data-dreamshoot-showcase-preview="video"
                       data-showcase-card-kind="video"
                       key={card.id}
@@ -15198,10 +15213,10 @@ function SectionView({
                     >
                       <div className={aidreamcapesEuXby ? "overflow-hidden" : isMyDreamShootsProfileSite(site) && !isSpanishXbySite(site) ? "aspect-square" : "aspect-[3/4]"}>
                         {card.videoUrl ? (
-                          <DreamshootShowcaseVideo className={aidreamcapesEuXby ? "block h-auto w-full max-w-full object-contain bg-[#05070e]" : "h-full w-full max-w-full object-cover"} label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
+                          <DreamshootShowcaseVideo className={aidreamcapesEuXby ? "block h-auto w-full max-w-full object-contain bg-[#05070e]" : "h-full w-full max-w-full object-cover"} label={videoPosterAltForSite(site, { meta: card.meta, slug: card.slug, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
                         ) : (
                           <StorefrontImage
-                            alt={videoPosterAltForSite(site, { meta: card.meta, title: card.title })}
+                            alt={videoPosterAltForSite(site, { meta: card.meta, slug: card.slug, title: card.title })}
                             className={aidreamcapesEuXby ? "block h-auto w-full max-w-full object-contain bg-[#05070e]" : "h-full w-full max-w-full object-cover"}
                             loading="lazy"
                             preview={false}
@@ -15751,6 +15766,15 @@ function SectionView({
               title: item.title
             })
           : item.imageAlt;
+        const publishedVideoSlug = item.kind === "video"
+          ? item.canonicalPath.match(/^\/ai-video-generation\/([^/?#]+)/)?.[1]
+          : undefined;
+        const publishedVideoAlt = item.kind === "video"
+          ? videoPosterAltForSite(site, { meta: item.category, slug: publishedVideoSlug, title: item.title })
+          : publishedImageAlt;
+        const publishedVideoPlaybackLabel = item.kind === "video"
+          ? videoPlaybackAriaLabelForSite(site, publishedVideoAlt)
+          : publishedImageAlt;
         if (item.kind === "video" && item.videoUrl) {
           const videoAspectRatio = isPrimaryMydreamshootsCapabilitySite(site)
             ? mydreamshootsHomepageVideoAspectRatio(item.canonicalPath)
@@ -15763,18 +15787,18 @@ function SectionView({
               key={item.id}
             >
               <div
-                aria-label={`Play ${item.title}`}
-              className={`relative ${aidreamcapesEuXby ? "overflow-hidden" : "aspect-square"} cursor-pointer overflow-hidden bg-[#05070e] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-inset`}
+                aria-label={publishedVideoPlaybackLabel}
+                className={`relative ${aidreamcapesEuXby ? "overflow-hidden" : "aspect-square"} cursor-pointer overflow-hidden bg-[#05070e] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-inset`}
                 data-dreamshoot-preview-meta={item.subtitle}
                 data-dreamshoot-preview-poster={mediaAssetUrl(site, item.imageUrl)}
                 data-dreamshoot-preview-src={mediaAssetUrl(site, item.videoUrl ?? "")}
-                data-dreamshoot-preview-title={item.imageAlt}
+                data-dreamshoot-preview-title={publishedVideoAlt}
                 data-dreamshoot-showcase-preview="video"
                 role="button"
                 tabIndex={0}
               >
                 <StorefrontImage
-                  alt={publishedImageAlt}
+                  alt={publishedVideoAlt}
                   className={aidreamcapesEuXby ? "block h-auto w-full object-contain" : `h-full w-full ${containPoster ? "object-contain" : "object-cover"}`}
                   loading="lazy"
                   preview={false}
@@ -15796,7 +15820,7 @@ function SectionView({
           );
         }
         const media = item.videoUrl && item.kind !== "save_the_date" ? (
-          <DreamshootShowcaseVideo className={mediaClassName} label={publishedImageAlt} poster={mediaAssetUrl(site, item.imageUrl)} priority={false} src={mediaAssetUrl(site, item.videoUrl)} />
+          <DreamshootShowcaseVideo className={mediaClassName} label={publishedVideoAlt} poster={mediaAssetUrl(site, item.imageUrl)} priority={false} src={mediaAssetUrl(site, item.videoUrl)} />
         ) : (
           <StorefrontImage alt={publishedImageAlt} className={mediaClassName} loading="lazy" preview={false} sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw" src={mediaAssetUrl(site, item.imageUrl)} />
         );
@@ -15812,7 +15836,7 @@ function SectionView({
               data-dreamshoot-preview-meta={item.subtitle}
               data-dreamshoot-preview-poster={mediaAssetUrl(site, item.imageUrl)}
               data-dreamshoot-preview-src={mediaAssetUrl(site, videoUrl)}
-              data-dreamshoot-preview-title={item.imageAlt || item.title}
+              data-dreamshoot-preview-title={publishedVideoAlt || item.title}
               data-dreamshoot-showcase-preview="video"
               role="button"
               tabIndex={0}
@@ -15967,12 +15991,12 @@ function SectionView({
                 <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4" data-dreamshoot-homepage-gallery-grid="video">
                   {homepageVideoCards.map((card) => (
                     <figure
-                      aria-label={videoPlaybackAriaLabelForSite(site, videoPosterAltForSite(site, { meta: card.meta, title: card.title }))}
+                      aria-label={videoPlaybackAriaLabelForSite(site, videoPosterAltForSite(site, { meta: card.meta, slug: card.slug, title: card.title }))}
                       className="group relative min-w-0 cursor-pointer overflow-hidden rounded-[8px] border border-white/12 bg-black text-white shadow-[0_28px_84px_-66px_rgba(0,0,0,0.92)] transition hover:-translate-y-0.5 hover:border-white/24 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
                       data-dreamshoot-preview-meta={card.meta}
                       data-dreamshoot-preview-poster={mediaAssetUrl(site, card.posterUrl)}
                       data-dreamshoot-preview-src={mediaAssetUrl(site, card.videoUrl)}
-                      data-dreamshoot-preview-title={videoPosterAltForSite(site, { meta: card.meta, title: card.title })}
+                      data-dreamshoot-preview-title={videoPosterAltForSite(site, { meta: card.meta, slug: card.slug, title: card.title })}
                       data-dreamshoot-showcase-preview="video"
                       data-showcase-card-kind="video"
                       key={`${card.id}-video-grid`}
@@ -15980,7 +16004,7 @@ function SectionView({
                       tabIndex={0}
                     >
                       <div className="aspect-square min-w-0 max-w-full overflow-hidden">
-                        <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
+                        <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, slug: card.slug, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
                       </div>
                       <figcaption className="border-t border-white/10 bg-[#090B12] p-3">
                         <span className="block truncate text-sm font-semibold text-white">{card.title}</span>
@@ -16001,19 +16025,19 @@ function SectionView({
                 <DreamshootShowcaseRail className="dreamshoot-showcase-rail relative left-1/2 -ml-[50vw] mt-5 w-screen overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" reverse speed={58} trackClassName="dreamshoot-showcase-track flex w-max gap-2 px-0">
                   {videoRailCards.map((card) => (
                     <figure
-                      aria-label={videoPlaybackAriaLabelForSite(site, videoPosterAltForSite(site, { meta: card.meta, title: card.title }))}
+                      aria-label={videoPlaybackAriaLabelForSite(site, videoPosterAltForSite(site, { meta: card.meta, slug: card.slug, title: card.title }))}
                       className={`group relative aspect-[3/4] w-[min(86vw,24rem)] shrink-0 cursor-pointer overflow-hidden rounded-[16px] border bg-black text-white shadow-[0_30px_86px_-64px_rgba(0,0,0,0.76)] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 md:w-[clamp(24rem,25vw,34rem)] ${aidreamcapes ? "border-[#f2b27c]/40" : "border-white/10"}`}
                       data-dreamshoot-preview-meta={card.meta}
                       data-dreamshoot-preview-poster={mediaAssetUrl(site, card.posterUrl)}
                       data-dreamshoot-preview-src={mediaAssetUrl(site, card.videoUrl)}
-                      data-dreamshoot-preview-title={videoPosterAltForSite(site, { meta: card.meta, title: card.title })}
+                      data-dreamshoot-preview-title={videoPosterAltForSite(site, { meta: card.meta, slug: card.slug, title: card.title })}
                       data-dreamshoot-showcase-preview="video"
                       data-showcase-card-kind="video"
                       key={card.railKey}
                       role="button"
                       tabIndex={0}
                     >
-                      <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
+                      <DreamshootShowcaseVideo className="h-full w-full max-w-full object-cover" label={videoPosterAltForSite(site, { meta: card.meta, slug: card.slug, title: card.title })} poster={mediaAssetUrl(site, card.posterUrl)} priority={false} src={mediaAssetUrl(site, card.videoUrl)} />
                       <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-black/80 to-transparent p-4 pt-12 text-sm text-white">
                         <span className="sr-only">{`${card.meta} video preview.`}</span>
                         {isPrimaryMydreamshootsCapabilitySite(site) && isMydreamshootsVideoContentPath(card.videoUrl) && mydreamshootsVideoWatchPathForContentPath(card.videoUrl) ? (
