@@ -34,8 +34,8 @@ function replaceBrokenHomepageMedia(value) {
   if (Array.isArray(value)) return value.map(replaceBrokenHomepageMedia);
   if (typeof value === "string") {
     return value.replace(
-      /\/assets\/sites\/site_aidreamcapes_eu\/mirror\/aidreamcapes\/dreamshoot\/generated\/homepage-showcase\/videos\/aidreamcapes-ai-image-tutorial-20260814\.mp4(?:\?[^\s"']*)?/g,
-      "/assets/sites/site_aidreamcapes_eu/homepage-showcase/videos/scenic-overlook-pan.mp4"
+      /\/assets\/sites\/site_aidreamcapes_eu\/homepage-showcase\/videos\/scenic-overlook-pan\.mp4(?:\?[^\s"']*)?/g,
+      "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/generated/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-20260814.mp4"
     );
   }
   if (!value || typeof value !== "object") return value;

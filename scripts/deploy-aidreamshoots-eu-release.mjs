@@ -57,6 +57,10 @@ const fullSourcePaths = [
   "scripts",
   "src"
 ];
+const requiredSpanishTutorialAssets = [
+  "public/assets/sites/site_aidreamshoots/visuals/generated/homepage-showcase/videos/AIdreamshoots-ai-image-tutorial-20260814.mp4",
+  "public/assets/sites/site_aidreamshoots/visuals/generated/homepage-showcase/videos/AIdreamshoots-ai-video-tutorial-20260814.mp4"
+];
 
 const config = {
   domain: "aidreamshoots.eu",
@@ -125,8 +129,10 @@ function releaseFiles() {
     ? git(["diff", "--name-only", base, commit])
     : git(["diff-tree", "--no-commit-id", "--name-only", "-r", "--diff-filter=ACMRT", commit, commit + "^"]);
   const files = output ? output.split("\n").filter(Boolean) : [];
-  if (!base) return files;
   const selected = files.filter((file) => allowedReleaseFiles.includes(file) || file.startsWith("public/assets/sites/site_aidreamshoots/"));
+  for (const required of requiredSpanishTutorialAssets) {
+    if (!selected.includes(required)) selected.push(required);
+  }
   for (const required of [
     "scripts/build-production.mjs",
     "scripts/restore-next-env.mjs",

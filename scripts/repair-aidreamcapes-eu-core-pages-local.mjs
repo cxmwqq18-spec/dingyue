@@ -179,13 +179,13 @@ const SPECS = {
         plan_rule_credits: { meta: "03 · Coût", title: "Confirmer la demande", description: "Relisez le coût en crédits et les paramètres avant de lancer la création." },
         plan_rule_gallery: { meta: "04 · Livraison", title: "Vérifier la galerie", description: "Contrôlez les visages, les mains, le texte et le contexte avant le téléchargement." }
       } },
-      tutorial_video_1: { settings: { title: "Voir le parcours de création", eyebrow: "GUIDE", subtitle: "Découvrez comment préparer une demande et vérifier un résultat dans l’espace privé.", playLabel: "Voir le guide de création", videoUrl: "/assets/sites/site_aidreamcapes_eu/homepage-showcase/videos/scenic-overlook-pan.mp4" } },
+      tutorial_video_1: { settings: { title: "Voir le parcours de création", eyebrow: "GUIDE", subtitle: "Découvrez comment préparer une demande et vérifier un résultat dans l’espace privé.", playLabel: "Voir le guide de création", videoUrl: "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/generated/homepage-showcase/videos/aidreamcapes-ai-image-tutorial-20260814.mp4" } },
       workflow_intro_1: { settings: { title: "Pourquoi le parcours reste simple", eyebrow: "UN ESPACE PRIVÉ", body: "Vous choisissez une direction avant la génération, vous voyez les crédits nécessaires et vous retrouvez les résultats dans une galerie privée.", primaryCta: "Commencer à créer", secondaryCta: "Voir les tarifs" }, blocks: {
         workflow_intro_private: { meta: "Privé", title: "Garder les demandes regroupées", description: "Vos sources, demandes et créations restent associées à votre compte." },
         workflow_intro_credits: { meta: "Crédits", title: "Voir le coût avant de confirmer", description: "Le parcours affiche les crédits nécessaires avant le lancement." },
         workflow_intro_gallery: { meta: "Galerie", title: "Relire avant le partage", description: "Vérifiez le rendu final puis téléchargez les fichiers adaptés à votre usage." }
       } },
-      tutorial_image_video_1: { settings: { title: "Passer d’une image à une courte vidéo", eyebrow: "IMAGE VERS VIDÉO", subtitle: "Animez une source autorisée lorsque le thème le permet et vérifiez chaque mouvement avant le partage.", playLabel: "Voir le guide image vers vidéo", videoUrl: "/assets/sites/site_aidreamcapes_eu/homepage-showcase/videos/coastal-memory-clip.mp4" } }
+      tutorial_image_video_1: { settings: { title: "Passer d’une image à une courte vidéo", eyebrow: "IMAGE VERS VIDÉO", subtitle: "Animez une source autorisée lorsque le thème le permet et vérifiez chaque mouvement avant le partage.", playLabel: "Voir le guide image vers vidéo", videoUrl: "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/generated/homepage-showcase/videos/aidreamcapes-ai-video-tutorial-20260814.mp4" } }
     }
   },
   "/about-us": {
