@@ -118,6 +118,13 @@ const FRENCH_PHRASES = [
   ["AI Tools Collection", "Collection d’outils IA"],
   ["AI photo tools", "outils photo IA"],
   ["AI photo tool", "outil photo IA"],
+  ["AI Save the Date", "Annonce de date avec l’IA"],
+  ["Ceremony Moodboard", "Tableau d’ambiance de cérémonie"],
+  ["Save the Date gallery", "Galerie d’annonces de date"],
+  ["Explore all Save the Date themes", "Explorer tous les thèmes d’annonces de date"],
+  ["Private model", "Modèle privé"],
+  ["Fan-safe styling", "Style adapté aux fans"],
+  ["Holiday albums", "Albums de fêtes"],
   ["Professional headshot maker", "Créateur de portraits professionnels"],
   ["Creator portrait studio", "Studio de portraits pour créateurs"],
   ["Background changer", "Changer l’arrière-plan"],
@@ -242,7 +249,8 @@ const FRENCH_WORDS: Record<string, string> = {
   result: "résultat",
   available: "disponible",
   popular: "populaire",
-  ready: "prêt"
+  ready: "prêt",
+  uses: "utilisations"
 };
 
 const PROTECTED_VALUE_PATTERN = /^(?:https?:|mailto:|\/|\{[A-Z0-9_:-]+\})/i;

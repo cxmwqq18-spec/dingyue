@@ -23,6 +23,28 @@ type AidreamcapesEuSeoContent = Omit<AidreamcapesEuSeoSeed, "subject" | "scene">
   faqItems: Array<[string, string]>;
 };
 
+export type AidreamcapesEuRouteSeo = {
+  title: string;
+  description: string;
+};
+
+const SAVE_THE_DATE_SEO: Record<string, AidreamcapesEuRouteSeo> = {
+  "/ai-save-the-date/save-the-date": { title: "Vidéo d’annonce de date avec l’IA | Aidreamcapes", description: "Créez une vidéo d’annonce de date avec l’IA à partir de vos photos de couple et partagez un message clair avec vos proches." },
+  "/ai-save-the-date/wedding-invitation": { title: "Vidéo d’invitation de mariage avec l’IA | Aidreamcapes", description: "Créez une vidéo d’invitation de mariage avec l’IA à partir de vos photos, de la date et des détails de votre cérémonie." },
+  "/ai-save-the-date/valentines-day": { title: "Vidéo de Saint-Valentin avec l’IA | Aidreamcapes", description: "Créez une vidéo romantique de Saint-Valentin avec l’IA à partir de vos photos de couple et partagez-la avec la personne aimée." },
+  "/ai-save-the-date/engagement": { title: "Vidéo d’annonce de fiançailles avec l’IA | Aidreamcapes", description: "Créez une vidéo d’annonce de fiançailles avec l’IA à partir de vos photos de couple et préparez un message personnel à partager." },
+  "/ai-save-the-date/proposal": { title: "Vidéo de demande en mariage avec l’IA | Aidreamcapes", description: "Créez une vidéo de demande en mariage avec l’IA à partir de vos photos et composez une annonce personnelle et mémorable." },
+  "/ai-save-the-date/christmas": { title: "Vidéo de Noël avec l’IA | Aidreamcapes", description: "Créez une vidéo de Noël avec l’IA à partir de vos photos et partagez vos vœux dans une ambiance chaleureuse et festive." },
+  "/ai-save-the-date/thanksgiving": { title: "Vidéo de Thanksgiving avec l’IA | Aidreamcapes", description: "Créez une vidéo de Thanksgiving avec l’IA à partir de vos photos et partagez un message chaleureux avec vos proches." },
+  "/ai-save-the-date/new-year": { title: "Vidéo du Nouvel An avec l’IA | Aidreamcapes", description: "Créez une vidéo du Nouvel An avec l’IA à partir de vos photos et envoyez vos vœux dans un format personnel et élégant." },
+  "/ai-save-the-date/mothers-day": { title: "Vidéo de fête des Mères avec l’IA | Aidreamcapes", description: "Créez une vidéo de fête des Mères avec l’IA à partir de vos photos et préparez un message touchant à partager." },
+  "/ai-save-the-date/fathers-day": { title: "Vidéo de fête des Pères avec l’IA | Aidreamcapes", description: "Créez une vidéo de fête des Pères avec l’IA à partir de vos photos et partagez un message personnel avec votre famille." },
+  "/ai-save-the-date/halloween": { title: "Vidéo d’Halloween avec l’IA | Aidreamcapes", description: "Créez une vidéo d’Halloween avec l’IA à partir de vos photos et partagez une annonce originale dans une ambiance de fête." },
+  "/ai-save-the-date/wedding-ceremony": { title: "Vidéo de cérémonie de mariage avec l’IA | Aidreamcapes", description: "Créez une vidéo de cérémonie de mariage avec l’IA à partir de vos photos et préparez un message élégant pour vos invités." },
+  "/ai-save-the-date/wedding-anniversary": { title: "Vidéo d’anniversaire de mariage avec l’IA | Aidreamcapes", description: "Créez une vidéo d’anniversaire de mariage avec l’IA à partir de vos photos et célébrez votre histoire avec vos proches." },
+  "/ai-save-the-date/easter": { title: "Vidéo de Pâques avec l’IA | Aidreamcapes", description: "Créez une vidéo de Pâques avec l’IA à partir de vos photos et partagez un message lumineux pour cette célébration." }
+};
+
 const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   avatar: {
     label: "Avatar professionnel",
@@ -492,4 +514,9 @@ export function aidreamcapesEuSeoContentForSlug(slug: string): AidreamcapesEuSeo
 export function aidreamcapesEuSeoContentFromPath(path: string): AidreamcapesEuSeoContent | undefined {
   const match = String(path || "").match(/^\/ai-image-generation\/([^/?#]+)/i);
   return match?.[1] ? aidreamcapesEuSeoContentForSlug(match[1]) : undefined;
+}
+
+export function aidreamcapesEuSaveTheDateSeoFromPath(path: string | null | undefined): AidreamcapesEuRouteSeo | undefined {
+  const normalized = String(path ?? "").split(/[?#]/, 1)[0].replace(/\/+$/, "") || "/";
+  return SAVE_THE_DATE_SEO[normalized.toLowerCase()];
 }

@@ -2280,7 +2280,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
       : isDreamShootFooter
         ? [
             { label: "AI Video Generation", href: "/ai-video-generation" },
-            ...(hasPublishedSaveTheDate ? [{ label: "AI Save the Date", href: "/best-save-the-date" }] : []),
+            ...(hasPublishedSaveTheDate ? [{ label: site.id === "site_aidreamcapes_xby" ? "Annonces de date" : "AI Save the Date", href: "/best-save-the-date" }] : []),
             { label: "AI Image Generation", href: "/ai-image-generation" },
             { label: "AI Photo Packages", href: "/best-packages" },
             { label: "Pricing", href: "/pricing" }
@@ -2427,7 +2427,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
         ? [
             ["AI Video Generation", "/ai-video-generation", "product"],
             ["Best AI video", "/best-ai-video", "product"],
-            ...(hasPublishedSaveTheDate ? [["AI Save the Date", "/best-save-the-date", "product"] as const] : []),
+            ...(hasPublishedSaveTheDate ? [[site.id === "site_aidreamcapes_xby" ? "Annonces de date" : "AI Save the Date", "/best-save-the-date", "product"] as const] : []),
             ["AI Image Generation", "/ai-image-generation", "product"],
             ["AI Photo Packages", "/best-packages", "product"],
             ["How it works", "/workflow", "product"],
@@ -2447,7 +2447,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
           ? [
               ["AI Video Generation", "/ai-video-generation", "product"],
               ["Best AI video", "/best-ai-video", "product"],
-              ...(hasPublishedSaveTheDate ? [["AI Save the Date", "/best-save-the-date", "product"] as const] : []),
+              ...(hasPublishedSaveTheDate ? [[site.id === "site_aidreamcapes_xby" ? "Annonces de date" : "AI Save the Date", "/best-save-the-date", "product"] as const] : []),
               ["AI Image Generation", "/ai-image-generation", "product"],
               ["AI Photo Packages", "/best-packages", "product"],
               ["How it works", "/workflow", "product"],
@@ -5834,7 +5834,8 @@ function genericVisualAltForSite(
   // descriptive SEO alt values in the published theme snapshot.
   const preservePageAuthoredAlt = /\/assets\/sites\/site_aidreamcapes_eu\/mirror\/aidreamcapes\/dreamshoot\/save-the-date\/(?:valentines-day-4k-vendor-v1|vendor-api-gpt-image-2-4k-v1)\//i.test(input.imageUrl ?? "");
   if (preservePageAuthoredAlt && input.explicitAlt?.trim()) {
-    return (storefrontMeaningfulAlt(input.explicitAlt) || input.explicitAlt.trim())
+    const authoredAlt = storefrontMeaningfulAlt(input.explicitAlt) || input.explicitAlt.trim();
+    return (site.id === "site_aidreamcapes_xby" ? frenchCopy(authoredAlt) : authoredAlt)
       .replace(/\btoutée\b/gi, "allée");
   }
   return cardImageAltForSite(site, {
@@ -14932,6 +14933,8 @@ function SectionView({
   if (section.type === "dreamshoot_visual_proof") {
     const aidreamcapes = isAidreamcapesSite(site);
     const spanishXbyVisualProof = isSpanishXbySite(site);
+    const frenchXbyVisualProof = site.id === "site_aidreamcapes_xby";
+    const localizeEuProofText = (value: string) => frenchXbyVisualProof ? frenchCopy(value) : value;
     const blocks = sectionBlocks(section, "proof_card");
     const fallbackCards: SectionBlockInstance[] = [
       { id: "proof_worldcup", type: "proof_card", settings: { title: "Soccer", description: "Stadium fan posters, match-day group shots, and social-ready supporter portraits.", category: "Lifestyle & Creative", badge: "Featured", imageUrl: "/assets/dreamshoot/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp", href: publicCollectionPathForSite(site, "soccer") } },
@@ -14940,7 +14943,8 @@ function SectionView({
       { id: "proof_christmas", type: "proof_card", settings: { title: "Christmas Photo", description: "Festive couple, family-style, and friend-group portraits for cards, posts, and private albums.", category: "Best Themes & Presets", badge: "Christmas", imageUrl: "/assets/dreamshoot/generated/pack-galleries/christmas-photos/christmas-photos-01.webp", href: publicCollectionPathForSite(site, "christmas-photo") } },
       { id: "proof_seasonal", type: "proof_card", settings: { title: "Seasonal holiday albums", description: "Holiday portraits for Christmas cards, Thanksgiving warmth, Halloween mood, and private group albums.", category: "Seasonal", badge: "Seasonal", imageUrl: "/assets/dreamshoot/generated/pack-covers/holiday/holiday-cover.webp?v=20260803safecover1", href: publicCollectionPathForSite(site, "holiday") } }
     ];
-    const tabs = listLines(setting(section, "tabs", "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal"));
+    const tabs = listLines(setting(section, "tabs", "All|Fan Photos|Sports Stars|VIP Looks|Christmas|Thanksgiving|Halloween|Seasonal"))
+      .map(localizeEuProofText);
     const aidreamcapesProofTabHrefByLabel: Record<string, string> = {
       "fan scenes": "/collections/fan-scene-albums",
       "game day": "/collections/game-day-group-photos",
@@ -14950,7 +14954,8 @@ function SectionView({
       halloween: "/collections/halloween-party-portraits",
       seasonal: "/collections/seasonal-celebration-photos"
     };
-    const badges = listLines(setting(section, "badges", "Private model|Fan-safe styling|Holiday albums")).map((badge) => spanishXbyVisualProof ? spanishProofBadgeLabel(badge) : badge);
+    const badges = listLines(setting(section, "badges", "Private model|Fan-safe styling|Holiday albums"))
+      .map((badge) => spanishXbyVisualProof ? spanishProofBadgeLabel(badge) : localizeEuProofText(badge));
     const cards = (blocks.length ? blocks : fallbackCards).slice(0, aidreamcapes && !spanishXbyVisualProof ? 4 : 5);
     const lead = cards[0];
     if (aidreamcapes && !spanishXbyVisualProof) {
@@ -15004,18 +15009,20 @@ function SectionView({
         seasonal: "/collections/seasonal-celebration-photos"
       };
       const proofCards = cards.map((card, index) => {
-        const title = blockValue(card, "title", "Occasion album");
-        const description = blockValue(card, "description", "Fan-scene albums, game-day group portraits, holiday memory sets, and private gallery-ready photos.");
-        const category = blockValue(card, "category", blockValue(card, "badge", "Occasion"));
+        const rawTitle = blockValue(card, "title", "Occasion album");
+        const rawCategory = blockValue(card, "category", blockValue(card, "badge", "Occasion"));
+        const title = localizeEuProofText(rawTitle);
+        const description = localizeEuProofText(blockValue(card, "description", "Fan-scene albums, game-day group portraits, holiday memory sets, and private gallery-ready photos."));
+        const category = localizeEuProofText(rawCategory);
         const explicitUsesLabel = blockValue(card, "usesLabel", "");
-        const explicitTags = listLines(blockValue(card, "tags", ""));
+        const explicitTags = listLines(blockValue(card, "tags", "")).map(localizeEuProofText);
         const configuredHref = blockValue(card, "href", "/collections");
-        const categoryHref = aidreamcapesProofHrefByCategory[category.trim().toLowerCase()];
+        const categoryHref = aidreamcapesProofHrefByCategory[rawCategory.trim().toLowerCase()];
         const href = categoryHref && /(?:^|\/)login(?:[/?#]|$)/i.test(configuredHref)
           ? categoryHref
           : configuredHref;
         const hrefSlug = dreamshootCategorySlug(href.replace(/^\/collections\//, ""));
-        const titleSlug = dreamshootCategorySlug(title);
+        const titleSlug = dreamshootCategorySlug(rawTitle);
         const taxonomyPacks = relatedPacksForTaxonomyCard(site, creativePacks, creativePackCategories, card.id, href);
         const hrefPacks = activeCreativePacksForCollectionSlug(creativePacks, hrefSlug, site);
         const titlePacks = creativePacks.filter((pack) =>
@@ -15055,7 +15062,7 @@ function SectionView({
           images,
           tags: explicitTags.length ? explicitTags.slice(0, 3) : aidreamcapesTravelTagsFor(title, category, description),
           photoCountLabel: photoCount ? `${photoCount} Photos` : "",
-          usesLabel: explicitUsesLabel || (usesCount ? `${usesCount.toLocaleString("en-US")} uses` : fallbackStats?.usesLabel || aidreamcapesMetaLabel(title, category, description))
+          usesLabel: localizeEuProofText(explicitUsesLabel || (usesCount ? `${usesCount.toLocaleString(frenchXbyVisualProof ? "fr-FR" : "en-US")} ${frenchXbyVisualProof ? "utilisations" : "uses"}` : fallbackStats?.usesLabel || aidreamcapesMetaLabel(title, category, description)))
         };
       });
 
@@ -15065,12 +15072,12 @@ function SectionView({
           <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,0.7)_1px,transparent_1px)] [background-size:94px_94px]" />
           <div className="relative mx-auto max-w-[var(--site-content-width)]">
             <div className="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.08em] text-white/62">
-              <span>{setting(section, "label", "Occasion proof gallery")}</span>
+              <span>{localizeEuProofText(setting(section, "label", "Occasion proof gallery"))}</span>
             </div>
             <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] lg:items-end">
               <div>
                 <h2 className="max-w-[46rem] text-[clamp(2.65rem,6.8vw,5rem)] font-semibold leading-[0.96] tracking-[-0.06em] text-balance [font-family:var(--site-title-font)]">
-                  {setting(section, "title", "See how approved photos become private fan and holiday albums.")}
+                  {localizeEuProofText(setting(section, "title", "See how approved photos become private fan and holiday albums."))}
                 </h2>
                 <div className="mt-8 flex flex-wrap gap-3">
                   {tabs.map((tab, index) => (
@@ -15091,7 +15098,7 @@ function SectionView({
               </div>
               <div className="lg:pb-3">
                 <p className="max-w-[42rem] text-[clamp(1.12rem,1.7vw,1.48rem)] leading-[1.28] text-white/72">
-                  {setting(section, "subtitle", "Compare fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, and seasonal directions before opening an album.")}
+                  {localizeEuProofText(setting(section, "subtitle", "Compare fan-scene, game-day, premiere, Christmas, Thanksgiving, Halloween, and seasonal directions before opening an album."))}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {badges.map((badge, index) => (
@@ -15941,7 +15948,16 @@ function SectionView({
             mediaRevision: `aidreamcapes-eu-photo-${item.slug}`
           }))
         : publishedHomepageItems.filter((item) => item.kind === "photo").slice(0, 8);
-      const renderPublishedCard = (item: PublishedHomepageShowcaseItem) => {
+      const renderPublishedCard = (rawItem: PublishedHomepageShowcaseItem) => {
+        const item = frenchXby && rawItem.kind === "save_the_date"
+          ? {
+              ...rawItem,
+              title: frenchCopy(rawItem.title),
+              subtitle: frenchCopy(rawItem.subtitle),
+              category: rawItem.category ? frenchCopy(rawItem.category) : rawItem.category,
+              imageAlt: frenchCopy(rawItem.imageAlt)
+            }
+          : rawItem;
         const href = hrefFor(site, item.canonicalPath);
         const compactCard = item.kind === "save_the_date";
         const hasVideo = Boolean(item.videoUrl);
