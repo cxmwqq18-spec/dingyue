@@ -2421,9 +2421,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
               ["Política de privacidad", "/privacy", "support"],
               ["Política de contenido", "/content", "support"],
               ["Términos de servicio", "/terms", "support"],
-              ["Política de cookies", "/cookies", "support"],
-              ["Privacidad infantil", "/children-privacy", "support"],
-              ["Derechos de privacidad estatal", "/state-privacy", "support"]
+              ["Política de cookies", "/cookies", "support"]
             ]
         : isAidreamcapesFooter
         ? [
@@ -2463,9 +2461,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
               ["Privacy Policy", "/privacy", "support"],
               ["Content policy", "/content", "support"],
               ["Terms of Service", "/terms", "support"],
-              ["Cookie Policy", "/cookies", "support"],
-              ["Children's Privacy", "/children-privacy", "support"],
-              ["State Privacy", "/state-privacy", "support"]
+              ["Cookie Policy", "/cookies", "support"]
             ]
           : [
               ["Best Packages", "/best-packages", "product"],
@@ -2648,10 +2644,10 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
     if (normalizedHref === "/state-privacy") return "State Privacy Rights";
     return label;
   };
-  const bottomPolicyLinks = isAidreamcapesFooter && !spanishXbyFooter
+  const bottomPolicyLinks = ((isDreamShootFooter || isAidreamcapesFooter) && !spanishXbyFooter) || aidreamshootsXbyFooter
     ? [
-        ...(footerLinkIsPublished({ href: "/children-privacy" }) ? [{ label: frenchXbyFooter ? "Confidentialité des mineurs" : "Children's Privacy", href: "/children-privacy" }] : []),
-        ...(footerLinkIsPublished({ href: "/state-privacy" }) ? [{ label: frenchXbyFooter ? "Droits relatifs à la vie privée régionale" : "State Privacy", href: "/state-privacy" }] : [])
+        ...(footerLinkIsPublished({ href: "/children-privacy" }) ? [{ label: frenchXbyFooter ? "Confidentialité des mineurs" : spanishXbyFooter ? "Privacidad infantil" : "Children's Privacy", href: "/children-privacy" }] : []),
+        ...(footerLinkIsPublished({ href: "/state-privacy" }) ? [{ label: frenchXbyFooter ? "Droits relatifs à la vie privée régionale" : spanishXbyFooter ? "Derechos de privacidad estatal" : "State Privacy", href: "/state-privacy" }] : [])
       ]
     : [];
   const normalizedCopyright = frenchPageFooter
