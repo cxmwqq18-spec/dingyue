@@ -295,7 +295,19 @@ function isRenderableTopicImage(image: VideoTopicImage | undefined): image is Vi
   return Boolean(image?.src?.trim() && Number(image.width) > 0 && Number(image.height) > 0);
 }
 
+const aidreamcapesEuMotionImageReplacements: Record<string, string> = {
+  "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/provider-recovered/asset-motion-generator-01-hero.webp?v=20260916euproviderrecovery1",
+  "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-02.webp": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/provider-recovered/asset-motion-generator-02-portrait-action.webp?v=20260916euproviderrecovery1",
+  "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-03.webp": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/provider-recovered/asset-motion-generator-03-product-motion.webp?v=20260916euproviderrecovery1"
+};
+
+function aidreamcapesEuTopicImageSrc(src: string): string {
+  const clean = src.trim().replace(/&amp;/g, "&");
+  return aidreamcapesEuMotionImageReplacements[clean] ?? clean;
+}
+
 function optimizedTopicImageSrc(src: string): string {
+  src = aidreamcapesEuTopicImageSrc(src);
   if (!src.startsWith("/assets/dreamshoot/")) return src;
   const youtubeMap: Record<string, string> = {
     "youtube-card-01": "youtube-card-01",
@@ -367,7 +379,7 @@ function StorefrontTopicImage({ src, previewSrc, ...props }: StorefrontTopicImag
 
 function topicImagePreviewSrc(image: VideoTopicImage): string {
   const original = image.imageOriginalUrl?.trim() ?? "";
-  return /^(?:https?:|\/assets\/)/i.test(original) ? original : optimizedTopicImageSrc(image.src);
+  return /^(?:https?:|\/assets\/)/i.test(original) ? aidreamcapesEuTopicImageSrc(original) : aidreamcapesEuTopicImageSrc(image.src);
 }
 
 function heroPreviewImages(content: Pick<VideoTopicContent, "hero">): VideoTopicImage[] {

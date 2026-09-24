@@ -29,6 +29,12 @@ export const mydreamshootsVideoGenerationCategories = [
     sortOrder: 30
   },
   {
+    slug: "motion-generator",
+    label: "Motion Generator",
+    description: "Animate a still photo with controlled subject and camera motion.",
+    sortOrder: 35
+  },
+  {
     slug: "photo-animation",
     label: "Photo Animation",
     description: "Animate a still photo with controlled subject and camera motion.",
