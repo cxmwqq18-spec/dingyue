@@ -1,4 +1,5 @@
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
 import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
 import { storefrontCardImageAlt } from "@/lib/storefront-media-alt";
 
@@ -116,7 +117,7 @@ function SafeTaxonomyImage({
 }) {
   const safeAlt = alt.trim() || (locale === "es" ? "Visual de paquete privado generado con IA para una galería personal" : "AI-generated private package visual showing a styled subject and intended gallery use");
   return (
-    <img
+    <AidreamcapesResponsiveImage
       alt={safeAlt}
       aria-label={locale === "es" ? `Ver ${safeAlt} en pantalla completa` : locale === "fr" ? `Voir ${safeAlt} en plein écran` : `View ${safeAlt} full screen`}
       className={`block w-full cursor-zoom-in object-center ${className}`}
@@ -127,8 +128,8 @@ function SafeTaxonomyImage({
       decoding={decoding}
       fetchPriority={fetchPriority}
       loading={loading}
-      src={src}
       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      src={src}
       width={1200}
       height={900}
     />

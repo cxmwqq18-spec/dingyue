@@ -57,7 +57,7 @@ import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { canonicalSpanishXbyCollectionSlug, isAidreamshootsStorefrontSite, isSpanishStorefrontSite, SPANISH_XBY_COLLECTION_ALIASES } from "@/lib/spanish-storefronts";
 import { isFrenchStorefrontSite, storefrontLocaleForSite } from "@/lib/storefront-locale";
 import { AIDREAMCAPES_EU_VIDEO_TOPIC_SLUGS, aidreamcapesEuVideoTopic } from "@/lib/aidreamcapes-eu-video-media";
-import { isAidreamcapesEuLegacyCoverGalleryDerivative } from "@/lib/aidreamcapes-eu-legacy-media";
+import { isAidreamcapesEuLegacyCoverGalleryDerivative, replaceAidreamcapesEuLegacyMedia } from "@/lib/aidreamcapes-eu-legacy-media";
 import { canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRemovedPublicNavigationPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { frenchCopy } from "@/lib/french-copy";
 import {
@@ -3387,9 +3387,10 @@ const mydreamshootsGalleryPairExcludedPaths = new Set([
 function mirroredFrenchEuDreamshootAssetUrl(value: string): string {
   const clean = cleanStorefrontImageSrc(value);
   const match = clean.match(/^\/assets\/dreamshoot(\/[^?#]*)([?#].*)?$/);
-  return match
+  const mirrored = match
     ? `/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot${match[1]}${match[2] ?? ""}`
     : value;
+  return replaceAidreamcapesEuLegacyMedia(mirrored) || value;
 }
 
 const aidreamcapesEuCommonImageBySlug: Record<string, string> = {
@@ -13891,7 +13892,7 @@ function SectionView({
         appHref: matchingPack ? hrefFor(site, creativePackCreateHref(matchingPack, site)) : hrefFor(site, "/app/create"),
         ...profileDetailFields,
         ...aidreamcapesDetailFields,
-        layout: profile || aidreamcapesTags.length ? "split" : "mosaic",
+        layout: profile || aidreamcapesTags.length || spanishXbyTaxonomy ? "split" : "mosaic",
         photoCountLabel: matchingPack && profile ? dreamshootPackPhotoCountLabel(matchingPack) : aidreamcapesPhotoCountLabel || card.photoCountLabel,
         tags: profile?.tags ?? (aidreamcapesTags.length ? aidreamcapesTags : card.tags),
         usesLabel: matchingPack && profile ? dreamshootPackActivityLabel(site, matchingPack, profile) : aidreamcapesUsesLabel || card.usesLabel,

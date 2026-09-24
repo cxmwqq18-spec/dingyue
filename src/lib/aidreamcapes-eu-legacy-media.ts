@@ -1,6 +1,68 @@
 const legacyMirrorCoverPattern = /^\/assets\/sites\/site_aidreamcapes_eu\/mirror\/aidreamcapes\/dreamshoot\/generated\/pack-covers\/([^/]+)\/\1-cover\.(?:png|jpe?g|webp|avif)$/i;
 const legacyMirrorGalleryPattern = /^\/assets\/sites\/site_aidreamcapes_eu\/mirror\/aidreamcapes\/dreamshoot\/generated\/pack-galleries\/([^/]+)\/\1-01\.(?:png|jpe?g|webp|avif)$/i;
 
+const euImagePackRoot = "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1";
+const euProviderPackRoot = "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1";
+
+// The database still contains a number of pre-EU mirror keys. These are
+// compatibility replacements, not new content: each target is a file in the
+// current EU image pack that is deployed with the storefront release.
+const legacyPackCoverReplacements: Record<string, string> = {
+  "profile-cards": `${euImagePackRoot}/avatar/cover-333df83b69eb-avatar-cover-cobalt-studio.jpg`,
+  "professional-headshots": `${euImagePackRoot}/headshot/cover-6360dd7e005c-headshot-cover-architect-office.jpg`,
+  "gala-photos": `${euImagePackRoot}/gala-photo/cover-5b9863721f87-gala-photo-cover-red-carpet-steps.jpg`,
+  "creator-portraits": `${euImagePackRoot}/portrait-photo/cover-19ef724d7001-portrait-photo-cover-analog-cafe.jpg`,
+  "black-friday": `${euImagePackRoot}/black-friday/cover-d7b389e574c5-black-friday-cover-white-studio-bag.jpg`,
+  "only-fans": `${euImagePackRoot}/only-fans/cover-751be524992d-only-fans-cover-home-musician.jpg`,
+  "singles-awareness-day": `${euImagePackRoot}/singles-awareness-day/cover-8967392ff7ad-singles-awareness-day-cover-sunrise-run.jpg`,
+  "product-style": `${euImagePackRoot}/background-changer/cover-background-changer-00-quiet-city-walk-2cb0da1f20fa.jpg`,
+  "background-remover": `${euImagePackRoot}/background-remover/cover-background-remover-00-quiet-city-walk-d85ac6d2b2af.jpg`,
+  "magic-eraser": `${euImagePackRoot}/magic-eraser/cover-magic-eraser-00-quiet-city-walk-6e842a44c57a.jpg`,
+  "magic-upscaler": `${euImagePackRoot}/photo-enhancer/cover-photo-enhancer-00-quiet-city-walk-7603f9a29b46.jpg`,
+  "portrait-retouch": `${euImagePackRoot}/portrait-retouch/cover-portrait-retouch-00-quiet-city-walk-93973d530e01.jpg`,
+  "unblur-image": `${euImagePackRoot}/unblur-image/cover-unblur-image-00-quiet-city-walk-cb790273c6f2.jpg`,
+  "color-correction": `${euImagePackRoot}/color-correction/cover-color-correction-00-quiet-city-walk-edf1177e9ab4.jpg`,
+  "old-photo-restoration": `${euImagePackRoot}/old-photo-restoration/cover-old-photo-restoration-00-quiet-city-walk-2a1bf9ddd8f9.jpg`,
+  "social-cards": `${euImagePackRoot}/social-cards/cover-social-cards-00-quiet-city-walk-30a15cc73c01.jpg`,
+  "edit-by-prompt": `${euImagePackRoot}/edit-by-prompt/cover-edit-by-prompt-00-quiet-city-walk-4b0d75e03717.jpg`,
+  cyberpunk: `${euImagePackRoot}/cyberpunk/cover-6d00c84382e7-cyberpunk-cover-rain-alley.jpg`,
+  boudoir: `${euImagePackRoot}/boudoir/cover-8498408a3477-boudoir-cover-silk-window.jpg`,
+  holiday: `${euImagePackRoot}/holiday/cover-893fb697d662-holiday-cover-winter-window.jpg`,
+  cannes: `${euImagePackRoot}/cannes/cover-3dd2cb8ed69a-cannes-cover-red-carpet-sunset.jpg`,
+  nightlife: `${euImagePackRoot}/nightlife/cover-4c08f56660a5-nightlife-cover-jazz-club.jpg`,
+  "rich-lifestyle": `${euImagePackRoot}/rich-lifestyle/cover-45d7051cc443-rich-lifestyle-cover-villa-breakfast.jpg`,
+  bikini: `${euImagePackRoot}/bikini/cover-ad43fd8d7ca2-bikini-cover-coral-beach.jpg`,
+  swimsuit: `${euImagePackRoot}/swimsuit/cover-492eb58413b6-swimsuit-cover-red-one-piece.jpg`,
+  nature: `${euImagePackRoot}/travel/cover-4cc6a7986820-travel-cover-lisbon-tram.jpg`,
+  "world-cup-fan-photos": `${euImagePackRoot}/soccer/cover-a21c7b9b1ad1-soccer-cover-stadium-scarf.jpg`,
+  "outdoor-creator-scenes": `${euImagePackRoot}/travel/cover-4cc6a7986820-travel-cover-lisbon-tram.jpg`,
+  "fashion-editorial": `${euImagePackRoot}/portrait-photo/cover-19ef724d7001-portrait-photo-cover-analog-cafe.jpg`,
+  mafia: `${euImagePackRoot}/mafia/cover-98242376be30-mafia-cover-1940s-diner.jpg`,
+  hairstyle: `${euImagePackRoot}/hairstyle-generator/cover-hairstyle-generator-00-quiet-city-walk-c452820dc22d.jpg`,
+  "virtual-try-on": `${euImagePackRoot}/virtual-try-on/cover-virtual-try-on-00-quiet-city-walk-e431078651ef.jpg`,
+  "ai-video-add-ons": `${euImagePackRoot}/motion-generator/cover-motion-generator-00-quiet-city-walk-b7fec8e17439.jpg`,
+  engagement: "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/engagement-photo/cover-occasion-6adcf48854.webp",
+  "wedding-photo": `${euImagePackRoot}/wedding-photo/cover-fa9197c1a667-occasion-b7af762a69.jpg`,
+  "valentine-photos": `${euImagePackRoot}/valentines-photo/cover-54ae0fb62bf7-occasion-3cf2a1d4ea.jpg`,
+  "christmas-photos": `${euImagePackRoot}/christmas-photo/cover-414936c66db4-seasonal-be76f6d3ee.jpg`,
+  "halloween-party-photos": `${euImagePackRoot}/halloween-photo/cover-e45b5bb0a588-seasonal-fd5c22148e.jpg`,
+  "thanksgiving-group-photos": `${euImagePackRoot}/thanksgiving-photo/cover-0787b71b581c-seasonal-2b3549dc37.jpg`
+};
+
+const legacyStandaloneMediaReplacements: Record<string, string> = {
+  "generated/20260622-homepage-unique/hero-grid-business.png": legacyPackCoverReplacements["professional-headshots"],
+  "generated/20260622-homepage-unique/hero-grid-upscale.png": legacyPackCoverReplacements["magic-upscaler"],
+  "generated/20260622-homepage-unique/hero-grid-beauty.png": legacyPackCoverReplacements["virtual-try-on"],
+  "generated/category-covers/aidreamcapes/creative-cover.png": legacyPackCoverReplacements.cyberpunk,
+  "holiday-card-gpt2.png": legacyPackCoverReplacements["christmas-photos"]
+};
+
+const legacyVideoHeroReplacements: Record<string, string> = {
+  "explainer-video/hero-explainer-video-product-concept.jpg": `${euProviderPackRoot}/video-topic-015-explainer-video-hero-explainer-video-product-concept.jpg`,
+  "how-to-video/hero-how-to-video-hands-on-step.jpg": `${euProviderPackRoot}/video-topic-048-how-to-video-hero-how-to-video-hands-on-step.jpg`,
+  "talking-head-video/hero-talking-head-video-professional-presenter.jpg": `${euProviderPackRoot}/video-topic-133-talking-head-video-hero-talking-head-video-professional-presenter.jpg`
+};
+
 function withoutQuery(value: string | undefined): string {
   return String(value ?? "").trim().split(/[?#]/, 1)[0] ?? "";
 }
@@ -18,4 +80,16 @@ export function isAidreamcapesEuLegacyCoverGalleryDerivative(
   const coverMatch = withoutQuery(coverUrl).match(legacyMirrorCoverPattern);
   const galleryMatch = withoutQuery(galleryUrl).match(legacyMirrorGalleryPattern);
   return Boolean(coverMatch && galleryMatch && coverMatch[1] === galleryMatch[1]);
+}
+
+export function replaceAidreamcapesEuLegacyMedia(value: string | undefined): string {
+  const clean = withoutQuery(value);
+  const mirrorPrefix = "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/";
+  if (!clean.startsWith(mirrorPrefix)) return String(value ?? "");
+  const relativePath = clean.slice(mirrorPrefix.length);
+  const coverMatch = relativePath.match(/^generated\/pack-covers\/([^/]+)\/\1-cover\.(?:png|jpe?g|webp|avif)$/i);
+  if (coverMatch) return legacyPackCoverReplacements[coverMatch[1].toLowerCase()] ?? clean;
+  return legacyStandaloneMediaReplacements[relativePath]
+    ?? legacyVideoHeroReplacements[relativePath]
+    ?? clean;
 }
