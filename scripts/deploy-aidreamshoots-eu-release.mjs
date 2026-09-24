@@ -147,7 +147,7 @@ function releaseFiles() {
     ? git(["diff", "--name-only", base, commit])
     : git(["diff-tree", "--no-commit-id", "--name-only", "-r", "--diff-filter=ACMRT", commit, commit + "^"]);
   const files = output ? output.split("\n").filter(Boolean) : [];
-  const selected = files.filter((file) => allowedReleaseFiles.includes(file) || file.startsWith(config.assetPrefix));
+  const selected = files.filter((file) => allowedReleaseFiles.includes(file) || file.startsWith("src/") || file.startsWith(config.assetPrefix));
   for (const required of config.requiredAssets) {
     if (!selected.includes(required)) selected.push(required);
   }
