@@ -483,7 +483,10 @@ export function compileMydreamshootsVideoTopicPublication(
     pageMedia.push(finalizedMedia);
     routes.push({
       disposition: "render",
-      siteId,
+      // Keep the route projection assignment compatible with older release
+      // bundles whose generated type union predates the localized site ids.
+      // The runtime value remains the actual localized site id.
+      siteId: siteId as "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes",
       routeKind: "ai-video-topic-leaf",
       canonicalSlug: source.slug,
       canonicalPath,
