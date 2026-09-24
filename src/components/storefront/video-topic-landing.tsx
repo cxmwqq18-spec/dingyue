@@ -15,6 +15,7 @@ import type { AidreamcapesAdsTestingDetailContent, AidreamcapesBrandCreatorDetai
 import { talkingPhotoContentFromSection, type TalkingPhotoContent } from "@/lib/talking-photo-content";
 import { isMydreamshootsVideoContentPath, mydreamshootsVideoWatchPathForContentPath } from "@/lib/mydreamshoots-video-watch";
 import { storefrontResponsiveImageDimensions, storefrontResponsiveImageSet } from "@/lib/storefront-responsive-images";
+import { aidreamcapesEuVideoTopic } from "@/lib/aidreamcapes-eu-video-media";
 
 type RoutedSite = Site & { __storefrontBasePath?: string };
 
@@ -418,8 +419,8 @@ function TopicHeroVideo({ video, site }: { video: VideoTopicVideo; site?: Site }
   return (
     <DreamshootShowcasePreview className="h-full">
       <div
-        aria-label={`Open ${accessibleLabel}`}
-        className="group relative h-full w-full cursor-pointer overflow-hidden bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd] focus-visible:ring-inset"
+        aria-label={`${site?.id === "site_aidreamcapes_xby" ? "Ouvrir" : "Open"} ${accessibleLabel}`}
+        className="group relative h-full w-full cursor-pointer overflow-hidden bg-[#17151f] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c4b5fd] focus-visible:ring-inset"
         data-dreamshoot-preview-poster={video.poster}
         data-dreamshoot-preview-src={video.src}
         data-dreamshoot-preview-title={accessibleLabel}
@@ -439,7 +440,7 @@ function TopicHeroVideo({ video, site }: { video: VideoTopicVideo; site?: Site }
           muted
           playsInline
           poster={video.poster}
-          preload="auto"
+          preload="metadata"
           src={video.src}
           title={accessibleLabel}
           width={video.width}
@@ -1932,9 +1933,28 @@ export function AiVideoTopicLanding({ section, site }: { section: SectionInstanc
     if (content.layoutVariant === "ads-testing-detail" || content.layoutVariant === "conversion-seeding-detail" || content.layoutVariant === "promo-category-detail") return <AdsTestingDetail content={content as unknown as AidreamcapesAdsTestingDetailContent} section={section} site={site} />;
     notFound();
   }
+  const normalizedContent = normalizeAiContent(content);
+  const euMedia = site.id === "site_aidreamcapes_xby" ? aidreamcapesEuVideoTopic(contentKey) : undefined;
+  const contentWithEuMedia = euMedia
+    ? {
+        ...normalizedContent,
+        hero: {
+          ...normalizedContent.hero,
+          video: {
+            src: euMedia.videoUrl,
+            poster: euMedia.posterUrl,
+            alt: euMedia.alt,
+            label: euMedia.label,
+            width: euMedia.width,
+            height: euMedia.height,
+            fit: "contain" as const
+          }
+        }
+      }
+    : normalizedContent;
   return (
-    <DreamshootShowcasePreview>
-      <VideoTopicLanding content={normalizeAiContent(content)} contentKey={contentKey} section={section} site={site} />
+    <DreamshootShowcasePreview locale={site.id === "site_aidreamcapes_xby" ? "fr" : "en"}>
+      <VideoTopicLanding content={contentWithEuMedia} contentKey={contentKey} section={section} site={site} />
     </DreamshootShowcasePreview>
   );
 }
@@ -1942,9 +1962,28 @@ export function AiVideoTopicLanding({ section, site }: { section: SectionInstanc
 export function TalkingPhotoLanding({ section, site }: { section: SectionInstance; site: Site }) {
   const content = talkingPhotoContentFromSection(section);
   if (!content) notFound();
+  const normalizedContent = normalizeTalkingContent(content);
+  const euMedia = site.id === "site_aidreamcapes_xby" ? aidreamcapesEuVideoTopic("talking-photo") : undefined;
+  const contentWithEuMedia = euMedia
+    ? {
+        ...normalizedContent,
+        hero: {
+          ...normalizedContent.hero,
+          video: {
+            src: euMedia.videoUrl,
+            poster: euMedia.posterUrl,
+            alt: euMedia.alt,
+            label: euMedia.label,
+            width: euMedia.width,
+            height: euMedia.height,
+            fit: "contain" as const
+          }
+        }
+      }
+    : normalizedContent;
   return (
-    <DreamshootShowcasePreview>
-      <VideoTopicLanding content={normalizeTalkingContent(content)} contentKey="talking-photo" section={section} site={site} />
+    <DreamshootShowcasePreview locale={site.id === "site_aidreamcapes_xby" ? "fr" : "en"}>
+      <VideoTopicLanding content={contentWithEuMedia} contentKey="talking-photo" section={section} site={site} />
     </DreamshootShowcasePreview>
   );
 }

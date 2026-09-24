@@ -61,11 +61,11 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
     scene: "plage corallienne, piscine d’hôtel, promenade maritime ou terrasse face à la mer"
   },
   "black-friday": {
-    label: "Black Friday",
-    title: "Images Black Friday créées avec l’IA | Aidreamcapes",
-    description: "Préparez des visuels Black Friday avec l’IA : portraits de campagne, produits et compositions commerciales variées pour bannières, réseaux sociaux et annonces.",
-    keywords: "images Black Friday IA, visuel promotionnel, photo campagne commerciale, bannière e-commerce, Aidreamcapes",
-    h2: "Visuels Black Friday pour campagne commerciale",
+    label: "Vendredi noir",
+    title: "Images du Vendredi noir créées avec l’IA | Aidreamcapes",
+    description: "Préparez des visuels du Vendredi noir avec l’IA : portraits de campagne, produits et compositions commerciales variées pour bannières, réseaux sociaux et annonces.",
+    keywords: "images du Vendredi noir IA, visuel promotionnel, photo campagne commerciale, bannière e-commerce, Aidreamcapes",
+    h2: "Visuels du Vendredi noir pour campagne commerciale",
     subject: "un visuel adulte ou produit conçu pour une campagne promotionnelle sans texte intégré",
     scene: "studio blanc, vitrine sombre, table de produit ou décor de campagne aux contrastes nets"
   },
@@ -268,12 +268,12 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
     scene: "studio doux, intérieur près d’une fenêtre, café calme ou décor architectural minimal"
   },
   "rich-lifestyle": {
-    label: "Lifestyle premium",
-    title: "Photos lifestyle premium avec l’IA | Aidreamcapes",
-    description: "Créez des photos lifestyle premium avec l’IA : villa, voyage, gastronomie et moments de quotidien soignés pour profils, campagnes et albums privés.",
-    keywords: "lifestyle premium IA, photo luxe, portrait villa, photo voyage éditoriale, Aidreamcapes",
-    h2: "Lifestyle premium et quotidien éditorial",
-    subject: "un adulte dans une scène de vie premium, naturelle et sans logo visible",
+    label: "Art de vivre premium",
+    title: "Photos d’art de vivre premium avec l’IA | Aidreamcapes",
+    description: "Créez des photos d’art de vivre premium avec l’IA : villa, voyage, gastronomie et moments du quotidien soignés pour profils, campagnes et albums privés.",
+    keywords: "art de vivre premium IA, photo luxe, portrait villa, photo voyage éditoriale, Aidreamcapes",
+    h2: "Art de vivre premium et quotidien éditorial",
+    subject: "un adulte dans une scène d’art de vivre premium, naturelle et sans logo visible",
     scene: "petit-déjeuner en villa, terrasse de Riviera, hôtel design ou salon baigné de lumière"
   },
   "singles-awareness-day": {
@@ -305,10 +305,10 @@ const SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
   },
   "street-style": {
     label: "Style de rue",
-    title: "Photos street style avec l’IA : mode urbaine | Aidreamcapes",
-    description: "Créez des photos street style avec l’IA : silhouettes contemporaines, architecture urbaine, lumière de rue et attitudes naturelles pour profils et éditoriaux.",
-    keywords: "street style IA, photo mode urbaine, portrait rue, look contemporain, Aidreamcapes",
-    h2: "Street style et mode urbaine",
+    title: "Photos de style urbain avec l’IA | Aidreamcapes",
+    description: "Créez des photos de style urbain avec l’IA : silhouettes contemporaines, architecture urbaine, lumière de rue et attitudes naturelles pour profils et éditoriaux.",
+    keywords: "style urbain IA, photo mode urbaine, portrait rue, look contemporain, Aidreamcapes",
+    h2: "Style urbain et mode contemporaine",
     subject: "un adulte dans une silhouette de mode urbaine avec tenue et attitude lisibles",
     scene: "passage bétonné, marché couvert, façade colorée, quai de gare ou rue au néon"
   },
@@ -409,12 +409,12 @@ const DIRECTORY_SEEDS: Record<string, AidreamcapesEuSeoSeed> = {
     scene: "bureau contemporain, studio neutre, architecture moderne et lumière naturelle"
   },
   "lifestyle-creative": {
-    label: "Lifestyle et créations",
-    title: "Photos lifestyle et créatives avec l’IA | Aidreamcapes",
-    description: "Découvrez des thèmes photo lifestyle et créatifs avec l’IA : voyage, mode, plage, ville et univers originaux pour des galeries privées distinctives.",
-    keywords: "photo lifestyle IA, photo créative, portrait voyage, mode IA, galerie privée, Aidreamcapes",
-    h2: "Explorer des photos lifestyle et créatives",
-    subject: "des adultes dans des scènes lifestyle, de voyage, de mode et d’expression personnelle",
+    label: "Art de vivre et créations",
+    title: "Photos d’art de vivre et créations avec l’IA | Aidreamcapes",
+    description: "Découvrez des thèmes photo d’art de vivre et créatifs avec l’IA : voyage, mode, plage, ville et univers originaux pour des galeries privées distinctives.",
+    keywords: "photo art de vivre IA, photo créative, portrait voyage, mode IA, galerie privée, Aidreamcapes",
+    h2: "Explorer des photos d’art de vivre et créatives",
+    subject: "des adultes dans des scènes d’art de vivre, de voyage, de mode et d’expression personnelle",
     scene: "côte lumineuse, rue urbaine, intérieur éditorial, paysage de voyage et décor de vacances"
   },
   magic: {
@@ -470,6 +470,7 @@ function contentFromSeed(seed: AidreamcapesEuSeoSeed, normalized: string, canoni
 }
 
 export const AIDREAMCAPES_EU_THEME_SLUGS = Object.freeze(Object.keys(SEEDS));
+export const AIDREAMCAPES_EU_DIRECTORY_SLUGS = Object.freeze([...AIDREAMCAPES_EU_THEME_SLUGS, ...Object.keys(DIRECTORY_SEEDS)]);
 
 export function aidreamcapesEuSeoContent(slug: string): AidreamcapesEuSeoContent | undefined {
   const normalized = slug.trim().toLowerCase();
@@ -482,4 +483,13 @@ export function aidreamcapesEuSeoDirectoryContent(slug: string): AidreamcapesEuS
   const normalized = slug.trim().toLowerCase();
   const seed = DIRECTORY_SEEDS[normalized];
   return seed ? contentFromSeed(seed, normalized, `/ai-image-generation/${normalized}`) : undefined;
+}
+
+export function aidreamcapesEuSeoContentForSlug(slug: string): AidreamcapesEuSeoContent | undefined {
+  return aidreamcapesEuSeoContent(slug) ?? aidreamcapesEuSeoDirectoryContent(slug);
+}
+
+export function aidreamcapesEuSeoContentFromPath(path: string): AidreamcapesEuSeoContent | undefined {
+  const match = String(path || "").match(/^\/ai-image-generation\/([^/?#]+)/i);
+  return match?.[1] ? aidreamcapesEuSeoContentForSlug(match[1]) : undefined;
 }

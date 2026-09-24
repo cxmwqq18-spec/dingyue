@@ -15,8 +15,14 @@ import {
 import { resolveMediaAssetUrl } from "@/lib/media";
 import { storefrontCreativePackImageAlt, storefrontMediaAltLocaleForSite, storefrontMediaBrandName } from "@/lib/storefront-media-alt";
 import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import {
+  AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA,
+  AIDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES,
+  AIDREAMSHOOTS_HOMEPAGE_VIDEO_TITLES,
+  aidreamshootsVideoTopicSlugForPath
+} from "@/lib/aidreamshoots-video-media";
 import { isAidreamcapesImageThemePath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
-import { AIDREAMCAPES_EU_PUBLIC_DETAIL_PATHS, isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
+import { AIDREAMCAPES_EU_PUBLIC_DETAIL_PATHS, canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import { imageThemeDetailContentFromPage } from "@/lib/aidreamcapes-image-theme-content";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS, MYDREAMSHOOTS_RETIRED_PUBLIC_PATHS } from "@/lib/mydreamshoots-legacy-public-redirects";
@@ -340,6 +346,24 @@ function sitemapVideoDuration(value: unknown, fallback = 15): string {
 }
 
 function pageSitemapVideoForSite(site: Site, page: ThemePage): SitemapVideoEntry | undefined {
+  if (isAidreamshootsStorefrontSite(site)) {
+    const path = canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page));
+    const slug = aidreamshootsVideoTopicSlugForPath(path);
+    const media = slug ? AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA[slug] : undefined;
+    if (!slug || !media) return undefined;
+    const thumbnailLoc = aidreamshootsVideoSitemapMediaUrl(site, media.poster);
+    const contentLoc = aidreamshootsVideoSitemapMediaUrl(site, media.video);
+    if (!thumbnailLoc || !contentLoc) return undefined;
+    const publicationDate = normalizeSitemapDate(page.updatedAt);
+    return {
+      thumbnailLoc,
+      title: AIDREAMSHOOTS_HOMEPAGE_VIDEO_TITLES[slug],
+      description: AIDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES[slug],
+      contentLoc,
+      ...(publicationDate ? { publicationDate } : {}),
+      duration: String(media.durationSeconds)
+    };
+  }
   if (!isDreamshootSite(site)) return undefined;
   const hero = Object.values(page.publishedJson.sections ?? {}).find((section) => section?.type === "editorial_hero");
   if (!hero) return undefined;
@@ -449,6 +473,21 @@ function sitemapMediaUrl(site: Site, value: string | undefined): string {
     // Aidreamcapes publishes its sitemap media from the repository's public
     // asset namespace. Do not advertise a stale database reference when the
     // corresponding file is absent from the release being built.
+    const localAsset = nodePath.join(process.cwd(), "public", parsed.pathname.replace(/^\/+/, ""));
+    return fs.existsSync(localAsset) ? resolved : "";
+  } catch {
+    return "";
+  }
+}
+
+function aidreamshootsVideoSitemapMediaUrl(site: Site, value: string | undefined): string {
+  if (!isAidreamshootsStorefrontSite(site)) return "";
+  const resolved = absoluteMediaUrl(site, value);
+  if (!resolved) return "";
+  try {
+    const parsed = new URL(resolved);
+    if (parsed.hostname.toLowerCase() !== new URL(AIDREAMSHOOTS_EU_ORIGIN).hostname) return "";
+    if (!parsed.pathname.startsWith("/assets/sites/site_aidreamshoots/")) return "";
     const localAsset = nodePath.join(process.cwd(), "public", parsed.pathname.replace(/^\/+/, ""));
     return fs.existsSync(localAsset) ? resolved : "";
   } catch {
@@ -615,6 +654,7 @@ function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   const pageSeo = page.publishedJson.seo;
   const canonicalValue = pageSeo?.canonical ?? pageSeo?.canonicalPath ?? page.slug;
   const canonicalPath = canonicalPublicPath(normalizePath(/^https?:\/\//i.test(canonicalValue) ? new URL(canonicalValue).pathname : canonicalValue));
+  if (site.id === "site_aidreamcapes_xby" && canonicalAidreamcapesEuPublicPath(canonicalPath) !== canonicalPath) return "";
   if (site.id === AIDREAMCAPES_SITE_ID && (canonicalPath === "/tools" || aidreamcapesLegacyVideoSaveTheDatePath(canonicalPath))) return "";
   if (isAidreamcapesEuRetiredPublicPath(site.id, canonicalPath)) return "";
   if (isRetiredAidreamcapesPublicPath(site.slug, normalizePath(page.slug)) || isRetiredAidreamcapesPublicPath(site.slug, canonicalPath)) return "";
@@ -1044,6 +1084,10 @@ function canonicalBlogPathForSite(site: Site, path: string): string {
 
 function canonicalDirectoryPathForSite(site: Site, path: string): string {
   const normalized = normalizePath(path);
+  if (site.id === "site_aidreamcapes_xby") {
+    const euCanonicalPath = canonicalAidreamcapesEuPublicPath(normalized);
+    if (euCanonicalPath !== normalized) return euCanonicalPath;
+  }
   // A legacy EU catalogue serializer sometimes prefixed the image root twice
   // (for example `ai-image-generation-avatar`). Treat it as the same current
   // detail route so sitemap generation cannot publish a guaranteed 404.

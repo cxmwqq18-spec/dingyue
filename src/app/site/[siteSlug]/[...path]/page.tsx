@@ -20,7 +20,7 @@ import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/sp
 import { storefrontPathForRouteMode, storefrontRouteModeForHeaders, type StorefrontRouteMode } from "@/lib/storefront-route-mode";
 import { isPrimaryMydreamshootsSlug, usesAiGenerationPublicRoutes, usesAiGenerationPublicSlug } from "@/lib/storefront-context/capabilities";
 import { aidreamcapesImageThemePathForRequest, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
-import { isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
+import { canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { canonicalUrlForSite, createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
@@ -523,6 +523,10 @@ export default async function SiteCatchAllPage({
     });
   }
   if (isAidreamcapesEuRetiredPublicPath(publicSlug, slug)) notFound();
+  if (publicSlug === "aidreamcapes-eu") {
+    const canonicalEuPath = canonicalAidreamcapesEuPublicPath(slug);
+    if (canonicalEuPath !== slug) permanentRedirect(routePath(canonicalEuPath));
+  }
   if (isRetiredAidreamcapesPublicPath(publicSlug, slug)) notFound();
   if (publicSlug === "aidreamcapes" || publicSlug === "aidreamcapes-eu") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);

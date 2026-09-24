@@ -12,6 +12,7 @@ import { isAidreamshootsStorefrontSite } from "@/lib/spanish-storefronts";
 import { canonicalPathForPage, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 import { canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import { AIDREAMCAPES_EU_SITE_ID, canonicalAidreamcapesEuPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import type {
   EffectiveIndexability,
   EffectivePublishedPage,
@@ -465,6 +466,12 @@ export function resolvePublishedRouteDisposition(snapshot: PublishedSiteSnapshot
   }
   if (isPrimaryMydreamshootsSite(snapshot.site) && DEFERRED_MYDREAMSHOOTS_VIDEO_PATHS.has(requestedPath)) {
     return { kind: "not_found", status: 404, path: requestedPath };
+  }
+  if (snapshot.site.id === AIDREAMCAPES_EU_SITE_ID) {
+    const canonicalPath = canonicalAidreamcapesEuPublicPath(requestedPath);
+    if (canonicalPath !== requestedPath && snapshot.publishedPaths.includes(canonicalPath)) {
+      return resolvePublishedRedirectDisposition(snapshot, requestedPath, canonicalPath, 308);
+    }
   }
   const exactPublishedRoute = snapshot.publishedRoutes.find((route) =>
     route.disposition === "redirect" ? route.aliasPath === requestedPath : route.canonicalPath === requestedPath

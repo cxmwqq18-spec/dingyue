@@ -8,7 +8,8 @@ import { aiVideoTopicLandingContentFromSection } from "@/lib/ai-video-topic-cont
 import { talkingPhotoContentFromSection } from "@/lib/talking-photo-content";
 import { imageThemeDetailContentFromSection } from "@/lib/aidreamcapes-image-theme-content";
 import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
-import { AIDREAMCAPES_EU_THEME_SLUGS, aidreamcapesEuSeoContent } from "@/lib/aidreamcapes-eu-seo-content";
+import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSeoContentForSlug } from "@/lib/aidreamcapes-eu-seo-content";
+import { aidreamcapesEuVideoTopic, aidreamcapesEuVideoTopicFromPath } from "@/lib/aidreamcapes-eu-video-media";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
 import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
@@ -19,6 +20,12 @@ import {
   AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY,
   isAidreamshootsEngagementFrenchPage
 } from "@/lib/aidreamshoots-engagement-photo-french";
+import {
+  AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA,
+  AIDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES,
+  AIDREAMSHOOTS_HOMEPAGE_VIDEO_TITLES,
+  aidreamshootsVideoTopicSlugForPath
+} from "@/lib/aidreamshoots-video-media";
 import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue, VideoTheme } from "@/lib/types";
 
 export type JsonLdNode = Record<string, unknown>;
@@ -135,6 +142,12 @@ function collapseSpanishXbyBrandRepeats(value: string): string {
 }
 
 function schemaServiceType(site: Site, pagePath: string): string {
+  if (site.id === "site_aidreamcapes_xby") {
+    const videoTopic = aidreamcapesEuVideoTopicFromPath(pagePath);
+    if (videoTopic) return `service de création de ${videoTopic.label.toLowerCase()} avec l’IA`;
+    if (pagePath.startsWith("/tools/")) return "service de création et de retouche photo avec l’IA";
+    return "service de création visuelle avec l’IA";
+  }
   if (isAidreamcapesAdsTestingPage(site, pagePath)) return "AI UGC product advertising video generation service";
   if (isAidreamcapesBrandCreatorPage(site, pagePath)) {
     if (pagePath.endsWith("/founder-update")) return "AI founder update video generation service";
@@ -165,7 +178,7 @@ function schemaServiceType(site: Site, pagePath: string): string {
 
 function itemListName(site: Site, title: string): string {
   if (isSpanishXbySite(site)) return isAidreamcapesSite(site) ? `${title} opciones de album de viaje` : `${title} opciones de paquete`;
-  if (isAidreamcapesSite(site)) return `${title} occasion album options`;
+  if (isAidreamcapesSite(site)) return site.id === "site_aidreamcapes_xby" ? `${title} options de création` : `${title} occasion album options`;
   return `${title} package options`;
 }
 
@@ -436,7 +449,9 @@ function homepageOfferCatalogSchema(site: Site, routeMode: "host" | "path"): Jso
     "@id": `${baseUrl}#plans`,
     name: isSpanishXbySite(site)
       ? isAidreamcapesSite(site) ? `Paquetes de retrato de viaje y creditos ${siteName}` : `Paquetes de fotos y creditos ${siteName}`
-      : isAidreamcapesSite(site) ? "Aidreamcapes occasion portrait packages and credits" : "MyDreamShoots photo packages and credits",
+      : isAidreamcapesSite(site)
+        ? site.id === "site_aidreamcapes_xby" ? "Forfaits photo et crédits Aidreamcapes" : "Aidreamcapes occasion portrait packages and credits"
+        : "MyDreamShoots photo packages and credits",
     url: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, "/pricing"))
   };
 }
@@ -485,7 +500,9 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
         ...(profile.email ? { email: profile.email } : {}),
         ...(profile.phone ? { telephone: profile.phone } : {}),
         contactType: "customer support",
-        availableLanguage: site.id === "site_aidreamcapes_xby" ? ["fr-FR", "en"] : ["en"]
+        availableLanguage: site.id === "site_aidreamcapes_xby"
+          ? ["fr-FR"]
+          : isAidreamshootsStorefrontSite(site) ? ["es-ES", "en"] : ["en"]
       }
     } : {}),
     ...(address ? { address } : {}),
@@ -518,7 +535,7 @@ function aidreamcapesEuThemeSlug(site: Site, pagePath: string): string | undefin
   const parts = pagePath.split("/").filter(Boolean);
   if (parts.length !== 2 || parts[0] !== "ai-image-generation") return undefined;
   const slug = parts[1].toLowerCase();
-  return AIDREAMCAPES_EU_THEME_SLUGS.includes(slug) ? slug : undefined;
+  return AIDREAMCAPES_EU_DIRECTORY_SLUGS.includes(slug) ? slug : undefined;
 }
 
 function isAidreamcapesEuSaveTheDatePage(site: Site, pagePath: string | undefined): boolean {
@@ -650,6 +667,16 @@ function faqSchema(site: Site, pageJson: ThemePageJson | undefined, input?: Json
         .filter(Boolean) as JsonLdNode[]
     };
   }
+  const aidreamcapesEuVideo = input?.pagePath && site.id === "site_aidreamcapes_xby"
+    ? aidreamcapesEuVideoTopicFromPath(input.pagePath)
+    : undefined;
+  if (aidreamcapesEuVideo) {
+    const mainEntity = [
+      faqQuestionNode(site, `Que permet de créer ${aidreamcapesEuVideo.label.toLowerCase()} ?`, aidreamcapesEuVideo.description),
+      faqQuestionNode(site, "Quelles photos utiliser pour commencer ?", "Utilisez des images nettes dont vous détenez les droits ou l’autorisation, avec un sujet clairement visible et une intention visuelle précise.")
+    ].filter(Boolean) as JsonLdNode[];
+    return { "@type": "FAQPage", inLanguage: "fr-FR", mainEntity };
+  }
   const aidreamcapesEuSlug = input?.pagePath ? aidreamcapesEuThemeSlug(site, input.pagePath) : undefined;
   if (aidreamcapesEuSlug) {
     const section = pageJson?.sectionsOrder
@@ -659,7 +686,7 @@ function faqSchema(site: Site, pageJson: ThemePageJson | undefined, input?: Json
       blockValue(block, "question", blockValue(block, "title")),
       faqAnswerText(block)
     ] as [string, string]) ?? [];
-    const content = aidreamcapesEuSeoContent(aidreamcapesEuSlug);
+    const content = aidreamcapesEuSeoContentForSlug(aidreamcapesEuSlug);
     const sourceItems = visibleItems.length ? visibleItems : (content?.faqItems ?? []);
     const seen = new Set<string>();
     const mainEntity = sourceItems
@@ -742,6 +769,7 @@ function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string,
   const tags = listText(sectionOfType(pageJson, "blog_article")?.settings.tags);
   return {
     "@type": "BlogPosting",
+    ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
     headline: articleSectionValue(pageJson, "title") || title,
     description: articleSectionValue(pageJson, "summary") || description,
     author: {
@@ -798,6 +826,36 @@ function publishedStandardPageSchema(input: JsonLdInput, title: string, descript
   };
 }
 
+function spanishStorefrontWebPageSchema(input: JsonLdInput, title: string, description: string): JsonLdNode | undefined {
+  if (!isAidreamshootsStorefrontSite(input.site) || !input.context.seo.index) return undefined;
+  const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
+  const url = absoluteUrl(input.site, input.routeMode, path);
+  const media = input.context.publishedPageMedia?.status === "ready"
+    ? input.context.publishedPageMedia.primaryImage
+    : input.context.publishedStandardPageMedia?.status === "ready"
+      ? input.context.publishedStandardPageMedia.jsonLdImage
+      : input.context.seo.ogImage;
+  return {
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    name: title,
+    description,
+    url,
+    inLanguage: "es-ES",
+    ...(media ? {
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        "@id": `${url}#primaryimage`,
+        url: absoluteUrl(input.site, input.routeMode, media),
+        contentUrl: absoluteUrl(input.site, input.routeMode, media)
+      }
+    } : {}),
+    isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
+    publisher: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
+    mainEntityOfPage: url
+  };
+}
+
 function aidreamcapesEuPublicWebPageSchema(input: JsonLdInput, title: string, description: string): JsonLdNode | undefined {
   if (input.site.id !== "site_aidreamcapes_xby" || aidreamcapesEuThemeSlug(input.site, input.pagePath)) return undefined;
   const url = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath));
@@ -844,6 +902,7 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
       "@type": "Service",
       name: title,
       description,
+      ...(input.site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
       provider: { "@type": "Organization", name: siteBrandName(input.site) },
       serviceType: schemaServiceType(input.site, path),
       url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, path))
@@ -861,9 +920,13 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
         availability: checkoutEnabled ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
         category: isSpanishXbySite(input.site)
           ? product.type === "subscription" ? "suscripcion de fotos IA" : "paquete de creditos IA"
+          : input.site.id === "site_aidreamcapes_xby"
+            ? product.type === "subscription" ? "abonnement de création photo IA" : "forfait de crédits IA"
           : product.type === "subscription" ? "AI photo subscription" : "AI photo credit pack",
         description: isSpanishXbySite(input.site)
           ? `${price.creditsGranted} creditos${price.interval === "one_time" ? "" : ` por ${price.interval}`}`
+          : input.site.id === "site_aidreamcapes_xby"
+            ? `${price.creditsGranted} crédits${price.interval === "one_time" ? "" : ` par ${price.interval}`}`
           : `${price.creditsGranted} credits${price.interval === "one_time" ? "" : ` per ${price.interval}`}`,
         url
       }));
@@ -871,7 +934,9 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
       ? {
           "@type": "OfferCatalog",
           "@id": `${url}#offers`,
-          name: isSpanishXbySite(input.site) ? `${siteName} planes y paquetes de creditos` : `${siteName} plans and credit packs`,
+          name: isSpanishXbySite(input.site)
+            ? `${siteName} planes y paquetes de creditos`
+            : input.site.id === "site_aidreamcapes_xby" ? `${siteName} abonnements et forfaits de crédits` : `${siteName} plans and credit packs`,
           itemListElement: offers
         }
       : undefined;
@@ -885,6 +950,7 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
         "@type": "Service",
         name: title,
         description,
+        ...(input.site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
         provider: { "@type": "Organization", name: siteName },
         serviceType: isSpanishXbySite(input.site)
           ? isAidreamcapesSite(input.site) ? "servicio de retratos de viaje IA" : "servicio de generacion de fotos IA"
@@ -896,6 +962,7 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
         "@type": "SoftwareApplication",
         name: siteName,
         description,
+        ...(input.site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
         applicationCategory: "PhotographyApplication",
         operatingSystem: "Web",
         url,
@@ -1261,6 +1328,70 @@ function editorialVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
   }];
 }
 
+function aidreamcapesEuVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
+  if (input.site.id !== "site_aidreamcapes_xby") return [];
+  const media = aidreamcapesEuVideoTopicFromPath(input.pagePath);
+  if (!media) return [];
+  const pageUrl = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath));
+  const uploadDate = normalizedUploadDate(input.page.updatedAt);
+  return [{
+    "@type": "VideoObject",
+    "@id": `${pageUrl}#video`,
+    name: media.title,
+    description: media.description,
+    inLanguage: "fr-FR",
+    thumbnailUrl: [absoluteUrl(input.site, input.routeMode, media.posterUrl)],
+    ...(uploadDate ? { uploadDate } : {}),
+    duration: iso8601Duration(media.durationSeconds),
+    contentUrl: absoluteUrl(input.site, input.routeMode, media.videoUrl),
+    encodingFormat: "video/mp4",
+    width: media.width,
+    height: media.height,
+    url: pageUrl,
+    mainEntityOfPage: pageUrl,
+    isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
+    publisher: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
+    potentialAction: { "@type": "WatchAction", target: pageUrl }
+  }];
+}
+
+function spanishVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
+  if (!isAidreamshootsStorefrontSite(input.site) || !input.context.seo.index) return [];
+  const requestedSlug = aidreamshootsVideoTopicSlugForPath(input.pagePath);
+  const slugs = input.pagePath === "/"
+    ? Object.keys(AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA).filter((slug) => AIDREAMSHOOTS_HOMEPAGE_VIDEO_TITLES[slug])
+    : requestedSlug ? [requestedSlug] : [];
+  if (!slugs.length) return [];
+  const pageUrl = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath));
+  const pageDescriptionValue = pageDescription(input.site, input.page, input.context);
+  const uploadDate = normalizedUploadDate(input.page.updatedAt);
+  return slugs.flatMap((slug) => {
+    const media = AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA[slug];
+    if (!media || !uploadDate) return [];
+    const name = cleanSchemaText(input.site, AIDREAMSHOOTS_HOMEPAGE_VIDEO_TITLES[slug], slug);
+    const description = cleanSchemaText(input.site, AIDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES[slug], pageDescriptionValue);
+    return [{
+      "@type": "VideoObject",
+      "@id": `${pageUrl}#video-${slug}`,
+      name,
+      description,
+      thumbnailUrl: [absoluteUrl(input.site, input.routeMode, media.poster)],
+      uploadDate,
+      duration: iso8601Duration(media.durationSeconds),
+      contentUrl: absoluteUrl(input.site, input.routeMode, media.video),
+      url: pageUrl,
+      mainEntityOfPage: pageUrl,
+      inLanguage: "es-ES",
+      isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
+      publisher: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
+      potentialAction: {
+        "@type": "WatchAction",
+        target: pageUrl
+      }
+    }];
+  });
+}
+
 function collectionPageSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
   if (isAidreamcapesImageThemePath(input.site.slug, input.pagePath) || aidreamcapesEuThemeSlug(input.site, input.pagePath)) return [];
   if (!input.pagePath.startsWith("/collections") && !input.pagePath.startsWith("/ai-image-generation")) return [];
@@ -1399,6 +1530,7 @@ function aidreamcapesImageThemeDetailSchema(input: JsonLdInput, title: string, d
       "@id": `${url}#application`,
       name: content.schema.applicationName,
       description,
+      inLanguage: "fr-FR",
       applicationCategory: "BusinessApplication",
       applicationSubCategory: content.schema.applicationSubCategory,
       operatingSystem: "Web",
@@ -1410,6 +1542,7 @@ function aidreamcapesImageThemeDetailSchema(input: JsonLdInput, title: string, d
       "@id": `${url}#service`,
       name: title,
       description,
+      inLanguage: "fr-FR",
       serviceType: content.schema.serviceType,
       provider: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
       url
@@ -1420,7 +1553,7 @@ function aidreamcapesImageThemeDetailSchema(input: JsonLdInput, title: string, d
 function aidreamcapesEuImageThemeDetailSchema(input: JsonLdInput, title: string, description: string): JsonLdNode[] {
   const slug = aidreamcapesEuThemeSlug(input.site, input.pagePath);
   if (!slug) return [];
-  const content = aidreamcapesEuSeoContent(slug);
+  const content = aidreamcapesEuSeoContentForSlug(slug);
   if (!content) return [];
   const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
   const url = absoluteUrl(input.site, input.routeMode, path);
@@ -1456,7 +1589,9 @@ function websiteSchema(site: Site, routeMode: "host" | "path"): JsonLdNode {
     "@id": `${storefrontBaseUrl(site, routeMode)}#website`,
     name: siteBrandName(site),
     url: storefrontBaseUrl(site, routeMode),
-    ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {})
+    ...(site.id === "site_aidreamcapes_xby"
+      ? { inLanguage: "fr-FR" }
+      : isAidreamshootsStorefrontSite(site) ? { inLanguage: "es-ES" } : {})
   };
 }
 
@@ -1469,6 +1604,7 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
     "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#app`,
     name: siteName,
     description,
+    ...(input.site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
     applicationCategory: "PhotographyApplication",
     operatingSystem: "Web",
     url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath)),
@@ -1479,7 +1615,8 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
 
 export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   const isImageThemeRoute = isAidreamcapesImageThemePath(input.site.slug, input.pagePath);
-  const routeInput: JsonLdInput = input.context && !isImageThemeRoute
+  const isAidreamcapesEuVideoRoute = input.site.id === "site_aidreamcapes_xby" && Boolean(aidreamcapesEuVideoTopicFromPath(input.pagePath));
+  const routeInput: JsonLdInput = input.context && !isImageThemeRoute && !isAidreamcapesEuVideoRoute
     ? { ...input, pagePath: input.context.seo.canonicalPath }
     : input;
   const resolvedInput: JsonLdInput = isAidreamcapesImageThemePath(routeInput.site.slug, routeInput.pagePath)
@@ -1493,6 +1630,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     storefrontApplicationSchema(resolvedInput, title, description),
     breadcrumbs(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, resolvedInput.publishedRoutePaths),
     publishedStandardPageSchema(resolvedInput, title, description),
+    spanishStorefrontWebPageSchema(resolvedInput, title, description),
     aidreamcapesEuPublicWebPageSchema(resolvedInput, title, description),
     policyWebPageSchema(resolvedInput, title, description),
     ...aidreamcapesImageThemeDetailSchema(resolvedInput, title, description),
@@ -1502,6 +1640,8 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     articleSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, description, resolvedInput.pageJson),
     ...collectionPageSchema(resolvedInput, title, description),
     ...editorialVideoObjectSchemas(resolvedInput),
+    ...aidreamcapesEuVideoObjectSchemas(resolvedInput),
+    ...spanishVideoObjectSchemas(resolvedInput),
     ...homeVideoObjectSchemas(resolvedInput),
     ...serviceOrProductSchema(resolvedInput, title, description)
   ];
@@ -1550,6 +1690,7 @@ export function buildToolDirectoryJsonLd({
       ? talkingPhotoContentFromSection(talkingPhotoSection)
       : undefined;
   const item = topicContent ? undefined : getSeoDirectoryContentForSite(site, "tool", toolSlug);
+  const euVideoTopic = site.id === "site_aidreamcapes_xby" ? aidreamcapesEuVideoTopic(toolSlug) : undefined;
   const pagePath = publicPath ?? topicContent?.seo.canonicalPath ?? item?.canonicalPath ?? `/tools/${toolSlug}`;
   const path = schemaPagePath(site, routeMode, pagePath);
   const url = absoluteUrl(site, routeMode, path);
@@ -1563,15 +1704,16 @@ export function buildToolDirectoryJsonLd({
           .filter(Boolean)
       }
     : toolDirectoryFaqSchema(site, item!);
-  const label = topicContent?.hero.title ?? item!.label;
-  const title = context.seo.title;
-  const description = context.seo.description;
+  const label = euVideoTopic?.label ?? topicContent?.hero.title ?? item!.label;
+  const title = euVideoTopic?.title ?? context.seo.title;
+  const description = euVideoTopic?.description ?? context.seo.description;
   const isAdsTestingPage = isAidreamcapesAdsTestingPage(site, pagePath);
   const isAidreamcapesBrandCreator = isAidreamcapesBrandCreatorPage(site, pagePath);
   const softwareApplication: JsonLdNode = {
     "@type": "SoftwareApplication",
     name: title,
     description,
+    ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
     applicationCategory: isAdsTestingPage
       ? "AI UGC and product advertising tool"
       : isAidreamcapesBrandCreator ? "AI brand and creator video tool"
@@ -1601,6 +1743,9 @@ export function buildToolDirectoryJsonLd({
   const graph: JsonLdNode[] = [
     organizationSchema(site, routeMode, context, pagePath),
     websiteSchema(site, routeMode),
+    ...(isAidreamshootsStorefrontSite(site)
+      ? [spanishStorefrontWebPageSchema({ site, page: context.page, pageJson, pagePath, routeMode, context }, title, description)].filter((node): node is JsonLdNode => Boolean(node))
+      : []),
     ...(site.id === "site_aidreamcapes_xby" ? [{
       "@type": "WebPage",
       "@id": `${url}#webpage`,
@@ -1617,6 +1762,7 @@ export function buildToolDirectoryJsonLd({
       "@type": "Service",
       name: label,
       description,
+      ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
       serviceType: schemaServiceType(site, pagePath),
       provider: {
         "@type": "Organization",
@@ -1625,8 +1771,15 @@ export function buildToolDirectoryJsonLd({
       },
       url
     },
-    faq
+    faq,
+    ...(site.id === "site_aidreamcapes_xby"
+      ? aidreamcapesEuVideoObjectSchemas({ site, page: context.page, pageJson, pagePath, routeMode, context })
+      : [])
   ];
+
+  if (isAidreamshootsStorefrontSite(site)) {
+    graph.push(...spanishVideoObjectSchemas({ site, page: context.page, pageJson, pagePath, routeMode, context }));
+  }
 
   return [{ "@context": "https://schema.org", "@graph": graph }];
 }
@@ -1645,11 +1798,11 @@ export function buildCollectionDirectoryJsonLd({
   context: StorefrontContext;
 }): JsonLdNode[] {
   const pageSlug = canonicalCollectionSlugForCandidate(site, collectionSlug) || slugifySchemaPart(collectionSlug);
-  const aidreamcapesEuSlug = site.id === "site_aidreamcapes_xby" && AIDREAMCAPES_EU_THEME_SLUGS.includes(pageSlug)
+  const aidreamcapesEuSlug = site.id === "site_aidreamcapes_xby" && AIDREAMCAPES_EU_DIRECTORY_SLUGS.includes(pageSlug)
     ? pageSlug
     : undefined;
   if (aidreamcapesEuSlug) {
-    const content = aidreamcapesEuSeoContent(aidreamcapesEuSlug);
+    const content = aidreamcapesEuSeoContentForSlug(aidreamcapesEuSlug);
     if (!content) return [];
     const pagePath = content.canonicalPath;
     const url = absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, pagePath));
@@ -1690,6 +1843,7 @@ export function buildCollectionDirectoryJsonLd({
           "@id": `${url}#service`,
           name: content.label,
           description: content.description,
+          inLanguage: "fr-FR",
           serviceType: "service de création et retouche photo avec IA",
           provider: { "@id": `${storefrontBaseUrl(site, routeMode)}#organization` },
           url

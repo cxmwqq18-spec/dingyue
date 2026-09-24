@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { findPage } from "@/lib/data";
 import { imageThemeDetailContentFromPage } from "@/lib/aidreamcapes-image-theme-content";
 import { parsePublicCollectionRouteForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
@@ -10,10 +10,10 @@ import { renderStorefrontPage } from "@/lib/storefront-render";
 import { createPublishedSiteSnapshot } from "@/lib/storefront-context";
 import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
 import { canResolveCollectionSlugForSite } from "@/lib/storefront-render";
-import { storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
+import { storefrontPathForRouteMode, storefrontRouteModeForHeaders } from "@/lib/storefront-route-mode";
 import { AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY, isAidreamshootsEngagementFrenchPage } from "@/lib/aidreamshoots-engagement-photo-french";
 import { AIDREAMCAPES_IMAGE_THEME_ROOT_PATH, isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
-import { isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
+import { canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import type { PlatformState, Site } from "@/lib/types";
 
 type RouteParams = Promise<{ siteSlug: string; themeSlug: string }>;
@@ -37,6 +37,7 @@ async function loadImageThemeState(siteSlug: string, themeSlug: string): Promise
 
 export async function generateMetadata({ params }: { params: RouteParams }): Promise<Metadata> {
   const { siteSlug, themeSlug } = await params;
+  if (siteSlug === "aidreamcapes-eu" && canonicalAidreamcapesEuPublicPath(`${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`) !== `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`) return {};
   const loaded = await loadImageThemeState(siteSlug, themeSlug);
   if (!loaded) return {};
   const { state, site } = loaded;
@@ -109,10 +110,17 @@ export default async function ImageThemePage({
   searchParams?: SearchParams;
 }) {
   const resolved = await params;
+  const requestedPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${resolved.themeSlug}`;
+  if (resolved.siteSlug === "aidreamcapes-eu") {
+    const canonicalEuPath = canonicalAidreamcapesEuPublicPath(requestedPath);
+    if (canonicalEuPath !== requestedPath) {
+      const routeMode = storefrontRouteModeForHeaders(await headers(), resolved.siteSlug);
+      permanentRedirect(storefrontPathForRouteMode(resolved.siteSlug, canonicalEuPath, routeMode));
+    }
+  }
   const loaded = await loadImageThemeState(resolved.siteSlug, resolved.themeSlug);
   if (!loaded) notFound();
   const { state, site } = loaded;
-  const requestedPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${resolved.themeSlug}`;
   if (isAidreamcapesImageThemePath(resolved.siteSlug, requestedPath)) {
     const routeMode = storefrontRouteModeForHeaders(await headers(), resolved.siteSlug);
     if (!imageThemeDetailContentFromPage(findPage(site, requestedPath)!)) notFound();

@@ -3,10 +3,13 @@ import { ArrowRight, ChevronRight } from "lucide-react";
 import type { PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
 
 export function SaveTheDateDirectory({ groups, createHref = "/app/create", french = false, spanish = false }: { groups: PublishedSaveTheDateGroup[]; createHref?: string; french?: boolean; spanish?: boolean }) {
+  const localizeFrenchDatePhrase = (value: string) => value.replace(/\bSave the Date\b/gi, "annonce de date");
   const visibleGroups = groups
     .map((group) => ({
       ...group,
+      label: french ? localizeFrenchDatePhrase(group.label) : group.label,
       items: group.items
+        .map((item) => french ? { ...item, label: localizeFrenchDatePhrase(item.label), description: localizeFrenchDatePhrase(item.description) } : item)
         .sort((left, right) => left.sortOrder - right.sortOrder || left.label.localeCompare(right.label))
     }))
     .filter((group) => group.items.length)
@@ -14,8 +17,8 @@ export function SaveTheDateDirectory({ groups, createHref = "/app/create", frenc
   const totalItems = visibleGroups.reduce((sum, group) => sum + group.items.length, 0);
   const copy = french
     ? {
-        eyebrow: "Galerie Save the Date",
-        title: "Explorez tous les thèmes Save the Date",
+        eyebrow: "Galerie d’annonces de date",
+        title: "Explorez tous les thèmes d’annonces de date",
         intro: "Comparez des directions romantiques pour annoncer une date, préparer une invitation, raconter une demande en mariage ou partager un souvenir de couple avant d’ouvrir une page dédiée.",
         category: "Catégorie",
         categorySingular: "catégorie",
@@ -23,8 +26,8 @@ export function SaveTheDateDirectory({ groups, createHref = "/app/create", frenc
         themeSingular: "thème",
         themePlural: "thèmes",
         openTheme: "Ouvrir le thème",
-        empty: "Les thèmes Save the Date sont en cours de préparation.",
-        create: "Créer votre histoire Save the Date"
+        empty: "Les thèmes d’annonces de date sont en cours de préparation.",
+        create: "Créer votre histoire d’annonce de date"
       }
     : spanish
       ? {

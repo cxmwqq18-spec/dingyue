@@ -14,7 +14,8 @@ import {
 } from "@/lib/photo-package-taxonomy";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { aidreamshootsXbyThemeContent } from "@/lib/aidreamshoots-xby-seo-content";
-import { AIDREAMCAPES_EU_THEME_SLUGS, aidreamcapesEuSeoContent, aidreamcapesEuSeoDirectoryContent } from "@/lib/aidreamcapes-eu-seo-content";
+import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSeoContentForSlug } from "@/lib/aidreamcapes-eu-seo-content";
+import { canonicalAidreamcapesEuPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import { mydreamshootsPublishedRouteForSlug } from "@/lib/mydreamshoots-published-contract";
 import {
@@ -2424,6 +2425,10 @@ export function canonicalDreamshootDirectorySlug(kind: SeoDirectoryKind, slug: s
 
 export function canonicalSeoDirectorySlugForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): string {
   const slug = normalizeDirectorySlug(rawSlug);
+  if (isAidreamcapesEuSite(site) && kind === "collection") {
+    const canonicalPath = canonicalAidreamcapesEuPublicPath(`/ai-image-generation/${slug}`);
+    return normalizeDirectorySlug(canonicalPath);
+  }
   if (isAidreamcapesSite(site)) return canonicalAidreamcapesDirectorySlug(kind, slug);
   if (isSpanishXbySite(site) && kind === "collection") return canonicalSpanishXbyCollectionSlug(slug);
   return canonicalDreamshootDirectorySlug(kind, slug);
@@ -2898,7 +2903,7 @@ export function isExplicitSeoDirectoryContent(kind: SeoDirectoryKind, rawSlug: s
 export function isExplicitSeoDirectoryContentForSite(site: Site | undefined, kind: SeoDirectoryKind, rawSlug: string): boolean {
   const slug = canonicalSeoDirectorySlugForSite(site, kind, rawSlug);
   if (slug === "text-to-video" || slug === "image-to-video") return false;
-  if (isAidreamcapesEuSite(site) && kind === "collection") return Boolean(aidreamcapesEuSeoContent(slug) || aidreamcapesEuSeoDirectoryContent(slug));
+  if (isAidreamcapesEuSite(site) && kind === "collection") return Boolean(aidreamcapesEuSeoContentForSlug(slug));
   if (isAidreamcapesSite(site)) {
     return kind === "collection" ? Boolean(aidreamcapesCollectionDirectory[slug]) : Boolean(aidreamcapesToolDirectory[slug]);
   }
@@ -2909,7 +2914,7 @@ export function isExplicitSeoDirectoryContentForSite(site: Site | undefined, kin
 }
 
 export function getExplicitSeoDirectorySlugsForSite(site: Site | undefined, kind: SeoDirectoryKind): string[] {
-  if (isAidreamcapesEuSite(site) && kind === "collection") return [...AIDREAMCAPES_EU_THEME_SLUGS];
+  if (isAidreamcapesEuSite(site) && kind === "collection") return [...AIDREAMCAPES_EU_DIRECTORY_SLUGS];
   if (isAidreamcapesSite(site)) {
     return Object.keys(kind === "collection" ? aidreamcapesCollectionDirectory : aidreamcapesToolDirectory);
   }
@@ -3167,6 +3172,30 @@ function fallbackCollection(slug: string, brandName = "myDreamshoots"): SeoDirec
   };
 }
 
+function aidreamcapesEuUnpublishedDirectoryContent(kind: SeoDirectoryKind, slug: string): SeoDirectoryContent {
+  const canonicalPath = kind === "collection"
+    ? `/ai-image-generation/${slug}`
+    : `/ai-video-generation/${slug}`;
+  return {
+    slug,
+    explicit: false,
+    label: "Page non publiée",
+    title: "Page temporairement indisponible | Aidreamcapes",
+    description: "Cette page n’est pas disponible dans le catalogue français publié d’Aidreamcapes.",
+    keywords: "Aidreamcapes, page indisponible",
+    canonicalPath,
+    h2: "Page temporairement indisponible",
+    h3: ["Catalogue français", "Contenu en préparation"],
+    intro: "Cette adresse n’est pas encore associée à un contenu français publié.",
+    details: ["La page reste hors index tant que son contenu français n’est pas validé."],
+    useCases: [],
+    workflow: ["Revenir au catalogue publié."],
+    internalLinks: [{ label: "Voir le catalogue photo", href: "/ai-image-generation" }],
+    ctaLabel: "Voir le catalogue",
+    ctaHref: kind === "collection" ? "/ai-image-generation" : "/ai-video-generation"
+  };
+}
+
 function fallbackTool(slug: string, brandName = "myDreamshoots"): SeoDirectorySeed {
   const label = singularTopicLabel(cleanDirectoryLabel(slug));
   const lower = lowerTopic(label);
@@ -3378,18 +3407,20 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
   const slug = normalizeDirectorySlug(rawSlug);
   if (isAidreamcapesEuSite(site) && kind === "collection") {
     const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, slug);
-    const euContent = aidreamcapesEuSeoContent(canonicalSlug) || aidreamcapesEuSeoDirectoryContent(canonicalSlug);
+    const euContent = aidreamcapesEuSeoContentForSlug(canonicalSlug);
     if (euContent) {
       return {
         ...euContent,
         internalLinks: normalizeSeoDirectoryInternalLinks(euContent.internalLinks)
       };
     }
+    return aidreamcapesEuUnpublishedDirectoryContent(kind, canonicalSlug);
   }
   if (isAidreamcapesEuSite(site) && kind === "tool") {
     const canonicalSlug = canonicalSeoDirectorySlugForSite(site, kind, slug);
     const euToolContent = aidreamcapesEuFrenchToolContent(canonicalSlug);
     if (euToolContent) return euToolContent;
+    return aidreamcapesEuUnpublishedDirectoryContent(kind, canonicalSlug);
   }
   const aidreamcapes = isAidreamcapesSite(site);
   const spanishXby = isSpanishXbySite(site);

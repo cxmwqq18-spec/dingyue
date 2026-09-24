@@ -128,7 +128,7 @@ function imageTopicFromUrl(imageUrl: string | undefined): string {
 
 function frenchThemeSubject(key: string): string | undefined {
   if (/\b(?:credit|subscription|plan|pricing|checkout)\b/.test(key)) return "Panneau de crédits pour galeries photo privées";
-  if (/(black-friday|commercial|sale-campaign|promo)/.test(key)) return "Portrait de campagne commerciale Black Friday";
+  if (/(black-friday|commercial|sale-campaign|promo)/.test(key)) return "Portrait de campagne commerciale du Vendredi noir";
   if (/(bikini|swimsuit|beach|pool|vacation)/.test(key)) return "Adulte en tenue balnéaire dans un décor de vacances";
   if (/(cannes|riviera)/.test(key)) return "Portrait adulte inspiré de Cannes et de la Riviera";
   if (/(nightlife|night-life|urban-night)/.test(key)) return "Portrait adulte dans une ambiance nocturne urbaine";
@@ -170,7 +170,7 @@ const frenchEuPackSubjects: Record<string, string> = {
   "background-changer": "Sujet intégré dans un nouvel arrière-plan",
   "background-remover": "Sujet détouré sur un fond neutre",
   bikini: "Adulte en tenue balnéaire dans un décor de vacances",
-  "black-friday": "Portrait de campagne commerciale Black Friday",
+  "black-friday": "Portrait de campagne commerciale du Vendredi noir",
   boudoir: "Portrait boudoir adulte à l’éclairage doux",
   cannes: "Portrait adulte inspiré de Cannes et de la Riviera",
   "christmas-photo": "Portrait adulte dans une scène de Noël chaleureuse",

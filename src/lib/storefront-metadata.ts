@@ -6,13 +6,14 @@ import { canonicalUrlForSite, normalizeCanonicalPath } from "@/lib/storefront-co
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
-import { AIDREAMCAPES_EU_THEME_SLUGS, aidreamcapesEuSeoContent } from "@/lib/aidreamcapes-eu-seo-content";
+import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSeoContentForSlug, aidreamcapesEuSeoContentFromPath } from "@/lib/aidreamcapes-eu-seo-content";
+import { aidreamcapesEuVideoTopicFromPath } from "@/lib/aidreamcapes-eu-video-media";
 import type { CreativePack, PlatformState, Product, Site, ThemePage } from "@/lib/types";
 
 const AIDREAMCAPES_EU_SAVE_THE_DATE_SEO_OVERRIDES: Record<string, { title: string; description: string }> = {
   "/ai-save-the-date/save-the-date": {
-    title: "Vidéo Save the Date avec IA | Aidreamcapes",
-    description: "Créez une vidéo Save the Date avec IA à partir de portraits de couple et d'une date de mariage confirmée, puis partagez une annonce claire avec vos proches."
+    title: "Vidéo d’annonce de date avec l’IA | Aidreamcapes",
+    description: "Créez une vidéo d’annonce de date avec l’IA à partir de portraits de couple et d’une date de mariage confirmée, puis partagez une annonce claire avec vos proches."
   },
   "/ai-save-the-date/wedding-invitation": {
     title: "Vidéo d’invitation de mariage avec l’IA | Aidreamcapes",
@@ -37,7 +38,7 @@ function isAidreamcapesEuImageThemePath(site: Site, value: unknown): boolean {
   if (site.id !== "site_aidreamcapes_xby") return false;
   const normalized = normalizeCanonicalPath(value, "");
   const parts = normalized.split("/").filter(Boolean);
-  return parts.length === 2 && parts[0] === "ai-image-generation" && AIDREAMCAPES_EU_THEME_SLUGS.includes(parts[1]);
+  return parts.length === 2 && parts[0] === "ai-image-generation" && AIDREAMCAPES_EU_DIRECTORY_SLUGS.includes(parts[1]);
 }
 
 export async function metadataForPublishedStorefrontPage({
@@ -101,6 +102,12 @@ export async function metadataForPublishedStorefrontPage({
   const euSaveTheDateSeo = snapshot.site.id === "site_aidreamcapes_xby"
     ? AIDREAMCAPES_EU_SAVE_THE_DATE_SEO_OVERRIDES[metadataPath]
     : undefined;
+  const euImageSeo = snapshot.site.id === "site_aidreamcapes_xby"
+    ? aidreamcapesEuSeoContentFromPath(metadataPath)
+    : undefined;
+  const euVideoTopic = snapshot.site.id === "site_aidreamcapes_xby"
+    ? aidreamcapesEuVideoTopicFromPath(metadataPath)
+    : undefined;
   const publicRouteSeo = snapshot.site.id === "site_mydreamshoots_xby"
     ? getDreamshootPublicSeoPageMetadataForSite(snapshot.site, metadataPath)
     : undefined;
@@ -129,6 +136,18 @@ export async function metadataForPublishedStorefrontPage({
       ...(targetPageSeo?.keywords?.trim()
         ? { keywords: targetPageSeo.keywords.trim() }
         : publicRouteSeo?.keywords?.trim() ? { keywords: publicRouteSeo.keywords.trim() } : {}),
+      ...(euImageSeo ? {
+        title: euImageSeo.title,
+        description: euImageSeo.description,
+        keywords: euImageSeo.keywords,
+        ogImageAlt: `Illustration de ${euImageSeo.label.toLowerCase()} pour Aidreamcapes.`
+      } : {}),
+      ...(euVideoTopic ? {
+        title: euVideoTopic.title,
+        description: euVideoTopic.description,
+        keywords: `${euVideoTopic.label}, création vidéo IA, Aidreamcapes`,
+        ogImageAlt: euVideoTopic.alt
+      } : {}),
       ...(euVideoDirectorySeo ?? {})
     }
   };
@@ -197,7 +216,7 @@ export async function metadataForPublishedStorefrontDirectoryPage({
     : undefined;
   const euCoverImage = euPack?.imageUrl?.trim() || undefined;
   const isAidreamcapesEuCollection = publishedSite.id === "site_aidreamcapes_xby" && kind === "collection";
-  const euSeoContent = isAidreamcapesEuCollection ? aidreamcapesEuSeoContent(directorySlug) : undefined;
+  const euSeoContent = isAidreamcapesEuCollection ? aidreamcapesEuSeoContentForSlug(directorySlug) : undefined;
   const directoryPageJson = pageEntity
     ? {
         ...publishedBasePage.publishedJson,

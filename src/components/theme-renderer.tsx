@@ -56,6 +56,7 @@ import { isMydreamshootsVideoContentPath, mydreamshootsVideoWatchPathForContentP
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { canonicalSpanishXbyCollectionSlug, isAidreamshootsStorefrontSite, isSpanishStorefrontSite, SPANISH_XBY_COLLECTION_ALIASES } from "@/lib/spanish-storefronts";
 import { isFrenchStorefrontSite, storefrontLocaleForSite } from "@/lib/storefront-locale";
+import { AIDREAMCAPES_EU_VIDEO_TOPIC_SLUGS, aidreamcapesEuVideoTopic } from "@/lib/aidreamcapes-eu-video-media";
 import { isAidreamcapesEuLegacyCoverGalleryDerivative } from "@/lib/aidreamcapes-eu-legacy-media";
 import { canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRemovedPublicNavigationPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { frenchCopy } from "@/lib/french-copy";
@@ -79,6 +80,11 @@ import {
 import { GUARDED_STOREFRONT_FOOTER_PATHS } from "@/lib/storefront-global-shell";
 import { storefrontOriginalLogoUrl } from "@/lib/storefront-brand-assets";
 import { storefrontResponsiveImageDimensions, storefrontResponsiveImageSet } from "@/lib/storefront-responsive-images";
+import {
+  AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA,
+  AIDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES,
+  AIDREAMSHOOTS_HOMEPAGE_VIDEO_TITLES
+} from "@/lib/aidreamshoots-video-media";
 import {
   AlertTriangle,
   ArrowRight,
@@ -1222,8 +1228,12 @@ const mydreamshootsVideoDirectoryCoverOverrides: Record<string, string> = {
   "meme-video": "/assets/dreamshoot/meme-video/meme-video-message-overload.webp"
 };
 
-function mydreamshootsVideoThemeDirectoryCover(topic: HeaderVideoGenerationTopic, fallbackImageUrl = defaultMydreamshootsVideoThemeCover) {
-  const src = mydreamshootsVideoDirectoryCoverOverrides[topic.slug] || topic.imageUrl || fallbackImageUrl;
+function mydreamshootsVideoThemeDirectoryCover(site: Site, topic: HeaderVideoGenerationTopic, fallbackImageUrl = defaultMydreamshootsVideoThemeCover) {
+  const euStorefront = isSpanishXbySite(site) || isFrenchStorefrontSite(site);
+  const configuredSrc = euStorefront
+    ? topic.imageUrl || mydreamshootsVideoDirectoryCoverOverrides[topic.slug] || fallbackImageUrl
+    : mydreamshootsVideoDirectoryCoverOverrides[topic.slug] || topic.imageUrl || fallbackImageUrl;
+  const src = euStorefront ? mediaAssetUrl(site, configuredSrc) : configuredSrc;
   return {
     alt: storefrontSourceImageAlt({ imageUrl: src, fallback: topic.label }),
     src
@@ -1405,21 +1415,22 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
     ? resolvePublishedSaveTheDateGroups(publishedSaveTheDateShowcases)
     : configuredSaveTheDateGroups;
   const saveTheDateMenuLabel = frenchHeader
-    ? "Annonces Save the Date"
+    ? "Annonces de date"
     : spanishXby
     ? (saveTheDateConfig?.menuLabel?.trim() || "Guardar la fecha").replace(/Save the Date/gi, "Guardar la fecha")
     : isMyDreamShootsCom
     ? saveTheDateConfig?.menuLabel?.trim() || "Save the Date"
     : saveTheDateConfig?.menuLabel?.trim() ?? "";
   const hasPublishedSaveTheDateProjection = publishedSaveTheDateShowcases.length > 0;
+  const frenchSaveTheDateLabel = (value: string) => value.replace(/\bSave the Date\b/gi, "annonce de date");
   const routedSaveTheDateGroups = saveTheDateGroups.map((group) => ({
     ...group,
-    label: aidreamshootsXby ? aidreamshootsSpanishSaveTheDateLabel(group.label) : group.label,
+    label: frenchHeader ? frenchSaveTheDateLabel(group.label) : aidreamshootsXby ? aidreamshootsSpanishSaveTheDateLabel(group.label) : group.label,
     items: group.items
       .filter((item) => !(isMyDreamShootsCom && isMydreamshootsRemovedLegacyRoute(canonicalSaveTheDatePath(item.href))))
       .map((item) => ({
         ...item,
-        label: aidreamshootsXby ? aidreamshootsSpanishSaveTheDateLabel(item.label) : item.label,
+        label: frenchHeader ? frenchSaveTheDateLabel(item.label) : aidreamshootsXby ? aidreamshootsSpanishSaveTheDateLabel(item.label) : item.label,
         href: hrefForPage(site, canonicalSaveTheDatePath(item.href), pagePath)
       }))
   }));
@@ -2360,7 +2371,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
           ? [
               ["Création vidéo IA", "/ai-video-generation", "product"],
               ["Meilleures vidéos IA", "/best-ai-video", "product"],
-              ["Annonces Save the Date", "/best-save-the-date", "product"],
+              ["Annonces de date", "/best-save-the-date", "product"],
               ["Création photo IA", "/ai-image-generation", "product"],
               ["Packs photo", "/best-packages", "product"],
               ["Comment ça marche", "/workflow", "product"],
@@ -3446,6 +3457,39 @@ const aidreamshootsLatestMedia = {
   blogCover: "/assets/sites/site_aidreamshoots/visuals/generated/blog/virtual-try-on-workflow-cover.webp"
 } as const;
 
+// The Spanish Best AI Image directory is curated from the latest detail-page
+// hero images. Keep this override page-scoped so older shared storefront
+// showcase behavior is not changed for the other sites or routes.
+const aidreamshootsBestAiImageLatestDetailMediaBySlug: Record<string, string> = {
+  soccer: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-soccer-diverse-20260913-v1/soccer-00-quiet-city-walk-d501ec18d0ff.webp",
+  "world-cup-fan-photos": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-soccer-diverse-20260913-v1/soccer-00-quiet-city-walk-d501ec18d0ff.webp",
+  "portrait-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-portrait-photo-diverse-20260913-v1/portrait-photo-00-quiet-city-walk-52a903358c93.webp",
+  "creator-portraits": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-portrait-photo-diverse-20260913-v1/portrait-photo-00-quiet-city-walk-52a903358c93.webp",
+  "gala-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-gala-photo-diverse-20260913-v1/gala-photo-00-quiet-city-walk-f43ed55832c1.webp",
+  "gala-photos": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-gala-photo-diverse-20260913-v1/gala-photo-00-quiet-city-walk-f43ed55832c1.webp",
+  headshot: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-headshot-diverse-20260913-v1/headshot-00-quiet-city-walk-d1c3618678fc.webp",
+  "professional-headshots": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-headshot-diverse-20260913-v1/headshot-00-quiet-city-walk-d1c3618678fc.webp",
+  "hairstyle-generator": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-hairstyle-generator-diverse-20260913-v1/hairstyle-generator-00-quiet-city-walk-206e8ab7de1b.webp",
+  hairstyle: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-hairstyle-generator-diverse-20260913-v1/hairstyle-generator-00-quiet-city-walk-206e8ab7de1b.webp",
+  cyberpunk: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-cyberpunk-diverse-20260913-v1/cyberpunk-00-quiet-city-walk-e2ff1a930e76.webp",
+  mafia: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-mafia-diverse-20260913-v1/mafia-00-quiet-city-walk-004b8e5d8de2.webp",
+  travel: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-travel-diverse-20260913-v1/travel-00-quiet-city-walk-49147472065a.webp",
+  nature: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-travel-diverse-20260913-v1/travel-00-quiet-city-walk-49147472065a.webp",
+  urban: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-urban-diverse-20260913-v1/urban-00-quiet-city-walk-91c8b0efcf71.webp",
+  "virtual-try-on": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-virtual-try-on-diverse-20260913-v1/virtual-try-on-00-quiet-city-walk-bbf0dc2804c0.webp",
+  avatar: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-avatar-diverse-20260913-v1/avatar-00-quiet-city-walk-5530547ec560.webp",
+  "street-style": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-street-style-diverse-20260913-v1/street-style-00-quiet-city-walk-2fa7d40fe7e2.webp",
+  "outdoor-creator-scenes": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-urban-diverse-20260913-v1/urban-00-quiet-city-walk-91c8b0efcf71.webp",
+  "motion-generator": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-motion-generator-diverse-20260913-v1/motion-generator-00-quiet-city-walk-18c5ecf57775.webp",
+  "ai-video-add-ons": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-motion-generator-diverse-20260913-v1/motion-generator-00-quiet-city-walk-18c5ecf57775.webp",
+  "photo-enhancer": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-photo-enhancer-diverse-20260913-v1/photo-enhancer-00-quiet-city-walk-9974ef32fbe8.webp",
+  "magic-upscaler": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-photo-enhancer-diverse-20260913-v1/photo-enhancer-00-quiet-city-walk-9974ef32fbe8.webp",
+  "christmas-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-christmas-20260913-v1/seasonal-932951600e5f.webp",
+  "christmas-photos": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-christmas-20260913-v1/seasonal-932951600e5f.webp",
+  "thanksgiving-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-thanksgiving-20260913-v1/seasonal-d30583a4a4a4.webp",
+  "thanksgiving-group-photos": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-thanksgiving-20260913-v1/seasonal-d30583a4a4a4.webp"
+};
+
 const aidreamshootsReviewMediaById: Record<string, { avatarUrl: string; resultImageUrl: string }> = {
   // Each result was generated by the selected vendor with its own matching
   // headshot as the identity reference. Keep the avatar and themed result
@@ -3637,6 +3681,67 @@ const aidreamshootsLegacyPackMediaBySlug: Record<string, string> = {
   "magic-upscaler": aidreamshootsLatestMedia.enhancer
 };
 
+// The Spanish EU catalogue has a newer, site-local cover for every public
+// image theme. Keep this mapping limited to pack covers: gallery slots still
+// use their published gallery sources, while both the directory card and the
+// detail-page hero converge on the same current cover.
+const aidreamshootsLatestPackCoverBySlug: Record<string, string> = {
+  avatar: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-avatar-diverse-20260913-v1/avatar-00-quiet-city-walk-5530547ec560.webp",
+  headshot: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-headshot-diverse-20260913-v1/headshot-00-quiet-city-walk-d1c3618678fc.webp",
+  "portrait-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-portrait-photo-diverse-20260913-v1/portrait-photo-00-quiet-city-walk-52a903358c93.webp",
+  "gala-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-gala-photo-diverse-20260913-v1/gala-photo-00-quiet-city-walk-f43ed55832c1.webp",
+  "black-friday": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-black-friday-diverse-20260913-v1/black-friday-00-quiet-city-walk-e076df98ca23.webp",
+  "only-fans": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-only-fans-diverse-20260913-v1/only-fans-00-quiet-city-walk-b4bae5c6251e.webp",
+  "singles-awareness-day": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-singles-awareness-day-diverse-20260913-v1/singles-awareness-day-00-quiet-city-walk-8d5a77bf6a13.webp",
+  "background-changer": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-background-changer-diverse-20260913-v1/background-changer-00-quiet-city-walk-c91b57dcd55a.webp",
+  "background-remover": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-background-remover-diverse-20260913-v1/background-remover-00-quiet-city-walk-88e52d90801d.webp",
+  "color-correction": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-color-correction-diverse-20260913-v1/color-correction-00-quiet-city-walk-3a55a4dbc568.webp",
+  "edit-by-prompt": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-edit-by-prompt-diverse-20260913-v1/edit-by-prompt-00-quiet-city-walk-a9c3ba00c990.webp",
+  "magic-eraser": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-magic-eraser-diverse-20260913-v1/magic-eraser-00-quiet-city-walk-810c745fa605.webp",
+  "motion-generator": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-motion-generator-diverse-20260913-v1/motion-generator-00-quiet-city-walk-18c5ecf57775.webp",
+  "old-photo-restoration": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-old-photo-restoration-diverse-20260913-v1/old-photo-restoration-00-quiet-city-walk-d1a82411e4f4.webp",
+  "photo-enhancer": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-photo-enhancer-diverse-20260913-v1/photo-enhancer-00-quiet-city-walk-9974ef32fbe8.webp",
+  "portrait-retouch": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-portrait-retouch-diverse-20260913-v1/portrait-retouch-00-quiet-city-walk-1beee566a5eb.webp",
+  "social-cards": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-social-cards-diverse-20260913-v1/social-cards-00-quiet-city-walk-506437818041.webp",
+  "unblur-image": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-unblur-image-diverse-20260913-v1/unblur-image-00-quiet-city-walk-735ba24f6713.webp",
+  "virtual-try-on": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-virtual-try-on-diverse-20260913-v1/virtual-try-on-00-quiet-city-walk-bbf0dc2804c0.webp",
+  "hairstyle-generator": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-hairstyle-generator-diverse-20260913-v1/hairstyle-generator-00-quiet-city-walk-206e8ab7de1b.webp",
+  "bikini": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-bikini-diverse-20260913-v1/bikini-00-quiet-city-walk-b3125d37b64d.webp",
+  boudoir: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-boudoir-diverse-20260913-v1/boudoir-00-quiet-city-walk-dd44e160276b.webp",
+  cannes: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-cannes-diverse-20260913-v1/cannes-00-quiet-city-walk-db6d3ceb46d6.webp",
+  cyberpunk: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-cyberpunk-diverse-20260913-v1/cyberpunk-00-quiet-city-walk-e2ff1a930e76.webp",
+  holiday: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-holiday-diverse-20260913-v1/holiday-00-quiet-city-walk-43569433ff46.webp",
+  mafia: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-mafia-diverse-20260913-v1/mafia-00-quiet-city-walk-004b8e5d8de2.webp",
+  nightlife: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-nightlife-diverse-20260913-v1/nightlife-00-quiet-city-walk-4999c22f60b4.webp",
+  "rich-lifestyle": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-rich-lifestyle-diverse-20260913-v1/rich-lifestyle-00-quiet-city-walk-907614798ac6.webp",
+  soccer: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-soccer-diverse-20260913-v1/soccer-00-quiet-city-walk-d501ec18d0ff.webp",
+  "street-style": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-street-style-diverse-20260913-v1/street-style-00-quiet-city-walk-2fa7d40fe7e2.webp",
+  swimsuit: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-swimsuit-diverse-20260913-v1/swimsuit-00-quiet-city-walk-f242846c6ada.webp",
+  travel: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-travel-diverse-20260913-v1/travel-00-quiet-city-walk-49147472065a.webp",
+  urban: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-urban-diverse-20260913-v1/urban-00-quiet-city-walk-91c8b0efcf71.webp",
+  engagement: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-engagement-13-20260912-v1/occasion-ce78ec5f5515.webp",
+  "engagement-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-engagement-13-20260912-v1/occasion-ce78ec5f5515.webp",
+  wedding: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-wedding-20260913-v1/occasion-99f28104259b.webp",
+  "wedding-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-wedding-20260913-v1/occasion-99f28104259b.webp",
+  "wedding-portraits": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-wedding-20260913-v1/occasion-99f28104259b.webp",
+  "valentine": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-valentine-diverse-20260913-v2/valentine-00-quiet-city-walk-8cc46fd05c6a.webp",
+  "valentine-photos": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-valentine-diverse-20260913-v2/valentine-00-quiet-city-walk-8cc46fd05c6a.webp",
+  "valentines-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-valentine-diverse-20260913-v2/valentine-00-quiet-city-walk-8cc46fd05c6a.webp",
+  christmas: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-christmas-20260913-v1/seasonal-932951600e5f.webp",
+  "christmas-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-christmas-20260913-v1/seasonal-932951600e5f.webp",
+  "christmas-photos": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-christmas-20260913-v1/seasonal-932951600e5f.webp",
+  thanksgiving: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-thanksgiving-20260913-v1/seasonal-d30583a4a4a4.webp",
+  "thanksgiving-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-thanksgiving-20260913-v1/seasonal-d30583a4a4a4.webp",
+  halloween: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-halloween-themed-20260913-v3/halloween-00-quiet-city-walk-235e19990231.webp",
+  "halloween-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-halloween-themed-20260913-v3/halloween-00-quiet-city-walk-235e19990231.webp"
+};
+
+function aidreamshootsLatestPackCoverMedia(relativePath: string): string | undefined {
+  const normalized = relativePath.replace(/^creative-packs\//, "");
+  const match = normalized.match(/^(?:generated\/)?pack-covers\/([^/]+)\//);
+  return match ? aidreamshootsLatestPackCoverBySlug[match[1]] : undefined;
+}
+
 function aidreamshootsLegacyPackMedia(relativePath: string): string | undefined {
   const normalized = relativePath.replace(/^creative-packs\//, "");
   const match = normalized.match(/^(?:generated\/)?pack-(?:galleries|covers)\/([^/]+)\//);
@@ -3656,6 +3761,7 @@ function replaceAidreamshootsLegacyMedia(site: Site, value: string): string {
   const replacement = aidreamshootsLegacyMediaReplacements[relativePath]
     ?? aidreamshootsLegacyMediaReplacements[relativePath.replace(/\.webp$/i, ".png")]
     ?? aidreamshootsLegacyMediaReplacements[relativePath.replace(/\.png$/i, ".webp")]
+    ?? aidreamshootsLatestPackCoverMedia(relativePath)
     ?? aidreamshootsLegacyPackMedia(relativePath);
   return replacement ?? value;
 }
@@ -3971,73 +4077,6 @@ const MYDREAMSHOOTS_HOMEPAGE_PHOTO_ROUTE_SLUGS: Record<string, string> = {
   "professional-headshots": "headshot"
 };
 
-const AIDREAMSHOOTS_HOMEPAGE_VIDEO_TITLES: Record<string, string> = {
-  "talking-photo": "Foto parlante",
-  "cinematic-video": "Vídeo cinematográfico",
-  "music-video": "Vídeo musical",
-  "tiktok-video": "Vídeo para TikTok",
-  "instagram-reels": "Reels de Instagram",
-  "product-video": "Vídeo de producto",
-  "product-ad-video": "Anuncio de producto en vídeo",
-  "promo-video": "Vídeo promocional",
-  "motion-generator": "Generador de movimiento"
-};
-
-const AIDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES: Record<string, string> = {
-  "talking-photo": "Crea un vídeo parlante a partir de un retrato.",
-  "cinematic-video": "Convierte tus fotos en escenas de vídeo cinematográficas.",
-  "music-video": "Crea conceptos visuales para artistas y actuaciones.",
-  "tiktok-video": "Crea vídeos cortos con IA para TikTok.",
-  "instagram-reels": "Crea vídeos verticales con IA para Instagram.",
-  "product-video": "Convierte imágenes de producto en vídeos de producto con IA.",
-  "product-ad-video": "Crea anuncios de vídeo con IA a partir de imágenes de producto.",
-  "promo-video": "Crea vídeos promocionales con IA para campañas.",
-  "motion-generator": "Convierte tus fotos en vídeos con movimiento generado por IA."
-};
-
-const AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA: Record<string, { poster: string; video: string; alt: string }> = {
-  "talking-photo": {
-    poster: "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo.mp4",
-    alt: "Mujer mayor hablando a la cámara en un vídeo de fotografía parlante."
-  },
-  "cinematic-video": {
-    poster: "/assets/sites/site_aidreamshoots/visuals/cinematic-video/cinematic-video-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/cinematic-video/cinematic-video.mp4",
-    alt: "Persona adulta en una escena cinematográfica con iluminación dramática y composición cuidada."
-  },
-  "music-video": {
-    poster: "/assets/sites/site_aidreamshoots/visuals/music-video/music-video-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/music-video/music-video.mp4",
-    alt: "Artista adulta preparando una propuesta visual para una canción en un estudio de producción."
-  },
-  "tiktok-video": {
-    poster: "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video.mp4",
-    alt: "Creadora adulta preparando un vídeo corto para TikTok con cámara y accesorios coloridos."
-  },
-  "instagram-reels": {
-    poster: "/assets/sites/site_aidreamshoots/visuals/instagram-reels/instagram-reels-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/instagram-reels/instagram-reels.mp4",
-    alt: "Creadora adulta preparando un Reel en un estudio casero con cámara y accesorios de grabación."
-  },
-  "product-video": {
-    poster: "/assets/sites/site_aidreamshoots/visuals/product-video/product-video-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/product-video/product-video.mp4",
-    alt: "Producto de consumo sin marca presentado en un estudio comercial con iluminación limpia y precisa."
-  },
-  "product-ad-video": {
-    poster: "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video.mp4",
-    alt: "Presentadora adulta mostrando un producto sin marca en una escena centrada en una decisión de compra."
-  },
-  "promo-video": {
-    poster: "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video.mp4",
-    alt: "Persona adulta presentando un adelanto de lanzamiento con iluminación promocional y ambiente dinámico."
-  }
-};
-
 const AIDREAMSHOOTS_HOMEPAGE_PHOTO_ITEMS = [
   {
     slug: "engagement",
@@ -4114,8 +4153,37 @@ function sortedByShowcaseSlugs<T>(items: T[], selectedSlugs: string[], slugFor: 
     .map(({ item }) => item);
 }
 
-function generationShowcaseImageForPack(site: Site, pack: CreativePack, excludeImages: string[] = []): string {
-  const excluded = new Set([packImage(site, pack), ...excludeImages].map((image) => comparableImageUrl(image)).filter(Boolean));
+type GenerationShowcaseImageOptions = {
+  preferAidreamshootsLatestDetailImage?: boolean;
+};
+
+function latestDetailImageForAidreamshootsBestAiImage(site: Site, pack: CreativePack): string {
+  if (site.id !== "site_mydreamshoots_xby") return "";
+  const candidateSlugs = uniqueStringList([
+    generationShowcaseThemeSlugForPack(pack),
+    pack.categoryRecord?.slug ? dreamshootCategorySlug(pack.categoryRecord.slug) : "",
+    pack.category ? dreamshootCategorySlug(pack.category) : "",
+    pack.name ? dreamshootCategorySlug(pack.name) : ""
+  ]);
+  const path = candidateSlugs.map((slug) => aidreamshootsBestAiImageLatestDetailMediaBySlug[slug]).find(Boolean);
+  // These regenerated files are already published under the target site's
+  // asset namespace. Do not pass them through the legacy media registry: an
+  // older registry row can resolve the new storage key back to a pack cover.
+  return path || "";
+}
+
+function generationShowcaseImageForPack(
+  site: Site,
+  pack: CreativePack,
+  excludeImages: string[] = [],
+  options: GenerationShowcaseImageOptions = {}
+): string {
+  const excludedSources = options.preferAidreamshootsLatestDetailImage ? excludeImages : [packImage(site, pack), ...excludeImages];
+  const excluded = new Set(excludedSources.map((image) => comparableImageUrl(image)).filter(Boolean));
+  if (options.preferAidreamshootsLatestDetailImage) {
+    const latestDetailImage = latestDetailImageForAidreamshootsBestAiImage(site, pack);
+    if (latestDetailImage && !excluded.has(comparableImageUrl(latestDetailImage))) return latestDetailImage;
+  }
   const safeHomepageImage = dreamshootHomepageSafeImageForPack(site, pack);
   if (safeHomepageImage && !excluded.has(comparableImageUrl(safeHomepageImage)) && !looksLikeCompositeShowcaseImageUrl(safeHomepageImage)) {
     return safeHomepageImage;
@@ -4159,7 +4227,12 @@ function creativePackMatchesShowcaseSlug(pack: CreativePack, slug: string): bool
   ].filter(Boolean).map((value) => dreamshootCategorySlug(String(value))).includes(normalizedSlug);
 }
 
-function homepageShowcaseImageCardFromSlug(site: Site, slug: string, creativePacks: CreativePack[]): GenerationShowcaseImageCard | null {
+function homepageShowcaseImageCardFromSlug(
+  site: Site,
+  slug: string,
+  creativePacks: CreativePack[],
+  options: GenerationShowcaseImageOptions = {}
+): GenerationShowcaseImageCard | null {
   const normalizedSlug = dreamshootCategorySlug(slug);
   if (!normalizedSlug) return null;
   const matchingPack = creativePacks.find((pack) => pack.status === "active" && creativePackMatchesShowcaseSlug(pack, normalizedSlug));
@@ -4167,9 +4240,12 @@ function homepageShowcaseImageCardFromSlug(site: Site, slug: string, creativePac
   const categoryLabel = parentMatches
     ? matchingPack?.categoryRecord?.parent?.label
     : matchingPack?.categoryRecord?.label || matchingPack?.categoryRecord?.parent?.label;
+  const latestDetailImage = options.preferAidreamshootsLatestDetailImage && site.id === "site_mydreamshoots_xby"
+    ? aidreamshootsBestAiImageLatestDetailMediaBySlug[normalizedSlug] || ""
+    : "";
   const imageUrl = matchingPack
-    ? generationShowcaseImageForPack(site, matchingPack)
-    : dreamshootShowcaseImagePath(site, normalizedSlug);
+    ? generationShowcaseImageForPack(site, matchingPack, [], options)
+    : latestDetailImage || dreamshootShowcaseImagePath(site, normalizedSlug);
   if (!imageUrl || looksLikeCompositeShowcaseImageUrl(imageUrl)) return null;
   return {
     id: `homepage-showcase-${normalizedSlug}`,
@@ -4193,13 +4269,14 @@ function generationShowcasePriorityImageCardFromSlug(
   slug: string,
   creativePacks: CreativePack[],
   claimedPackKeys: Set<string>,
-  excludeImages: string[] = []
+  excludeImages: string[] = [],
+  options: GenerationShowcaseImageOptions = {}
 ): GenerationShowcaseImageCard | null {
   const normalizedSlug = dreamshootCategorySlug(slug);
   if (!normalizedSlug) return null;
   const excludedImages = new Set(excludeImages.map((image) => comparableImageUrl(image)).filter(Boolean));
   const matchingPack = creativePacks.find((pack) => !claimedPackKeys.has(generationShowcasePackDedupeKey(pack)) && creativePackMatchesShowcaseSlug(pack, normalizedSlug));
-  const card = homepageShowcaseImageCardFromSlug(site, normalizedSlug, matchingPack ? [matchingPack] : creativePacks);
+  const card = homepageShowcaseImageCardFromSlug(site, normalizedSlug, matchingPack ? [matchingPack] : creativePacks, options);
   if (!card?.imageUrl || excludedImages.has(comparableImageUrl(card.imageUrl))) return null;
   if (matchingPack) claimedPackKeys.add(generationShowcasePackDedupeKey(matchingPack));
   return {
@@ -4208,13 +4285,18 @@ function generationShowcasePriorityImageCardFromSlug(
   };
 }
 
-function generationShowcaseCardFromPack(site: Site, pack: CreativePack, excludeImages: string[] = []): GenerationShowcaseImageCard {
+function generationShowcaseCardFromPack(
+  site: Site,
+  pack: CreativePack,
+  excludeImages: string[] = [],
+  options: GenerationShowcaseImageOptions = {}
+): GenerationShowcaseImageCard {
   const slug = dreamshootCategorySlug(pack.categoryRecord?.slug || pack.category || pack.name);
   return {
     id: pack.id,
     slug,
     title: pack.name || pack.categoryRecord?.label || dreamshootCategoryLabel(pack.category || slug),
-    imageUrl: generationShowcaseImageForPack(site, pack, excludeImages),
+    imageUrl: generationShowcaseImageForPack(site, pack, excludeImages, options),
     meta: pack.categoryRecord?.label ?? pack.categoryRecord?.parent?.label ?? dreamshootCategoryLabel(pack.category || pack.name)
   };
 }
@@ -4277,7 +4359,12 @@ function generationShowcaseCardsFromSources<T>(
     .filter((card): card is GenerationShowcaseImageCard => Boolean(card));
 }
 
-function generationShowcaseImageCardsForSite(site: Site, creativePacks: CreativePack[], selectedImageSlugs: string[]): GenerationShowcaseImageCard[] {
+function generationShowcaseImageCardsForSite(
+  site: Site,
+  creativePacks: CreativePack[],
+  selectedImageSlugs: string[],
+  options: GenerationShowcaseImageOptions = {}
+): GenerationShowcaseImageCard[] {
   const activePacks = creativePacks.filter((pack) => pack.status === "active");
   const uniqueSelectedImageSlugs = uniqueStringList(selectedImageSlugs.map((slug) => dreamshootCategorySlug(slug)));
   const seenPackKeys = new Set<string>();
@@ -4291,7 +4378,7 @@ function generationShowcaseImageCardsForSite(site: Site, creativePacks: Creative
   const usedImages: string[] = [];
   const priorityCards = uniqueSelectedImageSlugs
     .map((slug) => {
-      const card = generationShowcasePriorityImageCardFromSlug(site, slug, uniquePacks, claimedPackKeys, usedImages);
+      const card = generationShowcasePriorityImageCardFromSlug(site, slug, uniquePacks, claimedPackKeys, usedImages, options);
       if (card?.imageUrl) usedImages.push(card.imageUrl);
       return card;
     })
@@ -4313,13 +4400,13 @@ function generationShowcaseImageCardsForSite(site: Site, creativePacks: Creative
     .map(({ pack }) => pack);
   const packCards = orderedPacks
     .map((pack) => {
-      const card = generationShowcaseCardFromPack(site, pack, usedImages);
+      const card = generationShowcaseCardFromPack(site, pack, usedImages, options);
       if (card?.imageUrl) usedImages.push(card.imageUrl);
       return card;
     })
     .filter((card): card is GenerationShowcaseImageCard => Boolean(card));
   const rawCards = [...priorityCards, ...packCards];
-  const selectedFallbackCards = generationShowcaseCardsFromSources(uniqueSelectedImageSlugs, (slug) => homepageShowcaseImageCardFromSlug(site, slug, activePacks));
+  const selectedFallbackCards = generationShowcaseCardsFromSources(uniqueSelectedImageSlugs, (slug) => homepageShowcaseImageCardFromSlug(site, slug, activePacks, options));
   const cards = rawCards.length ? rawCards : selectedFallbackCards;
   const seen = new Set<string>();
   const seenImages = new Set<string>();
@@ -5580,7 +5667,7 @@ const frenchVideoShowcaseAltBySlug: Record<string, string> = {
   "product-video": "Vidéo produit montrant un article dans une présentation commerciale soignée.",
   "promo-video": "Vidéo promotionnelle annonçant un lancement ou une offre avec un appel à l’action.",
   "product-ad-video": "Publicité vidéo produit mettant en scène une démonstration orientée vers une décision d’achat.",
-  "instagram-reels": "Instagram Reel horizontal présentant une histoire visuelle conçue pour le fil mobile."
+  "instagram-reels": "Reel Instagram horizontal présentant une histoire visuelle conçue pour le fil mobile."
 };
 
 function videoPosterAltForSite(site: Site, input: { meta?: string; slug?: string; title: string }): string {
@@ -7136,7 +7223,9 @@ function aidreamcapesProfileForPack(site: Site, pack: CreativePack | null | unde
 }
 
 function dreamshootPackImageSet(site: Site, pack: CreativePack, limit = 2): string[] {
-  const primaryImage = packImage(site, pack);
+  const primaryImage = isAidreamcapesSite(site) || isSpanishXbySite(site)
+    ? packHeroImage(site, pack)
+    : packImage(site, pack);
   const galleryPreviewImages = galleryImagesForPack(site, pack, limit + 3, [primaryImage]);
   const aidreamcapesCategoryImages = isAidreamcapesSite(site) && !isSpanishXbySite(site)
     ? {
@@ -7146,14 +7235,16 @@ function dreamshootPackImageSet(site: Site, pack: CreativePack, limit = 2): stri
     : undefined;
   if (aidreamcapesCategoryImages) {
     const images = uniqueImageUrlList([
+      primaryImage,
       aidreamcapesCategoryImages.leaf,
-      aidreamcapesCategoryImages.parent,
-      primaryImage
+      aidreamcapesCategoryImages.parent
     ]).slice(0, 1);
     return images.length ? images : [primaryImage];
   }
-  const orderedImages = isMyDreamShootsProfileSite(site)
-    ? [...galleryPreviewImages, primaryImage]
+  const orderedImages = isSpanishXbySite(site)
+    ? [primaryImage, ...galleryPreviewImages]
+    : isMyDreamShootsProfileSite(site)
+      ? [...galleryPreviewImages, primaryImage]
     : [primaryImage, ...galleryPreviewImages];
   const images = uniqueImageUrlList(orderedImages).slice(0, limit);
   return images.length ? images : [primaryImage];
@@ -7640,7 +7731,7 @@ function frenchPhotoPackageLabel(value: string): string {
     "portrait photo": "Portraits personnels",
     "portrait professionnel": "Portraits professionnels",
     "gala photo": "Portraits de gala",
-    "black friday": "Black Friday",
+    "black friday": "Vendredi noir",
     "singles awareness day": "Journée du célibat",
     "only fans": "Créations pour fans",
     "seulement fans": "Créations pour fans",
@@ -7650,7 +7741,7 @@ function frenchPhotoPackageLabel(value: string): string {
     "virtual try-on": "Essayage virtuel",
     "motion generator": "Générateur de mouvement",
     "motion générateur": "Générateur de mouvement",
-    "lifestyle premium": "Style de vie premium",
+    "lifestyle premium": "Art de vivre premium",
     "background changer": "Changer l’arrière-plan",
     "background remover": "Supprimer l’arrière-plan",
     "magic eraser": "Gomme magique",
@@ -7662,7 +7753,7 @@ function frenchPhotoPackageLabel(value: string): string {
     "edit by prompt": "Modifier avec une consigne",
     "modifier avec une consigne": "Modifier avec une consigne",
     "social cards": "Cartes sociales",
-    "rich lifestyle": "Lifestyle premium",
+    "rich lifestyle": "Art de vivre premium",
     "bikini": "Bikini",
     "swimsuit": "Maillots de bain",
     "cannes": "Cannes",
@@ -7776,7 +7867,7 @@ const frenchSaveTheDateSubtitles: Record<string, string> = {
 
 function frenchSaveTheDateSubtitle(slug: string, title: string): string {
   const normalized = slug.trim().toLowerCase().replace(/[_\s]+/g, "-");
-  return frenchSaveTheDateSubtitles[normalized] ?? `Créez une annonce Save the Date personnalisée : ${title}.`;
+  return frenchSaveTheDateSubtitles[normalized] ?? `Créez une annonce de date personnalisée : ${title}.`;
 }
 
 function spanishAiFeatureLauncherLabel(value: string, aidreamcapes: boolean): string {
@@ -13406,9 +13497,9 @@ function SectionView({
 	                              role: imageIndex === 0 ? "card" : "gallery",
 	                              title: card.title
 	                            })}
-                            fetchPriority={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) && imageIndex === 0 ? "high" : "low"}
+                            fetchPriority={index < 4 && imageIndex === 0 ? "high" : "low"}
                             imageClassName="transition duration-500"
-                            loading={shouldPrioritizeStorefrontSectionImage(renderContext, section.type, index) && imageIndex === 0 ? "eager" : "lazy"}
+                            loading={index < 4 && imageIndex === 0 ? "eager" : "lazy"}
                             src={image}
                           />
                         </div>
@@ -13460,8 +13551,8 @@ function SectionView({
 	                      title: card.title
 	                    })}
                     className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.045]"
-                    fetchPriority="low"
-                    loading="lazy"
+                    fetchPriority={index < 4 ? "high" : "low"}
+                    loading={index < 4 ? "eager" : "lazy"}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
                     src={card.imageUrl}
                   />
@@ -15160,7 +15251,9 @@ function SectionView({
     const selectedImageSlugs = fullGallery ? [] : listLines(setting(section, "imageSlugs"));
     const selectedVideoSlugs = fullGallery ? [] : listLines(setting(section, "videoSlugs"));
     const configuredImageItemLimit = numberSetting(section, "imageItemLimit", Number.POSITIVE_INFINITY);
-    const imageCards = generationShowcaseImageCardsForSite(site, creativePacks, selectedImageSlugs)
+    const imageCards = generationShowcaseImageCardsForSite(site, creativePacks, selectedImageSlugs, {
+      preferAidreamshootsLatestDetailImage: site.id === "site_mydreamshoots_xby" && renderContext.pagePath === "/best-ai-image"
+    })
       .slice(0, Number.isFinite(configuredImageItemLimit) ? Math.max(1, Math.floor(configuredImageItemLimit)) : undefined)
       .map((card, index) => ({
         ...card,
@@ -15392,7 +15485,7 @@ function SectionView({
               category: group.label,
               sortOrder: index + 1,
               imageUrl: item.imageUrl,
-              imageAlt: `${item.label} — annonce Save the Date`,
+              imageAlt: `${item.label} — annonce de date`,
               ...(item.videoUrl ? { videoUrl: item.videoUrl } : {}),
               status: "published" as const,
               indexable: true as const,
@@ -15502,11 +15595,43 @@ function SectionView({
           ...aidreamshootsXbyHomepagePhotoItems
         ]
       : [];
+    const aidreamcapesEuXby = site.id === "site_aidreamcapes_xby";
     const homepageShowcasesForRender = aidreamshootsXbyFallbackHomepageItems.length
       ? aidreamshootsXbyFallbackHomepageItems
-      : homepageShowcases.length
+        : homepageShowcases.length
         ? homepageShowcases
         : frenchEuFallbackHomepageItems;
+    const aidreamcapesEuHomepageMediaItems: PublishedHomepageShowcaseItem[] = aidreamcapesEuXby && renderContext.pagePath === "/"
+      ? AIDREAMCAPES_EU_VIDEO_TOPIC_SLUGS.map((slug, index): PublishedHomepageShowcaseItem | undefined => {
+          const media = aidreamcapesEuVideoTopic(slug);
+          if (!media) return undefined;
+          const item: PublishedHomepageShowcaseItem = {
+            id: `aidreamcapes-eu-canonical-home-video-${slug}`,
+            kind: "video" as const,
+            pageEntityId: `aidreamcapes-eu-video-${slug}`,
+            canonicalPath: publicVideoGenerationPathForSite(site, slug),
+            title: media.label,
+            subtitle: media.description,
+            category: "Création vidéo IA",
+            sortOrder: index + 1,
+            imageUrl: media.posterUrl,
+            imageAlt: media.alt,
+            videoUrl: media.videoUrl,
+            status: "published" as const,
+            indexable: true as const,
+            sitemapEligible: true as const,
+            entityRevision: `aidreamcapes-eu-video-${slug}`,
+            mediaRevision: `aidreamcapes-eu-video-${slug}`
+          };
+          return item;
+        }).filter((item): item is PublishedHomepageShowcaseItem => item !== undefined)
+      : [];
+    const homepageShowcasesWithCanonicalEuVideo = aidreamcapesEuHomepageMediaItems.length
+      ? [
+          ...homepageShowcasesForRender.filter((item) => item.kind !== "video"),
+          ...aidreamcapesEuHomepageMediaItems
+        ]
+      : homepageShowcasesForRender;
     const imageProductCards = imageCards.map((card, productIndex) => ({ ...card, productIndex }));
     const homepageImageProductCards = imageProductCards.slice(0, 16);
     const homepageVideoCards = videoCards.slice(0, 8);
@@ -15683,7 +15808,7 @@ function SectionView({
       </div>
     );
 
-    const publishedHomepageItems = homepageShowcasesForRender
+    const publishedHomepageItems = homepageShowcasesWithCanonicalEuVideo
       .filter((item) => item.status === "published" && item.indexable && item.sitemapEligible)
       .sort((left, right) => left.sortOrder - right.sortOrder || left.title.localeCompare(right.title));
     if (useMydreamShowcaseGrid) {
@@ -15691,7 +15816,6 @@ function SectionView({
         // Keep the existing database-backed showcase visible while an older active
         // publication is waiting for the homepage projection migration.
       } else {
-      const aidreamcapesEuXby = site.id === "site_aidreamcapes_xby";
       const projectedVideosByPath = new Map(
         publishedHomepageItems
           .filter((item) => item.kind === "video")
@@ -15772,8 +15896,11 @@ function SectionView({
         const publishedVideoSlug = item.kind === "video"
           ? item.canonicalPath.match(/^\/ai-video-generation\/([^/?#]+)/)?.[1]
           : undefined;
+        const aidreamcapesEuVideo = aidreamcapesEuXby && item.kind === "video"
+          ? aidreamcapesEuVideoTopic(publishedVideoSlug)
+          : undefined;
         const publishedVideoAlt = item.kind === "video"
-          ? videoPosterAltForSite(site, { meta: item.category, slug: publishedVideoSlug, title: item.title })
+          ? aidreamcapesEuVideo?.alt ?? videoPosterAltForSite(site, { meta: item.category, slug: publishedVideoSlug, title: item.title })
           : publishedImageAlt;
         const publishedVideoPlaybackLabel = item.kind === "video"
           ? videoPlaybackAriaLabelForSite(site, publishedVideoAlt)
@@ -15834,7 +15961,7 @@ function SectionView({
             key={item.id}
           >
             <div
-              aria-label={`Preview ${item.title}`}
+              aria-label={`${frenchXby ? "Aperçu" : "Preview"} ${item.title}`}
               className={aidreamcapesEuXby ? "aspect-video overflow-hidden" : "aspect-square overflow-hidden"}
               data-dreamshoot-preview-meta={item.subtitle}
               data-dreamshoot-preview-poster={mediaAssetUrl(site, item.imageUrl)}
@@ -15845,7 +15972,7 @@ function SectionView({
               tabIndex={0}
             >{media}</div>
             <Link
-              aria-label={`Open ${item.title}`}
+              aria-label={`${frenchXby ? "Ouvrir" : "Open"} ${item.title}`}
               className={compactCard ? "block border-t border-white/10 p-2 outline-none transition hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/80 sm:p-2.5" : "block border-t border-white/10 p-3 outline-none transition hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/80"}
               href={videoHref}
             >
@@ -15887,7 +16014,7 @@ function SectionView({
           <div className="relative mx-auto max-w-[var(--site-content-width)]">
             {trustedProof}
             {renderPublishedSection(videoItems, videoTitle, canonicalGeneratorCopy ? frenchXby ? "Transformez vos photos en vidéos IA pour les réseaux sociaux, les récits, les présentations de produits et vos projets créatifs. Explorez les portraits animés, les scènes cinématographiques, les vidéos sociales et les démonstrations produit." : mydreamshootsHomepageCopy.videoIntro : setting(section, "videoIntro", ""), videoAllHref, videoAllLabel, "video")}
-            {renderPublishedSection(saveTheDateItems, canonicalGeneratorCopy ? frenchXby ? "Vidéos Save the Date IA" : mydreamshootsHomepageCopy.saveTheDateTitle : aidreamshootsXby ? "Vídeos para guardar la fecha con IA" : setting(section, "saveTheDateTitle", "AI Save the Date Videos"), canonicalGeneratorCopy ? frenchXby ? "Créez des vidéos Save the Date personnalisées à partir de vos photos pour vos fiançailles, demandes en mariage, invitations et célébrations." : mydreamshootsHomepageCopy.saveTheDateIntro : aidreamshootsXby ? "Crea vídeos personalizados para guardar la fecha a partir de tus fotos para compromisos, propuestas, invitaciones y celebraciones." : setting(section, "saveTheDateIntro", ""), canonicalSaveTheDatePath(setting(section, "saveTheDateAllHref", "/ai-save-the-date/save-the-date")), canonicalGeneratorCopy && frenchXby ? "VOIR TOUTES LES ANNONCES SAVE THE DATE" : aidreamshootsXby ? "VER TODOS LOS VÍDEOS PARA GUARDAR LA FECHA" : setting(section, "saveTheDateAllLabel", "VIEW ALL SAVE THE DATE"), "save_the_date")}
+            {renderPublishedSection(saveTheDateItems, canonicalGeneratorCopy ? frenchXby ? "Vidéos d’annonce de date avec l’IA" : mydreamshootsHomepageCopy.saveTheDateTitle : aidreamshootsXby ? "Vídeos para guardar la fecha con IA" : setting(section, "saveTheDateTitle", "AI Save the Date Videos"), canonicalGeneratorCopy ? frenchXby ? "Créez des vidéos d’annonce de date personnalisées à partir de vos photos pour vos fiançailles, demandes en mariage, invitations et célébrations." : mydreamshootsHomepageCopy.saveTheDateIntro : aidreamshootsXby ? "Crea vídeos personalizados para guardar la fecha a partir de tus fotos para compromisos, propuestas, invitaciones y celebraciones." : setting(section, "saveTheDateIntro", ""), canonicalSaveTheDatePath(setting(section, "saveTheDateAllHref", "/ai-save-the-date/save-the-date")), canonicalGeneratorCopy && frenchXby ? "VOIR TOUTES LES ANNONCES DE DATE" : aidreamshootsXby ? "VER TODOS LOS VÍDEOS PARA GUARDAR LA FECHA" : setting(section, "saveTheDateAllLabel", "VIEW ALL SAVE THE DATE"), "save_the_date")}
             {renderPublishedSection(photoItems, imageTitle, canonicalGeneratorCopy && frenchXby ? "Découvrez des portraits professionnels, des photos de couple, des images de voyage, des créations de saison et des séries photo à partir de vos importations." : setting(section, "photoIntro", ""), imageAllHref, imageAllLabel, "photo")}
             {embeddedPricing}
           </div>
@@ -16603,7 +16730,7 @@ function SectionView({
                     </div>
                     <div className="mt-5 grid items-start gap-5 sm:grid-cols-2 lg:grid-cols-4">
                       {group.topics.map((topic, index) => {
-                        const coverImage = mydreamshootsVideoThemeDirectoryCover(topic, fallbackCoverImageUrl);
+                        const coverImage = mydreamshootsVideoThemeDirectoryCover(site, topic, fallbackCoverImageUrl);
                         const previewVideo = mydreamshootsVideoThemeDirectoryPreview(topic);
                         return (
                         <article

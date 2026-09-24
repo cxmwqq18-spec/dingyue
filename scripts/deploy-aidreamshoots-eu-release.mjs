@@ -13,6 +13,7 @@ const fullSource = hasArgument("--full-source");
 const apply = hasArgument("--apply");
 const confirm = argumentValue("--confirm");
 const branch = execFileSync("git", ["branch", "--show-current"], { encoding: "utf8" }).trim();
+const euTarget = process.env.AI_PROJECT_EU_TARGET === "aidreamcapes-eu" ? "aidreamcapes-eu" : "aidreamshoots-eu";
 
 const allowedReleaseFiles = [
   "package.json",
@@ -27,6 +28,8 @@ const allowedReleaseFiles = [
   "src/app/[...path]/page.tsx",
   "src/components/storefront/save-the-date-directory.tsx",
   "src/components/theme-renderer.tsx",
+  "src/lib/aidreamcapes-eu-video-media.ts",
+  "src/lib/aidreamshoots-video-media.ts",
   "src/lib/aidreamshoots-xby-seo-content.ts",
   "src/lib/aidreamcapes-eu-retired-routes.ts",
   "src/lib/dreamshoot-seo-content.ts",
@@ -62,14 +65,29 @@ const requiredSpanishTutorialAssets = [
   "public/assets/sites/site_aidreamshoots/visuals/generated/homepage-showcase/videos/AIdreamshoots-ai-video-tutorial-20260814.mp4"
 ];
 
-const config = {
-  domain: "aidreamshoots.eu",
-  root: "/www/wwwroot/aidreamshoots.eu",
-  service: "aidreamshoots.service",
-  port: "3012",
-  validationPort: "3912",
-  siteId: "site_mydreamshoots_xby"
-};
+const config = euTarget === "aidreamcapes-eu"
+  ? {
+      domain: "aidreamcapes.eu",
+      root: "/www/wwwroot/aidreamcapes.eu",
+      service: "aidreamcapes-eu.service",
+      port: "3015",
+      validationPort: "3915",
+      siteId: "site_aidreamcapes_xby",
+      htmlLang: "fr",
+      assetPrefix: "public/assets/sites/site_aidreamcapes_eu/visuals/",
+      requiredAssets: []
+    }
+  : {
+      domain: "aidreamshoots.eu",
+      root: "/www/wwwroot/aidreamshoots.eu",
+      service: "aidreamshoots.service",
+      port: "3012",
+      validationPort: "3912",
+      siteId: "site_mydreamshoots_xby",
+      htmlLang: "es",
+      assetPrefix: "public/assets/sites/site_aidreamshoots/",
+      requiredAssets: requiredSpanishTutorialAssets
+    };
 
 function fail(message) {
   throw new Error(message);
@@ -129,8 +147,8 @@ function releaseFiles() {
     ? git(["diff", "--name-only", base, commit])
     : git(["diff-tree", "--no-commit-id", "--name-only", "-r", "--diff-filter=ACMRT", commit, commit + "^"]);
   const files = output ? output.split("\n").filter(Boolean) : [];
-  const selected = files.filter((file) => allowedReleaseFiles.includes(file) || file.startsWith("public/assets/sites/site_aidreamshoots/"));
-  for (const required of requiredSpanishTutorialAssets) {
+  const selected = files.filter((file) => allowedReleaseFiles.includes(file) || file.startsWith(config.assetPrefix));
+  for (const required of config.requiredAssets) {
     if (!selected.includes(required)) selected.push(required);
   }
   for (const required of [
@@ -221,7 +239,7 @@ function runRemote(changedFiles) {
     "trap 'kill \"$CANDIDATE_PID\" 2>/dev/null || true; rm -rf \"$STAGE\" \"$PATCH\"; rm -f \"$PATCH_TAR\"' EXIT",
     "READY=0; for ATTEMPT in $(seq 1 40); do if curl -fsS --max-time 3 -H " + shellQuote("Host: " + config.domain) + " \"http://127.0.0.1:" + config.validationPort + "/\" > \"$STAGE/.candidate.html\"; then READY=1; break; fi; sleep 1; done; test \"$READY\" = 1",
     "grep -E '<title[^>]*>[^<]+</title>' \"$STAGE/.candidate.html\"",
-    "grep -F 'lang=\"es\"' \"$STAGE/.candidate.html\"",
+    "grep -F 'lang=\"" + config.htmlLang + "\"' \"$STAGE/.candidate.html\"",
     "grep -F 'https://" + config.domain + "/' \"$STAGE/.candidate.html\"",
     "kill \"$CANDIDATE_PID\" 2>/dev/null || true; wait \"$CANDIDATE_PID\" 2>/dev/null || true",
     "mv \"$STAGE\" \"$RELEASE\"",
@@ -275,7 +293,7 @@ function runRemote(changedFiles) {
 try {
   const { changed, remoteHead } = localPrecheck();
   console.log(JSON.stringify({
-    target: "production",
+    target: euTarget,
     domain: config.domain,
     appRoot: config.root,
     service: config.service,
@@ -291,8 +309,8 @@ try {
     console.log("Dry-run only. Add --apply --confirm=deploy-aidreamshoots-eu to release this exact commit.");
     process.exit(0);
   }
-  if (confirm !== "deploy-aidreamshoots-eu") {
-    fail("Spanish production deployment requires --confirm=deploy-aidreamshoots-eu.");
+  if (confirm !== "deploy-" + euTarget) {
+    fail("EU production deployment requires --confirm=deploy-" + euTarget + ".");
   }
   await runRemote(changed);
 } catch (error) {

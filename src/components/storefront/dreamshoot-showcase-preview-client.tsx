@@ -31,7 +31,7 @@ function previewMediaFor(target: HTMLElement): PreviewMedia | null {
   };
 }
 
-export function DreamshootShowcasePreviewClient({ children, className }: { children: ReactNode; className?: string }) {
+export function DreamshootShowcasePreviewClient({ children, className, locale = "en" }: { children: ReactNode; className?: string; locale?: "en" | "fr" }) {
   const [preview, setPreview] = useState<PreviewMedia | null>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   const closeRef = useRef<HTMLButtonElement | null>(null);
@@ -78,13 +78,16 @@ export function DreamshootShowcasePreviewClient({ children, className }: { child
     return () => window.removeEventListener("keydown", onEscape);
   }, [preview]);
 
-  const mediaLabel = preview?.kind === "video" ? "video" : "image";
+  const mediaLabel = preview?.kind === "video" ? (locale === "fr" ? "vidéo" : "video") : "image";
+  const previewTitle = locale === "fr" ? "Aperçu" : "Preview";
+  const openOriginalLabel = locale === "fr" ? `Ouvrir la ${mediaLabel} originale` : `Open original ${mediaLabel}`;
+  const closeLabel = locale === "fr" ? `Fermer l’aperçu ${mediaLabel}` : `Close ${mediaLabel} preview`;
 
   return (
     <div className={`${className || ""} [&_img:not([data-dreamshoot-preview-disabled])]:cursor-zoom-in [&_video:not([data-dreamshoot-preview-disabled])]:cursor-zoom-in`.trim()} data-dreamshoot-preview-root="true" onClick={onClick} onKeyDown={onKeyDown}>
       {children}
       {preview ? (
-        <div aria-describedby={preview.meta ? "dreamshoot-media-preview-meta" : undefined} aria-label={`Preview: ${preview.title}`} aria-modal="true" className="fixed inset-0 z-[160] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm sm:p-8" onClick={closePreview} role="dialog">
+        <div aria-describedby={preview.meta ? "dreamshoot-media-preview-meta" : undefined} aria-label={`${previewTitle} : ${preview.title}`} aria-modal="true" className="fixed inset-0 z-[160] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm sm:p-8" onClick={closePreview} role="dialog">
           <div className="relative flex max-h-full w-full max-w-6xl flex-col" onClick={(event) => event.stopPropagation()}>
             <div className="mb-3 flex min-h-9 items-center justify-between gap-3 text-white">
               <div className="min-w-0">
@@ -92,8 +95,8 @@ export function DreamshootShowcasePreviewClient({ children, className }: { child
                 {preview.meta ? <p className="truncate text-xs text-white/68" id="dreamshoot-media-preview-meta">{preview.meta}</p> : null}
               </div>
               <div className="flex shrink-0 items-center gap-2">
-                <a aria-label={`Open original ${mediaLabel}`} className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-black/35 text-white transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white" href={preview.src} rel="noreferrer" target="_blank" title={`Open original ${mediaLabel}`}><ExternalLink aria-hidden="true" className="h-4 w-4" /></a>
-                <button aria-label={`Close ${mediaLabel} preview`} className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-black/35 text-white transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white" onClick={closePreview} ref={closeRef} title="Close preview" type="button"><X aria-hidden="true" className="h-5 w-5" /></button>
+                <a aria-label={openOriginalLabel} className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-black/35 text-white transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white" href={preview.src} rel="noreferrer" target="_blank" title={openOriginalLabel}><ExternalLink aria-hidden="true" className="h-4 w-4" /></a>
+                <button aria-label={closeLabel} className="grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-black/35 text-white transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white" onClick={closePreview} ref={closeRef} title={locale === "fr" ? "Fermer l’aperçu" : "Close preview"} type="button"><X aria-hidden="true" className="h-5 w-5" /></button>
               </div>
             </div>
             <div className="flex min-h-0 justify-center overflow-hidden rounded-[8px] bg-transparent">
