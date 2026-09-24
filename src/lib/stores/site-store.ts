@@ -2608,7 +2608,15 @@ export type CustomerWorkspaceBootstrapRelational = {
 };
 
 export async function getPublishedVideoGenerationNavigationForSite(siteId: string): Promise<PublishedVideoNavigationProjection[]> {
-  if (!isMydreamshootsVideoFrameworkSiteId(siteId) && siteId !== "site_aidreamcapes") return [];
+  // The EU storefronts use the same dedicated video-topic page contract as
+  // MyDreamShoots, but their localized site ids are not part of the primary
+  // framework-site allowlist. Read their live topic pages here as well so a
+  // newly published topic cannot be present at its route while missing from
+  // the shared header menu.
+  if (
+    !isMydreamshootsVideoFrameworkSiteId(siteId) &&
+    !["site_aidreamcapes", "site_aidreamcapes_xby", "site_mydreamshoots_xby"].includes(siteId)
+  ) return [];
   const pages = await prisma.livePage.findMany({
     where: { siteId },
     orderBy: { slug: "asc" },
@@ -2617,7 +2625,7 @@ export async function getPublishedVideoGenerationNavigationForSite(siteId: strin
   const isolatedPages = pages.filter((page) => isolateAidreamcapesEnglishValue(siteId, page.contentJson) !== undefined);
   return compileMydreamshootsVideoTopicPublication(
     isolatedPages.map((page) => toThemePage({ ...page, draftJson: page.contentJson, publishedJson: page.contentJson })),
-    siteId as "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes"
+    siteId as "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes" | "site_aidreamcapes_xby" | "site_mydreamshoots_xby"
   ).navigation;
 }
 

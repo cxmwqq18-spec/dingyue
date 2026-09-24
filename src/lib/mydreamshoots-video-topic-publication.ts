@@ -35,6 +35,13 @@ export type MyDreamshootsVideoTopicPublication = {
   navigation: PublishedVideoNavigationProjection[];
 };
 
+type VideoTopicPublicationSiteId =
+  | "site_dreamshoot"
+  | "site_grownstride_test"
+  | "site_aidreamcapes"
+  | "site_aidreamcapes_xby"
+  | "site_mydreamshoots_xby";
+
 type TopicSource = {
   page: Pick<ThemePage, "id" | "pageType" | "slug" | "title" | "draftJson" | "publishedJson">;
   slug: string;
@@ -393,7 +400,7 @@ function topicReady(entity: PublishedPageEntityProjection, media: PublishedPageM
  */
 export function compileMydreamshootsVideoTopicPublication(
   pages: Array<Pick<ThemePage, "id" | "pageType" | "slug" | "title" | "draftJson" | "publishedJson">>,
-  siteId: "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes" = "site_dreamshoot"
+  siteId: VideoTopicPublicationSiteId = "site_dreamshoot"
 ): MyDreamshootsVideoTopicPublication {
   const sources = sourcesFromPages(pages)
     .sort((left, right) => topicSortOrder(left.slug) - topicSortOrder(right.slug) || left.slug.localeCompare(right.slug));
@@ -562,7 +569,7 @@ export function compileMydreamshootsVideoTopicPublication(
  */
 export function applyMydreamshootsVideoTopicPublication(
   snapshot: PublishedSeoSnapshot,
-  siteId: "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes" = "site_dreamshoot"
+  siteId: VideoTopicPublicationSiteId = "site_dreamshoot"
 ): PublishedSeoSnapshot {
   const pages = snapshot.pages.map((page) => ({
     id: page.id,
