@@ -1,5 +1,6 @@
 import { normalizeCanonicalPath } from "@/lib/storefront-context/seo-projection";
 import type { Site } from "@/lib/types";
+import { aidreamshootsXbyTdkOverrides } from "@/lib/aidreamshoots-xby-tdk";
 
 type PageTdk = {
   title: string;
@@ -19,6 +20,12 @@ function isPrimaryMydreamshoots(
     site.slug.trim().toLowerCase() === "mydreamshoots" ||
     /(?:^|\.)mydreamshoots\.com$/i.test(site.primaryDomain)
   );
+}
+
+function isAidreamshootsXby(
+  site: Pick<Site, "id">,
+): boolean {
+  return site.id === "site_mydreamshoots_xby";
 }
 
 function topicForPath(path: string): string {
@@ -123,9 +130,10 @@ export function resolveMydreamshootsPageTdk(
   path: string,
   tdk: PageTdk,
 ): PageTdk {
-  if (!isPrimaryMydreamshoots(site)) return tdk;
+  const spanishXby = isAidreamshootsXby(site);
+  if (!spanishXby && !isPrimaryMydreamshoots(site)) return tdk;
   const canonicalPath = normalizeCanonicalPath(path);
-  const override = pathOverrides[canonicalPath];
+  const override = spanishXby ? aidreamshootsXbyTdkOverrides[canonicalPath] : pathOverrides[canonicalPath];
   const topic = topicForPath(canonicalPath);
   const title =
     clean(override?.title) || clean(tdk.title) ||

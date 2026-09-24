@@ -5,6 +5,7 @@ import { createPublishedSiteSnapshot, resolvePublishedSeoEntity, resolvePublishe
 import { canonicalUrlForSite, normalizeCanonicalPath } from "@/lib/storefront-context/seo-projection";
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
+import { resolveMydreamshootsPageTdk } from "@/lib/mydreamshoots-tdk";
 import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
 import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSeoContentForSlug, aidreamcapesEuSeoContentFromPath } from "@/lib/aidreamcapes-eu-seo-content";
 import { aidreamcapesEuVideoTopicFromPath } from "@/lib/aidreamcapes-eu-video-media";
@@ -151,6 +152,20 @@ export async function metadataForPublishedStorefrontPage({
       ...(euVideoDirectorySeo ?? {})
     }
   };
+  const spanishTdk = snapshot.site.id === "site_mydreamshoots_xby"
+    ? resolveMydreamshootsPageTdk(snapshot.site, metadataPath, metadataContext.seo)
+    : undefined;
+  const finalMetadataContext = spanishTdk
+    ? {
+        ...metadataContext,
+        seo: {
+          ...metadataContext.seo,
+          title: spanishTdk.title,
+          description: spanishTdk.description,
+          keywords: spanishTdk.keywords
+        }
+      }
+    : metadataContext;
   const approvedDirectoryImage = isPrimaryMydreamshootsSite(snapshot.site) && snapshotPage.slug === "/ai-image-generation" &&
     context.publishedStandardPageMedia?.status === "ready"
     ? context.publishedStandardPageMedia.ogImage?.trim()
@@ -159,8 +174,8 @@ export async function metadataForPublishedStorefrontPage({
   const defaultOgImage = context.settings.seo?.defaultOgImage?.trim();
   const useApprovedDirectoryImage = Boolean(approvedDirectoryImage && (!configuredOgImage || configuredOgImage === defaultOgImage));
   return metadataForSingleThemePage(snapshot.site, snapshotPage, useApprovedDirectoryImage
-    ? { ...metadataContext, seo: { ...metadataContext.seo, ogImage: approvedDirectoryImage } }
-    : metadataContext
+    ? { ...finalMetadataContext, seo: { ...finalMetadataContext.seo, ogImage: approvedDirectoryImage } }
+    : finalMetadataContext
   );
 }
 

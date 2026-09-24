@@ -1063,7 +1063,7 @@ export interface PublishedLeafRouteProjection {
 
 export interface PublishedVideoTopicRouteProjection {
   disposition: "render";
-  siteId: "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes";
+  siteId: "site_dreamshoot" | "site_grownstride_test" | "site_aidreamcapes" | "site_aidreamcapes_xby" | "site_mydreamshoots_xby";
   routeKind: "ai-video-topic-leaf";
   canonicalSlug: string;
   canonicalPath: string;

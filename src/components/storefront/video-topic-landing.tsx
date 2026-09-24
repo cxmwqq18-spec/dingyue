@@ -340,13 +340,14 @@ function StorefrontTopicImage({ src, previewSrc, ...props }: StorefrontTopicImag
   const resolvedSrc = optimizedTopicImageSrc(src);
   const responsive = storefrontResponsiveImageSet(resolvedSrc);
   const dimensions = storefrontResponsiveImageDimensions(resolvedSrc);
+  const aidreamshootsAsset = resolvedSrc.startsWith("/assets/sites/site_aidreamshoots/");
   const aidreamcapesAsset = resolvedSrc.startsWith("/assets/sites/site_aidreamcapes/");
   const sizes = props.sizes ?? (responsive || aidreamcapesAsset ? "(max-width: 768px) 100vw, 50vw" : undefined);
   const image = (
     <img
       {...props}
       alt={props.alt}
-      src={resolvedSrc}
+      src={aidreamshootsAsset ? responsive?.fallbackSrc ?? resolvedSrc : resolvedSrc}
       srcSet={responsive?.fallbackSrcSet ?? (resolvedSrc.startsWith("/assets/sites/site_aidreamcapes/") ? resolvedSrc : undefined)}
       sizes={sizes}
       width={props.width ?? dimensions?.width}

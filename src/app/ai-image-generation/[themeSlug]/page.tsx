@@ -11,6 +11,7 @@ import { readStorefrontPublicRuntimeStateByHostFromDatabase } from "@/lib/storef
 import { canResolveCollectionSlugForSite, renderStorefrontPage } from "@/lib/storefront-render";
 import { createPublishedSiteSnapshot } from "@/lib/storefront-context";
 import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
+import { resolveMydreamshootsPageTdk } from "@/lib/mydreamshoots-tdk";
 import {
   AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY,
   isAidreamshootsEngagementFrenchPage
@@ -70,13 +71,20 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const engagementPhotoMeta = isAidreamshootsEngagementFrenchPage(site, route.canonicalPath)
     ? AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY
     : undefined;
-  const finalTitle = engagementPhotoMeta?.seoTitle ?? directoryContent.title;
-  const finalDescription = engagementPhotoMeta?.seoDescription ?? directoryContent.description;
+  const spanishTdk = site.id === "site_mydreamshoots_xby"
+    ? resolveMydreamshootsPageTdk(site, route.canonicalPath, {
+        title: typeof metadata.title === "string" ? metadata.title : directoryContent.title,
+        description: typeof metadata.description === "string" ? metadata.description : directoryContent.description,
+        keywords: typeof metadata.keywords === "string" ? metadata.keywords : directoryContent.keywords
+      })
+    : undefined;
+  const finalTitle = engagementPhotoMeta?.seoTitle ?? spanishTdk?.title ?? directoryContent.title;
+  const finalDescription = engagementPhotoMeta?.seoDescription ?? spanishTdk?.description ?? directoryContent.description;
   return {
     ...metadata,
     title: finalTitle,
     description: finalDescription,
-    keywords: engagementPhotoMeta?.seoKeywords ?? metadata.keywords,
+    keywords: engagementPhotoMeta?.seoKeywords ?? spanishTdk?.keywords ?? metadata.keywords,
     alternates: {
       ...(metadata.alternates ?? {}),
       canonical: engagementPhotoMeta?.canonicalPath ?? metadata.alternates?.canonical
