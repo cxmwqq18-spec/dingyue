@@ -334,7 +334,14 @@ function VideoSection({ section, resolveAsset }: { section: SectionInstance; res
   const video = setting(section, "videoUrl");
   const poster = setting(section, "imageUrl");
   if (!video && !poster) return null;
-  return <section className="ac-section ac-section-tight" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="video"><div className="ac-container"><div className="ac-video-layout"><div><Eyebrow tone="cyan">{setting(section, "eyebrow")}</Eyebrow><h2 className="ac-display-md">{setting(section, "title")}</h2>{setting(section, "subtitle") ? <p className="ac-copy">{setting(section, "subtitle")}</p> : null}</div>{video || poster ? <div className="ac-video-frame">{video ? <video controls poster={poster ? resolveAsset(poster) : undefined} preload="metadata"><source src={resolveAsset(video)} /></video> : <ImageFrame src={resolveAsset(poster)} alt={setting(section, "title")} />}</div> : null}</div></div></section>;
+  const resolvedVideo = video ? resolveAsset(video) : "";
+  const videoType = /\.webm(?:[?#]|$)/i.test(resolvedVideo) ? "video/webm" : /\.(?:mp4|m4v|mov)(?:[?#]|$)/i.test(resolvedVideo) ? "video/mp4" : undefined;
+  const videoWidth = Math.max(1, Number.parseInt(setting(section, "videoWidth", "1280"), 10) || 1280);
+  const videoHeight = Math.max(1, Number.parseInt(setting(section, "videoHeight", "720"), 10) || 720);
+  const subtitleUrl = setting(section, "subtitleUrl");
+  const subtitleLanguage = setting(section, "subtitleLanguage", "en");
+  const subtitleLabel = setting(section, "subtitleLabel", "English subtitles");
+  return <section className="ac-section ac-section-tight" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="video"><div className="ac-container"><div className="ac-video-layout"><div><Eyebrow tone="cyan">{setting(section, "eyebrow")}</Eyebrow><h2 className="ac-display-md">{setting(section, "title")}</h2>{setting(section, "subtitle") ? <p className="ac-copy">{setting(section, "subtitle")}</p> : null}</div>{video || poster ? <div className="ac-video-frame">{video && videoType ? <video controls height={videoHeight} poster={poster ? resolveAsset(poster) : undefined} preload="metadata" width={videoWidth}><source src={resolvedVideo} type={videoType} />{subtitleUrl ? <track default kind="subtitles" label={subtitleLabel} src={resolveAsset(subtitleUrl)} srcLang={subtitleLanguage} /> : null}</video> : poster ? <ImageFrame src={resolveAsset(poster)} alt={setting(section, "title")} /> : null}</div> : null}</div></div></section>;
 }
 
 function ConversionSection({ section, resolveHref }: { section: SectionInstance; resolveHref: Resolve }) {

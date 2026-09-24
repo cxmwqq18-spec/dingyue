@@ -42,6 +42,9 @@ type VideoTopicVideo = {
   width: number;
   height: number;
   fit: "cover" | "contain";
+  subtitleUrl?: string;
+  subtitleLanguage?: string;
+  subtitleLabel?: string;
 };
 
 type VideoTopicUseCase = {
@@ -295,7 +298,19 @@ function isRenderableTopicImage(image: VideoTopicImage | undefined): image is Vi
   return Boolean(image?.src?.trim() && Number(image.width) > 0 && Number(image.height) > 0);
 }
 
+const aidreamcapesEuMotionImageReplacements: Record<string, string> = {
+  "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/provider-recovered/asset-motion-generator-01-hero.webp?v=20260916euproviderrecovery1",
+  "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-02.webp": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/provider-recovered/asset-motion-generator-02-portrait-action.webp?v=20260916euproviderrecovery1",
+  "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-03.webp": "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/provider-recovered/asset-motion-generator-03-product-motion.webp?v=20260916euproviderrecovery1"
+};
+
+function aidreamcapesEuTopicImageSrc(src: string): string {
+  const clean = src.trim().replace(/&amp;/g, "&");
+  return aidreamcapesEuMotionImageReplacements[clean] ?? clean;
+}
+
 function optimizedTopicImageSrc(src: string): string {
+  src = aidreamcapesEuTopicImageSrc(src);
   if (!src.startsWith("/assets/dreamshoot/")) return src;
   const youtubeMap: Record<string, string> = {
     "youtube-card-01": "youtube-card-01",
@@ -368,7 +383,7 @@ function StorefrontTopicImage({ src, previewSrc, ...props }: StorefrontTopicImag
 
 function topicImagePreviewSrc(image: VideoTopicImage): string {
   const original = image.imageOriginalUrl?.trim() ?? "";
-  return /^(?:https?:|\/assets\/)/i.test(original) ? original : optimizedTopicImageSrc(image.src);
+  return /^(?:https?:|\/assets\/)/i.test(original) ? aidreamcapesEuTopicImageSrc(original) : optimizedTopicImageSrc(image.src);
 }
 
 function heroPreviewImages(content: Pick<VideoTopicContent, "hero">): VideoTopicImage[] {
@@ -412,11 +427,32 @@ function heroMediaSizingClass(video?: VideoTopicVideo): string {
   return isPortraitVideo(video) ? "w-full max-w-full md:w-fit" : "w-full";
 }
 
+function videoMimeTypeForUrl(value: string): "video/mp4" | "video/webm" | undefined {
+  if (/\.webm(?:[?#]|$)/i.test(value)) return "video/webm";
+  if (/\.(?:mp4|m4v|mov)(?:[?#]|$)/i.test(value)) return "video/mp4";
+  return undefined;
+}
+
 function TopicHeroVideo({ video, site }: { video: VideoTopicVideo; site?: Site }) {
   const accessibleLabel = video.alt?.trim() || video.label;
+  const videoMimeType = videoMimeTypeForUrl(video.src);
   const watchPath = site?.id === "site_dreamshoot" && isMydreamshootsVideoContentPath(video.src)
     ? mydreamshootsVideoWatchPathForContentPath(video.src)
     : undefined;
+  if (!videoMimeType) {
+    return (
+      <div className="relative h-full w-full overflow-hidden bg-[#17151f]">
+        <StorefrontTopicImage
+          alt={accessibleLabel}
+          className="absolute inset-0 h-full w-full object-contain"
+          height={video.height}
+          loading="eager"
+          src={video.poster}
+          width={video.width}
+        />
+      </div>
+    );
+  }
   return (
     <DreamshootShowcasePreview className="h-full">
       <div
@@ -442,10 +478,12 @@ function TopicHeroVideo({ video, site }: { video: VideoTopicVideo; site?: Site }
           playsInline
           poster={video.poster}
           preload="metadata"
-          src={video.src}
           title={accessibleLabel}
           width={video.width}
-        />
+        >
+          <source src={video.src} type={videoMimeType} />
+          {video.subtitleUrl ? <track default kind="subtitles" label={video.subtitleLabel ?? "English subtitles"} src={video.subtitleUrl} srcLang={video.subtitleLanguage ?? "en"} /> : null}
+        </video>
         <span aria-hidden="true" className="absolute inset-0 bg-black/0 transition group-hover:bg-black/[0.08]" />
         {watchPath ? (
           <StorefrontInstantLink className="absolute bottom-4 right-4 z-10 rounded-full border border-white/30 bg-black/55 px-3 py-1.5 text-xs font-semibold text-white underline decoration-white/35 underline-offset-4 backdrop-blur transition hover:bg-black/75" href={watchPath}>

@@ -947,6 +947,11 @@ export const aiSubscriptionSectionSchemas: Record<string, ThemeSectionSchema> = 
       textarea("supportingCopy", "Supporting copy", ""),
       image("imageUrl", "Poster image"),
       url("videoUrl", "Video URL", ""),
+      url("subtitleUrl", "Subtitle WebVTT URL", ""),
+      text("subtitleLanguage", "Subtitle language", "en"),
+      text("subtitleLabel", "Subtitle label", "English subtitles"),
+      text("videoWidth", "Video width", "1280"),
+      text("videoHeight", "Video height", "720"),
       text("videoBadge", "Video badge", "HAPPY NEW YEAR"),
       text("playLabel", "Play label", "Watch tutorial")
     ]

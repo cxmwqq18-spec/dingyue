@@ -15,6 +15,9 @@ export type TalkingPhotoVideo = {
   width: number;
   height: number;
   fit: "cover" | "contain";
+  subtitleUrl?: string;
+  subtitleLanguage?: string;
+  subtitleLabel?: string;
 };
 
 export type TalkingPhotoUseCase = {

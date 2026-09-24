@@ -25,6 +25,9 @@ export type AiVideoTopicVideo = {
   width: number;
   height: number;
   fit: "cover" | "contain";
+  subtitleUrl?: string;
+  subtitleLanguage?: string;
+  subtitleLabel?: string;
 };
 
 export type AiVideoTopicCard = {

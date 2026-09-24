@@ -419,7 +419,7 @@ function VideoGrid({
                 </div>
               ) : null}
               <div className="absolute bottom-0 left-0 p-4">
-                <h4 className="text-sm font-medium text-white">{blockValue(block, "title")}</h4>
+                <h3 className="text-sm font-medium text-white">{blockValue(block, "title")}</h3>
                 <p className="mt-1 text-xs text-gray-400">{blockValue(block, "description")}</p>
               </div>
             </a>
@@ -654,7 +654,7 @@ function ScenarioGrid({ id, resolveHref, section, site }: AidreamcapesZipHomepag
               >
                 {blockValue(block, "category")}
               </div>
-              <h4 className="mb-1 font-semibold">{blockValue(block, "title")}</h4>
+              <h3 className="mb-1 font-semibold">{blockValue(block, "title")}</h3>
               <p className="text-xs text-gray-400">{blockValue(block, "description")}</p>
             </a>
           })}
