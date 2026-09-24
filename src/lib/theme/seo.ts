@@ -119,6 +119,9 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
   const ogImageAlt = articleImageAlt ?? settingText(seo.ogImageAlt) ?? settingText(page.publishedJson.seo?.ogImageAlt);
   const isAidreamcapesEu = site.id === "site_aidreamcapes_xby";
   const isAidreamshoots = site.id === "site_mydreamshoots_xby";
+  const resolvedOgImageAlt = ogImageAlt ?? (isAidreamcapesEu
+    ? `Illustration de ${seo.title.replace(/\s*\|\s*Aidreamcapes\s*$/i, "").trim()} pour Aidreamcapes.`
+    : undefined);
   return {
     title: seo.title,
     description: seo.description,
@@ -141,15 +144,15 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
         : {}),
       ...(articlePublishedTime ? { publishedTime: articlePublishedTime } : {}),
       ...(articleModifiedTime ? { modifiedTime: articleModifiedTime } : {}),
-      images: ogImage ? [{ url: ogImage, ...(ogImageAlt ? { alt: ogImageAlt } : {}) }] : undefined
+      images: ogImage ? [{ url: ogImage, ...(resolvedOgImageAlt ? { alt: resolvedOgImageAlt } : {}) }] : undefined
     },
     twitter: {
       card: ogImage ? "summary_large_image" : "summary",
       title: seo.title,
       description: seo.twitterDescription ?? seo.description,
-      images: ogImage ? [ogImage] : undefined
+      images: ogImage ? [{ url: ogImage, ...(resolvedOgImageAlt ? { alt: resolvedOgImageAlt } : {}) }] : undefined
     },
-    ...(ogImageAlt ? { other: { "twitter:image:alt": ogImageAlt } } : {}),
+    ...(resolvedOgImageAlt ? { other: { "twitter:image:alt": resolvedOgImageAlt } } : {}),
     icons: siteIcons(site, context.settings)
   };
 }

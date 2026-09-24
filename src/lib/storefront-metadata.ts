@@ -6,20 +6,9 @@ import { canonicalUrlForSite, normalizeCanonicalPath } from "@/lib/storefront-co
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import { metadataForSingleThemePage } from "@/lib/theme/seo";
 import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
-import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSeoContentForSlug, aidreamcapesEuSeoContentFromPath } from "@/lib/aidreamcapes-eu-seo-content";
+import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSaveTheDateSeoFromPath, aidreamcapesEuSeoContentForSlug, aidreamcapesEuSeoContentFromPath } from "@/lib/aidreamcapes-eu-seo-content";
 import { aidreamcapesEuVideoTopicFromPath } from "@/lib/aidreamcapes-eu-video-media";
 import type { CreativePack, PlatformState, Product, Site, ThemePage } from "@/lib/types";
-
-const AIDREAMCAPES_EU_SAVE_THE_DATE_SEO_OVERRIDES: Record<string, { title: string; description: string }> = {
-  "/ai-save-the-date/save-the-date": {
-    title: "Vidéo d’annonce de date avec l’IA | Aidreamcapes",
-    description: "Créez une vidéo d’annonce de date avec l’IA à partir de portraits de couple et d’une date de mariage confirmée, puis partagez une annonce claire avec vos proches."
-  },
-  "/ai-save-the-date/wedding-invitation": {
-    title: "Vidéo d’invitation de mariage avec l’IA | Aidreamcapes",
-    description: "Créez une vidéo d’invitation de mariage avec l’IA à partir de votre papeterie approuvée : noms, date, lieu et détails lisibles avant le partage."
-  }
-};
 
 function canonicalMetadataPath(site: Site, value: unknown, fallback = "/"): string {
   const normalized = normalizeCanonicalPath(value, fallback);
@@ -100,7 +89,7 @@ export async function metadataForPublishedStorefrontPage({
       }
     : undefined;
   const euSaveTheDateSeo = snapshot.site.id === "site_aidreamcapes_xby"
-    ? AIDREAMCAPES_EU_SAVE_THE_DATE_SEO_OVERRIDES[metadataPath]
+    ? aidreamcapesEuSaveTheDateSeoFromPath(metadataPath)
     : undefined;
   const euImageSeo = snapshot.site.id === "site_aidreamcapes_xby"
     ? aidreamcapesEuSeoContentFromPath(metadataPath)
