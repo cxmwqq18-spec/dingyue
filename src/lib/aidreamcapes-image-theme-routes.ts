@@ -94,6 +94,14 @@ export const AIDREAMCAPES_RETIRED_PUBLIC_PATHS = new Set<string>([
   ...retiredImageCollectionPaths
 ]);
 
+export const AIDREAMCAPES_GONE_PUBLIC_PATHS = new Set<string>([
+  "/ai-save-the-date/save-the-date",
+  "/ai-save-the-date/valentines-day",
+  "/ai-save-the-date/engagement",
+  "/ai-save-the-date/proposal",
+  "/ai-image-generation/unblur-image"
+]);
+
 const imageThemeByPath = new Map(
   AIDREAMCAPES_IMAGE_THEME_DEFINITIONS.map((definition) => [
     `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${definition.slug}`,
@@ -142,4 +150,9 @@ export function isRetiredAidreamcapesPublicPath(siteSlug: string | undefined, pa
     return true;
   }
   return AIDREAMCAPES_RETIRED_PUBLIC_PATHS.has(normalizedPath);
+}
+
+export function isAidreamcapesGonePublicPath(siteSlug: string | undefined, path: string): boolean {
+  if (siteSlug !== "aidreamcapes") return false;
+  return AIDREAMCAPES_GONE_PUBLIC_PATHS.has(path.replace(/\/$/, ""));
 }

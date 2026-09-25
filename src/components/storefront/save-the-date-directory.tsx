@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, ChevronRight } from "lucide-react";
+import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
 import type { PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
 
 export function SaveTheDateDirectory({ groups, createHref = "/app/create", french = false, spanish = false }: { groups: PublishedSaveTheDateGroup[]; createHref?: string; french?: boolean; spanish?: boolean }) {
@@ -96,7 +97,7 @@ export function SaveTheDateDirectory({ groups, createHref = "/app/create", frenc
                       prefetch={false}
                     >
                       <div className={french ? "relative overflow-hidden bg-[#111827]" : "relative aspect-[4/3] overflow-hidden bg-[#111827]"}>
-                        <img alt={imageAlt} className={french ? "block h-auto w-full object-center transition duration-500 group-hover:scale-[1.015]" : "block h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]"} decoding="async" loading={index === 0 ? "eager" : "lazy"} src={imageUrl} />
+                        <AidreamcapesResponsiveImage alt={imageAlt} className={french ? "block h-auto w-full object-center transition duration-500 group-hover:scale-[1.015]" : "block h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]"} decoding="async" fetchPriority={index === 0 ? "high" : "low"} loading={index === 0 ? "eager" : "lazy"} sizes="(max-width: 639px) 100vw, (max-width: 1279px) 50vw, 33vw" src={imageUrl} width={1600} height={1200} />
                         <span className="absolute left-3 top-3 rounded-full border border-white/16 bg-black/44 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/82 backdrop-blur">{String(index + 1).padStart(2, "0")}</span>
                       </div>
                       <div className="flex flex-1 flex-col border-t border-white/10 p-5">

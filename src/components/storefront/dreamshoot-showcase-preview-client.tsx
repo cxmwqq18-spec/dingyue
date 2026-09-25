@@ -12,6 +12,12 @@ type PreviewMedia = {
   title: string;
 };
 
+function videoMimeTypeForUrl(value: string): "video/mp4" | "video/webm" | undefined {
+  if (/\.webm(?:[?#]|$)/i.test(value)) return "video/webm";
+  if (/\.(?:mp4|m4v|mov)(?:[?#]|$)/i.test(value)) return "video/mp4";
+  return undefined;
+}
+
 function previewTarget(target: EventTarget | null): HTMLElement | null {
   if (!(target instanceof Element)) return null;
   return target.closest<HTMLElement>("[data-dreamshoot-showcase-preview][data-dreamshoot-preview-src]")
@@ -82,6 +88,7 @@ export function DreamshootShowcasePreviewClient({ children, className, locale = 
   const previewTitle = locale === "fr" ? "Aperçu" : "Preview";
   const openOriginalLabel = locale === "fr" ? `Ouvrir la ${mediaLabel} originale` : `Open original ${mediaLabel}`;
   const closeLabel = locale === "fr" ? `Fermer l’aperçu ${mediaLabel}` : `Close ${mediaLabel} preview`;
+  const previewVideoType = preview?.kind === "video" ? videoMimeTypeForUrl(preview.src) : undefined;
 
   return (
     <div className={`${className || ""} [&_img:not([data-dreamshoot-preview-disabled])]:cursor-zoom-in [&_video:not([data-dreamshoot-preview-disabled])]:cursor-zoom-in`.trim()} data-dreamshoot-preview-root="true" onClick={onClick} onKeyDown={onKeyDown}>
@@ -100,7 +107,7 @@ export function DreamshootShowcasePreviewClient({ children, className, locale = 
               </div>
             </div>
             <div className="flex min-h-0 justify-center overflow-hidden rounded-[8px] bg-transparent">
-              {preview.kind === "video" ? <video autoPlay className="h-auto max-h-[calc(100vh-9rem)] w-auto max-w-full object-contain" controls playsInline poster={preview.poster || undefined} preload="metadata" src={preview.src} /> : <img alt={preview.title} className="h-auto max-h-[calc(100vh-9rem)] w-auto max-w-full object-contain" src={preview.src} />}
+              {preview.kind === "video" && previewVideoType ? <video autoPlay className="h-auto max-h-[calc(100vh-9rem)] w-auto max-w-full object-contain" controls playsInline poster={preview.poster || undefined} preload="metadata"><source src={preview.src} type={previewVideoType} /></video> : <img alt={preview.title} className="h-auto max-h-[calc(100vh-9rem)] w-auto max-w-full object-contain" src={preview.kind === "video" ? preview.poster || preview.src : preview.src} />}
             </div>
           </div>
         </div>

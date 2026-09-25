@@ -4,7 +4,7 @@ import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity }
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS as MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS, isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
-import { isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { isAidreamcapesGonePublicPath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath } from "@/lib/save-the-date-routes";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
@@ -240,6 +240,22 @@ function aidreamcapesEuWwwRedirect(request: NextRequest): NextResponse | undefin
   return NextResponse.redirect(target, 301);
 }
 
+function aidreamcapesCanonicalHostRedirect(request: NextRequest): NextResponse | undefined {
+  const forwardedHost = request.headers.get("x-forwarded-host") ?? "";
+  const host = (forwardedHost || request.headers.get("host") || "").split(",")[0]?.trim().toLowerCase().split(":")[0] ?? "";
+  if (host !== "www.aidreamcapes.com" && host !== "aidreamcapes.com") return undefined;
+
+  const forwardedProtocol = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim().toLowerCase();
+  const protocol = forwardedProtocol || request.nextUrl.protocol.replace(/:$/, "").toLowerCase();
+  if (host === "aidreamcapes.com" && protocol === "https") return undefined;
+
+  const target = request.nextUrl.clone();
+  target.protocol = "https:";
+  target.hostname = "aidreamcapes.com";
+  target.port = "";
+  return NextResponse.redirect(target, 301);
+}
+
 function mydreamshootsLegacySiteSlugRedirect(request: NextRequest): NextResponse | undefined {
   const match = request.nextUrl.pathname.match(/^\/site\/([^/]+)(\/.*)?$/i);
   const legacySlug = match?.[1]?.toLowerCase();
@@ -471,7 +487,9 @@ function moveSeoTagsBeforeResources(html: string): string {
         .replace(/\stype=["']application\/json["']/i, ' type="application/ld+json"')
         .replace(/\sid=["']storefront-json-ld-(\d+)["']/i, ' id="storefront-json-ld-head-$1"');
       seoTags.push(headTag);
-      return tag;
+      // Keep the normalized copy in <head>, but remove the body marker from
+      // the final document so the same JSON-LD graph is not emitted twice.
+      return "";
     }
     seoTags.push(tag);
     return "";
@@ -486,6 +504,12 @@ function moveSeoTagsBeforeResources(html: string): string {
   const { titleTag, seoTags: nonTitleSeoTags } = splitTitleAndSeoTags(seoTags);
   const reorderedHead = `${titleTag}${essentialTags.join("")}${nonTitleSeoTags.join("")}${remainingHead}`;
   return `${beforeHeadContent}${reorderedHead}${strippedAfterHead}`;
+}
+
+const BODY_MARKER_JSON_LD_RE = /<script\b(?=[^>]*data-storefront-json-ld=["']body-marker["'])[^>]*>[\s\S]*?<\/script>/gi;
+
+function stripBodyMarkerJsonLd(html: string): string {
+  return html.replace(BODY_MARKER_JSON_LD_RE, "");
 }
 
 type StorefrontIconSet = {
@@ -584,6 +608,7 @@ function rewriteStorefrontHtmlStream(body: ReadableStream<Uint8Array>, request: 
       const decoder = new TextDecoder();
       const encoder = new TextEncoder();
       let buffer = "";
+      let bodyBuffer = "";
       let emittedHead = false;
 
       try {
@@ -597,7 +622,7 @@ function rewriteStorefrontHtmlStream(body: ReadableStream<Uint8Array>, request: 
             const headPrefix = buffer.slice(0, headEnd);
             const bodyRemainder = buffer.slice(headEnd);
             controller.enqueue(encoder.encode(rewriteStorefrontHtmlHead(headPrefix, request, shouldReorder)));
-            if (bodyRemainder) controller.enqueue(encoder.encode(bodyRemainder));
+            if (bodyRemainder) bodyBuffer += bodyRemainder;
             buffer = "";
             emittedHead = true;
             break;
@@ -616,11 +641,13 @@ function rewriteStorefrontHtmlStream(body: ReadableStream<Uint8Array>, request: 
           const { done, value } = await reader.read();
           if (value) {
             const chunk = decoder.decode(value, { stream: !done });
-            if (chunk) controller.enqueue(encoder.encode(chunk));
+            if (chunk) bodyBuffer += chunk;
           }
           if (done) {
             const tail = decoder.decode();
-            if (tail) controller.enqueue(encoder.encode(tail));
+            if (tail) bodyBuffer += tail;
+            const cleanedBody = stripBodyMarkerJsonLd(bodyBuffer);
+            if (cleanedBody) controller.enqueue(encoder.encode(cleanedBody));
             controller.close();
             return;
           }
@@ -741,9 +768,10 @@ function retiredAidreamcapesImageToolResponse(request: NextRequest): Response | 
   const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
   const siteSlug = pathMatch?.[1]?.toLowerCase() === "aidreamcapes" ? "aidreamcapes" : hostSlug;
   const publicPath = pathMatch ? pathMatch[2] || "/" : normalizedPath;
+  const isGone = isAidreamcapesGonePublicPath(siteSlug, publicPath);
   if (!isRetiredAidreamcapesPublicPath(siteSlug, publicPath) && !(siteSlug === "aidreamcapes" && aidreamcapesLegacyVideoSaveTheDatePath(publicPath))) return undefined;
   return new NextResponse(null, {
-    status: 404,
+    status: isGone ? 410 : 404,
     headers: { "cache-control": "public, max-age=60" }
   });
 }
@@ -815,6 +843,8 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 }
 
 export async function middleware(request: NextRequest) {
+  const canonicalHostResponse = aidreamcapesCanonicalHostRedirect(request);
+  if (canonicalHostResponse) return finalizeStorefrontResponse(canonicalHostResponse, request);
   const retiredImageToolResponse = retiredAidreamcapesImageToolResponse(request);
   if (retiredImageToolResponse) return finalizeStorefrontResponse(retiredImageToolResponse, request);
   const workspaceRedirect = mydreamshootsWorkspaceRedirect(request);
@@ -907,5 +937,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|assets|_next/static|_next/image|robots.txt|sitemap.xml).*)"]
+  // Keep static resources in the canonical-host redirect path. The request
+  // still exits before HTML rewriting via INTERNAL_PATH_RE, so this only
+  // enforces the non-www/HTTPS URL policy for assets and Next bundles.
+  matcher: ["/((?!api).*)"]
 };

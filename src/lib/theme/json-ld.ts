@@ -8,7 +8,7 @@ import { aiVideoTopicLandingContentFromSection } from "@/lib/ai-video-topic-cont
 import { talkingPhotoContentFromSection } from "@/lib/talking-photo-content";
 import { imageThemeDetailContentFromSection } from "@/lib/aidreamcapes-image-theme-content";
 import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
-import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSeoContentForSlug } from "@/lib/aidreamcapes-eu-seo-content";
+import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSaveTheDateSeoFromPath, aidreamcapesEuSeoContentForSlug } from "@/lib/aidreamcapes-eu-seo-content";
 import { aidreamcapesEuVideoTopic, aidreamcapesEuVideoTopicFromPath } from "@/lib/aidreamcapes-eu-video-media";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
@@ -556,7 +556,7 @@ function breadcrumbs(site: Site, routeMode: "host" | "path", pagePath: string, t
     {
       "@type": "ListItem",
       position: 1,
-      name: frenchEngagementPage || aidreamcapesEuPage ? "Accueil" : isSpanishXbySite(site) ? "Inicio" : "Home",
+      name: frenchEngagementPage || aidreamcapesEuPage || site.id === "site_aidreamcapes_xby" ? "Accueil" : isSpanishXbySite(site) ? "Inicio" : "Home",
       item: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, "/"))
     }
   ];
@@ -665,6 +665,16 @@ function faqSchema(site: Site, pageJson: ThemePageJson | undefined, input?: Json
       mainEntity: AIDREAMCAPES_EU_TOOLS_FAQ
         .map(([question, answer]) => faqQuestionNode(site, question, answer))
         .filter(Boolean) as JsonLdNode[]
+    };
+  }
+  if (site.id === "site_aidreamcapes_xby" && isAidreamcapesEuSaveTheDatePage(site, input?.pagePath)) {
+    return {
+      "@type": "FAQPage",
+      inLanguage: "fr-FR",
+      mainEntity: [
+        faqQuestionNode(site, "Que permet de créer cette vidéo d’annonce ?", "Créez une vidéo personnalisée à partir de vos photos et partagez un message clair pour votre occasion."),
+        faqQuestionNode(site, "Quelles photos utiliser pour commencer ?", "Utilisez des photos nettes dont vous détenez les droits ou l’autorisation, avec les personnes clairement visibles.")
+      ].filter(Boolean)
     };
   }
   const aidreamcapesEuVideo = input?.pagePath && site.id === "site_aidreamcapes_xby"
@@ -1355,6 +1365,40 @@ function aidreamcapesEuVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
   }];
 }
 
+function aidreamcapesVideoFeatureObjectSchemas(input: JsonLdInput): JsonLdNode[] {
+  if (!isAidreamcapesSite(input.site) || !hasPageSections(input.pageJson)) return [];
+  const pageUrl = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath));
+  const uploadDate = normalizedUploadDate(input.page.updatedAt);
+  if (!pageUrl || !uploadDate) return [];
+  const pageTitleValue = pageTitle(input.site, input.page, input.context);
+  const pageDescriptionValue = pageDescription(input.site, input.page, input.context);
+  return input.pageJson.sectionsOrder.flatMap((sectionId, index) => {
+    const section = input.pageJson?.sections[sectionId];
+    if (section?.type !== "video_feature") return [];
+    const videoUrl = videoMediaPath(section.settings.videoUrl);
+    const thumbnailUrl = imageMediaPath(section.settings.imageUrl) || imageMediaPath(section.settings.posterUrl);
+    if (!videoUrl || !thumbnailUrl) return [];
+    const name = cleanSchemaText(input.site, section.settings.title, pageTitleValue);
+    const description = cleanSchemaText(input.site, section.settings.subtitle, pageDescriptionValue);
+    return [{
+      "@type": "VideoObject",
+      "@id": `${pageUrl}#video-${index + 1}`,
+      name,
+      description,
+      thumbnailUrl: [absoluteUrl(input.site, input.routeMode, thumbnailUrl)],
+      uploadDate,
+      duration: iso8601Duration(numericSetting(section.settings.videoDurationSeconds, 15)),
+      contentUrl: absoluteUrl(input.site, input.routeMode, videoUrl),
+      encodingFormat: mediaEncodingFormat(videoUrl),
+      url: pageUrl,
+      mainEntityOfPage: pageUrl,
+      isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
+      publisher: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
+      potentialAction: { "@type": "WatchAction", target: pageUrl }
+    }];
+  });
+}
+
 function spanishVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
   if (!isAidreamshootsStorefrontSite(input.site) || !input.context.seo.index) return [];
   const requestedSlug = aidreamshootsVideoTopicSlugForPath(input.pagePath);
@@ -1622,8 +1666,11 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   const resolvedInput: JsonLdInput = isAidreamcapesImageThemePath(routeInput.site.slug, routeInput.pagePath)
     ? { ...routeInput, site: { ...routeInput.site, primaryDomain: "aidreamcapes.com" } }
     : routeInput;
-  const title = pageTitle(resolvedInput.site, resolvedInput.page, resolvedInput.context);
-  const description = pageDescription(resolvedInput.site, resolvedInput.page, resolvedInput.context);
+  const euRouteSeo = resolvedInput.site.id === "site_aidreamcapes_xby"
+    ? aidreamcapesEuSaveTheDateSeoFromPath(resolvedInput.pagePath)
+    : undefined;
+  const title = euRouteSeo?.title ?? pageTitle(resolvedInput.site, resolvedInput.page, resolvedInput.context);
+  const description = euRouteSeo?.description ?? pageDescription(resolvedInput.site, resolvedInput.page, resolvedInput.context);
   const graph: Array<JsonLdNode | undefined> = [
     organizationSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.context, resolvedInput.pagePath),
     websiteSchema(resolvedInput.site, resolvedInput.routeMode),
@@ -1641,6 +1688,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     ...collectionPageSchema(resolvedInput, title, description),
     ...editorialVideoObjectSchemas(resolvedInput),
     ...aidreamcapesEuVideoObjectSchemas(resolvedInput),
+    ...aidreamcapesVideoFeatureObjectSchemas(resolvedInput),
     ...spanishVideoObjectSchemas(resolvedInput),
     ...homeVideoObjectSchemas(resolvedInput),
     ...serviceOrProductSchema(resolvedInput, title, description)
@@ -1733,7 +1781,9 @@ export function buildToolDirectoryJsonLd({
       offers: {
         "@type": "Offer",
         availability: toolOfferAvailability(site, pagePath, context),
-        category: isSpanishXbySite(site)
+        category: site.id === "site_aidreamcapes_xby"
+          ? "outil de portraits d’occasion avec l’IA"
+          : isSpanishXbySite(site)
           ? isAidreamcapesSite(site) ? "herramienta de retratos de viaje IA" : "herramienta de fotos IA"
           : isAidreamcapesSite(site) ? "AI occasion portrait tool" : isMydreamshootsComSite(site) && MYDREAMSHOOTS_VIDEO_SCHEMA_PATHS.has(pagePath) ? "AI video tool" : "AI photo tool",
         url

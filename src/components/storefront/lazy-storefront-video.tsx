@@ -13,6 +13,12 @@ type LazyStorefrontVideoProps = Omit<VideoHTMLAttributes<HTMLVideoElement>, "pre
   pauseOverlay?: boolean;
 };
 
+function videoMimeTypeForUrl(value: string): "video/mp4" | "video/webm" | undefined {
+  if (/\.webm(?:[?#]|$)/i.test(value)) return "video/webm";
+  if (/\.(?:mp4|m4v|mov)(?:[?#]|$)/i.test(value)) return "video/mp4";
+  return undefined;
+}
+
 export function LazyStorefrontVideo({
   src,
   autoPlayOnInteraction = false,
@@ -77,6 +83,7 @@ export function LazyStorefrontVideo({
     : "Play tutorial video";
   const showPosterOverlay = Boolean(posterOverlay && poster && !posterOverlayDismissed);
   const showPauseOverlay = Boolean(pauseOverlay && hasPlayableVideo && !isPlaying && !showPosterOverlay);
+  const videoMimeType = videoMimeTypeForUrl(src);
 
   const video = (
     <video
@@ -121,8 +128,10 @@ export function LazyStorefrontVideo({
       poster={poster}
       preload="metadata"
       ref={videoRef}
-      src={src}
-    />
+      {...(videoMimeType ? {} : { src })}
+    >
+      {videoMimeType ? <source src={src} type={videoMimeType} /> : null}
+    </video>
   );
 
   if (!posterOverlay && !pauseOverlay) return video;

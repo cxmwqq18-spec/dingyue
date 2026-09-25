@@ -10,7 +10,7 @@ import { getSectionSchema } from "@/lib/section-schema";
 import { clearSiteMediaSummaryCache, clearSiteReadCache, getThemePublishPreflightBundleRelational } from "@/lib/stores/site-store";
 import { normalizeStorefrontProfile } from "@/lib/stores/storefront-profile-store";
 import { clearStorefrontContextCache, hasCompleteStorefrontProfileFacts, loadDraftStorefrontContext } from "@/lib/storefront-context";
-import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
+import { isAidreamcapesSite, isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import { resolveStorefrontBindings } from "@/lib/storefront-context/core";
 import {
   buildSaasThemeDraft,
@@ -276,6 +276,12 @@ const STANDARD_MYDREAMSHOOTS_MEDIA_ALTS: Record<(typeof STANDARD_MYDREAMSHOOTS_M
   "/ai-save-the-date/fathers-day": "Father's Day family, gifts, outdoor activities, and celebration scenes",
   "/ai-save-the-date/halloween": "Halloween costume, couple, family, pet, pumpkin, party, and haunted-scene ideas"
 };
+
+function standardMediaAltForSite(site: Site, canonicalPath: string): string {
+  const alt = STANDARD_MYDREAMSHOOTS_MEDIA_ALTS[canonicalPath as keyof typeof STANDARD_MYDREAMSHOOTS_MEDIA_ALTS] || "";
+  return isAidreamcapesSite(site) ? alt.replace(/\bMyDreamShoots\b/gi, "Aidreamcapes") : alt;
+}
+
 function collectPublishedImageUrls(value: unknown, output: string[] = []): string[] {
   if (typeof value === "string" && /\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i.test(value.trim())) {
     if (value.trim() && !output.includes(value.trim())) output.push(value.trim());
@@ -313,7 +319,7 @@ function buildPublishedStandardPageMedia(
     const primaryImage = firstReadyLeafMedia?.primaryImage ?? page?.publishedJson.seo?.ogImage ?? discovered[0] ?? "";
     const pageEntityId = `mydreamshoots:standard:${canonicalPath.slice(1).replace(/[^a-z0-9]+/gi, "-")}`;
     const mediaEntityId = `${pageEntityId}:media`;
-    const primaryImageAlt = page ? (manifest[0]?.alt || STANDARD_MYDREAMSHOOTS_MEDIA_ALTS[canonicalPath] || "") : "";
+    const primaryImageAlt = page ? (manifest[0]?.alt || standardMediaAltForSite(site, canonicalPath)) : "";
     const sitemapImages = primaryImage ? [primaryImage, ...discovered.filter((image) => image !== primaryImage)].slice(0, 6) : [];
     const expectedMediaCount = page?.publishedJson.contentContract?.mediaCount ?? 11;
     const manifestAssetsReady = !SAVE_THE_DATE_EDITORIAL_PATHS.includes(canonicalPath as (typeof SAVE_THE_DATE_EDITORIAL_PATHS)[number]) || (

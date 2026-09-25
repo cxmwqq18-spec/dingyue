@@ -21,10 +21,20 @@ const STALE_SLUG = "/ai-image-generation/headshot";
 const STALE_ID = "aidreamcapes_mirror_page_dc81ade5b57414c4";
 const CONFIRMATION = "aidreamcapes-seo-remediation";
 const BACKUP_ROOT = path.resolve("releases/backups/aidreamcapes");
+const GONE_PUBLIC_PATHS = new Set([
+  "/ai-save-the-date/save-the-date",
+  "/ai-save-the-date/valentines-day",
+  "/ai-save-the-date/engagement",
+  "/ai-save-the-date/proposal",
+  "/ai-image-generation/unblur-image"
+]);
 
 // These descriptions are intentionally written per route. They are not a
 // generic fallback and do not replace the 30 image-theme content contracts.
 const SEO_REPLACEMENTS = new Map([
+  ["/", {
+    description: "Create AI images and videos for products, portraits, ads, and private visual stories. Upload a reference, choose a workflow, and review results before sharing."
+  }],
   ["/about-us", {
     title: "About Aidreamcapes: AI Creation Studio | Aidreamcapes",
     description: "Learn how Aidreamcapes turns photos into AI images, videos, and private visual stories. Explore guided creation, secure uploads, and results ready for review."
@@ -32,6 +42,9 @@ const SEO_REPLACEMENTS = new Map([
   ["/ai-image-generation", {
     title: "AI Image Generation Tools for Product Teams | Aidreamcapes",
     description: "Explore AI image tools for ecommerce, lifestyle, portraits, ads, packaging, and product details. Start with a reference and review results before publishing."
+  }],
+  ["/ai-image-generation/professional-headshot", {
+    description: "Create a polished professional headshot for LinkedIn, resumes, team pages, and creator profiles from an approved photo. Review the result before sharing."
   }],
   ["/ai-image-generation/ecommerce-main-image", {
     description: "Create a clean ecommerce main image from one product reference. Keep it clear and centered for Shopify, marketplace, and DTC store pages with Aidreamcapes."
@@ -343,7 +356,7 @@ function hash(value) {
 
 function normalizeAidreamcapesOrigin(value) {
   if (typeof value !== "string") return value;
-  return value.replace(/^https:\/\/www\.aidreamcapes\.com(?=\/|$)/i, "https://aidreamcapes.com");
+  return value.replace(/https:\/\/www\.aidreamcapes\.com(?=\/|$)/gi, "https://aidreamcapes.com");
 }
 
 function updateSeoValue(value) {
@@ -385,20 +398,70 @@ function updateRouteReferenceValue(value, key) {
 
 function updateContentValue(value, key = "") {
   if (Array.isArray(value)) return value.map((item) => updateContentValue(item, key));
-  if (!value || typeof value !== "object") return updateRouteReferenceValue(value, key);
+  if (!value || typeof value !== "object") {
+    const routeUpdated = normalizeAidreamcapesOrigin(updateRouteReferenceValue(value, key));
+    if (typeof routeUpdated !== "string") return routeUpdated;
+    if (/(?:href|url|canonical|path|target|link|asset|src|slug)/i.test(key) || /^https?:\/\//i.test(routeUpdated) || routeUpdated.includes("/assets/")) return routeUpdated;
+    return routeUpdated.replace(/\bmydreamshoots\b/gi, "Aidreamcapes");
+  }
   return Object.fromEntries(Object.entries(value).map(([childKey, child]) => [
     childKey,
     updateContentValue(child, childKey)
   ]));
 }
 
+function isLinkLikeKey(key) {
+  return /(?:href|url|canonical|path|target|link|route|slug|@id)/i.test(key);
+}
+
+function isGoneRouteReference(value) {
+  if (typeof value !== "string") return false;
+  const trimmed = value.trim();
+  if (!trimmed) return false;
+  try {
+    const parsed = new URL(trimmed, "https://aidreamcapes.com");
+    return GONE_PUBLIC_PATHS.has(parsed.pathname);
+  } catch {
+    return false;
+  }
+}
+
+function containsGoneRouteReference(value, key = "") {
+  if (typeof value === "string") return isLinkLikeKey(key) && isGoneRouteReference(value);
+  if (Array.isArray(value)) return value.some((item) => containsGoneRouteReference(item, key));
+  if (!value || typeof value !== "object") return false;
+  return Object.entries(value).some(([childKey, child]) => containsGoneRouteReference(child, childKey));
+}
+
+// Remove retired routes from navigation/link structures while leaving prose
+// and the retired pages' own stored content intact for a future re-publish.
+function removeGoneRouteReferences(value, key = "") {
+  if (Array.isArray(value)) {
+    return value
+      .filter((item) => !containsGoneRouteReference(item, key))
+      .map((item) => removeGoneRouteReferences(item, key));
+  }
+  if (!value || typeof value !== "object") {
+    return isLinkLikeKey(key) && isGoneRouteReference(value) ? undefined : value;
+  }
+  const next = {};
+  for (const [childKey, child] of Object.entries(value)) {
+    if (isLinkLikeKey(childKey) && isGoneRouteReference(child)) continue;
+    const cleaned = removeGoneRouteReferences(child, childKey);
+    if (cleaned !== undefined) next[childKey] = cleaned;
+  }
+  return next;
+}
+
 function nextPage(row) {
-  const contentJson = updateContentValue(clone(row.contentJson) ?? {});
+  let contentJson = updateContentValue(clone(row.contentJson) ?? {});
+  if (!GONE_PUBLIC_PATHS.has(row.slug)) contentJson = removeGoneRouteReferences(contentJson);
   const seo = updateSeoValue(contentJson.seo ?? {});
   const replacement = SEO_REPLACEMENTS.get(row.slug);
   if (replacement) Object.assign(seo, replacement);
   contentJson.seo = seo;
-  return { ...row, title: replacement?.title ?? row.title, contentJson };
+  const title = replacement?.title ?? (typeof row.title === "string" ? row.title.replace(/\bmydreamshoots\b/gi, "Aidreamcapes") : row.title);
+  return { ...row, title, contentJson };
 }
 
 function collectStringReferences(value, needle, result = []) {
@@ -464,9 +527,11 @@ async function main() {
 
   const prisma = new PrismaClient();
   try {
-    const [site, livePages, allLivePages, beforeOtherSites] = await Promise.all([
+    const [site, livePages, themePages, themeSettings, allLivePages, beforeOtherSites] = await Promise.all([
       prisma.site.findUnique({ where: { id: SITE_ID }, select: { id: true, slug: true, primaryDomain: true, status: true } }),
       prisma.livePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, siteId: true, pageType: true, templateKey: true, slug: true, title: true, contentJson: true, updatedAt: true } }),
+      prisma.themePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, siteId: true, slug: true, title: true, draftJson: true, publishedJson: true, updatedAt: true } }),
+      prisma.themeSettings.findMany({ where: { siteId: SITE_ID }, select: { id: true, siteId: true, draftJson: true, publishedJson: true, updatedAt: true } }),
       prisma.livePage.findMany({ select: { id: true, siteId: true, slug: true, contentJson: true } }),
       otherSiteSentinel(prisma)
     ]);
@@ -497,7 +562,32 @@ async function main() {
       const before = livePages.find((candidate) => candidate.id === row.id);
       return before && (before.title !== row.title || hash(before.contentJson) !== hash(row.contentJson));
     });
+    const preparedThemePages = themePages.map((row) => {
+      const shouldRemoveGoneRoutes = !GONE_PUBLIC_PATHS.has(row.slug);
+      const draftJson = shouldRemoveGoneRoutes
+        ? removeGoneRouteReferences(updateContentValue(clone(row.draftJson) ?? {}))
+        : updateContentValue(clone(row.draftJson) ?? {});
+      const publishedJson = shouldRemoveGoneRoutes
+        ? removeGoneRouteReferences(updateContentValue(clone(row.publishedJson) ?? {}))
+        : updateContentValue(clone(row.publishedJson) ?? {});
+      const title = typeof row.title === "string" ? row.title.replace(/\bmydreamshoots\b/gi, "Aidreamcapes") : row.title;
+      return { ...row, title, draftJson, publishedJson };
+    });
+    const changedThemePages = preparedThemePages.filter((row) => {
+      const before = themePages.find((candidate) => candidate.id === row.id);
+      return before && (before.title !== row.title || hash(before.draftJson) !== hash(row.draftJson) || hash(before.publishedJson) !== hash(row.publishedJson));
+    });
+    const preparedThemeSettings = themeSettings.map((row) => ({
+      ...row,
+      draftJson: removeGoneRouteReferences(updateContentValue(clone(row.draftJson) ?? {})),
+      publishedJson: removeGoneRouteReferences(updateContentValue(clone(row.publishedJson) ?? {}))
+    }));
+    const changedThemeSettings = preparedThemeSettings.filter((row) => {
+      const before = themeSettings.find((candidate) => candidate.id === row.id);
+      return before && (hash(before.draftJson) !== hash(row.draftJson) || hash(before.publishedJson) !== hash(row.publishedJson));
+    });
     const changedSlugs = changes.map((row) => row.slug).sort();
+    const changedThemePageSlugs = changedThemePages.map((row) => row.slug).sort();
     const summary = {
       ok: true,
       mode: apply ? "apply" : "dry-run",
@@ -509,6 +599,11 @@ async function main() {
       afterLivePageCount: prepared.length,
       changedLivePageCount: changes.length,
       changedSlugs,
+      beforeThemePageCount: themePages.length,
+      changedThemePageCount: changedThemePages.length,
+      changedThemePageSlugs,
+      beforeThemeSettingsCount: themeSettings.length,
+      changedThemeSettingsCount: changedThemeSettings.length,
       canonicalPolicy: "https://aidreamcapes.com",
       mediaRegeneration: "skipped",
       pageSpeed: "skipped",
@@ -524,17 +619,27 @@ async function main() {
       site,
       stale,
       targetLivePages: livePages,
+      targetThemePages: themePages,
+      targetThemeSettings: themeSettings,
       otherSiteSentinel: beforeOtherSites
     });
     await prisma.$transaction(async (tx) => {
       for (const row of changes) {
         await tx.livePage.update({ where: { id: row.id }, data: { title: row.title, contentJson: row.contentJson } });
       }
+      for (const row of changedThemePages) {
+        await tx.themePage.update({ where: { id: row.id }, data: { title: row.title, draftJson: row.draftJson, publishedJson: row.publishedJson } });
+      }
+      for (const row of changedThemeSettings) {
+        await tx.themeSettings.update({ where: { id: row.id }, data: { draftJson: row.draftJson, publishedJson: row.publishedJson } });
+      }
       if (stale) await tx.livePage.delete({ where: { id: stale.id } });
     }, { maxWait: 10000, timeout: 120000 });
 
-    const [afterPages, afterOtherSites, deletedRow] = await Promise.all([
+    const [afterPages, afterThemePages, afterThemeSettings, afterOtherSites, deletedRow] = await Promise.all([
       prisma.livePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, slug: true, title: true, contentJson: true } }),
+      prisma.themePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, slug: true, title: true, draftJson: true, publishedJson: true } }),
+      prisma.themeSettings.findMany({ where: { siteId: SITE_ID }, select: { id: true, draftJson: true, publishedJson: true } }),
       otherSiteSentinel(prisma),
       stale ? prisma.livePage.findUnique({ where: { id: stale.id }, select: { id: true } }) : null
     ]);
@@ -547,6 +652,21 @@ async function main() {
       assert(actual, `${row.slug}: updated LivePage missing after migration.`);
       assert.equal(actual.title, row.title, `${row.slug}: title readback mismatch.`);
       assert.equal(hash(actual.contentJson), hash(row.contentJson), `${row.slug}: content readback mismatch.`);
+    }
+    const afterThemePageById = new Map(afterThemePages.map((row) => [row.id, row]));
+    for (const row of preparedThemePages) {
+      const actual = afterThemePageById.get(row.id);
+      assert(actual, `${row.slug}: updated ThemePage missing after migration.`);
+      assert.equal(actual.title, row.title, `${row.slug}: ThemePage title readback mismatch.`);
+      assert.equal(hash(actual.draftJson), hash(row.draftJson), `${row.slug}: ThemePage draft readback mismatch.`);
+      assert.equal(hash(actual.publishedJson), hash(row.publishedJson), `${row.slug}: ThemePage published readback mismatch.`);
+    }
+    const afterThemeSettingsById = new Map(afterThemeSettings.map((row) => [row.id, row]));
+    for (const row of preparedThemeSettings) {
+      const actual = afterThemeSettingsById.get(row.id);
+      assert(actual, `${row.id}: updated ThemeSettings missing after migration.`);
+      assert.equal(hash(actual.draftJson), hash(row.draftJson), `${row.id}: ThemeSettings draft readback mismatch.`);
+      assert.equal(hash(actual.publishedJson), hash(row.publishedJson), `${row.id}: ThemeSettings published readback mismatch.`);
     }
     console.log(JSON.stringify({ ...summary, mode: "applied", backupPath, afterOtherSiteSentinelHash: afterOtherSites.hash }, null, 2));
   } finally {
