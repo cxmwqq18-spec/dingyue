@@ -121,7 +121,7 @@ function reorderHtmlHead(html) {
   return `${withoutBodyJsonLd.slice(0, headStart)}${reorderedHead}${withoutBodyJsonLd.slice(headClose)}`;
 }
 
-function interceptHtmlResponse(response, { reorderHead = true } = {}) {
+function interceptHtmlResponse(response, { reorderHead = true, startedAt = process.hrtime.bigint() } = {}) {
   const chunks = [];
   const write = response.write.bind(response);
   const end = response.end.bind(response);
@@ -171,6 +171,10 @@ function interceptHtmlResponse(response, { reorderHead = true } = {}) {
     const nextHtml = reorderHead ? reorderHtmlHead(html) : html;
     const body = Buffer.from(nextHtml, "utf8");
     if (!response.headersSent) {
+      const totalMs = Number(process.hrtime.bigint() - startedAt) / 1e6;
+      const existingServerTiming = response.getHeader("Server-Timing");
+      const transportTiming = `ssr;dur=${totalMs.toFixed(1)}, html;dur=${totalMs.toFixed(1)};desc="${body.byteLength} bytes"`;
+      response.setHeader("Server-Timing", existingServerTiming ? `${existingServerTiming}, ${transportTiming}` : transportTiming);
       response.removeHeader("content-length");
       response.setHeader("content-length", String(body.length));
       if (pendingWriteHead) writePendingHead();
@@ -183,6 +187,7 @@ await app.prepare();
 
 createServer(async (request, response) => {
   try {
+    const startedAt = process.hrtime.bigint();
     request.headers["accept-encoding"] = "identity";
     const requestUrl = new URL(request.url || "/", `http://${request.headers.host || "localhost"}`);
     const requestHost = requestUrl.host.split(":")[0].toLowerCase();
@@ -190,7 +195,7 @@ createServer(async (request, response) => {
       /^\/site\/aidreamcapes-eu(?:\/|$)/i.test(requestUrl.pathname) ||
       /^(?:www\.)?aidreamcapes\.eu$/i.test(requestHost);
     if (shouldInterceptHtmlPath(requestUrl.pathname)) {
-      interceptHtmlResponse(response, { reorderHead: !isAidreamcapesEuRequest });
+      interceptHtmlResponse(response, { reorderHead: !isAidreamcapesEuRequest, startedAt });
     }
     await handle(request, response);
   } catch (error) {

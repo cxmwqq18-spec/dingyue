@@ -103,6 +103,7 @@
     "rebind:aidreamcapes-eu-local-originals": "node scripts/rebind-aidreamcapes-eu-local-originals.mjs",
     "rebind:aidreamcapes-eu-local-originals:apply": "node scripts/rebind-aidreamcapes-eu-local-originals.mjs --apply",
     "smoke:aidreamcapes-eu-image-framing": "node scripts/smoke-aidreamcapes-eu-image-framing.mjs",
+    "smoke:eu-image-directory-layout": "node scripts/smoke-eu-image-directory-layout.mjs",
     "smoke:aidreamcapes-eu-save-the-date-browser": "node scripts/smoke-aidreamcapes-eu-save-the-date-browser.mjs",
     "smoke:eu-responsive-images-browser": "node scripts/smoke-eu-responsive-images-browser.mjs",
     "smoke:aidreamcapes-eu-provider-no-crop": "node scripts/smoke-aidreamcapes-eu-provider-no-crop.mjs",

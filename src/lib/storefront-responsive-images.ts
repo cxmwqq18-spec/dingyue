@@ -67,7 +67,7 @@ export function storefrontResponsiveImageSet(src: string): StorefrontResponsiveI
         ...entry,
         avifSrcSet: srcSet(variants.map((variant) => ({ url: variant.avif, width: variant.width }))),
         webpSrcSet: srcSet(variants.map((variant) => ({ url: variant.webp, width: variant.width }))),
-        fallbackSrcSet: entry.site === "aidreamshoots-eu" ? srcSet(fallbackVariants) : entry.original,
+        fallbackSrcSet: entry.site === "aidreamshoots-eu" || entry.site === "aidreamcapes-eu" ? srcSet(fallbackVariants) : entry.original,
         fallbackSrc
       };
 }

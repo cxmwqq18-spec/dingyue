@@ -9,22 +9,25 @@ const argument = (name, fallback) => {
 };
 
 const baseUrl = argument("--base-url", "http://127.0.0.1:3002");
-const pages = [
-  "/",
-  "/ai-save-the-date/engagement",
-  "/ai-save-the-date/wedding-invitation",
-  "/faq",
-  "/ai-image-generation/headshot",
-  "/tools"
-];
-const pagesWithSiteImages = new Set([
-  "/",
-  "/ai-save-the-date/engagement",
-  "/ai-save-the-date/wedding-invitation"
-]);
 const sites = [
-  { key: "aidreamcapes-eu", path: "/site/aidreamcapes-eu", lang: "fr", assetPrefix: "/assets/sites/site_aidreamcapes_eu/" },
-  { key: "aidreamshoots-eu", path: "/site/aidreamshoots", lang: "es", assetPrefix: "/assets/sites/site_aidreamshoots/" }
+  {
+    key: "aidreamcapes-eu",
+    path: "/site/aidreamcapes-eu",
+    lang: "fr",
+    assetPrefix: "/assets/sites/site_aidreamcapes_eu/",
+    pages: ["/", "/ai-save-the-date/engagement", "/ai-save-the-date/wedding-invitation", "/faq", "/ai-image-generation/headshot", "/tools"],
+    pagesWithSiteImages: new Set(["/", "/ai-save-the-date/engagement", "/ai-save-the-date/wedding-invitation"])
+  },
+  {
+    key: "aidreamshoots-eu",
+    path: "/site/aidreamshoots",
+    lang: "es",
+    assetPrefix: "/assets/sites/site_aidreamshoots/",
+    // The Spanish storefront publishes engagement, but not the French-only
+    // wedding-invitation route used by the other EU site.
+    pages: ["/", "/ai-save-the-date/engagement", "/faq", "/ai-image-generation/headshot", "/tools"],
+    pagesWithSiteImages: new Set(["/", "/ai-save-the-date/engagement"])
+  }
 ];
 const imageRequestPattern = /\.(?:avif|webp|jpe?g|png)(?:[?#]|$)/i;
 const browser = await chromium.launch({ headless: true });
@@ -33,7 +36,7 @@ const reports = [];
 try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   for (const site of sites) {
-    for (const pathname of pages) {
+    for (const pathname of site.pages) {
       const requestFailures = [];
       const imageHttpFailures = [];
       const onRequestFailed = (request) => {
@@ -76,7 +79,7 @@ try {
       assert.equal(data.lang, site.lang, `${site.key}${pathname}: language`);
       assert.equal(requestFailures.length, 0, `${site.key}${pathname}: image request failures ${JSON.stringify(requestFailures)}`);
       assert.equal(imageHttpFailures.length, 0, `${site.key}${pathname}: image HTTP failures ${JSON.stringify(imageHttpFailures)}`);
-      if (pagesWithSiteImages.has(pathname)) assert(responsiveImages.length > 0, `${site.key}${pathname}: no responsive site image selected`);
+      if (site.pagesWithSiteImages.has(pathname)) assert(responsiveImages.length > 0, `${site.key}${pathname}: no responsive site image selected`);
       assert(responsiveImages.every((image) => image.responsive && image.hasAvif && image.hasWebp), `${site.key}${pathname}: missing AVIF/WebP picture sources`);
       assert(siteImages.every((image) => !image.src.includes("/assets/sites/") || image.src.includes(site.assetPrefix)), `${site.key}${pathname}: cross-site image asset selected`);
       assert(siteImages.every((image) => !image.preview.includes("/_responsive/")), `${site.key}${pathname}: preview points to responsive derivative`);

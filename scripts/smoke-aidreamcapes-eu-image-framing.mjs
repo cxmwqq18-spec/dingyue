@@ -8,14 +8,7 @@ const homepageUrl = baseUrl.replace(/\/$/, "");
 const engagementUrl = `${homepageUrl}/ai-image-generation/engagement-photo`;
 const detailUrl = `${homepageUrl}/ai-image-generation/wedding-photo`;
 const navigationTimeout = Number(process.env.AIDREAMCAPES_SMOKE_TIMEOUT_MS || 60000);
-const knownBadSourceFragments = [
-  "/generated/recovered/aidreamcapes-eu-image-pack-4k-",
-  "/engagement-photo/cover-be44f26040d5-",
-  "/engagement-photo/gallery-02-16cb447c5854-",
-  "/engagement-photo/gallery-03-45ba56e2cbe6-",
-  "/engagement-photo/gallery-09-be562067823e-",
-  "/wedding-photo/gallery-03-68cd9180096c-"
-];
+const knownBadSourceFragments = [];
 
 function pathOf(value) {
   try {
@@ -28,6 +21,9 @@ function pathOf(value) {
 function assertNaturalRatio(record, label) {
   assert(record.naturalWidth > 0 && record.naturalHeight > 0, `${label}: image did not decode`);
   assert(record.width > 0 && record.height > 0, `${label}: image has no rendered box`);
+  // A fixed directory frame uses object-contain: the element box is the
+  // layout frame, while the source pixels retain their natural ratio inside it.
+  if (record.objectFit === "contain") return;
   const sourceRatio = record.naturalWidth / record.naturalHeight;
   const renderedRatio = record.width / record.height;
   const delta = Math.abs(sourceRatio - renderedRatio) / sourceRatio;
@@ -64,6 +60,7 @@ async function main() {
     const homepageSources = [];
     for (let index = 0; index < await homepageImages.count(); index += 1) {
       const image = homepageImages.nth(index);
+      if (await image.evaluate((element) => Boolean(element.closest("[data-package-card-media]")))) continue;
       const src = await image.getAttribute("src") || "";
       const pathname = pathOf(src);
       if (!/(engagement-photo|wedding-photo|valentines-photo|christmas-photo|halloween-photo|thanksgiving-photo|avatar|gala-photo)/.test(pathname)) continue;
@@ -79,6 +76,17 @@ async function main() {
       assertNoKnownBadSource(src, `homepage image ${index}`);
     }
     assert(homepageSources.length >= 2, "homepage: expected themed photo cards were not rendered");
+
+    const directoryMedia = page.locator("[data-package-card-media]");
+    for (let index = 0; index < await directoryMedia.count(); index += 1) {
+      const frame = directoryMedia.nth(index);
+      const record = await frame.evaluate((element) => {
+        const box = element.querySelector("div")?.getBoundingClientRect() || element.getBoundingClientRect();
+        return { width: box.width, height: box.height };
+      });
+      if (record.width === 0 || record.height === 0) continue;
+      assert(Math.abs(record.width / record.height - 4 / 3) <= 0.02, `directory card ${index}: cover frame must stay 4:3`);
+    }
 
     await page.goto(engagementUrl, { waitUntil: "domcontentloaded", timeout: navigationTimeout });
     await waitForImages(page);

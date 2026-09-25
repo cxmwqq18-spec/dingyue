@@ -1,6 +1,7 @@
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
-import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
+import { DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview";
+import { DreamshootShowcasePreviewClient } from "@/components/storefront/dreamshoot-showcase-preview-client";
 import { storefrontCardImageAlt } from "@/lib/storefront-media-alt";
 
 export type PackageTaxonomyCard = {
@@ -128,7 +129,7 @@ function SafeTaxonomyImage({
       decoding={decoding}
       fetchPriority={fetchPriority}
       loading={loading}
-      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc(50vw - 2rem), 25vw"
       src={src}
       width={1200}
       height={900}
@@ -137,11 +138,11 @@ function SafeTaxonomyImage({
 }
 
 const splitCardClass =
-  "group relative block overflow-hidden rounded-[14px] border border-white/[0.11] bg-[#111827]/[0.82] text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.92)] transition duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[linear-gradient(90deg,rgba(255,166,68,0.74),rgba(236,75,221,0.52),rgba(22,220,240,0.68))] before:opacity-70 before:content-[''] hover:-translate-y-1 hover:border-cyan-200/24 hover:shadow-[0_24px_74px_-50px_rgba(22,220,240,0.42)]";
+  "group relative flex h-full flex-col overflow-hidden rounded-[14px] border border-white/[0.11] bg-[#111827]/[0.82] text-white shadow-[0_22px_62px_-48px_rgba(0,0,0,0.92)] transition duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-[linear-gradient(90deg,rgba(255,166,68,0.74),rgba(236,75,221,0.52),rgba(22,220,240,0.68))] before:opacity-70 before:content-[''] hover:-translate-y-1 hover:border-cyan-200/24 hover:shadow-[0_24px_74px_-50px_rgba(22,220,240,0.42)]";
 const splitImageShellClass = "bg-[#0B1020]/[0.70]";
 const splitImageFrameClass = "relative aspect-[4/3] overflow-hidden rounded-[9px] bg-[#070B14]";
-const splitSingleImageFrameClass = "relative aspect-[8/3] overflow-hidden rounded-[9px] bg-[#070B14]";
-const splitContentClass = "flex min-h-[184px] flex-col bg-[#111827]/[0.46] p-4";
+const splitSingleImageFrameClass = splitImageFrameClass;
+const splitContentClass = "flex min-h-[184px] flex-1 flex-col bg-[#111827]/[0.46] p-4";
 const splitTitleClass = "line-clamp-1 text-base font-semibold leading-5 text-white [font-family:var(--site-title-font)]";
 const splitDescriptionClass = "mt-3 line-clamp-2 min-h-[2.45rem] text-xs leading-[1.625] text-slate-300/70";
 const splitArrowClass = "mt-1 h-5 w-5 shrink-0 text-slate-300/70 transition group-hover:translate-x-1 group-hover:text-cyan-100";
@@ -161,21 +162,25 @@ function SplitPackageTaxonomyCard({
   index: number;
   locale: "en" | "es" | "fr";
 }) {
-  const images = cardImageUrls(card);
+  // Directory cards intentionally expose one stable cover. The complete
+  // gallery remains available on the linked detail page and in its lightbox.
+  const images = cardImageUrls(card).slice(0, 1);
   const tags = (card.tags?.length ? card.tags : card.keywords).filter(Boolean).slice(0, 3).map((tag) => taxonomyTagLabel(tag, locale));
   return (
     <a
       aria-label={cardLinkLabel(locale === "es" ? "Ver colección" : locale === "fr" ? "Voir la collection" : "View collection", card.title)}
       className={splitCardClass}
+      data-package-card-href={card.href}
+      data-package-taxonomy-card=""
       href={card.href}
     >
-      <div className={splitImageShellClass}>
-        <div className={images.length > 1 ? "grid grid-cols-2 items-start gap-0.5 p-3" : "grid items-start p-3"}>
-          {images.slice(0, 2).map((image, imageIndex) => (
-            <div className={locale === "fr" ? "overflow-hidden rounded-[9px] bg-transparent" : images.length > 1 ? splitImageFrameClass : splitSingleImageFrameClass} key={`${card.id}_taxonomy_${imageIndex}`}>
+      <div className={`${splitImageShellClass} p-3`} data-package-card-media="">
+        <div className={splitSingleImageFrameClass}>
+          {images.map((image, imageIndex) => (
+            <div className="h-full w-full" key={`${card.id}_taxonomy_${imageIndex}`}>
 	              <SafeTaxonomyImage
-	                alt={taxonomyImageAlt(card, image, imageIndex, locale, imageIndex === 0 ? "card" : "gallery")}
-                className={locale === "fr" ? "block h-auto w-full object-center transition duration-500" : "h-full object-cover transition duration-500"}
+		                alt={taxonomyImageAlt(card, image, imageIndex, locale, "card")}
+                className="h-full w-full object-contain transition duration-500"
                 decoding="async"
 	                fetchPriority={index === 0 && imageIndex === 0 ? "high" : "low"}
 	                loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
@@ -194,15 +199,15 @@ function SplitPackageTaxonomyCard({
           </div>
           <ArrowRight className={splitArrowClass} strokeWidth={1.8} />
         </div>
-        {tags.length ? (
-          <div className="mt-4 flex min-h-[4.1rem] flex-wrap content-start items-start gap-2">
+        <div className="mt-4 h-[4.1rem] shrink-0 overflow-hidden">
+          <div className="flex flex-wrap content-start items-start gap-2">
             {tags.map((tag) => (
               <span className={splitTagClass} key={tag}>
                 {tag}
               </span>
             ))}
           </div>
-        ) : null}
+        </div>
         <div className={splitFooterClass}>
           <span className={splitPhotoCountClass}>{card.photoCountLabel || card.chips[0] || "20 Photos"}</span>
           <span className={splitUsesClass}>{card.usesLabel || card.meta}</span>
@@ -265,7 +270,7 @@ export function PackageTaxonomyClient({
       : "w-full overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.06] p-3 shadow-[0_28px_90px_-60px_rgba(0,0,0,0.9)] lg:max-w-[540px] lg:justify-self-end";
     const selectedImageBgClass = locale === "fr" ? "bg-transparent" : variant === "cream" ? "bg-[#EADFCF]" : "bg-zinc-900";
     return (
-      <DreamshootShowcasePreview>
+      <DreamshootShowcasePreviewClient>
       <div data-package-taxonomy-client="ready">
         <div className="mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(320px,0.75fr)] lg:items-start">
           <div className={selectedPanelClass}>
@@ -379,7 +384,7 @@ export function PackageTaxonomyClient({
           </div>
         ) : null}
       </div>
-      </DreamshootShowcasePreview>
+      </DreamshootShowcasePreviewClient>
     );
   }
 
@@ -397,9 +402,9 @@ export function PackageTaxonomyClient({
                   </div>
                   <span className="text-xs font-semibold uppercase tracking-[0.14em] text-white/[0.42]">{group.cards.length} {locale === "es" ? "temas" : locale === "fr" ? "thèmes" : "themes"}</span>
                 </div>
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                  {group.cards.map((card, index) => (
-                    <SplitPackageTaxonomyCard card={card} index={index} key={card.id} locale={locale} />
+                <div className="grid items-stretch gap-6 sm:grid-cols-2 xl:grid-cols-4" data-package-taxonomy-grid="">
+                  {group.cards.map((card) => (
+                    <SplitPackageTaxonomyCard card={card} index={cards.indexOf(card)} key={card.id} locale={locale} />
                   ))}
                 </div>
               </section>
@@ -410,7 +415,7 @@ export function PackageTaxonomyClient({
     }
     return (
       <DreamshootShowcasePreview>
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-package-taxonomy-client="ready">
+      <div className="mt-10 grid items-stretch gap-6 sm:grid-cols-2 xl:grid-cols-4" data-package-taxonomy-client="ready" data-package-taxonomy-grid="">
         {cards.map((card, index) => (
           <SplitPackageTaxonomyCard card={card} index={index} key={card.id} locale={locale} />
         ))}

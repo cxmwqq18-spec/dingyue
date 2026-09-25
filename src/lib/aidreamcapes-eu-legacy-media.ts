@@ -4,6 +4,49 @@ const legacyMirrorGalleryPattern = /^\/assets\/sites\/site_aidreamcapes_eu\/mirr
 const euImagePackRoot = "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1";
 const euProviderPackRoot = "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1";
 
+// The published no-crop rows for the two highest-traffic EU detail pages
+// still point at an external mirror. Their current, site-local equivalents
+// are the generated image-pack files below. Resolve them before rendering so
+// the detail gallery does not wait on a slow mirror or fall back to a missing
+// source URL. Directory cards use their own unique cover resolver; this map is
+// intentionally limited to detail-gallery slots.
+const noCropGalleryReplacements: Record<string, string> = {
+  ...Object.fromEntries([
+    ["gallery-01-occasion-5052c2f0be.webp", "gallery-01-eabba4a2efef-occasion-5052c2f0be.jpg"],
+    ["gallery-02-occasion-68a6e16a3e.webp", "gallery-02-16cb447c5854-occasion-68a6e16a3e.jpg"],
+    ["gallery-03-occasion-1bd237fc3f.webp", "gallery-03-45ba56e2cbe6-occasion-1bd237fc3f.jpg"],
+    ["gallery-04-occasion-759e3b3626.webp", "gallery-04-940a9f372bb8-occasion-759e3b3626.jpg"],
+    ["gallery-05-occasion-68b6d595be.webp", "gallery-05-ef84a1e37d86-occasion-68b6d595be.jpg"],
+    ["gallery-06-occasion-3b3eb72fa4.webp", "gallery-06-3a609cc1ccba-occasion-3b3eb72fa4.jpg"],
+    ["gallery-07-occasion-63f6dfd229.webp", "gallery-07-9c25e405da14-occasion-63f6dfd229.jpg"],
+    ["gallery-08-occasion-0b84b051a6.webp", "gallery-08-42303d19827c-occasion-0b84b051a6.jpg"],
+    ["gallery-09-occasion-4f48e44c8c.webp", "gallery-09-be562067823e-occasion-4f48e44c8c.jpg"],
+    ["gallery-10-occasion-2c36dcd1bc.webp", "gallery-10-339cacf44ae2-occasion-2c36dcd1bc.jpg"],
+    ["gallery-11-occasion-e8f84629de.webp", "gallery-11-a676c73b88e0-occasion-e8f84629de.jpg"],
+    ["gallery-12-occasion-3021c5800d.webp", "gallery-12-e35e4615c170-occasion-3021c5800d.jpg"]
+  ].map(([source, target]) => [
+    `/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/engagement-photo/${source}`,
+    `${euImagePackRoot}/engagement-photo/${target}`
+  ])),
+  ...Object.fromEntries([
+    ["gallery-01-occasion-ad1354f9a1.webp", "gallery-01-b7e85001d26f-occasion-ad1354f9a1.jpg"],
+    ["gallery-02-occasion-0f24f72a39.webp", "gallery-02-2aaaf5436d24-occasion-0f24f72a39.jpg"],
+    ["gallery-03-occasion-e9d0e234a7.webp", "gallery-03-68cd9180096c-occasion-e9d0e234a7.jpg"],
+    ["gallery-04-occasion-1b23cb461f.webp", "gallery-04-11b505719ac0-occasion-1b23cb461f.jpg"],
+    ["gallery-05-occasion-c19b271be4.webp", "gallery-05-a9ee5f13ded8-occasion-c19b271be4.jpg"],
+    ["gallery-06-occasion-a41a70f28b.webp", "gallery-06-557e57f505c1-occasion-a41a70f28b.jpg"],
+    ["gallery-07-occasion-293b634881.webp", "gallery-07-3316556383fe-occasion-293b634881.jpg"],
+    ["gallery-08-occasion-bd993fccae.webp", "gallery-08-f940bc5b1fc6-occasion-bd993fccae.jpg"],
+    ["gallery-09-occasion-409540fb66.webp", "gallery-09-e4d903840507-occasion-409540fb66.jpg"],
+    ["gallery-10-occasion-684e0688f3.webp", "gallery-10-663e1da9b7ff-occasion-684e0688f3.jpg"],
+    ["gallery-11-occasion-0b04ade9dd.webp", "gallery-11-1d13e2c7b840-occasion-0b04ade9dd.jpg"],
+    ["gallery-12-occasion-8a05728e0c.webp", "gallery-12-53809bb00af1-occasion-8a05728e0c.jpg"]
+  ].map(([source, target]) => [
+    `/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/wedding-photo/${source}`,
+    `${euImagePackRoot}/wedding-photo/${target}`
+  ]))
+};
+
 // The database still contains a number of pre-EU mirror keys. These are
 // compatibility replacements, not new content: each target is a file in the
 // current EU image pack that is deployed with the storefront release.
@@ -85,6 +128,8 @@ export function isAidreamcapesEuLegacyCoverGalleryDerivative(
 export function replaceAidreamcapesEuLegacyMedia(value: string | undefined): string {
   const clean = withoutQuery(value);
   const mirrorPrefix = "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/";
+  const noCropGalleryReplacement = noCropGalleryReplacements[clean];
+  if (noCropGalleryReplacement) return noCropGalleryReplacement;
   if (!clean.startsWith(mirrorPrefix)) return String(value ?? "");
   const relativePath = clean.slice(mirrorPrefix.length);
   const coverMatch = relativePath.match(/^generated\/pack-covers\/([^/]+)\/\1-cover\.(?:png|jpe?g|webp|avif)$/i);

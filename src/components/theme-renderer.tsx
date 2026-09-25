@@ -3786,6 +3786,182 @@ const aidreamshootsLatestPackCoverBySlug: Record<string, string> = {
   "halloween-photo": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-theme-halloween-themed-20260913-v3/halloween-00-quiet-city-walk-235e19990231.webp"
 };
 
+// Published Spanish slugs are localized, while the current site-local cover
+// library uses stable English pack slugs. Keep this translation at the
+// storefront boundary so a missing CreativePack row can never fall back to a
+// global headshot cover in the public directory.
+const aidreamshootsPublishedDirectoryCoverSlugBySlug: Record<string, string> = {
+  "accion-de-gracias-foto": "thanksgiving-photo",
+  "banador": "swimsuit",
+  "boda-foto": "wedding-photo",
+  "borrador-magico": "magic-eraser",
+  "borrador-m-gico": "magic-eraser",
+  "calle-estilo": "street-style",
+  "cambiador-de-fondo": "background-changer",
+  "compromiso-foto": "engagement-photo",
+  "correccion-de-color": "color-correction",
+  "editar-con-instrucciones": "edit-by-prompt",
+  "eliminador-de-fondo": "background-remover",
+  "enfocar-imagen": "unblur-image",
+  "estilo-y-fantasia": "rich-lifestyle",
+  festivos: "holiday",
+  futbol: "soccer",
+  "gala-foto": "gala-photo",
+  "halloween-foto": "halloween-photo",
+  "mejorador-de-fotos": "photo-enhancer",
+  "movimiento-generador": "motion-generator",
+  "navidad-foto": "christmas-photo",
+  "negro-viernes": "black-friday",
+  "noir-cinematografico": "mafia",
+  "peinado-generador": "hairstyle-generator",
+  "best-themes-presets": "portrait-photo",
+  "lifestyle-creative": "rich-lifestyle",
+  magic: "magic-eraser",
+  "photo-tools": "background-changer",
+  professional: "headshot",
+  "premium-estilo-de-vida": "travel",
+  "probador-virtual": "virtual-try-on",
+  "restauracion-de-fotos-antiguas": "old-photo-restoration",
+  "retoque-de-retrato": "portrait-retouch",
+  "retrato-foto": "portrait-photo",
+  "retrato-profesional": "headshot",
+  "san-valentin-foto": "valentine-photos",
+  "solo-fans": "only-fans",
+  "solteros-conciencia-dia": "singles-awareness-day",
+  "tarjetas-para-redes": "social-cards",
+  urbano: "urban",
+  viaje: "travel",
+  "vida-nocturna": "nightlife"
+};
+
+const aidreamshootsPublishedDirectoryCategoryCoverBySlug: Record<string, string> = {
+  "best-themes-presets": "/assets/sites/site_aidreamshoots/visuals/generated/category-covers/aidreamshoots/couple-cover.png",
+  "lifestyle-creative": "/assets/sites/site_aidreamshoots/visuals/generated/category-covers/aidreamshoots/creative-cover.png",
+  magic: "/assets/sites/site_aidreamshoots/visuals/generated/category-covers/aidreamshoots/cultural-cover.png",
+  "photo-tools": "/assets/sites/site_aidreamshoots/visuals/generated/category-covers/aidreamshoots/wedding-cover.png",
+  professional: "/assets/sites/site_aidreamshoots/visuals/generated/category-covers/aidreamshoots/creator-cover.png"
+};
+
+const aidreamcapesEuPublishedDirectoryCoverRoot = "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1";
+const aidreamcapesEuPublishedDirectoryCoverBySlug: Record<string, string> = {
+  avatar: `${aidreamcapesEuPublishedDirectoryCoverRoot}/avatar/cover-333df83b69eb-avatar-cover-cobalt-studio.jpg`,
+  headshot: `${aidreamcapesEuPublishedDirectoryCoverRoot}/headshot/cover-6360dd7e005c-headshot-cover-architect-office.jpg`,
+  "gala-photo": `${aidreamcapesEuPublishedDirectoryCoverRoot}/gala-photo/cover-5b9863721f87-gala-photo-cover-red-carpet-steps.jpg`,
+  "portrait-photo": `${aidreamcapesEuPublishedDirectoryCoverRoot}/portrait-photo/cover-19ef724d7001-portrait-photo-cover-analog-cafe.jpg`,
+  "black-friday": `${aidreamcapesEuPublishedDirectoryCoverRoot}/black-friday/cover-d7b389e574c5-black-friday-cover-white-studio-bag.jpg`,
+  "only-fans": `${aidreamcapesEuPublishedDirectoryCoverRoot}/only-fans/cover-751be524992d-only-fans-cover-home-musician.jpg`,
+  "singles-awareness-day": `${aidreamcapesEuPublishedDirectoryCoverRoot}/singles-awareness-day/cover-8967392ff7ad-singles-awareness-day-cover-sunrise-run.jpg`,
+  "background-changer": `${aidreamcapesEuPublishedDirectoryCoverRoot}/background-changer/cover-background-changer-00-quiet-city-walk-2cb0da1f20fa.jpg`,
+  "background-remover": `${aidreamcapesEuPublishedDirectoryCoverRoot}/background-remover/cover-background-remover-00-quiet-city-walk-d85ac6d2b2af.jpg`,
+  "magic-eraser": `${aidreamcapesEuPublishedDirectoryCoverRoot}/magic-eraser/cover-magic-eraser-00-quiet-city-walk-6e842a44c57a.jpg`,
+  "photo-enhancer": `${aidreamcapesEuPublishedDirectoryCoverRoot}/photo-enhancer/cover-photo-enhancer-00-quiet-city-walk-7603f9a29b46.jpg`,
+  "portrait-retouch": `${aidreamcapesEuPublishedDirectoryCoverRoot}/portrait-retouch/cover-portrait-retouch-00-quiet-city-walk-93973d530e01.jpg`,
+  "unblur-image": `${aidreamcapesEuPublishedDirectoryCoverRoot}/unblur-image/cover-unblur-image-00-quiet-city-walk-cb790273c6f2.jpg`,
+  "color-correction": `${aidreamcapesEuPublishedDirectoryCoverRoot}/color-correction/cover-color-correction-00-quiet-city-walk-edf1177e9ab4.jpg`,
+  "old-photo-restoration": `${aidreamcapesEuPublishedDirectoryCoverRoot}/old-photo-restoration/cover-old-photo-restoration-00-quiet-city-walk-2a1bf9ddd8f9.jpg`,
+  "social-cards": `${aidreamcapesEuPublishedDirectoryCoverRoot}/social-cards/cover-social-cards-00-quiet-city-walk-30a15cc73c01.jpg`,
+  "edit-by-prompt": `${aidreamcapesEuPublishedDirectoryCoverRoot}/edit-by-prompt/cover-edit-by-prompt-00-quiet-city-walk-4b0d75e03717.jpg`,
+  cyberpunk: `${aidreamcapesEuPublishedDirectoryCoverRoot}/cyberpunk/cover-6d00c84382e7-cyberpunk-cover-rain-alley.jpg`,
+  boudoir: `${aidreamcapesEuPublishedDirectoryCoverRoot}/boudoir/cover-8498408a3477-boudoir-cover-silk-window.jpg`,
+  holiday: `${aidreamcapesEuPublishedDirectoryCoverRoot}/holiday/cover-893fb697d662-holiday-cover-winter-window.jpg`,
+  cannes: `${aidreamcapesEuPublishedDirectoryCoverRoot}/cannes/cover-3dd2cb8ed69a-cannes-cover-red-carpet-sunset.jpg`,
+  nightlife: `${aidreamcapesEuPublishedDirectoryCoverRoot}/nightlife/cover-4c08f56660a5-nightlife-cover-jazz-club.jpg`,
+  "rich-lifestyle": `${aidreamcapesEuPublishedDirectoryCoverRoot}/rich-lifestyle/cover-45d7051cc443-rich-lifestyle-cover-villa-breakfast.jpg`,
+  bikini: `${aidreamcapesEuPublishedDirectoryCoverRoot}/bikini/cover-ad43fd8d7ca2-bikini-cover-coral-beach.jpg`,
+  swimsuit: `${aidreamcapesEuPublishedDirectoryCoverRoot}/swimsuit/cover-492eb58413b6-swimsuit-cover-red-one-piece.jpg`,
+  travel: `${aidreamcapesEuPublishedDirectoryCoverRoot}/travel/cover-4cc6a7986820-travel-cover-lisbon-tram.jpg`,
+  soccer: `${aidreamcapesEuPublishedDirectoryCoverRoot}/soccer/cover-a21c7b9b1ad1-soccer-cover-stadium-scarf.jpg`,
+  urban: `${aidreamcapesEuPublishedDirectoryCoverRoot}/urban/cover-e62bb0a86e32-urban-cover-concrete-plaza.jpg`,
+  "street-style": `${aidreamcapesEuPublishedDirectoryCoverRoot}/street-style/cover-6c77364cf38c-street-style-cover-oversized-cobalt.jpg`,
+  mafia: `${aidreamcapesEuPublishedDirectoryCoverRoot}/mafia/cover-98242376be30-mafia-cover-1940s-diner.jpg`,
+  "hairstyle-generator": `${aidreamcapesEuPublishedDirectoryCoverRoot}/hairstyle-generator/cover-hairstyle-generator-00-quiet-city-walk-c452820dc22d.jpg`,
+  "virtual-try-on": `${aidreamcapesEuPublishedDirectoryCoverRoot}/virtual-try-on/cover-virtual-try-on-00-quiet-city-walk-e431078651ef.jpg`,
+  "motion-generator": `${aidreamcapesEuPublishedDirectoryCoverRoot}/motion-generator/cover-motion-generator-00-quiet-city-walk-b7fec8e17439.jpg`,
+  "engagement-photo": `${aidreamcapesEuPublishedDirectoryCoverRoot}/engagement-photo/cover-be44f26040d5-occasion-6adcf48854.jpg`,
+  "wedding-photo": `${aidreamcapesEuPublishedDirectoryCoverRoot}/wedding-photo/cover-fa9197c1a667-occasion-b7af762a69.jpg`,
+  "valentines-photo": `${aidreamcapesEuPublishedDirectoryCoverRoot}/valentines-photo/cover-54ae0fb62bf7-occasion-3cf2a1d4ea.jpg`,
+  "christmas-photo": `${aidreamcapesEuPublishedDirectoryCoverRoot}/christmas-photo/cover-414936c66db4-seasonal-be76f6d3ee.jpg`,
+  "halloween-photo": `${aidreamcapesEuPublishedDirectoryCoverRoot}/halloween-photo/cover-e45b5bb0a588-seasonal-fd5c22148e.jpg`,
+  "thanksgiving-photo": `${aidreamcapesEuPublishedDirectoryCoverRoot}/thanksgiving-photo/cover-0787b71b581c-seasonal-2b3549dc37.jpg`,
+  // Category landing cards use their own gallery slot so they do not share a
+  // cover with the corresponding pack card on the same directory page.
+  "best-themes-presets": `${aidreamcapesEuPublishedDirectoryCoverRoot}/portrait-photo/gallery-01-02250f216051-portrait-photo-01-greenhouse-shadow.jpg`,
+  "lifestyle-creative": `${aidreamcapesEuPublishedDirectoryCoverRoot}/rich-lifestyle/gallery-01-414cf5751d7b-rich-lifestyle-01-private-train.jpg`,
+  magic: `${aidreamcapesEuPublishedDirectoryCoverRoot}/motion-generator/gallery-01-motion-generator-01-coastal-wind-a27a0c9057f5.jpg`,
+  "photo-tools": `${aidreamcapesEuPublishedDirectoryCoverRoot}/background-remover/gallery-01-background-remover-01-coastal-wind-855f961b89e1.jpg`,
+  professional: `${aidreamcapesEuPublishedDirectoryCoverRoot}/headshot/gallery-01-924e481aaba7-headshot-01-chef-kitchen.jpg`
+};
+
+const aidreamshootsPublishedDirectoryAliasCoverBySlug: Record<string, string> = {
+  "accion-de-gracias-foto": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/thanksgiving-group-photos/thanksgiving-group-photos-01.webp",
+  banador: "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/swimsuit/swimsuit-01.webp",
+  "boda-foto": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/wedding-photo/wedding-photo-01.webp",
+  "borrador-magico": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/magic-eraser/magic-eraser-01.webp",
+  "borrador-m-gico": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/magic-eraser/magic-eraser-02.webp",
+  "calle-estilo": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/fashion-editorial/fashion-editorial-01.webp",
+  "cambiador-de-fondo": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/background-remover/background-remover-01.webp",
+  "compromiso-foto": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/engagement/engagement-01.webp",
+  "correccion-de-color": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/color-correction/color-correction-01.webp",
+  "editar-con-instrucciones": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/edit-by-prompt/edit-by-prompt-01.webp",
+  "eliminador-de-fondo": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/background-remover/background-remover-02.webp",
+  "enfocar-imagen": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/unblur-image/unblur-image-01.webp",
+  festivos: "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/holiday/holiday-01.webp",
+  futbol: "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/world-cup-fan-photos/world-cup-fan-photos-01.webp",
+  "gala-foto": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/gala-photos/gala-photos-02.webp",
+  "halloween-foto": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/halloween-party-photos/halloween-party-photos-01.webp",
+  "mejorador-de-fotos": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/magic-upscaler/magic-upscaler-01.webp",
+  "movimiento-generador": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp",
+  "navidad-foto": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/christmas-photos/christmas-photos-01.webp",
+  "negro-viernes": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/black-friday/black-friday-01.webp",
+  "noir-cinematografico": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/mafia/mafia-01.webp",
+  "peinado-generador": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/hairstyle/hairstyle-01.webp",
+  "premium-estilo-de-vida": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/rich-lifestyle/rich-lifestyle-01.webp",
+  "probador-virtual": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/virtual-try-on/virtual-try-on-01.webp",
+  "restauracion-de-fotos-antiguas": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/old-photo-restoration/old-photo-restoration-01.webp",
+  "retoque-de-retrato": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/portrait-retouch/portrait-retouch-01.webp",
+  "retrato-foto": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/professional-headshots/professional-headshots-01.webp",
+  "retrato-profesional": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/profile-cards/profile-cards-01.webp",
+  "san-valentin-foto": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/valentine-photos/valentine-photos-01.webp",
+  "solo-fans": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/only-fans/only-fans-01.webp",
+  "solteros-conciencia-dia": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/singles-awareness-day/singles-awareness-day-01.webp",
+  "tarjetas-para-redes": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/social-cards/social-cards-01.webp",
+  viaje: "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/travel-scene-pack/travel-scene-pack-01.webp",
+  "vida-nocturna": "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/nightlife/nightlife-01.webp"
+};
+
+function aidreamshootsPublishedDirectoryCoverForSlug(site: Site, slug: string): string | undefined {
+  if (site.id === "site_aidreamcapes_xby") {
+    const cover = aidreamcapesEuPublishedDirectoryCoverBySlug[dreamshootCategorySlug(slug)];
+    return cover ? mediaAssetUrl(site, cover, { skipEuVisualRepair: true }) : undefined;
+  }
+  if (!isAidreamshootsStorefrontSite(site)) return undefined;
+  const normalizedSlug = dreamshootCategorySlug(slug);
+  const categoryCover = aidreamshootsPublishedDirectoryCategoryCoverBySlug[normalizedSlug];
+  if (categoryCover) return mediaAssetUrl(site, categoryCover, { preserveAidreamshootsLegacyMedia: true });
+  const aliasCover = aidreamshootsPublishedDirectoryAliasCoverBySlug[normalizedSlug];
+  if (aliasCover) return mediaAssetUrl(site, aliasCover, { preserveAidreamshootsLegacyMedia: true });
+  const canonicalSlug = aidreamshootsPublishedDirectoryCoverSlugBySlug[normalizedSlug] ?? normalizedSlug;
+  const cover = aidreamshootsLatestPackCoverBySlug[canonicalSlug];
+  return cover ? mediaAssetUrl(site, cover) : undefined;
+}
+
+function directoryMediaCandidates(site: Site, pack: CreativePack): string[] {
+  return uniqueImageUrlList([
+    pack.imageUrl ? mediaAssetUrl(site, pack.imageUrl) : "",
+    pack.categoryRecord?.imageUrl ? mediaAssetUrl(site, pack.categoryRecord.imageUrl) : "",
+    pack.categoryRecord?.parent?.imageUrl ? mediaAssetUrl(site, pack.categoryRecord.parent.imageUrl) : "",
+    packHeroImage(site, pack),
+    ...galleryImagesForPack(site, pack, 4)
+  ]).filter((image) => directoryMediaBelongsToSite(site, image));
+}
+
+function directoryMediaBelongsToSite(site: Site, value: string): boolean {
+  const normalized = comparableImageUrl(value).toLowerCase();
+  if (isAidreamshootsStorefrontSite(site)) return !normalized.includes("/assets/sites/site_aidreamcapes");
+  if (site.id === "site_aidreamcapes_xby") return !normalized.includes("/assets/sites/site_aidreamshoots");
+  return true;
+}
+
 function aidreamshootsLatestPackCoverMedia(relativePath: string): string | undefined {
   const normalized = relativePath.replace(/^creative-packs\//, "");
   const match = normalized.match(/^(?:generated\/)?pack-covers\/([^/]+)\//);
@@ -5641,7 +5817,11 @@ function isGeneratedDreamshootPackCoverUrl(value: string): boolean {
 function galleryImagesForPack(site: Site, pack: CreativePack, limit = 12, excludeImages: string[] = []): string[] {
   const excluded = new Set(excludeImages.map((image) => comparableImageUrl(image)).filter(Boolean));
   const rawGalleryImages = (pack.galleryImages ?? []).filter((image): image is string => typeof image === "string" && Boolean(image.trim()));
-  const configuredGalleryPaths = new Set(rawGalleryImages.map((image) => comparableImageUrl(image)).filter(Boolean));
+  // Compare visual-repair candidates against the resolved, site-local source
+  // paths. Legacy no-crop rows are normalized to the current EU image pack at
+  // this boundary; comparing the raw database URL would miss that the repair
+  // already points at another configured gallery slot.
+  const configuredGalleryPaths = new Set(rawGalleryImages.map((image) => comparableImageUrl(mediaAssetUrl(site, image, { skipEuVisualRepair: true }))).filter(Boolean));
   const seenGalleryPaths = new Set<string>();
   const resolvedGalleryImages: string[] = [];
   for (const image of rawGalleryImages) {
@@ -13703,6 +13883,7 @@ function SectionView({
       }
     ];
     const cards = blocks.length ? blocks : fallbackCards;
+    const isPackageDirectoryRoute = renderContext.pagePath === "/collections" || renderContext.pagePath === "/ai-image-generation" || renderContext.pagePath === "/ai-image-generation/";
     const categoryThemeCards = creativePackCategories
       .filter((category) => category.status === "active")
       .map((category) => {
@@ -13735,8 +13916,14 @@ function SectionView({
             category.label,
             matchingPack?.aiAppSlug ? dreamshootDefaultToolTitle(matchingPack.aiAppSlug) : ""
           ].filter((value): value is string => Boolean(value)),
-	          imageUrl,
-	          imageUrls: dreamshootCategoryPreviewImageSet(site, imageUrl, relatedCategoryPacks, 2),
+          imageUrl,
+          imageCandidates: isPackageDirectoryRoute
+            ? uniqueImageUrlList([
+                imageUrl,
+                ...relatedCategoryPacks.flatMap((pack) => directoryMediaCandidates(site, pack))
+              ])
+            : [],
+          imageUrls: dreamshootCategoryPreviewImageSet(site, imageUrl, relatedCategoryPacks, 2),
 	          imageAlts: matchingPack?.galleryImageAlts,
 	          photoCountLabel: matchingPack && profile ? dreamshootPackPhotoCountLabel(matchingPack) : undefined,
           tags: profile?.tags ?? [],
@@ -13749,6 +13936,9 @@ function SectionView({
       .filter((pack) => pack.status === "active")
       .map((pack) => {
         const profile = aidreamcapes && !spanishXbyTaxonomy ? aidreamcapesProfileForPack(site, pack) : myDreamShootsProfileForPack(site, pack);
+        const mappedDirectoryCover = isPackageDirectoryRoute
+          ? aidreamshootsPublishedDirectoryCoverForSlug(site, pack.categoryRecord?.slug || pack.category || pack.name)
+          : undefined;
         return {
           id: pack.id,
           groupKey: pack.categoryRecord?.parent?.slug || pack.categoryRecord?.slug || pack.category,
@@ -13762,7 +13952,10 @@ function SectionView({
             pack.categoryRecord?.slug,
             pack.aiAppSlug ? dreamshootDefaultToolTitle(pack.aiAppSlug) : ""
           ].filter((value): value is string => Boolean(value)),
-	          imageUrl: packImage(site, pack),
+	          imageUrl: mappedDirectoryCover || packImage(site, pack),
+	          imageCandidates: isPackageDirectoryRoute
+            ? uniqueImageUrlList([mappedDirectoryCover || "", ...directoryMediaCandidates(site, pack)])
+            : [],
           imageUrls: isMyDreamShootsProfileSite(site) || (aidreamcapes && !spanishXbyTaxonomy)
             ? dreamshootPackImageSet(site, pack, 2)
             : undefined,
@@ -13786,6 +13979,7 @@ function SectionView({
             const slug = href.slice("/ai-image-generation/".length);
             const matchingPack = creativePacks.find((pack) => creativePackCollectionHref(pack) === href);
             const content = getSeoDirectoryContentForSite(site, "collection", slug);
+            const mappedCover = aidreamshootsPublishedDirectoryCoverForSlug(site, slug);
             return {
               id: `published_${slug}`,
               groupKey: undefined as string | undefined,
@@ -13794,7 +13988,13 @@ function SectionView({
               description: content.description || "Explora este tema de fotos con IA y guarda tus resultados en una galería privada.",
               meta: "Fotos con IA",
               keywords: [content.label, slug, "fotos con IA"].filter((value): value is string => Boolean(value)),
-              imageUrl: matchingPack ? packImage(site, matchingPack) : fallbackHeroImages[0],
+              imageUrl: mappedCover || (matchingPack ? packImage(site, matchingPack) : ""),
+              imageCandidates: isPackageDirectoryRoute
+                ? uniqueImageUrlList([
+                    mappedCover || "",
+                    ...(matchingPack ? directoryMediaCandidates(site, matchingPack) : [])
+                  ])
+                : [],
               imageUrls: matchingPack ? dreamshootPackImageSet(site, matchingPack, 2) : undefined,
               imageAlts: matchingPack?.galleryImageAlts,
               photoCountLabel: matchingPack ? dreamshootPackPhotoCountLabel(matchingPack) : undefined,
@@ -13819,6 +14019,7 @@ function SectionView({
           meta: blockValue(card, "meta", "Package"),
           keywords: listLines(blockValue(card, "keywords", "")),
 	          imageUrl: mediaAssetUrl(site, blockValue(card, "imageUrl", fallbackHeroImages[0])),
+	          imageCandidates: [mediaAssetUrl(site, blockValue(card, "imageUrl", fallbackHeroImages[0]))],
 	          imageUrls: undefined as string[] | undefined,
 	          imageAlt: blockValue(card, "imageAlt", ""),
 	          imageAlts: undefined as string[] | undefined,
@@ -13828,13 +14029,19 @@ function SectionView({
           href: blockValue(card, "href", "/collections"),
           block: card
         }));
-    const visibleTaxonomyCards = taxonomyCards.filter((card) => !isAidreamcapesEuRemovedPublicNavigationPath(site, card.href));
+    const visibleTaxonomyCards = Array.from(new Map(
+      taxonomyCards
+        .filter((card) => !isAidreamcapesEuRemovedPublicNavigationPath(site, card.href))
+        .map((card) => [hrefFor(site, card.href), card] as const)
+    ).values());
+    const directoryUsedImageUrls = new Set<string>();
     const taxonomyClientCards: PackageTaxonomyCard[] = visibleTaxonomyCards.map((card) => {
+      const cardSlug = publicCollectionSlugFromPath(site, card.href) || card.href.replace(/^\/collections\//, "").split("/").filter(Boolean).at(-1) || "";
       const matchingPack = creativePacks.find((pack) =>
         pack.status === "active" && pack.creditCost > 0 && pack.outputCount > 0 &&
         (creativePackCollectionHref(pack) === card.href || pack.id === card.id)
-      );
-      const cardSlug = publicCollectionSlugFromPath(site, card.href) || card.href.replace(/^\/collections\//, "").split("/").filter(Boolean).at(-1) || "";
+      ) ?? (isPackageDirectoryRoute ? activeCreativePackForCollectionSlug(creativePacks, cardSlug, site) : undefined);
+      const rawDirectoryCardSlug = card.href.split(/[?#]/, 1)[0].split("/").filter(Boolean).at(-1) || cardSlug;
       const profile = aidreamcapes && !spanishXbyTaxonomy
         ? aidreamcapesProfileForSlug(site, cardSlug) ?? (matchingPack ? aidreamcapesProfileForPack(site, matchingPack) : undefined)
         : matchingPack ? myDreamShootsProfileForPack(site, matchingPack) : myDreamShootsProfileForSlug(site, cardSlug);
@@ -13871,6 +14078,23 @@ function SectionView({
         .filter((keyword): keyword is string => Boolean(keyword))
         .map((keyword) => spanishXbyTaxonomy ? spanishXbyTaxonomyKeyword(keyword, aidreamcapes) : keyword)
         .filter(Boolean);
+      const mappedDirectoryCover = isPackageDirectoryRoute
+        ? aidreamshootsPublishedDirectoryCoverForSlug(site, rawDirectoryCardSlug)
+        : undefined;
+      const imageCandidates = uniqueImageUrlList([
+        mappedDirectoryCover ?? "",
+        ...(card.imageCandidates ?? []),
+        ...(card.imageUrls ?? []),
+        card.imageUrl,
+        ...(matchingPack ? directoryMediaCandidates(site, matchingPack) : [])
+      ]).filter((image) => directoryMediaBelongsToSite(site, image));
+      const directoryCover = isPackageDirectoryRoute
+        ? imageCandidates.find((image) => !directoryUsedImageUrls.has(comparableImageUrl(image)))
+        : card.imageUrl;
+      if (isPackageDirectoryRoute && !directoryCover) {
+        throw new Error(`Public package directory cover collision or missing media for ${card.href}; candidates=${imageCandidates.length}; pack=${matchingPack?.id ?? "none"}`);
+      }
+      if (isPackageDirectoryRoute && directoryCover) directoryUsedImageUrls.add(comparableImageUrl(directoryCover));
         return {
           brand: storefrontMediaBrandName(site),
           id: card.id,
@@ -13880,8 +14104,10 @@ function SectionView({
         description: truncateText(profile?.cardDescription || card.description, 220),
         meta: spanishXbyTaxonomy ? spanishXbyCategoryLinkLabel(card.meta, aidreamcapes) : profile?.metaLabel || card.meta,
         keywords: Array.from(new Set(localizedKeywords)).slice(0, 5),
-	        imageUrl: card.imageUrl,
-	        imageUrls: aidreamcapes && !spanishXbyTaxonomy
+	        imageUrl: directoryCover || card.imageUrl,
+	        imageUrls: isPackageDirectoryRoute
+	          ? undefined
+	          : aidreamcapes && !spanishXbyTaxonomy
 	          ? aidreamcapesImageUrls?.length ? aidreamcapesImageUrls : uniqueImageUrlList([...(card.imageUrls ?? []), card.imageUrl]).slice(0, 1)
           : matchingPack && (isMyDreamShootsProfileSite(site) || profile)
             ? dreamshootPackImageSet(site, matchingPack, 2)
@@ -19436,9 +19662,17 @@ function SectionView({
               const beforeLabel = spanishXbyUiText(site, blockValue(item, "beforeLabel", spanishBeforeAfter ? "Antes" : "Before"));
               const afterLabel = spanishXbyUiText(site, blockValue(item, "afterLabel", spanishBeforeAfter ? "Después" : "After"));
               const beforeImage = mediaAssetUrl(site, blockValue(item, "beforeImage", fallbackHeroImages[1]));
-              const afterImage = mediaAssetUrl(site, blockValue(item, "afterImage", fallbackHeroImages[0]));
+              const configuredAfterImage = mediaAssetUrl(site, blockValue(item, "afterImage", fallbackHeroImages[0]));
+              const afterImage = comparableImageUrl(beforeImage) === comparableImageUrl(configuredAfterImage)
+                ? [fallbackHeroImages[0], fallbackHeroImages[1], fallbackHeroImages[2]]
+                    .map((image) => mediaAssetUrl(site, image))
+                    .find((image) => comparableImageUrl(image) !== comparableImageUrl(beforeImage))
+                : configuredAfterImage;
+              if (!afterImage) {
+                throw new Error(`Before/after source and result must use different media for ${item.id}`);
+              }
               return (
-                <div className="grid gap-3 rounded-[1.4rem] border border-black/10 bg-white p-3 shadow-[0_24px_80px_-60px_rgba(24,24,27,0.55)] sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2" key={instanceKey(item, index, "before_after")} {...xfcartBlockAttrs(mode, item, index, "before_after")}>
+                <div className="grid gap-3 rounded-[1.4rem] border border-black/10 bg-white p-3 shadow-[0_24px_80px_-60px_rgba(24,24,27,0.55)] sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2" data-before-after-item="" data-before-after-result={afterImage} data-before-after-source={beforeImage} key={instanceKey(item, index, "before_after")} {...xfcartBlockAttrs(mode, item, index, "before_after")}>
 	                  {[
 	                    { image: beforeImage, label: beforeLabel, stage: "source upload" },
 	                    { image: afterImage, label: afterLabel, stage: "AI-generated result" }

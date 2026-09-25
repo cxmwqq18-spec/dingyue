@@ -126,26 +126,40 @@ function collectAssetUrls(value, assetPrefix, refMap, ref) {
 }
 
 function collectPublicAssetInventory(siteKey, config, refMap) {
-  if (siteKey !== "aidreamcapes-com") return;
-  const root = localPathForUrl(config.assetPrefix);
-  if (!root || !fs.existsSync(root)) return;
+  const inventoryUrls = siteKey === "aidreamshoots-eu"
+    ? [
+        "/assets/sites/site_aidreamshoots/generated/regenerated/",
+        "/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/",
+        "/assets/sites/site_aidreamshoots/visuals/generated/category-covers/aidreamshoots/"
+      ]
+    : siteKey === "aidreamcapes-eu"
+      ? [
+          "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/"
+        ]
+      : siteKey === "aidreamcapes-com"
+      ? [config.assetPrefix]
+      : [];
+  if (!inventoryUrls.length) return;
 
-  function visit(directory) {
+  function visit(directory, inventoryRoot) {
     for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
       const filePath = path.join(directory, entry.name);
       if (entry.isDirectory()) {
-        visit(filePath);
+        visit(filePath, inventoryRoot);
         continue;
       }
       const url = urlForLocalPath(filePath);
       if (!url || !isPublicImageUrl(url, config.assetPrefix) || AIDREAMCAPES_RETIRED_CONTENT_PATH.test(url)) continue;
       const current = refMap.get(url) || { url, refs: [] };
-      current.refs.push({ site: siteKey, model: "public-asset-inventory", rowId: null, fieldPath: url });
+      current.refs.push({ site: siteKey, model: "public-asset-inventory", rowId: null, fieldPath: `${inventoryRoot}${url.slice(inventoryRoot.length)}` });
       refMap.set(url, current);
     }
   }
 
-  visit(root);
+  for (const inventoryUrl of inventoryUrls) {
+    const root = localPathForUrl(inventoryUrl);
+    if (root && fs.existsSync(root)) visit(root, inventoryUrl);
+  }
 }
 
 async function findManyOptional(prisma, modelName, argsForQuery) {
@@ -244,12 +258,14 @@ async function main() {
   assertDatabaseTarget({ expectedTarget: "local" });
   const selectedSites = siteArg === "all" ? Object.entries(SITES) : [[siteArg, SITES[siteArg]]];
   const prisma = new PrismaClient();
-  const existingManifest = apply && siteArg !== "all" && fs.existsSync(MANIFEST_PATH)
+  const existingManifest = apply && fs.existsSync(MANIFEST_PATH)
     ? JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf8"))
     : {};
-  const manifest = siteArg === "all"
-    ? {}
-    : Object.fromEntries(Object.entries(existingManifest).filter(([, entry]) => entry?.site !== siteArg));
+  // Keep previously validated entries when refreshing a site-specific inventory.
+  // The public asset scan is intentionally focused on the EU directory media,
+  // so replacing the whole site slice here would silently drop older approved
+  // assets that are still used by other storefront routes.
+  const manifest = apply ? { ...existingManifest } : {};
   const report = {
     generatedAt: new Date().toISOString(),
     mode: apply ? "apply" : "dry-run",

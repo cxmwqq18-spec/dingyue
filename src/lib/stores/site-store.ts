@@ -388,18 +388,24 @@ type StorefrontPublicNavigationData = {
 type StorefrontPublicNavigationDataOptions = {
   creativePackTake?: number;
   toolMenuTake?: number;
+  creativePackProjection?: "directory" | "full";
 };
 
 export const getStorefrontPublicNavigationDataForSite = cache(async (siteId: string, options: StorefrontPublicNavigationDataOptions = {}): Promise<StorefrontPublicNavigationData> => {
   const creativePackTake = Number.isFinite(options.creativePackTake) ? Math.max(0, Math.floor(options.creativePackTake ?? 0)) : undefined;
   const toolMenuTake = Number.isFinite(options.toolMenuTake) ? Math.max(0, Math.floor(options.toolMenuTake ?? 0)) : undefined;
+  const creativePackProjection = options.creativePackProjection ?? "full";
   const creativePackTakeKey = creativePackTake ?? "all";
   const toolMenuTakeKey = toolMenuTake ?? "all";
   return siteReadCache.get(
-    `public-navigation:${siteId}:packs-${creativePackTakeKey}:tools-${toolMenuTakeKey}`,
+    `public-navigation:${siteId}:packs-${creativePackProjection}-${creativePackTakeKey}:tools-${toolMenuTakeKey}`,
     async () => {
       const [creativePacks, creativePackCategories, toolCategories, toolMenuItems, videoThemeCategories, videoThemes] = await runDbTasks([
-        () => creativePackTake === 0 ? Promise.resolve([]) : getStorefrontPublicCreativePacksForSite(siteId, creativePackTake),
+        () => creativePackTake === 0
+          ? Promise.resolve([])
+          : creativePackProjection === "directory"
+            ? getStorefrontPublicDirectoryCreativePacksForSite(siteId, creativePackTake)
+            : getStorefrontPublicCreativePacksForSite(siteId, creativePackTake),
         () => getStorefrontPublicCreativePackCategoriesForSite(siteId),
         () => loadToolCategoriesForSite(siteId, { activeOnly: true }),
         () => toolMenuTake === 0 ? Promise.resolve([]) : loadToolMenuItemsForSite(siteId, { activeOnly: true, take: toolMenuTake }),
@@ -764,6 +770,56 @@ const publicRuntimeCreativePackSelect = {
   categoryRecord: collectionDetailCreativePackSelect.categoryRecord
 } satisfies Prisma.CreativePackSelect;
 type PublicRuntimeCreativePackRecord = Prisma.CreativePackGetPayload<{ select: typeof publicRuntimeCreativePackSelect }>;
+const publicDirectoryCreativePackSelect = {
+  id: true,
+  siteId: true,
+  categoryId: true,
+  name: true,
+  headline: true,
+  description: true,
+  category: true,
+  aiAppSlug: true,
+  status: true,
+  creditCost: true,
+  outputCount: true,
+  trainingRequired: true,
+  generationCount: true,
+  conversionRate: true,
+  imageUrl: true,
+  galleryImages: true,
+  galleryImageAlts: true,
+  categoryRecord: {
+    select: {
+      id: true,
+      siteId: true,
+      parentId: true,
+      slug: true,
+      label: true,
+      description: true,
+      icon: true,
+      imageUrl: true,
+      sortOrder: true,
+      status: true,
+      createdAt: true,
+      parent: {
+        select: {
+          id: true,
+          siteId: true,
+          parentId: true,
+          slug: true,
+          label: true,
+          description: true,
+          icon: true,
+          imageUrl: true,
+          sortOrder: true,
+          status: true,
+          createdAt: true
+        }
+      }
+    }
+  }
+} satisfies Prisma.CreativePackSelect;
+type PublicDirectoryCreativePackRecord = Prisma.CreativePackGetPayload<{ select: typeof publicDirectoryCreativePackSelect }>;
 const publicRuntimeCreativePackCategorySelect = collectionDetailCreativePackSelect.categoryRecord.select satisfies Prisma.CreativePackCategorySelect;
 const publicRuntimeSiteAiAppSelect = {
   id: true,
@@ -1270,6 +1326,17 @@ function toPublicRuntimeCreativePack(record: PublicRuntimeCreativePackRecord): C
   };
 }
 
+function toPublicDirectoryCreativePack(record: PublicDirectoryCreativePackRecord): CreativePack {
+  const pack = toCreativePack(record);
+  return {
+    ...pack,
+    // Directory cover resolution may need the next few approved pack images
+    // for localized aliases, but never serializes the full detail gallery.
+    galleryImages: pack.galleryImages?.slice(0, 4),
+    galleryImageAlts: pack.galleryImageAlts?.slice(0, 4)
+  };
+}
+
 function fallbackPublicCreativePackCategoriesForSite(siteId: string): CreativePackCategory[] {
   const state = readPlatformState();
   const categories = state.creativePackCategories ?? [];
@@ -1394,6 +1461,34 @@ export const getStorefrontPublicCreativePacksForSite = cache(async (siteId: stri
         if (!shouldFallbackRelationalRead(error)) throw error;
         warnRelationalFallback("storefront public creative packs", error);
         return fallbackPublicCreativePacksForSite(siteId, take);
+      }
+    },
+    0
+  );
+});
+
+export const getStorefrontPublicDirectoryCreativePacksForSite = cache(async (siteId: string, take?: number) => {
+  const takeKey = typeof take === "number" ? String(take) : "all";
+  return siteReadCache.get(
+    `public-directory-creative-packs:${siteId}:${takeKey}`,
+    async () => {
+      try {
+        const rows = await prisma.creativePack.findMany({
+          where: { siteId, status: "active" },
+          select: publicDirectoryCreativePackSelect,
+          orderBy: [{ status: "asc" }, { createdAt: "asc" }],
+          ...(typeof take === "number" ? { take } : {})
+        });
+        return rows.map(toPublicDirectoryCreativePack);
+      } catch (error) {
+        if (isMydreamshootsContentSourceSiteId(siteId)) throw error;
+        if (!shouldFallbackRelationalRead(error)) throw error;
+        warnRelationalFallback("storefront public directory creative packs", error);
+        return fallbackPublicCreativePacksForSite(siteId, take).map((pack) => ({
+          ...pack,
+          galleryImages: pack.galleryImages?.slice(0, 4),
+          galleryImageAlts: pack.galleryImageAlts?.slice(0, 4)
+        }));
       }
     },
     0
@@ -1585,11 +1680,15 @@ async function loadStorefrontPublicCollectionDirectoryState(slug: string): Promi
   const startedAt = Date.now();
   const site = await getStorefrontPublicCollectionSiteShellBySlug(slug);
   if (!site) return undefined;
+  storefrontPerfMark("collection-directory-shell:site-shell", startedAt, {
+    siteId: site.id,
+    livePages: site.livePages.length
+  });
   const navigationData = isSynchronizedDreamshootNavigationSite(site)
-    ? await getStorefrontPublicNavigationDataForSite(site.id)
+    ? await getStorefrontPublicNavigationDataForSite(site.id, { creativePackProjection: "directory" })
     : {
         creativePackCategories: await getStorefrontPublicCreativePackCategoriesForSite(site.id),
-        creativePacks: await getStorefrontPublicCreativePacksForSite(site.id, publicRuntimeLimits("collections").creativePacks),
+        creativePacks: await getStorefrontPublicDirectoryCreativePacksForSite(site.id, publicRuntimeLimits("collections").creativePacks),
         toolCategories: [],
         toolMenuItems: [],
         videoThemeCategories: []
@@ -1601,7 +1700,7 @@ async function loadStorefrontPublicCollectionDirectoryState(slug: string): Promi
   });
   const mediaAssets: MediaAsset[] = [];
   const mappedSite = toPublicSiteShell(site, mediaAssets);
-  return emptyPlatformState({
+  const state = emptyPlatformState({
     sites: [mappedSite],
     siteDomains: site.domains.map(toSiteDomain),
     creativePackCategories: navigationData.creativePackCategories,
@@ -1611,6 +1710,13 @@ async function loadStorefrontPublicCollectionDirectoryState(slug: string): Promi
     videoThemeCategories: navigationData.videoThemeCategories,
     mediaAssets
   });
+  storefrontPerfMark("collection-directory-shell:done", startedAt, {
+    siteId: site.id,
+    creativePacks: navigationData.creativePacks.length,
+    creativePackCategories: navigationData.creativePackCategories.length,
+    livePages: site.livePages.length
+  });
+  return state;
 }
 
 async function loadStorefrontPublicCollectionDetailState(slug: string, collectionSlug: string): Promise<PlatformState | undefined> {
