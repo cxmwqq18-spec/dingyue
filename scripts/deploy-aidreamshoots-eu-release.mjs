@@ -74,7 +74,10 @@ const config = euTarget === "aidreamcapes-eu"
       validationPort: "3915",
       siteId: "site_aidreamcapes_xby",
       htmlLang: "fr",
-      assetPrefix: "public/assets/sites/site_aidreamcapes_eu/visuals/",
+      // EU French directory covers and responsive variants live under both
+      // generated/recovered and visuals. Ship the whole site-local asset root
+      // so an incremental release cannot omit the directory media manifest.
+      assetPrefix: "public/assets/sites/site_aidreamcapes_eu/",
       requiredAssets: []
     }
   : {
