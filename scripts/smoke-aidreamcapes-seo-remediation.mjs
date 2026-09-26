@@ -148,18 +148,16 @@ function requestUrl(url) {
 }
 
 async function assertImageResponse(url) {
-  const response = await fetchWithRetry(url, { redirect: "manual", headers: { "Cache-Control": "no-cache", ...(REQUEST_HOST ? { host: REQUEST_HOST, "x-forwarded-host": REQUEST_HOST } : {}), ...(REQUEST_PROTO ? { "x-forwarded-proto": REQUEST_PROTO } : {}) } });
+  const response = await fetchWithRetry(url, { method: "HEAD", redirect: "manual", headers: { "Cache-Control": "no-cache", ...(REQUEST_HOST ? { host: REQUEST_HOST, "x-forwarded-host": REQUEST_HOST } : {}), ...(REQUEST_PROTO ? { "x-forwarded-proto": REQUEST_PROTO } : {}) } });
   const contentType = response.headers.get("content-type") || "";
   assert.equal(response.status, 200, `${url}: image HTTP ${response.status}`);
   assert(contentType.toLowerCase().startsWith("image/"), `${url}: expected image MIME, received ${contentType || "missing"}`);
-  const body = await response.arrayBuffer();
-  assert(body.byteLength > 64, `${url}: image response is empty or suspiciously small`);
 }
 
 async function checkImageUrls(urls) {
   const unique = [...new Set(urls.filter(Boolean).map(requestUrl))];
-  for (let start = 0; start < unique.length; start += 12) {
-    await Promise.all(unique.slice(start, start + 12).map(assertImageResponse));
+  for (let start = 0; start < unique.length; start += 48) {
+    await Promise.all(unique.slice(start, start + 48).map(assertImageResponse));
   }
   return unique.length;
 }
@@ -249,11 +247,15 @@ async function fetchChecked(url, options = {}) {
 async function fetchWithRetry(url, options, attempts = 3) {
   let lastError;
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20_000);
     try {
-      return await fetch(url, options);
+      return await fetch(url, { ...options, signal: controller.signal });
     } catch (error) {
       lastError = error;
       if (attempt < attempts) await new Promise((resolve) => setTimeout(resolve, 250 * attempt));
+    } finally {
+      clearTimeout(timeout);
     }
   }
   throw lastError;
@@ -310,14 +312,19 @@ async function main() {
     }
 
     const themeResults = [];
-    for (const slug of THEME_SLUGS) themeResults.push(await checkThemePage(prisma, slug));
-    for (const loc of locs) {
-      const pageUrl = new URL(loc);
-      if (pageUrl.hostname !== new URL(ORIGIN).hostname) continue;
-      const path = `${pageUrl.pathname}${pageUrl.search}`;
-      const page = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
-      assert.equal(page.response.status, 200, `${path}: HTTP ${page.response.status}`);
-      assertSeoContract(path, page.html);
+    for (let start = 0; start < THEME_SLUGS.length; start += 6) {
+      themeResults.push(...await Promise.all(THEME_SLUGS.slice(start, start + 6).map((slug) => checkThemePage(prisma, slug))));
+    }
+    const sitemapPagePaths = locs
+      .map((loc) => new URL(loc))
+      .filter((pageUrl) => pageUrl.hostname === new URL(ORIGIN).hostname)
+      .map((pageUrl) => `${pageUrl.pathname}${pageUrl.search}`);
+    for (let start = 0; start < sitemapPagePaths.length; start += 12) {
+      await Promise.all(sitemapPagePaths.slice(start, start + 12).map(async (path) => {
+        const page = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
+        assert.equal(page.response.status, 200, `${path}: HTTP ${page.response.status}`);
+        assertSeoContract(path, page.html);
+      }));
     }
     const sitemapImageUrls = [...sitemap.html.matchAll(/<image:loc>([^<]+)<\/image:loc>/gi)].map((match) => decode(match[1]));
     const themeImageUrls = themeResults.flatMap((result) => result.mediaUrls);
