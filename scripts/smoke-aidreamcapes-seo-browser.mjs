@@ -50,7 +50,7 @@ if (await page.locator("video").count() > 0) {
   assert((await talkingPhoto.locator("source").first().getAttribute("src"))?.match(/\.(?:mp4|webm)(?:[?#]|$)/i), "talking-photo: non-video source");
   assert.equal(await talkingPhoto.locator("source").first().getAttribute("type"), "video/mp4", "talking-photo: MIME missing");
 } else {
-  const talkingPhotoImage = page.locator('img[alt*="talking photo" i]').first();
+  const talkingPhotoImage = page.locator('[data-video-topic-hero-media] img').first();
   assert.equal(await talkingPhotoImage.count(), 1, "talking-photo: image fallback missing");
   assert(await talkingPhotoImage.getAttribute("alt"), "talking-photo: image fallback alt missing");
   assert(await talkingPhotoImage.getAttribute("width"), "talking-photo: image fallback width missing");

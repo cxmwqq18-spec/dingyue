@@ -80,6 +80,69 @@ function mediaUrlForOrigin(src) {
   return `${REQUEST_ORIGIN}${value.startsWith("/") ? value : `/${value}`}`;
 }
 
+function nextFlightPayloadText(html) {
+  const prefix = 'self.__next_f.push([1,"';
+  const chunks = [];
+  let cursor = 0;
+  while (true) {
+    const start = html.indexOf(prefix, cursor);
+    if (start < 0) break;
+    const payloadStart = start + prefix.length;
+    const payloadEnd = html.indexOf('"])', payloadStart);
+    if (payloadEnd < 0) break;
+    try {
+      chunks.push(JSON.parse(`"${html.slice(payloadStart, payloadEnd)}"`));
+    } catch {
+      // Ignore non-JSON flight chunks and continue scanning the response.
+    }
+    cursor = payloadEnd + 3;
+  }
+  return chunks.join("\n");
+}
+
+function balancedJsonObjectAt(text, start) {
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+  for (let index = start; index < text.length; index += 1) {
+    const character = text[index];
+    if (inString) {
+      if (escaped) escaped = false;
+      else if (character === "\\") escaped = true;
+      else if (character === '"') inString = false;
+      continue;
+    }
+    if (character === '"') {
+      inString = true;
+      continue;
+    }
+    if (character === "{") depth += 1;
+    else if (character === "}" && --depth === 0) return text.slice(start, index + 1);
+  }
+  return "";
+}
+
+function nextFlightJsonLdBlocks(html) {
+  const payloadText = nextFlightPayloadText(html);
+  const blocks = [];
+  const marker = '{"@context":"https://schema.org"';
+  let cursor = 0;
+  while (true) {
+    const start = payloadText.indexOf(marker, cursor);
+    if (start < 0) break;
+    const serialized = balancedJsonObjectAt(payloadText, start);
+    if (serialized) {
+      try {
+        blocks.push(JSON.parse(serialized));
+      } catch {
+        // Ignore incomplete or non-JSON fragments in the flight stream.
+      }
+    }
+    cursor = start + marker.length;
+  }
+  return blocks;
+}
+
 function requestUrl(url) {
   return String(url).replace(ORIGIN, REQUEST_ORIGIN).replace(WWW_ORIGIN, WWW_REQUEST_ORIGIN);
 }
@@ -104,13 +167,17 @@ async function checkImageUrls(urls) {
 function bodyJsonLd(html) {
   const blocks = [...html.matchAll(/<script\b([^>]*)type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)]
     .map((match) => ({ attributes: match[1] || "", json: match[2] || "" }));
-  return blocks.find((block) => /data-storefront-json-ld=["']body-marker["']/i.test(block.attributes))?.json
-    || blocks[0]?.json
-    || "";
+  if (blocks.length) {
+    return blocks.find((block) => /data-storefront-json-ld=["']body-marker["']/i.test(block.attributes))?.json
+      || blocks[0]?.json
+      || "";
+  }
+  const flightBlock = nextFlightJsonLdBlocks(html)[0];
+  return flightBlock ? JSON.stringify(flightBlock) : "";
 }
 
 function jsonLdBlocks(html) {
-  return [...html.matchAll(/<script\b([^>]*)type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)]
+  const blocks = [...html.matchAll(/<script\b([^>]*)type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)]
     .map((match) => {
       try {
         return JSON.parse(match[2] || "");
@@ -118,6 +185,7 @@ function jsonLdBlocks(html) {
         throw new Error(`Invalid JSON-LD: ${error.message}`);
       }
     });
+  return blocks.length ? blocks : nextFlightJsonLdBlocks(html);
 }
 
 function collectJsonLdIds(value, result = []) {
@@ -152,7 +220,7 @@ function assertSeoContract(path, html) {
     assert(/<meta\b(?=[^>]*property=["']og:image:alt["'])[^>]*>/i.test(html), `${path}: og:image:alt missing`);
   }
   assert.equal((html.match(/<h1\b/gi) || []).length, 1, `${path}: expected one H1`);
-  assert(!/mydreamshoots/i.test(html), "MyDreamShoots residual found in HTML");
+  assert(!/mydreamshoots/i.test(html), `${path}: MyDreamShoots residual found in HTML`);
   if (path === "/") assertHeadingHierarchy(path, html);
   assert(!/mydreamshoots/i.test(visibleHtml(html)), `${path}: MyDreamShoots residual found in visible HTML`);
   assert(!/mydreamshoots/i.test(bodyJsonLd(html)), `${path}: MyDreamShoots residual found in JSON-LD`);
@@ -210,8 +278,8 @@ async function checkThemePage(prisma, slug) {
   assert.equal((jsonLd.match(/"@type"\s*:\s*"Question"/g) || []).length, 6, `${path}: expected six FAQ questions in JSON-LD`);
   assert(!/premiere-style-portraits|["']@type["']\s*:\s*["'](?:ItemList|Product)["']/i.test(jsonLd), `${path}: stale or unrelated structured data found`);
   assert(!/premiere-style-portraits|\/ai-image-generation\/(?:headshot|avatar|portrait-photo)/i.test(visibleHtml(html)), `${path}: stale route or theme reference found`);
-  assert(html.includes('"@type":"Service"') || html.includes('"@type": "Service"'), `${path}: Service JSON-LD missing`);
-  assert(html.includes('"@type":"SoftwareApplication"') || html.includes('"@type": "SoftwareApplication"'), `${path}: SoftwareApplication JSON-LD missing`);
+  assert(jsonLd.includes('"@type":"Service"') || jsonLd.includes('"@type": "Service"'), `${path}: Service JSON-LD missing`);
+  assert(jsonLd.includes('"@type":"SoftwareApplication"') || jsonLd.includes('"@type": "SoftwareApplication"'), `${path}: SoftwareApplication JSON-LD missing`);
   const tags = imageTags(html);
   assert(tags.length >= manifest.length, `${path}: rendered images ${tags.length} below manifest ${manifest.length}`);
   for (const tag of tags) {

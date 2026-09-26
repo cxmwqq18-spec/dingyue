@@ -303,7 +303,8 @@ export function buildPublishedPageMediaProjection(
   const suppliedImageAlts = (pack.galleryImageAlts ?? []).map((value) => String(value ?? "").trim());
   // CreativePack stores gallery alts without the cover alt. The immutable
   // page-media contract includes the cover, so normalize both shapes here.
-  const coverAlt = `MyDreamShoots ${route.canonicalSlug.replace(/-/g, " ")} hero cover for image generation planning`;
+  const coverBrand = route.siteId === "site_aidreamcapes" ? "Aidreamcapes" : "MyDreamShoots";
+  const coverAlt = `${coverBrand} ${route.canonicalSlug.replace(/-/g, " ")} hero cover for image generation planning`;
   const suppliedContractAlts = suppliedImageAlts.length === images.length - 1
     ? [coverAlt, ...suppliedImageAlts]
     : suppliedImageAlts;
