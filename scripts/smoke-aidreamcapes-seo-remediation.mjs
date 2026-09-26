@@ -256,7 +256,8 @@ function metaDescription(html) {
 }
 
 function relatedToolHrefs(html) {
-  return new Set([...html.matchAll(/\bhref=["'](\/ai-(?:image|video)-generation\/[^"']+)["']/gi)].map((match) => match[1].split(/[?#]/, 1)[0]));
+  const mainHtml = (html.match(/<main\b[\s\S]*?<\/main>/i) || [html])[0];
+  return new Set([...mainHtml.matchAll(/\bhref=["'](\/ai-(?:image|video)-generation\/[^"']+)["']/gi)].map((match) => match[1].split(/[?#]/, 1)[0]));
 }
 
 async function checkBlogHome(prisma) {

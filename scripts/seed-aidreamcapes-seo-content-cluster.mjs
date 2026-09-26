@@ -152,9 +152,9 @@ const ARTICLES = [
     primaryCta: "Read the content policy",
     primaryHref: "/content",
     relatedLinks: [
-      ["/content", "Read the Content Policy"],
-      ["/workflow", "Review the creation workflow"],
-      ["/ai-video-generation/brand-video", "Plan a brand video"]
+      ["/ai-video-generation/talking-photo", "Review talking photo disclosure"],
+      ["/ai-video-generation/brand-video", "Plan a brand video"],
+      ["/ai-image-generation/professional-headshot", "Prepare a permission-safe portrait"]
     ],
     tags: "AI disclosure|Safe AI usage|Synthetic media|Content policy",
     body: "<p>Responsible AI content starts before generation and continues after export. Keep permission for source material, describe generated media honestly when context matters, and review the final result for claims, likeness, rights, and audience expectations.</p><h2 id=\"ai-safe-source\">Start with permission-safe source material</h2><p>Use photos, voices, products, logos, and text that you own or are authorized to use. Do not upload someone else’s likeness or private material without permission, and avoid using generated content to impersonate a real person.</p><h2 id=\"ai-disclosure-context\">Add the context viewers need</h2><p>Disclosure should be clear enough for the audience and placement to understand when an image or video is generated or substantially altered. Do not hide a material change when viewers could reasonably mistake the result for documentary footage, a real endorsement, or an unedited product view.</p><h2 id=\"ai-safe-review\">Keep a review record</h2><ul><li>Check factual claims, rights, names, faces, voices, and brand marks.</li><li>Confirm the destination, audience, caption, and disclosure language.</li><li>Keep the approved source and final export together.</li><li>Remove content that is misleading, unsafe, or outside the approved use.</li></ul><p>Use the policy and workflow links above as a starting point, then apply the same review standard to every channel where the content appears.</p>",
