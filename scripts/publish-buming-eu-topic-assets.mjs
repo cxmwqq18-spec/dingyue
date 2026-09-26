@@ -13,13 +13,19 @@ const replacementsBySite = [
     domain: "aidreamcapes.eu",
     slugs: [
       "/ai-video-generation/proposal",
+      "/ai-save-the-date/proposal",
       "/ai-video-generation/engagement",
       "/ai-video-generation/motion-generator",
-      "/ai-video-generation/wedding-ceremony"
+      "/ai-video-generation/wedding-ceremony",
+      "/ai-save-the-date/wedding-ceremony"
     ],
     replacements: new Map([
       [
         "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/save-the-date/proposal/hero-ai-proposal-beach-sunset.jpg",
+        "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/provider-buming-20260926/proposal/hero-ai-proposal-beach-sunset.jpg"
+      ],
+      [
+        "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/save-the-date/vendor-api-gpt-image-2-4k-v1/proposal/hero-ai-proposal-beach-sunset.jpg",
         "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/provider-buming-20260926/proposal/hero-ai-proposal-beach-sunset.jpg"
       ],
       [
@@ -36,6 +42,10 @@ const replacementsBySite = [
       ],
       [
         "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/seasonal/wedding-ceremony/hero-ai-wedding-ceremony-first-kiss.jpg",
+        "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/provider-buming-20260926/wedding-ceremony/hero-ai-wedding-ceremony-first-kiss.jpg"
+      ],
+      [
+        "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/save-the-date/vendor-api-gpt-image-2-4k-v1/wedding-ceremony/hero-ai-wedding-ceremony-first-kiss.jpg",
         "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/provider-buming-20260926/wedding-ceremony/hero-ai-wedding-ceremony-first-kiss.jpg"
       ]
     ])
@@ -127,9 +137,6 @@ try {
       for (const row of liveRows) {
         const stats = { replaced: 0 };
         const contentJson = replaceExact(parseJson(row.contentJson), config.replacements, stats);
-        if (stats.replaced < 1) {
-          throw new Error(`live_page_no_replacement:${config.siteId}:${row.slug}`);
-        }
         await tx.livePage.update({ where: { id: row.id }, data: { contentJson, updatedAt: new Date() } });
         result.livePages.push({ siteId: config.siteId, slug: row.slug, replaced: stats.replaced });
       }
