@@ -1132,6 +1132,7 @@ function isBlockedPublicPath(path: string, site?: Site): boolean {
 }
 
 function isBlockedPublicPathForSite(site: Site, path: string): boolean {
+  if ((site.id === "site_aidreamcapes" || site.id === "site_aidreamcapes_xby") && path.startsWith("/ai-image-generation/ai-image-generation-")) return true;
   if (isAidreamshootsStorefrontSite(site) && AIDREAMSHOOTS_LEGACY_ALIAS_PATHS.has(path)) return true;
   if (isAidreamshootsStorefrontSite(site) && path.startsWith("/ai-image-generation/collections-")) return true;
   if (isAidreamshootsStorefrontSite(site) && path.startsWith("/tools/")) return true;
