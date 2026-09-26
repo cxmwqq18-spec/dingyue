@@ -130,6 +130,12 @@ async function checkPage(page, target) {
   assert(report.cards.every((card) => card.hasResponsiveSources), `${target.key}: every directory image needs AVIF/WebP responsive sources`);
   const oppositeSiteMarker = target.key === "aidreamshoots-eu" ? "/assets/sites/site_aidreamcapes" : "/assets/sites/site_aidreamshoots";
   assert(report.cards.every((card) => !card.image.includes(oppositeSiteMarker)), `${target.key}: directory image points at the other EU site`);
+  if (target.key === "aidreamshoots-eu") {
+    assert(
+      report.cards.every((card) => !card.image.includes("/assets/sites/site_aidreamshoots/visuals/generated/pack-galleries/")),
+      `${target.key}: directory must not use legacy pack-gallery covers when current generated media exists`
+    );
+  }
   assert.equal(report.cards[0].loading, "eager", `${target.key}: first directory image should be eager`);
   assert(report.cards.slice(1).every((card) => card.loading === "lazy"), `${target.key}: below-fold directory images should be lazy`);
   assertRowsAligned(report.cards, target.key);

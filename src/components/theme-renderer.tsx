@@ -3942,11 +3942,14 @@ function aidreamshootsPublishedDirectoryCoverForSlug(site: Site, slug: string): 
   const normalizedSlug = dreamshootCategorySlug(slug);
   const categoryCover = aidreamshootsPublishedDirectoryCategoryCoverBySlug[normalizedSlug];
   if (categoryCover) return mediaAssetUrl(site, categoryCover, { preserveAidreamshootsLegacyMedia: true });
-  const aliasCover = aidreamshootsPublishedDirectoryAliasCoverBySlug[normalizedSlug];
-  if (aliasCover) return mediaAssetUrl(site, aliasCover, { preserveAidreamshootsLegacyMedia: true });
   const canonicalSlug = aidreamshootsPublishedDirectoryCoverSlugBySlug[normalizedSlug] ?? normalizedSlug;
   const cover = aidreamshootsLatestPackCoverBySlug[canonicalSlug];
-  return cover ? mediaAssetUrl(site, cover) : undefined;
+  if (cover) return mediaAssetUrl(site, cover);
+  // Keep the legacy alias map only for published slugs without a current
+  // site-local generated cover. Current generated media must always win over
+  // compatibility assets from the old shared website.
+  const aliasCover = aidreamshootsPublishedDirectoryAliasCoverBySlug[normalizedSlug];
+  return aliasCover ? mediaAssetUrl(site, aliasCover, { preserveAidreamshootsLegacyMedia: true }) : undefined;
 }
 
 function directoryMediaCandidates(site: Site, pack: CreativePack): string[] {
