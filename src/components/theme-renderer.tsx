@@ -19638,6 +19638,31 @@ function SectionView({
       }
     );
     const frenchXbyBeforeAfter = site.id === "site_aidreamcapes_xby";
+    const beforeAfterFallbackImages = frenchXbyBeforeAfter
+      ? [
+          aidreamcapesEuPublishedDirectoryCoverBySlug["portrait-photo"],
+          aidreamcapesEuPublishedDirectoryCoverBySlug["singles-awareness-day"],
+          aidreamcapesEuPublishedDirectoryCoverBySlug["rich-lifestyle"],
+          aidreamcapesEuPublishedDirectoryCoverBySlug["only-fans"],
+          aidreamcapesEuPublishedDirectoryCoverBySlug.cannes,
+          aidreamcapesEuPublishedDirectoryCoverBySlug.nightlife
+        ]
+      : fallbackHeroImages;
+    // Legacy published section blocks can resolve different aliases to the
+    // same cover. Reserve every resolved image across the whole module so a
+    // repeated source cannot appear as another card's "before" example.
+    const usedBeforeAfterImages = new Set<string>();
+    const resolveUniqueBeforeAfterImage = (configuredImage: string, itemId: string, role: "source" | "result"): string => {
+      const candidates = [configuredImage, ...beforeAfterFallbackImages];
+      for (const candidate of candidates) {
+        const resolved = mediaAssetUrl(site, candidate);
+        const normalized = comparableImageUrl(resolved);
+        if (!normalized || usedBeforeAfterImages.has(normalized)) continue;
+        usedBeforeAfterImages.add(normalized);
+        return resolved;
+      }
+      throw new Error(`Before/after ${role} media must be unique for ${itemId}`);
+    };
     return (
       <section className="px-5 py-16" id={sectionAnchor(section, id)}>
         <div className="mx-auto grid max-w-[var(--site-content-width)] gap-8 lg:grid-cols-[minmax(280px,0.38fr)_minmax(0,0.62fr)] lg:items-start">
@@ -19665,16 +19690,8 @@ function SectionView({
             {items.map((item, index) => {
               const beforeLabel = spanishXbyUiText(site, blockValue(item, "beforeLabel", spanishBeforeAfter ? "Antes" : "Before"));
               const afterLabel = spanishXbyUiText(site, blockValue(item, "afterLabel", spanishBeforeAfter ? "Después" : "After"));
-              const beforeImage = mediaAssetUrl(site, blockValue(item, "beforeImage", fallbackHeroImages[1]));
-              const configuredAfterImage = mediaAssetUrl(site, blockValue(item, "afterImage", fallbackHeroImages[0]));
-              const afterImage = comparableImageUrl(beforeImage) === comparableImageUrl(configuredAfterImage)
-                ? [fallbackHeroImages[0], fallbackHeroImages[1], fallbackHeroImages[2]]
-                    .map((image) => mediaAssetUrl(site, image))
-                    .find((image) => comparableImageUrl(image) !== comparableImageUrl(beforeImage))
-                : configuredAfterImage;
-              if (!afterImage) {
-                throw new Error(`Before/after source and result must use different media for ${item.id}`);
-              }
+              const beforeImage = resolveUniqueBeforeAfterImage(blockValue(item, "beforeImage", fallbackHeroImages[1]), item.id, "source");
+              const afterImage = resolveUniqueBeforeAfterImage(blockValue(item, "afterImage", fallbackHeroImages[0]), item.id, "result");
               return (
                 <div className="grid gap-3 rounded-[1.4rem] border border-black/10 bg-white p-3 shadow-[0_24px_80px_-60px_rgba(24,24,27,0.55)] sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2" data-before-after-item="" data-before-after-result={afterImage} data-before-after-source={beforeImage} key={instanceKey(item, index, "before_after")} {...xfcartBlockAttrs(mode, item, index, "before_after")}>
 	                  {[

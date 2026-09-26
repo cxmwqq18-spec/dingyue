@@ -134,6 +134,12 @@ async function checkPage(page, target) {
   assert(report.cards.slice(1).every((card) => card.loading === "lazy"), `${target.key}: below-fold directory images should be lazy`);
   assertRowsAligned(report.cards, target.key);
   assert(report.beforeAfter.every((item) => normalizedUrl(item.source) !== normalizedUrl(item.result)), `${target.key}: before/after source and result must differ`);
+  const beforeAfterMedia = report.beforeAfter.flatMap((item) => [item.source, item.result]);
+  assert.equal(
+    new Set(beforeAfterMedia.map(normalizedUrl)).size,
+    beforeAfterMedia.length,
+    `${target.key}: before/after gallery must not reuse media across cards`
+  );
   const directoryImageUrls = new Set(report.directoryImageUrls.map(normalizedUrl));
   const directoryImageFailures = imageFailures.filter((failure) => {
     const match = failure.match(/https?:\/\/\S+/)?.[0] || failure;
