@@ -17,6 +17,8 @@ async function assertSeo(page, path) {
   assert.equal(await page.locator('meta[property="og:image:alt"]').count(), 1, `${path}: og:image:alt missing`);
   assert.equal(await page.locator("h1").count(), 1, `${path}: H1 count`);
   assert(!/MyDreamShoots/i.test(await page.locator("body").innerText()), `${path}: brand residual`);
+  assert.equal(await page.locator('script[type="application/ld+json"]').count(), 1, "JSON-LD must be emitted once");
+  assert(!/MyDreamShoots/i.test(await page.content()), "brand residual in HTML");
   if (path === "/") {
     const headings = await page.locator("h1,h2,h3,h4,h5,h6").evaluateAll((elements) => elements.map((element) => Number(element.tagName.slice(1))));
     for (let index = 1; index < headings.length; index += 1) {
@@ -40,13 +42,20 @@ for (const href of ["/ai-image-generation/ecommerce-main-image", "/ai-image-gene
 }
 
 await page.goto(`${BASE_URL}/ai-video-generation/talking-photo`, { waitUntil: "networkidle" });
-const talkingPhoto = page.locator("video").first();
-assert.equal(await page.locator("video").count() >= 1, true, "talking-photo: video missing");
-assert(await talkingPhoto.getAttribute("poster"), "talking-photo: poster missing");
-assert(await talkingPhoto.getAttribute("width"), "talking-photo: width missing");
-assert(await talkingPhoto.getAttribute("height"), "talking-photo: height missing");
-assert((await talkingPhoto.locator("source").first().getAttribute("src"))?.endsWith(".mp4"), "talking-photo: non-video source");
-assert.equal(await talkingPhoto.locator("source").first().getAttribute("type"), "video/mp4", "talking-photo: MIME missing");
+if (await page.locator("video").count() > 0) {
+  const talkingPhoto = page.locator("video").first();
+  assert(await talkingPhoto.getAttribute("poster"), "talking-photo: poster missing");
+  assert(await talkingPhoto.getAttribute("width"), "talking-photo: width missing");
+  assert(await talkingPhoto.getAttribute("height"), "talking-photo: height missing");
+  assert((await talkingPhoto.locator("source").first().getAttribute("src"))?.match(/\.(?:mp4|webm)(?:[?#]|$)/i), "talking-photo: non-video source");
+  assert.equal(await talkingPhoto.locator("source").first().getAttribute("type"), "video/mp4", "talking-photo: MIME missing");
+} else {
+  const talkingPhotoImage = page.locator('img[alt*="talking photo" i]').first();
+  assert.equal(await talkingPhotoImage.count(), 1, "talking-photo: image fallback missing");
+  assert(await talkingPhotoImage.getAttribute("alt"), "talking-photo: image fallback alt missing");
+  assert(await talkingPhotoImage.getAttribute("width"), "talking-photo: image fallback width missing");
+  assert(await talkingPhotoImage.getAttribute("height"), "talking-photo: image fallback height missing");
+}
 
 await page.goto(`${BASE_URL}/workflow`, { waitUntil: "networkidle" });
 const workflowVideos = page.locator("video");

@@ -152,6 +152,7 @@ function assertSeoContract(path, html) {
     assert(/<meta\b(?=[^>]*property=["']og:image:alt["'])[^>]*>/i.test(html), `${path}: og:image:alt missing`);
   }
   assert.equal((html.match(/<h1\b/gi) || []).length, 1, `${path}: expected one H1`);
+  assert(!/mydreamshoots/i.test(html), "MyDreamShoots residual found in HTML");
   if (path === "/") assertHeadingHierarchy(path, html);
   assert(!/mydreamshoots/i.test(visibleHtml(html)), `${path}: MyDreamShoots residual found in visible HTML`);
   assert(!/mydreamshoots/i.test(bodyJsonLd(html)), `${path}: MyDreamShoots residual found in JSON-LD`);

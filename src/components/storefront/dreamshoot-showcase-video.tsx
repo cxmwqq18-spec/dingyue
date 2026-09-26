@@ -8,6 +8,8 @@ type DreamshootShowcaseVideoProps = {
   autoPlay?: boolean;
   loop?: boolean;
   muted?: boolean;
+  width?: number;
+  height?: number;
 };
 
 export function DreamshootShowcaseVideo({
@@ -19,11 +21,13 @@ export function DreamshootShowcaseVideo({
   controls = false,
   autoPlay = true,
   loop = true,
-  muted = true
+  muted = true,
+  width = 1280,
+  height = 720
 }: DreamshootShowcaseVideoProps) {
   const videoMimeType = /\.webm(?:[?#]|$)/i.test(src) ? "video/webm" : /\.(?:mp4|m4v|mov)(?:[?#]|$)/i.test(src) ? "video/mp4" : undefined;
   return (
-    <video aria-label={label} autoPlay={autoPlay} className={className} controls={controls} loop={loop} muted={muted} playsInline poster={poster} preload={priority ? "auto" : "metadata"} title={label}>
+    <video aria-label={label} autoPlay={autoPlay} className={className} controls={controls} height={height} loop={loop} muted={muted} playsInline poster={poster} preload={priority ? "auto" : "metadata"} title={label} width={width}>
       {videoMimeType ? <source src={src} type={videoMimeType} /> : <source src={src} />}
     </video>
   );

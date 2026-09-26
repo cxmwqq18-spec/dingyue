@@ -508,8 +508,17 @@ function moveSeoTagsBeforeResources(html: string): string {
 
 const BODY_MARKER_JSON_LD_RE = /<script\b(?=[^>]*data-storefront-json-ld=["']body-marker["'])[^>]*>[\s\S]*?<\/script>/gi;
 
+const RSC_BODY_MARKER_SCRIPT_RE = /<script\b[^>]*>[\s\S]*?<\/script>/gi;
+
 function stripBodyMarkerJsonLd(html: string): string {
-  return html.replace(BODY_MARKER_JSON_LD_RE, "");
+  const withoutRenderedBodyMarker = html.replace(BODY_MARKER_JSON_LD_RE, "");
+  // React Server Components serialize the body JSON-LD element into a
+  // self.__next_f flight chunk. Keep that chunk intact but make only its
+  // duplicate script inert during hydration.
+  return withoutRenderedBodyMarker.replace(RSC_BODY_MARKER_SCRIPT_RE, (tag) => {
+    if (!/data-storefront-json-ld[\s\S]*body-marker/i.test(tag)) return tag;
+    return tag.replace(/application\/ld\+json/gi, "text/plain");
+  });
 }
 
 type StorefrontIconSet = {
@@ -594,7 +603,7 @@ function rewriteStorefrontHtmlHead(html: string, request: NextRequest, shouldReo
 }
 
 function rewriteStorefrontHtmlFull(html: string, request: NextRequest, shouldReorder: boolean): string {
-  const htmlWithSeo = shouldReorder ? moveSeoTagsBeforeResources(html) : html;
+  const htmlWithSeo = stripBodyMarkerJsonLd(shouldReorder ? moveSeoTagsBeforeResources(html) : html);
   return withStorefrontLocale(
     withMydreamshootsImageThemeSeo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request),
     request

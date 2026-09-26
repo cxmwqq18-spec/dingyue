@@ -236,6 +236,16 @@ const SEO_REPLACEMENTS = new Map([
   }]
 ]);
 
+const OG_IMAGE_REPLACEMENTS = new Map([
+  ["/ai-video-generation", "/assets/sites/site_aidreamcapes/homepage-seo/ai-product-image-to-video-ugc-creator-smartwatch.webp"],
+  ["/ai-video-generation/ugc-ad-video", "/assets/sites/site_aidreamcapes/ugc-ad-v4/ugc-ad-video-hook.webp"],
+  ["/marketing", "/assets/sites/site_aidreamcapes/ads-testing/url-to-ad-workflow-generated.webp"],
+  ["/ai-video-generation/product-ad-video", "/assets/sites/site_aidreamcapes/ugc-ad-v4/ugc-ad-video-demo.webp"],
+  ["/best-ai-video", "/assets/sites/site_aidreamcapes/homepage-seo/ai-video-hook-variants-smartwatch.webp"],
+  ["/blog/ai-talking-photo-video-guide", "/assets/sites/site_aidreamcapes/homepage-seo/ai-talking-photo-presenter-portrait.webp"],
+  ["/blog/ai-video-review-checklist", "/assets/sites/site_aidreamcapes/homepage-seo/ai-ad-hook-variants-testing.webp"]
+]);
+
 // Replace only public route references in the Aidreamcapes content payload.
 // Asset filenames and ordinary prose are intentionally left untouched. The
 // target pages are the only rows passed through this function, so other
@@ -459,6 +469,11 @@ function nextPage(row) {
   const seo = updateSeoValue(contentJson.seo ?? {});
   const replacement = SEO_REPLACEMENTS.get(row.slug);
   if (replacement) Object.assign(seo, replacement);
+  const ogImage = OG_IMAGE_REPLACEMENTS.get(row.slug);
+  if (ogImage) {
+    seo.ogImage = ogImage;
+    seo.twitterImage = ogImage;
+  }
   contentJson.seo = seo;
   const title = replacement?.title ?? (typeof row.title === "string" ? row.title.replace(/\bmydreamshoots\b/gi, "Aidreamcapes") : row.title);
   return { ...row, title, contentJson };
@@ -570,7 +585,23 @@ async function main() {
       const publishedJson = shouldRemoveGoneRoutes
         ? removeGoneRouteReferences(updateContentValue(clone(row.publishedJson) ?? {}))
         : updateContentValue(clone(row.publishedJson) ?? {});
-      const title = typeof row.title === "string" ? row.title.replace(/\bmydreamshoots\b/gi, "Aidreamcapes") : row.title;
+      const replacement = SEO_REPLACEMENTS.get(row.slug);
+      const ogImage = OG_IMAGE_REPLACEMENTS.get(row.slug);
+      const draftSeo = draftJson.seo && typeof draftJson.seo === "object" ? draftJson.seo : {};
+      const publishedSeo = publishedJson.seo && typeof publishedJson.seo === "object" ? publishedJson.seo : {};
+      if (replacement) {
+        Object.assign(draftSeo, replacement);
+        Object.assign(publishedSeo, replacement);
+      }
+      if (ogImage) {
+        draftSeo.ogImage = ogImage;
+        draftSeo.twitterImage = ogImage;
+        publishedSeo.ogImage = ogImage;
+        publishedSeo.twitterImage = ogImage;
+      }
+      draftJson.seo = draftSeo;
+      publishedJson.seo = publishedSeo;
+      const title = replacement?.title ?? (typeof row.title === "string" ? row.title.replace(/\bmydreamshoots\b/gi, "Aidreamcapes") : row.title);
       return { ...row, title, draftJson, publishedJson };
     });
     const changedThemePages = preparedThemePages.filter((row) => {
