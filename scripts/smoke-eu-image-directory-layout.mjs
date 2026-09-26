@@ -71,7 +71,20 @@ async function checkPage(page, target) {
   await page.evaluate(async () => {
     for (const image of document.querySelectorAll("[data-package-taxonomy-card] img")) {
       image.scrollIntoView({ block: "center", inline: "nearest" });
-      await new Promise((resolve) => setTimeout(resolve, 15));
+      await new Promise((resolve) => {
+        if (image.complete) {
+          resolve();
+          return;
+        }
+        const finish = () => {
+          image.removeEventListener("load", finish);
+          image.removeEventListener("error", finish);
+          resolve();
+        };
+        image.addEventListener("load", finish, { once: true });
+        image.addEventListener("error", finish, { once: true });
+        setTimeout(finish, 10_000);
+      });
     }
   });
   await page.waitForTimeout(250);
@@ -88,6 +101,7 @@ async function checkPage(page, target) {
         image: image?.currentSrc || image?.src || "",
         loading: image?.getAttribute("loading") || "",
         hasDimensions: Boolean(image?.getAttribute("width") && image?.getAttribute("height")),
+        hasLoadedImage: Boolean(image?.complete && image?.naturalWidth > 0 && image?.naturalHeight > 0),
         hasResponsiveSources: Boolean(image?.getAttribute("srcset") && image?.closest("picture")?.querySelector("source[srcset]")),
         top: box.top,
         cardHeight: box.height,
@@ -111,6 +125,7 @@ async function checkPage(page, target) {
   assert(report.cards.length >= 10, `${target.key}: expected the complete directory card set`);
   assert.equal(new Set(report.cards.map((card) => card.href)).size, report.cards.length, `${target.key}: duplicate directory hrefs`);
   assert.equal(new Set(report.cards.map((card) => normalizedUrl(card.image))).size, report.cards.length, `${target.key}: duplicate directory cover URLs`);
+  assert(report.cards.every((card) => card.hasLoadedImage), `${target.key}: every directory image must load successfully`);
   assert(report.cards.every((card) => card.hasDimensions), `${target.key}: every directory image needs intrinsic dimensions`);
   assert(report.cards.every((card) => card.hasResponsiveSources), `${target.key}: every directory image needs AVIF/WebP responsive sources`);
   const oppositeSiteMarker = target.key === "aidreamshoots-eu" ? "/assets/sites/site_aidreamcapes" : "/assets/sites/site_aidreamshoots";

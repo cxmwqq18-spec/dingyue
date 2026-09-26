@@ -3835,11 +3835,15 @@ const aidreamshootsPublishedDirectoryCoverSlugBySlug: Record<string, string> = {
 };
 
 const aidreamshootsPublishedDirectoryCategoryCoverBySlug: Record<string, string> = {
-  "best-themes-presets": "/assets/sites/site_aidreamshoots/visuals/generated/category-covers/aidreamshoots/couple-cover.png",
-  "lifestyle-creative": "/assets/sites/site_aidreamshoots/visuals/generated/category-covers/aidreamshoots/creative-cover.png",
-  magic: "/assets/sites/site_aidreamshoots/visuals/generated/category-covers/aidreamshoots/cultural-cover.png",
-  "photo-tools": "/assets/sites/site_aidreamshoots/visuals/generated/category-covers/aidreamshoots/wedding-cover.png",
-  professional: "/assets/sites/site_aidreamshoots/visuals/generated/category-covers/aidreamshoots/creator-cover.png"
+  // These category cards used to point at a legacy visual directory that is
+  // not part of the EU release. Keep them on the published, site-local cover
+  // inventory. Use a distinct gallery frame for each category so it cannot
+  // collide with the corresponding pack cover later in the same directory.
+  "best-themes-presets": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-portrait-photo-diverse-20260913-v1/portrait-photo-01-coastal-wind-dbc8ef8bda84.webp",
+  "lifestyle-creative": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-lifestyle-creative-rich-lifestyle-diverse-20260913-v1/rich-lifestyle-01-coastal-wind-c5c939c08582.webp",
+  magic: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-magic-eraser-diverse-20260913-v1/magic-eraser-01-coastal-wind-11b4cb18440c.webp",
+  "photo-tools": "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-magic-photo-tools-background-changer-diverse-20260913-v1/background-changer-01-coastal-wind-4fa2bec1cded.webp",
+  professional: "/assets/sites/site_aidreamshoots/generated/regenerated/aidreamshoots-professional-headshot-diverse-20260913-v1/headshot-01-coastal-wind-e28edd6a44c7.webp"
 };
 
 const aidreamcapesEuPublishedDirectoryCoverRoot = "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1";
