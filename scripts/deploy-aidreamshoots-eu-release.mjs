@@ -115,6 +115,8 @@ function sshArgs(command) {
   args.push("-p", process.env.AI_PROJECT_SSH_PORT || "11765");
   if (process.env.AI_PROJECT_SSH_KEY_PATH) args.push("-i", process.env.AI_PROJECT_SSH_KEY_PATH);
   args.push(
+    "-o", "ServerAliveInterval=30",
+    "-o", "ServerAliveCountMax=20",
     (process.env.AI_PROJECT_SSH_USER || "root") + "@" + (process.env.AI_PROJECT_SSH_HOST || "204.77.130.125"),
     command
   );
@@ -124,7 +126,11 @@ function sshArgs(command) {
 function scpArgs(source, destination) {
   const args = [];
   if (process.env.SSH_CONFIG_PATH) args.push("-F", process.env.SSH_CONFIG_PATH);
-  args.push("-P", process.env.AI_PROJECT_SSH_PORT || "11765");
+  args.push(
+    "-P", process.env.AI_PROJECT_SSH_PORT || "11765",
+    "-o", "ServerAliveInterval=30",
+    "-o", "ServerAliveCountMax=20"
+  );
   if (process.env.AI_PROJECT_SSH_KEY_PATH) args.push("-i", process.env.AI_PROJECT_SSH_KEY_PATH);
   args.push(
     source,
