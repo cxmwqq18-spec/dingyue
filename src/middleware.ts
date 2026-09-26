@@ -510,8 +510,9 @@ const BODY_MARKER_JSON_LD_RE = /<script\b(?=[^>]*data-storefront-json-ld=["']bod
 
 const RSC_BODY_MARKER_SCRIPT_RE = /<script\b[^>]*>[\s\S]*?<\/script>/gi;
 
-function stripBodyMarkerJsonLd(html: string): string {
+function stripBodyMarkerJsonLd(html: string, inertSerializedBodyMarker = false): string {
   const withoutRenderedBodyMarker = html.replace(BODY_MARKER_JSON_LD_RE, "");
+  if (!inertSerializedBodyMarker) return withoutRenderedBodyMarker;
   // React Server Components serialize the body JSON-LD element into a
   // self.__next_f flight chunk. Keep that chunk intact but make only its
   // duplicate script inert during hydration.
@@ -602,8 +603,8 @@ function rewriteStorefrontHtmlHead(html: string, request: NextRequest, shouldReo
   );
 }
 
-function rewriteStorefrontHtmlFull(html: string, request: NextRequest, shouldReorder: boolean): string {
-  const htmlWithSeo = stripBodyMarkerJsonLd(shouldReorder ? moveSeoTagsBeforeResources(html) : html);
+function rewriteStorefrontHtmlFull(html: string, request: NextRequest, shouldReorder: boolean, inertSerializedBodyMarker = false): string {
+  const htmlWithSeo = stripBodyMarkerJsonLd(shouldReorder ? moveSeoTagsBeforeResources(html) : html, inertSerializedBodyMarker);
   return withStorefrontLocale(
     withMydreamshootsImageThemeSeo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request),
     request
@@ -938,7 +939,7 @@ export async function middleware(request: NextRequest) {
   }
 
   const html = await upstreamResponse.text();
-  return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlFull(html, request, shouldReorder), {
+  return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlFull(html, request, shouldReorder, aboutUsRoute), {
     status: upstreamResponse.status,
     statusText: upstreamResponse.statusText,
     headers
