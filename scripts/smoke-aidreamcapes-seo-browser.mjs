@@ -18,7 +18,9 @@ const BLOG_ARTICLE_PATHS = [
 ];
 
 async function assertSeo(page, path) {
-  await page.goto(`${BASE_URL}${path}`, { waitUntil: "networkidle" });
+  // SSR HTML is the SEO contract; media requests should not make the smoke test wait indefinitely.
+  await page.goto(`${BASE_URL}${path}`, { waitUntil: "domcontentloaded" });
+  await page.waitForSelector('script[type="application/ld+json"]', { state: "attached", timeout: 10_000 });
   assert((await page.title()).trim(), `${path}: title missing`);
   assert.equal(await page.locator('link[rel="canonical"]').count(), 1, `${path}: canonical count`);
   assert.equal(await page.locator('meta[property="og:type"]').count(), 1, `${path}: og:type missing`);
