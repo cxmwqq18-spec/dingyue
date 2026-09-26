@@ -16,6 +16,15 @@ const REQUEST_PROTO = String(argumentValue("--request-proto") || process.env.AID
 const SKIP_ROBOTS = process.argv.includes("--skip-robots");
 const DB_TARGET = String(argumentValue("--db-target") || process.env.DATABASE_TARGET || "local").trim().toLowerCase();
 const SITE_ID = "site_aidreamcapes";
+const BLOG_HOME_PATH = "/blog";
+const BLOG_ARTICLE_PATHS = [
+  "/blog/ai-product-photography-guide",
+  "/blog/ai-ugc-video-ads-guide",
+  "/blog/ai-talking-photo-video-guide",
+  "/blog/ecommerce-product-image-workflow",
+  "/blog/ai-video-review-checklist",
+  "/blog/ai-content-disclosure-safe-usage"
+];
 const THEME_SLUGS = [
   "ecommerce-main-image", "lifestyle-scene", "packshot-multi-angle", "macro-details", "bundle-sets", "size-reference", "feature-infographic", "comparison-chart",
   "feed-ad-still", "ugc-still-ad", "story-ad-vertical", "carousel-set", "sale-campaign-key-visual", "lookbook-cover",
@@ -237,6 +246,60 @@ function assertSeoContract(path, html) {
   }
 }
 
+function titleText(html) {
+  return decode((html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i) || ["", ""])[1]).replace(/<[^>]+>/g, "").trim();
+}
+
+function metaDescription(html) {
+  const tag = (html.match(/<meta\b[^>]*name=["']description["'][^>]*>/i) || [""])[0];
+  return attr(tag, "content");
+}
+
+function relatedToolHrefs(html) {
+  return new Set([...html.matchAll(/\bhref=["'](\/ai-(?:image|video)-generation\/[^"']+)["']/gi)].map((match) => match[1].split(/[?#]/, 1)[0]));
+}
+
+async function checkBlogHome(prisma) {
+  const path = BLOG_HOME_PATH;
+  const { response, html } = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
+  assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
+  assertSeoContract(path, html);
+  assert.equal(titleText(html), "AI Ecommerce, UGC & Talking Photo Guides | Aidreamcapes", `${path}: stale SEO title`);
+  assert.equal(metaDescription(html), "Practical guides for AI product photography, UGC video ads, talking photos, ecommerce workflows, video review, and safe AI content publishing.", `${path}: stale SEO description`);
+  assert(/AI guides for ecommerce images, UGC video, and talking photos/i.test(visibleHtml(html)), `${path}: updated H1 missing`);
+  assert(!/private albums|AI photo packages/i.test(titleText(html)), `${path}: stale private-album positioning in title`);
+  assert.equal((BLOG_ARTICLE_PATHS.filter((articlePath) => html.includes(`href="${articlePath}"`)).length), BLOG_ARTICLE_PATHS.length, `${path}: not all content-cluster articles are linked`);
+
+  const dbPage = await prisma.livePage.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: path } }, select: { title: true, contentJson: true } });
+  assert(dbPage, `${path}: LivePage missing`);
+  assert.equal(dbPage.title, "AI image and video guides", `${path}: SQL title is stale`);
+  assert.equal(dbPage.contentJson?.seo?.title, "AI Ecommerce, UGC & Talking Photo Guides | Aidreamcapes", `${path}: SQL SEO title is stale`);
+  assert.equal(dbPage.contentJson?.seo?.description, "Practical guides for AI product photography, UGC video ads, talking photos, ecommerce workflows, video review, and safe AI content publishing.", `${path}: SQL SEO description is stale`);
+  return { path, articleLinks: BLOG_ARTICLE_PATHS.length };
+}
+
+async function checkBlogArticle(prisma, path) {
+  const { response, html } = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
+  assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
+  assertSeoContract(path, html);
+  const serializedJsonLd = JSON.stringify(jsonLdBlocks(html));
+  assert(/BlogPosting/.test(serializedJsonLd), `${path}: BlogPosting JSON-LD missing`);
+  for (const field of ["author", "datePublished", "dateModified", "image"]) {
+    assert(new RegExp(`"${field}"\\s*:\\s*(?:\\{|\\[|"[^"].*?"|https?://)`, "i").test(serializedJsonLd), `${path}: BlogPosting ${field} missing`);
+  }
+  assert(relatedToolHrefs(html).size >= 3, `${path}: fewer than three related tool links`);
+  const dbPage = await prisma.livePage.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: path } }, select: { pageType: true, templateKey: true, contentJson: true } });
+  assert(dbPage, `${path}: LivePage missing`);
+  assert.equal(dbPage.pageType, "article", `${path}: pageType mismatch`);
+  assert.equal(dbPage.templateKey, "blog-detail", `${path}: templateKey mismatch`);
+  const settings = dbPage.contentJson?.sections?.blog_detail_1?.settings;
+  assert(settings, `${path}: article settings missing`);
+  assert.equal(settings.author, "Aidreamcapes editorial team", `${path}: author mismatch`);
+  assert(settings.publishedAt && settings.updatedAt, `${path}: publication dates missing`);
+  assert(Array.isArray(settings.relatedLinks) && settings.relatedLinks.length >= 3, `${path}: SQL related links missing`);
+  return { path, relatedToolLinks: relatedToolHrefs(html).size };
+}
+
 async function fetchChecked(url, options = {}) {
   const isWwwRequest = options.headers?.["x-smoke-www"] === "1" || (WWW_REQUEST_ORIGIN !== REQUEST_ORIGIN && String(url).startsWith(WWW_REQUEST_ORIGIN));
   const host = isWwwRequest ? WWW_REQUEST_HOST : REQUEST_HOST;
@@ -300,6 +363,8 @@ async function main() {
     const locs = [...sitemap.html.matchAll(/<loc>([^<]+)<\/loc>/gi)].map((match) => decode(match[1]));
     const locSet = new Set(locs);
     for (const slug of THEME_SLUGS) assert(locSet.has(`${ORIGIN}/ai-image-generation/${slug}`), `sitemap missing image theme: ${slug}`);
+    assert(locSet.has(`${ORIGIN}${BLOG_HOME_PATH}`), "sitemap missing blog home");
+    for (const path of BLOG_ARTICLE_PATHS) assert(locSet.has(`${ORIGIN}${path}`), `sitemap missing content-cluster article: ${path}`);
     assert(!locs.some((loc) => loc.startsWith(`${WWW_ORIGIN}/`)), "sitemap contains a www Aidreamcapes page URL");
     assert(!locs.some((loc) => loc.includes("/tools")), "sitemap contains a /tools URL");
     for (const alias of LEGACY_SITEMAP_ALIASES) assert(!locs.includes(`${ORIGIN}${alias}`), `sitemap contains legacy alias: ${alias}`);
@@ -310,6 +375,10 @@ async function main() {
       assert.equal(robots.response.status, 200, `robots.txt: HTTP ${robots.response.status}`);
       assert(robots.html.includes(`Sitemap: ${ORIGIN}/sitemap.xml`), "robots.txt does not point to the non-www sitemap");
     }
+
+    const blogHomeResult = await checkBlogHome(prisma);
+    const blogArticleResults = [];
+    for (const path of BLOG_ARTICLE_PATHS) blogArticleResults.push(await checkBlogArticle(prisma, path));
 
     const themeResults = [];
     for (let start = 0; start < THEME_SLUGS.length; start += 6) {
@@ -358,7 +427,7 @@ async function main() {
     const random404 = await fetchChecked(`${REQUEST_ORIGIN}/seo-smoke-random-404`);
     assert.equal(random404.response.status, 404, "random 404 must remain 404");
     assert(/<meta\b(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*noindex)/i.test(random404.html), "random 404 must remain noindex");
-    console.log(JSON.stringify({ ok: true, origin: ORIGIN, wwwOrigin: WWW_ORIGIN, sitemapPageLocs: locs.length, sitemapImageLocs: sitemapImageUrls.length, checkedImageCount, themes: themeResults.map(({ mediaUrls: _mediaUrls, ...result }) => result), retiredRoutes: RETIRED_PATHS.length, goneRoutes: GONE_PATHS.length, pageSpeed: "skipped" }, null, 2));
+    console.log(JSON.stringify({ ok: true, origin: ORIGIN, wwwOrigin: WWW_ORIGIN, sitemapPageLocs: locs.length, sitemapImageLocs: sitemapImageUrls.length, checkedImageCount, contentCluster: { blogHome: blogHomeResult, articles: blogArticleResults }, themes: themeResults.map(({ mediaUrls: _mediaUrls, ...result }) => result), retiredRoutes: RETIRED_PATHS.length, goneRoutes: GONE_PATHS.length, pageSpeed: "skipped" }, null, 2));
   } finally {
     await prisma.$disconnect();
   }

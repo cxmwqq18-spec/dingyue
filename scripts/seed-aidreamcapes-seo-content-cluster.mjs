@@ -13,6 +13,13 @@ const SITE_ID = "site_aidreamcapes";
 const CONFIRMATION = "aidreamcapes-seo-content-cluster";
 const BACKUP_ROOT = path.resolve("releases/backups/aidreamcapes");
 const IMAGE_ROOT = "/assets/sites/site_aidreamcapes/public-editorial/20260918-v1";
+const BLOG_HOME_SLUG = "/blog";
+const BLOG_HOME_TITLE = "AI image and video guides";
+const BLOG_HOME_SEO = {
+  title: "AI Ecommerce, UGC & Talking Photo Guides | Aidreamcapes",
+  description: "Practical guides for AI product photography, UGC video ads, talking photos, ecommerce workflows, video review, and safe AI content publishing.",
+  keywords: "AI ecommerce guides, AI product photography, UGC video ads, talking photo video, AI content review"
+};
 
 const ARTICLES = [
   {
@@ -255,6 +262,42 @@ function existingArticlePatch(row) {
   return { draftJson, publishedJson };
 }
 
+function blogHomeJsonPatch(pageJson) {
+  const next = clone(pageJson);
+  next.seo = {
+    ...(next.seo || {}),
+    title: BLOG_HOME_SEO.title,
+    description: BLOG_HOME_SEO.description,
+    keywords: BLOG_HOME_SEO.keywords,
+    canonicalPath: BLOG_HOME_SLUG,
+    twitterDescription: BLOG_HOME_SEO.description,
+    robots: { index: true, follow: true }
+  };
+  const intro = next.sections?.blog_intro_1?.settings;
+  if (intro) {
+    intro.title = "AI guides for ecommerce images, UGC video, and talking photos";
+    intro.body = "Use Aidreamcapes guides to plan product images, creator-style ads, talking photo videos, ecommerce workflows, video reviews, and responsible AI content publishing.";
+    intro.eyebrow = "Guides";
+    intro.headingLevel = "h1";
+  }
+  const list = next.sections?.blog_list_1?.settings;
+  if (list) {
+    list.title = "AI image and video guides";
+    list.body = "Practical guidance for AI product photography, UGC video ads, talking photo videos, ecommerce image workflows, final video reviews, and safe AI publishing.";
+    list.guideType = "AI content guide";
+    list.headingLevel = "h2";
+  }
+  return next;
+}
+
+function hasBlogHomeChanges(livePage, themePage) {
+  return livePage.title !== BLOG_HOME_TITLE
+    || themePage.title !== BLOG_HOME_TITLE
+    || hash(livePage.contentJson) !== hash(blogHomeJsonPatch(livePage.contentJson))
+    || hash(themePage.draftJson) !== hash(blogHomeJsonPatch(themePage.draftJson))
+    || hash(themePage.publishedJson) !== hash(blogHomeJsonPatch(themePage.publishedJson));
+}
+
 function writeBackup(payload) {
   fs.mkdirSync(BACKUP_ROOT, { recursive: true, mode: 0o700 });
   const file = path.join(BACKUP_ROOT, `seo-content-cluster-${new Date().toISOString().replace(/[:.]/g, "-")}.json`);
@@ -281,15 +324,19 @@ async function main() {
 
   const prisma = new PrismaClient();
   try {
-    const [site, existingArticles, existingPage, beforeOtherSites] = await Promise.all([
+    const [site, existingArticles, existingPage, blogLivePage, blogThemePage, beforeOtherSites] = await Promise.all([
       prisma.site.findUnique({ where: { id: SITE_ID }, select: { id: true, slug: true, primaryDomain: true } }),
       prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: ARTICLES.map((article) => article.slug) } }, select: { id: true, siteId: true, pageType: true, templateKey: true, slug: true, title: true, contentJson: true } }),
       prisma.themePage.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: EXISTING_ARTICLE_SLUG } }, select: { id: true, siteId: true, slug: true, draftJson: true, publishedJson: true } }),
+      prisma.livePage.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: BLOG_HOME_SLUG } }, select: { id: true, siteId: true, slug: true, title: true, contentJson: true } }),
+      prisma.themePage.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: BLOG_HOME_SLUG } }, select: { id: true, siteId: true, slug: true, title: true, draftJson: true, publishedJson: true } }),
       otherSiteSentinel(prisma)
     ]);
     assert.equal(site?.slug, "aidreamcapes", `${SITE_ID}: unexpected site.`);
     assert.equal(site?.primaryDomain?.toLowerCase(), "www.aidreamcapes.com", `${SITE_ID}: unexpected primary domain.`);
     assert(existingPage, `${EXISTING_ARTICLE_SLUG}: existing article missing.`);
+    assert(blogLivePage, `${BLOG_HOME_SLUG}: LivePage missing.`);
+    assert(blogThemePage, `${BLOG_HOME_SLUG}: ThemePage missing.`);
 
     const existingBySlug = new Map(existingArticles.map((row) => [row.slug, row]));
     const creates = ARTICLES.filter((article) => !existingBySlug.has(article.slug));
@@ -301,6 +348,7 @@ async function main() {
     });
     const existingPatch = existingArticlePatch(existingPage);
     const existingArticleChanged = hash(existingPage.draftJson) !== hash(existingPatch.draftJson) || hash(existingPage.publishedJson) !== hash(existingPatch.publishedJson);
+    const blogHomeUpdate = hasBlogHomeChanges(blogLivePage, blogThemePage);
     const summary = {
       ok: true,
       mode: apply ? "apply" : "dry-run",
@@ -308,6 +356,7 @@ async function main() {
       createdSlugs: creates.map((article) => article.slug),
       updatedSlugs: updates.map((article) => article.slug),
       existingArticleRelatedLinkUpdate: existingArticleChanged,
+      blogHomeUpdate,
       articleCountAfter: existingArticles.length + creates.length,
       otherSiteSentinelHash: beforeOtherSites
     };
@@ -316,7 +365,7 @@ async function main() {
       return;
     }
 
-    const backupPath = writeBackup({ createdAt: new Date().toISOString(), site, existingArticles, existingPage, otherSiteSentinelHash: beforeOtherSites });
+    const backupPath = writeBackup({ createdAt: new Date().toISOString(), site, existingArticles, existingPage, blogLivePage, blogThemePage, otherSiteSentinelHash: beforeOtherSites });
     await prisma.$transaction(async (tx) => {
       for (const article of ARTICLES) {
         const pageJson = articlePageJson(article);
@@ -345,12 +394,18 @@ async function main() {
           await tx.livePage.update({ where: { id: liveExisting.id }, data: { contentJson: liveJson } });
         }
       }
+      if (blogHomeUpdate) {
+        await tx.livePage.update({ where: { id: blogLivePage.id }, data: { title: BLOG_HOME_TITLE, contentJson: blogHomeJsonPatch(blogLivePage.contentJson) } });
+        await tx.themePage.update({ where: { id: blogThemePage.id }, data: { title: BLOG_HOME_TITLE, draftJson: blogHomeJsonPatch(blogThemePage.draftJson), publishedJson: blogHomeJsonPatch(blogThemePage.publishedJson) } });
+      }
     }, { maxWait: 10000, timeout: 120000 });
 
-    const [afterLive, afterTheme, afterExisting, afterOtherSites] = await Promise.all([
+    const [afterLive, afterTheme, afterExisting, afterBlogLive, afterBlogTheme, afterOtherSites] = await Promise.all([
       prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: ARTICLES.map((article) => article.slug) } }, select: { slug: true, title: true, contentJson: true } }),
       prisma.themePage.findMany({ where: { siteId: SITE_ID, slug: { in: ARTICLES.map((article) => article.slug) } }, select: { slug: true, title: true, draftJson: true, publishedJson: true } }),
       prisma.livePage.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: EXISTING_ARTICLE_SLUG } }, select: { contentJson: true } }),
+      prisma.livePage.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: BLOG_HOME_SLUG } }, select: { title: true, contentJson: true } }),
+      prisma.themePage.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: BLOG_HOME_SLUG } }, select: { title: true, draftJson: true, publishedJson: true } }),
       otherSiteSentinel(prisma)
     ]);
     assert.equal(afterLive.length, ARTICLES.length, "content-cluster LivePage count mismatch.");
@@ -366,6 +421,12 @@ async function main() {
       assert.equal(hash(theme.publishedJson), hash(expected), `${article.slug}: ThemePage published readback mismatch.`);
     }
     assert(afterExisting.contentJson?.sections?.blog_detail_1?.settings?.relatedLinks?.some((link) => link?.href === EXISTING_RELATED_LINK.href), `${EXISTING_ARTICLE_SLUG}: related tool link readback missing.`);
+    assert(afterBlogLive && afterBlogTheme, `${BLOG_HOME_SLUG}: readback missing.`);
+    assert.equal(afterBlogLive.title, BLOG_HOME_TITLE, `${BLOG_HOME_SLUG}: LivePage title readback mismatch.`);
+    assert.equal(afterBlogTheme.title, BLOG_HOME_TITLE, `${BLOG_HOME_SLUG}: ThemePage title readback mismatch.`);
+    assert.deepEqual(afterBlogLive.contentJson, blogHomeJsonPatch(blogLivePage.contentJson), `${BLOG_HOME_SLUG}: LivePage readback mismatch.`);
+    assert.deepEqual(afterBlogTheme.draftJson, blogHomeJsonPatch(blogThemePage.draftJson), `${BLOG_HOME_SLUG}: ThemePage draft readback mismatch.`);
+    assert.deepEqual(afterBlogTheme.publishedJson, blogHomeJsonPatch(blogThemePage.publishedJson), `${BLOG_HOME_SLUG}: ThemePage published readback mismatch.`);
     assert.equal(afterOtherSites, beforeOtherSites, "A non-target site's data changed; seed is not considered safe.");
     console.log(JSON.stringify({ ...summary, mode: "applied", backupPath, afterOtherSiteSentinelHash: afterOtherSites }, null, 2));
   } finally {

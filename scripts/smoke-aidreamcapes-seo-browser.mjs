@@ -8,6 +8,14 @@ const SITE_HEADERS = {
   "x-forwarded-host": "aidreamcapes.com",
   "x-forwarded-proto": "https"
 };
+const BLOG_ARTICLE_PATHS = [
+  "/blog/ai-product-photography-guide",
+  "/blog/ai-ugc-video-ads-guide",
+  "/blog/ai-talking-photo-video-guide",
+  "/blog/ecommerce-product-image-workflow",
+  "/blog/ai-video-review-checklist",
+  "/blog/ai-content-disclosure-safe-usage"
+];
 
 async function assertSeo(page, path) {
   await page.goto(`${BASE_URL}${path}`, { waitUntil: "networkidle" });
@@ -16,11 +24,12 @@ async function assertSeo(page, path) {
   assert.equal(await page.locator('meta[property="og:type"]').count(), 1, `${path}: og:type missing`);
   assert.equal(await page.locator('meta[property="og:image:alt"]').count(), 1, `${path}: og:image:alt missing`);
   assert.equal(await page.locator("h1").count(), 1, `${path}: H1 count`);
+  assert.equal(await page.locator("main h1").count(), 1, `${path}: main H1 count`);
   assert(!/MyDreamShoots/i.test(await page.locator("body").innerText()), `${path}: brand residual`);
   assert.equal(await page.locator('script[type="application/ld+json"]').count(), 1, "JSON-LD must be emitted once");
   assert(!/MyDreamShoots/i.test(await page.content()), "brand residual in HTML");
-  if (path === "/") {
-    const headings = await page.locator("h1,h2,h3,h4,h5,h6").evaluateAll((elements) => elements.map((element) => Number(element.tagName.slice(1))));
+  if (["/", "/blog", "/ai-image-generation", "/ai-video-generation"].includes(path)) {
+    const headings = await page.locator("main h1,main h2,main h3,main h4,main h5,main h6").evaluateAll((elements) => elements.map((element) => Number(element.tagName.slice(1))));
     for (let index = 1; index < headings.length; index += 1) {
       assert(headings[index] <= headings[index - 1] + 1, `${path}: heading level jumps from H${headings[index - 1]} to H${headings[index]}`);
     }
@@ -31,14 +40,15 @@ const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({ extraHTTPHeaders: SITE_HEADERS });
 const page = await context.newPage();
 
-for (const path of ["/", "/about-us", "/ai-image-generation/professional-headshot", "/ai-video-generation/talking-photo", "/workflow"]) {
+for (const path of ["/", "/about-us", "/ai-image-generation/professional-headshot", "/ai-video-generation/talking-photo", "/workflow", "/blog", "/ai-image-generation", "/ai-video-generation"]) {
   await assertSeo(page, path);
 }
 
-await assertSeo(page, "/blog/ai-product-photography-guide");
-assert((await page.locator('script[type="application/ld+json"]').allTextContents()).some((value) => /BlogPosting/.test(value)), "blog article: BlogPosting JSON-LD missing");
-for (const href of ["/ai-image-generation/ecommerce-main-image", "/ai-image-generation/lifestyle-scene", "/ai-image-generation/packaging-mockup"]) {
-  assert(await page.locator(`a[href="${href}"]`).count() >= 1, `blog article: related link missing ${href}`);
+for (const path of BLOG_ARTICLE_PATHS) {
+  await assertSeo(page, path);
+  assert((await page.locator('script[type="application/ld+json"]').allTextContents()).some((value) => /BlogPosting/.test(value)), `${path}: BlogPosting JSON-LD missing`);
+  const relatedToolLinks = await page.locator('main a[href^="/ai-image-generation/"], main a[href^="/ai-video-generation/"]').evaluateAll((links) => [...new Set(links.map((link) => link.getAttribute("href")))].filter(Boolean));
+  assert(relatedToolLinks.length >= 3, `${path}: fewer than three related tool links`);
 }
 
 await page.goto(`${BASE_URL}/ai-video-generation/talking-photo`, { waitUntil: "networkidle" });
@@ -86,7 +96,7 @@ const staticRequest = await wwwRequest.get(`${BASE_URL}${staticPath}`, { maxRedi
 assert.equal(staticRequest.status(), 301, `www static route returned ${staticRequest.status()}`);
 assert.equal(staticRequest.headers().location, `https://aidreamcapes.com${staticPath}`, "www static redirect target");
 
-console.log(JSON.stringify({ ok: true, browser: "chromium", pages: 6, gone: 1, redirects: 3 }));
+console.log(JSON.stringify({ ok: true, browser: "chromium", pages: 14, gone: 1, redirects: 3 }));
 await httpRequest.dispose();
 await wwwRequest.dispose();
 await goneRequest.dispose();
