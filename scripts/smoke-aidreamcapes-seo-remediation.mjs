@@ -33,6 +33,7 @@ const THEME_SLUGS = [
   "professional-headshot", "creator-portrait", "team-directory", "social-profile-photo", "fashion-editorial"
 ];
 const RETIRED_PATHS = [
+  "/collections",
   "/ai-image-generation/rich-lifestyle", "/ai-image-generation/social-cards", "/ai-image-generation/black-friday", "/ai-image-generation/street-style",
   "/ai-image-generation/hairstyle-generator", "/ai-image-generation/edit-by-prompt", "/ai-image-generation/background-remover", "/ai-image-generation/photo-enhancer",
   "/ai-image-generation/old-photo-restoration", "/ai-image-generation/headshot", "/ai-image-generation/avatar", "/ai-image-generation/portrait-photo",
@@ -360,6 +361,24 @@ async function checkThemePage(prisma, slug) {
   return { path, mediaCount: manifest.length, imageTagCount: tags.length, mediaUrls: manifest.map((media) => mediaUrlForOrigin(media.src)) };
 }
 
+async function checkImageDirectory() {
+  const path = "/ai-image-generation";
+  const { response, html } = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
+  assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
+  assertSeoContract(path, html);
+  const jsonLd = bodyJsonLd(html);
+  const legacyDirectoryResidual = /\/assets\/sites\/site_aidreamcapes\/creative-packs|christmas photo|background remover|magic eraser|premiere-style-portraits|\/ai-image-generation\/(?:headshot|avatar|portrait-photo|unblur-image)/i;
+  assert(!legacyDirectoryResidual.test(html), `${path}: legacy CreativePack/category residual found in HTML`);
+  assert(!legacyDirectoryResidual.test(jsonLd), `${path}: legacy CreativePack/category residual found in JSON-LD`);
+  assert(jsonLd.includes('"@type":"CollectionPage"') || jsonLd.includes('"@type": "CollectionPage"'), `${path}: clean CollectionPage JSON-LD missing`);
+  assert(jsonLd.includes('"@type":"ItemList"') || jsonLd.includes('"@type": "ItemList"'), `${path}: clean ItemList JSON-LD missing`);
+  for (const slug of THEME_SLUGS) {
+    assert(html.includes(`/ai-image-generation/${slug}`), `${path}: current image theme missing: ${slug}`);
+    assert(jsonLd.includes(`/ai-image-generation/${slug}`), `${path}: current image theme missing from JSON-LD: ${slug}`);
+  }
+  return { path, themeCount: THEME_SLUGS.length };
+}
+
 async function main() {
   assertDatabaseTarget({ expectedTarget: DB_TARGET });
   const prisma = new PrismaClient();
@@ -376,6 +395,7 @@ async function main() {
     for (const alias of LEGACY_SITEMAP_ALIASES) assert(!locs.includes(`${ORIGIN}${alias}`), `sitemap contains legacy alias: ${alias}`);
     for (const path of GONE_PATHS) assert(!locs.includes(`${ORIGIN}${path}`), `sitemap contains gone URL: ${path}`);
     assert(!locs.some((loc) => loc.includes("premiere-style-portraits")), "sitemap contains the stale premiere route");
+    assert(!locs.includes(`${ORIGIN}/collections`), "sitemap contains retired /collections alias");
 
     if (!SKIP_ROBOTS) {
       const robots = await fetchChecked(`${REQUEST_ORIGIN}/robots.txt`);
@@ -386,6 +406,7 @@ async function main() {
     const blogHomeResult = await checkBlogHome(prisma);
     const blogArticleResults = [];
     for (const path of BLOG_ARTICLE_PATHS) blogArticleResults.push(await checkBlogArticle(prisma, path));
+    const imageDirectoryResult = await checkImageDirectory();
 
     const themeResults = [];
     for (let start = 0; start < THEME_SLUGS.length; start += 6) {
@@ -434,7 +455,7 @@ async function main() {
     const random404 = await fetchChecked(`${REQUEST_ORIGIN}/seo-smoke-random-404`);
     assert.equal(random404.response.status, 404, "random 404 must remain 404");
     assert(/<meta\b(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*noindex)/i.test(random404.html), "random 404 must remain noindex");
-    console.log(JSON.stringify({ ok: true, origin: ORIGIN, wwwOrigin: WWW_ORIGIN, sitemapPageLocs: locs.length, sitemapImageLocs: sitemapImageUrls.length, checkedImageCount, contentCluster: { blogHome: blogHomeResult, articles: blogArticleResults }, themes: themeResults.map(({ mediaUrls: _mediaUrls, ...result }) => result), retiredRoutes: RETIRED_PATHS.length, goneRoutes: GONE_PATHS.length, pageSpeed: "skipped" }, null, 2));
+    console.log(JSON.stringify({ ok: true, origin: ORIGIN, wwwOrigin: WWW_ORIGIN, sitemapPageLocs: locs.length, sitemapImageLocs: sitemapImageUrls.length, checkedImageCount, contentCluster: { blogHome: blogHomeResult, articles: blogArticleResults }, imageDirectory: imageDirectoryResult, themes: themeResults.map(({ mediaUrls: _mediaUrls, ...result }) => result), retiredRoutes: RETIRED_PATHS.length, goneRoutes: GONE_PATHS.length, pageSpeed: "skipped" }, null, 2));
   } finally {
     await prisma.$disconnect();
   }

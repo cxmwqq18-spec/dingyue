@@ -60,6 +60,10 @@ const retiredImageThemePaths = [
 // the shared catalogue projection. They are retired for Aidreamcapes only;
 // the same slugs remain available to other storefronts where they are valid.
 const retiredImageCollectionPaths = [
+  // The old shared collection alias is no longer a public Aidreamcapes page.
+  // Keep this site-scoped so other storefronts can retain their own alias
+  // behavior while this host returns a real 404.
+  "/collections",
   // Legacy catalogue group pages. These paths were rendered by the shared
   // collection fallback rather than by a dedicated published page, so keep
   // them in the site-scoped retirement allowlist to stop the fallback from

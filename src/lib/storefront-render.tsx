@@ -57,7 +57,7 @@ import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirecto
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
-import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS } from "@/lib/aidreamcapes-image-theme-routes";
+import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS, AIDREAMCAPES_IMAGE_THEME_ROOT_PATH } from "@/lib/aidreamcapes-image-theme-routes";
 import { indexableSeoPageEntriesForSite } from "@/lib/seo-indexing";
 import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, PublishedLeafRouteProjection, PublishedVideoNavigationProjection, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
@@ -121,6 +121,17 @@ type AidreamcapesDirectoryProjection = {
   imageCards: AidreamcapesImageDirectoryCard[];
   videoCovers: Record<string, AidreamcapesVideoThemeCover>;
 };
+
+const aidreamcapesLegacyCreativePackAssetPattern = /\/assets\/sites\/site_aidreamcapes\/creative-packs(?:\/|$)/i;
+const AIDREAMCAPES_DIRECTORY_FALLBACK_IMAGE = "/assets/sites/site_aidreamcapes/ecommerce-main-image-v1/ecommerce-main-image/hero-output.webp";
+
+function isAidreamcapesLegacyCreativePackAsset(value: string | undefined): boolean {
+  return Boolean(value && aidreamcapesLegacyCreativePackAssetPattern.test(value));
+}
+
+function isAidreamcapesImageDirectoryPage(site: Pick<Site, "id">, path: string): boolean {
+  return site.id === "site_aidreamcapes" && directoryPath(path) === AIDREAMCAPES_IMAGE_THEME_ROOT_PATH;
+}
 
 function directoryPath(value: string): string {
   const clean = value.trim().split(/[?#]/)[0] ?? "";
@@ -207,7 +218,12 @@ function buildAidreamcapesDirectoryProjection(
       const lane = imageDirectoryLane(definition.slug);
       const title = definition.label;
       const heroBody = typeof hero?.body === "string" ? hero.body.trim() : "";
-      const imageUrl = media?.primaryImage?.trim() || contentImage?.src || "";
+      const mediaImage = media?.primaryImage?.trim();
+      const contentImageUrl = contentImage?.src?.trim();
+      const imageUrl = [mediaImage, contentImageUrl, AIDREAMCAPES_DIRECTORY_FALLBACK_IMAGE]
+        .find((candidate) => candidate && !isAidreamcapesLegacyCreativePackAsset(candidate)) || "";
+      const safeContentImageUrl = !isAidreamcapesLegacyCreativePackAsset(contentImageUrl) ? contentImageUrl : undefined;
+      const safeMediaImageAlt = !isAidreamcapesLegacyCreativePackAsset(mediaImage) ? media?.imageAlts?.[0]?.trim() : undefined;
       if (!imageUrl) return undefined;
       return {
         slug: definition.slug,
@@ -217,8 +233,8 @@ function buildAidreamcapesDirectoryProjection(
         group: lane.key,
         groupLabel: lane.label,
         imageUrl,
-        fallbackImageUrl: contentImage?.src?.trim() || undefined,
-        imageAlt: media?.imageAlts?.[0]?.trim() || contentImage?.alt?.trim() || `${title} cover image`,
+        fallbackImageUrl: safeContentImageUrl && safeContentImageUrl !== imageUrl ? safeContentImageUrl : undefined,
+        imageAlt: safeMediaImageAlt || (safeContentImageUrl ? contentImage?.alt?.trim() : undefined) || `${title} cover image`,
         width: storefrontResponsiveImageDimensions(imageUrl)?.width ?? contentImage?.width ?? 1600,
         height: storefrontResponsiveImageDimensions(imageUrl)?.height ?? contentImage?.height ?? 1200,
         tags: (entity?.content.tags ?? []).filter(Boolean).slice(0, 4)
@@ -3118,6 +3134,17 @@ export async function renderStorefrontPage({
         creativePacks: renderData.creativePacks.filter((pack) => imagePackIds.has(pack.id))
       }
     : renderData;
+  const usesAidreamcapesImageDirectory = isAidreamcapesImageDirectoryPage(currentSite, slug);
+  const aidreamcapesImageDirectoryRenderData = usesAidreamcapesImageDirectory
+    ? {
+        ...publicDirectoryRenderData,
+        // The public directory is now driven by the published image-theme
+        // manifest. Do not serialize the shared legacy CreativePack catalogue
+        // into this page's RSC payload, media refs, or JSON-LD input.
+        creativePackCategories: [],
+        creativePacks: []
+      }
+    : publicDirectoryRenderData;
   const focusedCollectionRenderData = isFocusedCollectionPage ? trimFocusedCollectionRenderData(renderData, collectionCategory) : renderData;
   const useSharedNavigation = usesSharedDreamShootNavigation(currentSite);
   // Header menus are global storefront navigation. Focused collection routes
@@ -3133,8 +3160,8 @@ export async function renderStorefrontPage({
   const navigationRenderData: SiteRenderData = sharedNavigationData
     ? {
         ...currentRenderData,
-        creativePackCategories: sharedNavigationData.creativePackCategories,
-        creativePacks: sharedNavigationData.creativePacks,
+        creativePackCategories: usesAidreamcapesImageDirectory ? [] : sharedNavigationData.creativePackCategories,
+        creativePacks: usesAidreamcapesImageDirectory ? [] : sharedNavigationData.creativePacks,
         toolMenuItems: sharedNavigationData.toolMenuItems,
         videoThemeCategories: sharedNavigationData.videoThemeCategories,
         videoThemes: sharedNavigationData.videoThemes
@@ -3203,7 +3230,7 @@ export async function renderStorefrontPage({
         site: currentSite,
         publishedCopy: publishedLeafCopy(publishedSnapshot, collectionCategory)
       })
-    : isCollectionDirectoryPage
+    : isCollectionDirectoryPage && !usesAidreamcapesImageDirectory
     ? withDreamShootCollectionsDirectoryPage(page.publishedJson, currentSite)
     : page.publishedJson;
   const canonicalRenderPath = isPrimaryMydreamshootsStorefront(currentSite) && (renderPagePath.startsWith("/holidays-events/") || renderPagePath.startsWith("/ai-save-the-date/"))
@@ -3223,7 +3250,7 @@ export async function renderStorefrontPage({
         }
       : basePageJson
   );
-  const renderDataForPage = isFocusedCollectionPage ? focusedCollectionRenderData : publicDirectoryRenderData;
+  const renderDataForPage = isFocusedCollectionPage ? focusedCollectionRenderData : aidreamcapesImageDirectoryRenderData;
   let pageRenderData = withPageMediaAssets(
     currentSite,
     pageJson,
@@ -3236,7 +3263,7 @@ export async function renderStorefrontPage({
   const currentPageSectionTypes = pageSectionTypes(pageJson);
   const currentPageUsesFullMediaGallery = pageUsesFullMediaGallery(pageJson);
   const pageUsesDirectoryPackLimit = currentPageSectionTypes.has("dreamshoot_generation_showcase") || currentPageSectionTypes.has("dreamshoot_media_gallery") || currentPageSectionTypes.has("dreamshoot_featured_pack");
-  const pageNeedsPublicCreativePacks = !isFocusedCollectionPage && (slug === "/" || isCollectionDirectoryPage || Array.from(currentPageSectionTypes).some((type) => creativePackSectionTypes.has(type)));
+  const pageNeedsPublicCreativePacks = !usesAidreamcapesImageDirectory && !isFocusedCollectionPage && (slug === "/" || isCollectionDirectoryPage || Array.from(currentPageSectionTypes).some((type) => creativePackSectionTypes.has(type)));
   const pageNeedsPublicVideoThemes = currentPageSectionTypes.has("dreamshoot_generation_showcase") || currentPageSectionTypes.has("dreamshoot_media_gallery");
   const directoryPackLimit = publicPackLimitForPage({
     slug,

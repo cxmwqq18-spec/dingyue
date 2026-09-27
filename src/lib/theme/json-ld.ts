@@ -7,7 +7,7 @@ import { canonicalAbsoluteUrlForSite, canonicalOriginForSite, storefrontBaseUrl 
 import { aiVideoTopicLandingContentFromSection } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection } from "@/lib/talking-photo-content";
 import { imageThemeDetailContentFromSection } from "@/lib/aidreamcapes-image-theme-content";
-import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
+import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS, isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
 import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSaveTheDateSeoFromPath, aidreamcapesEuSeoContentForSlug } from "@/lib/aidreamcapes-eu-seo-content";
 import { aidreamcapesEuVideoTopic, aidreamcapesEuVideoTopicFromPath } from "@/lib/aidreamcapes-eu-video-media";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
@@ -1441,6 +1441,41 @@ function collectionPageSchema(input: JsonLdInput, title: string, description: st
   if (!input.pagePath.startsWith("/collections") && !input.pagePath.startsWith("/ai-image-generation")) return [];
   const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
   const url = absoluteUrl(input.site, input.routeMode, path);
+  if (input.site.id === "site_aidreamcapes" && input.pagePath === "/ai-image-generation") {
+    const itemListElement = AIDREAMCAPES_IMAGE_THEME_DEFINITIONS.map((definition, index) => {
+      const themePath = `/ai-image-generation/${definition.slug}`;
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "Service",
+          name: definition.label,
+          description: `Aidreamcapes ${definition.label.toLowerCase()} workflow for ecommerce, campaign, and creator content.`,
+          url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, themePath))
+        }
+      };
+    });
+    return [
+      {
+        "@type": "CollectionPage",
+        "@id": `${url}#aidreamcapes-image-directory`,
+        name: title,
+        description,
+        url,
+        inLanguage: "en",
+        isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
+        publisher: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` }
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${url}#aidreamcapes-image-themes`,
+        name: `${title} themes`,
+        description,
+        url,
+        itemListElement
+      }
+    ];
+  }
   const activePacks = projectPublicCreativePacks(input.context, input.creativePacks ?? input.context.catalog.activePacks);
   const engagementPage = isAidreamshootsEngagementFrenchPage(input.site, input.pagePath);
   const itemListElement = activePacks.length
