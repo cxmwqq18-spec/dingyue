@@ -52,7 +52,12 @@ const GONE_PATHS = [
   "/ai-save-the-date/valentines-day",
   "/ai-save-the-date/engagement",
   "/ai-save-the-date/proposal",
-  "/ai-image-generation/unblur-image"
+  "/ai-image-generation/unblur-image",
+  "/ai-image-generation/best-themes-presets",
+  "/ai-image-generation/lifestyle-creative",
+  "/ai-image-generation/magic",
+  "/ai-image-generation/photo-tools",
+  "/ai-image-generation/professional"
 ];
 const LEGACY_SITEMAP_ALIASES = [
   "christmas", "halloween", "thanksgiving", "new-year", "mothers-day", "fathers-day", "valentines-day", "engagement", "proposal", "save-the-date", "wedding-invitation", "wedding-ceremony"
@@ -369,6 +374,7 @@ async function main() {
     assert(!locs.some((loc) => loc.startsWith(`${WWW_ORIGIN}/`)), "sitemap contains a www Aidreamcapes page URL");
     assert(!locs.some((loc) => loc.includes("/tools")), "sitemap contains a /tools URL");
     for (const alias of LEGACY_SITEMAP_ALIASES) assert(!locs.includes(`${ORIGIN}${alias}`), `sitemap contains legacy alias: ${alias}`);
+    for (const path of GONE_PATHS) assert(!locs.includes(`${ORIGIN}${path}`), `sitemap contains gone URL: ${path}`);
     assert(!locs.some((loc) => loc.includes("premiere-style-portraits")), "sitemap contains the stale premiere route");
 
     if (!SKIP_ROBOTS) {

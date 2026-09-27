@@ -80,8 +80,18 @@ for (let index = 0; index < await workflowVideos.count(); index += 1) {
 }
 
 const goneRequest = await request.newContext({ extraHTTPHeaders: SITE_HEADERS });
-const gone = await goneRequest.get(`${BASE_URL}/ai-image-generation/unblur-image`, { maxRedirects: 0 });
-assert.equal(gone.status(), 410, `410 route returned ${gone.status()}`);
+const gonePaths = [
+  "/ai-image-generation/unblur-image",
+  "/ai-image-generation/best-themes-presets",
+  "/ai-image-generation/lifestyle-creative",
+  "/ai-image-generation/magic",
+  "/ai-image-generation/photo-tools",
+  "/ai-image-generation/professional"
+];
+for (const path of gonePaths) {
+  const gone = await goneRequest.get(`${BASE_URL}${path}`, { maxRedirects: 0 });
+  assert.equal(gone.status(), 410, `${path}: 410 route returned ${gone.status()}`);
+}
 
 const wwwRequest = await request.newContext({ extraHTTPHeaders: { "x-forwarded-host": "www.aidreamcapes.com", "x-forwarded-proto": "https" } });
 const www = await wwwRequest.get(`${BASE_URL}/ai-video-generation/talking-photo`, { maxRedirects: 0 });
@@ -98,7 +108,7 @@ const staticRequest = await wwwRequest.get(`${BASE_URL}${staticPath}`, { maxRedi
 assert.equal(staticRequest.status(), 301, `www static route returned ${staticRequest.status()}`);
 assert.equal(staticRequest.headers().location, `https://aidreamcapes.com${staticPath}`, "www static redirect target");
 
-console.log(JSON.stringify({ ok: true, browser: "chromium", pages: 14, gone: 1, redirects: 3 }));
+console.log(JSON.stringify({ ok: true, browser: "chromium", pages: 14, gone: gonePaths.length, redirects: 3 }));
 await httpRequest.dispose();
 await wwwRequest.dispose();
 await goneRequest.dispose();

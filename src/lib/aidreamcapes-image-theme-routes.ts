@@ -60,6 +60,15 @@ const retiredImageThemePaths = [
 // the shared catalogue projection. They are retired for Aidreamcapes only;
 // the same slugs remain available to other storefronts where they are valid.
 const retiredImageCollectionPaths = [
+  // Legacy catalogue group pages. These paths were rendered by the shared
+  // collection fallback rather than by a dedicated published page, so keep
+  // them in the site-scoped retirement allowlist to stop the fallback from
+  // recreating them.
+  "/ai-image-generation/best-themes-presets",
+  "/ai-image-generation/lifestyle-creative",
+  "/ai-image-generation/magic",
+  "/ai-image-generation/photo-tools",
+  "/ai-image-generation/professional",
   "/ai-image-generation/background-changer",
   "/ai-image-generation/bikini",
   "/ai-image-generation/boudoir",
@@ -99,7 +108,12 @@ export const AIDREAMCAPES_GONE_PUBLIC_PATHS = new Set<string>([
   "/ai-save-the-date/valentines-day",
   "/ai-save-the-date/engagement",
   "/ai-save-the-date/proposal",
-  "/ai-image-generation/unblur-image"
+  "/ai-image-generation/unblur-image",
+  "/ai-image-generation/best-themes-presets",
+  "/ai-image-generation/lifestyle-creative",
+  "/ai-image-generation/magic",
+  "/ai-image-generation/photo-tools",
+  "/ai-image-generation/professional"
 ]);
 
 const imageThemeByPath = new Map(
