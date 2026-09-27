@@ -143,12 +143,34 @@ const MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS: Record<string, string> = {
   "/ai-image-generation/social-cards": "/ai-image-generation"
 };
 
+const MYDREAMSHOOTS_LEGACY_BLOG_REDIRECTS: Record<string, string> = {
+  "/blog/video-photo-package-guide": "/blog/talking-photo-video-guide",
+  "/blog/ai-video-add-ons-photo-package-guide": "/blog/motion-generator-video-guide",
+  "/blog/album-story-video": "/blog/motion-generator-video-guide",
+  "/blog/creator-intro-video": "/blog/motion-generator-video-guide",
+  "/blog/fan-poster-motion": "/blog/motion-generator-video-guide",
+  "/blog/fashion-reel": "/blog/motion-generator-video-guide",
+  "/blog/image-to-video": "/blog/motion-generator-video-guide",
+  "/blog/product-teaser-clip": "/blog/motion-generator-video-guide",
+  "/blog/profile-clip": "/blog/motion-generator-video-guide",
+  "/blog/video-ai": "/blog/motion-generator-video-guide",
+  "/blog/creator-motion": "/blog/motion-generator-video-guide",
+  "/blog/portrait-motion": "/blog/motion-generator-video-guide",
+  "/blog/product-teaser": "/blog/motion-generator-video-guide",
+  "/blog/social-cards": "/blog/motion-generator-video-guide",
+  "/blog/wedding-memory": "/blog/motion-generator-video-guide"
+};
+
 export function mydreamshootsLegacyPublicPathTarget(pathname: string): string | undefined {
   return MYDREAMSHOOTS_LEGACY_PUBLIC_PATH_REDIRECTS[normalizedPathname(pathname)];
 }
 
 export function mydreamshootsLegacyVideoPathTarget(pathname: string): string | undefined {
   return LEGACY_MYDREAMSHOOTS_VIDEO_PATH_REDIRECTS[normalizedPathname(pathname)];
+}
+
+export function mydreamshootsLegacyBlogPathTarget(pathname: string): string | undefined {
+  return MYDREAMSHOOTS_LEGACY_BLOG_REDIRECTS[normalizedPathname(pathname)];
 }
 
 export function legacyPublicPathTarget(pathname: string, fallbackCollectionPath = "/collections"): string | undefined {

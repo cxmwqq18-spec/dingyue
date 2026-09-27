@@ -23,7 +23,7 @@ import {
 import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
-import { legacyPublicPathTarget, mydreamshootsLegacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
+import { legacyPublicPathTarget, mydreamshootsLegacyBlogPathTarget, mydreamshootsLegacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
 import { isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { customerSessionCookie } from "@/lib/session";
 import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
@@ -69,24 +69,27 @@ const AIDREAMCAPES_LEGACY_TOOL_REDIRECTS: Record<string, string> = {
   "travel-journal-cover-maker": "/tools/new-year-countdown-album-maker"
 };
 const DREAMSHOOT_LEGACY_BLOG_CATEGORY_REDIRECTS: Record<string, string> = {
-  "ai-video-add-ons": "/blog/video-photo-package-guide"
+  "ai-video-add-ons": "/blog/motion-generator-video-guide"
+};
+const DREAMSHOOT_LEGACY_BLOG_DIRECT_REDIRECTS: Record<string, string> = {
+  "video-photo-package-guide": "/blog/talking-photo-video-guide"
 };
 const DREAMSHOOT_LEGACY_BLOG_TOOL_REDIRECTS: Record<string, string> = {
   "ai-photo-edit": "/blog/utility-image-prep-guide",
-  "album-story-video": "/blog/video-photo-package-guide",
+  "album-story-video": "/blog/motion-generator-video-guide",
   "animated-avatar": "/blog/avatar-photo-package-guide",
   "background-changer": "/blog/utility-image-prep-guide",
   "background-remover": "/blog/utility-image-prep-guide",
   "color-correction": "/blog/utility-image-prep-guide",
-  "creator-intro-video": "/blog/video-photo-package-guide",
+  "creator-intro-video": "/blog/motion-generator-video-guide",
   "creator-portrait": "/blog/creator-photo-package-guide",
   "cyberpunk-portrait": "/blog/creative-photo-package-guide",
   "edit-by-prompt": "/blog/utility-image-prep-guide",
-  "fan-poster-motion": "/blog/video-photo-package-guide",
-  "fashion-reel": "/blog/video-photo-package-guide",
+  "fan-poster-motion": "/blog/motion-generator-video-guide",
+  "fashion-reel": "/blog/motion-generator-video-guide",
   "gala-photo": "/blog/creative-photo-package-guide",
   headshot: "/blog/headshot-photo-package-guide",
-  "image-to-video": "/blog/video-photo-package-guide",
+  "image-to-video": "/blog/motion-generator-video-guide",
   "magic-eraser": "/blog/utility-image-prep-guide",
   "nature-adventure": "/blog/creative-photo-package-guide",
   "noir-portrait": "/blog/creative-photo-package-guide",
@@ -95,17 +98,17 @@ const DREAMSHOOT_LEGACY_BLOG_TOOL_REDIRECTS: Record<string, string> = {
   "photo-enhancer": "/blog/utility-image-prep-guide",
   "portrait-retouch": "/blog/utility-image-prep-guide",
   "product-lifestyle": "/blog/creator-photo-package-guide",
-  "product-teaser-clip": "/blog/video-photo-package-guide",
-  "profile-clip": "/blog/video-photo-package-guide",
+  "product-teaser-clip": "/blog/motion-generator-video-guide",
+  "profile-clip": "/blog/motion-generator-video-guide",
   "unblur-image": "/blog/utility-image-prep-guide",
-  "video-ai": "/blog/video-photo-package-guide",
+  "video-ai": "/blog/motion-generator-video-guide",
 };
 const DREAMSHOOT_LEGACY_BLOG_VIDEO_REDIRECTS: Record<string, string> = {
-  "creator-motion": "/blog/video-photo-package-guide",
-  "portrait-motion": "/blog/video-photo-package-guide",
-  "product-teaser": "/blog/video-photo-package-guide",
-  "social-cards": "/blog/video-photo-package-guide",
-  "wedding-memory": "/blog/video-photo-package-guide"
+  "creator-motion": "/blog/motion-generator-video-guide",
+  "portrait-motion": "/blog/motion-generator-video-guide",
+  "product-teaser": "/blog/motion-generator-video-guide",
+  "social-cards": "/blog/motion-generator-video-guide",
+  "wedding-memory": "/blog/motion-generator-video-guide"
 };
 const AIDREAMCAPES_LEGACY_BLOG_CATEGORY_REDIRECTS: Record<string, string> = {
   "fan-scene-albums": "/blog/private-fan-scene-album-photo-package-guide",
@@ -323,7 +326,7 @@ function redirectLegacyBlogArticle(site: { slug: string; name: string; branding:
       AIDREAMCAPES_LEGACY_BLOG_DIRECT_REDIRECTS
     )
     : isMydreamshootsSite(site)
-    ? legacyBlogRedirectPath(articleSlug, DREAMSHOOT_LEGACY_BLOG_CATEGORY_REDIRECTS, DREAMSHOOT_LEGACY_BLOG_TOOL_REDIRECTS, DREAMSHOOT_LEGACY_BLOG_VIDEO_REDIRECTS)
+    ? legacyBlogRedirectPath(articleSlug, DREAMSHOOT_LEGACY_BLOG_CATEGORY_REDIRECTS, DREAMSHOOT_LEGACY_BLOG_TOOL_REDIRECTS, DREAMSHOOT_LEGACY_BLOG_VIDEO_REDIRECTS, DREAMSHOOT_LEGACY_BLOG_DIRECT_REDIRECTS)
     : undefined;
   if (redirectPath && redirectPath !== slug) permanentRedirect(redirectPath);
 }
@@ -465,6 +468,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
       : {};
   }
   const isMydreamshootsHost = isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]));
+  if (isMydreamshootsHost && mydreamshootsLegacyBlogPathTarget(requestedPath)) return {};
   if (isMydreamshootsHost && isMydreamshootsRetiredPublicPath(requestedPath)) return {};
   if (isMydreamshootsHost && requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
   if (isMydreamshootsHost && (requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || requestedPath === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) return {};

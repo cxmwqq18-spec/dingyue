@@ -13,7 +13,7 @@ import { preferLocalPathModeState, readPathModePublicMetadataState, readPathMode
 import { metadataForPublishedStorefrontDirectoryPage, metadataForPublishedStorefrontPage } from "@/lib/storefront-metadata";
 import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
 import { parsePublicCollectionRouteForSite, parsePublicVideoGenerationRouteForSite } from "@/lib/photo-package-taxonomy";
-import { legacyPublicPathTarget, mydreamshootsLegacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
+import { legacyPublicPathTarget, mydreamshootsLegacyBlogPathTarget, mydreamshootsLegacyPublicPathTarget, mydreamshootsLegacyVideoPathTarget, publicContentPageSlug } from "@/lib/site-route-canonical";
 import { isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { publicSiteSlug } from "@/lib/domain-routing";
 import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
@@ -340,6 +340,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(requestedSlug);
     if (legacySaveTheDateTarget) return {};
   }
+  if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && mydreamshootsLegacyBlogPathTarget(requestedSlug)) return {};
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && isMydreamshootsRetiredPublicPath(requestedSlug)) return {};
   const legacyPublicTarget = isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) ? mydreamshootsLegacyPublicPathTarget(requestedSlug) : undefined;
   if (isPrimaryMydreamshootsSlug(publicSiteSlug(siteSlug)) && requestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH) return weddingInvitationMetadata();
@@ -537,6 +538,8 @@ export default async function SiteCatchAllPage({
     permanentRedirect(routePath("/digital-delivery"));
   }
   if (isPrimaryMydreamshootsSlug(publicSlug) && isMydreamshootsRetiredPublicPath(slug)) notFound();
+  const legacyBlogTarget = isPrimaryMydreamshootsSlug(publicSlug) ? mydreamshootsLegacyBlogPathTarget(slug) : undefined;
+  if (legacyBlogTarget && legacyBlogTarget !== slug) permanentRedirect(routePath(legacyBlogTarget));
   const mydreamLegacyTarget = isPrimaryMydreamshootsSlug(publicSlug) ? mydreamshootsLegacyPublicPathTarget(slug) : undefined;
   if (isPrimaryMydreamshootsSlug(publicSlug) && (slug === MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH || slug === MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH)) notFound();
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);

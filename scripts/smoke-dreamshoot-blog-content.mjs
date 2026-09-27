@@ -262,7 +262,7 @@ for (const expected of expectedSites) {
       `${expected.slug}${article.slug}: detail page contains only blog_detail_1`
     );
     const targetHref = sectionSetting(articleSection, "targetHref");
-    assert(/^(\/(?:ai-image-generation|collections)(?:\/[^/]+)?|\/pricing|\/login|\/policies\/[^/]+)$/.test(targetHref), `${expected.slug}${article.slug}: CTA target is a current local route`, targetHref);
+    assert(/^(\/(?:ai-image-generation|ai-video-generation|collections)(?:\/[^/]+)?|\/pricing|\/login|\/policies\/[^/]+)$/.test(targetHref), `${expected.slug}${article.slug}: CTA target is a current local route`, targetHref);
     if (expected.siteId === "site_dreamshoot") {
       const imageUrl = sectionSetting(articleSection, "imageUrl");
       assert(!/\/pack-covers\//i.test(imageUrl), `${expected.slug}${article.slug}: cover avoids package cover composites`, imageUrl);

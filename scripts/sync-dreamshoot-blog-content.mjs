@@ -10,12 +10,17 @@ import {
   MYDREAMSHOOTS_SEASONAL_OCCASION_BLOG_SEO_SLUGS,
   mydreamshootsSeasonalOccasionBlogSeoArticles
 } from "./mydreamshoots-seasonal-occasion-blog-seo-articles.mjs";
+import {
+  MYDREAMSHOOTS_VIDEO_BLOG_SLUGS,
+  mydreamshootsVideoBlogArticles
+} from "./mydreamshoots-video-blog-articles.mjs";
+import { assertDatabaseTarget } from "./lib/database-target.mjs";
 import { readPlatformStateFromSql, writePlatformStateToSql } from "./lib/platform-state-sql.mjs";
 
 const mydreamshootsTaxonomyPath = path.join(process.cwd(), "src", "lib", "mydreamshoots-theme-taxonomy.json");
 const MYDREAMSHOOTS_SITE_ID = "site_dreamshoot";
 const MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS = [
-  "/blog/video-photo-package-guide",
+  ...MYDREAMSHOOTS_VIDEO_BLOG_SLUGS,
   "/blog/cyberpunk-photo-package-guide",
   "/blog/mafia-photo-package-guide",
   "/blog/magic-upscaler-photo-package-guide",
@@ -27,7 +32,7 @@ const MYDREAMSHOOTS_PRIORITY_BLOG_SLUGS = [
   "/blog/world-cup-fan-photos-photo-package-guide"
 ];
 const MYDREAMSHOOTS_LEGACY_BLOG_SLUG_BY_CANONICAL = new Map([
-  ["/blog/video-photo-package-guide", "/blog/ai-video-add-ons-photo-package-guide"]
+  ["/blog/talking-photo-video-guide", "/blog/video-photo-package-guide"]
 ]);
 const SOCCER_MIGRATION_APPROVED = process.env.MDS_SOCCER_MIGRATION_APPROVED === "1";
 const mydreamshootsPriorityBlogSlugSet = new Set([
@@ -47,6 +52,8 @@ function cliOption(name) {
 const cliFlags = new Set(process.argv.slice(2));
 const dryRun = cliFlags.has("--dry-run");
 const updateDb = cliFlags.has("--db");
+const productionSync = cliFlags.has("--production");
+const productionConfirmation = cliOption("confirm");
 const requestedSiteId = cliOption("site-id");
 const requestedSlugs = cliOption("slugs")
   .split(",")
@@ -64,6 +71,26 @@ if (scopedRun) {
   const unsupportedSlugs = requestedSlugs.filter((slug) => !mydreamshootsPriorityBlogSlugSet.has(slug));
   if (unsupportedSlugs.length) {
     throw new Error(`Scoped blog sync refuses non-priority slugs: ${unsupportedSlugs.join(", ")}`);
+  }
+  if (productionSync) {
+    const requestedProductionSlugs = [...requestedSlugs].sort();
+    const expectedProductionSlugs = [...MYDREAMSHOOTS_VIDEO_BLOG_SLUGS].sort();
+    if (!updateDb) throw new Error("Production blog sync requires --db.");
+    if (dryRun) throw new Error("Production blog sync does not accept --dry-run; use the local preview sync for dry runs.");
+    if (productionConfirmation !== "sync-mydreamshoots-video-blog-production") {
+      throw new Error("Production blog sync requires --confirm=sync-mydreamshoots-video-blog-production.");
+    }
+    if (
+      requestedProductionSlugs.length !== expectedProductionSlugs.length ||
+      requestedProductionSlugs.some((slug, index) => slug !== expectedProductionSlugs[index])
+    ) {
+      throw new Error(`Production blog sync is restricted to exactly: ${expectedProductionSlugs.join(",")}`);
+    }
+    assertDatabaseTarget({
+      expectedTarget: "production",
+      requireProductionConfirmation: true,
+      productionConfirmed: true
+    });
   }
 }
 
@@ -875,35 +902,6 @@ function makePriorityBlogArticle(input) {
 
 const mydreamshootsPriorityArticleOverrides = new Map([
   makePriorityBlogArticle({
-    slug: "/blog/video-photo-package-guide",
-    pageTitle: "Video photo package guide",
-    title: "Video Photo Add-ons: Plan Motion-Ready Frames for Private Albums",
-    summary: "Plan a motion-ready photo frame or short video add-on with one clear movement idea, permission-safe source images, and a focused review of identity stability and crop quality.",
-    imageUrl: "/assets/dreamshoot/generated/pack-galleries/ai-video-add-ons/ai-video-add-ons-01.webp?v=20260715b",
-    imageAlt: "Motion-ready portrait frame prepared for a private AI video add-on.",
-    tags: "AI video add-ons|Motion Generator|Image-to-video planning|Private albums",
-    seoTitle: "Video photo add-ons guide | myDreamshoots",
-    seoDescription: "Plan motion-ready photo frames and short AI video add-ons with focused source images, one movement direction, and a private review checklist.",
-    seoKeywords: "AI video add-ons, motion-ready photo frames, image-to-video guide, Motion Generator, private gallery",
-    targetLabel: "Open Motion Generator",
-    targetHref: "/ai-video-generation/motion-generator",
-    relatedLinks: [
-      { label: "Open Motion Generator", href: "/ai-video-generation/motion-generator" },
-      { label: "Read the Creator portraits guide", href: "/blog/creator-photo-package-guide" },
-      { label: "Compare Profile cards", href: "/ai-image-generation/avatar" }
-    ],
-    body: html`
-      <p>Use this guide when a finished image should become a short motion concept, profile clip, or private album add-on. Keep one movement idea in the brief and review the result in the private gallery before downloading.</p>
-      <h2 id="video-photo-source">Choose a motion-ready source frame</h2>
-      <p>Start with a clear, recent image where the face, hairline, hands, and main subject edges are readable. Use only photos you own or have permission to use. A clean source frame gives the motion pass less identity detail to guess.</p>
-      <h2 id="video-photo-movement">Name one movement direction</h2>
-      <p>Choose one slow camera drift, gentle reveal, profile turn, or background motion cue. Mixing several unrelated movements makes the clip harder to review and can introduce unstable faces, hands, or clothing edges.</p>
-      <h2 id="video-photo-review">Review the private result before download</h2>
-      <ul><li>Check face and eye stability across the full clip.</li><li>Inspect hands, hair, clothing edges, and accessories.</li><li>Review crop, pacing, and background geometry.</li><li>Remove any invented marks, text, or protected branding.</li></ul>
-      <p>Open Motion Generator for the current workflow and visible credit cost. Keep the original source frame with the private job so the final choice remains easy to explain.</p>
-    `
-  }),
-  makePriorityBlogArticle({
     slug: "/blog/profile-cards-photo-package-guide",
     pageTitle: "Profile card photo guide",
     title: "Profile Card Photos: Plan a Consistent Image Set for Personal and Creator Uses",
@@ -1336,8 +1334,8 @@ const mydreamshootsPriorityArticleOverrides = new Map([
 ].map((article) => [article.slug, article]));
 
 const mydreamshootsPriorityBlogSlugByPackSlug = new Map([
-  ["ai-video-add-ons", "/blog/video-photo-package-guide"],
-  ["motion-generator", "/blog/video-photo-package-guide"],
+  ["ai-video-add-ons", "/blog/motion-generator-video-guide"],
+  ["motion-generator", "/blog/motion-generator-video-guide"],
   ["profile-cards", "/blog/profile-cards-photo-package-guide"],
   ["avatar", "/blog/profile-cards-photo-package-guide"],
   ["cyberpunk", "/blog/cyberpunk-photo-package-guide"],
@@ -1590,7 +1588,9 @@ function assertMyDreamShootsArticleFacts(config) {
         throw new Error(`${slug} has a non-local related guide href: ${String(link?.href ?? "")}`);
       }
     }
-    const expectedProductHref = article.productSlug === "ai-image-generation"
+    const expectedProductHref = article.productSlug === "profile-cards"
+      ? "/ai-image-generation/avatar"
+      : article.productSlug === "ai-image-generation"
       ? "/ai-image-generation"
       : String(article.targetHref).startsWith("/ai-video-generation/")
         ? `/ai-video-generation/${article.productSlug}`
@@ -1668,22 +1668,22 @@ const siteConfigs = [
     coverageMode: "creative-packs",
     blogTitle: "Guides",
     footerLabel: "Blog",
-    guideType: "AI photo guide",
-    homeIntroTitle: "AI photo guides for better source photos, credits, and private albums.",
+    guideType: "AI photo and video guide",
+    homeIntroTitle: "AI photo and video guides for better inputs, creative direction, and private albums.",
     homeIntroBody:
-      "Use these MyDreamShoots guides to choose source photos, compare package fit, understand credits, and review finished images inside a private gallery.",
-    homeListTitle: "AI photo guides",
+      "Use these MyDreamShoots guides to choose source photos, plan AI video direction, compare theme fit, understand current credits, and review finished work inside a private gallery.",
+    homeListTitle: "AI photo and video guides",
     homeListBody:
-      "Practical guidance for source-photo preparation, package planning, visible credits, private gallery delivery, and stronger AI portrait results.",
+      "Practical guidance for source-photo preparation, video movement and scene planning, package selection, visible credits, private gallery delivery, and stronger AI results.",
     relatedTitle: "Related guides",
     relatedBody:
       "Read more about source photos, package selection, credit planning, private albums, and delivery review before starting another AI photo set.",
     homeSeo: {
-      title: "MyDreamShoots Guides for AI photo packages and private albums",
+      title: "MyDreamShoots Guides for AI photo and video packages",
       description:
-        "Read MyDreamShoots guides for source photos, AI photo package planning, visible credits, private galleries, downloads, and delivery review.",
+        "Read MyDreamShoots guides for source photos, AI video direction, photo package planning, visible credits, private galleries, downloads, and delivery review.",
       keywords:
-        "AI photo guides, source photo tips, AI photo packages, private AI gallery, MyDreamShoots credits"
+        "AI photo and video guides, source photo tips, AI video planning, private AI gallery, MyDreamShoots credits"
     },
     articles: [
       {
@@ -2048,6 +2048,7 @@ const siteConfigs = [
 ];
 
 for (const config of siteConfigs) {
+  if (scopedRun && config.siteId !== requestedSiteId) continue;
   config.articles = config.coverageMode === "creative-packs"
     ? buildCreativePackCoverageArticles(sourceState, config.siteId, config.brand)
     : [
@@ -2063,6 +2064,10 @@ for (const config of siteConfigs) {
       ...config.articles.filter((article) => !remediationSlugs.has(article.slug)),
       ...mydreamshootsBlogSeoRemediationArticles.map((article) => makePriorityBlogArticle(article)),
       ...mydreamshootsSeasonalOccasionBlogSeoArticles.map((article) => makePriorityBlogArticle(article))
+    ];
+    config.articles = [
+      ...config.articles.filter((article) => !MYDREAMSHOOTS_VIDEO_BLOG_SLUGS.includes(article.slug) && article.slug !== "/blog/video-photo-package-guide"),
+      ...mydreamshootsVideoBlogArticles.map((article) => makePriorityBlogArticle(article))
     ];
   }
   if (config.siteId === MYDREAMSHOOTS_SITE_ID && SOCCER_MIGRATION_APPROVED && !config.articles.some((article) => article.slug === "/blog/soccer-fan-photo-guide")) {
@@ -2366,9 +2371,23 @@ function seoSettingsForPage(page) {
   };
 }
 
-function mergeScopedSeoPages(settings) {
-  // Page SEO belongs to ThemePage JSON; the legacy settings map is compatibility-only.
-  return clone(settings ?? {});
+function mergeScopedSeoPages(settings, pages = []) {
+  const next = clone(settings ?? {});
+  next.seo ??= {};
+  next.seo.pages = { ...(next.seo.pages ?? {}) };
+  for (const page of pages) {
+    const pageSeo = page.publishedJson?.seo ?? page.draftJson?.seo ?? {};
+    next.seo.pages[page.id] = {
+      ...(next.seo.pages[page.id] ?? {}),
+      title: pageSeo.title ?? page.title,
+      description: pageSeo.description ?? "",
+      keywords: pageSeo.keywords ?? "",
+      canonicalPath: pageSeo.canonicalPath ?? page.slug,
+      index: pageSeo.robots?.index ?? true,
+      follow: pageSeo.robots?.follow ?? true
+    };
+  }
+  return next;
 }
 
 function syncScopedSite(state, config, slugs) {
@@ -2377,6 +2396,21 @@ function syncScopedSite(state, config, slugs) {
   const selectedArticles = config.articles.filter((article) => slugs.has(article.slug));
   const missingSlugs = Array.from(slugs).filter((slug) => !selectedArticles.some((article) => article.slug === slug));
   if (missingSlugs.length) throw new Error(`Missing generated priority articles: ${missingSlugs.join(", ")}`);
+
+  site.themeSettings ??= {};
+  const existingBlogHome = site.pages.find((page) => page.slug === "/blog");
+  const blogHomeJson = makeBlogHomeJson(config, existingBlogHome);
+  const blogHomePage = {
+    id: existingBlogHome?.id ?? `${site.id}_blog`,
+    siteId: site.id,
+    pageType: "blog",
+    templateKey: "blog",
+    slug: "/blog",
+    title: config.blogTitle,
+    draftJson: clone(blogHomeJson),
+    publishedJson: clone(blogHomeJson)
+  };
+  upsertPage(site, blogHomePage);
 
   const sourceArticlePage = site.pages.find((page) => page.slug.startsWith("/blog/"));
   const pages = selectedArticles.map((article) => {
@@ -2391,7 +2425,7 @@ function syncScopedSite(state, config, slugs) {
       slug: article.slug,
       title: article.pageTitle,
       draftJson: clone(articleJson),
-      ...(existingPage?.publishedJson ? { publishedJson: existingPage.publishedJson } : {})
+      publishedJson: clone(articleJson)
     };
     const legacyIndex = legacySlug ? site.pages.findIndex((item) => item.slug === legacySlug) : -1;
     if (legacyIndex >= 0) site.pages[legacyIndex] = page;
@@ -2399,8 +2433,9 @@ function syncScopedSite(state, config, slugs) {
     return page;
   });
 
-  site.themeSettings.draftJson = mergeScopedSeoPages(site.themeSettings.draftJson, pages);
-  return pages;
+  site.themeSettings.draftJson = mergeScopedSeoPages(site.themeSettings.draftJson, [blogHomePage, ...pages]);
+  site.themeSettings.publishedJson = mergeScopedSeoPages(site.themeSettings.publishedJson, [blogHomePage, ...pages]);
+  return [blogHomePage, ...pages];
 }
 
 function assertLocalDatabaseUrl() {
@@ -2418,12 +2453,24 @@ function assertLocalDatabaseUrl() {
   }
 }
 
+function assertDatabaseUrlForScopedSync() {
+  if (productionSync) {
+    assertDatabaseTarget({
+      expectedTarget: "production",
+      requireProductionConfirmation: true,
+      productionConfirmed: true
+    });
+    return;
+  }
+  assertLocalDatabaseUrl();
+}
+
 function toPrismaJson(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
 async function updateScopedDatabase(state, pages) {
-  assertLocalDatabaseUrl();
+  assertDatabaseUrlForScopedSync();
   const { PrismaClient } = await import("@prisma/client");
   const prisma = new PrismaClient();
   try {
@@ -2438,18 +2485,42 @@ async function updateScopedDatabase(state, pages) {
           where: { siteId_slug: { siteId: MYDREAMSHOOTS_SITE_ID, slug: legacySlug } },
           select: { id: true }
         }) : null);
-        if (!existing) throw new Error(`ThemePage ${MYDREAMSHOOTS_SITE_ID}:${page.slug} must exist before draft content can be imported.`);
-        const id = existing.id;
+        const id = existing?.id ?? page.id;
         const data = {
+          id,
           siteId: MYDREAMSHOOTS_SITE_ID,
           pageType: page.pageType,
           templateKey: page.templateKey,
           slug: page.slug,
           title: page.title,
-          draftJson: toPrismaJson(page.draftJson)
+          draftJson: toPrismaJson(page.draftJson),
+          publishedJson: toPrismaJson(page.publishedJson ?? page.draftJson)
         };
-        await tx.themePage.update({ where: { id }, data });
+        if (existing) {
+          const { id: _ignoredId, ...updateData } = data;
+          await tx.themePage.update({ where: { id }, data: updateData });
+        }
+        else await tx.themePage.create({ data });
         databasePages.push({ ...page, id });
+
+        const livePage = await tx.livePage.findUnique({
+          where: { siteId_slug: { siteId: MYDREAMSHOOTS_SITE_ID, slug: page.slug } },
+          select: { id: true }
+        }) ?? (legacySlug ? await tx.livePage.findUnique({
+          where: { siteId_slug: { siteId: MYDREAMSHOOTS_SITE_ID, slug: legacySlug } },
+          select: { id: true }
+        }) : null);
+        const liveId = livePage?.id ?? `${id}_live`;
+        const liveData = {
+          siteId: MYDREAMSHOOTS_SITE_ID,
+          pageType: page.pageType,
+          templateKey: page.templateKey,
+          slug: page.slug,
+          title: page.title,
+          contentJson: toPrismaJson(page.publishedJson ?? page.draftJson)
+        };
+        if (livePage) await tx.livePage.update({ where: { id: liveId }, data: liveData });
+        else await tx.livePage.create({ data: { id: liveId, ...liveData } });
       }
 
       const themeSettings = await tx.themeSettings.findUnique({ where: { siteId: MYDREAMSHOOTS_SITE_ID } });
@@ -2457,7 +2528,8 @@ async function updateScopedDatabase(state, pages) {
       await tx.themeSettings.update({
         where: { siteId: MYDREAMSHOOTS_SITE_ID },
         data: {
-          draftJson: toPrismaJson(mergeScopedSeoPages(themeSettings.draftJson, databasePages))
+          draftJson: toPrismaJson(mergeScopedSeoPages(themeSettings.draftJson, databasePages)),
+          publishedJson: toPrismaJson(mergeScopedSeoPages(themeSettings.publishedJson, databasePages))
         }
       });
 
@@ -2469,7 +2541,6 @@ async function updateScopedDatabase(state, pages) {
           stateSite.pages ??= [];
           for (const page of databasePages) {
             const index = stateSite.pages.findIndex((item) => item?.slug === page.slug || item?.id === page.id);
-            if (index < 0) throw new Error(`Platform state ThemePage ${page.slug} must exist before draft content can be imported.`);
             const entry = {
               id: page.id,
               siteId: MYDREAMSHOOTS_SITE_ID,
@@ -2477,13 +2548,16 @@ async function updateScopedDatabase(state, pages) {
               templateKey: page.templateKey,
               slug: page.slug,
               title: page.title,
-              draftJson: clone(page.draftJson)
+              draftJson: clone(page.draftJson),
+              publishedJson: clone(page.publishedJson ?? page.draftJson)
             };
-            stateSite.pages[index] = { ...stateSite.pages[index], ...entry };
+            if (index < 0) stateSite.pages.push(entry);
+            else stateSite.pages[index] = { ...stateSite.pages[index], ...entry };
           }
           stateSite.themeSettings = {
             ...stateSite.themeSettings,
-            draftJson: mergeScopedSeoPages(stateSite.themeSettings?.draftJson, databasePages)
+            draftJson: mergeScopedSeoPages(stateSite.themeSettings?.draftJson, databasePages),
+            publishedJson: mergeScopedSeoPages(stateSite.themeSettings?.publishedJson, databasePages)
           };
           await tx.platformStateDocument.update({ where: { id: "platform" }, data: { state: toPrismaJson(nextState) } });
         }

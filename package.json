@@ -171,6 +171,7 @@
     "sync:aidreamcapes-trusted-logos": "node scripts/sync-aidreamcapes-trusted-logos.mjs",
     "sync:dreamshoot-featured-packs": "node scripts/sync-dreamshoot-homepage-featured-packs.mjs",
     "sync:dreamshoot-blog-content": "node scripts/sync-dreamshoot-blog-content.mjs",
+    "smoke:mydreamshoots-video-blog": "node scripts/smoke-mydreamshoots-video-blog.mjs",
     "sync:mydreamshoots-audit-closure": "node scripts/sync-mydreamshoots-audit-closure.mjs --dry-run",
     "sync:mydreamshoots-audit-closure:write": "node scripts/sync-mydreamshoots-audit-closure.mjs --write",
     "sync:mydreamshoots-audit-closure:db": "ALLOW_LOCAL_BLOG_DB_SYNC=1 LOCAL_BLOG_DB_CONTAINER_CONFIRMED=1 node scripts/sync-mydreamshoots-audit-closure.mjs --write --db",
