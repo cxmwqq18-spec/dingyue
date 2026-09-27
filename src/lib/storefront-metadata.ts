@@ -109,6 +109,9 @@ export async function metadataForPublishedStorefrontPage({
   const euVideoTopic = snapshot.site.id === "site_aidreamcapes_xby"
     ? aidreamcapesEuVideoTopicFromPath(metadataPath)
     : undefined;
+  const aidreamcapesImageDirectoryOgImage = snapshot.site.id === "site_aidreamcapes" && metadataPath === "/ai-image-generation"
+    ? "/assets/sites/site_aidreamcapes/ecommerce-main-image-v1/ecommerce-main-image/og.webp"
+    : undefined;
   const publicRouteSeo = snapshot.site.id === "site_mydreamshoots_xby"
     ? getDreamshootPublicSeoPageMetadataForSite(snapshot.site, metadataPath)
     : undefined;
@@ -148,6 +151,10 @@ export async function metadataForPublishedStorefrontPage({
         description: euVideoTopic.description,
         keywords: `${euVideoTopic.label}, création vidéo IA, Aidreamcapes`,
         ogImageAlt: euVideoTopic.alt
+      } : {}),
+      ...(aidreamcapesImageDirectoryOgImage ? {
+        ogImage: aidreamcapesImageDirectoryOgImage,
+        ogImageAlt: "Ecommerce product image workflow preview for Aidreamcapes."
       } : {}),
       ...(euVideoDirectorySeo ?? {})
     }
