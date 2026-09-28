@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { execFileSync, spawnSync } from "node:child_process";
+import { execFileSync, spawn, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -149,7 +149,11 @@ function rsyncArgs(source, destination) {
   ssh.push("-o", "ServerAliveInterval=30", "-o", "ServerAliveCountMax=20");
   return [
     "-a",
-    "--checksum",
+    // Target asset files are immutable release inputs. Existing files are
+    // preserved; changed files in the commit patch are applied to the new
+    // release separately. Skipping existing files avoids re-hashing gigabytes
+    // of media over the production SSH connection.
+    "--ignore-existing",
     "--no-owner",
     "--no-group",
     "-e",
@@ -243,17 +247,47 @@ function localPrecheck() {
   return { changed, remoteHead };
 }
 
-function syncTargetAssets() {
-  if (!fullAssets) return;
-
-  const source = path.resolve(config.assetPrefix) + path.sep;
-  const destination = config.root + "/current/" + config.assetPrefix;
-  console.log("Synchronizing target asset root " + config.assetPrefix + " to " + destination);
-  const result = spawnSync("rsync", rsyncArgs(source, destination), { stdio: "inherit" });
-  if (result.status !== 0) fail("Target asset synchronization failed with exit " + result.status);
+function runRsync(source, destination) {
+  return new Promise((resolve, reject) => {
+    const child = spawn("rsync", rsyncArgs(source, destination), { stdio: "inherit" });
+    child.once("error", reject);
+    child.once("exit", (status, signal) => {
+      if (status === 0) resolve();
+      else reject(new Error("rsync failed with " + (status === null ? "signal " + signal : "exit " + status)));
+    });
+  });
 }
 
-function runRemote(changedFiles) {
+async function syncTargetAssets() {
+  if (!fullAssets) return;
+
+  const sourceRoot = path.resolve(config.assetPrefix);
+  const destinationRoot = config.root + "/current/" + config.assetPrefix;
+  const entries = fs.readdirSync(sourceRoot, { withFileTypes: true });
+  console.log("Synchronizing target asset root " + config.assetPrefix + " to " + destinationRoot);
+
+  const jobs = entries.map((entry) => {
+    const source = path.join(sourceRoot, entry.name) + (entry.isDirectory() ? path.sep : "");
+    const destination = destinationRoot + entry.name + (entry.isDirectory() ? "/" : "");
+    return { source, destination };
+  });
+  const concurrency = Math.min(4, jobs.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < jobs.length) {
+      const job = jobs[next++];
+      console.log("Synchronizing asset subtree " + job.source);
+      await runRsync(job.source, job.destination);
+    }
+  };
+  try {
+    await Promise.all(Array.from({ length: concurrency }, worker));
+  } catch (error) {
+    fail("Target asset synchronization failed: " + (error?.message || error));
+  }
+}
+
+async function runRemote(changedFiles) {
   const shortCommit = commit.slice(0, 8);
   const release = config.root + "/releases/" + commit + "-" + config.domain.replaceAll(".", "-");
   const stage = release + ".install";
@@ -329,7 +363,7 @@ function runRemote(changedFiles) {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "aidreamshoots-eu-release-"));
   const archivePath = path.join(tempDir, commit + ".tar");
   try {
-    syncTargetAssets();
+    await syncTargetAssets();
     const archivePaths = fullSource
       ? [...new Set([...fullSourcePaths, ...changedFiles])]
       : changedFiles;
