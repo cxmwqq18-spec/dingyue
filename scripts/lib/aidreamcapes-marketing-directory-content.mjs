@@ -50,11 +50,11 @@ export const aidreamcapesMarketingDirectoryContent = {
     "/ai-video-generation/video-ad": `${siteAssetRoot}/mirror/aidreamcapes/dreamshoot/generated/video-topic-media/video-ad/video-ad-01.webp`
   },
   seo: {
-    title: "AI Marketing Workflows for Product Images & Video | Aidreamcapes",
+    title: "AI Marketing Workflows for Ecommerce | Aidreamcapes",
     description: "Browse Aidreamcapes AI marketing workflows for product images, listing stills, UGC ads, product videos, launch campaigns, creator stories, and social content.",
     keywords: "AI marketing workflows, AI product images, AI product video, UGC ads, ecommerce creative, launch campaign assets",
     canonicalPath: "/marketing",
-    canonical: "https://www.aidreamcapes.com/marketing",
+    canonical: "https://aidreamcapes.com/marketing",
     robots: { index: true, follow: true, maxImagePreview: "large" },
     twitterDescription: "Browse AI marketing workflows for product images, UGC ads, product videos, launch campaigns, creator stories, and social content.",
     ogImage: `${siteAssetRoot}/homepage-seo/ai-product-url-to-ugc-ad-workflow.webp`,
@@ -66,6 +66,6 @@ export function validateAidreamcapesMarketingDirectoryContent() {
   const content = aidreamcapesMarketingDirectoryContent;
   if (content.workflow.steps.length !== 4) throw new Error("Aidreamcapes marketing directory requires four workflow steps.");
   if (content.seo.canonicalPath !== "/marketing") throw new Error("Marketing directory canonical path is incorrect.");
-  if (!content.seo.canonical.startsWith("https://www.aidreamcapes.com/")) throw new Error("Marketing directory canonical host is incorrect.");
+  if (!content.seo.canonical.startsWith("https://aidreamcapes.com/")) throw new Error("Marketing directory canonical host is incorrect.");
   return content;
 }

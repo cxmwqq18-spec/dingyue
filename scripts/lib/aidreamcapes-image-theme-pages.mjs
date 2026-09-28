@@ -77,6 +77,158 @@ function sixFaq(spec) {
   ];
 }
 
+const THEME_RELATED_LINKS = {
+  "lifestyle-scene": [
+    ["Create ecommerce main images", "/ai-image-generation/ecommerce-main-image"],
+    ["Explore bundle set images", "/ai-image-generation/bundle-sets"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "packshot-multi-angle": [
+    ["Create ecommerce main images", "/ai-image-generation/ecommerce-main-image"],
+    ["Show macro product details", "/ai-image-generation/macro-details"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "macro-details": [
+    ["Create multi-angle product images", "/ai-image-generation/packshot-multi-angle"],
+    ["Build feature infographics", "/ai-image-generation/feature-infographic"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "bundle-sets": [
+    ["Create ecommerce main images", "/ai-image-generation/ecommerce-main-image"],
+    ["Add a size reference", "/ai-image-generation/size-reference"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "size-reference": [
+    ["Create bundle set images", "/ai-image-generation/bundle-sets"],
+    ["Build comparison charts", "/ai-image-generation/comparison-chart"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "feature-infographic": [
+    ["Show macro product details", "/ai-image-generation/macro-details"],
+    ["Build comparison charts", "/ai-image-generation/comparison-chart"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "comparison-chart": [
+    ["Build feature infographics", "/ai-image-generation/feature-infographic"],
+    ["Explore commercial lighting", "/ai-image-generation/commercial-lighting"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "feed-ad-still": [
+    ["Create UGC ad stills", "/ai-image-generation/ugc-still-ad"],
+    ["Create vertical story ads", "/ai-image-generation/story-ad-vertical"],
+    ["Read the AI UGC video ads guide", "/blog/ai-ugc-video-ads-guide"]
+  ],
+  "ugc-still-ad": [
+    ["Create feed ad stills", "/ai-image-generation/feed-ad-still"],
+    ["Create carousel sets", "/ai-image-generation/carousel-set"],
+    ["Read the AI UGC video ads guide", "/blog/ai-ugc-video-ads-guide"]
+  ],
+  "story-ad-vertical": [
+    ["Create feed ad stills", "/ai-image-generation/feed-ad-still"],
+    ["Create carousel sets", "/ai-image-generation/carousel-set"],
+    ["Read the AI UGC video ads guide", "/blog/ai-ugc-video-ads-guide"]
+  ],
+  "carousel-set": [
+    ["Create vertical story ads", "/ai-image-generation/story-ad-vertical"],
+    ["Create sale campaign visuals", "/ai-image-generation/sale-campaign-key-visual"],
+    ["Read the AI UGC video ads guide", "/blog/ai-ugc-video-ads-guide"]
+  ],
+  "sale-campaign-key-visual": [
+    ["Create carousel sets", "/ai-image-generation/carousel-set"],
+    ["Create a lookbook cover", "/ai-image-generation/lookbook-cover"],
+    ["Read the AI UGC video ads guide", "/blog/ai-ugc-video-ads-guide"]
+  ],
+  "lookbook-cover": [
+    ["Create sale campaign visuals", "/ai-image-generation/sale-campaign-key-visual"],
+    ["Create fashion editorial images", "/ai-image-generation/fashion-editorial"],
+    ["Read the AI UGC video ads guide", "/blog/ai-ugc-video-ads-guide"]
+  ],
+  "on-model-generation": [
+    ["Explore virtual try-on", "/ai-image-generation/virtual-try-on"],
+    ["Create ghost mannequin images", "/ai-image-generation/ghost-mannequin"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "virtual-try-on": [
+    ["Create on-model product images", "/ai-image-generation/on-model-generation"],
+    ["Preview hair and makeup", "/ai-image-generation/hair-makeup-preview"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "hair-makeup-preview": [
+    ["Explore virtual try-on", "/ai-image-generation/virtual-try-on"],
+    ["Create a professional headshot", "/ai-image-generation/professional-headshot"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "jewelry-positioning": [
+    ["Create on-model product images", "/ai-image-generation/on-model-generation"],
+    ["Show macro product details", "/ai-image-generation/macro-details"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "ghost-mannequin": [
+    ["Create on-model product images", "/ai-image-generation/on-model-generation"],
+    ["Create product color variations", "/ai-image-generation/colorway-variations"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "colorway-variations": [
+    ["Create ghost mannequin images", "/ai-image-generation/ghost-mannequin"],
+    ["Build comparison charts", "/ai-image-generation/comparison-chart"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ],
+  "background-remove-replace": [
+    ["Enhance and upscale an image", "/ai-image-generation/enhance-upscale"],
+    ["Explore commercial lighting", "/ai-image-generation/commercial-lighting"],
+    ["Read the ecommerce image workflow", "/blog/ecommerce-product-image-workflow"]
+  ],
+  "enhance-upscale": [
+    ["Remove or replace a background", "/ai-image-generation/background-remove-replace"],
+    ["Restore an old photo", "/ai-image-generation/old-photo-restore"],
+    ["Read the ecommerce image workflow", "/blog/ecommerce-product-image-workflow"]
+  ],
+  "old-photo-restore": [
+    ["Enhance and upscale an image", "/ai-image-generation/enhance-upscale"],
+    ["Create a professional headshot", "/ai-image-generation/professional-headshot"],
+    ["Read the safe AI content guide", "/blog/ai-content-disclosure-safe-usage"]
+  ],
+  "commercial-lighting": [
+    ["Remove or replace a background", "/ai-image-generation/background-remove-replace"],
+    ["Create packaging mockups", "/ai-image-generation/packaging-mockup"],
+    ["Read the ecommerce image workflow", "/blog/ecommerce-product-image-workflow"]
+  ],
+  "packaging-mockup": [
+    ["Explore commercial lighting", "/ai-image-generation/commercial-lighting"],
+    ["Create bundle set images", "/ai-image-generation/bundle-sets"],
+    ["Read the ecommerce image workflow", "/blog/ecommerce-product-image-workflow"]
+  ],
+  "professional-headshot": [
+    ["Create creator portraits", "/ai-image-generation/creator-portrait"],
+    ["Create team directory portraits", "/ai-image-generation/team-directory"],
+    ["Read the safe AI content guide", "/blog/ai-content-disclosure-safe-usage"]
+  ],
+  "creator-portrait": [
+    ["Create a professional headshot", "/ai-image-generation/professional-headshot"],
+    ["Create social profile photos", "/ai-image-generation/social-profile-photo"],
+    ["Read the safe AI content guide", "/blog/ai-content-disclosure-safe-usage"]
+  ],
+  "team-directory": [
+    ["Create a professional headshot", "/ai-image-generation/professional-headshot"],
+    ["Create social profile photos", "/ai-image-generation/social-profile-photo"],
+    ["Read the safe AI content guide", "/blog/ai-content-disclosure-safe-usage"]
+  ],
+  "social-profile-photo": [
+    ["Create creator portraits", "/ai-image-generation/creator-portrait"],
+    ["Create a professional headshot", "/ai-image-generation/professional-headshot"],
+    ["Read the safe AI content guide", "/blog/ai-content-disclosure-safe-usage"]
+  ],
+  "fashion-editorial": [
+    ["Create a lookbook cover", "/ai-image-generation/lookbook-cover"],
+    ["Create on-model product images", "/ai-image-generation/on-model-generation"],
+    ["Read the AI product photography guide", "/blog/ai-product-photography-guide"]
+  ]
+};
+
+function relatedLinksForSlug(slug) {
+  return (THEME_RELATED_LINKS[slug] ?? []).map(([label, href]) => ({ label, href }));
+}
+
 function makePage(spec) {
   const root = assetRoot(spec.slug);
   const source = image(root, "source-input.webp", spec.sourceAlt, ...sourceImageSize(), "eager", "high");
@@ -171,6 +323,7 @@ function makePage(spec) {
       intro: spec.faqIntro,
       items: sixFaq(spec)
     },
+    internalLinks: relatedLinksForSlug(spec.slug),
     finalCta: {
       eyebrow: spec.finalEyebrow,
       title: spec.finalTitle,
@@ -862,6 +1015,12 @@ export function validateAidreamcapesImageThemePages({ requireAssets = false } = 
     subjects.add(page.subject);
     if (page.faq.items.length !== 6) throw new Error(`${page.seo.canonicalPath} requires six FAQ items.`);
     if (page.examples.items.length < 6) throw new Error(`${page.seo.canonicalPath} requires at least six example images.`);
+    if (!Array.isArray(page.internalLinks) || page.internalLinks.length < 3) throw new Error(`${page.seo.canonicalPath} requires at least three related links.`);
+    for (const link of page.internalLinks) {
+      if (!link.label || !link.href || !link.href.startsWith("/") || /collections|\/tools(?:\/|$)/i.test(link.href)) {
+        throw new Error(`${page.seo.canonicalPath} has an invalid related link.`);
+      }
+    }
     if (requireAssets) {
       const images = [page.hero.productImage, page.hero.outputImage, ...page.examples.items.map((item) => item.image)];
       for (const item of images) if (!existsSync(`public${item.src}`)) throw new Error(`Missing image theme asset: ${item.src}`);

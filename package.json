@@ -24,6 +24,7 @@
     "repair:aidreamshoots-xby-seo-media": "node --no-warnings --experimental-strip-types scripts/repair-aidreamshoots-xby-seo-media.mjs",
     "repair:aidreamshoots-xby-seo-media:apply": "node --no-warnings --experimental-strip-types scripts/repair-aidreamshoots-xby-seo-media.mjs --apply",
     "repair:aidreamcapes-seo": "node scripts/repair-aidreamcapes-seo-remediation.mjs",
+    "repair:aidreamcapes-seo-quality": "node scripts/repair-aidreamcapes-seo-quality.mjs",
     "seed:aidreamcapes-seo-content-cluster": "node scripts/seed-aidreamcapes-seo-content-cluster.mjs",
     "replace:aidreamshoots-public-media-local": "node scripts/replace-aidreamshoots-public-media-local.mjs",
     "replace:aidreamshoots-public-media-local:apply": "node scripts/replace-aidreamshoots-public-media-local.mjs --apply",

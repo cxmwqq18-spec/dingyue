@@ -154,6 +154,11 @@ export function aidreamcapesEcommerceMainImageContent() {
         { question: "What should I have ready?", answer: "Have one clear product photo, accurate product information, and any brand or labeling rules that must stay unchanged." }
       ]
     },
+    internalLinks: [
+      { label: "Explore lifestyle product scenes", href: "/ai-image-generation/lifestyle-scene" },
+      { label: "Create multi-angle product images", href: "/ai-image-generation/packshot-multi-angle" },
+      { label: "Read the AI product photography guide", href: "/blog/ai-product-photography-guide" }
+    ],
     finalCta: {
       eyebrow: "Ready to make your product clearer",
       title: "Create your next product image",
@@ -169,6 +174,7 @@ export function validateAidreamcapesEcommerceMainImageContent({ requireAssets = 
   const content = aidreamcapesEcommerceMainImageContent();
   if (content.examples.items.length !== 7) throw new Error("Ecommerce Main Image requires seven example images.");
   if (content.faq.items.length !== 6) throw new Error("Ecommerce Main Image requires six FAQ items.");
+  if (!Array.isArray(content.internalLinks) || content.internalLinks.length < 3) throw new Error("Ecommerce Main Image requires three related links.");
   if (!content.seo.canonicalPath.startsWith("/ai-image-generation/")) throw new Error("Ecommerce Main Image canonical path is outside the image directory.");
   if (requireAssets) {
     const images = [content.hero.productImage, content.hero.outputImage, ...content.examples.items.map((item) => item.image)];

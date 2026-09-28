@@ -142,6 +142,30 @@ const AIDREAMCAPES_VIDEO_TOPIC_SEO: Record<string, AidreamcapesVideoTopicSeo> = 
   }
 };
 
+const AIDREAMCAPES_SEO_QUALITY_OVERRIDES: Record<string, Partial<AidreamcapesVideoTopicSeo>> = {
+  "/marketing": { title: "AI Marketing Workflows for Ecommerce | Aidreamcapes" },
+  "/ai-image-generation/fashion-editorial": { description: "Create AI fashion editorial images for lookbooks, product launches, campaigns, and social content with guided styling and review-ready outputs." },
+  "/ai-image-generation/feed-ad-still": { description: "Create AI feed ad images for product launches, paid social, and ecommerce campaigns with a clear hook, product proof, and review-ready framing." },
+  "/ai-image-generation/jewelry-positioning": { description: "Create AI jewelry positioning images for ecommerce, catalogs, and social campaigns with controlled placement and review-ready product detail." },
+  "/ai-image-generation/colorway-variations": { description: "Create AI product color variations for ecommerce listings, catalogs, and campaigns while keeping the product shape, materials, and details ready for review." },
+  "/ai-image-generation/carousel-set": { description: "Create AI carousel ad images for ecommerce and social campaigns with a consistent product story, clear sequence, and review-ready visuals for every slide." },
+  "/ai-image-generation/enhance-upscale": { description: "Enhance soft, dark, or compressed product and portrait images with AI before using them in listings, profiles, campaigns, or private creative workflows." },
+  "/ai-image-generation/packaging-mockup": { description: "Create AI packaging mockups for product launches, ecommerce pages, and campaign concepts with clear proportions, readable structure, and review-ready visuals." },
+  "/ai-image-generation/bundle-sets": { description: "Create AI product bundle images for ecommerce listings, promotions, and catalogs with clear item grouping, consistent scale, and review-ready composition." },
+  "/ai-image-generation/on-model-generation": { description: "Create AI on-model product images for ecommerce, fashion campaigns, and social content with guided styling, clear product placement, and review-ready results." },
+  "/ai-image-generation/background-remove-replace": { description: "Remove or replace photo backgrounds with AI for products, portraits, listings, and campaigns while preserving subject edges, scale, and review-ready detail." },
+  "/ai-image-generation/commercial-lighting": { description: "Create AI commercial lighting images for product pages, catalogs, and campaigns with controlled highlights, clear material detail, and review-ready composition." },
+  "/ai-image-generation/story-ad-vertical": { description: "Create AI vertical story ad images for mobile campaigns, product launches, and social promotions with a clear hook, readable framing, and review-ready visuals." },
+  "/ai-image-generation/macro-details": { description: "Create AI macro product detail images for ecommerce pages, catalogs, and campaigns with close-up material focus, controlled framing, and review-ready results." },
+  "/ai-image-generation/team-directory": { description: "Create AI team directory portraits for company pages, staff profiles, and internal communications with consistent framing and review-ready results." },
+  "/ai-video-generation/founder-update": { description: "Create AI founder update videos from an approved portrait, product image, or short message with clear pacing, reviewable claims, and a publishing workflow." },
+  "/ai-video-generation/how-to-video": { description: "Create AI how-to videos from approved images and steps for tutorials, demonstrations, and training with clear sequencing and review before publishing." },
+  "/ai-video-generation/local-service-ad": { description: "Create AI local service ad videos with an offer, service area, proof, and CTA while keeping contact details and claims under your control before publishing." },
+  "/ai-video-generation/multilingual-video": { description: "Create AI multilingual videos from approved source material with reviewable pronunciation, subtitles, timing, names, and final messaging for each audience." },
+  "/ai-video-generation/home-organization": { description: "Create AI home organization videos that show a space, the change, and useful steps with clear continuity, practical context, and review before sharing." },
+  "/blog/ai-talking-photo-video-guide": { description: "Use this AI talking photo guide to plan portraits, scripts, consent, disclosure, review steps, and publishing choices before sharing a generated video." }
+};
+
 type SeoDirectoryMap = Record<string, SeoDirectorySeed>;
 
 type MyDreamshootsThemeTaxonomy = {
@@ -3552,6 +3576,19 @@ export function aidreamcapesVideoTopicSeoForPath(site: Site | undefined, path: s
   if (site?.id !== "site_aidreamcapes") return undefined;
   const normalizedPath = `/${String(path || "").replace(/^\/+|\/+$/g, "")}`;
   return AIDREAMCAPES_VIDEO_TOPIC_SEO[normalizedPath];
+}
+
+export function aidreamcapesSeoQualityForPath(site: Site | undefined, path: string): AidreamcapesVideoTopicSeo | undefined {
+  if (site?.id !== "site_aidreamcapes") return undefined;
+  const normalizedPath = `/${String(path || "").replace(/^\/+|\/+$/g, "")}`;
+  const override = AIDREAMCAPES_SEO_QUALITY_OVERRIDES[normalizedPath];
+  if (!override) return undefined;
+  const current = AIDREAMCAPES_VIDEO_TOPIC_SEO[normalizedPath];
+  return {
+    title: override.title ?? current?.title ?? "",
+    description: override.description ?? current?.description ?? "",
+    keywords: override.keywords ?? current?.keywords ?? ""
+  };
 }
 
 export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, site?: Site, publishedCopy?: MyDreamshootsPageCopy): ThemePageJson {

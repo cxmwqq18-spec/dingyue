@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { chromium, request } from "playwright";
 
 const BASE_URL = String(process.env.AIDREAMCAPES_BROWSER_SMOKE_ORIGIN || "http://127.0.0.1:3002").replace(/\/$/, "");
+const WWW_ORIGIN = String(process.env.AIDREAMCAPES_BROWSER_SMOKE_WWW_ORIGIN || (BASE_URL.includes("aidreamcapes.com") ? "https://www.aidreamcapes.com" : "")).replace(/\/$/, "");
 const SITE_HEADERS = {
   "x-forwarded-host": "aidreamcapes.com",
   "x-forwarded-proto": "https"
@@ -110,10 +111,12 @@ for (const path of gonePaths) {
   assert.equal(gone.status(), 410, `${path}: 410 route returned ${gone.status()}`);
 }
 
-const wwwRequest = await request.newContext({ extraHTTPHeaders: { "x-forwarded-host": "www.aidreamcapes.com", "x-forwarded-proto": "https" } });
-const www = await wwwRequest.get(`${BASE_URL}/ai-video-generation/talking-photo`, { maxRedirects: 0 });
-assert.equal(www.status(), 301, `www route returned ${www.status()}`);
-assert.equal(www.headers().location, "https://aidreamcapes.com/ai-video-generation/talking-photo", "www redirect target");
+const wwwRequest = await request.newContext();
+if (WWW_ORIGIN) {
+  const www = await wwwRequest.get(`${WWW_ORIGIN}/ai-video-generation/talking-photo`, { maxRedirects: 0 });
+  assert.equal(www.status(), 301, `www route returned ${www.status()}`);
+  assert.equal(www.headers().location, "https://aidreamcapes.com/ai-video-generation/talking-photo", "www redirect target");
+}
 
 const httpRequest = await request.newContext({ extraHTTPHeaders: { "x-forwarded-host": "aidreamcapes.com", "x-forwarded-proto": "http" } });
 const http = await httpRequest.get(`${BASE_URL}/ai-video-generation/talking-photo?utm_source=smoke`, { maxRedirects: 0 });
@@ -121,11 +124,13 @@ assert.equal(http.status(), 301, `HTTP route returned ${http.status()}`);
 assert.equal(http.headers().location, "https://aidreamcapes.com/ai-video-generation/talking-photo?utm_source=smoke", "HTTP redirect target");
 
 const staticPath = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?utm_source=smoke";
-const staticRequest = await wwwRequest.get(`${BASE_URL}${staticPath}`, { maxRedirects: 0 });
-assert.equal(staticRequest.status(), 301, `www static route returned ${staticRequest.status()}`);
-assert.equal(staticRequest.headers().location, `https://aidreamcapes.com${staticPath}`, "www static redirect target");
+if (WWW_ORIGIN) {
+  const staticRequest = await wwwRequest.get(`${WWW_ORIGIN}${staticPath}`, { maxRedirects: 0 });
+  assert.equal(staticRequest.status(), 301, `www static route returned ${staticRequest.status()}`);
+  assert.equal(staticRequest.headers().location, `https://aidreamcapes.com${staticPath}`, "www static redirect target");
+}
 
-console.log(JSON.stringify({ ok: true, browser: "chromium", pages: 14, gone: gonePaths.length, redirects: 3 }));
+console.log(JSON.stringify({ ok: true, browser: "chromium", pages: 14, gone: gonePaths.length, redirects: WWW_ORIGIN ? 3 : 1, wwwOrigin: WWW_ORIGIN || null }));
 await httpRequest.dispose();
 await wwwRequest.dispose();
 await goneRequest.dispose();

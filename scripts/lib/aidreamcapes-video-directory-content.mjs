@@ -64,7 +64,7 @@ export const aidreamcapesVideoDirectoryContent = {
     description: "Explore Aidreamcapes AI video generation themes for product demos, UGC ads, launches, creator updates, cinematic films, and audio-synced social cuts.",
     keywords: "AI video generation themes, product video generator, UGC ads, creator video, cinematic product film, audio sync video",
     canonicalPath: "/ai-video-generation",
-    canonical: "https://www.aidreamcapes.com/ai-video-generation",
+    canonical: "https://aidreamcapes.com/ai-video-generation",
     robots: { index: true, follow: true, maxImagePreview: "large" },
     twitterDescription: "Browse Aidreamcapes video themes for product demos, UGC ads, creator updates, cinematic films, launches, and audio-synced social cuts.",
     ogImage: `${siteAssetRoot}/homepage-seo/ai-product-url-to-ugc-ad-workflow.webp`,
@@ -77,6 +77,6 @@ export function validateAidreamcapesVideoDirectoryContent() {
   if (content.laneCopy.length !== 4) throw new Error("Aidreamcapes video directory requires four lane descriptions.");
   if (content.workflow.steps.length !== 4) throw new Error("Aidreamcapes video directory requires four workflow steps.");
   if (content.seo.canonicalPath !== "/ai-video-generation") throw new Error("Video directory canonical path is incorrect.");
-  if (!content.seo.canonical.startsWith("https://www.aidreamcapes.com/")) throw new Error("Video directory canonical host is incorrect.");
+  if (!content.seo.canonical.startsWith("https://aidreamcapes.com/")) throw new Error("Video directory canonical host is incorrect.");
   return content;
 }

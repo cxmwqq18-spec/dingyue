@@ -20,6 +20,11 @@ export type AidreamcapesImageThemeCard = {
   body: string;
 };
 
+export type AidreamcapesImageThemeInternalLink = {
+  label: string;
+  href: string;
+};
+
 export type AidreamcapesImageThemeDetailContent = {
   subject: string;
   layoutVariant: AidreamcapesImageThemeLayoutVariant;
@@ -96,6 +101,7 @@ export type AidreamcapesImageThemeDetailContent = {
     intro: string;
     items: Array<{ question: string; answer: string }>;
   };
+  internalLinks: AidreamcapesImageThemeInternalLink[];
   finalCta: {
     eyebrow: string;
     title: string;
@@ -210,6 +216,10 @@ export function imageThemeDetailContentFromSection(section: SectionInstance): Ai
   if (!text(formats.eyebrow) || !text(formats.title) || !text(formats.intro) || !cards(formats.items, 4)) return undefined;
   if (!text(checklist.eyebrow) || !text(checklist.title) || !text(checklist.intro) || !Array.isArray(checklist.items) || checklist.items.length < 4 || !checklist.items.every(text)) return undefined;
   if (!faq(candidate.faq) || !text(finalCta.eyebrow) || !text(finalCta.title) || !text(finalCta.body) || !text(finalCta.cta) || !text(finalCta.ctaHref) || !text(finalCta.microcopy)) return undefined;
+  if (!Array.isArray(candidate.internalLinks) || candidate.internalLinks.length < 3 || !candidate.internalLinks.every((item) => {
+    const link = record(item);
+    return Boolean(link && text(link.label) && typeof link.href === "string" && link.href.startsWith("/") && !/collections|\/tools(?:\/|$)/i.test(link.href));
+  })) return undefined;
   return candidate as unknown as AidreamcapesImageThemeDetailContent;
 }
 

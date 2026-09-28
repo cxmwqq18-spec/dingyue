@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import type { ImgHTMLAttributes, ReactNode } from "react";
 import type { SectionInstance, Site } from "@/lib/types";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
+import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
 import { DreamshootShowcasePreviewClient as DreamshootShowcasePreview } from "@/components/storefront/dreamshoot-showcase-preview-client";
 import { hostAwareSitePath } from "@/lib/domain-routing";
 import { canonicalSeoDirectoryPathForSite } from "@/lib/dreamshoot-seo-content";
@@ -465,25 +466,25 @@ function TopicHeroVideo({ video, site }: { video: VideoTopicVideo; site?: Site }
         role="button"
         tabIndex={0}
       >
-        <video
+        <LazyStorefrontVideo
           aria-label={accessibleLabel}
           autoPlay
-          // Keep every source pixel visible. The surrounding frame supplies the
-          // standard 9:16 or 16:9 canvas; object-cover would crop non-standard
-          // encoded dimensions such as 864x496.
           className="absolute inset-0 h-full w-full object-contain"
+          deferLoading={site?.id === "site_aidreamcapes"}
           height={video.height}
+          interactionPreload="auto"
           loop
           muted
+          nearViewportPreload="metadata"
+          observerRootMargin="240px"
           playsInline
           poster={video.poster}
-          preload="metadata"
           title={accessibleLabel}
           width={video.width}
+          src={video.src}
         >
-          <source src={video.src} type={videoMimeType} />
           {video.subtitleUrl ? <track default kind="subtitles" label={video.subtitleLabel ?? "English subtitles"} src={video.subtitleUrl} srcLang={video.subtitleLanguage ?? "en"} /> : null}
-        </video>
+        </LazyStorefrontVideo>
         <span aria-hidden="true" className="absolute inset-0 bg-black/0 transition group-hover:bg-black/[0.08]" />
         {watchPath ? (
           <StorefrontInstantLink className="absolute bottom-4 right-4 z-10 rounded-full border border-white/30 bg-black/55 px-3 py-1.5 text-xs font-semibold text-white underline decoration-white/35 underline-offset-4 backdrop-blur transition hover:bg-black/75" href={watchPath}>

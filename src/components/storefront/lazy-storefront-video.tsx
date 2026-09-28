@@ -9,6 +9,7 @@ type LazyStorefrontVideoProps = Omit<VideoHTMLAttributes<HTMLVideoElement>, "pre
   interactionPreload?: "metadata" | "auto";
   nearViewportPreload?: "metadata" | "auto";
   observerRootMargin?: string;
+  deferLoading?: boolean;
   posterOverlay?: boolean;
   pauseOverlay?: boolean;
 };
@@ -22,9 +23,10 @@ function videoMimeTypeForUrl(value: string): "video/mp4" | "video/webm" | undefi
 export function LazyStorefrontVideo({
   src,
   autoPlayOnInteraction = false,
-  interactionPreload: _interactionPreload,
-  nearViewportPreload: _nearViewportPreload,
-  observerRootMargin: _observerRootMargin,
+  interactionPreload = "auto",
+  nearViewportPreload = "metadata",
+  observerRootMargin = "200px",
+  deferLoading = false,
   posterOverlay = false,
   pauseOverlay = false,
   onClick,
@@ -40,6 +42,7 @@ export function LazyStorefrontVideo({
   "aria-label": ariaLabel,
   className,
   poster,
+  children,
   ...props
 }: LazyStorefrontVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -47,29 +50,79 @@ export function LazyStorefrontVideo({
   const [posterOverlayLoading, setPosterOverlayLoading] = useState(false);
   const [hasPlayableVideo, setHasPlayableVideo] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(!deferLoading);
+  const [playRequested, setPlayRequested] = useState(false);
+
+  const requestLoad = useCallback(() => setShouldLoad(true), []);
 
   useEffect(() => {
     setPosterOverlayDismissed(false);
     setPosterOverlayLoading(false);
     setHasPlayableVideo(false);
     setIsPlaying(false);
-  }, [src]);
+    setShouldLoad(!deferLoading);
+    setPlayRequested(false);
+  }, [deferLoading, src]);
+
+  useEffect(() => {
+    if (!deferLoading || shouldLoad) return;
+    const video = videoRef.current;
+    if (!video || typeof IntersectionObserver === "undefined") {
+      setShouldLoad(true);
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        setShouldLoad(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: observerRootMargin });
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [deferLoading, observerRootMargin, shouldLoad]);
+
+  useEffect(() => {
+    if (!shouldLoad || !playRequested) return;
+    const video = videoRef.current;
+    if (!video) return;
+    const play = () => {
+      setPosterOverlayLoading(true);
+      void video.play().then(() => {
+        setPosterOverlayDismissed(true);
+        setHasPlayableVideo(true);
+        setIsPlaying(true);
+        setPosterOverlayLoading(false);
+      }).catch(() => {
+        setPosterOverlayLoading(false);
+        setIsPlaying(false);
+      });
+    };
+    if (video.readyState >= 2) {
+      play();
+      return;
+    }
+    video.addEventListener("canplay", play, { once: true });
+    return () => video.removeEventListener("canplay", play);
+  }, [playRequested, shouldLoad]);
 
   const requestPlay = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
-
-    setPosterOverlayLoading(true);
-    void video.play().then(() => {
-      setPosterOverlayDismissed(true);
-      setHasPlayableVideo(true);
-      setIsPlaying(true);
-      setPosterOverlayLoading(false);
-    }).catch(() => {
-      setPosterOverlayLoading(false);
-      setIsPlaying(false);
-    });
-  }, []);
+    setPlayRequested(true);
+    setShouldLoad(true);
+    if (!deferLoading) {
+      setPosterOverlayLoading(true);
+      void video.play().then(() => {
+        setPosterOverlayDismissed(true);
+        setHasPlayableVideo(true);
+        setIsPlaying(true);
+        setPosterOverlayLoading(false);
+      }).catch(() => {
+        setPosterOverlayLoading(false);
+        setIsPlaying(false);
+      });
+    }
+  }, [deferLoading]);
 
   const markVideoPlaying = useCallback(() => {
     setPosterOverlayDismissed(true);
@@ -97,6 +150,7 @@ export function LazyStorefrontVideo({
       }}
       onClick={(event) => {
         if (autoPlayOnInteraction) requestPlay();
+        else if (deferLoading) requestLoad();
         onClick?.(event);
       }}
       onEnded={(event) => {
@@ -110,7 +164,10 @@ export function LazyStorefrontVideo({
         setIsPlaying(false);
         onError?.(event);
       }}
-      onFocus={(event) => onFocus?.(event)}
+      onFocus={(event) => {
+        if (deferLoading) requestLoad();
+        onFocus?.(event);
+      }}
       onPause={(event) => {
         setIsPlaying(false);
         onPause?.(event);
@@ -123,14 +180,21 @@ export function LazyStorefrontVideo({
         markVideoPlaying();
         onPlaying?.(event);
       }}
-      onPointerEnter={(event) => onPointerEnter?.(event)}
-      onTouchStart={(event) => onTouchStart?.(event)}
+      onPointerEnter={(event) => {
+        if (deferLoading) requestLoad();
+        onPointerEnter?.(event);
+      }}
+      onTouchStart={(event) => {
+        if (deferLoading) requestLoad();
+        onTouchStart?.(event);
+      }}
       poster={poster}
-      preload="metadata"
+      preload={deferLoading ? (shouldLoad ? (playRequested ? interactionPreload : nearViewportPreload) : "none") : "metadata"}
       ref={videoRef}
-      {...(videoMimeType ? {} : { src })}
+      {...(videoMimeType && shouldLoad ? {} : videoMimeType ? {} : shouldLoad ? { src } : {})}
     >
-      {videoMimeType ? <source src={src} type={videoMimeType} /> : null}
+      {videoMimeType && shouldLoad ? <source src={src} type={videoMimeType} /> : null}
+      {children}
     </video>
   );
 

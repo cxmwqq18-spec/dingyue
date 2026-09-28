@@ -12209,6 +12209,7 @@ function SectionView({
                   autoPlayOnInteraction
                   className="aspect-[16/9] w-full bg-black object-contain"
                   controls
+                  deferLoading={site.id === "site_aidreamcapes"}
                   pauseOverlay
                   playsInline
                   poster={videoPoster || undefined}
@@ -12326,6 +12327,7 @@ function SectionView({
                         autoPlayOnInteraction
                         className="aspect-[9/16] h-full w-full object-contain"
                         controls
+                        deferLoading={site.id === "site_aidreamcapes"}
                         playsInline
                         poster={item.videoPoster || undefined}
                         src={item.videoUrl}
@@ -12382,6 +12384,7 @@ function SectionView({
                         autoPlayOnInteraction
                         className="h-full w-full object-cover"
                         controls
+                        deferLoading={site.id === "site_aidreamcapes"}
                         playsInline
                         poster={legacyVideoPoster || undefined}
                         src={legacyVideoUrl}
@@ -19972,10 +19975,11 @@ function SectionView({
                       type="button"
                     >
 	                      {resultVideo ? (
-		                        <LazyStorefrontVideo
-		                          aria-label={videoPosterAltForSite(site, { meta: cardMeta || customerRole, title: cardTitle })}
+	                          <LazyStorefrontVideo
+	                          aria-label={videoPosterAltForSite(site, { meta: cardMeta || customerRole, title: cardTitle })}
 	                          className="absolute inset-0 h-full w-full object-cover"
 	                          controls={false}
+	                          deferLoading={site.id === "site_aidreamcapes"}
 	                          muted
                           playsInline
                           poster={resultImage}
@@ -20413,6 +20417,15 @@ function SectionView({
         : setting(section, "primaryHref", "");
     const secondaryCta = setting(section, "secondaryCta", "");
     const secondaryHref = setting(section, "secondaryHref", "");
+    const configuredRelatedLinks = aidreamcapesRichText ? section.settings.relatedLinks : undefined;
+    const relatedLinks = Array.isArray(configuredRelatedLinks)
+      ? configuredRelatedLinks.reduce<Array<{ label: string; href: string }>>((links, value) => {
+          if (value && typeof value === "object" && !Array.isArray(value) && typeof value.label === "string" && typeof value.href === "string" && value.label.trim() && value.href.startsWith("/")) {
+            links.push({ label: value.label.trim(), href: value.href.trim() });
+          }
+          return links;
+        }, [])
+      : [];
     const tone = setting(section, "tone", "warm");
     const layout = setting(section, "layout", "commerce_intro");
     const applicationForm = layout === "application_form";
@@ -20488,6 +20501,11 @@ function SectionView({
                     </Link>
                   ) : null}
                 </div>
+              ) : null}
+              {relatedLinks.length ? (
+                <nav aria-label="Related Aidreamcapes guides" className="mt-7 flex flex-wrap gap-2">
+                  {relatedLinks.map((link) => <Link className={dark ? "rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:text-white" : "rounded-full border border-[#ded5ca] bg-white/70 px-4 py-2 text-sm font-semibold text-[#14161a] transition hover:border-[#b9a58e]"} href={hrefFor(site, link.href)} key={link.href}>{link.label}</Link>)}
+                </nav>
               ) : null}
               {showInlineRichCards ? (
                 <div className={dark ? "mt-8 grid min-w-0 gap-3 border-t border-white/12 pt-5 sm:grid-cols-2" : "mt-8 grid min-w-0 gap-3 border-t border-[#ddd4c8] pt-5 sm:grid-cols-2"}>
@@ -20802,7 +20820,7 @@ function SectionView({
           </div>
           {body ? <article className="mt-8 max-w-4xl rounded-[28px] border border-[#e5ddd1] bg-white p-6 shadow-[0_24px_80px_-64px_rgba(18,20,24,0.25)] md:p-8">
             <div
-              className="space-y-6 text-[0.97rem] leading-8 text-[#3d3a36] [&_h3]:mt-8 [&_h3]:text-[1.05rem] [&_h3]:font-semibold [&_h3]:tracking-[-0.02em] [&_p]:mt-3 [&_p]:leading-8 [&_a]:text-[#2f6fed] [&_a]:underline [&_a]:decoration-[#2f6fed]/30 [&_a]:underline-offset-4 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6 [&_ol]:mt-3 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6"
+              className="space-y-6 text-[0.97rem] leading-8 text-[#3d3a36] [&_h2]:mt-8 [&_h2]:text-[1.2rem] [&_h2]:font-semibold [&_h2]:tracking-[-0.02em] [&_h3]:mt-8 [&_h3]:text-[1.05rem] [&_h3]:font-semibold [&_h3]:tracking-[-0.02em] [&_p]:mt-3 [&_p]:leading-8 [&_a]:text-[#2f6fed] [&_a]:underline [&_a]:decoration-[#2f6fed]/30 [&_a]:underline-offset-4 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6 [&_ol]:mt-3 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6"
               dangerouslySetInnerHTML={{ __html: body }}
             />
           </article> : null}

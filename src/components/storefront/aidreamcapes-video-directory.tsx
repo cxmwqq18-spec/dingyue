@@ -316,6 +316,19 @@ export function AidreamcapesVideoDirectory({
           </div>
         </section>
 
+        <section className="mt-10 rounded-[26px] border border-white/10 bg-white/[0.035] p-6 sm:p-8" aria-labelledby="video-directory-guides">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#c4b5fd]">Plan the next cut</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-white" id="video-directory-guides">Video workflows and review guides</h2>
+          <nav aria-label="Aidreamcapes video guides" className="mt-5 flex flex-wrap gap-3">
+            {[
+              ["Founder and brand video", "/ai-video-generation/brand-video"],
+              ["Video ad workflow", "/ai-video-generation/video-ad"],
+              ["Talking photo videos", "/ai-video-generation/talking-photo"],
+              ["AI UGC video ads guide", "/blog/ai-ugc-video-ads-guide"]
+            ].map(([label, href]) => <AnchorLink className="inline-flex min-h-10 items-center rounded-full border border-white/15 bg-white/[0.04] px-4 text-sm font-medium text-white/80 transition hover:border-white/30 hover:bg-white/[0.08] hover:text-white" href={href} localBasePath={localBasePath} key={href} site={site}>{label}</AnchorLink>)}
+          </nav>
+        </section>
+
         <section className="relative mt-10 overflow-hidden rounded-[30px] border border-white/10 bg-gradient-to-br from-[#f8fafc] via-[#eef2ff] to-[#e0f2fe] p-7 text-[#0f172a] sm:p-10 lg:flex lg:items-center lg:justify-between lg:gap-10" data-video-directory-cta>
           <div className="absolute right-[-3rem] top-[-4rem] h-44 w-44 rounded-full bg-[#8b5cf6]/15 blur-[55px]" />
           <div className="relative">

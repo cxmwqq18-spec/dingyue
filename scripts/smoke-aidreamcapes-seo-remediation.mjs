@@ -45,6 +45,29 @@ const VIDEO_DESCRIPTION_SEO = {
   "/ai-video-generation/talking-photo": "Create talking-photo videos from an approved portrait and short script for messages, explainers, product pitches, and social intros, with clear review steps.",
   "/ai-video-generation/video-ad": "Create AI video ads for paid social, product launches, retargeting, and creator-style campaigns with a focused hook, proof, CTA, and review workflow."
 };
+const SEO_QUALITY_EXPECTATIONS = {
+  "/marketing": { title: "AI Marketing Workflows for Ecommerce | Aidreamcapes" },
+  "/ai-image-generation/fashion-editorial": { description: "Create AI fashion editorial images for lookbooks, product launches, campaigns, and social content with guided styling and review-ready outputs." },
+  "/ai-image-generation/feed-ad-still": { description: "Create AI feed ad images for product launches, paid social, and ecommerce campaigns with a clear hook, product proof, and review-ready framing." },
+  "/ai-image-generation/jewelry-positioning": { description: "Create AI jewelry positioning images for ecommerce, catalogs, and social campaigns with controlled placement and review-ready product detail." },
+  "/ai-image-generation/colorway-variations": { description: "Create AI product color variations for ecommerce listings, catalogs, and campaigns while keeping the product shape, materials, and details ready for review." },
+  "/ai-image-generation/carousel-set": { description: "Create AI carousel ad images for ecommerce and social campaigns with a consistent product story, clear sequence, and review-ready visuals for every slide." },
+  "/ai-image-generation/enhance-upscale": { description: "Enhance soft, dark, or compressed product and portrait images with AI before using them in listings, profiles, campaigns, or private creative workflows." },
+  "/ai-image-generation/packaging-mockup": { description: "Create AI packaging mockups for product launches, ecommerce pages, and campaign concepts with clear proportions, readable structure, and review-ready visuals." },
+  "/ai-image-generation/bundle-sets": { description: "Create AI product bundle images for ecommerce listings, promotions, and catalogs with clear item grouping, consistent scale, and review-ready composition." },
+  "/ai-image-generation/on-model-generation": { description: "Create AI on-model product images for ecommerce, fashion campaigns, and social content with guided styling, clear product placement, and review-ready results." },
+  "/ai-image-generation/background-remove-replace": { description: "Remove or replace photo backgrounds with AI for products, portraits, listings, and campaigns while preserving subject edges, scale, and review-ready detail." },
+  "/ai-image-generation/commercial-lighting": { description: "Create AI commercial lighting images for product pages, catalogs, and campaigns with controlled highlights, clear material detail, and review-ready composition." },
+  "/ai-image-generation/story-ad-vertical": { description: "Create AI vertical story ad images for mobile campaigns, product launches, and social promotions with a clear hook, readable framing, and review-ready visuals." },
+  "/ai-image-generation/macro-details": { description: "Create AI macro product detail images for ecommerce pages, catalogs, and campaigns with close-up material focus, controlled framing, and review-ready results." },
+  "/ai-image-generation/team-directory": { description: "Create AI team directory portraits for company pages, staff profiles, and internal communications with consistent framing and review-ready results." },
+  "/ai-video-generation/founder-update": { description: "Create AI founder update videos from an approved portrait, product image, or short message with clear pacing, reviewable claims, and a publishing workflow." },
+  "/ai-video-generation/how-to-video": { description: "Create AI how-to videos from approved images and steps for tutorials, demonstrations, and training with clear sequencing and review before publishing." },
+  "/ai-video-generation/local-service-ad": { description: "Create AI local service ad videos with an offer, service area, proof, and CTA while keeping contact details and claims under your control before publishing." },
+  "/ai-video-generation/multilingual-video": { description: "Create AI multilingual videos from approved source material with reviewable pronunciation, subtitles, timing, names, and final messaging for each audience." },
+  "/ai-video-generation/home-organization": { description: "Create AI home organization videos that show a space, the change, and useful steps with clear continuity, practical context, and review before sharing." },
+  "/blog/ai-talking-photo-video-guide": { description: "Use this AI talking photo guide to plan portraits, scripts, consent, disclosure, review steps, and publishing choices before sharing a generated video." }
+};
 const THEME_SLUGS = [
   "ecommerce-main-image", "lifestyle-scene", "packshot-multi-angle", "macro-details", "bundle-sets", "size-reference", "feature-infographic", "comparison-chart",
   "feed-ad-still", "ugc-still-ad", "story-ad-vertical", "carousel-set", "sale-campaign-key-visual", "lookbook-cover",
@@ -238,6 +261,55 @@ function metaDescription(html) {
   return attr(tag, "content");
 }
 
+function visibleWordCount(html) {
+  return decode(visibleHtml(html).replace(/<[^>]+>/g, " ")).split(/\s+/).filter(Boolean).length;
+}
+
+async function assertInternalLinks200(hrefs, context) {
+  const unique = [...new Set(hrefs.filter((href) => href && href.startsWith("/") && !href.startsWith("//")))];
+  await Promise.all(unique.map(async (href) => {
+    const { response } = await fetchChecked(`${REQUEST_ORIGIN}${href}`);
+    assert.equal(response.status, 200, `${context}: internal link ${href} returned ${response.status}`);
+  }));
+  return unique.length;
+}
+
+async function checkSeoQualityPage(path, expected) {
+  const { response, html } = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
+  assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
+  assertSeoContract(path, html);
+  if (expected.title) {
+    assert.equal(titleText(html), expected.title, `${path}: title mismatch`);
+    assert(expected.title.length <= 60, `${path}: title exceeds 60 characters`);
+  }
+  if (expected.description) {
+    assert.equal(metaDescription(html), expected.description, `${path}: description mismatch`);
+    assert(expected.description.length >= 140 && expected.description.length <= 160, `${path}: description length ${expected.description.length} is outside 140-160`);
+    assert(bodyJsonLd(html).includes(expected.description), `${path}: JSON-LD description mismatch`);
+  }
+  return { path, titleLength: titleText(html).length, descriptionLength: metaDescription(html).length };
+}
+
+async function checkContactAndPolicies() {
+  const contact = await fetchChecked(`${REQUEST_ORIGIN}/contact-us`);
+  assert.equal(contact.response.status, 200, "/contact-us: HTTP status");
+  assertSeoContract("/contact-us", contact.html);
+  const contactWords = visibleWordCount(contact.html);
+  assert(contactWords >= 350 && contactWords <= 500, `/contact-us: visible word count ${contactWords} is outside 350-500`);
+  const contactLinks = ["/privacy", "/terms", "/refunds", "/content"];
+  for (const href of contactLinks) assert(contact.html.includes(`href="${href}"`), `/contact-us: missing ${href} link`);
+  const policyResults = [];
+  for (const path of ["/content", "/children-privacy", "/cookies", "/digital-delivery", "/state-privacy", "/refunds"]) {
+    const page = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
+    assert.equal(page.response.status, 200, `${path}: HTTP status`);
+    assertSeoContract(path, page.html);
+    assertHeadingHierarchy(path, page.html);
+    assert(!/<h1\b[^>]*>[\s\S]*?<\/h1>[\s\S]*?<h3\b/i.test(page.html), `${path}: H1 to H3 jump remains`);
+    policyResults.push(path);
+  }
+  return { contactWords, policies: policyResults };
+}
+
 function relatedToolHrefs(html) {
   const mainHtml = (html.match(/<main\b[\s\S]*?<\/main>/i) || [html])[0];
   return new Set([...mainHtml.matchAll(/\bhref=["'](\/ai-(?:image|video)-generation\/[^"']+)["']/gi)].map((match) => match[1].split(/[?#]/, 1)[0]));
@@ -341,6 +413,12 @@ async function checkThemePage(prisma, slug) {
   const manifest = Array.isArray(dbPage.contentJson?.mediaManifest) ? dbPage.contentJson.mediaManifest : [];
   assert.equal(manifest.length, Number(dbPage.contentJson?.contentContract?.mediaCount), `${path}: SQL media count mismatch`);
   assert.equal(dbPage.contentJson?.contentContract?.faqCount, 6, `${path}: SQL FAQ contract mismatch`);
+  const themeSection = Object.values(dbPage.contentJson?.sections ?? {}).find((section) => section?.type === "ai_image_theme_landing");
+  const relatedLinks = Array.isArray(themeSection?.settings?.content?.internalLinks) ? themeSection.settings.content.internalLinks : [];
+  assert(relatedLinks.length >= 3, `${path}: SQL related links missing`);
+  const relatedHrefs = relatedLinks.map((link) => String(link.href || "")).filter(Boolean);
+  assert.equal(new Set(relatedHrefs).size, relatedHrefs.length, `${path}: duplicate related links`);
+  assert(!relatedHrefs.some((href) => /collections|\/tools(?:\/|$)/i.test(href)), `${path}: retired related route found`);
 
   const { response, html } = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
   assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
@@ -359,7 +437,9 @@ async function checkThemePage(prisma, slug) {
     for (const name of ["alt", "width", "height"]) assert(tag.match(new RegExp(`\\s${name}=["']`, "i")), `${path}: image missing ${name}`);
   }
   for (const media of manifest) assert(html.includes(String(media.src).split("?")[0]), `${path}: manifest image not rendered: ${media.src}`);
-  return { path, mediaCount: manifest.length, imageTagCount: tags.length, mediaUrls: manifest.map((media) => mediaUrlForOrigin(media.src)) };
+  for (const href of relatedHrefs) assert(html.includes(`href="${href}"`), `${path}: related link not rendered: ${href}`);
+  const checkedRelatedLinks = await assertInternalLinks200(relatedHrefs, path);
+  return { path, mediaCount: manifest.length, imageTagCount: tags.length, relatedLinks: checkedRelatedLinks, mediaUrls: manifest.map((media) => mediaUrlForOrigin(media.src)) };
 }
 
 async function checkImageDirectory() {
@@ -377,7 +457,45 @@ async function checkImageDirectory() {
     assert(html.includes(`/ai-image-generation/${slug}`), `${path}: current image theme missing: ${slug}`);
     assert(jsonLd.includes(`/ai-image-generation/${slug}`), `${path}: current image theme missing from JSON-LD: ${slug}`);
   }
-  return { path, themeCount: THEME_SLUGS.length };
+  const guideLinks = [
+    "/blog/ai-product-photography-guide",
+    "/blog/ecommerce-product-image-workflow",
+    "/blog/ai-content-disclosure-safe-usage"
+  ];
+  for (const href of guideLinks) assert(html.includes(`href="${href}"`), `${path}: missing guide link ${href}`);
+  const checkedGuideLinks = await assertInternalLinks200(guideLinks, path);
+  return { path, themeCount: THEME_SLUGS.length, guideLinks: checkedGuideLinks };
+}
+
+async function checkVideoDirectory() {
+  const path = "/ai-video-generation";
+  const { response, html } = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
+  assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
+  assertSeoContract(path, html);
+  const guideLinks = [
+    "/ai-video-generation/brand-video",
+    "/ai-video-generation/video-ad",
+    "/ai-video-generation/talking-photo",
+    "/blog/ai-ugc-video-ads-guide"
+  ];
+  for (const href of guideLinks) assert(html.includes(`href="${href}"`), `${path}: missing guide link ${href}`);
+  const checkedGuideLinks = await assertInternalLinks200(guideLinks, path);
+  return { path, guideLinks: checkedGuideLinks };
+}
+
+async function checkFaq(prisma) {
+  const path = "/faq";
+  const { response, html } = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
+  assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
+  assertSeoContract(path, html);
+  const expectedLinks = ["/ai-image-generation", "/ai-video-generation", "/blog/ai-content-disclosure-safe-usage"];
+  for (const href of expectedLinks) assert(html.includes(`href="${href}"`), `${path}: missing related link ${href}`);
+  const dbPage = await prisma.livePage.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: path } }, select: { contentJson: true } });
+  assert(dbPage, `${path}: LivePage missing`);
+  const introLinks = dbPage.contentJson?.sections?.intro_1?.settings?.relatedLinks;
+  assert(Array.isArray(introLinks) && introLinks.length >= 3, `${path}: SQL related links missing`);
+  const checkedRelatedLinks = await assertInternalLinks200(expectedLinks, path);
+  return { path, relatedLinks: checkedRelatedLinks };
 }
 
 async function main() {
@@ -412,7 +530,12 @@ async function main() {
     for (const [path, expectedTitle] of Object.entries(VIDEO_TOPIC_SEO)) videoTopicResults.push(await checkVideoTopicPage(path, expectedTitle));
     const videoDescriptionResults = [];
     for (const [path, expectedDescription] of Object.entries(VIDEO_DESCRIPTION_SEO)) videoDescriptionResults.push(await checkVideoDescriptionPage(path, expectedDescription));
+    const seoQualityResults = [];
+    for (const [path, expected] of Object.entries(SEO_QUALITY_EXPECTATIONS)) seoQualityResults.push(await checkSeoQualityPage(path, expected));
     const imageDirectoryResult = await checkImageDirectory();
+    const videoDirectoryResult = await checkVideoDirectory();
+    const faqResult = await checkFaq(prisma);
+    const contactPolicyResult = await checkContactAndPolicies();
 
     const themeResults = [];
     for (let start = 0; start < THEME_SLUGS.length; start += 6) {
@@ -472,7 +595,7 @@ async function main() {
     const random404 = await fetchChecked(`${REQUEST_ORIGIN}/seo-smoke-random-404`);
     assert.equal(random404.response.status, 404, "random 404 must remain 404");
     assert(/<meta\b(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*noindex)/i.test(random404.html), "random 404 must remain noindex");
-    console.log(JSON.stringify({ ok: true, origin: ORIGIN, wwwOrigin: WWW_ORIGIN, sitemapPageLocs: locs.length, sitemapImageLocs: sitemapImageUrls.length, checkedImageCount, contentCluster: { blogHome: blogHomeResult, articles: blogArticleResults }, videoTopics: videoTopicResults, videoDescriptions: videoDescriptionResults, imageDirectory: imageDirectoryResult, themes: themeResults.map(({ mediaUrls: _mediaUrls, ...result }) => result), retiredRoutes: RETIRED_PATHS.length, goneRoutes: GONE_PATHS.length, pageSpeed: "skipped" }, null, 2));
+    console.log(JSON.stringify({ ok: true, origin: ORIGIN, wwwOrigin: WWW_ORIGIN, sitemapPageLocs: locs.length, sitemapImageLocs: sitemapImageUrls.length, checkedImageCount, contentCluster: { blogHome: blogHomeResult, articles: blogArticleResults }, seoQuality: seoQualityResults, videoTopics: videoTopicResults, videoDescriptions: videoDescriptionResults, imageDirectory: imageDirectoryResult, videoDirectory: videoDirectoryResult, faq: faqResult, contactPolicy: contactPolicyResult, themes: themeResults.map(({ mediaUrls: _mediaUrls, ...result }) => result), retiredRoutes: RETIRED_PATHS.length, goneRoutes: GONE_PATHS.length, pageSpeed: "skipped" }, null, 2));
   } finally {
     await prisma.$disconnect();
   }
