@@ -31,7 +31,19 @@ type VideoWatchSiteConfig = {
   brand: string;
   locale: StorefrontLocale;
   assetRoots: readonly string[];
+  slugAliases?: ReadonlyMap<string, string>;
 };
+
+const AIDREAMCAPES_EU_VIDEO_SLUG_ALIASES = new Map([
+  [
+    "/assets/sites/site_aidreamcapes_eu/visuals/tutorial/aidreamcapes-ai-image-tutorial-20260814.mp4",
+    "portrait-parlant"
+  ],
+  [
+    "/assets/sites/site_aidreamcapes_eu/visuals/tutorial/aidreamcapes-ai-video-tutorial-20260814.mp4",
+    "video-cinematographique"
+  ]
+]);
 
 const VIDEO_WATCH_SITE_CONFIGS: readonly VideoWatchSiteConfig[] = [
   {
@@ -53,7 +65,8 @@ const VIDEO_WATCH_SITE_CONFIGS: readonly VideoWatchSiteConfig[] = [
     origin: "https://aidreamcapes.eu",
     brand: "Aidreamcapes",
     locale: "fr",
-    assetRoots: ["/assets/sites/site_aidreamcapes_eu/"]
+    assetRoots: ["/assets/sites/site_aidreamcapes_eu/"],
+    slugAliases: AIDREAMCAPES_EU_VIDEO_SLUG_ALIASES
   }
 ];
 
@@ -201,7 +214,9 @@ function shortHash(value: string): string {
   return (hash >>> 0).toString(36).slice(0, 6);
 }
 
-function stableSlug(contentPath: string, usedSlugs: Set<string>): string {
+function stableSlug(contentPath: string, usedSlugs: Set<string>, config?: VideoWatchSiteConfig): string {
+  const configuredSlug = config?.slugAliases?.get(contentPath);
+  if (configuredSlug && !usedSlugs.has(configuredSlug)) return configuredSlug;
   const legacySlug = LEGACY_VIDEO_SLUG_ALIASES.get(contentPath);
   if (legacySlug) return legacySlug;
   const base = slugify(humanizeFilename(contentPath));
@@ -304,7 +319,7 @@ function addCandidate(records: Map<string, MyDreamShootsVideoWatchPage>, candida
   // complete editorial record. Do not invent a title, description, date, or
   // duration from a filename or a historical/runtime fallback.
   if (!name || !description || !thumbnailPath || !uploadDate || durationSeconds <= 0) return;
-  const slug = stableSlug(contentPath, usedSlugs);
+  const slug = stableSlug(contentPath, usedSlugs, config);
   usedSlugs.add(slug);
   records.set(contentPath, {
     slug,
