@@ -60,6 +60,7 @@ import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
 import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS, AIDREAMCAPES_IMAGE_THEME_ROOT_PATH } from "@/lib/aidreamcapes-image-theme-routes";
 import { indexableSeoPageEntriesForSite } from "@/lib/seo-indexing";
 import { isBlockedPublicVideoThemeSlugForSite } from "@/lib/video-theme-public-scope";
+import { mydreamshootsVideoWatchPagesForState, type MyDreamShootsVideoWatchPage } from "@/lib/mydreamshoots-video-watch";
 import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, PublishedLeafRouteProjection, PublishedVideoNavigationProjection, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
@@ -2903,6 +2904,7 @@ function renderThemePage({
   navigationVideoGenerationTopics,
   aidreamcapesImageDirectoryCards,
   aidreamcapesVideoThemeCovers,
+  videoWatchPages,
   routeMode,
   runtime,
   settings,
@@ -2932,6 +2934,7 @@ function renderThemePage({
   storefrontContext?: StorefrontContext;
   publishedPaths?: string[];
   publishedIndexablePaths?: string[];
+  videoWatchPages?: readonly MyDreamShootsVideoWatchPage[];
   lightweightChrome?: boolean;
 }) {
   const jsonLdNodes = jsonLd;
@@ -2964,6 +2967,14 @@ function renderThemePage({
       footerLinks: settings.navigation.footerLinks.filter((link) => navigationLinkIsPublished(link.href))
     }
   };
+  const isEuropeanVideoStorefront = currentSite.id === "site_aidreamcapes_xby" || currentSite.id === "site_mydreamshoots_xby";
+  const videoDirectoryLink = {
+    label: currentSite.id === "site_aidreamcapes_xby" ? "Exemples vidéo" : "Ejemplos de vídeo",
+    href: "/best-ai-video"
+  };
+  if (isEuropeanVideoStorefront && !resolvedSettings.navigation.footerLinks.some((link) => link.href === videoDirectoryLink.href)) {
+    resolvedSettings.navigation.footerLinks = [...resolvedSettings.navigation.footerLinks, videoDirectoryLink];
+  }
   // AIdreamshoots has a live relational catalogue but no English
   // publication-backed offer/collection projection. Applying the English
   // publication filter here hides valid target products and packs, which is
@@ -3012,6 +3023,13 @@ function renderThemePage({
   const isolatedNavigationVideoThemeCategories = isolateAidreamcapesEnglishCollection(currentSite.id, navigationVideoThemeCategories ?? []);
   const isolatedNavigationVideoThemes = isolateAidreamcapesEnglishCollection(currentSite.id, navigationVideoThemes ?? []);
   const isolatedNavigationVideoGenerationTopics = isolateAidreamcapesEnglishCollection(currentSite.id, navigationVideoGenerationTopics ?? []);
+  const visibleVideoWatchPages = pagePath === "/best-ai-video" && isEuropeanVideoStorefront
+    ? (videoWatchPages ?? [])
+    : [];
+  const videoWatchDirectoryTitle = currentSite.id === "site_aidreamcapes_xby" ? "Découvrez nos exemples vidéo" : "Descubre nuestros ejemplos de vídeo";
+  const videoWatchDirectoryDescription = currentSite.id === "site_aidreamcapes_xby"
+    ? "Parcourez les créations vidéo publiées sur Aidreamcapes."
+    : "Explora los vídeos publicados en Aidreamshoots.";
 
   return (
     <div style={themeStyleVars(resolvedSettings)}>
@@ -3043,6 +3061,23 @@ function renderThemePage({
         publishedIndexablePaths={publishedIndexablePaths}
         storefrontContext={storefrontContext}
       />
+      {visibleVideoWatchPages.length ? (
+        <section aria-labelledby="video-watch-directory-title" className="mx-auto max-w-7xl px-6 pb-16 pt-4 sm:px-10">
+          <div className="rounded-3xl border border-black/10 bg-white/70 p-6 shadow-sm sm:p-8">
+            <h2 id="video-watch-directory-title" className="text-2xl font-semibold tracking-tight text-slate-950">{videoWatchDirectoryTitle}</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">{videoWatchDirectoryDescription}</p>
+            <ul className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {visibleVideoWatchPages.map((video) => (
+                <li key={video.watchPath}>
+                  <a className="block rounded-xl border border-black/10 px-4 py-3 text-sm font-medium text-slate-800 transition hover:border-slate-400 hover:bg-white" href={video.watchPath}>
+                    {video.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
       {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} preserveBodyMarker={isAidreamcapesStorefront(currentSite) || (currentSite.id !== "site_mydreamshoots_xby" && pagePath === "/about-us")} /> : null}
     </div>
   );
@@ -3072,6 +3107,16 @@ export async function renderStorefrontPage({
   if (!stateSite) notFound();
   const publishedSnapshot = createPublishedSiteSnapshot(state, stateSite);
   const currentSite = publishedSnapshot.site;
+  const videoWatchPages = currentSite.id === "site_aidreamcapes_xby" || currentSite.id === "site_mydreamshoots_xby"
+    ? mydreamshootsVideoWatchPagesForState(state, currentSite, {
+        pages: publishedSnapshot.pages.map((page) => ({
+          ...page,
+          slug: page.publishedJson.seo?.canonicalPath ?? page.publishedJson.seo?.canonical ?? page.slug
+        })),
+        homepageShowcases: publishedSnapshot.publishedHomepageShowcases,
+        themeSettingsJson: publishedSnapshot.themeSettings
+      })
+    : [];
   const aidreamcapesDirectoryProjection = currentSite.id === "site_aidreamcapes" && (slug === "/ai-image-generation" || slug === "/ai-video-generation" || slug === "/marketing")
     ? await (async () => {
         try {
@@ -3346,6 +3391,7 @@ export async function renderStorefrontPage({
     storefrontContext,
     publishedPaths: publishedSnapshot.publishedPaths,
     publishedIndexablePaths,
+    videoWatchPages,
     jsonLd: isFocusedCollectionPage
       ? buildCollectionDirectoryJsonLd({
           site: currentSite,
