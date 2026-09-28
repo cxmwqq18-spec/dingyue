@@ -16206,7 +16206,12 @@ function SectionView({
           ? mydreamshootsVideoWatchPathForContentPath(videoUrl)
           : undefined;
         const videoHref = videoWatchPath ? hrefFor(site, videoWatchPath) : href;
-        const mediaClassName = aidreamcapesEuXby ? "block h-auto w-full object-contain object-center" : "h-full w-full object-cover";
+        const squarePhotoCard = item.kind === "photo";
+        const mediaClassName = squarePhotoCard
+          ? "h-full w-full object-cover object-center"
+          : aidreamcapesEuXby
+            ? "block h-auto w-full object-contain object-center"
+            : "h-full w-full object-cover";
         const publishedImageAlt = item.kind === "photo"
           ? cardImageAltForSite(site, {
               category: "homepage photo package",
@@ -16312,7 +16317,7 @@ function SectionView({
             href={href}
             key={item.id}
           >
-            <div className={aidreamcapesEuXby ? "overflow-hidden" : "aspect-square overflow-hidden"}>{media}</div>
+            <div className={squarePhotoCard ? "aspect-square overflow-hidden" : aidreamcapesEuXby ? "overflow-hidden" : "aspect-square overflow-hidden"}>{media}</div>
             <div className={compactCard ? "border-t border-white/10 p-2 sm:p-2.5" : "border-t border-white/10 p-3"}>
               <h3 className={compactCard ? "truncate text-xs font-semibold text-white sm:text-sm" : "truncate text-sm font-semibold text-white"}>{item.title}</h3>
               <p className={compactCard ? "mt-1 line-clamp-2 text-[11px] leading-4 text-white/60 sm:text-xs" : "mt-1 line-clamp-2 text-xs leading-5 text-white/60"}>{item.subtitle}</p>
