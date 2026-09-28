@@ -3030,6 +3030,7 @@ function renderThemePage({
   const videoWatchDirectoryDescription = currentSite.id === "site_aidreamcapes_xby"
     ? "Parcourez les créations vidéo publiées sur Aidreamcapes."
     : "Explora los vídeos publicados en Aidreamshoots.";
+  const videoDirectoryCta = currentSite.id === "site_aidreamcapes_xby" ? "Voir tous les exemples vidéo" : "Ver todos los ejemplos de vídeo";
 
   return (
     <div style={themeStyleVars(resolvedSettings)}>
@@ -3077,6 +3078,11 @@ function renderThemePage({
             </ul>
           </div>
         </section>
+      ) : null}
+      {isEuropeanVideoStorefront && pagePath !== "/best-ai-video" ? (
+        <p className="mx-auto max-w-7xl px-6 pb-10 text-sm text-slate-600 sm:px-10">
+          <a className="font-semibold text-slate-900 underline decoration-slate-300 underline-offset-4 hover:decoration-slate-900" href={videoDirectoryLink.href}>{videoDirectoryCta}</a>
+        </p>
       ) : null}
       {jsonLdNodes?.length ? <StorefrontJsonLd nodes={jsonLdNodes} preserveBodyMarker={isAidreamcapesStorefront(currentSite) || (currentSite.id !== "site_mydreamshoots_xby" && pagePath === "/about-us")} /> : null}
     </div>
