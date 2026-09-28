@@ -10,6 +10,7 @@ import { argumentValue, hasArgument } from "./lib/database-target.mjs";
 const commit = argumentValue("--commit") || "";
 const base = argumentValue("--base") || "";
 const fullSource = hasArgument("--full-source");
+const fullAssets = hasArgument("--full-assets");
 const apply = hasArgument("--apply");
 const confirm = argumentValue("--confirm");
 const branch = execFileSync("git", ["branch", "--show-current"], { encoding: "utf8" }).trim();
@@ -100,6 +101,7 @@ function git(args, options = {}) {
   return execFileSync("git", args, {
     cwd: process.cwd(),
     encoding: "utf8",
+    maxBuffer: 64 * 1024 * 1024,
     stdio: ["ignore", "pipe", "pipe"],
     ...options
   }).trim();
@@ -171,6 +173,23 @@ function releaseFiles() {
   return selected;
 }
 
+function assertFullAssetTreeIsReleaseable() {
+  if (!fullAssets) return;
+
+  const untracked = git(["ls-files", "--others", "--exclude-standard", "--", config.assetPrefix]);
+  if (untracked) {
+    fail("--full-assets refuses untracked files under the target asset root:\n" + untracked);
+  }
+
+  const deleted = git(["ls-files", "--deleted", "--", config.assetPrefix]);
+  if (deleted) {
+    fail("--full-assets refuses deleted tracked files under the target asset root:\n" + deleted);
+  }
+
+  const tracked = git(["ls-files", "--", config.assetPrefix]).split("\n").filter(Boolean);
+  if (!tracked.length) fail("--full-assets found no tracked files under " + config.assetPrefix);
+}
+
 function localPrecheck() {
   if (!branch) fail("The deployment must run from a named git branch.");
   if (!/^[0-9a-f]{40}$/i.test(commit)) fail("--commit must be a full 40-character commit SHA.");
@@ -201,6 +220,7 @@ function localPrecheck() {
     fail("Incremental release refuses deleted files because the remote release must be reviewed explicitly:\n" + deleted.join("\n"));
   }
   const changed = releaseFiles();
+  assertFullAssetTreeIsReleaseable();
   if (!changed.length && !fullSource) fail("Commit " + commit + " has no changed files to release.");
   return { changed, remoteHead };
 }
@@ -284,7 +304,9 @@ function runRemote(changedFiles) {
     const archivePaths = fullSource
       ? [...new Set([...fullSourcePaths, ...changedFiles])]
       : changedFiles;
-    execFileSync("git", ["archive", "--format=tar", "--output=" + archivePath, commit, "--", ...archivePaths], {
+    if (fullAssets) archivePaths.push(config.assetPrefix);
+    const uniqueArchivePaths = [...new Set(archivePaths)];
+    execFileSync("git", ["archive", "--format=tar", "--output=" + archivePath, commit, "--", ...uniqueArchivePaths], {
       cwd: process.cwd(),
       stdio: ["ignore", "inherit", "inherit"]
     });
@@ -308,6 +330,7 @@ try {
     service: config.service,
     port: config.port,
     siteId: config.siteId,
+    fullAssets,
     productionAffected: true,
     commit,
     branch,
