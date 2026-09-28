@@ -4080,7 +4080,10 @@ type MediaAssetUrlOptions = {
 function mediaAssetUrl(site: Site, value: string, options: MediaAssetUrlOptions = {}): string {
   const euAwareValue = isFrenchStorefrontSite(site) ? mirroredFrenchEuDreamshootAssetUrl(value) : value;
   const euCommonImage = aidreamcapesEuCommonImageForSite(site, euAwareValue);
-  const resolvedMedia = siteScopedFallbackImage(site, cleanStorefrontImageSrc(resolveMediaAssetUrl(site, euCommonImage ?? euAwareValue)));
+  const resolvedMedia = replaceAidreamcapesLegacyPublicMedia(
+    site,
+    siteScopedFallbackImage(site, cleanStorefrontImageSrc(resolveMediaAssetUrl(site, euCommonImage ?? euAwareValue)))
+  );
   const resolvedBeforeVisualRepair = options.preserveAidreamshootsLegacyMedia
     ? resolvedMedia
     : replaceAidreamshootsLegacyMedia(site, resolvedMedia);
@@ -5724,6 +5727,9 @@ function collectionSlugFromHrefForCanonical(site: Site, href: string): string {
 }
 
 function canonicalCollectionHrefForSite(site: Site, href: string): string {
+  if (site.id === "site_aidreamcapes" && (href === "/collections" || href.startsWith("/collections/"))) {
+    return "/ai-image-generation";
+  }
   if (isAidreamshootsStorefrontSite(site)) {
     const slug = collectionSlugFromHrefForCanonical(site, href);
     return publicCollectionPathForSite(site, canonicalSpanishXbyCollectionSlug(slug));
@@ -7112,10 +7118,20 @@ const aidreamcapesFallbackSecondaryCategorySlugByCollectionSlug: Record<string, 
 };
 
 const aidreamcapesFallbackHeroImages = [
-  `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/fan-scene-albums.webp?v=${aidreamcapesFanHolidayAssetVersion}`,
-  `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/game-day-group-photos.webp?v=${aidreamcapesFanHolidayAssetVersion}`,
-  `/assets/sites/site_aidreamcapes/fan-holiday-theme/categories/christmas-holiday-albums.webp?v=${aidreamcapesFanHolidayAssetVersion}`
+  "/assets/sites/site_aidreamcapes/homepage-seo/ai-ecommerce-product-main-image-running-shoe.webp",
+  "/assets/sites/site_aidreamcapes/homepage-seo/ai-product-image-to-video-ugc-creator-smartwatch.webp",
+  "/assets/sites/site_aidreamcapes/ugc-ad-v4/ugc-ad-video-review.webp"
 ];
+
+const aidreamcapesCurrentFallbackVideo = "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4";
+const aidreamcapesLegacyPublicMediaPattern = /\/assets\/sites\/site_aidreamcapes\/(?:creative-packs|fan-holiday-theme)(?:\/|$)/i;
+
+function replaceAidreamcapesLegacyPublicMedia(site: Site, value: string): string {
+  if (site.id !== "site_aidreamcapes" || !aidreamcapesLegacyPublicMediaPattern.test(value)) return value;
+  return /\.(?:mp4|webm|mov)(?:[?#]|$)/i.test(value)
+    ? aidreamcapesCurrentFallbackVideo
+    : aidreamcapesFallbackHeroImages[0];
+}
 
 function siteScopedFallbackImage(site: Site, src: string): string {
   if (!isAidreamcapesSite(site)) return src;
@@ -20028,7 +20044,7 @@ function SectionView({
       const visualPanel = aidreamcapesFaq ? "bg-[#2a1d16]" : "bg-[#111827]";
       const visualMuted = aidreamcapesFaq ? "text-[#ead8c9]/70" : "text-slate-300/70";
       const fallbackImage = aidreamcapesFaq
-        ? "/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/private-fan-scene-album.webp"
+        ? aidreamcapesFallbackHeroImages[0]
         : "/assets/dreamshoot/frames/faq-intro-portrait.png";
       const configuredImage = setting(section, "imageUrl", fallbackImage);
       const featureAlt = frenchEngagementPage

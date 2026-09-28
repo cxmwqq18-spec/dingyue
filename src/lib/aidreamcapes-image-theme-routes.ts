@@ -39,6 +39,17 @@ export type AidreamcapesImageThemeLayoutVariant = AidreamcapesImageThemeDefiniti
 export const AIDREAMCAPES_ECOMMERCE_MAIN_IMAGE_PATH = "/ai-image-generation/ecommerce-main-image";
 export const AIDREAMCAPES_ECOMMERCE_MAIN_IMAGE_CANONICAL = `https://aidreamcapes.com${AIDREAMCAPES_ECOMMERCE_MAIN_IMAGE_PATH}`;
 
+// These catalogue landing pages were inherited from the old CreativePack
+// gallery. They are still useful as migration targets, but are no longer
+// standalone Aidreamcapes documents. Keep the redirect map separate from the
+// retired/404 paths so an old backlink receives the relevant new directory
+// instead of a soft 404.
+export const AIDREAMCAPES_LEGACY_GALLERY_REDIRECTS = new Map<string, string>([
+  ["/best-ai-image", AIDREAMCAPES_IMAGE_THEME_ROOT_PATH],
+  ["/best-ai-video", "/ai-video-generation"],
+  ["/best-packages", AIDREAMCAPES_IMAGE_THEME_ROOT_PATH]
+]);
+
 const retiredImageThemePaths = [
   "/ai-image-generation/rich-lifestyle",
   "/ai-image-generation/social-cards",
@@ -168,6 +179,11 @@ export function isRetiredAidreamcapesPublicPath(siteSlug: string | undefined, pa
     return true;
   }
   return AIDREAMCAPES_RETIRED_PUBLIC_PATHS.has(normalizedPath);
+}
+
+export function aidreamcapesLegacyGalleryRedirectForPath(siteSlug: string | undefined, path: string): string | undefined {
+  if (siteSlug !== "aidreamcapes") return undefined;
+  return AIDREAMCAPES_LEGACY_GALLERY_REDIRECTS.get(path.replace(/\/$/, ""));
 }
 
 export function isAidreamcapesGonePublicPath(siteSlug: string | undefined, path: string): boolean {

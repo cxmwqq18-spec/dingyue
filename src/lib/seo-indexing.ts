@@ -21,7 +21,7 @@ import {
   AIDREAMSHOOTS_HOMEPAGE_VIDEO_TITLES,
   aidreamshootsVideoTopicSlugForPath
 } from "@/lib/aidreamshoots-video-media";
-import { isAidreamcapesImageThemePath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS, aidreamcapesLegacyGalleryRedirectForPath, isAidreamcapesImageThemePath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { AIDREAMCAPES_EU_PUBLIC_DETAIL_PATHS, canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import storefrontSourcePageMap from "../../scripts/data/storefront-source-page-map-2026-09-27.json";
@@ -468,6 +468,14 @@ function absoluteMediaUrl(site: Site, value: string | undefined): string {
 function sitemapMediaUrl(site: Site, value: string | undefined): string {
   const resolved = absoluteMediaUrl(site, value);
   if (!resolved) return "";
+  if (site.id === AIDREAMCAPES_SITE_ID) {
+    try {
+      const pathname = new URL(resolved).pathname;
+      if (/\/assets\/sites\/site_aidreamcapes\/(?:creative-packs|fan-holiday-theme)(?:\/|$)/i.test(pathname)) return "";
+    } catch {
+      return "";
+    }
+  }
   const isAidreamcapesMediaSite = site.id === AIDREAMCAPES_SITE_ID || site.id === "site_aidreamcapes_xby";
   const isAidreamshootsEuMediaSite = site.id === "site_mydreamshoots_xby";
   if (isAidreamshootsEuMediaSite || site.id === "site_aidreamcapes_xby") {
@@ -607,10 +615,8 @@ function sitemapImageTitleForPage(page: ThemePage): string {
   const seoTitle = cleanText(page.publishedJson.seo?.title)
     .replace(/\s*[|-]\s*(?:myDreamshoots|MyDreamShoots|Aidreamcapes)\s*$/i, "")
     .trim();
-  const title = cleanText(seoTitle, cleanText(page.title, "MyDreamShoots page image"));
-  return title.split(/\s+/).length >= 8
-    ? title
-    : `${title} for private AI photo creation workflows`;
+  const title = cleanText(seoTitle, cleanText(page.title, "Aidreamcapes page image"));
+  return title.split(/\s+/).length >= 4 ? title : `${title} image`;
 }
 
 function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): SitemapImageEntry[] {
@@ -674,6 +680,29 @@ function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): Sitem
 
   visit(page.publishedJson);
   return images.slice(0, limit);
+}
+
+function collectAidreamcapesImageDirectorySitemapImages(
+  snapshot: ReturnType<typeof createPublishedSiteSnapshot>,
+  site: Site
+): SitemapImageEntry[] {
+  if (site.id !== AIDREAMCAPES_SITE_ID) return [];
+  const images: SitemapImageEntry[] = [];
+  const seen = new Set<string>();
+  for (const definition of AIDREAMCAPES_IMAGE_THEME_DEFINITIONS) {
+    const path = `/ai-image-generation/${definition.slug}`;
+    const page = pageForCanonicalSeoPath(snapshot, site, path);
+    const manifest = page?.publishedJson.mediaManifest;
+    const image = manifest?.find((candidate) => imageSitemapUrl(site, candidate.src));
+    if (!image) continue;
+    const loc = imageSitemapUrl(site, image.src);
+    const comparable = comparableSitemapImageUrl(loc);
+    if (!loc || !comparable || seen.has(comparable)) continue;
+    seen.add(comparable);
+    const alt = cleanText(image.alt, `${definition.label} example image`);
+    images.push({ loc, title: alt, caption: alt });
+  }
+  return images;
 }
 
 function pageSitemapPathForSite(site: Site, page: ThemePage): string {
@@ -794,13 +823,18 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
   }
   const collectionPath = publicCollectionPathForSite(site, "");
   const collectionPage = snapshot.pages.find((page) => canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page)) === canonicalDirectoryPathForSite(site, collectionPath));
-  if (collectionPage && collectionItems.length) {
+  if (collectionPage && collectionItems.length && !(site.id === AIDREAMCAPES_SITE_ID && collectionPath === "/ai-image-generation")) {
     const effective = resolveEffectivePublishedPage(snapshot, collectionPage.slug);
     if (effective.routeDisposition.kind === "render" && effective.indexability.sitemapEligible) {
       const loc = effective.context.seo.canonicalUrl;
       const entry = entries.get(loc);
       if (entry) entry.images = collectionItems.flatMap((item) => packSitemapImages(site, item.source, 1));
     }
+  }
+  if (site.id === AIDREAMCAPES_SITE_ID) {
+    const directoryLoc = sitemapUrl(site, "/ai-image-generation");
+    const directoryEntry = entries.get(directoryLoc);
+    if (directoryEntry) directoryEntry.images = collectAidreamcapesImageDirectorySitemapImages(snapshot, site);
   }
   if (isPrimaryMydreamshootsSite(site) && collectionPage) {
     for (const route of snapshot.publishedRoutes.filter((candidate): candidate is PublishedLeafRouteProjection =>
@@ -902,7 +936,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       const route = parsePublicCollectionRouteForSite(site, path);
       if (route?.kind !== "item") continue;
       const isAidreamcapesEu = site.id === "site_aidreamcapes_xby";
-      if (isAidreamcapesImageThemePath(site.slug, path) || (!isAidreamcapesEu && isRetiredAidreamcapesPublicPath(site.slug, path)) || (!isAidreamcapesEu && LEGACY_OR_DUPLICATE_PATHS.has(path)) || (!isAidreamcapesEu && (path === "/tools" || aidreamcapesLegacyVideoSaveTheDatePath(path))) || (path.endsWith("/social-cards") && !isAidreamcapesEu)) continue;
+      if (isAidreamcapesImageThemePath(site.slug, path) || (!isAidreamcapesEu && isRetiredAidreamcapesPublicPath(site.slug, path)) || (!isAidreamcapesEu && aidreamcapesLegacyGalleryRedirectForPath(site.slug, path)) || (!isAidreamcapesEu && LEGACY_OR_DUPLICATE_PATHS.has(path)) || (!isAidreamcapesEu && (path === "/tools" || aidreamcapesLegacyVideoSaveTheDatePath(path))) || (path.endsWith("/social-cards") && !isAidreamcapesEu)) continue;
       // A catalogue pack without a published page is not a public SEO
       // document. Keeping this pass page-backed prevents stale collection
       // records from recreating retired URLs in the sitemap.
@@ -1189,6 +1223,7 @@ function isBlockedPublicPath(path: string, site?: Site): boolean {
 }
 
 function isBlockedPublicPathForSite(site: Site, path: string): boolean {
+  if (site.id === AIDREAMCAPES_SITE_ID && aidreamcapesLegacyGalleryRedirectForPath(site.slug, path)) return true;
   if ((site.id === "site_aidreamcapes" || site.id === "site_aidreamcapes_xby") && path.startsWith("/ai-image-generation/ai-image-generation-")) return true;
   if (isAidreamshootsStorefrontSite(site) && AIDREAMSHOOTS_LEGACY_ALIAS_PATHS.has(path)) return true;
   if (isAidreamshootsStorefrontSite(site) && path.startsWith("/ai-image-generation/collections-")) return true;
@@ -1367,7 +1402,7 @@ function isIndexablePage(page: ThemePage, site?: Site): boolean {
   if (site && isDreamshootSite(site) && MYDREAMSHOOTS_LEGACY_PUBLIC_PATHS.has(path)) return false;
   if (NON_INDEXABLE_TOOL_PATHS.has(path)) return false;
   if (BLOCKED_PAGE_TYPES.has(page.pageType)) return false;
-  return !isBlockedPublicPath(path, site);
+  return site ? !isBlockedPublicPathForSite(site, path) : !isBlockedPublicPath(path, site);
 }
 
 function isIndexableToolPath(site: Site, path: string): boolean {

@@ -33,6 +33,7 @@ const GONE_PUBLIC_PATHS = new Set([
 // generic fallback and do not replace the 30 image-theme content contracts.
 const SEO_REPLACEMENTS = new Map([
   ["/", {
+    title: "AI UGC Ads, Product Videos & Ecommerce Photos | Aidreamcapes",
     description: "Create AI images and videos for products, portraits, ads, and private visual stories. Upload a reference, choose a workflow, and review results before sharing."
   }],
   ["/about-us", {
@@ -233,17 +234,62 @@ const SEO_REPLACEMENTS = new Map([
   ["/tools", {
     title: "Aidreamcapes AI Tools | Image and Video Workflows",
     description: "Explore Aidreamcapes tools for creating and improving AI images and videos. Choose a workflow, review requirements, and check results before sharing."
+  }],
+  ["/blog", {
+    title: "AI Ecommerce, UGC & Talking Photo Guides | Aidreamcapes",
+    description: "Practical guides for AI product photography, UGC video ads, talking photos, ecommerce workflows, video review, and safe AI content publishing."
   }]
 ]);
 
 const OG_IMAGE_REPLACEMENTS = new Map([
+  ["/", "/assets/sites/site_aidreamcapes/homepage-seo/ai-ecommerce-product-main-image-running-shoe.webp"],
+  ["/about-us", "/assets/sites/site_aidreamcapes/homepage-seo/ai-professional-headshot-business-woman.webp"],
+  ["/ai-image-generation", "/assets/sites/site_aidreamcapes/ecommerce-main-image-v1/ecommerce-main-image/og.webp"],
   ["/ai-video-generation", "/assets/sites/site_aidreamcapes/homepage-seo/ai-product-image-to-video-ugc-creator-smartwatch.webp"],
+  ["/ai-video-generation/brand-video", "/assets/sites/site_aidreamcapes/brand-creator-v1/cinematic-product-film/cinematic-product-film-hero-output.webp"],
+  ["/ai-video-generation/explainer-video", "/assets/sites/site_aidreamcapes/homepage-seo/ai-product-demo-sneaker-multi-angle.webp"],
+  ["/ai-video-generation/fashion-video", "/assets/sites/site_aidreamcapes/homepage-seo/ai-fashion-lookbook-editorial-portrait.webp"],
+  ["/ai-video-generation/instagram-reels", "/assets/sites/site_aidreamcapes/ads-testing/tiktok-reels-shorts-generated.webp"],
+  ["/ai-video-generation/motion-generator", "/assets/sites/site_aidreamcapes/homepage-seo/ai-video-hook-variants-smartwatch.webp"],
+  ["/ai-video-generation/meme-video", "/assets/sites/site_aidreamcapes/homepage-seo/ai-actor-product-ad-skincare-demo.webp"],
+  ["/ai-video-generation/pet-video", "/assets/sites/site_aidreamcapes/homepage-seo/ai-ecommerce-lifestyle-photo-water-bottle.webp"],
+  ["/ai-video-generation/social-media-video", "/assets/sites/site_aidreamcapes/homepage-seo/ai-social-feed-ad-image-wellness-product.webp"],
+  ["/ai-video-generation/story-video", "/assets/sites/site_aidreamcapes/homepage-seo/ai-url-to-ad-smartwatch-workflow.webp"],
+  ["/ai-video-generation/talking-head-video", "/assets/sites/site_aidreamcapes/homepage-seo/ai-professional-headshot-business-woman.webp"],
+  ["/ai-video-generation/talking-photo", "/assets/sites/site_aidreamcapes/homepage-seo/ai-talking-photo-presenter-portrait.webp"],
+  ["/ai-video-generation/tiktok-video", "/assets/sites/site_aidreamcapes/ads-testing/tiktok-reels-shorts-generated.webp"],
+  ["/ai-video-generation/video-ad", "/assets/sites/site_aidreamcapes/ads-testing/url-to-ad-workflow-generated.webp"],
+  ["/ai-video-generation/youtube-video", "/assets/sites/site_aidreamcapes/homepage-seo/ai-unboxing-video-product-experience.webp"],
   ["/ai-video-generation/ugc-ad-video", "/assets/sites/site_aidreamcapes/ugc-ad-v4/ugc-ad-video-hook.webp"],
   ["/marketing", "/assets/sites/site_aidreamcapes/ads-testing/url-to-ad-workflow-generated.webp"],
   ["/ai-video-generation/product-ad-video", "/assets/sites/site_aidreamcapes/ugc-ad-v4/ugc-ad-video-demo.webp"],
+  ["/best-ai-image", "/assets/sites/site_aidreamcapes/ecommerce-main-image-v1/ecommerce-main-image/og.webp"],
   ["/best-ai-video", "/assets/sites/site_aidreamcapes/homepage-seo/ai-video-hook-variants-smartwatch.webp"],
+  ["/best-packages", "/assets/sites/site_aidreamcapes/homepage-seo/ai-ecommerce-product-main-image-running-shoe.webp"],
+  ["/blog", "/assets/sites/site_aidreamcapes/homepage-seo/ai-product-image-to-video-ugc-creator-smartwatch.webp"],
+  ["/blog/video-photo-package-guide", "/assets/sites/site_aidreamcapes/homepage-seo/ai-ecommerce-lifestyle-photo-water-bottle.webp"],
   ["/blog/ai-talking-photo-video-guide", "/assets/sites/site_aidreamcapes/homepage-seo/ai-talking-photo-presenter-portrait.webp"],
-  ["/blog/ai-video-review-checklist", "/assets/sites/site_aidreamcapes/homepage-seo/ai-ad-hook-variants-testing.webp"]
+  ["/blog/ai-video-review-checklist", "/assets/sites/site_aidreamcapes/homepage-seo/ai-ad-hook-variants-testing.webp"],
+  ["/children-privacy", "/assets/sites/site_aidreamcapes/homepage-seo/ai-professional-headshot-business-woman.webp"],
+  ["/creators-circle", "/assets/sites/site_aidreamcapes/homepage-seo/ai-ugc-product-ad-skincare-creator.webp"],
+  ["/digital-delivery", "/assets/sites/site_aidreamcapes/homepage-seo/ai-product-demo-sneaker-multi-angle.webp"],
+  ["/cookies", "/assets/sites/site_aidreamcapes/homepage-seo/ai-background-removal-product-image-perfume.webp"],
+  ["/faq", "/assets/sites/site_aidreamcapes/homepage-seo/ai-product-image-to-video-smartwatch-product-shot.webp"],
+  ["/contact-us", "/assets/sites/site_aidreamcapes/homepage-seo/ai-url-to-ad-smartwatch-workflow.webp"],
+  ["/content", "/assets/sites/site_aidreamcapes/homepage-seo/ai-actor-product-ad-skincare-demo.webp"],
+  ["/refunds", "/assets/sites/site_aidreamcapes/homepage-seo/ai-promo-sale-product-campaign.webp"],
+  ["/pricing", "/assets/sites/site_aidreamcapes/homepage-seo/ai-product-image-to-video-ugc-creator-smartwatch.webp"],
+  ["/privacy", "/assets/sites/site_aidreamcapes/homepage-seo/ai-before-after-skincare-results.webp"],
+  ["/terms", "/assets/sites/site_aidreamcapes/homepage-seo/ai-ecommerce-lifestyle-photo-water-bottle.webp"],
+  ["/state-privacy", "/assets/sites/site_aidreamcapes/homepage-seo/ai-virtual-try-on-fashion-model-blazer.webp"],
+  ["/workflow", "/assets/sites/site_aidreamcapes/homepage-seo/ai-product-image-to-video-smartwatch-product-shot.webp"]
+]);
+
+const AIDREAMCAPES_LEGACY_MEDIA_RE = /\/assets\/sites\/site_aidreamcapes\/(?:creative-packs|fan-holiday-theme)(?:\/|$)/i;
+const AIDREAMCAPES_DEFAULT_MEDIA = "/assets/sites/site_aidreamcapes/homepage-seo/ai-ecommerce-product-main-image-running-shoe.webp";
+const AIDREAMCAPES_DEFAULT_VIDEO = "/assets/sites/site_aidreamcapes/homepage-showcase/videos/aidreamcapes-i2v-tutorial-55s.mp4";
+const PAGE_TITLE_REPLACEMENTS = new Map([
+  ["/blog", "AI image and video guides"]
 ]);
 
 // Replace only public route references in the Aidreamcapes content payload.
@@ -406,18 +452,81 @@ function updateRouteReferenceValue(value, key) {
   return next;
 }
 
-function updateContentValue(value, key = "") {
-  if (Array.isArray(value)) return value.map((item) => updateContentValue(item, key));
+function currentAidreamcapesMediaForPage(pageSlug, key, value) {
+  if (!AIDREAMCAPES_LEGACY_MEDIA_RE.test(String(value || ""))) return value;
+  if (/\.(?:mp4|webm|mov)(?:[?#]|$)/i.test(String(value)) && !/(?:poster|thumbnail|image|og|twitter)/i.test(key)) return AIDREAMCAPES_DEFAULT_VIDEO;
+  return OG_IMAGE_REPLACEMENTS.get(pageSlug) || AIDREAMCAPES_DEFAULT_MEDIA;
+}
+
+function updateContentValue(value, key = "", pageSlug = "") {
+  if (Array.isArray(value)) return value.map((item) => updateContentValue(item, key, pageSlug)).filter((item) => item !== undefined);
   if (!value || typeof value !== "object") {
-    const routeUpdated = normalizeAidreamcapesOrigin(updateRouteReferenceValue(value, key));
+    const mediaUpdated = currentAidreamcapesMediaForPage(pageSlug, key, value);
+    if (mediaUpdated === undefined) return undefined;
+    const routeUpdated = normalizeAidreamcapesOrigin(updateRouteReferenceValue(mediaUpdated, key));
     if (typeof routeUpdated !== "string") return routeUpdated;
     if (/(?:href|url|canonical|path|target|link|asset|src|slug)/i.test(key) || /^https?:\/\//i.test(routeUpdated) || routeUpdated.includes("/assets/")) return routeUpdated;
     return routeUpdated.replace(/\bmydreamshoots\b/gi, "Aidreamcapes");
   }
-  return Object.fromEntries(Object.entries(value).map(([childKey, child]) => [
+  const next = Object.fromEntries(Object.entries(value).map(([childKey, child]) => [
     childKey,
-    updateContentValue(child, childKey)
-  ]));
+    updateContentValue(child, childKey, pageSlug)
+  ]).filter(([, child]) => child !== undefined));
+  // A legacy Fan Holiday video can be removed by the media cleanup above,
+  // but the landing component still needs a real video source to render its
+  // published tool contract. Restore a current Aidreamcapes MP4 only for
+  // objects that are unambiguously video-shaped (poster + dimensions).
+  if (next.poster && next.width && next.height && !next.src) {
+    next.src = AIDREAMCAPES_DEFAULT_VIDEO;
+    next.type = "video/mp4";
+  }
+  return next;
+}
+
+function updateAidreamcapesBlogHomeContent(value, pageSlug) {
+  if (pageSlug !== "/blog" || !value || typeof value !== "object" || Array.isArray(value)) return value;
+  const next = clone(value);
+  const sections = next.sections && typeof next.sections === "object" ? next.sections : {};
+  const blogIntro = sections.blog_intro_1?.settings;
+  if (blogIntro && typeof blogIntro === "object") {
+    blogIntro.eyebrow = "AI content guide";
+    blogIntro.title = "AI guides for ecommerce images, UGC video, and talking photos";
+    blogIntro.body = "Use these Aidreamcapes guides to plan product photography, UGC video ads, talking photo videos, ecommerce image workflows, video reviews, and responsible AI publishing.";
+  }
+  const blogList = sections.blog_list_1?.settings;
+  if (blogList && typeof blogList === "object") {
+    blogList.title = "AI image and video guides";
+    blogList.guideType = "AI content guide";
+    blogList.body = "Practical guides for product photography, UGC video ads, talking photos, ecommerce workflows, video review, and safe AI content publishing.";
+  }
+  const conversion = sections.conversion_1?.settings;
+  if (conversion && typeof conversion === "object") {
+    conversion.eyebrow = "Build your workflow";
+    conversion.title = "Turn a clear brief into publishable AI content.";
+    conversion.subtitle = "Choose the right image or video workflow, review the output, and keep product claims, permissions, and final publishing under your control.";
+  }
+  const pathSection = sections.packages_strip_1;
+  if (pathSection?.settings && typeof pathSection.settings === "object") {
+    pathSection.settings.eyebrow = "From brief to publish";
+    pathSection.settings.title = "A repeatable path from idea to final asset.";
+    pathSection.settings.subtitle = "Plan the brief, create the asset, review the result, and publish the version that fits your store or campaign.";
+    const cards = Array.isArray(pathSection.blocks) ? pathSection.blocks : [];
+    const cardCopy = [
+      ["Plan the brief", "Define the product, audience, format, message, and approved source material before you generate."],
+      ["Create the asset", "Choose a product image, lifestyle scene, UGC ad, talking photo, or video workflow that matches the job."],
+      ["Review the result", "Check product details, faces, hands, timing, captions, claims, and framing before anyone sees the draft."],
+      ["Publish responsibly", "Keep permissions, disclosures, accessibility, and the final destination clear when you share the asset."]
+    ];
+    cards.forEach((card, index) => {
+      const settings = card?.settings;
+      const copy = cardCopy[index];
+      if (!settings || !copy) return;
+      settings.title = copy[0];
+      settings.text = copy[1];
+      settings.meta = `Step ${String(index + 1).padStart(2, "0")}`;
+    });
+  }
+  return next;
 }
 
 function isLinkLikeKey(key) {
@@ -464,7 +573,8 @@ function removeGoneRouteReferences(value, key = "") {
 }
 
 function nextPage(row) {
-  let contentJson = updateContentValue(clone(row.contentJson) ?? {});
+  let contentJson = updateContentValue(clone(row.contentJson) ?? {}, "", row.slug);
+  contentJson = updateAidreamcapesBlogHomeContent(contentJson, row.slug);
   if (!GONE_PUBLIC_PATHS.has(row.slug)) contentJson = removeGoneRouteReferences(contentJson);
   const seo = updateSeoValue(contentJson.seo ?? {});
   const replacement = SEO_REPLACEMENTS.get(row.slug);
@@ -475,7 +585,7 @@ function nextPage(row) {
     seo.twitterImage = ogImage;
   }
   contentJson.seo = seo;
-  const title = replacement?.title ?? (typeof row.title === "string" ? row.title.replace(/\bmydreamshoots\b/gi, "Aidreamcapes") : row.title);
+  const title = PAGE_TITLE_REPLACEMENTS.get(row.slug) ?? replacement?.title ?? (typeof row.title === "string" ? row.title.replace(/\bmydreamshoots\b/gi, "Aidreamcapes") : row.title);
   return { ...row, title, contentJson };
 }
 
@@ -493,11 +603,12 @@ function collectStringReferences(value, needle, result = []) {
 }
 
 async function otherSiteSentinel(prisma) {
-  const [livePages, themePages, themeSettings] = await Promise.all([
-    prisma.livePage.findMany({ where: { siteId: { not: SITE_ID } }, orderBy: [{ siteId: "asc" }, { slug: "asc" }], select: { id: true, siteId: true, slug: true, title: true, pageType: true, templateKey: true, contentJson: true } }),
-    prisma.themePage.findMany({ where: { siteId: { not: SITE_ID } }, orderBy: [{ siteId: "asc" }, { slug: "asc" }], select: { id: true, siteId: true, slug: true, draftJson: true, publishedJson: true } }),
-    prisma.themeSettings.findMany({ where: { siteId: { not: SITE_ID } }, orderBy: { siteId: "asc" }, select: { id: true, siteId: true, draftJson: true, publishedJson: true } })
-  ]);
+  // The production database is reached through a single SSH-forwarded
+  // PostgreSQL listener. Read these large JSON payloads serially so the
+  // tunnel is not asked to open several long-lived channels at once.
+  const livePages = await prisma.livePage.findMany({ where: { siteId: { not: SITE_ID } }, orderBy: [{ siteId: "asc" }, { slug: "asc" }], select: { id: true, siteId: true, slug: true, title: true, pageType: true, templateKey: true, contentJson: true } });
+  const themePages = await prisma.themePage.findMany({ where: { siteId: { not: SITE_ID } }, orderBy: [{ siteId: "asc" }, { slug: "asc" }], select: { id: true, siteId: true, slug: true, draftJson: true, publishedJson: true } });
+  const themeSettings = await prisma.themeSettings.findMany({ where: { siteId: { not: SITE_ID } }, orderBy: { siteId: "asc" }, select: { id: true, siteId: true, draftJson: true, publishedJson: true } });
   return { livePages, themePages, themeSettings, hash: hash({ livePages, themePages, themeSettings }) };
 }
 
@@ -542,14 +653,12 @@ async function main() {
 
   const prisma = new PrismaClient();
   try {
-    const [site, livePages, themePages, themeSettings, allLivePages, beforeOtherSites] = await Promise.all([
-      prisma.site.findUnique({ where: { id: SITE_ID }, select: { id: true, slug: true, primaryDomain: true, status: true } }),
-      prisma.livePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, siteId: true, pageType: true, templateKey: true, slug: true, title: true, contentJson: true, updatedAt: true } }),
-      prisma.themePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, siteId: true, slug: true, title: true, draftJson: true, publishedJson: true, updatedAt: true } }),
-      prisma.themeSettings.findMany({ where: { siteId: SITE_ID }, select: { id: true, siteId: true, draftJson: true, publishedJson: true, updatedAt: true } }),
-      prisma.livePage.findMany({ select: { id: true, siteId: true, slug: true, contentJson: true } }),
-      otherSiteSentinel(prisma)
-    ]);
+    const site = await prisma.site.findUnique({ where: { id: SITE_ID }, select: { id: true, slug: true, primaryDomain: true, status: true } });
+    const livePages = await prisma.livePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, siteId: true, pageType: true, templateKey: true, slug: true, title: true, contentJson: true, updatedAt: true } });
+    const themePages = await prisma.themePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, siteId: true, slug: true, title: true, draftJson: true, publishedJson: true, updatedAt: true } });
+    const themeSettings = await prisma.themeSettings.findMany({ where: { siteId: SITE_ID }, select: { id: true, siteId: true, draftJson: true, publishedJson: true, updatedAt: true } });
+    const allLivePages = await prisma.livePage.findMany({ select: { id: true, siteId: true, slug: true, contentJson: true } });
+    const beforeOtherSites = await otherSiteSentinel(prisma);
     assert(site, `${SITE_ID}: site not found.`);
     assert.equal(site.slug, SITE_SLUG, `${SITE_ID}: unexpected site slug.`);
     assert.equal(site.primaryDomain.toLowerCase(), "www.aidreamcapes.com", `${SITE_ID}: unexpected primary domain.`);
@@ -579,12 +688,14 @@ async function main() {
     });
     const preparedThemePages = themePages.map((row) => {
       const shouldRemoveGoneRoutes = !GONE_PUBLIC_PATHS.has(row.slug);
-      const draftJson = shouldRemoveGoneRoutes
-        ? removeGoneRouteReferences(updateContentValue(clone(row.draftJson) ?? {}))
-        : updateContentValue(clone(row.draftJson) ?? {});
-      const publishedJson = shouldRemoveGoneRoutes
-        ? removeGoneRouteReferences(updateContentValue(clone(row.publishedJson) ?? {}))
-        : updateContentValue(clone(row.publishedJson) ?? {});
+      let draftJson = shouldRemoveGoneRoutes
+        ? removeGoneRouteReferences(updateContentValue(clone(row.draftJson) ?? {}, "", row.slug))
+        : updateContentValue(clone(row.draftJson) ?? {}, "", row.slug);
+      let publishedJson = shouldRemoveGoneRoutes
+        ? removeGoneRouteReferences(updateContentValue(clone(row.publishedJson) ?? {}, "", row.slug))
+        : updateContentValue(clone(row.publishedJson) ?? {}, "", row.slug);
+      draftJson = updateAidreamcapesBlogHomeContent(draftJson, row.slug);
+      publishedJson = updateAidreamcapesBlogHomeContent(publishedJson, row.slug);
       const replacement = SEO_REPLACEMENTS.get(row.slug);
       const ogImage = OG_IMAGE_REPLACEMENTS.get(row.slug);
       const draftSeo = draftJson.seo && typeof draftJson.seo === "object" ? draftJson.seo : {};
@@ -601,7 +712,7 @@ async function main() {
       }
       draftJson.seo = draftSeo;
       publishedJson.seo = publishedSeo;
-      const title = replacement?.title ?? (typeof row.title === "string" ? row.title.replace(/\bmydreamshoots\b/gi, "Aidreamcapes") : row.title);
+      const title = PAGE_TITLE_REPLACEMENTS.get(row.slug) ?? replacement?.title ?? (typeof row.title === "string" ? row.title.replace(/\bmydreamshoots\b/gi, "Aidreamcapes") : row.title);
       return { ...row, title, draftJson, publishedJson };
     });
     const changedThemePages = preparedThemePages.filter((row) => {
@@ -610,8 +721,8 @@ async function main() {
     });
     const preparedThemeSettings = themeSettings.map((row) => ({
       ...row,
-      draftJson: removeGoneRouteReferences(updateContentValue(clone(row.draftJson) ?? {})),
-      publishedJson: removeGoneRouteReferences(updateContentValue(clone(row.publishedJson) ?? {}))
+      draftJson: removeGoneRouteReferences(updateContentValue(clone(row.draftJson) ?? {}, "", "")),
+      publishedJson: removeGoneRouteReferences(updateContentValue(clone(row.publishedJson) ?? {}, "", ""))
     }));
     const changedThemeSettings = preparedThemeSettings.filter((row) => {
       const before = themeSettings.find((candidate) => candidate.id === row.id);
@@ -667,13 +778,11 @@ async function main() {
       if (stale) await tx.livePage.delete({ where: { id: stale.id } });
     }, { maxWait: 10000, timeout: 120000 });
 
-    const [afterPages, afterThemePages, afterThemeSettings, afterOtherSites, deletedRow] = await Promise.all([
-      prisma.livePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, slug: true, title: true, contentJson: true } }),
-      prisma.themePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, slug: true, title: true, draftJson: true, publishedJson: true } }),
-      prisma.themeSettings.findMany({ where: { siteId: SITE_ID }, select: { id: true, draftJson: true, publishedJson: true } }),
-      otherSiteSentinel(prisma),
-      stale ? prisma.livePage.findUnique({ where: { id: stale.id }, select: { id: true } }) : null
-    ]);
+    const afterPages = await prisma.livePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, slug: true, title: true, contentJson: true } });
+    const afterThemePages = await prisma.themePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" }, select: { id: true, slug: true, title: true, draftJson: true, publishedJson: true } });
+    const afterThemeSettings = await prisma.themeSettings.findMany({ where: { siteId: SITE_ID }, select: { id: true, draftJson: true, publishedJson: true } });
+    const afterOtherSites = await otherSiteSentinel(prisma);
+    const deletedRow = stale ? await prisma.livePage.findUnique({ where: { id: stale.id }, select: { id: true } }) : null;
     assert.equal(deletedRow, null, `${STALE_ID}: stale row still exists after migration.`);
     assert.equal(afterPages.length, livePages.length - (stale ? 1 : 0), `${SITE_ID}: unexpected LivePage count after migration.`);
     assert.equal(afterOtherSites.hash, beforeOtherSites.hash, "A non-target site's data changed; migration is not considered safe.");

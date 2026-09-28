@@ -4,7 +4,7 @@ import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity }
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS as MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS, isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
-import { isAidreamcapesGonePublicPath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { aidreamcapesLegacyGalleryRedirectForPath, isAidreamcapesGonePublicPath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath } from "@/lib/save-the-date-routes";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
@@ -262,6 +262,38 @@ function aidreamcapesCanonicalHostRedirect(request: NextRequest): NextResponse |
   target.hostname = "aidreamcapes.com";
   target.port = "";
   return NextResponse.redirect(target, 301);
+}
+
+function aidreamcapesLegacyGalleryRedirect(request: NextRequest): NextResponse | undefined {
+  const normalizedPath = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
+  const pathMatch = normalizedPath.match(/^\/site\/([^/]+)(\/.*)?$/i);
+  const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
+  const siteSlug = pathMatch?.[1]?.toLowerCase() === "aidreamcapes" ? "aidreamcapes" : hostSlug;
+  const publicPath = pathMatch?.[2] || normalizedPath;
+  const targetPath = aidreamcapesLegacyGalleryRedirectForPath(siteSlug, publicPath);
+  if (!targetPath) return undefined;
+
+  const target = request.nextUrl.clone();
+  target.pathname = pathMatch ? `/site/${pathMatch[1]}${targetPath}` : targetPath;
+  return NextResponse.redirect(publicRedirectUrlForRequest(request, `${target.pathname}${target.search}`), 301);
+}
+
+function aidreamcapesTrailingSlashRedirect(request: NextRequest): NextResponse | undefined {
+  if (request.method !== "GET" && request.method !== "HEAD") return undefined;
+  const pathname = request.nextUrl.pathname;
+  if (pathname === "/" || !pathname.endsWith("/") || INTERNAL_PATH_RE.test(pathname) || BROWSER_ICON_PATH_RE.test(pathname)) return undefined;
+  if (PRIVATE_STORE_PATH_RE.test(pathname) || HOST_PRIVATE_STORE_PATH_RE.test(pathname)) return undefined;
+  if (/\.[a-z0-9]{2,5}$/i.test(pathname.replace(/\/+$/, ""))) return undefined;
+
+  const normalizedPath = pathname.replace(/\/+$/, "") || "/";
+  const pathMatch = normalizedPath.match(/^\/site\/([^/]+)(\/.*)?$/i);
+  const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
+  const siteSlug = pathMatch?.[1]?.toLowerCase() === "aidreamcapes" ? "aidreamcapes" : hostSlug;
+  if (siteSlug !== "aidreamcapes") return undefined;
+
+  const target = request.nextUrl.clone();
+  target.pathname = normalizedPath;
+  return NextResponse.redirect(publicRedirectUrlForRequest(request, `${target.pathname}${target.search}`), 301);
 }
 
 function mydreamshootsLegacySiteSlugRedirect(request: NextRequest): NextResponse | undefined {
@@ -876,8 +908,12 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 export async function middleware(request: NextRequest) {
   const canonicalHostResponse = aidreamcapesCanonicalHostRedirect(request);
   if (canonicalHostResponse) return finalizeStorefrontResponse(canonicalHostResponse, request);
+  const legacyGalleryRedirect = aidreamcapesLegacyGalleryRedirect(request);
+  if (legacyGalleryRedirect) return finalizeStorefrontResponse(legacyGalleryRedirect, request);
   const retiredImageToolResponse = retiredAidreamcapesImageToolResponse(request);
   if (retiredImageToolResponse) return finalizeStorefrontResponse(retiredImageToolResponse, request);
+  const trailingSlashResponse = aidreamcapesTrailingSlashRedirect(request);
+  if (trailingSlashResponse) return finalizeStorefrontResponse(trailingSlashResponse, request);
   const workspaceRedirect = mydreamshootsWorkspaceRedirect(request);
   if (workspaceRedirect) return finalizeStorefrontResponse(workspaceRedirect, request);
   const legacySiteSlugRedirect = mydreamshootsLegacySiteSlugRedirect(request);

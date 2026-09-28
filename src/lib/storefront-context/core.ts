@@ -7,7 +7,7 @@ import { isPublicPriceFact, missingStorefrontProfileFacts } from "./facts";
 import { isPrimaryMydreamshootsSite, resolveSiteCapability } from "./capabilities";
 import { applyTitleTemplate, canonicalUrlForSite, normalizeCanonicalPath } from "./seo-projection";
 import { robotsForPage } from "@/lib/theme/seo";
-import { canonicalSeoDirectoryPathForSite, getDreamshootPublicSeoPageMetadataForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
+import { aidreamcapesVideoTopicSeoForPath, canonicalSeoDirectoryPathForSite, getDreamshootPublicSeoPageMetadataForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 import { MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 
@@ -85,6 +85,7 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
   const brand = clean(bundle.site.branding.logoText) || clean(bundle.site.name);
   const normalizedPath = normalizeCanonicalPath(pageSeo?.canonical ?? pageSeo?.canonicalPath, bundle.page.slug);
   const path = canonicalSeoPathForSite(bundle.site, normalizedPath);
+  const aidreamcapesVideoTopicSeo = aidreamcapesVideoTopicSeoForPath(bundle.site, path);
   const primaryMydreamshoots = isPrimaryMydreamshootsSite(bundle.site);
   const publicRouteSeo = bundle.site.id === "site_mydreamshoots_xby"
     ? getDreamshootPublicSeoPageMetadataForSite(bundle.site, path)
@@ -93,8 +94,8 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
   const collectionDirectoryContent = collectionPageSlug
     ? getSeoDirectoryContentForSite(bundle.site, "collection", collectionPageSlug)
     : undefined;
-  const rawTitle = clean(collectionDirectoryContent?.title) || clean(publicRouteSeo?.title) || clean(pageSeo?.title) || clean(bundle.page.title) || brand;
-  const description = clean(collectionDirectoryContent?.description) || clean(publicRouteSeo?.description) || clean(pageSeo?.description);
+  const rawTitle = clean(aidreamcapesVideoTopicSeo?.title) || clean(collectionDirectoryContent?.title) || clean(publicRouteSeo?.title) || clean(pageSeo?.title) || clean(bundle.page.title) || brand;
+  const description = clean(aidreamcapesVideoTopicSeo?.description) || clean(collectionDirectoryContent?.description) || clean(publicRouteSeo?.description) || clean(pageSeo?.description);
   const standardMedia = primaryMydreamshoots
     ? bundle.publishedStandardPageMedia?.[path]
     : undefined;
@@ -114,9 +115,9 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
     description: normalizeAidreamcapesEuDescription(AIDREAMCAPES_EU_SEO_DESCRIPTION_OVERRIDES[path] ?? description, euIndexable),
     // MyDreamshoots requires page-scoped keywords. Do not silently inherit the
     // homepage list for an unrelated public route.
-    keywords: primaryMydreamshoots
+    keywords: aidreamcapesVideoTopicSeo?.keywords || (primaryMydreamshoots
       ? clean(publicRouteSeo?.keywords) || clean(pageSeo?.keywords) || undefined
-      : clean(pageSeo?.keywords) || clean(settings.seo?.siteKeywords) || undefined,
+      : clean(pageSeo?.keywords) || clean(settings.seo?.siteKeywords) || undefined),
     canonicalPath: path,
     canonicalUrl: canonicalUrlForSite(bundle.site, path),
     ogImage: standardMedia?.status === "ready"

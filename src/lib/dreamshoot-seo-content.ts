@@ -58,6 +58,75 @@ type DreamshootRouteMetadataSeed = {
   follow: boolean;
 };
 
+type AidreamcapesVideoTopicSeo = {
+  title: string;
+  description: string;
+  keywords: string;
+};
+
+const AIDREAMCAPES_VIDEO_TOPIC_SEO: Record<string, AidreamcapesVideoTopicSeo> = {
+  "/ai-video-generation/explainer-video": {
+    title: "AI Explainer Video Generator for Teams | Aidreamcapes",
+    description: "Create clear AI explainer videos for products, services, and concepts with focused scripts, visual guidance, and share-ready scenes for your team.",
+    keywords: "AI explainer video, AI video generator, product video, Aidreamcapes"
+  },
+  "/ai-video-generation/fashion-video": {
+    title: "AI Fashion Video Generator for Brands | Aidreamcapes",
+    description: "Create polished AI fashion videos for campaigns, lookbooks, and product launches with clear visual direction and social-ready scenes for every channel.",
+    keywords: "AI fashion video, lookbook video, fashion marketing, Aidreamcapes"
+  },
+  "/ai-video-generation/motion-generator": {
+    title: "AI Motion Generator for Product Ideas | Aidreamcapes",
+    description: "Turn product photos and creative stills into short AI motion videos with guided prompts, controlled movement, and share-ready outputs for marketing teams.",
+    keywords: "AI motion generator, image to video, product motion video, Aidreamcapes"
+  },
+  "/ai-video-generation/meme-video": {
+    title: "AI Meme Video Generator for Creators | Aidreamcapes",
+    description: "Create short AI meme videos for reactions, POVs, and relatable moments with a simple workflow for creators, brands, and social media teams today.",
+    keywords: "AI meme video, meme video generator, social video, Aidreamcapes"
+  },
+  "/ai-video-generation/instagram-reels": {
+    title: "AI Instagram Reels Generator for Creators | Aidreamcapes",
+    description: "Create vertical AI Instagram Reels with focused hooks, product moments, and clear scene direction for creators, brands, and ecommerce campaigns.",
+    keywords: "AI Instagram Reels, Reels generator, vertical video, Aidreamcapes"
+  },
+  "/ai-video-generation/pet-video": {
+    title: "AI Pet Video Generator for Stories | Aidreamcapes",
+    description: "Create playful AI pet videos from your ideas or images with guided scenes, expressive motion, and share-ready formats for creators and brands.",
+    keywords: "AI pet video, pet video generator, image to video, Aidreamcapes"
+  },
+  "/ai-video-generation/product-ad-video": {
+    title: "AI Product Ad Video Generator for Stores | Aidreamcapes",
+    description: "Create AI product ad videos with clear benefits, visual proof, and calls to action for ecommerce teams, brands, and performance marketing campaigns.",
+    keywords: "AI product ad video, ecommerce video, product marketing, Aidreamcapes"
+  },
+  "/ai-video-generation/social-media-video": {
+    title: "AI Social Media Video Generator | Aidreamcapes",
+    description: "Create AI social media videos with platform-ready scenes, clear hooks, and flexible visual direction for brands, creators, and marketing teams.",
+    keywords: "AI social media video, social video generator, content creation, Aidreamcapes"
+  },
+  "/ai-video-generation/story-video": {
+    title: "AI Story Video Generator for Creators | Aidreamcapes",
+    description: "Create AI story videos with guided scenes, visual continuity, and share-ready pacing for creators, campaigns, and memorable brand narratives.",
+    keywords: "AI story video, story video generator, visual storytelling, Aidreamcapes"
+  },
+  "/ai-video-generation/youtube-video": {
+    title: "AI YouTube Video Generator for Creators | Aidreamcapes",
+    description: "Create AI YouTube videos with structured scenes, clear storytelling, and reusable visual direction for creators, educators, and growing brands.",
+    keywords: "AI YouTube video, YouTube video generator, creator video, Aidreamcapes"
+  },
+  "/ai-video-generation/tiktok-video": {
+    title: "AI TikTok Video Generator for Creators | Aidreamcapes",
+    description: "Create vertical AI TikTok videos with strong hooks, product moments, and fast visual direction for creators, brands, and ecommerce campaigns.",
+    keywords: "AI TikTok video, TikTok video generator, vertical video, Aidreamcapes"
+  },
+  "/ai-video-generation/talking-head-video": {
+    title: "AI Talking Head Video Generator | Aidreamcapes",
+    description: "Create AI talking-head videos with clear scripts, presenter visuals, and share-ready scenes for product education, marketing, and social content.",
+    keywords: "AI talking head video, presenter video, AI video generator, Aidreamcapes"
+  }
+};
+
 type SeoDirectoryMap = Record<string, SeoDirectorySeed>;
 
 type MyDreamshootsThemeTaxonomy = {
@@ -3464,6 +3533,12 @@ export function getSeoDirectoryContentForSite(site: Site | undefined, kind: SeoD
   };
 }
 
+export function aidreamcapesVideoTopicSeoForPath(site: Site | undefined, path: string): AidreamcapesVideoTopicSeo | undefined {
+  if (site?.id !== "site_aidreamcapes") return undefined;
+  const normalizedPath = `/${String(path || "").replace(/^\/+|\/+$/g, "")}`;
+  return AIDREAMCAPES_VIDEO_TOPIC_SEO[normalizedPath];
+}
+
 export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryKind, rawSlug: string, site?: Site, publishedCopy?: MyDreamshootsPageCopy): ThemePageJson {
   const topicSection = kind === "tool" ? Object.values(pageJson.sections).find((section) => section.type === "ai_video_topic_landing") : undefined;
   const talkingPhotoSection = kind === "tool" ? Object.values(pageJson.sections).find((section) => section.type === "talking_photo_landing") : undefined;
@@ -3474,15 +3549,16 @@ export function withSeoDirectorySeo(pageJson: ThemePageJson, kind: SeoDirectoryK
       : undefined;
   if (topicContent) {
     const canonicalPath = topicContent.seo.canonicalPath;
+    const aidreamcapesSeo = aidreamcapesVideoTopicSeoForPath(site, canonicalPath);
     const index = pageJson.seo?.index ?? pageJson.seo?.robots?.index ?? true;
     const follow = pageJson.seo?.follow ?? pageJson.seo?.robots?.follow ?? true;
     return {
       ...pageJson,
       seo: {
         ...pageJson.seo,
-        title: topicContent.seo.title,
-        description: topicContent.seo.description,
-        keywords: topicContent.seo.keywords,
+        title: aidreamcapesSeo?.title ?? topicContent.seo.title,
+        description: aidreamcapesSeo?.description ?? topicContent.seo.description,
+        keywords: aidreamcapesSeo?.keywords ?? topicContent.seo.keywords,
         canonicalPath,
         canonical: canonicalPath,
         index,

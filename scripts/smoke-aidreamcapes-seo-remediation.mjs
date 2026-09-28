@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { PrismaClient } from "@prisma/client";
 
 import "./load-runtime-env.mjs";
-import { argumentValue, assertDatabaseTarget } from "./lib/database-target.mjs";
+import { argumentValue, assertDatabaseTarget, buildTunneledDatabaseUrl, parseDatabaseUrl } from "./lib/database-target.mjs";
 
 const ORIGIN = String(argumentValue("--origin") || process.env.AIDREAMCAPES_AUDIT_ORIGIN || "https://aidreamcapes.com").replace(/\/$/, "");
 const WWW_ORIGIN = String(argumentValue("--www-origin") || "https://www.aidreamcapes.com").replace(/\/$/, "");
@@ -25,6 +25,20 @@ const BLOG_ARTICLE_PATHS = [
   "/blog/ai-video-review-checklist",
   "/blog/ai-content-disclosure-safe-usage"
 ];
+const VIDEO_TOPIC_SEO = {
+  "/ai-video-generation/explainer-video": "AI Explainer Video Generator for Teams | Aidreamcapes",
+  "/ai-video-generation/fashion-video": "AI Fashion Video Generator for Brands | Aidreamcapes",
+  "/ai-video-generation/motion-generator": "AI Motion Generator for Product Ideas | Aidreamcapes",
+  "/ai-video-generation/meme-video": "AI Meme Video Generator for Creators | Aidreamcapes",
+  "/ai-video-generation/instagram-reels": "AI Instagram Reels Generator for Creators | Aidreamcapes",
+  "/ai-video-generation/pet-video": "AI Pet Video Generator for Stories | Aidreamcapes",
+  "/ai-video-generation/product-ad-video": "AI Product Ad Video Generator for Stores | Aidreamcapes",
+  "/ai-video-generation/social-media-video": "AI Social Media Video Generator | Aidreamcapes",
+  "/ai-video-generation/story-video": "AI Story Video Generator for Creators | Aidreamcapes",
+  "/ai-video-generation/youtube-video": "AI YouTube Video Generator for Creators | Aidreamcapes",
+  "/ai-video-generation/tiktok-video": "AI TikTok Video Generator for Creators | Aidreamcapes",
+  "/ai-video-generation/talking-head-video": "AI Talking Head Video Generator | Aidreamcapes"
+};
 const THEME_SLUGS = [
   "ecommerce-main-image", "lifestyle-scene", "packshot-multi-angle", "macro-details", "bundle-sets", "size-reference", "feature-infographic", "comparison-chart",
   "feed-ad-still", "ugc-still-ad", "story-ad-vertical", "carousel-set", "sale-campaign-key-visual", "lookbook-cover",
@@ -63,6 +77,12 @@ const GONE_PATHS = [
 const LEGACY_SITEMAP_ALIASES = [
   "christmas", "halloween", "thanksgiving", "new-year", "mothers-day", "fathers-day", "valentines-day", "engagement", "proposal", "save-the-date", "wedding-invitation", "wedding-ceremony"
 ].map((slug) => `/ai-video-generation/${slug}`);
+const LEGACY_AIDREAMCAPES_MEDIA_RE = /\/assets\/sites\/site_aidreamcapes\/(?:creative-packs|fan-holiday-theme)(?:\/|$)/i;
+const LEGACY_GALLERY_REDIRECTS = new Map([
+  ["/best-ai-image", "/ai-image-generation"],
+  ["/best-ai-video", "/ai-video-generation"],
+  ["/best-packages", "/ai-image-generation"]
+]);
 
 function decode(value) {
   return String(value || "")
@@ -162,6 +182,14 @@ function requestUrl(url) {
   return String(url).replace(ORIGIN, REQUEST_ORIGIN).replace(WWW_ORIGIN, WWW_REQUEST_ORIGIN);
 }
 
+function ensureSmokeDatabaseTarget() {
+  if (DB_TARGET !== "production") return;
+  const current = parseDatabaseUrl(process.env.DATABASE_URL);
+  if ((current.database === "dingyue_local" || current.port === 15433) && process.env.REMOTE_DB_DATABASE_URL) {
+    process.env.DATABASE_URL = buildTunneledDatabaseUrl(process.env.REMOTE_DB_DATABASE_URL, { host: "127.0.0.1", port: 15432 });
+  }
+}
+
 async function assertImageResponse(url) {
   const response = await fetchWithRetry(url, { method: "HEAD", redirect: "manual", headers: { "Cache-Control": "no-cache", ...(REQUEST_HOST ? { host: REQUEST_HOST, "x-forwarded-host": REQUEST_HOST } : {}), ...(REQUEST_PROTO ? { "x-forwarded-proto": REQUEST_PROTO } : {}) } });
   const contentType = response.headers.get("content-type") || "";
@@ -234,6 +262,7 @@ function assertSeoContract(path, html) {
   }
   assert.equal((html.match(/<h1\b/gi) || []).length, 1, `${path}: expected one H1`);
   assert(!/mydreamshoots/i.test(html), `${path}: MyDreamShoots residual found in HTML`);
+  assert(!LEGACY_AIDREAMCAPES_MEDIA_RE.test(html), `${path}: legacy Aidreamcapes media residual found in HTML`);
   if (path === "/") assertHeadingHierarchy(path, html);
   assert(!/mydreamshoots/i.test(visibleHtml(html)), `${path}: MyDreamShoots residual found in visible HTML`);
   assert(!/mydreamshoots/i.test(bodyJsonLd(html)), `${path}: MyDreamShoots residual found in JSON-LD`);
@@ -305,6 +334,19 @@ async function checkBlogArticle(prisma, path) {
   assert(settings.publishedAt && settings.updatedAt, `${path}: publication dates missing`);
   assert(Array.isArray(settings.relatedLinks) && settings.relatedLinks.length >= 3, `${path}: SQL related links missing`);
   return { path, relatedToolLinks: relatedToolHrefs(html).size };
+}
+
+async function checkVideoTopicPage(path, expectedTitle) {
+  const { response, html } = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
+  assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
+  assertSeoContract(path, html);
+  assert.equal(titleText(html), expectedTitle, `${path}: video topic title is not scoped to Aidreamcapes`);
+  const description = metaDescription(html);
+  assert(description.length >= 140 && description.length <= 160, `${path}: video topic description length ${description.length} is outside 140-160`);
+  const serializedJsonLd = JSON.stringify(jsonLdBlocks(html));
+  assert(serializedJsonLd.includes(expectedTitle), `${path}: JSON-LD does not use the scoped video topic title`);
+  assert(serializedJsonLd.includes(description), `${path}: JSON-LD does not use the scoped video topic description`);
+  return { path, titleLength: expectedTitle.length, descriptionLength: description.length };
 }
 
 async function fetchChecked(url, options = {}) {
@@ -380,6 +422,7 @@ async function checkImageDirectory() {
 }
 
 async function main() {
+  ensureSmokeDatabaseTarget();
   assertDatabaseTarget({ expectedTarget: DB_TARGET });
   const prisma = new PrismaClient();
   try {
@@ -406,6 +449,8 @@ async function main() {
     const blogHomeResult = await checkBlogHome(prisma);
     const blogArticleResults = [];
     for (const path of BLOG_ARTICLE_PATHS) blogArticleResults.push(await checkBlogArticle(prisma, path));
+    const videoTopicResults = [];
+    for (const [path, expectedTitle] of Object.entries(VIDEO_TOPIC_SEO)) videoTopicResults.push(await checkVideoTopicPage(path, expectedTitle));
     const imageDirectoryResult = await checkImageDirectory();
 
     const themeResults = [];
@@ -424,6 +469,7 @@ async function main() {
       }));
     }
     const sitemapImageUrls = [...sitemap.html.matchAll(/<image:loc>([^<]+)<\/image:loc>/gi)].map((match) => decode(match[1]));
+    assert(!LEGACY_AIDREAMCAPES_MEDIA_RE.test(sitemap.html), "sitemap contains retired Aidreamcapes media paths");
     const themeImageUrls = themeResults.flatMap((result) => result.mediaUrls);
     const checkedImageCount = await checkImageUrls([...sitemapImageUrls, ...themeImageUrls]);
     const virtualTryOn = await fetchChecked(`${REQUEST_ORIGIN}/ai-image-generation/virtual-try-on`);
@@ -445,6 +491,16 @@ async function main() {
       assert.equal(response.status, 404, `${path}: expected 404`);
       assert.equal(response.headers.get("location"), null, `${path}: unexpected Location header`);
     }
+    for (const [path, targetPath] of LEGACY_GALLERY_REDIRECTS) {
+      const { response } = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
+      assert.equal(response.status, 301, `${path}: expected legacy gallery redirect`);
+      assert.equal(response.headers.get("location"), `${ORIGIN}${targetPath}`, `${path}: redirect target mismatch`);
+    }
+    for (const path of ["/ai-image-generation", "/ai-video-generation", "/blog", "/workflow"]) {
+      const { response } = await fetchChecked(`${REQUEST_ORIGIN}${path}/`);
+      assert.equal(response.status, 301, `${path}/: expected trailing-slash redirect`);
+      assert.equal(response.headers.get("location"), `${ORIGIN}${path}`, `${path}/: trailing-slash target mismatch`);
+    }
     for (const path of GONE_PATHS) {
       const { response } = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
       assert.equal(response.status, 410, `${path}: expected 410`);
@@ -455,7 +511,7 @@ async function main() {
     const random404 = await fetchChecked(`${REQUEST_ORIGIN}/seo-smoke-random-404`);
     assert.equal(random404.response.status, 404, "random 404 must remain 404");
     assert(/<meta\b(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*noindex)/i.test(random404.html), "random 404 must remain noindex");
-    console.log(JSON.stringify({ ok: true, origin: ORIGIN, wwwOrigin: WWW_ORIGIN, sitemapPageLocs: locs.length, sitemapImageLocs: sitemapImageUrls.length, checkedImageCount, contentCluster: { blogHome: blogHomeResult, articles: blogArticleResults }, imageDirectory: imageDirectoryResult, themes: themeResults.map(({ mediaUrls: _mediaUrls, ...result }) => result), retiredRoutes: RETIRED_PATHS.length, goneRoutes: GONE_PATHS.length, pageSpeed: "skipped" }, null, 2));
+    console.log(JSON.stringify({ ok: true, origin: ORIGIN, wwwOrigin: WWW_ORIGIN, sitemapPageLocs: locs.length, sitemapImageLocs: sitemapImageUrls.length, checkedImageCount, contentCluster: { blogHome: blogHomeResult, articles: blogArticleResults }, videoTopics: videoTopicResults, imageDirectory: imageDirectoryResult, themes: themeResults.map(({ mediaUrls: _mediaUrls, ...result }) => result), retiredRoutes: RETIRED_PATHS.length, goneRoutes: GONE_PATHS.length, pageSpeed: "skipped" }, null, 2));
   } finally {
     await prisma.$disconnect();
   }
