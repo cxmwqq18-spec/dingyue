@@ -283,7 +283,7 @@ async function syncTargetAssets() {
     }
     for (const entry of entries) {
       const childSource = path.join(source, entry.name);
-      const childDestination = destination + entry.name;
+      const childDestination = destination + "/" + entry.name;
       if (entry.isDirectory()) splitDirectory(childSource, childDestination, depth - 1);
     }
   };
