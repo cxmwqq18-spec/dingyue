@@ -263,15 +263,35 @@ async function syncTargetAssets() {
 
   const sourceRoot = path.resolve(config.assetPrefix);
   const destinationRoot = config.root + "/current/" + config.assetPrefix;
-  const entries = fs.readdirSync(sourceRoot, { withFileTypes: true });
   console.log("Synchronizing target asset root " + config.assetPrefix + " to " + destinationRoot);
 
-  const jobs = entries.map((entry) => {
-    const source = path.join(sourceRoot, entry.name) + (entry.isDirectory() ? path.sep : "");
-    const destination = destinationRoot + entry.name + (entry.isDirectory() ? "/" : "");
-    return { source, destination };
-  });
-  const concurrency = Math.min(4, jobs.length);
+  const jobs = [];
+  const splitDirectory = (source, destination, depth) => {
+    const entries = fs.readdirSync(source, { withFileTypes: true });
+    if (!entries.length || depth === 0) {
+      jobs.push({ source: source + path.sep, destination: destination + "/" });
+      return;
+    }
+    for (const entry of entries) {
+      const childSource = path.join(source, entry.name);
+      const childDestination = destination + entry.name;
+      if (entry.isDirectory()) splitDirectory(childSource, childDestination, depth - 1);
+      else jobs.push({ source: childSource, destination: childDestination });
+    }
+  };
+  for (const entry of fs.readdirSync(sourceRoot, { withFileTypes: true })) {
+    const source = path.join(sourceRoot, entry.name);
+    const destination = destinationRoot + entry.name;
+    if (entry.isDirectory() && ["visuals", "generated", "creative-packs"].includes(entry.name)) {
+      splitDirectory(source, destination, 2);
+    } else if (entry.isDirectory()) {
+      jobs.push({ source: source + path.sep, destination: destination + "/" });
+    } else {
+      jobs.push({ source, destination });
+    }
+  }
+
+  const concurrency = Math.min(8, jobs.length);
   let next = 0;
   const worker = async () => {
     while (next < jobs.length) {
