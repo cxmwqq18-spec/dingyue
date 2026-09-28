@@ -58,16 +58,36 @@ function collectDiagnostics(page, label) {
   };
 }
 
-async function waitForImages(page) {
-  await page.evaluate(async () => {
-    const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
-    const reviewImages = [...document.images].filter((image) => image.src.includes("/generated/public-media/reviews/"));
-    for (const image of reviewImages) {
+async function waitForReviewImages(page) {
+  const locator = page.locator('img[src*="/generated/public-media/reviews/"]');
+  await locator.evaluateAll((images) => {
+    for (const image of images) {
+      image.loading = "eager";
       image.scrollIntoView({ block: "center", inline: "nearest" });
-      await sleep(35);
     }
-    await sleep(1200);
   });
+  for (let index = 0; index < await locator.count(); index += 1) {
+    await locator.nth(index).evaluate((element) => new Promise((resolve, reject) => {
+      const cleanup = () => {
+        element.removeEventListener("load", loaded);
+        element.removeEventListener("error", failed);
+      };
+      const loaded = () => {
+        cleanup();
+        resolve();
+      };
+      const failed = () => {
+        cleanup();
+        reject(new Error(`review image failed to load: ${element.currentSrc || element.src}`));
+      };
+      if (element.complete && element.naturalWidth > 0 && element.naturalHeight > 0) {
+        resolve();
+        return;
+      }
+      element.addEventListener("load", loaded, { once: true });
+      element.addEventListener("error", failed, { once: true });
+    }));
+  }
 }
 
 async function assertDiagnostics(diagnostics) {
@@ -93,7 +113,7 @@ async function nextIssueState(page) {
 }
 
 async function assertReviewMedia(page) {
-  await waitForImages(page);
+  await waitForReviewImages(page);
   const reviewImages = await page.evaluate(() => [...document.images]
     .map((image) => ({ src: image.currentSrc || image.src, alt: image.alt, width: image.naturalWidth, height: image.naturalHeight }))
     .filter((image) => image.src.includes("/generated/public-media/reviews/")));
@@ -101,7 +121,7 @@ async function assertReviewMedia(page) {
   assert.equal(reviewImages.filter((image) => image.width === 0 || image.height === 0).length, 0, "homepage: review image failed to load");
   const byReviewer = new Map();
   for (const image of reviewImages) {
-    const match = image.src.match(/reviews\/(?:vendor-[^/]+\/)?review-([a-z]+)-(headshot|theme)\./i);
+    const match = image.src.match(/reviews\/(?:vendor-[^/]+\/)?(?:_responsive\/)?review-([a-z]+)-(headshot|theme)(?:--\d+)?\./i);
     assert(match, `homepage: unrecognized review image ${image.src}`);
     const [, reviewer, kind] = match;
     const entry = byReviewer.get(reviewer) ?? {};
@@ -145,7 +165,7 @@ async function assertHomepage(page) {
   assert.equal(await page.getByPlaceholder("Adresse e-mail", { exact: true }).count(), 1, "homepage: email sign-up input");
   assert.equal(await page.getByRole("button", { name: "Créer un compte avec votre e-mail", exact: true }).count(), 1, "homepage: email sign-up button");
 
-  for (const menuName of ["Création vidéo IA", "Annonces Save the Date", "Création photo IA"]) {
+  for (const menuName of ["Création vidéo IA", "Annonces de date", "Création photo IA"]) {
     const menuButton = page.getByRole("button", { name: menuName, exact: true });
     assert.equal(await menuButton.getAttribute("aria-expanded"), "false", `homepage: ${menuName} starts closed`);
     await menuButton.click();

@@ -20,18 +20,44 @@ page.on("response", (response) => {
   if (response.status() >= 400) badResponses.push({ url: response.url(), status: response.status(), type: response.request().resourceType() });
 });
 
+async function waitForImages(locator) {
+  await locator.evaluateAll((images) => {
+    for (const image of images) {
+      image.loading = "eager";
+      image.scrollIntoView({ block: "center", inline: "nearest" });
+    }
+  });
+  for (let index = 0; index < await locator.count(); index += 1) {
+    const image = locator.nth(index);
+    await image.evaluate((element) => {
+      return new Promise((resolve, reject) => {
+        const cleanup = () => {
+          element.removeEventListener("load", loaded);
+          element.removeEventListener("error", failed);
+        };
+        const loaded = () => {
+          cleanup();
+          resolve();
+        };
+        const failed = () => {
+          cleanup();
+          reject(new Error(`image failed to load: ${element.currentSrc || element.src}`));
+        };
+        if (element.complete && element.naturalWidth > 0 && element.naturalHeight > 0) {
+          resolve();
+          return;
+        }
+        element.addEventListener("load", loaded, { once: true });
+        element.addEventListener("error", failed, { once: true });
+      });
+    });
+  }
+}
+
 try {
   const response = await page.goto(baseUrl, { waitUntil: "commit", timeout: 120_000 });
   await page.waitForLoadState("networkidle", { timeout: 120_000 });
-  await page.locator("img").evaluateAll(async (images) => {
-    const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
-    for (const image of images) {
-      image.scrollIntoView({ block: "center", inline: "nearest" });
-      await sleep(40);
-    }
-  });
-  await page.waitForTimeout(1_200);
-  await page.waitForTimeout(1_000);
+  await waitForImages(page.locator("img"));
   await page.screenshot({ path: screenshotPath, fullPage: true });
   const images = await page.locator("img").evaluateAll((elements) => elements.map((image) => ({
     src: image.currentSrc || image.src,
