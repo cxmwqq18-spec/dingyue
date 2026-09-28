@@ -13,6 +13,7 @@ const eslintConfig = [
       ".next-build/**",
       ".codex/**",
       "node_modules/**",
+      ".tmp/**",
       "next-env.d.ts",
       "tsconfig.tsbuildinfo",
       ".tmp-*.cjs",
