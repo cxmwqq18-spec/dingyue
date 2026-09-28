@@ -4,14 +4,14 @@ import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { StorefrontJsonLd } from "@/components/storefront/storefront-json-ld";
 import {
-  isMydreamshootsVideoHost,
-  mydreamshootsVideoAssetUrl,
+  isStorefrontVideoHost,
+  storefrontVideoAssetUrl,
   mydreamshootsVideoWatchUrl,
-  MYDREAMSHOOTS_VIDEO_WATCH_ORIGIN,
+  storefrontVideoBrand,
   mydreamshootsVideoWatchPageForSlug,
   type MyDreamShootsVideoWatchPage
 } from "@/lib/mydreamshoots-video-watch";
-import { getMydreamshootsVideoWatchPagesForHost } from "@/lib/seo-indexing";
+import { getStorefrontVideoWatchPagesForHost } from "@/lib/seo-indexing";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -22,8 +22,8 @@ function videoDuration(seconds: number): string {
 
 function videoJsonLd(video: MyDreamShootsVideoWatchPage) {
   const watchUrl = mydreamshootsVideoWatchUrl(video);
-  const thumbnailUrl = mydreamshootsVideoAssetUrl(video.thumbnailPath);
-  const contentUrl = mydreamshootsVideoAssetUrl(video.contentPath);
+  const thumbnailUrl = storefrontVideoAssetUrl(video, video.thumbnailPath);
+  const contentUrl = storefrontVideoAssetUrl(video, video.contentPath);
   return {
     "@context": "https://schema.org",
     "@type": "VideoObject",
@@ -35,14 +35,15 @@ function videoJsonLd(video: MyDreamShootsVideoWatchPage) {
     duration: videoDuration(video.durationSeconds),
     contentUrl,
     encodingFormat: /\.webm(?:[?#]|$)/i.test(video.contentPath) ? "video/webm" : "video/mp4",
+    inLanguage: video.locale,
     url: watchUrl,
-    mainEntityOfPage: { "@type": "WebPage", "@id": watchUrl },
-    isPartOf: { "@type": "WebSite", "@id": `${MYDREAMSHOOTS_VIDEO_WATCH_ORIGIN}/#website` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": watchUrl, inLanguage: video.locale },
+    isPartOf: { "@type": "WebSite", "@id": `${video.origin}/#website` },
     publisher: {
       "@type": "Organization",
-      "@id": `${MYDREAMSHOOTS_VIDEO_WATCH_ORIGIN}/#organization`,
-      name: "myDreamshoots",
-      url: "https://www.mydreamshoots.com/"
+      "@id": `${video.origin}/#organization`,
+      name: storefrontVideoBrand(video),
+      url: `${video.origin}/`
     },
     potentialAction: {
       "@type": "WatchAction",
@@ -51,11 +52,23 @@ function videoJsonLd(video: MyDreamShootsVideoWatchPage) {
   };
 }
 
+function breadcrumbJsonLd(video: MyDreamShootsVideoWatchPage) {
+  const watchUrl = mydreamshootsVideoWatchUrl(video);
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: storefrontVideoBrand(video), item: `${video.origin}/` },
+      { "@type": "ListItem", position: 2, name: "Watch", item: watchUrl }
+    ]
+  };
+}
+
 async function videoForRequest(slug: string): Promise<MyDreamShootsVideoWatchPage | undefined> {
   const requestHeaders = await headers();
   const hostCandidates = [requestHeaders.get("x-forwarded-host"), requestHeaders.get("host")];
-  if (!hostCandidates.some(isMydreamshootsVideoHost)) return undefined;
-  const pages = await getMydreamshootsVideoWatchPagesForHost(hostCandidates);
+  if (!hostCandidates.some(isStorefrontVideoHost)) return undefined;
+  const pages = await getStorefrontVideoWatchPagesForHost(hostCandidates);
   return mydreamshootsVideoWatchPageForSlug(slug, pages);
 }
 
@@ -66,9 +79,10 @@ export async function generateMetadata({ params }: { params: Promise<{ videoSlug
     return { robots: { index: false, follow: false } };
   }
   const watchUrl = mydreamshootsVideoWatchUrl(video);
-  const thumbnailUrl = mydreamshootsVideoAssetUrl(video.thumbnailPath);
+  const thumbnailUrl = storefrontVideoAssetUrl(video, video.thumbnailPath);
+  const brand = storefrontVideoBrand(video);
   return {
-    title: `${video.name} | myDreamshoots`,
+    title: `${video.name} | ${brand}`,
     description: video.description,
     alternates: { canonical: watchUrl },
     robots: { index: true, follow: true, "max-image-preview": "large" },
@@ -77,7 +91,7 @@ export async function generateMetadata({ params }: { params: Promise<{ videoSlug
       url: watchUrl,
       title: video.name,
       description: video.description,
-      siteName: "myDreamshoots",
+      siteName: brand,
       images: [{ url: thumbnailUrl, alt: video.name }]
     },
     twitter: {
@@ -98,14 +112,19 @@ export default async function MyDreamShootsVideoWatchPage({
   const video = await videoForRequest(videoSlug);
   if (!video) notFound();
 
-  const thumbnailUrl = mydreamshootsVideoAssetUrl(video.thumbnailPath);
-  const contentUrl = mydreamshootsVideoAssetUrl(video.contentPath);
+  const thumbnailUrl = storefrontVideoAssetUrl(video, video.thumbnailPath);
+  const contentUrl = storefrontVideoAssetUrl(video, video.contentPath);
+  const brand = storefrontVideoBrand(video);
+  const isFrench = video.locale === "fr";
+  const isSpanish = video.locale === "es";
+  const relatedLabel = isFrench ? "Voir la page associée →" : isSpanish ? "Ver la página relacionada →" : "View the related myDreamshoots page →";
+  const createLabel = isFrench ? "Commencer à créer →" : isSpanish ? "Empieza a crear →" : "Start creating →";
 
   return (
     <main style={{ minHeight: "100vh", background: "#090b12", color: "#f8fafc", padding: "clamp(2rem, 6vw, 6rem) 1.25rem" }}>
       <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
         <p style={{ margin: "0 0 0.75rem", color: "#a5b4fc", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase" }}>
-          myDreamshoots video
+          {brand} video
         </p>
         <h1 style={{ maxWidth: "820px", margin: "0", fontSize: "clamp(2rem, 5vw, 4.5rem)", lineHeight: 1.05, letterSpacing: "-0.04em" }}>
           {video.name}
@@ -123,19 +142,19 @@ export default async function MyDreamShootsVideoWatchPage({
             style={{ display: "block", width: "100%", height: "auto", aspectRatio: "16 / 9", background: "#020617" }}
           >
             <source src={contentUrl} type={/\.webm(?:[?#]|$)/i.test(video.contentPath) ? "video/webm" : "video/mp4"} />
-            Your browser does not support HTML video.
+            {isFrench ? "Votre navigateur ne prend pas en charge la vidéo HTML." : isSpanish ? "Tu navegador no admite vídeo HTML." : "Your browser does not support HTML video."}
           </video>
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center", marginTop: "1.5rem" }}>
           <Link href={video.sourcePath} style={{ color: "#c4b5fd", fontWeight: 700, textDecoration: "none" }}>
-            View the related myDreamshoots page →
+            {relatedLabel}
           </Link>
           <Link href="/app/create" style={{ color: "#f8fafc", fontWeight: 700, textDecoration: "none" }}>
-            Start creating →
+            {createLabel}
           </Link>
         </div>
       </div>
-      <StorefrontJsonLd nodes={[videoJsonLd(video)]} preserveBodyMarker />
+      <StorefrontJsonLd nodes={[videoJsonLd(video), breadcrumbJsonLd(video)]} preserveBodyMarker />
     </main>
   );
 }

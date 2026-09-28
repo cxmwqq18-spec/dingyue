@@ -1,10 +1,17 @@
 import type { PlatformState, PublishedHomepageShowcaseItem, Site } from "@/lib/types";
+import type { StorefrontLocale } from "@/lib/storefront-locale";
+import { isBlockedPublicVideoThemeSlugForSite } from "@/lib/video-theme-public-scope";
 
 export const MYDREAMSHOOTS_VIDEO_WATCH_ORIGIN = "https://www.mydreamshoots.com";
 
 export type MyDreamShootsVideoWatchPage = {
+  siteId: string;
+  locale: StorefrontLocale;
+  origin: string;
+  brand: string;
   slug: string;
   watchPath: string;
+  canonicalUrl: string;
   sourcePath: string;
   sourcePaths: readonly string[];
   name: string;
@@ -17,6 +24,56 @@ export type MyDreamShootsVideoWatchPage = {
 
 const VIDEO_PATH_PATTERN = /\.(?:mp4|webm)(?:[?#]|$)/i;
 const IMAGE_PATH_PATTERN = /\.(?:avif|jpe?g|png|webp)(?:[?#]|$)/i;
+
+type VideoWatchSiteConfig = {
+  siteId: string;
+  origin: string;
+  brand: string;
+  locale: StorefrontLocale;
+  assetRoots: readonly string[];
+};
+
+const VIDEO_WATCH_SITE_CONFIGS: readonly VideoWatchSiteConfig[] = [
+  {
+    siteId: "site_dreamshoot",
+    origin: MYDREAMSHOOTS_VIDEO_WATCH_ORIGIN,
+    brand: "myDreamshoots",
+    locale: "en",
+    assetRoots: ["/assets/dreamshoot/", "/assets/sites/site_dreamshoot/"]
+  },
+  {
+    siteId: "site_mydreamshoots_xby",
+    origin: "https://aidreamshoots.eu",
+    brand: "Aidreamshoots",
+    locale: "es",
+    assetRoots: ["/assets/sites/site_aidreamshoots/"]
+  },
+  {
+    siteId: "site_aidreamcapes_xby",
+    origin: "https://aidreamcapes.eu",
+    brand: "Aidreamcapes",
+    locale: "fr",
+    assetRoots: ["/assets/sites/site_aidreamcapes_eu/"]
+  }
+];
+
+function videoWatchSiteConfig(site: Pick<Site, "id" | "primaryDomain" | "slug">): VideoWatchSiteConfig | undefined {
+  const byId = VIDEO_WATCH_SITE_CONFIGS.find((config) => config.siteId === site.id);
+  if (byId) return byId;
+  const identity = `${site.slug} ${site.primaryDomain}`.toLowerCase();
+  if (identity.includes("aidreamshoots")) return VIDEO_WATCH_SITE_CONFIGS.find((config) => config.siteId === "site_mydreamshoots_xby");
+  if (identity.includes("aidreamcapes")) return VIDEO_WATCH_SITE_CONFIGS.find((config) => config.siteId === "site_aidreamcapes_xby");
+  if (identity.includes("mydreamshoots") || identity.includes("dreamshoot")) return VIDEO_WATCH_SITE_CONFIGS.find((config) => config.siteId === "site_dreamshoot");
+  return undefined;
+}
+
+function isAllowedAssetPath(path: string, config: VideoWatchSiteConfig): boolean {
+  if (!config.assetRoots.some((root) => path.startsWith(root))) return false;
+  // The EU publication may keep historical mirror rows for rollback, but a
+  // public watch page must never promote a mirror path as its canonical media.
+  if (config.siteId === "site_aidreamcapes_xby" && path.includes("/mirror/")) return false;
+  return true;
+}
 
 // These aliases preserve the three URLs that were previously published while
 // allowing their metadata to come from the current published runtime data.
@@ -51,14 +108,16 @@ function normalizePath(value: string): string {
   return clean === "/" ? "/" : `/${clean.replace(/^\/+|\/+$/g, "")}`;
 }
 
-function normalizeAssetPath(value: unknown, pattern: RegExp): string {
+function normalizeAssetPath(value: unknown, pattern: RegExp, config = VIDEO_WATCH_SITE_CONFIGS[0]): string {
   if (typeof value !== "string" || !value.trim()) return "";
   const raw = value.trim();
   let path = raw;
   if (/^https?:\/\//i.test(raw)) {
     try {
       const url = new URL(raw);
-      if (url.hostname && !/(?:^|\.)mydreamshoots\.com$/i.test(url.hostname)) return "";
+      const allowedHost = new URL(config.origin).hostname.toLowerCase();
+      const localHost = /^(?:localhost|127\.0\.0\.1|\[::1\])$/i.test(url.hostname);
+      if (url.hostname && url.hostname.toLowerCase() !== allowedHost && !localHost) return "";
       path = url.pathname;
     } catch {
       return "";
@@ -69,18 +128,25 @@ function normalizeAssetPath(value: unknown, pattern: RegExp): string {
 }
 
 export function isMydreamshootsVideoContentPath(value: unknown): value is string {
-  const path = normalizeAssetPath(value, VIDEO_PATH_PATTERN);
-  return path.startsWith("/assets/dreamshoot/");
+  const config = VIDEO_WATCH_SITE_CONFIGS[0];
+  return isAllowedAssetPath(normalizeAssetPath(value, VIDEO_PATH_PATTERN, config), config);
 }
 
-function normalizeVideoContentPath(value: unknown): string {
-  const path = normalizeAssetPath(value, VIDEO_PATH_PATTERN);
-  return path.startsWith("/assets/dreamshoot/") ? path : "";
+export function isStorefrontVideoContentPath(value: unknown, site?: Pick<Site, "id" | "primaryDomain" | "slug">): value is string {
+  const config = site ? videoWatchSiteConfig(site) : undefined;
+  if (!config) return false;
+  const path = normalizeAssetPath(value, VIDEO_PATH_PATTERN, config);
+  return isAllowedAssetPath(path, config);
 }
 
-function normalizeThumbnailPath(value: unknown): string {
-  const path = normalizeAssetPath(value, IMAGE_PATH_PATTERN);
-  return path.startsWith("/assets/dreamshoot/") ? path : "";
+function normalizeVideoContentPath(value: unknown, config = VIDEO_WATCH_SITE_CONFIGS[0]): string {
+  const path = normalizeAssetPath(value, VIDEO_PATH_PATTERN, config);
+  return isAllowedAssetPath(path, config) ? path : "";
+}
+
+function normalizeThumbnailPath(value: unknown, config = VIDEO_WATCH_SITE_CONFIGS[0]): string {
+  const path = normalizeAssetPath(value, IMAGE_PATH_PATTERN, config);
+  return isAllowedAssetPath(path, config) ? path : "";
 }
 
 function textValue(value: unknown): string {
@@ -89,6 +155,13 @@ function textValue(value: unknown): string {
 
 function firstText(values: unknown[]): string {
   return values.map(textValue).find(Boolean) ?? "";
+}
+
+function firstValue(values: unknown[]): unknown {
+  return values.find((value) => {
+    if (typeof value === "number") return Number.isFinite(value) && value > 0;
+    return Boolean(textValue(value));
+  });
 }
 
 function parseDuration(value: unknown): number | undefined {
@@ -111,7 +184,7 @@ function normalizeUploadDate(value: unknown, fallback = ""): string {
 }
 
 function humanizeFilename(contentPath: string): string {
-  const filename = contentPath.split("/").pop()?.replace(/\.(?:mp4|webm)$/i, "") ?? "AI video";
+  const filename = contentPath.split("/").pop()?.replace(/\.(?:mp4|webm)$/i, "") ?? "video";
   return filename.replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
@@ -149,7 +222,7 @@ function sourcePathForPage(sourcePath: unknown): string {
   return normalized || "/";
 }
 
-function metadataFromObject(value: Record<string, unknown>, fallback: VideoCandidate): Omit<VideoCandidate, "contentPath" | "sourcePath"> {
+function metadataFromObject(value: Record<string, unknown>, fallback: VideoCandidate, config: VideoWatchSiteConfig): Omit<VideoCandidate, "contentPath" | "sourcePath"> {
   const thumbnailPath = firstText([
     value.videoPosterUrl,
     value.videoPoster,
@@ -160,8 +233,8 @@ function metadataFromObject(value: Record<string, unknown>, fallback: VideoCandi
     value.imageUrl,
     value.coverImage,
     value.image
-  ].map(normalizeThumbnailPath));
-  const durationSeconds = parseDuration(firstText([
+  ].map((item) => normalizeThumbnailPath(item, config)));
+  const durationSeconds = parseDuration(firstValue([
     value.videoDurationSeconds,
     value.durationSeconds,
     value.videoDuration,
@@ -176,22 +249,22 @@ function metadataFromObject(value: Record<string, unknown>, fallback: VideoCandi
   };
 }
 
-function collectVideoCandidates(value: unknown, fallback: VideoCandidate, onCandidate: (candidate: VideoCandidate) => void): void {
+function collectVideoCandidates(value: unknown, fallback: VideoCandidate, config: VideoWatchSiteConfig, onCandidate: (candidate: VideoCandidate) => void): void {
   if (Array.isArray(value)) {
-    value.forEach((item) => collectVideoCandidates(item, fallback, onCandidate));
+    value.forEach((item) => collectVideoCandidates(item, fallback, config, onCandidate));
     return;
   }
   if (!value || typeof value !== "object") return;
   const object = value as Record<string, unknown>;
-  const metadata = metadataFromObject(object, fallback);
+  const metadata = metadataFromObject(object, fallback, config);
   for (const [key, child] of Object.entries(object)) {
-    const contentPath = normalizeVideoContentPath(child);
+    const contentPath = normalizeVideoContentPath(child, config);
     if (contentPath) {
       onCandidate({ contentPath, sourcePath: fallback.sourcePath, ...metadata });
       continue;
     }
     if (typeof child === "object" && child !== null) {
-      collectVideoCandidates(child, { ...fallback, ...metadata }, onCandidate);
+      collectVideoCandidates(child, { ...fallback, ...metadata }, config, onCandidate);
     }
     // Keeping this variable makes it explicit that only media-bearing values
     // are treated as video sources; arbitrary URLs in copy are ignored.
@@ -199,31 +272,38 @@ function collectVideoCandidates(value: unknown, fallback: VideoCandidate, onCand
   }
 }
 
-function addCandidate(records: Map<string, MyDreamShootsVideoWatchPage>, candidate: VideoCandidate, usedSlugs: Set<string>): void {
-  const contentPath = normalizeVideoContentPath(candidate.contentPath);
+function addCandidate(records: Map<string, MyDreamShootsVideoWatchPage>, candidate: VideoCandidate, config: VideoWatchSiteConfig, usedSlugs: Set<string>): void {
+  const contentPath = normalizeVideoContentPath(candidate.contentPath, config);
   if (!contentPath) return;
   const sourcePath = sourcePathForPage(candidate.sourcePath);
   const existing = records.get(contentPath);
   if (existing) {
     const sourcePaths = Array.from(new Set([...existing.sourcePaths, sourcePath])).sort();
-    records.set(contentPath, {
+    const next = {
       ...existing,
       sourcePath: existing.sourcePath || sourcePath,
       sourcePaths,
-      name: existing.name || candidate.name || humanizeFilename(contentPath),
-      description: existing.description || candidate.description || `Watch ${humanizeFilename(contentPath)} on myDreamshoots.`,
+      name: existing.name || textValue(candidate.name),
+      description: existing.description || textValue(candidate.description),
       thumbnailPath: existing.thumbnailPath || candidate.thumbnailPath || "",
       uploadDate: existing.uploadDate || normalizeUploadDate(candidate.uploadDate),
-      durationSeconds: existing.durationSeconds || candidate.durationSeconds || 15
-    });
+      durationSeconds: existing.durationSeconds || candidate.durationSeconds || 0
+    };
+    if (!next.name || !next.description || !next.thumbnailPath || !next.uploadDate || next.durationSeconds <= 0) return;
+    records.set(contentPath, next);
     return;
   }
-  const thumbnailPath = candidate.thumbnailPath || "";
-  // Public theme media can be rendered without a separate editorial date.
-  // Keep those videos indexable with a stable fallback instead of dropping
-  // an otherwise valid, publicly rendered video from the watch-page registry.
-  const uploadDate = normalizeUploadDate(candidate.uploadDate, "2026-01-01T00:00:00.000Z");
-  if (!thumbnailPath || !uploadDate) return;
+  const name = textValue(candidate.name);
+  const description = textValue(candidate.description);
+  const thumbnailPath = textValue(candidate.thumbnailPath);
+  const uploadDate = normalizeUploadDate(candidate.uploadDate);
+  const durationSeconds = candidate.durationSeconds && candidate.durationSeconds > 0
+    ? Math.floor(candidate.durationSeconds)
+    : 0;
+  // A watch page is indexable only when the current relational source has a
+  // complete editorial record. Do not invent a title, description, date, or
+  // duration from a filename or a historical/runtime fallback.
+  if (!name || !description || !thumbnailPath || !uploadDate || durationSeconds <= 0) return;
   const slug = stableSlug(contentPath, usedSlugs);
   usedSlugs.add(slug);
   records.set(contentPath, {
@@ -231,26 +311,37 @@ function addCandidate(records: Map<string, MyDreamShootsVideoWatchPage>, candida
     watchPath: `/watch/${slug}`,
     sourcePath,
     sourcePaths: [sourcePath],
-    name: candidate.name || humanizeFilename(contentPath),
-    description: candidate.description || `Watch ${humanizeFilename(contentPath)} on myDreamshoots.`,
+    name,
+    description,
+    siteId: config.siteId,
+    locale: config.locale,
+    origin: config.origin,
+    brand: config.brand,
     thumbnailPath,
     contentPath,
     uploadDate,
-    durationSeconds: Math.max(1, Math.floor(candidate.durationSeconds || 15))
+    durationSeconds,
+    canonicalUrl: `${config.origin}/watch/${slug}`
   });
 }
 
 export function mydreamshootsVideoWatchPagesForState(
   state: Pick<PlatformState, "videoThemes">,
-  site: Pick<Site, "id" | "primaryDomain" | "themeSettings" | "currentPublishedState">,
+  site: Pick<Site, "id" | "slug" | "primaryDomain" | "themeSettings">,
   options: {
     pages?: readonly VideoWatchSourcePage[];
     homepageShowcases?: readonly PublishedHomepageShowcaseItem[];
     themeSettingsJson?: unknown;
   } = {}
 ): readonly MyDreamShootsVideoWatchPage[] {
+  const config = videoWatchSiteConfig(site);
+  if (!config) return [];
   const records = new Map<string, MyDreamShootsVideoWatchPage>();
-  const usedSlugs = new Set(LEGACY_VIDEO_SLUG_ALIASES.values());
+  // Source aliases are part of the MyDreamShoots compatibility contract. EU
+  // stores own their watch namespace and must not inherit those reservations,
+  // otherwise an otherwise stable localized slug gets an accidental hash
+  // suffix (for example the Valentine page on Aidreamshoots).
+  const usedSlugs = config.siteId === "site_dreamshoot" ? new Set(LEGACY_VIDEO_SLUG_ALIASES.values()) : new Set<string>();
   const pages = options.pages ?? [];
   for (const page of pages) {
     const sourcePath = sourcePathForPage(page.slug);
@@ -259,58 +350,61 @@ export function mydreamshootsVideoWatchPagesForState(
       sourcePath,
       name: page.title,
       description: page.description,
-      uploadDate: page.updatedAt ?? page.createdAt ?? site.currentPublishedState?.publishedAt,
-      durationSeconds: 15
+      uploadDate: page.updatedAt ?? page.createdAt,
+      durationSeconds: undefined
     };
-    collectVideoCandidates(page.publishedJson, fallback, (candidate) => addCandidate(records, candidate, usedSlugs));
+    collectVideoCandidates(page.publishedJson, fallback, config, (candidate) => addCandidate(records, candidate, config, usedSlugs));
   }
   collectVideoCandidates(options.themeSettingsJson ?? site.themeSettings?.publishedJson, {
     contentPath: "",
     sourcePath: "/",
-    name: "How myDreamshoots AI Video Creation Works",
-    description: "See how myDreamshoots turns uploaded photos and ideas into AI videos and creative photo projects.",
-    uploadDate: site.currentPublishedState?.publishedAt,
-    durationSeconds: 15
-  }, (candidate) => addCandidate(records, candidate, usedSlugs));
+    name: "",
+    description: "",
+    uploadDate: "",
+    durationSeconds: undefined
+  }, config, (candidate) => addCandidate(records, candidate, config, usedSlugs));
 
   for (const item of options.homepageShowcases ?? []) {
-    const contentPath = normalizeVideoContentPath(item.videoUrl);
+    const contentPath = normalizeVideoContentPath(item.videoUrl, config);
     if (!contentPath || item.status !== "published" || !item.indexable || !item.sitemapEligible) continue;
     const candidate: VideoCandidate = {
       contentPath,
       sourcePath: "/",
       name: item.title,
       description: item.subtitle,
-      thumbnailPath: normalizeThumbnailPath(item.imageUrl),
-      uploadDate: site.currentPublishedState?.publishedAt,
-      durationSeconds: 15
+      thumbnailPath: normalizeThumbnailPath(item.imageUrl, config),
+      uploadDate: "",
+      durationSeconds: undefined
     };
-    addCandidate(records, candidate, usedSlugs);
-    addCandidate(records, { ...candidate, sourcePath: item.canonicalPath }, usedSlugs);
+    addCandidate(records, candidate, config, usedSlugs);
+    addCandidate(records, { ...candidate, sourcePath: item.canonicalPath }, config, usedSlugs);
   }
 
   for (const theme of state.videoThemes ?? []) {
     if (theme.siteId !== site.id || theme.status !== "active") continue;
-    const contentPath = (theme.galleryImages ?? []).map(normalizeVideoContentPath).find(Boolean) ?? "";
+    const contentPath = (theme.galleryImages ?? []).map((item) => normalizeVideoContentPath(item, config)).find(Boolean) ?? "";
     if (!contentPath) continue;
+    const relatedSourcePath = isBlockedPublicVideoThemeSlugForSite(site.id, theme.slug)
+      ? "/ai-video-generation"
+      : `/ai-video-generation/${theme.slug}`;
     addCandidate(records, {
       contentPath,
-      sourcePath: `/ai-video-generation/${theme.slug}`,
+      sourcePath: relatedSourcePath,
       name: theme.name,
       description: theme.description || theme.headline,
-      thumbnailPath: normalizeThumbnailPath(theme.imageUrl),
+      thumbnailPath: normalizeThumbnailPath(theme.imageUrl, config),
       uploadDate: theme.createdAt,
       durationSeconds: theme.durationSeconds
-    }, usedSlugs);
+    }, config, usedSlugs);
     addCandidate(records, {
       contentPath,
       sourcePath: "/",
       name: theme.name,
       description: theme.description || theme.headline,
-      thumbnailPath: normalizeThumbnailPath(theme.imageUrl),
+      thumbnailPath: normalizeThumbnailPath(theme.imageUrl, config),
       uploadDate: theme.createdAt,
       durationSeconds: theme.durationSeconds
-    }, usedSlugs);
+    }, config, usedSlugs);
   }
 
   return [...records.values()].sort((left, right) => left.watchPath.localeCompare(right.watchPath));
@@ -336,11 +430,19 @@ export function mydreamshootsVideoWatchPathForContentPath(
 }
 
 export function mydreamshootsVideoWatchUrl(page: MyDreamShootsVideoWatchPage): string {
-  return `${MYDREAMSHOOTS_VIDEO_WATCH_ORIGIN}${page.watchPath}`;
+  return page.canonicalUrl || `${page.origin}${page.watchPath}`;
 }
 
 export function mydreamshootsVideoAssetUrl(path: string): string {
   return `${MYDREAMSHOOTS_VIDEO_WATCH_ORIGIN}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+export function storefrontVideoAssetUrl(video: Pick<MyDreamShootsVideoWatchPage, "origin">, path: string): string {
+  return `${video.origin}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+export function storefrontVideoBrand(video: Pick<MyDreamShootsVideoWatchPage, "brand">): string {
+  return video.brand;
 }
 
 export function isMydreamshootsVideoHost(host: string | null | undefined): boolean {
@@ -349,4 +451,22 @@ export function isMydreamshootsVideoHost(host: string | null | undefined): boole
     || normalized === "mydreamshoots.com"
     || normalized === "www.mydreamshoots.localhost"
     || normalized === "mydreamshoots.localhost";
+}
+
+export function isStorefrontVideoHost(host: string | null | undefined): boolean {
+  const normalized = String(host ?? "").split(",")[0]?.trim().toLowerCase().split(":")[0] ?? "";
+  return [
+    "www.mydreamshoots.com",
+    "mydreamshoots.com",
+    "www.mydreamshoots.localhost",
+    "mydreamshoots.localhost",
+    "aidreamshoots.eu",
+    "www.aidreamshoots.eu",
+    "aidreamshoots.localhost",
+    "www.aidreamshoots.localhost",
+    "aidreamcapes.eu",
+    "www.aidreamcapes.eu",
+    "aidreamcapes.localhost",
+    "www.aidreamcapes.localhost"
+  ].includes(normalized);
 }

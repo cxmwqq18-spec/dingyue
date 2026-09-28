@@ -59,6 +59,7 @@ import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
 import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS, AIDREAMCAPES_IMAGE_THEME_ROOT_PATH } from "@/lib/aidreamcapes-image-theme-routes";
 import { indexableSeoPageEntriesForSite } from "@/lib/seo-indexing";
+import { isBlockedPublicVideoThemeSlugForSite } from "@/lib/video-theme-public-scope";
 import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, PublishedLeafRouteProjection, PublishedVideoNavigationProjection, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
@@ -864,10 +865,8 @@ function pageUsesFullMediaGallery(pageJson: ThemePageJson): boolean {
   return Object.values(pageJson.sections).some((section) => sectionUsesFullMediaGallery(section));
 }
 
-const blockedPublicVideoThemeSlugs = new Set(["creator-scene-motion"]);
-
 function isBlockedPublicVideoTheme(theme: VideoTheme): boolean {
-  return blockedPublicVideoThemeSlugs.has(theme.slug) && theme.siteId === "site_aidreamcapes";
+  return isBlockedPublicVideoThemeSlugForSite(theme.siteId, theme.slug);
 }
 
 function trimVideoThemesForStorefront(renderData: SiteRenderData, limit?: number, section?: SectionInstance): VideoTheme[] {

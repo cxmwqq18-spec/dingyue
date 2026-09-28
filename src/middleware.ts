@@ -801,10 +801,11 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
   const upstreamUrl = sameServerUrl(request);
   const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
   if (!hostSlug || upstreamUrl.pathname.startsWith("/site/")) return upstreamUrl;
-  // Video watch pages are standalone MyDreamShoots routes. Keep them on the
-  // top-level App Router path so they do not fall through to the database-backed
-  // storefront catch-all and lose their static video indexing contract.
-  if (hostSlug === "mydreamshoots" && upstreamUrl.pathname.startsWith("/watch/")) return upstreamUrl;
+  // Video watch pages are standalone routes for all three storefront hosts.
+  // Keep them on the top-level App Router path so they do not fall through to
+  // the database-backed storefront catch-all and lose their site-specific
+  // video indexing contract.
+  if (["mydreamshoots", "aidreamshoots", "aidreamcapes-eu"].includes(hostSlug) && upstreamUrl.pathname.startsWith("/watch/")) return upstreamUrl;
   // Keep the directory renderer for its complete published shell, while the
   // category query lets its metadata resolve the requested image theme.
   const imageThemeMatch = upstreamUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/);
@@ -926,11 +927,14 @@ export async function middleware(request: NextRequest) {
   }
   if (isGrownstrideRequest(request)) headers.set("X-Robots-Tag", "noindex, nofollow");
 
-  // About Us emits its JSON-LD after the page body. Buffer this single public
-  // route so the existing full HTML rewrite can relocate that schema into
-  // <head>; keep streaming for the rest of the storefront for performance.
+  // Aidreamcapes EU emits its JSON-LD after the page body. Buffer the French
+  // EU storefront so the existing full HTML rewrite can relocate that schema
+  // into <head>; otherwise the schema remains only inside a React Flight
+  // payload and is not exposed as a crawlable JSON-LD script in the response
+  // HTML. Keep the other storefronts on their existing streaming path.
   const aboutUsRoute = /(?:^|\/)about-us\/?$/i.test(request.nextUrl.pathname);
-  if (upstreamResponse.body && !aboutUsRoute) {
+  const bufferSeoJsonLd = aboutUsRoute || (isFrenchXbyRequest(request) && !isPrivateStorefrontHtmlRequest(request));
+  if (upstreamResponse.body && !bufferSeoJsonLd) {
     return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlStream(upstreamResponse.body, request, shouldReorder), {
       status: upstreamResponse.status,
       statusText: upstreamResponse.statusText,

@@ -38,6 +38,18 @@ const aliasExpectations = [
   ["/ai-video-generation/christmas", "/ai-save-the-date/christmas"],
   ["/ai-image-generation/urban", "/ai-image-generation/urbano"]
 ];
+const sharedPublicPaths = [
+  "/",
+  "/about-us",
+  "/contact-us",
+  "/creators-circle",
+  "/best-packages",
+  "/best-ai-image",
+  "/best-save-the-date",
+  "/faq",
+  "/pricing",
+  "/workflow"
+];
 
 const failures = [];
 const checks = [];
@@ -266,13 +278,17 @@ async function run() {
   check("sitemap.xml: excludes stale policy and private aliases", sitemapPaths.every((path) => !["/album", "/policies/shipping", "/policies/state-privacy"].includes(normalizePath(path))), sitemapPaths.filter((path) => ["/album", "/policies/shipping", "/policies/state-privacy"].includes(normalizePath(path))));
   check("sitemap.xml: excludes private/error paths", sitemapPaths.every((path) => !/^\/(login|404|account|app|dashboard|gallery)(?:\/|$)/i.test(path)), sitemapPaths.filter((path) => /^\/(login|404|account|app|dashboard|gallery)(?:\/|$)/i.test(path)));
   check("sitemap.xml: published coverage is non-empty", sitemapPaths.length > 0, { actual: sitemapPaths.length });
+  const missingSharedPublicPaths = sharedPublicPaths.filter((pathname) => !sitemapPaths.includes(pathname));
+  check("sitemap.xml: shared public baseline coverage", missingSharedPublicPaths.length === 0, missingSharedPublicPaths);
   const invalidLastmods = sitemapEntries.filter((entry) => !entry.lastmod || !Number.isFinite(Date.parse(entry.lastmod))).map((entry) => entry.loc);
   check("sitemap.xml: every URL has a valid lastmod", sitemapEntries.length === sitemapLocs.length && invalidLastmods.length === 0, { entries: sitemapEntries.length, missingOrInvalid: invalidLastmods.slice(0, 10) });
 
   if (!skipSitemapStatus) {
     for (const path of sitemapPaths) {
       try {
-        const response = await requestWithRetry(path, { method: "HEAD", host: productionHost, maxBytes: 20_000 });
+        // Use GET here: some Next.js fallback paths can return a misleading
+        // successful HEAD response while the actual HTML request is 404/500.
+        const response = await requestWithRetry(path, { method: "GET", host: productionHost, maxBytes: 20_000 });
         check(`sitemap route ${path}: HTTP 200`, response.status === 200, response.status);
       } catch (error) {
         check(`sitemap route ${path}: reachable`, false, String(error?.message ?? error));

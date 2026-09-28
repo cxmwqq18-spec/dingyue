@@ -91,6 +91,8 @@
     "repair:aidreamcapes-eu-video-french-local": "node scripts/repair-aidreamcapes-eu-video-french-local.mjs",
     "repair:aidreamcapes-eu-seo": "node scripts/repair-aidreamcapes-eu-seo-remediation.mjs",
     "repair:aidreamcapes-eu-seo:apply-local": "node scripts/repair-aidreamcapes-eu-seo-remediation.mjs --apply-local",
+    "repair:aidreamcapes-eu-mirror-media": "node scripts/repair-aidreamcapes-eu-mirror-media-local.mjs",
+    "repair:aidreamcapes-eu-mirror-media:apply-local": "node scripts/repair-aidreamcapes-eu-mirror-media-local.mjs --apply-local",
     "smoke:aidreamcapes-eu-seo": "node scripts/smoke-aidreamcapes-eu-seo-remediation.mjs",
     "smoke:aidreamcapes-before-after-assets": "node scripts/smoke-aidreamcapes-before-after-assets.mjs",
     "smoke:aidreamcapes-before-after-assets:db": "node scripts/smoke-aidreamcapes-before-after-assets.mjs --db",

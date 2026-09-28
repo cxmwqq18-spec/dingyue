@@ -7,9 +7,10 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 
-const baseUrl = (process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002/site/aidreamcapes-eu").replace(/\/$/, "");
+const baseUrl = (process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/\/$/, "");
+const smokeHost = process.env.SMOKE_HOST || "aidreamcapes.eu";
 const productionOrigin = "https://aidreamcapes.eu";
-const sitePrefix = "/site/aidreamcapes-eu";
+const sitePrefix = /\/site\/aidreamcapes-eu$/i.test(baseUrl) ? "/site/aidreamcapes-eu" : "";
 const reportRoot = path.resolve(".tmp", "aidreamcapes-eu-seo-remediation");
 const RETIRED_PATHS = new Set([
   "/ai-save-the-date/easter",
@@ -24,8 +25,32 @@ const RETIRED_PATHS = new Set([
 ]);
 const PRIVATE_PATHS = new Set(["/account", "/album", "/app", "/cart", "/login", "/search"]);
 const ALIAS_PATHS = new Set(["/collections", "/ai-video-generation/christmas", "/cookie-policy", "/privacy-policy", "/terms-of-service"]);
+// These are taxonomy group facets emitted by the shared directory navigation,
+// not page-backed EU documents. The fixed 117-page mapping intentionally does
+// not index them; do not treat their links as missing sitemap coverage.
+const NON_INDEXABLE_CATEGORY_GROUP_PATHS = new Set([
+  "/ai-image-generation/best-themes-presets",
+  "/ai-image-generation/lifestyle-creative",
+  "/ai-image-generation/magic",
+  "/ai-image-generation/motion-generator",
+  "/ai-image-generation/photo-tools",
+  "/ai-image-generation/professional",
+  "/ai-image-generation/social-cards"
+]);
 const KNOWN_BROKEN_ASSETS = ["portrait-professionnel.webp", "virtuel-essai.webp", "noel-photo.webp"];
 const SENTINEL_404_PATHS = ["/undefined", "/null", "/test", "/old"];
+const REQUIRED_SHARED_PUBLIC_PATHS = [
+  "/",
+  "/about-us",
+  "/contact-us",
+  "/creators-circle",
+  "/best-packages",
+  "/best-ai-image",
+  "/best-save-the-date",
+  "/faq",
+  "/pricing",
+  "/workflow"
+];
 
 function compact(value) {
   return String(value ?? "").replace(/\s+/g, " ").trim();
@@ -57,7 +82,7 @@ function isDetailRoute(route) {
 }
 
 function isEligibleDiscoveredRoute(route) {
-  return Boolean(route) && isDetailRoute(route) && !RETIRED_PATHS.has(route) && !PRIVATE_PATHS.has(route) && !ALIAS_PATHS.has(route);
+  return Boolean(route) && isDetailRoute(route) && !RETIRED_PATHS.has(route) && !PRIVATE_PATHS.has(route) && !ALIAS_PATHS.has(route) && !NON_INDEXABLE_CATEGORY_GROUP_PATHS.has(route);
 }
 
 function metaContent(html, name) {
@@ -92,6 +117,25 @@ function imageSources(html) {
   return [...html.matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)].map((match) => match[1]);
 }
 
+function jsonLdTypes(html) {
+  const types = new Set();
+  for (const match of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    try {
+      const parsed = JSON.parse(match[1]);
+      const nodes = Array.isArray(parsed?.["@graph"]) ? parsed["@graph"] : [parsed];
+      for (const node of nodes) {
+        for (const type of Array.isArray(node?.["@type"]) ? node["@type"] : [node?.["@type"]]) {
+          if (type) types.add(type);
+        }
+      }
+    } catch {
+      // The per-page failure below reports a missing required type; malformed
+      // JSON-LD must not make the smoke itself crash.
+    }
+  }
+  return types;
+}
+
 function internalHrefRoutes(html) {
   return [...html.matchAll(/<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>/gi)]
     .map((match) => routeFromUrl(match[1]))
@@ -100,7 +144,14 @@ function internalHrefRoutes(html) {
 
 async function request(route, options = {}) {
   const timeoutMs = Number(process.env.SEO_SMOKE_REQUEST_TIMEOUT_MS || 20_000);
-  const response = await fetch(absoluteLocalUrl(route), { redirect: options.redirect || "follow", signal: AbortSignal.timeout(timeoutMs), headers: { accept: "text/html,application/xml" } });
+  const response = await fetch(absoluteLocalUrl(route), {
+    redirect: options.redirect || "follow",
+    signal: AbortSignal.timeout(timeoutMs),
+    headers: {
+      accept: "text/html,application/xml",
+      ...(smokeHost ? { host: smokeHost, "x-forwarded-host": smokeHost } : {})
+    }
+  });
   const body = await response.text();
   return { route, status: response.status, url: response.url, headers: response.headers, body };
 }
@@ -128,6 +179,8 @@ async function main() {
   assert.equal(new Set(sitemapLocs).size, sitemapLocs.length, "sitemap has duplicate loc values");
   assert(sitemapLocs.every((loc) => new URL(loc).hostname === "aidreamcapes.eu"), "sitemap contains a foreign host");
   assert(!sitemapRoutes.some((route) => PRIVATE_PATHS.has(route) || RETIRED_PATHS.has(route) || ALIAS_PATHS.has(route)), "sitemap contains private, retired or alias route");
+  const missingSharedPublicPaths = REQUIRED_SHARED_PUBLIC_PATHS.filter((route) => !sitemapSet.has(route));
+  assert.equal(missingSharedPublicPaths.length, 0, `shared public routes missing from Aidreamcapes EU sitemap: ${missingSharedPublicPaths.join(", ")}`);
 
   const routeResults = [];
   const crawlRoutes = [...new Set(sitemapRoutes)];
@@ -156,6 +209,11 @@ async function main() {
     if (sourceProblems.length) failures.push("known-broken-image-source");
     const text = stripMarkup(page.body);
     if (/myDreamshoots|myDreamShoots|AIdreamshoots|aidreamshoots\.eu|aidreamcapes\.com/i.test(text)) failures.push("brand-leak");
+    const schemaTypes = jsonLdTypes(page.body);
+    const requiredSchemaTypes = isDetailRoute(route) || /^\/watch\//.test(route)
+      ? ["BreadcrumbList"]
+      : ["Organization", "WebSite", "BreadcrumbList"];
+    if (requiredSchemaTypes.some((type) => !schemaTypes.has(type))) failures.push("incomplete-json-ld");
     routeResults.push({ route, status: page.status, canonical, robots, imageCount: imageSources(page.body).length, wordCount: text.split(/\s+/).filter(Boolean).length, failures });
   });
 
@@ -198,6 +256,8 @@ async function main() {
   }
   const discoveredNotInSitemap = [...discoveredRoutes].filter((route) => !sitemapSet.has(route)).sort();
   const pageFailures = routeResults.filter((result) => result.failures.length);
+  const sitemapImageCount = (sitemapResponse.body.match(/<image:loc>/g) || []).length;
+  assert(sitemapImageCount > 0, "Aidreamcapes EU sitemap has no image entries");
   assert.equal(discoveredNotInSitemap.length, 0, `public detail routes missing from sitemap: ${discoveredNotInSitemap.join(", ")}`);
   assert.equal(pageFailures.length, 0, `sitemap page failures: ${JSON.stringify(pageFailures.slice(0, 8))}`);
 

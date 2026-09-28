@@ -24,6 +24,7 @@ import {
 import { isAidreamcapesImageThemePath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { AIDREAMCAPES_EU_PUBLIC_DETAIL_PATHS, canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
+import storefrontSourcePageMap from "../../scripts/data/storefront-source-page-map-2026-09-27.json";
 import { imageThemeDetailContentFromPage } from "@/lib/aidreamcapes-image-theme-content";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS, MYDREAMSHOOTS_RETIRED_PUBLIC_PATHS } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
@@ -32,6 +33,7 @@ import type { CreativePack, PlatformState, PublishedLeafRouteProjection, Publish
 import { AIDREAMSHOOTS_VIDEO_SAVE_THE_DATE_ALIASES, aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import {
   mydreamshootsVideoWatchPagesForState,
+  isStorefrontVideoHost,
   type MyDreamShootsVideoWatchPage
 } from "@/lib/mydreamshoots-video-watch";
 
@@ -79,6 +81,8 @@ const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_PATHS = [
 ];
 const DREAMSHOOT_DEFAULT_PUBLIC_TOOL_SLUGS = new Set<string>(MYDREAMSHOOTS_PUBLIC_AI_VIDEO_GENERATION_SLUGS);
 const REQUIRED_INDEXABLE_CONTENT_PATHS = ["/about-us", "/contact-us", "/creators-circle", "/best-packages", "/best-ai-image", "/best-save-the-date", "/faq", "/pricing", "/workflow"];
+const REQUIRED_INDEXABLE_AIDREAMCAPES_EU_PATHS = [...REQUIRED_INDEXABLE_CONTENT_PATHS];
+const REQUIRED_INDEXABLE_EU_PARITY_PATHS = ["/best-ai-video", "/blog/cinematic-video-guide", "/blog/motion-generator-video-guide", "/blog/talking-photo-video-guide"];
 const REQUIRED_INDEXABLE_AIDREAMSHOOTS_PATHS = [
   "/ai-image-generation/motion-generator",
   ...Object.keys(AIDREAMSHOOTS_VIDEO_SAVE_THE_DATE_ALIASES).map((slug) => `/ai-save-the-date/${slug}`)
@@ -463,13 +467,37 @@ function absoluteMediaUrl(site: Site, value: string | undefined): string {
 
 function sitemapMediaUrl(site: Site, value: string | undefined): string {
   const resolved = absoluteMediaUrl(site, value);
+  if (!resolved) return "";
   const isAidreamcapesMediaSite = site.id === AIDREAMCAPES_SITE_ID || site.id === "site_aidreamcapes_xby";
-  if (!resolved || !isAidreamcapesMediaSite) return resolved;
+  const isAidreamshootsEuMediaSite = site.id === "site_mydreamshoots_xby";
+  if (isAidreamshootsEuMediaSite || site.id === "site_aidreamcapes_xby") {
+    try {
+      const parsed = new URL(resolved);
+      const expectedHost = originHost(siteOrigin(site));
+      const expectedRoot = site.id === "site_aidreamcapes_xby"
+        ? "/assets/sites/site_aidreamcapes_eu/"
+        : "/assets/sites/site_aidreamshoots/";
+      if (!expectedHost || parsed.host.toLowerCase() !== expectedHost || !parsed.pathname.startsWith(expectedRoot) || parsed.pathname.includes("/mirror/")) return "";
+      // AIdreamshoots' current relation rows already own these target-root
+      // paths; some binary derivatives are supplied by the media release
+      // rather than this source checkout. Keep the sitemap contract focused
+      // on host/root ownership and let the HTTP release smoke verify files.
+      if (site.id === "site_mydreamshoots_xby") return resolved;
+      const localAsset = nodePath.join(process.cwd(), "public", parsed.pathname.replace(/^\/+/, ""));
+      return fs.existsSync(localAsset) ? resolved : "";
+    } catch {
+      return "";
+    }
+  }
+  if (!isAidreamcapesMediaSite) return resolved;
   try {
     const parsed = new URL(resolved);
     const expectedHost = originHost(site.id === AIDREAMCAPES_SITE_ID ? AIDREAMCAPES_ORIGIN : siteOrigin(site));
     if (!expectedHost || parsed.host.toLowerCase() !== expectedHost) return "";
-    if (!parsed.pathname.startsWith(`/assets/sites/${site.id}/`)) return "";
+    const allowedAssetRoots = site.id === "site_aidreamcapes_xby"
+      ? ["site_aidreamcapes_eu", "site_aidreamcapes_xby"]
+      : [site.id];
+    if (!allowedAssetRoots.some((assetSiteId) => parsed.pathname.startsWith(`/assets/sites/${assetSiteId}/`))) return "";
     // Aidreamcapes publishes its sitemap media from the repository's public
     // asset namespace. Do not advertise a stale database reference when the
     // corresponding file is absent from the release being built.
@@ -675,7 +703,6 @@ function mydreamshootsVideoWatchPagesForSnapshot(
   site: Site,
   snapshot: ReturnType<typeof createPublishedSiteSnapshot>
 ): readonly MyDreamShootsVideoWatchPage[] {
-  if (!isPrimaryMydreamshootsSite(site)) return [];
   return mydreamshootsVideoWatchPagesForState(state, site, {
     pages: snapshot.pages.map((page) => ({
       ...page,
@@ -933,17 +960,20 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       });
     }
   }
-  if (site.id === DREAMSHOOT_SITE_ID || site.primaryDomain === "www.mydreamshoots.com") {
+  if (isStorefrontVideoWatchSite(site)) {
     for (const video of videoWatchPages) {
       const loc = sitemapUrl(site, video.watchPath);
+      const thumbnailLoc = sitemapMediaUrl(site, video.thumbnailPath);
+      const contentLoc = sitemapMediaUrl(site, video.contentPath);
+      if (!thumbnailLoc || !contentLoc) continue;
       entries.set(loc, {
         loc,
-        images: [{ loc: absoluteMediaUrl(site, video.thumbnailPath), title: video.name }].filter((image) => image.loc),
+        images: [{ loc: thumbnailLoc, title: video.name }],
         video: {
-          thumbnailLoc: absoluteMediaUrl(site, video.thumbnailPath),
+          thumbnailLoc,
           title: video.name,
           description: video.description,
-          contentLoc: absoluteMediaUrl(site, video.contentPath),
+          contentLoc,
           publicationDate: video.uploadDate,
           duration: String(video.durationSeconds)
         },
@@ -990,6 +1020,33 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       if (canonicalLoc === loc) continue;
       entries.delete(loc);
       if (!entries.has(canonicalLoc)) entries.set(canonicalLoc, { ...entry, loc: canonicalLoc });
+    }
+  }
+  if (site.id === "site_aidreamcapes_xby" || site.id === "site_mydreamshoots_xby") {
+    const targetKey = site.id === "site_aidreamcapes_xby" ? "aidreamcapesPath" : "aidreamshootsPath";
+    const allowedPaths = new Set(storefrontSourcePageMap.pages.map((page) => page[targetKey]));
+    // A translated EU LivePage can be fully indexable while its historical
+    // route projection is absent. Add the current relational page entity
+    // directly so parity never depends on an old publication snapshot.
+    for (const path of allowedPaths) {
+      const loc = sitemapUrl(site, path);
+      if (entries.has(loc) || path.startsWith("/watch/")) continue;
+      const page = pageForCanonicalSeoPath(snapshot, site, path);
+      if (!page || page.publishedJson.seo?.index === false || page.publishedJson.seo?.robots?.index === false) continue;
+      entries.set(loc, {
+        loc,
+        images: collectPageSitemapImages(site, page),
+        lastmod: pageContentLastModified(page, snapshot.publication?.publishedAt),
+        changefreq: sitemapChangeFrequencyForPath(path),
+        priority: sitemapPriorityForPath(path)
+      });
+    }
+    for (const [loc] of entries) {
+      try {
+        if (!allowedPaths.has(new URL(loc).pathname)) entries.delete(loc);
+      } catch {
+        entries.delete(loc);
+      }
     }
   }
   return [...entries.values()].sort((left, right) => left.loc.localeCompare(right.loc));
@@ -1469,7 +1526,13 @@ function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[
   // Keep the public editorial inventory in the same candidate set as dynamic
   // catalogue links. The final resolver below still requires a published
   // page/route, so a missing draft cannot become a sitemap URL by declaration.
-  for (const path of [...REQUIRED_INDEXABLE_CONTENT_PATHS, ...REQUIRED_INDEXABLE_POLICY_PATHS, ...(isAidreamshootsStorefrontSite(site) ? REQUIRED_INDEXABLE_AIDREAMSHOOTS_PATHS : [])]) {
+  for (const path of [
+    ...REQUIRED_INDEXABLE_CONTENT_PATHS,
+    ...(isAidreamshootsStorefrontSite(site) || site.id === "site_aidreamcapes_xby" ? REQUIRED_INDEXABLE_EU_PARITY_PATHS : []),
+    ...REQUIRED_INDEXABLE_POLICY_PATHS,
+    ...(isAidreamshootsStorefrontSite(site) ? REQUIRED_INDEXABLE_AIDREAMSHOOTS_PATHS : []),
+    ...(site.id === "site_aidreamcapes_xby" ? REQUIRED_INDEXABLE_AIDREAMCAPES_EU_PATHS : [])
+  ]) {
     addPublicPath(state, site, paths, path);
   }
   if (site.id === "site_aidreamcapes_xby") {
@@ -1518,8 +1581,13 @@ export function indexableSeoPageEntriesForSite(state: PlatformState, site: Site,
     if (isAidreamshootsStorefrontSite(site) && canonicalPath.startsWith("/ai-image-generation/collections-")) continue;
     const route = snapshot.publishedRoutes.find((item) => item.disposition === "render" && item.canonicalPath === canonicalPath);
     const page = pageForCanonicalSeoPath(snapshot, site, canonicalPath);
-    const explicitAidreamshootsPage = isAidreamshootsStorefrontSite(site) &&
-      [...REQUIRED_INDEXABLE_CONTENT_PATHS, ...REQUIRED_INDEXABLE_AIDREAMSHOOTS_PATHS].includes(canonicalPath);
+    const explicitEditorialPage = (
+      isAidreamshootsStorefrontSite(site) &&
+      [...REQUIRED_INDEXABLE_CONTENT_PATHS, ...REQUIRED_INDEXABLE_AIDREAMSHOOTS_PATHS, ...REQUIRED_INDEXABLE_EU_PARITY_PATHS].includes(canonicalPath)
+    ) || (
+      site.id === "site_aidreamcapes_xby" &&
+      [...REQUIRED_INDEXABLE_AIDREAMCAPES_EU_PATHS, ...REQUIRED_INDEXABLE_EU_PARITY_PATHS].includes(canonicalPath)
+    );
     let indexable = false;
 
     if (route && "status" in route) {
@@ -1545,7 +1613,7 @@ export function indexableSeoPageEntriesForSite(state: PlatformState, site: Site,
     // AIdreamshoots editorial rows are served from the current LivePage
     // projection and can legitimately exist without a historical publication
     // route entity. Their own SEO flags remain authoritative.
-    if (!indexable && explicitAidreamshootsPage && page && isIndexablePage(page, site)) {
+    if (!indexable && explicitEditorialPage && page && isIndexablePage(page, site)) {
       const seo = page.publishedJson.seo;
       indexable = seo?.index !== false && seo?.robots?.index !== false && canonicalDirectoryPathForSite(site, canonicalPathForSitemapPage(page)) === canonicalPath;
     }
@@ -1643,14 +1711,14 @@ function normalizeHostCandidates(hosts: string | null | undefined | Array<string
 export async function getMydreamshootsVideoWatchPagesForHost(
   hosts: string | null | undefined | Array<string | null | undefined>
 ): Promise<readonly MyDreamShootsVideoWatchPage[]> {
+  return getStorefrontVideoWatchPagesForHost(hosts);
+}
+
+export async function getStorefrontVideoWatchPagesForHost(
+  hosts: string | null | undefined | Array<string | null | undefined>
+): Promise<readonly MyDreamShootsVideoWatchPage[]> {
   const normalizedHosts = normalizeHostCandidates(hosts);
-  const isMydreamshootsRequest = normalizedHosts.some((host) =>
-    host === "www.mydreamshoots.com"
-    || host === "mydreamshoots.com"
-    || host === "www.mydreamshoots.localhost"
-    || host === "mydreamshoots.localhost"
-  );
-  if (!isMydreamshootsRequest) return [];
+  if (!normalizedHosts.some(isStorefrontVideoHost)) return [];
 
   // Reverse proxies can provide both a public x-forwarded-host and an
   // internal loopback host. A request is local only when every candidate is
@@ -1665,10 +1733,31 @@ export async function getMydreamshootsVideoWatchPagesForHost(
   // sitemap. In multi-site runtime snapshots, taking the first DreamShoot
   // site can silently produce watch pages from a different site's content.
   const site = getSiteByHostCandidatesFromState(runtime.state, normalizedHosts)
-    ?? runtime.sites.find(isDreamshootSite);
-  if (!site || !isDreamshootSite(site)) return [];
+    ?? runtime.sites.find((candidate) => normalizedHosts.some((host) => isHostForVideoWatchSite(candidate, host)))
+    ?? runtime.sites.find(isStorefrontVideoWatchSite);
+  if (!site || !isStorefrontVideoWatchSite(site)) return [];
   const snapshot = createPublishedSiteSnapshot(runtime.state, site, { source: "postgres" });
   return mydreamshootsVideoWatchPagesForSnapshot(runtime.state, site, snapshot);
+}
+
+function isStorefrontVideoWatchSite(site: Site): boolean {
+  return site.id === DREAMSHOOT_SITE_ID
+    || site.id === "site_mydreamshoots_xby"
+    || site.id === "site_aidreamcapes_xby"
+    || site.primaryDomain.trim().toLowerCase() === "www.mydreamshoots.com"
+    || site.primaryDomain.trim().toLowerCase() === "aidreamshoots.eu"
+    || site.primaryDomain.trim().toLowerCase() === "www.aidreamshoots.eu"
+    || site.primaryDomain.trim().toLowerCase() === "aidreamcapes.eu"
+    || site.primaryDomain.trim().toLowerCase() === "www.aidreamcapes.eu";
+}
+
+function isHostForVideoWatchSite(site: Site, host: string): boolean {
+  const normalized = host.trim().toLowerCase().split(":")[0];
+  if (!normalized) return false;
+  if (normalized.includes("aidreamshoots")) return site.id === "site_mydreamshoots_xby" || site.primaryDomain.toLowerCase().includes("aidreamshoots");
+  if (normalized.includes("aidreamcapes")) return site.id === "site_aidreamcapes_xby" || site.primaryDomain.toLowerCase().includes("aidreamcapes");
+  if (normalized.includes("mydreamshoots")) return isDreamshootSite(site);
+  return false;
 }
 
 function isLocalDevelopmentHost(host: string): boolean {

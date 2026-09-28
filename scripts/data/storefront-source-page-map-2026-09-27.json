@@ -1,0 +1,1665 @@
+{
+  "version": "2026-09-27-v1",
+  "source": {
+    "siteId": "site_dreamshoot",
+    "origin": "https://www.mydreamshoots.com",
+    "sitemap": "https://www.mydreamshoots.com/sitemap.xml",
+    "expectedUrlCount": 117
+  },
+  "targets": {
+    "aidreamcapes": {
+      "siteId": "site_aidreamcapes_xby",
+      "origin": "https://aidreamcapes.eu",
+      "locale": "fr",
+      "mediaRoot": "/assets/sites/site_aidreamcapes_eu/",
+      "expectedUrlCount": 117
+    },
+    "aidreamshoots": {
+      "siteId": "site_mydreamshoots_xby",
+      "origin": "https://aidreamshoots.eu",
+      "locale": "es",
+      "mediaRoot": "/assets/sites/site_aidreamshoots/",
+      "expectedUrlCount": 117
+    }
+  },
+  "pages": [
+    {
+      "sourcePath": "/",
+      "aidreamcapesPath": "/",
+      "aidreamshootsPath": "/",
+      "pageType": "public-page",
+      "sourceTitle": "Home",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/about-us",
+      "aidreamcapesPath": "/about-us",
+      "aidreamshootsPath": "/about-us",
+      "pageType": "public-page",
+      "sourceTitle": "About Us",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation",
+      "aidreamcapesPath": "/ai-image-generation",
+      "aidreamshootsPath": "/ai-image-generation",
+      "pageType": "image-theme",
+      "sourceTitle": "Ai Image Generation",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/avatar",
+      "aidreamcapesPath": "/ai-image-generation/avatar",
+      "aidreamshootsPath": "/ai-image-generation/avatar",
+      "pageType": "image-theme",
+      "sourceTitle": "Avatar",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/background-changer",
+      "aidreamcapesPath": "/ai-image-generation/background-changer",
+      "aidreamshootsPath": "/ai-image-generation/cambiador-de-fondo",
+      "pageType": "image-theme",
+      "sourceTitle": "Background Changer",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/background-remover",
+      "aidreamcapesPath": "/ai-image-generation/background-remover",
+      "aidreamshootsPath": "/ai-image-generation/eliminador-de-fondo",
+      "pageType": "image-theme",
+      "sourceTitle": "Background Remover",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/bikini",
+      "aidreamcapesPath": "/ai-image-generation/bikini",
+      "aidreamshootsPath": "/ai-image-generation/bikini",
+      "pageType": "image-theme",
+      "sourceTitle": "Bikini",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/black-friday",
+      "aidreamcapesPath": "/ai-image-generation/black-friday",
+      "aidreamshootsPath": "/ai-image-generation/negro-viernes",
+      "pageType": "image-theme",
+      "sourceTitle": "Black Friday",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/boudoir",
+      "aidreamcapesPath": "/ai-image-generation/boudoir",
+      "aidreamshootsPath": "/ai-image-generation/boudoir",
+      "pageType": "image-theme",
+      "sourceTitle": "Boudoir",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/cannes",
+      "aidreamcapesPath": "/ai-image-generation/cannes",
+      "aidreamshootsPath": "/ai-image-generation/cannes",
+      "pageType": "image-theme",
+      "sourceTitle": "Cannes",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/christmas-photo",
+      "aidreamcapesPath": "/ai-image-generation/christmas-photo",
+      "aidreamshootsPath": "/ai-image-generation/navidad-foto",
+      "pageType": "image-theme",
+      "sourceTitle": "Christmas Photo",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/color-correction",
+      "aidreamcapesPath": "/ai-image-generation/color-correction",
+      "aidreamshootsPath": "/ai-image-generation/correccion-de-color",
+      "pageType": "image-theme",
+      "sourceTitle": "Color Correction",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/cyberpunk",
+      "aidreamcapesPath": "/ai-image-generation/cyberpunk",
+      "aidreamshootsPath": "/ai-image-generation/cyberpunk",
+      "pageType": "image-theme",
+      "sourceTitle": "Cyberpunk",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/edit-by-prompt",
+      "aidreamcapesPath": "/ai-image-generation/edit-by-prompt",
+      "aidreamshootsPath": "/ai-image-generation/editar-con-instrucciones",
+      "pageType": "image-theme",
+      "sourceTitle": "Edit By Prompt",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/engagement-photo",
+      "aidreamcapesPath": "/ai-image-generation/engagement-photo",
+      "aidreamshootsPath": "/ai-image-generation/compromiso-foto",
+      "pageType": "image-theme",
+      "sourceTitle": "Engagement Photo",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/gala-photo",
+      "aidreamcapesPath": "/ai-image-generation/gala-photo",
+      "aidreamshootsPath": "/ai-image-generation/gala-foto",
+      "pageType": "image-theme",
+      "sourceTitle": "Gala Photo",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/hairstyle-generator",
+      "aidreamcapesPath": "/ai-image-generation/hairstyle-generator",
+      "aidreamshootsPath": "/ai-image-generation/peinado-generador",
+      "pageType": "image-theme",
+      "sourceTitle": "Hairstyle Generator",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/halloween-photo",
+      "aidreamcapesPath": "/ai-image-generation/halloween-photo",
+      "aidreamshootsPath": "/ai-image-generation/halloween-foto",
+      "pageType": "image-theme",
+      "sourceTitle": "Halloween Photo",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/headshot",
+      "aidreamcapesPath": "/ai-image-generation/headshot",
+      "aidreamshootsPath": "/ai-image-generation/retrato-profesional",
+      "pageType": "image-theme",
+      "sourceTitle": "Headshot",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/holiday",
+      "aidreamcapesPath": "/ai-image-generation/holiday",
+      "aidreamshootsPath": "/ai-image-generation/festivos",
+      "pageType": "image-theme",
+      "sourceTitle": "Holiday",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/mafia",
+      "aidreamcapesPath": "/ai-image-generation/mafia",
+      "aidreamshootsPath": "/ai-image-generation/noir-cinematografico",
+      "pageType": "image-theme",
+      "sourceTitle": "Mafia",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/magic-eraser",
+      "aidreamcapesPath": "/ai-image-generation/magic-eraser",
+      "aidreamshootsPath": "/ai-image-generation/borrador-m-gico",
+      "pageType": "image-theme",
+      "sourceTitle": "Magic Eraser",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/nightlife",
+      "aidreamcapesPath": "/ai-image-generation/nightlife",
+      "aidreamshootsPath": "/ai-image-generation/vida-nocturna",
+      "pageType": "image-theme",
+      "sourceTitle": "Nightlife",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/old-photo-restoration",
+      "aidreamcapesPath": "/ai-image-generation/old-photo-restoration",
+      "aidreamshootsPath": "/ai-image-generation/restauracion-de-fotos-antiguas",
+      "pageType": "image-theme",
+      "sourceTitle": "Old Photo Restoration",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/only-fans",
+      "aidreamcapesPath": "/ai-image-generation/only-fans",
+      "aidreamshootsPath": "/ai-image-generation/solo-fans",
+      "pageType": "image-theme",
+      "sourceTitle": "Only Fans",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/photo-enhancer",
+      "aidreamcapesPath": "/ai-image-generation/photo-enhancer",
+      "aidreamshootsPath": "/ai-image-generation/mejorador-de-fotos",
+      "pageType": "image-theme",
+      "sourceTitle": "Photo Enhancer",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/portrait-photo",
+      "aidreamcapesPath": "/ai-image-generation/portrait-photo",
+      "aidreamshootsPath": "/ai-image-generation/retrato-foto",
+      "pageType": "image-theme",
+      "sourceTitle": "Portrait Photo",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/portrait-retouch",
+      "aidreamcapesPath": "/ai-image-generation/portrait-retouch",
+      "aidreamshootsPath": "/ai-image-generation/retoque-de-retrato",
+      "pageType": "image-theme",
+      "sourceTitle": "Portrait Retouch",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/rich-lifestyle",
+      "aidreamcapesPath": "/ai-image-generation/rich-lifestyle",
+      "aidreamshootsPath": "/ai-image-generation/premium-estilo-de-vida",
+      "pageType": "image-theme",
+      "sourceTitle": "Rich Lifestyle",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/singles-awareness-day",
+      "aidreamcapesPath": "/ai-image-generation/singles-awareness-day",
+      "aidreamshootsPath": "/ai-image-generation/solteros-conciencia-dia",
+      "pageType": "image-theme",
+      "sourceTitle": "Singles Awareness Day",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/soccer",
+      "aidreamcapesPath": "/ai-image-generation/soccer",
+      "aidreamshootsPath": "/ai-image-generation/futbol",
+      "pageType": "image-theme",
+      "sourceTitle": "Soccer",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/street-style",
+      "aidreamcapesPath": "/ai-image-generation/street-style",
+      "aidreamshootsPath": "/ai-image-generation/calle-estilo",
+      "pageType": "image-theme",
+      "sourceTitle": "Street Style",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/swimsuit",
+      "aidreamcapesPath": "/ai-image-generation/swimsuit",
+      "aidreamshootsPath": "/ai-image-generation/banador",
+      "pageType": "image-theme",
+      "sourceTitle": "Swimsuit",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/thanksgiving-photo",
+      "aidreamcapesPath": "/ai-image-generation/thanksgiving-photo",
+      "aidreamshootsPath": "/ai-image-generation/accion-de-gracias-foto",
+      "pageType": "image-theme",
+      "sourceTitle": "Thanksgiving Photo",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/travel",
+      "aidreamcapesPath": "/ai-image-generation/travel",
+      "aidreamshootsPath": "/ai-image-generation/viaje",
+      "pageType": "image-theme",
+      "sourceTitle": "Travel",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/unblur-image",
+      "aidreamcapesPath": "/ai-image-generation/unblur-image",
+      "aidreamshootsPath": "/ai-image-generation/enfocar-imagen",
+      "pageType": "image-theme",
+      "sourceTitle": "Unblur Image",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/urban",
+      "aidreamcapesPath": "/ai-image-generation/urban",
+      "aidreamshootsPath": "/ai-image-generation/urbano",
+      "pageType": "image-theme",
+      "sourceTitle": "Urban",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/valentines-photo",
+      "aidreamcapesPath": "/ai-image-generation/valentines-photo",
+      "aidreamshootsPath": "/ai-image-generation/san-valentin-foto",
+      "pageType": "image-theme",
+      "sourceTitle": "Valentines Photo",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/virtual-try-on",
+      "aidreamcapesPath": "/ai-image-generation/virtual-try-on",
+      "aidreamshootsPath": "/ai-image-generation/probador-virtual",
+      "pageType": "image-theme",
+      "sourceTitle": "Virtual Try On",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-image-generation/wedding-photo",
+      "aidreamcapesPath": "/ai-image-generation/wedding-photo",
+      "aidreamshootsPath": "/ai-image-generation/boda-foto",
+      "pageType": "image-theme",
+      "sourceTitle": "Wedding Photo",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-save-the-date/christmas",
+      "aidreamcapesPath": "/ai-save-the-date/christmas",
+      "aidreamshootsPath": "/ai-save-the-date/christmas",
+      "pageType": "save-the-date",
+      "sourceTitle": "Christmas",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-save-the-date/engagement",
+      "aidreamcapesPath": "/ai-save-the-date/engagement",
+      "aidreamshootsPath": "/ai-save-the-date/engagement",
+      "pageType": "save-the-date",
+      "sourceTitle": "Engagement",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-save-the-date/fathers-day",
+      "aidreamcapesPath": "/ai-save-the-date/fathers-day",
+      "aidreamshootsPath": "/ai-save-the-date/fathers-day",
+      "pageType": "save-the-date",
+      "sourceTitle": "Fathers Day",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-save-the-date/halloween",
+      "aidreamcapesPath": "/ai-save-the-date/halloween",
+      "aidreamshootsPath": "/ai-save-the-date/halloween",
+      "pageType": "save-the-date",
+      "sourceTitle": "Halloween",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-save-the-date/mothers-day",
+      "aidreamcapesPath": "/ai-save-the-date/mothers-day",
+      "aidreamshootsPath": "/ai-save-the-date/mothers-day",
+      "pageType": "save-the-date",
+      "sourceTitle": "Mothers Day",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-save-the-date/new-year",
+      "aidreamcapesPath": "/ai-save-the-date/new-year",
+      "aidreamshootsPath": "/ai-save-the-date/new-year",
+      "pageType": "save-the-date",
+      "sourceTitle": "New Year",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-save-the-date/proposal",
+      "aidreamcapesPath": "/ai-save-the-date/proposal",
+      "aidreamshootsPath": "/ai-save-the-date/proposal",
+      "pageType": "save-the-date",
+      "sourceTitle": "Proposal",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-save-the-date/save-the-date",
+      "aidreamcapesPath": "/ai-save-the-date/save-the-date",
+      "aidreamshootsPath": "/ai-save-the-date/save-the-date",
+      "pageType": "save-the-date",
+      "sourceTitle": "Save The Date",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-save-the-date/thanksgiving",
+      "aidreamcapesPath": "/ai-save-the-date/thanksgiving",
+      "aidreamshootsPath": "/ai-save-the-date/thanksgiving",
+      "pageType": "save-the-date",
+      "sourceTitle": "Thanksgiving",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-save-the-date/valentines-day",
+      "aidreamcapesPath": "/ai-save-the-date/valentines-day",
+      "aidreamshootsPath": "/ai-save-the-date/valentines-day",
+      "pageType": "save-the-date",
+      "sourceTitle": "Valentines Day",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-save-the-date/wedding-ceremony",
+      "aidreamcapesPath": "/ai-save-the-date/wedding-ceremony",
+      "aidreamshootsPath": "/ai-save-the-date/wedding-ceremony",
+      "pageType": "save-the-date",
+      "sourceTitle": "Wedding Ceremony",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-save-the-date/wedding-invitation",
+      "aidreamcapesPath": "/ai-save-the-date/wedding-invitation",
+      "aidreamshootsPath": "/ai-save-the-date/wedding-invitation",
+      "pageType": "save-the-date",
+      "sourceTitle": "Wedding Invitation",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation",
+      "aidreamcapesPath": "/ai-video-generation",
+      "aidreamshootsPath": "/ai-video-generation",
+      "pageType": "video-theme",
+      "sourceTitle": "Ai Video Generation",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/brand-video",
+      "aidreamcapesPath": "/ai-video-generation/brand-video",
+      "aidreamshootsPath": "/ai-video-generation/brand-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Brand Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/cinematic-video",
+      "aidreamcapesPath": "/ai-video-generation/cinematic-video",
+      "aidreamshootsPath": "/ai-video-generation/cinematic-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Cinematic Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/explainer-video",
+      "aidreamcapesPath": "/ai-video-generation/explainer-video",
+      "aidreamshootsPath": "/ai-video-generation/explainer-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Explainer Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/fashion-video",
+      "aidreamcapesPath": "/ai-video-generation/fashion-video",
+      "aidreamshootsPath": "/ai-video-generation/fashion-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Fashion Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/food-video",
+      "aidreamcapesPath": "/ai-video-generation/food-video",
+      "aidreamshootsPath": "/ai-video-generation/food-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Food Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/how-to-video",
+      "aidreamcapesPath": "/ai-video-generation/how-to-video",
+      "aidreamshootsPath": "/ai-video-generation/how-to-video",
+      "pageType": "video-theme",
+      "sourceTitle": "How To Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/instagram-reels",
+      "aidreamcapesPath": "/ai-video-generation/instagram-reels",
+      "aidreamshootsPath": "/ai-video-generation/instagram-reels",
+      "pageType": "video-theme",
+      "sourceTitle": "Instagram Reels",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/meme-video",
+      "aidreamcapesPath": "/ai-video-generation/meme-video",
+      "aidreamshootsPath": "/ai-video-generation/meme-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Meme Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/motion-generator",
+      "aidreamcapesPath": "/ai-video-generation/motion-generator",
+      "aidreamshootsPath": "/ai-video-generation/motion-generator",
+      "pageType": "video-theme",
+      "sourceTitle": "Motion Generator",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/music-video",
+      "aidreamcapesPath": "/ai-video-generation/music-video",
+      "aidreamshootsPath": "/ai-video-generation/music-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Music Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/pet-video",
+      "aidreamcapesPath": "/ai-video-generation/pet-video",
+      "aidreamshootsPath": "/ai-video-generation/pet-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Pet Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/product-ad-video",
+      "aidreamcapesPath": "/ai-video-generation/product-ad-video",
+      "aidreamshootsPath": "/ai-video-generation/product-ad-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Product Ad Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/product-video",
+      "aidreamcapesPath": "/ai-video-generation/product-video",
+      "aidreamshootsPath": "/ai-video-generation/product-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Product Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/promo-video",
+      "aidreamcapesPath": "/ai-video-generation/promo-video",
+      "aidreamshootsPath": "/ai-video-generation/promo-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Promo Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/social-media-video",
+      "aidreamcapesPath": "/ai-video-generation/social-media-video",
+      "aidreamshootsPath": "/ai-video-generation/social-media-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Social Media Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/story-video",
+      "aidreamcapesPath": "/ai-video-generation/story-video",
+      "aidreamshootsPath": "/ai-video-generation/story-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Story Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/talking-head-video",
+      "aidreamcapesPath": "/ai-video-generation/talking-head-video",
+      "aidreamshootsPath": "/ai-video-generation/talking-head-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Talking Head Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/talking-photo",
+      "aidreamcapesPath": "/ai-video-generation/talking-photo",
+      "aidreamshootsPath": "/ai-video-generation/talking-photo",
+      "pageType": "video-theme",
+      "sourceTitle": "Talking Photo",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/tiktok-video",
+      "aidreamcapesPath": "/ai-video-generation/tiktok-video",
+      "aidreamshootsPath": "/ai-video-generation/tiktok-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Tiktok Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/ugc-ad-video",
+      "aidreamcapesPath": "/ai-video-generation/ugc-ad-video",
+      "aidreamshootsPath": "/ai-video-generation/ugc-ad-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Ugc Ad Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/video-ad",
+      "aidreamcapesPath": "/ai-video-generation/video-ad",
+      "aidreamshootsPath": "/ai-video-generation/video-ad",
+      "pageType": "video-theme",
+      "sourceTitle": "Video Ad",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/ai-video-generation/youtube-video",
+      "aidreamcapesPath": "/ai-video-generation/youtube-video",
+      "aidreamshootsPath": "/ai-video-generation/youtube-video",
+      "pageType": "video-theme",
+      "sourceTitle": "Youtube Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/best-ai-image",
+      "aidreamcapesPath": "/best-ai-image",
+      "aidreamshootsPath": "/best-ai-image",
+      "pageType": "marketing",
+      "sourceTitle": "Best Ai Image",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/best-ai-video",
+      "aidreamcapesPath": "/best-ai-video",
+      "aidreamshootsPath": "/best-ai-video",
+      "pageType": "marketing",
+      "sourceTitle": "Best Ai Video",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/best-packages",
+      "aidreamcapesPath": "/best-packages",
+      "aidreamshootsPath": "/best-packages",
+      "pageType": "marketing",
+      "sourceTitle": "Best Packages",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/best-save-the-date",
+      "aidreamcapesPath": "/best-save-the-date",
+      "aidreamshootsPath": "/best-save-the-date",
+      "pageType": "marketing",
+      "sourceTitle": "Best Save The Date",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/blog",
+      "aidreamcapesPath": "/blog",
+      "aidreamshootsPath": "/blog",
+      "pageType": "blog",
+      "sourceTitle": "Blog",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/blog/cinematic-video-guide",
+      "aidreamcapesPath": "/blog/cinematic-video-guide",
+      "aidreamshootsPath": "/blog/cinematic-video-guide",
+      "pageType": "blog",
+      "sourceTitle": "Cinematic Video Guide",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/blog/motion-generator-video-guide",
+      "aidreamcapesPath": "/blog/motion-generator-video-guide",
+      "aidreamshootsPath": "/blog/motion-generator-video-guide",
+      "pageType": "blog",
+      "sourceTitle": "Motion Generator Video Guide",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/blog/talking-photo-video-guide",
+      "aidreamcapesPath": "/blog/talking-photo-video-guide",
+      "aidreamshootsPath": "/blog/talking-photo-video-guide",
+      "pageType": "blog",
+      "sourceTitle": "Talking Photo Video Guide",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/children-privacy",
+      "aidreamcapesPath": "/children-privacy",
+      "aidreamshootsPath": "/children-privacy",
+      "pageType": "public-page",
+      "sourceTitle": "Children Privacy",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/contact-us",
+      "aidreamcapesPath": "/contact-us",
+      "aidreamshootsPath": "/contact-us",
+      "pageType": "public-page",
+      "sourceTitle": "Contact Us",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/content",
+      "aidreamcapesPath": "/content",
+      "aidreamshootsPath": "/content",
+      "pageType": "public-page",
+      "sourceTitle": "Content",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/cookies",
+      "aidreamcapesPath": "/cookies",
+      "aidreamshootsPath": "/cookies",
+      "pageType": "public-page",
+      "sourceTitle": "Cookies",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/creators-circle",
+      "aidreamcapesPath": "/creators-circle",
+      "aidreamshootsPath": "/creators-circle",
+      "pageType": "public-page",
+      "sourceTitle": "Creators Circle",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/digital-delivery",
+      "aidreamcapesPath": "/digital-delivery",
+      "aidreamshootsPath": "/digital-delivery",
+      "pageType": "public-page",
+      "sourceTitle": "Digital Delivery",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/faq",
+      "aidreamcapesPath": "/faq",
+      "aidreamshootsPath": "/faq",
+      "pageType": "public-page",
+      "sourceTitle": "Faq",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/pricing",
+      "aidreamcapesPath": "/pricing",
+      "aidreamshootsPath": "/pricing",
+      "pageType": "public-page",
+      "sourceTitle": "Pricing",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/privacy",
+      "aidreamcapesPath": "/privacy",
+      "aidreamshootsPath": "/privacy",
+      "pageType": "public-page",
+      "sourceTitle": "Privacy",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/refunds",
+      "aidreamcapesPath": "/refunds",
+      "aidreamshootsPath": "/refunds",
+      "pageType": "public-page",
+      "sourceTitle": "Refunds",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/state-privacy",
+      "aidreamcapesPath": "/state-privacy",
+      "aidreamshootsPath": "/state-privacy",
+      "pageType": "public-page",
+      "sourceTitle": "State Privacy",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/terms",
+      "aidreamcapesPath": "/terms",
+      "aidreamshootsPath": "/terms",
+      "pageType": "public-page",
+      "sourceTitle": "Terms",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/ai-music-video-generator-for-artist-visuals-and-performance-concepts",
+      "aidreamcapesPath": "/watch/music-video",
+      "aidreamshootsPath": "/watch/music-video",
+      "pageType": "video-detail",
+      "sourceTitle": "Ai Music Video Generator For Artist Visuals And Performance Concepts",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/ai-video-creation-tutorial",
+      "aidreamcapesPath": "/watch/portrait-parlant",
+      "aidreamshootsPath": "/watch/aidreamshoots-ai-image-tutorial-20260814",
+      "pageType": "video-detail",
+      "sourceTitle": "Ai Video Creation Tutorial",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/build-the-ad-around-one-buyer-decision",
+      "aidreamcapesPath": "/watch/product-ad-video",
+      "aidreamshootsPath": "/watch/product-ad-video",
+      "pageType": "video-detail",
+      "sourceTitle": "Build The Ad Around One Buyer Decision",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/christmas-family-gift",
+      "aidreamcapesPath": "/watch/alpine-trail-motion",
+      "aidreamshootsPath": "/watch/christmas-hero-family-gift",
+      "pageType": "video-detail",
+      "sourceTitle": "Christmas Family Gift",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/cinematic-portrait-motion",
+      "aidreamcapesPath": "/watch/heritage-celebration-film-no-watermark",
+      "aidreamshootsPath": "/watch/cinematic-portrait-motion",
+      "pageType": "video-detail",
+      "sourceTitle": "Cinematic Portrait Motion",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/create-a-more-cinematic-video-without-a-full-film-crew",
+      "aidreamcapesPath": "/watch/cinematic-video",
+      "aidreamshootsPath": "/watch/cinematic-video",
+      "pageType": "video-detail",
+      "sourceTitle": "Create A More Cinematic Video Without A Full Film Crew",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/creator-intro-motion",
+      "aidreamcapesPath": "/watch/resort-balcony-motion",
+      "aidreamshootsPath": "/watch/creator-intro-motion",
+      "pageType": "video-detail",
+      "sourceTitle": "Creator Intro Motion",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/creator-scene-motion",
+      "aidreamcapesPath": "/watch/scenic-overlook-pan",
+      "aidreamshootsPath": "/watch/creator-scene-motion",
+      "pageType": "video-detail",
+      "sourceTitle": "Creator Scene Motion",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/feature-led-product-showcase",
+      "aidreamcapesPath": "/watch/product-video",
+      "aidreamshootsPath": "/watch/product-video",
+      "pageType": "video-detail",
+      "sourceTitle": "Feature Led Product Showcase",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/holiday-card-motion",
+      "aidreamcapesPath": "/watch/reels-instagram",
+      "aidreamshootsPath": "/watch/holiday-card-motion",
+      "pageType": "video-detail",
+      "sourceTitle": "Holiday Card Motion",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/make-a-photo-talk-without-recording-another-take",
+      "aidreamcapesPath": "/watch/talking-photo",
+      "aidreamshootsPath": "/watch/talking-photo",
+      "pageType": "video-detail",
+      "sourceTitle": "Make A Photo Talk Without Recording Another Take",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/mydreamshoots-ai-video-tutorial-20260814",
+      "aidreamcapesPath": "/watch/video-cinematographique",
+      "aidreamshootsPath": "/watch/aidreamshoots-ai-video-tutorial-20260814",
+      "pageType": "video-detail",
+      "sourceTitle": "Mydreamshoots Ai Video Tutorial 20260814",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/product-showcase-motion",
+      "aidreamcapesPath": "/watch/route-atlas-motion",
+      "aidreamshootsPath": "/watch/product-showcase-motion",
+      "pageType": "video-detail",
+      "sourceTitle": "Product Showcase Motion",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/promo-video-launch-teaser",
+      "aidreamcapesPath": "/watch/promo-video",
+      "aidreamshootsPath": "/watch/promo-video",
+      "pageType": "video-detail",
+      "sourceTitle": "Promo Video Launch Teaser",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/prompt-directed-motion",
+      "aidreamcapesPath": "/watch/solo-traveler-profile-clip-no-watermark",
+      "aidreamshootsPath": "/watch/prompt-directed-motion",
+      "pageType": "video-detail",
+      "sourceTitle": "Prompt Directed Motion",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/social-profile-clip",
+      "aidreamcapesPath": "/watch/old-quarter-walkthrough",
+      "aidreamshootsPath": "/watch/social-profile-clip",
+      "pageType": "video-detail",
+      "sourceTitle": "Social Profile Clip",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/travel-route-story",
+      "aidreamcapesPath": "/watch/solo-traveler-profile-clip",
+      "aidreamshootsPath": "/watch/travel-route-story",
+      "pageType": "video-detail",
+      "sourceTitle": "Travel Route Story",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/turn-photos-and-ideas-into-reels-that-fit-your-feed",
+      "aidreamcapesPath": "/watch/instagram-reels",
+      "aidreamshootsPath": "/watch/instagram-reels",
+      "pageType": "video-detail",
+      "sourceTitle": "Turn Photos And Ideas Into Reels That Fit Your Feed",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/turn-your-photos-and-ideas-into-tiktok-first-videos",
+      "aidreamcapesPath": "/watch/tiktok-video",
+      "aidreamshootsPath": "/watch/tiktok-video",
+      "pageType": "video-detail",
+      "sourceTitle": "Turn Your Photos And Ideas Into Tiktok First Videos",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/valentines-day-save-the-date",
+      "aidreamcapesPath": "/watch/coastal-memory-clip",
+      "aidreamshootsPath": "/watch/valentines-day-save-the-date",
+      "pageType": "video-detail",
+      "sourceTitle": "Valentines Day Save The Date",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/watch/wedding-memory-film",
+      "aidreamcapesPath": "/watch/heritage-celebration-film",
+      "aidreamshootsPath": "/watch/wedding-memory-film",
+      "pageType": "video-detail",
+      "sourceTitle": "Wedding Memory Film",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    },
+    {
+      "sourcePath": "/workflow",
+      "aidreamcapesPath": "/workflow",
+      "aidreamshootsPath": "/workflow",
+      "pageType": "public-page",
+      "sourceTitle": "Workflow",
+      "targetLocale": {
+        "aidreamcapes": "fr",
+        "aidreamshoots": "es"
+      },
+      "indexable": true,
+      "sitemapEligible": true,
+      "mediaPolicy": "site-owned"
+    }
+  ]
+}

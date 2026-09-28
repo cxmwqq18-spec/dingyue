@@ -13,6 +13,7 @@ import { canonicalPathForPage, canonicalUrlForSite, normalizeCanonicalPath } fro
 import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial-routes";
 import { canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import { AIDREAMCAPES_EU_SITE_ID, canonicalAidreamcapesEuPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
+import { replaceAidreamcapesEuLegacyMedia } from "@/lib/aidreamcapes-eu-legacy-media";
 import type {
   EffectiveIndexability,
   EffectivePublishedPage,
@@ -28,6 +29,26 @@ import type {
 function normalizePath(value: string): string {
   const clean = value.trim().split("?")[0] || "/";
   return clean === "/" ? "/" : `/${clean.replace(/^\/+|\/+$/g, "")}`;
+}
+
+const AIDREAMCAPES_EU_MIRROR_MEDIA_PATTERN = /\/assets\/sites\/site_aidreamcapes_eu\/mirror\/[^"'\\\s<>|)]+/g;
+
+/**
+ * The current relational rows are the only public source of truth, but some
+ * older rows still contain an embedded EU mirror path. Sanitize that payload
+ * at the public projection boundary so SSR, RSC and JSON-LD cannot serialize
+ * a historical mirror URL while the bounded local data repair is rolled out.
+ */
+function sanitizeAidreamcapesEuPublicJson(siteId: string, value: unknown): unknown {
+  if (siteId !== AIDREAMCAPES_EU_SITE_ID) return value;
+  if (typeof value === "string") {
+    return value.replace(AIDREAMCAPES_EU_MIRROR_MEDIA_PATTERN, (match) => replaceAidreamcapesEuLegacyMedia(match));
+  }
+  if (Array.isArray(value)) return value.map((item) => sanitizeAidreamcapesEuPublicJson(siteId, item));
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, sanitizeAidreamcapesEuPublicJson(siteId, child)]));
+  }
+  return value;
 }
 
 export function assertLiveDraftPage(page: ThemePage): void {
@@ -222,10 +243,21 @@ export function createPublishedSiteSnapshot(
       .filter((page) => {
         try { assertLiveDraftPage(page); return true; } catch { return false; }
       })
-      .map((page) => ({ ...page, publishedJson: page.draftJson })),
-    themeSettings: { ...site.themeSettings, publishedJson: site.themeSettings.draftJson },
+      .map((page) => {
+        const currentJson = sanitizeAidreamcapesEuPublicJson(site.id, page.draftJson) as ThemePage["draftJson"];
+        return { ...page, draftJson: currentJson, publishedJson: currentJson };
+      }),
+    themeSettings: {
+      ...site.themeSettings,
+      draftJson: sanitizeAidreamcapesEuPublicJson(site.id, site.themeSettings.draftJson) as Site["themeSettings"]["draftJson"],
+      publishedJson: sanitizeAidreamcapesEuPublicJson(site.id, site.themeSettings.draftJson) as Site["themeSettings"]["publishedJson"]
+    },
     storefrontProfile: site.storefrontProfile
-      ? { ...site.storefrontProfile, publishedJson: site.storefrontProfile.draftJson }
+      ? {
+          ...site.storefrontProfile,
+          draftJson: sanitizeAidreamcapesEuPublicJson(site.id, site.storefrontProfile.draftJson) as NonNullable<Site["storefrontProfile"]>["draftJson"],
+          publishedJson: sanitizeAidreamcapesEuPublicJson(site.id, site.storefrontProfile.draftJson) as NonNullable<Site["storefrontProfile"]>["publishedJson"]
+        }
       : undefined
   };
   const liveProjection = buildPublicationSnapshot(

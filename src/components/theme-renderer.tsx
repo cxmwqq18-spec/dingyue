@@ -56,6 +56,7 @@ import { isMydreamshootsVideoContentPath, mydreamshootsVideoWatchPathForContentP
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { canonicalSpanishXbyCollectionSlug, isAidreamshootsStorefrontSite, isSpanishStorefrontSite, SPANISH_XBY_COLLECTION_ALIASES } from "@/lib/spanish-storefronts";
 import { isFrenchStorefrontSite, storefrontLocaleForSite } from "@/lib/storefront-locale";
+import { isBlockedPublicVideoThemeSlugForSite } from "@/lib/video-theme-public-scope";
 import { AIDREAMCAPES_EU_VIDEO_TOPIC_SLUGS, aidreamcapesEuVideoTopic } from "@/lib/aidreamcapes-eu-video-media";
 import { isAidreamcapesEuLegacyCoverGalleryDerivative, replaceAidreamcapesEuLegacyMedia } from "@/lib/aidreamcapes-eu-legacy-media";
 import { canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRemovedPublicNavigationPath } from "@/lib/aidreamcapes-eu-retired-routes";
@@ -3940,16 +3941,18 @@ function aidreamshootsPublishedDirectoryCoverForSlug(site: Site, slug: string): 
   }
   if (!isAidreamshootsStorefrontSite(site)) return undefined;
   const normalizedSlug = dreamshootCategorySlug(slug);
+  // Localized Spanish aliases can appear beside their stable English pack
+  // counterpart on the directory page. Prefer their dedicated gallery cover
+  // so the per-page image de-duplication guard never turns a valid alias card
+  // into a server error after the canonical card has claimed the pack cover.
+  const aliasCover = aidreamshootsPublishedDirectoryAliasCoverBySlug[normalizedSlug];
+  if (aliasCover) return mediaAssetUrl(site, aliasCover, { preserveAidreamshootsLegacyMedia: true });
   const categoryCover = aidreamshootsPublishedDirectoryCategoryCoverBySlug[normalizedSlug];
   if (categoryCover) return mediaAssetUrl(site, categoryCover, { preserveAidreamshootsLegacyMedia: true });
   const canonicalSlug = aidreamshootsPublishedDirectoryCoverSlugBySlug[normalizedSlug] ?? normalizedSlug;
   const cover = aidreamshootsLatestPackCoverBySlug[canonicalSlug];
   if (cover) return mediaAssetUrl(site, cover);
-  // Keep the legacy alias map only for published slugs without a current
-  // site-local generated cover. Current generated media must always win over
-  // compatibility assets from the old shared website.
-  const aliasCover = aidreamshootsPublishedDirectoryAliasCoverBySlug[normalizedSlug];
-  return aliasCover ? mediaAssetUrl(site, aliasCover, { preserveAidreamshootsLegacyMedia: true }) : undefined;
+  return undefined;
 }
 
 function directoryMediaCandidates(site: Site, pack: CreativePack): string[] {
@@ -7275,8 +7278,6 @@ const _panelWarm = "#fbfaf7";
 const _borderWarm = "#d8d2c7";
 const _inkBase = "#14161a";
 const _inkMuted = "#6f716f";
-const blockedPublicVideoThemeSlugs = new Set(["creator-scene-motion"]);
-
 function isAidreamcapesSite(site: Site): boolean {
   return isAidreamcapesCapabilitySite(site);
 }
@@ -7382,9 +7383,11 @@ function isMyDreamShootsProfileSite(site: Site): boolean {
 }
 
 function publicVideoThemesForShowcase(site: Site, videoThemes: VideoTheme[]): VideoTheme[] {
-  if (isSpanishXbySite(site) || isFrenchStorefrontSite(site)) return videoThemes;
+  if (isSpanishXbySite(site) || isFrenchStorefrontSite(site)) {
+    return videoThemes.filter((theme) => !isBlockedPublicVideoThemeSlugForSite(site.id, theme.slug));
+  }
   if (!isAidreamcapesSite(site)) return videoThemes;
-  return videoThemes.filter((theme) => !blockedPublicVideoThemeSlugs.has(theme.slug));
+  return videoThemes.filter((theme) => !isBlockedPublicVideoThemeSlugForSite(site.id, theme.slug));
 }
 
 function storefrontCatalogCategoryHrefOverrides(site: Site): DreamshootCategoryHrefOverrides {

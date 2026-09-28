@@ -27,6 +27,7 @@ import {
 import { normalizePlatformAiProviderType, platformProviderTypeForAppType } from "@/lib/ai-provider-type";
 import { shouldFallbackRelationalRead, shouldUseRelationalReadFallbackCircuit, warnRelationalFallback } from "@/lib/stores/relational-fallback";
 import { isMydreamshootsContentSourceSiteId } from "@/lib/storefront-content-source-policy";
+import { isBlockedPublicVideoThemeSlugForSite } from "@/lib/video-theme-public-scope";
 import { usesAiGenerationPublicRoutes } from "@/lib/storefront-context/capabilities";
 import { videoProviderModelFamiliesForProviders } from "@/lib/video-provider-family";
 import { runnableVideoProviderModelFamiliesForRequest } from "@/lib/video-provider-availability";
@@ -1421,7 +1422,8 @@ function fallbackPublicVideoThemesForSite(siteId: string, take?: number): VideoT
 }
 
 function isBlockedPublicVideoTheme(siteId: string, slug: string): boolean {
-  return isMydreamshootsVideoFrameworkSiteId(siteId) && ["text-to-video", "image-to-video", "creator-scene-motion"].includes(slug);
+  return (isMydreamshootsVideoFrameworkSiteId(siteId) && ["text-to-video", "image-to-video", "creator-scene-motion"].includes(slug))
+    || isBlockedPublicVideoThemeSlugForSite(siteId, slug);
 }
 
 function storefrontPerfMark(label: string, startedAt: number, meta: Record<string, unknown> = {}) {

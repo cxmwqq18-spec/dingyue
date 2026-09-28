@@ -84,7 +84,7 @@ const legacyPackCoverReplacements: Record<string, string> = {
   hairstyle: `${euImagePackRoot}/hairstyle-generator/cover-hairstyle-generator-00-quiet-city-walk-c452820dc22d.jpg`,
   "virtual-try-on": `${euImagePackRoot}/virtual-try-on/cover-virtual-try-on-00-quiet-city-walk-e431078651ef.jpg`,
   "ai-video-add-ons": `${euImagePackRoot}/motion-generator/cover-motion-generator-00-quiet-city-walk-b7fec8e17439.jpg`,
-  engagement: "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/engagement-photo/cover-occasion-6adcf48854.webp",
+  engagement: `${euImagePackRoot}/wedding-photo/cover-fa9197c1a667-occasion-b7af762a69.jpg`,
   "wedding-photo": `${euImagePackRoot}/wedding-photo/cover-fa9197c1a667-occasion-b7af762a69.jpg`,
   "valentine-photos": `${euImagePackRoot}/valentines-photo/cover-54ae0fb62bf7-occasion-3cf2a1d4ea.jpg`,
   "christmas-photos": `${euImagePackRoot}/christmas-photo/cover-414936c66db4-seasonal-be76f6d3ee.jpg`,
@@ -105,6 +105,25 @@ const legacyVideoHeroReplacements: Record<string, string> = {
   "how-to-video/hero-how-to-video-hands-on-step.jpg": `${euProviderPackRoot}/video-topic-048-how-to-video-hero-how-to-video-hands-on-step.jpg`,
   "talking-head-video/hero-talking-head-video-professional-presenter.jpg": `${euProviderPackRoot}/video-topic-133-talking-head-video-hero-talking-head-video-professional-presenter.jpg`
 };
+
+// Some legacy mirror rows are editorial gallery slots whose original
+// filename has no one-to-one regenerated counterpart. They still must never
+// escape into EU HTML, JSON-LD, sitemap media or responsive srcsets. Resolve
+// those rows to current, site-owned EU pack media selected by the source
+// path's subject instead of returning the historical mirror URL.
+const legacyMirrorSemanticFallbacks: Array<[RegExp, string]> = [
+  [/valentine|engagement|proposal|wedding|save-the-date/i, legacyPackCoverReplacements["wedding-photo"]],
+  [/christmas/i, legacyPackCoverReplacements["christmas-photos"]],
+  [/halloween/i, legacyPackCoverReplacements["halloween-party-photos"]],
+  [/thanksgiving/i, legacyPackCoverReplacements["thanksgiving-group-photos"]],
+  [/new-year|holiday|mother|father/i, legacyPackCoverReplacements.holiday],
+  [/video|motion|cinematic|talking|tiktok|reels/i, legacyPackCoverReplacements["ai-video-add-ons"]],
+  [/product|commerce/i, legacyPackCoverReplacements["product-style"]],
+  [/social|creator/i, legacyPackCoverReplacements["social-cards"]],
+  [/travel|nature|route/i, legacyPackCoverReplacements.nature],
+  [/beauty|hairstyle|portrait|headshot|profile/i, legacyPackCoverReplacements["professional-headshots"]]
+];
+const legacyMirrorDefaultFallback = legacyPackCoverReplacements["rich-lifestyle"];
 
 function withoutQuery(value: string | undefined): string {
   return String(value ?? "").trim().split(/[?#]/, 1)[0] ?? "";
@@ -127,14 +146,19 @@ export function isAidreamcapesEuLegacyCoverGalleryDerivative(
 
 export function replaceAidreamcapesEuLegacyMedia(value: string | undefined): string {
   const clean = withoutQuery(value);
-  const mirrorPrefix = "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/";
+  const mirrorPrefix = "/assets/sites/site_aidreamcapes_eu/mirror/";
   const noCropGalleryReplacement = noCropGalleryReplacements[clean];
   if (noCropGalleryReplacement) return noCropGalleryReplacement;
   if (!clean.startsWith(mirrorPrefix)) return String(value ?? "");
-  const relativePath = clean.slice(mirrorPrefix.length);
+  const relativePath = clean
+    .slice(mirrorPrefix.length)
+    .replace(/^aidreamcapes\/(?:dreamshoot|aidreamcapes)\//i, "");
   const coverMatch = relativePath.match(/^generated\/pack-covers\/([^/]+)\/\1-cover\.(?:png|jpe?g|webp|avif)$/i);
   if (coverMatch) return legacyPackCoverReplacements[coverMatch[1].toLowerCase()] ?? clean;
-  return legacyStandaloneMediaReplacements[relativePath]
+  const mapped = legacyStandaloneMediaReplacements[relativePath]
     ?? legacyVideoHeroReplacements[relativePath]
     ?? clean;
+  if (mapped !== clean) return mapped;
+  return legacyMirrorSemanticFallbacks.find(([pattern]) => pattern.test(relativePath))?.[1]
+    ?? legacyMirrorDefaultFallback;
 }
