@@ -141,6 +141,24 @@ function scpArgs(source, destination) {
   return args;
 }
 
+function rsyncArgs(source, destination) {
+  const ssh = ["ssh"];
+  if (process.env.SSH_CONFIG_PATH) ssh.push("-F", shellQuote(process.env.SSH_CONFIG_PATH));
+  ssh.push("-p", shellQuote(process.env.AI_PROJECT_SSH_PORT || "11765"));
+  if (process.env.AI_PROJECT_SSH_KEY_PATH) ssh.push("-i", shellQuote(process.env.AI_PROJECT_SSH_KEY_PATH));
+  ssh.push("-o", "ServerAliveInterval=30", "-o", "ServerAliveCountMax=20");
+  return [
+    "-a",
+    "--checksum",
+    "--no-owner",
+    "--no-group",
+    "-e",
+    ssh.join(" "),
+    source,
+    (process.env.AI_PROJECT_SSH_USER || "root") + "@" + (process.env.AI_PROJECT_SSH_HOST || "204.77.130.125") + ":" + destination
+  ];
+}
+
 function changedFilesForCommit() {
   const output = git(["diff-tree", "--no-commit-id", "--name-only", "-r", "--diff-filter=ACMRT", commit, commit + "^"]);
   return output ? output.split("\n").filter(Boolean) : [];
@@ -225,6 +243,16 @@ function localPrecheck() {
   return { changed, remoteHead };
 }
 
+function syncTargetAssets() {
+  if (!fullAssets) return;
+
+  const source = path.resolve(config.assetPrefix) + path.sep;
+  const destination = config.root + "/current/" + config.assetPrefix;
+  console.log("Synchronizing target asset root " + config.assetPrefix + " to " + destination);
+  const result = spawnSync("rsync", rsyncArgs(source, destination), { stdio: "inherit" });
+  if (result.status !== 0) fail("Target asset synchronization failed with exit " + result.status);
+}
+
 function runRemote(changedFiles) {
   const shortCommit = commit.slice(0, 8);
   const release = config.root + "/releases/" + commit + "-" + config.domain.replaceAll(".", "-");
@@ -301,10 +329,10 @@ function runRemote(changedFiles) {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "aidreamshoots-eu-release-"));
   const archivePath = path.join(tempDir, commit + ".tar");
   try {
+    syncTargetAssets();
     const archivePaths = fullSource
       ? [...new Set([...fullSourcePaths, ...changedFiles])]
       : changedFiles;
-    if (fullAssets) archivePaths.push(config.assetPrefix);
     const uniqueArchivePaths = [...new Set(archivePaths)];
     execFileSync("git", ["archive", "--format=tar", "--output=" + archivePath, commit, "--", ...uniqueArchivePaths], {
       cwd: process.cwd(),

@@ -11,7 +11,8 @@ const targets = [
 ];
 
 assert.match(deployScript, /const fullAssets = hasArgument\("--full-assets"\)/, "deploy script must expose --full-assets");
-assert.match(deployScript, /if \(fullAssets\) archivePaths\.push\(config\.assetPrefix\)/, "--full-assets must include the target asset root in the archive");
+assert.match(deployScript, /function syncTargetAssets\(\)/, "deploy script must define target asset synchronization");
+assert.match(deployScript, /syncTargetAssets\(\);/, "--full-assets must synchronize the target asset root before release creation");
 
 const reports = targets.map((prefix) => {
   const options = { encoding: "utf8", maxBuffer: 32 * 1024 * 1024 };
