@@ -149,7 +149,7 @@ function changedFilesForCommit() {
 function deletedFilesForCommit() {
   const output = base
     ? git(["diff", "--name-only", "--diff-filter=D", base, commit])
-    : git(["diff-tree", "--no-commit-id", "--name-only", "-r", "--diff-filter=D", commit, commit + "^"]);
+    : git(["diff-tree", "--no-commit-id", "--name-only", "-r", "--diff-filter=D", commit]);
   return output ? output.split("\n").filter(Boolean) : [];
 }
 
