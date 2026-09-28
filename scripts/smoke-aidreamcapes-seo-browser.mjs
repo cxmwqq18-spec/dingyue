@@ -5,6 +5,7 @@ import { chromium, request } from "playwright";
 
 const BASE_URL = String(process.env.AIDREAMCAPES_BROWSER_SMOKE_ORIGIN || "http://127.0.0.1:3002").replace(/\/$/, "");
 const WWW_ORIGIN = String(process.env.AIDREAMCAPES_BROWSER_SMOKE_WWW_ORIGIN || (BASE_URL.includes("aidreamcapes.com") ? "https://www.aidreamcapes.com" : "")).replace(/\/$/, "");
+const HTTP_ORIGIN = BASE_URL.includes("aidreamcapes.com") ? "http://aidreamcapes.com" : BASE_URL;
 const SITE_HEADERS = {
   "x-forwarded-host": "aidreamcapes.com",
   "x-forwarded-proto": "https"
@@ -71,7 +72,8 @@ for (const path of BLOG_ARTICLE_PATHS) {
   assert(relatedToolLinks.length >= 3, `${path}: fewer than three related tool links`);
 }
 
-await page.goto(`${BASE_URL}/ai-video-generation/talking-photo`, { waitUntil: "networkidle" });
+await page.goto(`${BASE_URL}/ai-video-generation/talking-photo`, { waitUntil: "domcontentloaded" });
+await page.waitForTimeout(1000);
 if (await page.locator("video").count() > 0) {
   const talkingPhoto = page.locator("video").first();
   assert(await talkingPhoto.getAttribute("poster"), "talking-photo: poster missing");
@@ -87,7 +89,8 @@ if (await page.locator("video").count() > 0) {
   assert(await talkingPhotoImage.getAttribute("height"), "talking-photo: image fallback height missing");
 }
 
-await page.goto(`${BASE_URL}/workflow`, { waitUntil: "networkidle" });
+await page.goto(`${BASE_URL}/workflow`, { waitUntil: "domcontentloaded" });
+await page.waitForTimeout(1000);
 const workflowVideos = page.locator("video");
 assert.equal(await workflowVideos.count() >= 2, true, "workflow: expected two videos");
 for (let index = 0; index < await workflowVideos.count(); index += 1) {
@@ -118,8 +121,10 @@ if (WWW_ORIGIN) {
   assert.equal(www.headers().location, "https://aidreamcapes.com/ai-video-generation/talking-photo", "www redirect target");
 }
 
-const httpRequest = await request.newContext({ extraHTTPHeaders: { "x-forwarded-host": "aidreamcapes.com", "x-forwarded-proto": "http" } });
-const http = await httpRequest.get(`${BASE_URL}/ai-video-generation/talking-photo?utm_source=smoke`, { maxRedirects: 0 });
+const httpRequest = HTTP_ORIGIN === BASE_URL
+  ? await request.newContext({ extraHTTPHeaders: { "x-forwarded-host": "aidreamcapes.com", "x-forwarded-proto": "http" } })
+  : await request.newContext();
+const http = await httpRequest.get(`${HTTP_ORIGIN}/ai-video-generation/talking-photo?utm_source=smoke`, { maxRedirects: 0 });
 assert.equal(http.status(), 301, `HTTP route returned ${http.status()}`);
 assert.equal(http.headers().location, "https://aidreamcapes.com/ai-video-generation/talking-photo?utm_source=smoke", "HTTP redirect target");
 

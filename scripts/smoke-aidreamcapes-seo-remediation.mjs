@@ -261,10 +261,6 @@ function metaDescription(html) {
   return attr(tag, "content");
 }
 
-function visibleWordCount(html) {
-  return decode(visibleHtml(html).replace(/<[^>]+>/g, " ")).split(/\s+/).filter(Boolean).length;
-}
-
 function contactContentWordCount(html) {
   const mainHtml = (html.match(/<main\b[\s\S]*?<\/main>/i) || [html])[0];
   const heroHtml = (mainHtml.match(/<section\b[^>]*data-aidreamcapes-public-section=["']hero["'][\s\S]*?<\/section>/i) || [""])[0];
