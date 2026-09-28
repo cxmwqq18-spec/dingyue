@@ -50,7 +50,7 @@ const FAQ_RELATED_LINKS = [
 
 const CONTACT_INTRO_BODY = `Aidreamcapes support can help with account access, billing questions, generation failures, copyright and permission concerns, and privacy requests. When you contact us, include the email on your account, the page or workflow you were using, and a short description of what happened. Do not send passwords, payment card numbers, or private material that support does not need to review.`;
 
-const CONTACT_DETAILS_BODY = `<h2>How to contact Aidreamcapes</h2><p>Email <a href="mailto:support@aidreamcapes.com">support@aidreamcapes.com</a> for account, billing, generation, rights, or privacy support. We aim to reply within two business days. A reply may take longer when we need to verify account ownership, inspect a failed job, or coordinate a request involving uploaded content.</p><h2>What to include</h2><p>For a failed generation, share the workflow name, approximate time, and a description of the result. For a billing question, include the account email and transaction date, but never send full card details. For a copyright, portrait, or logo concern, explain what you own or what permission you have and identify the affected upload or result. For a privacy request, use the account email so we can confirm the request safely.</p><h2>Before you upload</h2><p>Only upload images, audio, text, logos, and other material that you own or have permission to use. Get consent from people shown in portraits or videos, and check whether a generated result needs disclosure before publishing it. Review every result for inaccurate faces, hands, labels, claims, contact details, and unwanted changes before sharing.</p><p>Read the <a href="/privacy">Privacy Policy</a>, <a href="/terms">Terms of Service</a>, <a href="/refunds">Refund Policy</a>, and <a href="/content">Content Policy</a> for the rules that apply to your use of Aidreamcapes.</p>`;
+const CONTACT_DETAILS_BODY = `<h2>How to contact Aidreamcapes</h2><p>Email <a href="mailto:support@aidreamcapes.com">support@aidreamcapes.com</a> for account, billing, generation, rights, or privacy support. We aim to reply within two business days. A reply may take longer when we need to verify account ownership, inspect a failed job, or coordinate a request involving uploaded content.</p><h2>What to include</h2><p>For a failed generation, share the workflow name, approximate time, and a description of the result. For a billing question, include the account email and transaction date, but never send full card details. For a copyright, portrait, or logo concern, explain what you own or what permission you have and identify the affected upload or result. For a privacy request, use the account email so we can confirm the request safely.</p><h2>Before you upload</h2><p>Only upload images, audio, text, logos, and other material that you own or have permission to use. Get consent from people shown in portraits or videos, and check whether a generated result needs disclosure before publishing it. Review every result for inaccurate faces, hands, labels, claims, contact details, and unwanted changes before sharing.</p><h2>Support boundaries</h2><p>Support can help explain an account or workflow, but it cannot approve rights for you or guarantee that an AI output is accurate. Keep original source files, prompt notes, permissions, and the final approval record for projects you publish. If a result includes a person, brand, product label, or claim, check the intended use and correct errors before distribution. Tell us promptly if content should be removed or access should be restricted.</p><p>Read the <a href="/privacy">Privacy Policy</a>, <a href="/terms">Terms of Service</a>, <a href="/refunds">Refund Policy</a>, and <a href="/content">Content Policy</a> for the rules that apply to your use of Aidreamcapes.</p>`;
 
 function clone(value) {
   return value === undefined ? undefined : structuredClone(value);
@@ -151,9 +151,22 @@ function updateContactJson(json) {
   return next;
 }
 
+function updateArticleSummary(json, description) {
+  const next = clone(json) ?? {};
+  for (const section of Object.values(next.sections ?? {})) {
+    if (!section || typeof section !== "object" || section.type !== "blog_article") continue;
+    section.settings = { ...(section.settings ?? {}), summary: description };
+  }
+  return next;
+}
+
 function updateSpecialJson(json, slug) {
   let next = clone(json) ?? {};
-  if (SEO_REPLACEMENTS.has(slug)) next.seo = applySeoReplacement(next.seo, slug);
+  if (SEO_REPLACEMENTS.has(slug)) {
+    const replacement = SEO_REPLACEMENTS.get(slug);
+    next.seo = applySeoReplacement(next.seo, slug);
+    if (replacement.description && slug === "/blog/ai-talking-photo-video-guide") next = updateArticleSummary(next, replacement.description);
+  }
   if (slug === FAQ_PATH) {
     const intro = next.sections?.intro_1;
     if (intro && typeof intro === "object") {

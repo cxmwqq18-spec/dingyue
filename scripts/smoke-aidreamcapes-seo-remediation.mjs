@@ -265,6 +265,19 @@ function visibleWordCount(html) {
   return decode(visibleHtml(html).replace(/<[^>]+>/g, " ")).split(/\s+/).filter(Boolean).length;
 }
 
+function contactContentWordCount(html) {
+  const mainHtml = (html.match(/<main\b[\s\S]*?<\/main>/i) || [html])[0];
+  const heroHtml = (mainHtml.match(/<section\b[^>]*data-aidreamcapes-public-section=["']hero["'][\s\S]*?<\/section>/i) || [""])[0];
+  const policyHtml = (mainHtml.match(/<section\b[^>]*data-aidreamcapes-public-section=["']policy["'][\s\S]*?<\/section>/i) || [""])[0];
+  const policyText = decode(visibleHtml(policyHtml).replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
+  const marker = "How to contact Aidreamcapes";
+  const firstMarker = policyText.indexOf(marker);
+  const secondMarker = firstMarker < 0 ? -1 : policyText.indexOf(marker, firstMarker + marker.length);
+  const firstResponsiveCopy = secondMarker > 0 ? policyText.slice(0, secondMarker) : policyText;
+  const text = `${decode(visibleHtml(heroHtml).replace(/<[^>]+>/g, " "))} ${firstResponsiveCopy}`;
+  return text.split(/\s+/).filter(Boolean).length;
+}
+
 async function assertInternalLinks200(hrefs, context) {
   const unique = [...new Set(hrefs.filter((href) => href && href.startsWith("/") && !href.startsWith("//")))];
   await Promise.all(unique.map(async (href) => {
@@ -294,7 +307,7 @@ async function checkContactAndPolicies() {
   const contact = await fetchChecked(`${REQUEST_ORIGIN}/contact-us`);
   assert.equal(contact.response.status, 200, "/contact-us: HTTP status");
   assertSeoContract("/contact-us", contact.html);
-  const contactWords = visibleWordCount(contact.html);
+  const contactWords = contactContentWordCount(contact.html);
   assert(contactWords >= 350 && contactWords <= 500, `/contact-us: visible word count ${contactWords} is outside 350-500`);
   const contactLinks = ["/privacy", "/terms", "/refunds", "/content"];
   for (const href of contactLinks) assert(contact.html.includes(`href="${href}"`), `/contact-us: missing ${href} link`);
