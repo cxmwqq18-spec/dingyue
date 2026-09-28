@@ -437,6 +437,13 @@ function isPrivateStorefrontHtmlRequest(request: NextRequest): boolean {
   return PRIVATE_STORE_PATH_RE.test(pathname) || (TARGET_HOST_RE.test(host) && HOST_PRIVATE_STORE_PATH_RE.test(pathname));
 }
 
+function isAidreamcapesComPublicHtmlRequest(request: NextRequest): boolean {
+  if (isPrivateStorefrontHtmlRequest(request)) return false;
+  const pathname = request.nextUrl.pathname;
+  const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
+  return hostSlug === "aidreamcapes" || /^\/site\/aidreamcapes(?:\/|$)/i.test(pathname);
+}
+
 function hasCustomerSessionCookie(request: NextRequest): boolean {
   return request.cookies.getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
 }
@@ -989,9 +996,12 @@ export async function middleware(request: NextRequest) {
   // EU storefront so the existing full HTML rewrite can relocate that schema
   // into <head>; otherwise the schema remains only inside a React Flight
   // payload and is not exposed as a crawlable JSON-LD script in the response
-  // HTML. Keep the other storefronts on their existing streaming path.
+  // HTML. Aidreamcapes .com has the same body-marker contract, so keep its
+  // public HTML buffered as well. Keep other storefronts on their existing
+  // streaming path.
   const aboutUsRoute = /(?:^|\/)about-us\/?$/i.test(request.nextUrl.pathname);
-  const bufferSeoJsonLd = aboutUsRoute || (isFrenchXbyRequest(request) && !isPrivateStorefrontHtmlRequest(request));
+  const aidreamcapesComPublicHtml = isAidreamcapesComPublicHtmlRequest(request);
+  const bufferSeoJsonLd = aboutUsRoute || aidreamcapesComPublicHtml || (isFrenchXbyRequest(request) && !isPrivateStorefrontHtmlRequest(request));
   if (upstreamResponse.body && !bufferSeoJsonLd) {
     return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlStream(upstreamResponse.body, request, shouldReorder), {
       status: upstreamResponse.status,
@@ -1001,7 +1011,7 @@ export async function middleware(request: NextRequest) {
   }
 
   const html = await upstreamResponse.text();
-  return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlFull(html, request, shouldReorder, aboutUsRoute), {
+  return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlFull(html, request, shouldReorder, aboutUsRoute || aidreamcapesComPublicHtml), {
     status: upstreamResponse.status,
     statusText: upstreamResponse.statusText,
     headers

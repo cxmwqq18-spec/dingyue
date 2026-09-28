@@ -3,7 +3,7 @@
 import assert from "node:assert/strict";
 import { chromium, request } from "playwright";
 
-const BASE_URL = "http://127.0.0.1:3002";
+const BASE_URL = String(process.env.AIDREAMCAPES_BROWSER_SMOKE_ORIGIN || "http://127.0.0.1:3002").replace(/\/$/, "");
 const SITE_HEADERS = {
   "x-forwarded-host": "aidreamcapes.com",
   "x-forwarded-proto": "https"
@@ -14,12 +14,24 @@ const BLOG_ARTICLE_PATHS = [
   "/blog/ai-talking-photo-video-guide",
   "/blog/ecommerce-product-image-workflow",
   "/blog/ai-video-review-checklist",
-  "/blog/ai-content-disclosure-safe-usage"
+  "/blog/ai-content-disclosure-safe-usage",
+  "/blog/video-photo-package-guide"
 ];
 
 async function assertSeo(page, path) {
-  // SSR HTML is the SEO contract; media requests should not make the smoke test wait indefinitely.
-  await page.goto(`${BASE_URL}${path}`, { waitUntil: "domcontentloaded" });
+  // The source response and hydrated DOM are both SEO contracts; media requests
+  // should not make the smoke test wait indefinitely.
+  const response = await page.goto(`${BASE_URL}${path}`, { waitUntil: "domcontentloaded" });
+  const sourceHtml = await response?.text();
+  assert(sourceHtml, `${path}: source response missing`);
+  const sourceJsonLd = [...sourceHtml.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+  assert.equal(sourceJsonLd.length, 1, `${path}: source JSON-LD count`);
+  const headOpen = sourceHtml.search(/<head\b[^>]*>/i);
+  const headClose = sourceHtml.search(/<\/head>/i);
+  assert(sourceJsonLd[0].index > headOpen && sourceJsonLd[0].index < headClose, `${path}: source JSON-LD must be inside head`);
+  assert.doesNotMatch(sourceJsonLd[0][0].slice(0, sourceJsonLd[0][0].indexOf(">") + 1), /data-storefront-json-ld=["']body-marker["']/i, `${path}: source body marker remains`);
+  assert.doesNotMatch(sourceHtml.slice(headClose), /<script\b[^>]*type=["']application\/ld\+json["']/i, `${path}: source body JSON-LD duplicate`);
+  assert.doesNotThrow(() => JSON.parse(sourceJsonLd[0][1]), `${path}: source JSON-LD invalid`);
   await page.waitForSelector('script[type="application/ld+json"]', { state: "attached", timeout: 10_000 });
   assert((await page.title()).trim(), `${path}: title missing`);
   assert.equal(await page.locator('link[rel="canonical"]').count(), 1, `${path}: canonical count`);
@@ -29,7 +41,12 @@ async function assertSeo(page, path) {
   assert.equal(await page.locator("main h1").count(), 1, `${path}: main H1 count`);
   assert(!/MyDreamShoots/i.test(await page.locator("body").innerText()), `${path}: brand residual`);
   assert.equal(await page.locator('script[type="application/ld+json"]').count(), 1, "JSON-LD must be emitted once");
-  assert(!/MyDreamShoots/i.test(await page.content()), "brand residual in HTML");
+  const renderedBodyHtml = await page.locator("body").evaluate((body) => {
+    const clone = body.cloneNode(true);
+    clone.querySelectorAll("script,style").forEach((element) => element.remove());
+    return clone.outerHTML;
+  });
+  assert(!/MyDreamShoots/i.test(renderedBodyHtml), `${path}: brand residual in rendered HTML`);
   if (["/", "/blog", "/ai-image-generation", "/ai-video-generation"].includes(path)) {
     const headings = await page.locator("main h1,main h2,main h3,main h4,main h5,main h6").evaluateAll((elements) => elements.map((element) => Number(element.tagName.slice(1))));
     for (let index = 1; index < headings.length; index += 1) {

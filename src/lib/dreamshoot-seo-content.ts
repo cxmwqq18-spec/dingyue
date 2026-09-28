@@ -124,6 +124,21 @@ const AIDREAMCAPES_VIDEO_TOPIC_SEO: Record<string, AidreamcapesVideoTopicSeo> = 
     title: "AI Talking Head Video Generator | Aidreamcapes",
     description: "Create AI talking-head videos with clear scripts, presenter visuals, and share-ready scenes for product education, marketing, and social content.",
     keywords: "AI talking head video, presenter video, AI video generator, Aidreamcapes"
+  },
+  "/ai-video-generation/brand-video": {
+    title: "AI Brand Video Generator for Brand Stories | Aidreamcapes",
+    description: "Create AI brand videos for founder stories, product origins, company values, and campaigns with guided scenes, clear messaging, and review-ready outputs.",
+    keywords: "AI brand video, founder video, product story, Aidreamcapes"
+  },
+  "/ai-video-generation/talking-photo": {
+    title: "AI Talking Photo Generator – Make a Photo Talk | Aidreamcapes",
+    description: "Create talking-photo videos from an approved portrait and short script for messages, explainers, product pitches, and social intros, with clear review steps.",
+    keywords: "AI talking photo, talking portrait video, AI video generator, Aidreamcapes"
+  },
+  "/ai-video-generation/video-ad": {
+    title: "AI Video Ad Generator for Paid Social | Aidreamcapes",
+    description: "Create AI video ads for paid social, product launches, retargeting, and creator-style campaigns with a focused hook, proof, CTA, and review workflow.",
+    keywords: "AI video ad, paid social video, product ad video, Aidreamcapes"
   }
 };
 

@@ -23,7 +23,8 @@ const BLOG_ARTICLE_PATHS = [
   "/blog/ai-talking-photo-video-guide",
   "/blog/ecommerce-product-image-workflow",
   "/blog/ai-video-review-checklist",
-  "/blog/ai-content-disclosure-safe-usage"
+  "/blog/ai-content-disclosure-safe-usage",
+  "/blog/video-photo-package-guide"
 ];
 const VIDEO_TOPIC_SEO = {
   "/ai-video-generation/explainer-video": "AI Explainer Video Generator for Teams | Aidreamcapes",
@@ -38,6 +39,11 @@ const VIDEO_TOPIC_SEO = {
   "/ai-video-generation/youtube-video": "AI YouTube Video Generator for Creators | Aidreamcapes",
   "/ai-video-generation/tiktok-video": "AI TikTok Video Generator for Creators | Aidreamcapes",
   "/ai-video-generation/talking-head-video": "AI Talking Head Video Generator | Aidreamcapes"
+};
+const VIDEO_DESCRIPTION_SEO = {
+  "/ai-video-generation/brand-video": "Create AI brand videos for founder stories, product origins, company values, and campaigns with guided scenes, clear messaging, and review-ready outputs.",
+  "/ai-video-generation/talking-photo": "Create talking-photo videos from an approved portrait and short script for messages, explainers, product pitches, and social intros, with clear review steps.",
+  "/ai-video-generation/video-ad": "Create AI video ads for paid social, product launches, retargeting, and creator-style campaigns with a focused hook, proof, CTA, and review workflow."
 };
 const THEME_SLUGS = [
   "ecommerce-main-image", "lifestyle-scene", "packshot-multi-angle", "macro-details", "bundle-sets", "size-reference", "feature-infographic", "comparison-chart",
@@ -115,69 +121,6 @@ function mediaUrlForOrigin(src) {
   return `${REQUEST_ORIGIN}${value.startsWith("/") ? value : `/${value}`}`;
 }
 
-function nextFlightPayloadText(html) {
-  const prefix = 'self.__next_f.push([1,"';
-  const chunks = [];
-  let cursor = 0;
-  while (true) {
-    const start = html.indexOf(prefix, cursor);
-    if (start < 0) break;
-    const payloadStart = start + prefix.length;
-    const payloadEnd = html.indexOf('"])', payloadStart);
-    if (payloadEnd < 0) break;
-    try {
-      chunks.push(JSON.parse(`"${html.slice(payloadStart, payloadEnd)}"`));
-    } catch {
-      // Ignore non-JSON flight chunks and continue scanning the response.
-    }
-    cursor = payloadEnd + 3;
-  }
-  return chunks.join("\n");
-}
-
-function balancedJsonObjectAt(text, start) {
-  let depth = 0;
-  let inString = false;
-  let escaped = false;
-  for (let index = start; index < text.length; index += 1) {
-    const character = text[index];
-    if (inString) {
-      if (escaped) escaped = false;
-      else if (character === "\\") escaped = true;
-      else if (character === '"') inString = false;
-      continue;
-    }
-    if (character === '"') {
-      inString = true;
-      continue;
-    }
-    if (character === "{") depth += 1;
-    else if (character === "}" && --depth === 0) return text.slice(start, index + 1);
-  }
-  return "";
-}
-
-function nextFlightJsonLdBlocks(html) {
-  const payloadText = nextFlightPayloadText(html);
-  const blocks = [];
-  const marker = '{"@context":"https://schema.org"';
-  let cursor = 0;
-  while (true) {
-    const start = payloadText.indexOf(marker, cursor);
-    if (start < 0) break;
-    const serialized = balancedJsonObjectAt(payloadText, start);
-    if (serialized) {
-      try {
-        blocks.push(JSON.parse(serialized));
-      } catch {
-        // Ignore incomplete or non-JSON fragments in the flight stream.
-      }
-    }
-    cursor = start + marker.length;
-  }
-  return blocks;
-}
-
 function requestUrl(url) {
   return String(url).replace(ORIGIN, REQUEST_ORIGIN).replace(WWW_ORIGIN, WWW_REQUEST_ORIGIN);
 }
@@ -205,28 +148,33 @@ async function checkImageUrls(urls) {
   return unique.length;
 }
 
-function bodyJsonLd(html) {
-  const blocks = [...html.matchAll(/<script\b([^>]*)type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)]
-    .map((match) => ({ attributes: match[1] || "", json: match[2] || "" }));
-  if (blocks.length) {
-    return blocks.find((block) => /data-storefront-json-ld=["']body-marker["']/i.test(block.attributes))?.json
-      || blocks[0]?.json
-      || "";
-  }
-  const flightBlock = nextFlightJsonLdBlocks(html)[0];
-  return flightBlock ? JSON.stringify(flightBlock) : "";
+function jsonLdScriptMatches(html) {
+  return [...html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
 }
 
 function jsonLdBlocks(html) {
-  const blocks = [...html.matchAll(/<script\b([^>]*)type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)]
+  const matches = jsonLdScriptMatches(html);
+  assert.equal(matches.length, 1, "source HTML must contain exactly one JSON-LD script");
+  const headOpen = html.search(/<head\b[^>]*>/i);
+  const headClose = html.search(/<\/head>/i);
+  assert(headOpen >= 0 && headClose > headOpen, "source HTML head is missing");
+  const scriptIndex = matches[0].index ?? -1;
+  assert(scriptIndex > headOpen && scriptIndex < headClose, "JSON-LD must be emitted inside <head>");
+  const openingTag = matches[0][0].slice(0, matches[0][0].indexOf(">") + 1);
+  assert(!/data-storefront-json-ld=["']body-marker["']/i.test(openingTag), "JSON-LD body marker must not remain in source HTML");
+  assert(!/<script\b[^>]*type=["']application\/ld\+json["']/i.test(html.slice(headClose)), "source HTML must not contain a body JSON-LD duplicate");
+  return matches
     .map((match) => {
       try {
-        return JSON.parse(match[2] || "");
+        return JSON.parse(match[1] || "");
       } catch (error) {
-        throw new Error(`Invalid JSON-LD: ${error.message}`);
+        throw new Error(`Invalid source JSON-LD: ${error.message}`);
       }
     });
-  return blocks.length ? blocks : nextFlightJsonLdBlocks(html);
+}
+
+function bodyJsonLd(html) {
+  return JSON.stringify(jsonLdBlocks(html));
 }
 
 function collectJsonLdIds(value, result = []) {
@@ -349,6 +297,17 @@ async function checkVideoTopicPage(path, expectedTitle) {
   return { path, titleLength: expectedTitle.length, descriptionLength: description.length };
 }
 
+async function checkVideoDescriptionPage(path, expectedDescription) {
+  const { response, html } = await fetchChecked(`${REQUEST_ORIGIN}${path}`);
+  assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
+  assertSeoContract(path, html);
+  assert.equal(metaDescription(html), expectedDescription, `${path}: description override mismatch`);
+  assert(expectedDescription.length >= 140 && expectedDescription.length <= 160, `${path}: description length ${expectedDescription.length} is outside 140-160`);
+  const serializedJsonLd = JSON.stringify(jsonLdBlocks(html));
+  assert(serializedJsonLd.includes(expectedDescription), `${path}: JSON-LD does not use the scoped description`);
+  return { path, descriptionLength: expectedDescription.length };
+}
+
 async function fetchChecked(url, options = {}) {
   const isWwwRequest = options.headers?.["x-smoke-www"] === "1" || (WWW_REQUEST_ORIGIN !== REQUEST_ORIGIN && String(url).startsWith(WWW_REQUEST_ORIGIN));
   const host = isWwwRequest ? WWW_REQUEST_HOST : REQUEST_HOST;
@@ -451,6 +410,8 @@ async function main() {
     for (const path of BLOG_ARTICLE_PATHS) blogArticleResults.push(await checkBlogArticle(prisma, path));
     const videoTopicResults = [];
     for (const [path, expectedTitle] of Object.entries(VIDEO_TOPIC_SEO)) videoTopicResults.push(await checkVideoTopicPage(path, expectedTitle));
+    const videoDescriptionResults = [];
+    for (const [path, expectedDescription] of Object.entries(VIDEO_DESCRIPTION_SEO)) videoDescriptionResults.push(await checkVideoDescriptionPage(path, expectedDescription));
     const imageDirectoryResult = await checkImageDirectory();
 
     const themeResults = [];
@@ -511,7 +472,7 @@ async function main() {
     const random404 = await fetchChecked(`${REQUEST_ORIGIN}/seo-smoke-random-404`);
     assert.equal(random404.response.status, 404, "random 404 must remain 404");
     assert(/<meta\b(?=[^>]*name=["']robots["'])(?=[^>]*content=["'][^"']*noindex)/i.test(random404.html), "random 404 must remain noindex");
-    console.log(JSON.stringify({ ok: true, origin: ORIGIN, wwwOrigin: WWW_ORIGIN, sitemapPageLocs: locs.length, sitemapImageLocs: sitemapImageUrls.length, checkedImageCount, contentCluster: { blogHome: blogHomeResult, articles: blogArticleResults }, videoTopics: videoTopicResults, imageDirectory: imageDirectoryResult, themes: themeResults.map(({ mediaUrls: _mediaUrls, ...result }) => result), retiredRoutes: RETIRED_PATHS.length, goneRoutes: GONE_PATHS.length, pageSpeed: "skipped" }, null, 2));
+    console.log(JSON.stringify({ ok: true, origin: ORIGIN, wwwOrigin: WWW_ORIGIN, sitemapPageLocs: locs.length, sitemapImageLocs: sitemapImageUrls.length, checkedImageCount, contentCluster: { blogHome: blogHomeResult, articles: blogArticleResults }, videoTopics: videoTopicResults, videoDescriptions: videoDescriptionResults, imageDirectory: imageDirectoryResult, themes: themeResults.map(({ mediaUrls: _mediaUrls, ...result }) => result), retiredRoutes: RETIRED_PATHS.length, goneRoutes: GONE_PATHS.length, pageSpeed: "skipped" }, null, 2));
   } finally {
     await prisma.$disconnect();
   }
