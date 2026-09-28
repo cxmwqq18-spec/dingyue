@@ -141,7 +141,7 @@ function scpArgs(source, destination) {
   return args;
 }
 
-function rsyncArgs(source, destination) {
+function rsyncArgs(source, destination, extraArgs = []) {
   const ssh = ["ssh"];
   if (process.env.SSH_CONFIG_PATH) ssh.push("-F", shellQuote(process.env.SSH_CONFIG_PATH));
   ssh.push("-p", shellQuote(process.env.AI_PROJECT_SSH_PORT || "11765"));
@@ -154,6 +154,7 @@ function rsyncArgs(source, destination) {
     // release separately. Skipping existing files avoids re-hashing gigabytes
     // of media over the production SSH connection.
     "--ignore-existing",
+    ...extraArgs,
     "--no-owner",
     "--no-group",
     "-e",
@@ -247,9 +248,9 @@ function localPrecheck() {
   return { changed, remoteHead };
 }
 
-function runRsync(source, destination) {
+function runRsync(source, destination, extraArgs = []) {
   return new Promise((resolve, reject) => {
-    const child = spawn("rsync", rsyncArgs(source, destination), { stdio: "inherit" });
+    const child = spawn("rsync", rsyncArgs(source, destination, extraArgs), { stdio: "inherit" });
     child.once("error", reject);
     child.once("exit", (status, signal) => {
       if (status === 0) resolve();
@@ -272,11 +273,18 @@ async function syncTargetAssets() {
       jobs.push({ source: source + path.sep, destination: destination + "/" });
       return;
     }
+    const files = entries.filter((entry) => !entry.isDirectory());
+    if (files.length) {
+      jobs.push({
+        source: source + path.sep,
+        destination: destination + "/",
+        extraArgs: ["--exclude=*/"]
+      });
+    }
     for (const entry of entries) {
       const childSource = path.join(source, entry.name);
       const childDestination = destination + entry.name;
       if (entry.isDirectory()) splitDirectory(childSource, childDestination, depth - 1);
-      else jobs.push({ source: childSource, destination: childDestination });
     }
   };
   for (const entry of fs.readdirSync(sourceRoot, { withFileTypes: true })) {
@@ -297,7 +305,7 @@ async function syncTargetAssets() {
     while (next < jobs.length) {
       const job = jobs[next++];
       console.log("Synchronizing asset subtree " + job.source);
-      await runRsync(job.source, job.destination);
+      await runRsync(job.source, job.destination, job.extraArgs);
     }
   };
   try {
