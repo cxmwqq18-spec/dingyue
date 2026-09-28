@@ -106,6 +106,14 @@ const AIDREAMSHOOTS_ICON = "/assets/sites/site_aidreamshoots/brand/aidreamshoots
 const AIDREAMSHOOTS_APPLE_ICON = "/assets/sites/site_aidreamshoots/brand/aidreamshoots-icon-180.png?v=20260919original";
 const MYDREAMSHOOTS_ICON = "/assets/dreamshoot/brand/dreamshootai-logo-refined.svg?v=20260920favicon";
 const MYDREAMSHOOTS_APPLE_ICON = "/assets/dreamshoot/brand/dreamshootai-icon-180.png?v=20260702";
+const AIDREAMCAPES_EU_LEGACY_MEDIA_REDIRECTS: Record<string, string> = {
+  "/assets/sites/site_aidreamcapes_eu/fan-holiday-theme/categories/portrait-professionnel.webp":
+    "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/4916dfeaf3ca-polished-professional-headshot.webp",
+  "/assets/sites/site_aidreamcapes_eu/fan-holiday-theme/categories/virtuel-essai.webp":
+    "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/beea80062dd5-virtual-try-on-01.webp",
+  "/assets/sites/site_aidreamcapes_eu/fan-holiday-theme/categories/noel-photo.webp":
+    "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/a707445975aa-christmas-couple-cover.webp"
+};
 
 function envSwitch(value: string | undefined): boolean | undefined {
   const normalized = String(value ?? "").trim().toLowerCase();
@@ -826,6 +834,18 @@ function sanitizeUpstreamHeaders(headers: Headers): Headers {
   return next;
 }
 
+function aidreamcapesEuLegacyMediaRewrite(request: NextRequest): Response | undefined {
+  if (request.method !== "GET" && request.method !== "HEAD") return undefined;
+  const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
+  if (hostSlug !== "aidreamcapes-eu") return undefined;
+  const targetPath = AIDREAMCAPES_EU_LEGACY_MEDIA_REDIRECTS[request.nextUrl.pathname];
+  if (!targetPath) return undefined;
+
+  const target = request.nextUrl.clone();
+  target.pathname = targetPath;
+  return NextResponse.rewrite(target);
+}
+
 async function storefrontIconResponse(request: NextRequest): Promise<Response | undefined> {
   if (request.method !== "GET" || !BROWSER_ICON_PATH_RE.test(request.nextUrl.pathname)) return undefined;
 
@@ -868,6 +888,8 @@ export async function middleware(request: NextRequest) {
   if (spanishXbyRedirect) return finalizeStorefrontResponse(spanishXbyRedirect, request);
   const legacyPublicRedirect = mydreamshootsLegacyPublicRedirect(request);
   if (legacyPublicRedirect) return finalizeStorefrontResponse(legacyPublicRedirect, request);
+  const legacyMediaRewrite = aidreamcapesEuLegacyMediaRewrite(request);
+  if (legacyMediaRewrite) return applyGrownstrideNoindex(legacyMediaRewrite, request);
   const iconResponse = await storefrontIconResponse(request);
   if (iconResponse) return applyGrownstrideNoindex(iconResponse, request);
 
