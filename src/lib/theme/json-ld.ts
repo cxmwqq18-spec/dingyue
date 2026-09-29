@@ -1788,8 +1788,11 @@ export function buildToolDirectoryJsonLd({
       }
     : toolDirectoryFaqSchema(site, item!);
   const label = euVideoTopic?.label ?? topicContent?.hero.title ?? item!.label;
-  const title = euVideoTopic?.title ?? context.seo.title;
-  const description = euVideoTopic?.description ?? context.seo.description;
+  // Dedicated video topic pages own their SEO copy in the landing section.
+  // Keep JSON-LD aligned with the document metadata instead of falling back
+  // to the older generic directory context.
+  const title = euVideoTopic?.title ?? topicContent?.seo.title ?? context.seo.title;
+  const description = euVideoTopic?.description ?? topicContent?.seo.description ?? context.seo.description;
   const isAdsTestingPage = isAidreamcapesAdsTestingPage(site, pagePath);
   const isAidreamcapesBrandCreator = isAidreamcapesBrandCreatorPage(site, pagePath);
   const softwareApplication: JsonLdNode = {
