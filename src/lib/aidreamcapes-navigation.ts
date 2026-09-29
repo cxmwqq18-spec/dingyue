@@ -118,7 +118,7 @@ export const aidreamcapesZipMarketingGroups: AidreamcapesNavGroup[] = [
   { label: "Catalog / Try-On", items: [
     { label: "On-Model", href: "/ai-image-generation/on-model-generation" },
     { label: "Virtual Try-On", href: "/ai-image-generation/virtual-try-on" },
-    { label: "App / SaaS Ads", href: "/ai-video-generation/video-ad" }
+    { label: "App / SaaS Ads", href: "/ai-video-generation/app-saas-demo" }
   ] }
 ];
 

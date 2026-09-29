@@ -93,8 +93,8 @@ function homepageJson(existing) {
   const videoCards = [
     card("video_ugc", "video_card", "UGC Product Ad", "Meta / TikTok tests", "/ai-video-generation/ugc-ad-video", image("ugc"), { badge: "#1 Ads" }),
     card("video_url_ad", "video_card", "URL → Ad", "PDP link to creatives", "/ai-video-generation/url-to-ad", image("urlWorkflow")),
-    card("video_hooks", "video_card", "Hook variants", "First 3 seconds", "/ai-video-generation/video-ad", image("hooks")),
-    card("video_talking", "video_card", "Talking Photo", "Pitch on camera", "/ai-video-generation/talking-photo", image("talkingPhoto")),
+    card("video_hooks", "video_card", "Hook variants", "First 3 seconds", "/ai-video-generation/hook-lab", image("hooks")),
+    card("video_talking", "video_card", "Talking Photo", "Pitch on camera", "/ai-video-generation/talking-photo-recs", image("talkingPhoto")),
     card("video_demo", "video_card", "Product Demo", "Still to motion", "/ai-video-generation/product-video", image("productDemo")),
     card("video_unboxing", "video_card", "Unboxing", "Trust creatives", "/ai-video-generation/product-video", image("unboxing")),
     card("video_before_after", "video_card", "Before–After", "Result ads", "/ai-video-generation/before-after-showcases", image("beforeAfter")),
@@ -136,7 +136,7 @@ function homepageJson(existing) {
   const outputCards = [image("productOutput"), image("hooks"), image("productDemo")].map((media, index) => block(`workflow_output_${index + 1}`, "workflow_output", imageSettings(media)));
   const adFeatures = [
     card("ad_hook_lab", "ad_feature", "Hook Lab", "Generate dozens of first-3-second variations to test retention rates.", "", image("adHooks")),
-    card("ad_actor", "ad_feature", "AI Actor Product Ads", "Lifelike virtual avatars speaking your script with natural hand gestures holding products.", "/ai-video-generation/talking-head-video", image("actor"), { ctaLabel: "Explore Actors →" })
+    card("ad_actor", "ad_feature", "AI Actor Product Ads", "Lifelike virtual avatars speaking your script with natural hand gestures holding products.", "/ai-video-generation/ai-actor-product-ads", image("actor"), { ctaLabel: "Explore Actors →" })
   ];
 
   const old = existing || {};
