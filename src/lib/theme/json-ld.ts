@@ -1792,8 +1792,8 @@ export function buildToolDirectoryJsonLd({
   // Keep JSON-LD aligned with the document metadata instead of falling back
   // to the older generic directory context.
   const seoQualityOverride = aidreamcapesSeoQualityForPath(site, pagePath);
-  const title = euVideoTopic?.title ?? seoQualityOverride?.title ?? topicContent?.seo.title ?? context.seo.title;
-  const description = euVideoTopic?.description ?? seoQualityOverride?.description ?? topicContent?.seo.description ?? context.seo.description;
+  const title = euVideoTopic?.title || seoQualityOverride?.title || topicContent?.seo.title || context.seo.title;
+  const description = euVideoTopic?.description || seoQualityOverride?.description || topicContent?.seo.description || context.seo.description;
   const isAdsTestingPage = isAidreamcapesAdsTestingPage(site, pagePath);
   const isAidreamcapesBrandCreator = isAidreamcapesBrandCreatorPage(site, pagePath);
   const softwareApplication: JsonLdNode = {
