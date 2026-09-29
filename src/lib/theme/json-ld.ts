@@ -12,7 +12,7 @@ import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSaveTheDateSeoFromPath, 
 import { aidreamcapesEuVideoTopic, aidreamcapesEuVideoTopicFromPath } from "@/lib/aidreamcapes-eu-video-media";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
 import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
-import { canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
+import { aidreamcapesSeoQualityForPath, canonicalSeoDirectoryPathForSite, getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
 import { storefrontOriginalLogoUrl } from "@/lib/storefront-brand-assets";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
@@ -1791,8 +1791,9 @@ export function buildToolDirectoryJsonLd({
   // Dedicated video topic pages own their SEO copy in the landing section.
   // Keep JSON-LD aligned with the document metadata instead of falling back
   // to the older generic directory context.
-  const title = euVideoTopic?.title ?? topicContent?.seo.title ?? context.seo.title;
-  const description = euVideoTopic?.description ?? context.seo.description ?? topicContent?.seo.description;
+  const seoQualityOverride = aidreamcapesSeoQualityForPath(site, pagePath);
+  const title = euVideoTopic?.title ?? seoQualityOverride?.title ?? topicContent?.seo.title ?? context.seo.title;
+  const description = euVideoTopic?.description ?? seoQualityOverride?.description ?? topicContent?.seo.description ?? context.seo.description;
   const isAdsTestingPage = isAidreamcapesAdsTestingPage(site, pagePath);
   const isAidreamcapesBrandCreator = isAidreamcapesBrandCreatorPage(site, pagePath);
   const softwareApplication: JsonLdNode = {
