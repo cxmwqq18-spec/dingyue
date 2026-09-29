@@ -781,7 +781,9 @@ function articleSchema(site: Site, routeMode: "host" | "path", pagePath: string,
     "@type": "BlogPosting",
     ...(site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
     headline: articleSectionValue(pageJson, "title") || title,
-    description: articleSectionValue(pageJson, "summary") || description,
+    // Use the final page SEO description so BlogPosting stays aligned with
+    // the document metadata and any route-specific SEO override.
+    description,
     author: {
       "@type": authorType,
       name: cleanSchemaText(site, author),
