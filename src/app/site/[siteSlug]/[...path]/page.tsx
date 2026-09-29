@@ -24,6 +24,8 @@ import { canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRetiredPublicPath } 
 import { canonicalUrlForSite, createPublishedSiteSnapshot, resolvePublishedRedirectDisposition, resolvePublishedRouteDisposition } from "@/lib/storefront-context";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import { dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
+import type { PlatformState, ThemePage } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -76,6 +78,33 @@ async function readRoutePublicMetadataState(
     }
   }
   return readPathModePublicMetadataState(publicSlug, pageSlug);
+}
+
+function withAidreamcapesPromptGuidePage(state: PlatformState | undefined): PlatformState | undefined {
+  const site = state?.sites[0];
+  if (!state || !site || site.id !== "site_aidreamcapes" || findPage(site, "/prompt-guide")) return state;
+  const pageJson = dreamshootAiStudioTemplatesForSite({
+    id: site.id,
+    slug: site.slug,
+    name: site.name,
+    primaryDomain: site.primaryDomain,
+    branding: site.branding
+  })["prompt-guide"];
+  if (!pageJson) return state;
+  const page: ThemePage = {
+    id: `${site.id}_prompt-guide`,
+    siteId: site.id,
+    pageType: pageJson.pageType,
+    templateKey: "prompt-guide",
+    slug: "/prompt-guide",
+    title: "Prompt Guide",
+    draftJson: pageJson,
+    publishedJson: pageJson
+  };
+  return {
+    ...state,
+    sites: state.sites.map((candidate) => candidate.id === site.id ? { ...candidate, pages: [...candidate.pages, page] } : candidate)
+  };
 }
 const aidreamcapesLegacyBlogCategoryRedirects: Record<string, string> = {
   "fan-scene-albums": "/blog/private-fan-scene-album-photo-package-guide",
@@ -369,10 +398,13 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   }
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, siteSlug);
-  const metadataSourceSlug = isSpanishWeddingInvitationCompatibilitySite(siteSlug) && canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+  const isAidreamcapesPromptGuide = publicSiteSlug(siteSlug) === "aidreamcapes" && requestedSlug === "/prompt-guide";
+  const metadataSourceSlug = isAidreamcapesPromptGuide
+    ? "/workflow"
+    : isSpanishWeddingInvitationCompatibilitySite(siteSlug) && canonicalRequestedSlug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
     ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
     : slug;
-  const state = isVideoGenerationRequest
+  const loadedState = isVideoGenerationRequest
     ? routeMode === "host"
       ? await readRoutePublicRuntimeState(headerStore, routeMode, siteSlug, `/ai-video-generation/${videoLookupSlug || ""}`.replace(/\/$/, ""), videoLookupSlug || undefined)
       : await readVideoGenerationRouteState(siteSlug, videoLookupSlug)
@@ -386,6 +418,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
         : await readPathModePublicRuntimeState(siteSlug, "/ai-image-generation")
       : await readRoutePublicMetadataState(headerStore, routeMode, siteSlug, metadataSourceSlug)
       || (legacyRequestedSlug ? await readRoutePublicMetadataState(headerStore, routeMode, siteSlug, legacyRequestedSlug) : undefined);
+  const state = isAidreamcapesPromptGuide ? withAidreamcapesPromptGuidePage(loadedState) : loadedState;
   const site = state?.sites[0];
   if (!site) return {};
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
@@ -610,15 +643,21 @@ export default async function SiteCatchAllPage({
   const legacyPathTarget = legacyPublicPathTarget(slug, collectionRootPageSlug);
   const pageSlug = isCollectionRequest ? collectionRootPageSlug : isVideoGenerationRequest ? "/ai-video-generation" : mydreamLegacyTarget ?? (legacyPathTarget ? publicContentPageSlug(legacyPathTarget) : publicContentPageSlug(canonicalSaveTheDatePath(slug)));
   const legacySaveDateSlug = isPrimaryMydreamshootsSlug(publicSlug) ? legacySaveTheDatePath(pageSlug) : undefined;
-  const sourcePageSlug = isSpanishWeddingInvitationCompatibilitySite(publicSlug) && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+  const isAidreamcapesPromptGuide = publicSlug === "aidreamcapes" && slug === "/prompt-guide";
+  const sourcePageSlug = isAidreamcapesPromptGuide
+    ? "/workflow"
+    : isSpanishWeddingInvitationCompatibilitySite(publicSlug) && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
     ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
     : pageSlug;
-  const state = isVideoGenerationRequest
+  const loadedState = isVideoGenerationRequest
     ? await readVideoGenerationRouteState(publicSlug, videoLookupSlug)
     : isCollectionRequest && collectionLookupSlug
     ? await readCollectionRouteState(publicSlug, collectionLookupSlug, headerStore, routeMode)
-    : await readPathModePublicRuntimeState(publicSlug, sourcePageSlug)
+    : isAidreamcapesPromptGuide
+      ? await readRoutePublicRuntimeState(headerStore, routeMode, publicSlug, "/workflow")
+      : await readPathModePublicRuntimeState(publicSlug, sourcePageSlug)
       || (legacySaveDateSlug ? await readPathModePublicRuntimeState(publicSlug, legacySaveDateSlug) : undefined);
+  const state = isAidreamcapesPromptGuide ? withAidreamcapesPromptGuidePage(loadedState) : loadedState;
   const publicSite = state?.sites[0];
   if (!state || !publicSite) notFound();
   if (isPrimaryMydreamshootsSlug(publicSlug) && isVideoGenerationRequest && ["text-to-video", "image-to-video"].includes(path[1] ?? "")) {

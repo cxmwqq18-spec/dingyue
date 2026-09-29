@@ -23,7 +23,7 @@ const common = {
   readMinutes: "7"
 };
 
-export function aidreamcapesBlogArticles({ imageRoot }) {
+export function aidreamcapesBlogArticles() {
   return [
     {
       ...common,
@@ -31,8 +31,8 @@ export function aidreamcapesBlogArticles({ imageRoot }) {
       title: "AI Product Photography for Ecommerce",
       description: "Plan AI product photography for ecommerce with a clean source image, clear scene direction, review gates, and links to the right image workflow.",
       keywords: "AI product photography, ecommerce product photos, product image workflow, AI ecommerce images",
-      imageUrl: `${imageRoot}/blog-upload-prep.png`,
       imageAlt: "A product photo brief and source image prepared for an ecommerce workflow.",
+      coverThemeHref: "/ai-image-generation/ecommerce-main-image",
       summary: "A practical workflow for turning an approved product reference into clear ecommerce images for product pages, ads, and campaigns.",
       entityName: "AI product photography workflow",
       userIntent: "Plan an ecommerce product photography workflow before creating or publishing AI images.",
@@ -98,8 +98,8 @@ export function aidreamcapesBlogArticles({ imageRoot }) {
       title: "AI Talking Photo Video: Plan and Review Safely",
       description: "Plan an AI talking photo video with permission-safe portraits, a focused script, clear audio, captions, and a face-and-timing review before sharing.",
       keywords: "AI talking photo, talking portrait video, AI avatar video, talking photo safety",
-      imageUrl: `${imageRoot}/article-motion-frames.png`,
       imageAlt: "A portrait frame prepared for a talking photo video review.",
+      coverThemeHref: "/ai-video-generation/talking-photo-recs",
       summary: "A permission-safe planning guide for talking photo videos, including source portraits, scripts, audio, captions, and final review.",
       entityName: "AI talking photo video workflow",
       userIntent: "Plan a talking photo video from an approved portrait and review its face, voice, captions, and timing.",
@@ -165,8 +165,8 @@ export function aidreamcapesBlogArticles({ imageRoot }) {
       title: "Ecommerce Product Image Workflow",
       description: "Build an ecommerce product image workflow from an approved source to main image, lifestyle scene, feature graphic, and comparison asset with review gates.",
       keywords: "ecommerce product image workflow, product page images, AI product content, PDP image checklist",
-      imageUrl: `${imageRoot}/workflow-source-to-gallery.png`,
       imageAlt: "An ecommerce product image workflow from source reference to approved gallery.",
+      coverThemeHref: "/ai-image-generation/feature-infographic",
       summary: "Map the image set a product page needs, choose the right Aidreamcapes workflow for each asset, and review the complete set before publishing.",
       entityName: "Ecommerce product image workflow",
       userIntent: "Plan a complete ecommerce product image set from an approved product reference.",
@@ -232,8 +232,8 @@ export function aidreamcapesBlogArticles({ imageRoot }) {
       title: "AI Video Review Checklist for Brands",
       description: "Review generated video for visual stability, audio, captions, product claims, crop, disclosure, and destination before publishing or sharing.",
       keywords: "AI video review checklist, AI video quality control, generated video review, video publishing checklist",
-      imageUrl: `${imageRoot}/article-motion-frames.png`,
       imageAlt: "A review checklist beside a motion-ready video frame.",
+      coverThemeHref: "/ai-video-generation/how-to-video",
       summary: "A practical final-pass checklist for generated video, covering visual stability, audio, captions, claims, disclosure, and delivery format.",
       entityName: "AI video review checklist",
       userIntent: "Review a generated video for visual, audio, factual, and publishing issues before sharing it.",
@@ -299,8 +299,8 @@ export function aidreamcapesBlogArticles({ imageRoot }) {
       title: "AI Content Disclosure and Safe Usage",
       description: "Review AI content responsibly with permission-safe sources, honest context, disclosure decisions, rights checks, and a record of final approval.",
       keywords: "AI content disclosure, safe AI usage, synthetic media policy, permission-safe AI content",
-      imageUrl: `${imageRoot}/about-private-workspace.png`,
       imageAlt: "A private workspace for reviewing AI content and source permissions.",
+      coverThemeHref: "/ai-image-generation/professional-headshot",
       summary: "A practical guide to permission-safe uploads, honest context, review records, and responsible sharing of AI-generated images and videos.",
       entityName: "AI content disclosure and safe usage",
       userIntent: "Understand how to review, label, and share AI-generated content responsibly.",
@@ -366,8 +366,8 @@ export function aidreamcapesBlogArticles({ imageRoot }) {
       title: "AI Motion Generator Video Guide",
       description: "Plan motion-generator videos from one approved image with a focused action, continuity checks, product-safe movement, and final export review.",
       keywords: "AI motion generator, image to video workflow, product motion video, AI video review",
-      imageUrl: `${imageRoot}/article-motion-frames.png`,
       imageAlt: "Motion frames reviewed for continuity before exporting a product video.",
+      coverThemeHref: "/ai-video-generation/cinematic-video",
       summary: "A practical guide to turning one approved still into a reviewable motion clip without losing product identity or publishing context.",
       entityName: "AI motion generator video workflow",
       userIntent: "Plan a motion-generator video from one approved image and review it before sharing or publishing.",
@@ -433,8 +433,8 @@ export function aidreamcapesBlogArticles({ imageRoot }) {
       title: "AI UGC Video Ads: A Review-Ready Workflow",
       description: "Plan AI UGC video ads with a clear hook, approved product facts, creator-style scenes, disclosure, and review gates before paid distribution.",
       keywords: "AI UGC video ads, creator-style ads, product video ads, UGC ad review",
-      imageUrl: `${imageRoot}/creators-channel-studio.png`,
       imageAlt: "A creator-style video ad plan with product notes and a review checklist.",
+      coverThemeHref: "/ai-video-generation/ugc-ad-video",
       summary: "Build creator-style ad concepts with one clear hook, controlled product claims, and a review pass before the video enters a campaign.",
       entityName: "AI UGC video ad workflow",
       userIntent: "Plan and review a creator-style AI video ad before publishing it to a campaign.",

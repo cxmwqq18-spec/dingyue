@@ -218,9 +218,9 @@ function FeatureSection({ section, resolveAsset, resolveHref }: { section: Secti
             <h2 className="ac-display-md">{title}</h2>
             {paragraphs.length ? paragraphs.map((paragraph, index) => <p className="ac-copy" key={paragraph.slice(0, 24) + "-" + index}>{paragraph}</p>) : body ? <p className="ac-copy">{body}</p> : null}
             <ActionButtons section={section} resolveHref={resolveHref} />
-            <RichTextCards items={cards} />
           </div>
           {image ? <div className="ac-feature-media"><ImageFrame src={image} alt={setting(section, "imageAlt", title)} /></div> : hasQuote ? <div className="ac-quote-panel"><p>{body}</p><span>{setting(section, "eyebrow")}</span></div> : null}
+          {cards.length ? <div className="ac-feature-cards"><RichTextCards items={cards} /></div> : null}
         </div>
       </div>
     </section>
@@ -242,9 +242,9 @@ function StorySection({ section, resolveAsset, resolveHref }: { section: Section
             <Eyebrow tone={setting(section, "eyebrowTone", "amber") as "cyan" | "pink" | "amber" | "violet"}>{setting(section, "eyebrow")}</Eyebrow>
             <h2 className="ac-display-md">{title}</h2>
             {paragraphs.length ? paragraphs.map((paragraph, index) => <p className="ac-copy" key={paragraph.slice(0, 24) + "-" + index}>{paragraph}</p>) : body ? <p className="ac-copy">{body}</p> : null}
-            <RichTextCards items={cards} />
             <ActionButtons section={section} resolveHref={resolveHref} />
           </div>
+          {cards.length ? <div className="ac-story-cards"><RichTextCards items={cards} /></div> : null}
         </div>
       </div>
     </section>
@@ -263,7 +263,7 @@ function ApplicationSection({ section, siteId, resolveAsset, resolveHref }: { se
   return (
     <section className="ac-section" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="application_form">
       <div className="ac-container">
-        <div className="ac-feature-split">
+        <div className="ac-feature-split ac-application-split">
           <div className="ac-feature-copy">
             <Eyebrow tone="pink">{setting(section, "eyebrow")}</Eyebrow>
             <h2 className="ac-display-md">{setting(section, "title")}</h2>
@@ -398,6 +398,24 @@ function ArticleSection({ section, resolveAsset, resolveHref }: { section: Secti
   </>;
 }
 
+type AidreamcapesAccentTone = "cyan" | "pink" | "amber" | "violet";
+
+type AidreamcapesPolicyMeta = {
+  key: string;
+  label: string;
+  index: string;
+  tone: AidreamcapesAccentTone;
+};
+
+const aidreamcapesPolicyMeta: Record<string, AidreamcapesPolicyMeta> = {
+  "/refunds": { key: "refunds", label: "Refund review", index: "01", tone: "pink" },
+  "/digital-delivery": { key: "digital-delivery", label: "Digital delivery", index: "02", tone: "cyan" },
+  "/content": { key: "content", label: "Content standards", index: "03", tone: "amber" },
+  "/cookies": { key: "cookies", label: "Cookie controls", index: "04", tone: "violet" },
+  "/privacy": { key: "privacy", label: "Privacy controls", index: "05", tone: "cyan" },
+  "/terms": { key: "terms", label: "Service terms", index: "06", tone: "amber" }
+};
+
 function PolicySection({ section, page, pagePath, storefrontContext, resolveHref }: { section: SectionInstance; page: ThemePageJson; pagePath: string; storefrontContext?: StorefrontContext; resolveHref: Resolve }) {
   const intro = pageSections(page).find((item) => item.type === "rich_text");
   const body = setting(section, "body");
@@ -406,9 +424,19 @@ function PolicySection({ section, page, pagePath, storefrontContext, resolveHref
   const subtitle = intro ? setting(intro, "subtitle", setting(intro, "body")) : "";
   const contactEmail = setting(section, "contactEmail", storefrontContext?.profile?.identity.supportEmail ?? "");
   const isContact = pagePath === "/contact-us";
+  const policy = aidreamcapesPolicyMeta[pagePath] ?? { key: "policy", label: "Policy document", index: "00", tone: "cyan" as const };
+  const policyLinks = [
+    ["Refund Policy", "/refunds"],
+    ["Digital Delivery Policy", "/digital-delivery"],
+    ["Privacy Policy", "/privacy"],
+    ["Content Policy", "/content"],
+    ["Terms of Service", "/terms"],
+    ["Cookie Policy", "/cookies"],
+    ["Contact Us", "/contact-us"]
+  ] as const;
   return <>
-    {!isContact ? <section className="ac-page-hero" data-aidreamcapes-public-section="policy_intro"><div className="ac-container"><div className={subtitle ? "ac-directory-header" : "ac-directory-header ac-directory-header-single"}><div><Eyebrow tone={pagePath === "/terms" ? "amber" : "cyan"}>{setting(section, "eyebrow")}</Eyebrow><h1 className="ac-display-lg">{title}</h1></div>{subtitle ? <p>{subtitle}</p> : null}</div></div></section> : null}
-    <section className="ac-section ac-section-tight" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="policy"><div className="ac-container">{isContact ? <div className="ac-contact-layout"><div className="ac-feature-copy"><Eyebrow tone="pink">{setting(section, "eyebrow")}</Eyebrow><h2 className="ac-display-md">{setting(section, "title")}</h2>{setting(section, "body") ? <p className="ac-copy">{htmlText(setting(section, "body"))}</p> : null}{contactEmail ? <a className="ac-button" href={"mailto:" + contactEmail}>Email support<ArrowUpRight size={15} /></a> : null}</div><div className="ac-form-card">{contactEmail ? <div className="ac-policy-notice"><strong>Support details</strong><span>{contactEmail}</span></div> : null}<div className="ac-article-prose" dangerouslySetInnerHTML={{ __html: addHeadingIds(body) }} /></div></div> : <div className="ac-policy-layout">{headings.length ? <aside className="ac-policy-aside"><h2>On this page</h2><nav aria-label="Policy contents">{headings.map((heading) => <a href={"#" + heading.id} key={heading.id}>{heading.label}</a>)}</nav></aside> : null}<article className="ac-policy-paper"><div className="ac-policy-notice"><strong>Last updated:</strong><span>{setting(section, "lastUpdated")}</span>{contactEmail ? <span>Contact: <a href={"mailto:" + contactEmail}>{contactEmail}</a></span> : null}</div><div className="ac-article-prose" dangerouslySetInnerHTML={{ __html: addHeadingIds(body) }} /></article></div>}{!isContact ? <div className="ac-policy-links">{[["Privacy Policy", "/privacy"], ["Terms of Service", "/terms"], ["Contact Us", "/contact-us"]].filter(([, href]) => href !== pagePath).map(([label, href]) => <a href={resolveHref(href)} key={href}>{label}</a>)}</div> : null}</div></section>
+    {!isContact ? <section className="ac-page-hero ac-policy-hero" data-aidreamcapes-public-section="policy_intro" data-policy-key={policy.key} data-policy-tone={policy.tone}><div className="ac-container"><div className="ac-policy-hero-grid"><div className="ac-directory-copy"><div className="ac-policy-kicker"><span className="ac-policy-index">{policy.index}</span><Eyebrow tone={policy.tone}>{setting(section, "eyebrow")}</Eyebrow></div><h1 className="ac-display-lg">{title}</h1>{subtitle ? <p className="ac-lead">{subtitle}</p> : null}</div><aside className="ac-policy-identity" aria-label="Policy document details"><span className="ac-policy-identity-label">Policy document</span><strong>{policy.label}</strong><div className="ac-policy-identity-row"><span>Applies to</span><span>Aidreamcapes</span></div><div className="ac-policy-identity-row"><span>Questions?</span>{contactEmail ? <a href={"mailto:" + contactEmail}>Contact support <ArrowUpRight size={13} /></a> : <span>Contact support</span>}</div></aside></div></div></section> : null}
+    <section className={["ac-section", "ac-section-tight", !isContact ? "ac-policy-section" : ""].filter(Boolean).join(" ")} id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="policy" data-policy-key={!isContact ? policy.key : undefined} data-policy-tone={!isContact ? policy.tone : undefined}><div className="ac-container">{isContact ? <div className="ac-contact-layout"><div className="ac-feature-copy"><Eyebrow tone="pink">{setting(section, "eyebrow")}</Eyebrow><h2 className="ac-display-md">{setting(section, "title")}</h2>{setting(section, "body") ? <p className="ac-copy">{htmlText(setting(section, "body"))}</p> : null}{contactEmail ? <a className="ac-button" href={"mailto:" + contactEmail}>Email support<ArrowUpRight size={15} /></a> : null}</div><div className="ac-form-card">{contactEmail ? <div className="ac-policy-notice"><strong>Support details</strong><span>{contactEmail}</span></div> : null}<div className="ac-article-prose" dangerouslySetInnerHTML={{ __html: addHeadingIds(body) }} /></div></div> : <div className="ac-policy-layout">{headings.length ? <aside className="ac-policy-aside"><div className="ac-policy-aside-head"><span>Contents</span><span>{String(headings.length).padStart(2, "0")}</span></div><h2>On this page</h2><nav aria-label="Policy contents">{headings.map((heading) => <a href={"#" + heading.id} key={heading.id}>{heading.label}</a>)}</nav></aside> : null}<article className="ac-policy-paper"><div className="ac-policy-notice"><strong>Last updated:</strong><span>{setting(section, "lastUpdated")}</span>{contactEmail ? <span>Contact: <a href={"mailto:" + contactEmail}>{contactEmail}</a></span> : null}</div><div className="ac-article-prose" dangerouslySetInnerHTML={{ __html: addHeadingIds(body) }} /></article></div>}{!isContact ? <div className="ac-policy-links">{policyLinks.filter(([, href]) => href !== pagePath).map(([label, href]) => <a href={resolveHref(href)} key={href}>{label}</a>)}</div> : null}</div></section>
   </>;
 }
 
@@ -417,7 +445,7 @@ export function AidreamcapesPublicSection(props: AidreamcapesPublicSectionProps)
   const routedSection = sectionWithPrototypeAnchor(section, pagePath);
   const isFirstRichText = pageSections(page).find((item) => item.type === "rich_text") === section;
   if (routedSection.type === "rich_text") {
-    if (pagePath === "/privacy" || pagePath === "/terms") return null;
+    if (aidreamcapesPolicyMeta[pagePath]) return null;
     if (setting(routedSection, "layout") === "application_form") return <ApplicationSection section={routedSection} siteId={site.id} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
     if (isFirstRichText) {
       if (pagePath === "/blog" || pagePath === "/contact-us" || pagePath === "/pricing") {

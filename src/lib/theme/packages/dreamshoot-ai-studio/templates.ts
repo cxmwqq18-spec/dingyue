@@ -8,6 +8,7 @@ export type MydreamShootsAiStudioTemplateKey =
   | ThemePackageTemplateKey
   | "tools"
   | "workflow"
+  | "prompt-guide"
   | "help"
   | "faq"
   | "creators-circle"
@@ -2304,6 +2305,70 @@ function aidreamcapesWorkflowPage(): ThemePageJson {
   );
 }
 
+function aidreamcapesPromptGuidePage(site?: DreamshootPublicSeoSiteSeed): ThemePageJson {
+  return page(
+    "content",
+    ["prompt_guide_intro_1", "prompt_guide_framework_1", "prompt_guide_examples_1", "conversion_1"],
+    {
+      prompt_guide_intro_1: section("rich_text", {
+        eyebrow: "Prompt guide",
+        title: "Give every album request a clear visual brief.",
+        body: "A useful prompt tells the generator what must stay true, what should change, and how the finished image should feel. Start with the subject and occasion, add the setting and wardrobe, then finish with framing, light, mood, and any boundaries that matter.",
+        headingLevel: "h1",
+        tone: "dark",
+        imageUrl: aidreamcapesPublicAssets.premiere,
+        primaryCta: "Try a creation tool",
+        primaryHref: "/app/create",
+        secondaryCta: "Read the workflow",
+        secondaryHref: "/workflow"
+      }, [
+        block("aidream_prompt_subject", "rich_text_card", { meta: "01", title: "Name the subject", description: "Describe the people, product, or moment that must remain recognizable in the final image." }),
+        block("aidream_prompt_scene", "rich_text_card", { meta: "02", title: "Set the occasion", description: "Choose the fan scene, game-day moment, premiere arrival, holiday table, or celebration the image should support." }),
+        block("aidream_prompt_look", "rich_text_card", { meta: "03", title: "Shape the look", description: "Add location, wardrobe, lighting, camera distance, color, and the visual mood you want to see." }),
+        block("aidream_prompt_boundary", "rich_text_card", { meta: "04", title: "State the boundary", description: "Call out approved source photos, original styling, readable text, or anything the image must avoid." })
+      ]),
+      prompt_guide_framework_1: section("rich_text", {
+        eyebrow: "Prompt structure",
+        title: "Use a short structure before adding extra style words.",
+        bodyParagraphs: [
+          "Subject + action: who or what is in the frame, and what they are doing.",
+          "Scene + purpose: where the moment happens and what the image needs to communicate.",
+          "Look + camera: wardrobe, materials, lighting, lens distance, composition, and color.",
+          "Constraints: approved references, original marks, readable copy, and details to keep out of frame."
+        ],
+        layout: "prompt_guide",
+        imageUrl: aidreamcapesPublicAssets.gameDay,
+        primaryCta: "Browse album directions",
+        primaryHref: "/collections",
+        secondaryCta: "View pricing",
+        secondaryHref: "/pricing"
+      }, [
+        block("aidream_prompt_subject_action", "rich_text_card", { meta: "Subject + action", title: "Keep the main idea concrete", description: "Write what is visible first: a small group celebrating, a supporter holding a handmade sign, or a couple reviewing a printed keepsake." }),
+        block("aidream_prompt_scene_purpose", "rich_text_card", { meta: "Scene + purpose", title: "Give the frame a job", description: "Say whether the result is for a profile, invitation, social post, private album, gift, or campaign concept." }),
+        block("aidream_prompt_look_camera", "rich_text_card", { meta: "Look + camera", title: "Control the visual language", description: "Use a few strong choices for light, color, crop, perspective, texture, and expression instead of a long list of loose adjectives." }),
+        block("aidream_prompt_constraints", "rich_text_card", { meta: "Constraints", title: "Protect the important details", description: "Ask for natural faces, intact hands, accurate clothing colors, clean edges, and original marks when those details matter." })
+      ]),
+      prompt_guide_examples_1: section("rich_text", {
+        eyebrow: "Example briefs",
+        title: "Describe the moment before you decorate it.",
+        body: "Strong prompts are specific without becoming crowded. Use one clear sentence for the scene, then add only the details that change the result. If a source photo or piece of text is important, identify it explicitly and review the generated image before sharing it.",
+        imageUrl: aidreamcapesPublicAssets.gallery,
+        primaryCta: "Start with approved photos",
+        primaryHref: "/app/create",
+        secondaryCta: "Contact support",
+        secondaryHref: "/contact-us"
+      }, [
+        block("aidream_prompt_example_fan", "rich_text_card", { meta: "Fan scene", title: "Warm, original, and personal", description: "A small group of friends in a night stadium-inspired setting, wearing original red-and-black fan colors, candid smiles, soft floodlights, medium-wide framing, no official team logos." }),
+        block("aidream_prompt_example_holiday", "rich_text_card", { meta: "Holiday", title: "Make the keepsake readable", description: "A family gathered around a Thanksgiving table, warm window light, natural expressions, textured linen, room for a short original greeting in the upper-left corner, portrait crop." }),
+        block("aidream_prompt_example_review", "rich_text_card", { meta: "Review", title: "Check the result before delivery", description: "Review faces, hands, clothing edges, signs, captions, and protected marks. Keep the version that communicates the occasion clearly and remove anything inaccurate." })
+      ]),
+      conversion_1: aidreamcapesConversionSection()
+    },
+    1,
+    seoForPublicPage("/prompt-guide", site)
+  );
+}
+
 function aidreamcapesCreatorsCirclePage(site?: DreamshootPublicSeoSiteSeed): ThemePageJson {
   return page(
     "content",
@@ -2618,6 +2683,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
       robots: { index: true, follow: true }
     }
   ),
+  "prompt-guide": aidreamcapesPromptGuidePage(site),
   "package-detail": page(
     "package_detail",
     ["package_hero_1", "package_before_after_1", "packages_1", "packages_strip_1", "trust_1", "pricing_1", "conversion_1"],
@@ -3012,6 +3078,7 @@ export function dreamshootAiStudioTemplatesForSite(site?: DreamshootPublicSeoSit
   return {
     ...templates,
     workflow: aidreamcapesWorkflowPage(),
+    "prompt-guide": aidreamcapesPromptGuidePage(site),
     "creators-circle": aidreamcapesCreatorsCirclePage(site),
     "partner-registration": aidreamcapesPartnerRegistrationPage(site),
     "about-us": aidreamcapesAboutPage(site),
@@ -3031,6 +3098,7 @@ export const dreamshootAiStudioTemplateLabels: Record<MydreamShootsAiStudioTempl
   "best-save-the-date": "Best Save the Date themes",
   tools: "AI Tools Directory",
   workflow: "How It Works",
+  "prompt-guide": "Prompt Guide",
   "package-detail": "Package Detail",
   "tool-detail": "AI Tool Detail",
   login: "Login",

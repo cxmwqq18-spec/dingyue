@@ -47,6 +47,18 @@ export const aidreamcapesZipVideoGroups: AidreamcapesNavGroup[] = [
   ] }
 ];
 
+// The public .com video directory is the source of truth for Aidreamcapes
+// video detail routes. Keep route parsing and sitemap generation aligned with
+// the visible directory instead of accepting arbitrary historical database
+// slugs.
+export const AIDREAMCAPES_PUBLIC_AI_VIDEO_GENERATION_SLUGS = aidreamcapesZipVideoGroups
+  .flatMap((group) => group.items)
+  .map((item) => item.href.replace(/^\/ai-video-generation\//, ""));
+
+export function isAidreamcapesPublicVideoGenerationSlug(slug: string | undefined): boolean {
+  return Boolean(slug && AIDREAMCAPES_PUBLIC_AI_VIDEO_GENERATION_SLUGS.includes(slug));
+}
+
 export const aidreamcapesZipImageGroups: AidreamcapesNavGroup[] = [
   { label: "Listing / Store", items: [
     { label: "Ecommerce Main Image", href: "/ai-image-generation/ecommerce-main-image" },
@@ -157,14 +169,19 @@ export const aidreamcapesZipFooterGroups: AidreamcapesNavGroup[] = [
   ] },
   { label: "Resources", items: [
     { label: "Workflow", href: "/workflow" },
-    { label: "Prompt Guide", href: "/workflow" },
     { label: "Affiliate Program", href: "/creators-circle" },
     { label: "Blog", href: "/blog" }
   ] },
   { label: "Company", items: [
     { label: "About Us", href: "/about-us" },
-    { label: "Contact Us", href: "/contact-us" },
+    { label: "Contact Us", href: "/contact-us" }
+  ] },
+  { label: "Support", items: [
+    { label: "Refund Policy", href: "/refunds" },
+    { label: "Digital Delivery Policy", href: "/digital-delivery" },
     { label: "Privacy Policy", href: "/privacy" },
-    { label: "Terms of Service", href: "/terms" }
+    { label: "Content Policy", href: "/content" },
+    { label: "Terms of Service", href: "/terms" },
+    { label: "Cookie Policy", href: "/cookies" }
   ] }
 ];

@@ -2,6 +2,7 @@ import mydreamshootsThemeTaxonomy from "@/lib/mydreamshoots-theme-taxonomy.json"
 import type { CreativePack, CreativePackCategory, Site } from "@/lib/types";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import { canonicalSpanishXbyCollectionSlug, isAidreamshootsStorefrontSite, isSpanishStorefrontSite } from "@/lib/spanish-storefronts";
+import { isAidreamcapesPublicVideoGenerationSlug } from "@/lib/aidreamcapes-navigation";
 
 export type PhotoPackageMegaGroup = {
   label: string;
@@ -132,6 +133,14 @@ function isAidreamcapesRouteSite(site: CollectionRouteSiteIdentity | undefined):
   return Boolean(site && isAidreamcapesCapabilitySite({ id: site.siteId ?? site.id ?? "", slug: site.slug ?? "" }));
 }
 
+function isPrimaryAidreamcapesRouteSite(site: CollectionRouteSiteIdentity | undefined): boolean {
+  if (!site) return false;
+  const siteId = site.siteId ?? site.id ?? "";
+  const slug = (site.slug ?? "").trim().toLowerCase();
+  const domain = (site.primaryDomain ?? "").trim().toLowerCase();
+  return siteId === "site_aidreamcapes" || slug === "aidreamcapes" || domain === "aidreamcapes.com" || domain === "www.aidreamcapes.com";
+}
+
 export function isMydreamshootsCollectionRouteSite(site: CollectionRouteSiteIdentity | undefined): boolean {
   if (!site || isAidreamcapesRouteSite(site)) return false;
   const siteId = site.siteId ?? site.id ?? "";
@@ -185,6 +194,7 @@ export function publicCollectionPathForSite(site: CollectionRouteSiteIdentity | 
 export function publicVideoGenerationPathForSite(site: CollectionRouteSiteIdentity | undefined, rawSlug?: string): string {
   const slug = photoPackageSlug(rawSlug);
   if (!slug || slug === "all" || slug === "todo" || slug === "todos") return MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH;
+  if (isPrimaryAidreamcapesRouteSite(site) && !isAidreamcapesPublicVideoGenerationSlug(slug)) return MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH;
   if (isAidreamcapesRouteSite(site)) return `${MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH}/${slug}`;
   if (!isMydreamshootsPublicVideoGenerationSlug(slug)) return MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH;
   return `${MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH}/${slug}`;
@@ -319,6 +329,7 @@ export function parsePublicVideoGenerationRouteForSite(site: CollectionRouteSite
     if (segments.length === 1) return { root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT, canonicalPath: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT_PATH, kind: "directory" };
     if (segments.length === 2) {
       const itemSlug = photoPackageSlug(segments[1]);
+      if (isPrimaryAidreamcapesRouteSite(site) && !isAidreamcapesPublicVideoGenerationSlug(itemSlug)) return undefined;
       return { root: MYDREAMSHOOTS_AI_VIDEO_GENERATION_ROOT, itemSlug, canonicalPath: publicVideoGenerationPathForSite(site, itemSlug), kind: "item" };
     }
     return undefined;

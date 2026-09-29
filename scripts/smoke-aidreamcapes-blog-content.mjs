@@ -5,6 +5,7 @@ import { PrismaClient } from "@prisma/client";
 
 import "./load-runtime-env.mjs";
 import { argumentValue, assertDatabaseTarget } from "./lib/database-target.mjs";
+import { aidreamcapesThemeCoverImage, assertUniqueAidreamcapesBlogCovers } from "./lib/aidreamcapes-blog-cover-media.mjs";
 import { BLOG_ARTICLE_PATHS, LEGACY_ARTICLE_PATH, MIGRATED_ARTICLE_PATH, articleLinkHrefs, validateAidreamcapesBlogArticle } from "./lib/aidreamcapes-blog-route-contract.mjs";
 
 const ORIGIN = String(argumentValue("--origin") || process.env.AIDREAMCAPES_AUDIT_ORIGIN || "http://127.0.0.1:3002").replace(/\/$/, "");
@@ -81,6 +82,22 @@ async function main() {
       orderBy: { slug: "asc" }
     });
     assert.equal(pages.length, BLOG_ARTICLE_PATHS.length, "Aidreamcapes blog article row count mismatch");
+    const coverThemeHrefs = [...new Set(pages.map((page) => page.contentJson?.sections?.blog_detail_1?.settings?.coverThemeHref).filter(Boolean))];
+    const [coverLivePages, coverThemePages] = await Promise.all([
+      prisma.livePage.findMany({
+        where: { siteId: SITE_ID, slug: { in: coverThemeHrefs } },
+        select: { slug: true, contentJson: true }
+      }),
+      prisma.themePage.findMany({
+        where: { siteId: SITE_ID, slug: { in: coverThemeHrefs } },
+        select: { slug: true, publishedJson: true }
+      })
+    ]);
+    const coverPageByHref = new Map(coverLivePages.map((page) => [page.slug, page.contentJson]));
+    for (const page of coverThemePages) {
+      if (!coverPageByHref.has(page.slug)) coverPageByHref.set(page.slug, page.publishedJson);
+    }
+    assert.equal(coverPageByHref.size, coverThemeHrefs.length, "Aidreamcapes cover theme page count mismatch");
     const oldPage = await prisma.livePage.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: LEGACY_ARTICLE_PATH } }, select: { id: true } });
     assert.equal(oldPage, null, "legacy Aidreamcapes blog LivePage still exists");
 
@@ -89,6 +106,9 @@ async function main() {
     assertIndexablePage("/blog", home.html, `${CANONICAL_ORIGIN}/blog`);
     for (const pathname of BLOG_ARTICLE_PATHS) assert(home.html.includes(`href="${pathname}"`), `/blog: missing article link ${pathname}`);
     assert(!home.html.includes(`href="${LEGACY_ARTICLE_PATH}"`), "/blog: legacy article link remains");
+    const expectedListCovers = pages.map((page) => page.contentJson?.sections?.blog_detail_1?.settings?.imageUrl).filter(Boolean);
+    assertUniqueAidreamcapesBlogCovers(pages.map((page) => page.contentJson?.sections?.blog_detail_1?.settings || {}));
+    for (const imageUrl of expectedListCovers) assert(home.html.includes(imageUrl), `/blog: missing article cover ${imageUrl}`);
 
     const articleResults = [];
     for (const page of pages) {
@@ -98,6 +118,12 @@ async function main() {
       assertIndexablePage(pathname, responsePage.html, `${CANONICAL_ORIGIN}${pathname}`, true);
       const settings = page.contentJson?.sections?.blog_detail_1?.settings;
       assert(settings, `${pathname}: blog settings missing`);
+      const coverSource = settings.coverThemeHref;
+      const expectedCover = aidreamcapesThemeCoverImage(coverPageByHref.get(coverSource));
+      assert(expectedCover, `${pathname}: cover theme ${coverSource} has no image asset`);
+      assert.equal(settings.imageUrl, expectedCover, `${pathname}: cover image is not sourced from ${coverSource}`);
+      assert(!settings.imageUrl.includes("/public-editorial/"), `${pathname}: generic editorial cover remains`);
+      assert(responsePage.html.includes(expectedCover), `${pathname}: rendered cover does not use the theme asset`);
       validateAidreamcapesBlogArticle({
         slug: pathname,
         title: settings.title,
@@ -105,6 +131,7 @@ async function main() {
         relatedLinks: settings.relatedLinks.map((link) => [link.href, link.label]),
         targetHref: settings.targetHref,
         primaryHref: settings.primaryHref,
+        coverThemeHref: settings.coverThemeHref,
         body: settings.body
       });
       const links = [...new Set(articleLinkHrefs({

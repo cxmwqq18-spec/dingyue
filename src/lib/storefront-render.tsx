@@ -66,6 +66,7 @@ import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, P
 const jobDetailSlug = "/app/jobs/detail";
 const dreamshootPartnerTemplateSlugs = new Set([
   "/workflow",
+  "/prompt-guide",
   "/faq",
   "/creators-circle",
   "/about-us",
@@ -184,6 +185,22 @@ function contentImageForPage(snapshot: ReturnType<typeof createPublishedSiteSnap
   return undefined;
 }
 
+function contentVideoForPage(snapshot: ReturnType<typeof createPublishedSiteSnapshot>, path: string): { src: string; poster: string; alt: string } | undefined {
+  const content = landingContentForPage(snapshot, path, "video");
+  const hero = content?.hero && typeof content.hero === "object" && !Array.isArray(content.hero)
+    ? content.hero as Record<string, unknown>
+    : undefined;
+  const video = hero?.video && typeof hero.video === "object" && !Array.isArray(hero.video)
+    ? hero.video as Record<string, unknown>
+    : undefined;
+  if (!video || typeof video.src !== "string" || !video.src.trim() || typeof video.poster !== "string" || !video.poster.trim()) return undefined;
+  return {
+    src: video.src,
+    poster: video.poster,
+    alt: typeof video.alt === "string" ? video.alt : typeof video.label === "string" ? video.label : "AI video theme preview"
+  };
+}
+
 function landingContentForPage(snapshot: ReturnType<typeof createPublishedSiteSnapshot>, path: string, kind: "image" | "video") {
   const page = snapshot.pages.find((candidate) => directoryPath(candidate.slug) === directoryPath(path));
   if (!page) return undefined;
@@ -222,7 +239,7 @@ function buildAidreamcapesDirectoryProjection(
       const heroBody = typeof hero?.body === "string" ? hero.body.trim() : "";
       const mediaImage = media?.primaryImage?.trim();
       const contentImageUrl = contentImage?.src?.trim();
-      const imageUrl = [mediaImage, contentImageUrl, AIDREAMCAPES_DIRECTORY_FALLBACK_IMAGE]
+      const imageUrl = [contentImageUrl, mediaImage, AIDREAMCAPES_DIRECTORY_FALLBACK_IMAGE]
         .find((candidate) => candidate && !isAidreamcapesLegacyCreativePackAsset(candidate)) || "";
       const safeContentImageUrl = !isAidreamcapesLegacyCreativePackAsset(contentImageUrl) ? contentImageUrl : undefined;
       const safeMediaImageAlt = !isAidreamcapesLegacyCreativePackAsset(mediaImage) ? media?.imageAlts?.[0]?.trim() : undefined;
@@ -236,7 +253,7 @@ function buildAidreamcapesDirectoryProjection(
         groupLabel: lane.label,
         imageUrl,
         fallbackImageUrl: safeContentImageUrl && safeContentImageUrl !== imageUrl ? safeContentImageUrl : undefined,
-        imageAlt: safeMediaImageAlt || (safeContentImageUrl ? contentImage?.alt?.trim() : undefined) || `${title} cover image`,
+        imageAlt: (safeContentImageUrl ? contentImage?.alt?.trim() : undefined) || safeMediaImageAlt || `${title} cover image`,
         width: storefrontResponsiveImageDimensions(imageUrl)?.width ?? contentImage?.width ?? 1600,
         height: storefrontResponsiveImageDimensions(imageUrl)?.height ?? contentImage?.height ?? 1200,
         tags: (entity?.content.tags ?? []).filter(Boolean).slice(0, 4)
@@ -251,10 +268,13 @@ function buildAidreamcapesDirectoryProjection(
     .forEach((page) => {
       const path = directoryPath(page.slug);
       const contentImage = contentImageForPage(snapshot, path, "video");
+      const contentVideo = contentVideoForPage(snapshot, path);
       if (!contentImage?.src) return;
       videoCovers[path] = {
         src: contentImage.src,
-        alt: contentImage.alt || `${path.split("/").at(-1)?.replace(/-/g, " ") ?? "AI video"} theme cover`
+        alt: contentImage.alt || `${path.split("/").at(-1)?.replace(/-/g, " ") ?? "AI video"} theme cover`,
+        videoSrc: contentVideo?.src,
+        posterSrc: contentVideo?.poster || contentImage.src
       };
     });
   snapshot.publishedRoutes
@@ -263,11 +283,14 @@ function buildAidreamcapesDirectoryProjection(
       const path = directoryPath(route.canonicalPath);
       const media = mediaForRoute(route as { pageEntityId: string; routeKind: "ai-video-topic-leaf" });
       const contentImage = contentImageForPage(snapshot, path, "video");
-      const src = media?.primaryImage?.trim() || contentImage?.src || "";
+      const contentVideo = contentVideoForPage(snapshot, path);
+      const src = contentImage?.src || media?.primaryImage?.trim() || "";
       if (!src) return;
       videoCovers[path] = {
         src,
-        alt: media?.imageAlts?.[0]?.trim() || contentImage?.alt?.trim() || `${path.split("/").at(-1)?.replace(/-/g, " ") ?? "AI video"} theme cover`
+        alt: contentImage?.alt?.trim() || media?.imageAlts?.[0]?.trim() || `${path.split("/").at(-1)?.replace(/-/g, " ") ?? "AI video"} theme cover`,
+        videoSrc: contentVideo?.src,
+        posterSrc: contentVideo?.poster || src
       };
     });
   return { imageCards, videoCovers };

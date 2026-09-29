@@ -4,6 +4,27 @@ const legacyMirrorGalleryPattern = /^\/assets\/sites\/site_aidreamcapes_eu\/mirr
 const euImagePackRoot = "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1";
 const euProviderPackRoot = "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1";
 
+// The EU image directory must not expose the old no-crop export as its social
+// or feature image. This cover is present in the current EU image pack and is
+// also safe for the page-level fallback used by the public directory.
+export const AIDREAMCAPES_EU_IMAGE_DIRECTORY_OG_IMAGE =
+  `${euImagePackRoot}/portrait-photo/cover-19ef724d7001-portrait-photo-cover-analog-cafe.jpg`;
+
+// A small set of legacy values still survives in the published page JSON for
+// the EU image directory. Some files were never deployed in the no-crop
+// export, while the avatar cover is valid but belongs to the retired export.
+// Keep this repair list explicit and page-media-only rather than rewriting the
+// no-crop source set used by the EU homepage review gallery.
+const euImageDirectoryLegacyMediaReplacements: Record<string, string> = {
+  "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/headshot/cover-headshot-cover-architect-office.webp": `${euImagePackRoot}/headshot/cover-6360dd7e005c-headshot-cover-architect-office.jpg`,
+  "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/avatar/cover-avatar-cover-cobalt-studio.webp": `${euImagePackRoot}/avatar/cover-333df83b69eb-avatar-cover-cobalt-studio.jpg`,
+  "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/mafia/cover-mafia-cover-1940s-diner.webp": `${euImagePackRoot}/mafia/cover-98242376be30-mafia-cover-1940s-diner.jpg`,
+  "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/hairstyle-generator/cover-hairstyle-generator-00-quiet-city-walk-c452820dc22d.webp": `${euImagePackRoot}/hairstyle-generator/cover-hairstyle-generator-00-quiet-city-walk-c452820dc22d.jpg`,
+  "/assets/sites/site_aidreamcapes_eu/restored/originals/aidreamcapes-eu-no-crop-v1/boudoir/cover-boudoir-cover-silk-window.webp": `${euImagePackRoot}/boudoir/cover-8498408a3477-boudoir-cover-silk-window.jpg`,
+  "/assets/sites/site_aidreamcapes_eu/homepage-seo/ai-ecommerce-product-main-image-running-shoe.webp": AIDREAMCAPES_EU_IMAGE_DIRECTORY_OG_IMAGE,
+  "/assets/sites/site_aidreamcapes/homepage-seo/ai-ecommerce-product-main-image-running-shoe.webp": AIDREAMCAPES_EU_IMAGE_DIRECTORY_OG_IMAGE
+};
+
 // The published no-crop rows for the two highest-traffic EU detail pages
 // still point at an external mirror. Their current, site-local equivalents
 // are the generated image-pack files below. Resolve them before rendering so
@@ -146,6 +167,8 @@ export function isAidreamcapesEuLegacyCoverGalleryDerivative(
 
 export function replaceAidreamcapesEuLegacyMedia(value: string | undefined): string {
   const clean = withoutQuery(value);
+  const directoryReplacement = euImageDirectoryLegacyMediaReplacements[clean];
+  if (directoryReplacement) return directoryReplacement;
   const mirrorPrefix = "/assets/sites/site_aidreamcapes_eu/mirror/";
   const noCropGalleryReplacement = noCropGalleryReplacements[clean];
   if (noCropGalleryReplacement) return noCropGalleryReplacement;

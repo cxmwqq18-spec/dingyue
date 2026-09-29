@@ -74,6 +74,47 @@ function SocialGlyph({ platform }: { platform: AidreamcapesZipSocialKey }) {
   return Icon ? <Icon aria-hidden="true" className="h-4 w-4" strokeWidth={1.8} /> : null;
 }
 
+function footerNavigationColumns(groups: AidreamcapesZipNavigationGroup[]) {
+  const visibleGroups = groups.map((group) => group.label === "Resources"
+    ? {
+        ...group,
+        items: group.items.filter((item) => item.label !== "Prompt Guide" && item.href !== "/prompt-guide"),
+      }
+    : group);
+  const resourcesIndex = visibleGroups.findIndex((group) => group.label === "Resources");
+  const companyIndex = visibleGroups.findIndex((group) => group.label === "Company");
+
+  if (resourcesIndex < 0 || companyIndex < 0) return visibleGroups.map((group) => [group]);
+
+  const firstMergedIndex = Math.min(resourcesIndex, companyIndex);
+  const secondMergedIndex = Math.max(resourcesIndex, companyIndex);
+  const mergedGroups = firstMergedIndex === resourcesIndex
+    ? [visibleGroups[resourcesIndex], visibleGroups[companyIndex]]
+    : [visibleGroups[companyIndex], visibleGroups[resourcesIndex]];
+  return visibleGroups.flatMap((group, index) => {
+    if (index === firstMergedIndex) return [mergedGroups];
+    if (index === secondMergedIndex) return [];
+    return [[group]];
+  });
+}
+
+function FooterNavigationGroup({ group, heading }: { group: AidreamcapesZipNavigationGroup; heading?: string }) {
+  return (
+    <section>
+      <h2 className="text-sm font-semibold text-white">{heading ?? group.label}</h2>
+      <ul className="mt-4 grid gap-2.5 text-sm text-white/55">
+        {group.items.map((item, itemIndex) => (
+          <li key={`${group.label}-${item.label}-${item.href}-${itemIndex}`}>
+            <a className="transition-colors hover:text-white" href={item.href}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export function AidreamcapesZipFooter({
   footer,
   groups,
@@ -109,14 +150,15 @@ export function AidreamcapesZipFooter({
     ? /^https?:\/\//i.test(company.website) ? company.website : `https://${company.website}`
     : "";
   const phoneHref = company?.phone ? `tel:${company.phone.replace(/[^+\d]/g, "")}` : "";
+  const navigationColumns = footerNavigationColumns(groups);
 
   return (
     <footer
-      className="aidreamcapes-zip-footer mt-12 bg-[#050505] px-5 py-10 text-white sm:px-8 lg:py-12"
+      className="aidreamcapes-zip-footer mt-8 bg-[#050505] px-5 py-10 text-white sm:px-8 lg:py-12"
       data-shell="shared"
     >
       <div className="mx-auto max-w-[1400px]">
-        <div className="grid gap-10 lg:grid-cols-[1.45fr_0.7fr_0.7fr_0.7fr_0.82fr] lg:gap-8">
+        <div className="grid gap-10 lg:grid-cols-[1.35fr_0.72fr_0.95fr_0.72fr_0.82fr] lg:gap-8">
           <section className="min-w-0">
             <a
               className="inline-flex text-3xl font-bold tracking-[-0.04em] text-white transition-colors hover:text-white/80"
@@ -141,22 +183,22 @@ export function AidreamcapesZipFooter({
             ) : null}
           </section>
 
-          {groups.map((group) => (
-            <section key={group.label}>
-              <h2 className="text-sm font-semibold text-white">{group.label}</h2>
-              <ul className="mt-4 grid gap-2.5 text-sm text-white/55">
-                {group.items.map((item, itemIndex) => (
-                  <li key={`${group.label}-${item.label}-${item.href}-${itemIndex}`}>
-                    <a
-                      className="transition-colors hover:text-white"
-                      href={resolveHref(item.href)}
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
+          {navigationColumns.map((column, columnIndex) => (
+            column.length === 1 ? (
+              <FooterNavigationGroup key={`${column[0].label}-${columnIndex}`} group={{
+                ...column[0],
+                items: column[0].items.map((item) => ({ ...item, href: resolveHref(item.href) })),
+              }} />
+            ) : (
+              <FooterNavigationGroup
+                group={{
+                  label: "Resources & Company",
+                  items: column.flatMap((group) => group.items).map((item) => ({ ...item, href: resolveHref(item.href) })),
+                }}
+                heading="Resources & Company"
+                key={`merged-navigation-${columnIndex}`}
+              />
+            )
           ))}
 
           <section className="flex flex-col">

@@ -69,10 +69,10 @@ async function checkPage(page, target) {
   assert.equal(response?.status(), 200, `${target.key}: page response`);
   await page.waitForFunction(() => document.querySelectorAll("[data-package-taxonomy-card]").length > 0, { timeout: 30_000 });
   await page.evaluate(async () => {
-    for (const image of document.querySelectorAll("[data-package-taxonomy-card] img")) {
+    for (const image of document.querySelectorAll("img")) {
       image.scrollIntoView({ block: "center", inline: "nearest" });
       await new Promise((resolve) => {
-        if (image.complete) {
+        if (image.complete && image.naturalWidth > 0 && image.naturalHeight > 0) {
           resolve();
           return;
         }
@@ -118,6 +118,19 @@ async function checkPage(page, target) {
       beforeAfter: [...document.querySelectorAll("[data-before-after-item]")].map((item) => ({
         source: item.getAttribute("data-before-after-source") || "",
         result: item.getAttribute("data-before-after-result") || ""
+      })),
+      beforeAfterLayout: [...document.querySelectorAll("[data-before-after-item]")].flatMap((item) => [...item.children].flatMap((frame) => {
+        const box = frame.getBoundingClientRect();
+        const image = frame.querySelector("img");
+        const imageBox = image?.getBoundingClientRect();
+        return [{
+          frameWidth: box.width,
+          frameHeight: box.height,
+          imageWidth: imageBox?.width || 0,
+          imageHeight: imageBox?.height || 0,
+          objectFit: image ? getComputedStyle(image).objectFit : "",
+          loaded: Boolean(image?.complete && image.naturalWidth > 0 && image.naturalHeight > 0)
+        }];
       }))
     };
   });
@@ -146,12 +159,31 @@ async function checkPage(page, target) {
     beforeAfterMedia.length,
     `${target.key}: before/after gallery must not reuse media across cards`
   );
+  const foreignBeforeAfterMarker = target.key === "aidreamcapes-eu"
+    ? /site_aidreamshoots/i
+    : /site_aidreamcapes(?:_eu)?/i;
+  assert(
+    beforeAfterMedia.every((url) => !/(?:\/mirror\/|\/restored\/originals\/|\/homepage-seo\/)/i.test(url) && !foreignBeforeAfterMarker.test(url)),
+    `${target.key}: before/after gallery must use current site-local media: ${JSON.stringify(beforeAfterMedia)}`
+  );
+  assert(report.beforeAfterLayout.length > 0, `${target.key}: before/after layout is missing`);
+  assert(
+    report.beforeAfterLayout.every((frame) =>
+      frame.loaded &&
+      frame.objectFit === "cover" &&
+      frame.imageWidth > 0 &&
+      frame.imageHeight > 0 &&
+      Math.abs(frame.frameWidth / frame.frameHeight - 4 / 5) <= 0.02
+    ),
+    `${target.key}: before/after media must be loaded into fixed 4:5 cover frames`
+  );
   const directoryImageUrls = new Set(report.directoryImageUrls.map(normalizedUrl));
   const directoryImageFailures = imageFailures.filter((failure) => {
     const match = failure.match(/https?:\/\/\S+/)?.[0] || failure;
     return directoryImageUrls.has(normalizedUrl(match));
   });
   assert.equal(directoryImageFailures.length, 0, `${target.key}: directory image request failures ${JSON.stringify(directoryImageFailures)}`);
+  assert.equal(imageFailures.length, 0, `${target.key}: page image request failures ${JSON.stringify(imageFailures)}`);
 
   const viewportChecks = [
     [1440, target.expectedColumns.desktop],

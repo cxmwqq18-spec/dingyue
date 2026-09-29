@@ -654,7 +654,7 @@ function normalizedHeadingLevel(value: string, fallback: "h1" | "h2"): "h1" | "h
   return value === "h1" || value === "h2" ? value : fallback;
 }
 
-const aidreamshootsHeadingH2Pages = new Set(["/about-us", "/contact-us", "/creators-circle", "/tools", "/workflow"]);
+const aidreamshootsHeadingH2Pages = new Set(["/about-us", "/contact-us", "/creators-circle", "/tools", "/workflow", "/prompt-guide"]);
 
 function primaryRichTextFallbackHeadingLevel(sectionId: string, page: ThemePageJson, pagePath: string): "h1" | "h2" {
   const semanticH1Paths = new Set(["/about-us", "/contact-us", "/digital-delivery", "/shipping", "/faq", "/help", "/search", "/cart", "/blog"]);
@@ -898,6 +898,7 @@ function isPublicSeoRoute(pagePath: string): boolean {
     pagePath === "/tools" ||
     pagePath === "/ai-video-generation" ||
     pagePath === "/workflow" ||
+    pagePath === "/prompt-guide" ||
     pagePath === "/faq" ||
     pagePath === "/blog" ||
     pagePath === "/creators-circle" ||
@@ -943,12 +944,17 @@ function isAidreamcapesComPublicRedesignPath(pagePath: string): boolean {
   return pagePath === "/login" ||
     pagePath === "/pricing" ||
     pagePath === "/workflow" ||
+    pagePath === "/prompt-guide" ||
     pagePath === "/creators-circle" ||
     pagePath === "/blog" ||
     pagePath === "/about-us" ||
     pagePath === "/contact-us" ||
     pagePath === "/privacy" ||
     pagePath === "/terms" ||
+    pagePath === "/refunds" ||
+    pagePath === "/digital-delivery" ||
+    pagePath === "/content" ||
+    pagePath === "/cookies" ||
     pagePath.startsWith("/blog/");
 }
 
@@ -2360,7 +2366,6 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
             ["Marketing Hub", "/ai-video-generation/product-ad-video", "product"],
             ["Pricing", "/pricing", "product"],
             ["Workflow", "/workflow", "resources"],
-            ["Prompt Guide", "/workflow", "resources"],
             ["Affiliate Program", "/creators-circle", "resources"],
             ["Blog", "/blog", "resources"],
             ["About Us", "/about-us", "company"],
@@ -4084,9 +4089,12 @@ function mediaAssetUrl(site: Site, value: string, options: MediaAssetUrlOptions 
     site,
     siteScopedFallbackImage(site, cleanStorefrontImageSrc(resolveMediaAssetUrl(site, euCommonImage ?? euAwareValue)))
   );
+  const resolvedEuLegacyMedia = site.id === "site_aidreamcapes_xby"
+    ? replaceAidreamcapesEuLegacyMedia(resolvedMedia)
+    : resolvedMedia;
   const resolvedBeforeVisualRepair = options.preserveAidreamshootsLegacyMedia
-    ? resolvedMedia
-    : replaceAidreamshootsLegacyMedia(site, resolvedMedia);
+    ? resolvedEuLegacyMedia
+    : replaceAidreamshootsLegacyMedia(site, resolvedEuLegacyMedia);
   const resolved = options.skipEuVisualRepair
     ? resolvedBeforeVisualRepair
     : repairAidreamcapesEuVisualAsset(site, resolvedBeforeVisualRepair);
@@ -19728,9 +19736,9 @@ function SectionView({
 	                    { image: beforeImage, label: beforeLabel, stage: "source upload" },
 	                    { image: afterImage, label: afterLabel, stage: "AI-generated result" }
                   ].map(({ image, label, stage }, imageIndex) => (
-                    <div className={frenchXbyBeforeAfter ? "relative overflow-hidden rounded-[1rem] bg-transparent" : "relative aspect-[4/5] overflow-hidden rounded-[1rem] bg-zinc-200"} key={`${label}-${stage}-${imageIndex}`}>
+                    <div className="relative aspect-[4/5] overflow-hidden rounded-[1rem] bg-zinc-200" key={`${label}-${stage}-${imageIndex}`}>
 	                      <img
-	                        className={frenchXbyBeforeAfter ? "block h-auto w-full object-center" : "h-full w-full object-cover"}
+	                        className="h-full w-full object-cover"
 	                        src={image}
 	                        alt={spanishXbyImageAlt(site, manualImageAlt({
 	                          src: image,

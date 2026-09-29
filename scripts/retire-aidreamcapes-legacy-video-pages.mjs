@@ -45,11 +45,22 @@ const LEGACY_SLUGS = [
   "youtube-video"
 ];
 const LEGACY_PATHS = LEGACY_SLUGS.map((slug) => `/ai-video-generation/${slug}`);
-const HOME_ROUTE_REPLACEMENTS = new Map([
+const RETIRED_ROUTE_REPLACEMENTS = new Map([
+  ["/ai-video-generation/brand-video", "/ai-video-generation/founder-update"],
+  ["/ai-video-generation/explainer-video", "/ai-video-generation/how-to-video"],
+  ["/ai-video-generation/fashion-video", "/ai-video-generation/fashion-try-on-reel"],
+  ["/ai-video-generation/instagram-reels", "/ai-video-generation/tiktok-reels-shorts"],
+  ["/ai-video-generation/meme-video", "/ai-video-generation/hook-lab"],
+  ["/ai-video-generation/motion-generator", "/ai-video-generation/cinematic-video"],
+  ["/ai-video-generation/pet-video", "/ai-video-generation/ugc-ad-video"],
   ["/ai-video-generation/product-ad-video", "/ai-video-generation/ugc-ad-video"],
+  ["/ai-video-generation/social-media-video", "/ai-video-generation/tiktok-reels-shorts"],
+  ["/ai-video-generation/story-video", "/ai-video-generation/promo-video"],
   ["/ai-video-generation/video-ad", "/ai-video-generation/hook-lab"],
   ["/ai-video-generation/talking-photo", "/ai-video-generation/talking-photo-recs"],
-  ["/ai-video-generation/talking-head-video", "/ai-video-generation/ai-actor-product-ads"]
+  ["/ai-video-generation/talking-head-video", "/ai-video-generation/ai-actor-product-ads"],
+  ["/ai-video-generation/tiktok-video", "/ai-video-generation/tiktok-reels-shorts"],
+  ["/ai-video-generation/youtube-video", "/ai-video-generation/cinematic-video"]
 ]);
 
 const applyLocal = hasArgument("--apply-local");
@@ -108,25 +119,46 @@ function loadCurrentNavigation() {
   return navigation;
 }
 
-function rewriteHomepage(value) {
-  if (typeof value === "string") return HOME_ROUTE_REPLACEMENTS.get(value) ?? value;
-  if (Array.isArray(value)) return value.map(rewriteHomepage);
+function rewriteRetiredRoutes(value) {
+  if (typeof value === "string") return RETIRED_ROUTE_REPLACEMENTS.get(value) ?? value;
+  if (Array.isArray(value)) return value.map(rewriteRetiredRoutes);
   if (!value || typeof value !== "object") return value;
-  return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, rewriteHomepage(child)]));
+  return Object.fromEntries(Object.entries(value).map(([key, child]) => [
+    RETIRED_ROUTE_REPLACEMENTS.get(key) ?? key,
+    rewriteRetiredRoutes(child)
+  ]));
 }
 
 function replaceSettings(value, navigation) {
   const next = clone(value);
-  next.aidreamcapesZipNavigation = clone(navigation);
   if (next.seo?.pages && typeof next.seo.pages === "object" && !Array.isArray(next.seo.pages)) {
     next.seo.pages = Object.fromEntries(Object.entries(next.seo.pages).filter(([route]) => !LEGACY_PATHS.includes(route)));
   }
-  return next;
+  const rewritten = rewriteRetiredRoutes(next);
+  rewritten.aidreamcapesZipNavigation = clone(navigation);
+  return rewritten;
 }
 
 function countExact(value, needles) {
-  const serialized = JSON.stringify(value ?? "");
-  return needles.reduce((sum, needle) => sum + serialized.split(JSON.stringify(needle)).length - 1, 0);
+  const targets = new Set(needles);
+  let count = 0;
+  const visit = (current) => {
+    if (typeof current === "string") {
+      if (targets.has(current)) count += 1;
+      return;
+    }
+    if (Array.isArray(current)) {
+      current.forEach(visit);
+      return;
+    }
+    if (!current || typeof current !== "object") return;
+    for (const [key, child] of Object.entries(current)) {
+      if (targets.has(key)) count += 1;
+      visit(child);
+    }
+  };
+  visit(value);
+  return count;
 }
 
 function compactPage(row, jsonKey) {
@@ -150,10 +182,12 @@ const navigation = loadCurrentNavigation();
 const prisma = new PrismaClient();
 try {
   const legacyRouteSlugs = LEGACY_PATHS;
-  const [site, livePages, themePages, settings, homepage] = await Promise.all([
+  const [site, livePages, themePages, allLivePages, allThemePages, settings, homepage] = await Promise.all([
     prisma.site.findUnique({ where: { id: SITE_ID }, select: { id: true, slug: true, primaryDomain: true } }),
     prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: legacyRouteSlugs } }, orderBy: { slug: "asc" } }),
     prisma.themePage.findMany({ where: { siteId: SITE_ID, slug: { in: legacyRouteSlugs } }, orderBy: { slug: "asc" } }),
+    prisma.livePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" } }),
+    prisma.themePage.findMany({ where: { siteId: SITE_ID }, orderBy: { slug: "asc" } }),
     prisma.themeSettings.findUnique({ where: { siteId: SITE_ID } }),
     prisma.livePage.findUnique({ where: { siteId_slug: { siteId: SITE_ID, slug: HOME_SLUG } } })
   ]);
@@ -164,9 +198,21 @@ try {
   assert(settings, `${SITE_ID}: ThemeSettings is required`);
   assert(homepage, `${SITE_ID}: homepage LivePage is required`);
 
-  const nextHomepage = rewriteHomepage(homepage.contentJson);
+  const nextHomepage = rewriteRetiredRoutes(homepage.contentJson);
   const nextDraftSettings = replaceSettings(settings.draftJson, navigation);
   const nextPublishedSettings = replaceSettings(settings.publishedJson, navigation);
+  const nextLivePages = allLivePages.map((row) => ({ row, contentJson: rewriteRetiredRoutes(row.contentJson) }));
+  const nextThemePages = allThemePages.map((row) => ({
+    row,
+    draftJson: rewriteRetiredRoutes(row.draftJson),
+    publishedJson: rewriteRetiredRoutes(row.publishedJson)
+  }));
+  const changedLivePages = nextLivePages.filter(({ row, contentJson }) => JSON.stringify(row.contentJson) !== JSON.stringify(contentJson));
+  const changedThemePages = nextThemePages.filter(({ row, draftJson, publishedJson }) =>
+    JSON.stringify(row.draftJson) !== JSON.stringify(draftJson) || JSON.stringify(row.publishedJson) !== JSON.stringify(publishedJson)
+  );
+  const allLiveLegacyRefs = allLivePages.reduce((sum, row) => sum + countExact(row.contentJson, LEGACY_PATHS), 0);
+  const allThemeLegacyRefs = allThemePages.reduce((sum, row) => sum + countExact(row.draftJson, LEGACY_PATHS) + countExact(row.publishedJson, LEGACY_PATHS), 0);
   const expectedCurrentHrefs = navigation.video.groups.flatMap((group) => group.items).map((item) => item.href);
 
   const report = {
@@ -177,6 +223,7 @@ try {
     before: {
       livePageCount: livePages.length,
       themePageCount: themePages.length,
+      publishedJsonLegacyRefs: allLiveLegacyRefs + allThemeLegacyRefs,
       homepageLegacyRefs: countExact(homepage.contentJson, LEGACY_PATHS),
       settingsLegacyRefs: countExact(settings.draftJson, LEGACY_PATHS) + countExact(settings.publishedJson, LEGACY_PATHS),
       currentVideoEntryCount: expectedCurrentHrefs.length
@@ -184,13 +231,17 @@ try {
     after: {
       livePageCount: 0,
       themePageCount: 0,
+      publishedJsonLegacyRefs: countExact(nextHomepage, LEGACY_PATHS) +
+        countExact(nextDraftSettings, LEGACY_PATHS) + countExact(nextPublishedSettings, LEGACY_PATHS) +
+        nextLivePages.reduce((sum, item) => sum + countExact(item.contentJson, LEGACY_PATHS), 0) +
+        nextThemePages.reduce((sum, item) => sum + countExact(item.draftJson, LEGACY_PATHS) + countExact(item.publishedJson, LEGACY_PATHS), 0),
       homepageLegacyRefs: countExact(nextHomepage, LEGACY_PATHS),
       actorTargetRefs: countExact(nextHomepage, ["/ai-video-generation/ai-actor-product-ads"]),
       settingsLegacyRefs: countExact(nextDraftSettings, LEGACY_PATHS) + countExact(nextPublishedSettings, LEGACY_PATHS),
       currentVideoEntryCount: expectedCurrentHrefs.length,
       currentVideoEntries: expectedCurrentHrefs
     },
-    changed: livePages.length > 0 || themePages.length > 0 || JSON.stringify(homepage.contentJson) !== JSON.stringify(nextHomepage) || JSON.stringify(settings.draftJson) !== JSON.stringify(nextDraftSettings) || JSON.stringify(settings.publishedJson) !== JSON.stringify(nextPublishedSettings),
+    changed: livePages.length > 0 || themePages.length > 0 || changedLivePages.length > 0 || changedThemePages.length > 0 || JSON.stringify(homepage.contentJson) !== JSON.stringify(nextHomepage) || JSON.stringify(settings.draftJson) !== JSON.stringify(nextDraftSettings) || JSON.stringify(settings.publishedJson) !== JSON.stringify(nextPublishedSettings),
     backupPath: null
   };
 
@@ -208,6 +259,8 @@ try {
       livePages: livePages.map((row) => compactPage(row, "contentJson")),
       themePages: themePages.map((row) => compactPage(row, "draftJson")),
       themePagesPublishedJson: themePages.map((row) => ({ id: row.id, slug: row.slug, publishedJson: row.publishedJson })),
+      rewrittenLivePages: changedLivePages.map(({ row }) => compactPage(row, "contentJson")),
+      rewrittenThemePages: changedThemePages.map(({ row }) => ({ ...compactPage(row, "draftJson"), publishedJson: row.publishedJson })),
       homepage,
       settings
     }, null, 2)}\n`, { mode: 0o600 });
@@ -216,25 +269,39 @@ try {
     await prisma.$transaction(async (tx) => {
       await tx.livePage.update({ where: { id: homepage.id }, data: { contentJson: nextHomepage, updatedAt: new Date() } });
       await tx.themeSettings.update({ where: { id: settings.id }, data: { draftJson: nextDraftSettings, publishedJson: nextPublishedSettings, updatedAt: new Date() } });
+      for (const { row, contentJson } of changedLivePages) {
+        await tx.livePage.update({ where: { id: row.id }, data: { contentJson, updatedAt: new Date() } });
+      }
+      for (const { row, draftJson, publishedJson } of changedThemePages) {
+        await tx.themePage.update({ where: { id: row.id }, data: { draftJson, publishedJson, updatedAt: new Date() } });
+      }
       await tx.livePage.deleteMany({ where: { siteId: SITE_ID, slug: { in: legacyRouteSlugs } } });
       await tx.themePage.deleteMany({ where: { siteId: SITE_ID, slug: { in: legacyRouteSlugs } } });
     }, { timeout: 120_000 });
 
-    const [liveReadback, themeReadback, settingsReadback, homeReadback] = await Promise.all([
+    const [liveReadback, themeReadback, settingsReadback, homeReadback, allLiveReadback, allThemeReadback] = await Promise.all([
       prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: legacyRouteSlugs } }, select: { slug: true } }),
       prisma.themePage.findMany({ where: { siteId: SITE_ID, slug: { in: legacyRouteSlugs } }, select: { slug: true } }),
       prisma.themeSettings.findUnique({ where: { siteId: SITE_ID }, select: { draftJson: true, publishedJson: true } }),
-      prisma.livePage.findUnique({ where: { id: homepage.id }, select: { contentJson: true } })
+      prisma.livePage.findUnique({ where: { id: homepage.id }, select: { contentJson: true } }),
+      prisma.livePage.findMany({ where: { siteId: SITE_ID }, select: { contentJson: true } }),
+      prisma.themePage.findMany({ where: { siteId: SITE_ID }, select: { draftJson: true, publishedJson: true } })
     ]);
     assert.equal(liveReadback.length, 0, "legacy LivePage rows remain after retirement");
     assert.equal(themeReadback.length, 0, "legacy ThemePage rows remain after retirement");
     assert.equal(countExact(settingsReadback?.draftJson, LEGACY_PATHS) + countExact(settingsReadback?.publishedJson, LEGACY_PATHS), 0, "legacy SEO/navigation refs remain in ThemeSettings");
     assert.equal(countExact(homeReadback?.contentJson, LEGACY_PATHS), 0, "legacy homepage refs remain after retirement");
+    const remainingPublishedJsonLegacyRefs = allLiveReadback.reduce((sum, row) => sum + countExact(row.contentJson, LEGACY_PATHS), 0) +
+      allThemeReadback.reduce((sum, row) => sum + countExact(row.draftJson, LEGACY_PATHS) + countExact(row.publishedJson, LEGACY_PATHS), 0);
+    assert.equal(remainingPublishedJsonLegacyRefs, 0, "legacy route references remain in published JSON");
     report.readback = {
       legacyLivePages: liveReadback.length,
       legacyThemePages: themeReadback.length,
       settingsLegacyRefs: countExact(settingsReadback?.draftJson, LEGACY_PATHS) + countExact(settingsReadback?.publishedJson, LEGACY_PATHS),
-      homepageLegacyRefs: countExact(homeReadback?.contentJson, LEGACY_PATHS)
+      homepageLegacyRefs: countExact(homeReadback?.contentJson, LEGACY_PATHS),
+      publishedJsonLegacyRefs: remainingPublishedJsonLegacyRefs,
+      rewrittenLivePages: changedLivePages.length,
+      rewrittenThemePages: changedThemePages.length
     };
   }
 

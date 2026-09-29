@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
 
-const storefrontBaseUrl = (process.env.STOREFRONT_FOOTER_BASE_URL || "http://127.0.0.1:3002/site/mydreamshoots").replace(/\/$/, "");
 const expectedProfile = (process.env.STOREFRONT_FOOTER_EXPECTED_PROFILE || "mydreamshoots").trim().toLowerCase();
-const routePaths = (process.env.STOREFRONT_FOOTER_PATHS || "/,/pricing,/about-us,/contact-us,/workflow,/best-packages,/ai-video-generation,/ai-image-generation/unblur-image,/blog")
+const storefrontBaseUrl = (process.env.STOREFRONT_FOOTER_BASE_URL || (expectedProfile === "aidreamcapes"
+  ? "http://127.0.0.1:3002/site/aidreamcapes"
+  : "http://127.0.0.1:3002/site/mydreamshoots")).replace(/\/$/, "");
+const routePaths = (process.env.STOREFRONT_FOOTER_PATHS || (expectedProfile === "aidreamcapes"
+  ? "/workflow,/prompt-guide,/refunds,/digital-delivery,/content,/cookies"
+  : "/,/pricing,/about-us,/contact-us,/workflow,/best-packages,/ai-video-generation,/ai-image-generation/unblur-image,/blog"))
   .split(",")
   .map((value) => value.trim())
   .filter(Boolean)
@@ -34,6 +38,25 @@ const expectedSocialLinks = [
   ["x", "https://x.com/myDreamshoots"],
   ["tiktok", "https://www.tiktok.com/@mydreamshoots"]
 ];
+const aidreamcapesExpectedLinks = [
+  ["AI Video", "/ai-video-generation"],
+  ["AI Image", "/ai-image-generation"],
+  ["Marketing Hub", "/ai-video-generation/ugc-ad-video"],
+  ["Pricing", "/pricing"],
+  ["Workflow", "/workflow"],
+  ["Prompt Guide", "/prompt-guide"],
+  ["Affiliate Program", "/creators-circle"],
+  ["Blog", "/blog"],
+  ["About Us", "/about-us"],
+  ["Contact Us", "/contact-us"],
+  ["Refund Policy", "/refunds"],
+  ["Digital Delivery Policy", "/digital-delivery"],
+  ["Privacy Policy", "/privacy"],
+  ["Content Policy", "/content"],
+  ["Terms of Service", "/terms"],
+  ["Cookie Policy", "/cookies"]
+];
+const aidreamcapesExpectedGroups = ["Product", "Resources", "Company", "Support"];
 
 function pageUrl(routePath) {
   return routePath === "/" ? storefrontBaseUrl : `${storefrontBaseUrl}${routePath}`;
@@ -72,6 +95,21 @@ async function readFooter(routePath) {
       !socialAnchors.some((anchor) => anchor.includes(`data-social-platform="${platform}"`) && anchor.includes(`href="${href}"`))
     );
     assert.deepEqual(missingSocial, [], `${url} is missing social links: ${missingSocial.map(([platform, href]) => `${platform} (${href})`).join(", ")}`);
+  } else if (expectedProfile === "aidreamcapes") {
+    const missing = aidreamcapesExpectedLinks.filter(([label, href]) =>
+      !links.some((link) => link.href === href && link.label.includes(label))
+    );
+    assert.deepEqual(missing, [], `${url} is missing ${missing.map(([label, href]) => `${label} (${href})`).join(", ")}`);
+    const headings = [...footer.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi)]
+      .map((match) => match[1].replace(/<[^>]+>/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim());
+    for (const heading of aidreamcapesExpectedGroups) {
+      assert(headings.includes(heading), `${url} is missing the ${heading} footer group`);
+    }
+    const companySection = footer.match(/<section\b[\s\S]*?<h2\b[^>]*>Company<\/h2>[\s\S]*?<\/section>/i)?.[0] ?? "";
+    assert(companySection, `${url} is missing the Company footer section`);
+    assert(!/Privacy Policy|Terms of Service/i.test(companySection), `${url} must keep policy links out of Company`);
+    const supportSection = footer.match(/<section\b[\s\S]*?<h2\b[^>]*>Support<\/h2>[\s\S]*?<\/section>/i)?.[0] ?? "";
+    assert(supportSection, `${url} is missing the Support footer section`);
   }
   const internalSignature = Array.from(new Set(
     links
@@ -79,6 +117,13 @@ async function readFooter(routePath) {
       .map((link) => `${link.label}\t${link.href}`)
   )).sort();
   return { routePath, internalSignature };
+}
+
+if (expectedProfile === "aidreamcapes") {
+  for (const path of ["/refunds", "/digital-delivery", "/content", "/cookies"]) {
+    const response = await fetch(pageUrl(path), { redirect: "follow", headers: { connection: "close" } });
+    assert.equal(response.status, 200, `${pageUrl(path)} returned HTTP ${response.status}`);
+  }
 }
 
 const results = [];
@@ -97,7 +142,7 @@ console.log(JSON.stringify({
   storefrontBaseUrl,
   expectedProfile,
   routeCount: results.length,
-  expectedLinkCount: expectedLinks.length,
-  hiddenLinkCount: 2,
+  expectedLinkCount: expectedProfile === "aidreamcapes" ? aidreamcapesExpectedLinks.length : expectedLinks.length,
+  hiddenLinkCount: expectedProfile === "aidreamcapes" ? 0 : 2,
   internalLinkCount: baseline.internalSignature.length
 }, null, 2));

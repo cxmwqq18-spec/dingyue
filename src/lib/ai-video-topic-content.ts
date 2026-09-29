@@ -25,6 +25,9 @@ export type AiVideoTopicVideo = {
   width: number;
   height: number;
   fit: "cover" | "contain";
+  loading?: "eager" | "lazy";
+  fetchPriority?: "high" | "low" | "auto";
+  sizes?: string;
   subtitleUrl?: string;
   subtitleLanguage?: string;
   subtitleLabel?: string;
@@ -111,6 +114,7 @@ export type AidreamcapesAdsTestingDetailContent = {
     outputLabel: string;
     productImage: AidreamcapesAdsTestingImage;
     outputImage: AidreamcapesAdsTestingImage;
+    video?: AiVideoTopicVideo;
   };
   workflowOutput: AiVideoTopicGuidance;
   workflow: AiVideoTopicGuidance;
@@ -176,6 +180,7 @@ export type AidreamcapesUgcAdDetailContent = {
     footnote: string;
     product: { label: string; image: LegacyUgcAdDetailImage };
     output: { label: string; image: LegacyUgcAdDetailImage };
+    video?: AiVideoTopicVideo;
   };
   workflowOutput: { eyebrow: string; title: string; ctaHref?: string; items: Array<{ title: string; body: string }> };
   workflow: { eyebrow: string; title: string; leadBody?: string; steps: Array<{ title: string; body: string }> };
@@ -299,7 +304,10 @@ function video(value: ThemeSettingValue | undefined): boolean {
   return Boolean(
     candidate && text(candidate.src) && text(candidate.poster) && text(candidate.label) &&
     typeof candidate.width === "number" && typeof candidate.height === "number" &&
-    (candidate.fit === "cover" || candidate.fit === "contain")
+    (candidate.fit === "cover" || candidate.fit === "contain") &&
+    (candidate.loading === undefined || candidate.loading === "eager" || candidate.loading === "lazy") &&
+    (candidate.fetchPriority === undefined || candidate.fetchPriority === "high" || candidate.fetchPriority === "low" || candidate.fetchPriority === "auto") &&
+    (candidate.sizes === undefined || text(candidate.sizes))
   );
 }
 
@@ -335,7 +343,7 @@ function legacyUgcAdDetailContent(value: ThemeSettingValue | undefined): value i
   return Boolean(
     (candidate?.layoutVariant === "ugc-ad-detail" || candidate?.layoutVariant === "ads-testing-detail") && hero && workflowOutput && workflow && creativeDirections && examples && adTesting && requirements && relatedWorkflows && faq && finalCta &&
     text(hero.eyebrow) && text(hero.title) && text(hero.body) && text(hero.primaryCta) && text(hero.primaryHref) && text(hero.secondaryCta) && text(hero.secondaryHref) &&
-    record(hero.product) && record(hero.output) && image(record(hero.product)?.image) && image(record(hero.output)?.image) &&
+    record(hero.product) && record(hero.output) && image(record(hero.product)?.image) && image(record(hero.output)?.image) && (!hero.video || video(hero.video)) &&
     Array.isArray(workflowOutput.items) && workflowOutput.items.length > 0 && Array.isArray(workflow.steps) && workflow.steps.length > 0 &&
     Array.isArray(creativeDirections.items) && creativeDirections.items.length > 0 && Array.isArray(examples.items) && examples.items.length > 0 &&
     examples.items.every((item) => record(item) && image(record(item)?.image)) && Array.isArray(adTesting.formats) && adTesting.formats.length > 0 &&
@@ -361,7 +369,7 @@ function adsTestingDetailContent(value: ThemeSettingValue | undefined): value is
     text(seo.twitterDescription) && text(seo.ogImage) && text(seo.ogImageAlt) &&
     text(hero.eyebrow) && text(hero.title) && text(hero.body) && text(hero.primaryCta) && text(hero.primaryCtaHref) && text(hero.secondaryCta) && text(hero.secondaryCtaHref) &&
     text(hero.availabilityNote) && text(hero.rightsCopy) && text(hero.imageNote) && text(hero.productLabel) && text(hero.outputLabel) &&
-    adsTestingImage(hero.productImage) && adsTestingImage(hero.outputImage) &&
+    adsTestingImage(hero.productImage) && adsTestingImage(hero.outputImage) && (!hero.video || video(hero.video)) &&
     guidance(candidate.workflowOutput) && guidance(candidate.workflow) && guidance(candidate.creativeDirections) &&
     text(examples.eyebrow) && text(examples.title) && text(examples.intro) && Array.isArray(examples.items) &&
     examples.items.length > 0 && examples.items.every((item) => {
@@ -455,7 +463,8 @@ export function adsTestingDetailFromLegacyUgcContent(content: AiVideoTopicLandin
       productLabel: legacy.hero.product.label,
       outputLabel: legacy.hero.output.label,
       productImage,
-      outputImage
+      outputImage,
+      video: legacy.hero.video
     },
     workflowOutput: {
       eyebrow: legacy.workflowOutput.eyebrow,

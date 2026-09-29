@@ -342,6 +342,15 @@ export const dreamshootPublicSeoPageMetadata: Record<string, DreamshootRouteMeta
 };
 
 export const aidreamcapesPublicSeoPageMetadata: Record<string, DreamshootRouteMetadataSeed> = {
+  "/prompt-guide": {
+    title: "Aidreamcapes prompt guide for clearer AI photo briefs",
+    description:
+      "Learn how to write clearer Aidreamcapes prompts for fan-scene albums, game-day portraits, premiere-inspired sets, holiday keepsakes, and private AI photo workflows.",
+    keywords: "Aidreamcapes prompt guide, AI photo prompts, fan-scene photo prompts, holiday photo prompts, private AI photo workflow",
+    canonicalPath: "/prompt-guide",
+    index: true,
+    follow: true
+  },
   "/workflow": {
     title: "How Aidreamcapes works - private fan-scene and holiday albums",
     description:

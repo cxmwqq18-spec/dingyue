@@ -79,6 +79,9 @@ export function visibleText(body) {
 }
 
 export function validateAidreamcapesBlogArticle(article) {
+  if (article.coverThemeHref) {
+    assert(VALID_THEME_PATHS.has(normalizeBlogHref(article.coverThemeHref)), `${article.slug}: unregistered cover theme ${article.coverThemeHref}`);
+  }
   assert(article.title.length <= 60, `${article.slug}: title exceeds 60 characters.`);
   assert(article.description.length >= 140 && article.description.length <= 160, `${article.slug}: description length ${article.description.length} is outside 140-160.`);
   assert(article.relatedLinks.length >= 3 && article.relatedLinks.length <= 5, `${article.slug}: expected 3-5 related links.`);

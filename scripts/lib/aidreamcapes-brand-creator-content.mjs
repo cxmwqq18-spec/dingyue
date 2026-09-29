@@ -90,7 +90,7 @@ const topics = [
       title: "Move from point of view to production.",
       intro: "Use a related Aidreamcapes video workflow when the update needs a different kind of delivery.",
       items: [
-        ["Talking head", "Use a direct-to-camera format when the message needs a clear speaker and a simple handoff.", "/ai-video-generation/talking-head-video", "Explore talking head"],
+        ["AI actor", "Use a controlled presenter format when the message needs a clear speaker and a simple handoff.", "/ai-video-generation/ai-actor-product-ads", "Explore AI actors"],
         ["Product demo", "Show the product action after the founder has explained why it matters.", "/ai-video-generation/product-video", "Explore product demo"],
         ["Cinematic film", "Give a launch moment more visual atmosphere while keeping the source facts precise.", "/ai-video-generation/cinematic-video", "Explore cinematic film"]
       ]
@@ -195,7 +195,7 @@ const topics = [
       title: "Use the right format for the next market question.",
       intro: "Move from localization into a related Aidreamcapes workflow when the story needs a different production focus.",
       items: [
-        ["Talking head", "Start from a direct presenter format when voice, pacing, and translation review are central.", "/ai-video-generation/talking-head-video", "Explore talking head"],
+        ["AI actor", "Start from a controlled presenter format when voice, pacing, and translation review are central.", "/ai-video-generation/ai-actor-product-ads", "Explore AI actors"],
         ["Product demo", "Keep the localized message grounded in a visible product action.", "/ai-video-generation/product-video", "Explore product demo"],
         ["Founder update", "Adapt an approved company message for a new team, region, or community.", "/ai-video-generation/founder-update", "Explore founder update"]
       ]

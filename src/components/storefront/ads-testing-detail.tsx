@@ -2,9 +2,9 @@ import { ArrowRight, Check, ChevronRight, ShieldCheck, Sparkles } from "lucide-r
 import type { ReactNode } from "react";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { AdsTestingDetailGallery } from "@/components/storefront/ads-testing-detail-gallery";
-import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
+import { AidreamcapesDetailHeroMedia } from "@/components/storefront/aidreamcapes-detail-hero-media";
 import { hostAwareSitePath } from "@/lib/domain-routing";
-import type { AidreamcapesAdsTestingDetailContent, AidreamcapesAdsTestingImage } from "@/lib/ai-video-topic-content";
+import type { AidreamcapesAdsTestingDetailContent } from "@/lib/ai-video-topic-content";
 import type { SectionInstance, Site } from "@/lib/types";
 
 type RoutedSite = Site & { __storefrontBasePath?: string };
@@ -51,10 +51,6 @@ function GuidanceCards({ items }: { items: Array<{ title: string; body: string }
   );
 }
 
-function Media({ image, className = "", priority = false }: { image: AidreamcapesAdsTestingImage; className?: string; priority?: boolean }) {
-  return <AidreamcapesResponsiveImage alt={image.alt} className={className} decoding="async" fetchPriority={priority ? "high" : "low"} height={image.height} loading={priority ? "eager" : "lazy"} sizes={image.sizes} src={image.src} width={image.width} />;
-}
-
 export function AdsTestingDetail({ content, section, site }: { content: AidreamcapesAdsTestingDetailContent; section: SectionInstance; site: Site }) {
   const rootId = String(section.settings.anchor ?? content.seo.canonicalPath.split("/").at(-1) ?? "ads-testing");
   return (
@@ -74,22 +70,14 @@ export function AdsTestingDetail({ content, section, site }: { content: Aidreamc
             <p className="mt-4 max-w-xl text-sm leading-6 text-white/58">{content.hero.rightsCopy}</p>
           </div>
           <figure className="relative min-w-0">
-            <div className="aidreamcapes-detail-hero-frame rounded-[30px] border border-[#8b5cf6]/30 bg-gradient-to-br from-[#171225] via-[#0d1020] to-[#121018] p-3 shadow-[0_42px_110px_-56px_rgba(139,92,246,0.9)]">
-              <div className="grid grid-cols-[minmax(0,0.82fr)_3.25rem_minmax(0,1fr)] items-center gap-3 rounded-[22px] border border-white/10 bg-[#08080b] p-3 sm:gap-5 sm:p-5">
-                <div className="overflow-hidden rounded-[18px] border border-white/10 bg-[#101117]">
-                  <Media className="aspect-[4/5] h-full w-full object-cover" image={content.hero.productImage} />
-                  <p className="border-t border-white/10 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/54">{content.hero.productLabel}</p>
-                </div>
-                <div className="grid place-items-center text-[#b8a7ff]">
-                  <div className="grid h-11 w-11 place-items-center rounded-full border border-[#8b5cf6]/45 bg-[#8b5cf6]/15"><ArrowRight aria-hidden="true" className="h-5 w-5" strokeWidth={1.8} /></div>
-                  <span className="mt-2 text-center text-[10px] font-semibold uppercase tracking-[0.12em] text-white/42">{content.hero.imageNote}</span>
-                </div>
-                <div className="overflow-hidden rounded-[18px] border border-[#ec4899]/30 bg-[#151020]">
-                  <Media className="aspect-[4/5] h-full w-full object-cover" image={content.hero.outputImage} priority />
-                  <p className="border-t border-white/10 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/54">{content.hero.outputLabel}</p>
-                </div>
-              </div>
-            </div>
+            <AidreamcapesDetailHeroMedia
+              imageNote={content.hero.imageNote}
+              outputImage={content.hero.outputImage}
+              outputLabel={content.hero.outputLabel}
+              productImage={content.hero.productImage}
+              productLabel={content.hero.productLabel}
+              video={content.hero.video}
+            />
             <figcaption className="mt-4 flex items-start gap-3 text-sm leading-6 text-white/58"><Sparkles aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-[#c4b5fd]" strokeWidth={1.8} /><span>{content.hero.imageNote}</span></figcaption>
           </figure>
         </div>

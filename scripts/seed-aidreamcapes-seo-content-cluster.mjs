@@ -9,12 +9,12 @@ import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { argumentValue, assertDatabaseTarget, hasArgument } from "./lib/database-target.mjs";
 import { aidreamcapesBlogArticles } from "./lib/aidreamcapes-blog-content.mjs";
+import { aidreamcapesBlogCoverSourceHref, aidreamcapesThemeCoverAlt, aidreamcapesThemeCoverImage, assertUniqueAidreamcapesBlogCovers } from "./lib/aidreamcapes-blog-cover-media.mjs";
 import { LEGACY_ARTICLE_PATH, MIGRATED_ARTICLE_PATH, validateAidreamcapesBlogArticle } from "./lib/aidreamcapes-blog-route-contract.mjs";
 
 const SITE_ID = "site_aidreamcapes";
 const CONFIRMATION = "aidreamcapes-seo-content-cluster";
 const BACKUP_ROOT = path.resolve("releases/backups/aidreamcapes");
-const IMAGE_ROOT = "/assets/sites/site_aidreamcapes/public-editorial/20260918-v1";
 const BLOG_HOME_SLUG = "/blog";
 const BLOG_HOME_TITLE = "AI image and video guides";
 const BLOG_HOME_SEO = {
@@ -24,7 +24,7 @@ const BLOG_HOME_SEO = {
 };
 
 
-const ARTICLES = aidreamcapesBlogArticles({ imageRoot: IMAGE_ROOT });
+const ARTICLES = aidreamcapesBlogArticles();
 const EXISTING_ARTICLE_SLUG = LEGACY_ARTICLE_PATH;
 const MIGRATED_ARTICLE_SLUG = MIGRATED_ARTICLE_PATH;
 
@@ -75,6 +75,7 @@ function articlePageJson(article) {
           summary: article.summary,
           imageAlt: article.imageAlt,
           imageUrl: article.imageUrl,
+          coverThemeHref: article.coverThemeHref,
           authorUrl: "/about-us",
           updatedAt,
           publishedAt,
@@ -189,9 +190,37 @@ async function main() {
     assert(blogLivePage, `${BLOG_HOME_SLUG}: LivePage missing.`);
     assert(blogThemePage, `${BLOG_HOME_SLUG}: ThemePage missing.`);
 
+    const coverThemeHrefs = [...new Set(ARTICLES.map(aidreamcapesBlogCoverSourceHref))];
+    const [coverLivePages, coverThemePages] = await Promise.all([
+      prisma.livePage.findMany({
+        where: { siteId: SITE_ID, slug: { in: coverThemeHrefs } },
+        select: { slug: true, contentJson: true }
+      }),
+      prisma.themePage.findMany({
+        where: { siteId: SITE_ID, slug: { in: coverThemeHrefs } },
+        select: { slug: true, publishedJson: true }
+      })
+    ]);
+    const coverPageJsonByHref = new Map(coverLivePages.map((page) => [page.slug, page.contentJson]));
+    for (const page of coverThemePages) {
+      if (!coverPageJsonByHref.has(page.slug)) coverPageJsonByHref.set(page.slug, page.publishedJson);
+    }
+    const resolvedArticles = ARTICLES.map((article) => {
+      const sourceHref = aidreamcapesBlogCoverSourceHref(article);
+      const sourcePageJson = coverPageJsonByHref.get(sourceHref);
+      assert(sourcePageJson, `${article.slug}: cover theme page ${sourceHref} is missing.`);
+      const imageUrl = aidreamcapesThemeCoverImage(sourcePageJson);
+      assert(imageUrl, `${article.slug}: cover theme page ${sourceHref} has no Aidreamcapes image asset.`);
+      return {
+        ...article,
+        imageUrl,
+        imageAlt: aidreamcapesThemeCoverAlt(sourcePageJson, article.imageAlt)
+      };
+    });
+    assertUniqueAidreamcapesBlogCovers(resolvedArticles);
     const existingBySlug = new Map(existingArticles.map((row) => [row.slug, row]));
-    const creates = ARTICLES.filter((article) => !existingBySlug.has(article.slug));
-    const updates = ARTICLES.filter((article) => {
+    const creates = resolvedArticles.filter((article) => !existingBySlug.has(article.slug));
+    const updates = resolvedArticles.filter((article) => {
       const row = existingBySlug.get(article.slug);
       if (!row) return false;
       const next = articlePageJson(article);
@@ -218,7 +247,7 @@ async function main() {
 
     const backupPath = writeBackup({ createdAt: new Date().toISOString(), site, existingArticles, legacyLivePage, legacyThemePage, blogLivePage, blogThemePage, otherSiteSentinelHash: beforeOtherSites });
     await prisma.$transaction(async (tx) => {
-      for (const article of ARTICLES) {
+      for (const article of resolvedArticles) {
         const pageJson = articlePageJson(article);
         const id = pageIdForSlug(article.slug);
         await tx.livePage.upsert({
@@ -257,7 +286,7 @@ async function main() {
     assert.equal(afterTheme.length, ARTICLES.length, "content-cluster ThemePage count mismatch.");
     assert.equal(afterLegacyLive, null, `${EXISTING_ARTICLE_SLUG}: legacy LivePage still exists after migration.`);
     assert.equal(afterLegacyTheme, null, `${EXISTING_ARTICLE_SLUG}: legacy ThemePage still exists after migration.`);
-    for (const article of ARTICLES) {
+    for (const article of resolvedArticles) {
       const expected = articlePageJson(article);
       const live = afterLive.find((row) => row.slug === article.slug);
       const theme = afterTheme.find((row) => row.slug === article.slug);

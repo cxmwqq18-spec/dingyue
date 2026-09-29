@@ -9,6 +9,7 @@ import { resolveMydreamshootsPageTdk } from "@/lib/mydreamshoots-tdk";
 import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
 import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSeoContentForSlug, aidreamcapesEuSeoContentFromPath } from "@/lib/aidreamcapes-eu-seo-content";
 import { aidreamcapesEuVideoTopicFromPath } from "@/lib/aidreamcapes-eu-video-media";
+import { AIDREAMCAPES_EU_IMAGE_DIRECTORY_OG_IMAGE } from "@/lib/aidreamcapes-eu-legacy-media";
 import type { CreativePack, PlatformState, Product, Site, ThemePage } from "@/lib/types";
 
 const AIDREAMCAPES_EU_SAVE_THE_DATE_SEO_OVERRIDES: Record<string, { title: string; description: string }> = {
@@ -112,6 +113,9 @@ export async function metadataForPublishedStorefrontPage({
   const aidreamcapesImageDirectoryOgImage = snapshot.site.id === "site_aidreamcapes" && metadataPath === "/ai-image-generation"
     ? "/assets/sites/site_aidreamcapes/ecommerce-main-image-v1/ecommerce-main-image/og.webp"
     : undefined;
+  const aidreamcapesEuImageDirectoryOgImage = snapshot.site.id === "site_aidreamcapes_xby" && metadataPath === "/ai-image-generation"
+    ? AIDREAMCAPES_EU_IMAGE_DIRECTORY_OG_IMAGE
+    : undefined;
   const publicRouteSeo = snapshot.site.id === "site_mydreamshoots_xby"
     ? getDreamshootPublicSeoPageMetadataForSite(snapshot.site, metadataPath)
     : undefined;
@@ -155,6 +159,10 @@ export async function metadataForPublishedStorefrontPage({
       ...(aidreamcapesImageDirectoryOgImage ? {
         ogImage: aidreamcapesImageDirectoryOgImage,
         ogImageAlt: "Ecommerce product image workflow preview for Aidreamcapes."
+      } : {}),
+      ...(aidreamcapesEuImageDirectoryOgImage ? {
+        ogImage: aidreamcapesEuImageDirectoryOgImage,
+        ogImageAlt: "Galerie de portraits créée avec l’IA pour Aidreamcapes."
       } : {}),
       ...(euVideoDirectorySeo ?? {})
     }

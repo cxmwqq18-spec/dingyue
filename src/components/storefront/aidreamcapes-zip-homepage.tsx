@@ -1,6 +1,7 @@
 import type { SectionBlockInstance, SectionInstance, Site } from "@/lib/types";
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
+import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
 import { isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 
 type SqlProduct = ReturnType<typeof import("@/lib/data").getSiteProducts>[number];
@@ -97,6 +98,53 @@ function BlockImage({
       width={width}
     />
   );
+}
+
+function BlockVideo({
+  className,
+  eager = false,
+  resolveAsset,
+  source,
+}: {
+  className: string;
+  eager?: boolean;
+  resolveAsset: (value: string) => string;
+  source: SectionInstance | SectionBlockInstance;
+}) {
+  const sourceSettings = source.settings;
+  const src = read(sourceSettings.videoUrl);
+  if (!src) return null;
+  const poster = read(sourceSettings.videoPosterUrl) || read(sourceSettings.imageUrl);
+  return (
+    <LazyStorefrontVideo
+      aria-label={read(sourceSettings.videoAlt) || read(sourceSettings.imageAlt) || "Aidreamcapes video preview"}
+      autoPlay
+      className={className}
+      deferLoading={!eager}
+      loop
+      muted
+      nearViewportPreload={eager ? "auto" : "metadata"}
+      playsInline
+      poster={poster ? resolveAsset(poster) : undefined}
+      src={resolveAsset(src)}
+    />
+  );
+}
+
+function BlockMedia({
+  className,
+  eager = false,
+  resolveAsset,
+  source,
+}: {
+  className: string;
+  eager?: boolean;
+  resolveAsset: (value: string) => string;
+  source: SectionInstance | SectionBlockInstance;
+}) {
+  return read(source.settings.videoUrl)
+    ? <BlockVideo className={className} eager={eager} resolveAsset={resolveAsset} source={source} />
+    : <BlockImage className={className} eager={eager} resolveAsset={resolveAsset} source={source} />;
 }
 
 function LinkButton({
@@ -201,6 +249,9 @@ function Hero({
       imageAlt: setting(section, "outputImageAlt"),
       imageWidth: setting(section, "outputImageWidth"),
       imageHeight: setting(section, "outputImageHeight"),
+      videoUrl: setting(section, "outputVideoUrl"),
+      videoPosterUrl: setting(section, "outputVideoPosterUrl", setting(section, "outputImageUrl")),
+      videoAlt: setting(section, "outputVideoAlt", setting(section, "outputImageAlt")),
     },
   };
   return (
@@ -294,8 +345,9 @@ function Hero({
                     <span className="absolute left-2 top-2 z-10 rounded-full bg-[#8b5cf6] px-2 py-0.5 text-[10px] text-white">
                       {setting(section, "studioOutputLabel")}
                     </span>
-                    <BlockImage
+                    <BlockMedia
                       className="absolute inset-0 h-full w-full object-cover opacity-80"
+                      eager
                       resolveAsset={resolveAsset}
                       source={outputImage}
                     />
@@ -407,7 +459,7 @@ function VideoGrid({
               href={resolveHref(blockValue(block, "href"))}
               key={block.id}
             >
-              <BlockImage
+              <BlockMedia
                 className="h-full w-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-105"
                 resolveAsset={resolveAsset}
                 source={block}
@@ -513,7 +565,7 @@ function AdTesting({
                   </div>
                 </div>
                 <div className="grid flex-1 grid-cols-3 gap-3">
-                  {outputCards.map((block) => <BlockImage
+                  {outputCards.map((block) => <BlockMedia
                     className="h-full min-h-[210px] w-full rounded-lg border border-white/10 object-cover"
                     resolveAsset={resolveAsset}
                     source={block}
@@ -531,7 +583,7 @@ function AdTesting({
               <p className="mb-4 text-xs text-gray-400">
                 {hookCard ? blockValue(hookCard, "description") : null}
               </p>
-              {hookCard ? <BlockImage
+              {hookCard ? <BlockMedia
                 className="h-36 w-full rounded-xl border border-white/10 object-cover"
                 resolveAsset={resolveAsset}
                 source={hookCard}
@@ -544,7 +596,7 @@ function AdTesting({
               <p className="mb-4 text-xs text-gray-400">
                 {actorCard ? blockValue(actorCard, "description") : null}
               </p>
-              {actorCard ? <BlockImage
+              {actorCard ? <BlockMedia
                 className="mb-4 h-40 w-full rounded-xl border border-white/10 object-cover"
                 resolveAsset={resolveAsset}
                 source={actorCard}
