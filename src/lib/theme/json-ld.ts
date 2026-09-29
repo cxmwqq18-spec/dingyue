@@ -1704,8 +1704,9 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   const euRouteSeo = resolvedInput.site.id === "site_aidreamcapes_xby"
     ? aidreamcapesEuSaveTheDateSeoFromPath(resolvedInput.pagePath)
     : undefined;
-  const title = euRouteSeo?.title ?? pageTitle(resolvedInput.site, resolvedInput.page, resolvedInput.context);
-  const description = euRouteSeo?.description ?? pageDescription(resolvedInput.site, resolvedInput.page, resolvedInput.context);
+  const seoQualityOverride = aidreamcapesSeoQualityForPath(resolvedInput.site, resolvedInput.pagePath);
+  const title = euRouteSeo?.title || seoQualityOverride?.title || pageTitle(resolvedInput.site, resolvedInput.page, resolvedInput.context);
+  const description = euRouteSeo?.description || seoQualityOverride?.description || pageDescription(resolvedInput.site, resolvedInput.page, resolvedInput.context);
   const graph: Array<JsonLdNode | undefined> = [
     organizationSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.context, resolvedInput.pagePath),
     websiteSchema(resolvedInput.site, resolvedInput.routeMode),
