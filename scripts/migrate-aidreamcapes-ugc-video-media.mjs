@@ -41,7 +41,8 @@ const imageThemeRoutes = [
   "/ai-image-generation/lifestyle-scene",
   "/ai-image-generation/feed-ad-still",
   "/ai-image-generation/background-remove-replace",
-  "/ai-image-generation/virtual-try-on"
+  "/ai-image-generation/virtual-try-on",
+  "/ai-image-generation/fashion-editorial"
 ];
 const homepageVideoBlocks = new Map([
   ["video_ugc", "/ai-video-generation/ugc-ad-video"],
@@ -53,7 +54,7 @@ const homepageVideoBlocks = new Map([
   ["video_before_after", "/ai-video-generation/before-after-showcases"],
   ["video_promo", "/ai-video-generation/promo-video"]
 ]);
-const homepageFeatureVideos = new Map([
+const homepageFeatureImages = new Map([
   ["workflow_output_1", "/ai-video-generation/ugc-ad-video"],
   ["workflow_output_2", "/ai-video-generation/hook-lab"],
   ["workflow_output_3", "/ai-video-generation/product-video"],
@@ -161,6 +162,23 @@ function applyHomepageVideoSettings(block, route, detailByRoute) {
   block.settings.imageHeight = outputImage.height || 768;
 }
 
+function applyHomepageImageSettings(block, route, detailByRoute, source = "output") {
+  const detail = detailByRoute.get(route);
+  assert(detail, `Homepage detail image mapping is missing for ${route}`);
+  const content = Object.values(detail.contentJson?.sections ?? {}).find((entry) => entry?.type === "ai_video_topic_landing")?.settings?.content;
+  const hero = detailHero(content);
+  const image = source === "product" ? hero.productImage || hero.product?.image : hero.outputImage || hero.output?.image;
+  assert(image?.src, `${route}: detail image is missing`);
+  block.settings.href = route;
+  block.settings.imageUrl = image.src;
+  block.settings.imageAlt = image.alt || block.settings.title || "AI video theme image";
+  block.settings.imageWidth = image.width || 400;
+  block.settings.imageHeight = image.height || 400;
+  delete block.settings.videoUrl;
+  delete block.settings.videoPosterUrl;
+  delete block.settings.videoAlt;
+}
+
 function updateHomepage(page, detailByRoute, imageByRoute) {
   const next = structuredClone(page.contentJson);
   const hero = section({ contentJson: next }, "aidreamcapes_hero");
@@ -178,11 +196,31 @@ function updateHomepage(page, detailByRoute, imageByRoute) {
 
   const adTesting = section({ contentJson: next }, "aidreamcapes_ad_testing");
   for (const block of adTesting.blocks ?? []) {
-    const route = homepageFeatureVideos.get(block.id);
-    if (route) applyHomepageVideoSettings(block, route, detailByRoute);
+    const route = homepageFeatureImages.get(block.id);
+    if (route) applyHomepageImageSettings(block, route, detailByRoute);
+  }
+  const urlCard = adTesting.blocks?.find((block) => block.id === "url_to_ad");
+  if (urlCard) {
+    applyHomepageImageSettings(urlCard, "/ai-video-generation/url-to-ad", detailByRoute, "product");
   }
 
   const photoGrid = section({ contentJson: next }, "aidreamcapes_photo_grid");
+  if (!(photoGrid.blocks ?? []).some((block) => block.id === "photo_fashion_editorial")) {
+    photoGrid.blocks = [
+      ...(photoGrid.blocks ?? []),
+      {
+        id: "photo_fashion_editorial",
+        type: "photo_card",
+        settings: {
+          href: "/ai-image-generation/fashion-editorial",
+          title: "Fashion Editorial",
+          imageAlt: "Adult model in a tailored neutral fashion editorial scene",
+          imageLoading: "lazy",
+          imageFetchPriority: "auto"
+        }
+      }
+    ];
+  }
   for (const block of photoGrid.blocks ?? []) {
     const route = block.settings?.href;
     const image = imageByRoute.get(route);
@@ -252,7 +290,7 @@ try {
     sourceRoot: SOURCE_ROOT,
     videoCount: manifest.length,
     detailPages: manifest.map((item) => item.route),
-    homepage: { videoCards: homepageVideoBlocks.size, featureVideos: homepageFeatureVideos.size, photoCards: imageThemeRoutes.length },
+    homepage: { videoCards: homepageVideoBlocks.size, featureImages: homepageFeatureImages.size, photoCards: imageThemeRoutes.length },
     pages: report
   }, null, 2));
 

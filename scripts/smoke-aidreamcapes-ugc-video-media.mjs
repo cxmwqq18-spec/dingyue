@@ -18,7 +18,8 @@ const imageRoutes = [
   "/ai-image-generation/lifestyle-scene",
   "/ai-image-generation/feed-ad-still",
   "/ai-image-generation/background-remove-replace",
-  "/ai-image-generation/virtual-try-on"
+  "/ai-image-generation/virtual-try-on",
+  "/ai-image-generation/fashion-editorial"
 ];
 const expectedHomepageVideoRoutes = new Map([
   ["video_ugc", "/ai-video-generation/ugc-ad-video"],
@@ -78,13 +79,24 @@ try {
     assert(block.settings.videoPosterUrl, `Homepage video poster missing for ${block.id}`);
   }
   const photoGrid = home.contentJson.sections.aidreamcapes_photo_grid;
+  assert.equal(photoGrid.blocks.length, 10, "Homepage photo grid should contain the supplemental theme image.");
   for (const block of photoGrid.blocks) {
     const imagePage = bySlug.get(block.settings.href);
     const imageContent = contentEntry(imagePage, "ai_image_theme_landing")?.settings?.content;
     const image = imageContent?.hero?.outputImage || imageContent?.hero?.image;
     assert.equal(block.settings.imageUrl, image?.src, `Homepage image source drifted for ${block.id}`);
   }
-  console.log(`Aidreamcapes UGC video smoke passed: ${manifest.length} detail videos, ${videoGrid.blocks.length} homepage video cards, ${photoGrid.blocks.length} homepage photo cards.`);
+  const adTesting = home.contentJson.sections.aidreamcapes_ad_testing;
+  for (const block of adTesting.blocks) {
+    assert(!block.settings.videoUrl, `Ad testing workflow should remain image-led: ${block.id}`);
+    if (block.settings.href?.startsWith("/ai-video-generation/")) {
+      const detail = bySlug.get(block.settings.href);
+      const detailContent = contentEntry(detail, "ai_video_topic_landing")?.settings?.content;
+      const detailImage = detailHero(detailContent)?.outputImage || detailHero(detailContent)?.output?.image;
+      if (block.id !== "url_to_ad") assert.equal(block.settings.imageUrl, detailImage?.src, `Ad testing image source drifted for ${block.id}`);
+    }
+  }
+  console.log(`Aidreamcapes UGC video smoke passed: ${manifest.length} detail videos, ${videoGrid.blocks.length} homepage video cards, ${photoGrid.blocks.length} homepage photo cards, image-led ad testing workflow.`);
 } finally {
   await prisma.$disconnect();
 }

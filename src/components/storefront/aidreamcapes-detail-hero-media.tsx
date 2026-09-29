@@ -3,7 +3,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
-import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
+import { AidreamcapesVideoPreview } from "@/components/storefront/aidreamcapes-video-preview";
 import type { AidreamcapesAdsTestingImage, AiVideoTopicVideo } from "@/lib/ai-video-topic-content";
 
 type HeroSlide = {
@@ -126,19 +126,13 @@ export function AidreamcapesDetailHeroMedia({
 
       <div className="overflow-hidden rounded-[22px] border border-[#ec4899]/30 bg-[#0d0a14] shadow-[0_0_42px_rgba(236,72,153,0.13)]">
         {video ? (
-          <LazyStorefrontVideo
-            aria-label={video.alt ?? video.label}
-            autoPlay
-            className="aspect-video h-full min-h-[280px] w-full object-cover lg:min-h-full"
-            controls
-            height={video.height}
-            loop
-            muted
+          <AidreamcapesVideoPreview
+            alt={video.alt ?? video.label}
+            className="relative aspect-video h-full min-h-[280px] w-full lg:min-h-full"
             nearViewportPreload="auto"
-            playsInline
             poster={video.poster}
             src={video.src}
-            width={video.width}
+            videoClassName="aspect-video h-full min-h-[280px] w-full object-cover lg:min-h-full"
           />
         ) : (
           <AidreamcapesResponsiveImage
@@ -156,7 +150,7 @@ export function AidreamcapesDetailHeroMedia({
         {video ? (
           <div className="flex items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-[11px] uppercase tracking-[0.12em] text-white/50">
             <span className="text-[#f2b4ff]">{video.label}</span>
-            <span>Muted preview · {video.width}:{video.height}</span>
+            <span>Click to preview with sound · {video.width}:{video.height}</span>
           </div>
         ) : null}
       </div>

@@ -1,7 +1,7 @@
 import type { SectionBlockInstance, SectionInstance, Site } from "@/lib/types";
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
-import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
+import { AidreamcapesVideoPreview } from "@/components/storefront/aidreamcapes-video-preview";
 import { isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 
 type SqlProduct = ReturnType<typeof import("@/lib/data").getSiteProducts>[number];
@@ -115,18 +115,16 @@ function BlockVideo({
   const src = read(sourceSettings.videoUrl);
   if (!src) return null;
   const poster = read(sourceSettings.videoPosterUrl) || read(sourceSettings.imageUrl);
+  const triggerClassName = className.includes("absolute") ? "absolute inset-0 min-h-[200px]" : "relative h-full w-full";
   return (
-    <LazyStorefrontVideo
-      aria-label={read(sourceSettings.videoAlt) || read(sourceSettings.imageAlt) || "Aidreamcapes video preview"}
-      autoPlay
-      className={className}
+    <AidreamcapesVideoPreview
+      alt={read(sourceSettings.videoAlt) || read(sourceSettings.imageAlt) || "Aidreamcapes video preview"}
+      className={triggerClassName}
       deferLoading={!eager}
-      loop
-      muted
       nearViewportPreload={eager ? "auto" : "metadata"}
-      playsInline
       poster={poster ? resolveAsset(poster) : undefined}
       src={resolveAsset(src)}
+      videoClassName={className}
     />
   );
 }
@@ -351,7 +349,7 @@ function Hero({
                       resolveAsset={resolveAsset}
                       source={outputImage}
                     />
-                    <div className="absolute inset-0 grid place-items-center">
+                    <div className="pointer-events-none absolute inset-0 grid place-items-center">
                       <span className="grid h-10 w-10 place-items-center rounded-full border border-white/30 bg-white/20 text-white">
                         <svg aria-hidden="true" className="ml-0.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M8 5v14l11-7z" />
@@ -854,7 +852,13 @@ function Pricing({
   );
 }
 
-function Testimonials({ section }: { section: SectionInstance }) {
+function Testimonials({
+  resolveAsset,
+  section,
+}: {
+  resolveAsset: (value: string) => string;
+  section: SectionInstance;
+}) {
   const reviewBlocks = blocks(section).filter(
     (block) => block.type === "testimonial",
   );
@@ -864,9 +868,15 @@ function Testimonials({ section }: { section: SectionInstance }) {
       data-aidreamcapes-section="testimonials"
     >
       <div className="relative z-10 mb-16 text-center">
+        <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-gray-400">
+          Example workflows
+        </div>
         <h2 className="mb-4 text-3xl font-bold md:text-4xl">
           {setting(section, "title")}
         </h2>
+        <p className="mx-auto max-w-2xl text-sm leading-6 text-gray-500">
+          {setting(section, "subtitle")}
+        </p>
         <div aria-hidden="true" className="mt-6 flex justify-center gap-2">
           <div className="h-1 w-10 rounded-full bg-black" />
           <div className="h-1 w-2 rounded-full bg-gray-300" />
@@ -878,29 +888,71 @@ function Testimonials({ section }: { section: SectionInstance }) {
           const name = blockValue(block, "name");
           const initials = name.split(/\s+/).map((part) => part.slice(0, 1)).join("").slice(0, 2).toUpperCase();
           const rating = Number.parseInt(blockValue(block, "rating"), 10) || 0;
+          const avatarUrl = blockValue(block, "avatarUrl");
+          const resultImageUrl = blockValue(block, "resultImageUrl");
+          const themeLabel = blockValue(block, "role", "Theme");
+          const resultLabel = blockValue(block, "location", "Generated result");
+          const resultAlt = blockValue(block, "resultImageAlt") || `${name}'s ${resultLabel.toLowerCase()} generated with Aidreamcapes`;
           return (
           <div
-            className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm"
+            className="group overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+            data-review-card={block.id}
             key={block.id}
           >
-            <div className="mb-4 flex items-center gap-3">
-              <div
-                aria-label={`${name} initials`}
-                className={`flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br ${index % 3 === 0 ? "from-purple-500 to-indigo-500" : index % 3 === 1 ? "from-blue-500 to-cyan-500" : "from-pink-500 to-rose-500"} text-xs font-semibold text-white`}
-              >
-                {initials}
-              </div>
-              <div>
-                <div className="text-sm font-semibold">{name}</div>
-                <div
-                  aria-label={`${rating} out of 5 stars`}
-                  className="text-xs text-yellow-400"
-                >
-                  {"★".repeat(rating)}
+            {resultImageUrl ? (
+              <div className="relative aspect-[1.55] overflow-hidden bg-gray-100" data-review-result>
+                <Media
+                  alt={resultAlt}
+                  className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                  height="720"
+                  resolveAsset={resolveAsset}
+                  src={resultImageUrl}
+                  width="1120"
+                />
+                <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                  <span className="rounded-full bg-black/60 px-2.5 py-1 backdrop-blur-sm">Generated result</span>
+                  <span className="rounded-full bg-white/85 px-2.5 py-1 text-gray-700 backdrop-blur-sm">{resultLabel}</span>
                 </div>
               </div>
+            ) : null}
+            <div className="p-6">
+              <div className="mb-4 flex items-center gap-3">
+                {avatarUrl ? (
+                  <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full ring-2 ring-white shadow-sm" data-review-avatar>
+                    <Media
+                      alt={`${name} avatar`}
+                      className="h-full w-full object-cover"
+                      height="96"
+                      resolveAsset={resolveAsset}
+                      src={avatarUrl}
+                      width="96"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    aria-label={`${name} initials`}
+                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${index % 3 === 0 ? "from-purple-500 to-indigo-500" : index % 3 === 1 ? "from-blue-500 to-cyan-500" : "from-pink-500 to-rose-500"} text-xs font-semibold text-white`}
+                    data-review-avatar="fallback"
+                  >
+                    {initials}
+                  </div>
+                )}
+                <div className="min-w-0">
+                  <div className="text-sm font-semibold">{name}</div>
+                  <div
+                    aria-label={`${rating} out of 5 stars`}
+                    className="text-xs text-yellow-400"
+                  >
+                    {"★".repeat(rating)}
+                  </div>
+                </div>
+              </div>
+              <div className="mb-4 flex flex-wrap gap-2">
+                <span className="rounded-full bg-gray-100 px-2.5 py-1 text-[11px] font-semibold text-gray-600">{themeLabel}</span>
+                <span className="rounded-full bg-gray-50 px-2.5 py-1 text-[11px] text-gray-500">{resultLabel}</span>
+              </div>
+              <p className="text-sm leading-relaxed text-gray-600">“{blockValue(block, "quote")}"</p>
             </div>
-            <p className="text-sm leading-relaxed text-gray-600">“{blockValue(block, "quote")}”</p>
           </div>
           );
         })}
@@ -1081,7 +1133,7 @@ function SectionRenderer({
   if (section.type === "pricing_table")
     return <Pricing products={products} resolveHref={resolveHref} section={section} storefrontContext={storefrontContext} />;
   if (section.type === "testimonial_wall")
-    return <Testimonials section={section} />;
+    return <Testimonials resolveAsset={resolveAsset} section={section} />;
   if (section.type === "faq") return <Faq resolveHref={resolveHref} section={section} />;
   if (section.type === "conversion_panel")
     return <Conversion resolveHref={resolveHref} section={section} />;

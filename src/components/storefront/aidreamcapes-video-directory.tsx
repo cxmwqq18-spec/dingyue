@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import type { AidreamcapesZipNavigation, Site } from "@/lib/types";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
-import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
+import { AidreamcapesVideoPreview } from "@/components/storefront/aidreamcapes-video-preview";
 
 export type AidreamcapesVideoDirectoryCopy = {
   eyebrow: string;
@@ -279,17 +279,14 @@ export function AidreamcapesVideoDirectory({
                     >
                       <span className="relative block aspect-[16/9] overflow-hidden bg-[#17131f]" data-video-theme-cover={item.href}>
                         {cover?.videoSrc ? (
-                          <LazyStorefrontVideo
-                            aria-label={`${cover.alt || item.label} video preview`}
-                            autoPlay
-                            className="h-full w-full object-cover opacity-80 transition duration-700 group-hover:scale-[1.04] group-hover:opacity-100"
+                          <AidreamcapesVideoPreview
+                            alt={`${cover.alt || item.label} video preview`}
+                            className="relative h-full w-full"
                             deferLoading={!(groupIndex === 0 && itemIndex < 3)}
-                            loop
-                            muted
                             nearViewportPreload={groupIndex === 0 && itemIndex < 3 ? "auto" : "metadata"}
-                            playsInline
                             poster={cover.posterSrc || cover.src}
                             src={cover.videoSrc}
+                            videoClassName="h-full w-full object-cover opacity-80 transition duration-700 group-hover:scale-[1.04] group-hover:opacity-100"
                           />
                         ) : cover ? optimizeImages ? <AidreamcapesResponsiveImage alt={cover.alt || `${item.label} theme cover`} className="h-full w-full object-cover opacity-80 transition duration-700 group-hover:scale-[1.04] group-hover:opacity-100" decoding="async" fetchPriority={groupIndex === 0 && itemIndex === 0 ? "high" : "low"} loading={groupIndex === 0 && itemIndex === 0 ? "eager" : "lazy"} sizes="(max-width: 639px) 100vw, (max-width: 1279px) 50vw, 33vw" src={cover.src} /> : <img alt={cover.alt || `${item.label} theme cover`} className="h-full w-full object-cover opacity-80 transition duration-700 group-hover:scale-[1.04] group-hover:opacity-100" decoding="async" loading={groupIndex === 0 && itemIndex < 3 ? "eager" : "lazy"} src={cover.src} /> : null}
                         <span className={`absolute inset-0 ${cover ? "bg-gradient-to-t from-[#08090d]/80 via-transparent to-transparent" : accent.glow}`} />

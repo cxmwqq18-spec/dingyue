@@ -52,6 +52,11 @@ try {
   const hero = home.locator('[data-aidreamcapes-section="hero"]');
   assert.equal(await hero.locator("video").count(), 1, "homepage hero video count");
   await assertVideo(hero.locator("video").first());
+  await hero.locator("[data-aidreamcapes-video-preview-trigger]").click();
+  const homepageDialog = home.locator("[data-aidreamcapes-video-preview-dialog]");
+  assert.equal(await homepageDialog.count(), 1, "homepage video preview dialog");
+  assert.equal(await homepageDialog.locator("video").evaluate((element) => element.muted), false, "homepage preview should open with sound");
+  await homepageDialog.getByRole("button", { name: "Close video preview" }).click();
 
   const videoGrid = home.locator('[data-aidreamcapes-section="video-grid"]');
   await videoGrid.scrollIntoViewIfNeeded();
@@ -66,10 +71,19 @@ try {
 
   const photoGrid = home.locator('[data-aidreamcapes-section="photo-grid"]');
   await photoGrid.scrollIntoViewIfNeeded();
-  assert.equal(await photoGrid.locator("img").count(), 9, "homepage photo grid count");
+  assert.equal(await photoGrid.locator("img").count(), 10, "homepage photo grid count");
   for (const image of await photoGrid.locator("img").all()) {
     const src = await image.getAttribute("src");
-    assert(src?.includes("/assets/sites/site_aidreamcapes/") && !src.includes("homepage-seo"), "homepage photo card still uses old placeholder");
+    const decodedSrc = decodeURIComponent(src || "");
+    assert(decodedSrc.includes("/assets/sites/site_aidreamcapes/") && !decodedSrc.includes("homepage-seo"), "homepage photo card still uses old placeholder");
+  }
+  const adTesting = home.locator('[data-aidreamcapes-section="ad-testing"]');
+  assert.equal(await adTesting.locator("video").count(), 0, "ad testing workflow should remain image-led");
+  assert.equal(await adTesting.locator("img").count(), 6, "ad testing detail image count");
+  for (const image of await adTesting.locator("img").all()) {
+    const src = await image.getAttribute("src");
+    const decodedSrc = decodeURIComponent(src || "");
+    assert(decodedSrc.includes("/assets/sites/site_aidreamcapes/"), "ad testing image should come from an Aidreamcapes detail theme");
   }
 
   const detail = await context.newPage();
@@ -77,6 +91,11 @@ try {
   const detailMedia = detail.locator("[data-aidreamcapes-detail-hero-media]");
   assert.equal(await detailMedia.count(), 1, "detail hero media marker");
   await assertVideo(detailMedia.locator("video").first());
+  await detailMedia.locator("[data-aidreamcapes-video-preview-trigger]").click();
+  const detailDialog = detail.locator("[data-aidreamcapes-video-preview-dialog]");
+  assert.equal(await detailDialog.count(), 1, "detail video preview dialog");
+  assert.equal(await detailDialog.locator("video").evaluate((element) => element.muted), false, "detail preview should open with sound");
+  await detailDialog.getByRole("button", { name: "Close video preview" }).click();
   const carouselTabs = detailMedia.getByRole("tab");
   assert.equal(await carouselTabs.count(), 2, "detail carousel tab count");
   await detail.getByRole("button", { name: "Next hero image" }).click();
