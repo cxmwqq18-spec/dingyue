@@ -2,6 +2,7 @@
 
 import assert from "node:assert/strict";
 import { chromium, request } from "playwright";
+import { BLOG_ARTICLE_PATHS, LEGACY_ARTICLE_PATH, MIGRATED_ARTICLE_PATH } from "./lib/aidreamcapes-blog-route-contract.mjs";
 
 const BASE_URL = String(process.env.AIDREAMCAPES_BROWSER_SMOKE_ORIGIN || "http://127.0.0.1:3002").replace(/\/$/, "");
 const WWW_ORIGIN = String(process.env.AIDREAMCAPES_BROWSER_SMOKE_WWW_ORIGIN || (BASE_URL.includes("aidreamcapes.com") ? "https://www.aidreamcapes.com" : "")).replace(/\/$/, "");
@@ -10,16 +11,6 @@ const SITE_HEADERS = {
   "x-forwarded-host": "aidreamcapes.com",
   "x-forwarded-proto": "https"
 };
-const BLOG_ARTICLE_PATHS = [
-  "/blog/ai-product-photography-guide",
-  "/blog/ai-ugc-video-ads-guide",
-  "/blog/ai-talking-photo-video-guide",
-  "/blog/ecommerce-product-image-workflow",
-  "/blog/ai-video-review-checklist",
-  "/blog/ai-content-disclosure-safe-usage",
-  "/blog/video-photo-package-guide"
-];
-
 async function assertSeo(page, path) {
   // The source response and hydrated DOM are both SEO contracts; media requests
   // should not make the smoke test wait indefinitely.
@@ -61,7 +52,7 @@ const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({ extraHTTPHeaders: SITE_HEADERS });
 const page = await context.newPage();
 
-for (const path of ["/", "/about-us", "/ai-image-generation/professional-headshot", "/ai-video-generation/talking-photo", "/workflow", "/blog", "/ai-image-generation", "/ai-video-generation"]) {
+for (const path of ["/", "/about-us", "/ai-image-generation/professional-headshot", "/ai-video-generation/talking-photo-recs", "/workflow", "/blog", "/ai-image-generation", "/ai-video-generation"]) {
   await assertSeo(page, path);
 }
 
@@ -72,7 +63,11 @@ for (const path of BLOG_ARTICLE_PATHS) {
   assert(relatedToolLinks.length >= 3, `${path}: fewer than three related tool links`);
 }
 
-await page.goto(`${BASE_URL}/ai-video-generation/talking-photo`, { waitUntil: "domcontentloaded" });
+const legacyArticle = await request.get(`${BASE_URL}${LEGACY_ARTICLE_PATH}`, { maxRedirects: 0 });
+assert([301, 308].includes(legacyArticle.status()), `${LEGACY_ARTICLE_PATH}: expected permanent redirect, received ${legacyArticle.status()}`);
+assert.equal(legacyArticle.headers().location, `https://aidreamcapes.com${MIGRATED_ARTICLE_PATH}`, `${LEGACY_ARTICLE_PATH}: redirect target mismatch`);
+
+await page.goto(`${BASE_URL}/ai-video-generation/talking-photo-recs`, { waitUntil: "domcontentloaded" });
 await page.waitForTimeout(1000);
 if (await page.locator("video").count() > 0) {
   const talkingPhoto = page.locator("video").first();
@@ -116,17 +111,17 @@ for (const path of gonePaths) {
 
 const wwwRequest = await request.newContext();
 if (WWW_ORIGIN) {
-  const www = await wwwRequest.get(`${WWW_ORIGIN}/ai-video-generation/talking-photo`, { maxRedirects: 0 });
+  const www = await wwwRequest.get(`${WWW_ORIGIN}/ai-video-generation/talking-photo-recs`, { maxRedirects: 0 });
   assert.equal(www.status(), 301, `www route returned ${www.status()}`);
-  assert.equal(www.headers().location, "https://aidreamcapes.com/ai-video-generation/talking-photo", "www redirect target");
+  assert.equal(www.headers().location, "https://aidreamcapes.com/ai-video-generation/talking-photo-recs", "www redirect target");
 }
 
 const httpRequest = HTTP_ORIGIN === BASE_URL
   ? await request.newContext({ extraHTTPHeaders: { "x-forwarded-host": "aidreamcapes.com", "x-forwarded-proto": "http" } })
   : await request.newContext();
-const http = await httpRequest.get(`${HTTP_ORIGIN}/ai-video-generation/talking-photo?utm_source=smoke`, { maxRedirects: 0 });
+const http = await httpRequest.get(`${HTTP_ORIGIN}/ai-video-generation/talking-photo-recs?utm_source=smoke`, { maxRedirects: 0 });
 assert.equal(http.status(), 301, `HTTP route returned ${http.status()}`);
-assert.equal(http.headers().location, "https://aidreamcapes.com/ai-video-generation/talking-photo?utm_source=smoke", "HTTP redirect target");
+assert.equal(http.headers().location, "https://aidreamcapes.com/ai-video-generation/talking-photo-recs?utm_source=smoke", "HTTP redirect target");
 
 const staticPath = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?utm_source=smoke";
 if (WWW_ORIGIN) {
@@ -135,7 +130,7 @@ if (WWW_ORIGIN) {
   assert.equal(staticRequest.headers().location, `https://aidreamcapes.com${staticPath}`, "www static redirect target");
 }
 
-console.log(JSON.stringify({ ok: true, browser: "chromium", pages: 14, gone: gonePaths.length, redirects: WWW_ORIGIN ? 3 : 1, wwwOrigin: WWW_ORIGIN || null }));
+console.log(JSON.stringify({ ok: true, browser: "chromium", pages: 8 + BLOG_ARTICLE_PATHS.length, gone: gonePaths.length, redirects: WWW_ORIGIN ? 3 : 1, wwwOrigin: WWW_ORIGIN || null }));
 await httpRequest.dispose();
 await wwwRequest.dispose();
 await goneRequest.dispose();

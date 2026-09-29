@@ -107,6 +107,7 @@ const aidreamcapesLegacyBlogCategoryRedirects: Record<string, string> = {
   "new-year-countdown-albums": "/blog/new-year-countdown-group-album-photo-package-guide"
 };
 const aidreamcapesLegacyBlogDirectRedirects: Record<string, string> = {
+  "video-photo-package-guide": "/blog/motion-generator-video-guide",
   "fan-scene-photo-albums-guide": "/blog/private-fan-scene-album-photo-package-guide",
   "game-day-group-portraits-guide": "/blog/game-day-group-portraits-photo-package-guide",
   "premiere-style-photo-sets-guide": "/blog/premiere-flash-portraits-photo-package-guide",
@@ -561,7 +562,7 @@ export default async function SiteCatchAllPage({
   if (slug === "/help" && isSpanishAIdreamshootsSlug(publicSlug)) permanentRedirect(routePath("/faq"));
   if (slug === "/how-it-works" && isSpanishAIdreamshootsSlug(publicSlug)) permanentRedirect(routePath("/workflow"));
   const aidreamcapesBlogRedirect = aidreamcapesLegacyBlogRedirectPath(publicSlug, slug);
-  if (aidreamcapesBlogRedirect && aidreamcapesBlogRedirect !== slug) redirect(routePath(aidreamcapesBlogRedirect));
+  if (aidreamcapesBlogRedirect && aidreamcapesBlogRedirect !== slug) permanentRedirect(routePath(aidreamcapesBlogRedirect));
   if (slug === "/checkout") {
     const query = new URLSearchParams();
     for (const [key, value] of Object.entries(searchParams ? await searchParams : {})) {

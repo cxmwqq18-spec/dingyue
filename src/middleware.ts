@@ -114,6 +114,9 @@ const AIDREAMCAPES_EU_LEGACY_MEDIA_REDIRECTS: Record<string, string> = {
   "/assets/sites/site_aidreamcapes_eu/fan-holiday-theme/categories/noel-photo.webp":
     "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-provider-4k-20260916-v1/reused-local/a707445975aa-christmas-couple-cover.webp"
 };
+const AIDREAMCAPES_LEGACY_BLOG_REDIRECTS: Record<string, string> = {
+  "/blog/video-photo-package-guide": "/blog/motion-generator-video-guide"
+};
 
 function envSwitch(value: string | undefined): boolean | undefined {
   const normalized = String(value ?? "").trim().toLowerCase();
@@ -232,6 +235,17 @@ function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse
   if (!hostMatchesSite) return undefined;
   const scopedPath = match[2] || "/";
   return NextResponse.redirect(publicRedirectUrlForRequest(request, scopedPath === "/" ? "/" : scopedPath), 301);
+}
+
+function aidreamcapesLegacyBlogRedirect(request: NextRequest): NextResponse | undefined {
+  const normalizedPath = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
+  const match = normalizedPath.match(/^\/site\/(aidreamcapes)(\/blog\/[^/]+)$/i);
+  if (!match) return undefined;
+  const targetPath = AIDREAMCAPES_LEGACY_BLOG_REDIRECTS[match[2].toLowerCase()];
+  if (!targetPath) return undefined;
+
+  const target = `${targetPath}${request.nextUrl.search}`;
+  return NextResponse.redirect(publicRedirectUrlForRequest(request, target), 308);
 }
 
 function aidreamcapesEuWwwRedirect(request: NextRequest): NextResponse | undefined {
@@ -939,7 +953,7 @@ export async function middleware(request: NextRequest) {
   const skipInternalRewrite = request.headers.get(REORDER_SKIP_HEADER) === "1";
   if (skipInternalRewrite) return applyGrownstrideNoindex(nextWithPathname(request), request);
 
-  const redirectResponse = grownstrideLegacyHostRedirect(request) ?? aidreamcapesEuWwwRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request);
+  const redirectResponse = grownstrideLegacyHostRedirect(request) ?? aidreamcapesEuWwwRedirect(request) ?? aidreamcapesLegacyBlogRedirect(request) ?? canonicalPublicHostSitePathRedirect(request) ?? localDefaultStorefrontRedirect(request);
   if (redirectResponse) return finalizeStorefrontResponse(redirectResponse, request);
   if (!shouldRewriteStorefrontHtml(request)) return finalizeStorefrontResponse(nextWithPathname(request), request);
 

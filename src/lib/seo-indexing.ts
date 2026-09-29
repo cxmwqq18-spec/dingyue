@@ -188,6 +188,7 @@ const AIDREAMCAPES_LEGACY_BLOG_CATEGORY_CANONICAL_PATHS: Record<string, string> 
   "new-year-countdown-albums": "/blog/new-year-countdown-group-album-photo-package-guide"
 };
 const AIDREAMCAPES_LEGACY_BLOG_DIRECT_CANONICAL_PATHS: Record<string, string> = {
+  "video-photo-package-guide": "/blog/motion-generator-video-guide",
   "fan-scene-photo-albums-guide": "/blog/private-fan-scene-album-photo-package-guide",
   "game-day-group-portraits-guide": "/blog/game-day-group-portraits-photo-package-guide",
   "premiere-style-photo-sets-guide": "/blog/premiere-flash-portraits-photo-package-guide",

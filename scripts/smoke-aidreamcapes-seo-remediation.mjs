@@ -5,6 +5,7 @@ import { PrismaClient } from "@prisma/client";
 
 import "./load-runtime-env.mjs";
 import { argumentValue, assertDatabaseTarget, buildTunneledDatabaseUrl, parseDatabaseUrl } from "./lib/database-target.mjs";
+import { BLOG_ARTICLE_PATHS, LEGACY_ARTICLE_PATH, MIGRATED_ARTICLE_PATH, articleLinkHrefs, validateAidreamcapesBlogArticle } from "./lib/aidreamcapes-blog-route-contract.mjs";
 
 const ORIGIN = String(argumentValue("--origin") || process.env.AIDREAMCAPES_AUDIT_ORIGIN || "https://aidreamcapes.com").replace(/\/$/, "");
 const WWW_ORIGIN = String(argumentValue("--www-origin") || "https://www.aidreamcapes.com").replace(/\/$/, "");
@@ -17,33 +18,20 @@ const SKIP_ROBOTS = process.argv.includes("--skip-robots");
 const DB_TARGET = String(argumentValue("--db-target") || process.env.DATABASE_TARGET || "local").trim().toLowerCase();
 const SITE_ID = "site_aidreamcapes";
 const BLOG_HOME_PATH = "/blog";
-const BLOG_ARTICLE_PATHS = [
-  "/blog/ai-product-photography-guide",
-  "/blog/ai-ugc-video-ads-guide",
-  "/blog/ai-talking-photo-video-guide",
-  "/blog/ecommerce-product-image-workflow",
-  "/blog/ai-video-review-checklist",
-  "/blog/ai-content-disclosure-safe-usage",
-  "/blog/video-photo-package-guide"
-];
 const VIDEO_TOPIC_SEO = {
-  "/ai-video-generation/explainer-video": "AI Explainer Video Generator for Teams | Aidreamcapes",
-  "/ai-video-generation/fashion-video": "AI Fashion Video Generator for Brands | Aidreamcapes",
-  "/ai-video-generation/motion-generator": "AI Motion Generator for Product Ideas | Aidreamcapes",
-  "/ai-video-generation/meme-video": "AI Meme Video Generator for Creators | Aidreamcapes",
-  "/ai-video-generation/instagram-reels": "AI Instagram Reels Generator for Creators | Aidreamcapes",
-  "/ai-video-generation/pet-video": "AI Pet Video Generator for Stories | Aidreamcapes",
-  "/ai-video-generation/product-ad-video": "AI Product Ad Video Generator for Stores | Aidreamcapes",
-  "/ai-video-generation/social-media-video": "AI Social Media Video Generator | Aidreamcapes",
-  "/ai-video-generation/story-video": "AI Story Video Generator for Creators | Aidreamcapes",
-  "/ai-video-generation/youtube-video": "AI YouTube Video Generator for Creators | Aidreamcapes",
-  "/ai-video-generation/tiktok-video": "AI TikTok Video Generator for Creators | Aidreamcapes",
-  "/ai-video-generation/talking-head-video": "AI Talking Head Video Generator | Aidreamcapes"
+  "/ai-video-generation/ugc-ad-video": "AI UGC Product Ads & Video Generator | Aidreamcapes",
+  "/ai-video-generation/tiktok-reels-shorts": "TikTok, Reels & Shorts UGC Ad Generator | Aidreamcapes",
+  "/ai-video-generation/multilingual-video": "AI Multilingual Video Generator for Localization | Aidreamcapes",
+  "/ai-video-generation/talking-photo-recs": "Talking Photo Product Recs for UGC Ads | Aidreamcapes",
+  "/ai-video-generation/how-to-video": "AI How-to Tutorial Video Generator | Aidreamcapes",
+  "/ai-video-generation/founder-update": "AI Founder Update Video Generator | Aidreamcapes",
+  "/ai-video-generation/cinematic-video": "AI Cinematic Product Film Generator | Aidreamcapes",
+  "/ai-video-generation/product-video": "AI Product Demo Video Generator | Aidreamcapes"
 };
 const VIDEO_DESCRIPTION_SEO = {
-  "/ai-video-generation/brand-video": "Create AI brand videos for founder stories, product origins, company values, and campaigns with guided scenes, clear messaging, and review-ready outputs.",
-  "/ai-video-generation/talking-photo": "Create talking-photo videos from an approved portrait and short script for messages, explainers, product pitches, and social intros, with clear review steps.",
-  "/ai-video-generation/video-ad": "Create AI video ads for paid social, product launches, retargeting, and creator-style campaigns with a focused hook, proof, CTA, and review workflow."
+  "/ai-video-generation/talking-photo-recs": "Turn a product photo into a talking recommendation concept with clear product context, creator-style delivery, and reviewable claims for vertical social ads.",
+  "/ai-video-generation/founder-update": "Create AI founder update videos from an approved portrait, product image, or short message with clear pacing, reviewable claims, and a publishing workflow.",
+  "/ai-video-generation/tiktok-reels-shorts": "Create vertical UGC product ad concepts for TikTok, Instagram Reels, and YouTube Shorts with platform-ready hooks, proof, pacing, and CTAs for social."
 };
 const SEO_QUALITY_EXPECTATIONS = {
   "/marketing": { title: "AI Marketing Workflows for Ecommerce | Aidreamcapes" },
@@ -224,6 +212,8 @@ function assertSeoContract(path, html) {
   const canonical = canonicalFromHtml(html);
   assert.equal((html.match(/<title\b[^>]*>[\s\S]*?<\/title>/gi) || []).length, 1, `${path}: expected one title`);
   assert.equal((html.match(/<meta\b(?=[^>]*name=["']description["'])[^>]*>/gi) || []).length, 1, `${path}: expected one description`);
+  const robots = (html.match(/<meta\b(?=[^>]*name=["']robots["'])[^>]*>/i) || [""])[0];
+  assert(/index\s*,?\s*follow/i.test(attr(robots, "content")), `${path}: expected index,follow robots`);
   assert.equal((html.match(/<link\b(?=[^>]*rel=["']canonical["'])[^>]*>/gi) || []).length, 1, `${path}: expected one canonical`);
   assert.equal(canonical, `${ORIGIN}${path}`, `${path}: canonical mismatch`);
   assert(!canonical.includes("www.aidreamcapes.com"), `${path}: canonical uses www`);
@@ -279,6 +269,16 @@ async function assertInternalLinks200(hrefs, context) {
   await Promise.all(unique.map(async (href) => {
     const { response } = await fetchChecked(`${REQUEST_ORIGIN}${href}`);
     assert.equal(response.status, 200, `${context}: internal link ${href} returned ${response.status}`);
+  }));
+  return unique.length;
+}
+
+async function assertBlogInternalLinks(hrefs, context) {
+  const unique = [...new Set(hrefs.filter((href) => href && href.startsWith("/") && !href.startsWith("//")))];
+  await Promise.all(unique.map(async (href) => {
+    const { response, html } = await fetchChecked(`${REQUEST_ORIGIN}${href}`);
+    assert.equal(response.status, 200, `${context}: blog link ${href} returned ${response.status}`);
+    assertSeoContract(href, html);
   }));
   return unique.length;
 }
@@ -362,7 +362,23 @@ async function checkBlogArticle(prisma, path) {
   assert.equal(settings.author, "Aidreamcapes editorial team", `${path}: author mismatch`);
   assert(settings.publishedAt && settings.updatedAt, `${path}: publication dates missing`);
   assert(Array.isArray(settings.relatedLinks) && settings.relatedLinks.length >= 3, `${path}: SQL related links missing`);
-  return { path, relatedToolLinks: relatedToolHrefs(html).size };
+  validateAidreamcapesBlogArticle({
+    slug: path,
+    title: settings.title,
+    description: dbPage.contentJson?.seo?.description || "",
+    relatedLinks: settings.relatedLinks.map((link) => [link.href, link.label]),
+    targetHref: settings.targetHref,
+    primaryHref: settings.primaryHref,
+    body: settings.body
+  });
+  const checkedBlogLinks = await assertBlogInternalLinks(articleLinkHrefs({
+    relatedLinks: settings.relatedLinks.map((link) => [link.href, link.label]),
+    targetHref: settings.targetHref,
+    primaryHref: settings.primaryHref,
+    body: settings.body
+  }), path);
+  assert(BLOG_ARTICLE_PATHS.includes(path), `${path}: article path is not in the expected set`);
+  return { path, relatedToolLinks: relatedToolHrefs(html).size, checkedBlogLinks };
 }
 
 async function checkVideoTopicPage(path, expectedTitle) {
@@ -482,9 +498,9 @@ async function checkVideoDirectory() {
   assert.equal(response.status, 200, `${path}: HTTP ${response.status}`);
   assertSeoContract(path, html);
   const guideLinks = [
-    "/ai-video-generation/brand-video",
-    "/ai-video-generation/video-ad",
-    "/ai-video-generation/talking-photo",
+    "/ai-video-generation/founder-update",
+    "/ai-video-generation/product-video",
+    "/ai-video-generation/talking-photo-recs",
     "/blog/ai-ugc-video-ads-guide"
   ];
   for (const href of guideLinks) assert(html.includes(`href="${href}"`), `${path}: missing guide link ${href}`);
@@ -519,6 +535,7 @@ async function main() {
     for (const slug of THEME_SLUGS) assert(locSet.has(`${ORIGIN}/ai-image-generation/${slug}`), `sitemap missing image theme: ${slug}`);
     assert(locSet.has(`${ORIGIN}${BLOG_HOME_PATH}`), "sitemap missing blog home");
     for (const path of BLOG_ARTICLE_PATHS) assert(locSet.has(`${ORIGIN}${path}`), `sitemap missing content-cluster article: ${path}`);
+    assert(!locSet.has(`${ORIGIN}${LEGACY_ARTICLE_PATH}`), "sitemap contains migrated legacy blog article");
     assert(!locs.some((loc) => loc.startsWith(`${WWW_ORIGIN}/`)), "sitemap contains a www Aidreamcapes page URL");
     assert(!locs.some((loc) => loc.includes("/tools")), "sitemap contains a /tools URL");
     for (const alias of LEGACY_SITEMAP_ALIASES) assert(!locs.includes(`${ORIGIN}${alias}`), `sitemap contains legacy alias: ${alias}`);
@@ -533,6 +550,9 @@ async function main() {
     }
 
     const blogHomeResult = await checkBlogHome(prisma);
+    const legacyArticle = await fetchChecked(`${REQUEST_ORIGIN}${LEGACY_ARTICLE_PATH}`);
+    assert([301, 308].includes(legacyArticle.response.status), `${LEGACY_ARTICLE_PATH}: expected permanent redirect, received ${legacyArticle.response.status}`);
+    assert.equal(legacyArticle.response.headers.get("location"), `${ORIGIN}${MIGRATED_ARTICLE_PATH}`, `${LEGACY_ARTICLE_PATH}: redirect target mismatch`);
     const blogArticleResults = [];
     for (const path of BLOG_ARTICLE_PATHS) blogArticleResults.push(await checkBlogArticle(prisma, path));
     const videoTopicResults = [];
