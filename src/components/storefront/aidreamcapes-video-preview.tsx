@@ -8,20 +8,24 @@ type AidreamcapesVideoPreviewProps = {
   alt: string;
   className?: string;
   deferLoading?: boolean;
+  height?: number;
   nearViewportPreload?: "metadata" | "auto";
   poster?: string;
   src: string;
   videoClassName?: string;
+  width?: number;
 };
 
 export function AidreamcapesVideoPreview({
   alt,
   className = "",
   deferLoading = false,
+  height = 720,
   nearViewportPreload = "metadata",
   poster,
   src,
-  videoClassName = "h-full w-full object-cover"
+  videoClassName = "h-full w-full object-cover",
+  width = 1280
 }: AidreamcapesVideoPreviewProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dialogVideoRef = useRef<HTMLVideoElement>(null);
@@ -68,12 +72,14 @@ export function AidreamcapesVideoPreview({
           autoPlay
           className={videoClassName}
           deferLoading={deferLoading}
+          height={height}
           loop
           muted
           nearViewportPreload={nearViewportPreload}
           playsInline
           poster={poster}
           src={src}
+          width={width}
         />
         <span className="pointer-events-none absolute inset-0 grid place-items-center bg-black/0 transition group-hover:bg-black/20">
           <span className="flex items-center gap-2 rounded-full border border-white/35 bg-black/55 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white opacity-0 backdrop-blur-md transition group-hover:opacity-100">
@@ -113,11 +119,13 @@ export function AidreamcapesVideoPreview({
               autoPlay
               className="max-h-[78vh] w-full bg-black object-contain"
               controls
+              height={height}
               loop
               playsInline
               poster={poster}
               ref={dialogVideoRef}
               src={src}
+              width={width}
             />
             <div className="border-t border-white/10 px-4 py-3 text-[11px] text-white/55 sm:px-5">
               Sound is on by default. Use the native controls to mute or pause.

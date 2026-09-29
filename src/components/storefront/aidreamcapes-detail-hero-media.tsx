@@ -133,6 +133,8 @@ export function AidreamcapesDetailHeroMedia({
             poster={video.poster}
             src={video.src}
             videoClassName="aspect-video h-full min-h-[280px] w-full object-cover lg:min-h-full"
+            height={video.height}
+            width={video.width}
           />
         ) : (
           <AidreamcapesResponsiveImage
