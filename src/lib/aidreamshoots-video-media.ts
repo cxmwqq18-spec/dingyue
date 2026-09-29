@@ -37,7 +37,7 @@ export const AIDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES: Record<string, string> = {
 export const AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA: Record<string, AidreamshootsVideoTopicMedia> = {
   "talking-photo": {
     poster: "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo.mp4",
+    video: "/assets/sites/site_aidreamshoots/visuals/talking-photo/talking-photo.mp4?subtitlefix=20260929es1",
     alt: "Mujer mayor hablando a la cámara en un vídeo de fotografía parlante.",
     durationSeconds: 30
   },
@@ -55,7 +55,7 @@ export const AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA: Record<string, AidreamshootsVid
   },
   "tiktok-video": {
     poster: "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video.mp4",
+    video: "/assets/sites/site_aidreamshoots/visuals/tiktok-video/tiktok-video.mp4?subtitlefix=20260929es1",
     alt: "Creadora adulta preparando un vídeo corto para TikTok con cámara y accesorios coloridos.",
     durationSeconds: 30
   },
@@ -67,19 +67,19 @@ export const AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA: Record<string, AidreamshootsVid
   },
   "product-video": {
     poster: "/assets/sites/site_aidreamshoots/visuals/product-video/product-video-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/product-video/product-video.mp4",
+    video: "/assets/sites/site_aidreamshoots/visuals/product-video/product-video.mp4?subtitlefix=20260929es1",
     alt: "Producto de consumo sin marca presentado en un estudio comercial con iluminación limpia y precisa.",
     durationSeconds: 15
   },
   "product-ad-video": {
     poster: "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video.mp4",
+    video: "/assets/sites/site_aidreamshoots/visuals/product-ad-video/product-ad-video.mp4?subtitlefix=20260929es1",
     alt: "Presentadora adulta mostrando un producto sin marca en una escena centrada en una decisión de compra.",
     durationSeconds: 15
   },
   "promo-video": {
     poster: "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video-poster.jpg",
-    video: "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video.mp4",
+    video: "/assets/sites/site_aidreamshoots/visuals/promo-video/promo-video.mp4?subtitlefix=20260929es1",
     alt: "Persona adulta presentando un adelanto de lanzamiento con iluminación promocional y ambiente dinámico.",
     durationSeconds: 15
   }
@@ -90,4 +90,3 @@ export function aidreamshootsVideoTopicSlugForPath(path: string): string | undef
   const slug = match?.[1]?.toLowerCase();
   return slug && AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA[slug] ? slug : undefined;
 }
-
