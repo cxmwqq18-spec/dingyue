@@ -1154,7 +1154,19 @@ const aidreamcapesPublicAssets = {
   thanksgiving: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/thanksgiving-keepsake-table-set.webp"),
   halloween: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/halloween-party-portrait-set.webp"),
   seasonal: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/covers/seasonal-celebration-photo-set.webp"),
-  gallery: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/gallery/private-fan-scene-album-01.webp")
+  gallery: versionedAsset("/assets/sites/site_aidreamcapes/fan-holiday-theme/gallery/private-fan-scene-album-01.webp"),
+  reviewMayaAvatar: "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-maya-avatar.webp?v=20260929reviewavatars",
+  reviewOwenAvatar: "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-owen-avatar.webp?v=20260929reviewavatars",
+  reviewLenaAvatar: "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-lena-avatar.webp?v=20260929reviewavatars",
+  reviewSamAvatar: "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-sam-avatar.webp?v=20260929reviewavatars",
+  reviewNoraAvatar: "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-nora-avatar.webp?v=20260929reviewavatars",
+  reviewIanAvatar: "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-ian-avatar.webp?v=20260929reviewavatars",
+  reviewMayaResult: "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-maya-result.webp?v=20260929reviewavatars",
+  reviewOwenResult: "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-owen-result.webp?v=20260929reviewavatars",
+  reviewLenaResult: "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-lena-result.webp?v=20260929reviewavatars",
+  reviewSamResult: "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-sam-result.webp?v=20260929reviewavatars",
+  reviewNoraResult: "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-nora-result.webp?v=20260929reviewavatars",
+  reviewIanResult: "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-ian-result.webp?v=20260929reviewavatars"
 } as const;
 
 function aidreamcapesHomeHeroSection(): SectionInstance {
@@ -1357,20 +1369,20 @@ function aidreamcapesReviewSection(): SectionInstance {
     {
       anchor: "reviews",
       mode: "reviews",
-      title: "Positive words from Aidreamcapes customers.",
-      subtitle: "Customers mention the private album flow, clear occasion categories, fan-safe boundaries, and simple credit review before generation.",
+      title: "See what creators make with Aidreamcapes.",
+      subtitle: "Illustrative workflows show how a theme becomes a finished image asset. These examples use fictional people and approved source-photo scenarios.",
       summaryTitle: "Occasion albums feel easy to plan.",
       summaryBody: "Aidreamcapes helps fan communities, event planners, creators, and holiday sellers build private album ideas without handling protected marks or public-figure likenesses.",
       summaryRating: "4.8/5",
       summaryMeta: "Occasion album feedback"
     },
     [
-      block("aidream_review_maya", "testimonial", { quote: "The fan-scene album made our group photos feel planned instead of random. I liked seeing the credit cost before the request started.", name: "Maya L.", role: "Fan community admin", location: "Private fan scene", rating: "5", avatarUrl: aidreamcapesPublicAssets.fan, resultImageUrl: aidreamcapesPublicAssets.gallery }),
-      block("aidream_review_owen", "testimonial", { quote: "Game-day portraits were easy to brief. The site kept the boundaries clear, so we avoided logos and still got a strong match-day mood.", name: "Owen K.", role: "Event organizer", location: "Game day album", rating: "5", avatarUrl: aidreamcapesPublicAssets.gameDay, resultImageUrl: aidreamcapesPublicAssets.gameDay }),
-      block("aidream_review_lena", "testimonial", { quote: "I used the premiere look for creator posts. The examples helped me choose the right direction before I uploaded source photos.", name: "Lena V.", role: "Creator", location: "Premiere portraits", rating: "5", avatarUrl: aidreamcapesPublicAssets.premiere, resultImageUrl: aidreamcapesPublicAssets.premiere }),
-      block("aidream_review_sam", "testimonial", { quote: "Christmas albums came together quickly for our seasonal shop. The finished images were easy to review and download from one private space.", name: "Sam D.", role: "Holiday seller", location: "Christmas group album", rating: "5", avatarUrl: aidreamcapesPublicAssets.christmas, resultImageUrl: aidreamcapesPublicAssets.christmas }),
-      block("aidream_review_nora", "testimonial", { quote: "The Thanksgiving set had the warm mood we wanted. It felt useful for planning cards, table scenes, and private keepsakes.", name: "Nora H.", role: "Family album planner", location: "Thanksgiving set", rating: "5", avatarUrl: aidreamcapesPublicAssets.thanksgiving, resultImageUrl: aidreamcapesPublicAssets.thanksgiving }),
-      block("aidream_review_ian", "testimonial", { quote: "I appreciate that Aidreamcapes explains approved photos and protected-mark limits in plain language. It makes the creative brief much safer.", name: "Ian B.", role: "Community creator", location: "Seasonal albums", rating: "5", avatarUrl: aidreamcapesPublicAssets.seasonal, resultImageUrl: aidreamcapesPublicAssets.seasonal })
+      block("aidream_review_maya", "testimonial", { quote: "I started with the Fan Scene Album theme and turned a few approved photos into a match-day supporter image set.", name: "Maya L.", role: "Fan Scene Album", location: "Supporter image set", resultImageAlt: "Supporter image set generated from the Fan Scene Album theme", rating: "5", avatarUrl: aidreamcapesPublicAssets.reviewMayaAvatar, resultImageUrl: aidreamcapesPublicAssets.reviewMayaResult }),
+      block("aidream_review_owen", "testimonial", { quote: "The Game Day Group Portraits theme gave our event page a strong group image without booking a full studio day.", name: "Owen K.", role: "Game Day Group Portraits", location: "Event group portrait", resultImageAlt: "Event group portrait generated from the Game Day Group Portraits theme", rating: "5", avatarUrl: aidreamcapesPublicAssets.reviewOwenAvatar, resultImageUrl: aidreamcapesPublicAssets.reviewOwenResult }),
+      block("aidream_review_lena", "testimonial", { quote: "I used Premiere Flash Portraits to generate a polished profile asset for my creator page.", name: "Lena V.", role: "Premiere Flash Portraits", location: "Creator profile asset", resultImageAlt: "Creator profile asset generated from the Premiere Flash Portraits theme", rating: "5", avatarUrl: aidreamcapesPublicAssets.reviewLenaAvatar, resultImageUrl: aidreamcapesPublicAssets.reviewLenaResult }),
+      block("aidream_review_sam", "testimonial", { quote: "Christmas Group Album turned ordinary phone photos into a card-ready holiday image.", name: "Sam D.", role: "Christmas Group Album", location: "Holiday card image", resultImageAlt: "Holiday card image generated from the Christmas Group Album theme", rating: "5", avatarUrl: aidreamcapesPublicAssets.reviewSamAvatar, resultImageUrl: aidreamcapesPublicAssets.reviewSamResult }),
+      block("aidream_review_nora", "testimonial", { quote: "The Thanksgiving Keepsake theme gave our family album a warm table-scene image with one clear visual direction.", name: "Nora H.", role: "Thanksgiving Keepsake", location: "Family keepsake scene", resultImageAlt: "Family keepsake scene generated from the Thanksgiving Keepsake theme", rating: "5", avatarUrl: aidreamcapesPublicAssets.reviewNoraAvatar, resultImageUrl: aidreamcapesPublicAssets.reviewNoraResult }),
+      block("aidream_review_ian", "testimonial", { quote: "Seasonal Celebration helped me generate a ready-to-share product-style visual set for our shop.", name: "Ian B.", role: "Seasonal Celebration", location: "Shop-ready visual set", resultImageAlt: "Shop-ready visual set generated from the Seasonal Celebration theme", rating: "5", avatarUrl: aidreamcapesPublicAssets.reviewIanAvatar, resultImageUrl: aidreamcapesPublicAssets.reviewIanResult })
     ]
   );
 }

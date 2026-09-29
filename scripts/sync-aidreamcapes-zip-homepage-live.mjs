@@ -10,6 +10,7 @@ import { argumentValue, assertDatabaseTarget, hasArgument } from "./lib/database
 const SITE_ID = "site_aidreamcapes";
 const HOME_SLUG = "/";
 const ASSET_ROOT = "/assets/sites/site_aidreamcapes/homepage-seo/";
+const VIDEO_ROOT = "/assets/sites/site_aidreamcapes/ugc-video-themes/";
 const EXPECTED_SECTION_IDS = [
   "aidreamcapes_hero",
   "aidreamcapes_video_grid",
@@ -47,6 +48,12 @@ function validateHomepage(contentJson) {
   assert(serialized.includes(ASSET_ROOT), "homepage does not reference the Aidreamcapes ZIP asset root");
   assert.equal(contentJson.mediaManifest?.length, 22, "homepage media manifest must contain the 22 ZIP assets");
   for (const item of contentJson.mediaManifest) assert(String(item.src).startsWith(ASSET_ROOT), `asset escaped Aidreamcapes root: ${item.src}`);
+  const heroVideo = contentJson.sections.aidreamcapes_hero.settings?.outputVideoUrl;
+  assert(String(heroVideo).startsWith(VIDEO_ROOT), "homepage hero video asset is missing");
+  for (const block of contentJson.sections.aidreamcapes_video_grid.blocks ?? []) {
+    assert(String(block.settings?.videoUrl).startsWith(VIDEO_ROOT), `homepage video card asset is missing: ${block.id}`);
+    assert(block.settings?.videoPosterUrl, `homepage video card poster is missing: ${block.id}`);
+  }
 }
 
 const prisma = new PrismaClient();

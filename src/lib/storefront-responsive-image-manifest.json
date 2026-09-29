@@ -140763,5 +140763,197 @@
         "webp": "/assets/sites/site_aidreamcapes_eu/generated/recovered/aidreamcapes-eu-image-pack-4k-20260916-v1/wedding-photo/_responsive/gallery-12-53809bb00af1-occasion-8a05728e0c--1600.webp"
       }
     ]
+  },
+  "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-maya-avatar.webp": {
+    "site": "aidreamcapes-com",
+    "width": 1254,
+    "height": 1254,
+    "format": "webp",
+    "bytes": 142670,
+    "sha256": "6f48ded0ad498a75750646f73b7d7223789df425384fffb0a09ffcec3840f940",
+    "original": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-maya-avatar.webp",
+    "variants": [
+      {
+        "width": 640,
+        "avif": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/_responsive/review-maya-avatar--640.avif",
+        "webp": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/_responsive/review-maya-avatar--640.webp"
+      }
+    ]
+  },
+  "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-owen-avatar.webp": {
+    "site": "aidreamcapes-com",
+    "width": 1254,
+    "height": 1254,
+    "format": "webp",
+    "bytes": 150790,
+    "sha256": "77eecaf64cfa3c2459c6e310c3202a49adec2757d34a7a45262b85058688c418",
+    "original": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-owen-avatar.webp",
+    "variants": [
+      {
+        "width": 640,
+        "avif": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/_responsive/review-owen-avatar--640.avif",
+        "webp": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/_responsive/review-owen-avatar--640.webp"
+      }
+    ]
+  },
+  "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-lena-avatar.webp": {
+    "site": "aidreamcapes-com",
+    "width": 1254,
+    "height": 1254,
+    "format": "webp",
+    "bytes": 101812,
+    "sha256": "061e6dd8ff080bab4857e6a94f770a800409cfb7b0bb8db6be81d468b136248c",
+    "original": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-lena-avatar.webp",
+    "variants": [
+      {
+        "width": 640,
+        "avif": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/_responsive/review-lena-avatar--640.avif",
+        "webp": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/_responsive/review-lena-avatar--640.webp"
+      }
+    ]
+  },
+  "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-sam-avatar.webp": {
+    "site": "aidreamcapes-com",
+    "width": 1254,
+    "height": 1254,
+    "format": "webp",
+    "bytes": 138430,
+    "sha256": "fb69149e4451e3b5c5464a9b4012390bd2be304edc4830d24b7541cfda43fac7",
+    "original": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-sam-avatar.webp",
+    "variants": [
+      {
+        "width": 640,
+        "avif": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/_responsive/review-sam-avatar--640.avif",
+        "webp": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/_responsive/review-sam-avatar--640.webp"
+      }
+    ]
+  },
+  "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-nora-avatar.webp": {
+    "site": "aidreamcapes-com",
+    "width": 1254,
+    "height": 1254,
+    "format": "webp",
+    "bytes": 161894,
+    "sha256": "c0108db94532eee27deb5e7cbdbfc1bfc58b05a9c83fb821538f9b106e60c9c1",
+    "original": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-nora-avatar.webp",
+    "variants": [
+      {
+        "width": 640,
+        "avif": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/_responsive/review-nora-avatar--640.avif",
+        "webp": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/_responsive/review-nora-avatar--640.webp"
+      }
+    ]
+  },
+  "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-ian-avatar.webp": {
+    "site": "aidreamcapes-com",
+    "width": 1254,
+    "height": 1254,
+    "format": "webp",
+    "bytes": 140440,
+    "sha256": "8f1805f5433df58e1006c3091d1fae585fb60aaba51cf4835da96b615afed9a2",
+    "original": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/review-ian-avatar.webp",
+    "variants": [
+      {
+        "width": 640,
+        "avif": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/_responsive/review-ian-avatar--640.avif",
+        "webp": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/_responsive/review-ian-avatar--640.webp"
+      }
+    ]
+  },
+  "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-maya-result.webp": {
+    "site": "aidreamcapes-com",
+    "width": 1280,
+    "height": 960,
+    "format": "webp",
+    "bytes": 101412,
+    "sha256": "12acd4efd98eefd65ff1414b9180ceb8ead3cd6cbb7d28b313bba926fb76abb5",
+    "original": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-maya-result.webp",
+    "variants": [
+      {
+        "width": 640,
+        "avif": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/_responsive/review-maya-result--640.avif",
+        "webp": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/_responsive/review-maya-result--640.webp"
+      }
+    ]
+  },
+  "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-owen-result.webp": {
+    "site": "aidreamcapes-com",
+    "width": 1280,
+    "height": 960,
+    "format": "webp",
+    "bytes": 291292,
+    "sha256": "cc380140dc5d927e6084ca7c0176855858422f1af02ac7f1b756d42a6bf16378",
+    "original": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-owen-result.webp",
+    "variants": [
+      {
+        "width": 640,
+        "avif": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/_responsive/review-owen-result--640.avif",
+        "webp": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/_responsive/review-owen-result--640.webp"
+      }
+    ]
+  },
+  "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-lena-result.webp": {
+    "site": "aidreamcapes-com",
+    "width": 1280,
+    "height": 960,
+    "format": "webp",
+    "bytes": 138480,
+    "sha256": "701e07599c049c065f9c30ad313d183ec6b2f663b691320d1118ff1f2dfa09b2",
+    "original": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-lena-result.webp",
+    "variants": [
+      {
+        "width": 640,
+        "avif": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/_responsive/review-lena-result--640.avif",
+        "webp": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/_responsive/review-lena-result--640.webp"
+      }
+    ]
+  },
+  "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-sam-result.webp": {
+    "site": "aidreamcapes-com",
+    "width": 1280,
+    "height": 960,
+    "format": "webp",
+    "bytes": 267902,
+    "sha256": "eb431203604982ae1d0b18c489b8c36653e1c1dab8b163c22bd02111b68c45a5",
+    "original": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-sam-result.webp",
+    "variants": [
+      {
+        "width": 640,
+        "avif": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/_responsive/review-sam-result--640.avif",
+        "webp": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/_responsive/review-sam-result--640.webp"
+      }
+    ]
+  },
+  "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-nora-result.webp": {
+    "site": "aidreamcapes-com",
+    "width": 1280,
+    "height": 960,
+    "format": "webp",
+    "bytes": 260802,
+    "sha256": "423b4f24e9d501306371c79e4ca439b126b983c74abebd21bab77bee4bb1e06c",
+    "original": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-nora-result.webp",
+    "variants": [
+      {
+        "width": 640,
+        "avif": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/_responsive/review-nora-result--640.avif",
+        "webp": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/_responsive/review-nora-result--640.webp"
+      }
+    ]
+  },
+  "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-ian-result.webp": {
+    "site": "aidreamcapes-com",
+    "width": 1280,
+    "height": 960,
+    "format": "webp",
+    "bytes": 176976,
+    "sha256": "64aab9ddd453632aa9ded691eaab29950cdbbf815ddda3010a54bed1ea75d392",
+    "original": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/review-ian-result.webp",
+    "variants": [
+      {
+        "width": 640,
+        "avif": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/_responsive/review-ian-result--640.avif",
+        "webp": "/assets/sites/site_aidreamcapes/generated/public-media/reviews/20260929/results/_responsive/review-ian-result--640.webp"
+      }
+    ]
   }
 }

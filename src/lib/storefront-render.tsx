@@ -45,6 +45,7 @@ import { assertLiveDraftPage, createPublishedSiteSnapshot, isAidreamcapesSite as
 import type { StorefrontContext } from "@/lib/storefront-context/types";
 import { themeStyleVars } from "@/lib/theme";
 import { canonicalSiteSlug, publicSiteSlug } from "@/lib/domain-routing";
+import { aidreamcapesZipFooterGroups, aidreamcapesZipMarketingCollection } from "@/lib/aidreamcapes-navigation";
 import { publicContentPageSlug } from "@/lib/site-route-canonical";
 import { dreamshootToolDetailFaqBlocks, dreamshootToolDetailFaqSectionSettings } from "@/lib/dreamshoot-tool-faq";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
@@ -2988,7 +2989,17 @@ function renderThemePage({
     navigation: {
       headerLinks: settings.navigation.headerLinks.filter((link) => navigationLinkIsPublished(link.href)),
       footerLinks: settings.navigation.footerLinks.filter((link) => navigationLinkIsPublished(link.href))
-    }
+    },
+    aidreamcapesZipNavigation: currentSite.id === "site_aidreamcapes" && settings.aidreamcapesZipNavigation
+      ? {
+          ...settings.aidreamcapesZipNavigation,
+          marketing: {
+            ...settings.aidreamcapesZipNavigation.marketing,
+            collection: aidreamcapesZipMarketingCollection
+          },
+          footerGroups: aidreamcapesZipFooterGroups
+        }
+      : settings.aidreamcapesZipNavigation
   };
   const isEuropeanVideoStorefront = currentSite.id === "site_aidreamcapes_xby" || currentSite.id === "site_mydreamshoots_xby";
   const videoDirectoryLink = {

@@ -74,7 +74,7 @@ try {
   assert.equal(groups.length, 4, "ZIP video directory must contain four top-level groups");
   assert.equal(items.length, 35, "ZIP video directory must contain 35 public themes");
   assert.equal(content?.contentContract?.expectedThemeCount, items.length, "theme count contract");
-  assert.equal(copy.seo.canonical, "https://www.aidreamcapes.com/ai-video-generation", "canonical source");
+  assert.equal(copy.seo.canonical, "https://aidreamcapes.com/ai-video-generation", "canonical source");
 
   const ogImagePath = path.resolve("public", copy.seo.ogImage.slice(1));
   await fs.access(ogImagePath);
@@ -83,6 +83,9 @@ try {
   assert.equal(response.status, 200, "directory SSR response");
   const html = await response.text();
   const renderedHtml = visibleHtml(html);
+  const directoryStart = renderedHtml.indexOf('data-aidreamcapes-video-directory="true"');
+  const footerStart = renderedHtml.indexOf("<footer", directoryStart);
+  const directoryHtml = renderedHtml.slice(directoryStart, footerStart > directoryStart ? footerStart : undefined);
 
   assert(html.includes(`<title>${htmlAttribute(copy.seo.title)}</title>`), "SQL title missing from head");
   assert(html.includes(`<link rel="canonical" href="${htmlAttribute(copy.seo.canonical)}"`), "SQL canonical missing from head");
@@ -98,10 +101,10 @@ try {
       assert(renderedHtml.includes(`href="/site/aidreamcapes${item.href}"`), `${item.label}: scoped route missing`);
     }
   }
-  assert(!renderedHtml.includes('href="#"'), "visible directory contains href hash");
-  assert(!/<a[^>]+href=["']https?:\/\//i.test(renderedHtml), "visible directory contains cross-site external link");
-  assert(!/mydreamshoots\.(com|eu)|mydreamshoots\.xyz/i.test(renderedHtml), "visible directory leaks another storefront");
-  assert(!/[\u4e00-\u9fff]/.test(renderedHtml), "visible directory contains Chinese customer copy");
+  assert(!directoryHtml.includes('href="#"'), "visible directory contains href hash");
+  assert(!/<a[^>]+href=["']https?:\/\//i.test(directoryHtml), "visible directory contains cross-site external link");
+  assert(!/mydreamshoots\.(com|eu)|mydreamshoots\.xyz/i.test(directoryHtml), "visible directory leaks another storefront");
+  assert(!/[\u4e00-\u9fff]/.test(directoryHtml), "visible directory contains Chinese customer copy");
   assert(html.includes('lang="en"'), "document language must remain English");
 
   const nodes = graphNodes(html);

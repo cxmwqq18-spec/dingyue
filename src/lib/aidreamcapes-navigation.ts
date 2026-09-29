@@ -157,14 +157,14 @@ export const aidreamcapesZipScenarioGroups: AidreamcapesNavGroup[] = [
 
 export const aidreamcapesZipVideoCollection: AidreamcapesNavItem = { label: "View all video →", href: "/ai-video-generation" };
 export const aidreamcapesZipImageCollection: AidreamcapesNavItem = { label: "View all photo →", href: "/ai-image-generation" };
-export const aidreamcapesZipMarketingCollection: AidreamcapesNavItem = { label: "Open Marketing Hub →", href: "/ai-video-generation/ugc-ad-video" };
+export const aidreamcapesZipMarketingCollection: AidreamcapesNavItem = { label: "Open Marketing Hub →", href: "/marketing" };
 export const aidreamcapesZipScenarioCollection: AidreamcapesNavItem = { label: "View all scenarios →", href: "/ai-save-the-date/save-the-date" };
 
 export const aidreamcapesZipFooterGroups: AidreamcapesNavGroup[] = [
   { label: "Product", items: [
     { label: "AI Video", href: "/ai-video-generation" },
     { label: "AI Image", href: "/ai-image-generation" },
-    { label: "Marketing Hub", href: "/ai-video-generation/ugc-ad-video" },
+    { label: "Marketing Hub", href: "/marketing" },
     { label: "Pricing", href: "/pricing" }
   ] },
   { label: "Resources", items: [

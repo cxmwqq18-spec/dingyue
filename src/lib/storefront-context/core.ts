@@ -280,7 +280,7 @@ export function resolveStorefrontContext(
   const pageCopySlug = seo.canonicalPath.match(/^\/ai-image-generation\/([^/?#]+)$/)?.[1];
   const videoTopicSlug = seo.canonicalPath.match(/^\/ai-video-generation\/([^/?#]+)$/)?.[1];
   const standardPageEntityPath = primaryMydreamshoots && MYDREAMSHOOTS_STANDARD_SEO_PATHS.has(seo.canonicalPath) ? seo.canonicalPath : undefined;
-  const pageEntity = (pageCopySlug || videoTopicSlug || standardPageEntityPath) && mode === "published" && bundle.publishedPageEntities
+  const pageEntity = primaryMydreamshoots && (pageCopySlug || videoTopicSlug || standardPageEntityPath) && mode === "published" && bundle.publishedPageEntities
     ? bundle.publishedPageEntities[seo.canonicalPath]
     : undefined;
   const pageCopy = pageCopySlug && mode === "published" && primaryMydreamshoots

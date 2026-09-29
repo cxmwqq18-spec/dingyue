@@ -87,6 +87,49 @@ function pathForAsset(assetPath) {
 }
 for (const file of zipImages) if (!fs.existsSync(file)) throw new Error(`Missing ZIP homepage asset: ${file}`);
 
+const videoSettingKeys = [
+  "videoUrl",
+  "videoPosterUrl",
+  "videoAlt",
+  "outputVideoUrl",
+  "outputVideoPosterUrl",
+  "outputVideoAlt"
+];
+
+function hasVideoSettings(value) {
+  return videoSettingKeys.some((key) => typeof value?.settings?.[key] === "string" && value.settings[key].trim());
+}
+
+function preserveVideoSettings(nextPage, ...sourceDocuments) {
+  for (const sectionId of ["aidreamcapes_hero", "aidreamcapes_video_grid"]) {
+    const targetSection = nextPage.sections?.[sectionId];
+    if (!targetSection) continue;
+    const sourceSections = sourceDocuments.map((document) => document?.sections?.[sectionId]).filter(Boolean);
+    const sourceSection = sourceSections.find(hasVideoSettings);
+    if (sourceSection) {
+      targetSection.settings = { ...targetSection.settings };
+      for (const key of videoSettingKeys) {
+        if (typeof sourceSection.settings?.[key] === "string" && sourceSection.settings[key].trim()) {
+          targetSection.settings[key] = sourceSection.settings[key];
+        }
+      }
+    }
+    for (const targetBlock of targetSection.blocks ?? []) {
+      const sourceBlock = sourceSections
+        .flatMap((section) => section.blocks ?? [])
+        .find((block) => block.id === targetBlock.id && hasVideoSettings(block));
+      if (!sourceBlock) continue;
+      targetBlock.settings = { ...targetBlock.settings };
+      for (const key of videoSettingKeys) {
+        if (typeof sourceBlock.settings?.[key] === "string" && sourceBlock.settings[key].trim()) {
+          targetBlock.settings[key] = sourceBlock.settings[key];
+        }
+      }
+    }
+  }
+  return nextPage;
+}
+
 function homepageJson(existing) {
   const hero = image("product", "hero");
   const output = image("productOutput", "hero");
@@ -198,13 +241,21 @@ function replaceLegacyHomepageImages(value) {
 
 const prisma = new PrismaClient();
 try {
-  const site = await prisma.site.findUnique({ where: { id: siteId }, include: { settings: true, pages: true } });
+  const [site, liveHomepage] = await Promise.all([
+    prisma.site.findUnique({ where: { id: siteId }, include: { settings: true, pages: true } }),
+    prisma.livePage.findUnique({ where: { siteId_slug: { siteId, slug: "/" } }, select: { contentJson: true } })
+  ]);
   if (!site) throw new Error(`Site not found: ${siteId}`);
   const page = site.pages.find((item) => item.slug === "/");
   if (!page) throw new Error("Aidreamcapes homepage page record was not found");
   const current = page.draftJson || page.publishedJson || {};
   homepageImageCursor = 0;
-  const nextPage = replaceLegacyHomepageImages(homepageJson(current));
+  const nextPage = preserveVideoSettings(
+    replaceLegacyHomepageImages(homepageJson(current)),
+    liveHomepage?.contentJson,
+    page.draftJson,
+    page.publishedJson
+  );
   const nextPageSerialized = JSON.stringify(nextPage);
   assert.equal(/\/assets\/sites\/site_aidreamcapes\/(?:fan-holiday-theme|creative-packs|homepage-showcase\/images)\/.*\.(?:avif|gif|jpe?g|png|webp)/i.test(nextPageSerialized), false, "homepage still contains a legacy image asset");
   const currentSettings = site.settings?.draftJson || site.settings?.publishedJson || {};

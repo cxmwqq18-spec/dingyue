@@ -6,7 +6,7 @@ const storefrontBaseUrl = (process.env.STOREFRONT_FOOTER_BASE_URL || (expectedPr
   ? "http://127.0.0.1:3002/site/aidreamcapes"
   : "http://127.0.0.1:3002/site/mydreamshoots")).replace(/\/$/, "");
 const routePaths = (process.env.STOREFRONT_FOOTER_PATHS || (expectedProfile === "aidreamcapes"
-  ? "/workflow,/prompt-guide,/refunds,/digital-delivery,/content,/cookies"
+  ? "/workflow,/marketing,/ai-video-generation/ugc-ad-video,/refunds,/digital-delivery,/content,/cookies"
   : "/,/pricing,/about-us,/contact-us,/workflow,/best-packages,/ai-video-generation,/ai-image-generation/unblur-image,/blog"))
   .split(",")
   .map((value) => value.trim())
@@ -41,10 +41,9 @@ const expectedSocialLinks = [
 const aidreamcapesExpectedLinks = [
   ["AI Video", "/ai-video-generation"],
   ["AI Image", "/ai-image-generation"],
-  ["Marketing Hub", "/ai-video-generation/ugc-ad-video"],
+  ["Marketing Hub", "/marketing"],
   ["Pricing", "/pricing"],
   ["Workflow", "/workflow"],
-  ["Prompt Guide", "/prompt-guide"],
   ["Affiliate Program", "/creators-circle"],
   ["Blog", "/blog"],
   ["About Us", "/about-us"],
@@ -56,7 +55,7 @@ const aidreamcapesExpectedLinks = [
   ["Terms of Service", "/terms"],
   ["Cookie Policy", "/cookies"]
 ];
-const aidreamcapesExpectedGroups = ["Product", "Resources", "Company", "Support"];
+const aidreamcapesExpectedGroups = ["Product", "Resources & Company", "Support"];
 
 function pageUrl(routePath) {
   return routePath === "/" ? storefrontBaseUrl : `${storefrontBaseUrl}${routePath}`;
@@ -105,9 +104,17 @@ async function readFooter(routePath) {
     for (const heading of aidreamcapesExpectedGroups) {
       assert(headings.includes(heading), `${url} is missing the ${heading} footer group`);
     }
-    const companySection = footer.match(/<section\b[\s\S]*?<h2\b[^>]*>Company<\/h2>[\s\S]*?<\/section>/i)?.[0] ?? "";
-    assert(companySection, `${url} is missing the Company footer section`);
-    assert(!/Privacy Policy|Terms of Service/i.test(companySection), `${url} must keep policy links out of Company`);
+    const mergedSection = footer.match(/<section\b[\s\S]*?<h2\b[^>]*>Resources &amp; Company<\/h2>[\s\S]*?<\/section>/i)?.[0] ?? "";
+    assert(mergedSection, `${url} is missing the merged Resources & Company footer section`);
+    assert(!/Prompt Guide/i.test(footer), `${url} must not expose Prompt Guide in the footer`);
+    for (const paymentKey of ["visa", "mastercard", "us-debit", "paypal", "apple-pay", "google-pay"]) {
+      assert(footer.includes(`data-payment-method="${paymentKey}"`), `${url} is missing the ${paymentKey} payment method`);
+    }
+    const expectedOrder = aidreamcapesExpectedLinks.map(([label]) => label);
+    const actualOrder = links
+      .filter((link) => expectedOrder.includes(link.label))
+      .map((link) => link.label);
+    assert.deepEqual(actualOrder, expectedOrder, `${url} has an unexpected Aidreamcapes footer menu order`);
     const supportSection = footer.match(/<section\b[\s\S]*?<h2\b[^>]*>Support<\/h2>[\s\S]*?<\/section>/i)?.[0] ?? "";
     assert(supportSection, `${url} is missing the Support footer section`);
   }

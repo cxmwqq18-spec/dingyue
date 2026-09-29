@@ -2163,7 +2163,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
     taxId: footer ? setting(footer, "taxId") : "",
   };
   const zipPaymentMethodsValue = footer?.settings.paymentMethods ?? footer?.settings.acceptedPaymentMethods;
-  const zipPaymentMethods: AidreamcapesZipPaymentMethod[] = Array.isArray(zipPaymentMethodsValue)
+  const configuredZipPaymentMethods: AidreamcapesZipPaymentMethod[] = Array.isArray(zipPaymentMethodsValue)
     ? zipPaymentMethodsValue.flatMap((item, index) => {
         if (typeof item === "string" && item.trim()) return [{ key: `payment-${index}`, label: item.trim() }];
         if (!item || typeof item !== "object" || Array.isArray(item)) return [];
@@ -2173,6 +2173,18 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
         return key && label ? [{ key, label }] : [];
       })
     : [];
+  const zipPaymentMethods: AidreamcapesZipPaymentMethod[] = configuredZipPaymentMethods.length > 0
+    ? configuredZipPaymentMethods
+    : isAidreamcapesComFooter
+      ? [
+          { key: "visa", label: "Visa" },
+          { key: "mastercard", label: "Mastercard" },
+          { key: "us-debit", label: "US debit" },
+          { key: "paypal", label: "PayPal" },
+          { key: "apple-pay", label: "Apple Pay" },
+          { key: "google-pay", label: "Google Pay" },
+        ]
+      : [];
   const zipShowPaymentIconsValue = footer?.settings.showPaymentIcons;
   const zipShowPaymentIcons = zipPaymentMethods.length > 0 && zipShowPaymentIconsValue !== false && zipShowPaymentIconsValue !== "false";
   if (isAidreamcapesComFooter && !lightweight) {
@@ -15720,7 +15732,9 @@ function SectionView({
     const aidreamshootsXby = site.id === "site_mydreamshoots_xby";
     const mydreamProfileSite = isMyDreamShootsProfileSite(site);
     const canonicalGeneratorCopy = !isSpanishXbySite(site) && (mydreamProfileSite || aidreamcapes);
-    const imageTitle = canonicalGeneratorCopy
+    const imageTitle = aidreamcapesCom && renderContext.pagePath === "/"
+      ? "AI UGC Ads, Product Videos & Ecommerce Photos"
+      : canonicalGeneratorCopy
       ? mydreamProfileSite
         ? mydreamshootsHomepageCopy.photoTitle
         : frenchXby
@@ -16124,21 +16138,24 @@ function SectionView({
         </div>
       </div>
     );
-    const renderShowcaseSubsectionHeader = (title: string, href: string, label: string, kind: "photo" | "video" | "save_the_date") => (
+    const renderShowcaseSubsectionHeader = (title: string, href: string, label: string, kind: "photo" | "video" | "save_the_date") => {
+      const HeadingTag = aidreamcapesCom && renderContext.pagePath === "/" && kind === "photo" ? "h1" : "h2";
+      return (
       <div className="relative flex flex-col items-center gap-3 text-center md:block" data-dreamshoot-showcase-heading={kind}>
-        <h2 className="text-2xl font-semibold tracking-normal md:text-3xl [font-family:var(--site-title-font)]">
+        <HeadingTag className="text-2xl font-semibold tracking-normal md:text-3xl [font-family:var(--site-title-font)]">
           <Link className="inline-flex max-w-full flex-col items-stretch transition hover:text-white/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80" href={hrefFor(site, href)}>
             <DreamshootUnderlinedTitle gradient={accent} underlineClassName="mt-2">
               {title}
             </DreamshootUnderlinedTitle>
           </Link>
-        </h2>
+        </HeadingTag>
         <Link className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:text-white/76 md:absolute md:right-0 md:top-1" href={hrefFor(site, href)}>
           {label}
           <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
         </Link>
       </div>
-    );
+      );
+    };
 
     const publishedHomepageItems = homepageShowcasesWithCanonicalEuVideo
       .filter((item) => item.status === "published" && item.indexable && item.sitemapEligible)

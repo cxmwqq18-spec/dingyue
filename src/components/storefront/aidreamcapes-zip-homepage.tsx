@@ -573,8 +573,8 @@ function AdTesting({
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-6">
-            <div className="glass-card flex-1 rounded-2xl border border-white/10 p-6">
+          <div className="grid gap-6 md:grid-cols-2" data-ad-testing-features>
+            <div className="glass-card min-w-0 rounded-2xl border border-white/10 p-6">
               <h3 className="mb-2 text-lg font-semibold text-white">
                 {hookCard ? blockValue(hookCard, "title") : null}
               </h3>
@@ -582,12 +582,12 @@ function AdTesting({
                 {hookCard ? blockValue(hookCard, "description") : null}
               </p>
               {hookCard ? <BlockMedia
-                className="h-36 w-full rounded-xl border border-white/10 object-cover"
+                className="aspect-[4/3] h-auto w-full rounded-xl border border-white/10 object-cover"
                 resolveAsset={resolveAsset}
                 source={hookCard}
               /> : null}
             </div>
-            <div className="glass-card flex-1 rounded-2xl border border-white/10 p-6">
+            <div className="glass-card min-w-0 rounded-2xl border border-white/10 p-6">
               <h3 className="mb-2 text-lg font-semibold text-white">
                 {actorCard ? blockValue(actorCard, "title") : null}
               </h3>
@@ -595,7 +595,7 @@ function AdTesting({
                 {actorCard ? blockValue(actorCard, "description") : null}
               </p>
               {actorCard ? <BlockMedia
-                className="mb-4 h-40 w-full rounded-xl border border-white/10 object-cover"
+                className="mb-4 aspect-[4/3] h-auto w-full rounded-xl border border-white/10 object-cover"
                 resolveAsset={resolveAsset}
                 source={actorCard}
               /> : null}
@@ -677,6 +677,7 @@ function ScenarioGrid({ id, resolveHref, section, site }: AidreamcapesZipHomepag
   const scenarioCards = blocks(section)
     .filter((block) => block.type === "scenario_card")
     .filter((block) => !isAidreamcapesCom || !isRetiredAidreamcapesPublicPath("aidreamcapes", blockValue(block, "href")));
+  if (scenarioCards.length === 0) return null;
   return (
     <section
       className="border-t border-white/5 bg-[#050505] px-6 py-24 text-white"

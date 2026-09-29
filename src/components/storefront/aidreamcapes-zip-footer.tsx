@@ -101,8 +101,8 @@ function footerNavigationColumns(groups: AidreamcapesZipNavigationGroup[]) {
 function FooterNavigationGroup({ group, heading }: { group: AidreamcapesZipNavigationGroup; heading?: string }) {
   return (
     <section>
-      <h2 className="text-sm font-semibold text-white">{heading ?? group.label}</h2>
-      <ul className="mt-4 grid gap-2.5 text-sm text-white/55">
+      <h2 className="text-[13px] font-semibold text-white">{heading ?? group.label}</h2>
+      <ul className="mt-3 grid gap-2 text-[13px] leading-5 text-white/55">
         {group.items.map((item, itemIndex) => (
           <li key={`${group.label}-${item.label}-${item.href}-${itemIndex}`}>
             <a className="transition-colors hover:text-white" href={item.href}>
@@ -154,24 +154,24 @@ export function AidreamcapesZipFooter({
 
   return (
     <footer
-      className="aidreamcapes-zip-footer mt-8 bg-[#050505] px-5 py-10 text-white sm:px-8 lg:py-12"
+      className="aidreamcapes-zip-footer mt-8 bg-[#050505] px-5 py-8 text-white sm:px-8 lg:py-10"
       data-shell="shared"
     >
       <div className="mx-auto max-w-[1400px]">
-        <div className="grid gap-10 lg:grid-cols-[1.35fr_0.72fr_0.95fr_0.72fr_0.82fr] lg:gap-8">
+        <div className="grid gap-8 lg:grid-cols-[1.28fr_0.72fr_0.95fr_0.72fr_0.9fr] lg:gap-7">
           <section className="min-w-0">
             <a
-              className="inline-flex text-3xl font-bold tracking-[-0.04em] text-white transition-colors hover:text-white/80"
+              className="inline-flex text-2xl font-bold tracking-[-0.04em] text-white transition-colors hover:text-white/80"
               href={resolveHref(homeHref)}
             >
               {title}
             </a>
-            {tagline ? <p className="mt-3 max-w-sm text-sm leading-6 text-white/55">{tagline}</p> : null}
+            {tagline ? <p className="mt-2 max-w-sm text-[13px] leading-5 text-white/55">{tagline}</p> : null}
 
             {companyFields.length ? (
-              <address className="mt-6 not-italic">
+              <address className="mt-4 not-italic">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">Company details</p>
-                <dl className="mt-4 grid gap-2 text-sm">
+                <dl className="mt-3 grid gap-1.5 text-[13px]">
                   {company?.legalName ? <div className="flex items-baseline gap-x-3"><dt className="w-16 shrink-0 text-xs text-white/40">Company</dt><dd className="font-medium text-white/85">{company.legalName}</dd></div> : null}
                   {company?.website && websiteHref ? <div className="flex items-baseline gap-x-3"><dt className="w-16 shrink-0 text-xs text-white/40">Website</dt><dd><a className="text-white/70 transition-colors hover:text-white" href={websiteHref} rel="noreferrer">{company.website}</a></dd></div> : null}
                   {company?.address ? <div className="flex items-start gap-x-3"><dt className="w-16 shrink-0 pt-0.5 text-xs text-white/40">Address</dt><dd className="min-w-0 max-w-xs flex-1 leading-5 text-white/70">{company.address}</dd></div> : null}
@@ -204,19 +204,19 @@ export function AidreamcapesZipFooter({
           <section className="flex flex-col">
             <div className="max-w-[250px]">
               {socialHeading ? <h2 className="text-sm font-semibold text-white">{socialHeading}</h2> : null}
-              {socialBody ? <p className="mt-3 text-sm leading-6 text-white/55">{socialBody}</p> : null}
+              {socialBody ? <p className="mt-2 text-[13px] leading-5 text-white/55">{socialBody}</p> : null}
             </div>
-            <div aria-label="Social links" className="mt-5 flex flex-wrap items-center gap-2">
+            <div aria-label="Social links" className="mt-4 flex flex-wrap items-center gap-2">
               {visibleSocialLinks.map((link) => {
                 const content = <SocialGlyph platform={link.key} />;
-                return <a aria-label={`${link.label} for Aidreamcapes`} className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.035] text-white/70 transition hover:border-white/25 hover:bg-white/[0.09] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80" href={link.href} key={link.key} rel="nofollow noopener noreferrer" target="_blank" title={link.label}>{content}</a>;
+                return <a aria-label={`${link.label} for Aidreamcapes`} className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.035] text-white/70 transition hover:border-white/25 hover:bg-white/[0.09] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80" data-social-platform={link.key} href={link.href} key={link.key} rel="nofollow noopener noreferrer" target="_blank" title={link.label}>{content}</a>;
               })}
             </div>
           </section>
 
         </div>
 
-        <div className="mt-7 text-sm text-white/45">
+        <div className="mt-5 text-[13px] text-white/45">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
               {copyright ? <p className="shrink-0">{copyright}</p> : null}
@@ -231,14 +231,21 @@ export function AidreamcapesZipFooter({
                 <span
                   aria-label={method.label}
                   className="inline-flex h-7 min-w-12 items-center justify-center rounded-[4px] border border-white/10 bg-white px-2.5 text-[10px] font-bold tracking-[0.01em] text-[#111318] shadow-[0_8px_22px_-18px_rgba(255,255,255,0.7)]"
+                  data-payment-method={method.key}
                   key={method.key}
                   title={method.label}
                 >
-                  {method.key === "mastercard" ? (
+                  {method.key === "visa" ? (
+                    <span className="italic tracking-[-0.06em]">VISA</span>
+                  ) : method.key === "mastercard" ? (
                     <span aria-hidden="true" className="relative inline-flex h-4 w-7 items-center justify-center">
                       <span className="absolute left-0 h-4 w-4 rounded-full bg-[#eb001b]" />
                       <span className="absolute right-0 h-4 w-4 rounded-full bg-[#f79e1b] mix-blend-multiply" />
                     </span>
+                  ) : method.key === "us-debit" ? (
+                    <span className="whitespace-nowrap text-[9px]">US DEBIT</span>
+                  ) : method.key === "paypal" ? (
+                    <span className="whitespace-nowrap">PayPal</span>
                   ) : method.key === "apple-pay" ? (
                     <span className="whitespace-nowrap normal-case">Apple Pay</span>
                   ) : method.key === "google-pay" ? (

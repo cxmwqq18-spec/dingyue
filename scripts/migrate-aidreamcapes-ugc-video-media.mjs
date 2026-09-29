@@ -255,10 +255,16 @@ assert.equal(new Set(manifest.map((item) => item.slug)).size, manifest.length, "
 const prisma = new PrismaClient();
 try {
   const requestedRoutes = ["/", ...manifest.map((item) => item.route), ...imageThemeRoutes];
-  const pages = await prisma.livePage.findMany({
-    where: { siteId: SITE_ID, slug: { in: requestedRoutes } },
-    select: { id: true, slug: true, title: true, contentJson: true, updatedAt: true }
-  });
+  const [pages, themePage] = await Promise.all([
+    prisma.livePage.findMany({
+      where: { siteId: SITE_ID, slug: { in: requestedRoutes } },
+      select: { id: true, slug: true, title: true, contentJson: true, updatedAt: true }
+    }),
+    prisma.themePage.findUnique({
+      where: { siteId_slug: { siteId: SITE_ID, slug: "/" } },
+      select: { id: true, slug: true, title: true, draftJson: true, publishedJson: true, updatedAt: true }
+    })
+  ]);
   const pageBySlug = new Map(pages.map((page) => [page.slug, page]));
   assert.equal(pages.length, requestedRoutes.length, `Expected ${requestedRoutes.length} targeted LivePages, found ${pages.length}.`);
   const home = pageBySlug.get("/");
@@ -279,6 +285,12 @@ try {
   const nextHomepage = { ...home, contentJson: updateHomepage(home, detailByRoute, imageByRoute) };
   nextPages.push(nextHomepage);
 
+  assert(themePage?.draftJson?.sections?.aidreamcapes_video_grid, "Aidreamcapes homepage draft must use the ZIP homepage before video media can be synced.");
+  const nextHomepageDraft = {
+    ...themePage,
+    draftJson: updateHomepage({ ...themePage, contentJson: themePage.draftJson }, detailByRoute, imageByRoute)
+  };
+
   const report = nextPages.map((page) => ({
     slug: page.slug,
     action: "UPDATE",
@@ -290,7 +302,7 @@ try {
     sourceRoot: SOURCE_ROOT,
     videoCount: manifest.length,
     detailPages: manifest.map((item) => item.route),
-    homepage: { videoCards: homepageVideoBlocks.size, featureImages: homepageFeatureImages.size, photoCards: imageThemeRoutes.length },
+    homepage: { videoCards: homepageVideoBlocks.size, featureImages: homepageFeatureImages.size, photoCards: imageThemeRoutes.length, draftUpdated: true },
     pages: report
   }, null, 2));
 
@@ -298,7 +310,7 @@ try {
     const stamp = new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14);
     const backupPath = path.resolve(backupRoot, `ugc-video-media-${stamp}.json`);
     mkdirSync(path.dirname(backupPath), { recursive: true });
-    writeFileSync(backupPath, JSON.stringify({ siteId: SITE_ID, pages }, null, 2) + "\n", "utf8");
+    writeFileSync(backupPath, JSON.stringify({ siteId: SITE_ID, themePage, pages }, null, 2) + "\n", "utf8");
     await prisma.$transaction(async (tx) => {
       for (const page of nextPages) {
         await tx.livePage.update({
@@ -306,6 +318,10 @@ try {
           data: { contentJson: page.contentJson }
         });
       }
+      await tx.themePage.update({
+        where: { id: themePage.id },
+        data: { draftJson: nextHomepageDraft.draftJson }
+      });
     });
     const readback = await prisma.livePage.findMany({
       where: { siteId: SITE_ID, slug: { in: requestedRoutes } },
@@ -316,6 +332,11 @@ try {
       const page = readbackBySlug.get(item.route);
       const content = Object.values(page.contentJson.sections).find((entry) => entry?.type === "ai_video_topic_landing")?.settings?.content;
       assert.equal(detailHero(content).video?.src, videoPathFor(item), `Readback mismatch: ${item.route}`);
+    }
+    const readbackThemePage = await prisma.themePage.findUnique({ where: { id: themePage.id }, select: { draftJson: true } });
+    assert.equal(readbackThemePage?.draftJson?.sections?.aidreamcapes_hero?.settings?.outputVideoUrl, videoPathFor(slugByRoute.get("/ai-video-generation/ugc-ad-video")), "Homepage draft hero video mismatch");
+    for (const block of readbackThemePage?.draftJson?.sections?.aidreamcapes_video_grid?.blocks ?? []) {
+      assert(block.settings?.videoUrl, `Homepage draft video URL missing for ${block.id}`);
     }
     console.log(`Applied ${nextPages.length} LivePage updates for ${SITE_ID}. Backup: ${backupPath}`);
   }

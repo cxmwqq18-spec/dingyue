@@ -106,8 +106,8 @@ function updateNavigation(source) {
     ["Native Spark Ads", "/ai-video-generation/native-spark-ads"],
     ["Carousel Storytelling", "/ai-video-generation/carousel-storytelling"],
     ["Retargeting / Urgency", "/ai-video-generation/retargeting-urgency"],
-    ["Marketing Hub", "/ai-video-generation/ugc-ad-video"],
-    ["Open Marketing Hub →", "/ai-video-generation/ugc-ad-video"]
+    ["Marketing Hub", "/marketing"],
+    ["Open Marketing Hub →", "/marketing"]
   ]);
   let changed = 0;
   const visit = (value) => {
@@ -178,7 +178,7 @@ try {
           data: { draftJson: navigationDraft.next, publishedJson: navigationPublished.next }
         });
       }
-    });
+    }, { maxWait: 30000, timeout: 120000 });
     const readback = await prisma.livePage.findMany({ where: { siteId: SITE_ID, id: { in: expectedPageIds } }, select: { id: true, slug: true, contentJson: true } });
     assert.equal(readback.length, nextPages.length, "LivePage readback count");
     const readbackById = new Map(readback.map((page) => [page.id, page]));
