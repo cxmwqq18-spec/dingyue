@@ -1384,10 +1384,6 @@ function fallbackCustomerWorkspaceSiteShell(slug: string): CustomerWorkspaceBoot
   };
 }
 
-function fallbackCustomerWorkspaceAidreamcapesNavigation(slug: string): AidreamcapesZipNavigation | undefined {
-  return fallbackSiteBySlug(slug)?.themeSettings?.publishedJson.aidreamcapesZipNavigation;
-}
-
 function fallbackCustomerWorkspaceSiteAiApps(siteId: string): SiteAiApp[] {
   return (readPlatformState().siteAiApps ?? [])
     .filter((siteAiApp) => siteAiApp.siteId === siteId && siteAiApp.enabled)
@@ -2862,7 +2858,7 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
         primaryDomain: site.primaryDomain,
         branding: site.branding
       },
-      aidreamcapesZipNavigation: liveSnapshot?.themeSettings?.aidreamcapesZipNavigation ?? fallbackCustomerWorkspaceAidreamcapesNavigation(slug),
+      aidreamcapesZipNavigation: liveSnapshot?.themeSettings?.aidreamcapesZipNavigation,
       siteAiApps,
       creativePackCategories: navigationData.creativePackCategories.map((category) => watermarkedCreativePackCategoryForWorkspace(category) ?? category),
       creativePacks: navigationData.creativePacks.map(watermarkedCreativePackForWorkspace),
