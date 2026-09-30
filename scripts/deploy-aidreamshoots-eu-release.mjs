@@ -191,6 +191,8 @@ function releaseFiles() {
     "scripts/build-production.mjs",
     "scripts/restore-next-env.mjs",
     "src/components/storefront/save-the-date-directory.tsx",
+    "src/components/storefront/lazy-storefront-video.tsx",
+    "src/lib/aidreamcapes-eu-legacy-media.ts",
     "src/lib/aidreamcapes-eu-retired-routes.ts"
   ]) {
     if (!selected.includes(required)) selected.push(required);
