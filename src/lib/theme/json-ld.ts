@@ -469,7 +469,17 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
       .filter((value): value is string => typeof value === "string" && /^https?:\/\//i.test(value.trim()))
       .map((value) => value.trim())
     : [];
-  const sameAs = Array.from(new Set([...profileSameAs, ...footerSameAs]));
+  const aidreamcapesPublicSocialProfiles = site.id === "site_aidreamcapes"
+    ? [
+        "https://www.instagram.com/aidreamcapes",
+        "https://www.facebook.com/aidreamcapes",
+        "https://www.pinterest.com/aidreamcapes",
+        "https://www.youtube.com/@aidreamcapes",
+        "https://x.com/aidreamcapes",
+        "https://www.tiktok.com/@aidreamcapes"
+      ]
+    : [];
+  const sameAs = Array.from(new Set([...profileSameAs, ...footerSameAs, ...aidreamcapesPublicSocialProfiles]));
   const isAboutPage = pagePath === "/about-us" && isMydreamshootsComSite(site);
   const originalLogo = storefrontOriginalLogoUrl(site);
   const logo = originalLogo
@@ -1665,11 +1675,21 @@ function aidreamcapesEuImageThemeDetailSchema(input: JsonLdInput, title: string,
 }
 
 function websiteSchema(site: Site, routeMode: "host" | "path"): JsonLdNode {
+  const baseUrl = storefrontBaseUrl(site, routeMode);
   return {
     "@type": "WebSite",
-    "@id": `${storefrontBaseUrl(site, routeMode)}#website`,
+    "@id": `${baseUrl}#website`,
     name: siteBrandName(site),
-    url: storefrontBaseUrl(site, routeMode),
+    url: baseUrl,
+    ...(site.id === "site_aidreamcapes"
+      ? {
+          potentialAction: {
+            "@type": "SearchAction",
+            target: `${baseUrl}search?q={search_term_string}`,
+            "query-input": "required name=search_term_string"
+          }
+        }
+      : {}),
     ...(site.id === "site_aidreamcapes_xby"
       ? { inLanguage: "fr-FR" }
       : isAidreamshootsStorefrontSite(site) ? { inLanguage: "es-ES" } : {})

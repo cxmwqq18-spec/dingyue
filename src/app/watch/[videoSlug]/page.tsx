@@ -12,6 +12,7 @@ import {
   type MyDreamShootsVideoWatchPage
 } from "@/lib/mydreamshoots-video-watch";
 import { getStorefrontVideoWatchPagesForHost } from "@/lib/seo-indexing";
+import { normalizePublicSeoDescription, normalizePublicSeoTitle } from "@/lib/storefront-seo-text";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -24,12 +25,13 @@ function videoJsonLd(video: MyDreamShootsVideoWatchPage) {
   const watchUrl = mydreamshootsVideoWatchUrl(video);
   const thumbnailUrl = storefrontVideoAssetUrl(video, video.thumbnailPath);
   const contentUrl = storefrontVideoAssetUrl(video, video.contentPath);
+  const description = normalizePublicSeoDescription(video.description, { brand: video.brand, locale: video.locale, fallbackTopic: video.name });
   return {
     "@context": "https://schema.org",
     "@type": "VideoObject",
     "@id": `${watchUrl}#video`,
     name: video.name,
-    description: video.description,
+    description,
     thumbnailUrl: [thumbnailUrl],
     uploadDate: video.uploadDate,
     duration: videoDuration(video.durationSeconds),
@@ -81,23 +83,25 @@ export async function generateMetadata({ params }: { params: Promise<{ videoSlug
   const watchUrl = mydreamshootsVideoWatchUrl(video);
   const thumbnailUrl = storefrontVideoAssetUrl(video, video.thumbnailPath);
   const brand = storefrontVideoBrand(video);
+  const title = normalizePublicSeoTitle(video.name, { brand, locale: video.locale, fallbackTopic: "AI video" });
+  const description = normalizePublicSeoDescription(video.description, { brand, locale: video.locale, fallbackTopic: video.name });
   return {
-    title: `${video.name} | ${brand}`,
-    description: video.description,
+    title,
+    description,
     alternates: { canonical: watchUrl },
     robots: { index: true, follow: true, "max-image-preview": "large" },
     openGraph: {
       type: "website",
       url: watchUrl,
-      title: video.name,
-      description: video.description,
+      title,
+      description,
       siteName: brand,
       images: [{ url: thumbnailUrl, alt: video.name }]
     },
     twitter: {
       card: "summary_large_image",
-      title: video.name,
-      description: video.description,
+      title,
+      description,
       images: [thumbnailUrl]
     }
   };
@@ -134,6 +138,7 @@ export default async function MyDreamShootsVideoWatchPage({
         </p>
         <div style={{ overflow: "hidden", border: "1px solid rgba(148, 163, 184, 0.28)", borderRadius: "24px", background: "#111827", boxShadow: "0 24px 80px rgba(0, 0, 0, 0.35)" }}>
           <video
+            aria-label={video.name}
             controls
             preload="metadata"
             poster={thumbnailUrl}

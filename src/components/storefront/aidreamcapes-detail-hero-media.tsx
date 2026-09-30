@@ -11,6 +11,13 @@ type HeroSlide = {
   label: string;
 };
 
+function heroImageAlt(image: AidreamcapesAdsTestingImage, label: string): string {
+  const explicitAlt = image.alt?.trim();
+  if (explicitAlt) return explicitAlt;
+  const normalizedLabel = label.replace(/^\d+\s*[·.-]\s*/u, "").trim();
+  return `${normalizedLabel || "AI video workflow"} image`;
+}
+
 export function AidreamcapesDetailHeroMedia({
   imageNote,
   outputImage,
@@ -58,7 +65,7 @@ export function AidreamcapesDetailHeroMedia({
       <div className="rounded-[22px] border border-white/10 bg-[#08080b] p-3 sm:p-4">
         <div className="relative overflow-hidden rounded-[18px] border border-white/10 bg-[#101117]">
           <AidreamcapesResponsiveImage
-            alt={activeSlide.image.alt}
+            alt={heroImageAlt(activeSlide.image, activeSlide.label)}
             className="aspect-[4/5] h-full w-full object-cover"
             decoding="async"
             fetchPriority="high"
@@ -110,7 +117,7 @@ export function AidreamcapesDetailHeroMedia({
               type="button"
             >
               <AidreamcapesResponsiveImage
-                alt=""
+                alt={heroImageAlt(slide.image, slide.label)}
                 className="aspect-[4/3] h-full w-full object-cover"
                 decoding="async"
                 height={slide.image.height}
@@ -138,7 +145,7 @@ export function AidreamcapesDetailHeroMedia({
           />
         ) : (
           <AidreamcapesResponsiveImage
-            alt={outputImage.alt}
+            alt={heroImageAlt(outputImage, outputLabel)}
             className="aspect-video h-full min-h-[280px] w-full object-cover lg:min-h-full"
             decoding="async"
             fetchPriority="high"

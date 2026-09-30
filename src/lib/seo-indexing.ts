@@ -620,6 +620,31 @@ function sitemapImageTitleForPage(page: ThemePage): string {
   return title.split(/\s+/).length >= 4 ? title : `${title} image`;
 }
 
+const AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE = "/ai-ecommerce-product-main-image-running-shoe.webp";
+const AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE_TITLE = "Running shoe ecommerce product image for AI-generated store creative";
+const AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE_CAPTION = "Clean running shoe product image showing an ecommerce-ready AI creative for online stores.";
+
+function overrideAidreamcapesHomepageSitemapImages(site: Site, entry: SitemapEntry): SitemapEntry {
+  if (site.id !== AIDREAMCAPES_SITE_ID) return entry;
+  let path = "";
+  try {
+    path = new URL(entry.loc).pathname;
+  } catch {
+    return entry;
+  }
+  if (path !== "/") return entry;
+  return {
+    ...entry,
+    images: entry.images.map((image) => image.loc.includes(AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE)
+      ? {
+          ...image,
+          title: AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE_TITLE,
+          caption: AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE_CAPTION
+        }
+      : image)
+  };
+}
+
 function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): SitemapImageEntry[] {
   const themeManifest = isAidreamcapesImageThemePath(site.slug, normalizePath(page.slug))
     ? page.publishedJson.mediaManifest
@@ -1084,7 +1109,9 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       }
     }
   }
-  return [...entries.values()].sort((left, right) => left.loc.localeCompare(right.loc));
+  return [...entries.values()]
+    .map((entry) => overrideAidreamcapesHomepageSitemapImages(site, entry))
+    .sort((left, right) => left.loc.localeCompare(right.loc));
 }
 
 function canonicalPathForSitemapPage(page: ThemePage): string {

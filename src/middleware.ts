@@ -1017,16 +1017,15 @@ export async function middleware(request: NextRequest) {
   }
   if (isGrownstrideRequest(request)) headers.set("X-Robots-Tag", "noindex, nofollow");
 
-  // Aidreamcapes EU emits its JSON-LD after the page body. Buffer the French
-  // EU storefront so the existing full HTML rewrite can relocate that schema
-  // into <head>; otherwise the schema remains only inside a React Flight
-  // payload and is not exposed as a crawlable JSON-LD script in the response
-  // HTML. Aidreamcapes .com has the same body-marker contract, so keep its
-  // public HTML buffered as well. Keep other storefronts on their existing
-  // streaming path.
+  // EU storefronts emit body-marker JSON-LD after the page body. Buffer their
+  // public HTML so the existing full rewrite can relocate that schema into
+  // <head>; otherwise the schema can remain only inside a React Flight payload
+  // and is not exposed as crawlable JSON-LD in the response HTML. Aidreamcapes
+  // .com has the same body-marker contract, so keep its public HTML buffered as
+  // well. Keep other storefronts on their existing streaming path.
   const aboutUsRoute = /(?:^|\/)about-us\/?$/i.test(request.nextUrl.pathname);
   const aidreamcapesComPublicHtml = isAidreamcapesComPublicHtmlRequest(request);
-  const bufferSeoJsonLd = aboutUsRoute || aidreamcapesComPublicHtml || (isFrenchXbyRequest(request) && !isPrivateStorefrontHtmlRequest(request));
+  const bufferSeoJsonLd = aboutUsRoute || aidreamcapesComPublicHtml || ((isSpanishXbyRequest(request) || isFrenchXbyRequest(request)) && !isPrivateStorefrontHtmlRequest(request));
   if (upstreamResponse.body && !bufferSeoJsonLd) {
     return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlStream(upstreamResponse.body, request, shouldReorder), {
       status: upstreamResponse.status,
@@ -1036,7 +1035,7 @@ export async function middleware(request: NextRequest) {
   }
 
   const html = await upstreamResponse.text();
-  return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlFull(html, request, shouldReorder, aboutUsRoute || aidreamcapesComPublicHtml), {
+  return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlFull(html, request, shouldReorder, bufferSeoJsonLd), {
     status: upstreamResponse.status,
     statusText: upstreamResponse.statusText,
     headers

@@ -10,6 +10,7 @@ import { isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-rou
 import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSeoContentForSlug, aidreamcapesEuSeoContentFromPath } from "@/lib/aidreamcapes-eu-seo-content";
 import { aidreamcapesEuVideoTopicFromPath } from "@/lib/aidreamcapes-eu-video-media";
 import { AIDREAMCAPES_EU_IMAGE_DIRECTORY_OG_IMAGE } from "@/lib/aidreamcapes-eu-legacy-media";
+import { normalizePublicSeoDescription, normalizePublicSeoTitle } from "@/lib/storefront-seo-text";
 import type { CreativePack, PlatformState, Product, Site, ThemePage } from "@/lib/types";
 
 const AIDREAMCAPES_EU_SAVE_THE_DATE_SEO_OVERRIDES: Record<string, { title: string; description: string }> = {
@@ -21,6 +22,11 @@ const AIDREAMCAPES_EU_SAVE_THE_DATE_SEO_OVERRIDES: Record<string, { title: strin
     title: "Vidéo d’invitation de mariage avec l’IA | Aidreamcapes",
     description: "Créez une vidéo d’invitation de mariage avec l’IA à partir de votre papeterie approuvée : noms, date, lieu et détails lisibles avant le partage."
   }
+};
+
+const AIDREAMCAPES_SEO_DESCRIPTION_OVERRIDES: Record<string, string> = {
+  "/ai-image-generation/ecommerce-main-image": "Create a clean ecommerce main image from one product reference. Keep it clear and centered for Shopify, marketplace, and DTC store pages with Aidreamcapes.",
+  "/ai-image-generation/lifestyle-scene": "Create natural lifestyle product photos with real-world settings, clear context, and focus on what you sell for Shopify, marketplaces, and online stores."
 };
 
 function canonicalMetadataPath(site: Site, value: unknown, fallback = "/"): string {
@@ -43,26 +49,24 @@ function isAidreamcapesEuImageThemePath(site: Site, value: unknown): boolean {
   return parts.length === 2 && parts[0] === "ai-image-generation" && AIDREAMCAPES_EU_DIRECTORY_SLUGS.includes(parts[1]);
 }
 
-function trimSeoText(value: string, maxLength: number): string {
-  const normalized = value.replace(/\s+/g, " ").trim().replace(/…+$/, "").trim();
-  if (normalized.length <= maxLength) return normalized;
-  const withoutTrailingWord = normalized.slice(0, maxLength + 1).replace(/\s+\S*$/, "").trim();
-  return (withoutTrailingWord || normalized.slice(0, maxLength).trim()).slice(0, maxLength).trim();
+function publicSeoBrandAndLocale(site: Pick<Site, "id">): { brand: string; locale: "es" | "fr" } | undefined {
+  if (site.id === "site_mydreamshoots_xby") return { brand: "Aidreamshoots", locale: "es" };
+  if (site.id === "site_aidreamcapes_xby") return { brand: "Aidreamcapes", locale: "fr" };
+  return undefined;
 }
 
-function normalizePublicMetadataTitle(value: string): string {
-  const normalized = value.replace(/\s+/g, " ").trim().replace(/…+$/, "").trim();
-  if (normalized.length <= 60) return normalized;
-  const suffixMatch = normalized.match(/(\s\|\s(?:Aidreamcapes|AIdreamshoots|myDreamshoots))$/i);
-  if (suffixMatch) {
-    const prefix = trimSeoText(normalized.slice(0, -suffixMatch[1].length), 60 - suffixMatch[1].length);
-    return `${prefix}${suffixMatch[1]}`.slice(0, 60).trim();
-  }
-  return trimSeoText(normalized, 60);
+function normalizePublicMetadataTitle(site: Pick<Site, "id">, value: string, fallbackTopic?: string): string {
+  const config = publicSeoBrandAndLocale(site);
+  return config
+    ? normalizePublicSeoTitle(value, { ...config, fallbackTopic })
+    : value;
 }
 
-function normalizeAidreamcapesEuMetadataDescription(value: string): string {
-  return trimSeoText(value, 160);
+function normalizePublicMetadataDescription(site: Pick<Site, "id">, value: string, fallbackTopic?: string): string {
+  const config = publicSeoBrandAndLocale(site);
+  return config
+    ? normalizePublicSeoDescription(value, { ...config, fallbackTopic })
+    : value;
 }
 
 export async function metadataForPublishedStorefrontPage({
@@ -121,6 +125,9 @@ export async function metadataForPublishedStorefrontPage({
       : path === page.slug ? context.seo.canonicalPath : path,
     snapshotPage.slug
   );
+  const aidreamcapesSeoDescription = snapshot.site.id === "site_aidreamcapes"
+    ? AIDREAMCAPES_SEO_DESCRIPTION_OVERRIDES[metadataPath]
+    : undefined;
   const euVideoDirectorySeo = snapshot.site.id === "site_aidreamcapes_xby" && metadataPath === "/ai-video-generation"
     ? {
         title: "Création vidéo avec l’IA | Aidreamcapes",
@@ -168,6 +175,7 @@ export async function metadataForPublishedStorefrontPage({
         : targetPageSeo?.description?.trim()
         ? { description: targetPageSeo.description.trim() }
         : publicRouteSeo?.description?.trim() ? { description: publicRouteSeo.description.trim() } : {}),
+      ...(aidreamcapesSeoDescription ? { description: aidreamcapesSeoDescription } : {}),
       ...(targetPageSeo?.keywords?.trim()
         ? { keywords: targetPageSeo.keywords.trim() }
         : publicRouteSeo?.keywords?.trim() ? { keywords: publicRouteSeo.keywords.trim() } : {}),
@@ -199,8 +207,8 @@ export async function metadataForPublishedStorefrontPage({
         ...metadataContext,
         seo: {
           ...metadataContext.seo,
-          title: normalizePublicMetadataTitle(metadataContext.seo.title),
-          description: normalizeAidreamcapesEuMetadataDescription(metadataContext.seo.description)
+          title: normalizePublicMetadataTitle(snapshot.site, metadataContext.seo.title, metadataPath),
+          description: normalizePublicMetadataDescription(snapshot.site, metadataContext.seo.description, metadataPath)
         }
       }
     : metadataContext;
@@ -212,8 +220,8 @@ export async function metadataForPublishedStorefrontPage({
         ...publicNormalizedMetadataContext,
         seo: {
           ...publicNormalizedMetadataContext.seo,
-          title: normalizePublicMetadataTitle(spanishTdk.title),
-          description: normalizeAidreamcapesEuMetadataDescription(spanishTdk.description),
+          title: normalizePublicMetadataTitle(snapshot.site, spanishTdk.title, metadataPath),
+          description: normalizePublicMetadataDescription(snapshot.site, spanishTdk.description, metadataPath),
           keywords: spanishTdk.keywords
         }
       }

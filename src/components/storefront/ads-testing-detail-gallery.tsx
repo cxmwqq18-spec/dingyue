@@ -9,6 +9,11 @@ import type { AidreamcapesAdsTestingImage } from "@/lib/ai-video-topic-content";
 
 export type AdsTestingGalleryImage = AidreamcapesAdsTestingImage;
 
+function galleryImageAlt(image: AdsTestingGalleryImage, title: string): string {
+  const explicitAlt = image.alt?.trim();
+  return explicitAlt || `${title.trim() || "AI video workflow"} image`;
+}
+
 export function AdsTestingDetailGallery({
   items,
 }: {
@@ -81,7 +86,7 @@ export function AdsTestingDetailGallery({
               type="button"
             >
               <AidreamcapesResponsiveImage
-                alt={item.image.alt}
+                alt={galleryImageAlt(item.image, item.title)}
                 className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                 decoding="async"
                 fetchPriority={item.image.fetchPriority}
@@ -127,7 +132,7 @@ export function AdsTestingDetailGallery({
           </button>
           <figure className="max-h-full max-w-5xl" onClick={(event) => event.stopPropagation()}>
             <img
-              alt={items[activeIndex].image.alt}
+              alt={galleryImageAlt(items[activeIndex].image, items[activeIndex].title)}
               className="max-h-[82vh] w-auto max-w-full rounded-[18px] object-contain shadow-2xl"
               decoding="async"
               fetchPriority="high"

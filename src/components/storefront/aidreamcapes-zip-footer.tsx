@@ -167,7 +167,7 @@ export function AidreamcapesZipFooter({
               className="inline-flex items-center gap-3 text-2xl font-bold tracking-[-0.04em] text-white transition-colors hover:text-white/80"
               href={resolveHref(homeHref)}
             >
-              {brandLogoUrl ? <img alt="" aria-hidden="true" className="h-9 w-9 shrink-0 object-contain" height="36" src={brandLogoUrl} width="36" /> : null}
+              {brandLogoUrl ? <img alt={`${title || "Aidreamcapes"} logo`} className="h-9 w-9 shrink-0 object-contain" height="36" src={brandLogoUrl} width="36" /> : null}
               {title}
             </a>
             {tagline ? <p className="mt-2 max-w-sm text-[13px] leading-5 text-white/55">{tagline}</p> : null}

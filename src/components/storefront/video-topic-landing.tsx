@@ -362,7 +362,7 @@ function StorefrontTopicImage({ src, previewSrc, ...props }: StorefrontTopicImag
   const image = (
     <img
       {...props}
-      alt={props.alt}
+      alt={topicImageAlt(resolvedSrc, props.alt)}
       src={aidreamshootsAsset ? responsive?.fallbackSrc ?? resolvedSrc : resolvedSrc}
       srcSet={responsive?.fallbackSrcSet ?? (resolvedSrc.startsWith("/assets/sites/site_aidreamcapes/") ? resolvedSrc : undefined)}
       sizes={sizes}
@@ -380,6 +380,20 @@ function StorefrontTopicImage({ src, previewSrc, ...props }: StorefrontTopicImag
       {image}
     </picture>
   );
+}
+
+function topicImageAlt(src: string, explicitAlt?: string): string {
+  const normalizedAlt = explicitAlt?.trim();
+  if (normalizedAlt) return normalizedAlt;
+  const filename = src
+    .split(/[?#]/u)[0]
+    .split("/")
+    .pop()
+    ?.replace(/\.(?:avif|jpe?g|png|webp)$/iu, "")
+    .replace(/[-_]+/gu, " ")
+    .trim();
+  const label = filename ? filename.replace(/\b\w/gu, (character) => character.toUpperCase()) : "AI video workflow";
+  return `${label} image`;
 }
 
 function topicImagePreviewSrc(image: VideoTopicImage): string {

@@ -976,11 +976,12 @@ function sectionEditorAttrs(mode: "published" | "preview", id: string, type: str
 }
 
 function AidreamcapesLogoMark({ site, ariaLabel = "Aidreamcapes logo", className = "h-full w-full" }: { site: Pick<Site, "id" | "slug" | "primaryDomain">; ariaLabel?: string; className?: string }) {
+  const resolvedAriaLabel = ariaLabel.trim() || "Aidreamcapes logo";
   return (
     <img
       className={className}
       src={storefrontOriginalLogoUrl(site) ?? "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919original"}
-      alt={ariaLabel}
+      alt={resolvedAriaLabel}
       width={512}
       height={512}
     />
