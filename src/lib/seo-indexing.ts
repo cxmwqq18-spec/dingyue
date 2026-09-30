@@ -627,6 +627,12 @@ const AIDREAMCAPES_HOMEPAGE_ENGAGEMENT_IMAGE = "/engagement/hero-ai-engagement-c
 const AIDREAMCAPES_HOMEPAGE_ENGAGEMENT_IMAGE_TITLE = "Engagement announcement couple portrait at sunset";
 const AIDREAMCAPES_HOMEPAGE_ENGAGEMENT_IMAGE_CAPTION = "Couple portrait at sunset for an engagement announcement creative.";
 
+function sitemapImageMatchesAsset(imageLoc: string, assetPath: string): boolean {
+  const imagePath = cleanText(imageLoc).split(/[?#]/)[0].toLowerCase();
+  const assetName = cleanText(assetPath).split("/").pop()?.toLowerCase();
+  return Boolean(assetName && imagePath.endsWith(`/${assetName}`));
+}
+
 function overrideAidreamcapesHomepageSitemapImages(site: Site, entry: SitemapEntry): SitemapEntry {
   if (site.id !== AIDREAMCAPES_SITE_ID) return entry;
   let path = "";
@@ -639,14 +645,14 @@ function overrideAidreamcapesHomepageSitemapImages(site: Site, entry: SitemapEnt
   return {
     ...entry,
     images: entry.images.map((image) => {
-      if (image.loc.includes(AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE)) {
+      if (sitemapImageMatchesAsset(image.loc, AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE)) {
         return {
           ...image,
           title: AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE_TITLE,
           caption: AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE_CAPTION
         };
       }
-      if (image.loc.includes(AIDREAMCAPES_HOMEPAGE_ENGAGEMENT_IMAGE)) {
+      if (sitemapImageMatchesAsset(image.loc, AIDREAMCAPES_HOMEPAGE_ENGAGEMENT_IMAGE)) {
         return {
           ...image,
           title: AIDREAMCAPES_HOMEPAGE_ENGAGEMENT_IMAGE_TITLE,
