@@ -520,6 +520,17 @@ function splitTitleAndSeoTags(tags: string[]): { titleTag: string; seoTags: stri
   };
 }
 
+function dedupeJsonLdSeoTags(tags: string[]): string[] {
+  const seen = new Set<string>();
+  return tags.filter((tag) => {
+    if (!/<script\b[^>]*type=["']application\/ld\+json["']/i.test(tag)) return true;
+    const body = tag.match(/^[\s\S]*?>([\s\S]*?)<\/script>\s*$/i)?.[1]?.trim();
+    if (!body || seen.has(body)) return false;
+    seen.add(body);
+    return true;
+  });
+}
+
 function leadingSeoHeadLength(headContent: string): number {
   return headContent.match(LEADING_SEO_HEAD_TAG_RE)?.[0].length ?? 0;
 }
@@ -562,7 +573,7 @@ function moveSeoTagsBeforeResources(html: string): string {
     essentialTags.push(tag);
     return "";
   });
-  const { titleTag, seoTags: nonTitleSeoTags } = splitTitleAndSeoTags(seoTags);
+  const { titleTag, seoTags: nonTitleSeoTags } = splitTitleAndSeoTags(dedupeJsonLdSeoTags(seoTags));
   const reorderedHead = `${titleTag}${essentialTags.join("")}${nonTitleSeoTags.join("")}${remainingHead}`;
   return `${beforeHeadContent}${reorderedHead}${strippedAfterHead}`;
 }
@@ -579,7 +590,7 @@ function stripBodyMarkerJsonLd(html: string, inertSerializedBodyMarker = false):
   // duplicate script inert during hydration.
   return withoutRenderedBodyMarker.replace(RSC_BODY_MARKER_SCRIPT_RE, (tag) => {
     if (!/data-storefront-json-ld[\s\S]*body-marker/i.test(tag)) return tag;
-    return tag.replace(/application\/ld\+json/gi, "text/plain");
+    return tag.replace(/application\/(?:ld\+json|json)/gi, "text/plain");
   });
 }
 

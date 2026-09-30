@@ -58,6 +58,22 @@ function normalizeAidreamcapesEuDescription(description: string, indexable: bool
   return `${description.slice(0, 159).replace(/\s+\S*$/, "").trim()}…`;
 }
 
+function normalizeMydreamshootsTitle(title: string, indexable: boolean): string {
+  if (!indexable || title.length <= 60) return title;
+  const suffixMatch = title.match(/(\s\|\s(?:AIdreamshoots|myDreamshoots))$/i);
+  if (suffixMatch) {
+    const prefixLimit = 60 - suffixMatch[1].length;
+    const prefix = title.slice(0, prefixLimit).replace(/\s+\S*$/, "").trim();
+    return `${prefix}${suffixMatch[1]}`;
+  }
+  return `${title.slice(0, 59).replace(/\s+\S*$/, "").trim()}…`;
+}
+
+function normalizeMydreamshootsDescription(description: string, indexable: boolean): string {
+  if (!indexable || description.length <= 160) return description;
+  return `${description.slice(0, 160).replace(/\s+\S*$/, "").trim()}`;
+}
+
 function revisionHash(value: string): string {
   let first = 0x811c9dc5;
   let second = 0x9e3779b9;
@@ -83,7 +99,10 @@ function canonicalSeoPathForSite(site: StorefrontContextBundle["site"], path: st
 function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, settings: ThemeSettings): ResolvedPageSeo {
   const pageSeo = pageJson.seo;
   const brand = clean(bundle.site.branding.logoText) || clean(bundle.site.name);
-  const normalizedPath = normalizeCanonicalPath(pageSeo?.canonical ?? pageSeo?.canonicalPath, bundle.page.slug);
+  const aidreamshootsToolsDirectory = bundle.site.id === "site_mydreamshoots_xby" && bundle.page.slug === "/tools";
+  const normalizedPath = aidreamshootsToolsDirectory
+    ? "/tools"
+    : normalizeCanonicalPath(pageSeo?.canonical ?? pageSeo?.canonicalPath, bundle.page.slug);
   const path = canonicalSeoPathForSite(bundle.site, normalizedPath);
   const aidreamcapesQualitySeo = aidreamcapesSeoQualityForPath(bundle.site, path);
   const aidreamcapesVideoTopicSeo = aidreamcapesVideoTopicSeoForPath(bundle.site, path);
@@ -321,8 +340,12 @@ export function resolveStorefrontContext(
   const resolvedTdk = resolveMydreamshootsPageTdk(bundle.site, resolvedSeo.canonicalPath, resolvedSeo);
   const pageScopedSeo = {
     ...resolvedSeo,
-    title: resolvedTdk.title,
-    description: resolvedTdk.description,
+    title: bundle.site.id === "site_mydreamshoots_xby"
+      ? normalizeMydreamshootsTitle(resolvedTdk.title, resolvedSeo.index)
+      : resolvedTdk.title,
+    description: bundle.site.id === "site_mydreamshoots_xby"
+      ? normalizeMydreamshootsDescription(resolvedTdk.description, resolvedSeo.index)
+      : resolvedTdk.description,
     keywords: resolvedTdk.keywords
   };
   if (standardPageEntityMissing) missingFacts.push("published.standard_page_entity");

@@ -3,6 +3,7 @@ import { ArrowRight, ChevronRight, PlayCircle } from "lucide-react";
 import { creativePackIconByName, suggestedCreativePackIconName } from "@/lib/creative-pack-icons";
 import type { SaveTheDateNavigationGroup } from "@/lib/types";
 import { canonicalSpanishXbyCollectionSlug } from "@/lib/spanish-storefronts";
+import { isAidreamcapesEuRemovedPublicNavigationPath } from "@/lib/aidreamcapes-eu-retired-routes";
 
 type NativeLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & { prefetch?: boolean };
 
@@ -19,16 +20,9 @@ function aidreamshootsCollectionHref(href: string, collectionsHref: string): str
   return `${basePath}/ai-image-generation${slug ? `/${slug}` : ""}${suffix}`;
 }
 
-const AIDREAMCAPES_EU_REMOVED_MENU_PATHS = new Set([
-  "/ai-image-generation/estilo-y-fantasia",
-  "/collections/soccer",
-  "/collections/christmas-photo",
-  "/collections/thanksgiving-photo",
-  "/tools/seasonal-celebration-album-maker"
-]);
-
-function isAidreamcapesEuRemovedMenuHref(href: string, collectionsHref: string): boolean {
-  const euMenu = /(?:^|\/)site\/aidreamcapes-eu(?:\/|$)/i.test(collectionsHref)
+function isAidreamcapesEuRemovedMenuHref(href: string, collectionsHref: string, french = false): boolean {
+  const euMenu = french
+    || /(?:^|\/)site\/aidreamcapes-eu(?:\/|$)/i.test(collectionsHref)
     || /(?:^|\/)aidreamcapes\.eu(?:\/|$)/i.test(collectionsHref)
     || /(?:^|\/)site\/aidreamcapes-eu(?:\/|$)/i.test(href)
     || /(?:^|\/)aidreamcapes\.eu(?:\/|$)/i.test(href);
@@ -39,7 +33,7 @@ function isAidreamcapesEuRemovedMenuHref(href: string, collectionsHref: string):
     .replace(/^\/site\/aidreamcapes-eu(?=\/|$)/i, "")
     .replace(/^\/{2,}/, "/")
     .replace(/\/$/, "") || "/";
-  return AIDREAMCAPES_EU_REMOVED_MENU_PATHS.has(normalizedPath);
+  return isAidreamcapesEuRemovedPublicNavigationPath("aidreamcapes.eu", normalizedPath);
 }
 
 export type HeaderPhotoPackageMegaGroup = {
@@ -246,7 +240,7 @@ export function HeaderPhotoPackageMegaPanel({
       ...group,
       items: group.items.filter((item) => {
         const resolvedHref = useAidreamshootsRoutes ? aidreamshootsCollectionHref(item.href, collectionsHref) : item.href;
-        return !isAidreamcapesEuRemovedMenuHref(item.href, collectionsHref) && !isAidreamcapesEuRemovedMenuHref(resolvedHref, collectionsHref);
+        return !isAidreamcapesEuRemovedMenuHref(item.href, collectionsHref, french) && !isAidreamcapesEuRemovedMenuHref(resolvedHref, collectionsHref, french);
       })
     }))
     .filter((group) => group.items.length > 0);
@@ -490,7 +484,7 @@ export function HeaderMobilePhotoPackagesMenu({
       ...group,
       items: group.items.filter((item) => {
         const resolvedHref = useAidreamshootsRoutes ? aidreamshootsCollectionHref(item.href, collectionsHref) : item.href;
-        return !isAidreamcapesEuRemovedMenuHref(item.href, collectionsHref) && !isAidreamcapesEuRemovedMenuHref(resolvedHref, collectionsHref);
+        return !isAidreamcapesEuRemovedMenuHref(item.href, collectionsHref, french) && !isAidreamcapesEuRemovedMenuHref(resolvedHref, collectionsHref, french);
       })
     }))
     .filter((group) => group.items.length > 0);

@@ -43,6 +43,28 @@ function isAidreamcapesEuImageThemePath(site: Site, value: unknown): boolean {
   return parts.length === 2 && parts[0] === "ai-image-generation" && AIDREAMCAPES_EU_DIRECTORY_SLUGS.includes(parts[1]);
 }
 
+function trimSeoText(value: string, maxLength: number): string {
+  const normalized = value.replace(/\s+/g, " ").trim().replace(/…+$/, "").trim();
+  if (normalized.length <= maxLength) return normalized;
+  const withoutTrailingWord = normalized.slice(0, maxLength + 1).replace(/\s+\S*$/, "").trim();
+  return (withoutTrailingWord || normalized.slice(0, maxLength).trim()).slice(0, maxLength).trim();
+}
+
+function normalizePublicMetadataTitle(value: string): string {
+  const normalized = value.replace(/\s+/g, " ").trim().replace(/…+$/, "").trim();
+  if (normalized.length <= 60) return normalized;
+  const suffixMatch = normalized.match(/(\s\|\s(?:Aidreamcapes|AIdreamshoots|myDreamshoots))$/i);
+  if (suffixMatch) {
+    const prefix = trimSeoText(normalized.slice(0, -suffixMatch[1].length), 60 - suffixMatch[1].length);
+    return `${prefix}${suffixMatch[1]}`.slice(0, 60).trim();
+  }
+  return trimSeoText(normalized, 60);
+}
+
+function normalizeAidreamcapesEuMetadataDescription(value: string): string {
+  return trimSeoText(value, 160);
+}
+
 export async function metadataForPublishedStorefrontPage({
   site,
   page,
@@ -83,13 +105,18 @@ export async function metadataForPublishedStorefrontPage({
       ((isAidreamcapesImageThemePath(snapshot.site.slug, snapshotPage.slug) || isAidreamcapesEuSaveTheDatePage || isAidreamcapesEuImagePage) && !isAidreamcapesEuImagePage))
     ? snapshotPage.publishedJson.seo
     : undefined;
+  const requestedPath = normalizeCanonicalPath(path, snapshotPage.slug);
+  const aidreamshootsToolsDirectory = snapshot.site.id === "site_mydreamshoots_xby" &&
+    (requestedPath === "/tools" || snapshotPage.slug === "/tools");
   const metadataPath = canonicalMetadataPath(
     snapshot.site,
     // Image-theme routes are authoritative at their requested path. The
     // generic storefront projection can still resolve an old collection
     // alias for the same slug, which would leak a legacy canonical into the
     // new theme detail page.
-    isAidreamcapesImageThemePath(snapshot.site.slug, path)
+    aidreamshootsToolsDirectory
+      ? "/tools"
+      : isAidreamcapesImageThemePath(snapshot.site.slug, path)
       ? path
       : path === page.slug ? context.seo.canonicalPath : path,
     snapshotPage.slug
@@ -167,20 +194,30 @@ export async function metadataForPublishedStorefrontPage({
       ...(euVideoDirectorySeo ?? {})
     }
   };
-  const spanishTdk = snapshot.site.id === "site_mydreamshoots_xby"
-    ? resolveMydreamshootsPageTdk(snapshot.site, metadataPath, metadataContext.seo)
-    : undefined;
-  const finalMetadataContext = spanishTdk
+  const publicNormalizedMetadataContext = snapshot.site.id === "site_aidreamcapes_xby" || snapshot.site.id === "site_mydreamshoots_xby"
     ? {
         ...metadataContext,
         seo: {
           ...metadataContext.seo,
-          title: spanishTdk.title,
-          description: spanishTdk.description,
-          keywords: spanishTdk.keywords
+          title: normalizePublicMetadataTitle(metadataContext.seo.title),
+          description: normalizeAidreamcapesEuMetadataDescription(metadataContext.seo.description)
         }
       }
     : metadataContext;
+  const spanishTdk = snapshot.site.id === "site_mydreamshoots_xby"
+    ? resolveMydreamshootsPageTdk(snapshot.site, metadataPath, publicNormalizedMetadataContext.seo)
+    : undefined;
+  const finalMetadataContext = spanishTdk
+    ? {
+        ...publicNormalizedMetadataContext,
+        seo: {
+          ...publicNormalizedMetadataContext.seo,
+          title: normalizePublicMetadataTitle(spanishTdk.title),
+          description: normalizeAidreamcapesEuMetadataDescription(spanishTdk.description),
+          keywords: spanishTdk.keywords
+        }
+      }
+    : publicNormalizedMetadataContext;
   const approvedDirectoryImage = isPrimaryMydreamshootsSite(snapshot.site) && snapshotPage.slug === "/ai-image-generation" &&
     context.publishedStandardPageMedia?.status === "ready"
     ? context.publishedStandardPageMedia.ogImage?.trim()
