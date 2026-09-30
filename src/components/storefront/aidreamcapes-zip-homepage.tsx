@@ -573,7 +573,7 @@ function AdTesting({
               </div>
             </div>
           </div>
-          <div className="grid gap-6 md:grid-cols-2" data-ad-testing-features>
+          <div className="grid items-stretch gap-6 self-start md:grid-cols-2" data-ad-testing-features>
             <div className="glass-card min-w-0 rounded-2xl border border-white/10 p-6">
               <h3 className="mb-2 text-lg font-semibold text-white">
                 {hookCard ? blockValue(hookCard, "title") : null}
@@ -582,7 +582,7 @@ function AdTesting({
                 {hookCard ? blockValue(hookCard, "description") : null}
               </p>
               {hookCard ? <BlockMedia
-                className="aspect-[4/3] h-auto w-full rounded-xl border border-white/10 object-cover"
+                className="h-44 w-full rounded-xl border border-white/10 object-cover"
                 resolveAsset={resolveAsset}
                 source={hookCard}
               /> : null}
@@ -595,7 +595,7 @@ function AdTesting({
                 {actorCard ? blockValue(actorCard, "description") : null}
               </p>
               {actorCard ? <BlockMedia
-                className="mb-4 aspect-[4/3] h-auto w-full rounded-xl border border-white/10 object-cover"
+                className="mb-4 h-44 w-full rounded-xl border border-white/10 object-cover"
                 resolveAsset={resolveAsset}
                 source={actorCard}
               /> : null}

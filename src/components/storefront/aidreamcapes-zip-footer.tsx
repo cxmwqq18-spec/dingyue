@@ -120,6 +120,7 @@ export function AidreamcapesZipFooter({
   groups,
   resolveHref,
   brandTitle,
+  brandLogoUrl,
   company,
   socialLinks = [],
   paymentMethods = [],
@@ -129,6 +130,7 @@ export function AidreamcapesZipFooter({
   groups: AidreamcapesZipNavigationGroup[];
   resolveHref: (href: string) => string;
   brandTitle?: string;
+  brandLogoUrl?: string;
   company?: AidreamcapesZipCompanyProfile;
   socialLinks?: AidreamcapesZipSocialLink[];
   paymentMethods?: AidreamcapesZipPaymentMethod[];
@@ -140,17 +142,18 @@ export function AidreamcapesZipFooter({
   const copyright = textSetting(footer, "copyright");
   const socialHeading = textSetting(footer, "socialHeading");
   const socialBody = textSetting(footer, "socialBody");
+  const bottomLine = textSetting(footer, "bottomLine") || "Credits, AI video and photo projects, private albums, and checkout stay inside your account.";
   const configuredSocialLinks = new Map(socialLinks.map((link) => [link.key, link]));
   const visibleSocialLinks = defaultSocialLinks.map((link) => ({
     ...link,
     ...configuredSocialLinks.get(link.key),
   })).filter((link) => Boolean(link.href));
-  const companyFields = [company?.legalName, company?.website, company?.address, company?.phone, company?.email, company?.taxId].filter(Boolean);
-  const websiteHref = company?.website
-    ? /^https?:\/\//i.test(company.website) ? company.website : `https://${company.website}`
-    : "";
-  const phoneHref = company?.phone ? `tel:${company.phone.replace(/[^+\d]/g, "")}` : "";
+  const hasVisibleCompanyDetails = Boolean(company?.legalName || company?.address || company?.email || company?.taxId);
   const navigationColumns = footerNavigationColumns(groups);
+  const legalLinks = [
+    { label: "Children's Privacy", href: "/children-privacy" },
+    { label: "State Privacy", href: "/state-privacy" },
+  ];
 
   return (
     <footer
@@ -161,21 +164,19 @@ export function AidreamcapesZipFooter({
         <div className="grid gap-8 lg:grid-cols-[1.28fr_0.72fr_0.95fr_0.72fr_0.9fr] lg:gap-7">
           <section className="min-w-0">
             <a
-              className="inline-flex text-2xl font-bold tracking-[-0.04em] text-white transition-colors hover:text-white/80"
+              className="inline-flex items-center gap-3 text-2xl font-bold tracking-[-0.04em] text-white transition-colors hover:text-white/80"
               href={resolveHref(homeHref)}
             >
+              {brandLogoUrl ? <img alt="" aria-hidden="true" className="h-9 w-9 shrink-0 object-contain" height="36" src={brandLogoUrl} width="36" /> : null}
               {title}
             </a>
             {tagline ? <p className="mt-2 max-w-sm text-[13px] leading-5 text-white/55">{tagline}</p> : null}
 
-            {companyFields.length ? (
+            {hasVisibleCompanyDetails ? (
               <address className="mt-4 not-italic">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/45">Company details</p>
-                <dl className="mt-3 grid gap-1.5 text-[13px]">
+                <dl className="grid gap-1.5 text-[13px]">
                   {company?.legalName ? <div className="flex items-baseline gap-x-3"><dt className="w-16 shrink-0 text-xs text-white/40">Company</dt><dd className="font-medium text-white/85">{company.legalName}</dd></div> : null}
-                  {company?.website && websiteHref ? <div className="flex items-baseline gap-x-3"><dt className="w-16 shrink-0 text-xs text-white/40">Website</dt><dd><a className="text-white/70 transition-colors hover:text-white" href={websiteHref} rel="noreferrer">{company.website}</a></dd></div> : null}
                   {company?.address ? <div className="flex items-start gap-x-3"><dt className="w-16 shrink-0 pt-0.5 text-xs text-white/40">Address</dt><dd className="min-w-0 max-w-xs flex-1 leading-5 text-white/70">{company.address}</dd></div> : null}
-                  {company?.phone && phoneHref ? <div className="flex items-baseline gap-x-3"><dt className="w-16 shrink-0 text-xs text-white/40">Phone</dt><dd><a className="text-white/70 transition-colors hover:text-white" href={phoneHref}>{company.phone}</a></dd></div> : null}
                   {company?.taxId ? <div className="flex items-baseline gap-x-3"><dt className="w-16 shrink-0 text-xs text-white/40">Tax ID</dt><dd className="text-white/70">{company.taxId}</dd></div> : null}
                   {company?.email ? <div className="flex items-baseline gap-x-3"><dt className="w-16 shrink-0 text-xs text-white/40">Email</dt><dd className="min-w-0"><a className="break-all text-white/70 transition-colors hover:text-white" href={`mailto:${company.email}`}>{company.email}</a></dd></div> : null}
                 </dl>
@@ -218,11 +219,17 @@ export function AidreamcapesZipFooter({
 
         <div className="mt-5 text-[13px] text-white/45">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
-              {copyright ? <p className="shrink-0">{copyright}</p> : null}
-              {company?.email ? <a className="transition-colors hover:text-white" href={`mailto:${company.email}`}>Contact us</a> : null}
-              {company?.email && company?.taxId ? <span aria-hidden="true" className="text-white/20">•</span> : null}
-              {company?.taxId ? <span>Tax ID {company.taxId}</span> : null}
+            <div className="min-w-0 flex-1">
+              <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2">
+                {copyright ? <p className="shrink-0">{copyright}</p> : null}
+                {legalLinks.map((link) => (
+                  <a className="transition-colors hover:text-white" href={resolveHref(link.href)} key={link.href}>{link.label}</a>
+                ))}
+                {company?.email ? <a className="transition-colors hover:text-white" href={`mailto:${company.email}`}>Contact us</a> : null}
+                {company?.email && company?.taxId ? <span aria-hidden="true" className="text-white/20">•</span> : null}
+                {company?.taxId ? <span>Tax ID {company.taxId}</span> : null}
+              </div>
+              <p className="mt-1 max-w-[44rem] text-[11px] leading-4 text-white/35">{bottomLine}</p>
             </div>
 
           {showPaymentIcons && paymentMethods.length ? (
@@ -242,6 +249,8 @@ export function AidreamcapesZipFooter({
                       <span className="absolute left-0 h-4 w-4 rounded-full bg-[#eb001b]" />
                       <span className="absolute right-0 h-4 w-4 rounded-full bg-[#f79e1b] mix-blend-multiply" />
                     </span>
+                  ) : method.key === "amex" ? (
+                    <span className="whitespace-nowrap text-[9px] font-extrabold tracking-[-0.02em] text-[#1476b8]">AMEX</span>
                   ) : method.key === "us-debit" ? (
                     <span className="whitespace-nowrap text-[9px]">US DEBIT</span>
                   ) : method.key === "paypal" ? (

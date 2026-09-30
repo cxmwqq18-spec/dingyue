@@ -61,6 +61,8 @@ async function inspectViewport(page, viewport, screenshotName) {
   assert.match(await page.locator("body").innerText(), /Example workflows/i);
   assert.match(await page.locator("body").innerText(), /Fan Scene Album/i);
   assert.equal(await page.getByText("Generated result", { exact: true }).count(), 6, `${screenshotName}: result labels`);
+  const firstCardChildren = await cards.first().locator(":scope > *").evaluateAll((children) => children.map((child) => child.getAttribute("data-review-result") !== null ? "result" : "content"));
+  assert.deepEqual(firstCardChildren.slice(0, 2), ["result", "content"], `${screenshotName}: result image must precede review content`);
 
   const layout = await page.evaluate(() => ({
     viewportWidth: window.innerWidth,

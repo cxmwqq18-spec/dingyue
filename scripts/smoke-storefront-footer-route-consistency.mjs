@@ -74,7 +74,7 @@ async function readFooter(routePath) {
   assert.ok(footer, `${url} must contain an SSR footer`);
   const links = [...footer.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)].map((match) => ({
     href: normalizeHref(match[1]),
-    label: match[2].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim()
+    label: match[2].replace(/<[^>]+>/g, " ").replace(/&#x27;|&#39;/gi, "'").replace(/&amp;/gi, "&").replace(/\s+/g, " ").trim()
   }));
   if (expectedProfile === "mydreamshoots") {
     const missing = expectedLinks.filter(([label, href]) =>
@@ -95,6 +95,7 @@ async function readFooter(routePath) {
     );
     assert.deepEqual(missingSocial, [], `${url} is missing social links: ${missingSocial.map(([platform, href]) => `${platform} (${href})`).join(", ")}`);
   } else if (expectedProfile === "aidreamcapes") {
+    assert(!footer.includes("/ai-video-generation/product-ad-video"), `${url} must not use the legacy Marketing Hub detail route`);
     const missing = aidreamcapesExpectedLinks.filter(([label, href]) =>
       !links.some((link) => link.href === href && link.label.includes(label))
     );
@@ -107,8 +108,15 @@ async function readFooter(routePath) {
     const mergedSection = footer.match(/<section\b[\s\S]*?<h2\b[^>]*>Resources &amp; Company<\/h2>[\s\S]*?<\/section>/i)?.[0] ?? "";
     assert(mergedSection, `${url} is missing the merged Resources & Company footer section`);
     assert(!/Prompt Guide/i.test(footer), `${url} must not expose Prompt Guide in the footer`);
-    for (const paymentKey of ["visa", "mastercard", "us-debit", "paypal", "apple-pay", "google-pay"]) {
+    assert(!/Company details/i.test(footer), `${url} must hide the Company details label`);
+    assert(!/<dt\b[^>]*>Website<\/dt>/i.test(footer), `${url} must hide the Website row`);
+    assert(!/<dt\b[^>]*>Phone<\/dt>/i.test(footer), `${url} must hide the Phone row`);
+    assert(/<img\b[^>]*src=["'][^"']+aidreamcapes[^"']+\.(?:svg|png|webp)/i.test(footer), `${url} must render the Aidreamcapes footer logo`);
+    for (const paymentKey of ["visa", "mastercard", "amex", "paypal", "apple-pay", "google-pay"]) {
       assert(footer.includes(`data-payment-method="${paymentKey}"`), `${url} is missing the ${paymentKey} payment method`);
+    }
+    for (const [label, href] of [["Children's Privacy", "/children-privacy"], ["State Privacy", "/state-privacy"]]) {
+      assert(links.some((link) => link.href === href && link.label.includes(label)), `${url} is missing ${label} (${href})`);
     }
     const expectedOrder = aidreamcapesExpectedLinks.map(([label]) => label);
     const actualOrder = links
@@ -123,6 +131,9 @@ async function readFooter(routePath) {
       .filter((link) => link.href.startsWith("/") && !link.href.startsWith("/cdn-cgi/"))
       .map((link) => `${link.label}\t${link.href}`)
   )).sort();
+  if (expectedProfile === "aidreamcapes" && routePath === "/marketing") {
+    assert(/data-aidreamcapes-marketing-directory="true"/.test(html), `${url} must render the Marketing Hub directory page`);
+  }
   return { routePath, internalSignature };
 }
 

@@ -80,6 +80,7 @@ import {
 } from "@/lib/storefront-media-alt";
 import { GUARDED_STOREFRONT_FOOTER_PATHS } from "@/lib/storefront-global-shell";
 import { storefrontOriginalLogoUrl } from "@/lib/storefront-brand-assets";
+import { aidreamcapesZipFooterGroups } from "@/lib/aidreamcapes-navigation";
 import { storefrontResponsiveImageDimensions, storefrontResponsiveImageSet } from "@/lib/storefront-responsive-images";
 import {
   AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA,
@@ -2123,6 +2124,12 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
   const frenchEngagementPage = isAidreamshootsEngagementFrenchPage(site, pagePath);
   const frenchPageFooter = frenchXbyFooter;
   const isAidreamcapesComFooter = isAidreamcapesFooter && !spanishXbyFooter && !frenchXbyFooter;
+  // Aidreamcapes uses one public Footer contract on every route. Keep the
+  // legacy renderer on the same canonical groups so preview/lightweight and
+  // full-page paths cannot drift apart.
+  const canonicalAidreamcapesFooterGroups = isAidreamcapesComFooter
+    ? aidreamcapesZipFooterGroups
+    : settings.aidreamcapesZipNavigation?.footerGroups ?? [];
   const zipIdentity = storefrontContext?.profile?.identity;
   const zipConfiguredSocialKeys = ["instagramUrl", "facebookUrl", "threadsUrl", "pinterestUrl", "youtubeUrl", "xUrl", "twitterUrl", "tiktokUrl"];
   const zipHasConfiguredSocialFields = Boolean(footer && zipConfiguredSocialKeys.some((key) => Object.prototype.hasOwnProperty.call(footer.settings, key)));
@@ -2179,7 +2186,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
       ? [
           { key: "visa", label: "Visa" },
           { key: "mastercard", label: "Mastercard" },
-          { key: "us-debit", label: "US debit" },
+          { key: "amex", label: "American Express" },
           { key: "paypal", label: "PayPal" },
           { key: "apple-pay", label: "Apple Pay" },
           { key: "google-pay", label: "Google Pay" },
@@ -2190,10 +2197,11 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
   if (isAidreamcapesComFooter && !lightweight) {
     return (
       <AidreamcapesZipFooter
+        brandLogoUrl={storefrontOriginalLogoUrl(site) ?? ""}
         brandTitle={title}
         company={zipCompany}
         footer={footer}
-        groups={settings.aidreamcapesZipNavigation?.footerGroups ?? []}
+        groups={canonicalAidreamcapesFooterGroups}
         paymentMethods={zipPaymentMethods}
         resolveHref={(href) => hrefFor(site, href)}
         showPaymentIcons={zipShowPaymentIcons}
@@ -2288,7 +2296,7 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
           { label: "FAQ", href: "/faq" }
         ]
       : isAidreamcapesComFooter
-      ? aidreamcapesZipFooterItems(settings.aidreamcapesZipNavigation?.footerGroups ?? [], (href) => href).map(({ label, href }) => ({ label, href }))
+      ? aidreamcapesZipFooterItems(canonicalAidreamcapesFooterGroups, (href) => href).map(({ label, href }) => ({ label, href }))
       : spanishXbyFooter
       ? [
           { label: isAidreamcapesFooter ? "Albumes de ocasion" : "Ver paquetes", href: "/collections" },
@@ -2371,20 +2379,9 @@ export function ThemeGlobalFooter({ lightweight = false, mode = "published", pag
             ["Términos de servicio", "/terms", "support"],
             ["Política de cookies", "/cookies", "support"]
           ]
-        : isAidreamcapesComFooter
-        ? [
-            ["AI Video", "/ai-video-generation", "product"],
-            ["AI Image", "/ai-image-generation", "product"],
-            ["Marketing Hub", "/ai-video-generation/product-ad-video", "product"],
-            ["Pricing", "/pricing", "product"],
-            ["Workflow", "/workflow", "resources"],
-            ["Affiliate Program", "/creators-circle", "resources"],
-            ["Blog", "/blog", "resources"],
-            ["About Us", "/about-us", "company"],
-            ["Contact Us", "/contact-us", "company"],
-            ["Privacy Policy", "/privacy", "company"],
-            ["Terms of Service", "/terms", "company"]
-          ]
+      : isAidreamcapesComFooter
+      ? aidreamcapesZipFooterItems(canonicalAidreamcapesFooterGroups, (href) => href)
+          .map((item) => [item.label, item.href, item.group] as const)
         : frenchXbyFooter
           ? [
               ["Création vidéo IA", "/ai-video-generation", "product"],
@@ -19856,6 +19853,7 @@ function SectionView({
     const featuredVoices = [...items, ...fallbackReviewItems].slice(0, testimonialLimit);
     const aidreamshootsXbyReviewLayout = site.id === "site_mydreamshoots_xby" && renderContext.pagePath === "/";
     const stackedReviewLayout = reviewMode && (isPrimaryMyDreamShootsSite(site) || aidreamshootsXbyReviewLayout);
+    const aidreamcapesReviewImageFirst = site.id === "site_aidreamcapes";
     const aidreamcapesCenteredReviewLayout = reviewMode && isAidreamcapesSite(site);
     const aidreamcapesEuReviewImageClassName = site.id === "site_aidreamcapes_xby" ? "!h-auto !w-full !object-contain !object-center" : "";
     const centeredReviewLayout = stackedReviewLayout || aidreamcapesCenteredReviewLayout;
@@ -19960,7 +19958,7 @@ function SectionView({
                   : `Open ${resultVideo ? "video" : "image"} result from ${customerName}'s ${customerRole} review`;
                 return (
                   <article className={`group flex ${centeredReviewLayout ? "min-h-[410px]" : "min-h-[380px]"} min-w-0 flex-col overflow-hidden rounded-[14px] border border-[#e7dccf] bg-white shadow-[0_22px_58px_-46px_rgba(20,22,26,0.16)]`} key={instanceKey(item, index, "testimonial")} {...xfcartBlockAttrs(mode, item, index, "testimonial")}>
-                    <div className={`flex flex-1 flex-col ${centeredReviewLayout ? "p-5" : "p-[18px]"}`}>
+                    <div className={`flex flex-1 flex-col ${centeredReviewLayout ? "p-5" : "p-[18px]"} ${aidreamcapesReviewImageFirst ? "order-2" : ""}`}>
                       <div className="flex items-center gap-3">
                         {avatar ? (
                           <StorefrontImage
@@ -19993,7 +19991,7 @@ function SectionView({
 	                    </div>
 	                    <button
 	                      aria-label={previewAriaLabel}
-                      className={`group/result relative block w-full overflow-hidden bg-[#f2e8da] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b98a57] focus-visible:ring-inset ${site.id === "site_aidreamcapes_xby" ? "" : centeredReviewLayout ? "aspect-[3/2]" : "h-[180px]"}`}
+                      className={`group/result relative block w-full overflow-hidden bg-[#f2e8da] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b98a57] focus-visible:ring-inset ${aidreamcapesReviewImageFirst ? "order-1" : ""} ${site.id === "site_aidreamcapes_xby" ? "" : centeredReviewLayout ? "aspect-[3/2]" : "h-[180px]"}`}
                       data-dreamshoot-preview-meta={cardMeta}
                       data-dreamshoot-preview-poster={resultImage}
                       data-dreamshoot-preview-src={resultVideo || resultImage}
