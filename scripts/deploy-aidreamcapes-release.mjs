@@ -55,7 +55,7 @@ chmod 600 "$RELEASE/.env"
 cd "$RELEASE"
 npm ci --no-audit --no-fund
 DINGYUE_ENV=production DATABASE_TARGET=production node ./node_modules/prisma/build/index.js generate
-DINGYUE_ENV=production DATABASE_TARGET=production DINGYUE_BUILD_MAX_OLD_SPACE_SIZE=6144 npm run build
+DINGYUE_ENV=production DATABASE_TARGET=production DINGYUE_BUILD_MAX_OLD_SPACE_SIZE=12288 npm run build
 printf '%s\n' "$COMMIT" > .deployed-commit
 HOSTNAME=127.0.0.1 PORT=3913 NODE_ENV=production NEXT_DIST_DIR=.next-build DINGYUE_ENV=production DATABASE_TARGET=production node server.mjs > .candidate.log 2>&1 &
 CANDIDATE=$!
