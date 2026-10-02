@@ -118,6 +118,10 @@ assert.equal(homepage.headers()["x-content-type-options"], "nosniff", "content t
 assert(homepage.headers()["referrer-policy"], "referrer policy missing");
 assert(homepage.headers()["x-frame-options"], "frame protection missing");
 const homepageHtml = await homepage.text();
+const homepageDom = load(homepageHtml);
+const bodyMarkers = homepageDom('body script[data-storefront-json-ld="body-marker"]');
+assert(bodyMarkers.length > 0, "JSON-LD body markers must remain present for React hydration");
+assert(bodyMarkers.toArray().every((node) => homepageDom(node).attr("type") === "application/json"), "body markers must be inert JSON, not duplicate structured data");
 assert.equal(htmlCanonical(homepageHtml), "https://aidreamcapes.com/", "homepage canonical");
 assert.equal((homepageHtml.match(/<link\b[^>]*\brel=["']alternate["']/gi) || []).length, 0, "single-language .com must not invent hreflang");
 assert.doesNotMatch(homepageHtml, /engagement-photo image|An intimate engagement announcement/i, "stale homepage image sitemap copy");

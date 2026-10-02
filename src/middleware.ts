@@ -536,7 +536,7 @@ function leadingSeoHeadLength(headContent: string): number {
   return headContent.match(LEADING_SEO_HEAD_TAG_RE)?.[0].length ?? 0;
 }
 
-function moveSeoTagsBeforeResources(html: string): string {
+function moveSeoTagsBeforeResources(html: string, preserveBodyMarker = false): string {
   const headOpen = html.search(/<head\b[^>]*>/i);
   if (headOpen < 0) return html;
 
@@ -560,6 +560,7 @@ function moveSeoTagsBeforeResources(html: string): string {
         .replace(/\stype=["']application\/json["']/i, ' type="application/ld+json"')
         .replace(/\sid=["']storefront-json-ld-(\d+)["']/i, ' id="storefront-json-ld-head-$1"');
       seoTags.push(headTag);
+      if (preserveBodyMarker) return tag;
       // Keep the normalized copy in <head>, but remove the body marker from
       // the final document so the same JSON-LD graph is not emitted twice.
       return "";
@@ -677,7 +678,9 @@ function rewriteStorefrontHtmlHead(html: string, request: NextRequest, shouldReo
 }
 
 function rewriteStorefrontHtmlFull(html: string, request: NextRequest, shouldReorder: boolean, inertSerializedBodyMarker = false): string {
-  const htmlWithSeo = stripBodyMarkerJsonLd(shouldReorder ? moveSeoTagsBeforeResources(html) : html, inertSerializedBodyMarker);
+  const preserveBodyMarker = isAidreamcapesComPublicHtmlRequest(request);
+  const reordered = shouldReorder ? moveSeoTagsBeforeResources(html, preserveBodyMarker) : html;
+  const htmlWithSeo = preserveBodyMarker ? reordered : stripBodyMarkerJsonLd(reordered, inertSerializedBodyMarker);
   return withStorefrontLocale(
     withMydreamshootsImageThemeSeo(withStorefrontIcons(htmlWithSeo, siteIconForRequest(request)), request),
     request
