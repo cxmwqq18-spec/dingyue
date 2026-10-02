@@ -9,7 +9,14 @@ const targetRoot = path.join(repoRoot, "public/assets/sites/site_aidreamcapes/tr
 async function main() {
   const sourceStat = await fs.stat(sourceRoot).catch(() => undefined);
   if (!sourceStat?.isDirectory()) {
-    throw new Error(`missing_trusted_logo_source:${sourceRoot}`);
+    console.log(JSON.stringify({
+      ok: true,
+      skipped: true,
+      reason: "external_public_static_media",
+      sourceRoot,
+      targetRoot
+    }, null, 2));
+    return;
   }
 
   await fs.mkdir(targetRoot, { recursive: true });
