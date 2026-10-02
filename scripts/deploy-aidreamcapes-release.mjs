@@ -15,6 +15,13 @@ assert.equal(git("rev-parse", "origin/main"), commit, "Release must equal origin
 assert.equal(git("ls-remote", "origin", "refs/heads/main").split(/\s/)[0], commit, "GitHub main must contain this exact commit");
 const sourcePaths = ["package.json", "package-lock.json", "next.config.mjs", "next-env.d.ts", "postcss.config.mjs", "tailwind.config.ts", "tsconfig.json", "tsconfig.typecheck.json", "eslint.config.mjs", "server.mjs", "data/saas-fonts.json", "data/saas-theme-packages.json", "data/saas-theme1-package.json", "prisma", "scripts", "src"];
 const root = "/www/wwwroot/aidreamcapes.com";
+const reuseBuildCommit = value("--reuse-build");
+if (reuseBuildCommit) {
+  assert(/^[a-f0-9]{40}$/.test(reuseBuildCommit), "Reuse requires an exact --reuse-build=<40-character SHA>");
+  const buildInputs = (sha) => git("ls-tree", "-r", sha, "--", ...sourcePaths)
+    .split("\n").filter((line) => !line.endsWith("\tscripts/deploy-aidreamcapes-release.mjs")).join("\n");
+  assert.equal(buildInputs(reuseBuildCommit), buildInputs(commit), "Reused build must have identical tracked build inputs; only this deployment script may differ");
+}
 const release = `${root}/releases/${commit}-seo`;
 const quote = (s) => `'${String(s).replaceAll("'", "'\\''")}'`;
 const connection = ["-o", "BatchMode=yes", "-o", "ConnectTimeout=15"];
@@ -55,18 +62,24 @@ chmod 600 "$RELEASE/.env"
 cd "$RELEASE"
 npm ci --no-audit --no-fund
 DINGYUE_ENV=production DATABASE_TARGET=production node ./node_modules/prisma/build/index.js generate
-DINGYUE_ENV=production DATABASE_TARGET=production DINGYUE_BUILD_MAX_OLD_SPACE_SIZE=12288 npm run build
+${reuseBuildCommit ? `REUSE=${quote(`${root}/releases/${reuseBuildCommit}-seo`)}
+test "$(cat "$REUSE/.deployed-commit")" = ${quote(reuseBuildCommit)}
+test -f "$REUSE/.next-build/BUILD_ID"
+cp -a --reflink=auto "$REUSE/.next-build" "$RELEASE/.next-build"
+DINGYUE_ENV=production DATABASE_TARGET=production npm run sync:aidreamcapes-trusted-logos` : "DINGYUE_ENV=production DATABASE_TARGET=production DINGYUE_BUILD_MAX_OLD_SPACE_SIZE=12288 npm run build"}
 printf '%s\n' "$COMMIT" > .deployed-commit
-HOSTNAME=127.0.0.1 PORT=3913 NODE_ENV=production NEXT_DIST_DIR=.next-build DINGYUE_ENV=production DATABASE_TARGET=production node server.mjs > .candidate.log 2>&1 &
+CANDIDATE_PORT=$(node -e 'const server=require("node:net").createServer(); server.listen(0,"127.0.0.1",()=>{process.stdout.write(String(server.address().port));server.close();});')
+HOSTNAME=127.0.0.1 PORT="$CANDIDATE_PORT" NODE_ENV=production NEXT_DIST_DIR=.next-build DINGYUE_ENV=production DATABASE_TARGET=production node server.mjs > .candidate.log 2>&1 &
 CANDIDATE=$!
 trap 'kill "$CANDIDATE" 2>/dev/null || true' EXIT
 READY=0
 for ATTEMPT in $(seq 1 60); do
-  if curl -fsS --max-time 5 -H 'X-Forwarded-Host: aidreamcapes.com' -H 'X-Forwarded-Proto: https' http://127.0.0.1:3913/ > .candidate.html; then READY=1; break; fi
+  if ! kill -0 "$CANDIDATE" 2>/dev/null; then cat .candidate.log; exit 1; fi
+  if grep -Fq "> Ready on http://127.0.0.1:$CANDIDATE_PORT" .candidate.log && curl -fsS --max-time 15 -H 'X-Forwarded-Host: aidreamcapes.com' -H 'X-Forwarded-Proto: https' "http://127.0.0.1:$CANDIDATE_PORT/" > .candidate.html; then READY=1; break; fi
   sleep 2
 done
 test "$READY" = 1
-AIDREAMCAPES_SEO_ORIGIN=http://127.0.0.1:3913 node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json
+AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json
 cat .candidate-contract.json
 kill "$CANDIDATE"; wait "$CANDIDATE" 2>/dev/null || true
 trap - EXIT
