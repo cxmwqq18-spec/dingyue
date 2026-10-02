@@ -480,8 +480,22 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     return { title: spanishTitle ? "Cuenta" : "Account", robots: { index: false, follow: false } };
   }
   if (firstSegment === "login") {
+    if (hostSiteSlug === "aidreamcapes") {
+      return {
+        title: "Sign in to Aidreamcapes | Private Workspace",
+        description: "Sign in to Aidreamcapes to create, review, and manage private AI image and video projects.",
+        robots: { index: false, follow: false }
+      };
+    }
     const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
     return { title: spanishTitle ? "Espacio privado" : "Private workspace", robots: { index: false, follow: false } };
+  }
+  if (requestedPath === "/404" && hostSiteSlug === "aidreamcapes") {
+    return {
+      title: "Page not found | Aidreamcapes",
+      description: "The page you requested is not available. Return to Aidreamcapes to explore AI image, video, pricing, and support workflows.",
+      robots: { index: false, follow: false }
+    };
   }
   if (firstSegment === "app" || firstSegment === "dashboard") {
     const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");

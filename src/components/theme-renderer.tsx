@@ -690,6 +690,7 @@ function sectionRendersMainHeading(sectionId: string, section: SectionInstance, 
     return normalizedHeadingLevel(setting(section, "headingLevel"), "h2") === "h1";
   }
   if (sectionType === "login_method_panel") {
+    if (renderContext.siteId === "site_aidreamcapes" && renderContext.pagePath === "/login") return true;
     return normalizedHeadingLevel(setting(section, "headingLevel"), renderContext.pagePath === "/login" ? "h1" : "h2") === "h1";
   }
   if (sectionType === "dreamshoot_package_taxonomy" || sectionType === "aidreamcapes_package_taxonomy") {
@@ -12738,7 +12739,11 @@ function SectionView({
           { id: "email_access", type: "login_method", settings: { label: "Use email access", helper: "Log in, register, or reset your password from one private account page.", kind: "email", href: "/login" } },
           { id: "email", type: "login_method", settings: { label: "Use email login", helper: "Password login is available for private album access.", kind: "email", href: "/login" } }
         ];
-    const HeadingTag = setting(section, "headingLevel", renderContext.pagePath === "/login" ? "h1" : "h2") === "h1" ? "h1" : "h2";
+    const defaultHeadingLevel = renderContext.pagePath === "/login" ? "h1" : "h2";
+    const aidreamcapesLoginPage = site.id === "site_aidreamcapes" && renderContext.pagePath === "/login";
+    const HeadingTag = aidreamcapesLoginPage
+      ? "h1"
+      : setting(section, "headingLevel", defaultHeadingLevel) === "h1" ? "h1" : "h2";
     return (
       <section className="bg-[#090a0e] px-4 py-6 text-white sm:px-5 md:py-10" id={sectionAnchor(section, "start")}>
         <div className="mx-auto grid min-w-0 max-w-[var(--site-content-width)] gap-6 rounded-[32px] border border-white/10 bg-[#0f1117] p-4 shadow-[0_40px_120px_-84px_rgba(0,0,0,0.88)] sm:p-5 md:p-6 lg:grid-cols-[0.44fr_0.56fr] lg:items-start">
@@ -20462,7 +20467,7 @@ function SectionView({
     const richTextHeadingLevel = renderContext.pagePath === "/album" && id === "album_intro_1"
       ? "h1"
       : primaryRichTextFallbackHeadingLevel(id, renderContext.page, renderContext.pagePath);
-    const HeadingTag = !policyPage && normalizedHeadingLevel(setting(section, "headingLevel"), richTextHeadingLevel) === "h1" ? "h1" : "h2";
+    const HeadingTag = !policyPage && !(site.id === "site_aidreamcapes" && renderContext.pagePath === "/login") && normalizedHeadingLevel(setting(section, "headingLevel"), richTextHeadingLevel) === "h1" ? "h1" : "h2";
     const firstRichTextSectionId = renderContext.page.sectionsOrder.find((candidateId) => renderContext.page.sections[candidateId]?.type === "rich_text");
     const RichCardHeadingTag = site.id === "site_mydreamshoots_xby"
       && aidreamshootsHeadingH2Pages.has(renderContext.pagePath)

@@ -623,9 +623,6 @@ function sitemapImageTitleForPage(page: ThemePage): string {
 const AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE = "/ai-ecommerce-product-main-image-running-shoe.webp";
 const AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE_TITLE = "Running shoe ecommerce product image for AI-generated store creative";
 const AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE_CAPTION = "Clean running shoe product image showing an ecommerce-ready AI creative for online stores.";
-const AIDREAMCAPES_HOMEPAGE_ENGAGEMENT_IMAGE = "/engagement/hero-ai-engagement-couple-sunset.jpg";
-const AIDREAMCAPES_HOMEPAGE_ENGAGEMENT_IMAGE_TITLE = "Engagement announcement couple portrait at sunset";
-const AIDREAMCAPES_HOMEPAGE_ENGAGEMENT_IMAGE_CAPTION = "Couple portrait at sunset for an engagement announcement creative.";
 
 function sitemapImageMatchesAsset(imageLoc: string, assetPath: string): boolean {
   const imagePath = cleanText(imageLoc).split(/[?#]/)[0].toLowerCase();
@@ -652,20 +649,13 @@ function overrideAidreamcapesHomepageSitemapImages(site: Site, entry: SitemapEnt
           caption: AIDREAMCAPES_HOMEPAGE_PRODUCT_IMAGE_CAPTION
         };
       }
-      if (sitemapImageMatchesAsset(image.loc, AIDREAMCAPES_HOMEPAGE_ENGAGEMENT_IMAGE)) {
-        return {
-          ...image,
-          title: AIDREAMCAPES_HOMEPAGE_ENGAGEMENT_IMAGE_TITLE,
-          caption: AIDREAMCAPES_HOMEPAGE_ENGAGEMENT_IMAGE_CAPTION
-        };
-      }
       return image;
     })
   };
 }
 
 function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): SitemapImageEntry[] {
-  const themeManifest = isAidreamcapesImageThemePath(site.slug, normalizePath(page.slug))
+  const themeManifest = (site.id === AIDREAMCAPES_SITE_ID && normalizePath(page.slug) !== "/") || isAidreamcapesImageThemePath(site.slug, normalizePath(page.slug))
     ? page.publishedJson.mediaManifest
     : undefined;
   if (themeManifest?.length) {
@@ -697,7 +687,8 @@ function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): Sitem
     });
   };
 
-  pushImage(page.publishedJson.seo?.ogImage, title, caption);
+  // Share-card assets are not necessarily displayed in the current .com page.
+  if (site.id !== AIDREAMCAPES_SITE_ID) pushImage(page.publishedJson.seo?.ogImage, title, caption);
 
   const visit = (value: unknown, key?: string): void => {
     if (images.length >= limit) return;
@@ -719,11 +710,22 @@ function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): Sitem
     if (!value || typeof value !== "object") return;
     for (const [childKey, childValue] of Object.entries(value)) {
       if (images.length >= limit) return;
+      if (site.id === AIDREAMCAPES_SITE_ID && childKey === "seo") continue;
       visit(childValue, childKey);
     }
   };
 
-  visit(page.publishedJson);
+  if (site.id === AIDREAMCAPES_SITE_ID) {
+    for (const sectionId of page.publishedJson.sectionsOrder) {
+      const section = page.publishedJson.sections[sectionId];
+      if (!section) continue;
+      if (section.type === "pricing_table") continue;
+      if (normalizePath(page.slug) === "/contact-us" && section.type === "rich_text") continue;
+      visit(section);
+    }
+  } else {
+    visit(page.publishedJson);
+  }
   return images.slice(0, limit);
 }
 
@@ -738,7 +740,8 @@ function collectAidreamcapesImageDirectorySitemapImages(
     const path = `/ai-image-generation/${definition.slug}`;
     const page = pageForCanonicalSeoPath(snapshot, site, path);
     const manifest = page?.publishedJson.mediaManifest;
-    const image = manifest?.find((candidate) => imageSitemapUrl(site, candidate.src));
+    // Directory cards display the generated output, not the source input.
+    const image = manifest?.[1];
     if (!image) continue;
     const loc = imageSitemapUrl(site, image.src);
     const comparable = comparableSitemapImageUrl(loc);
@@ -1129,6 +1132,15 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
     }
   }
   return [...entries.values()]
+    .map((entry) => {
+      if (site.id !== AIDREAMCAPES_SITE_ID) return entry;
+      const path = new URL(entry.loc).pathname;
+      if (path === "/ai-image-generation") return entry;
+      // Match the renderer's current LivePage JSON, not media injected into
+      // the legacy catalogue projection for a different layout.
+      const page = site.pages.find((candidate) => normalizePath(candidate.slug) === path);
+      return page ? { ...entry, images: collectPageSitemapImages(site, { ...page, publishedJson: page.draftJson }) } : entry;
+    })
     .map((entry) => overrideAidreamcapesHomepageSitemapImages(site, entry))
     .sort((left, right) => left.loc.localeCompare(right.loc));
 }

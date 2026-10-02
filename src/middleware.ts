@@ -6,6 +6,7 @@ import { mydreamshootsPageCopyForSlug } from "@/lib/mydreamshoots-page-copy";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS as MYDREAMSHOOTS_PUBLISHED_LEGACY_REDIRECTS, isMydreamshootsRetiredPublicPath } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { aidreamcapesLegacyGalleryRedirectForPath, isAidreamcapesGonePublicPath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath } from "@/lib/save-the-date-routes";
+import { aidreamcapesNotFoundResponse } from "@/lib/aidreamcapes-not-found";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
@@ -852,6 +853,7 @@ function retiredAidreamcapesImageToolResponse(request: NextRequest): Response | 
   const publicPath = pathMatch ? pathMatch[2] || "/" : normalizedPath;
   const isGone = isAidreamcapesGonePublicPath(siteSlug, publicPath);
   if (!isRetiredAidreamcapesPublicPath(siteSlug, publicPath) && !(siteSlug === "aidreamcapes" && aidreamcapesLegacyVideoSaveTheDatePath(publicPath))) return undefined;
+  if (siteSlug === "aidreamcapes") return aidreamcapesNotFoundResponse(isGone ? 410 : 404);
   return new NextResponse(null, {
     status: isGone ? 410 : 404,
     headers: { "cache-control": "public, max-age=60" }
@@ -1000,6 +1002,10 @@ export async function middleware(request: NextRequest) {
   });
 
   const contentType = upstreamResponse.headers.get("content-type") ?? "";
+  if (upstreamResponse.status === 404 && contentType.includes("text/html") && isAidreamcapesComPublicHtmlRequest(request)) {
+    await upstreamResponse.body?.cancel();
+    return finalizeStorefrontResponse(aidreamcapesNotFoundResponse(), request);
+  }
   if (upstreamResponse.status >= 300 && upstreamResponse.status < 400) {
     const location = upstreamResponse.headers.get("location");
     if (location) return finalizeStorefrontResponse(NextResponse.redirect(publicRedirectUrlForRequest(request, location), upstreamResponse.status), request);

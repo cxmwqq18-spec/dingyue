@@ -97,15 +97,15 @@ export async function metadataForPublishedStorefrontPage({
     ? page
     : snapshot.pages.find((candidate) => candidate.id === page.id) ?? page;
   const context = resolvePublishedStorefrontContext(snapshot, snapshotPage);
-  // AIdreamshoots keeps its translated SEO in the target LivePage JSON. The
-  // shared storefront context may still derive a generic title from an older
-  // route projection (notably for policy pages), so prefer the target page's
-  // explicit SEO fields for this site only. Other storefronts retain the
-  // existing projection and metadata behavior.
+  // Aidreamcapes and AIdreamshoots keep their route-specific SEO in the
+  // published LivePage projection. The shared storefront context may still
+  // derive a generic title from an older route projection (notably for policy
+  // pages), so prefer explicit SEO fields for these target sites only.
   const isAidreamcapesEuSaveTheDatePage = snapshot.site.id === "site_aidreamcapes_xby" && snapshotPage.slug.startsWith("/ai-save-the-date/");
   const isAidreamcapesEuImagePage = isAidreamcapesEuImageThemePath(snapshot.site, path) || isAidreamcapesEuImageThemePath(snapshot.site, snapshotPage.slug);
   const targetPageSeo = snapshot.site.id === "site_mydreamshoots_xby" ||
-    ((snapshot.site.id === "site_aidreamcapes" || snapshot.site.id === "site_aidreamcapes_xby") &&
+    snapshot.site.id === "site_aidreamcapes" ||
+    ((snapshot.site.id === "site_aidreamcapes_xby") &&
       ((isAidreamcapesImageThemePath(snapshot.site.slug, snapshotPage.slug) || isAidreamcapesEuSaveTheDatePage || isAidreamcapesEuImagePage) && !isAidreamcapesEuImagePage))
     ? snapshotPage.publishedJson.seo
     : undefined;
@@ -270,10 +270,13 @@ export async function metadataForPublishedStorefrontDirectoryPage({
   const euVideoTargetPage = publishedSite.id === "site_aidreamcapes_xby" && kind === "tool" && snapshot
     ? snapshot.pages.find((candidate) => candidate.slug === projectionPath || candidate.publishedJson?.seo?.canonicalPath === projectionPath)
     : undefined;
-  const seoSourcePage = spanishTargetPage ?? euVideoTargetPage ?? publishedBasePage;
+  const aidreamcapesVideoTargetPage = publishedSite.id === "site_aidreamcapes" && kind === "tool" && snapshot
+    ? snapshot.pages.find((candidate) => candidate.slug === projectionPath || candidate.publishedJson?.seo?.canonicalPath === projectionPath)
+    : undefined;
+  const seoSourcePage = spanishTargetPage ?? euVideoTargetPage ?? aidreamcapesVideoTargetPage ?? publishedBasePage;
   // Dedicated video topic pages own their SEO in LivePage.contentJson. Resolve
   // that first so they never require a generic tool-directory seed.
-  const pageJsonWithDirectorySeo = spanishTargetPage || euVideoTargetPage
+  const pageJsonWithDirectorySeo = spanishTargetPage || euVideoTargetPage || aidreamcapesVideoTargetPage
     ? seoSourcePage.publishedJson
     : withSeoDirectorySeo(publishedBasePage.publishedJson, kind, directorySlug, publishedSite);
   const resolved = (isPrimaryMydreamshootsSite(publishedSite) || publishedSite.id === "site_aidreamcapes_xby" || publishedSite.id === "site_mydreamshoots_xby") && snapshot

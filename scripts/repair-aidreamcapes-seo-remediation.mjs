@@ -48,6 +48,7 @@ const SEO_REPLACEMENTS = new Map([
     description: "Create a polished professional headshot for LinkedIn, resumes, team pages, and creator profiles from an approved photo. Review the result before sharing."
   }],
   ["/ai-image-generation/ecommerce-main-image", {
+    title: "AI Ecommerce Main Image Generator | Aidreamcapes",
     description: "Create a clean ecommerce main image from one product reference. Keep it clear and centered for Shopify, marketplace, and DTC store pages with Aidreamcapes."
   }],
   ["/ai-image-generation/lifestyle-scene", {
@@ -82,19 +83,19 @@ const SEO_REPLACEMENTS = new Map([
   }],
   ["/ai-video-generation/home-organization", {
     title: "AI Home Organization Video Maker | Aidreamcapes",
-    description: "Create a clear home organization video that shows a space, the change, and useful steps. Review object placement, continuity, and the message before sharing."
+    description: "Create AI home organization videos that show a space, the change, and useful steps with clear continuity, practical context, and review before sharing."
   }],
   ["/ai-video-generation/local-service-ad", {
     title: "AI Local Service Ad Video Generator | Aidreamcapes",
-    description: "Create a local service ad video with a clear offer area, useful context, and room for your own contact details. Review every claim and scene before publishing."
+    description: "Create AI local service ad videos with an offer, service area, proof, and CTA while keeping contact details and claims under your control before publishing."
   }],
   ["/ai-video-generation/founder-update", {
     title: "AI Founder Update Video Generator | Aidreamcapes",
-    description: "Create a founder update video from an approved portrait, message, or product image. Keep it direct, then review the face, voice, timing, and wording."
+    description: "Create AI founder update videos from an approved portrait, product image, or short message with clear pacing, reviewable claims, and a publishing workflow."
   }],
   ["/ai-video-generation/multilingual-video", {
     title: "AI Multilingual Video Generator | Aidreamcapes",
-    description: "Create a video for more than one language from approved source material. Check pronunciation, subtitles, timing, names, and the final message before publishing."
+    description: "Create AI multilingual videos from approved source material with reviewable pronunciation, subtitles, timing, names, and final messaging for each audience."
   }],
   ["/ai-video-generation/brand-video", {
     title: "AI Brand Video Generator for Teams | Aidreamcapes",
@@ -109,7 +110,7 @@ const SEO_REPLACEMENTS = new Map([
   }],
   ["/ai-video-generation/how-to-video", {
     title: "AI How-To Video Generator for Guides | Aidreamcapes",
-    description: "Create a helpful how-to video from approved images and steps, with a sequence viewers can follow. Review each action and the instructions before sharing."
+    description: "Create AI how-to videos from approved images and steps for tutorials, demonstrations, and training with clear sequencing and review before publishing."
   }],
   ["/ai-video-generation/instagram-reels", {
     title: "AI Instagram Reels Generator for Creators | Aidreamcapes",
@@ -134,6 +135,10 @@ const SEO_REPLACEMENTS = new Map([
   ["/ai-video-generation/music-video", {
     title: "AI Music Video Generator for Creators | Aidreamcapes",
     description: "Create music video visuals from text or images for performances, artist promos, dance, and sequences. Review continuity and use licensed audio."
+  }],
+  ["/blog/ai-talking-photo-video-guide", {
+    title: "AI Talking Photo Video Guide for Creators | Aidreamcapes",
+    description: "Use this AI talking photo guide to plan portraits, scripts, consent, disclosure, review steps, and publishing choices before sharing a generated video."
   }],
   ["/ai-video-generation/product-video", {
     title: "AI Product Video Generator for Stores | Aidreamcapes",
@@ -172,11 +177,11 @@ const SEO_REPLACEMENTS = new Map([
     description: "Browse AI collections for product pages, campaigns, ads, portraits, packaging, and lifestyle scenes. Choose a workflow and review examples before creating."
   }],
   ["/pricing", {
-    title: "Aidreamcapes Pricing: AI Image & Video Credits",
+    title: "AI Image and Video Plans and Pricing | Aidreamcapes",
     description: "Review Aidreamcapes plans, credits, and image and video workflows before you create. See what each option includes and check the cost before generation."
   }],
   ["/refunds", {
-    title: "Aidreamcapes Refund Policy | Credits and Failed Jobs",
+    title: "Refund Policy for AI Credits and Jobs | Aidreamcapes",
     description: "Read the Aidreamcapes refund policy for credits, failed jobs, duplicate charges, and support requests. Keep receipts and contact support with account details."
   }],
   ["/policies/refunds", {
@@ -184,11 +189,11 @@ const SEO_REPLACEMENTS = new Map([
     description: "Read the Aidreamcapes refund policy for credits, failed jobs, duplicate charges, and support requests. Keep receipts and contact support with account details."
   }],
   ["/creators-circle", {
-    title: "Aidreamcapes Creator Circle | AI Content Tools",
+    title: "Creator Circle for AI Content Workflows | Aidreamcapes",
     description: "Explore the Aidreamcapes Creator Circle for practical ideas, product updates, and workflows that help creators plan, review, and share AI projects."
   }],
   ["/children-privacy", {
-    title: "Aidreamcapes Children’s Privacy Policy | Safety",
+    title: "Children's Privacy for AI Tools | Aidreamcapes",
     description: "Learn how Aidreamcapes handles children’s information, age limits, privacy choices, and support requests. Do not upload content without permission."
   }],
   ["/policies/children-privacy", {
@@ -196,7 +201,7 @@ const SEO_REPLACEMENTS = new Map([
     description: "Learn how Aidreamcapes handles children’s information, age limits, privacy choices, and support requests. Do not upload content without permission."
   }],
   ["/content", {
-    title: "Aidreamcapes Content Policy | Safe AI Uploads",
+    title: "AI Content Policy for Uploads and Safety | Aidreamcapes",
     description: "Review the Aidreamcapes content policy for approved uploads, prohibited material, impersonation, rights, safety, and responsible use of AI image tools."
   }],
   ["/policies/content", {
@@ -204,7 +209,7 @@ const SEO_REPLACEMENTS = new Map([
     description: "Review the Aidreamcapes content policy for approved uploads, prohibited material, impersonation, rights, safety, and responsible use of AI tools."
   }],
   ["/privacy", {
-    title: "Aidreamcapes Privacy Policy | Data and AI Uploads",
+    title: "Privacy Policy for AI Uploads and Data | Aidreamcapes",
     description: "Read how Aidreamcapes handles account details, uploaded images, generated results, payments, cookies, and privacy requests when you use the service."
   }],
   ["/policies/privacy", {
@@ -216,7 +221,7 @@ const SEO_REPLACEMENTS = new Map([
     description: "Read how Aidreamcapes handles account details, uploaded images, generated results, payments, cookies, and privacy requests when you use the service."
   }],
   ["/terms", {
-    title: "Aidreamcapes Terms of Service | Use of AI Tools",
+    title: "Terms of Service for AI Tools and Content | Aidreamcapes",
     description: "Read the Aidreamcapes terms for accounts, uploads, generated content, credits, payments, acceptable use, intellectual property, and service limitations."
   }],
   ["/policies/terms", {
@@ -228,12 +233,24 @@ const SEO_REPLACEMENTS = new Map([
     description: "Read the Aidreamcapes terms for accounts, uploads, generated content, credits, payments, acceptable use, intellectual property, and service limitations."
   }],
   ["/state-privacy", {
-    title: "Aidreamcapes State Privacy Notice | U.S. Residents",
+    title: "State Privacy Rights for AI Users | Aidreamcapes",
     description: "Review state privacy rights for eligible U.S. residents, including access, correction, deletion, and requests related to Aidreamcapes accounts and uploads."
   }],
   ["/tools", {
     title: "Aidreamcapes AI Tools | Image and Video Workflows",
     description: "Explore Aidreamcapes tools for creating and improving AI images and videos. Choose a workflow, review requirements, and check results before sharing."
+  }],
+  ["/contact-us", {
+    title: "AI Image and Video Support for Creators | Aidreamcapes",
+    description: "Contact Aidreamcapes for account, billing, generation, rights, and privacy support. Include the workflow and account details needed to help you."
+  }],
+  ["/faq", {
+    title: "AI Image and Video FAQ for Creators | Aidreamcapes",
+    description: "Find answers about Aidreamcapes AI image and video workflows, uploads, review steps, credits, privacy, publishing, and customer support with clear next steps."
+  }],
+  ["/workflow", {
+    title: "AI Image and Video Workflow Guide | Aidreamcapes",
+    description: "Follow a practical Aidreamcapes workflow from approved reference to AI image or video, review, corrections, and responsible publishing with clear steps."
   }],
   ["/blog", {
     title: "AI Ecommerce, UGC & Talking Photo Guides | Aidreamcapes",

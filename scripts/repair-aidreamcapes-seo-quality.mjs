@@ -20,6 +20,9 @@ const FAQ_PATH = "/faq";
 
 const SEO_REPLACEMENTS = new Map([
   ["/marketing", { title: "AI Marketing Workflows for Ecommerce | Aidreamcapes" }],
+  ["/ai-image-generation/professional-headshot", { description: "Create a polished professional headshot for LinkedIn, resumes, team pages, and creator profiles from an approved photo. Review the result before sharing." }],
+  ["/ai-image-generation/ecommerce-main-image", { description: "Create a clean ecommerce main image from one product reference. Keep it clear and centered for Shopify, marketplace, and DTC store pages with Aidreamcapes." }],
+  ["/ai-image-generation/lifestyle-scene", { description: "Create natural lifestyle product photos with real-world settings, clear context, and focus on what you sell for Shopify, marketplaces, and online stores." }],
   ["/ai-image-generation/fashion-editorial", { description: "Create AI fashion editorial images for lookbooks, product launches, campaigns, and social content with guided styling and review-ready outputs." }],
   ["/ai-image-generation/feed-ad-still", { description: "Create AI feed ad images for product launches, paid social, and ecommerce campaigns with a clear hook, product proof, and review-ready framing." }],
   ["/ai-image-generation/jewelry-positioning", { description: "Create AI jewelry positioning images for ecommerce, catalogs, and social campaigns with controlled placement and review-ready product detail." }],

@@ -20,6 +20,10 @@ function shouldInterceptHtmlPath(pathname) {
   );
 }
 
+function isAidreamcapesComHost(host) {
+  return /^(?:www\.)?aidreamcapes\.com$/i.test(host);
+}
+
 function tagKey(tag) {
   if (/^<title\b/i.test(tag)) return "title";
   if (/\bcharset=/i.test(tag)) return "meta:charset";
@@ -191,6 +195,10 @@ createServer(async (request, response) => {
     request.headers["accept-encoding"] = "identity";
     const requestUrl = new URL(request.url || "/", `http://${request.headers.host || "localhost"}`);
     const requestHost = requestUrl.host.split(":")[0].toLowerCase();
+    const forwardedHost = String(request.headers["x-forwarded-host"] || "").split(",")[0].trim().toLowerCase();
+    if (isAidreamcapesComHost(forwardedHost || requestHost)) {
+      response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+    }
     const isAidreamcapesEuRequest =
       /^\/site\/aidreamcapes-eu(?:\/|$)/i.test(requestUrl.pathname) ||
       /^(?:www\.)?aidreamcapes\.eu$/i.test(requestHost);

@@ -447,7 +447,7 @@ export function AidreamcapesPublicSection(props: AidreamcapesPublicSectionProps)
   if (routedSection.type === "rich_text") {
     if (aidreamcapesPolicyMeta[pagePath]) return null;
     if (setting(routedSection, "layout") === "application_form") return <ApplicationSection section={routedSection} siteId={site.id} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
-    if (isFirstRichText) {
+    if (isFirstRichText && pagePath !== "/login") {
       if (pagePath === "/blog" || pagePath === "/contact-us" || pagePath === "/pricing") {
         return <PageHero section={{ ...routedSection, settings: { ...routedSection.settings, imageUrl: "" } }} page={page} resolveAsset={resolveAsset} resolveHref={resolveHref} />;
       }

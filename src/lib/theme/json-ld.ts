@@ -450,7 +450,11 @@ function homepageOfferCatalogSchema(site: Site, routeMode: "host" | "path"): Jso
     name: isSpanishXbySite(site)
       ? isAidreamcapesSite(site) ? `Paquetes de retrato de viaje y creditos ${siteName}` : `Paquetes de fotos y creditos ${siteName}`
       : isAidreamcapesSite(site)
-        ? site.id === "site_aidreamcapes_xby" ? "Forfaits photo et crédits Aidreamcapes" : "Aidreamcapes occasion portrait packages and credits"
+        ? site.id === "site_aidreamcapes_xby"
+          ? "Forfaits photo et crédits Aidreamcapes"
+          : site.id === "site_aidreamcapes"
+          ? "Aidreamcapes AI image and video plans"
+          : "Aidreamcapes occasion portrait packages and credits"
         : "MyDreamShoots photo packages and credits",
     url: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, "/pricing"))
   };
@@ -519,7 +523,7 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
     ...(profile.taxId ? { taxID: profile.taxId } : {}),
     ...(identifiers.length ? { identifier: identifiers } : {}),
     ...(sameAs.length ? { sameAs } : {}),
-    ...(pagePath === "/" && isMydreamshootsComSite(site) ? { hasOfferCatalog: homepageOfferCatalogSchema(site, routeMode) } : {})
+    ...(pagePath === "/" && (isMydreamshootsComSite(site) || site.id === "site_aidreamcapes") ? { hasOfferCatalog: homepageOfferCatalogSchema(site, routeMode) } : {})
   };
 }
 
@@ -963,7 +967,7 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
         }
       : undefined;
     const catalogLink = offerCatalog
-      ? isMydreamshootsComSite(input.site)
+      ? isMydreamshootsComSite(input.site) || input.site.id === "site_aidreamcapes"
         ? { hasOfferCatalog: { "@id": `${url}#offers` } }
         : { offers: { "@id": `${url}#offers` } }
       : {};
@@ -985,11 +989,11 @@ function serviceOrProductSchema(input: JsonLdInput, title: string, description: 
         name: siteName,
         description,
         ...(input.site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
-        applicationCategory: "PhotographyApplication",
+        applicationCategory: input.site.id === "site_aidreamcapes" ? "MultimediaApplication" : "PhotographyApplication",
         operatingSystem: "Web",
         url,
         provider: { "@type": "Organization", name: siteName },
-        ...(offerCatalog && !isMydreamshootsComSite(input.site) ? { offers: { "@id": `${url}#offers` } } : {})
+        ...(input.site.id === "site_aidreamcapes" ? { offers } : offerCatalog && !isMydreamshootsComSite(input.site) ? { offers: { "@id": `${url}#offers` } } : {})
       },
       offerCatalog
     ].filter(Boolean) as JsonLdNode[];
@@ -1706,11 +1710,19 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
     name: siteName,
     description,
     ...(input.site.id === "site_aidreamcapes_xby" ? { inLanguage: "fr-FR" } : {}),
-    applicationCategory: "PhotographyApplication",
+    applicationCategory: input.site.id === "site_aidreamcapes" ? "MultimediaApplication" : "PhotographyApplication",
     operatingSystem: "Web",
     url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath)),
     provider: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
-    ...(!isMydreamshootsComSite(input.site) ? { offers: homepageOfferCatalogSchema(input.site, input.routeMode) } : {})
+    ...(input.site.id === "site_aidreamcapes"
+      ? { offers: projectPublicPricingOffers(input.context).map(({ product, price }) => ({
+          "@type": "Offer",
+          name: price.label || product.name,
+          price: (price.amountCents / 100).toFixed(2),
+          priceCurrency: price.currency.toUpperCase(),
+          url: absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, "/pricing"))
+        })) }
+      : !isMydreamshootsComSite(input.site) ? { offers: homepageOfferCatalogSchema(input.site, input.routeMode) } : {})
   };
 }
 
