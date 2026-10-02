@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { execFileSync, spawn, spawnSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -13,6 +13,7 @@ const fullSource = hasArgument("--full-source");
 const fullAssets = hasArgument("--full-assets");
 const apply = hasArgument("--apply");
 const confirm = argumentValue("--confirm");
+const externalAssetSource = process.env.PUBLIC_STATIC_ASSET_SOURCE_ROOT?.trim() || "";
 const branch = execFileSync("git", ["branch", "--show-current"], { encoding: "utf8" }).trim();
 const euTarget = process.env.AI_PROJECT_EU_TARGET === "aidreamcapes-eu" ? "aidreamcapes-eu" : "aidreamshoots-eu";
 
@@ -81,6 +82,7 @@ const config = euTarget === "aidreamcapes-eu"
       validationPort: "3915",
       siteId: "site_aidreamcapes_xby",
       htmlLang: "fr",
+      publicStaticRoot: "/www/wwwroot/aidreamcapes.eu/shared/public-static",
       // EU French directory covers and responsive variants live under both
       // generated/recovered and visuals. Ship the whole site-local asset root
       // so an incremental release cannot omit the directory media manifest.
@@ -95,6 +97,7 @@ const config = euTarget === "aidreamcapes-eu"
       validationPort: "3912",
       siteId: "site_mydreamshoots_xby",
       htmlLang: "es",
+      publicStaticRoot: "/www/wwwroot/aidreamshoots.eu/shared/public-static",
       assetPrefix: "public/assets/sites/site_aidreamshoots/",
       requiredAssets: requiredSpanishTutorialAssets
     };
@@ -147,29 +150,6 @@ function scpArgs(source, destination) {
   return args;
 }
 
-function rsyncArgs(source, destination, extraArgs = []) {
-  const ssh = ["ssh"];
-  if (process.env.SSH_CONFIG_PATH) ssh.push("-F", shellQuote(process.env.SSH_CONFIG_PATH));
-  ssh.push("-p", shellQuote(process.env.AI_PROJECT_SSH_PORT || "11765"));
-  if (process.env.AI_PROJECT_SSH_KEY_PATH) ssh.push("-i", shellQuote(process.env.AI_PROJECT_SSH_KEY_PATH));
-  ssh.push("-o", "ServerAliveInterval=30", "-o", "ServerAliveCountMax=20");
-  return [
-    "-a",
-    // Target asset files are immutable release inputs. Existing files are
-    // preserved; changed files in the commit patch are applied to the new
-    // release separately. Skipping existing files avoids re-hashing gigabytes
-    // of media over the production SSH connection.
-    "--ignore-existing",
-    ...extraArgs,
-    "--no-owner",
-    "--no-group",
-    "-e",
-    ssh.join(" "),
-    source,
-    (process.env.AI_PROJECT_SSH_USER || "root") + "@" + (process.env.AI_PROJECT_SSH_HOST || "204.77.130.125") + ":" + destination
-  ];
-}
-
 function changedFilesForCommit() {
   const output = git(["diff-tree", "--no-commit-id", "--name-only", "-r", "--diff-filter=ACMRT", commit, commit + "^"]);
   return output ? output.split("\n").filter(Boolean) : [];
@@ -188,9 +168,6 @@ function releaseFiles() {
     : git(["diff-tree", "--no-commit-id", "--name-only", "-r", "--diff-filter=ACMRT", commit, commit + "^"]);
   const files = output ? output.split("\n").filter(Boolean) : [];
   const selected = files.filter((file) => allowedReleaseFiles.includes(file) || file.startsWith("src/") || file.startsWith(config.assetPrefix));
-  for (const required of config.requiredAssets) {
-    if (!selected.includes(required)) selected.push(required);
-  }
   for (const required of [
     "scripts/build-production.mjs",
     "scripts/restore-next-env.mjs",
@@ -207,18 +184,25 @@ function releaseFiles() {
 function assertFullAssetTreeIsReleaseable() {
   if (!fullAssets) return;
 
-  const untracked = git(["ls-files", "--others", "--exclude-standard", "--", config.assetPrefix]);
-  if (untracked) {
-    fail("--full-assets refuses untracked files under the target asset root:\n" + untracked);
+  if (!externalAssetSource) {
+    fail("--full-assets requires PUBLIC_STATIC_ASSET_SOURCE_ROOT to point to an external public/ mirror.");
   }
-
-  const deleted = git(["ls-files", "--deleted", "--", config.assetPrefix]);
-  if (deleted) {
-    fail("--full-assets refuses deleted tracked files under the target asset root:\n" + deleted);
+  const sourceRoot = path.resolve(externalAssetSource);
+  if (!fs.existsSync(sourceRoot) || !fs.statSync(sourceRoot).isDirectory()) {
+    fail("External public static root does not exist: " + sourceRoot);
   }
+  for (const required of config.requiredAssets) {
+    const relative = required.replace(/^public\//, "");
+    if (!fs.existsSync(path.join(sourceRoot, relative))) {
+      fail("Required external public asset is missing: " + path.join(sourceRoot, relative));
+    }
+  }
+}
 
-  const tracked = git(["ls-files", "--", config.assetPrefix]).split("\n").filter(Boolean);
-  if (!tracked.length) fail("--full-assets found no tracked files under " + config.assetPrefix);
+function isExternalMediaPath(file) {
+  return file.startsWith("public/assets/") ||
+    file.startsWith("public/site-media/") ||
+    /\.(?:png|jpe?g|webp|avif|gif|svg|ico|mp4|mov|webm|m4v)$/i.test(file);
 }
 
 function localPrecheck() {
@@ -246,7 +230,10 @@ function localPrecheck() {
       fail("Base commit " + base + " does not exist locally.");
     }
   }
-  const deleted = deletedFilesForCommit().filter((file) => !base || allowedReleaseFiles.includes(file) || file.startsWith("public/assets/sites/site_aidreamshoots/"));
+  const deleted = deletedFilesForCommit().filter((file) => {
+    if (isExternalMediaPath(file)) return false;
+    return base ? allowedReleaseFiles.includes(file) : true;
+  });
   if (deleted.length) {
     fail("Incremental release refuses deleted files because the remote release must be reviewed explicitly:\n" + deleted.join("\n"));
   }
@@ -256,71 +243,20 @@ function localPrecheck() {
   return { changed, remoteHead };
 }
 
-function runRsync(source, destination, extraArgs = []) {
-  return new Promise((resolve, reject) => {
-    const child = spawn("rsync", rsyncArgs(source, destination, extraArgs), { stdio: "inherit" });
-    child.once("error", reject);
-    child.once("exit", (status, signal) => {
-      if (status === 0) resolve();
-      else reject(new Error("rsync failed with " + (status === null ? "signal " + signal : "exit " + status)));
-    });
-  });
-}
-
 async function syncTargetAssets() {
   if (!fullAssets) return;
-
-  const sourceRoot = path.resolve(config.assetPrefix);
-  const destinationRoot = config.root + "/current/" + config.assetPrefix;
-  console.log("Synchronizing target asset root " + config.assetPrefix + " to " + destinationRoot);
-
-  const jobs = [];
-  const splitDirectory = (source, destination, depth) => {
-    const entries = fs.readdirSync(source, { withFileTypes: true });
-    if (!entries.length || depth === 0) {
-      jobs.push({ source: source + path.sep, destination: destination + "/" });
-      return;
-    }
-    const files = entries.filter((entry) => !entry.isDirectory());
-    if (files.length) {
-      jobs.push({
-        source: source + path.sep,
-        destination: destination + "/",
-        extraArgs: ["--exclude=*/"]
-      });
-    }
-    for (const entry of entries) {
-      const childSource = path.join(source, entry.name);
-      const childDestination = destination + "/" + entry.name;
-      if (entry.isDirectory()) splitDirectory(childSource, childDestination, depth - 1);
-    }
-  };
-  for (const entry of fs.readdirSync(sourceRoot, { withFileTypes: true })) {
-    const source = path.join(sourceRoot, entry.name);
-    const destination = destinationRoot + entry.name;
-    if (entry.isDirectory() && ["visuals", "generated", "creative-packs"].includes(entry.name)) {
-      splitDirectory(source, destination, 2);
-    } else if (entry.isDirectory()) {
-      jobs.push({ source: source + path.sep, destination: destination + "/" });
-    } else {
-      jobs.push({ source, destination });
-    }
-  }
-
-  const concurrency = Math.min(8, jobs.length);
-  let next = 0;
-  const worker = async () => {
-    while (next < jobs.length) {
-      const job = jobs[next++];
-      console.log("Synchronizing asset subtree " + job.source);
-      await runRsync(job.source, job.destination, job.extraArgs);
-    }
-  };
-  try {
-    await Promise.all(Array.from({ length: concurrency }, worker));
-  } catch (error) {
-    fail("Target asset synchronization failed: " + (error?.message || error));
-  }
+  const sourceRoot = path.resolve(externalAssetSource);
+  const site = euTarget === "aidreamcapes-eu" ? "aidreamcapesEu" : "aidreamshootsEu";
+  const sync = spawnSync(process.execPath, [
+    path.join(process.cwd(), "scripts/sync-public-media.mjs"),
+    "--apply",
+    "--site=" + site,
+    "--source=" + sourceRoot
+  ], {
+    stdio: "inherit",
+    env: { ...process.env, PUBLIC_STATIC_ASSET_SOURCE_ROOT: sourceRoot }
+  });
+  if (sync.status !== 0) fail("External public media synchronization failed for " + config.domain + ".");
 }
 
 async function runRemote(changedFiles) {

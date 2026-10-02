@@ -24,6 +24,24 @@ tmp/
 .tmp-*.cjs
 public/current-*.png
 public/qa-*.png
+
+# Public image and video media are provisioned outside Git. Keep the relative
+# paths available through the external public-static mirror instead.
+public/assets/
+public/site-media/
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.avif
+*.gif
+*.svg
+*.ico
+*.mp4
+*.mov
+*.webm
+*.m4v
+
 data/customer-assets/
 docs/audits/**/local-playwright/
 docs/audits/**/screenshots/
