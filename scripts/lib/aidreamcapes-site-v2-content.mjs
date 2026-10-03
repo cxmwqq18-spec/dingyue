@@ -109,11 +109,12 @@ export function loadSiteV2Source() {
     for (const key of ["intro", "credits_explained"]) if (typeof value[key] === "string") value[key] = [value[key]];
     content[page.id] = value;
   }
-  return { master, images, content };
+  const media = { catalog: readJson(path.join(DATA_DIR, "media-catalog.json")), plan: readJson(path.join(DATA_DIR, "media-plan.json")) };
+  return { master, images, content, media };
 }
 
 function buildModel(source) {
-  const { master, images, content } = source;
+  const { master, images, content, media } = source;
   const pages = master.pages.map((page) => ({ ...page, url: page.url === "/" ? "/" : page.url.replace(/\/+$/, "") }));
   const byId = Object.fromEntries(pages.map((page) => [page.id, page]));
   const ind = Object.fromEntries(master.industries.map(([slug, label]) => [slug, label]));
@@ -130,7 +131,7 @@ function buildModel(source) {
   }
   cards.sort((a, b) => CARD_ORDER.indexOf(a.key) - CARD_ORDER.indexOf(b.key));
   const cardByKey = Object.fromEntries(cards.map((card) => [card.key, card]));
-  return { pages, byId, content, images, ind, plat, occ, cards, cardByKey };
+  return { pages, byId, content, images, media, ind, plat, occ, cards, cardByKey };
 }
 
 function imageRef(model, key, alt) {
@@ -138,12 +139,120 @@ function imageRef(model, key, alt) {
   assert.ok(meta, `unknown image ${key}`);
   return { src: img(key), alt, width: meta.w, height: meta.h };
 }
+
+// ---------------------------------------------------------------------------
+// Media. Pages show the original high-resolution images and example clips already on the
+// site (scripts/data/aidreamcapes-site-v2/media-catalog.json) plus a few newly generated
+// images, chosen per page in media-plan.json. References look like
+//   g:<gallery>/<file>  photo tool gallery image    u:<name>  creator scene image
+//   f:<slug>            example frame from a clip   n:<name>  newly generated image
+//   s:<key>             image in the site-v2 folder
+const MEDIA_SIZES = { hero: "(max-width: 900px) 100vw, 560px", gallery: "(max-width: 700px) 100vw, 380px", card: "(max-width: 700px) 100vw, 340px", inset: "160px" };
+
+function mediaSource(model, ref) {
+  const { catalog } = model.media;
+  const kind = ref.slice(0, 2);
+  const rest = ref.slice(2);
+  if (kind === "g:") {
+    const [tool, file] = rest.split("/");
+    const gallery = catalog.galleries[tool];
+    const meta = gallery?.items[file];
+    assert.ok(meta, `unknown gallery image ${ref}`);
+    return { meta, alt: meta.alt, variants: gallery.variants, original: `${gallery.dir}/${file}.webp`, variantUrl: (w) => `${gallery.dir}/_responsive/${file}--${w}.webp` };
+  }
+  if (kind === "u:") {
+    const group = catalog.ugc;
+    const meta = group.items[rest];
+    assert.ok(meta, `unknown creator scene ${ref}`);
+    return { meta, alt: meta.alt, variants: group.variants, original: `${group.dir}/${meta.file}.webp`, variantUrl: (w) => `${group.dir}/_responsive/${meta.file}--${w}.webp` };
+  }
+  if (kind === "f:" || kind === "n:") {
+    const folder = kind === "f:" ? "frames" : "gen";
+    const meta = catalog[kind === "f:" ? "frames" : "gen"][rest];
+    assert.ok(meta, `unknown ${folder} image ${ref}`);
+    return { meta, alt: meta.alt, variants: meta.variants ?? [], original: `${ASSET_ROOT}/${folder}/${rest}.webp`, variantUrl: (w) => `${ASSET_ROOT}/${folder}/${rest}--${w}.webp` };
+  }
+  assert.fail(`unknown media reference ${ref}`);
+}
+
+// One image as it is stored on the page: the file to load, its description, and the sizes
+// available so the browser downloads only what the screen needs.
+function mediaImage(model, ref, mode = "hero") {
+  if (ref.startsWith("s:")) {
+    const key = ref.slice(2);
+    const meta = model.images[key];
+    assert.ok(meta, `unknown image ${ref}`);
+    return { src: img(key), alt: model.media.catalog.site[key].alt, width: meta.w, height: meta.h };
+  }
+  const { meta, alt, variants, original, variantUrl } = mediaSource(model, ref);
+  if (ref.endsWith("/og")) return { src: original, alt, width: meta.w, height: meta.h };
+  const widths = [...new Set([...variants.filter((w) => w < meta.w), meta.w])].sort((x, y) => x - y);
+  const urlFor = (w) => (w === meta.w ? original : variantUrl(w));
+  const closest = (list, target) => list.reduce((best, w) => (Math.abs(w - target) < Math.abs(best - target) ? w : best), list[0]);
+  const range = { hero: [640, 1600], gallery: [640, 1280], card: [640, 640], inset: [640, 640], og: [1200, 1600] }[mode];
+  let set = widths.filter((w) => w >= range[0] && w <= range[1]);
+  if (!set.length) set = [closest(widths, range[0])];
+  const srcWidth = mode === "hero" || mode === "og" ? closest(set, mode === "og" ? 1200 : 1280) : set[0];
+  const out = { src: urlFor(srcWidth), alt, width: srcWidth, height: Math.round((srcWidth * meta.h) / meta.w) };
+  if (set.length > 1) {
+    out.srcSet = set.map((w) => `${urlFor(w)} ${w}w`).join(", ");
+    out.sizes = MEDIA_SIZES[mode];
+  }
+  return out;
+}
+
+function clipRef(model, slug) {
+  const clip = model.media.catalog.clips[slug];
+  assert.ok(clip, `unknown clip ${slug}`);
+  return { src: clip.src, width: clip.w, height: clip.h, duration: clip.duration, name: clip.name, description: clip.description, uploadDate: clip.uploadDate, poster: mediaImage(model, `f:${slug}`, "hero") };
+}
+
+function heroMediaFor(model, pageId) {
+  const hero = model.media.plan.pages[pageId]?.hero;
+  if (!hero) return undefined;
+  if (hero.kind === "pair") return { kind: "pair", before: mediaImage(model, hero.before, "inset"), after: mediaImage(model, hero.after, "hero") };
+  if (hero.kind === "image") return { kind: "image", image: mediaImage(model, hero.image, "hero") };
+  if (hero.kind === "video") return { kind: "video", video: clipRef(model, hero.clip) };
+  if (hero.kind === "loop") {
+    const loop = model.media.catalog.loop;
+    return { kind: "loop", video: { src: loop.src, width: loop.w, height: loop.h, poster: { ...mediaImage(model, "f:ugc-ad-video", "hero"), src: loop.poster, width: loop.w, height: loop.h, srcSet: undefined, sizes: undefined } }, inset: mediaImage(model, hero.inset, "inset") };
+  }
+  assert.fail(`unknown hero kind for ${pageId}`);
+}
+
+function heroImageOf(media) {
+  if (!media) return undefined;
+  return media.kind === "pair" ? media.after : media.kind === "image" ? media.image : media.kind === "video" || media.kind === "loop" ? media.video.poster : undefined;
+}
+
+function galleryFor(model, pageId) {
+  const refs = model.media.plan.pages[pageId]?.gallery ?? [];
+  return refs.length ? { images: refs.map((ref) => mediaImage(model, ref, "gallery")) } : undefined;
+}
+
+// "Your photo" next to the result, for pages that show before and after examples.
+function pairsFor(model, pageId) {
+  const list = model.media.plan.pages[pageId]?.pairs ?? [];
+  return list.length ? list.map((item) => ({ before: mediaImage(model, item.before, "inset"), after: mediaImage(model, item.after, "gallery") })) : undefined;
+}
+
+// Thumbnail for lists of pages and templates.
+function pageCardImage(model, pageId) {
+  const plan = model.media.plan.pages[pageId];
+  if (plan?.card) return mediaImage(model, plan.card, "card");
+  const hero = plan?.hero;
+  const ref = hero?.image ?? hero?.after ?? (hero?.clip ? `f:${hero.clip}` : undefined);
+  assert.ok(ref, `no card image for ${pageId}`);
+  return mediaImage(model, ref, "card");
+}
+
 function cardRef(model, key) {
   const card = model.cardByKey[key];
   assert.ok(card, `unknown card ${key}`);
+  const cardImage = model.media.plan.cards[key];
   return {
     key, name: card.name, line: LINES[key], kind: card.kind, href: model.byId[card.pageId].url,
-    image: imageRef(model, card.img, `${card.name} example`),
+    image: cardImage ? mediaImage(model, cardImage, "card") : imageRef(model, card.img, `${card.name} example`),
     tags: [...card.ind.map((slug) => model.ind[slug]), ...card.plat.map((slug) => model.plat[slug])],
     industries: card.ind, platforms: card.plat
   };
@@ -281,7 +390,7 @@ function payloadFor(model, page) {
     let more = sameKind.filter((card) => card.ind.some((x) => page.industries.includes(x)) || card.plat.some((x) => page.platforms.includes(x))).map((card) => card.key).slice(0, 4);
     more = more.concat(sameKind.map((card) => card.key).filter((k) => !more.includes(k))).slice(0, 4);
     return { ...base, kind: page.group, intro: c.intro, tip: c.tip, steps: c.steps, ideas: c.ideas || [],
-      image: imageRef(model, page.img, `${page.label} example`),
+      image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, `${page.label} example`),
       maker: { options: (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3), cta: c.maker?.cta || "Use this template", href: toolAppHref(tool, key) },
       specs: [["Output", page.output], ["Best for", page.platforms.map((x) => model.plat[x]).join(", ") || "Your website"], ["Popular with", page.industries.map((x) => model.ind[x]).join(", ") || "Any brand"], ["Made with", tool.label]],
       madeWith: { label: tool.label, href: tool.url }, more: more.map((k) => cardRef(model, k)) };
@@ -303,21 +412,21 @@ function payloadFor(model, page) {
       out.filters = { types: [["video", "Video"], ["photo", "Photo"]], industries: Object.entries(model.ind), platforms: Object.entries(model.plat) };
     } else if (page.id === "industries" || page.id === "platforms") {
       const prefix = page.id === "industries" ? "ind-" : "plat-";
-      out.items = model.pages.filter((p) => p.id.startsWith(prefix)).map((p) => ({ label: p.label, href: p.url, text: (model.content[p.id].lead || "").slice(0, 140), image: imageRef(model, p.img, "") }));
+      out.items = model.pages.filter((p) => p.id.startsWith(prefix)).map((p) => ({ label: p.label, href: p.url, text: (model.content[p.id].lead || "").slice(0, 140), image: pageCardImage(model, p.id) }));
     } else {
-      out.articles = model.pages.filter((p) => p.section === page.id).map((p) => ({ title: model.content[p.id].h1, summary: model.content[p.id].summary || "", minutes: model.content[p.id].read_minutes || 5, href: p.url, image: imageRef(model, p.img, "") }));
+      out.articles = model.pages.filter((p) => p.section === page.id).map((p) => ({ title: model.content[p.id].h1, summary: model.content[p.id].summary || "", minutes: model.content[p.id].read_minutes || 5, href: p.url, image: pageCardImage(model, p.id) }));
     }
     return out;
   }
   if (t === "article") {
-    return { ...base, section: page.section, minutes: c.read_minutes || 5, image: imageRef(model, page.img, page.label), sections: c.sections || [], checklist: c.checklist || [],
+    return { ...base, section: page.section, minutes: c.read_minutes || 5, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, page.label), sections: c.sections || [], checklist: c.checklist || [],
       related: (c.related || []).filter((id) => model.byId[id]).map((id) => ({ label: model.byId[id].label, href: model.byId[id].url, text: (model.content[id].lead || "").slice(0, 110) })) };
   }
   if (t === "pricing") return { ...base, intro: c.intro || [], credits: c.credits_explained || [], plans: PLANS, next: nextLinks(model, t) };
-  if (t === "faq") return { ...base, image: imageRef(model, page.img, c.h1), next: nextLinks(model, t) };
-  if (t === "contact") return { ...base, image: imageRef(model, page.img, c.h1), intro: c.intro || [], topics: c.topics || [], email: "support@aidreamcapes.com", next: nextLinks(model, t) };
-  if (t === "about") return { ...base, image: imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
-  if (t === "trust") return { ...base, image: imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
+  if (t === "faq") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), next: nextLinks(model, t) };
+  if (t === "contact") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), intro: c.intro || [], topics: c.topics || [], email: "support@aidreamcapes.com", next: nextLinks(model, t) };
+  if (t === "about") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
+  if (t === "trust") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
   if (t === "ai-info") return { ...base, summary: c.summary, facts: c.facts, notOffered: c.not_offered, describe: c.describe, llmsText: buildLlmsText(model), next: nextLinks(model, t) };
   if (t === "examples") {
     return { ...base, intro: c.intro || [], cases: c.cases || [], cards: CARD_ORDER.map((key) => cardRef(model, key)),
@@ -326,16 +435,30 @@ function payloadFor(model, page) {
   throw new Error(`unsupported page type ${t}`);
 }
 
-function jsonLdFor(model, page, c, payload) {
+function jsonLdFor(model, page, c, payload, ogImage) {
   const org = { "@type": "Organization", "@id": `${BASE}/#organization`, name: "Aidreamcapes", url: `${BASE}/` };
   const graph = [org];
   if (page.id === "home") graph.push({ "@type": "WebSite", "@id": `${BASE}/#website`, name: "Aidreamcapes", url: `${BASE}/`, inLanguage: "en", publisher: { "@id": `${BASE}/#organization` } });
   else graph.push({ "@type": "BreadcrumbList", itemListElement: payload.breadcrumbs.map((crumb, index) => ({ "@type": "ListItem", position: index + 1, name: crumb.label, item: `${BASE}${crumb.href === "/" ? "/" : crumb.href}` })) });
+  const absolute = (src) => `${BASE}${src}`;
+  const primary = heroImageOf(payload.heroMedia) ?? ogImage;
+  const videoNode = payload.heroMedia?.kind === "video" ? payload.heroMedia.video : undefined;
+  const videoId = `${canonical(page)}#video`;
   const webpageType = { hub: "CollectionPage", index: "CollectionPage", industry: "CollectionPage", platform: "CollectionPage", occasion: "CollectionPage", examples: "CollectionPage", contact: "ContactPage", about: "AboutPage" }[page.type] || "WebPage";
   if (page.type === "article") {
-    graph.push({ "@type": page.section === "blog" ? "BlogPosting" : "Article", headline: c.h1, description: c.description, image: `${BASE}${img(page.img)}`, author: { "@id": `${BASE}/#organization` }, publisher: { "@id": `${BASE}/#organization` }, datePublished: "2026-10-02", dateModified: "2026-10-02", mainEntityOfPage: canonical(page), inLanguage: "en" });
+    graph.push({ "@type": page.section === "blog" ? "BlogPosting" : "Article", headline: c.h1, description: c.description, image: absolute(primary.src), author: { "@id": `${BASE}/#organization` }, publisher: { "@id": `${BASE}/#organization` }, datePublished: "2026-10-02", dateModified: "2026-10-02", mainEntityOfPage: canonical(page), inLanguage: "en" });
   } else {
-    graph.push({ "@type": webpageType, "@id": `${canonical(page)}#webpage`, url: canonical(page), name: c.title, description: c.description, inLanguage: "en", isPartOf: { "@id": `${BASE}/#website` } });
+    graph.push({ "@type": webpageType, "@id": `${canonical(page)}#webpage`, url: canonical(page), name: c.title, description: c.description, inLanguage: "en", isPartOf: { "@id": `${BASE}/#website` },
+      primaryImageOfPage: { "@type": "ImageObject", url: absolute(primary.src), width: primary.width, height: primary.height },
+      ...(videoNode ? { video: { "@id": videoId } } : {}) });
+  }
+  if (videoNode) {
+    graph.push({ "@type": "VideoObject", "@id": videoId, name: videoNode.name, description: videoNode.description, thumbnailUrl: [absolute(videoNode.poster.src)], uploadDate: videoNode.uploadDate,
+      duration: `PT${videoNode.duration}S`, contentUrl: absolute(videoNode.src), width: videoNode.width, height: videoNode.height, inLanguage: "en" });
+  }
+  if (["tool", "hub-tool", "template", "hub"].includes(page.type) && payload.steps?.length >= 2) {
+    graph.push({ "@type": "HowTo", "@id": `${canonical(page)}#howto`, name: `How it works: ${page.label}`,
+      step: payload.steps.map((step, index) => ({ "@type": "HowToStep", position: index + 1, name: step.t, text: step.d })) });
   }
   if (page.type === "tool" || page.type === "hub-tool") {
     graph.push({ "@type": "SoftwareApplication", name: `Aidreamcapes ${page.label}`, applicationCategory: "MultimediaApplication", operatingSystem: "Web", url: canonical(page), description: c.description, publisher: { "@id": `${BASE}/#organization` } });
@@ -358,18 +481,31 @@ export function buildSiteV2(source = loadSiteV2Source()) {
   const model = buildModel(source);
   const pages = model.pages.map((page) => {
     const c = model.content[page.id];
-    const payload = payloadFor(model, page);
-    const ogImage = imageRef(model, page.img, c.h1);
+    const heroMedia = heroMediaFor(model, page.id);
+    const gallery = galleryFor(model, page.id);
+    const pairs = pairsFor(model, page.id);
+    const payload = { ...payloadFor(model, page), ...(heroMedia ? { heroMedia } : {}), ...(gallery ? { gallery } : {}), ...(pairs ? { pairs } : {}) };
+    const ogRef = model.media.plan.pages[page.id]?.og;
+    const ogBase = ogRef ? mediaImage(model, ogRef, "og") : imageRef(model, page.img, c.h1);
+    const ogImage = { src: ogBase.src, alt: ogBase.alt || heroImageOf(heroMedia)?.alt || c.h1, width: ogBase.width, height: ogBase.height };
     const robots = page.noindex ? { index: false, follow: true } : { index: true, follow: true, maxImagePreview: "large" };
     const seo = {
       title: c.title, description: c.description, keywords: (c.secondary_keywords || []).join(", "), primaryKeyword: page.primary_keyword,
       canonicalPath: page.url, canonical: canonical(page), robots, index: !page.noindex,
       ogImage: ogImage.src, ogImageAlt: ogImage.alt, twitterDescription: c.description,
-      jsonLd: jsonLdFor(model, page, c, payload)
+      jsonLd: jsonLdFor(model, page, c, payload, ogImage)
     };
     const media = [];
-    const pushMedia = (ref) => { if (ref?.src && ref.alt && !media.some((item) => item.src === ref.src)) media.push(ref); };
-    pushMedia(ogImage);
+    const pushMedia = (ref) => { if (ref?.src && ref.alt && !media.some((item) => item.src === ref.src)) media.push({ src: ref.src, alt: ref.alt, width: ref.width, height: ref.height }); };
+    // The sitemap lists these images, so only images that are visible on the page belong here.
+    if (heroMedia) {
+      pushMedia(heroImageOf(heroMedia));
+      if (heroMedia.kind === "pair") pushMedia(heroMedia.before);
+    } else if (page.type === "home") {
+      pushMedia(ogImage);
+    }
+    for (const image of gallery?.images ?? []) pushMedia(image);
+    for (const pair of pairs ?? []) { pushMedia(pair.after); pushMedia(pair.before); }
     const { pageType, templateKey } = livePageTypeFor(page);
     return {
       id: page.id, slug: page.url, title: c.h1, pageType, templateKey, status: page.status, noindex: Boolean(page.noindex),
@@ -456,6 +592,26 @@ export function validateSiteV2(build = buildSiteV2()) {
     const faq = data.faq || [];
     const ld = seo.jsonLd["@graph"].find((node) => node["@type"] === "FAQPage");
     if (faq.length && (!ld || ld.mainEntity.length !== faq.length)) errors.push(`${page.id}: FAQ JSON-LD mismatch`);
+  }
+  // Media: pages of these layouts show their own picture, every image has a proper
+  // description, nothing comes from another store's folders, and no two pages share the
+  // same main image.
+  const needsMain = new Set(["tool", "template", "collection", "article", "faq", "contact", "about", "trust"]);
+  const mainImages = new Map();
+  for (const page of build.pages) {
+    const { layout, data } = page.contentJson.sections.v2_main.settings;
+    const main = heroImageOf(data.heroMedia);
+    for (const image of [main, data.heroMedia?.before, ...(data.gallery?.images ?? []), ...(data.pairs ?? []).flatMap((pair) => [pair.before, pair.after])].filter(Boolean)) {
+      if (!image.alt || image.alt.length < 12) errors.push(`${page.id}: image without a proper description (${image.src})`);
+      if (/\bunbranded\b|\bplaceholder\b|\bprompt\b/i.test(image.alt)) errors.push(`${page.id}: internal wording in an image description (${image.alt})`);
+      if (!image.src.startsWith("/assets/sites/site_aidreamcapes/")) errors.push(`${page.id}: image outside the Aidreamcapes asset folder (${image.src})`);
+      if (/\/(dreamshoot|mirror|fan-holiday-theme|creative-packs)\//.test(image.src)) errors.push(`${page.id}: image from a retired or other-store folder (${image.src})`);
+    }
+    if (!main && needsMain.has(layout) && page.id !== "photo-hub" && !data.image) errors.push(`${page.id}: no main image`);
+    if (main) {
+      if (mainImages.has(main.src)) errors.push(`${page.id}: same main image as ${mainImages.get(main.src)}`);
+      mainImages.set(main.src, page.id);
+    }
   }
   const slugs = new Set(build.pages.map((page) => page.slug));
   for (const [from, to] of build.redirects) {

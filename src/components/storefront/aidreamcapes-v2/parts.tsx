@@ -1,5 +1,16 @@
 import type { ReactNode } from "react";
-import type { V2Card, V2Crumb, V2Faq, V2Image, V2Item, V2Maker, V2Plan, V2Resolvers, V2Tool } from "./types";
+import type { V2Card, V2Crumb, V2Faq, V2HeroMedia, V2Image, V2Item, V2Maker, V2Plan, V2Resolvers, V2Tool, V2Video } from "./types";
+
+// Each candidate in a stored srcset goes through the same asset resolver as the main file.
+function resolveSrcSet(srcSet: string, r: V2Resolvers): string {
+  return srcSet
+    .split(",")
+    .map((part) => {
+      const [url, size] = part.trim().split(/\s+/);
+      return `${r.asset(url)} ${size}`;
+    })
+    .join(", ");
+}
 
 export function Img({ image, r, className, eager }: { image: V2Image; r: V2Resolvers; className?: string; eager?: boolean }) {
   return (
@@ -7,9 +18,12 @@ export function Img({ image, r, className, eager }: { image: V2Image; r: V2Resol
       alt={image.alt}
       className={className}
       decoding="async"
+      fetchPriority={eager ? "high" : undefined}
       height={image.height}
       loading={eager ? "eager" : "lazy"}
+      sizes={image.srcSet ? image.sizes : undefined}
       src={r.asset(image.src)}
+      srcSet={image.srcSet ? resolveSrcSet(image.srcSet, r) : undefined}
       width={image.width}
     />
   );
@@ -237,13 +251,75 @@ export function Collage({ cards, r }: { cards: V2Card[]; r: V2Resolvers }) {
   );
 }
 
-export function Single({ image, r }: { image: V2Image; r: V2Resolvers }) {
+export function Single({ image, r, label = "Example" }: { image: V2Image; r: V2Resolvers; label?: string | null }) {
   return (
     <div className="single">
-      <span className="lbl">Example</span>
+      {label ? <span className="lbl">{label}</span> : null}
       <Img eager image={image} r={r} />
     </div>
   );
+}
+
+// An example clip: nothing is downloaded until the visitor presses play.
+export function VideoPlayer({ video, r }: { video: V2Video; r: V2Resolvers }) {
+  return (
+    <figure className="vid">
+      <video aria-label={video.name ?? video.poster.alt} controls height={video.height} playsInline poster={r.asset(video.poster.src)} preload="none" width={video.width}>
+        <source src={r.asset(video.src)} type="video/mp4" />
+      </video>
+      <figcaption>Example clip{video.duration ? ` · ${video.duration} seconds` : ""}</figcaption>
+    </figure>
+  );
+}
+
+const orientation = (image: V2Image) => ((image.width ?? 1) >= (image.height ?? 1) ? "land" : "port");
+
+// The main picture at the top of a page: a before/after pair, one image, an example clip,
+// or a short silent loop (home page).
+export function HeroMedia({ media, r }: { media: V2HeroMedia; r: V2Resolvers }) {
+  if (media.kind === "video") return <div className="hm-video"><VideoPlayer r={r} video={media.video} /></div>;
+  if (media.kind === "loop") {
+    return (
+      <div className="hm hm-loop">
+        <video aria-label={media.video.poster.alt} autoPlay data-adc2-loop height={media.video.height} loop muted playsInline poster={r.asset(media.video.poster.src)} preload="metadata" width={media.video.width}>
+          <source src={r.asset(media.video.src)} type="video/mp4" />
+        </video>
+        <span className="lbl">Example video ad</span>
+        <div className="inset"><span className="lbl">Your product photo</span><Img eager image={media.inset} r={r} /></div>
+      </div>
+    );
+  }
+  if (media.kind === "pair") {
+    return (
+      <figure className="hm hm-pair" data-orient={orientation(media.after)}>
+        <Img eager image={media.after} r={r} />
+        <span className="lbl">Result</span>
+        <div className="inset"><span className="lbl">Your photo</span><Img eager image={media.before} r={r} /></div>
+      </figure>
+    );
+  }
+  return <figure className="hm" data-orient={orientation(media.image)}><Img eager image={media.image} r={r} /></figure>;
+}
+
+export function PairGrid({ pairs, r }: { pairs: { before: V2Image; after: V2Image }[]; r: V2Resolvers }) {
+  if (!pairs.length) return null;
+  return (
+    <div className="pairs" data-n={pairs.length}>
+      {pairs.map((pair) => (
+        <figure className="hm hm-pair" data-orient="land" key={pair.after.src}>
+          <Img image={pair.after} r={r} />
+          <span className="lbl">Result</span>
+          <div className="inset"><span className="lbl">Your photo</span><Img image={pair.before} r={r} /></div>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
+export function Gallery({ images, r }: { images: V2Image[]; r: V2Resolvers }) {
+  if (!images.length) return null;
+  const ratio = (images[0].width ?? 16) / (images[0].height ?? 10);
+  return <div className="gal" data-n={images.length} data-shape={ratio > 0.9 && ratio < 1.1 ? "square" : "wide"}>{images.map((image) => <figure key={image.src}><Img image={image} r={r} /></figure>)}</div>;
 }
 
 export function PageHero({ eyebrow, title, lead, right, children }: { eyebrow: string; title: string; lead: string; right?: ReactNode; children?: ReactNode }) {

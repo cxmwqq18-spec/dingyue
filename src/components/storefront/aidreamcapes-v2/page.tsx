@@ -1,9 +1,9 @@
 import type { SectionInstance } from "@/lib/types";
-import { AidreamcapesV2HeroTabs, AidreamcapesV2TemplateFilters } from "./behavior";
+import { AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  Boxes, Collage, Crumbs, CtaBand, Faq, Img, Intro, Maker, PageHero, Plans, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolLink, ToolRow
+  Boxes, Collage, Crumbs, CtaBand, Faq, Gallery, HeroMedia, Img, Intro, Maker, PairGrid, PageHero, Plans, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolLink, ToolRow
 } from "./parts";
-import { list, text, type V2Card, type V2Data, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2Tool } from "./types";
+import { list, text, type V2Card, type V2Data, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2Tool } from "./types";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
 
@@ -19,6 +19,7 @@ function HomePage({ data, r }: Props) {
   const templates = data.templates as { title: string; lead: string; cards: V2Card[]; total: number };
   const platforms = data.platforms as { title: string; items: { label: string; href: string; spec: string }[] };
   const examples = data.examples as { image: V2Image; output: V2Image; versions: V2Image[]; bottle: V2Image; bottleAd: V2Image };
+  const heroMedia = data.heroMedia as V2HeroMedia | undefined;
   return (
     <>
       <section className="hero">
@@ -60,6 +61,9 @@ function HomePage({ data, r }: Props) {
                 </div>
               </div>
             </div>
+            {heroMedia?.kind === "loop" ? (
+              <div aria-label="Example: product photo to video ad" className="visual-loop"><HeroMedia media={heroMedia} r={r} /></div>
+            ) : (
             <div aria-label="Example: product photo to video ad" className="visual">
               <div className="vin"><span className="lbl">Your product photo</span><Img eager image={hero.image} r={r} /></div>
               <div aria-hidden="true" className="arrow">
@@ -74,6 +78,7 @@ function HomePage({ data, r }: Props) {
                 <span>More versions</span>
               </div>
             </div>
+            )}
           </div>
           <div className="trust">
             <span>Private uploads</span><span>Cost shown before every job</span><span>9:16, 1:1 or 16:9</span><span>6, 10 or 15 second videos</span>
@@ -130,6 +135,7 @@ function HomePage({ data, r }: Props) {
       <Faq items={data.faq} title="Questions before you start" />
       <CtaBand href="/app/create" lead="Upload a photo, pick a template and get a video ad or store-ready photos." r={r} title="Your next ad starts with one product photo" />
       <AidreamcapesV2HeroTabs />
+      <AidreamcapesV2MotionPreference />
     </>
   );
 }
@@ -183,14 +189,19 @@ function VideoHubPage({ data, r }: Props) {
 
 function ToolPage({ data, r }: Props) {
   const hero = data.hero as { single?: V2Image; cards?: V2Card[] };
+  const heroMedia = data.heroMedia as V2HeroMedia | undefined;
+  const gallery = data.gallery as { images: V2Image[] } | undefined;
+  const pairs = list<{ before: V2Image; after: V2Image }>(data.pairs);
   const maker = data.maker as V2Maker;
   const video = data.group === "video";
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
         <Maker maker={maker} r={r} />
       </PageHero>
+      {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} /></Section> : null}
+      {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /></Section> : null}
       <Section eyebrow="What it is" title={`What ${data.label} can do for your store`}><Intro paras={list<string>(data.intro)} /></Section>
       <Section eyebrow="Why use it" title={`Why stores use ${data.label}`}><Boxes items={list<V2Item>(data.benefits)} /></Section>
       <Section eyebrow="How it works" title="Three steps">
@@ -214,13 +225,16 @@ function ToolPage({ data, r }: Props) {
 function TemplatePage({ data, r }: Props) {
   const maker = data.maker as V2Maker;
   const madeWith = data.madeWith as { label: string; href: string };
+  const heroMedia = data.heroMedia as V2HeroMedia | undefined;
+  const gallery = data.gallery as { images: V2Image[] } | undefined;
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Single image={data.image as V2Image} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Single image={data.image as V2Image} r={r} />} title={data.h1}>
         <Maker maker={maker} r={r} />
         {text(data.tip) ? <div className="tip"><b>Tip:</b> {text(data.tip)}</div> : null}
       </PageHero>
+      {gallery?.images.length ? <Section eyebrow="Examples" title="What this template looks like"><Gallery images={gallery.images} r={r} /></Section> : null}
       <Section eyebrow="About this template" title="What you get">
         <Intro paras={list<string>(data.intro)} />
         <div style={{ marginTop: 20 }}><Specs rows={list<[string, string]>(data.specs)} /></div>
@@ -239,13 +253,16 @@ function CollectionPage({ data, r }: Props) {
   const kind = text(data.kind);
   const overview = kind === "industry" ? `What ${data.label} sellers need` : kind === "platform" ? `Making ads for ${data.label}` : `Getting ready for ${data.label}`;
   const cards = list<V2Card>(data.cards);
+  const heroMedia = data.heroMedia as V2HeroMedia | undefined;
+  const gallery = data.gallery as { images: V2Image[] } | undefined;
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Collage cards={list<V2Card>(data.heroCards)} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Collage cards={list<V2Card>(data.heroCards)} r={r} />} title={data.h1}>
         <Maker maker={{ options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
       </PageHero>
       <Section eyebrow="Overview" title={overview}><Intro paras={list<string>(data.intro)} /></Section>
+      {gallery?.images.length ? <Section eyebrow="Examples" title={`${data.label} examples`}><Gallery images={gallery.images} r={r} /></Section> : null}
       {list<[string, string]>(data.specs).length ? (
         <Section eyebrow="Sizes and formats" title={`What works on ${data.label}`}>
           <Specs rows={list<[string, string]>(data.specs)} />
@@ -395,7 +412,7 @@ function NextLinks({ data, r }: { data: V2Data; r: V2Resolvers }) {
 
 function SimplePage({ data, r, layout }: Props & { layout: string }) {
   const heroImage = data.image as V2Image | undefined;
-  const hero = <><Crumbs items={data.breadcrumbs} r={r} /><PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroImage?.src ? <Single image={heroImage} r={r} /> : undefined} title={data.h1} /></>;
+  const hero = <><Crumbs items={data.breadcrumbs} r={r} /><PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroImage?.src ? <HeroMedia media={{ kind: "image", image: heroImage }} r={r} /> : undefined} title={data.h1} /></>;
   if (layout === "pricing") {
     return (
       <>
@@ -466,6 +483,7 @@ function SimplePage({ data, r, layout }: Props & { layout: string }) {
         {hero}
         <section style={{ paddingBottom: 20 }}><div className="wrap"><Intro paras={list<string>(data.intro)} /></div></section>
         <section style={{ paddingBottom: 40 }}><div className="wrap"><Flows examples={data.flows as never} r={r} titles={cases.length >= 2 ? cases : undefined} /></div></section>
+        {list<{ before: V2Image; after: V2Image }>(data.pairs).length ? <Section eyebrow="White background" title="Normal photos turned into clean white-background shots"><PairGrid pairs={list<{ before: V2Image; after: V2Image }>(data.pairs)} r={r} /></Section> : null}
         <Section eyebrow="More results" title="Results by template"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
         <Faq items={data.faq} title="Questions" />
       </>

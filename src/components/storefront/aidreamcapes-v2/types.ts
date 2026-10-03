@@ -1,7 +1,13 @@
 // Shapes of the Aidreamcapes.com v2 page payload stored in LivePage.contentJson
 // (sections.v2_main.settings.data). Built by scripts/lib/aidreamcapes-site-v2-content.mjs.
 
-export type V2Image = { src: string; alt: string; width?: number; height?: number };
+export type V2Image = { src: string; alt: string; width?: number; height?: number; srcSet?: string; sizes?: string };
+export type V2Video = { src: string; width: number; height: number; duration?: number; name?: string; description?: string; uploadDate?: string; poster: V2Image };
+export type V2HeroMedia =
+  | { kind: "pair"; before: V2Image; after: V2Image }
+  | { kind: "image"; image: V2Image }
+  | { kind: "video"; video: V2Video }
+  | { kind: "loop"; video: V2Video; inset: V2Image };
 export type V2Item = { t: string; d: string };
 export type V2Faq = { q: string; a: string };
 export type V2Crumb = { label: string; href: string };

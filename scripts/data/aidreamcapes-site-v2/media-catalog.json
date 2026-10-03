@@ -1,0 +1,1416 @@
+{
+ "site": {
+  "watch": {
+   "alt": "White smartwatch product photo used as the starting image"
+  },
+  "watchugc": {
+   "alt": "Creator holding the same white smartwatch toward the camera"
+  },
+  "presenter": {
+   "alt": "AI-generated presenter holding a skincare bottle"
+  }
+ },
+ "galleries": {
+  "ecommerce-main-image": {
+   "dir": "/assets/sites/site_aidreamcapes/ecommerce-main-image-v1/ecommerce-main-image",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Front-facing product image of a matte ceramic travel mug with a clear silhouette"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Ceramic travel mug with a soft grounded shadow on a clean studio surface"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Three-quarter product view showing the travel mug handle and ceramic finish"
+    },
+    "example-04": {
+     "w": 1880,
+     "h": 1880,
+     "alt": "Close view of the travel mug rim and matte ceramic surface"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Bundle image showing the travel mug with its matching lid accessory"
+    },
+    "example-06": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Hand-held scale reference for a ceramic travel mug"
+    },
+    "example-07": {
+     "w": 1880,
+     "h": 1880,
+     "alt": "Square-ready product crop of a matte ceramic travel mug on a neutral background"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Clean ecommerce main image of a matte ceramic travel mug on a neutral studio background"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Ceramic travel mug on a neutral surface as the starting photo"
+    }
+   }
+  },
+  "lifestyle-scene": {
+   "dir": "/assets/sites/site_aidreamcapes/lifestyle-scene-v1/lifestyle-scene",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Linen tote bag beside a coffee cup at a sunny cafe"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Linen tote bag on a park bench with soft morning light"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Linen tote bag carried beside a city bike"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Linen tote bag on a beach picnic blanket"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Linen tote bag hanging in a bright home entryway"
+    },
+    "example-06": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Hand holding the linen tote bag on a neighborhood street"
+    },
+    "example-07": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close view of the tote bag weave and stitched handle"
+    },
+    "example-08": {
+     "w": 1880,
+     "h": 1880,
+     "alt": "Portrait-ready lifestyle crop of the linen tote bag"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Linen tote bag styled in a bright weekend market scene"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Linen tote bag as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "on-model-generation": {
+   "dir": "/assets/sites/site_aidreamcapes/on-model-generation-v1/on-model-generation",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Front view of the backpack worn by a person"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Side view showing the shoulder straps"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Back view showing the full backpack shape"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close view of the backpack pocket"
+    },
+    "example-05": {
+     "w": 3333,
+     "h": 1880,
+     "alt": "Person using the backpack at a desk"
+    },
+    "example-06": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Outdoor walking image with the backpack"
+    },
+    "example-07": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Detail of the backpack handle"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Person wearing a canvas backpack on a city walk"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Canvas backpack as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "background-remove-replace": {
+   "dir": "/assets/sites/site_aidreamcapes/background-remove-replace-v1/background-remove-replace",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Original vase photo with the room background"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Vase isolated on a plain light background"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Vase in a warm living room setting"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Vase on a dark editorial background"
+    },
+    "example-05": {
+     "w": 3338,
+     "h": 1880,
+     "alt": "Vase outdoors on a stone surface"
+    },
+    "example-06": {
+     "w": 3338,
+     "h": 1880,
+     "alt": "Clean edge detail around the vase"
+    },
+    "example-07": {
+     "w": 1880,
+     "h": 1880,
+     "alt": "Square product crop with a soft shadow"
+    },
+    "hero-output": {
+     "w": 2048,
+     "h": 3072,
+     "alt": "Ceramic vase isolated against a clean warm studio background"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Ceramic vase on a cluttered home background as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "feed-ad-still": {
+   "dir": "/assets/sites/site_aidreamcapes/feed-ad-still-v1/feed-ad-still",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Running shoe close-up for a social feed"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Hand holding the running shoe against a simple background"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Running shoe beside a gym bag"
+    },
+    "example-04": {
+     "w": 3336,
+     "h": 1880,
+     "alt": "Running shoe on an outdoor path"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Sole and tread detail of the running shoe"
+    },
+    "example-06": {
+     "w": 3338,
+     "h": 1880,
+     "alt": "Pair of running shoes in a clean product arrangement"
+    },
+    "example-07": {
+     "w": 1880,
+     "h": 1880,
+     "alt": "Square feed crop of the running shoe"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Running shoe centered in a clean vertical feed ad composition"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Running shoe as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "packshot-multi-angle": {
+   "dir": "/assets/sites/site_aidreamcapes/packshot-multi-angle-v1/packshot-multi-angle",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Rear view of the wireless speaker showing its plain connection area"
+    },
+    "example-03": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Side profile showing the speaker’s depth and rounded edge"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Top view of the wireless speaker with simple controls"
+    },
+    "example-06": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Bottom view showing the speaker base and grip"
+    },
+    "example-07": {
+     "w": 3338,
+     "h": 1880,
+     "alt": "Close view of the wireless speaker fabric grille"
+    },
+    "example-08": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Front and rear views of the wireless speaker side by side"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "macro-details": {
+   "dir": "/assets/sites/site_aidreamcapes/macro-details-v1/macro-details",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close view of the wallet leather grain"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Wallet stitching detail along the outer edge"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Interior card slots of the brown leather wallet"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Folded wallet edge and seam detail"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close view of the wallet zipper and pull"
+    },
+    "example-06": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Corner detail showing the leather finish"
+    },
+    "example-07": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Open wallet interior on a neutral background"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close product image of a brown leather wallet with clean studio lighting"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Brown leather wallet as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "size-reference": {
+   "dir": "/assets/sites/site_aidreamcapes/size-reference-v1/size-reference",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Hand beside the travel backpack showing everyday size"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Travel backpack next to a dining chair"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Backpack beside a carry-on suitcase"
+    },
+    "example-04": {
+     "w": 3333,
+     "h": 1880,
+     "alt": "Backpack resting on a desk beside a notebook"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Person wearing the backpack for a natural size cue"
+    },
+    "example-06": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Folded backpack shown beside the full-size version"
+    },
+    "hero-output": {
+     "w": 3338,
+     "h": 1880,
+     "alt": "Travel backpack shown beside a familiar hand and carry-on suitcase for scale"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Folding travel backpack as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "colorway-variations": {
+   "dir": "/assets/sites/site_aidreamcapes/colorway-variations-v1/colorway-variations",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "White canvas sneaker color option"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Navy canvas sneaker color option"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Sage canvas sneaker color option"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Rust canvas sneaker color option"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Side-by-side color lineup"
+    },
+    "example-06": {
+     "w": 3338,
+     "h": 1880,
+     "alt": "Sole detail across the color options"
+    },
+    "example-07": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close view of the canvas texture"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Four canvas sneakers shown together in distinct color options"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Canvas sneaker in a single base color as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "bundle-sets": {
+   "dir": "/assets/sites/site_aidreamcapes/bundle-sets-v1/bundle-sets",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Every item in the skincare set shown together"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Skincare bottle and cream jar arranged side by side"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Open product box with the skincare items beside it"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Top view of the complete skincare bundle"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Travel-size skincare set arranged in a small pouch"
+    },
+    "example-06": {
+     "w": 3338,
+     "h": 1880,
+     "alt": "Gift-ready skincare bundle on a neutral surface"
+    },
+    "example-07": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Shelf presentation of the complete skincare collection"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Complete skincare bundle arranged together on a clean studio set"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Skincare bottle, cream jar, and matching box bundle as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "packaging-mockup": {
+   "dir": "/assets/sites/site_aidreamcapes/packaging-mockup-v1/packaging-mockup",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Front view of the tea box"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Tea pouch standing beside the box"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Stacked packaging set on a counter"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Hand holding the tea pouch"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Tea packaging on a kitchen shelf"
+    },
+    "example-06": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Open packaging arrangement without readable text"
+    },
+    "example-07": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close view of the package material"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Tea packaging arranged on a realistic kitchen shelf"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Tea box and pouch packaging as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "commercial-lighting": {
+   "dir": "/assets/sites/site_aidreamcapes/commercial-lighting-v1/commercial-lighting",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Soft light on the glass perfume bottle"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Bright light showing the bottle shape"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Dramatic edge light on the bottle"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Warm light on a neutral studio surface"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Cool light with a clean blue-gray background"
+    },
+    "example-06": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Side silhouette of the perfume bottle"
+    },
+    "example-07": {
+     "w": 3338,
+     "h": 1880,
+     "alt": "Reflective surface detail"
+    },
+    "hero-output": {
+     "w": 3338,
+     "h": 1880,
+     "alt": "Glass perfume bottle lit with a clean soft studio look"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Glass perfume bottle without a label as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "virtual-try-on": {
+   "dir": "/assets/sites/site_aidreamcapes/virtual-try-on-v1/virtual-try-on",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3338,
+     "h": 1880,
+     "alt": "Front view of the blue jacket on a person"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Side view showing the jacket length"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Blue jacket sleeve and cuff detail on a person"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Zipper and collar detail"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Person walking in the jacket"
+    },
+    "example-06": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Seated view of the jacket fit"
+    },
+    "example-07": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close fabric view of the blue jacket"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Person wearing a plain blue jacket in a softly lit fitting room"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Plain blue jacket as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "jewelry-positioning": {
+   "dir": "/assets/sites/site_aidreamcapes/jewelry-positioning-v1/jewelry-positioning",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Silver necklace on a dark top"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Simple hoop earring shown on an approved portrait"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Bracelet shown on a wrist close-up"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Ring shown on a hand close-up"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Pendant detail at the neckline"
+    },
+    "example-06": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Three-quarter view of jewelry placement"
+    },
+    "example-07": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Side neckline view with the necklace visible"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close portrait showing a simple silver necklace worn at the collarbone"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Simple silver necklace and a portrait photo as the starting photos"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "fashion-editorial": {
+   "dir": "/assets/sites/site_aidreamcapes/fashion-editorial-v1/fashion-editorial",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Full fashion look in a studio"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Outfit captured in motion"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close view of fabric texture"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Accessory detail with no visible brand"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Street fashion editorial scene"
+    },
+    "example-06": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Outdoor editorial portrait"
+    },
+    "example-07": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close fashion portrait"
+    },
+    "example-08": {
+     "w": 1880,
+     "h": 1880,
+     "alt": "Magazine-ready fashion crop"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Fashion editorial image of an adult wearing a tailored neutral outfit in a sculptural space"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Tailored outfit on a plain hanger as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "professional-headshot": {
+   "dir": "/assets/sites/site_aidreamcapes/professional-headshot-v1/professional-headshot",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Professional headshot in a dark blazer"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Professional headshot in a casual shirt"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Headshot with a warm office background"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Headshot with an outdoor neutral background"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Three-quarter professional portrait"
+    },
+    "example-06": {
+     "w": 1880,
+     "h": 1880,
+     "alt": "Square profile crop of the headshot"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Polished professional headshot of an adult against a clean neutral background"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Adult professional portrait as the starting photo"
+    }
+   }
+  },
+  "ugc-still-ad": {
+   "dir": "/assets/sites/site_aidreamcapes/ugc-still-ad-v1/ugc-still-ad",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3333,
+     "h": 1880,
+     "alt": "Water bottle on a kitchen counter during a daily routine"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Person placing the bottle into a gym bag"
+    },
+    "example-03": {
+     "w": 3336,
+     "h": 1880,
+     "alt": "Water bottle beside a laptop on a desk"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Person carrying the bottle outdoors"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Hand-held close view of the bottle lid"
+    },
+    "example-06": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close product view in natural window light"
+    },
+    "example-07": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Vertical customer-style crop of the water bottle"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Person naturally holding a reusable water bottle in a home setting"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Reusable water bottle as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "story-ad-vertical": {
+   "dir": "/assets/sites/site_aidreamcapes/story-ad-vertical-v1/story-ad-vertical",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Sunscreen bottle on a bathroom shelf"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Hand holding sunscreen beside a beach bag"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Sunscreen bottle in a travel pouch"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Bottle beside a bright morning window"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close view of the sunscreen cap and bottle shape"
+    },
+    "example-06": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Vertical product crop with open space for copy"
+    },
+    "hero-output": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Vertical full-screen story image of a sunscreen bottle beside a bright pool towel"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Sunscreen bottle on a plain surface as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  },
+  "sale-campaign-key-visual": {
+   "dir": "/assets/sites/site_aidreamcapes/sale-campaign-key-visual-v1/sale-campaign-key-visual",
+   "variants": [
+    640,
+    1280,
+    1600
+   ],
+   "items": {
+    "example-01": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Winter jacket folded on a clean surface"
+    },
+    "example-02": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Person wearing the jacket outdoors"
+    },
+    "example-03": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Close view of the jacket fabric and zipper"
+    },
+    "example-04": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Flat lay of the jacket and winter accessories"
+    },
+    "example-05": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Jacket in a snowy city setting"
+    },
+    "example-06": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Gift-style jacket presentation without price or text"
+    },
+    "example-07": {
+     "w": 1880,
+     "h": 1880,
+     "alt": "Square seasonal campaign crop"
+    },
+    "hero-output": {
+     "w": 3344,
+     "h": 1880,
+     "alt": "Seasonal campaign image of a winter jacket with space for sale copy"
+    },
+    "source-input": {
+     "w": 1880,
+     "h": 3344,
+     "alt": "Winter jacket as the starting photo"
+    },
+    "og": {
+     "w": 1200,
+     "h": 630,
+     "alt": ""
+    }
+   }
+  }
+ },
+ "ugc": {
+  "dir": "/assets/sites/site_aidreamcapes/ugc-ad-v4",
+  "variants": [
+   640,
+   1280
+  ],
+  "items": {
+   "hook": {
+    "w": 1586,
+    "h": 992,
+    "file": "ugc-ad-video-hook",
+    "alt": "Creator holding up a small beauty product to a phone on a tripod in a bright bedroom"
+   },
+   "demo": {
+    "w": 1586,
+    "h": 992,
+    "file": "ugc-ad-video-demo",
+    "alt": "Creator making coffee with a compact coffee maker and showing it in a kitchen"
+   },
+   "review": {
+    "w": 1586,
+    "h": 992,
+    "file": "ugc-ad-video-review",
+    "alt": "Creator talking to a phone camera while holding a small gray product in a living room"
+   },
+   "script": {
+    "w": 1586,
+    "h": 992,
+    "file": "ugc-ad-video-script",
+    "alt": "Creator at a desk explaining a smart speaker to a phone camera"
+   },
+   "try-on": {
+    "w": 1586,
+    "h": 992,
+    "file": "ugc-ad-video-try-on",
+    "alt": "Creator checking a new outfit in a bedroom mirror while filming with a ring light"
+   },
+   "unboxing": {
+    "w": 1586,
+    "h": 992,
+    "file": "ugc-ad-video-unboxing",
+    "alt": "Creator opening a parcel and reacting to the product inside"
+   },
+   "broll": {
+    "w": 1586,
+    "h": 992,
+    "file": "ugc-ad-video-broll",
+    "alt": "Hands filming a bowl of food and a product detail with a smartphone"
+   }
+  }
+ },
+ "frames": {
+  "ugc-ad-video": {
+   "w": 1344,
+   "h": 768,
+   "alt": "Creator holding a white smartwatch toward the camera in a bright living room",
+   "variants": [
+    640
+   ]
+  },
+  "unboxing-experience": {
+   "w": 1344,
+   "h": 768,
+   "alt": "Hands opening a gray product box on a wooden table",
+   "variants": [
+    640
+   ]
+  },
+  "food-video": {
+   "w": 1344,
+   "h": 768,
+   "alt": "Glass bottle of golden sparkling citrus drink beside fresh oranges and a grapefruit half",
+   "variants": [
+    640
+   ]
+  },
+  "product-video": {
+   "w": 1344,
+   "h": 768,
+   "alt": "Compact espresso machine with a clear water tank on a kitchen counter",
+   "variants": [
+    640
+   ]
+  },
+  "before-after-showcases": {
+   "w": 1344,
+   "h": 768,
+   "alt": "Wardrobe shelves of folded clothes with a person standing beside it",
+   "variants": [
+    640
+   ]
+  },
+  "how-to-video": {
+   "w": 1344,
+   "h": 768,
+   "alt": "Portable garment steamer next to a folded blue shirt on a wooden table",
+   "variants": [
+    640
+   ]
+  },
+  "cinematic-video": {
+   "w": 1344,
+   "h": 768,
+   "alt": "Dark compact speaker lit by soft window light",
+   "variants": [
+    640
+   ]
+  },
+  "beauty-routine": {
+   "w": 1344,
+   "h": 768,
+   "alt": "Amber dropper serum bottle on a bathroom counter with a hand reaching in",
+   "variants": [
+    640
+   ]
+  },
+  "home-organization": {
+   "w": 1344,
+   "h": 768,
+   "alt": "Kitchen drawer shown before and after organizing with trays",
+   "variants": [
+    640
+   ]
+  },
+  "fashion-try-on-reel": {
+   "w": 1344,
+   "h": 768,
+   "alt": "Person holding a sand-colored overshirt in front of a fitting-room mirror",
+   "variants": [
+    640
+   ]
+  },
+  "promo-video": {
+   "w": 1344,
+   "h": 668,
+   "alt": "Hand switching on a warm portable table lamp beside a laptop",
+   "variants": [
+    640
+   ]
+  },
+  "competitor-comparison": {
+   "w": 1344,
+   "h": 768,
+   "alt": "Hand holding a black insulated mug next to a cream one on a wooden table",
+   "variants": [
+    640
+   ]
+  },
+  "black-friday-countdown": {
+   "w": 1344,
+   "h": 768,
+   "alt": "Folding electric bike in a bright garage with a person walking past",
+   "variants": [
+    640
+   ]
+  }
+ },
+ "gen": {
+  "skincare-vertical": {
+   "w": 1152,
+   "h": 2048,
+   "alt": "Amber dropper serum bottle and a cream jar on a stone bathroom shelf in soft morning light",
+   "variants": [
+    640
+   ]
+  },
+  "tiktok-hand-vertical": {
+   "w": 1152,
+   "h": 2048,
+   "alt": "Hand holding a black wireless earbuds case open toward the camera at a bright home desk",
+   "variants": [
+    640
+   ]
+  },
+  "drink-vertical": {
+   "w": 1152,
+   "h": 2048,
+   "alt": "Glass bottle of golden sparkling citrus drink and a tall iced glass with an orange slice on a sunny kitchen counter",
+   "variants": [
+    640
+   ]
+  },
+  "white-mug": {
+   "w": 1536,
+   "h": 1536,
+   "alt": "Matte cream ceramic travel mug with a lid on a pure white background",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "white-shoe": {
+   "w": 1536,
+   "h": 1536,
+   "alt": "Gray knit running shoe with a cream sole on a pure white background",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "white-backpack": {
+   "w": 1536,
+   "h": 1536,
+   "alt": "Olive canvas backpack with brown leather details on a pure white background",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "white-wallet": {
+   "w": 1536,
+   "h": 1536,
+   "alt": "Brown leather bifold wallet on a pure white background",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "white-perfume": {
+   "w": 1536,
+   "h": 1536,
+   "alt": "Glass perfume bottle with a gold neck and clear cap on a pure white background",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "white-sneaker": {
+   "w": 1536,
+   "h": 1536,
+   "alt": "Beige canvas sneaker with a white sole on a pure white background",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "url-to-video-concept": {
+   "w": 1792,
+   "h": 1008,
+   "alt": "Laptop showing a product page with a ceramic mug photo, next to a phone playing a vertical video of the same mug",
+   "variants": [
+    640,
+    1280
+   ]
+  }
+ },
+ "clips": {
+  "ugc-ad-video": {
+   "src": "/assets/sites/site_aidreamcapes/ugc-video-themes/ugc-ad-video.mp4",
+   "w": 1344,
+   "h": 768,
+   "duration": 15,
+   "uploadDate": "2026-09-29T16:15:59+08:00",
+   "name": "Example creator-style video ad: white smartwatch",
+   "description": "A 15-second example of a creator-style product video ad: a presenter shows a white smartwatch to the camera in a bright living room."
+  },
+  "unboxing-experience": {
+   "src": "/assets/sites/site_aidreamcapes/ugc-video-themes/unboxing-experience.mp4",
+   "w": 1344,
+   "h": 768,
+   "duration": 15,
+   "uploadDate": "2026-09-29T16:15:59+08:00",
+   "name": "Example unboxing video: headphones and case",
+   "description": "A 15-second example of an unboxing video: hands open a box and reveal headphones and a charging case on a wooden table."
+  },
+  "food-video": {
+   "src": "/assets/sites/site_aidreamcapes/ugc-video-themes/food-video.mp4",
+   "w": 1344,
+   "h": 768,
+   "duration": 15,
+   "uploadDate": "2026-09-29T16:15:59+08:00",
+   "name": "Example drink video: sparkling citrus drink",
+   "description": "A 15-second example of a drink video: a golden sparkling citrus drink is poured over ice in a bright kitchen."
+  }
+ },
+ "loop": {
+  "src": "/assets/sites/site_aidreamcapes/site-v2/video/home-hero.mp4",
+  "poster": "/assets/sites/site_aidreamcapes/site-v2/video/home-hero.webp",
+  "w": 960,
+  "h": 548
+ }
+}

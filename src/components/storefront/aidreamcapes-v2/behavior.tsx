@@ -127,3 +127,24 @@ export function AidreamcapesV2HeroTabs() {
   }, []);
   return null;
 }
+
+// The home page loop is muted and decorative. Visitors who ask their device for reduced
+// motion get a still poster with normal play controls instead of an automatic loop.
+export function AidreamcapesV2MotionPreference() {
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => {
+      if (!query.matches) return;
+      document.querySelectorAll<HTMLVideoElement>("video[data-adc2-loop]").forEach((video) => {
+        video.pause();
+        video.removeAttribute("autoplay");
+        video.loop = false;
+        video.controls = true;
+      });
+    };
+    apply();
+    query.addEventListener("change", apply);
+    return () => query.removeEventListener("change", apply);
+  }, []);
+  return null;
+}
