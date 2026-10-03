@@ -6,7 +6,7 @@
    "url": "/",
    "label": "Home",
    "primary_keyword": "AI product videos and photos for online stores",
-   "img": "v_creator",
+   "img": "v_creator_ad",
    "status": "rewrite",
    "group": null
   },
@@ -16,7 +16,7 @@
    "url": "/ai-video-generation",
    "label": "AI Video",
    "primary_keyword": "AI video generator for ecommerce",
-   "img": "v_creator",
+   "img": "v_creator_ad",
    "status": "rewrite",
    "group": "video"
   },
@@ -46,7 +46,7 @@
    "url": "/ai-video-generation/ugc-ad-video",
    "label": "Video Ads",
    "primary_keyword": "AI UGC video ads",
-   "img": "v_creator",
+   "img": "v_creator_ad",
    "status": "keep",
    "group": "video"
   },
@@ -726,7 +726,7 @@
    "url": "/platforms/tiktok-ads",
    "label": "TikTok",
    "primary_keyword": "AI TikTok ads generator",
-   "img": "v_creator",
+   "img": "v_creator_ad",
    "status": "rewrite",
    "group": null
   },
@@ -908,7 +908,7 @@
    "url": "/guides/first-tiktok-video-ad",
    "label": "Your First TikTok Video Ad",
    "primary_keyword": "how to make a TikTok ad",
-   "img": "v_creator",
+   "img": "v_creator_ad",
    "status": "new",
    "group": null,
    "section": "guides"
@@ -1111,7 +1111,7 @@
    "creator",
    "video-ads",
    "Creator Video Ad",
-   "v_creator",
+   "v_creator_ad",
    "video",
    [
     "electronics"
@@ -1226,7 +1226,7 @@
    "TikTok",
    "/platforms/tiktok-ads",
    "AI TikTok ads generator",
-   "v_creator",
+   "v_creator_ad",
    "rewrite"
   ],
   [
