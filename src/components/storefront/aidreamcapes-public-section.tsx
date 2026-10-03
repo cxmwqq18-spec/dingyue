@@ -66,7 +66,7 @@ function slugify(value: string): string {
   return htmlText(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "section";
 }
 
-function headingsFromHtml(value: string): Array<{ id: string; label: string; level: number }> {
+export function headingsFromHtml(value: string): Array<{ id: string; label: string; level: number }> {
   const result: Array<{ id: string; label: string; level: number }> = [];
   const matcher = /<h([23])([^>]*)>([\s\S]*?)<\/h[23]>/gi;
   let match: RegExpExecArray | null;
@@ -79,7 +79,7 @@ function headingsFromHtml(value: string): Array<{ id: string; label: string; lev
   return result.slice(0, 12);
 }
 
-function addHeadingIds(value: string): string {
+export function addHeadingIds(value: string): string {
   const used = new Set<string>();
   return value.replace(/<h([23])([^>]*)>([\s\S]*?)<\/h[23]>/gi, (full, level: string, attrs: string, body: string) => {
     const existing = attrs.match(/\sid=["']([^"']+)["']/i)?.[1];

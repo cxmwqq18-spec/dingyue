@@ -134,12 +134,23 @@ export function AidreamcapesV2Footer({ navigation, r }: { navigation: Aidreamcap
 }
 
 /** Full page chrome for Aidreamcapes.com v2: scoped styles, header, main content, footer. */
-export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-content" }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; children: ReactNode; mainId?: string }) {
+// `legacyPublicPage` keeps the existing Aidreamcapes page styles (scoped to
+// main[data-aidreamcapes-public-page]) for pages that still render their own sections,
+// such as login, search, cart and the album page.
+export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-content", legacyPublicPage = false }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; children: ReactNode; mainId?: string; legacyPublicPage?: boolean }) {
   return (
     <div className="adc2">
       <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_CSS }} />
       <AidreamcapesV2Header navigation={navigation} r={r} />
-      <main data-aidreamcapes-v2="true" id={mainId}>{children}</main>
+      <main
+        className={legacyPublicPage ? "bg-[#06070b] text-white" : undefined}
+        data-aidreamcapes-public-page={legacyPublicPage ? "true" : undefined}
+        data-aidreamcapes-v2="true"
+        data-theme-sections-root={legacyPublicPage ? "" : undefined}
+        id={mainId}
+      >
+        {children}
+      </main>
       <AidreamcapesV2Footer navigation={navigation} r={r} />
       <AidreamcapesV2MenuBehavior />
     </div>

@@ -181,6 +181,54 @@ const PLANS = [
   { name: "Premium", price: "$63", credits: "600", who: "For brands and agencies with many products.", features: ["Everything in Pro", "Twice the credits of Pro", "Most room for new products"], popular: false }
 ];
 
+// "Where to go next" links on the simple pages, so each one leads on to the pages a
+// visitor is most likely to need next.
+const NEXT_LINKS = {
+  about: [
+    ["AI Video", "/ai-video-generation", "Turn product photos into short video ads."],
+    ["Product Photos", "/ai-image-generation", "White background, lifestyle and model photos."],
+    ["Templates", "/templates", "Ready-made ideas for every product and platform."],
+    ["Trust and Safety", "/trust-and-safety", "How we handle your uploads and AI content."]
+  ],
+  faq: [
+    ["Pricing", "/pricing", "Plans, credits and what each job costs."],
+    ["Image to Video", "/ai-video-generation/image-to-video", "Start a video from one product photo."],
+    ["Product photo tips", "/guides/product-photo-tips", "How to take a photo that gives good results."],
+    ["Contact support", "/contact-us", "Email us if your question isn't answered here."]
+  ],
+  contact: [
+    ["FAQ", "/faq", "Quick answers about credits, sizes and refunds."],
+    ["Refund Policy", "/refunds", "When credits come back and how refund reviews work."],
+    ["Pricing", "/pricing", "Plans and the credits each one includes."],
+    ["Trust and Safety", "/trust-and-safety", "How we handle uploads and report problems."]
+  ],
+  pricing: [
+    ["FAQ", "/faq", "More about credits, refunds and video lengths."],
+    ["Templates", "/templates", "See what your credits can make."],
+    ["Refund Policy", "/refunds", "How refund reviews and credit returns work."],
+    ["Contact support", "/contact-us", "Questions about a plan or a charge."]
+  ],
+  trust: [
+    ["Privacy Policy", "/privacy", "What we collect and how long we keep it."],
+    ["Content Policy", "/content", "What you can and can't upload."],
+    ["Refund Policy", "/refunds", "How refund reviews and credit returns work."],
+    ["Contact support", "/contact-us", "Report a problem with a result."]
+  ],
+  "ai-info": [
+    ["AI Video", "/ai-video-generation", "Video tools and templates for product ads."],
+    ["Product Photos", "/ai-image-generation", "Photo tools for store listings and ads."],
+    ["Pricing", "/pricing", "Plans, credits and what each job costs."],
+    ["About Aidreamcapes", "/about-us", "Who we are and why we built it."]
+  ]
+};
+const POLICY_PATHS = ["/privacy", "/terms", "/refunds", "/cookies", "/content", "/digital-delivery", "/children-privacy", "/state-privacy"];
+function nextLinks(model, type) {
+  return (NEXT_LINKS[type] ?? []).map(([label, href, text]) => {
+    assert.ok(model.pages.some((page) => page.url === href) || POLICY_PATHS.includes(href), `next link to unknown page ${href}`);
+    return { label, href, text };
+  });
+}
+
 function layoutFor(page) {
   return { home: "home", hub: "video-hub", "hub-tool": "tool", tool: "tool", template: "template", industry: "collection", platform: "collection", occasion: "collection",
     index: "index", article: "article", pricing: "pricing", faq: "faq", contact: "contact", about: "about", examples: "examples", trust: "trust", "ai-info": "ai-info" }[page.type];
@@ -197,7 +245,7 @@ function payloadFor(model, page) {
   if (t === "home") {
     return { ...base,
       hero: { image: imageRef(model, "watch", "White smartwatch product photo used as the starting image"), output: imageRef(model, "watchugc", "Creator holding the same white smartwatch toward the camera"),
-        versions: [0, 1, 2].map((i) => imageRef(model, `var${i}`, "")), videoHref: appHref({ tool: "video-ads", template: "creator", size: "9:16", length: "15", prompt: TEMPLATE_PROMPTS.creator }, true),
+        versions: [0, 1, 2].map((i) => imageRef(model, `var${i}`, `Smartwatch opening version ${"ABC"[i]}`)), videoHref: appHref({ tool: "video-ads", template: "creator", size: "9:16", length: "15", prompt: TEMPLATE_PROMPTS.creator }, true),
         photoHref: appHref({ tool_id: "image_generator", tool: "white-background", template: "white", prompt: TEMPLATE_PROMPTS.white }, false) },
       make: { title: c.make_title, lead: c.make_lead, video: VIDEO_TOOLS.map((id) => toolRef(model, id)), photo: PHOTO_TOOLS.map((id) => toolRef(model, id)) },
       templates: { title: c.templates_title, lead: c.templates_lead, cards: HOME_FEATURED.map((key) => cardRef(model, key)), total: model.cards.length },
@@ -265,12 +313,12 @@ function payloadFor(model, page) {
     return { ...base, section: page.section, minutes: c.read_minutes || 5, image: imageRef(model, page.img, page.label), sections: c.sections || [], checklist: c.checklist || [],
       related: (c.related || []).filter((id) => model.byId[id]).map((id) => ({ label: model.byId[id].label, href: model.byId[id].url, text: (model.content[id].lead || "").slice(0, 110) })) };
   }
-  if (t === "pricing") return { ...base, intro: c.intro || [], credits: c.credits_explained || [], plans: PLANS };
-  if (t === "faq") return { ...base, image: imageRef(model, page.img, c.h1) };
-  if (t === "contact") return { ...base, image: imageRef(model, page.img, c.h1), intro: c.intro || [], topics: c.topics || [], email: "support@aidreamcapes.com" };
-  if (t === "about") return { ...base, image: imageRef(model, page.img, c.h1), sections: c.sections || [] };
-  if (t === "trust") return { ...base, image: imageRef(model, page.img, c.h1), sections: c.sections || [] };
-  if (t === "ai-info") return { ...base, summary: c.summary, facts: c.facts, notOffered: c.not_offered, describe: c.describe, llmsText: buildLlmsText(model) };
+  if (t === "pricing") return { ...base, intro: c.intro || [], credits: c.credits_explained || [], plans: PLANS, next: nextLinks(model, t) };
+  if (t === "faq") return { ...base, image: imageRef(model, page.img, c.h1), next: nextLinks(model, t) };
+  if (t === "contact") return { ...base, image: imageRef(model, page.img, c.h1), intro: c.intro || [], topics: c.topics || [], email: "support@aidreamcapes.com", next: nextLinks(model, t) };
+  if (t === "about") return { ...base, image: imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
+  if (t === "trust") return { ...base, image: imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
+  if (t === "ai-info") return { ...base, summary: c.summary, facts: c.facts, notOffered: c.not_offered, describe: c.describe, llmsText: buildLlmsText(model), next: nextLinks(model, t) };
   if (t === "examples") {
     return { ...base, intro: c.intro || [], cases: c.cases || [], cards: CARD_ORDER.map((key) => cardRef(model, key)),
       flows: payloadFor(model, model.byId.home).examples };
@@ -415,4 +463,94 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (!slugs.has(to) && to !== "/ai-video-generation" && to !== "/ai-image-generation") errors.push(`redirect target missing: ${to}`);
   }
   return errors;
+}
+
+// ---------------------------------------------------------------------------
+// Utility pages (login, album, cart, account, search, 404) keep their own sections;
+// only the named copy fields change. Every change names the value it replaces, so a
+// field that was edited online since is left alone and reported as a conflict.
+
+export function loadUtilityPagePatches() {
+  const source = readJson(path.join(DATA_DIR, "utility-pages.json"));
+  return source.pages.map((page) => ({
+    slug: page.slug,
+    changes: [...(page.include ?? []).flatMap((key) => source.shared[key] ?? []), ...page.changes]
+  }));
+}
+
+// An unset field matches `null` in a change, so a change can fill in a field that was never set.
+const sameValue = (left, right) => JSON.stringify(left ?? null) === JSON.stringify(right ?? null);
+
+export function applyUtilityPagePatch(contentJson, changes) {
+  const next = structuredClone(contentJson ?? {});
+  next.sections ??= {};
+  next.sectionsOrder ??= [];
+  next.seo ??= {};
+  const result = { next, applied: [], unchanged: [], conflicts: [] };
+  const sectionOf = (id, type) => {
+    const section = next.sections[id];
+    return section && section.type === type ? section : undefined;
+  };
+  for (const change of changes) {
+    const [kind] = change;
+    if (kind === "seo") {
+      const [, key, from, to] = change;
+      const current = next.seo[key];
+      if (sameValue(current, to)) result.unchanged.push(`seo.${key}`);
+      else if (sameValue(current, from)) { next.seo[key] = to; result.applied.push(`seo.${key}`); }
+      else result.conflicts.push(`seo.${key}`);
+    } else if (kind === "field") {
+      const [, id, type, key, from, to] = change;
+      const section = sectionOf(id, type);
+      const current = section?.settings?.[key];
+      if (!section) result.conflicts.push(`${id}.${key} (section missing)`);
+      else if (sameValue(current, to)) result.unchanged.push(`${id}.${key}`);
+      else if (sameValue(current, from)) { section.settings[key] = to; result.applied.push(`${id}.${key}`); }
+      else result.conflicts.push(`${id}.${key}`);
+    } else if (kind === "block") {
+      const [, id, type, index, key, from, to] = change;
+      const block = sectionOf(id, type)?.blocks?.[index];
+      const current = block?.settings?.[key];
+      if (!block) result.conflicts.push(`${id}.blocks[${index}].${key} (block missing)`);
+      else if (sameValue(current, to)) result.unchanged.push(`${id}.blocks[${index}].${key}`);
+      else if (sameValue(current, from)) { block.settings[key] = to; result.applied.push(`${id}.blocks[${index}].${key}`); }
+      else result.conflicts.push(`${id}.blocks[${index}].${key}`);
+    } else if (kind === "remove") {
+      const [, id, type] = change;
+      const section = next.sections[id];
+      if (!section) result.unchanged.push(`remove ${id}`);
+      else if (section.type !== type) result.conflicts.push(`remove ${id} (type ${section.type})`);
+      else {
+        delete next.sections[id];
+        next.sectionsOrder = next.sectionsOrder.filter((sectionId) => sectionId !== id);
+        result.applied.push(`remove ${id}`);
+      }
+    } else {
+      throw new Error(`Unknown utility page change: ${kind}`);
+    }
+  }
+  return result;
+}
+
+// Subscription plan cards (cart, account, checkout) show each product's summary and
+// features; they follow the v2 pricing plans. Same rule as above: only values that
+// still equal the expected current text are replaced.
+export function loadProductPatches() {
+  const source = readJson(path.join(DATA_DIR, "utility-pages.json"));
+  return (source.products ?? []).map((product) => {
+    const plan = PLANS.find((candidate) => candidate.name === product.plan);
+    assert.ok(plan, `unknown plan ${product.plan}`);
+    return { id: product.id, from: product.from, to: { summary: plan.who, features: plan.features, badgeLabel: product.badgeLabel } };
+  });
+}
+
+export function applyProductPatch(metadata, patch) {
+  const next = structuredClone(metadata ?? {});
+  const result = { next, applied: [], unchanged: [], conflicts: [] };
+  for (const key of Object.keys(patch.to)) {
+    if (sameValue(next[key], patch.to[key])) result.unchanged.push(key);
+    else if (sameValue(next[key], patch.from[key])) { next[key] = patch.to[key]; result.applied.push(key); }
+    else result.conflicts.push(key);
+  }
+  return result;
 }

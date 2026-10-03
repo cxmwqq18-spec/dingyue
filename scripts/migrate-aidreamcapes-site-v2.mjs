@@ -11,7 +11,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
-import { AIDREAMCAPES_SITE_ID, buildSiteV2, validateSiteV2 } from "./lib/aidreamcapes-site-v2-content.mjs";
+import { AIDREAMCAPES_SITE_ID, applyProductPatch, applyUtilityPagePatch, buildSiteV2, loadProductPatches, loadUtilityPagePatches, validateSiteV2 } from "./lib/aidreamcapes-site-v2-content.mjs";
 import { argumentValue, assertDatabaseTarget, assertNonProductionWriteTarget, hasArgument } from "./lib/database-target.mjs";
 
 const SITE_ID = AIDREAMCAPES_SITE_ID;
@@ -24,9 +24,14 @@ const confirmation = argumentValue("--confirm") ?? "";
 const backupRoot = argumentValue("--backup-dir") ?? path.resolve("releases/backups/aidreamcapes");
 
 assert.equal(requestedSiteId, SITE_ID, `This migration is restricted to ${SITE_ID}.`);
+// A dry run may read production (DINGYUE_ENV/DATABASE_TARGET=production) to preview the
+// change; it never writes.
+const productionDryRun = !apply && String(process.env.DATABASE_TARGET || "").trim().toLowerCase() === "production";
 if (applyProduction) {
   assertDatabaseTarget({ expectedTarget: "production", requireProductionConfirmation: true, productionConfirmed: confirmation === "production" });
   assert.equal(confirmation, "production", "Production apply requires --confirm=production.");
+} else if (productionDryRun) {
+  assertDatabaseTarget({ expectedTarget: "production" });
 } else {
   assertDatabaseTarget({ expectedTarget: "local" });
   if (apply) {
@@ -76,6 +81,26 @@ try {
   const nextSettings = (json) => ({ ...(json ?? {}), aidreamcapesV2Navigation: build.navigation });
   const navigationChanged = hashJson(settings.publishedJson?.aidreamcapesV2Navigation ?? null) !== hashJson(build.navigation)
     || hashJson(settings.draftJson?.aidreamcapesV2Navigation ?? null) !== hashJson(build.navigation);
+  // Utility pages keep their sections; only the named copy fields change (see utility-pages.json).
+  const utilityPatches = loadUtilityPagePatches();
+  const utilityRows = await prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: utilityPatches.map((patch) => patch.slug) } } });
+  const utilityResults = utilityPatches.map((patch) => {
+    const row = utilityRows.find((candidate) => candidate.slug === patch.slug);
+    if (!row) return { slug: patch.slug, missing: true, applied: [], conflicts: [] };
+    const result = applyUtilityPagePatch(row.contentJson, patch.changes);
+    return { slug: patch.slug, id: row.id, next: result.next, applied: result.applied, unchanged: result.unchanged.length, conflicts: result.conflicts };
+  });
+  const utilityReport = utilityResults.map(({ next, ...item }) => item);
+  // Subscription plan summaries and features (shown on cart, account and checkout).
+  const productPatches = loadProductPatches();
+  const productRows = await prisma.product.findMany({ where: { siteId: SITE_ID, id: { in: productPatches.map((patch) => patch.id) } } });
+  const productResults = productPatches.map((patch) => {
+    const row = productRows.find((candidate) => candidate.id === patch.id);
+    if (!row) return { id: patch.id, missing: true, applied: [], conflicts: [] };
+    const result = applyProductPatch(row.metadata, patch);
+    return { id: patch.id, name: row.name, next: result.next, applied: result.applied, conflicts: result.conflicts };
+  });
+  const productReport = productResults.map(({ next, ...item }) => item);
   const report = nextPages.map((page) => ({
     id: page.id,
     slug: page.slug,
@@ -85,14 +110,16 @@ try {
   }));
 
   if (!apply) {
-    console.log(JSON.stringify({ ok: true, mode: "dry-run", siteId: SITE_ID, domain: site.primaryDomain, pages: report.length,
+    // Every other page of this site, so each one can be checked against the v2 redirects.
+    const otherPages = await prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { notIn: slugs } }, select: { slug: true, title: true, pageType: true }, orderBy: { slug: "asc" } });
+    console.log(JSON.stringify({ ok: true, mode: productionDryRun ? "production-dry-run" : "dry-run", siteId: SITE_ID, domain: site.primaryDomain, pages: report.length,
       creates: report.filter((item) => item.action === "CREATE").length, updates: report.filter((item) => item.action === "UPDATE").length,
-      navigationChanged, report }, null, 2));
+      navigationChanged, report, utilityPages: utilityReport, products: productReport, otherPages }, null, 2));
   } else {
     const stamp = new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14);
     const backupPath = path.resolve(backupRoot, `site-v2-${applyProduction ? "production" : "local"}-${stamp}.json`);
     await mkdir(path.dirname(backupPath), { recursive: true });
-    await writeFile(backupPath, JSON.stringify({ site, existingPages, settings }, null, 2) + "\n", "utf8");
+    await writeFile(backupPath, JSON.stringify({ site, existingPages, utilityPages: utilityRows, products: productRows, settings }, null, 2) + "\n", "utf8");
     await prisma.$transaction(async (tx) => {
       for (const page of nextPages) {
         await tx.livePage.upsert({
@@ -100,6 +127,12 @@ try {
           create: page,
           update: { pageType: page.pageType, templateKey: page.templateKey, slug: page.slug, title: page.title, contentJson: page.contentJson }
         });
+      }
+      for (const item of utilityResults) {
+        if (!item.missing && item.applied.length) await tx.livePage.update({ where: { id: item.id }, data: { contentJson: item.next } });
+      }
+      for (const item of productResults) {
+        if (!item.missing && item.applied.length) await tx.product.update({ where: { id: item.id }, data: { metadata: item.next } });
       }
       if (navigationChanged) {
         await tx.themeSettings.update({
@@ -112,12 +145,20 @@ try {
     assert.equal(readback.length, nextPages.length, "LivePage readback count");
     const readbackBySlug = new Map(readback.map((page) => [page.slug, page]));
     for (const page of nextPages) assert.equal(hashJson(readbackBySlug.get(page.slug)?.contentJson), hashJson(page.contentJson), `${page.slug}: content hash readback`);
+    for (const item of utilityResults.filter((candidate) => !candidate.missing && candidate.applied.length)) {
+      const row = await prisma.livePage.findUnique({ where: { id: item.id }, select: { contentJson: true } });
+      assert.equal(hashJson(row?.contentJson), hashJson(item.next), `${item.slug}: utility page readback`);
+    }
+    for (const item of productResults.filter((candidate) => !candidate.missing && candidate.applied.length)) {
+      const row = await prisma.product.findUnique({ where: { id: item.id }, select: { metadata: true } });
+      assert.equal(hashJson(row?.metadata), hashJson(item.next), `${item.id}: product readback`);
+    }
     const settingsReadback = await prisma.themeSettings.findUnique({ where: { siteId: SITE_ID }, select: { publishedJson: true, draftJson: true } });
     assert.equal(hashJson(settingsReadback.publishedJson.aidreamcapesV2Navigation), hashJson(build.navigation), "published navigation readback");
     assert.equal(hashJson(settingsReadback.draftJson.aidreamcapesV2Navigation), hashJson(build.navigation), "draft navigation readback");
     console.log(JSON.stringify({ ok: true, mode: applyProduction ? "production-applied" : "local-applied", siteId: SITE_ID, backupPath,
       pages: report.length, creates: report.filter((item) => item.action === "CREATE").length, updates: report.filter((item) => item.action === "UPDATE").length,
-      navigationChanged, readback: "PASS" }, null, 2));
+      navigationChanged, utilityPages: utilityReport, products: productReport, readback: "PASS" }, null, 2));
   }
 } finally {
   await prisma.$disconnect();

@@ -381,6 +381,18 @@ function ProseSections({ sections }: { sections: V2Section[] }) {
   );
 }
 
+function NextLinks({ data, r }: { data: V2Data; r: V2Resolvers }) {
+  const links = list<{ label: string; href: string; text: string }>(data.next);
+  if (!links.length) return null;
+  return (
+    <Section eyebrow="Keep going" title="Where to go next">
+      <div className="related">
+        {links.map((item) => <a href={r.href(item.href)} key={item.href}><b>{item.label}</b><span>{item.text}</span></a>)}
+      </div>
+    </Section>
+  );
+}
+
 function SimplePage({ data, r, layout }: Props & { layout: string }) {
   const heroImage = data.image as V2Image | undefined;
   const hero = <><Crumbs items={data.breadcrumbs} r={r} /><PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroImage?.src ? <Single image={heroImage} r={r} /> : undefined} title={data.h1} /></>;
@@ -391,11 +403,12 @@ function SimplePage({ data, r, layout }: Props & { layout: string }) {
         <section style={{ paddingBottom: 64 }}><div className="wrap"><Plans plans={list<V2Plan>(data.plans)} r={r} /></div></section>
         {list<string>(data.credits).length ? <Section eyebrow="Credits" title="How credits work"><Intro paras={list<string>(data.credits)} /></Section> : null}
         <Faq items={data.faq} title="Pricing questions" />
+        <NextLinks data={data} r={r} />
         <CtaBand href="/app/create" lead="Pick a plan when you are ready." r={r} title="Start with one product photo" />
       </>
     );
   }
-  if (layout === "faq") return <>{hero}<Faq items={data.faq} title="All questions" /></>;
+  if (layout === "faq") return <>{hero}<Faq items={data.faq} title="All questions" /><NextLinks data={data} r={r} /></>;
   if (layout === "contact") {
     return (
       <>
@@ -408,6 +421,7 @@ function SimplePage({ data, r, layout }: Props & { layout: string }) {
         </section>
         {list<V2Item>(data.topics).length ? <Section eyebrow="We can help with" title="What to contact us about"><Boxes className="ideas" items={list<V2Item>(data.topics)} /></Section> : null}
         <Faq items={data.faq} title="Questions" />
+        <NextLinks data={data} r={r} />
       </>
     );
   }
@@ -417,6 +431,7 @@ function SimplePage({ data, r, layout }: Props & { layout: string }) {
         {hero}
         <ProseSections sections={list<V2Section>(data.sections)} />
         <Faq items={data.faq} title="Questions" />
+        <NextLinks data={data} r={r} />
         {layout === "about" ? <CtaBand href="/app/create" lead="Upload a product photo and try a template." r={r} title="See what you can make" /> : null}
       </>
     );
@@ -440,6 +455,7 @@ function SimplePage({ data, r, layout }: Props & { layout: string }) {
           {list<string>(data.describe).map((line) => <p key={line}>{line}</p>)}
         </div>
         <Faq items={data.faq} title="Common questions" />
+        <NextLinks data={data} r={r} />
       </>
     );
   }
