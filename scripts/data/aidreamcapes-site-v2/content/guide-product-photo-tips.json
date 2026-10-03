@@ -1,0 +1,91 @@
+{
+  "id": "guide-product-photo-tips",
+  "title": "How to Take Product Photos for AI | Aidreamcapes",
+  "description": "Learn how to take product photos for AI tools with just a phone: light, angles, framing, and a quick check before upload, for cleaner results. Read the guide.",
+  "h1": "How to Take Product Photos for AI With Just Your Phone",
+  "eyebrow": "Photo guide",
+  "lead": "The photo you upload shapes every image and video made from it. Here's how to shoot a clear one with a phone, a window, and about ten minutes.",
+  "secondary_keywords": [
+    "product photography with a phone",
+    "product photo lighting at home",
+    "how to photograph products for an online store",
+    "product photo angles"
+  ],
+  "read_minutes": 4,
+  "summary": "Shoot a clear, well-lit product photo on your phone so the images and videos you make from it look like the real thing.",
+  "sections": [
+    {
+      "h2": "Why the starting photo matters",
+      "paras": [
+        "An AI tool can only work with what it can see. If the label is blurry in your photo, the new image has to guess what it says. If your kitchen light turned a white mug slightly yellow, that yellow tends to carry into every version you make.",
+        "A sharp, evenly lit photo gives you results that look like your actual product. It also means fewer do-overs, and fewer credits spent on them."
+      ]
+    },
+    {
+      "h2": "Set up in five minutes",
+      "paras": [
+        "Start with light. Put a table next to a window during the day, where the light is bright but indirect. If the sun hits the table directly, tape a thin white sheet or baking paper over the glass to soften it. Turn off ceiling lights so warm and cool light don't mix on the product.",
+        "Next, the background. A plain surface is enough. A sheet of white poster board, curved so it runs under the product and up the wall behind it, hides the table edge. Plain gray card or a light wooden tabletop also works. Skip patterned tablecloths and busy shelves.",
+        "Then prep the product. Wipe off dust and fingerprints, peel off price stickers, and straighten anything soft, like a scarf or a pouch. Small flaws are easy to miss on a phone screen and obvious in a finished ad."
+      ]
+    },
+    {
+      "h2": "Frame the shot",
+      "paras": [
+        "Hold the phone at the same height as the product for the main front view. Shooting from above makes bottles and boxes look like they're tipping backward.",
+        "Fill most of the frame with the product, but leave a little space on every side so nothing gets cut off. Use the regular 1x lens and step closer instead of pinching to zoom, which softens fine detail.",
+        "Tap the screen on the label to focus. If white areas look washed out, slide the brightness down a little until texture comes back. Turn off portrait mode, filters, and any beauty setting. They change edges and colors, and the AI will copy those changes.",
+        "Keep the phone still. Rest it on a stack of books or a small tripod and use the volume button or a two-second timer to take the shot. Even a slight shake is enough to soften small print."
+      ]
+    },
+    {
+      "h2": "Take a few extra angles",
+      "paras": [
+        "One good front view is the minimum. A few more shots give you options later, when you want a close-up detail image or a video that starts from a different side.",
+        "For a ceramic mug, that might be the front with the handle on the right, a top-down shot showing the glaze inside, and a close-up of the stamp on the base. For a sneaker, try the side profile, a three-quarter front view, and the sole. For a serum bottle, shoot the front label, the back label, and the dropper held in a hand for scale.",
+        "Clothing needs a little more care. Lay the piece flat on a made bed or hang it on a plain door, smooth out creases with your hands, and shoot straight on from above or in front. Add one close-up of the fabric so the texture and stitching are clear."
+      ]
+    },
+    {
+      "h2": "Check the photo before you upload",
+      "paras": [
+        "Zoom in on your phone screen. Is the text on the label sharp enough to read? Are the product's edges crisp rather than smeared? Hold the real item next to the screen in daylight and compare the color.",
+        "Make sure your product is the only thing in the frame. Move anything that pulls attention, like a coffee cup or a laptop lid. Upload the original photo file, not a screenshot or a copy sent through a chat app, since those are usually shrunk."
+      ]
+    },
+    {
+      "h2": "Pair the photo with a clear description",
+      "paras": [
+        "In Aidreamcapes, you upload the photo and add a sentence about what you want. Describe the product and the scene in plain words. \"A matte black water bottle on a gym bench, early morning light\" gets you much closer than \"make it look amazing.\" The same goes for video: \"The bottle turns slowly on a wooden counter while sunlight moves across it\" tells the tool what should happen.",
+        "Leave out prices, discount codes, and headlines. AI-made lettering can come out with errors, so add those words afterward in Canva or your ads manager, where you control the exact spelling."
+      ]
+    }
+  ],
+  "checklist": [
+    "Window daylight, ceiling lights off",
+    "Plain background with no clutter",
+    "Product cleaned, stickers removed",
+    "Phone at product height, 1x lens, no filters",
+    "Label readable and color close to the real item",
+    "Original file, not a screenshot"
+  ],
+  "related": [
+    "photo-hub",
+    "white-background",
+    "image-to-video"
+  ],
+  "faq": [
+    {
+      "q": "How do I photograph shiny or reflective products?",
+      "a": "Shoot near a window and stand a white card on the opposite side to bounce light into the shadows. Turn the product slightly until the window's reflection lands on an edge instead of the label. Avoid flash, which leaves a hard white spot."
+    },
+    {
+      "q": "Does my photo need a white background before I upload it?",
+      "a": "No. A plain, uncluttered background is enough. If a marketplace asks for a white background, you can make that version from this photo afterward."
+    },
+    {
+      "q": "Can I upload a photo that shows other brands' logos?",
+      "a": "It's better not to. Requests that include logos or trademarks you don't own, or famous people, may be refused. Crop them out or reshoot with only your product in the frame."
+    }
+  ]
+}

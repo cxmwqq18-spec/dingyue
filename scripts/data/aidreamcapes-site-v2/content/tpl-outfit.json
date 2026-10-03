@@ -1,0 +1,75 @@
+{
+  "id": "tpl-outfit",
+  "title": "AI Fashion Reels: Show the Full Outfit | Aidreamcapes",
+  "description": "Create AI fashion reels from a photo of your jacket, jeans, or full outfit. Get a head-to-toe vertical video in 6, 10, or 15 seconds, ready for TikTok. Try it.",
+  "h1": "AI Fashion Reels That Show the Whole Look, Head to Toe",
+  "eyebrow": "Fashion video template",
+  "lead": "Put your jacket, jeans, or full outfit on a model, head to toe. Upload your clothing photo, describe the look and the pose, and receive a 9:16 reel ready for TikTok and Instagram.",
+  "secondary_keywords": [
+    "outfit reel ideas",
+    "clothing video ad",
+    "AI clothing model video",
+    "fashion TikTok ad",
+    "menswear video ad"
+  ],
+  "intro": [
+    "You get a short, full-length outfit clip, the kind shoppers scroll through for styling ideas. Our sample has a young man standing in a light gray studio in a stone-colored zip jacket over a white tee, straight blue jeans, and white sneakers.",
+    "Seeing the whole look helps buyers judge fit, length, and how the pieces work together, something a flat lay can't show. Use it for new arrivals, outfit pairing ideas, or to give one key piece a styled setting. Menswear, womenswear, and activewear all work."
+  ],
+  "tip": "Photograph the outfit laid flat or on a mannequin in one well-lit shot, then describe the model and pose, like \"man in his 20s, hands in pockets, light gray studio.\"",
+  "steps": [
+    {
+      "t": "Upload the clothing photo",
+      "d": "A flat lay or hanger shot with even light keeps the color and cut close to the real piece."
+    },
+    {
+      "t": "Describe the model and backdrop",
+      "d": "Say who is wearing it, how they stand, and where. Pick 6 seconds for a quick look or 15 for a slower reveal."
+    },
+    {
+      "t": "Add sizes and a sound",
+      "d": "After downloading, put a track, the price, and size notes on the clip in TikTok or CapCut."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "One jacket, three outfits",
+      "d": "Style the same jacket with jeans, tailored trousers, and shorts in separate reels to show its range."
+    },
+    {
+      "t": "Season switch",
+      "d": "Move the backdrop from a gray studio to a fall street or a summer boardwalk."
+    },
+    {
+      "t": "Womenswear and activewear",
+      "d": "Describe a different model to show dresses, matching sets, or leggings the same way."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Size",
+        "9:16 · TikTok & Reels"
+      ],
+      [
+        "Length",
+        "15 seconds"
+      ]
+    ],
+    "cta": "Make my outfit reel"
+  },
+  "faq": [
+    {
+      "q": "Can I use the same model in every reel?",
+      "a": "There's no saved model to pick from. Each reel is made on its own, so the model's face and build can change between videos, even with the same description."
+    },
+    {
+      "q": "Will the clothes look exactly like mine?",
+      "a": "The video follows your photo, but small details like buttons, stitching, or prints can shift. Watch each clip before you post, and generate a fresh one if a detail looks off."
+    },
+    {
+      "q": "Which clothes come out well?",
+      "a": "Garments with a strong outline and solid color, such as jackets, denim, knitwear, and dresses. Very fine patterns or tiny logos may lose sharpness, so shoot close and in good light."
+    }
+  ]
+}

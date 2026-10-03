@@ -24,6 +24,8 @@ const AIDREAMCAPES_EU_SAVE_THE_DATE_SEO_OVERRIDES: Record<string, { title: strin
   }
 };
 
+// Applies to Aidreamcapes v1 pages only. Aidreamcapes.com v2 pages own their
+// description and share image in LivePage.contentJson.seo.
 const AIDREAMCAPES_SEO_DESCRIPTION_OVERRIDES: Record<string, string> = {
   "/ai-image-generation/ecommerce-main-image": "Create a clean ecommerce main image from one product reference. Keep it clear and centered for Shopify, marketplace, and DTC store pages with Aidreamcapes.",
   "/ai-image-generation/lifestyle-scene": "Create natural lifestyle product photos with real-world settings, clear context, and focus on what you sell for Shopify, marketplaces, and online stores."
@@ -125,7 +127,9 @@ export async function metadataForPublishedStorefrontPage({
       : path === page.slug ? context.seo.canonicalPath : path,
     snapshotPage.slug
   );
-  const aidreamcapesSeoDescription = snapshot.site.id === "site_aidreamcapes"
+  const isAidreamcapesV2Page = snapshot.site.id === "site_aidreamcapes" &&
+    snapshotPage.publishedJson.sectionsOrder.some((sectionId) => snapshotPage.publishedJson.sections[sectionId]?.type === "aidreamcapes_v2_page");
+  const aidreamcapesSeoDescription = snapshot.site.id === "site_aidreamcapes" && !isAidreamcapesV2Page
     ? AIDREAMCAPES_SEO_DESCRIPTION_OVERRIDES[metadataPath]
     : undefined;
   const euVideoDirectorySeo = snapshot.site.id === "site_aidreamcapes_xby" && metadataPath === "/ai-video-generation"
@@ -144,7 +148,7 @@ export async function metadataForPublishedStorefrontPage({
   const euVideoTopic = snapshot.site.id === "site_aidreamcapes_xby"
     ? aidreamcapesEuVideoTopicFromPath(metadataPath)
     : undefined;
-  const aidreamcapesImageDirectoryOgImage = snapshot.site.id === "site_aidreamcapes" && metadataPath === "/ai-image-generation"
+  const aidreamcapesImageDirectoryOgImage = snapshot.site.id === "site_aidreamcapes" && !isAidreamcapesV2Page && metadataPath === "/ai-image-generation"
     ? "/assets/sites/site_aidreamcapes/ecommerce-main-image-v1/ecommerce-main-image/og.webp"
     : undefined;
   const aidreamcapesEuImageDirectoryOgImage = snapshot.site.id === "site_aidreamcapes_xby" && metadataPath === "/ai-image-generation"

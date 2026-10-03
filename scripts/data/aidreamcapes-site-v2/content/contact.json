@@ -1,0 +1,46 @@
+{
+  "id": "contact",
+  "title": "Support: Email Us About Credits or Results | Aidreamcapes",
+  "description": "Need Aidreamcapes support? Email support@aidreamcapes.com about credits, billing, failed jobs or your account. We aim to reply within two business days.",
+  "h1": "Contact Aidreamcapes Support",
+  "eyebrow": "Customer support",
+  "lead": "Questions about a photo, a video, your credits or your account? Send us an email and we'll help you sort it out.",
+  "secondary_keywords": [
+    "Aidreamcapes customer service",
+    "Aidreamcapes billing help",
+    "Aidreamcapes credits question",
+    "contact Aidreamcapes by email"
+  ],
+  "intro": [
+    "You can reach our support team by email at support@aidreamcapes.com. Our goal is to answer every message within two business days.",
+    "To help us solve things in one reply, include the email address on your account, a short description of the problem and, if it's about a specific photo or video, roughly when you made it. A screenshot of any error message helps too."
+  ],
+  "topics": [
+    {
+      "t": "Billing and plans",
+      "d": "Questions about your plan, a charge on your statement, or which plan fits the amount of content you make."
+    },
+    {
+      "t": "Credits and failed jobs",
+      "d": "If a job failed and you don't see your credits back, or a cost wasn't what you expected, tell us what happened."
+    },
+    {
+      "t": "Results that missed the mark",
+      "d": "If a photo or video came out very different from your description, send us the details and we'll take a look."
+    },
+    {
+      "t": "Account and privacy",
+      "d": "Trouble signing in, or questions about who can see your uploads and results."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is there a phone number or live chat for Aidreamcapes support?",
+      "a": "Support is handled by email at support@aidreamcapes.com, which also gives you a written record of your question and our answer."
+    },
+    {
+      "q": "Can you help me before I choose a plan?",
+      "a": "Yes. If you're not sure the tools suit your products, email us a short note about what you sell and where you advertise, and we'll point you to the right place to start."
+    }
+  ]
+}

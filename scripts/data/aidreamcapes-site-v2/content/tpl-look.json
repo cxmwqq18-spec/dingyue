@@ -1,0 +1,78 @@
+{
+  "id": "tpl-look",
+  "title": "AI Lookbook Photos for New Collections | Aidreamcapes",
+  "description": "Create AI lookbook photos for a new collection, with your outfits on a model in sunlit, editorial settings. Upload each outfit and build your launch looks.",
+  "h1": "AI Lookbook Photos with an Editorial Feel",
+  "eyebrow": "Model photo template",
+  "lead": "Put your outfits in a magazine-style setting, like a sunlit stone archway by the sea, and build a lookbook for a new drop one look at a time.",
+  "secondary_keywords": [
+    "fashion editorial photos",
+    "collection launch lookbook",
+    "menswear lookbook photos",
+    "Instagram lookbook images"
+  ],
+  "intro": [
+    "In the example, a relaxed sand-colored suit with wide-leg trousers stands against pale stone arches with a glimpse of the sea. The light is warm, the pose is easy, and the setting supports the outfit instead of competing with it.",
+    "A lookbook sets the mood for a collection in a way plain product shots don't. Use it to announce a seasonal drop on Instagram, open a launch email with a few outfit ideas, or give stockists a feel for the season ahead."
+  ],
+  "tip": "Upload each outfit as a full flat lay, top and bottom together, and choose one location for the whole collection so the images feel like one story.",
+  "steps": [
+    {
+      "t": "Lay out the full outfit",
+      "d": "Photograph every piece of the look together, including shoes if they're part of what you sell."
+    },
+    {
+      "t": "Set the scene",
+      "d": "Describe the place, light, and attitude, such as \"stone archway by the sea, late afternoon sun, relaxed stance.\""
+    },
+    {
+      "t": "Build the collection",
+      "d": "Download each look, then repeat with the next outfit in the same location so the set holds together."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Launch-day carousel",
+      "d": "Post five or six looks as an Instagram carousel on the day a collection goes live."
+    },
+    {
+      "t": "City or coast",
+      "d": "Try the same outfit on a city street and on a seaside terrace to find the setting that matches your brand."
+    },
+    {
+      "t": "Wedding guest edit",
+      "d": "Style linen suits and slip dresses for summer weddings and garden parties."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Template",
+        "Lookbook"
+      ],
+      [
+        "Size",
+        "Square by default"
+      ],
+      [
+        "Setting",
+        "A location you describe"
+      ]
+    ],
+    "cta": "Start my lookbook"
+  },
+  "faq": [
+    {
+      "q": "Can I make a whole lookbook at once?",
+      "a": "Each run makes one photo, so you build a lookbook look by look. Keeping the setting the same in every description helps the photos feel like one shoot."
+    },
+    {
+      "q": "Will the clothes in the photo match my real pieces?",
+      "a": "The cut, color, and fabric follow your upload, but small details like buttons and stitching can change. Look over each image next to the real garment before you publish it."
+    },
+    {
+      "q": "What size are the lookbook photos?",
+      "a": "Square by default, which suits Instagram feed posts and carousels. Ask for some space around the outfit in your description if you plan to crop later."
+    }
+  ]
+}

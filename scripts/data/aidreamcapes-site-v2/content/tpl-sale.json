@@ -1,0 +1,78 @@
+{
+  "id": "tpl-sale",
+  "title": "Sale Banner Maker for Seasonal Promotions | Aidreamcapes",
+  "description": "Use this sale banner maker to put your product in a seasonal scene with open space for the offer. Add your discount in Canva later. Make your sale image now.",
+  "h1": "Sale Banner Maker with Room Left for Your Offer",
+  "eyebrow": "Ad photo template",
+  "lead": "Create a seasonal image of your product with a clear patch of sky, wall, or snow where your discount and dates can go once you add them.",
+  "secondary_keywords": [
+    "Black Friday banner image",
+    "seasonal sale ad image",
+    "holiday sale photo for Facebook",
+    "winter clearance banner"
+  ],
+  "intro": [
+    "The example shows a sage green puffer jacket worn in a snowy mountain valley, with a wooden fence and a chalet nearby. The upper left is open sky, the natural place for a sale headline.",
+    "A sale image has two jobs: show the product and give the offer a clean place to sit. This handles the first and leaves room for the second, because you'll add the percentage, dates, and code yourself in Canva, where every number stays exact. Use it for Black Friday, end-of-season clearance, and holiday promotions on Facebook and Instagram."
+  ],
+  "tip": "Say where you want the empty space, for example \"open sky across the left third,\" so your offer text has a calm area to sit on.",
+  "steps": [
+    {
+      "t": "Upload the sale item",
+      "d": "Pick a crisp photo of the jacket, bag, or shoes you're discounting."
+    },
+    {
+      "t": "Describe the season and the gap",
+      "d": "Write the scene and where the empty area should be, like \"snowy mountains, chalet, clear sky upper left.\""
+    },
+    {
+      "t": "Type the offer last",
+      "d": "Download the image and type your discount, dates, and code over the open space in your design tool."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Black Friday",
+      "d": "Darker, dramatic light with plenty of empty space for bold offer text."
+    },
+    {
+      "t": "End-of-season clearance",
+      "d": "Summer dresses on a late-season beach or coats in early spring snow to move last season's stock."
+    },
+    {
+      "t": "Holiday gift promotions",
+      "d": "A product by a decorated fireplace or a frosted window for gift ads during the holiday rush."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Template",
+        "Sale Banner"
+      ],
+      [
+        "Size",
+        "Square by default"
+      ],
+      [
+        "Space",
+        "Open area for your offer"
+      ]
+    ],
+    "cta": "Make my sale image"
+  },
+  "faq": [
+    {
+      "q": "Why doesn't the banner include my discount text?",
+      "a": "AI-made lettering sometimes garbles words and digits, and a wrong price on a sale ad causes real trouble. Adding the text yourself keeps every figure exact."
+    },
+    {
+      "q": "What size is the sale image?",
+      "a": "Square by default, which fits Facebook and Instagram feed posts. For a wide website header, set the image on a wider canvas in your design tool."
+    },
+    {
+      "q": "Can I reuse one image for different offers?",
+      "a": "Yes. Since the offer is added afterward, the same image can carry a percent-off headline in one ad and a free-shipping line in another."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "id": "tpl-tryon",
+  "title": "AI Virtual Try-On for Clothing Photos | Aidreamcapes",
+  "description": "Use AI virtual try-on for clothing to show your jacket, shirt, or dress on a model without a photoshoot. Upload a flat lay or hanger shot and see it worn.",
+  "h1": "AI Virtual Try-On for Clothing: Your Garment on a Model",
+  "eyebrow": "Model photo template",
+  "lead": "Upload a flat lay or hanger photo of one garment and get a photo of it worn by a model, so shoppers can see how it hangs on a body.",
+  "secondary_keywords": [
+    "clothing on model from flat lay",
+    "AI fashion model photos",
+    "garment on model photo for Shopify",
+    "jacket product photos on a model"
+  ],
+  "intro": [
+    "The example shows a lightweight blue zip jacket over a white tee and stone-colored chinos, with the model standing by a mirror that catches the back of the collar and shoulders. It answers what a flat lay can't: where the hem falls, how the sleeves sit, and how the jacket looks zipped on a body.",
+    "For a small clothing shop, it's a way to show a new piece on a person the week it arrives, without booking a model or a studio. Use the photos on Shopify product pages beside your flat lays."
+  ],
+  "tip": "Hang the garment on a plain wall or spread it out flat, zipped and smoothed, then describe the model and room, such as \"man in his twenties, light fitting room.\"",
+  "steps": [
+    {
+      "t": "Photograph the garment",
+      "d": "Shoot one item at a time from the front, with the collar, pockets, and zipper in full view."
+    },
+    {
+      "t": "Describe the person and pose",
+      "d": "Add the model's look, the pose, and what they wear with it, for example \"hands in pockets, white tee, beige chinos.\""
+    },
+    {
+      "t": "Make the next look",
+      "d": "Download the photo, then upload the back of the garment for a rear view, or move on to the next item in your collection."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Outerwear and layers",
+      "d": "Jackets, overshirts, and cardigans look natural worn open or zipped over a simple base layer."
+    },
+    {
+      "t": "Front and back pairs",
+      "d": "Pair a front view with a mirror or back view so buyers can judge the cut from more than one side."
+    },
+    {
+      "t": "New arrivals",
+      "d": "Put each new piece on a model the day it lands, so your new-in collection shows clothes on people, not just on hangers."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Template",
+        "Clothing Try-On"
+      ],
+      [
+        "Size",
+        "Square by default"
+      ],
+      [
+        "Upload",
+        "One garment photo"
+      ]
+    ],
+    "cta": "Put it on a model"
+  },
+  "faq": [
+    {
+      "q": "Can my shoppers try clothes on themselves with this?",
+      "a": "No. This is for you as the seller: it turns your garment photo into a photo of the item being worn, which you then post on your store or social pages."
+    },
+    {
+      "q": "Will the model look the same in every photo?",
+      "a": "There's no saved model to reuse, so the person can look different from one photo to the next. Describing age, hair, and build in the same words each time helps the set feel related."
+    },
+    {
+      "q": "Does the photo show the true fit?",
+      "a": "It shows the style and how the fabric drapes, not an exact fit for every body. List your size chart and garment measurements alongside the photo so buyers can pick the right size."
+    }
+  ]
+}

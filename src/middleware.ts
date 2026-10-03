@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import aidreamcapesSiteV2Redirects from "@/lib/aidreamcapes-site-v2-redirects.json";
 import { NextResponse } from "next/server";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
@@ -878,6 +879,13 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
   const upstreamUrl = sameServerUrl(request);
   const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
   if (!hostSlug || upstreamUrl.pathname.startsWith("/site/")) return upstreamUrl;
+  // aidreamcapes.com/llms.txt is answered by an internal handler; every other host
+  // keeps its usual handling for this path.
+  if (hostSlug === "aidreamcapes" && upstreamUrl.pathname === "/llms.txt") {
+    upstreamUrl.pathname = "/api/aidreamcapes/llms-txt";
+    upstreamUrl.search = "";
+    return upstreamUrl;
+  }
   // Video watch pages are standalone routes for all three storefront hosts.
   // Keep them on the top-level App Router path so they do not fall through to
   // the database-backed storefront catch-all and lose their site-specific
@@ -942,9 +950,27 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
   });
 }
 
+// Aidreamcapes.com v2: retired v1 URLs move permanently to their closest v2 page.
+// Only requests for the aidreamcapes.com host (or its /site/aidreamcapes path mode) match.
+const AIDREAMCAPES_V2_REDIRECTS = new Map<string, string>(aidreamcapesSiteV2Redirects as [string, string][]);
+
+function aidreamcapesV2Redirect(request: NextRequest): Response | undefined {
+  const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
+  const pathMatch = pathname.match(/^\/site\/aidreamcapes(\/.*)?$/i);
+  const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
+  if (hostSlug ? hostSlug !== "aidreamcapes" : !pathMatch) return undefined;
+  const publicPath = pathMatch ? pathMatch[1] || "/" : pathname;
+  const target = AIDREAMCAPES_V2_REDIRECTS.get(publicPath);
+  if (!target) return undefined;
+  const location = `${pathMatch && hostSlug !== "aidreamcapes" ? "/site/aidreamcapes" : ""}${target}${request.nextUrl.search}`;
+  return NextResponse.redirect(publicRedirectUrlForRequest(request, location), 301);
+}
+
 export async function middleware(request: NextRequest) {
   const canonicalHostResponse = aidreamcapesCanonicalHostRedirect(request);
   if (canonicalHostResponse) return finalizeStorefrontResponse(canonicalHostResponse, request);
+  const aidreamcapesV2RedirectResponse = aidreamcapesV2Redirect(request);
+  if (aidreamcapesV2RedirectResponse) return finalizeStorefrontResponse(aidreamcapesV2RedirectResponse, request);
   const legacyGalleryRedirect = aidreamcapesLegacyGalleryRedirect(request);
   if (legacyGalleryRedirect) return finalizeStorefrontResponse(legacyGalleryRedirect, request);
   const retiredImageToolResponse = retiredAidreamcapesImageToolResponse(request);

@@ -1,0 +1,78 @@
+{
+  "id": "tpl-pack",
+  "title": "Packaging Mockup Generator for Styled Scenes | Aidreamcapes",
+  "description": "Use this packaging mockup generator to see your box, pouch, or label design in a styled scene. Upload your artwork and get a launch photo before stock lands.",
+  "h1": "Packaging Mockup Generator: See Your Design on the Shelf",
+  "eyebrow": "Product photo template",
+  "lead": "Upload your box or pouch artwork and see it on a sunny shelf, a coffee shop counter, or a kitchen table, ready to share before the first print run arrives.",
+  "secondary_keywords": [
+    "box mockup from design file",
+    "pouch packaging mockup",
+    "label mockup for food products",
+    "tea packaging design preview"
+  ],
+  "intro": [
+    "The example puts a tea brand on a wooden shelf in morning sun: a tall carton and a stand-up pouch, both printed with a misty mountain watercolor, next to a cup of tea and a jar of loose leaves.",
+    "It's handy in the gap between finished artwork and finished stock. Show the new packaging on your Shopify product page or in a coming-soon post while the boxes are still at the printer, or compare two label designs in the same scene before you commit to one."
+  ],
+  "tip": "Upload a flat, high-resolution image of your design or label, and keep tiny text like ingredient lists off the front, since fine print may not come out as designed.",
+  "steps": [
+    {
+      "t": "Upload your design or label",
+      "d": "Use the flat artwork for the front panel, or a photo of a printed sample if you have one."
+    },
+    {
+      "t": "Name the shape and setting",
+      "d": "Say what the packaging is and where it sits, for example \"tall carton and stand-up pouch on a wooden kitchen shelf.\""
+    },
+    {
+      "t": "Try a second setting",
+      "d": "Download the result, then run it again with a different scene, like a coffee shop counter, to see which one feels right for your brand."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Coming-soon posts",
+      "d": "Share the new pack on Instagram or in an email a few weeks before stock arrives."
+    },
+    {
+      "t": "Label refresh",
+      "d": "Preview a redesigned label for coffee, hot sauce, or tea on a kitchen counter before you reorder packaging."
+    },
+    {
+      "t": "Gift box options",
+      "d": "Place a holiday sleeve or gift box in a cozy table scene to help you decide which version to print."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Template",
+        "Packaging Preview"
+      ],
+      [
+        "Size",
+        "Square 1:1"
+      ],
+      [
+        "Upload",
+        "Your design or label"
+      ]
+    ],
+    "cta": "Preview my packaging"
+  },
+  "faq": [
+    {
+      "q": "Can I use the mockup to check colors before printing?",
+      "a": "Use it to judge the overall look in a real setting, not exact color or folds. Ask your printer for a printed sample before you place a full order."
+    },
+    {
+      "q": "Will the small text on my label come out right?",
+      "a": "Dense text such as ingredient panels or nutrition facts can blur or change in the result. Keep the front of your artwork simple, and show fine print in a separate photo of the real pack."
+    },
+    {
+      "q": "What packaging shapes can I use?",
+      "a": "Boxes, pouches, tins, jars, bottles, and paper bags are all common choices. Name the shape when you describe the scene so your design is placed on the right form."
+    }
+  ]
+}

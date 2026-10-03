@@ -17,6 +17,7 @@ export type SectionType =
   | "aidreamcapes_scenario_grid"
   | "aidreamcapes_how_it_works"
   | "aidreamcapes_credit_rules"
+  | "aidreamcapes_v2_page"
   | "hero"
   | "story_mosaic"
   | "video_feature"
@@ -70,6 +71,34 @@ export interface ThemeNavLink {
   label: string;
   href: string;
   group?: string;
+  /** Optional one-line customer-facing summary shown under the label (Aidreamcapes v2 menus). */
+  description?: string;
+  /** Optional thumbnail image path shown next to the label (Aidreamcapes v2 menus). */
+  image?: string;
+}
+
+/** Aidreamcapes.com v2 header/footer navigation, stored in ThemeSettings. */
+export interface AidreamcapesV2NavigationMenu {
+  label: string;
+  groups: AidreamcapesZipNavigationGroup[];
+  popular?: ThemeNavLink[];
+  footerLink?: ThemeNavLink;
+}
+
+export interface AidreamcapesV2Navigation {
+  version: 2;
+  menus: AidreamcapesV2NavigationMenu[];
+  links: ThemeNavLink[];
+  actions: {
+    login: ThemeNavLink;
+    getStarted: ThemeNavLink;
+  };
+  footer: {
+    tagline: string;
+    groups: AidreamcapesZipNavigationGroup[];
+    legal: ThemeNavLink[];
+    copyright: string;
+  };
 }
 
 export interface AidreamcapesZipNavigationGroup {
@@ -254,6 +283,7 @@ export interface ThemeSettings {
     footerLinks: ThemeNavLink[];
   };
   aidreamcapesZipNavigation?: AidreamcapesZipNavigation;
+  aidreamcapesV2Navigation?: AidreamcapesV2Navigation;
   saveTheDateNavigation?: SaveTheDateNavigationConfig;
   globalSections?: {
     header?: SectionInstance;

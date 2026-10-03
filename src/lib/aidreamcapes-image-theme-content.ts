@@ -223,6 +223,13 @@ export function imageThemeDetailContentFromSection(section: SectionInstance): Ai
   return candidate as unknown as AidreamcapesImageThemeDetailContent;
 }
 
+/** A registered Aidreamcapes image route renders either the v1 image theme detail or a v2 page. */
+export function isRenderableAidreamcapesImageThemePage(page: Pick<ThemePage, "publishedJson"> | undefined): boolean {
+  if (!page) return false;
+  const isV2 = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "aidreamcapes_v2_page");
+  return isV2 || Boolean(imageThemeDetailContentFromPage(page));
+}
+
 export function imageThemeDetailContentFromPage(page: Pick<ThemePage, "publishedJson">): AidreamcapesImageThemeDetailContent | undefined {
   const section = page.publishedJson.sectionsOrder
     .map((sectionId) => page.publishedJson.sections[sectionId])

@@ -22,6 +22,8 @@ import { resolvePublishedSaveTheDateGroups, resolvePublishedSaveTheDateNavigatio
 import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation, aidreamcapesZipFooterItems } from "@/components/storefront/aidreamcapes-zip-navigation";
+import { AidreamcapesV2Shell } from "@/components/storefront/aidreamcapes-v2/shell";
+import { AidreamcapesV2Page, isAidreamcapesV2Section } from "@/components/storefront/aidreamcapes-v2/page";
 import { AidreamcapesZipHomepageSection } from "@/components/storefront/aidreamcapes-zip-homepage";
 import { AidreamcapesPublicSection } from "@/components/storefront/aidreamcapes-public-section";
 import { AidreamcapesZipFooter, type AidreamcapesZipCompanyProfile, type AidreamcapesZipPaymentMethod, type AidreamcapesZipSocialLink } from "@/components/storefront/aidreamcapes-zip-footer";
@@ -307,6 +309,58 @@ export function ThemeRenderer({
   };
   const useAidreamcapesImageDirectory = displaySite.id === "site_aidreamcapes" && normalizedPath === "/ai-image-generation" && Boolean(aidreamcapesImageDirectoryCards?.length);
   const previewHasEmptyBody = mode === "preview" && entries.length === 0;
+  // Aidreamcapes.com v2: the site-owned navigation in ThemeSettings switches every
+  // public page of site_aidreamcapes (only) to the v2 header/footer. Pages whose
+  // LivePage contains the v2 section render the v2 body; other pages keep their
+  // existing sections inside the same chrome. No other storefront enters here.
+  const aidreamcapesV2Navigation = displaySite.id === "site_aidreamcapes" ? settings.aidreamcapesV2Navigation : undefined;
+  if (aidreamcapesV2Navigation?.version === 2) {
+    const v2Entry = getSectionEntries(displayPage).find(([, section]) => isAidreamcapesV2Section(section));
+    const v2Resolvers = {
+      href: (value: string) => hrefFor(routedSite, value),
+      asset: (value: string) => mediaAssetUrl(routedSite, value)
+    };
+    return (
+      <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
+        <AidreamcapesV2Shell mainId={mainContentId} navigation={aidreamcapesV2Navigation} r={v2Resolvers}>
+          {v2Entry ? (
+            <AidreamcapesV2Page r={v2Resolvers} section={v2Entry[1]} />
+          ) : (
+            <div data-aidreamcapes-public-page="true" data-theme-sections-root="">
+              {entries.map(([id, section]) => (
+                <ThemeSectionFrame
+                  creativePackCategories={creativePackCategories}
+                  creativePacks={creativePacks}
+                  id={id}
+                  key={id}
+                  lazyRender={false}
+                  mode={mode}
+                  previewSelection={previewSelection}
+                  products={products}
+                  publishedIndexablePaths={publishedIndexablePaths}
+                  renderContext={renderContext}
+                  storefrontContext={storefrontContext}
+                  runtime={runtime}
+                  section={section}
+                  site={routedSite}
+                  siteAiApps={siteAiApps}
+                  toolMenuItems={toolMenuItems}
+                  videoThemeCategories={videoThemeCategories}
+                  videoThemes={videoThemes}
+                  homepageShowcases={homepageShowcases}
+                  aidreamcapesImageDirectoryCards={aidreamcapesImageDirectoryCards}
+                  aidreamcapesVideoThemeCovers={aidreamcapesVideoThemeCovers}
+                  saveTheDateNavigationGroups={settings.saveTheDateNavigation?.groups ?? []}
+                  aidreamcapesVideoNavigation={settings.aidreamcapesZipNavigation}
+                  videoGenerationTopics={navigationVideoGenerationTopics}
+                />
+              ))}
+            </div>
+          )}
+        </AidreamcapesV2Shell>
+      </StorefrontLinkPrefetchProvider>
+    );
+  }
   return (
     <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
       <div

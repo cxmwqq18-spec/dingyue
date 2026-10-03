@@ -1,0 +1,89 @@
+{
+  "id": "guide-testing-ad-versions",
+  "title": "How to Test Ad Creatives on a Small Budget | Aidreamcapes",
+  "description": "Learn how to test ad creatives on a small budget: change one thing, make a few versions, run them side by side in your ad platform, then read the results.",
+  "h1": "How to Test Ad Creatives Without Guessing",
+  "eyebrow": "Ad testing guide",
+  "lead": "You can't tell in advance which video or photo people will stop for. A small, fair test shows you, and it doesn't take a big budget.",
+  "secondary_keywords": [
+    "ad creative testing for small business",
+    "compare ad versions",
+    "split test video ads",
+    "which ad version works"
+  ],
+  "read_minutes": 4,
+  "summary": "Make a few versions of an ad that differ in one way, run them side by side in your ad platform, and read the results fairly.",
+  "sections": [
+    {
+      "h2": "Change one thing at a time",
+      "paras": [
+        "A test only teaches you something if the versions differ in one way. Change the opening, the setting, and the offer all at once, and you won't know which change made the difference.",
+        "Things worth testing, one at a time: the opening moment, the setting, the shape (9:16 or 1:1), the length, and the text or offer you add on top. Start with the opening. It decides whether anyone sees the rest."
+      ]
+    },
+    {
+      "h2": "Plan three versions",
+      "paras": [
+        "Say you sell a smartwatch. Keep the product photo, length, and shape the same, and change only how the video starts.",
+        "Version one opens on the watch face lighting up in a dark room. Version two opens on a wrist turning during an outdoor run. Version three opens with the watch sliding out of its box.",
+        "Three is a sensible number on a small budget. With many more, each version gets too little spend to tell you anything.",
+        "Photo ads work the same way. For a ceramic mug in a feed ad, you might test the setting: the mug on a kitchen counter with steam rising, on a home office desk next to a notebook, and wrapped as a gift with a ribbon. Same mug, same angle, same text added afterward."
+      ]
+    },
+    {
+      "h2": "Make each version in Aidreamcapes",
+      "paras": [
+        "Upload the same product photo each time and choose the same shape and length. Change only the sentence that describes the opening. Each video is made separately, and you see the credit cost before each one, so you know what all three will cost before you commit.",
+        "Download each file and give it a clear name, such as watch-run-9x16. Then add the same caption, text, and music to all three in CapCut or TikTok's editor. If one version gets a different headline, the test is no longer about the opening.",
+        "Aidreamcapes makes the versions. The comparison happens in your ad platform, where real viewers produce real results."
+      ]
+    },
+    {
+      "h2": "Run them side by side in your ad platform",
+      "paras": [
+        "Put all three versions in the same campaign with the same audience, budget, and product page. Most ad platforms let you place several ads in one ad set or ad group. Some also offer a split test tool that divides the audience evenly between versions.",
+        "Expect the platform to push more spend to one version early on. That's normal, but a version that barely ran hasn't really been tested. If that happens, a split test or a separate ad set for each version gives a fairer comparison.",
+        "Avoid editing the ads while the test runs. Changes can reset how the platform delivers them and blur the results."
+      ]
+    },
+    {
+      "h2": "Read the results without fooling yourself",
+      "paras": [
+        "Give the test several days and enough views before you decide. A version that leads after one afternoon or a few hundred views can easily fall behind.",
+        "Look at three numbers, in this order. First, how many people keep watching past the first few seconds, which tells you whether the opening works. Second, the click rate, which shows whether the ad makes people curious enough to visit. Third, the cost per purchase or per add-to-cart, which matters most for your shop. A version can win on views and still lose on sales.",
+        "Sometimes the numbers end up close. That isn't a failed test; it tells you this change doesn't matter much to your buyers. Keep whichever version you like and test a bigger difference next time."
+      ]
+    },
+    {
+      "h2": "Keep the winner and test the next thing",
+      "paras": [
+        "Turn off the clear losers and keep the version that brings sales at a cost you can live with. Then start the next round by changing one new thing, like the setting, while keeping the winning opening.",
+        "Keep a simple log with the date, what changed, and the result. After a few rounds, you'll see patterns in what your buyers respond to. When a winning ad starts costing more per sale, that's your cue to make fresh versions.",
+        "Over time, work through the list of things worth testing: opening, setting, shape, length, then the offer. Each round builds on the last, so your next ad starts from what already worked instead of from scratch."
+      ]
+    }
+  ],
+  "checklist": [
+    "Only one difference between versions",
+    "Two to four versions, not ten",
+    "Same audience, budget, and product page for each",
+    "No edits while the test runs",
+    "Several days before calling a winner",
+    "Results written down for the next round"
+  ],
+  "related": [
+    "video-ads",
+    "social-ad-photos",
+    "guide-first-tiktok-video-ad"
+  ],
+  "faq": [
+    {
+      "q": "How much should I spend to test ad versions?",
+      "a": "There's no fixed amount. Set a daily budget you're comfortable with and give each version time to reach a fair number of viewers. If money is tight, test fewer versions so each one gets real spend."
+    },
+    {
+      "q": "Does Aidreamcapes run or score the tests for me?",
+      "a": "No. You make each version on Aidreamcapes, one at a time, then download them and compare how they perform in your ad platform's reports."
+    }
+  ]
+}

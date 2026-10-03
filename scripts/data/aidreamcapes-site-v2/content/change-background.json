@@ -1,0 +1,95 @@
+{
+  "id": "change-background",
+  "title": "AI Product Background Changer for Shop Photos | Aidreamcapes",
+  "description": "Use our AI product background changer to move your item from a cluttered table to a marble counter, a sunny shelf or a soft color. Upload a photo to begin.",
+  "h1": "AI Product Background Changer: Same Product, New Setting",
+  "eyebrow": "Photo tool",
+  "lead": "Took a good photo in a messy room? Keep the product and swap everything behind it for a clean color, a styled surface or a whole new setting.",
+  "secondary_keywords": [
+    "change product photo background",
+    "replace the background of a product image",
+    "product photo backdrop ideas",
+    "new background for Etsy photos",
+    "AI backdrop for product shots"
+  ],
+  "intro": [
+    "Sometimes the product looks great but the background doesn't: a cluttered counter, a wrinkled sheet, a wall that clashes with your brand colors. Reshooting takes time you may not have. This tool keeps your product and replaces what's behind it, so a vase photographed on a kitchen table can end up against a warm beige wall with soft window shadows.",
+    "Use it to match a new collection to your store's colors, give old listings a seasonal backdrop, or line up products shot in different places so they look like one set. Describe the background in a few words, like \"sage green wall, light wood shelf,\" or pick a ready-made option. Each result is a complete square photo with the new background already in place."
+  ],
+  "benefits": [
+    {
+      "t": "Save the shot you have",
+      "d": "A good angle and sharp focus are hard to get. Keep them and fix only what's behind the product."
+    },
+    {
+      "t": "Match your brand colors",
+      "d": "Set backgrounds in your store's palette so product pages, ads and posts look like they belong together."
+    },
+    {
+      "t": "Refresh old listings",
+      "d": "Give last year's photos a new season's backdrop without unpacking stock and setting up again."
+    }
+  ],
+  "steps": [
+    {
+      "t": "Upload the original photo",
+      "d": "Choose a shot where the product is in focus and not cut off at the edges, even if the room behind it is a mess."
+    },
+    {
+      "t": "Describe the new background",
+      "d": "Type a color, surface or setting, or pick a ready-made backdrop, such as \"terracotta wall with a linen tablecloth.\""
+    },
+    {
+      "t": "Download or test another backdrop",
+      "d": "Keep the version you like. Curious how a lighter or darker option would look? Run a new version with a changed description."
+    }
+  ],
+  "uses": [
+    {
+      "t": "Collection pages",
+      "d": "Put products shot in different rooms on matching backdrops so the whole collection looks planned."
+    },
+    {
+      "t": "Seasonal homepage updates",
+      "d": "Swap neutral backgrounds for autumn leaves or winter tones when your homepage changes for the season."
+    },
+    {
+      "t": "Social media posts",
+      "d": "Turn an everyday product photo into a styled post that fits the colors of your feed."
+    },
+    {
+      "t": "Extra marketplace images",
+      "d": "Follow your white main image with a styled backdrop version that shows the product in a warmer setting."
+    }
+  ],
+  "maker": {
+    "options": [
+      ["Photo", "Your product shot"],
+      ["Background", "Color, surface or setting"],
+      ["Size", "Square by default"]
+    ],
+    "cta": "Change my background"
+  },
+  "faq": [
+    {
+      "q": "Do I get a cut-out with a transparent background?",
+      "a": "Not from this tool. It gives you a finished photo with the new background already in place, ready to upload. For a plain white version, use the white background photo tool."
+    },
+    {
+      "q": "Will my product change when the background changes?",
+      "a": "The tool aims to keep your product as it is, but fine details like printed text or small patterns can shift. Look over each result next to the real item before you add it to a listing."
+    },
+    {
+      "q": "What backgrounds work well for home decor?",
+      "a": "Warm neutral walls, light wood, stone or linen surfaces and soft window light suit vases, candles, planters and tableware. Busy patterns can compete with the product, so save them for simple, solid-colored items."
+    },
+    {
+      "q": "Can I add my logo or a sale message to the background?",
+      "a": "Add logos and words afterward in a design tool such as Canva, where they'll look exactly as you set them. Lettering made by AI can come out misspelled or blurry."
+    },
+    {
+      "q": "How do credits work?",
+      "a": "You see the credit cost before you start. Credits are held when your job starts and used when it is delivered. If something fails, you get the credits back."
+    }
+  ]
+}

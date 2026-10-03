@@ -4298,7 +4298,8 @@ export async function renderToolPage({
   const pageHasToolEntry = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "ai_tool_entry");
   const pageHasTalkingPhotoLanding = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "talking_photo_landing");
   const pageHasAiVideoTopicLanding = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "ai_video_topic_landing");
-  const pageHasDedicatedVideoLanding = pageHasTalkingPhotoLanding || pageHasAiVideoTopicLanding;
+  const pageHasAidreamcapesV2Page = currentSite.id === "site_aidreamcapes" && page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "aidreamcapes_v2_page");
+  const pageHasDedicatedVideoLanding = pageHasTalkingPhotoLanding || pageHasAiVideoTopicLanding || pageHasAidreamcapesV2Page;
   const basePageJson = pageHasDedicatedVideoLanding || !pageHasToolEntry
     ? page.publishedJson
     : withToolEntryFirst(page.publishedJson);

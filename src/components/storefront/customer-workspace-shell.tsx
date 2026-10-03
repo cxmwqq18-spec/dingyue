@@ -11,6 +11,7 @@ import { StorefrontNavigationFeedback } from "@/components/storefront/navigation
 import { CustomerAssetDownloadButton } from "@/components/storefront/customer-asset-download-button";
 import { CustomerVideoWorkspace, type VideoRetryDraft } from "@/components/storefront/customer-video-workspace";
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
+import { AIDREAMCAPES_CREATE_INTENT_SITE_ID, aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
 import { sampleUploadFeedbackCount } from "@/lib/customer-workspace-sample-selection";
 import {
   canPrepareCustomerVideoFrameUploadFile,
@@ -1317,6 +1318,17 @@ function studioGenderLabel(id: string, spanish: boolean): string {
   if (id === "man") return t(spanish, "Man", "Hombre");
   if (id === "woman") return t(spanish, "Woman", "Mujer");
   return t(spanish, "Non-binary", "No binario");
+}
+
+// Aidreamcapes URL to Video: customer-facing messages for product link import errors.
+function productLinkImportErrorMessage(error: string | undefined, status: number): string {
+  if (status === 429) return "Too many links in a short time. Wait a minute, then try again.";
+  if (error === "product_url_invalid") return "That doesn't look like a product page link. Check the address, or upload your product photo instead.";
+  if (error === "product_url_blocked") return "We can't open that link. Use a public product page, or upload your product photo instead.";
+  if (error === "product_image_not_found") return "We couldn't find a product photo on that page. Upload your product photo instead.";
+  if (error === "product_image_unsupported") return "The product photo on that page can't be used. Upload a JPG or PNG of your product instead.";
+  if (error === "product_page_unsupported") return "That page couldn't be read. Upload your product photo instead.";
+  return "We couldn't open that page right now. Try again, or upload your product photo instead.";
 }
 
 export function CustomerWorkspaceShell({
@@ -3220,6 +3232,89 @@ export function CustomerWorkspaceShell({
         : rawAnchor;
     window.setTimeout(() => document.getElementById(scrollTarget)?.scrollIntoView({ block: "start" }), 0);
   }, [searchParams, tabItems]);
+
+  // Aidreamcapes.com storefront links (template, tool and URL to Video pages) open the
+  // workspace with the template's size, length and description already filled in, and
+  // URL to Video brings the product photo and name from the customer's product link.
+  // Other sites never read these parameters.
+  const createIntentKeyRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (site.id !== AIDREAMCAPES_CREATE_INTENT_SITE_ID) return;
+    const intent = aidreamcapesCreateIntentFromSearchParams(searchParams);
+    if (!intent || createIntentKeyRef.current === intent.key) return;
+    createIntentKeyRef.current = intent.key;
+    if (intent.kind === "photo") {
+      setRetryImageDraft({
+        key: `intent:${intent.key}`,
+        mode: "tool",
+        toolId: "image_generator",
+        prompt: intent.prompt,
+        restoreMessage: "Template applied. Add your product photo, check the description, then create."
+      });
+      return;
+    }
+    setActivePanel("video");
+    setActiveStudioSection("video");
+    setVideoWorkspaceTab("generate");
+    const draft: VideoRetryDraft = {
+      key: `intent:${intent.key}`,
+      sourceJobId: "",
+      frameAssetIds: [],
+      ...(intent.prompt ? { promptNote: intent.prompt } : {}),
+      ...(intent.length ? { durationSeconds: intent.length } : {}),
+      ...(intent.size ? { aspectRatio: intent.size } : {}),
+      restoreMessage: intent.tool === "url-to-video"
+        ? "Paste a product link on the URL to Video page, or upload your product photo here."
+        : "Template applied. Add your product photo, check the description, then generate."
+    };
+    if (!intent.productUrl) {
+      setRetryVideoDraft(draft);
+      return;
+    }
+    void importProductLinkForVideo(intent.productUrl, draft);
+    // Runs once per distinct link; the import handler only uses stable state setters.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, site.id]);
+
+  async function importProductLinkForVideo(productUrl: string, draft: VideoRetryDraft) {
+    setUploadingVideoFrames(true);
+    setVideoFrameMessage("Getting the product photo from your link…");
+    try {
+      const response = await fetch(`/api/sites/${site.id}/customers/${customer.id}/assets/import-url`, {
+        method: "POST",
+        headers: customerJsonHeaders(site.id),
+        body: JSON.stringify({ url: productUrl })
+      });
+      const result = (await response.json().catch(() => ({}))) as { asset?: ThemeRuntimeAsset; product?: { title?: string | null }; error?: string };
+      if (!response.ok || !result.asset) {
+        const message = productLinkImportErrorMessage(result.error, response.status);
+        setVideoFrameMessage(message);
+        setRetryVideoDraft({ ...draft, restoreMessage: message });
+        return;
+      }
+      deletedVideoFrameIdsRef.current.delete(result.asset.id);
+      replaceVideoFrameAsset(`import:${result.asset.id}`, result.asset);
+      const title = result.product?.title?.trim();
+      const promptNote = [title ? `Product: ${title}.` : "", draft.promptNote ?? ""].filter(Boolean).join(" ").trim();
+      setVideoFrameMessage("Product photo added from your link and selected.");
+      setRetryVideoDraft({
+        ...draft,
+        frameAssetIds: [result.asset.id],
+        ...(promptNote ? { promptNote } : {}),
+        restoreMessage: title
+          ? "We added the product photo and name from your link. Check them, then generate."
+          : "We added the product photo from your link. Add a short description, then generate."
+      });
+      invalidateCustomerAssets(site.id, customer.id);
+      window.dispatchEvent(new CustomEvent("customer-assets:updated"));
+    } catch {
+      const message = productLinkImportErrorMessage("product_url_fetch_failed", 0);
+      setVideoFrameMessage(message);
+      setRetryVideoDraft({ ...draft, restoreMessage: message });
+    } finally {
+      setUploadingVideoFrames(false);
+    }
+  }
 
   useEffect(() => {
     const nextSamples = hydratedAssets.filter(isSampleCandidateAsset);

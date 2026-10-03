@@ -25,7 +25,7 @@ import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS, aidreamcapesLegacyGalleryRedirect
 import { AIDREAMCAPES_EU_PUBLIC_DETAIL_PATHS, canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import storefrontSourcePageMap from "../../scripts/data/storefront-source-page-map-2026-09-27.json";
-import { imageThemeDetailContentFromPage } from "@/lib/aidreamcapes-image-theme-content";
+import { isRenderableAidreamcapesImageThemePage } from "@/lib/aidreamcapes-image-theme-content";
 import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS, MYDREAMSHOOTS_RETIRED_PUBLIC_PATHS } from "@/lib/mydreamshoots-legacy-public-redirects";
 import { createPublishedSiteSnapshot, resolveEffectivePublishedPage, resolvePublishedRouteDisposition, resolvePublishedSeoEntity, resolvePublishedStorefrontContext, resolvePublicCollectionItems } from "@/lib/storefront-context";
 import { pageCopyFromPublishedPageEntity } from "@/lib/mydreamshoots-published-contract";
@@ -36,6 +36,10 @@ import {
   isStorefrontVideoHost,
   type MyDreamShootsVideoWatchPage
 } from "@/lib/mydreamshoots-video-watch";
+import aidreamcapesSiteV2Redirects from "@/lib/aidreamcapes-site-v2-redirects.json";
+
+const aidreamcapesSiteV2RedirectSources = new Set<string>((aidreamcapesSiteV2Redirects as [string, string][]).map(([from]) => from));
+const AIDREAMCAPES_V2_POLICY_SITEMAP_PATHS = ["/privacy", "/terms", "/refunds", "/cookies", "/content", "/digital-delivery", "/children-privacy", "/state-privacy"];
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
 export const MYDREAMSHOOTS_SITEMAP_URL = `${MYDREAMSHOOTS_ORIGIN}/sitemap.xml`;
@@ -798,7 +802,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
   const entries = new Map<string, SitemapEntry>();
   for (const page of snapshot.pages) {
     const isRegisteredImageTheme = isAidreamcapesImageThemePath(site.slug, page.slug);
-    if (isRegisteredImageTheme && !imageThemeDetailContentFromPage(page)) continue;
+    if (isRegisteredImageTheme && !isRenderableAidreamcapesImageThemePage(page)) continue;
     const sitemapPath = pageSitemapPathForSite(site, page);
     if (!sitemapPath) continue;
     const canonicalPath = canonicalDirectoryPathForSite(site, sitemapPath);
@@ -1082,6 +1086,18 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
     }
   }
   if (site.id === AIDREAMCAPES_SITE_ID) {
+    // Aidreamcapes.com v2: retired v1 URLs answer with 301s, so they never appear in
+    // the sitemap. Once the v2 navigation is live, the sitemap lists only indexable
+    // v2 pages plus the kept policy pages, so leftover v1 rows stay out as well.
+    const aidreamcapesV2Paths = site.themeSettings.publishedJson.aidreamcapesV2Navigation?.version === 2
+      ? new Set<string>([
+          ...snapshot.pages
+            .filter((page) => page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "aidreamcapes_v2_page"))
+            .filter((page) => page.publishedJson.seo?.index !== false && page.publishedJson.seo?.robots?.index !== false)
+            .map((page) => page.slug),
+          ...AIDREAMCAPES_V2_POLICY_SITEMAP_PATHS
+        ].filter((path) => !aidreamcapesSiteV2RedirectSources.has(path)))
+      : undefined;
     // Keep every Aidreamcapes page URL on the non-www canonical origin and
     // apply the same retirement rules to entries added by catalogue passes.
     // This final guard is intentionally scoped to the main Aidreamcapes site;
@@ -1095,6 +1111,10 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
         continue;
       }
       if (path === "/tools" || aidreamcapesLegacyVideoSaveTheDatePath(path) || isRetiredAidreamcapesPublicPath(site.slug, path)) {
+        entries.delete(loc);
+        continue;
+      }
+      if (aidreamcapesSiteV2RedirectSources.has(path) || (aidreamcapesV2Paths && !aidreamcapesV2Paths.has(path))) {
         entries.delete(loc);
         continue;
       }
@@ -1135,7 +1155,8 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
     .map((entry) => {
       if (site.id !== AIDREAMCAPES_SITE_ID) return entry;
       const path = new URL(entry.loc).pathname;
-      if (path === "/ai-image-generation") return entry;
+      // The v1 photo directory lists its theme images; the v2 page lists its own image.
+      if (path === "/ai-image-generation" && site.themeSettings.publishedJson.aidreamcapesV2Navigation?.version !== 2) return entry;
       // Match the renderer's current LivePage JSON, not media injected into
       // the legacy catalogue projection for a different layout.
       const page = site.pages.find((candidate) => normalizePath(candidate.slug) === path);

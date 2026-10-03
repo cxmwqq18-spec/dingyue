@@ -1,0 +1,79 @@
+{
+  "id": "tpl-angle",
+  "title": "Product Packshot Photos from Every Angle | Aidreamcapes",
+  "description": "Make product packshot photos that show the front, back, and buttons of your item on a clean backdrop. Upload one photo per side and build your gallery today.",
+  "h1": "Product Packshot Photos for Every Side of Your Item",
+  "eyebrow": "Product photo template",
+  "lead": "Upload a photo of each side of your product and get a clean, square packshot for every view, ready for an Amazon or Shopify image gallery.",
+  "secondary_keywords": [
+    "multi-angle product photos",
+    "product photos from different angles",
+    "electronics product photography",
+    "Amazon gallery images",
+    "Shopify product image set"
+  ],
+  "intro": [
+    "A packshot is a clean photo of the product alone, with nothing to pull the eye away from it. In the example, a light gray fabric-covered wireless speaker with a woven wrist strap sits on a soft gray backdrop, its control buttons facing the camera.",
+    "Online shoppers can't turn a product over in their hands, so they look for the back, the base, and the buttons in your gallery. Run this once for each side you photograph and keep the same backdrop words, and the views line up as a set on your Amazon or Shopify listing."
+  ],
+  "tip": "Shoot each side straight on in daylight, and upload the back and base as separate photos so ports and labels come from your real product instead of a guess.",
+  "steps": [
+    {
+      "t": "Start with the front",
+      "d": "Upload a sharp photo of the front with the product filling most of the frame and nothing else in the shot."
+    },
+    {
+      "t": "Describe the backdrop once",
+      "d": "Write a short line such as \"soft gray seamless backdrop, gentle shadow\" and reuse those exact words for every side."
+    },
+    {
+      "t": "Repeat for each view",
+      "d": "Download the result, then upload the back, top, or base and run it again until the set is complete."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Buttons and ports",
+      "d": "Give the control strip or charging port a view of its own so buyers can see how the device works before they order."
+    },
+    {
+      "t": "Amazon gallery slots",
+      "d": "Fill the extra image slots on your listing with matching side, back, and base views that follow the main photo."
+    },
+    {
+      "t": "Other small electronics",
+      "d": "Earbud cases, chargers, smart plugs, and desk lamps all read more clearly with a top view beside the front view."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Template",
+        "Every Angle"
+      ],
+      [
+        "Size",
+        "Square 1:1"
+      ],
+      [
+        "Views",
+        "One per run"
+      ]
+    ],
+    "cta": "Make my first view"
+  },
+  "faq": [
+    {
+      "q": "Can I use these packshots as my Amazon main image?",
+      "a": "Amazon's main image has to sit on pure white, so ask for a white backdrop for that shot and check the result before you upload it. Gray or softly tinted backdrops suit the other gallery slots."
+    },
+    {
+      "q": "Will the AI guess what the back of my product looks like?",
+      "a": "It has to if you don't show it. Upload a real photo of every side you want in the set, so details like ports, screws, and labels match the item you ship."
+    },
+    {
+      "q": "How do I keep every angle looking like one set?",
+      "a": "Use the same backdrop and lighting words each time you run it. Small differences can still appear between runs, so pick the results that sit well together."
+    }
+  ]
+}

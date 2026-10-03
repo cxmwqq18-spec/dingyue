@@ -1,0 +1,69 @@
+{
+  "id": "plat-amazon",
+  "title": "Amazon Product Photos on White and in Use | Aidreamcapes",
+  "description": "Make Amazon product photos from pictures you already have: clean white-background main images plus lifestyle and detail shots for your gallery. Try it now.",
+  "h1": "Amazon Product Photos for Your Main Image and Listing Gallery",
+  "eyebrow": "Amazon listings",
+  "lead": "Start with a clean white main image, then add photos that show size, detail and real use, so shoppers can judge the product without holding it.",
+  "secondary_keywords": [
+    "Amazon main image white background",
+    "Amazon listing images",
+    "Amazon secondary images",
+    "Amazon lifestyle product photos"
+  ],
+  "intro": [
+    "On Amazon, your photos do the work a store shelf would do. The main image has to be clean and plain so it looks right in search results, and the rest of the gallery has to answer what a shopper would ask in person: How big is it? What's in the box? What does it look like on a counter? Aidreamcapes turns the product photos you already have into new square images, from a white-background main shot to lifestyle and close-up scenes.",
+    "It's made for sellers who need a fuller gallery without reshooting every item. Upload a phone photo of your product, pick a white background or describe a setting, and download the result. You can also make a short 16:9 or 1:1 video if your listing has room for one. Callouts and text labels go on afterward in Canva or another design tool."
+  ],
+  "specs": [
+    [
+      "Photo shape",
+      "Square by default"
+    ],
+    [
+      "Main image",
+      "Plain white background"
+    ],
+    [
+      "Listing video",
+      "16:9 or 1:1 shape"
+    ],
+    [
+      "Video length",
+      "Pick 6, 10 or 15 seconds"
+    ]
+  ],
+  "tips": [
+    "Use a pure white background for the main image, and check Amazon's current rules for your category before uploading, since requirements vary by category.",
+    "Keep the main image free of added text, badges and props; save those for the other gallery slots.",
+    "Fill the rest of the gallery with a scale shot, a close-up of the materials and a photo of the item in use."
+  ],
+  "ideas": [
+    {
+      "t": "White main image",
+      "d": "Turn a photo taken on your kitchen table into a square shot on plain white for the first image slot."
+    },
+    {
+      "t": "Size next to something familiar",
+      "d": "Place a wallet beside a phone or a planter beside a coffee mug so shoppers can judge the size at a glance."
+    },
+    {
+      "t": "Lifestyle shot in the right room",
+      "d": "Show a cutting board on a counter with chopped vegetables, or a bath mat in a bright bathroom."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Does this work for Amazon main images?",
+      "a": "Yes. Upload your product photo and choose a white background to get a square image of the item on plain white. Look it over closely before you upload, as you would with any photo."
+    },
+    {
+      "q": "Can I add text callouts to my gallery images?",
+      "a": "Add them yourself in Canva or a similar design app. Letters drawn by AI can come out wrong, and a separate text layer is easier to correct later."
+    },
+    {
+      "q": "Can I make a video for my Amazon listing?",
+      "a": "Yes. Choose a 16:9 or 1:1 shape and 6, 10 or 15 seconds of run time, then download the file and add it to your listing from your seller account."
+    }
+  ]
+}

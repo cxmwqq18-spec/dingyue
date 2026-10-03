@@ -1726,7 +1726,33 @@ function storefrontApplicationSchema(input: JsonLdInput, title: string, descript
   };
 }
 
+// Aidreamcapes.com v2 pages carry their page-specific JSON-LD nodes in
+// LivePage.contentJson.seo.jsonLd (built with the page copy), so the structured data
+// always matches the visible page. The Organization node and the homepage #app node
+// still come from the site profile, exactly as on every other storefront page.
+// Other sites never match here.
+function aidreamcapesV2StoredGraph(site: Site, pageJson: ThemePageJson | undefined): JsonLdNode[] | undefined {
+  if (site.id !== "site_aidreamcapes" || !pageJson) return undefined;
+  const isV2 = pageJson.sectionsOrder?.some((sectionId) => pageJson.sections?.[sectionId]?.type === "aidreamcapes_v2_page");
+  const graph = (pageJson.seo as { jsonLd?: { "@graph"?: unknown } } | undefined)?.jsonLd?.["@graph"];
+  return isV2 && Array.isArray(graph) ? (graph as JsonLdNode[]) : undefined;
+}
+
+function aidreamcapesV2JsonLd(input: JsonLdInput, storedGraph: JsonLdNode[]): JsonLdNode[] {
+  const seo = input.pageJson?.seo as { title?: unknown; description?: unknown } | undefined;
+  const title = cleanText(seo?.title) || pageTitle(input.site, input.page, input.context);
+  const description = cleanText(seo?.description) || pageDescription(input.site, input.page, input.context);
+  const graph: Array<JsonLdNode | undefined> = [
+    organizationSchema(input.site, input.routeMode, input.context, input.pagePath),
+    storefrontApplicationSchema(input, title, description),
+    ...storedGraph.filter((node) => node["@type"] !== "Organization")
+  ];
+  return [{ "@context": "https://schema.org", "@graph": graph.filter(Boolean) }];
+}
+
 export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
+  const aidreamcapesV2Graph = aidreamcapesV2StoredGraph(input.site, input.pageJson);
+  if (aidreamcapesV2Graph) return aidreamcapesV2JsonLd(input, aidreamcapesV2Graph);
   const isImageThemeRoute = isAidreamcapesImageThemePath(input.site.slug, input.pagePath);
   const isAidreamcapesEuVideoRoute = input.site.id === "site_aidreamcapes_xby" && Boolean(aidreamcapesEuVideoTopicFromPath(input.pagePath));
   const routeInput: JsonLdInput = input.context && !isImageThemeRoute && !isAidreamcapesEuVideoRoute
@@ -1800,6 +1826,11 @@ export function buildToolDirectoryJsonLd({
   pageJson?: ThemePageJson;
   context: StorefrontContext;
 }): JsonLdNode[] {
+  const aidreamcapesV2Graph = aidreamcapesV2StoredGraph(site, pageJson);
+  if (aidreamcapesV2Graph) {
+    const pagePath = publicPath ?? `/ai-video-generation/${toolSlug}`;
+    return aidreamcapesV2JsonLd({ site, routeMode, context, pageJson, pagePath, page: { id: toolSlug, slug: pagePath, title: siteBrandName(site), pageType: "ai_tool", updatedAt: "" } }, aidreamcapesV2Graph);
+  }
   const topicSection = sectionOfType(pageJson, "ai_video_topic_landing");
   const talkingPhotoSection = sectionOfType(pageJson, "talking_photo_landing");
   const topicContent = topicSection

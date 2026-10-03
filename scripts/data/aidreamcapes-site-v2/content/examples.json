@@ -1,0 +1,35 @@
+{
+  "id": "examples",
+  "title": "AI Product Photo and Video Examples | Aidreamcapes",
+  "description": "Browse AI product photo and video examples: a smartwatch shot turned into a vertical video ad and a water bottle scene made into a feed ad. See how it works.",
+  "h1": "AI Product Photo and Video Examples, Start to Finish",
+  "eyebrow": "From photo to ad",
+  "lead": "Two products, followed from the first photo to the finished ad. See what each one started as, what we asked for, and what came back.",
+  "secondary_keywords": [
+    "AI product video ad examples",
+    "AI lifestyle photo examples",
+    "product photo to video ad",
+    "AI social ad image examples"
+  ],
+  "intro": "Each example below starts with one product image and a short written description, and every result came from a separate job with its cost shown first. Notice how the product stays recognizable from the first image to the last, while the setting and framing change to suit where the ad will run.",
+  "cases": [
+    {
+      "t": "Smartwatch: a product photo becomes a vertical video ad with three openings",
+      "d": "We began with a studio photo of a white smartwatch on a soft green background. From that single image we made a 9:16 video ad in a casual, filmed-at-home style, with a woman holding the watch up to the camera in a bright living room. Then we made three more versions, each with a different first scene: the watch on a wrist beside a cozy sweater, the watch floating above a stone block, and a slow close-up of the crown and side button. Each opening was its own job, so they can be run side by side on TikTok or Reels to see which one holds attention."
+    },
+    {
+      "t": "Water bottle: a lifestyle photo becomes a social feed ad image",
+      "d": "The starting point was a lifestyle shot of a sage green water bottle on a marble table, with a woman relaxing on a sofa behind it. We asked for a feed ad version: the same bottle closer and larger in the frame, beaded with water, next to fresh limes and a folded towel in warm afternoon sun. The result is a square image sized for Facebook and Instagram feeds, with the headline and price left to add afterward in Ads Manager."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I make a video like the smartwatch ad with my own product?",
+      "a": "Yes. Upload a sharp shot of your product, choose the 9:16 vertical format and a length of 6, 10 or 15 seconds, then describe the opening scene. For a different opening, run it again with a new description."
+    },
+    {
+      "q": "Why don't the examples include prices or headlines?",
+      "a": "AI sometimes garbles letters and numbers, so prices, headlines and offers are left for you to add in Canva, CapCut or Ads Manager, where every word and number stays exactly as you type it."
+    }
+  ]
+}

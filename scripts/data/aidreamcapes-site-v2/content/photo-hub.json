@@ -1,0 +1,93 @@
+{
+  "id": "photo-hub",
+  "title": "AI Product Photo Generator for Sellers | Aidreamcapes",
+  "description": "Try an AI product photo generator for sellers: turn one picture into white background, lifestyle, or on-model shots for your store. Upload your first photo.",
+  "h1": "AI Product Photo Generator: New Shots From One Photo",
+  "eyebrow": "AI photo tools",
+  "lead": "Upload one product photo, pick a template or describe the scene, and get a fresh square image for your listings, store, and social posts.",
+  "secondary_keywords": [
+    "AI product image generator",
+    "AI photos for Shopify products",
+    "ecommerce product photo AI",
+    "AI product photo templates"
+  ],
+  "intro": [
+    "This is where every Aidreamcapes photo tool starts. Upload one photo of your product, then either pick a template or write a short description of the shot you want. You get back a new product image, square by default, that you can download and use right away. Your original photo and every result stay private in your account.",
+    "It's built for small store owners who need more than one picture per product but don't have time to book a shoot. From a single phone photo you can make a clean white background shot, place the item on a kitchen counter or a beach towel, show it on a model, or set up a close-up of the stitching. A good order is the main listing photo first, then scenes that help shoppers picture the product in their own home."
+  ],
+  "benefits": [
+    {
+      "t": "Many shots, one upload",
+      "d": "Use the same product photo again with different templates or descriptions. There's no reshoot each time you want a new setting."
+    },
+    {
+      "t": "Templates or your own words",
+      "d": "Pick a ready-made look when you want a quick start. Write your own description when you have a specific scene in mind."
+    },
+    {
+      "t": "Private to your account",
+      "d": "Uploads and finished images are visible only to you. Nothing goes into a public gallery."
+    }
+  ],
+  "steps": [
+    {
+      "t": "Upload a product photo",
+      "d": "A well-lit shot with the whole product in frame gives the cleanest result. Your phone camera is enough."
+    },
+    {
+      "t": "Pick a template or describe it",
+      "d": "Choose a look such as white background or lifestyle scene, or write a line like “ceramic mug on a wooden table by a window.”"
+    },
+    {
+      "t": "Download, or change the look",
+      "d": "Save the square image to your computer, or change the template or wording and make a new one."
+    }
+  ],
+  "uses": [
+    {
+      "t": "Shopify product pages",
+      "d": "Add lifestyle and detail shots under your main image so shoppers can see the product in use."
+    },
+    {
+      "t": "Amazon and Etsy listings",
+      "d": "Fill the extra image slots after your main photo with scenes, close-ups, and size references."
+    },
+    {
+      "t": "Instagram and Facebook posts",
+      "d": "Square images fit the feed without cropping, for regular posts and feed ads alike."
+    },
+    {
+      "t": "Email newsletters",
+      "d": "Drop a fresh product scene into your next launch or restock email instead of reusing the same old photo."
+    }
+  ],
+  "maker": {
+    "options": [
+      ["Size", "Square · 1:1"],
+      ["Start with", "Template or description"]
+    ],
+    "cta": "Make my product photo"
+  },
+  "faq": [
+    {
+      "q": "What kinds of product photos can I make?",
+      "a": "White background shots, lifestyle scenes, on-model photos, new backgrounds, feed ad images, and close-ups such as color variants or what's in the box. Each one starts from a photo of your product."
+    },
+    {
+      "q": "What kind of photo should I upload?",
+      "a": "Use a sharp photo where the whole product is visible and nothing is cut off at the edges. Even light and a plain background help, but a clear phone photo works too."
+    },
+    {
+      "q": "Can I use these photos as my Amazon main image?",
+      "a": "Use the white background option for that slot. Amazon's main image rules call for a pure white background with no added text, graphics, or watermarks, so compare your result with Amazon's current requirements before you upload it."
+    },
+    {
+      "q": "Can I put a price or sale text on the photo?",
+      "a": "Add text after you download. Canva works well for prices, discount codes, and headlines. AI-generated lettering can contain typos, so typing it yourself keeps it accurate."
+    },
+    {
+      "q": "How do credits work?",
+      "a": "You see the credit cost before you start. Credits are held when your job starts and used when it is delivered. If something fails, you get the credits back."
+    }
+  ]
+}

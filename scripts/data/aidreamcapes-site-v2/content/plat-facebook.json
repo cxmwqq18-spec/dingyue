@@ -1,0 +1,73 @@
+{
+  "id": "plat-facebook",
+  "title": "AI Facebook Ad Generator for Online Stores | Aidreamcapes",
+  "description": "Try an AI Facebook ad generator made for sellers: turn a product photo into square feed videos and ad images, then add your offer in Ads Manager. Get started.",
+  "h1": "AI Facebook Ad Generator for Square and Vertical Ads",
+  "eyebrow": "Facebook ads",
+  "lead": "Make square and vertical ads from one product photo, then write the headline and offer in Ads Manager, where you can change them anytime.",
+  "secondary_keywords": [
+    "Facebook video ads for ecommerce",
+    "Facebook feed ad images",
+    "square video ads for Facebook",
+    "Facebook ads for small business"
+  ],
+  "intro": [
+    "Facebook ads reach people in the feed, in Stories and in Reels, often while they're scrolling quickly past posts from friends and groups. A clear look at the product matters more there than anything clever. Aidreamcapes creates square 1:1 videos for the feed and 9:16 videos for Stories and Reels, in 6, 10 or 15 seconds, plus square ad images from the same product photo.",
+    "It fits store owners who run their own campaigns and need something new to try without a photoshoot. Describe the scene you want, such as a lunch box packed on a kitchen counter or a dog harness on a morning walk, and check the credit cost before you start. Your headline, price and button text belong in Ads Manager, where they stay easy to edit."
+  ],
+  "specs": [
+    [
+      "Feed",
+      "1:1 square video"
+    ],
+    [
+      "Stories & Reels",
+      "9:16 vertical"
+    ],
+    [
+      "Duration",
+      "Choose 6, 10 or 15 seconds"
+    ],
+    [
+      "Ad images",
+      "Square by default"
+    ]
+  ],
+  "tips": [
+    "Plenty of people scroll Facebook with the sound off, so make sure the video makes sense on mute.",
+    "Keep any words on the visual short, and put the details in the primary text and headline fields in Ads Manager.",
+    "Upload both a square and a vertical version so each placement gets a shape that fits it."
+  ],
+  "ideas": [
+    {
+      "t": "Messy to tidy",
+      "d": "For an organizer or storage bin, describe the cluttered space first and the neat result after, in one 10- or 15-second clip."
+    },
+    {
+      "t": "Gift-ready still",
+      "d": "A square image of the product beside wrapping paper and a ribbon, ready for gift-season ads."
+    },
+    {
+      "t": "Reminder for store visitors",
+      "d": "A clean lifestyle shot of a product people already looked at on your site, for ads aimed at past visitors."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Does a square video work for Facebook feed ads?",
+      "a": "Yes. Square fits the feed on phones and computers alike. Make a 9:16 version too if the ad will also run in Stories or Reels."
+    },
+    {
+      "q": "Can Aidreamcapes run my Facebook campaign?",
+      "a": "No. We make the video or image; you download it and set up the budget, audience and schedule in Ads Manager."
+    },
+    {
+      "q": "Can I make several versions to test against each other?",
+      "a": "Yes, one at a time. Each version shows its own credit cost before you start, and you can compare how they perform in Ads Manager."
+    },
+    {
+      "q": "Will Facebook reject an ad because it was made with AI?",
+      "a": "Meta reviews every ad against its advertising policies whether or not AI was involved. Stick to those policies, avoid claims you can't back up, and use an AI label where Meta asks for one."
+    }
+  ]
+}

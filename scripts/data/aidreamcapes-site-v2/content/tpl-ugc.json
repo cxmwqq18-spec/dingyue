@@ -1,0 +1,78 @@
+{
+  "id": "tpl-ugc",
+  "title": "UGC Style Product Photos for Social Ads | Aidreamcapes",
+  "description": "Create UGC style product photos that look like a casual post: your product in someone's hand at home, outside, or after a workout. Upload a photo to start.",
+  "h1": "UGC Style Product Photos That Feel Like a Real Moment",
+  "eyebrow": "Ad photo template",
+  "lead": "Show your product in a relaxed, everyday moment, the kind of photo someone might post after a workout, instead of a polished studio shot.",
+  "secondary_keywords": [
+    "creator style product photos",
+    "user-generated content style images",
+    "lifestyle photos for Instagram ads",
+    "fitness product lifestyle photos"
+  ],
+  "intro": [
+    "In the example, a woman sits on her living-room floor after a home workout, towel around her neck, holding a clear water bottle with a sage green lid. Dumbbells and a yoga mat lie nearby, and the light comes from a big window.",
+    "UGC stands for user-generated content: photos that look like they came from a real person rather than a brand. Images like this sit naturally in Instagram and TikTok feeds and show the product in daily use. They suit things people reach for every day, such as bottles, mats, snacks, and wellness products."
+  ],
+  "tip": "Describe a specific moment, like \"sitting on the floor after a home workout, morning light,\" rather than a vague style word such as \"authentic.\"",
+  "steps": [
+    {
+      "t": "Upload a clean product shot",
+      "d": "A well-lit photo of the bottle, jar, or pack with the label facing forward."
+    },
+    {
+      "t": "Write the moment",
+      "d": "Name the person, the place, and the time of day, for example \"woman in workout clothes on her living-room floor, towel on her shoulders.\""
+    },
+    {
+      "t": "Post it in the feed",
+      "d": "Download the photo for an Instagram ad or a TikTok photo post, and add any offer text yourself before it goes out."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Morning routine",
+      "d": "A tea tin or supplement jar on a kitchen counter next to breakfast."
+    },
+    {
+      "t": "On the go",
+      "d": "A bottle tucked into a gym tote, or a yoga mat under an arm on a city sidewalk."
+    },
+    {
+      "t": "Just delivered",
+      "d": "A package opened on the hallway floor with the product held up toward the camera."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Template",
+        "Creator-Style Photo"
+      ],
+      [
+        "Size",
+        "Square by default"
+      ],
+      [
+        "Scene",
+        "An everyday moment you describe"
+      ]
+    ],
+    "cta": "Make my UGC photo"
+  },
+  "faq": [
+    {
+      "q": "Can the photo show health benefits of my product?",
+      "a": "Show the product being used, not what it does for the body. Leave out before-and-after looks and claims like more energy or weight loss, in the image and in your ad text."
+    },
+    {
+      "q": "Can I choose who appears in the photo?",
+      "a": "You can describe the person: age range, style, and what they're doing. Each run creates a new person, so the same face won't appear again in your next image."
+    },
+    {
+      "q": "Does this work for TikTok?",
+      "a": "Yes, as a photo post or carousel that matches the casual tone of the feed. If you want moving footage, use one of the video tools instead."
+    }
+  ]
+}

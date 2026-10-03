@@ -42,6 +42,7 @@ export type JobCreateRetryDraft = {
   formValues?: Record<string, RetryDraftFormValue>;
   customerModelId?: string;
   packageAudience?: PackageAudience;
+  restoreMessage?: string;
 };
 type SubscriptionStatus = "loading" | "active" | "required" | "admin";
 
@@ -1723,7 +1724,7 @@ export function JobCreateForm({
       });
     }
 
-    setMessage(jobT(spanish, "Previous failed request restored. Review the setup, then create it again.", "Solicitud fallida restaurada. Revisa la configuracion y vuelve a crearla."));
+    setMessage(retryDraft.restoreMessage ?? jobT(spanish, "Previous failed request restored. Review the setup, then create it again.", "Solicitud fallida restaurada. Revisa la configuracion y vuelve a crearla."));
   }, [availableAssets, customerModels, orderedActiveCreativePacks, retryDraft, selectedApp, selectedToolId, siteAiApps, spanish, toolPresets]);
 
   async function uploadSourceFiles(files: FileList | null) {

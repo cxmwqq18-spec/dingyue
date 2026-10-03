@@ -1,0 +1,76 @@
+{
+  "id": "blog-model-photos-without-a-photoshoot",
+  "title": "Model Photos Without a Photoshoot | Aidreamcapes",
+  "description": "Get model photos without a photoshoot: photograph the garment flat, describe the model and setting, then check the fit before posting. Learn how and try it.",
+  "h1": "How to Get Model Photos Without a Photoshoot",
+  "eyebrow": "Clothing & jewelry",
+  "lead": "A flat lay or hanger photo can become a picture of your piece being worn. Here's how to prepare the photo, describe the model, and catch the details AI can get wrong.",
+  "secondary_keywords": [
+    "AI model photos for clothing",
+    "on-model photos from a flat lay",
+    "AI fashion model images",
+    "clothing photos without a model",
+    "AI jewelry model photos"
+  ],
+  "read_minutes": 4,
+  "summary": "How small clothing and jewelry brands can turn flat product photos into on-model images, plus the fit details to look over first.",
+  "sections": [
+    {
+      "h2": "When AI model photos make sense",
+      "paras": [
+        "A model shoot means booking a person, a photographer, a location, and a day, then waiting for edits. That's hard to justify for a small run of hoodies or a handful of new earrings.",
+        "AI model photos fill that gap. You upload a photo of the piece, describe who's wearing it and where, and get an image of it being worn. They're handy for new arrivals, short production runs, print-on-demand designs, and trying out a style before you commit to a full shoot.",
+        "They're less suited to showing exact fit. A generated image can't tell a shopper how a medium will sit on their own body, so keep your size chart and measurements in the listing."
+      ]
+    },
+    {
+      "h2": "Photograph the garment so nothing is left to guess",
+      "paras": [
+        "Lay the piece flat on a plain sheet or hang it against a bare wall, and shoot straight on in daylight. Steam out wrinkles first, since creases in your photo can turn into odd folds on the model.",
+        "Get the whole garment in frame, with sleeves, hem, and collar visible. Turn it so the print or logo faces the camera. Photograph each color separately rather than asking for a color change, because a generated color may not match your actual dye.",
+        "For jewelry, use a plain surface, get close, and keep the clasp, stones, and chain in sharp focus. With small pieces, a crisp source photo matters more than anything else."
+      ]
+    },
+    {
+      "h2": "Describe the model and the setting",
+      "paras": [
+        "One or two sentences is plenty. Cover the person, the pose, the place, and the light. You don't need to describe the clothing in detail, since that comes from your photo. If you'd rather not write anything, the Clothing Try-On, Jewelry On Model, and Lookbook templates give you a ready-made starting point.",
+        "Some examples. Linen dress: \"A woman in her 40s walking along a sunny beach path, relaxed smile, late afternoon light.\" Hoodie: \"A young man leaning on a brick wall on a city street, hands in the front pocket, overcast daylight.\" Drop earrings: \"Close-up of a woman's profile with her hair tucked behind her ear, soft studio light, neutral backdrop.\"",
+        "Showing a range of ages and body types across your collection helps more shoppers picture themselves in your pieces. Don't describe a celebrity or ask for a lookalike; those requests may be refused."
+      ]
+    },
+    {
+      "h2": "Check the fit and the details",
+      "paras": [
+        "Compare each image with the real piece before you use it. Look at the neckline shape, sleeve and hem length, where the print sits, how many buttons there are, and which side the zipper is on. Stripes and checks should line up the way they do on the actual garment.",
+        "For jewelry, check the clasp, count the stones, and see whether a necklace falls where it should on the chest for its length. Hands and hairlines deserve a second look as well, since they're common spots for small glitches.",
+        "If anything doesn't match, make a new version rather than posting one that's close enough."
+      ]
+    },
+    {
+      "h2": "Build a small set for each piece",
+      "paras": [
+        "For each item, plan two or three images: one full-length or full-view shot, one closer crop that shows the fabric or the stone, and one in a setting that fits how it's worn. Each is a separate request with its credit cost shown first.",
+        "When you have a few results, pick the ones that look like they belong together, with similar light and backgrounds, so your listing doesn't jump between styles."
+      ]
+    },
+    {
+      "h2": "Put the photos to work",
+      "paras": [
+        "On a Shopify or Etsy listing, lead with a clean product shot and follow it with one or two on-model images, so shoppers see both the details and the piece being worn. They come out square by default, a shape that sits neatly in a typical product gallery.",
+        "For Instagram, a few on-model photos in different settings make an easy new-arrivals post. Add the price or a \"New in\" line afterward in Canva. Everything you make stays private in your account until you decide to post it."
+      ]
+    }
+  ],
+  "related": [
+    "model-photos",
+    "tpl-tryon",
+    "ind-fashion-clothing"
+  ],
+  "faq": [
+    {
+      "q": "Do I need to say the model in my photos is AI-generated?",
+      "a": "It depends on where you post. Some platforms ask sellers to label realistic AI-generated people, and those rules change from time to time, so look up the latest guidance from each site before your photos go up."
+    }
+  ]
+}

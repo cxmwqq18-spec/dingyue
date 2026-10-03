@@ -1,0 +1,95 @@
+{
+  "id": "lifestyle-photos",
+  "title": "AI Lifestyle Product Photos for Your Store | Aidreamcapes",
+  "description": "Create AI lifestyle product photos that place your item on a kitchen shelf, a desk or a beach towel. Upload one photo, describe the scene and get started.",
+  "h1": "AI Lifestyle Product Photos in Everyday Settings",
+  "eyebrow": "Photo tool",
+  "lead": "Show shoppers where your product belongs. Upload one photo, describe a setting like a sunny patio or a cozy reading nook, and get a square scene built around your item.",
+  "secondary_keywords": [
+    "lifestyle product photography with AI",
+    "product in a home setting photo",
+    "lifestyle images for Shopify stores",
+    "Instagram product scene photos",
+    "AI product scene generator"
+  ],
+  "intro": [
+    "A plain product shot tells shoppers what your item looks like. A lifestyle photo tells them how it fits into their day: a ceramic mug next to an open book, a backpack hanging on a café chair, a throw blanket draped over a sofa. Scenes like these help people picture owning the product, and they usually take a location, props and a photographer to shoot.",
+    "With this tool you upload one clear product photo and describe the setting you want, or pick a ready-made scene. You get a square image with your item placed in that space. It's a good fit for small brands selling home goods, accessories, kitchenware and gifts that need fresh images for product pages, Instagram posts and email banners without booking a shoot every season."
+  ],
+  "benefits": [
+    {
+      "t": "Show where it belongs",
+      "d": "Put your product in a kitchen, a bedroom, a garden or a desk setup so shoppers can imagine it in their own home."
+    },
+    {
+      "t": "A scene for every season",
+      "d": "Trade a summer patio for a snowy windowsill without reshooting. Same product, different setting, whenever your store needs a refresh."
+    },
+    {
+      "t": "No props to buy",
+      "d": "Skip the trip for flowers, linens and backdrops. Describe the details you have in mind and the tool builds them into the scene."
+    }
+  ],
+  "steps": [
+    {
+      "t": "Upload a clear product photo",
+      "d": "Use a shot where the item is fully visible and evenly lit. A plain background makes it easier to place in a new scene."
+    },
+    {
+      "t": "Describe or pick a setting",
+      "d": "Choose a ready-made scene or write your own, such as \"linen bedding, morning light, a small plant on the nightstand.\""
+    },
+    {
+      "t": "Download or make another scene",
+      "d": "Save the square image you like. To try a different room or time of day, start a fresh version with a reworded description."
+    }
+  ],
+  "uses": [
+    {
+      "t": "Second image on product pages",
+      "d": "Place a lifestyle shot right after your main photo so shoppers see the item in context before they scroll further."
+    },
+    {
+      "t": "Instagram posts between launches",
+      "d": "Keep your grid active with styled scenes of products you already sell, no new photoshoot required."
+    },
+    {
+      "t": "Email headers and banners",
+      "d": "Give newsletters and promo emails an inviting picture that matches the time of year."
+    },
+    {
+      "t": "Etsy listing extras",
+      "d": "Add a styled scene to your handmade listings alongside your close-ups and measurement shots."
+    }
+  ],
+  "maker": {
+    "options": [
+      ["Photo", "Your product shot"],
+      ["Scene", "Describe a room or setting"],
+      ["Size", "Square by default"]
+    ],
+    "cta": "Make my lifestyle photo"
+  },
+  "faq": [
+    {
+      "q": "Can I choose where my product sits in the scene?",
+      "a": "You can steer it in your description, for example \"on the left side of a wooden table.\" Results won't always follow every word, so short and specific descriptions tend to work well."
+    },
+    {
+      "q": "Will the product look the same as in my original photo?",
+      "a": "The tool works from your photo to keep the product's shape, color and details. Compare each result with the real item before you publish it, so shoppers get what they see."
+    },
+    {
+      "q": "What lifestyle scenes work well for home goods?",
+      "a": "Rooms where the item is naturally used: a mug on a breakfast table, a candle on a bathtub ledge, a vase on an entry console. One or two props keep the attention on your product."
+    },
+    {
+      "q": "Can I use lifestyle photos in Facebook or Instagram ads?",
+      "a": "Yes. Lifestyle scenes work in ads as well as on product pages. Keep words out of the scene itself and add your headline or price later in your ad tool."
+    },
+    {
+      "q": "How do credits work?",
+      "a": "You see the credit cost before you start. Credits are held when your job starts and used when it is delivered. If something fails, you get the credits back."
+    }
+  ]
+}
