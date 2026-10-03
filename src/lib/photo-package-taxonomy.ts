@@ -187,6 +187,8 @@ export function publicCollectionPathForSite(site: CollectionRouteSiteIdentity | 
   const slug = photoPackageSlug(rawSlug);
   if (!slug || slug === "all" || slug === "todo" || slug === "todos") return rootPath;
   if (!isMydreamshootsCollectionRouteSite(site)) return `${rootPath}/${slug}`;
+  if (slug === "estilo-y-fantasia") return `${rootPath}/travel`;
+  if (slug === "urbano") return `${rootPath}/urban`;
   if (isMydreamshootsCollectionRootSlug(slug)) return rootPath;
   return `${rootPath}/${slug}`;
 }

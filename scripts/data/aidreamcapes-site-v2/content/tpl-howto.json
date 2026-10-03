@@ -1,0 +1,79 @@
+{
+  "id": "tpl-howto",
+  "title": "AI How-To Video Maker for Your Products | Aidreamcapes",
+  "description": "Use this AI how-to video maker to show your product in use, made from a single photo. Pick 9:16 for YouTube Shorts or 16:9 for your store page. Try it now.",
+  "h1": "AI How-To Video Maker for Showing Products in Action",
+  "eyebrow": "How-to video template",
+  "lead": "Use this AI how-to video maker to show shoppers how your product works in 10 or 15 seconds. Upload a photo, describe the task, and get a vertical or widescreen video for your store and YouTube Shorts.",
+  "secondary_keywords": [
+    "product how-to video",
+    "product demo video from photo",
+    "how to use product video",
+    "YouTube Shorts product tutorial",
+    "instructional product video"
+  ],
+  "intro": [
+    "Here, your product gets used the way a customer would use it at home. The sample clip shows a woman running a handheld steamer down a creased blue shirt that hangs on a wooden clothes rack.",
+    "A quick how-to answers the question most shoppers have before they buy: how does this actually work? It suits tools and gadgets with one clear job, like garment steamers, milk frothers, lint shavers, or cleaning brushes. Put a 16:9 version on your product page and a 9:16 one on YouTube Shorts, then let the clip do the explaining."
+  ],
+  "tip": "Describe one task from start to finish, like \"steams a wrinkled cotton shirt on a hanger, collar to hem,\" instead of listing every feature.",
+  "steps": [
+    {
+      "t": "Upload the product on its own",
+      "d": "A clear photo of the steamer, frother, or tool against a plain background helps it keep its shape in the video."
+    },
+    {
+      "t": "Describe a single task",
+      "d": "Say who is using it, where, and what they do. Choose 10 seconds for a quick demo or 15 to slow it down."
+    },
+    {
+      "t": "Add step labels after download",
+      "d": "Type short labels like \"Fill,\" \"Heat,\" and \"Steam\" in CapCut or Canva so the order is easy to follow."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Kitchen gadgets",
+      "d": "Show a milk frother foaming a latte or a garlic press working through a clove, one job per clip."
+    },
+    {
+      "t": "Product page explainer",
+      "d": "Place a 16:9 version in your Shopify product description so buyers see the item in use before they add it to cart."
+    },
+    {
+      "t": "A Shorts series",
+      "d": "Make a few 10-second clips, each showing a different use, and post them on YouTube Shorts over a week."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Size",
+        "9:16 · YouTube Shorts"
+      ],
+      [
+        "Length",
+        "15 seconds"
+      ],
+      [
+        "Also try",
+        "16:9 · Product page"
+      ]
+    ],
+    "cta": "Make my how-to video"
+  },
+  "faq": [
+    {
+      "q": "Can one video show several steps in a row?",
+      "a": "Keep it to one clear task. At 10 or 15 seconds, steaming a single shirt reads better than a full laundry routine. For a longer guide, make a few clips and join them in your editing app."
+    },
+    {
+      "q": "Will the video include spoken instructions?",
+      "a": "No. Aidreamcapes doesn't add a voiceover or music. If you want narration, record it yourself and add it in CapCut or another editing app along with any step text."
+    },
+    {
+      "q": "Does the video have to match how my product really works?",
+      "a": "Yes. Describe the real way your product is used and watch the clip before you post it. If it shows something your product can't do, generate it again with a clearer description."
+    }
+  ]
+}

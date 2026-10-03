@@ -51,9 +51,26 @@ export const aidreamcapesZipVideoGroups: AidreamcapesNavGroup[] = [
 // video detail routes. Keep route parsing and sitemap generation aligned with
 // the visible directory instead of accepting arbitrary historical database
 // slugs.
-export const AIDREAMCAPES_PUBLIC_AI_VIDEO_GENERATION_SLUGS = aidreamcapesZipVideoGroups
-  .flatMap((group) => group.items)
-  .map((item) => item.href.replace(/^\/ai-video-generation\//, ""));
+// Aidreamcapes.com v2 (2026-10): the public video detail routes are the v2 tool and
+// template pages. Retired v1 topics are answered by 301 redirects in the middleware.
+export const AIDREAMCAPES_PUBLIC_AI_VIDEO_GENERATION_SLUGS = [
+  "image-to-video",
+  "url-to-video",
+  "ugc-ad-video",
+  "product-video",
+  "unboxing-experience",
+  "before-after-showcases",
+  "ai-actor-product-ads",
+  "how-to-video",
+  "cinematic-video",
+  "beauty-routine",
+  "food-video",
+  "home-organization",
+  "fashion-try-on-reel",
+  "promo-video",
+  "competitor-comparison",
+  "black-friday-countdown"
+];
 
 export function isAidreamcapesPublicVideoGenerationSlug(slug: string | undefined): boolean {
   return Boolean(slug && AIDREAMCAPES_PUBLIC_AI_VIDEO_GENERATION_SLUGS.includes(slug));

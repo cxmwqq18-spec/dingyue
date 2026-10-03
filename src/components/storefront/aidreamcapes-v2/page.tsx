@@ -1,0 +1,510 @@
+import type { SectionInstance } from "@/lib/types";
+import { AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
+import {
+  Boxes, Collage, Crumbs, CtaBand, Faq, Gallery, HeroMedia, Img, Intro, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolLink, ToolRow
+} from "./parts";
+import { list, text, type V2Article, type V2Card, type V2Data, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
+
+export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
+
+export function isAidreamcapesV2Section(section: SectionInstance | undefined): boolean {
+  return section?.type === AIDREAMCAPES_V2_SECTION_TYPE;
+}
+
+type Props = { data: V2Data; r: V2Resolvers };
+
+function HomePage({ data, r }: Props) {
+  const hero = data.hero as { image: V2Image; output: V2Image; versions: V2Image[]; videoHref: string; photoHref: string };
+  const make = data.make as { title: string; lead: string; video: V2Tool[]; photo: V2Tool[] };
+  const templates = data.templates as { title: string; lead: string; cards: V2Card[]; total: number };
+  const platforms = data.platforms as { title: string; items: { label: string; href: string; spec: string }[] };
+  const examples = data.examples as { image: V2Image; output: V2Image; versions: V2Image[]; bottle: V2Image; bottleAd: V2Image };
+  const heroMedia = data.heroMedia as V2HeroMedia | undefined;
+  return (
+    <>
+      <section className="hero">
+        <div className="wrap">
+          <div className="hero-grid">
+            <div>
+              <div className="eyebrow">{data.eyebrow}</div>
+              <h1>{data.h1}</h1>
+              <p className="lead">{data.lead}</p>
+              <div aria-label="Start creating" className="maker" id="adc2-home-maker" role="group">
+                <div className="tabs" role="tablist">
+                  <button aria-selected="true" data-mode="video" role="tab" type="button">Video</button>
+                  <button aria-selected="false" data-mode="photo" role="tab" type="button">Photo</button>
+                </div>
+                <div className="drop">
+                  <Img image={hero.image} r={r} className="drop-thumb" eager />
+                  <div><b>Drop your product photo here</b><span>JPG, PNG or WebP · any clear photo works</span></div>
+                </div>
+                <div data-pane="video">
+                  <div className="opts">
+                    <span className="opt">Size <b>9:16 · TikTok &amp; Reels</b></span>
+                    <span className="opt">Length <b>15 seconds</b></span>
+                    <span className="opt">Template <b>Creator video ad</b></span>
+                  </div>
+                  <div className="maker-foot" style={{ marginTop: 14 }}>
+                    <a className="btn btn-grad" href={r.href(hero.videoHref)}>Make my video →</a>
+                    <small>See the cost before you start</small>
+                  </div>
+                </div>
+                <div data-pane="photo" hidden>
+                  <div className="opts">
+                    <span className="opt">Template <b>White background</b></span>
+                    <span className="opt">Size <b>Square</b></span>
+                  </div>
+                  <div className="maker-foot" style={{ marginTop: 14 }}>
+                    <a className="btn btn-grad" href={r.href(hero.photoHref)}>Make my photos →</a>
+                    <small>See the cost before you start</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {heroMedia?.kind === "loop" ? (
+              <div aria-label="Example: product photo to video ad" className="visual-loop"><HeroMedia media={heroMedia} r={r} /></div>
+            ) : (
+            <div aria-label="Example: product photo to video ad" className="visual">
+              <div className="vin"><span className="lbl">Your product photo</span><Img eager image={hero.image} r={r} /></div>
+              <div aria-hidden="true" className="arrow">
+                <svg fill="none" stroke="#fff" strokeWidth="2" viewBox="0 0 20 20"><path d="M4 10h11M11 5l5 5-5 5" /></svg>
+              </div>
+              <div className="vout">
+                <span className="lbl">Video ad · 9:16 · 15s</span>
+                <Img eager image={hero.output} r={r} />
+              </div>
+              <div className="vars">
+                {hero.versions.map((image, index) => <Img image={image} key={index} r={r} />)}
+                <span>More versions</span>
+              </div>
+            </div>
+            )}
+          </div>
+          <div className="trust">
+            <span>Private uploads</span><span>Cost shown before every job</span><span>9:16, 1:1 or 16:9</span><span>6, 10 or 15 second videos</span>
+          </div>
+        </div>
+      </section>
+      <section className="sec">
+        <div className="wrap">
+          <SecHead eyebrow="What do you want to make?" lead={make.lead} title={make.title} />
+          <div className="make">
+            <div className="mk">
+              <div className="mk-h"><div><h3>Video</h3><p>For TikTok, Reels, Shorts and your product page</p></div></div>
+              <div className="mlist">{make.video.map((tool) => <ToolLink key={tool.id} r={r} tool={tool} />)}</div>
+              <a className="btn btn-ghost" href={r.href("/ai-video-generation")}>All video tools →</a>
+            </div>
+            <div className="mk">
+              <div className="mk-h"><div><h3>Photo</h3><p>For Amazon, Shopify and social ads</p></div></div>
+              <div className="mlist">{make.photo.map((tool) => <ToolLink key={tool.id} r={r} tool={tool} />)}</div>
+              <a className="btn btn-ghost" href={r.href("/ai-image-generation")}>All photo tools →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <Section eyebrow="Templates" lead={templates.lead} title={templates.title}>
+        <TemplateGrid cards={templates.cards} r={r} />
+        <div style={{ marginTop: 24 }}><a className="btn btn-ghost" href={r.href("/templates")}>See all {templates.total} templates →</a></div>
+      </Section>
+      <Section eyebrow="Made for where you sell" title={platforms.title}>
+        <div className="plats">
+          {platforms.items.map((item) => (
+            <a className="plat" href={r.href(item.href)} key={item.href}>
+              <b>{item.label}</b><span>{item.spec}</span><i>See {item.label} page →</i>
+            </a>
+          ))}
+        </div>
+      </Section>
+      <Section eyebrow="How it works" title="Three steps. No studio, no filming."><Steps items={list<V2Item>(data.steps)} /></Section>
+      <Section eyebrow="Examples" title="One product photo, many results">
+        <Flows examples={examples} r={r} />
+        <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/inspiration")}>See more examples →</a></div>
+      </Section>
+      <Section eyebrow="Why stores switch" title="Skip the photoshoot. Keep testing new ads.">
+        <div className="cmp-wrap">
+          <table className="cmp">
+            <thead><tr><th scope="col"><span className="sr-only">Topic</span></th><th scope="col">Photoshoot or creator</th><th scope="col">Aidreamcapes</th></tr></thead>
+            <tbody>{list<string[]>(data.compare).map((row) => <tr key={row[0]}><td>{row[0]}</td><td>{row[1]}</td><td>{row[2]}</td></tr>)}</tbody>
+          </table>
+        </div>
+      </Section>
+      <Section eyebrow="Pricing" lead="Every plan comes with monthly credits. You always see the cost before you make anything." title="Simple monthly plans">
+        <Plans plans={list<V2Plan>(data.plans)} r={r} />
+        <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/pricing")}>See full pricing →</a></div>
+      </Section>
+      <Faq items={data.faq} title="Questions before you start" />
+      <CtaBand href="/app/create" lead="Upload a photo, pick a template and get a video ad or store-ready photos." r={r} title="Your next ad starts with one product photo" />
+      <AidreamcapesV2HeroTabs />
+      <AidreamcapesV2MotionPreference />
+    </>
+  );
+}
+
+function Flows({ examples, r, titles }: { examples: { image: V2Image; output: V2Image; versions: V2Image[]; bottle: V2Image; bottleAd: V2Image }; r: V2Resolvers; titles?: { t: string; d: string }[] }) {
+  const first = titles?.[0] ?? { t: "Smartwatch", d: "Product photo, then a vertical video ad, then three different openings to test." };
+  const second = titles?.[1] ?? { t: "Water bottle", d: "Lifestyle photo for the product page, then a feed ad for social." };
+  return (
+    <div className="ex">
+      <div className="exrow">
+        <div className="meta"><h3>{first.t}</h3><p>{first.d}</p></div>
+        <div className="flow">
+          <div className="fcell"><figure><Img image={examples.image} r={r} /></figure><small>Product photo</small></div>
+          <div aria-hidden="true" className="fsep">›</div>
+          <div className="fcell"><figure><Img image={examples.output} r={r} /></figure><small>Video ad · 9:16</small></div>
+          <div aria-hidden="true" className="fsep">›</div>
+          {examples.versions.map((image, index) => (
+            <div className="fcell" key={index}><figure><Img className="v916" image={image} r={r} /></figure><small>Version {"ABC"[index]}</small></div>
+          ))}
+        </div>
+      </div>
+      <div className="exrow">
+        <div className="meta"><h3>{second.t}</h3><p>{second.d}</p></div>
+        <div className="flow">
+          <div className="fcell"><figure><Img image={examples.bottle} r={r} /></figure><small>Lifestyle photo</small></div>
+          <div aria-hidden="true" className="fsep">›</div>
+          <div className="fcell"><figure><Img image={examples.bottleAd} r={r} /></figure><small>Feed ad</small></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function VideoHubPage({ data, r }: Props) {
+  return (
+    <>
+      <Crumbs items={data.breadcrumbs} r={r} />
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Collage cards={list<V2Card>(data.heroCards)} r={r} />} title={data.h1}>
+        <Maker maker={{ options: [["Size", "9:16 · TikTok & Reels"], ["Length", "15 seconds"]], cta: "Make my video", href: text(data.appHref) }} r={r} />
+      </PageHero>
+      <Section eyebrow="About" title="Short videos from your product photos"><Intro paras={list<string>(data.intro)} /></Section>
+      <Section eyebrow="Video tools" title="Pick the video you need"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
+      <Section eyebrow="Why use it" title="Why stores make videos with Aidreamcapes"><Boxes items={list<V2Item>(data.benefits)} /></Section>
+      <Section eyebrow="How it works" title="Three steps"><Steps items={list<V2Item>(data.steps)} /></Section>
+      <Section eyebrow="Video templates" title="Ready-made video ideas"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
+      <Faq items={data.faq} title="Questions about AI video" />
+      <Reading items={list<V2Article>(data.reading)} r={r} />
+      <CtaBand href={text(data.appHref)} lead="Upload a product photo and see the cost before you start." r={r} title="Make your first video today" />
+    </>
+  );
+}
+
+function ToolPage({ data, r }: Props) {
+  const hero = data.hero as { single?: V2Image; cards?: V2Card[] };
+  const heroMedia = data.heroMedia as V2HeroMedia | undefined;
+  const gallery = data.gallery as { images: V2Image[] } | undefined;
+  const pairs = list<{ before: V2Image; after: V2Image }>(data.pairs);
+  const maker = data.maker as V2Maker;
+  const video = data.group === "video";
+  return (
+    <>
+      <Crumbs items={data.breadcrumbs} r={r} />
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
+        <Maker maker={maker} r={r} />
+      </PageHero>
+      {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} /></Section> : null}
+      {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /></Section> : null}
+      <Section eyebrow="What it is" title={`What ${data.label} can do for your store`}><Intro paras={list<string>(data.intro)} /></Section>
+      <Section eyebrow="Why use it" title={`Why stores use ${data.label}`}><Boxes items={list<V2Item>(data.benefits)} /></Section>
+      <Section eyebrow="How it works" title="Three steps">
+        <Steps items={list<V2Item>(data.steps)} />
+        <div style={{ marginTop: 20 }}><Specs r={r} rows={list<V2SpecRow>(data.specs)} /></div>
+      </Section>
+      {list<V2Item>(data.uses).length ? <Section eyebrow="Where to use it" title="Where it works best"><Boxes className="ideas" items={list<V2Item>(data.uses)} /></Section> : null}
+      {list<V2Tool>(data.photoTools).length ? <Section eyebrow="Photo tools" title="All photo tools"><ToolRow r={r} tools={list<V2Tool>(data.photoTools)} /></Section> : null}
+      {list<V2Card>(data.templates).length ? (
+        <Section eyebrow="Templates" lead="Pick one, add your product photo and get the same look." title={`Templates for ${data.label}`}>
+          <TemplateGrid cards={list<V2Card>(data.templates)} r={r} />
+        </Section>
+      ) : null}
+      <Faq items={data.faq} title={`Questions about ${data.label}`} />
+      <Reading items={list<V2Article>(data.reading)} r={r} />
+      {list<V2Tool>(data.siblings).length ? <Section eyebrow="More tools" title="You might also need"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
+      <CtaBand href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} lead="Upload a product photo and see the cost before you start." r={r} title={`Make your first ${video ? "video" : "photo"} today`} />
+    </>
+  );
+}
+
+function TemplatePage({ data, r }: Props) {
+  const maker = data.maker as V2Maker;
+  const heroMedia = data.heroMedia as V2HeroMedia | undefined;
+  const gallery = data.gallery as { images: V2Image[] } | undefined;
+  return (
+    <>
+      <Crumbs items={data.breadcrumbs} r={r} />
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Single image={data.image as V2Image} r={r} />} title={data.h1}>
+        <Maker maker={maker} r={r} />
+        {text(data.tip) ? <div className="tip"><b>Tip:</b> {text(data.tip)}</div> : null}
+      </PageHero>
+      {gallery?.images.length ? <Section eyebrow="Examples" title="What this template looks like"><Gallery images={gallery.images} r={r} /></Section> : null}
+      <Section eyebrow="About this template" title="What you get">
+        <Intro paras={list<string>(data.intro)} />
+        <div style={{ marginTop: 20 }}><Specs r={r} rows={list<V2SpecRow>(data.specs)} /></div>
+      </Section>
+      <Section eyebrow="How it works" title="Three steps"><Steps items={list<V2Item>(data.steps)} /></Section>
+      {list<V2Item>(data.ideas).length ? <Section eyebrow="Ideas" title="Ways to use it"><Boxes className="ideas" items={list<V2Item>(data.ideas)} /></Section> : null}
+      <Faq items={data.faq} title="Questions about this template" />
+      <Section eyebrow="More templates" title="More like this"><TemplateGrid cards={list<V2Card>(data.more)} r={r} /></Section>
+      <Reading items={list<V2Article>(data.reading)} r={r} />
+      <CtaBand href={maker.href} lead="Upload one product photo. See the cost before you start." r={r} title={`Try ${data.label} with your product`} />
+    </>
+  );
+}
+
+function CollectionPage({ data, r }: Props) {
+  const kind = text(data.kind);
+  const overview = kind === "industry" ? `What ${data.label} sellers need` : kind === "platform" ? `Making ads for ${data.label}` : `Getting ready for ${data.label}`;
+  const cards = list<V2Card>(data.cards);
+  const heroMedia = data.heroMedia as V2HeroMedia | undefined;
+  const gallery = data.gallery as { images: V2Image[] } | undefined;
+  return (
+    <>
+      <Crumbs items={data.breadcrumbs} r={r} />
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Collage cards={list<V2Card>(data.heroCards)} r={r} />} title={data.h1}>
+        <Maker maker={{ options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
+      </PageHero>
+      <Section eyebrow="Overview" title={overview}><Intro paras={list<string>(data.intro)} /></Section>
+      {gallery?.images.length ? <Section eyebrow="Examples" title={`${data.label} examples`}><Gallery images={gallery.images} r={r} /></Section> : null}
+      {list<[string, string]>(data.specs).length ? (
+        <Section eyebrow="Sizes and formats" title={`What works on ${data.label}`}>
+          <Specs r={r} rows={list<V2SpecRow>(data.specs)} />
+          {list<string>(data.tips).length ? <ul className="prose check" style={{ marginTop: 18 }}>{list<string>(data.tips).map((tip) => <li key={tip}>{tip}</li>)}</ul> : null}
+        </Section>
+      ) : null}
+      {list<V2Item>(data.plan).length ? <Section eyebrow="Plan ahead" title="How to prepare"><Steps items={list<V2Item>(data.plan)} /></Section> : null}
+      {list<V2Item>(data.ideas).length ? <Section eyebrow="Ideas" title="What to make"><Boxes className="ideas" items={list<V2Item>(data.ideas)} /></Section> : null}
+      {cards.length ? (
+        <Section eyebrow="Templates" lead={`${cards.length} ready-made looks. Pick one and add your product.`} title={`${data.label} templates`}>
+          <TemplateGrid cards={cards} r={r} />
+        </Section>
+      ) : null}
+      <Section eyebrow="Tools" title="Tools that fit"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
+      <Faq items={data.faq} title="Questions" />
+      <Reading items={list<V2Article>(data.reading)} r={r} />
+      <CtaBand href={text(data.appHref)} lead="Upload a product photo and pick a template." r={r} title={`Make ${data.label} content today`} />
+    </>
+  );
+}
+
+function IndexPage({ data, r }: Props) {
+  const cards = list<V2Card>(data.cards);
+  const filters = data.filters as { types: [string, string][]; industries: [string, string][]; platforms: [string, string][] } | undefined;
+  const items = list<{ label: string; href: string; text: string; image: V2Image }>(data.items);
+  const articles = list<{ title: string; summary: string; minutes: number; href: string; image: V2Image }>(data.articles);
+  const filterRow = (label: string, key: string, options: [string, string][]) => (
+    <div className="frow">
+      <span className="fl">{label}</span>
+      <button aria-pressed="true" className="chip" data-k={key} data-v="all" type="button">All</button>
+      {options.map(([value, name]) => <button aria-pressed="false" className="chip" data-k={key} data-v={value} key={value} type="button">{name}</button>)}
+    </div>
+  );
+  return (
+    <>
+      <Crumbs items={data.breadcrumbs} r={r} />
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
+      <section style={{ paddingBottom: 30 }}><div className="wrap"><Intro paras={list<string>(data.intro)} /></div></section>
+      {cards.length && filters ? (
+        <section style={{ paddingBottom: 88 }}>
+          <div className="wrap">
+            <div className="filters" id="adc2-tpl-filters">
+              {filterRow("Type", "type", filters.types)}
+              {filterRow("Industry", "ind", filters.industries)}
+              {filterRow("Platform", "plat", filters.platforms)}
+              <div className="tcount" id="adc2-tpl-count">Showing {cards.length} of {cards.length} templates</div>
+            </div>
+            <TemplateGrid cards={cards} id="adc2-tpl-grid" r={r} />
+            <p className="empty" hidden id="adc2-tpl-empty">No templates match these filters yet. Try another industry or platform.</p>
+          </div>
+          <AidreamcapesV2TemplateFilters />
+        </section>
+      ) : null}
+      {items.length ? (
+        <section style={{ paddingBottom: 88 }}>
+          <div className="wrap cardlist">
+            {items.map((item) => (
+              <a href={r.href(item.href)} key={item.href}>
+                <Img image={item.image} r={r} />
+                <div><b>{item.label}</b><span>{item.text}</span></div>
+              </a>
+            ))}
+          </div>
+        </section>
+      ) : null}
+      {articles.length ? (
+        <section style={{ paddingBottom: 88 }}>
+          <div className="wrap articles">
+            {articles.map((article) => (
+              <a className="art" href={r.href(article.href)} key={article.href}>
+                <Img image={article.image} r={r} />
+                <div><small>{article.minutes} min read</small><h3>{article.title}</h3><p>{article.summary}</p></div>
+              </a>
+            ))}
+          </div>
+        </section>
+      ) : null}
+      <Faq items={data.faq} title="Questions" />
+    </>
+  );
+}
+
+function ArticlePage({ data, r }: Props) {
+  const sections = list<V2Section>(data.sections);
+  const checklist = list<string>(data.checklist);
+  const related = list<{ label: string; href: string; text: string }>(data.related);
+  return (
+    <>
+      <article>
+        <Crumbs items={data.breadcrumbs} r={r} />
+        <section className="ahero">
+          <div className="wrap">
+            <div className="eyebrow">{data.eyebrow}</div>
+            <h1>{data.h1}</h1>
+            <p className="lead">{data.lead}</p>
+            <p className="meta-line">{String(data.minutes)} min read · Aidreamcapes</p>
+            <Img eager image={data.image as V2Image} r={r} />
+          </div>
+        </section>
+        <div className="wrap prose" style={{ paddingBottom: 40 }}>
+          {sections.map((section) => (
+            <div key={section.h2}>
+              <h2>{section.h2}</h2>
+              {section.paras.map((para, index) => <p key={index}><RichText r={r} text={para} /></p>)}
+            </div>
+          ))}
+          {checklist.length ? <><h2>Checklist</h2><ul className="check">{checklist.map((item) => <li key={item}>{item}</li>)}</ul></> : null}
+          {related.length ? (
+            <>
+              <h2>Related</h2>
+              <div className="related">
+                {related.map((item) => <a href={r.href(item.href)} key={item.href}><b>{item.label}</b><span>{item.text}</span></a>)}
+              </div>
+            </>
+          ) : null}
+        </div>
+      </article>
+      <Faq items={data.faq} title="Questions" />
+      <CtaBand href="/app/create" lead="Upload a product photo and try it." r={r} title="Put it into practice" />
+    </>
+  );
+}
+
+function ProseSections({ sections }: { sections: V2Section[] }) {
+  return (
+    <div className="wrap prose" style={{ paddingBottom: 60 }}>
+      {sections.map((section) => (
+        <div key={section.h2}>
+          <h2>{section.h2}</h2>
+          {section.paras.map((para, index) => <p key={index}>{para}</p>)}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function NextLinks({ data, r }: { data: V2Data; r: V2Resolvers }) {
+  const links = list<{ label: string; href: string; text: string }>(data.next);
+  if (!links.length) return null;
+  return (
+    <Section eyebrow="Keep going" title="Where to go next">
+      <div className="related">
+        {links.map((item) => <a href={r.href(item.href)} key={item.href}><b>{item.label}</b><span>{item.text}</span></a>)}
+      </div>
+    </Section>
+  );
+}
+
+function SimplePage({ data, r, layout }: Props & { layout: string }) {
+  const heroImage = data.image as V2Image | undefined;
+  const hero = <><Crumbs items={data.breadcrumbs} r={r} /><PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroImage?.src ? <HeroMedia media={{ kind: "image", image: heroImage }} r={r} /> : undefined} title={data.h1} /></>;
+  if (layout === "pricing") {
+    return (
+      <>
+        {hero}
+        <section style={{ paddingBottom: 64 }}><div className="wrap"><Plans plans={list<V2Plan>(data.plans)} r={r} /></div></section>
+        {list<string>(data.credits).length ? <Section eyebrow="Credits" title="How credits work"><Intro paras={list<string>(data.credits)} /></Section> : null}
+        <Faq items={data.faq} title="Pricing questions" />
+        <NextLinks data={data} r={r} />
+        <CtaBand href="/app/create" lead="Pick a plan when you are ready." r={r} title="Start with one product photo" />
+      </>
+    );
+  }
+  if (layout === "faq") return <>{hero}<Faq items={data.faq} title="All questions" /><NextLinks data={data} r={r} /></>;
+  if (layout === "contact") {
+    return (
+      <>
+        {hero}
+        <section style={{ paddingBottom: 40 }}>
+          <div className="wrap">
+            <Intro paras={list<string>(data.intro)} />
+            <p className="meta-line" style={{ fontSize: 17 }}>Email: <a href={`mailto:${text(data.email)}`}>{text(data.email)}</a></p>
+          </div>
+        </section>
+        {list<V2Item>(data.topics).length ? <Section eyebrow="We can help with" title="What to contact us about"><Boxes className="ideas" items={list<V2Item>(data.topics)} /></Section> : null}
+        <Faq items={data.faq} title="Questions" />
+        <NextLinks data={data} r={r} />
+      </>
+    );
+  }
+  if (layout === "about" || layout === "trust") {
+    return (
+      <>
+        {hero}
+        <ProseSections sections={list<V2Section>(data.sections)} />
+        <Faq items={data.faq} title="Questions" />
+        <NextLinks data={data} r={r} />
+        {layout === "about" ? <CtaBand href="/app/create" lead="Upload a product photo and try a template." r={r} title="See what you can make" /> : null}
+      </>
+    );
+  }
+  if (layout === "ai-info") {
+    return (
+      <>
+        {hero}
+        <div className="wrap prose" style={{ paddingBottom: 40 }}>
+          <h2>In one sentence</h2>
+          <p>{text(data.summary)}</p>
+          <h2>Key facts</h2>
+          <div className="cmp-wrap">
+            <table className="cmp">
+              <tbody>{list<[string, string]>(data.facts).map(([key, value]) => <tr key={key}><td>{key}</td><td>{value}</td></tr>)}</tbody>
+            </table>
+          </div>
+          <h2>Not offered</h2>
+          <ul>{list<string>(data.notOffered).map((item) => <li key={item}>{item}</li>)}</ul>
+          <h2>How to describe Aidreamcapes</h2>
+          {list<string>(data.describe).map((line) => <p key={line}>{line}</p>)}
+        </div>
+        <Faq items={data.faq} title="Common questions" />
+        <NextLinks data={data} r={r} />
+      </>
+    );
+  }
+  if (layout === "examples") {
+    const cases = list<{ t: string; d: string }>(data.cases);
+    return (
+      <>
+        {hero}
+        <section style={{ paddingBottom: 20 }}><div className="wrap"><Intro paras={list<string>(data.intro)} /></div></section>
+        <section style={{ paddingBottom: 40 }}><div className="wrap"><Flows examples={data.flows as never} r={r} titles={cases.length >= 2 ? cases : undefined} /></div></section>
+        {list<{ before: V2Image; after: V2Image }>(data.pairs).length ? <Section eyebrow="White background" title="Normal photos turned into clean white-background shots"><PairGrid pairs={list<{ before: V2Image; after: V2Image }>(data.pairs)} r={r} /></Section> : null}
+        <Section eyebrow="More results" title="Results by template"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
+        <Faq items={data.faq} title="Questions" />
+      </>
+    );
+  }
+  return hero;
+}
+
+export function AidreamcapesV2Page({ section, r }: { section: SectionInstance; r: V2Resolvers }) {
+  const settings = section.settings as Record<string, unknown>;
+  const layout = text(settings.layout);
+  const data = settings.data as V2Data;
+  if (!data) return null;
+  if (layout === "home") return <HomePage data={data} r={r} />;
+  if (layout === "video-hub") return <VideoHubPage data={data} r={r} />;
+  if (layout === "tool") return <ToolPage data={data} r={r} />;
+  if (layout === "template") return <TemplatePage data={data} r={r} />;
+  if (layout === "collection") return <CollectionPage data={data} r={r} />;
+  if (layout === "index") return <IndexPage data={data} r={r} />;
+  if (layout === "article") return <ArticlePage data={data} r={r} />;
+  return <SimplePage data={data} layout={layout} r={r} />;
+}

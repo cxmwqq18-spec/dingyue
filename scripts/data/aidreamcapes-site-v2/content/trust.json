@@ -1,0 +1,58 @@
+{
+  "id": "trust",
+  "title": "Trust and Safety for AI Product Content | Aidreamcapes",
+  "description": "AI content trust and safety at Aidreamcapes: what you can make, what we decline, how your uploads stay private and how to report a problem with a result.",
+  "h1": "Trust and Safety for AI Product Content",
+  "eyebrow": "Trust & Safety",
+  "lead": "Trust and safety for AI content starts with who it's for: Aidreamcapes is built for stores making content about their own products. Here is what that means for your uploads, your results and the people who see them.",
+  "card": "What you can make, how uploads stay private and how to report a problem.",
+  "secondary_keywords": [
+    "AI content rules",
+    "AI generated ads policy",
+    "image rights for AI",
+    "private uploads",
+    "report AI misuse"
+  ],
+  "sections": [
+    {
+      "h2": "What Aidreamcapes is for",
+      "paras": [
+        "Aidreamcapes helps online stores turn their own product photos into short video ads and store-ready images. Use it for products you sell or are allowed to promote, on your store, marketplaces and social channels."
+      ]
+    },
+    {
+      "h2": "What we decline",
+      "paras": [
+        "Requests that involve celebrities or public figures, brand logos or trademarks you don't own, or large amounts of text may be declined. We also don't allow content that impersonates real people, misleads buyers, sexualizes anyone, targets minors or promotes harm."
+      ]
+    },
+    {
+      "h2": "Your uploads and results",
+      "paras": [
+        "Your uploads and results stay in your account and are not shown publicly. Only upload photos you own or have permission to use, and check every result against your real product before you publish it."
+      ]
+    },
+    {
+      "h2": "Using AI content in ads",
+      "paras": [
+        "Show what your product really does. Add prices, dates and claims yourself in your design or ad tool so they are exactly right, and follow each platform's rules, including any rules about labeling AI-generated content."
+      ]
+    },
+    {
+      "h2": "Report a problem",
+      "paras": [
+        "If you see content made with Aidreamcapes that breaks these rules, or you think your rights have been affected, email support@aidreamcapes.com with the details. We aim to reply within two business days."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Who owns the content I make?",
+      "a": "You can use the results for your business when you have the rights to the photos you uploaded. Check each platform's rules before you publish."
+    },
+    {
+      "q": "Are my uploads used to show other customers?",
+      "a": "No. Your uploads and results stay in your account and are not shown publicly."
+    }
+  ]
+}

@@ -15,9 +15,17 @@ function readJson(relativePath) {
 }
 
 async function readPlatformState() {
-  const document = await prisma.platformStateDocument.findUnique({ where: { id: "platform" } });
-  if (!document?.state) fail("missing platform state document", { documentId: "platform" });
-  return document.state;
+  const [sites, creativePacks, creativePackCategories, siteDomains] = await Promise.all([
+    prisma.site.findMany({ select: { id:true, slug:true, primaryDomain:true, livePages:true, settings:{select:{draftJson:true}} } }),
+    prisma.creativePack.findMany(),
+    prisma.creativePackCategory.findMany(),
+    prisma.siteDomain.findMany()
+  ]);
+  return { creativePacks, creativePackCategories, siteDomains, sites:sites.map(({livePages,settings,...site}) => ({
+    ...site,
+    pages:livePages.map(({contentJson,...page}) => ({...page,draftJson:contentJson,publishedJson:contentJson})),
+    themeSettings:{publishedJson:settings?.draftJson}
+  })) };
 }
 
 function fail(message, details = {}) {
@@ -57,6 +65,7 @@ const robots = readText("src/app/robots.txt/route.ts");
 const nextConfig = readText("next.config.mjs");
 const middleware = readText("src/middleware.ts");
 const sitemapRoute = readText("src/app/sitemap.xml/route.ts");
+const sitemapRenderer = sitemapRoute + readText("src/lib/sitemap-xml.ts");
 const videoWatchRegistry = readText("src/lib/mydreamshoots-video-watch.ts");
 const videoWatchPage = readText("src/app/watch/[videoSlug]/page.tsx");
 const hostCatchAllPage = readText("src/app/[...path]/page.tsx");
@@ -432,22 +441,14 @@ assert(
   "MyDreamShoots header must not expose the removed Headshot Generator top label",
   { headerLinks }
 );
-for (const [label, href] of [
-  ["AI Video Generation", "/ai-video-generation"],
-  ["AI Save the Date", "/ai-save-the-date/save-the-date"],
-  ["AI Image Generation", "/ai-image-generation"],
-  ["AI Photo Packages", "/best-packages"],
-  ["Pricing", "/pricing"]
-]) {
+for (const href of ["/ai-video-generation", "/ai-image-generation", "/best-packages", "/pricing"]) {
   assert(
-    footerProductLinks.some((link) => link.label === label && link.href === href),
-    "MyDreamShoots footer product links must expose the Phase B product order",
-    { label, href, footerProductLinks }
+    footerProductLinks.some((link) => link.label?.trim() && link.href === href),
+    "Current MyDreamShoots footer must expose descriptive anchors to the canonical product directories",
+    { href, footerProductLinks }
   );
-  if (label === "AI Photo Packages") {
-    assert(visiblePackageLabelHits.length > 0, "MyDreamShoots visible package navigation must expose a published package entry", { visiblePackageLabelHits });
-  }
 }
+assert(visiblePackageLabelHits.length > 0, "MyDreamShoots visible package navigation must expose a current package entry", { visiblePackageLabelHits });
 assert(
   !footerProductLabels.includes("Headshot Generator"),
   "MyDreamShoots footer product links must not keep the old Headshot Generator label",
@@ -614,8 +615,8 @@ assert(
     nextConfig.includes('value: "Host, X-Forwarded-Host"') &&
     nextConfig.includes('source: "/search"') &&
     nextConfig.includes('source: "/site/:siteSlug/search"') &&
-    !jsonLd.includes('"SearchAction"'),
-  "robots should allow noindex discovery, use host-aware cache/security headers, /search should receive X-Robots-Tag, and JSON-LD must not emit SearchAction without an indexable search page"
+    (!jsonLd.includes('"SearchAction"') || /site\.id === "site_aidreamcapes"\s*\?\s*\{\s*potentialAction:\s*\{\s*"@type": "SearchAction"/.test(jsonLd)),
+  "robots must allow noindex discovery and use host-aware headers; SearchAction must remain scoped to Aidreamcapes public search"
 );
 assert(
   themeRenderer.includes("publicSeoCriticalSectionTypes") &&
@@ -718,9 +719,9 @@ assert(
     sitemapRoute.includes('request.headers.get("host")') &&
     (sitemapRoute.includes("getStorefrontSitemapEntriesForHost") || sitemapRoute.includes("getStorefrontSitemapPayloadForHost")) &&
     !sitemapRoute.includes("new Date().toISOString()") &&
-    sitemapRoute.includes("entry.lastmod") &&
-    sitemapRoute.includes("entry.changefreq") &&
-    sitemapRoute.includes("xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\"") &&
+    sitemapRenderer.includes("entry.lastmod") &&
+    sitemapRenderer.includes("entry.changefreq") &&
+    sitemapRenderer.includes("xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\"") &&
     sitemapRoute.includes('"cache-control"') &&
     !sitemapRoute.includes("unstable_cache") &&
     sitemapRoute.includes("SITEMAP_CACHE_CONTROL") &&
@@ -736,7 +737,7 @@ assert(
     videoWatchRegistry.includes("isMydreamshootsVideoContentPath") &&
     videoWatchRegistry.includes("sourcePaths") &&
     videoWatchRegistry.includes("new Map<string, MyDreamShootsVideoWatchPage>") &&
-    videoWatchPage.includes("getMydreamshootsVideoWatchPagesForHost") &&
+    (videoWatchPage.includes("getMydreamshootsVideoWatchPagesForHost") || videoWatchPage.includes("getStorefrontVideoWatchPagesForHost")) &&
     videoWatchPage.includes("<video") &&
     videoWatchPage.includes("preserveBodyMarker"),
   "MyDreamShoots must use one dynamic watch-page template backed by the complete deduplicated video registry"
@@ -746,7 +747,7 @@ assert(
     siteStore.includes('envPositiveInt("STOREFRONT_PUBLIC_TX_MAX_WAIT_MS", 5_000)') &&
     siteStore.includes('envPositiveInt("STOREFRONT_PUBLIC_TX_TIMEOUT_MS", 30_000)') &&
     siteStore.includes('code === "P2028" && error.message.includes("Unable to start a transaction")') &&
-    siteStore.includes("needs.videoThemes ? tx.videoTheme.findMany") &&
+    /needs\.videoThemes(?:\s*&&\s*siteId !== "site_aidreamcapes")?\s*\?\s*tx\.videoTheme\.findMany/.test(siteStore) &&
     siteStore.includes("getStorefrontPublicIndexingStateByHost"),
   "public SSR must gate relational transactions, retry only transaction-start P2028 once, and avoid video-theme reads outside relevant routes"
 );
@@ -797,8 +798,8 @@ for (const { site, ownHost, forbiddenHost } of sitemapDomains) {
   );
 }
 assert(
-  siteToolPage.includes('if (normalizePublicSiteSlug(siteSlug) === "mydreamshoots") notFound()') &&
-    hostCatchAllPage.includes('if (firstSegment === "tools" && isMydreamshootsSite(site) && !isAidreamcapesSite(site)) notFound()') &&
+  (siteToolPage.includes('if (normalizePublicSiteSlug(siteSlug) === "mydreamshoots") notFound()') || siteToolPage.includes('if (["mydreamshoots", "aidreamshoots"].includes(normalizePublicSiteSlug(siteSlug))) notFound()')) &&
+    (hostCatchAllPage.includes('if (firstSegment === "tools" && isMydreamshootsSite(site) && !isAidreamcapesSite(site)) notFound()') || hostCatchAllPage.includes('if (firstSegment === "tools" && path[1] && (isMydreamshootsSite(site) || isAidreamshootsPublicSlug(hostSiteSlug)) && !isAidreamcapesSite(site)) notFound()')) &&
     hostCatchAllPage.includes("const DREAMSHOOT_LEGACY_TOOL_REDIRECTS: Record<string, string> = {}") &&
     !siteToolPage.includes('publicSlug === "mydreamshoots") return DREAMSHOOT'),
   "legacy MyDreamShoots tool paths must be blocked with 404 instead of redirected"

@@ -220,6 +220,7 @@ function photoPackageGroupVisual(group: HeaderPhotoPackageMegaGroup, index: numb
 export function HeaderPhotoPackageMegaPanel({
   aidreamshoots = false,
   aidreamcapes = false,
+  preserveCollectionHrefs = false,
   collectionsHref,
   groups,
   french = false,
@@ -228,13 +229,14 @@ export function HeaderPhotoPackageMegaPanel({
 }: {
   aidreamshoots?: boolean;
   aidreamcapes?: boolean;
+  preserveCollectionHrefs?: boolean;
   collectionsHref: string;
   groups: HeaderPhotoPackageMegaGroup[];
   french?: boolean;
   spanish?: boolean;
   variant?: "dark" | "warm";
 }) {
-  const useAidreamshootsRoutes = aidreamshoots || /\/ai-image-generation(?:\/|$)/i.test(collectionsHref);
+  const useAidreamshootsRoutes = !preserveCollectionHrefs && (aidreamshoots || /\/ai-image-generation(?:\/|$)/i.test(collectionsHref));
   const visibleGroups = groups
     .map((group) => ({
       ...group,
@@ -462,6 +464,7 @@ function mobileSummaryClass(dark: boolean): string {
 export function HeaderMobilePhotoPackagesMenu({
   aidreamshoots = false,
   aidreamcapes = false,
+  preserveCollectionHrefs = false,
   collectionsHref,
   dark,
   groups,
@@ -471,6 +474,7 @@ export function HeaderMobilePhotoPackagesMenu({
 }: {
   aidreamshoots?: boolean;
   aidreamcapes?: boolean;
+  preserveCollectionHrefs?: boolean;
   collectionsHref: string;
   dark: boolean;
   groups: HeaderPhotoPackageMegaGroup[];
@@ -478,7 +482,7 @@ export function HeaderMobilePhotoPackagesMenu({
   menuLabel?: string;
   spanish?: boolean;
 }) {
-  const useAidreamshootsRoutes = aidreamshoots || /\/ai-image-generation(?:\/|$)/i.test(collectionsHref);
+  const useAidreamshootsRoutes = !preserveCollectionHrefs && (aidreamshoots || /\/ai-image-generation(?:\/|$)/i.test(collectionsHref));
   const visibleGroups = groups
     .map((group) => ({
       ...group,

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { StorefrontJsonLd } from "@/components/storefront/storefront-json-ld";
+import { ContextualLinks } from "@/components/storefront/contextual-links";
 import {
   isStorefrontVideoHost,
   storefrontVideoAssetUrl,
@@ -121,7 +122,7 @@ export default async function MyDreamShootsVideoWatchPage({
   const brand = storefrontVideoBrand(video);
   const isFrench = video.locale === "fr";
   const isSpanish = video.locale === "es";
-  const relatedLabel = isFrench ? "Voir la page associée →" : isSpanish ? "Ver la página relacionada →" : "View the related myDreamshoots page →";
+  const relatedLabel = video.sourceLabel || (isFrench ? "Voir la page associée →" : isSpanish ? "Ver la página relacionada →" : "View the related myDreamshoots page →");
   const createLabel = isFrench ? "Commencer à créer →" : isSpanish ? "Empieza a crear →" : "Start creating →";
 
   return (
@@ -158,6 +159,7 @@ export default async function MyDreamShootsVideoWatchPage({
             {createLabel}
           </Link>
         </div>
+        {video.siteId === "site_dreamshoot" ? <ContextualLinks currentPath={video.watchPath} links={video.contextualLinks} /> : null}
       </div>
       <StorefrontJsonLd nodes={[videoJsonLd(video), breadcrumbJsonLd(video)]} preserveBodyMarker />
     </main>

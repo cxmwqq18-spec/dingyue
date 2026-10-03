@@ -1,0 +1,65 @@
+{
+  "id": "video-hub",
+  "title": "AI Video Generator for Ecommerce | Aidreamcapes",
+  "description": "Our AI video generator for ecommerce turns one product photo into a 6, 10, or 15 second clip for TikTok, Reels, or your store. Pick a video type to start.",
+  "h1": "AI Video Generator for Ecommerce Ads and Listings",
+  "eyebrow": "AI video tools",
+  "lead": "Our AI video generator for ecommerce makes short clips sized for TikTok, Instagram, YouTube Shorts, or your product page. Pick the kind of video you need, add a product photo and one sentence, and download the result.",
+  "card": "Short video ads, demos and unboxings made from one product photo.",
+  "secondary_keywords": [
+    "ecommerce video maker",
+    "short videos for online stores",
+    "AI video ads for Shopify sellers",
+    "vertical product videos for TikTok"
+  ],
+  "intro": [
+    "Aidreamcapes makes short videos for people who sell online. You add a photo of your product, write one sentence about the scene you want, and get back a single clip that runs 6, 10, or 15 seconds. Choose vertical 9:16 for TikTok, Reels, and Shorts, square 1:1 for social feeds, or wide 16:9 for a store banner. If you need something in between, 3:4 and 4:3 are available too.",
+    "Each video type on this page heads in its own direction. Creator-style ads have the casual, handheld feel of a phone video. Demo videos show what the product does. Unboxing clips focus on the reveal, before-and-after clips show a change, and photo-to-video adds motion to a shot you already like. Videos are made one at a time, so if you want three openings to compare, run it three times and keep the one you like."
+  ],
+  "benefits": [
+    {
+      "t": "Start from one photo",
+      "d": "A single clear product shot is enough to begin. No photo handy? You can start from a written description instead."
+    },
+    {
+      "t": "Sized for where you post",
+      "d": "Vertical, square, and wide formats are built in, so you never have to squeeze a wide clip into a TikTok frame."
+    },
+    {
+      "t": "Cost shown up front",
+      "d": "The credit price appears before anything runs. When a video fails, those credits go straight back to your balance."
+    }
+  ],
+  "steps": [
+    {
+      "t": "Add your product photo",
+      "d": "Upload a sharp picture of what you sell, or skip this step and describe it in words."
+    },
+    {
+      "t": "Choose a video type and size",
+      "d": "Pick creator-style, demo, unboxing, before-and-after, or photo-to-video. Set the length and format, then write one sentence about the scene."
+    },
+    {
+      "t": "Save it or make another",
+      "d": "Save the clip to your device. For a different opening or setting, edit your sentence and make another version."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do I need a product photo to make a video?",
+      "a": "No, but it helps. With a photo, the video is built around your actual product. Without one, the result comes from your description alone, so it may not match your item exactly."
+    },
+    {
+      "q": "How long are the videos, and what sizes can I choose?",
+      "a": "You can pick 6, 10, or 15 seconds. Formats include 9:16 vertical, 1:1 square, and 16:9 wide, plus 3:4 and 4:3."
+    },
+    {
+      "q": "Can I add my price, captions, or music?",
+      "a": "Add those after you download. Put prices, dates, and discount codes on in Canva, CapCut, or Ads Manager, and add captions and music in TikTok or CapCut. AI-generated text can come out misspelled, so it's safer to type it yourself."
+    },
+    {
+      "q": "How do credits work?",
+      "a": "You see the credit cost before you start. Credits are held when your job starts and used when it is delivered. If something fails, you get the credits back."
+    }
+  ]
+}

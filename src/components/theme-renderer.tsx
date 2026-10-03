@@ -1,6 +1,7 @@
 import NextImage from "next/image";
 import { Fragment } from "react";
 import type { CSSProperties, ReactNode } from "react";
+import { ContextualLinks } from "@/components/storefront/contextual-links";
 import { AssetsPanel } from "@/components/app/assets-panel";
 import { JobCreateForm } from "@/components/app/job-create-form";
 import { LoginForm } from "@/components/auth/login-form";
@@ -22,6 +23,9 @@ import { resolvePublishedSaveTheDateGroups, resolvePublishedSaveTheDateNavigatio
 import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation, aidreamcapesZipFooterItems } from "@/components/storefront/aidreamcapes-zip-navigation";
+import { AidreamcapesV2Shell } from "@/components/storefront/aidreamcapes-v2/shell";
+import { AidreamcapesV2Page, isAidreamcapesV2Section } from "@/components/storefront/aidreamcapes-v2/page";
+import { AidreamcapesV2PolicyPage, isAidreamcapesV2PolicyPage } from "@/components/storefront/aidreamcapes-v2/policy";
 import { AidreamcapesZipHomepageSection } from "@/components/storefront/aidreamcapes-zip-homepage";
 import { AidreamcapesPublicSection } from "@/components/storefront/aidreamcapes-public-section";
 import { AidreamcapesZipFooter, type AidreamcapesZipCompanyProfile, type AidreamcapesZipPaymentMethod, type AidreamcapesZipSocialLink } from "@/components/storefront/aidreamcapes-zip-footer";
@@ -274,6 +278,9 @@ export function ThemeRenderer({
 }) {
   const displaySite = mode === "published" ? storefrontPaidSiteCopy(site) : site;
   const normalizedPath = pagePath ?? sitePathFromPage(displaySite, page.pageType);
+  const contextualPath = displaySite.id === "site_dreamshoot" && normalizedPath === "/ai-image-generation" && typeof query.category === "string"
+    ? publicCollectionPathForSite(displaySite, query.category)
+    : normalizedPath;
   const displayPage = mode === "published"
     ? preserveVendorImageAlts(storefrontBrandPageCopy(displaySite, page), page)
     : page;
@@ -307,6 +314,62 @@ export function ThemeRenderer({
   };
   const useAidreamcapesImageDirectory = displaySite.id === "site_aidreamcapes" && normalizedPath === "/ai-image-generation" && Boolean(aidreamcapesImageDirectoryCards?.length);
   const previewHasEmptyBody = mode === "preview" && entries.length === 0;
+  // Aidreamcapes.com v2: the site-owned navigation in ThemeSettings switches every
+  // public page of site_aidreamcapes (only) to the v2 header/footer. Pages whose
+  // LivePage contains the v2 section render the v2 body; other pages keep their
+  // existing sections inside the same chrome. No other storefront enters here.
+  const aidreamcapesV2Navigation = displaySite.id === "site_aidreamcapes" ? settings.aidreamcapesV2Navigation : undefined;
+  if (aidreamcapesV2Navigation?.version === 2) {
+    const v2Entry = getSectionEntries(displayPage).find(([, section]) => isAidreamcapesV2Section(section));
+    const v2PageSections = entries.map(([, section]) => section);
+    const v2PolicyPage = !v2Entry && isAidreamcapesV2PolicyPage(v2PageSections, normalizedPath);
+    const v2Resolvers = {
+      href: (value: string) => hrefFor(routedSite, value),
+      asset: (value: string) => mediaAssetUrl(routedSite, value)
+    };
+    return (
+      <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
+        <AidreamcapesV2Shell legacyPublicPage={!v2Entry && !v2PolicyPage} mainId={mainContentId} navigation={aidreamcapesV2Navigation} r={v2Resolvers}>
+          {v2Entry ? (
+            <AidreamcapesV2Page r={v2Resolvers} section={v2Entry[1]} />
+          ) : v2PolicyPage ? (
+            <AidreamcapesV2PolicyPage pagePath={normalizedPath} r={v2Resolvers} sections={v2PageSections} supportEmail={storefrontContext?.profile?.identity.supportEmail} />
+          ) : (
+            <>
+              {entries.map(([id, section]) => (
+                <ThemeSectionFrame
+                  creativePackCategories={creativePackCategories}
+                  creativePacks={creativePacks}
+                  id={id}
+                  key={id}
+                  lazyRender={false}
+                  mode={mode}
+                  previewSelection={previewSelection}
+                  products={products}
+                  publishedIndexablePaths={publishedIndexablePaths}
+                  renderContext={renderContext}
+                  storefrontContext={storefrontContext}
+                  runtime={runtime}
+                  section={section}
+                  site={routedSite}
+                  siteAiApps={siteAiApps}
+                  toolMenuItems={toolMenuItems}
+                  videoThemeCategories={videoThemeCategories}
+                  videoThemes={videoThemes}
+                  homepageShowcases={homepageShowcases}
+                  aidreamcapesImageDirectoryCards={aidreamcapesImageDirectoryCards}
+                  aidreamcapesVideoThemeCovers={aidreamcapesVideoThemeCovers}
+                  saveTheDateNavigationGroups={settings.saveTheDateNavigation?.groups ?? []}
+                  aidreamcapesVideoNavigation={settings.aidreamcapesZipNavigation}
+                  videoGenerationTopics={navigationVideoGenerationTopics}
+                />
+              ))}
+            </>
+          )}
+        </AidreamcapesV2Shell>
+      </StorefrontLinkPrefetchProvider>
+    );
+  }
   return (
     <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
       <div
@@ -413,6 +476,13 @@ export function ThemeRenderer({
               )
             ) : null}
           </DreamshootShowcasePreviewClient>
+          {site.id === "site_dreamshoot" && publicStorefrontPage ? (
+            <ContextualLinks
+              currentPath={contextualPath}
+              links={displayPage.contextualLinksByPath?.[contextualPath] ?? displayPage.contextualLinks}
+              resolveHref={(href) => hrefFor(routedSite, href)}
+            />
+          ) : null}
         </main>
         <div
           className="xfcart-section"
@@ -1831,6 +1901,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
                   ) : isPackagesLink ? (
 	                    deferMegaMenuPanels ? (
 	                    <HeaderPhotoPackageMegaPanel
+	                        preserveCollectionHrefs={site.id === "site_dreamshoot"}
 	                        aidreamshoots={isAidreamshootsStorefrontSite(site)}
 	                        aidreamcapes={isAidreamcapes}
 	                        collectionsHref={routedSitePath(site, publicCollectionPathForSite(site, ""))}
@@ -1990,6 +2061,7 @@ export function ThemeGlobalHeader({ creativePackCategories = [], creativePacks =
 	                      return (
 	                        deferMegaMenuPanels ? (
 	                          <HeaderMobilePhotoPackagesMenu
+	                            preserveCollectionHrefs={site.id === "site_dreamshoot"}
 	                            aidreamshoots={isAidreamshootsStorefrontSite(site)}
 	                            aidreamcapes={isAidreamcapes}
 	                            collectionsHref={routedSitePath(site, publicCollectionPathForSite(site, ""))}
@@ -5445,7 +5517,11 @@ function settingListBlocks(
 }
 
 function routedSitePath(site: Site, path = "/"): string {
-  const normalizedPath = !path || path === "/" ? "/" : path.startsWith("/") ? path : `/${path}`;
+  let normalizedPath = !path || path === "/" ? "/" : path.startsWith("/") ? path : `/${path}`;
+  if (site.id === "site_dreamshoot") {
+    normalizedPath = normalizedPath.replace(/^\/ai-image-generation\/estilo-y-fantasia(?=[?#]|$)/, "/ai-image-generation/travel")
+      .replace(/^\/ai-image-generation\/urbano(?=[?#]|$)/, "/ai-image-generation/urban");
+  }
   const basePath = (site as RoutedSite).__storefrontBasePath;
   // The production AIdreamshoots domain is canonical even when an upstream
   // rewrite reaches the path-mode route. Never emit its internal /site alias

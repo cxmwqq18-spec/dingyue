@@ -1,0 +1,79 @@
+{
+  "id": "tpl-launch",
+  "title": "AI Promo Video Maker for New Products | Aidreamcapes",
+  "description": "Use this AI promo video maker to announce a new product with a warm, polished clip. Upload one photo, choose 9:16 or 1:1, and make your launch video today.",
+  "h1": "AI Promo Video Maker for Your Next Product Launch",
+  "eyebrow": "Launch video template",
+  "lead": "This AI promo video maker announces something new with a warm, styled clip. Start from a shot of the product, describe the room it belongs in, and get a short video for Facebook and Instagram. Clips run 6, 10, or 15 seconds.",
+  "secondary_keywords": [
+    "product launch video",
+    "new product promo video",
+    "Facebook promo video",
+    "Instagram launch ad",
+    "home decor promo video"
+  ],
+  "intro": [
+    "Your new product appears in the room where it belongs, styled like an ad on launch day. The sample clip features a slim white cordless lamp glowing on a wooden side table beside a stack of books, a mug, and a potted plant in a cozy, dim room.",
+    "Seeing the product in a real space helps people picture it at home before they read a word. It works for decor, small appliances, gadgets, and gift items. Use 9:16 for Stories and Reels, or 1:1 for the Facebook and Instagram feed."
+  ],
+  "tip": "Describe the time of day and the room, like \"evening living room, warm light, lamp on a side table,\" so the product looks lived with rather than staged.",
+  "steps": [
+    {
+      "t": "Upload the new product",
+      "d": "A clean shot from your launch photos is enough, and the video builds the room around it."
+    },
+    {
+      "t": "Choose the room and size",
+      "d": "Describe the space and mood, then pick 9:16 or 1:1. Six seconds suits a teaser; 10 or 15 gives a fuller scene."
+    },
+    {
+      "t": "Add the launch details",
+      "d": "Type \"New,\" your release date, and any offer in Canva or Ads Manager so every word is exactly right."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Coming-soon teaser",
+      "d": "Make a 6-second version with darker light and post it before release day."
+    },
+    {
+      "t": "Launch-week offer",
+      "d": "Generate a second version in the same kind of room and add your intro discount in your editor."
+    },
+    {
+      "t": "Gift table",
+      "d": "Place the product on a table set for a birthday or the holidays to pitch it as a present."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Size",
+        "9:16 · Stories & Reels"
+      ],
+      [
+        "Length",
+        "10 seconds"
+      ],
+      [
+        "Also try",
+        "1:1 · Feed"
+      ]
+    ],
+    "cta": "Make my launch video"
+  },
+  "faq": [
+    {
+      "q": "Can the video show my launch date and price?",
+      "a": "Add those yourself after downloading. AI can misspell words or scramble numbers, so dates, prices, and \"New\" badges are safer typed in Canva, CapCut, or Ads Manager."
+    },
+    {
+      "q": "Should I make a square or a vertical version?",
+      "a": "Vertical 9:16 fills the screen in Stories and Reels, and square 1:1 sits neatly in the feed. You can make one of each. Every version is its own run, with the cost shown before it starts."
+    },
+    {
+      "q": "Can I make a promo before my product photos are ready?",
+      "a": "You can start from a text description alone, but the product won't match your real one. For an ad, wait until you have a clear photo of the final item so shoppers see what they'll actually get."
+    }
+  ]
+}

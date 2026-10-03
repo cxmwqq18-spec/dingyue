@@ -969,6 +969,7 @@ function toAdminShellThemeSettings(record?: { draftJson?: unknown; publishedJson
         footerLinks: settings.navigation?.footerLinks ?? []
       },
       aidreamcapesZipNavigation: settings.aidreamcapesZipNavigation,
+      aidreamcapesV2Navigation: settings.aidreamcapesV2Navigation,
       saveTheDateNavigation: settings.saveTheDateNavigation,
       globalSections: settings.globalSections,
       seo: settings.seo

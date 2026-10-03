@@ -1,0 +1,53 @@
+{
+  "id": "about",
+  "title": "About Us: Visuals for Small Online Shops | Aidreamcapes",
+  "description": "Learn about Aidreamcapes, the online tool that helps small shops turn one product photo into short video ads and store images, with private uploads. Read on.",
+  "h1": "About Aidreamcapes: Product Visuals Made Simple",
+  "eyebrow": "About us",
+  "lead": "Here's what Aidreamcapes is about: tools that help online sellers make product photos and short video ads from a single picture, so less time goes into shoots and more into running the store.",
+  "secondary_keywords": [
+    "AI visuals for Shopify sellers",
+    "product content tool for Etsy shops",
+    "private AI product photo tool"
+  ],
+  "sections": [
+    {
+      "h2": "What we make",
+      "paras": [
+        "Aidreamcapes is an online tool for turning a product photo into new store images and short video ads. You upload a picture of what you sell, pick a template or write what you'd like to see, and get back a square image or a short video of 6, 10 or 15 seconds.",
+        "We keep the tools focused on things sellers use every week: white background shots, lifestyle scenes, on-model photos, feed ad images and short vertical videos for TikTok, Instagram Reels and YouTube Shorts."
+      ]
+    },
+    {
+      "h2": "Who it's for",
+      "paras": [
+        "We build for small and growing online stores on Shopify, Amazon and Etsy, and for the marketers who run their ads. If you pack orders, write listings and set up campaigns yourself, you're exactly who we have in mind.",
+        "You don't need design software or ad expertise. A clear photo of your product and a sentence about the scene you picture are enough to get started."
+      ]
+    },
+    {
+      "h2": "Your photos stay yours",
+      "paras": [
+        "Everything you upload and everything you make stays in your own account. We don't make your product photos or results public.",
+        "Some requests are turned down, such as ones involving celebrities, other public figures, or logos and trademarks that belong to someone else. That keeps the focus on your own products."
+      ]
+    },
+    {
+      "h2": "Credit costs you can see",
+      "paras": [
+        "Every photo and video shows its price in credits up front. Credits are reserved when a job begins, charged only when the result arrives, and returned automatically if something goes wrong.",
+        "Delivered results are generally not refunded, so we put the cost on screen before you commit rather than after."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is Aidreamcapes an agency or a tool?",
+      "a": "A self-serve online tool. You make the photos and videos yourself, from your own account, whenever you need them."
+    },
+    {
+      "q": "How do I get in touch with the Aidreamcapes team?",
+      "a": "Write to support@aidreamcapes.com with your question. We try to respond within two business days."
+    }
+  ]
+}

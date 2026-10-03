@@ -1,0 +1,95 @@
+{
+  "id": "social-ad-photos",
+  "title": "AI Ad Image Generator for Social Feed Ads | Aidreamcapes",
+  "description": "Use our AI ad image generator to make eye-catching product images for Facebook and Instagram feeds. Upload one photo, add text in Ads Manager. Start now.",
+  "h1": "AI Ad Image Generator for Facebook and Instagram Feeds",
+  "eyebrow": "Photo tool",
+  "lead": "This AI ad image generator turns a product photo into a bold, square ad image with room for your message. You add the headline and price later in Ads Manager or Canva, so every word is right.",
+  "secondary_keywords": [
+    "Facebook ad image maker",
+    "Instagram feed ad photos",
+    "product ad creative generator",
+    "square ad images for social media",
+    "AI images for paid social ads"
+  ],
+  "intro": [
+    "A feed ad gets only a moment to catch someone's eye while they scroll. Most of that work is done by the picture: a bright setting, a clear product and a bit of open space where your message can go. This tool takes one product photo and builds a square ad image around it, like a running shoe on a sunlit rock above a mountain lake.",
+    "It's made for shop owners and marketers who run ads on Facebook and Instagram and need new pictures often, since people stop noticing an image they've seen many times. Keep words out of the image itself. Add your headline, price or offer in Ads Manager, Canva or your usual design app, where you control spelling and layout, then compare the new ad with the one you're already running."
+  ],
+  "benefits": [
+    {
+      "t": "Fresh pictures for tired ads",
+      "d": "When an ad stops getting attention, give the same product a different setting and try again."
+    },
+    {
+      "t": "Room for your message",
+      "d": "Ask for open sky, a plain wall or empty space at one side so your headline has somewhere to sit."
+    },
+    {
+      "t": "Your product, front and center",
+      "d": "The item stays the focus, so people know what you're selling before they read anything."
+    }
+  ],
+  "steps": [
+    {
+      "t": "Upload the product you're promoting",
+      "d": "Use a clean shot of just the item, without packaging or other products crowding it."
+    },
+    {
+      "t": "Describe the ad scene and its open space",
+      "d": "Pick a ready-made ad look or describe one, for example \"running shoe on a rocky trail, lake behind, empty sky at the top.\""
+    },
+    {
+      "t": "Download, add text, make another",
+      "d": "Save the image, place your headline and price in your ad tool, and create a second version if you'd like another option to compare."
+    }
+  ],
+  "uses": [
+    {
+      "t": "Facebook feed ads",
+      "d": "Use the square image in a single-image ad and write your headline and offer in Ads Manager."
+    },
+    {
+      "t": "Instagram feed ads",
+      "d": "Run it as a sponsored post that sits naturally among the photos people already scroll past."
+    },
+    {
+      "t": "Carousel ad cards",
+      "d": "Make one image per product or per setting, then combine them into a carousel in your ad account."
+    },
+    {
+      "t": "Ads for past store visitors",
+      "d": "Show people who browsed your shop a fresh look at the item they viewed, instead of the same store photo."
+    }
+  ],
+  "maker": {
+    "options": [
+      ["Photo", "The product you're advertising"],
+      ["Scene", "Describe the ad setting"],
+      ["Size", "Square by default"]
+    ],
+    "cta": "Make my ad image"
+  },
+  "faq": [
+    {
+      "q": "Can the AI put my headline and price on the image?",
+      "a": "Add them yourself in Ads Manager, Canva or another design tool. AI-generated lettering can come out misspelled or garbled, and requests with a lot of text may be refused, so typing it yourself keeps prices and offers accurate."
+    },
+    {
+      "q": "What size are the ad images?",
+      "a": "They're square by default, a shape that works in both Facebook and Instagram feeds."
+    },
+    {
+      "q": "Can I create a few different ad images to compare?",
+      "a": "Yes, one at a time. Generate another image whenever you want a new option, with the cost shown before each one, then compare them in your ad account."
+    },
+    {
+      "q": "Do I have to say my ad image was made with AI?",
+      "a": "Ad platforms set their own rules for AI-generated or edited images, and those rules change. Check the current policy for each platform you advertise on before your campaign goes live."
+    },
+    {
+      "q": "How do credits work?",
+      "a": "You see the credit cost before you start. Credits are held when your job starts and used when it is delivered. If something fails, you get the credits back."
+    }
+  ]
+}

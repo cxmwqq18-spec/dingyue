@@ -1,0 +1,78 @@
+{
+  "id": "tpl-detail",
+  "title": "Product Detail Photos: Close-Ups of Texture | Aidreamcapes",
+  "description": "Create product detail photos that bring stitching, leather grain, and hardware up close. Upload a sharp shot of your item and make your first close-up now.",
+  "h1": "Close-Up Product Detail Photos of Stitching, Grain, and Finish",
+  "eyebrow": "Product photo template",
+  "lead": "Product detail photos turn one sharp product photo into a square close-up that lets shoppers inspect the stitching, texture, and finish they would normally check in a store.",
+  "secondary_keywords": [
+    "close-up product photos",
+    "macro product photography",
+    "leather goods product photos",
+    "texture shots for product listings"
+  ],
+  "intro": [
+    "The example frames a brown leather bifold wallet on a wooden desk, close enough to follow the edge stitching and the soft grain of the hide, with a pen, a plant, and a coffee cup around the edges.",
+    "Buyers judge quality from small things: how a seam is finished, whether a zipper pull is metal, how a surface takes the light. A close-up answers those questions without a long paragraph. It suits wallets, belts, bags, watches, and jewelry, and it sits well as the second or third image after a full product view."
+  ],
+  "tip": "Upload a photo taken in soft daylight with the detail in sharp focus, because the close-up can only be as crisp as the texture in your original shot.",
+  "steps": [
+    {
+      "t": "Pick the detail first",
+      "d": "Decide which part tells buyers the most, such as a seam, clasp, buckle, or engraving, and make sure it's in focus in your photo."
+    },
+    {
+      "t": "Name it in your description",
+      "d": "Write something like \"close-up of the corner stitching, wooden desk\" so the frame centers on that spot."
+    },
+    {
+      "t": "Place it after the main image",
+      "d": "Download the square photo and add it right after the full product view in your Amazon or Shopify gallery."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Clasps and closures",
+      "d": "Show how a bracelet clasp, magnetic snap, or zipper pull is made, since buyers often ask about these small parts."
+    },
+    {
+      "t": "Material up close",
+      "d": "Get near enough to a canvas tote, wool scarf, or leather belt that the weave or grain reads clearly on a phone screen."
+    },
+    {
+      "t": "Engraving and maker's marks",
+      "d": "Give initials, a maker's stamp, or a personalized message its own frame for handmade and custom pieces."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Template",
+        "Close-Up Details"
+      ],
+      [
+        "Size",
+        "Square 1:1"
+      ],
+      [
+        "Focus",
+        "The detail you name"
+      ]
+    ],
+    "cta": "Make my close-up"
+  },
+  "faq": [
+    {
+      "q": "Can AI add detail my photo doesn't show?",
+      "a": "It works from what's in your upload. If the stitching is blurry or cut off in your photo, the close-up may come out soft or show details your product doesn't have, so start with a sharp shot."
+    },
+    {
+      "q": "Where should a detail photo go in my listing?",
+      "a": "Right after the full product view, so shoppers see the whole item first and the close-up next. On Amazon and Shopify, that usually means image two or three."
+    },
+    {
+      "q": "Which products suit close-up details?",
+      "a": "Anything where quality shows in small parts: leather goods, watches, rings, knitwear, wooden boxes, ceramic mugs. Plain items with no texture or hardware gain less from it."
+    }
+  ]
+}

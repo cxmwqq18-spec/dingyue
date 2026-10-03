@@ -1,0 +1,403 @@
+{
+  "note": "Field-level copy updates for Aidreamcapes.com utility pages (login, album, cart, account, search, 404). Each change names the value it replaces; a field whose current value differs is left as it is and reported. Subscription product summaries and features follow the v2 pricing plans. The site's own description (used in the Organization structured data) is replaced the same way.",
+  "shared": {
+    "trust": [
+      [
+        "block",
+        "trust_1",
+        "trust_signal_bar",
+        2,
+        "label",
+        "If the shoot doesn't look like you, refund.",
+        "If a result misses what you asked for, ask us to review it for a refund, credit return or rerun."
+      ],
+      [
+        "block",
+        "trust_1",
+        "trust_signal_bar",
+        2,
+        "value",
+        "100% money-back guarantee",
+        "Results-based refund review"
+      ],
+      [
+        "block",
+        "trust_1",
+        "trust_signal_bar",
+        3,
+        "value",
+        "AES-256 at rest · TLS 256-bit in transit",
+        "AES-256 at rest · TLS in transit"
+      ],
+      [
+        "field",
+        "trust_1",
+        "trust_signal_bar",
+        "title",
+        "Private safeguards for every AI photo shoot.",
+        "How we look after your uploads."
+      ]
+    ],
+    "plans": [
+      [
+        "field",
+        "pricing_1",
+        "pricing_table",
+        "description",
+        "Choose Starter, Pro, or Premium. Each package shows its credit cost before generation; failed requests can return reserved credits according to request status.",
+        "Choose Starter, Pro or Premium. You see the credit cost before every video or photo, and if a job fails its credits go back to your balance."
+      ],
+      [
+        "field",
+        "pricing_1",
+        "pricing_table",
+        "sidePanelTitle",
+        "Our plans starts from $24.50 and are designed to be more affordable and flexible.",
+        "Plans start at $24.50 a month."
+      ],
+      [
+        "field",
+        "pricing_1",
+        "pricing_table",
+        "sidePanelBody",
+        "Credits stay predictable while packs stay flexible. You can generate private photo albums after reviewing credits, keep credit use predictable, and top up only when they need more runs.",
+        "Every plan adds credits to your account each month. Use them on any video or photo template, and see the cost of each job before you start."
+      ],
+      [
+        "field",
+        "pricing_1",
+        "pricing_table",
+        "marketComparison",
+        "The average professional photoshoot can cost around $725. Aidreamcapes keeps plan selection simple with monthly or quarterly and semiannually subscriptions.",
+        "Three monthly plans, each with a set number of credits for product videos and photos."
+      ],
+      [
+        "remove",
+        "plan_rules_1",
+        "rich_text"
+      ],
+      [
+        "remove",
+        "conversion_1",
+        "conversion_panel"
+      ]
+    ]
+  },
+  "site": {
+    "branding": [
+      [
+        "description",
+        [
+          "Aidreamcapes is a private AI video and photo workspace for themed generation, creative tools, credits, and private gallery delivery.",
+          "Aidreamcapes is a private AI photo studio for fan-scene albums, game-day group portraits, premiere-inspired sets, Christmas group albums, Thanksgiving keepsakes, Halloween party portraits, and customer-only gallery delivery."
+        ],
+        "Aidreamcapes is an online tool that turns a product photo or a product page link into short video ads and store-ready product images for online stores."
+      ]
+    ]
+  },
+  "pages": [
+    {
+      "slug": "/login",
+      "include": [
+        "trust"
+      ],
+      "changes": [
+        [
+          "seo",
+          "title",
+          "Sign in to manage private AI photo albums",
+          "Log In to Your Account | Aidreamcapes"
+        ],
+        [
+          "seo",
+          "description",
+          "Sign in to Aidreamcapes to manage source photos, credits, private AI photo jobs, downloads, and customer-only generated albums.",
+          "Log in to Aidreamcapes to upload product photos, check credits before you start, and download your finished product videos and photos."
+        ],
+        [
+          "field",
+          "login_1",
+          "login_method_panel",
+          "title",
+          "Sign in to create, track, and download your AI photos",
+          "Log in to make and download your product videos and photos"
+        ],
+        [
+          "field",
+          "login_1",
+          "login_method_panel",
+          "subtitle",
+          "Upload source photos, reserve credits before generation, track requests, and download finished albums from one secure account.",
+          "Upload product photos, see the credit cost before you start, follow each job and download your finished videos and photos from one account."
+        ],
+        [
+          "field",
+          "login_1",
+          "login_method_panel",
+          "imageCaption",
+          "Every source photo, credit, and gallery stays attached to your private account.",
+          "Your uploads, credits and finished files stay in your own account."
+        ],
+        [
+          "block",
+          "login_1",
+          "login_method_panel",
+          0,
+          "helper",
+          "Log in, register, or reset your password from one private account page.",
+          "Log in, create an account or reset your password with your email."
+        ],
+        [
+          "block",
+          "login_1",
+          "login_method_panel",
+          1,
+          "helper",
+          "Password login is available for private gallery access.",
+          "Sign in with the email and password you used to create your account."
+        ],
+        [
+          "remove",
+          "plan_rules_1",
+          "rich_text"
+        ]
+      ]
+    },
+    {
+      "slug": "/album",
+      "include": [
+        "trust"
+      ],
+      "changes": [
+        [
+          "seo",
+          "title",
+          "Creator photo album downloads and review",
+          "Your Videos and Photos | Aidreamcapes"
+        ],
+        [
+          "seo",
+          "description",
+          "Open Aidreamcapes private albums to review, compare, and download generated headshots, portrait photos, style sets, and fan photos.",
+          "Open your private Aidreamcapes gallery to review and download the product videos and photos you have made."
+        ],
+        [
+          "field",
+          "album_intro_1",
+          "media_banner",
+          "title",
+          "Delivered images stay inside a customer-only album.",
+          "Your finished videos and photos, in one private gallery."
+        ],
+        [
+          "field",
+          "album_intro_1",
+          "media_banner",
+          "subtitle",
+          "Open finished AI headshots, portrait photos, fan photos, and style packs in one signed-in gallery with download access.",
+          "Open your finished product videos and photos in your signed-in gallery and download them any time."
+        ],
+        [
+          "field",
+          "album_intro_1",
+          "media_banner",
+          "ctaLabel",
+          "View my albums",
+          "Open my gallery"
+        ],
+        [
+          "field",
+          "album_intro_1",
+          "media_banner",
+          "imageCaption",
+          null,
+          "Your product videos and photos"
+        ],
+        [
+          "field",
+          "album_intro_1",
+          "media_banner",
+          "imageMeta",
+          null,
+          "Upload a product photo, check the credit cost, create your video or photo and download it from one account."
+        ],
+        [
+          "field",
+          "album_1",
+          "album_gallery",
+          "title",
+          "Private generated albums",
+          "Your videos and photos"
+        ],
+        [
+          "remove",
+          "conversion_1",
+          "conversion_panel"
+        ]
+      ]
+    },
+    {
+      "slug": "/cart",
+      "include": [
+        "plans"
+      ],
+      "changes": [
+        [
+          "seo",
+          "title",
+          "Cart review for credits and checkout",
+          "Your Cart | Aidreamcapes"
+        ],
+        [
+          "seo",
+          "description",
+          "Review selected Aidreamcapes credits, plan details, price, and package access before completing secure checkout.",
+          "Check your selected Aidreamcapes plan and the credits it includes before you complete secure checkout."
+        ],
+        [
+          "field",
+          "cart_intro_1",
+          "rich_text",
+          "body",
+          "Review your selected subscription plan, confirm the included credits, and continue to checkout before starting premium AI photo generation.",
+          "Check the plan you picked and the credits it includes, then continue to checkout. Credits are added to your account after payment."
+        ],
+        [
+          "field",
+          "cart_1",
+          "cart_summary",
+          "emptyBody",
+          "Open pricing to select a monthly, quarterly, or semiannual subscription plan.",
+          "Open pricing to choose a monthly plan."
+        ]
+      ]
+    },
+    {
+      "slug": "/account",
+      "include": [
+        "plans"
+      ],
+      "changes": [
+        [
+          "seo",
+          "title",
+          "Account and billing for plans, credits, and receipts",
+          "Account and Billing | Aidreamcapes"
+        ],
+        [
+          "field",
+          "billing_intro_1",
+          "rich_text",
+          "body",
+          "Review your active plan, remaining credits, top-up options, checkout history, and package usage before starting the next AI photo set.",
+          "Check your plan, remaining credits, top-ups and receipts before you start your next product video or photo."
+        ]
+      ]
+    },
+    {
+      "slug": "/404",
+      "changes": [
+        [
+          "seo",
+          "title",
+          "Page not found - return to photo packages",
+          "Page not found | Aidreamcapes"
+        ],
+        [
+          "seo",
+          "description",
+          "This Aidreamcapes page is not available. Return to AI photo packages, tools, pricing, help, or the private customer workspace.",
+          "This Aidreamcapes page is not available. Go back to the home page, try the video and photo tools, or contact support."
+        ],
+        [
+          "field",
+          "not_found_1",
+          "not_found",
+          "subtitle",
+          "Return to AI photo packages, pricing, sign-in, or your private Aidreamcapes workspace.",
+          "The link may be old or mistyped. Try the video and photo tools, browse templates or go back to the home page."
+        ],
+        [
+          "field",
+          "not_found_1",
+          "not_found",
+          "secondaryCta",
+          "View packages",
+          "Product photo tools"
+        ],
+        [
+          "remove",
+          "packages_1",
+          "photo_package_wall"
+        ],
+        [
+          "remove",
+          "packages_strip_1",
+          "feature_grid"
+        ],
+        [
+          "remove",
+          "conversion_1",
+          "conversion_panel"
+        ]
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "prod_aidreamcapes_starter",
+      "plan": "Starter",
+      "from": {
+        "summary": "A practical starting plan for first private albums and quick profile sets.",
+        "features": [
+          "Create private photo albums after generation completes",
+          "AI photo editor with prompts",
+          "Special AI photo filters",
+          "Create photos by writing prompts in seconds",
+          "Create AI videos",
+          "Magic Upscaler for high-res images",
+          "No watermark"
+        ],
+        "badgeLabel": "Photo plan"
+      },
+      "badgeLabel": "Good to start"
+    },
+    {
+      "id": "prod_aidreamcapes_pro",
+      "plan": "Pro",
+      "from": {
+        "summary": "More credits for several albums, edits, and style tests.",
+        "features": [
+          "Create private photo albums after generation completes",
+          "AI photo editor with prompts",
+          "Special AI photo filters",
+          "Create photos by writing prompts in seconds",
+          "Create AI videos",
+          "Magic Upscaler for high-res images",
+          "No watermark"
+        ],
+        "badgeLabel": "Most popular"
+      },
+      "badgeLabel": "Most popular"
+    },
+    {
+      "id": "prod_aidreamcapes_premium",
+      "plan": "Premium",
+      "from": {
+        "summary": "The highest credit allowance for repeat albums, video ideas, and premium outputs.",
+        "features": [
+          "Create private photo albums after generation completes",
+          "AI photo editor with prompts",
+          "Special AI photo filters",
+          "Create photos by writing prompts in seconds",
+          "Create AI videos",
+          "Magic Upscaler for high-res images",
+          "No watermark",
+          "4K Ultra-High quality outputs"
+        ],
+        "badgeLabel": "Best value"
+      },
+      "badgeLabel": "Best value"
+    }
+  ]
+}

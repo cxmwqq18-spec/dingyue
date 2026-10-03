@@ -1,0 +1,76 @@
+{
+  "id": "blog-ai-ugc-video-ads-guide",
+  "title": "AI UGC Video Ads Guide: What Makes One Work | Aidreamcapes",
+  "description": "This AI UGC video ads guide shows how to plan the opening shot, write a one-line scene, pick a length, and finish the clip in your editor. Make your first ad.",
+  "h1": "AI UGC Video Ads Guide: Creator-Style Clips for Your Shop",
+  "eyebrow": "Video ad guide",
+  "lead": "This AI UGC video ads guide covers how to plan a UGC-style ad that looks like it was filmed on a phone in an ordinary home, describe it in a single sentence, and finish it for TikTok, Reels, or Shorts.",
+  "secondary_keywords": [
+    "UGC style video ads",
+    "creator style product videos",
+    "AI video ads for TikTok",
+    "how to make UGC ads",
+    "short video ads for small brands"
+  ],
+  "read_minutes": 4,
+  "summary": "A plain-English walkthrough of creator-style video ads: the opening shot, the scene description, length, size, and finishing touches.",
+  "sections": [
+    {
+      "h2": "What \"UGC-style\" actually means",
+      "paras": [
+        "UGC stands for user-generated content: photos and videos made by everyday people rather than brands. A UGC-style ad borrows that look. The camera is handheld, the setting is an ordinary kitchen, bathroom, desk, or car, and someone is holding or using the product in natural light.",
+        "Sellers like this style on [TikTok](page:plat-tiktok), [Instagram](page:plat-instagram) Reels, and [YouTube Shorts](page:plat-youtube-shorts) because it sits comfortably next to the posts people are already scrolling past. It shows the product in someone's hands, at real size, doing what it's meant to do, which can tell a shopper more than a polished studio shot.",
+        "In [Aidreamcapes Video Ads](page:video-ads), you upload a product photo, write one sentence about the scene, and get a short clip of 6, 10, or 15 seconds. There's no filming to arrange and no samples to ship out."
+      ]
+    },
+    {
+      "h2": "Plan the first second before anything else",
+      "paras": [
+        "People decide quickly whether to keep watching, so the opening frame should already show the product doing something. Try not to start on an empty room or on a person with nothing in their hands.",
+        "Some opening ideas for different products: a reusable water bottle pulled out of a gym bag and tipped back for a drink; a phone case snapped onto a phone, then tossed onto a sofa cushion; a rope toy thrown across a living room for a dog; [a serum dropper squeezed over the back of a hand](page:tpl-beauty).",
+        "Stick to one main action per clip. A 10-second video has room for one clear moment and a little context, not a whole story. Planning your first TikTok ad? Start with [Your First TikTok Video Ad](page:guide-first-tiktok-video-ad)."
+      ]
+    },
+    {
+      "h2": "Write the scene in one sentence",
+      "paras": [
+        "Your sentence is all the video has to go on, so make it count. Cover four things: who is in the shot, where they are, what they do with the product, and how it's filmed.",
+        "Here's an example for a cold brew bottle: \"A woman in her 30s at a sunny kitchen counter pours iced coffee from our glass bottle into a tall glass, filmed handheld on a phone.\" And one for a backpack: \"A college student unzips our gray backpack on a library table and pulls out a laptop, close-up, natural window light.\"",
+        "Leave out any words you want on screen, famous faces, and logos that aren't yours. Requests like these may be refused, and lettering drawn by AI is likely to come out wrong anyway."
+      ]
+    },
+    {
+      "h2": "Choose a length and a shape",
+      "paras": [
+        "Six seconds is enough for a single action, like a lid twisting off. Ten seconds fits an action plus a second angle or a reaction. Fifteen seconds lets you show a short sequence, such as taking the product out, using it, and setting it down.",
+        "For TikTok, Reels, and Shorts, pick 9:16 so the video fills the phone screen. Use 1:1 for square feed placements and 16:9 for a regular YouTube video or a wide banner on your product page. You can also pick 3:4 or 4:3. The [ad sizes guide](page:guide-ad-sizes-by-platform) shows where each shape fits.",
+        "Videos are made one at a time. If you want another version with a different opening or setting, generate it as a new video; the credit cost appears before each one starts."
+      ]
+    },
+    {
+      "h2": "Finish the ad in your editing app",
+      "paras": [
+        "Think of the clip you download as raw footage. Captions, music, your price, a discount code, and a line like \"Shop the new colors\" all go on afterward in CapCut, TikTok, Canva, or Ads Manager. Adding them yourself keeps the spelling and numbers right.",
+        "Keep on-screen text short, and keep it away from the bottom and right edges of a vertical video, where the caption, likes, and comment buttons sit. The upper middle of the frame is a safer spot for your main line."
+      ]
+    },
+    {
+      "h2": "Make a few versions and let your results decide",
+      "paras": [
+        "A single video doesn't tell you much. Make two or three that change just one thing, such as the opening action, the setting, or the person, and [run them side by side](page:guide-testing-ad-versions) in your ad account with the same budget and audience.",
+        "Once each has had a fair amount of spend, compare how long people watched and how many clicked through. Keep the stronger one, change one more thing, and run it again. Over time you'll learn which kinds of scenes suit your product."
+      ]
+    }
+  ],
+  "related": [
+    "video-ads",
+    "guide-first-tiktok-video-ad",
+    "guide-testing-ad-versions"
+  ],
+  "faq": [
+    {
+      "q": "Can I say the person in the video is a real customer?",
+      "a": "No. The person in the clip is generated by AI, so don't give them a name, a backstory, or a quote that suggests they bought and reviewed your product. Keep your captions focused on what the product is and how it's used."
+    }
+  ]
+}

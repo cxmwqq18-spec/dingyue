@@ -1,0 +1,78 @@
+{
+  "id": "tpl-color",
+  "title": "Product Color Variations in One Matching Set | Aidreamcapes",
+  "description": "Show product color variations in matching square photos, one for each shade you sell. Upload a photo of every colorway and build your swatch set today.",
+  "h1": "Product Color Variations Shot in the Same Light and Setting",
+  "eyebrow": "Product photo template",
+  "lead": "Product color variations work best when only the color changes. Every colorway gets its own square photo with the same table, light, and angle, so shoppers can compare shades without a change of backdrop getting in the way.",
+  "secondary_keywords": [
+    "colorway product photos",
+    "product variant images for Shopify",
+    "Amazon color variation images",
+    "sneaker color options photos"
+  ],
+  "intro": [
+    "The example lines up four low-top canvas sneakers in cream, navy, black, and olive on a linen runner. The light, the wooden table, and the low angle stay the same, so the only thing that changes is the color.",
+    "That consistency matters when a buyer taps between swatches on a Shopify product page or an Amazon variation. If each shade was shot on a different day in a different room, the colors are hard to compare. Make one photo per color with the same description, and the photos read as one set."
+  ],
+  "tip": "Upload a photo of the actual product in each color rather than one pair to be recolored, because real dyes and fabric textures differ more than you'd expect.",
+  "steps": [
+    {
+      "t": "Shoot every colorway",
+      "d": "Take one photo per color from the same angle and in the same daylight, so the starting points already match."
+    },
+    {
+      "t": "Write one description and keep it",
+      "d": "Describe the setting once, for example \"linen runner on a light oak table,\" and paste the same words for each color."
+    },
+    {
+      "t": "Attach each photo to its swatch",
+      "d": "Download each result and assign it to the matching variant in Shopify or Amazon, so the right image shows when a shopper picks a color."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "New seasonal shades",
+      "d": "When you add a color for spring or fall, make its photo in the same setting so it slots into the set you already have."
+    },
+    {
+      "t": "Tees, caps, and totes",
+      "d": "Any item sold in several colors, from T-shirts to canvas bags, can follow the same one-setting approach."
+    },
+    {
+      "t": "Instagram color carousel",
+      "d": "Post the shades as a swipeable carousel, one color per slide, to introduce a full range."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Template",
+        "Color Variants"
+      ],
+      [
+        "Size",
+        "Square 1:1"
+      ],
+      [
+        "Output",
+        "One photo per color"
+      ]
+    ],
+    "cta": "Make my color set"
+  },
+  "faq": [
+    {
+      "q": "Can I make every color from a single photo?",
+      "a": "Upload each colorway separately. Recoloring one photo can miss how a fabric or dye really looks, and buyers expect the shade they see to be the shade they receive."
+    },
+    {
+      "q": "How many colors can I make?",
+      "a": "As many as you sell. Each color is a separate run with its own credit cost shown before it starts, so a sneaker in six shades means six runs."
+    },
+    {
+      "q": "How do I stop the background from changing between colors?",
+      "a": "Keep your description word for word the same and upload photos taken from the same angle. If one result drifts, run that color again."
+    }
+  ]
+}

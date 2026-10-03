@@ -70,6 +70,7 @@ function runRemote(config) {
     `cp ${appQ}/.env.local ${releaseQ}/.env.local`,
     `cp ${releaseQ}/.env.local ${releaseQ}/.env`,
     `cd ${releaseQ}`,
+    `if [ ! -d node_modules ]; then if [ -d ${appQ}/node_modules ] && cmp -s package-lock.json ${appQ}/package-lock.json; then cp -a ${appQ}/node_modules node_modules; else npm ci --prefer-offline; fi; fi`,
     `DINGYUE_ENV=${shellQuote(target)} DATABASE_TARGET=${shellQuote(target)} npx prisma generate`,
     `DINGYUE_ENV=${shellQuote(target)} DATABASE_TARGET=${shellQuote(target)} npm run build`,
     `DINGYUE_ENV=${shellQuote(target)} DATABASE_TARGET=${shellQuote(target)} npx prisma migrate deploy`,
@@ -79,15 +80,15 @@ function runRemote(config) {
     `READY=0; for ATTEMPT in $(seq 1 30); do if curl -fsS --max-time 3 -H ${shellQuote(`Host: ${config.domain}`)} "http://127.0.0.1:${config.validationPort}/" > ${candidateHtmlQ}; then READY=1; break; fi; sleep 1; done; test "$READY" = 1`,
     `test "$(readlink -f /proc/$CANDIDATE_PID/cwd)" = ${releaseQ}`,
     `test "$(cat ${releaseQ}/.deployed-commit)" = ${commitQ}`,
-    `grep -E '<title[^>]*>[^<]+</title>' ${candidateHtmlQ}`,
-    `grep -E '<link[^>]+rel="canonical"' ${candidateHtmlQ}`,
+    `grep -E -o '<title[^>]*>[^<]+</title>' ${candidateHtmlQ}`,
+    `grep -E -o '<link[^>]+rel="canonical"[^>]*>' ${candidateHtmlQ}`,
     `kill "$CANDIDATE_PID" 2>/dev/null || true; wait "$CANDIDATE_PID" 2>/dev/null || true; trap - EXIT`,
     `SERVICE_FILE=${shellQuote(`/etc/systemd/system/${service}`)}`,
     `SERVICE_DROPIN=${shellQuote(`/etc/systemd/system/${service}.d/release.conf`)}`,
     `if [ -f "$SERVICE_DROPIN" ]; then SERVICE_FILE="$SERVICE_DROPIN"; fi`,
     `SERVICE_NEXT=${releaseQ}/${service}.next`,
     `cp "$SERVICE_FILE" "$SERVICE_NEXT"`,
-    `sed -i -E "s#^WorkingDirectory=.*#WorkingDirectory=${config.root}/releases/${commit}#; s#^EnvironmentFile=.*#EnvironmentFile=${config.root}/releases/${commit}/.env.local#; s#^ExecStart=.*next start -p [0-9]+#ExecStart=${config.root}/releases/${commit}/node_modules/.bin/next start -p ${config.port}#" "$SERVICE_NEXT"`,
+    `sed -i -E "s#^WorkingDirectory=.*#WorkingDirectory=${config.root}/releases/${commit}#; s#^EnvironmentFile=.*#EnvironmentFile=${config.root}/releases/${commit}/.env.local#; s#^ExecStart=.*#ExecStart=${config.root}/releases/${commit}/node_modules/.bin/next start -p ${config.port}#" "$SERVICE_NEXT"`,
     `grep -Fx ${shellQuote(`WorkingDirectory=${release}`)} "$SERVICE_NEXT"`,
     `grep -Fx ${shellQuote(`EnvironmentFile=${release}/.env.local`)} "$SERVICE_NEXT"`,
     `OLD_RELEASE=$(readlink -f ${rootQ}/current 2>/dev/null || true)`,
@@ -101,11 +102,12 @@ function runRemote(config) {
     `test "$(systemctl is-active ${shellQuote(service)})" = active`,
     `test "$(systemctl show -p WorkingDirectory ${shellQuote(service)} | sed -n 's/^WorkingDirectory=//p')" = ${releaseQ}`,
     `test "$(cat ${rootQ}/current/.deployed-commit)" = ${commitQ}`,
-    `PUBLIC_READY=0; for ATTEMPT in $(seq 1 12); do if curl -fsS --max-time 20 https://${config.domain}/ | grep -E '<title[^>]*>[^<]+</title>'; then PUBLIC_READY=1; break; fi; sleep 2; done; test \"$PUBLIC_READY\" = 1`,
+    `PUBLIC_READY=0; for ATTEMPT in $(seq 1 12); do if curl -fsS --max-time 20 https://${config.domain}/ | grep -E -o '<title[^>]*>[^<]+</title>'; then PUBLIC_READY=1; break; fi; sleep 2; done; test "$PUBLIC_READY" = 1`,
     `SWITCHED=0; trap - EXIT`,
-    `printf '%s\\n' ${shellQuote(`deployed_commit=${commit}`)} ${shellQuote(`service=$(systemctl is-active ${service})`)} ${shellQuote(`current=$(readlink -f ${config.root}/current)`)}`
+    `printf '%s\\n' ${shellQuote(`deployed_commit=${commit}`)} "service=$(systemctl is-active ${shellQuote(service)})" "current=$(readlink -f ${rootQ}/current)"`
   ].join("\n");
-  const sshArgs = ["-p", process.env.AI_PROJECT_SSH_PORT || "11765"];
+  const sshArgs = ["-o", "BatchMode=yes", "-o", "ConnectTimeout=30", "-o", "ServerAliveInterval=20", "-p", process.env.AI_PROJECT_SSH_PORT || "11765"];
+  if (process.env.AI_PROJECT_SSH_CONTROL_PATH) sshArgs.push("-o", `ControlPath=${process.env.AI_PROJECT_SSH_CONTROL_PATH}`);
   const keyPath = process.env.AI_PROJECT_SSH_KEY_PATH;
   if (keyPath) sshArgs.push("-i", keyPath);
   sshArgs.push(`${process.env.AI_PROJECT_SSH_USER || "root"}@${process.env.AI_PROJECT_SSH_HOST || "204.77.130.125"}`, command);

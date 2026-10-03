@@ -1,0 +1,95 @@
+{
+  "id": "model-photos",
+  "title": "AI Model Photos for Clothing and Accessories | Aidreamcapes",
+  "description": "Get AI model photos for clothing, bags and jewelry from one product shot. Show how a piece looks when worn, with no model booking. Upload yours to start.",
+  "h1": "AI Model Photos for Clothing, Bags and Jewelry",
+  "eyebrow": "Photo tool",
+  "lead": "AI model photos for clothing and accessories start from a photo of a dress, a canvas backpack or a pair of earrings, and show it worn by a model in a natural setting, ready for your product page or Instagram feed.",
+  "secondary_keywords": [
+    "on-model photos for clothing",
+    "AI fashion model images",
+    "clothing photos without a model shoot",
+    "AI photos of bags being worn",
+    "jewelry on model photos"
+  ],
+  "intro": [
+    "Shoppers want to see how a top hangs, how big a bag looks on a shoulder and where a necklace sits. Flat lays and hanger shots can't show that, and booking models, a photographer and a location for every new drop adds up quickly. This tool takes a photo of your piece and shows it worn by a model, in a setting that fits your brand.",
+    "It works for clothing, handbags, backpacks, hats, scarves and jewelry. Small fashion labels use it to fill pages for new arrivals, resellers use it to give secondhand pieces a styled look, and accessory makers use it to show how a piece looks when worn. Describe the styling and the place, like \"relaxed street look, city sidewalk, morning sun,\" and you get a square image back."
+  ],
+  "benefits": [
+    {
+      "t": "See it on a person",
+      "d": "Drape and proportion are easier to see on a body than on a hanger, so shoppers get a clearer picture of the piece."
+    },
+    {
+      "t": "Skip the model booking",
+      "d": "No casting, studio rental or travel. A clear photo of the item and a few words about the look are enough to begin."
+    },
+    {
+      "t": "Styled to your brand",
+      "d": "Set the scene to match your store, from a clean studio wall to a beach boardwalk or a leafy city street."
+    }
+  ],
+  "steps": [
+    {
+      "t": "Upload your piece",
+      "d": "Photograph the item flat, on a hanger or on a mannequin, with its full shape and details in view."
+    },
+    {
+      "t": "Describe the look and setting",
+      "d": "Go with one of the ready-made looks, or type the styling you want: \"casual weekend outfit, park bench, soft afternoon light.\""
+    },
+    {
+      "t": "Download or try another look",
+      "d": "Save the square image. For a different pose or backdrop, start a new version and check its cost before it begins."
+    }
+  ],
+  "uses": [
+    {
+      "t": "New arrival pages",
+      "d": "Add a worn shot to each new piece so shoppers can see how it looks on a person, not just on a table."
+    },
+    {
+      "t": "Instagram feed posts",
+      "d": "Share styled looks for each drop without organizing a shoot every time."
+    },
+    {
+      "t": "Resale and vintage listings",
+      "d": "Give secondhand pieces a worn look that feels more inviting than a photo on the floor."
+    },
+    {
+      "t": "Jewelry and accessory pages",
+      "d": "Show earrings, rings, scarves and bags on a person so shoppers can picture wearing them."
+    }
+  ],
+  "maker": {
+    "options": [
+      ["Photo", "Your clothing or accessory"],
+      ["Look", "Describe the styling and setting"],
+      ["Size", "Square by default"]
+    ],
+    "cta": "Make my model photo"
+  },
+  "faq": [
+    {
+      "q": "What products work with AI model photos?",
+      "a": "Clothing, handbags, backpacks, hats, scarves and jewelry all work. Pieces with a clear shape and visible details usually give cleaner results than crumpled or partly hidden ones."
+    },
+    {
+      "q": "Will the photo show how the clothing actually fits?",
+      "a": "Fit is shown, not promised. The image shows the style and how the piece looks when worn, but it can't replace real measurements, so point shoppers to your size chart for sizing."
+    },
+    {
+      "q": "Can I use these photos on Shopify and Instagram?",
+      "a": "Yes. Model photos come out square by default, which suits Shopify product galleries and the Instagram feed."
+    },
+    {
+      "q": "Can I ask for a celebrity or a well-known model?",
+      "a": "No. We may turn down requests that name celebrities or other famous people. Describe the look you want instead, such as hairstyle, outfit and mood."
+    },
+    {
+      "q": "How do credits work?",
+      "a": "You see the credit cost before you start. Credits are held when your job starts and used when it is delivered. If something fails, you get the credits back."
+    }
+  ]
+}

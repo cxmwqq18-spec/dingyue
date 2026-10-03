@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { load } from "cheerio";
 import { XMLParser, XMLValidator } from "fast-xml-parser";
 import { request } from "playwright";
@@ -10,7 +11,36 @@ const SITE_HEADERS = {
   "x-forwarded-host": "aidreamcapes.com",
   "x-forwarded-proto": "https"
 };
-const TARGET_PATHS = [
+// Aidreamcapes.com v2 retires v1 URLs with 301 redirects (applied by the middleware).
+const SITE_V2_REDIRECTS = JSON.parse(readFileSync(new URL("../src/lib/aidreamcapes-site-v2-redirects.json", import.meta.url), "utf8"));
+const SITE_V2_REDIRECT_SOURCES = new Set(SITE_V2_REDIRECTS.map(([from]) => from));
+const SITE_V2_TARGET_PATHS = [
+  "/ai-video-generation",
+  "/ai-video-generation/url-to-video",
+  "/ai-video-generation/ugc-ad-video",
+  "/ai-image-generation",
+  "/ai-image-generation/ecommerce-main-image",
+  "/ai-image-generation/lifestyle-scene",
+  "/templates",
+  "/industries/beauty-skincare",
+  "/platforms/tiktok-ads",
+  "/guides",
+  "/blog",
+  "/inspiration",
+  "/trust-and-safety",
+  "/ai-info",
+  "/about-us",
+  "/contact-us",
+  "/faq",
+  "/pricing",
+  "/children-privacy",
+  "/content",
+  "/privacy",
+  "/refunds",
+  "/state-privacy",
+  "/terms"
+];
+const V1_TARGET_PATHS = [
   "/ai-video-generation/multilingual-video",
   "/ai-video-generation/music-video",
   "/blog/ai-talking-photo-video-guide",
@@ -119,6 +149,11 @@ assert(homepage.headers()["referrer-policy"], "referrer policy missing");
 assert(homepage.headers()["x-frame-options"], "frame protection missing");
 const homepageHtml = await homepage.text();
 const homepageDom = load(homepageHtml);
+// The v2 storefront is live once the v2 LivePage rows and navigation are in the database.
+// Before that (for example while a new release is checked against current data) the v1
+// pages are still served and only redirected v1 paths are skipped.
+const siteV2 = homepageDom('main[data-aidreamcapes-v2="true"]').length > 0;
+const TARGET_PATHS = siteV2 ? SITE_V2_TARGET_PATHS : V1_TARGET_PATHS.filter((path) => !SITE_V2_REDIRECT_SOURCES.has(path));
 const bodyMarkers = homepageDom('body script[data-storefront-json-ld="body-marker"]');
 assert(bodyMarkers.length > 0, "JSON-LD body markers must remain present for React hydration");
 assert(bodyMarkers.toArray().every((node) => homepageDom(node).attr("type") === "application/json"), "body markers must be inert JSON, not duplicate structured data");
@@ -139,6 +174,20 @@ for (const variant of ["http", "www"]) {
     : await get("/pricing?seo_contract=1", { headers: { "x-forwarded-host": variant === "www" ? "www.aidreamcapes.com" : "aidreamcapes.com", "x-forwarded-proto": variant === "http" ? "http" : "https" } });
   assert.equal(response.status(), 301, `${variant}: canonical redirect status`);
   assert.equal(response.headers().location, "https://aidreamcapes.com/pricing?seo_contract=1", `${variant}: redirect preserves path and query`);
+}
+for (const [from, to] of SITE_V2_REDIRECTS) {
+  const response = await get(`${from}?seo_contract=1`);
+  assert.equal(response.status(), 301, `${from}: v2 redirect status`);
+  assert.equal(response.headers().location, `https://aidreamcapes.com${to}?seo_contract=1`, `${from}: v2 redirect target`);
+  await response.dispose();
+}
+if (siteV2) {
+  const llms = await get("/llms.txt");
+  assert.equal(llms.status(), 200, `llms.txt status: ${llms.status()}`);
+  assert.match(llms.headers()["content-type"] || "", /^text\/plain/, "llms.txt content type");
+  assert.match(await llms.text(), /^# Aidreamcapes/m, "llms.txt heading");
+  assert(homepageDom('header.site nav#adc2-main-nav a[href="/pricing"]').length > 0, "v2 header navigation");
+  assert(homepageDom('footer.site a[href="/privacy"]').length > 0, "v2 footer legal links");
 }
 const robotsResponse = await get("/robots.txt");
 assert.equal(robotsResponse.status(), 200, "robots.txt status");
@@ -211,7 +260,11 @@ const pageStatus = await mapLimit(entries, 3, async (entry) => {
   const html = await response.text();
   assert.equal(htmlCanonical(html), url, `sitemap URL canonical: ${url}`);
   assert.doesNotMatch(`${response.headers()["x-robots-tag"] || ""} ${htmlMeta(html, "robots")}`, /noindex/i, `${url}: indexable`);
-  parseJsonLd(html);
+  const jsonLdBlocks = parseJsonLd(html);
+  if (siteV2) {
+    assert(jsonLdBlocks.length > 0, `${url}: JSON-LD missing`);
+    assert(jsonLdBlocks.every((block) => block["@context"] === "https://schema.org"), `${url}: JSON-LD @context`);
+  }
   const actualImages = pageImageKeys(html, url);
   for (const image of entry["image:image"] || []) {
     assert(actualImages.has(imageKey(image["image:loc"])), `${url}: sitemap image not referenced by page: ${image["image:loc"]}`);
@@ -231,10 +284,12 @@ const imageStatus = await mapLimit([...new Set(imageUrls)], 4, async (url) => {
 console.log(JSON.stringify({
   ok: true,
   origin: BASE_URL,
+  storefront: siteV2 ? "site-v2" : "v1",
+  redirects: SITE_V2_REDIRECTS.length,
   targetMetadataPages: metadataResults.length,
   sitemapPages: pageStatus.length,
   sitemapImageRecords: imageUrls.length,
   uniqueSitemapImages: imageStatus.length,
-  checks: ["metadata", "jsonld", "canonical", "robots", "sitemap-xml", "image-page-membership", "image-status", "random-404", "retired-410", "https-www-redirects", "security-headers", "hsts"]
+  checks: ["metadata", "jsonld", "site-v2-redirects", "canonical", "robots", "sitemap-xml", "image-page-membership", "image-status", "random-404", "retired-410", "https-www-redirects", "security-headers", "hsts"]
 }));
 await http.dispose();

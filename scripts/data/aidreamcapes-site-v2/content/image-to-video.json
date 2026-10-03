@@ -1,0 +1,94 @@
+{
+  "id": "image-to-video",
+  "title": "AI Image to Video for Product Photos | Aidreamcapes",
+  "description": "Use AI image to video to add gentle motion to a product photo you already like. Download a short clip for Reels, TikTok, or your shop. Upload a shot to start.",
+  "h1": "Turn a Product Photo Into Motion With AI Image to Video",
+  "eyebrow": "Photo to video",
+  "lead": "AI image to video turns a product shot you already like into a short clip. Add a slow camera move, drifting light, or steam rising from a cup, and download it in the size you need.",
+  "secondary_keywords": [
+    "product photo to video",
+    "animate product photo",
+    "turn image into video ad",
+    "AI photo animation for ads"
+  ],
+  "intro": [
+    "Image to video takes one still photo of your product and adds movement to it. The camera can push in slowly, circle the item, or pan across a table, while light, water, fabric, or steam moves around it. Because it starts from your photo, the clip stays close to the look you already chose: the same product, colors, and setting.",
+    "It suits sellers who have good photos but no video yet, like a candle shop with a polished hero image or a watch brand with clean studio shots. Use it to make a product page feel less static, or to give an existing ad photo a moving version for Reels and Stories. Pick a length of 6, 10, or 15 seconds and any of five shapes: 9:16, 1:1, 16:9, 3:4, or 4:3."
+  ],
+  "benefits": [
+    {
+      "t": "Reuse photos you have",
+      "d": "There's no new shoot to plan. The photo on your product page right now can be the starting point for a video."
+    },
+    {
+      "t": "Subtle, believable motion",
+      "d": "Ask for small moves like a slow zoom or a light sweep. Gentle motion keeps attention on the product instead of the effect."
+    },
+    {
+      "t": "Lengths that suit feeds",
+      "d": "Choose 6, 10, or 15 seconds. The shortest option is handy for Reels and Stories, where clips replay on their own."
+    }
+  ],
+  "steps": [
+    {
+      "t": "Upload the photo to animate",
+      "d": "Pick a sharp image with some space around the product so the camera has room to move."
+    },
+    {
+      "t": "Describe the motion",
+      "d": "Write one line about the movement, like “slow push-in while morning light moves across the bottle,” then choose the length and size."
+    },
+    {
+      "t": "Download or try new motion",
+      "d": "Keep the clip you like. If the movement feels too fast, rewrite your line and run it once more."
+    }
+  ],
+  "uses": [
+    {
+      "t": "Product page gallery",
+      "d": "Add the clip to your Shopify product gallery so shoppers see a little movement among the still photos."
+    },
+    {
+      "t": "Instagram Reels and Stories",
+      "d": "Post a vertical version of an ad photo that already does well for you."
+    },
+    {
+      "t": "Facebook feed ads",
+      "d": "Swap a still feed ad for a square moving version of the same image."
+    },
+    {
+      "t": "Store homepage banner",
+      "d": "A wide 16:9 clip with slow motion makes a calm header at the top of your shop."
+    }
+  ],
+  "maker": {
+    "options": [
+      ["Size", "9:16 · Reels & Stories"],
+      ["Length", "6 seconds"],
+      ["Start from", "Your product photo"]
+    ],
+    "cta": "Animate my photo"
+  },
+  "faq": [
+    {
+      "q": "What kind of photo works for image to video?",
+      "a": "A sharp, well-lit photo with the product fully in frame. Leave some background around it, because tight crops give the camera nowhere to go."
+    },
+    {
+      "q": "Can I choose how the camera moves?",
+      "a": "Yes, describe it in your sentence. Phrases like “slow zoom in,” “orbit around the bottle,” or “pan left across the table” give the clearest direction. Motion can vary between runs, so a second try may land closer to what you pictured."
+    },
+    {
+      "q": "Will my product look exactly like the photo?",
+      "a": "It stays close, but fine details like small printed text, buttons, or label lettering can shift once things move. Watch the clip all the way through before posting it, and run it again if something looks off."
+    },
+    {
+      "q": "Can I make several clips from the same photo?",
+      "a": "Yes. Each run makes one clip, so change the motion or size and run it again. The credit cost is shown for every run before it starts."
+    },
+    {
+      "q": "How do credits work?",
+      "a": "You see the credit cost before you start. Credits are held when your job starts and used when it is delivered. If something fails, you get the credits back."
+    }
+  ]
+}

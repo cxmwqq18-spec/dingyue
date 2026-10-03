@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { notFound, permanentRedirect } from "next/navigation";
 import { findPage } from "@/lib/data";
-import { imageThemeDetailContentFromPage } from "@/lib/aidreamcapes-image-theme-content";
+import { isRenderableAidreamcapesImageThemePage } from "@/lib/aidreamcapes-image-theme-content";
 import { parsePublicCollectionRouteForSite, publicCollectionRootPathForSite } from "@/lib/photo-package-taxonomy";
 import { getSeoDirectoryContentForSite } from "@/lib/dreamshoot-seo-content";
 import { readPathModePublicRuntimeState } from "@/lib/storefront-local-state";
@@ -26,7 +26,7 @@ async function loadImageThemeState(siteSlug: string, themeSlug: string): Promise
     const state = await readPathModePublicRuntimeState(siteSlug, requestedPath);
     const site = state?.sites[0];
     const page = site ? findPage(site, requestedPath) : undefined;
-    return state && site && page && imageThemeDetailContentFromPage(page)
+    return state && site && page && isRenderableAidreamcapesImageThemePage(page)
       ? { state, site }
       : undefined;
   }
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: { params: RouteParams }): Pro
   const requestedPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`;
   if (isAidreamcapesImageThemePath(siteSlug, requestedPath)) {
     const page = findPage(site, requestedPath);
-    return page && imageThemeDetailContentFromPage(page)
+    return page && isRenderableAidreamcapesImageThemePage(page)
       ? metadataForPublishedStorefrontPage({
           site,
           page,
@@ -123,7 +123,7 @@ export default async function ImageThemePage({
   const { state, site } = loaded;
   if (isAidreamcapesImageThemePath(resolved.siteSlug, requestedPath)) {
     const routeMode = storefrontRouteModeForHeaders(await headers(), resolved.siteSlug);
-    if (!imageThemeDetailContentFromPage(findPage(site, requestedPath)!)) notFound();
+    if (!isRenderableAidreamcapesImageThemePage(findPage(site, requestedPath))) notFound();
     return renderStorefrontPage({
       site,
       slug: requestedPath,

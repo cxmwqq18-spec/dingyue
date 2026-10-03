@@ -1,0 +1,78 @@
+{
+  "id": "tpl-head",
+  "title": "AI Team Headshots for Your About Page | Aidreamcapes",
+  "description": "Make AI team headshots with the same light and backdrop for everyone. Each person uploads their own photo, so your About page looks tidy. Start with yours.",
+  "h1": "AI Team Headshots That Match, from Founder to New Hire",
+  "eyebrow": "Team photo template",
+  "lead": "Give everyone on your team a polished headshot in the same bright office setting, each one made from that person's own photo.",
+  "secondary_keywords": [
+    "matching team headshots",
+    "professional headshots for small business",
+    "About page team photos",
+    "headshots from your own photo"
+  ],
+  "intro": [
+    "The example shows a smiling team member in a black blazer, framed from the chest up in a bright office with a plant and soft daylight behind her.",
+    "Small shops often have a Team or About page with photos taken years apart in different rooms. Matching headshots make that page look tidy and help customers put a face to the people who pack their orders and answer their emails. Use one setting description for everyone, and have each person upload a recent photo of themselves."
+  ],
+  "tip": "Ask each person for a front-facing photo in daylight with nothing covering their face, and paste the same setting description for every headshot.",
+  "steps": [
+    {
+      "t": "Collect a photo from each person",
+      "d": "Everyone sends a recent, well-lit photo of their own face and shoulders, without sunglasses or hats."
+    },
+    {
+      "t": "Pick one setting for all",
+      "d": "Describe the backdrop and outfit style once, such as \"bright office, soft daylight, dark blazer,\" and reuse it."
+    },
+    {
+      "t": "Line them up on your page",
+      "d": "Download each headshot and place them side by side on your About or Team page to see how they sit together."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Team grid",
+      "d": "A row of matching portraits on your About page, so the whole crew looks like part of one shop."
+    },
+    {
+      "t": "Customer support replies",
+      "d": "Add a friendly face beside help desk replies or in your email signature."
+    },
+    {
+      "t": "Seller profiles",
+      "d": "Use a founder headshot for your Etsy shop profile or the About section of your Shopify store."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Template",
+        "Team Headshots"
+      ],
+      [
+        "Size",
+        "Square by default"
+      ],
+      [
+        "Upload",
+        "Each person's own photo"
+      ]
+    ],
+    "cta": "Make a team headshot"
+  },
+  "faq": [
+    {
+      "q": "Can I make headshots of my team from photos I already have?",
+      "a": "Each headshot should come from that person's own photo, shared by them and used with their agreement. Requests involving celebrities or public figures may be declined."
+    },
+    {
+      "q": "Will the headshot still look like me?",
+      "a": "It starts from your photo, so a clear, recent, front-facing shot gives the closest likeness. If something looks off, try again with a better-lit photo."
+    },
+    {
+      "q": "Are our team photos kept private?",
+      "a": "Yes. The photos your team uploads and the headshots you get back are kept in your account, not posted anywhere public."
+    }
+  ]
+}

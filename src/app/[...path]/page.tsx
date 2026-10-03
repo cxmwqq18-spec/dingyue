@@ -3,7 +3,7 @@ import { cookies, headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { cleanHost, getSiteByHostCandidatesFromState, isPlatformHost, publicSiteUrl, siteAdminPathForHost } from "@/lib/domain-routing";
 import { findPage } from "@/lib/data";
-import { imageThemeDetailContentFromPage } from "@/lib/aidreamcapes-image-theme-content";
+import { isRenderableAidreamcapesImageThemePage } from "@/lib/aidreamcapes-image-theme-content";
 import {
   readStorefrontPublicCollectionDetailStateBySlugFromDatabase,
   readStorefrontPlatformStateFromDatabase,
@@ -457,7 +457,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, imageThemePath);
     const detailSite = (detailState ? getSiteByHostCandidatesFromState(detailState, hostCandidates) : undefined) ?? detailState?.sites[0];
     const detailPage = detailSite ? findPage(detailSite, imageThemePath) : undefined;
-    return detailState && detailSite && detailPage && imageThemeDetailContentFromPage(detailPage)
+    return detailState && detailSite && detailPage && isRenderableAidreamcapesImageThemePage(detailPage)
       ? metadataForPublishedStorefrontPage({
           site: detailSite,
           page: detailPage,
@@ -707,7 +707,7 @@ export default async function HostStorefrontCatchAllPage({
     const detailState = await getHostPublicRuntimeStateWithFallback(hostCandidates, imageThemePath);
     const detailSite = (detailState ? getSiteByHostCandidatesFromState(detailState, hostCandidates) : undefined) ?? detailState?.sites[0];
     const detailPage = detailSite ? findPage(detailSite, imageThemePath) : undefined;
-    if (!detailState || !detailSite || !detailPage || !imageThemeDetailContentFromPage(detailPage)) notFound();
+    if (!detailState || !detailSite || !detailPage || !isRenderableAidreamcapesImageThemePage(detailPage)) notFound();
     return renderStorefrontPage({
       site: detailSite,
       slug: imageThemePath,

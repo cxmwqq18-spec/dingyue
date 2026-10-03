@@ -1,0 +1,89 @@
+{
+  "id": "guide-ad-sizes-by-platform",
+  "title": "Social Media Ad Sizes, Explained Simply | Aidreamcapes",
+  "description": "A plain-English guide to social media ad sizes: when to use vertical 9:16, square 1:1, or wide 16:9 on TikTok, Instagram, Facebook, and YouTube. Read it now.",
+  "h1": "Social Media Ad Sizes: Which Shape Goes Where",
+  "eyebrow": "Ad size guide",
+  "lead": "Social media ad sizes come down to three shapes: tall, square, and wide. Know which one each placement uses, and you can plan your photos and videos before you make them.",
+  "secondary_keywords": [
+    "9:16 vs 1:1 vs 16:9",
+    "vertical video ad size",
+    "Instagram Reels ad size",
+    "square ads for the Facebook feed",
+    "aspect ratio for TikTok ads"
+  ],
+  "read_minutes": 4,
+  "summary": "Which shape to use for TikTok, Reels, Stories, Shorts, social feeds, and wide screens, and which one to make first.",
+  "sections": [
+    {
+      "h2": "Think in shapes, not pixel sizes",
+      "paras": [
+        "An aspect ratio is the shape of the frame. 9:16 means 9 units wide for every 16 tall, so it's a tall rectangle. 1:1 is a square. 16:9 is the wide shape of a TV screen.",
+        "Exact pixel sizes vary by placement and shift as apps get updated. If your shape is right and your file is sharp, the platform scales it to fit. Platforms do revise their ad specs, so open each one's current spec page before you upload."
+      ]
+    },
+    {
+      "h2": "Vertical 9:16 for full-screen phone ads",
+      "paras": [
+        "Use 9:16 for [TikTok](page:plat-tiktok), [Instagram](page:plat-instagram) Reels and Stories, [Facebook](page:plat-facebook) Reels and Stories, and [YouTube Shorts](page:plat-youtube-shorts). These ads fill the whole phone screen, so they sit naturally between regular posts.",
+        "The app covers the top and bottom of the screen with its own layer: the account name, the caption, and buttons for likes and comments. Keep your product and any added text in the middle of the frame. A quick test: cover the top and bottom strips of your phone screen with your fingers. Can you still see the product and read the offer?"
+      ]
+    },
+    {
+      "h2": "Square 1:1 for feeds",
+      "paras": [
+        "Square works in the Facebook and Instagram feeds and looks the same on a phone or a laptop. That makes it a safe single file when you aren't sure where an ad will appear.",
+        "Some feeds also accept slightly taller frames that take up more of the screen. Square is still a solid place to start. Aidreamcapes [product photos](page:photo-hub) are square by default, so they drop straight into feed ads and the photo gallery on your product pages.",
+        "Square is also the usual pick for carousel ads, where shoppers swipe through several products or angles inside one ad. Keeping every card the same shape makes the swipe feel smooth."
+      ]
+    },
+    {
+      "h2": "Wide 16:9 for horizontal screens",
+      "paras": [
+        "16:9 is for places where people watch sideways: regular YouTube videos on a laptop or TV, video banners on your own website, and some video spots on desktop.",
+        "On a phone held upright, a 16:9 video fills only a thin band across the middle. Use it when you know the viewer is on a wide screen, not as a default for social apps.",
+        "A good fit for 16:9 is a short demo at the top of your homepage, such as a standing desk rising from sitting to standing height, or a wide shot of a patio set on a sunny deck."
+      ]
+    },
+    {
+      "h2": "Which shapes to make first",
+      "paras": [
+        "If you make just one video, make it 9:16. It covers TikTok, Reels, Stories, and Shorts. Add a 1:1 version for feed ads next. Make 16:9 only if you run YouTube ads or want a video on your homepage.",
+        "Here's how that might look for a small candle shop: a 10-second 9:16 video of a match lighting the wick for TikTok and Reels, a 1:1 version of the same scene for the Facebook feed, and square photos for the product page.",
+        "Already running ads? Your ad platform's placement report shows where past ads got the most views. Start with the shape that fits that spot.",
+        "In [Aidreamcapes video ads](page:video-ads), you choose the shape before the video is made: 9:16, 1:1, or 16:9, plus 3:4 and 4:3. Each shape is its own video, so to get the same scene in another shape, run it again with the same photo and description and the new size selected. For a Story, place a square photo on a vertical canvas in Canva and add your text around it."
+      ]
+    },
+    {
+      "h2": "Mistakes that make ads look off",
+      "paras": [
+        "Black bars. A wide video dropped into a vertical spot shows up with big empty bands above and below. Make a vertical version instead.",
+        "Cropped products. When a platform trims an image to fit, a product placed near the edge can lose its top or side. Keep it centered with some space around it.",
+        "Tiny text. Words that look fine on a laptop are hard to read on a phone. Preview the ad on your own phone before it goes live.",
+        "Cutting one shape out of another. Trimming a vertical video down to a square in an editor often slices off the top of the product or the hand holding it. Making a separate square version keeps the whole scene in view."
+      ]
+    }
+  ],
+  "checklist": [
+    "9:16 for TikTok, Reels, Stories, and Shorts",
+    "1:1 for Facebook and Instagram feeds",
+    "16:9 only for wide screens like YouTube or your website",
+    "Product and text kept away from the edges",
+    "A preview on your own phone before launch"
+  ],
+  "related": [
+    "video-hub",
+    "platforms",
+    "social-ad-photos"
+  ],
+  "faq": [
+    {
+      "q": "What size should a TikTok ad be?",
+      "a": "TikTok ads use the tall 9:16 shape that fills a phone screen from top to bottom. Leave the lower part of the frame clear, since the caption and buttons sit there."
+    },
+    {
+      "q": "Can I use one video for every platform?",
+      "a": "You can, but it won't look right everywhere. A vertical video fills TikTok and Reels yet gets shrunk or cropped in some feeds. A 9:16 version plus a 1:1 version covers most social placements."
+    }
+  ]
+}

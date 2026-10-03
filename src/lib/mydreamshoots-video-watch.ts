@@ -1,4 +1,5 @@
-import type { PlatformState, PublishedHomepageShowcaseItem, Site } from "@/lib/types";
+import type { ContextualLink, PlatformState, PublishedHomepageShowcaseItem, Site } from "@/lib/types";
+import { contextualLinksFromValue } from "@/lib/contextual-links";
 import type { StorefrontLocale } from "@/lib/storefront-locale";
 import { isBlockedPublicVideoThemeSlugForSite } from "@/lib/video-theme-public-scope";
 
@@ -14,6 +15,8 @@ export type MyDreamShootsVideoWatchPage = {
   canonicalUrl: string;
   sourcePath: string;
   sourcePaths: readonly string[];
+  sourceLabel?: string;
+  contextualLinks?: ContextualLink[];
   name: string;
   description: string;
   thumbnailPath: string;
@@ -113,6 +116,9 @@ type VideoCandidate = {
   thumbnailPath?: string;
   uploadDate?: string;
   durationSeconds?: number;
+  preferredSourcePath?: string;
+  sourceLabel?: string;
+  contextualLinks?: ContextualLink[];
 };
 
 function normalizePath(value: string): string {
@@ -260,7 +266,14 @@ function metadataFromObject(value: Record<string, unknown>, fallback: VideoCandi
     description: firstText([value.videoDescription, value.description, value.subtitle, fallback.description]),
     thumbnailPath: thumbnailPath || fallback.thumbnailPath,
     uploadDate: normalizeUploadDate(value.videoUploadDate ?? value.uploadDate ?? value.createdAt ?? value.updatedAt ?? fallback.uploadDate),
-    durationSeconds: durationSeconds ?? fallback.durationSeconds
+    durationSeconds: durationSeconds ?? fallback.durationSeconds,
+    preferredSourcePath: config.siteId === "site_dreamshoot" && typeof value.sourcePath === "string" && /^\/(?!\/)/.test(value.sourcePath)
+      ? sourcePathForPage(value.sourcePath)
+      : fallback.preferredSourcePath,
+    sourceLabel: (config.siteId === "site_dreamshoot" ? textValue(value.sourceLabel) : "") || fallback.sourceLabel,
+    contextualLinks: config.siteId === "site_dreamshoot" && contextualLinksFromValue(value.contextualLinks).length
+      ? contextualLinksFromValue(value.contextualLinks)
+      : fallback.contextualLinks
   };
 }
 
@@ -275,7 +288,7 @@ function collectVideoCandidates(value: unknown, fallback: VideoCandidate, config
   for (const [key, child] of Object.entries(object)) {
     const contentPath = normalizeVideoContentPath(child, config);
     if (contentPath) {
-      onCandidate({ contentPath, sourcePath: fallback.sourcePath, ...metadata });
+      onCandidate({ contentPath, sourcePath: metadata.preferredSourcePath ?? fallback.sourcePath, ...metadata });
       continue;
     }
     if (typeof child === "object" && child !== null) {
@@ -296,8 +309,10 @@ function addCandidate(records: Map<string, MyDreamShootsVideoWatchPage>, candida
     const sourcePaths = Array.from(new Set([...existing.sourcePaths, sourcePath])).sort();
     const next = {
       ...existing,
-      sourcePath: existing.sourcePath || sourcePath,
+      sourcePath: candidate.preferredSourcePath ?? (existing.sourcePath || sourcePath),
       sourcePaths,
+      sourceLabel: candidate.sourceLabel || existing.sourceLabel,
+      contextualLinks: candidate.contextualLinks?.length ? candidate.contextualLinks : existing.contextualLinks,
       name: existing.name || textValue(candidate.name),
       description: existing.description || textValue(candidate.description),
       thumbnailPath: existing.thumbnailPath || candidate.thumbnailPath || "",
@@ -326,6 +341,8 @@ function addCandidate(records: Map<string, MyDreamShootsVideoWatchPage>, candida
     watchPath: `/watch/${slug}`,
     sourcePath,
     sourcePaths: [sourcePath],
+    sourceLabel: candidate.sourceLabel,
+    contextualLinks: candidate.contextualLinks,
     name,
     description,
     siteId: config.siteId,

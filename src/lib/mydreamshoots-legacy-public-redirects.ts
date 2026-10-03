@@ -1,5 +1,7 @@
 export const MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS = [
-  { aliasPath: "/ai-image-generation/motion-generator", targetPath: "/ai-video-generation/motion-generator" }
+  { aliasPath: "/ai-image-generation/motion-generator", targetPath: "/ai-video-generation/motion-generator" },
+  { aliasPath: "/ai-image-generation/estilo-y-fantasia", targetPath: "/ai-image-generation/travel" },
+  { aliasPath: "/ai-image-generation/urbano", targetPath: "/ai-image-generation/urban" }
 ] as const;
 
 // These routes were retired rather than migrated. Keep this explicit so a
