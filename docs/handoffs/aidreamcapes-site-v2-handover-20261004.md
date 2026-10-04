@@ -114,6 +114,20 @@ Cloudflare 的邮箱混淆会把页面里的邮箱显示成 `[email protected]`,
   - 每页数据新增 `startNote`(由 `PLANS` 生成的价格与失败退回积分说明),显示在开始按钮下方;旧数据没有这个字段时不显示。
   - 列表页、`/inspiration`、FAQ、Trust & Safety 增加收尾按钮;每篇文章中间加一个对应工具的试用框(`ARTICLE_TOOL`);每个示例加"Try this with your product"(`FLOW_TOOL`)。
   - 购物车 `/cart` 的 `cart_intro_1` 原本没有图片,共享渲染器会显示旧的人像相册文案;现在通过 `utility-pages.json` 的字段补丁给它加了一张产品图,不改共享代码。
-- 域名 `aivideosugc.com` 与 `www.aivideosugc.com`:DNS 在 Cloudflare(代理开启),服务器上新增
-  `/www/server/panel/vhost/nginx/aivideosugc.com.conf`,所有地址 301 永久跳转到 `https://aidreamcapes.com` 的同一路径(保留查询参数)。
-  证书沿用 `aidreamcapes.com` 的源站证书。不要改成在两个域名上同时提供网站内容,会产生重复内容。
+
+## 10. 域名迁移:网站现在是 https://www.aivideosugc.com(2026-10-04)
+
+站点所有者要求以 `www.aivideosugc.com` 作为网站域名,`aidreamcapes.com` 不再使用(品牌名 Aidreamcapes 不变)。
+
+- 代码(`099c54dd3`、`6ba487328`,已上线):规范地址、站点地图、robots、llms.txt、结构化数据、HSTS(`server.mjs`)都使用 `https://www.aivideosugc.com`。
+  中间件把 `aivideosugc.com`、`aidreamcapes.com`、`www.aidreamcapes.com` 以及 http 访问 301 到 `https://www.aivideosugc.com`(保留路径和查询)。
+  渲染时会把旧数据里残留的旧域名统一换成新域名(`seo-projection.ts`、`json-ld.ts`)。
+- 数据库(仅 `site_aidreamcapes`):`scripts/migrate-aidreamcapes-domain.mjs` 新增 `www.aivideosugc.com`(主域名)和 `aivideosugc.com` 两条 `SiteDomain`,
+  `Site.primaryDomain` 改为 `www.aivideosugc.com`;旧的 aidreamcapes.com 记录保留为非主域名、状态 active。
+  条款、Cookie、State Privacy 页里写网站地址的地方已改为新域名(`utility-pages.json` 的 replace 补丁)。
+- 服务器 nginx:`/www/server/panel/vhost/nginx/aivideosugc.com.conf` 负责 `www.aivideosugc.com` 的网站反代(端口 3013);
+  `aidreamcapes.com.conf` 现在只做 301 到新域名,并保留 ACME 验证路径(新域名在源站沿用 aidreamcapes.com 的证书,证书续期仍走这个路径)。
+  旧配置备份在 `/www/wwwroot/aidreamcapes.com/releases/backups/nginx/`。
+- 部署脚本和冒烟检查都改为用 `www.aivideosugc.com` 访问;服务目录名仍是 `/www/wwwroot/aidreamcapes.com`、服务名 `aidreamcapes.service`,没有改。
+- 客服邮箱仍是 `support@aidreamcapes.com`(邮件依赖该域名的邮箱服务)。**不要让 aidreamcapes.com 过期**:跳转、证书续期和邮箱都还依赖它。
+- 需要站点所有者在 Google Search Console 添加新域名、提交新站点地图,并在旧域名属性里使用"更改地址"工具指向新域名。
