@@ -95,7 +95,7 @@ const nextConfig = {
 
     const origins = {
       mydreamshoots: process.env.MYDREAMSHOOTS_ASSET_REMOTE_ORIGIN?.trim() || "https://www.mydreamshoots.com",
-      aidreamcapes: process.env.AIDREAMCAPES_ASSET_REMOTE_ORIGIN?.trim() || "https://www.aidreamcapes.com",
+      aidreamcapes: process.env.AIDREAMCAPES_ASSET_REMOTE_ORIGIN?.trim() || "https://www.aivideosugc.com",
       aidreamshootsEu: process.env.AIDREAMSHOOTS_EU_ASSET_REMOTE_ORIGIN?.trim() || "https://aidreamshoots.eu",
       aidreamcapesEu: process.env.AIDREAMCAPES_EU_ASSET_REMOTE_ORIGIN?.trim() || "https://aidreamcapes.eu"
     };

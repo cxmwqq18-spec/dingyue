@@ -21,7 +21,7 @@ function shouldInterceptHtmlPath(pathname) {
 }
 
 function isAidreamcapesComHost(host) {
-  return /^(?:www\.)?aidreamcapes\.com$/i.test(host);
+  return /^(?:www\.)?(?:aidreamcapes|aivideosugc)\.com$/i.test(host);
 }
 
 function tagKey(tag) {
