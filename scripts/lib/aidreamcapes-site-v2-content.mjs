@@ -398,6 +398,33 @@ const PLANS = [
   { name: "Premium", price: "$63", credits: "600", who: "For brands and agencies with many products.", features: ["Everything in Pro", "Twice the credits of Pro", "Most room for new products"], popular: false }
 ];
 
+// One line under every start button, so the price and what happens to credits are clear before a visitor signs up.
+const START_NOTE = `Plans from ${PLANS[0].price} a month. You see the credit cost before every job, and if a job fails its credits go back to your balance.`;
+
+// The closing banner of each list page.
+const INDEX_CTA = {
+  templates: { title: "Pick a template and add your product", lead: "Upload one product photo, choose any template and see the cost before you start." },
+  industries: { title: "Make content for your products", lead: "Upload one product photo and pick a template made for your category." },
+  platforms: { title: "Make ads for the platforms you sell on", lead: "Upload one product photo and pick the size for where your ad will run." },
+  blog: { title: "Try it with your own product", lead: "Upload one product photo and turn it into a video ad or store-ready photos." },
+  guides: { title: "Put the guides into practice", lead: "Upload one product photo and try what you just read." }
+};
+
+// The tool each article puts into practice, offered in a box halfway through the article and in its closing banner.
+const ARTICLE_TOOL = {
+  "guide-product-photo-tips": "white-background", "guide-white-background-amazon": "white-background", "guide-first-tiktok-video-ad": "video-ads",
+  "guide-ad-sizes-by-platform": "social-ad-photos", "guide-testing-ad-versions": "video-ads", "blog-ai-product-photography-guide": "lifestyle-photos",
+  "blog-ai-ugc-video-ads-guide": "video-ads", "blog-ai-video-review-checklist": "image-to-video", "blog-unboxing-videos-for-launches": "unboxing-videos",
+  "blog-model-photos-without-a-photoshoot": "model-photos"
+};
+
+// The tool behind each start-to-finish example, so a visitor can make the same kind of result.
+const FLOW_TOOL = {
+  watch: "video-ads", bottle: "social-ad-photos", tote: "lifestyle-photos", necklace: "model-photos", jacket: "social-ad-photos", lipstick: "lifestyle-photos",
+  hoodie: "model-photos", handbag: "lifestyle-photos", boots: "model-photos", sunglasses: "lifestyle-photos", coffee: "lifestyle-photos", candle: "lifestyle-photos",
+  phonecase: "lifestyle-photos", yogamat: "lifestyle-photos", hotsauce: "social-ad-photos"
+};
+
 // "Where to go next" links on the simple pages, so each one leads on to the pages a
 // visitor is most likely to need next.
 const NEXT_LINKS = {
@@ -530,21 +557,34 @@ const EXAMPLE_FLOWS = {
   hotsauce: [null, [["Product photo", "n:hotsauce-pack"], ["Over tacos", "n:hotsauce-tacos"], ["With fresh chilies", "n:hotsauce-peppers"]]]
 };
 
+function flowCta(model, id) {
+  const tool = model.byId[FLOW_TOOL[id]];
+  return tool ? { cta: { label: "Try this with your product", href: toolAppHref(tool) } } : {};
+}
+
 function exampleFlow(model, item) {
   if (item.id === "watch") {
-    return { t: item.t, d: item.d, steps: [
+    return { t: item.t, d: item.d, ...flowCta(model, item.id), steps: [
       { label: "Product photo", image: imageRef(model, "watch", "White smartwatch product photo used as the starting image") },
       { label: "Video ad · 9:16", image: imageRef(model, "watchugc", "Creator holding the same white smartwatch toward the camera") },
       ...[0, 1, 2].map((i) => ({ label: `Version ${"ABC"[i]}`, tall: true, image: imageRef(model, `var${i}`, `Smartwatch opening version ${"ABC"[i]}`) }))] };
   }
   if (item.id === "bottle") {
-    return { t: item.t, d: item.d, steps: [
+    return { t: item.t, d: item.d, ...flowCta(model, item.id), steps: [
       { label: "Lifestyle photo", image: imageRef(model, "bottle", "Green water bottle in a living room scene") },
       { label: "Feed ad", image: imageRef(model, "feedbottle", "Same water bottle in a sunlit feed ad") }] };
   }
   const flow = EXAMPLE_FLOWS[item.id];
   assert.ok(flow, `unknown example flow ${item.id}`);
-  return { t: item.t, d: item.d, steps: flow[1].map(([label, file]) => ({ label, image: mediaImage(model, flow[0] ? `g:${flow[0]}/${file}` : file, "gallery") })) };
+  return { t: item.t, d: item.d, ...flowCta(model, item.id), steps: flow[1].map(([label, file]) => ({ label, image: mediaImage(model, flow[0] ? `g:${flow[0]}/${file}` : file, "gallery") })) };
+}
+
+function articleTry(model, page) {
+  const tool = model.byId[ARTICLE_TOOL[page.id]];
+  if (!tool) return {};
+  const video = tool.group === "video";
+  return { tryBox: { title: `Try ${tool.label}`, text: `${TOOL_DESC[tool.id]}. Upload one product photo and see the cost before you start.`,
+    href: toolAppHref(tool), label: video ? "Make my video" : "Make my photo", more: { label: `How ${tool.label} works`, href: tool.url } } };
 }
 
 function layoutFor(page) {
@@ -557,7 +597,8 @@ function payloadFor(model, page) {
   const base = {
     id: page.id, label: page.label, eyebrow: c.eyebrow || page.label, h1: c.h1, lead: c.lead,
     breadcrumbs: page.id === "home" ? [] : breadcrumbTrail(model, page),
-    faq: (c.faq || []).map((item) => ({ q: item.q, a: item.a }))
+    faq: (c.faq || []).map((item) => ({ q: item.q, a: item.a })),
+    startNote: START_NOTE
   };
   const t = page.type;
   if (t === "home") {
@@ -642,7 +683,8 @@ function payloadFor(model, page) {
       reading: readingFor(model, page) };
   }
   if (t === "index") {
-    const out = { ...base, intro: Array.isArray(c.intro) ? c.intro.map((para) => inlineLinks(model, para, page.id)) : c.intro };
+    const out = { ...base, intro: Array.isArray(c.intro) ? c.intro.map((para) => inlineLinks(model, para, page.id)) : c.intro,
+      ...(INDEX_CTA[page.id] ? { cta: { ...INDEX_CTA[page.id], href: "/app/create" } } : {}) };
     if (page.id === "templates") {
       out.cards = model.cards.map((card) => cardRef(model, card.key, "primary")).filter(Boolean);
       out.filters = { types: [["video", "Video"], ["photo", "Photo"]], industries: Object.entries(model.ind), platforms: Object.entries(model.plat) };
@@ -657,7 +699,7 @@ function payloadFor(model, page) {
   if (t === "article") {
     return { ...base, section: page.section, minutes: c.read_minutes || 5, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, page.label),
       sections: (c.sections || []).map((section) => ({ ...section, paras: section.paras.map((para) => inlineLinks(model, para, page.id)) })), checklist: c.checklist || [],
-      related: articleRelatedFor(model, page) };
+      related: articleRelatedFor(model, page), ...articleTry(model, page) };
   }
   if (t === "pricing") return { ...base, intro: c.intro || [], credits: c.credits_explained || [], plans: PLANS, next: nextLinks(model, t) };
   if (t === "faq") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), next: nextLinks(model, t) };
@@ -666,7 +708,8 @@ function payloadFor(model, page) {
   if (t === "trust") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
   if (t === "ai-info") return { ...base, summary: c.summary, facts: c.facts, notOffered: c.not_offered, describe: c.describe, llmsText: buildLlmsText(model), next: nextLinks(model, t) };
   if (t === "examples") {
-    return { ...base, intro: c.intro || [], flows: (c.cases || []).map((item) => exampleFlow(model, item)), cards: pickCards(model, CARD_ORDER, 12) };
+    return { ...base, intro: c.intro || [], flows: (c.cases || []).map((item) => exampleFlow(model, item)), cards: pickCards(model, CARD_ORDER, 12),
+      cta: { title: "Make this with your own product", lead: "Upload one product photo and pick the look you liked.", href: "/app/create" } };
   }
   throw new Error(`unsupported page type ${t}`);
 }

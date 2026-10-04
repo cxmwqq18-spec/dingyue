@@ -14,7 +14,7 @@ export type V2Crumb = { label: string; href: string };
 export type V2Card = { key: string; name: string; line: string; kind: "video" | "photo"; href: string; image: V2Image; tags: string[]; industries: string[]; platforms: string[] };
 export type V2Tool = { id: string; group?: string; label: string; description: string; href: string; image?: V2Image };
 export type V2FlowStep = { label: string; image: V2Image; tall?: boolean };
-export type V2Flow = { t: string; d: string; steps: V2FlowStep[] };
+export type V2Flow = { t: string; d: string; steps: V2FlowStep[]; cta?: { label: string; href: string } };
 export type V2Maker = { options: [string, string][]; cta: string; href: string; urlInput?: boolean };
 export type V2Plan = { name: string; price: string; credits: string; who: string; features: string[]; popular: boolean };
 export type V2Section = { h2: string; paras: string[] };
@@ -37,6 +37,8 @@ export type V2Data = V2Base & Record<string, unknown>;
 export type V2Resolvers = {
   href: (value: string) => string;
   asset: (value: string) => string;
+  // The plain link for a workspace address, used where a form must submit there directly.
+  direct?: (value: string) => string;
 };
 
 export function list<T>(value: unknown): T[] {

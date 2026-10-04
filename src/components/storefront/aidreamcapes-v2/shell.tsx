@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { AidreamcapesV2Navigation, ThemeNavLink } from "@/lib/types";
 import { AidreamcapesV2MenuBehavior } from "./behavior";
 import type { V2Company } from "./company";
-import { CompanyDetails } from "./parts";
+import { CompanyDetails, withStartLinks } from "./parts";
 import { AIDREAMCAPES_V2_CSS } from "./styles";
 import type { V2Resolvers } from "./types";
 
@@ -84,7 +84,7 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
         </nav>
         <div className="hright">
           <a className="login" href={r.href(navigation.actions.login.href)}>{navigation.actions.login.label}</a>
-          <a className="btn btn-primary" href={r.href(navigation.actions.getStarted.href)}>{navigation.actions.getStarted.label}</a>
+          <a className="btn btn-primary" href={withStartLinks(r).href(navigation.actions.getStarted.href)}>{navigation.actions.getStarted.label}</a>
           <button aria-controls="adc2-main-nav" aria-expanded="false" aria-label="Open menu" className="menu-toggle" id="adc2-menu-toggle" type="button">
             <svg fill="none" height="20" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 20 20" width="20">
               <path d="M3 6h14M3 10h14M3 14h14" />

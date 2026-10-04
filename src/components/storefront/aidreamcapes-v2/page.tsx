@@ -1,7 +1,7 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  Boxes, Collage, CompanyDetails, Crumbs, CtaBand, Faq, Gallery, HeroMedia, Img, Intro, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolLink, ToolRow
+  Boxes, Collage, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, HeroMedia, Img, Intro, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolLink, ToolRow
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
@@ -78,6 +78,7 @@ function HomePage({ data, r }: Props) {
                     <small>See the cost before you start</small>
                   </div>
                 </div>
+                <StartNote note={text(data.startNote)} />
               </div>
             </div>
             {heroMedia?.kind === "loop" ? (
@@ -154,7 +155,7 @@ function HomePage({ data, r }: Props) {
         <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/pricing")}>See full pricing →</a></div>
       </Section>
       <Faq items={data.faq} title="Questions before you start" />
-      <CtaBand href="/app/create" lead="Upload a photo, pick a template and get a video ad or store-ready photos." r={r} title="Your next ad starts with one product photo" />
+      <CtaBand note={text(data.startNote)} href="/app/create" lead="Upload a photo, pick a template and get a video ad or store-ready photos." r={r} title="Your next ad starts with one product photo" />
       <AidreamcapesV2HeroTabs />
       <AidreamcapesV2MotionPreference />
     </>
@@ -169,7 +170,7 @@ function Flows({ flows, r }: { flows: V2Flow[]; r: V2Resolvers }) {
     <div className="ex">
       {flows.map((flow) => (
         <div className="exrow" key={flow.t}>
-          <div className="meta"><h3>{flow.t}</h3><p>{flow.d}</p></div>
+          <div className="meta"><h3>{flow.t}</h3><p>{flow.d}</p>{flow.cta ? <a className="flow-cta" href={r.href(flow.cta.href)}>{flow.cta.label} →</a> : null}</div>
           <div className="flow">
             {flow.steps.map((step, index) => (
               <Fragment key={`${step.label}-${index}`}>
@@ -189,7 +190,7 @@ function VideoHubPage({ data, r }: Props) {
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
       <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Collage cards={list<V2Card>(data.heroCards)} r={r} />} title={data.h1}>
-        <Maker maker={{ options: [["Size", "9:16 · TikTok & Reels"], ["Length", "15 seconds"]], cta: "Make my video", href: text(data.appHref) }} r={r} />
+        <Maker note={text(data.startNote)} maker={{ options: [["Size", "9:16 · TikTok & Reels"], ["Length", "15 seconds"]], cta: "Make my video", href: text(data.appHref) }} r={r} />
       </PageHero>
       <Section eyebrow="About" title="Short videos from your product photos"><Intro paras={list<string>(data.intro)} /></Section>
       <Section eyebrow="Video tools" title="Pick the video you need"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
@@ -198,7 +199,7 @@ function VideoHubPage({ data, r }: Props) {
       <Section eyebrow="Video templates" title="Ready-made video ideas"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
       <Faq items={data.faq} title="Questions about AI video" />
       <Reading items={list<V2Article>(data.reading)} r={r} />
-      <CtaBand href={text(data.appHref)} lead="Upload a product photo and see the cost before you start." r={r} title="Make your first video today" />
+      <CtaBand note={text(data.startNote)} href={text(data.appHref)} lead="Upload a product photo and see the cost before you start." r={r} title="Make your first video today" />
     </>
   );
 }
@@ -214,7 +215,7 @@ function ToolPage({ data, r }: Props) {
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
       <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
-        <Maker maker={maker} r={r} />
+        <Maker note={text(data.startNote)} maker={maker} r={r} />
       </PageHero>
       {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} /></Section> : null}
       {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /></Section> : null}
@@ -234,7 +235,7 @@ function ToolPage({ data, r }: Props) {
       <Faq items={data.faq} title={`Questions about ${data.label}`} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="More tools" title="You might also need"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
-      <CtaBand href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} lead="Upload a product photo and see the cost before you start." r={r} title={`Make your first ${video ? "video" : "photo"} today`} />
+      <CtaBand note={text(data.startNote)} href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} lead="Upload a product photo and see the cost before you start." r={r} title={`Make your first ${video ? "video" : "photo"} today`} />
     </>
   );
 }
@@ -247,7 +248,7 @@ function TemplatePage({ data, r }: Props) {
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
       <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Single image={data.image as V2Image} r={r} />} title={data.h1}>
-        <Maker maker={maker} r={r} />
+        <Maker note={text(data.startNote)} maker={maker} r={r} />
         {text(data.tip) ? <div className="tip"><b>Tip:</b> {text(data.tip)}</div> : null}
       </PageHero>
       {gallery?.images.length ? <Section eyebrow="Examples" title="What this template looks like"><Gallery images={gallery.images} r={r} /></Section> : null}
@@ -260,7 +261,7 @@ function TemplatePage({ data, r }: Props) {
       <Faq items={data.faq} title="Questions about this template" />
       <Section eyebrow="More templates" title="More like this"><TemplateGrid cards={list<V2Card>(data.more)} r={r} /></Section>
       <Reading items={list<V2Article>(data.reading)} r={r} />
-      <CtaBand href={maker.href} lead="Upload one product photo. See the cost before you start." r={r} title={`Try ${data.label} with your product`} />
+      <CtaBand note={text(data.startNote)} href={maker.href} lead="Upload one product photo. See the cost before you start." r={r} title={`Try ${data.label} with your product`} />
     </>
   );
 }
@@ -275,7 +276,7 @@ function CollectionPage({ data, r }: Props) {
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
       <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Collage cards={list<V2Card>(data.heroCards)} r={r} />} title={data.h1}>
-        <Maker maker={{ options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
+        <Maker note={text(data.startNote)} maker={{ options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
       </PageHero>
       <Section eyebrow="Overview" title={overview}><Intro paras={list<string>(data.intro)} /></Section>
       {gallery?.images.length ? <Section eyebrow="Examples" title={`${data.label} examples`}><Gallery images={gallery.images} r={r} /></Section> : null}
@@ -295,7 +296,7 @@ function CollectionPage({ data, r }: Props) {
       <Section eyebrow="Tools" title="Tools that fit"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
       <Faq items={data.faq} title="Questions" />
       <Reading items={list<V2Article>(data.reading)} r={r} />
-      <CtaBand href={text(data.appHref)} lead="Upload a product photo and pick a template." r={r} title={`Make ${data.label} content today`} />
+      <CtaBand note={text(data.startNote)} href={text(data.appHref)} lead="Upload a product photo and pick a template." r={r} title={`Make ${data.label} content today`} />
     </>
   );
 }
@@ -305,6 +306,7 @@ function IndexPage({ data, r }: Props) {
   const filters = data.filters as { types: [string, string][]; industries: [string, string][]; platforms: [string, string][] } | undefined;
   const items = list<{ label: string; href: string; text: string; image: V2Image }>(data.items);
   const articles = list<{ title: string; summary: string; minutes: number; href: string; image: V2Image }>(data.articles);
+  const cta = data.cta as { title: string; lead: string; href: string } | undefined;
   const filterRow = (label: string, key: string, options: [string, string][]) => (
     <div className="frow">
       <span className="fl">{label}</span>
@@ -357,6 +359,7 @@ function IndexPage({ data, r }: Props) {
         </section>
       ) : null}
       <Faq items={data.faq} title="Questions" />
+      {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
     </>
   );
 }
@@ -365,6 +368,8 @@ function ArticlePage({ data, r }: Props) {
   const sections = list<V2Section>(data.sections);
   const checklist = list<string>(data.checklist);
   const related = list<{ label: string; href: string; text: string }>(data.related);
+  const tryBox = data.tryBox as { title: string; text: string; href: string; label: string; more?: { label: string; href: string } } | undefined;
+  const tryAfter = Math.max(0, Math.ceil(sections.length / 2) - 1);
   return (
     <>
       <article>
@@ -379,10 +384,21 @@ function ArticlePage({ data, r }: Props) {
           </div>
         </section>
         <div className="wrap prose" style={{ paddingBottom: 40 }}>
-          {sections.map((section) => (
+          {sections.map((section, sectionIndex) => (
             <div key={section.h2}>
               <h2>{section.h2}</h2>
               {section.paras.map((para, index) => <p key={index}><RichText r={r} text={para} /></p>)}
+              {tryBox && sectionIndex === tryAfter ? (
+                <aside className="trybox">
+                  <b>{tryBox.title}</b>
+                  <span>{tryBox.text}</span>
+                  <div className="row">
+                    <a className="btn btn-grad" href={r.href(tryBox.href)}>{tryBox.label} →</a>
+                    {tryBox.more ? <a className="trymore" href={r.href(tryBox.more.href)}>{tryBox.more.label}</a> : null}
+                  </div>
+                  <StartNote note={text(data.startNote)} />
+                </aside>
+              ) : null}
             </div>
           ))}
           {checklist.length ? <><h2>Checklist</h2><ul className="check">{checklist.map((item) => <li key={item}>{item}</li>)}</ul></> : null}
@@ -397,7 +413,7 @@ function ArticlePage({ data, r }: Props) {
         </div>
       </article>
       <Faq items={data.faq} title="Questions" />
-      <CtaBand href="/app/create" lead="Upload a product photo and try it." r={r} title="Put it into practice" />
+      <CtaBand note={text(data.startNote)} href={tryBox?.href ?? "/app/create"} lead="Upload a product photo and try it." r={r} title="Put it into practice" />
     </>
   );
 }
@@ -438,11 +454,11 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         {list<string>(data.credits).length ? <Section eyebrow="Credits" title="How credits work"><Intro paras={list<string>(data.credits)} /></Section> : null}
         <Faq items={data.faq} title="Pricing questions" />
         <NextLinks data={data} r={r} />
-        <CtaBand href="/app/create" lead="Pick a plan when you are ready." r={r} title="Start with one product photo" />
+        <CtaBand note={text(data.startNote)} href="/app/create" lead="Pick a plan when you are ready." r={r} title="Start with one product photo" />
       </>
     );
   }
-  if (layout === "faq") return <>{hero}<Faq items={data.faq} title="All questions" /><NextLinks data={data} r={r} /></>;
+  if (layout === "faq") return <>{hero}<Faq items={data.faq} title="All questions" /><NextLinks data={data} r={r} /><CtaBand note={text(data.startNote)} href="/app/create" lead="Upload one product photo and see the cost before you start." r={r} title="Ready to try it?" /></>;
   if (layout === "contact") {
     return (
       <>
@@ -468,7 +484,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         {layout === "about" && company ? <Section eyebrow="Company" lead={`Aidreamcapes is operated by ${company.name}.`} title="Who runs Aidreamcapes"><CompanyDetails className="company-card" company={company} /></Section> : null}
         <Faq items={data.faq} title="Questions" />
         <NextLinks data={data} r={r} />
-        {layout === "about" ? <CtaBand href="/app/create" lead="Upload a product photo and try a template." r={r} title="See what you can make" /> : null}
+        {layout === "about" || layout === "trust" ? <CtaBand note={text(data.startNote)} href="/app/create" lead="Upload a product photo and try a template." r={r} title="See what you can make" /> : null}
       </>
     );
   }
@@ -507,13 +523,15 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         {list<{ before: V2Image; after: V2Image }>(data.pairs).length ? <Section eyebrow="White background" title="Normal photos turned into clean white-background shots"><PairGrid pairs={list<{ before: V2Image; after: V2Image }>(data.pairs)} r={r} /></Section> : null}
         <Section eyebrow="More results" title="Results by template"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
         <Faq items={data.faq} title="Questions" />
+        {(data.cta as { href?: string } | undefined)?.href ? <CtaBand note={text(data.startNote)} href={text((data.cta as { href: string }).href)} lead={text((data.cta as { lead: string }).lead)} r={r} title={text((data.cta as { title: string }).title)} /> : null}
       </>
     );
   }
   return hero;
 }
 
-export function AidreamcapesV2Page({ section, r, company }: { section: SectionInstance; r: V2Resolvers; company?: V2Company }) {
+export function AidreamcapesV2Page({ section, r: baseResolvers, company }: { section: SectionInstance; r: V2Resolvers; company?: V2Company }) {
+  const r = withStartLinks(baseResolvers);
   const settings = section.settings as Record<string, unknown>;
   const layout = text(settings.layout);
   const data = settings.data as V2Data;

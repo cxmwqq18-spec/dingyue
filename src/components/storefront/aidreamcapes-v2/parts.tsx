@@ -245,12 +245,27 @@ const UploadIcon = () => (
   </span>
 );
 
-export function Maker({ maker, r }: { maker: V2Maker; r: V2Resolvers }) {
+// Workspace links (/app/...) open the sign-up form first and continue to the workspace afterwards;
+// visitors who are already signed in are sent straight on.
+export function withStartLinks(r: V2Resolvers): V2Resolvers {
+  if (r.direct) return r;
+  return {
+    ...r,
+    direct: r.href,
+    href: (value: string) => (value.startsWith("/app/") ? `${r.href("/login")}?mode=register&next=${encodeURIComponent(r.href(value))}` : r.href(value))
+  };
+}
+
+export function StartNote({ note }: { note?: string }) {
+  return note ? <p className="start-note">{note}</p> : null;
+}
+
+export function Maker({ maker, r, note }: { maker: V2Maker; r: V2Resolvers; note?: string }) {
   const options = maker.options.slice(0, 3);
   if (maker.urlInput) {
     // Plain GET form: works without JavaScript and sends the link to the workspace.
     return (
-      <form action={r.href("/app/create")} className="maker" method="get">
+      <form action={(r.direct ?? r.href)("/app/create")} className="maker" method="get">
         <input name="tool" type="hidden" value="url-to-video" />
         <input name="size" type="hidden" value="9:16" />
         <input name="length" type="hidden" value="15" />
@@ -276,6 +291,7 @@ export function Maker({ maker, r }: { maker: V2Maker; r: V2Resolvers }) {
           <button className="btn btn-grad" type="submit">{maker.cta} →</button>
           <small>See the cost before you start</small>
         </div>
+        <StartNote note={note} />
       </form>
     );
   }
@@ -293,6 +309,7 @@ export function Maker({ maker, r }: { maker: V2Maker; r: V2Resolvers }) {
         <a className="btn btn-grad" href={r.href(maker.href)}>{maker.cta} →</a>
         <small>See the cost before you start</small>
       </div>
+      <StartNote note={note} />
     </div>
   );
 }
@@ -398,7 +415,7 @@ export function PageHero({ eyebrow, title, lead, right, children }: { eyebrow: s
   );
 }
 
-export function CtaBand({ title, lead, href, r }: { title: string; lead: string; href: string; r: V2Resolvers }) {
+export function CtaBand({ title, lead, href, r, note }: { title: string; lead: string; href: string; r: V2Resolvers; note?: string }) {
   return (
     <div className="wrap">
       <section className="cta">
@@ -408,6 +425,7 @@ export function CtaBand({ title, lead, href, r }: { title: string; lead: string;
           <a className="btn btn-primary" href={r.href(href)}>Get started</a>
           <a className="btn btn-ghost" href={r.href("/templates")}>Browse templates</a>
         </div>
+        <StartNote note={note} />
       </section>
     </div>
   );

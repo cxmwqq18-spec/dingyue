@@ -281,6 +281,14 @@
           "emptyBody",
           "Open pricing to select a monthly, quarterly, or semiannual subscription plan.",
           "Open pricing to choose a monthly plan."
+        ],
+        [
+          "field",
+          "cart_intro_1",
+          "rich_text",
+          "imageUrl",
+          null,
+          "/assets/sites/site_aidreamcapes/site-v2/gen/planter-shelf--1280.webp"
         ]
       ]
     },
