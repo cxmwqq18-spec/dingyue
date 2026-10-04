@@ -84,7 +84,7 @@ function collectPublicStaticFiles(root) {
       const relative = path.relative(root, absolute);
       if (entry.isDirectory()) {
         pending.push(absolute);
-      } else if (entry.isFile() && (relative.startsWith("assets/") || relative.startsWith("site-media/") || mediaPattern.test(entry.name))) {
+      } else if ((entry.isFile() || entry.isSymbolicLink()) && (relative.startsWith("assets/") || relative.startsWith("site-media/") || mediaPattern.test(entry.name))) {
         files.push(relative);
       }
     }
