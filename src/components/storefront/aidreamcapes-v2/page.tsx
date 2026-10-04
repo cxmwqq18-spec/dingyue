@@ -1,9 +1,11 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  Boxes, Collage, Crumbs, CtaBand, Faq, Gallery, HeroMedia, Img, Intro, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolLink, ToolRow
+  Boxes, Collage, CompanyDetails, Crumbs, CtaBand, Faq, Gallery, HeroMedia, Img, Intro, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolLink, ToolRow
 } from "./parts";
-import { list, text, type V2Article, type V2Card, type V2Data, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
+import type { V2Company } from "./company";
+import { Fragment, type CSSProperties } from "react";
+import { list, text, type V2Article, type V2Card, type V2Data, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
 
@@ -13,12 +15,29 @@ export function isAidreamcapesV2Section(section: SectionInstance | undefined): b
 
 type Props = { data: V2Data; r: V2Resolvers };
 
+// The home examples are a list of flows. Until a page's data has been refreshed it can still hold the
+// older layout (one smartwatch flow and one water bottle flow); show that the same way meanwhile.
+function homeExampleFlows(examples: unknown): V2Flow[] {
+  const value = (examples ?? {}) as { flows?: unknown; image?: V2Image; output?: V2Image; versions?: V2Image[]; bottle?: V2Image; bottleAd?: V2Image };
+  if (Array.isArray(value.flows)) return value.flows as V2Flow[];
+  const flows: V2Flow[] = [];
+  if (value.image && value.output) {
+    flows.push({ t: "Smartwatch", d: "Product photo, then a vertical video ad, then three different openings to test.", steps: [
+      { label: "Product photo", image: value.image }, { label: "Video ad · 9:16", image: value.output },
+      ...list<V2Image>(value.versions).map((image, index) => ({ label: `Version ${"ABC"[index]}`, image, tall: true }))] });
+  }
+  if (value.bottle && value.bottleAd) {
+    flows.push({ t: "Water bottle", d: "Lifestyle photo for the product page, then a feed ad for social.", steps: [{ label: "Lifestyle photo", image: value.bottle }, { label: "Feed ad", image: value.bottleAd }] });
+  }
+  return flows;
+}
+
 function HomePage({ data, r }: Props) {
-  const hero = data.hero as { image: V2Image; output: V2Image; versions: V2Image[]; videoHref: string; photoHref: string };
+  const hero = data.hero as { image: V2Image; output?: V2Image; versions?: V2Image[]; videoHref: string; photoHref: string };
   const make = data.make as { title: string; lead: string; video: V2Tool[]; photo: V2Tool[] };
   const templates = data.templates as { title: string; lead: string; cards: V2Card[]; total: number };
   const platforms = data.platforms as { title: string; items: { label: string; href: string; spec: string }[] };
-  const examples = data.examples as { image: V2Image; output: V2Image; versions: V2Image[]; bottle: V2Image; bottleAd: V2Image };
+  const exampleFlows = homeExampleFlows(data.examples);
   const heroMedia = data.heroMedia as V2HeroMedia | undefined;
   return (
     <>
@@ -62,7 +81,7 @@ function HomePage({ data, r }: Props) {
               </div>
             </div>
             {heroMedia?.kind === "loop" ? (
-              <div aria-label="Example: product photo to video ad" className="visual-loop"><HeroMedia media={heroMedia} r={r} /></div>
+              <div aria-label={heroMedia.inset ? "Example: product photo to video ad" : "Example video ads for different products"} className="visual-loop"><HeroMedia media={heroMedia} r={r} /></div>
             ) : (
             <div aria-label="Example: product photo to video ad" className="visual">
               <div className="vin"><span className="lbl">Your product photo</span><Img eager image={hero.image} r={r} /></div>
@@ -71,10 +90,10 @@ function HomePage({ data, r }: Props) {
               </div>
               <div className="vout">
                 <span className="lbl">Video ad · 9:16 · 15s</span>
-                <Img eager image={hero.output} r={r} />
+                {hero.output ? <Img eager image={hero.output} r={r} /> : null}
               </div>
               <div className="vars">
-                {hero.versions.map((image, index) => <Img image={image} key={index} r={r} />)}
+                {list<V2Image>(hero.versions).map((image, index) => <Img image={image} key={index} r={r} />)}
                 <span>More versions</span>
               </div>
             </div>
@@ -116,10 +135,12 @@ function HomePage({ data, r }: Props) {
         </div>
       </Section>
       <Section eyebrow="How it works" title="Three steps. No studio, no filming."><Steps items={list<V2Item>(data.steps)} /></Section>
-      <Section eyebrow="Examples" title="One product photo, many results">
-        <Flows examples={examples} r={r} />
-        <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/inspiration")}>See more examples →</a></div>
-      </Section>
+      {exampleFlows.length ? (
+        <Section eyebrow="Examples" title="One product photo, many results">
+          <Flows flows={exampleFlows} r={r} />
+          <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/inspiration")}>See more examples →</a></div>
+        </Section>
+      ) : null}
       <Section eyebrow="Why stores switch" title="Skip the photoshoot. Keep testing new ads.">
         <div className="cmp-wrap">
           <table className="cmp">
@@ -140,31 +161,25 @@ function HomePage({ data, r }: Props) {
   );
 }
 
-function Flows({ examples, r, titles }: { examples: { image: V2Image; output: V2Image; versions: V2Image[]; bottle: V2Image; bottleAd: V2Image }; r: V2Resolvers; titles?: { t: string; d: string }[] }) {
-  const first = titles?.[0] ?? { t: "Smartwatch", d: "Product photo, then a vertical video ad, then three different openings to test." };
-  const second = titles?.[1] ?? { t: "Water bottle", d: "Lifestyle photo for the product page, then a feed ad for social." };
+// Each step of a flow shares the row by the shape of its picture, so every step ends up the same height and the row fits its box.
+const flowAspect = (step: V2Flow["steps"][number]) => (step.tall ? 9 / 16 : (step.image.width ?? 4) / (step.image.height ?? 3)).toFixed(3);
+
+function Flows({ flows, r }: { flows: V2Flow[]; r: V2Resolvers }) {
   return (
     <div className="ex">
-      <div className="exrow">
-        <div className="meta"><h3>{first.t}</h3><p>{first.d}</p></div>
-        <div className="flow">
-          <div className="fcell"><figure><Img image={examples.image} r={r} /></figure><small>Product photo</small></div>
-          <div aria-hidden="true" className="fsep">›</div>
-          <div className="fcell"><figure><Img image={examples.output} r={r} /></figure><small>Video ad · 9:16</small></div>
-          <div aria-hidden="true" className="fsep">›</div>
-          {examples.versions.map((image, index) => (
-            <div className="fcell" key={index}><figure><Img className="v916" image={image} r={r} /></figure><small>Version {"ABC"[index]}</small></div>
-          ))}
+      {flows.map((flow) => (
+        <div className="exrow" key={flow.t}>
+          <div className="meta"><h3>{flow.t}</h3><p>{flow.d}</p></div>
+          <div className="flow">
+            {flow.steps.map((step, index) => (
+              <Fragment key={`${step.label}-${index}`}>
+                {index > 0 ? <div aria-hidden="true" className="fsep">›</div> : null}
+                <div className="fcell" style={{ "--a": flowAspect(step) } as CSSProperties}><figure><Img className={step.tall ? "v916" : undefined} image={step.image} r={r} /></figure><small>{step.label}</small></div>
+              </Fragment>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="exrow">
-        <div className="meta"><h3>{second.t}</h3><p>{second.d}</p></div>
-        <div className="flow">
-          <div className="fcell"><figure><Img image={examples.bottle} r={r} /></figure><small>Lifestyle photo</small></div>
-          <div aria-hidden="true" className="fsep">›</div>
-          <div className="fcell"><figure><Img image={examples.bottleAd} r={r} /></figure><small>Feed ad</small></div>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }
@@ -301,7 +316,7 @@ function IndexPage({ data, r }: Props) {
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
       <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
-      <section style={{ paddingBottom: 30 }}><div className="wrap"><Intro paras={list<string>(data.intro)} /></div></section>
+      <section style={{ paddingBottom: 30 }}><div className="wrap"><Intro paras={list<string>(data.intro)} r={r} /></div></section>
       {cards.length && filters ? (
         <section style={{ paddingBottom: 88 }}>
           <div className="wrap">
@@ -412,7 +427,7 @@ function NextLinks({ data, r }: { data: V2Data; r: V2Resolvers }) {
   );
 }
 
-function SimplePage({ data, r, layout }: Props & { layout: string }) {
+function SimplePage({ data, r, layout, company }: Props & { layout: string; company?: V2Company }) {
   const heroImage = data.image as V2Image | undefined;
   const hero = <><Crumbs items={data.breadcrumbs} r={r} /><PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroImage?.src ? <HeroMedia media={{ kind: "image", image: heroImage }} r={r} /> : undefined} title={data.h1} /></>;
   if (layout === "pricing") {
@@ -439,6 +454,7 @@ function SimplePage({ data, r, layout }: Props & { layout: string }) {
           </div>
         </section>
         {list<V2Item>(data.topics).length ? <Section eyebrow="We can help with" title="What to contact us about"><Boxes className="ideas" items={list<V2Item>(data.topics)} /></Section> : null}
+        {company ? <Section eyebrow="Company" lead={`${company.name} operates Aidreamcapes.`} title="Company details"><CompanyDetails className="company-card" company={company} /></Section> : null}
         <Faq items={data.faq} title="Questions" />
         <NextLinks data={data} r={r} />
       </>
@@ -449,6 +465,7 @@ function SimplePage({ data, r, layout }: Props & { layout: string }) {
       <>
         {hero}
         <ProseSections sections={list<V2Section>(data.sections)} />
+        {layout === "about" && company ? <Section eyebrow="Company" lead={`Aidreamcapes is operated by ${company.name}.`} title="Who runs Aidreamcapes"><CompanyDetails className="company-card" company={company} /></Section> : null}
         <Faq items={data.faq} title="Questions" />
         <NextLinks data={data} r={r} />
         {layout === "about" ? <CtaBand href="/app/create" lead="Upload a product photo and try a template." r={r} title="See what you can make" /> : null}
@@ -465,7 +482,10 @@ function SimplePage({ data, r, layout }: Props & { layout: string }) {
           <h2>Key facts</h2>
           <div className="cmp-wrap">
             <table className="cmp">
-              <tbody>{list<[string, string]>(data.facts).map(([key, value]) => <tr key={key}><td>{key}</td><td>{value}</td></tr>)}</tbody>
+              <tbody>
+                {list<[string, string]>(data.facts).map(([key, value]) => <tr key={key}><td>{key}</td><td>{value}</td></tr>)}
+                {company ? <tr><td>Operated by</td><td>{[company.name, company.address].filter(Boolean).join(", ")}</td></tr> : null}
+              </tbody>
             </table>
           </div>
           <h2>Not offered</h2>
@@ -479,12 +499,11 @@ function SimplePage({ data, r, layout }: Props & { layout: string }) {
     );
   }
   if (layout === "examples") {
-    const cases = list<{ t: string; d: string }>(data.cases);
     return (
       <>
         {hero}
         <section style={{ paddingBottom: 20 }}><div className="wrap"><Intro paras={list<string>(data.intro)} /></div></section>
-        <section style={{ paddingBottom: 40 }}><div className="wrap"><Flows examples={data.flows as never} r={r} titles={cases.length >= 2 ? cases : undefined} /></div></section>
+        <section style={{ paddingBottom: 40 }}><div className="wrap"><Flows flows={list<V2Flow>(data.flows)} r={r} /></div></section>
         {list<{ before: V2Image; after: V2Image }>(data.pairs).length ? <Section eyebrow="White background" title="Normal photos turned into clean white-background shots"><PairGrid pairs={list<{ before: V2Image; after: V2Image }>(data.pairs)} r={r} /></Section> : null}
         <Section eyebrow="More results" title="Results by template"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
         <Faq items={data.faq} title="Questions" />
@@ -494,7 +513,7 @@ function SimplePage({ data, r, layout }: Props & { layout: string }) {
   return hero;
 }
 
-export function AidreamcapesV2Page({ section, r }: { section: SectionInstance; r: V2Resolvers }) {
+export function AidreamcapesV2Page({ section, r, company }: { section: SectionInstance; r: V2Resolvers; company?: V2Company }) {
   const settings = section.settings as Record<string, unknown>;
   const layout = text(settings.layout);
   const data = settings.data as V2Data;
@@ -506,5 +525,5 @@ export function AidreamcapesV2Page({ section, r }: { section: SectionInstance; r
   if (layout === "collection") return <CollectionPage data={data} r={r} />;
   if (layout === "index") return <IndexPage data={data} r={r} />;
   if (layout === "article") return <ArticlePage data={data} r={r} />;
-  return <SimplePage data={data} layout={layout} r={r} />;
+  return <SimplePage company={company} data={data} layout={layout} r={r} />;
 }

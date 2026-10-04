@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { V2Article, V2Card, V2Crumb, V2Faq, V2HeroMedia, V2Image, V2Item, V2Maker, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video } from "./types";
+import type { V2Company } from "./company";
 
 // Each candidate in a stored srcset goes through the same asset resolver as the main file.
 function resolveSrcSet(srcSet: string, r: V2Resolvers): string {
@@ -66,9 +67,9 @@ export function Section({ eyebrow, title, lead, children, id }: { eyebrow: strin
   );
 }
 
-export function Intro({ paras }: { paras: string[] }) {
+export function Intro({ paras, r }: { paras: string[]; r?: V2Resolvers }) {
   if (!paras.length) return null;
-  return <div className="intro">{paras.map((para, index) => <p key={index}>{para}</p>)}</div>;
+  return <div className="intro">{paras.map((para, index) => <p key={index}>{r ? <RichText r={r} text={para} /> : para}</p>)}</div>;
 }
 
 export function Boxes({ items, className = "ben" }: { items: V2Item[]; className?: string }) {
@@ -115,6 +116,19 @@ export function Specs({ rows, r }: { rows: V2SpecRow[]; r: V2Resolvers }) {
         </div>
       ))}
     </div>
+  );
+}
+
+// The company named in the site profile: name, postal address, phone and email.
+export function CompanyDetails({ company, className }: { company: V2Company; className?: string }) {
+  return (
+    <address className={className ? `company ${className}` : "company"}>
+      <b>{company.name}</b>
+      {company.address ? <span>{company.address}</span> : null}
+      {company.phone ? <span>Phone: <a href={`tel:${company.phoneHref}`}>{company.phone}</a></span> : null}
+      {company.email ? <span>Email: <a href={`mailto:${company.email}`}>{company.email}</a></span> : null}
+      {company.taxId ? <span>{company.taxIdLabel}: {company.taxId}</span> : null}
+    </address>
   );
 }
 
@@ -196,10 +210,20 @@ export function TemplateGrid({ cards, r, id }: { cards: V2Card[]; r: V2Resolvers
   return <div className="tgrid" id={id}>{cards.map((card) => <TemplateCard card={card} key={card.key} r={r} />)}</div>;
 }
 
+const ToolIcon = ({ group }: { group?: string }) => (
+  <span aria-hidden="true" className="tic">
+    {group === "photo" ? (
+      <svg fill="none" height="22" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24" width="22"><rect height="16" rx="3" width="18" x="3" y="4" /><circle cx="9" cy="10" r="1.6" /><path d="m4 17 5-4.5 4 3.5 3-2.5 4 3.5" /></svg>
+    ) : (
+      <svg fill="none" height="22" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24" width="22"><rect height="14" rx="3" width="18" x="3" y="5" /><path d="m10.5 9.5 4 2.5-4 2.5z" /></svg>
+    )}
+  </span>
+);
+
 export function ToolLink({ tool, r }: { tool: V2Tool; r: V2Resolvers }) {
   return (
     <a className="mi" href={r.href(tool.href)}>
-      <img alt="" decoding="async" height={46} loading="lazy" src={r.asset(tool.image.src)} width={46} />
+      {tool.image ? <img alt="" decoding="async" height={46} loading="lazy" src={r.asset(tool.image.src)} width={46} /> : <ToolIcon group={tool.group} />}
       <div>
         <b>{tool.label}</b>
         <span>{tool.description}</span>
@@ -320,8 +344,8 @@ export function HeroMedia({ media, r }: { media: V2HeroMedia; r: V2Resolvers }) 
         <video aria-label={media.video.poster.alt} autoPlay data-adc2-loop height={media.video.height} loop muted playsInline poster={r.asset(media.video.poster.src)} preload="metadata" width={media.video.width}>
           <source src={r.asset(media.video.src)} type="video/mp4" />
         </video>
-        <span className="lbl">Example video ad</span>
-        <div className="inset"><span className="lbl">Your product photo</span><Img eager image={media.inset} r={r} /></div>
+        <span className="lbl">{media.inset ? "Example video ad" : "Example video ads"}</span>
+        {media.inset ? <div className="inset"><span className="lbl">Your product photo</span><Img eager image={media.inset} r={r} /></div> : null}
       </div>
     );
   }

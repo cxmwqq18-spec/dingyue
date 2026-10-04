@@ -12,6 +12,11 @@
     "ecommerce content ideas",
     "AI product content tips"
   ],
-  "intro": "You don't need a studio or an agency to keep your store looking fresh, but you do need a plan for what to make and where it goes. These articles cover the practical side: taking a source photo that holds up, writing a one-sentence scene for a short video ad, planning clips around a launch, getting clothing onto a model without booking a shoot, and checking AI images and videos before they go live. Each one is written for sellers who handle their own listings and ads.",
+  "intro": [
+    "You don't need a studio or an agency to keep your store looking fresh, but you do need a plan for what to make and where it goes. These articles cover the practical side: taking a source photo that holds up, writing a one-sentence scene for a short video ad, planning clips around a launch, getting clothing onto a model without booking a shoot, and checking AI images and videos before they go live. Each one is written for sellers who handle their own listings and ads.",
+    "New to AI product content? Start with our guide to [AI product photography](page:blog-ai-product-photography-guide) to see how one photo becomes listing and social images, then read the [checklist for AI content](page:blog-ai-video-review-checklist) so you know what to check before anything goes live.",
+    "Selling clothing or jewelry? [Model photos without a photoshoot](page:blog-model-photos-without-a-photoshoot) shows how a flat lay becomes an on-model image. Planning a release? [Unboxing videos for product launches](page:blog-unboxing-videos-for-launches) lays out the clips, and [what makes a UGC-style video ad work](page:blog-ai-ugc-video-ads-guide) covers creator-style ads for TikTok, Reels and Shorts.",
+    "For step-by-step tasks, such as getting a white background photo ready for Amazon or testing two versions of an ad, see our [how-to guides](page:guides)."
+  ],
   "faq": []
 }

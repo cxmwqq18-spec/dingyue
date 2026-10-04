@@ -124,6 +124,7 @@ export default async function MyDreamShootsVideoWatchPage({
   const isSpanish = video.locale === "es";
   const relatedLabel = video.sourceLabel || (isFrench ? "Voir la page associée →" : isSpanish ? "Ver la página relacionada →" : "View the related myDreamshoots page →");
   const createLabel = isFrench ? "Commencer à créer →" : isSpanish ? "Empieza a crear →" : "Start creating →";
+  const WatchLink = video.siteId === "site_dreamshoot" ? "a" : Link;
 
   return (
     <main style={{ minHeight: "100vh", background: "#090b12", color: "#f8fafc", padding: "clamp(2rem, 6vw, 6rem) 1.25rem" }}>
@@ -152,12 +153,12 @@ export default async function MyDreamShootsVideoWatchPage({
           </video>
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center", marginTop: "1.5rem" }}>
-          <Link href={video.sourcePath} style={{ color: "#c4b5fd", fontWeight: 700, textDecoration: "none" }}>
+          <WatchLink href={video.sourcePath} style={{ color: "#c4b5fd", fontWeight: 700, textDecoration: "none" }}>
             {relatedLabel}
-          </Link>
-          <Link href="/app/create" style={{ color: "#f8fafc", fontWeight: 700, textDecoration: "none" }}>
+          </WatchLink>
+          <WatchLink href="/app/create" style={{ color: "#f8fafc", fontWeight: 700, textDecoration: "none" }}>
             {createLabel}
-          </Link>
+          </WatchLink>
         </div>
         {video.siteId === "site_dreamshoot" ? <ContextualLinks currentPath={video.watchPath} links={video.contextualLinks} /> : null}
       </div>

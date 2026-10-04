@@ -1,5 +1,6 @@
 import type { SectionInstance } from "@/lib/types";
 import { addHeadingIds, headingsFromHtml } from "@/components/storefront/aidreamcapes-public-section";
+import type { V2Company } from "./company";
 import { Crumbs } from "./parts";
 import type { V2Resolvers } from "./types";
 
@@ -38,7 +39,7 @@ export function isAidreamcapesV2PolicyPage(sections: SectionInstance[], pagePath
   return pagePath !== "/contact-us" && sections.some((section) => section.type === "policy_content");
 }
 
-export function AidreamcapesV2PolicyPage({ sections, pagePath, supportEmail, r }: { sections: SectionInstance[]; pagePath: string; supportEmail?: string; r: V2Resolvers }) {
+export function AidreamcapesV2PolicyPage({ sections, pagePath, supportEmail, r, company }: { sections: SectionInstance[]; pagePath: string; supportEmail?: string; r: V2Resolvers; company?: V2Company }) {
   const policy = sections.find((section) => section.type === "policy_content");
   const intro = sections.find((section) => section.type === "rich_text");
   // The page heading is the more descriptive of the intro and policy titles, which keeps
@@ -52,6 +53,9 @@ export function AidreamcapesV2PolicyPage({ sections, pagePath, supportEmail, r }
   const headings = headingsFromHtml(body);
   const lastUpdated = text(policy, "lastUpdated");
   const contactEmail = text(policy, "contactEmail") || supportEmail || "";
+  const rawSummary = policy?.settings?.summary;
+  const summary: string[] = [];
+  if (Array.isArray(rawSummary)) for (const item of rawSummary) if (typeof item === "string" && item.trim()) summary.push(item.trim());
   return (
     <>
       <Crumbs items={[{ label: "Home", href: "/" }, { label: title, href: pagePath }]} r={r} />
@@ -62,10 +66,22 @@ export function AidreamcapesV2PolicyPage({ sections, pagePath, supportEmail, r }
           {lead ? <p className="lead">{lead}</p> : null}
           <div className="legal-meta">
             {lastUpdated ? <span>Last updated: {lastUpdated}</span> : null}
+            {company ? <span>Operated by {[company.name, company.address].filter(Boolean).join(", ")}</span> : null}
             {contactEmail ? <span>Questions: <a href={`mailto:${contactEmail}`}>{contactEmail}</a></span> : null}
           </div>
         </div>
       </section>
+      {summary.length ? (
+        <section className="legal-glance">
+          <div className="wrap">
+            <div className="glance">
+              <h2>At a glance</h2>
+              <p>A plain-language summary. The full policy below is the version that applies.</p>
+              <ul className="check">{summary.map((item) => <li key={item}>{item}</li>)}</ul>
+            </div>
+          </div>
+        </section>
+      ) : null}
       <section className="sec legal-sec">
         <div className={headings.length ? "wrap legal-grid" : "wrap"}>
           {headings.length ? (

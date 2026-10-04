@@ -1,5 +1,5 @@
 {
-  "note": "Field-level copy updates for Aidreamcapes.com utility pages (login, album, cart, account, search, 404). Each change names the value it replaces; a field whose current value differs is left as it is and reported. Subscription product summaries and features follow the v2 pricing plans. The site's own description (used in the Organization structured data) is replaced the same way.",
+  "note": "Field-level copy updates for Aidreamcapes.com utility pages (login, album, cart, account, search, 404). Each change names the value it replaces; a field whose current value differs is left as it is and reported. Subscription product summaries and features follow the v2 pricing plans. The site's own description (used in the Organization structured data) is replaced the same way. Policy pages gain a plain-language summary, and the few old photo-shoot phrases in the refund wording are aligned with the product; the company's tax ID goes into the footer settings.",
   "shared": {
     "trust": [
       [
@@ -92,6 +92,18 @@
           "Aidreamcapes is a private AI photo studio for fan-scene albums, game-day group portraits, premiere-inspired sets, Christmas group albums, Thanksgiving keepsakes, Halloween party portraits, and customer-only gallery delivery."
         ],
         "Aidreamcapes is an online tool that turns a product photo or a product page link into short video ads and store-ready product images for online stores."
+      ]
+    ]
+  },
+  "settings": {
+    "footer": [
+      [
+        "taxId",
+        [
+          "",
+          null
+        ],
+        "41-5317529"
       ]
     ]
   },
@@ -339,6 +351,206 @@
           "remove",
           "conversion_1",
           "conversion_panel"
+        ]
+      ]
+    },
+    {
+      "slug": "/privacy",
+      "changes": [
+        [
+          "field",
+          "policy_1",
+          "policy_content",
+          "summary",
+          null,
+          [
+            "Your photos, prompts and results are used only to provide the service you request. They are never used to train models.",
+            "Input photos are deleted automatically 30 days after generation. Results, billing and security records may be kept where needed for account access, legal compliance, fraud prevention, refunds and support.",
+            "Uploads and account data are protected with AES-256 encryption at rest and TLS encryption in transit.",
+            "You can ask for access, correction, export or deletion of your data by contacting our support team with your account email."
+          ]
+        ]
+      ]
+    },
+    {
+      "slug": "/terms",
+      "changes": [
+        [
+          "field",
+          "policy_1",
+          "policy_content",
+          "summary",
+          null,
+          [
+            "Upload only photos and materials you own or have permission to use.",
+            "Credits are shown before each job, reserved when it starts, used once the result is delivered, and released or reviewed if the job fails.",
+            "AI results can vary. Check each one before you use it in advertising, profiles, documents or social media.",
+            "Your inputs are never used to train models, and input photos are deleted 30 days after generation.",
+            "Refunds and credit adjustments follow the Refund Policy."
+          ]
+        ],
+        [
+          "replace",
+          "policy_1",
+          "policy_content",
+          "body",
+          "including a results-based refund review when a result does not look like you,",
+          "including a results-based refund review when a result does not match what you asked for,"
+        ],
+        [
+          "field",
+          "policy_1",
+          "policy_content",
+          "lastUpdated",
+          "August 5, 2026",
+          "October 3, 2026"
+        ]
+      ]
+    },
+    {
+      "slug": "/refunds",
+      "changes": [
+        [
+          "field",
+          "policy_1",
+          "policy_content",
+          "summary",
+          null,
+          [
+            "You can ask for a refund of purchased credits if none of the credits from that purchase have been used. Send the request within 30 days of the purchase.",
+            "Credits spent on successful generations are generally not refundable, unless we confirm a problem on our side or approve a results-based refund review.",
+            "If a technical failure on our side stops a job from finishing, support can release the reserved credits, rerun the job or approve a refund after review.",
+            "Canceling a subscription does not automatically refund credits already used. Refunds appear in your credit history."
+          ]
+        ],
+        [
+          "replace",
+          "policy_1",
+          "policy_content",
+          "body",
+          "If the result does not look like you, contact support",
+          "If a result does not match what you asked for, contact support"
+        ],
+        [
+          "replace",
+          "policy_1",
+          "policy_content",
+          "body",
+          "If the shoot does not look like you, request a refund review.",
+          "If a result does not match what you asked for, request a refund review."
+        ],
+        [
+          "field",
+          "policy_1",
+          "policy_content",
+          "lastUpdated",
+          "August 5, 2026",
+          "October 3, 2026"
+        ]
+      ]
+    },
+    {
+      "slug": "/cookies",
+      "changes": [
+        [
+          "field",
+          "policy_1",
+          "policy_content",
+          "summary",
+          null,
+          [
+            "Essential cookies keep you signed in, protect your session and keep checkout and private albums working. The service can't run without them.",
+            "Preference storage remembers practical settings such as menu state and recently opened views.",
+            "Limited technical signals help us find slow pages and failed requests. Analytics, if enabled, show aggregated usage and should not be used to sell your uploaded photos or generated images.",
+            "You can block or delete cookies in your browser settings. Blocking essential cookies may stop sign-in, checkout and private albums from working."
+          ]
+        ]
+      ]
+    },
+    {
+      "slug": "/content",
+      "changes": [
+        [
+          "field",
+          "policy_1",
+          "policy_content",
+          "summary",
+          null,
+          [
+            "Upload only photos, logos and creative direction you own or have permission to use.",
+            "Don't use Aidreamcapes for content involving minors, people who haven't agreed, public figures, celebrities, trademarks or protected brand assets without permission, or for impersonation, harassment, deception or anything unlawful.",
+            "We may review, reject, remove or limit requests that look unsafe, unauthorized, misleading or infringing.",
+            "AI results can contain mistakes. Check them before you post, sell or print them, and follow the rules of the platform you publish on."
+          ]
+        ]
+      ]
+    },
+    {
+      "slug": "/digital-delivery",
+      "changes": [
+        [
+          "field",
+          "policy_1",
+          "policy_content",
+          "summary",
+          null,
+          [
+            "Aidreamcapes is digital only. We don't ship physical products, printed photos or merchandise.",
+            "Credits are added after payment is confirmed. Finished videos and photos appear in your signed-in workspace or private gallery, where you download them.",
+            "Processing time varies with your photo, the settings you choose, provider availability and system load.",
+            "There are no shipping, customs or handling charges. If a result doesn't arrive, contact support."
+          ]
+        ]
+      ]
+    },
+    {
+      "slug": "/children-privacy",
+      "changes": [
+        [
+          "field",
+          "policy_1",
+          "policy_content",
+          "summary",
+          null,
+          [
+            "Aidreamcapes is not directed to children under 13 and is not designed for child accounts.",
+            "Don't upload photos of minors unless you are the parent or legal guardian, or otherwise have the legal right and consent to use them.",
+            "If we learn that a child's personal information was provided without the required consent, we will review it and delete or restrict it.",
+            "A parent or guardian can contact us to ask about access, deletion or restriction of child-related information."
+          ]
+        ]
+      ]
+    },
+    {
+      "slug": "/state-privacy",
+      "changes": [
+        [
+          "field",
+          "policy_1",
+          "policy_content",
+          "summary",
+          null,
+          [
+            "California and other U.S. residents may have the right to request access, deletion and correction of personal information, a portable copy, and information about certain disclosures.",
+            "Where it applies, you may also ask to opt out of the sale or sharing of personal information. Aidreamcapes does not sell personal source photos or generated private galleries as stock content.",
+            "To make a request, email our support team with your account email, the request type and any relevant order or gallery details."
+          ]
+        ],
+        [
+          "replace",
+          "policy_1",
+          "policy_content",
+          "body",
+          "Company: Aidreamcapes.com; Address: 8 THE GREEN STE B, DOVER, DE, 19901, US; Contact Us: support@aidreamcapes.com.",
+          "Company: BLYDEYUS INC (Aidreamcapes.com); Address: 30 N GOULD ST STE R, SHERIDAN, WY 82801, US; Contact Us: support@aidreamcapes.com."
+        ],
+        [
+          "field",
+          "policy_1",
+          "policy_content",
+          "lastUpdated",
+          "July 14, 2026",
+          "October 3, 2026"
         ]
       ]
     }

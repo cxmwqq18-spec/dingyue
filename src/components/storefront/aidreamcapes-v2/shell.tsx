@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import type { AidreamcapesV2Navigation, ThemeNavLink } from "@/lib/types";
 import { AidreamcapesV2MenuBehavior } from "./behavior";
+import type { V2Company } from "./company";
+import { CompanyDetails } from "./parts";
 import { AIDREAMCAPES_V2_CSS } from "./styles";
 import type { V2Resolvers } from "./types";
 
@@ -94,7 +96,7 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
   );
 }
 
-export function AidreamcapesV2Footer({ navigation, r }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers }) {
+export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; company?: V2Company }) {
   return (
     <footer className="site">
       <div className="wrap">
@@ -105,6 +107,7 @@ export function AidreamcapesV2Footer({ navigation, r }: { navigation: Aidreamcap
               Aidreamcapes
             </a>
             <p style={{ marginTop: 12, maxWidth: 280 }}>{navigation.footer.tagline}</p>
+            {company ? <CompanyDetails className="company-foot" company={company} /> : null}
           </div>
           {navigation.footer.groups.map((group) => (
             <div key={group.label}>
@@ -137,7 +140,7 @@ export function AidreamcapesV2Footer({ navigation, r }: { navigation: Aidreamcap
 // `legacyPublicPage` keeps the existing Aidreamcapes page styles (scoped to
 // main[data-aidreamcapes-public-page]) for pages that still render their own sections,
 // such as login, search, cart and the album page.
-export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-content", legacyPublicPage = false }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; children: ReactNode; mainId?: string; legacyPublicPage?: boolean }) {
+export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-content", legacyPublicPage = false, company }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; children: ReactNode; mainId?: string; legacyPublicPage?: boolean; company?: V2Company }) {
   return (
     <div className="adc2">
       <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_CSS }} />
@@ -151,7 +154,7 @@ export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-co
       >
         {children}
       </main>
-      <AidreamcapesV2Footer navigation={navigation} r={r} />
+      <AidreamcapesV2Footer company={company} navigation={navigation} r={r} />
       <AidreamcapesV2MenuBehavior />
     </div>
   );

@@ -164,7 +164,9 @@ function buildModel(source) {
   }
   cards.sort((a, b) => CARD_ORDER.indexOf(a.key) - CARD_ORDER.indexOf(b.key));
   const cardByKey = Object.fromEntries(cards.map((card) => [card.key, card]));
-  return { pages, byId, content, images, media, ind, plat, occ, cards, cardByKey };
+  // Which pictures are already on the page being built, and how often each has been used on the
+  // site so far. Cards use these to pick a picture that is not repeated (see cardRef).
+  return { pages, byId, content, images, media, ind, plat, occ, cards, cardByKey, pageUse: new Set(), globalUse: new Map(), cardUse: new Map() };
 }
 
 function imageRef(model, key, alt) {
@@ -248,7 +250,7 @@ function heroMediaFor(model, pageId) {
   if (hero.kind === "video") return { kind: "video", video: clipRef(model, hero.clip) };
   if (hero.kind === "loop") {
     const loop = model.media.catalog.loop;
-    return { kind: "loop", video: { src: loop.src, width: loop.w, height: loop.h, poster: { ...mediaImage(model, "f:ugc-ad-video", "hero"), src: loop.poster, width: loop.w, height: loop.h, srcSet: undefined, sizes: undefined } }, inset: mediaImage(model, hero.inset, "inset") };
+    return { kind: "loop", video: { src: loop.src, width: loop.w, height: loop.h, poster: { src: loop.poster, alt: loop.alt, width: loop.w, height: loop.h } }, ...(hero.inset ? { inset: mediaImage(model, hero.inset, "inset") } : {}) };
   }
   assert.fail(`unknown hero kind for ${pageId}`);
 }
@@ -279,20 +281,93 @@ function pageCardImage(model, pageId) {
   return mediaImage(model, ref, "card");
 }
 
-function cardRef(model, key) {
+// ---------------------------------------------------------------------------
+// Picture variety. A template card has one curated picture and, where its gallery or the media
+// plan offers them, other examples of the same template. The curated picture is used on the main
+// lists (templates, home, hubs); everywhere else a card shows the example used least so far, and
+// never one that is already on the page. A card with no unused picture is left out of that list.
+const imageBase = (src) => String(src).replace(/\/_responsive\//, "/").replace(/--\d+(?=\.\w+$)/, "").replace(/\.\w+$/, "");
+
+function cardChoices(model, key) {
+  const primary = model.media.plan.cards[key];
+  if (!primary) return [];
+  const planned = model.media.plan.cardAlts?.[key] ?? [];
+  const items = primary.startsWith("g:") ? model.media.catalog.galleries[primary.slice(2).split("/")[0]]?.items ?? {} : {};
+  const tool = primary.startsWith("g:") ? primary.slice(2).split("/")[0] : "";
+  const fromGallery = Object.entries(items).filter(([file, meta]) => /^(hero-output|example-\d+)$/.test(file) && meta.w >= meta.h).map(([file]) => `g:${tool}/${file}`);
+  return [...new Set([primary, ...planned, ...fromGallery])];
+}
+
+function cardRef(model, key, role = "alt") {
   const card = model.cardByKey[key];
   assert.ok(card, `unknown card ${key}`);
-  const cardImage = model.media.plan.cards[key];
+  const choices = cardChoices(model, key);
+  let ref = choices[0];
+  if (role === "alt" && choices.length > 1) {
+    const others = choices.slice(1);
+    const free = others.filter((candidate) => !model.pageUse.has(candidate));
+    const pool = free.length ? free : others;
+    ref = [...pool].sort((a, b) => (model.globalUse.get(a) ?? 0) - (model.globalUse.get(b) ?? 0) || choices.indexOf(a) - choices.indexOf(b))[0];
+  }
+  if (ref && model.pageUse.has(ref)) return null;
+  if (ref) { model.pageUse.add(ref); model.globalUse.set(ref, (model.globalUse.get(ref) ?? 0) + 1); }
+  model.cardUse.set(key, (model.cardUse.get(key) ?? 0) + 1);
   return {
     key, name: card.name, line: LINES[key], kind: card.kind, href: model.byId[card.pageId].url,
-    image: cardImage ? mediaImage(model, cardImage, "card") : imageRef(model, card.img, `${card.name} example`),
+    image: ref ? mediaImage(model, ref, "card") : imageRef(model, card.img, `${card.name} example`),
     tags: [...card.ind.map((slug) => model.ind[slug]), ...card.plat.map((slug) => model.plat[slug])],
     industries: card.ind, platforms: card.plat
   };
 }
-function toolRef(model, id) {
+
+// How much its freshest available picture has been used so far; cards whose pictures are all
+// worn out come last, so lists lean on cards that can still show something new.
+function pictureUse(model, key, role) {
+  const choices = cardChoices(model, key);
+  const pool = role === "alt" && choices.length > 1 ? choices.slice(1) : choices;
+  const free = pool.filter((candidate) => !model.pageUse.has(candidate));
+  return free.length ? Math.min(...free.map((candidate) => model.globalUse.get(candidate) ?? 0)) : Infinity;
+}
+
+// Up to `count` of the given cards, those with the freshest pictures first, listed in the usual order.
+function pickCards(model, keys, count, role = "alt") {
+  const ranked = [...keys].sort((a, b) => pictureUse(model, a, role) - pictureUse(model, b, role) || (model.cardUse.get(a) ?? 0) - (model.cardUse.get(b) ?? 0) || CARD_ORDER.indexOf(a) - CARD_ORDER.indexOf(b));
+  const chosen = [];
+  for (const key of ranked) {
+    if (chosen.length >= count) break;
+    const card = cardRef(model, key, role);
+    if (card) chosen.push(card);
+  }
+  return chosen.sort((a, b) => CARD_ORDER.indexOf(a.key) - CARD_ORDER.indexOf(b.key));
+}
+
+// The pictures a page's own plan puts on it (main picture, gallery, before and after pairs), so cards never repeat them.
+function plannedRefs(model, pageId) {
+  const plan = model.media.plan.pages[pageId] ?? {};
+  const hero = plan.hero ?? {};
+  const refs = [];
+  if (hero.kind === "pair") refs.push(hero.before, hero.after);
+  else if (hero.kind === "image") refs.push(hero.image);
+  else if (hero.kind === "video") refs.push(`f:${hero.clip}`);
+  else if (hero.kind === "loop") refs.push(hero.inset, ...(hero.clips ?? ["ugc-ad-video"]).map((clip) => `f:${clip}`));
+  refs.push(...(plan.gallery ?? []), ...(plan.pairs ?? []).flatMap((pair) => [pair.before, pair.after]));
+  const flows = pageId === "home" ? model.content.home?.example_flows : pageId === "examples" ? model.content.examples?.cases : [];
+  for (const item of flows ?? []) {
+    const flow = EXAMPLE_FLOWS[item.id];
+    if (flow) refs.push(...flow[1].map(([, file]) => (flow[0] ? `g:${flow[0]}/${file}` : file)));
+  }
+  return refs.filter(Boolean);
+}
+
+// A tool link. Tools shown in lists on many pages leave the picture out (a small icon shows instead),
+// so the same few thumbnails are not repeated across the site.
+function toolPicture(model, id) {
+  const ref = model.media.plan.toolImages?.[id];
+  return ref ? mediaImage(model, ref, "inset") : imageRef(model, model.byId[id].img, "");
+}
+function toolRef(model, id, withImage = true) {
   const page = model.byId[id];
-  return { id, label: page.label, description: TOOL_DESC[id] ?? "", href: page.url, image: imageRef(model, page.img, "") };
+  return { id, group: page.group, label: page.label, description: TOOL_DESC[id] ?? "", href: page.url, ...(withImage ? { image: { ...toolPicture(model, id), alt: "" } } : {}) };
 }
 function appHref(params, video) {
   const query = new URLSearchParams(Object.entries(params).filter(([, value]) => value));
@@ -436,6 +511,42 @@ function specLinks(model, ids) {
   return ids.map((id) => ({ label: model.byId[id].label, href: model.byId[id].url }));
 }
 
+// Start-to-finish examples. Each follows one product from its photo to results made with the
+// photo tools: a gallery of the tools' own pictures ("g:" files) or the newly generated pictures
+// ("n:" references, a plain product photo first and then scenes made from it).
+const EXAMPLE_FLOWS = {
+  tote: ["lifestyle-scene", [["Product photo", "source-input"], ["Sunny cafe", "example-01"], ["City bike", "example-03"]]],
+  necklace: ["jewelry-positioning", [["Product photo", "source-input"], ["Worn on a dark top", "example-01"], ["Pendant detail", "example-05"]]],
+  jacket: ["sale-campaign-key-visual", [["Product photo", "source-input"], ["Worn outdoors", "example-02"], ["Snowy city", "example-05"]]],
+  lipstick: [null, [["Product photo", "n:lipstick-pack"], ["On a vanity", "n:lipstick-vanity"], ["Shade swatch", "n:lipstick-swatch"]]],
+  hoodie: [null, [["Product photo", "n:hoodie-pack"], ["Worn outdoors", "n:hoodie-street"], ["Flat lay", "n:hoodie-flatlay"]]],
+  handbag: [null, [["Product photo", "n:handbag-pack"], ["Cafe table", "n:handbag-cafe"], ["Carried outdoors", "n:handbag-carry"]]],
+  boots: [null, [["Product photo", "n:boots-pack"], ["On cobblestones", "n:boots-street"], ["By the door", "n:boots-doorway"]]],
+  sunglasses: [null, [["Product photo", "n:sunglasses-pack"], ["Cafe table", "n:sunglasses-cafe"], ["Worn outdoors", "n:sunglasses-worn"]]],
+  coffee: [null, [["Product photo", "n:coffee-pack"], ["Kitchen counter", "n:coffee-counter"], ["Breakfast table", "n:coffee-breakfast"]]],
+  candle: [null, [["Product photo", "n:candle-pack"], ["Living room", "n:candle-table"], ["Bath edge", "n:candle-bath"]]],
+  phonecase: [null, [["Product photo", "n:phonecase-pack"], ["On a desk", "n:phonecase-desk"], ["In a hand", "n:phonecase-hand"]]],
+  yogamat: [null, [["Product photo", "n:yogamat-pack"], ["Bright room", "n:yogamat-room"], ["In use", "n:yogamat-pose"]]],
+  hotsauce: [null, [["Product photo", "n:hotsauce-pack"], ["Over tacos", "n:hotsauce-tacos"], ["With fresh chilies", "n:hotsauce-peppers"]]]
+};
+
+function exampleFlow(model, item) {
+  if (item.id === "watch") {
+    return { t: item.t, d: item.d, steps: [
+      { label: "Product photo", image: imageRef(model, "watch", "White smartwatch product photo used as the starting image") },
+      { label: "Video ad · 9:16", image: imageRef(model, "watchugc", "Creator holding the same white smartwatch toward the camera") },
+      ...[0, 1, 2].map((i) => ({ label: `Version ${"ABC"[i]}`, tall: true, image: imageRef(model, `var${i}`, `Smartwatch opening version ${"ABC"[i]}`) }))] };
+  }
+  if (item.id === "bottle") {
+    return { t: item.t, d: item.d, steps: [
+      { label: "Lifestyle photo", image: imageRef(model, "bottle", "Green water bottle in a living room scene") },
+      { label: "Feed ad", image: imageRef(model, "feedbottle", "Same water bottle in a sunlit feed ad") }] };
+  }
+  const flow = EXAMPLE_FLOWS[item.id];
+  assert.ok(flow, `unknown example flow ${item.id}`);
+  return { t: item.t, d: item.d, steps: flow[1].map(([label, file]) => ({ label, image: mediaImage(model, flow[0] ? `g:${flow[0]}/${file}` : file, "gallery") })) };
+}
+
 function layoutFor(page) {
   return { home: "home", hub: "video-hub", "hub-tool": "tool", tool: "tool", template: "template", industry: "collection", platform: "collection", occasion: "collection",
     index: "index", article: "article", pricing: "pricing", faq: "faq", contact: "contact", about: "about", examples: "examples", trust: "trust", "ai-info": "ai-info" }[page.type];
@@ -451,28 +562,32 @@ function payloadFor(model, page) {
   const t = page.type;
   if (t === "home") {
     return { ...base,
-      hero: { image: imageRef(model, "watch", "White smartwatch product photo used as the starting image"), output: imageRef(model, "watchugc", "Creator holding the same white smartwatch toward the camera"),
-        versions: [0, 1, 2].map((i) => imageRef(model, `var${i}`, `Smartwatch opening version ${"ABC"[i]}`)), videoHref: appHref({ tool: "video-ads", template: "creator", size: "9:16", length: "15", prompt: TEMPLATE_PROMPTS.creator }, true),
+      // `output` and `versions` belong to the picture layout used when the hero has no video; with the video reel they are not shown, so they stay out of the data.
+      hero: { image: mediaImage(model, "g:feed-ad-still/source-input", "inset"),
+        ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: imageRef(model, "watchugc", "Creator holding the same white smartwatch toward the camera"), versions: [0, 1, 2].map((i) => imageRef(model, `var${i}`, `Smartwatch opening version ${"ABC"[i]}`)) }),
+        videoHref: appHref({ tool: "video-ads", template: "creator", size: "9:16", length: "15", prompt: TEMPLATE_PROMPTS.creator }, true),
         photoHref: appHref({ tool_id: "image_generator", tool: "white-background", template: "white", prompt: TEMPLATE_PROMPTS.white }, false) },
       make: { title: c.make_title, lead: c.make_lead, video: VIDEO_TOOLS.map((id) => toolRef(model, id)), photo: PHOTO_TOOLS.map((id) => toolRef(model, id)) },
-      templates: { title: c.templates_title, lead: c.templates_lead, cards: HOME_FEATURED.map((key) => cardRef(model, key)), total: model.cards.length },
+      templates: { title: c.templates_title, lead: c.templates_lead, cards: HOME_FEATURED.map((key) => cardRef(model, key, key === "creator" ? "alt" : "primary")).filter(Boolean), total: model.cards.length },
       platforms: { title: c.platforms_title, items: Object.entries(model.plat).map(([slug, label]) => ({ label, href: model.byId[`plat-${slug}`].url, spec: (model.content[`plat-${slug}`].specs || [["", ""]])[0][1] })) },
       steps: c.steps, compare: c.compare, plans: PLANS,
-      examples: { image: imageRef(model, "watch", "Smartwatch product photo"), output: imageRef(model, "watchugc", "Creator holding the smartwatch in a vertical video ad"),
-        versions: [0, 1, 2].map((i) => imageRef(model, `var${i}`, `Smartwatch opening version ${"ABC"[i]}`)),
-        bottle: imageRef(model, "bottle", "Green water bottle in a living room scene"), bottleAd: imageRef(model, "feedbottle", "Same water bottle in a sunlit feed ad") }
+      examples: { flows: (c.example_flows || []).map((item) => exampleFlow(model, item)) }
     };
   }
   if (t === "hub") {
     return { ...base, intro: c.intro, benefits: c.benefits, steps: c.steps, tools: VIDEO_TOOLS.map((id) => toolRef(model, id)),
-      cards: CARD_ORDER.filter((key) => model.cardByKey[key].kind === "video").map((key) => cardRef(model, key)),
-      heroCards: ["creator", "unbox", "beauty"].map((key) => cardRef(model, key)), appHref: appHref({ tool: "video-ads", size: "9:16", length: "15" }, true),
+      heroCards: ["creator", "unbox", "beauty"].map((key) => cardRef(model, key, "primary")).filter(Boolean),
+      cards: CARD_ORDER.filter((key) => model.cardByKey[key].kind === "video" && !["creator", "unbox", "beauty"].includes(key)).map((key) => cardRef(model, key, "primary")).filter(Boolean),
+      appHref: appHref({ tool: "video-ads", size: "9:16", length: "15" }, true),
       reading: readingFor(model, page) };
   }
   if (t === "tool" || t === "hub-tool") {
-    const rel = (TOOL_REL[page.id] || []).map((key) => cardRef(model, key));
+    const hub = page.id === "photo-hub";
+    const hasHero = Boolean(model.media.plan.pages[page.id]?.hero);
+    // The photo hub lists every photo template with its curated picture; other tool pages show a few.
+    const rel = hub ? (TOOL_REL[page.id] || []).map((key) => cardRef(model, key, "primary")).filter(Boolean) : pickCards(model, TOOL_REL[page.id] || [], 4);
     const video = page.group === "video";
-    const siblings = (video ? VIDEO_TOOLS : PHOTO_TOOLS).filter((id) => id !== page.id).map((id) => toolRef(model, id));
+    const siblings = (video ? VIDEO_TOOLS : PHOTO_TOOLS).filter((id) => id !== page.id).map((id) => toolRef(model, id, false));
     const industryIds = Object.entries(IND_TOOLS).filter(([, tools]) => tools.includes(page.id)).map(([slug]) => `ind-${slug}`).slice(0, 5);
     const platformIds = Object.entries(PLAT_TOOLS).filter(([, tools]) => tools.includes(page.id)).map(([slug]) => `plat-${slug}`).slice(0, 5);
     const names = (ids) => ids.map((id) => model.byId[id].label).join(", ");
@@ -486,16 +601,16 @@ function payloadFor(model, page) {
       ],
       hero: page.id === "white-background" ? { single: imageRef(model, "p_white", "Running shoe on a pure white background") }
         : page.id === "spokesperson-videos" ? { single: imageRef(model, "presenter", "AI-generated presenter holding a skincare bottle") }
-        : { cards: rel.slice(0, 3) },
-      templates: rel, siblings: page.id === "photo-hub" ? [] : siblings, photoTools: page.id === "photo-hub" ? PHOTO_TOOLS.slice(1).map((id) => toolRef(model, id)) : [],
+        : hasHero ? {} : { cards: rel.slice(0, 3) },
+      templates: hasHero ? rel : rel.slice(3), siblings: hub ? [] : siblings, photoTools: hub ? PHOTO_TOOLS.slice(1).map((id) => toolRef(model, id)) : [],
       reading: readingFor(model, page) };
   }
   if (t === "template") {
     const key = page.id.slice(4);
     const tool = model.byId[page.made_with];
     const sameKind = model.cards.filter((card) => card.key !== key && card.kind === page.group);
-    let more = sameKind.filter((card) => card.ind.some((x) => page.industries.includes(x)) || card.plat.some((x) => page.platforms.includes(x))).map((card) => card.key).slice(0, 4);
-    more = more.concat(sameKind.map((card) => card.key).filter((k) => !more.includes(k))).slice(0, 4);
+    let more = sameKind.filter((card) => card.ind.some((x) => page.industries.includes(x)) || card.plat.some((x) => page.platforms.includes(x))).map((card) => card.key);
+    more = more.concat(sameKind.map((card) => card.key).filter((k) => !more.includes(k)));
     const platformIds = page.platforms.map((slug) => `plat-${slug}`);
     const industryIds = page.industries.map((slug) => `ind-${slug}`);
     const occasionIds = (page.occasions ?? []).map((slug) => `occ-${slug}`);
@@ -510,23 +625,26 @@ function payloadFor(model, page) {
         ["Made with", tool.label, specLinks(model, [tool.id])],
         ...(occasionIds.length ? [["Good for", names(occasionIds), specLinks(model, occasionIds)]] : [])
       ],
-      madeWith: { label: tool.label, href: tool.url }, more: more.map((k) => cardRef(model, k)), reading: readingFor(model, page) };
+      madeWith: { label: tool.label, href: tool.url }, more: pickCards(model, more, 3), reading: readingFor(model, page) };
   }
   if (t === "industry" || t === "platform" || t === "occasion") {
     const slug = page.id.split("-").slice(1).join("-");
     const field = { industry: "ind", platform: "plat", occasion: "occ" }[t];
     const keys = model.cards.filter((card) => card[field].includes(slug)).map((card) => card.key);
     const tools = (t === "industry" ? IND_TOOLS[slug] : t === "platform" ? PLAT_TOOLS[slug] : ["video-ads", "social-ad-photos", "unboxing-videos"]) || [];
+    const hasHero = Boolean(model.media.plan.pages[page.id]?.hero);
+    const collage = hasHero ? [] : pickCards(model, keys, 3);
+    const listed = pickCards(model, keys.filter((key) => !collage.some((card) => card.key === key)), 6);
     const paramKey = { industry: "industry", platform: "platform", occasion: "occasion" }[t];
     return { ...base, kind: t, intro: c.intro, ideas: c.ideas || [], specs: c.specs || [], tips: c.tips || [], plan: c.plan || [],
-      cards: keys.map((key) => cardRef(model, key)), heroCards: keys.slice(0, 3).map((key) => cardRef(model, key)), tools: tools.map((id) => toolRef(model, id)),
+      cards: listed, heroCards: collage, tools: tools.map((id) => toolRef(model, id, false)),
       appHref: appHref({ [paramKey]: slug, ...(t === "platform" && ["tiktok", "youtube-shorts", "instagram"].includes(slug) ? { size: "9:16", length: "15" } : {}) }, t === "platform" && ["tiktok", "youtube-shorts"].includes(slug)),
       reading: readingFor(model, page) };
   }
   if (t === "index") {
-    const out = { ...base, intro: c.intro };
+    const out = { ...base, intro: Array.isArray(c.intro) ? c.intro.map((para) => inlineLinks(model, para, page.id)) : c.intro };
     if (page.id === "templates") {
-      out.cards = model.cards.map((card) => cardRef(model, card.key));
+      out.cards = model.cards.map((card) => cardRef(model, card.key, "primary")).filter(Boolean);
       out.filters = { types: [["video", "Video"], ["photo", "Photo"]], industries: Object.entries(model.ind), platforms: Object.entries(model.plat) };
     } else if (page.id === "industries" || page.id === "platforms") {
       const prefix = page.id === "industries" ? "ind-" : "plat-";
@@ -548,8 +666,7 @@ function payloadFor(model, page) {
   if (t === "trust") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
   if (t === "ai-info") return { ...base, summary: c.summary, facts: c.facts, notOffered: c.not_offered, describe: c.describe, llmsText: buildLlmsText(model), next: nextLinks(model, t) };
   if (t === "examples") {
-    return { ...base, intro: c.intro || [], cases: c.cases || [], cards: CARD_ORDER.map((key) => cardRef(model, key)),
-      flows: payloadFor(model, model.byId.home).examples };
+    return { ...base, intro: c.intro || [], flows: (c.cases || []).map((item) => exampleFlow(model, item)), cards: pickCards(model, CARD_ORDER, 12) };
   }
   throw new Error(`unsupported page type ${t}`);
 }
@@ -600,6 +717,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
   const model = buildModel(source);
   const pages = model.pages.map((page) => {
     const c = model.content[page.id];
+    model.pageUse = new Set(plannedRefs(model, page.id));
     const heroMedia = heroMediaFor(model, page.id);
     const gallery = galleryFor(model, page.id);
     const pairs = pairsFor(model, page.id);
@@ -642,7 +760,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
 
 function buildNavigation(model) {
   const link = (id, extra = {}) => ({ label: model.byId[id].label, href: model.byId[id].url, ...extra });
-  const tool = (id) => link(id, { description: TOOL_DESC[id], image: img(model.byId[id].img) });
+  const tool = (id) => link(id, { description: TOOL_DESC[id], image: toolPicture(model, id).src });
   const popular = (keys) => keys.map((key) => ({ label: model.cardByKey[key].name, href: model.byId[model.cardByKey[key].pageId].url, image: img(model.cardByKey[key].img) }));
   const group = (label, ids) => ({ label, items: ids.map((id) => link(id)) });
   const tplFirst = model.cards.filter((card) => card.pageId.startsWith("tpl-")).slice(0, 10).map((card) => card.pageId);
@@ -689,6 +807,41 @@ const BANNED = [
   [/\b\d+x\b(?! (lens|zoom))|\d+% (more|cheaper|higher|faster|lower)|#1\b|trusted by|thousands of|best-in-class/i, "unprovable claim"],
   [/\btheme\b|\bworkflow\b|\bSEO\b|landing page|proof moment/i, "internal wording"]
 ];
+
+// The pictures a page actually shows, in the order its layout draws them (mirrors the layouts in
+// src/components/storefront/aidreamcapes-v2/page.tsx). Used to make sure no picture appears twice on a page.
+export function renderedImages(layout, data) {
+  const out = [];
+  const add = (image) => { if (image?.src) out.push(image.src); };
+  const addMedia = (media) => {
+    if (!media) return false;
+    if (media.kind === "pair") { add(media.before); add(media.after); }
+    else if (media.kind === "image") add(media.image);
+    else if (media.kind === "video") add(media.video.poster);
+    else if (media.kind === "loop") { add(media.video.poster); add(media.inset); }
+    return true;
+  };
+  const addCards = (list) => (list ?? []).forEach((card) => add(card.image));
+  const addTools = (list) => (list ?? []).forEach((tool) => add(tool.image));
+  const addGallery = () => (data.gallery?.images ?? []).forEach(add);
+  const addPairs = () => (data.pairs ?? []).forEach((pair) => { add(pair.before); add(pair.after); });
+  const addFlows = (flows) => (flows ?? []).forEach((flow) => flow.steps.forEach((step) => add(step.image)));
+  if (layout === "home") {
+    add(data.hero.image);
+    if (!addMedia(data.heroMedia)) { add(data.hero.output); (data.hero.versions ?? []).forEach(add); }
+    addTools(data.make.video); addTools(data.make.photo); addCards(data.templates.cards); addFlows(data.examples.flows);
+  } else if (layout === "video-hub") { addCards(data.heroCards); addTools(data.tools); addCards(data.cards); }
+  else if (layout === "tool") {
+    if (!addMedia(data.heroMedia)) { if (data.hero?.single) add(data.hero.single); else addCards(data.hero?.cards); }
+    addGallery(); addPairs(); addTools(data.photoTools); addCards(data.templates); addTools(data.siblings);
+  } else if (layout === "template") { if (!addMedia(data.heroMedia)) add(data.image); addGallery(); addCards(data.more); }
+  else if (layout === "collection") { if (!addMedia(data.heroMedia)) addCards(data.heroCards); addGallery(); addCards(data.cards); addTools(data.tools); }
+  else if (layout === "index") { addCards(data.cards); (data.items ?? []).forEach((item) => add(item.image)); (data.articles ?? []).forEach((article) => add(article.image)); }
+  else if (layout === "article") add(data.image);
+  else if (layout === "examples") { addFlows(data.flows); addPairs(); addCards(data.cards); }
+  else add(data.image);
+  return out;
+}
 
 export function validateSiteV2(build = buildSiteV2()) {
   const errors = [];
@@ -739,6 +892,16 @@ export function validateSiteV2(build = buildSiteV2()) {
     const keyword = plain(page.contentJson.seo.primaryKeyword).split(" ").filter((word) => word.length > 2);
     const found = keyword.filter((word) => lead.includes(word.replace(/s$/, ""))).length;
     if (keyword.length && found / keyword.length < 0.75) errors.push(`${page.id}: opening paragraph does not name the topic "${page.contentJson.seo.primaryKeyword}"`);
+  }
+  // No picture appears twice on a page.
+  for (const page of build.pages) {
+    const { layout, data } = page.contentJson.sections.v2_main.settings;
+    const seenImages = new Set();
+    for (const src of renderedImages(layout, data)) {
+      const key = imageBase(src);
+      if (seenImages.has(key)) errors.push(`${page.id}: the picture ${key.split("/").slice(-2).join("/")} appears twice on the page`);
+      seenImages.add(key);
+    }
   }
   // Internal links: every guide and article is linked from at least five other pages, every
   // article text link points to a live page, and a card never ends in the middle of a word.
@@ -833,6 +996,15 @@ export function applyUtilityPagePatch(contentJson, changes) {
       else if (sameValue(current, to)) result.unchanged.push(`${id}.blocks[${index}].${key}`);
       else if (sameValue(current, from)) { block.settings[key] = to; result.applied.push(`${id}.blocks[${index}].${key}`); }
       else result.conflicts.push(`${id}.blocks[${index}].${key}`);
+    } else if (kind === "replace") {
+      // A change inside a longer text (such as a policy body): `from` and `to` are the exact words swapped.
+      const [, id, type, key, from, to] = change;
+      const section = sectionOf(id, type);
+      const current = section?.settings?.[key];
+      if (!section || typeof current !== "string") result.conflicts.push(`${id}.${key} (text missing)`);
+      else if (current.includes(to) && !current.includes(from)) result.unchanged.push(`${id}.${key}`);
+      else if (current.split(from).length === 2) { section.settings[key] = current.replace(from, () => to); result.applied.push(`${id}.${key}`); }
+      else result.conflicts.push(`${id}.${key}`);
     } else if (kind === "remove") {
       const [, id, type] = change;
       const section = next.sections[id];
@@ -860,6 +1032,27 @@ export function loadProductPatches() {
     assert.ok(plan, `unknown plan ${product.plan}`);
     return { id: product.id, from: product.from, to: { summary: plan.who, features: plan.features, badgeLabel: product.badgeLabel } };
   });
+}
+
+// The footer settings in ThemeSettings hold the company's tax ID, which is shown with the
+// company details. Same rule: only a value still equal to one of the listed old ones is replaced.
+export function loadThemeSettingsPatches() {
+  const source = readJson(path.join(DATA_DIR, "utility-pages.json"));
+  return (source.settings?.footer ?? []).map(([key, from, to]) => ({ key, from: Array.isArray(from) ? from : [from], to }));
+}
+
+export function applyThemeSettingsPatch(settingsJson, patches) {
+  const next = structuredClone(settingsJson ?? {});
+  const footer = next.globalSections?.footer;
+  const result = { next, applied: [], unchanged: [], conflicts: [] };
+  for (const { key, from, to } of patches) {
+    if (!footer?.settings) { result.conflicts.push(`footer.${key} (footer missing)`); continue; }
+    const current = footer.settings[key];
+    if (sameValue(current, to)) result.unchanged.push(`footer.${key}`);
+    else if (from.some((value) => sameValue(current, value))) { footer.settings[key] = to; result.applied.push(`footer.${key}`); }
+    else result.conflicts.push(`footer.${key}`);
+  }
+  return result;
 }
 
 // The site's own description (Site.branding.description) feeds the Organization structured

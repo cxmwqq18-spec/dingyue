@@ -7,12 +7,14 @@ export type V2HeroMedia =
   | { kind: "pair"; before: V2Image; after: V2Image }
   | { kind: "image"; image: V2Image }
   | { kind: "video"; video: V2Video }
-  | { kind: "loop"; video: V2Video; inset: V2Image };
+  | { kind: "loop"; video: V2Video; inset?: V2Image };
 export type V2Item = { t: string; d: string };
 export type V2Faq = { q: string; a: string };
 export type V2Crumb = { label: string; href: string };
 export type V2Card = { key: string; name: string; line: string; kind: "video" | "photo"; href: string; image: V2Image; tags: string[]; industries: string[]; platforms: string[] };
-export type V2Tool = { id: string; label: string; description: string; href: string; image: V2Image };
+export type V2Tool = { id: string; group?: string; label: string; description: string; href: string; image?: V2Image };
+export type V2FlowStep = { label: string; image: V2Image; tall?: boolean };
+export type V2Flow = { t: string; d: string; steps: V2FlowStep[] };
 export type V2Maker = { options: [string, string][]; cta: string; href: string; urlInput?: boolean };
 export type V2Plan = { name: string; price: string; credits: string; who: string; features: string[]; popular: boolean };
 export type V2Section = { h2: string; paras: string[] };

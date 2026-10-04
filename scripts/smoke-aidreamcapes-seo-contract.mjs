@@ -188,6 +188,18 @@ if (siteV2) {
   assert.match(await llms.text(), /^# Aidreamcapes/m, "llms.txt heading");
   assert(homepageDom('header.site nav#adc2-main-nav a[href="/pricing"]').length > 0, "v2 header navigation");
   assert(homepageDom('footer.site a[href="/privacy"]').length > 0, "v2 footer legal links");
+  // The company named in the Organization structured data is also visible on the page: in the
+  // footer of every page, and in the main content of the About and Contact pages.
+  const company = homepageOrganization ?? {};
+  const companyFacts = [["legal name", company.legalName], ["phone", company.telephone], ["street address", company.address?.streetAddress]].filter(([, value]) => value);
+  const footerText = homepageDom("footer.site").text();
+  for (const [label, value] of companyFacts) assert(footerText.includes(value), `footer shows the company ${label} from the structured data: ${value}`);
+  for (const path of ["/about-us", "/contact-us"]) {
+    const response = await get(path);
+    assert.equal(response.status(), 200, `${path} status`);
+    const mainText = load(await response.text())("main").text();
+    for (const [label, value] of companyFacts) assert(mainText.includes(value), `${path} shows the company ${label}: ${value}`);
+  }
 }
 const robotsResponse = await get("/robots.txt");
 assert.equal(robotsResponse.status(), 200, "robots.txt status");

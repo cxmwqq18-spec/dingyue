@@ -1,11 +1,11 @@
 {
   "id": "examples",
   "title": "AI Product Photo and Video Examples | Aidreamcapes",
-  "description": "Browse AI product photo and video examples: a smartwatch shot turned into a vertical video ad and a water bottle scene made into a feed ad. See how it works.",
+  "description": "Browse AI product photo and video examples: a smartwatch video ad, plus lipstick, hoodie, handbag and boots photos placed in new scenes. See how it works.",
   "h1": "AI Product Photo and Video Examples, Start to Finish",
   "eyebrow": "From photo to ad",
-  "lead": "These AI product photo and video examples follow two products from the first photo to the finished ad. See what each one started as, what we asked for, and what came back.",
-  "card": "Two products followed from the first photo to the finished ad.",
+  "lead": "These AI product photo and video examples follow each product from the first photo to the finished ad, from a smartwatch to lipstick, hoodies, handbags and boots. See what each one started as, what we asked for, and what came back.",
+  "card": "Fifteen products, from lipstick to a smartwatch, followed from the first photo to the finished ad.",
   "secondary_keywords": [
     "AI product video ad examples",
     "AI lifestyle photo examples",
@@ -15,12 +15,79 @@
   "intro": "Each example below starts with one product image and a short written description, and every result came from a separate job with its cost shown first. Notice how the product stays recognizable from the first image to the last, while the setting and framing change to suit where the ad will run.",
   "cases": [
     {
+      "id": "watch",
       "t": "Smartwatch: a product photo becomes a vertical video ad with three openings",
       "d": "We began with a studio photo of a white smartwatch on a soft green background. From that single image we made a 9:16 video ad in a casual, filmed-at-home style, with a woman holding the watch up to the camera in a bright living room. Then we made three more versions, each with a different first scene: the watch on a wrist beside a cozy sweater, the watch floating above a stone block, and a slow close-up of the crown and side button. Each opening was its own job, so they can be run side by side on TikTok or Reels to see which one holds attention."
     },
     {
+      "id": "lipstick",
+      "t": "Lipstick: one studio shot becomes a vanity scene and a shade swatch",
+      "d": "The starting photo was a single coral lipstick on a plain studio background. From it we made a scene on a marble vanity beside a mirror and a fresh flower, and a close-up next to a swatch of the same shade, so shoppers can judge the color before they buy."
+    },
+    {
+      "id": "hoodie",
+      "t": "Hoodie: a flat product photo becomes street style and a flat lay",
+      "d": "We started with a front view of a plain gray hoodie. From it we made an image of someone wearing it on an autumn street and a flat lay on a wooden bench with a beanie and a scarf, so the same item works on a product page and in social posts."
+    },
+    {
+      "id": "bottle",
       "t": "Water bottle: a lifestyle photo becomes a social feed ad image",
       "d": "The starting point was a lifestyle shot of a sage green water bottle on a marble table, with a woman relaxing on a sofa behind it. We asked for a feed ad version: the same bottle closer and larger in the frame, beaded with water, next to fresh limes and a folded towel in warm afternoon sun. The result is a square image sized for Facebook and Instagram feeds, with the headline and price left to add afterward in Ads Manager."
+    },
+    {
+      "id": "handbag",
+      "t": "Leather handbag: a studio shot placed in a cafe and on the street",
+      "d": "The starting photo showed a tan leather handbag with a gold clasp on a plain background. From it we made a cafe table scene with a latte and sunglasses, and an image of the bag carried on a sunny street, with the shape, color and clasp kept the same in each."
+    },
+    {
+      "id": "boots",
+      "t": "Chelsea boots: shown on cobblestones and by the front door",
+      "d": "We began with a studio photo of brown leather Chelsea boots. From it we made a walking shot on cobblestones in evening light and a quiet scene on a wooden floor beside a coat and an umbrella, ready for a seasonal campaign."
+    },
+    {
+      "id": "tote",
+      "t": "Linen tote bag: a product photo placed in everyday scenes",
+      "d": "From one photo of a linen tote bag we made a scene beside a coffee cup at a sunny cafe and another with the bag carried next to a city bike. The bag stays the same in each image while the setting changes to suit different shoppers."
+    },
+    {
+      "id": "sunglasses",
+      "t": "Sunglasses: a packshot becomes a cafe table scene and a worn look",
+      "d": "The starting photo was a pair of black wayfarer sunglasses on a plain background. From it we made a summer scene on a cafe table beside an iced drink and a profile image with the sunglasses worn on a seaside boardwalk."
+    },
+    {
+      "id": "coffee",
+      "t": "Coffee beans: a plain bag in a kitchen and at a breakfast table",
+      "d": "We started with a photo of a kraft coffee bag with a blank label and a scatter of beans. From it we made a kitchen counter scene with a pour-over brewer and a mug, and a breakfast table with a croissant, so the product looks at home in the moments people drink it."
+    },
+    {
+      "id": "necklace",
+      "t": "Silver necklace: shown worn, then up close",
+      "d": "We began with a photo of a simple silver necklace and a portrait. The Jewelry On Model template showed the necklace worn on a dark top, then a close view of the pendant at the neckline, so shoppers can judge the length and the size."
+    },
+    {
+      "id": "candle",
+      "t": "Scented candle: a studio shot becomes living room and spa scenes",
+      "d": "We began with a white ceramic candle jar and its lid on a plain background. From it we made a living room coffee table scene with books and a knit throw, and a spa-style scene on the edge of a bathtub beside a folded towel."
+    },
+    {
+      "id": "phonecase",
+      "t": "Phone case: a back view placed on a desk and in a hand",
+      "d": "We started with the back of a smartphone in a sage green silicone case. From it we made a tidy desk scene with earbuds, a notebook and a plant, and a hand-held image in a park, so the color and the camera cutout are easy to judge."
+    },
+    {
+      "id": "jacket",
+      "t": "Winter jacket: one photo, two seasonal scenes",
+      "d": "The starting photo was a plain winter jacket. From it we made an image of a person wearing the jacket outdoors and another in a snowy city setting, both ready for a seasonal campaign once you add your own headline."
+    },
+    {
+      "id": "yogamat",
+      "t": "Yoga mat: a rolled mat becomes a bright room and a stretch pose",
+      "d": "The starting photo was a teal yoga mat rolled up with its strap. From it we made an unrolled mat in a bright living room and an image of someone stretching on the mat, so shoppers can see the size and the texture in use."
+    },
+    {
+      "id": "hotsauce",
+      "t": "Hot sauce: from a plain bottle photo to a taco night ad",
+      "d": "The starting photo showed a glass bottle of red hot sauce with a blank cream label. From it we made a pouring shot over tacos and a rustic table scene with fresh chili peppers, with the bottle shape and color kept the same in both."
     }
   ],
   "faq": [

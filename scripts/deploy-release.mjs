@@ -88,7 +88,11 @@ function runRemote(config) {
     `if [ -f "$SERVICE_DROPIN" ]; then SERVICE_FILE="$SERVICE_DROPIN"; fi`,
     `SERVICE_NEXT=${releaseQ}/${service}.next`,
     `cp "$SERVICE_FILE" "$SERVICE_NEXT"`,
-    `sed -i -E "s#^WorkingDirectory=.*#WorkingDirectory=${config.root}/releases/${commit}#; s#^EnvironmentFile=.*#EnvironmentFile=${config.root}/releases/${commit}/.env.local#; s#^ExecStart=.*#ExecStart=${config.root}/releases/${commit}/node_modules/.bin/next start -p ${config.port}#" "$SERVICE_NEXT"`,
+    `sed -i -E "s#^WorkingDirectory=.*#WorkingDirectory=${config.root}/releases/${commit}#; s#^EnvironmentFile=.+#EnvironmentFile=${config.root}/releases/${commit}/.env.local#; s#^ExecStart=.+#ExecStart=${config.root}/releases/${commit}/node_modules/.bin/next start -p ${config.port}#" "$SERVICE_NEXT"`,
+    // A systemd drop-in needs the empty ExecStart= reset before its command.
+    // Replacing that reset would leave two commands and invalidate the unit.
+    `test "$(grep -Ec '^ExecStart=.+' "$SERVICE_NEXT")" = 1`,
+    `test "$(grep -Ec '^EnvironmentFile=.+' "$SERVICE_NEXT")" = 1`,
     `grep -Fx ${shellQuote(`WorkingDirectory=${release}`)} "$SERVICE_NEXT"`,
     `grep -Fx ${shellQuote(`EnvironmentFile=${release}/.env.local`)} "$SERVICE_NEXT"`,
     `OLD_RELEASE=$(readlink -f ${rootQ}/current 2>/dev/null || true)`,

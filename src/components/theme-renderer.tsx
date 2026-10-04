@@ -23,6 +23,7 @@ import { resolvePublishedSaveTheDateGroups, resolvePublishedSaveTheDateNavigatio
 import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-video";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation, aidreamcapesZipFooterItems } from "@/components/storefront/aidreamcapes-zip-navigation";
+import { aidreamcapesV2Company } from "@/components/storefront/aidreamcapes-v2/company";
 import { AidreamcapesV2Shell } from "@/components/storefront/aidreamcapes-v2/shell";
 import { AidreamcapesV2Page, isAidreamcapesV2Section } from "@/components/storefront/aidreamcapes-v2/page";
 import { AidreamcapesV2PolicyPage, isAidreamcapesV2PolicyPage } from "@/components/storefront/aidreamcapes-v2/policy";
@@ -327,13 +328,15 @@ export function ThemeRenderer({
       href: (value: string) => hrefFor(routedSite, value),
       asset: (value: string) => mediaAssetUrl(routedSite, value)
     };
+    // The company named in the site profile is shown in the footer and on the pages about it.
+    const v2Company = aidreamcapesV2Company(storefrontContext?.profile?.identity, settings.globalSections?.footer?.settings as Record<string, unknown> | undefined);
     return (
       <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
-        <AidreamcapesV2Shell legacyPublicPage={!v2Entry && !v2PolicyPage} mainId={mainContentId} navigation={aidreamcapesV2Navigation} r={v2Resolvers}>
+        <AidreamcapesV2Shell company={v2Company} legacyPublicPage={!v2Entry && !v2PolicyPage} mainId={mainContentId} navigation={aidreamcapesV2Navigation} r={v2Resolvers}>
           {v2Entry ? (
-            <AidreamcapesV2Page r={v2Resolvers} section={v2Entry[1]} />
+            <AidreamcapesV2Page company={v2Company} r={v2Resolvers} section={v2Entry[1]} />
           ) : v2PolicyPage ? (
-            <AidreamcapesV2PolicyPage pagePath={normalizedPath} r={v2Resolvers} sections={v2PageSections} supportEmail={storefrontContext?.profile?.identity.supportEmail} />
+            <AidreamcapesV2PolicyPage company={v2Company} pagePath={normalizedPath} r={v2Resolvers} sections={v2PageSections} supportEmail={storefrontContext?.profile?.identity.supportEmail} />
           ) : (
             <>
               {entries.map(([id, section]) => (

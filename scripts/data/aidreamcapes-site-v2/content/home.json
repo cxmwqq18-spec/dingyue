@@ -16,6 +16,23 @@
     {"t": "Pick a template or describe your idea", "d": "Choose the size (9:16, 1:1 or 16:9) and, for video, 6, 10 or 15 seconds."},
     {"t": "Download, or make another version", "d": "Keep the one you like, or make a few more to see which works best in your ads."}
   ],
+  "example_flows": [
+    {
+      "id": "lipstick",
+      "t": "Lipstick: one studio shot becomes a vanity scene and a shade swatch",
+      "d": "The starting photo was a single coral lipstick on a plain studio background. From it we made a scene on a marble vanity beside a mirror and a fresh flower, and a close-up next to a swatch of the same shade, so shoppers can judge the color before they buy."
+    },
+    {
+      "id": "hoodie",
+      "t": "Hoodie: a flat product photo becomes street style and a flat lay",
+      "d": "We started with a front view of a plain gray hoodie. From it we made an image of someone wearing it on an autumn street and a flat lay on a wooden bench with a beanie and a scarf, so the same item works on a product page and in social posts."
+    },
+    {
+      "id": "coffee",
+      "t": "Coffee beans: a plain bag in a kitchen and at a breakfast table",
+      "d": "We started with a photo of a kraft coffee bag with a blank label and a scatter of beans. From it we made a kitchen counter scene with a pour-over brewer and a mug, and a breakfast table with a croissant, so the product looks at home in the moments people drink it."
+    }
+  ],
   "compare": [
     ["What you need", "Models or creators, a location, shipping the product", "One clear product photo"],
     ["First result", "Days to weeks", "The same day"],

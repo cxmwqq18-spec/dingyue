@@ -11,7 +11,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
-import { AIDREAMCAPES_SITE_ID, applyProductPatch, applySiteBrandingPatch, applyUtilityPagePatch, buildSiteV2, loadProductPatches, loadSiteBrandingPatches, loadUtilityPagePatches, validateSiteV2 } from "./lib/aidreamcapes-site-v2-content.mjs";
+import { AIDREAMCAPES_SITE_ID, applyProductPatch, applySiteBrandingPatch, applyThemeSettingsPatch, applyUtilityPagePatch, buildSiteV2, loadProductPatches, loadSiteBrandingPatches, loadThemeSettingsPatches, loadUtilityPagePatches, validateSiteV2 } from "./lib/aidreamcapes-site-v2-content.mjs";
 import { argumentValue, assertDatabaseTarget, assertNonProductionWriteTarget, hasArgument } from "./lib/database-target.mjs";
 
 const SITE_ID = AIDREAMCAPES_SITE_ID;
@@ -78,9 +78,15 @@ try {
       contentJson: page.contentJson
     };
   });
-  const nextSettings = (json) => ({ ...(json ?? {}), aidreamcapesV2Navigation: build.navigation });
+  // Footer settings (the company's tax ID) are patched in the published and draft settings alike.
+  const settingsPatches = loadThemeSettingsPatches();
+  const publishedSettingsPatch = applyThemeSettingsPatch(settings.publishedJson, settingsPatches);
+  const draftSettingsPatch = applyThemeSettingsPatch(settings.draftJson, settingsPatches);
+  const nextSettings = (patched) => ({ ...patched.next, aidreamcapesV2Navigation: build.navigation });
   const navigationChanged = hashJson(settings.publishedJson?.aidreamcapesV2Navigation ?? null) !== hashJson(build.navigation)
     || hashJson(settings.draftJson?.aidreamcapesV2Navigation ?? null) !== hashJson(build.navigation);
+  const settingsChanged = navigationChanged || publishedSettingsPatch.applied.length > 0 || draftSettingsPatch.applied.length > 0;
+  const settingsReport = { published: { applied: publishedSettingsPatch.applied, unchanged: publishedSettingsPatch.unchanged, conflicts: publishedSettingsPatch.conflicts }, draft: { applied: draftSettingsPatch.applied, unchanged: draftSettingsPatch.unchanged, conflicts: draftSettingsPatch.conflicts } };
   // Utility pages keep their sections; only the named copy fields change (see utility-pages.json).
   const utilityPatches = loadUtilityPagePatches();
   const utilityRows = await prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: utilityPatches.map((patch) => patch.slug) } } });
@@ -117,7 +123,7 @@ try {
     const otherPages = await prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { notIn: slugs } }, select: { slug: true, title: true, pageType: true }, orderBy: { slug: "asc" } });
     console.log(JSON.stringify({ ok: true, mode: productionDryRun ? "production-dry-run" : "dry-run", siteId: SITE_ID, domain: site.primaryDomain, pages: report.length,
       creates: report.filter((item) => item.action === "CREATE").length, updates: report.filter((item) => item.action === "UPDATE").length,
-      navigationChanged, report, utilityPages: utilityReport, products: productReport, siteBranding: brandingReport, otherPages }, null, 2));
+      navigationChanged, report, utilityPages: utilityReport, products: productReport, siteBranding: brandingReport, footerSettings: settingsReport, otherPages }, null, 2));
   } else {
     const stamp = new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14);
     const backupPath = path.resolve(backupRoot, `site-v2-${applyProduction ? "production" : "local"}-${stamp}.json`);
@@ -138,10 +144,10 @@ try {
         if (!item.missing && item.applied.length) await tx.product.update({ where: { id: item.id }, data: { metadata: item.next } });
       }
       if (brandingResult.applied.length) await tx.site.update({ where: { id: SITE_ID }, data: { branding: brandingResult.next } });
-      if (navigationChanged) {
+      if (settingsChanged) {
         await tx.themeSettings.update({
           where: { siteId: SITE_ID },
-          data: { draftJson: nextSettings(settings.draftJson), publishedJson: nextSettings(settings.publishedJson) }
+          data: { draftJson: nextSettings(draftSettingsPatch), publishedJson: nextSettings(publishedSettingsPatch) }
         });
       }
     }, { maxWait: 30000, timeout: 180000 });
@@ -164,9 +170,11 @@ try {
     const settingsReadback = await prisma.themeSettings.findUnique({ where: { siteId: SITE_ID }, select: { publishedJson: true, draftJson: true } });
     assert.equal(hashJson(settingsReadback.publishedJson.aidreamcapesV2Navigation), hashJson(build.navigation), "published navigation readback");
     assert.equal(hashJson(settingsReadback.draftJson.aidreamcapesV2Navigation), hashJson(build.navigation), "draft navigation readback");
+    assert.equal(hashJson(settingsReadback.publishedJson.globalSections?.footer?.settings ?? null), hashJson(nextSettings(publishedSettingsPatch).globalSections?.footer?.settings ?? null), "published footer settings readback");
+    assert.equal(hashJson(settingsReadback.draftJson.globalSections?.footer?.settings ?? null), hashJson(nextSettings(draftSettingsPatch).globalSections?.footer?.settings ?? null), "draft footer settings readback");
     console.log(JSON.stringify({ ok: true, mode: applyProduction ? "production-applied" : "local-applied", siteId: SITE_ID, backupPath,
       pages: report.length, creates: report.filter((item) => item.action === "CREATE").length, updates: report.filter((item) => item.action === "UPDATE").length,
-      navigationChanged, utilityPages: utilityReport, products: productReport, siteBranding: brandingReport, readback: "PASS" }, null, 2));
+      navigationChanged, utilityPages: utilityReport, products: productReport, siteBranding: brandingReport, footerSettings: settingsReport, readback: "PASS" }, null, 2));
   }
 } finally {
   await prisma.$disconnect();

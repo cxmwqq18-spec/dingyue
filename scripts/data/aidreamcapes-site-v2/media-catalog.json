@@ -1287,6 +1287,312 @@
    "variants": [
     640
    ]
+  },
+  "unboxing-experience-t05": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Cardboard shipping box with tape next to an open gray product box on a wooden table",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "unboxing-experience-t08": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Over-ear headphones and a charging case inside an open gray box",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "unboxing-experience-t10": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Hands holding black over-ear headphones above an open box",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "unboxing-experience-t13": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Open box with headphones and a charging case on a wooden table",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "food-video-t06": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Golden sparkling drink poured from a glass bottle into a glass with ice and an orange slice",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "food-video-t13": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Glass bottle of golden citrus drink and a glass with fruit on a kitchen counter",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "product-video-t03": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Hand placing a small glass cup under a compact black espresso machine",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "product-video-t06": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Espresso running from a compact black machine into a glass cup",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "product-video-t09": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Espresso shot in a glass cup beside a jar of coffee beans",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "before-after-showcases-t04": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Person measuring a shelf piled with folded sweaters and jeans with a yellow tape measure",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "before-after-showcases-t10": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Person fitting a wooden shelf organizer into a wardrobe",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "before-after-showcases-t11": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Wardrobe shelves with one pile of clothes next to neatly folded stacks",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "how-to-video-t07": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Hand pressing the power button of a white handheld garment steamer in front of a blue shirt",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "how-to-video-t10": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Close view of a handheld garment steamer and its glowing button",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "cinematic-video-t06": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Close view of a black marble speaker with a glowing blue edge in a dark room",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "cinematic-video-t11": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Person adjusting a black speaker with a blue light ring beside a large window",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "cinematic-video-t14": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Black marble speaker on a stone plinth against a soft gray studio background",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "beauty-routine-t05": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Woman in a robe holding an amber dropper bottle in a bright bathroom",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "beauty-routine-t10": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Close view of a hand holding a serum dropper above an amber bottle",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "beauty-routine-t14": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Hand holding an amber dropper beside a serum bottle on a bathroom counter",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "home-organization-t07": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Cutlery sorted into gray drawer trays inside a wooden kitchen drawer",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "home-organization-t10": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Hand placing utensils into a gray drawer organizer",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "home-organization-t15": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Set of gray drawer organizer trays on a white marble counter",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "fashion-try-on-reel-t01": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Person holding a beige overshirt in a fitting room with a mirror",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "fashion-try-on-reel-t08": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Close view of a beige zip overshirt worn over a white t-shirt",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "fashion-try-on-reel-t15": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Person in a beige overshirt and jeans standing in a fitting room",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "promo-video-t03": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Warm portable table lamp glowing in a dim living room beside a plant",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "promo-video-t05": {
+   "w": 1344,
+   "h": 606,
+   "alt": "White portable table lamp on a desk beside a laptop with a city view",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "promo-video-t11": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Lit table lamp beside a potted plant and a knitted throw on a sofa",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "promo-video-t14": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Hand on a lit table lamp beside an open book in a cozy room",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "competitor-comparison-t10": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Coffee poured into a black insulated mug and a cream one held side by side",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "black-friday-countdown-t02": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Person crouching to unfold a gray folding electric bike in a garage",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "black-friday-countdown-t09": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Close view of a hand on the frame of a folding electric bike",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "black-friday-countdown-t11": {
+   "w": 1344,
+   "h": 606,
+   "alt": "Folded electric bike beside a decorated Christmas tree with warm lights",
+   "variants": [
+    640,
+    1280
+   ]
   }
  },
  "gen": {
@@ -1376,6 +1682,426 @@
     640,
     1280
    ]
+  },
+  "lipstick-pack": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "Coral-red lipstick in a matte black tube with its cap beside it on a light studio background",
+   "variants": [
+    640
+   ]
+  },
+  "hoodie-pack": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "Heather-gray pullover hoodie with drawstrings and a front pocket on a light studio background",
+   "variants": [
+    640
+   ]
+  },
+  "handbag-pack": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "Tan leather top-handle handbag with a gold clasp on a light studio background",
+   "variants": [
+    640
+   ]
+  },
+  "boots-pack": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "Pair of brown leather Chelsea ankle boots on a light studio background",
+   "variants": [
+    640
+   ]
+  },
+  "sunglasses-pack": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "Black wayfarer-style sunglasses with dark lenses on a light studio background",
+   "variants": [
+    640
+   ]
+  },
+  "phonecase-pack": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "Sage green silicone phone case, back view, on a light studio background",
+   "variants": [
+    640
+   ]
+  },
+  "yogamat-pack": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "Teal yoga mat rolled up with a black carrying strap on a light studio background",
+   "variants": [
+    640
+   ]
+  },
+  "protein-pack": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "White plastic protein powder tub with a plain front and a scoop on a light studio background",
+   "variants": [
+    640
+   ]
+  },
+  "coffee-pack": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "Kraft paper coffee bag with a blank label and whole coffee beans on a light studio background",
+   "variants": [
+    640
+   ]
+  },
+  "hotsauce-pack": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "Glass bottle of red hot sauce with a black cap and a blank cream label on a light studio background",
+   "variants": [
+    640
+   ]
+  },
+  "candle-pack": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "White ceramic candle jar with its lid leaning beside it on a light studio background",
+   "variants": [
+    640
+   ]
+  },
+  "planter-pack": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "Leafy green houseplant in a round white ceramic planter with a saucer on a light studio background",
+   "variants": [
+    640
+   ]
+  },
+  "lipstick-vanity": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Coral lipstick and its cap on a white marble vanity beside a pink flower in a glass vase and a round brass mirror",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "lipstick-swatch": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Close-up of a coral lipstick next to a swatch of the same color on the back of a hand",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "lipstick-ad": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Hand holding a coral lipstick and its cap against a soft pink backdrop with open space on the left",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "hoodie-street": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Person in a gray hoodie and jeans walking along a tree-lined city street in autumn, face turned away",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "hoodie-flatlay": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Folded gray hoodie on a wooden bench with a knit beanie and a cream scarf, seen from above",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "hoodie-detail": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Close-up detail shots of a gray hoodie: the hood, the fabric, the drawstring ends, the front pocket and the ribbed cuff",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "handbag-cafe": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Tan leather handbag on a marble cafe table beside a latte and a pair of sunglasses",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "handbag-carry": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Person in a cream coat carrying a tan leather handbag on the arm on a sunny street",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "handbag-detail": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Close-up of a tan leather handbag showing the stitched handle and the gold clasp",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "boots-street": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Brown leather Chelsea boots on a person in dark jeans walking over cobblestones in warm evening light",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "boots-doorway": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Pair of brown leather Chelsea boots on a wooden floor by a doorway next to a folded coat and an umbrella",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "boots-detail": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Close-up of brown leather Chelsea boots showing the elastic side panel, the pull tab and the toe",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "sunglasses-cafe": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Black wayfarer sunglasses on a sunlit outdoor cafe table beside an iced lemon drink with mint",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "sunglasses-worn": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Man in profile wearing black wayfarer sunglasses on a seaside boardwalk",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "sunglasses-flatlay": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Black wayfarer sunglasses, a wristwatch and a key in a brown leather tray, seen from above",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "phonecase-hand": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Hand holding a phone in a sage green case, back facing the camera, in front of a blurred green park",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "phonecase-desk": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Sage green phone case on a light wooden desk beside wireless earbuds, a notebook, a plant and a cup",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "phonecase-back": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Close-up of the camera cutout and the edges of a sage green silicone phone case",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "yogamat-room": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Teal yoga mat partly unrolled on a wooden floor in a bright living room with a large plant",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "yogamat-pose": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Person stretching forward in a seated pose on a teal yoga mat in a bright room",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "yogamat-rolled": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Rolled teal yoga mat with a carrying strap on a doorstep beside a green water bottle",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "protein-kitchen": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "White protein powder tub with a scoop, a shaker bottle and a banana on a bright kitchen counter",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "protein-scoop": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "White protein powder tub with its lid off and a scoop of powder resting in front of it",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "protein-gym": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "White protein powder tub and scoop on a gym bench next to a black gym bag and a rolled gray towel",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "coffee-counter": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Kraft coffee bag beside a pour-over brewer, a ceramic mug and a bowl of beans on a sunlit kitchen counter",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "coffee-beans": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Kraft coffee bag with whole beans scattered in front of it on a wooden table beside a burlap sack",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "coffee-breakfast": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Kraft coffee bag on a breakfast table beside a mug of coffee, a croissant and a bowl of beans",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "hotsauce-tacos": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Red hot sauce being poured from a glass bottle onto tacos on a rustic table",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "hotsauce-peppers": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Hot sauce bottle with a blank label on a wooden table beside fresh red chili peppers and a small bowl of sauce",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "hotsauce-drip": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Close-up of a hot sauce bottle with a drop of red sauce running down from the black cap",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "candle-table": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "White ceramic candle jar with its lid beside it on a wooden coffee table with a stack of books and a knit throw",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "candle-bath": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "White ceramic candle jar and lid on the edge of a bathtub next to a folded towel and a small plant",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "candle-flame": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Lit candle in a white ceramic jar on a dark wooden table with a knit throw behind it",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "planter-window": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Leafy houseplant in a white ceramic planter on a sunny windowsill with sheer curtains",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "planter-shelf": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Leafy houseplant in a white ceramic planter on a wooden shelf beside books and a small vase",
+   "variants": [
+    640,
+    1280
+   ]
+  },
+  "planter-corner": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Leafy houseplant in a white ceramic planter in a living room corner beside a gray sofa and a floor lamp",
+   "variants": [
+    640,
+    1280
+   ]
   }
  },
  "clips": {
@@ -1408,9 +2134,10 @@
   }
  },
  "loop": {
-  "src": "/assets/sites/site_aidreamcapes/site-v2/video/home-hero.mp4",
-  "poster": "/assets/sites/site_aidreamcapes/site-v2/video/home-hero.webp",
+  "src": "/assets/sites/site_aidreamcapes/site-v2/video/home-reel.mp4",
+  "poster": "/assets/sites/site_aidreamcapes/site-v2/video/home-reel.webp",
   "w": 960,
-  "h": 548
+  "h": 410,
+  "alt": "Example video ads for different products: a creator showing a smartwatch, headphones being unboxed, a sparkling drink being poured, an espresso machine and a table lamp"
  }
 }
