@@ -29,6 +29,8 @@ public/qa-*.png
 # paths available through the external public-static mirror instead.
 public/assets/
 public/site-media/
+public/assets
+public/site-media
 *.png
 *.jpg
 *.jpeg
@@ -41,6 +43,10 @@ public/site-media/
 *.mov
 *.webm
 *.m4v
+*.mp3
+*.m4a
+*.wav
+*.ogg
 
 data/customer-assets/
 docs/audits/**/local-playwright/
