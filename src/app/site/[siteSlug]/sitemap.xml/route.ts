@@ -7,7 +7,7 @@ const SITE_HOSTS: Record<string, string> = {
   aidreamshoots: "aidreamshoots.eu",
   "aidreamshoots-eu": "aidreamshoots.eu",
   "aidreamcapes-eu": "aidreamcapes.eu",
-  aidreamcapes: "aidreamcapes.com",
+  aidreamcapes: "www.aivideosugc.com",
   mydreamshoots: "mydreamshoots.com",
   grownstride: "grownstride.com"
 };

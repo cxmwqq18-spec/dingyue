@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 // aidreamcapes.com host only): a plain-text summary for AI assistants. The text is
 // stored on the /ai-info LivePage (built with the page copy), so it always states the
 // same facts as the public page. Any other host gets a 404.
-const AIDREAMCAPES_HOSTS = new Set(["aidreamcapes.com", "www.aidreamcapes.com"]);
+const AIDREAMCAPES_HOSTS = new Set(["www.aivideosugc.com", "aivideosugc.com", "aidreamcapes.com", "www.aidreamcapes.com"]);
 
 function normalizeHost(value: string | null | undefined): string {
   return String(value ?? "").split(",")[0]?.trim().toLowerCase().split(":")[0] ?? "";

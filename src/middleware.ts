@@ -10,7 +10,7 @@ import { aidreamcapesLegacyVideoSaveTheDatePath } from "@/lib/save-the-date-rout
 import { aidreamcapesNotFoundResponse } from "@/lib/aidreamcapes-not-found";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
-const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
+const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|aivideosugc|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
 const INTERNAL_PATH_RE = /^\/(?:api|assets|_next\/static|_next\/image|robots\.txt|sitemap\.xml)(?:\/|$)/i;
 const BROWSER_ICON_PATH_RE = /^\/(?:favicon\.ico|favicon\.svg|icon\.svg|apple-touch-icon(?:\.png)?)$/i;
 const GROWNSTRIDE_TEST_HOST = "test.grownstride.com";
@@ -233,7 +233,8 @@ function canonicalPublicHostSitePathRedirect(request: NextRequest): NextResponse
   const hostMatchesSite =
     normalizedHost.includes(siteSlug) ||
     (normalizedHost.includes("aidreamshoots") && /^(?:aidreamshoots|mydreamshoots)(?:-xby|-eu)?$/.test(siteSlug)) ||
-    (normalizedHost.includes("aidreamcapes") && /^aidreamcapes(?:-xby|-eu)?$/.test(siteSlug));
+    (normalizedHost.includes("aidreamcapes") && /^aidreamcapes(?:-xby|-eu)?$/.test(siteSlug)) ||
+    (normalizedHost.includes("aivideosugc") && siteSlug === "aidreamcapes");
   if (!hostMatchesSite) return undefined;
   const scopedPath = match[2] || "/";
   return NextResponse.redirect(publicRedirectUrlForRequest(request, scopedPath === "/" ? "/" : scopedPath), 301);
@@ -264,18 +265,23 @@ function aidreamcapesEuWwwRedirect(request: NextRequest): NextResponse | undefin
   return NextResponse.redirect(target, 301);
 }
 
+// The storefront's address is www.aivideosugc.com; its other hosts (aivideosugc.com and the
+// former aidreamcapes.com addresses) move there permanently, keeping the path and query.
+const AIDREAMCAPES_CANONICAL_HOST = "www.aivideosugc.com";
+const AIDREAMCAPES_HOSTS = new Set([AIDREAMCAPES_CANONICAL_HOST, "aivideosugc.com", "www.aidreamcapes.com", "aidreamcapes.com"]);
+
 function aidreamcapesCanonicalHostRedirect(request: NextRequest): NextResponse | undefined {
   const forwardedHost = request.headers.get("x-forwarded-host") ?? "";
   const host = (forwardedHost || request.headers.get("host") || "").split(",")[0]?.trim().toLowerCase().split(":")[0] ?? "";
-  if (host !== "www.aidreamcapes.com" && host !== "aidreamcapes.com") return undefined;
+  if (!AIDREAMCAPES_HOSTS.has(host)) return undefined;
 
   const forwardedProtocol = request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim().toLowerCase();
   const protocol = forwardedProtocol || request.nextUrl.protocol.replace(/:$/, "").toLowerCase();
-  if (host === "aidreamcapes.com" && protocol === "https") return undefined;
+  if (host === AIDREAMCAPES_CANONICAL_HOST && protocol === "https") return undefined;
 
   const target = request.nextUrl.clone();
   target.protocol = "https:";
-  target.hostname = "aidreamcapes.com";
+  target.hostname = AIDREAMCAPES_CANONICAL_HOST;
   target.port = "";
   return NextResponse.redirect(target, 301);
 }
@@ -840,7 +846,7 @@ function storefrontSlugForHost(host: string | null | undefined): string | undefi
   if (!TARGET_HOST_RE.test(normalized)) return undefined;
   if (normalized.includes("aidreamshoots")) return "aidreamshoots";
   if (normalized.includes("aidreamcapes.eu")) return "aidreamcapes-eu";
-  if (normalized.includes("aidreamcapes")) return "aidreamcapes";
+  if (normalized.includes("aidreamcapes") || normalized.includes("aivideosugc")) return "aidreamcapes";
   if (normalized.includes("mydreamshoots")) return "mydreamshoots";
   if (normalized.includes("grownstride")) return "grownstride";
   return undefined;

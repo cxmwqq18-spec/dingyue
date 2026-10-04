@@ -1738,6 +1738,15 @@ function aidreamcapesV2StoredGraph(site: Site, pageJson: ThemePageJson | undefin
   return isV2 && Array.isArray(graph) ? (graph as JsonLdNode[]) : undefined;
 }
 
+// Stored v2 graphs written before the move to www.aivideosugc.com name the former address; show every URL at the current origin.
+const AIDREAMCAPES_FORMER_ORIGIN_RE = /^https:\/\/(?:www\.)?(?:aidreamcapes|aivideosugc)\.com(?=\/|$)/i;
+function withAidreamcapesOrigin<T>(value: T): T {
+  if (typeof value === "string") return value.replace(AIDREAMCAPES_FORMER_ORIGIN_RE, "https://www.aivideosugc.com") as T;
+  if (Array.isArray(value)) return value.map((item) => withAidreamcapesOrigin(item)) as T;
+  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, withAidreamcapesOrigin(item)])) as T;
+  return value;
+}
+
 function aidreamcapesV2JsonLd(input: JsonLdInput, storedGraph: JsonLdNode[]): JsonLdNode[] {
   const seo = input.pageJson?.seo as { title?: unknown; description?: unknown } | undefined;
   const title = cleanText(seo?.title) || pageTitle(input.site, input.page, input.context);
@@ -1745,7 +1754,7 @@ function aidreamcapesV2JsonLd(input: JsonLdInput, storedGraph: JsonLdNode[]): Js
   const graph: Array<JsonLdNode | undefined> = [
     organizationSchema(input.site, input.routeMode, input.context, input.pagePath),
     storefrontApplicationSchema(input, title, description),
-    ...storedGraph.filter((node) => node["@type"] !== "Organization")
+    ...withAidreamcapesOrigin(storedGraph.filter((node) => node["@type"] !== "Organization"))
   ];
   return [{ "@context": "https://schema.org", "@graph": graph.filter(Boolean) }];
 }

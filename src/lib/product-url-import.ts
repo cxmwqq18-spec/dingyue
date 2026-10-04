@@ -20,7 +20,7 @@ const MIN_IMAGE_SIDE = 200;
 const GOOD_IMAGE_SIDE = 800;
 const SHOPIFY_IMAGE_WIDTH = 1600;
 const OUTPUT_MAX_SIDE = 2000;
-const USER_AGENT = "Mozilla/5.0 (compatible; AidreamcapesLinkPreview/1.0; +https://aidreamcapes.com/ai-info)";
+const USER_AGENT = "Mozilla/5.0 (compatible; AidreamcapesLinkPreview/1.0; +https://www.aivideosugc.com/ai-info)";
 const BLOCKED_HOST_SUFFIXES = [".localhost", ".local", ".internal", ".lan", ".home.arpa", ".intranet", ".corp"];
 
 export type ProductUrlImportErrorCode =

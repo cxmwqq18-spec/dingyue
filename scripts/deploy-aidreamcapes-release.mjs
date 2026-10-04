@@ -33,7 +33,7 @@ function run(command, argv) {
   const result = spawnSync(command, argv, { stdio: "inherit" });
   assert.equal(result.status, 0, `${command} failed (${result.status})`);
 }
-console.log(JSON.stringify({ domain: "aidreamcapes.com", service: "aidreamcapes.service", commit, release, databaseWrites: false }));
+console.log(JSON.stringify({ domain: "www.aivideosugc.com", service: "aidreamcapes.service", commit, release, databaseWrites: false }));
 if (!args.includes("--apply")) process.exit(0);
 assert.equal(value("--confirm"), "deploy-aidreamcapes", "Explicit target confirmation is required");
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), "aidreamcapes-release-"));
@@ -75,7 +75,7 @@ trap 'kill "$CANDIDATE" 2>/dev/null || true' EXIT
 READY=0
 for ATTEMPT in $(seq 1 60); do
   if ! kill -0 "$CANDIDATE" 2>/dev/null; then cat .candidate.log; exit 1; fi
-  if grep -Fq "> Ready on http://127.0.0.1:$CANDIDATE_PORT" .candidate.log && curl -fsS --max-time 15 -H 'X-Forwarded-Host: aidreamcapes.com' -H 'X-Forwarded-Proto: https' "http://127.0.0.1:$CANDIDATE_PORT/" > .candidate.html; then READY=1; break; fi
+  if grep -Fq "> Ready on http://127.0.0.1:$CANDIDATE_PORT" .candidate.log && curl -fsS --max-time 15 -H 'X-Forwarded-Host: www.aivideosugc.com' -H 'X-Forwarded-Proto: https' "http://127.0.0.1:$CANDIDATE_PORT/" > .candidate.html; then READY=1; break; fi
   sleep 2
 done
 test "$READY" = 1
@@ -97,7 +97,7 @@ systemctl restart aidreamcapes.service
 test "$(systemctl is-active aidreamcapes.service)" = active
 READY=0
 for ATTEMPT in $(seq 1 30); do
-  if curl -fsS --max-time 5 -H 'X-Forwarded-Host: aidreamcapes.com' -H 'X-Forwarded-Proto: https' http://127.0.0.1:3013/ > .origin.html; then READY=1; break; fi
+  if curl -fsS --max-time 5 -H 'X-Forwarded-Host: www.aivideosugc.com' -H 'X-Forwarded-Proto: https' http://127.0.0.1:3013/ > .origin.html; then READY=1; break; fi
   sleep 2
 done
 test "$READY" = 1

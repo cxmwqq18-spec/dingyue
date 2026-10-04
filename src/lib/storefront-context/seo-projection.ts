@@ -15,10 +15,9 @@ export function storefrontOrigin(site: Pick<Site, "primaryDomain">): string {
 type CanonicalSite = Pick<Site, "primaryDomain"> & Partial<Pick<Site, "id" | "slug">>;
 
 export function canonicalOriginForSite(site: CanonicalSite): string {
-  // Aidreamcapes keeps both hostnames reachable, but uses the non-www host as
-  // the single canonical origin. Other storefronts retain their configured
-  // origin.
-  if (site.id === "site_aidreamcapes") return "https://aidreamcapes.com";
+  // Aidreamcapes is served at www.aivideosugc.com; its other hosts redirect there.
+  // Other storefronts retain their configured origin.
+  if (site.id === "site_aidreamcapes") return "https://www.aivideosugc.com";
   return storefrontOrigin(site);
 }
 
@@ -29,7 +28,7 @@ export function canonicalAbsoluteUrlForSite(site: CanonicalSite, value: string |
   if (!/^https?:\/\//i.test(cleaned)) return `${origin}${cleaned.startsWith("/") ? cleaned : `/${cleaned}`}`;
   try {
     const parsed = new URL(cleaned);
-    if (site.id === "site_aidreamcapes" && ["aidreamcapes.com", "www.aidreamcapes.com"].includes(parsed.hostname.toLowerCase())) {
+    if (site.id === "site_aidreamcapes" && ["aidreamcapes.com", "www.aidreamcapes.com", "aivideosugc.com", "www.aivideosugc.com"].includes(parsed.hostname.toLowerCase())) {
       return `${origin}${parsed.pathname}${parsed.search}${parsed.hash}`;
     }
     return cleaned;

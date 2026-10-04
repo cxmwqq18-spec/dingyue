@@ -43,7 +43,7 @@ const AIDREAMCAPES_V2_POLICY_SITEMAP_PATHS = ["/privacy", "/terms", "/refunds", 
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
 export const MYDREAMSHOOTS_SITEMAP_URL = `${MYDREAMSHOOTS_ORIGIN}/sitemap.xml`;
-export const AIDREAMCAPES_ORIGIN = "https://aidreamcapes.com";
+export const AIDREAMCAPES_ORIGIN = "https://www.aivideosugc.com";
 export const AIDREAMCAPES_SITEMAP_URL = `${AIDREAMCAPES_ORIGIN}/sitemap.xml`;
 export const AIDREAMSHOOTS_EU_ORIGIN = "https://aidreamshoots.eu";
 export const AIDREAMSHOOTS_EU_SITEMAP_URL = `${AIDREAMSHOOTS_EU_ORIGIN}/sitemap.xml`;
@@ -1423,6 +1423,7 @@ function isAidreamcapesSite(site: Site): boolean {
     site.id === "site_aidreamcapes_xby" ||
     AIDREAMCAPES_SITE_SLUGS.has(site.slug) ||
     site.primaryDomain === "www.aidreamcapes.com" ||
+    site.primaryDomain === "www.aivideosugc.com" ||
     site.primaryDomain === "aidreamcapes.eu" ||
     site.primaryDomain === "www.aidreamcapes.eu";
 }
@@ -1436,6 +1437,8 @@ function isHostForSite(site: Site, host: string): boolean {
     (normalizedHost === "mydreamshoots.com" && isDreamshootSite(site)) ||
     (normalizedHost === "www.aidreamcapes.com" && isAidreamcapesSite(site)) ||
     (normalizedHost === "aidreamcapes.com" && isAidreamcapesSite(site)) ||
+    (normalizedHost === "www.aivideosugc.com" && isAidreamcapesSite(site)) ||
+    (normalizedHost === "aivideosugc.com" && isAidreamcapesSite(site)) ||
     (normalizedHost === "aidreamshoots.eu" && site.id === "site_mydreamshoots_xby") ||
     (normalizedHost === "www.aidreamshoots.eu" && site.id === "site_mydreamshoots_xby") ||
     (normalizedHost === "aidreamcapes.eu" && site.id === "site_aidreamcapes_xby") ||
@@ -1455,7 +1458,7 @@ function isReservedGrownstrideHost(host: string): boolean {
 }
 
 function isAidreamcapesHost(host: string): boolean {
-  return host === "www.aidreamcapes.com" || host === "aidreamcapes.com";
+  return host === "www.aivideosugc.com" || host === "aivideosugc.com" || host === "www.aidreamcapes.com" || host === "aidreamcapes.com";
 }
 
 function isAidreamshootsEuHost(host: string): boolean {

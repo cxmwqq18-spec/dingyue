@@ -138,7 +138,7 @@ function isPrimaryAidreamcapesRouteSite(site: CollectionRouteSiteIdentity | unde
   const siteId = site.siteId ?? site.id ?? "";
   const slug = (site.slug ?? "").trim().toLowerCase();
   const domain = (site.primaryDomain ?? "").trim().toLowerCase();
-  return siteId === "site_aidreamcapes" || slug === "aidreamcapes" || domain === "aidreamcapes.com" || domain === "www.aidreamcapes.com";
+  return siteId === "site_aidreamcapes" || slug === "aidreamcapes" || domain === "aidreamcapes.com" || domain === "www.aidreamcapes.com" || domain === "aivideosugc.com" || domain === "www.aivideosugc.com";
 }
 
 export function isMydreamshootsCollectionRouteSite(site: CollectionRouteSiteIdentity | undefined): boolean {

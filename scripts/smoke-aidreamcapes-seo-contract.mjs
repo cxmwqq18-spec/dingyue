@@ -8,7 +8,7 @@ import { request } from "playwright";
 
 const BASE_URL = String(process.env.AIDREAMCAPES_SEO_ORIGIN || "http://127.0.0.1:3002").replace(/\/$/, "");
 const SITE_HEADERS = {
-  "x-forwarded-host": "aidreamcapes.com",
+  "x-forwarded-host": "www.aivideosugc.com",
   "x-forwarded-proto": "https"
 };
 // Aidreamcapes.com v2 retires v1 URLs with 301 redirects (applied by the middleware).
@@ -86,7 +86,7 @@ function flattenJsonLd(value) {
   return [value, ...(Array.isArray(value["@graph"]) ? value["@graph"].flatMap(flattenJsonLd) : [])];
 }
 
-function imageKey(value, base = "https://aidreamcapes.com/") {
+function imageKey(value, base = "https://www.aivideosugc.com/") {
   const url = new URL(value, base);
   if (url.pathname === "/_next/image") return imageKey(url.searchParams.get("url"), base);
   return `${url.origin}${decodeURIComponent(url.pathname)}`;
@@ -157,7 +157,7 @@ const TARGET_PATHS = siteV2 ? SITE_V2_TARGET_PATHS : V1_TARGET_PATHS.filter((pat
 const bodyMarkers = homepageDom('body script[data-storefront-json-ld="body-marker"]');
 assert(bodyMarkers.length > 0, "JSON-LD body markers must remain present for React hydration");
 assert(bodyMarkers.toArray().every((node) => homepageDom(node).attr("type") === "application/json"), "body markers must be inert JSON, not duplicate structured data");
-assert.equal(htmlCanonical(homepageHtml), "https://aidreamcapes.com/", "homepage canonical");
+assert.equal(htmlCanonical(homepageHtml), "https://www.aivideosugc.com/", "homepage canonical");
 assert.equal((homepageHtml.match(/<link\b[^>]*\brel=["']alternate["']/gi) || []).length, 0, "single-language .com must not invent hreflang");
 assert.doesNotMatch(homepageHtml, /engagement-photo image|An intimate engagement announcement/i, "stale homepage image sitemap copy");
 const homepageNodes = flattenJsonLd(parseJsonLd(homepageHtml));
@@ -167,18 +167,20 @@ const homepageCatalog = homepageNodes.find((node) => node["@type"] === "OfferCat
 assert.equal(homepageApplication?.applicationCategory, "MultimediaApplication", "homepage application category");
 assert.equal(homepageCatalog?.name, "Aidreamcapes AI image and video plans", "homepage OfferCatalog name");
 assert(Array.isArray(homepageApplication?.offers) && homepageApplication.offers.every((offer) => offer["@type"] === "Offer"), "application offers must not be an OfferCatalog");
-const publicOrigin = new URL(BASE_URL).hostname === "aidreamcapes.com";
-for (const variant of ["http", "www"]) {
+const publicOrigin = new URL(BASE_URL).hostname === "www.aivideosugc.com";
+// The apex host and the former aidreamcapes.com addresses move permanently to https://www.aivideosugc.com.
+const OTHER_HOSTS = [["apex", "aivideosugc.com", "https"], ["former", "aidreamcapes.com", "https"], ["former-www", "www.aidreamcapes.com", "https"], ["http", "www.aivideosugc.com", "http"]];
+for (const [variant, host, protocol] of OTHER_HOSTS) {
   const response = publicOrigin
-    ? await http.get(`${variant === "http" ? "http://aidreamcapes.com" : "https://www.aidreamcapes.com"}/pricing?seo_contract=1`, { maxRedirects: 0 })
-    : await get("/pricing?seo_contract=1", { headers: { "x-forwarded-host": variant === "www" ? "www.aidreamcapes.com" : "aidreamcapes.com", "x-forwarded-proto": variant === "http" ? "http" : "https" } });
+    ? await http.get(`${protocol}://${host}/pricing?seo_contract=1`, { maxRedirects: 0 })
+    : await get("/pricing?seo_contract=1", { headers: { "x-forwarded-host": host, "x-forwarded-proto": protocol } });
   assert.equal(response.status(), 301, `${variant}: canonical redirect status`);
-  assert.equal(response.headers().location, "https://aidreamcapes.com/pricing?seo_contract=1", `${variant}: redirect preserves path and query`);
+  assert.equal(response.headers().location, "https://www.aivideosugc.com/pricing?seo_contract=1", `${variant}: redirect preserves path and query`);
 }
 for (const [from, to] of SITE_V2_REDIRECTS) {
   const response = await get(`${from}?seo_contract=1`);
   assert.equal(response.status(), 301, `${from}: v2 redirect status`);
-  assert.equal(response.headers().location, `https://aidreamcapes.com${to}?seo_contract=1`, `${from}: v2 redirect target`);
+  assert.equal(response.headers().location, `https://www.aivideosugc.com${to}?seo_contract=1`, `${from}: v2 redirect target`);
   await response.dispose();
 }
 if (siteV2) {
@@ -205,11 +207,11 @@ const robotsResponse = await get("/robots.txt");
 assert.equal(robotsResponse.status(), 200, "robots.txt status");
 const robotsText = await robotsResponse.text();
 if (publicOrigin) {
-  assert.match(robotsText, /Sitemap:\s*https:\/\/aidreamcapes\.com\/sitemap\.xml/i, "robots sitemap declaration");
+  assert.match(robotsText, /Sitemap:\s*https:\/\/www\.aivideosugc\.com\/sitemap\.xml/i, "robots sitemap declaration");
   assert.doesNotMatch(robotsText, /^Disallow:\s*\/\s*$/m, "public site must not block every crawler");
 } else {
   // Loopback deployments intentionally fail closed for discovery.
-  assert.match(robotsText, /Disallow:\s*\/|Sitemap:\s*https:\/\/aidreamcapes\.com\/sitemap\.xml/i, "candidate robots policy");
+  assert.match(robotsText, /Disallow:\s*\/|Sitemap:\s*https:\/\/www\.aivideosugc\.com\/sitemap\.xml/i, "candidate robots policy");
 }
 
 const metadataResults = await mapLimit(TARGET_PATHS, 3, async (path) => {
@@ -221,7 +223,7 @@ const metadataResults = await mapLimit(TARGET_PATHS, 3, async (path) => {
   assert(title.endsWith("| Aidreamcapes"), `${path}: missing brand suffix (${title})`);
   assert(title.length <= 60, `${path}: title too long (${title.length})`);
   assert(description.length >= 140 && description.length <= 160, `${path}: description length ${description.length}`);
-  assert.equal(htmlCanonical(html), `https://aidreamcapes.com${path}`, `${path}: canonical`);
+  assert.equal(htmlCanonical(html), `https://www.aivideosugc.com${path}`, `${path}: canonical`);
   return { path, title, description };
 });
 assert.equal(new Set(metadataResults.map(({ title }) => title)).size, metadataResults.length, "target titles must be unique");
@@ -266,7 +268,7 @@ assert(!sitemapXml.includes("An intimate engagement announcement"), "stale sitem
 
 const pageStatus = await mapLimit(entries, 3, async (entry) => {
   const url = entry.loc;
-  assert.equal(new URL(url).origin, "https://aidreamcapes.com", "sitemap origin");
+  assert.equal(new URL(url).origin, "https://www.aivideosugc.com", "sitemap origin");
   const response = await get(new URL(url).pathname);
   assert.equal(response.status(), 200, `sitemap URL status ${response.status()}: ${url}`);
   const html = await response.text();

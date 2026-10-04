@@ -412,6 +412,22 @@
           "lastUpdated",
           "August 5, 2026",
           "October 3, 2026"
+        ],
+        [
+          "replace",
+          "header_1",
+          "rich_text",
+          "body",
+          "when you use www.aidreamcapes.com,",
+          "when you use www.aivideosugc.com,"
+        ],
+        [
+          "replace",
+          "policy_1",
+          "policy_content",
+          "body",
+          "when you visit www.aidreamcapes.com,",
+          "when you visit www.aivideosugc.com,"
         ]
       ]
     },
@@ -472,6 +488,20 @@
             "Limited technical signals help us find slow pages and failed requests. Analytics, if enabled, show aggregated usage and should not be used to sell your uploaded photos or generated images.",
             "You can block or delete cookies in your browser settings. Blocking essential cookies may stop sign-in, checkout and private albums from working."
           ]
+        ],
+        [
+          "replace",
+          "header_1",
+          "rich_text",
+          "body",
+          "used on www.aidreamcapes.com for",
+          "used on www.aivideosugc.com for"
+        ],
+        [
+          "seo",
+          "canonical",
+          "https://aidreamcapes.com/cookies",
+          "https://www.aivideosugc.com/cookies"
         ]
       ]
     },
@@ -508,6 +538,12 @@
             "Processing time varies with your photo, the settings you choose, provider availability and system load.",
             "There are no shipping, customs or handling charges. If a result doesn't arrive, contact support."
           ]
+        ],
+        [
+          "seo",
+          "canonical",
+          "https://aidreamcapes.com/digital-delivery",
+          "https://www.aivideosugc.com/digital-delivery"
         ]
       ]
     },
@@ -549,8 +585,8 @@
           "policy_1",
           "policy_content",
           "body",
-          "Company: Aidreamcapes.com; Address: 8 THE GREEN STE B, DOVER, DE, 19901, US; Contact Us: support@aidreamcapes.com.",
-          "Company: BLYDEYUS INC (Aidreamcapes.com); Address: 30 N GOULD ST STE R, SHERIDAN, WY 82801, US; Contact Us: support@aidreamcapes.com."
+          "Company: BLYDEYUS INC (Aidreamcapes.com); Address: 30 N GOULD ST STE R, SHERIDAN, WY 82801, US; Contact Us: support@aidreamcapes.com.",
+          "Company: BLYDEYUS INC (www.aivideosugc.com); Address: 30 N GOULD ST STE R, SHERIDAN, WY 82801, US; Contact Us: support@aidreamcapes.com."
         ],
         [
           "field",

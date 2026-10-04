@@ -7,7 +7,7 @@ import assert from "node:assert/strict";
 
 export const AIDREAMCAPES_SITE_ID = "site_aidreamcapes";
 export const SITE_V2_SOURCE_REVISION = "aidreamcapes-site-v2";
-const BASE = "https://aidreamcapes.com";
+const BASE = "https://www.aivideosugc.com";
 const ASSET_ROOT = "/assets/sites/site_aidreamcapes/site-v2";
 const DATA_DIR = path.join(process.cwd(), "scripts", "data", "aidreamcapes-site-v2");
 const CREDITS_FAQ = {

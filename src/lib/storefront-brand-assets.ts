@@ -20,7 +20,7 @@ function brandKey(site: BrandSite): "aidreamcapes" | "aidreamcapes-eu" | "aidrea
   if (id === "site_aidreamcapes_xby" || slug === "aidreamcapes-eu" || domain.endsWith("aidreamcapes.eu")) {
     return "aidreamcapes-eu";
   }
-  if (id === "site_aidreamcapes" || slug === "aidreamcapes" || domain.endsWith("aidreamcapes.com")) {
+  if (id === "site_aidreamcapes" || slug === "aidreamcapes" || domain.endsWith("aidreamcapes.com") || domain.endsWith("aivideosugc.com")) {
     return "aidreamcapes";
   }
   return undefined;
