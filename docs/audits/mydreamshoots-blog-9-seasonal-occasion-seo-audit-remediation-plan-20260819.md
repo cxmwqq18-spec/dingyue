@@ -4,6 +4,10 @@
 审计范围：MyDreamShoots 线上 9 个博客 URL 及其公开产品 CTA、站点 robots/sitemap、SSR HTML、JSON-LD、OG/Twitter 元数据。  
 审计方法：安装并依据 GitHub `JeffLi1993/seo-audit-skill` 的 `seo-audit` / `seo-audit-full` 工作流，补充仓库代码、产品 taxonomy、GET/HEAD 路由、正文 5-gram 相似度和 sitemap inventory 检查。
 
+### 2026-10-04 线上复核补充
+
+本方案列出的 9 个 URL 与《九个博客页面 SEO 审查与整改方案》列出的另外 9 个 URL，目前 GET 和 HEAD 均返回 404；18 个地址均不在当前 sitemap，也不在当前 93 条 LivePage 数据中（其中 `/blog/` 仅有 3 条已发布页面）。因此，这两份 8 月页面级内容整改计划当前对应的是已下线 URL，不能按“整改已完成”验收。当前 sitemap 的 117 页内链抓取没有死链，但这 18 个旧 URL 不属于该抓取范围；其 Google 收录状态未通过 Search Console 核验。若仍要保留这些文章，应先恢复页面、加入 sitemap 和相关正文链接，再按本计划验收；若文章已退役，应记录退役或语义适配的跳转决定。
+
 ## 结论摘要
 
 这 9 页当前不是 9 个真正独立的内容实体，而是同一篇“photo package category”模板的主题名替换版本。页面的 GET 请求目前返回 200，但 HEAD 请求全部返回 308，并指向旧的聚合博客页；其中部分旧目标会继续返回 404。这会让搜索引擎、链接检查器和缓存层看到不一致的路由信号。

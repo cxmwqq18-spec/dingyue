@@ -4,6 +4,10 @@
 审查对象：`https://www.mydreamshoots.com/blog/` 下 9 个 photo-package guide 页面  
 状态：**线上审查完成；整改方案待执行**
 
+### 2026-10-04 线上复核补充
+
+本方案列出的 9 个 URL 与《九页季节与场合博客 SEO 审计及整改方案》列出的另外 9 个 URL，目前 GET 和 HEAD 均返回 404；18 个地址均不在当前 sitemap，也不在当前 93 条 LivePage 数据中（其中 `/blog/` 仅有 3 条已发布页面）。因此，这两份 8 月页面级内容整改计划当前对应的是已下线 URL，不能按“整改已完成”验收。当前 sitemap 的 117 页内链抓取没有死链，但这 18 个旧 URL 不属于该抓取范围；其 Google 收录状态未通过 Search Console 核验。若仍要保留这些文章，应先恢复页面、加入 sitemap 和相关正文链接，再按本计划验收；若文章已退役，应记录退役或语义适配的跳转决定。
+
 ## 1. 结论摘要
 
 这 9 个页面目前不是“缺少 title/canonical”的基础技术 SEO 问题，而是**页面实体、搜索意图和内容模板没有真正分开**。线上 HTML 能看到 index/follow、自引用 canonical、sitemap 收录、BlogPosting JSON-LD、OG/Twitter 图片等基础信号；真正拉低质量的部分是：
