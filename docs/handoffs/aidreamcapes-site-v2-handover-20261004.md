@@ -105,3 +105,15 @@ Cloudflare 的邮箱混淆会把页面里的邮箱显示成 `[email protected]`,
 - 站上没有真实评价和客户案例,没有编造;有真实内容时再补。
 - 生图中转站的密钥曾出现在聊天记录里,建议更换。
 - `/state-privacy` 只有约 275 字(简短的法律声明),没有为凑字数而扩写。
+
+## 9. 2026-10-04 之后的变更
+
+- 提交 `828898005`(已上线,线上数据已迁移,回读 PASS):
+  - v2 页面里所有指向 `/app/...` 的开始按钮,在渲染时改成 `/login?mode=register&next=<原地址>`,新访客直接看到注册表单;已登录用户会被登录页直接转到 `next`。
+    转换只在 `src/components/storefront/aidreamcapes-v2/parts.tsx` 的 `withStartLinks` 里做;链接产品页地址的表单仍直接提交到 `/app/create`。
+  - 每页数据新增 `startNote`(由 `PLANS` 生成的价格与失败退回积分说明),显示在开始按钮下方;旧数据没有这个字段时不显示。
+  - 列表页、`/inspiration`、FAQ、Trust & Safety 增加收尾按钮;每篇文章中间加一个对应工具的试用框(`ARTICLE_TOOL`);每个示例加"Try this with your product"(`FLOW_TOOL`)。
+  - 购物车 `/cart` 的 `cart_intro_1` 原本没有图片,共享渲染器会显示旧的人像相册文案;现在通过 `utility-pages.json` 的字段补丁给它加了一张产品图,不改共享代码。
+- 域名 `aivideosugc.com` 与 `www.aivideosugc.com`:DNS 在 Cloudflare(代理开启),服务器上新增
+  `/www/server/panel/vhost/nginx/aivideosugc.com.conf`,所有地址 301 永久跳转到 `https://aidreamcapes.com` 的同一路径(保留查询参数)。
+  证书沿用 `aidreamcapes.com` 的源站证书。不要改成在两个域名上同时提供网站内容,会产生重复内容。
