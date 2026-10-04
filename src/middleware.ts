@@ -396,6 +396,18 @@ function mydreamshootsLegacyPublicRedirect(request: NextRequest): NextResponse |
   return NextResponse.redirect(target, imageAlias ? 308 : 301);
 }
 
+function mydreamshootsUnknownImageThemeResponse(request: NextRequest): NextResponse | undefined {
+  const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
+  const sitePathMatch = request.nextUrl.pathname.match(/^\/site\/mydreamshoots\/ai-image-generation\/([^/]+)\/?$/i);
+  if (hostSlug !== "mydreamshoots" && !sitePathMatch) return undefined;
+  const slug = sitePathMatch?.[1] ?? request.nextUrl.pathname.match(/^\/ai-image-generation\/([^/]+)\/?$/i)?.[1];
+  if (!slug || mydreamshootsPageCopyForSlug(slug)) return undefined;
+  return new NextResponse(request.method === "HEAD" ? null : "Page not found", {
+    status: 404,
+    headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store", "x-robots-tag": "noindex, follow" }
+  });
+}
+
 function grownstrideLegacyHostRedirect(request: NextRequest): NextResponse | undefined {
   const host = String(request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "")
     .split(",")[0]
@@ -644,6 +656,7 @@ function mydreamshootsImageThemeSeo(request: NextRequest): { title: string; desc
   const slug = request.nextUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/i)?.[1]?.trim().toLowerCase();
   if (!slug) return undefined;
   const pageCopy = mydreamshootsPageCopyForSlug(slug);
+  if (!pageCopy) return undefined;
   const label = slug.replace(/[-_]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
   const title = pageCopy?.seoTitle || (slug === "edit-by-prompt"
     ? "AI Edit By Prompt for Safe Scene Changes, Style Adjustments, and Custom Photo Edits | myDreamshoots"
@@ -990,6 +1003,8 @@ export async function middleware(request: NextRequest) {
   if (spanishXbyRedirect) return finalizeStorefrontResponse(spanishXbyRedirect, request);
   const legacyPublicRedirect = mydreamshootsLegacyPublicRedirect(request);
   if (legacyPublicRedirect) return finalizeStorefrontResponse(legacyPublicRedirect, request);
+  const unknownImageTheme = mydreamshootsUnknownImageThemeResponse(request);
+  if (unknownImageTheme) return finalizeStorefrontResponse(unknownImageTheme, request);
   const legacyMediaRewrite = aidreamcapesEuLegacyMediaRewrite(request);
   if (legacyMediaRewrite) return applyGrownstrideNoindex(legacyMediaRewrite, request);
   const iconResponse = await storefrontIconResponse(request);

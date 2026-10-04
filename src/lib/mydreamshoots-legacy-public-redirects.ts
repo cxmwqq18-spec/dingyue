@@ -1,7 +1,22 @@
 export const MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS = [
   { aliasPath: "/ai-image-generation/motion-generator", targetPath: "/ai-video-generation/motion-generator" },
   { aliasPath: "/ai-image-generation/estilo-y-fantasia", targetPath: "/ai-image-generation/travel" },
-  { aliasPath: "/ai-image-generation/urbano", targetPath: "/ai-image-generation/urban" }
+  { aliasPath: "/ai-image-generation/urbano", targetPath: "/ai-image-generation/urban" },
+  { aliasPath: "/ai-image-generation/best-themes-presets", targetPath: "/ai-image-generation" },
+  { aliasPath: "/ai-image-generation/professional", targetPath: "/ai-image-generation" },
+  { aliasPath: "/ai-image-generation/lifestyle-creative", targetPath: "/ai-image-generation" },
+  { aliasPath: "/ai-image-generation/magic", targetPath: "/ai-image-generation" },
+  { aliasPath: "/ai-image-generation/photo-tools", targetPath: "/ai-image-generation" },
+  { aliasPath: "/ai-image-generation/couple", targetPath: "/ai-image-generation/engagement-photo" },
+  { aliasPath: "/ai-image-generation/cultural", targetPath: "/ai-image-generation" },
+  { aliasPath: "/ai-image-generation/wedding", targetPath: "/ai-image-generation/wedding-photo" },
+  { aliasPath: "/ai-image-generation/sports", targetPath: "/ai-image-generation/soccer" },
+  { aliasPath: "/ai-image-generation/creator", targetPath: "/ai-image-generation/avatar" },
+  { aliasPath: "/ai-image-generation/video", targetPath: "/ai-video-generation" },
+  { aliasPath: "/ai-video-generation/christmas", targetPath: "/ai-save-the-date/christmas" },
+  { aliasPath: "/ai-video-generation/halloween", targetPath: "/ai-save-the-date/halloween" },
+  { aliasPath: "/ai-video-generation/fathers-day", targetPath: "/ai-save-the-date/fathers-day" },
+  { aliasPath: "/ai-video-generation/engagement", targetPath: "/ai-save-the-date/engagement" }
 ] as const;
 
 // These routes were retired rather than migrated. Keep this explicit so a

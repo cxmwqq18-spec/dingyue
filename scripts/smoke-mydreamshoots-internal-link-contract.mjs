@@ -28,6 +28,9 @@ assert.equal(watch.sourcePath,editorial.sourcePath,'Current editorial source mus
 assert.equal(watch.sourceLabel,editorial.sourceLabel);
 assert.equal(watch.contextualLinks[0].href,'/best-ai-video');
 assert.equal(watch.contentPath,media);
+const workflowSource = {slug:'/workflow',title:'Workflow',publishedJson:{sections:{tutorial:{...editorial,contextualLinks:[{href:'/',label:'Generic workflow links'}]}}}};
+const [watchWithDuplicateSource] = mydreamshootsVideoWatchPagesForState({videoThemes:[theme]},site,{pages:[source,workflowSource]});
+assert.equal(watchWithDuplicateSource.contextualLinks[0].href,'/best-ai-video','Authored watch links must survive generic source-page discovery');
 const incomplete = structuredClone(source); delete incomplete.publishedJson.videoWatchEntries[0].durationSeconds;
 assert.equal(mydreamshootsVideoWatchPagesForState({videoThemes:[]},site,{pages:[incomplete]}).length,0,'Links must not make incomplete media indexable');
 const frenchSite = {id:'site_aidreamcapes_xby',slug:'aidreamcapes-xby',primaryDomain:'aidreamcapes.eu'};

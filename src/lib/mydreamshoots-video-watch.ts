@@ -439,6 +439,26 @@ export function mydreamshootsVideoWatchPagesForState(
     }, config, usedSlugs);
   }
 
+  // The current video index owns its watch-page links. Generic links inherited
+  // from a source page must not replace that authored sequence.
+  if (config.siteId === "site_dreamshoot") {
+    for (const page of pages) {
+      if (page.slug !== "/best-ai-video") continue;
+      const json = page.publishedJson;
+      if (!json || typeof json !== "object" || !("videoWatchEntries" in json)) continue;
+      const entries = (json as { videoWatchEntries?: unknown }).videoWatchEntries;
+      if (!Array.isArray(entries)) continue;
+      for (const entry of entries) {
+        if (!entry || typeof entry !== "object") continue;
+        const value = entry as Record<string, unknown>;
+        const contentPath = normalizeVideoContentPath(value.videoUrl, config);
+        const links = contextualLinksFromValue(value.contextualLinks);
+        const current = records.get(contentPath);
+        if (current && links.length) records.set(contentPath, { ...current, contextualLinks: links });
+      }
+    }
+  }
+
   return [...records.values()].sort((left, right) => left.watchPath.localeCompare(right.watchPath));
 }
 
