@@ -5,14 +5,17 @@ const publicCacheControl = "public, max-age=60, s-maxage=300, stale-while-revali
 const publicCdnCacheControl = "public, s-maxage=300, stale-while-revalidate=1800";
 const publicSitemapCacheControl = "public, max-age=300, s-maxage=900, stale-while-revalidate=86400";
 const publicSitemapCdnCacheControl = "public, s-maxage=900, stale-while-revalidate=86400";
-const legacyWatchPaths = [
+const requiredWatchPaths = [
   "/watch/ai-video-creation-tutorial",
+  "/watch/mydreamshoots-ai-video-tutorial-20260814",
+  "/watch/turn-your-photos-and-ideas-into-tiktok-first-videos",
   "/watch/christmas-family-gift",
   "/watch/valentines-day-save-the-date"
 ];
 const publicPaths = [
   "/",
-  ...legacyWatchPaths,
+  ...requiredWatchPaths,
+  "/watch/turn-photos-and-ideas-into-tiktok-first-videos",
   "/pricing",
   "/state-privacy",
   "/terms",
@@ -99,8 +102,8 @@ async function assertPublicPage(path) {
 
 const discoveredPublicPaths = await sitemapPaths();
 const discoveredWatchPaths = discoveredPublicPaths.filter((path) => path.startsWith("/watch/"));
-assert(discoveredWatchPaths.length >= legacyWatchPaths.length, "sitemap.xml must expose dynamically discovered watch pages");
-for (const path of legacyWatchPaths) assert(discoveredWatchPaths.includes(path), `${path} must remain in sitemap.xml`);
+assert(discoveredWatchPaths.length >= requiredWatchPaths.length, "sitemap.xml must expose dynamically discovered watch pages");
+for (const path of requiredWatchPaths) assert(discoveredWatchPaths.includes(path), `${path} must remain in sitemap.xml`);
 const allPublicPaths = [...new Set([...publicPaths, ...discoveredPublicPaths])];
 const publicConcurrency = 8;
 for (let index = 0; index < allPublicPaths.length; index += publicConcurrency) {

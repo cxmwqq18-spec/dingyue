@@ -3,8 +3,10 @@ import assert from "node:assert/strict";
 
 const origin = (process.env.SMOKE_BASE_URL || "http://127.0.0.1:3002").replace(/\/$/, "");
 const host = process.env.SMOKE_PUBLIC_HOST || "www.mydreamshoots.com";
-const legacyWatchPaths = [
+const requiredWatchPaths = [
   "/watch/ai-video-creation-tutorial",
+  "/watch/mydreamshoots-ai-video-tutorial-20260814",
+  "/watch/turn-your-photos-and-ideas-into-tiktok-first-videos",
   "/watch/christmas-family-gift",
   "/watch/valentines-day-save-the-date"
 ];
@@ -56,8 +58,8 @@ if (allowEmptySitemap && uniqueWatchPaths.length === 0) {
   console.log(JSON.stringify({ ok: true, origin, runtimeDataUnavailable: true, watchPages: 0, uniqueVideoAssets: 0 }, null, 2));
   process.exit(0);
 }
-assert(uniqueWatchPaths.length >= legacyWatchPaths.length, "sitemap must expose all legacy and dynamically discovered watch pages");
-for (const path of legacyWatchPaths) assert(uniqueWatchPaths.includes(path), `${path} must be present in sitemap.xml`);
+assert(uniqueWatchPaths.length >= requiredWatchPaths.length, "sitemap must expose all required and dynamically discovered watch pages");
+for (const path of requiredWatchPaths) assert(uniqueWatchPaths.includes(path), `${path} must be present in sitemap.xml`);
 
 const contentLocations = urls
   .map((urlBlock) => decodeXml(urlBlock.match(/<video:content_loc>([^<]+)<\/video:content_loc>/i)?.[1]))

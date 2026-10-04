@@ -99,6 +99,59 @@ const LEGACY_VIDEO_SLUG_ALIASES = new Map([
   ["/assets/dreamshoot/save-the-date/valentines-day/valentines-day-save-the-date.mp4", "valentines-day-save-the-date"]
 ]);
 
+const LEGACY_VIDEO_WATCH_SLUG_ALIASES = new Map([
+  ["turn-photos-and-ideas-into-tiktok-first-videos", "/assets/dreamshoot/tiktok-video/turn-your-photos-and-ideas-into-tiktok-first-videos.mp4"]
+]);
+
+// These public videos predate the relational watch-page metadata contract.
+// Keep their known editorial facts as fallback data so an older homepage or
+// workflow record cannot publish a link that resolves to a 404 merely because
+// its ThemePage JSON has no videoDurationSeconds field.
+type LegacyVideoCatalogEntry = {
+  sourcePath: string;
+  name: string;
+  description: string;
+  thumbnailPath: string;
+  uploadDate: string;
+  durationSeconds: number;
+};
+
+const MYDREAMSHOOTS_LEGACY_VIDEO_CATALOG = new Map<string, LegacyVideoCatalogEntry>([
+  [
+    "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-image-tutorial-20260814.mp4",
+    {
+      sourcePath: "/workflow",
+      name: "Create an AI photo set from source photos.",
+      description: "Watch the signed-in flow: choose a photo package, upload a clear source photo, review audience, credits, and selected uploads, start generation, refresh the workspace, and open the finished image.",
+      thumbnailPath: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-image-tutorial-20260814-cover-v2.jpg",
+      uploadDate: "2026-08-14T00:00:00.000Z",
+      durationSeconds: 61
+    }
+  ],
+  [
+    "/assets/dreamshoot/generated/homepage-showcase/videos/mydreamshoots-ai-video-tutorial-20260814.mp4",
+    {
+      sourcePath: "/workflow",
+      name: "Turn selected images into a private AI video.",
+      description: "Watch the image-to-video flow: upload frame images, choose the video mode, set the aspect ratio and duration, generate the clip, and preview the finished motion result.",
+      thumbnailPath: "/assets/dreamshoot/generated/homepage-showcase/posters/mydreamshoots-ai-video-tutorial-20260814-cover-v2.jpg",
+      uploadDate: "2026-08-14T00:00:00.000Z",
+      durationSeconds: 58
+    }
+  ],
+  [
+    "/assets/dreamshoot/tiktok-video/turn-your-photos-and-ideas-into-tiktok-first-videos.mp4",
+    {
+      sourcePath: "/ai-video-generation/tiktok-video",
+      name: "TikTok Video",
+      description: "Turn photos and ideas into TikTok-first vertical videos with clearer hooks, mobile-safe framing, captions, sound-aware structure, and one focused close.",
+      thumbnailPath: "/assets/dreamshoot/generated/video-topic-clean/tiktok-video/ai-tiktok-video-creator-phone-portrait.webp",
+      uploadDate: "2026-08-19T10:09:23.619Z",
+      durationSeconds: 15
+    }
+  ]
+]);
+
 type VideoWatchSourcePage = {
   slug: string;
   title?: string;
@@ -357,6 +410,17 @@ function addCandidate(records: Map<string, MyDreamShootsVideoWatchPage>, candida
   });
 }
 
+function addLegacyCatalogEntries(
+  records: Map<string, MyDreamShootsVideoWatchPage>,
+  config: VideoWatchSiteConfig,
+  usedSlugs: Set<string>
+): void {
+  if (config.siteId !== "site_dreamshoot") return;
+  for (const [contentPath, entry] of MYDREAMSHOOTS_LEGACY_VIDEO_CATALOG) {
+    addCandidate(records, { contentPath, ...entry }, config, usedSlugs);
+  }
+}
+
 export function mydreamshootsVideoWatchPagesForState(
   state: Pick<PlatformState, "videoThemes">,
   site: Pick<Site, "id" | "slug" | "primaryDomain" | "themeSettings">,
@@ -439,6 +503,9 @@ export function mydreamshootsVideoWatchPagesForState(
     }, config, usedSlugs);
   }
 
+  // Runtime relational and published metadata wins; the catalog only fills gaps.
+  addLegacyCatalogEntries(records, config, usedSlugs);
+
   // The current video index owns its watch-page links. Generic links inherited
   // from a source page must not replace that authored sequence.
   if (config.siteId === "site_dreamshoot") {
@@ -466,7 +533,10 @@ export function mydreamshootsVideoWatchPageForSlug(
   slug: string,
   pages: readonly MyDreamShootsVideoWatchPage[] = []
 ): MyDreamShootsVideoWatchPage | undefined {
-  return pages.find((page) => page.slug === slug);
+  const exact = pages.find((page) => page.slug === slug);
+  if (exact) return exact;
+  const aliasedContentPath = LEGACY_VIDEO_WATCH_SLUG_ALIASES.get(slug);
+  return aliasedContentPath ? pages.find((page) => page.contentPath === aliasedContentPath) : undefined;
 }
 
 export function mydreamshootsVideoWatchPathForContentPath(
