@@ -131,3 +131,16 @@ Cloudflare 的邮箱混淆会把页面里的邮箱显示成 `[email protected]`,
 - 部署脚本和冒烟检查都改为用 `www.aivideosugc.com` 访问;服务目录名仍是 `/www/wwwroot/aidreamcapes.com`、服务名 `aidreamcapes.service`,没有改。
 - 客服邮箱仍是 `support@aidreamcapes.com`(邮件依赖该域名的邮箱服务)。**不要让 aidreamcapes.com 过期**:跳转、证书续期和邮箱都还依赖它。
 - 需要站点所有者在 Google Search Console 添加新域名、提交新站点地图,并在旧域名属性里使用"更改地址"工具指向新域名。
+
+## 11. 2026-10-05:品牌改名、常见问答、商业化介绍、内链(均已上线)
+
+- 品牌名改为 **AIVideosUGC**,客服邮箱 `support@aivideosugc.com`,新图标在 `/assets/sites/site_aidreamcapes/brand/aivideosugc-*.png`(已传到线上 release 的 `public/`)。
+  迁移脚本用 `BRAND_SWAPS` / `rebrandTree` 把库里工具页、法律页、站点名称与描述、页头页脚设置、公司资料里的旧品牌词和旧邮箱换掉;社交账号链接(`@aidreamcapes`)保持不变。
+  旧补丁的比较忽略品牌词,重复运行不会报冲突。站点 ID、目录名、服务名仍是 aidreamcapes。
+- **注意:aivideosugc.com 和 aidreamcapes.com 目前都没有 MX 记录,客服邮箱收不到邮件**,需要站点所有者配置收信(例如 Cloudflare Email Routing)。
+- 常见问答:"How do credits work?" 只保留在首页、FAQ、价格页;博客页补了问答;登录页和 404 页标题已改名。
+- 首页新增"What is an AI UGC video ad?"和"Who AIVideosUGC is for";价格卡写明大约可做多少图片和 15 秒视频;价格页列出每种任务的积分
+  (`JOB_CREDITS`:图片 24、视频 6/10/15 秒为 24/40/60,来自工作台默认计价,本站没有单独配置)。
+- 内链:工具、模板、行业、平台、节日页的介绍段落和卡片会按 `AUTO_LINKS` 自动给首次出现的关键短语加链接(每页最多 5 个、每个目标全站最多 8 个、不链自己);
+  按钮下的价格说明链到 `/pricing`;示例区下方链到 `/inspiration`;视频广告、社媒广告图、开箱视频页的规格表列出四个节日页。
+- 仍待站点所有者决定:开通付款(目前显示 "Checkout coming soon")、注册赠送积分(`Site.signupCreditGrant` 现在是 0)、真实评价、用本产品生成的示例视频。
