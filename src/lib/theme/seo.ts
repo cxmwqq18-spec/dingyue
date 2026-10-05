@@ -91,7 +91,9 @@ export function metadataForSingleThemePage(site: Site, page: ThemePage, context:
   const resolvedOgImageAlt = ogImageAlt ?? (isAidreamcapesSite(site)
     ? isAidreamcapesEu
       ? `Illustration de ${seo.title.replace(/\s*\|\s*Aidreamcapes\s*$/i, "").trim()} pour Aidreamcapes.`
-      : `Preview image for ${seo.title.replace(/\s*\|\s*Aidreamcapes\s*$/i, "").trim()} — Aidreamcapes.`
+      : site.id === "site_aidreamcapes"
+        ? `Preview image for ${seo.title.replace(/\s*\|\s*(?:AIVideosUGC|Aidreamcapes)\s*$/i, "").trim()} — AIVideosUGC.`
+        : `Preview image for ${seo.title.replace(/\s*\|\s*Aidreamcapes\s*$/i, "").trim()} — Aidreamcapes.`
     : undefined);
   return {
     title: seo.title,
