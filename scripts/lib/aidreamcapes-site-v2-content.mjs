@@ -403,6 +403,9 @@ const PLANS_BASE = [
 ];
 
 const PLANS = PLANS_BASE.map((plan) => ({ ...plan, features: [planEstimate(plan.credits), ...plan.features] }));
+// The tools every occasion page recommends; those tool pages link back to the occasions.
+const OCCASION_TOOLS = ["video-ads", "social-ad-photos", "unboxing-videos"];
+const OCCASION_IDS = ["occ-product-launch", "occ-sale-discount", "occ-black-friday", "occ-holidays"];
 const JOB_COST_ROWS = [
   ["Product photo", `${JOB_CREDITS.photo} credits`],
   ["Video, 6 seconds", `${JOB_CREDITS.video6} credits`],
@@ -411,7 +414,9 @@ const JOB_COST_ROWS = [
 ];
 
 // One line under every start button, so the price and what happens to credits are clear before a visitor signs up.
-const START_NOTE = `Plans from ${PLANS[0].price} a month. You see the credit cost before every job, and if a job fails its credits go back to your balance.`;
+const START_NOTE_TEXT = (lead) => `${lead}. You see the credit cost before every job, and if a job fails its credits go back to your balance.`;
+const START_NOTE = START_NOTE_TEXT(`[Plans from ${PLANS[0].price} a month](/pricing)`);
+const START_NOTE_PLAIN = START_NOTE_TEXT(`Plans from ${PLANS[0].price} a month`);
 
 // The closing banner of each list page.
 const INDEX_CTA = {
@@ -544,6 +549,91 @@ function inlineLinks(model, value, where) {
   });
 }
 
+// Contextual links in the opening paragraphs of the selling pages. The first mention of a phrase links to the page about
+// it, so the tool, occasion, industry, template and platform pages are linked from the copy around them with the words
+// people search for. Earlier entries win; each target is linked once per page, never to the page itself, at most AUTO_LINK_MAX times.
+const AUTO_LINK_MAX = 5;
+// Across the whole site a page receives at most this many automatic links, so common words (Reels, product photos)
+// don't pile links onto a few pages.
+const AUTO_LINK_TARGET_CAP = 8;
+const AUTO_LINKS = [
+  [/\b(?:Black Friday|Cyber Monday)\b/i, "occ-black-friday"],
+  [/\bholiday (?:season|ads?|sales?|campaigns?|gifts?|shoppers)\b/i, "occ-holidays"],
+  [/\b(?:product launch(?:es)?|new launch(?:es)?|launch day)\b/i, "occ-product-launch"],
+  [/\b(?:(?:sale|discount|promo) (?:ads?|campaigns?|banners?|images?)|flash sales?|seasonal sales?)\b/i, "occ-sale-discount"],
+  [/\b(?:UGC(?:-style)? (?:video )?ads?|creator-style (?:video )?(?:ads?|clips?|videos?)|video ads?)\b/i, "video-ads"],
+  [/\bwhite[- ]background (?:photos?|images?|shots?|versions?)\b|\bwhite backgrounds?\b/i, "white-background"],
+  [/\blifestyle (?:photos?|scenes?|shots?|images?)\b/i, "lifestyle-photos"],
+  [/\b(?:on-model|model) (?:photos?|shots?|images?)\b/i, "model-photos"],
+  [/\b(?:feed ad (?:images?|photos?)|social ad (?:images?|photos?)|feed ads?)\b/i, "social-ad-photos"],
+  [/\b(?:unboxing (?:videos?|clips?)|reveal clips?)\b/i, "unboxing-videos"],
+  [/\b(?:product (?:videos?|demos?)|demo(?:-style)? (?:videos?|clips?))\b/i, "product-videos"],
+  [/\bbefore[- ]and[- ]after (?:videos?|clips?)\b/i, "before-after-videos"],
+  [/\b(?:new backgrounds?|change (?:the|your) background)\b/i, "change-background"],
+  [/\b(?:image to video|photo into a (?:short )?video)\b/i, "image-to-video"],
+  [/\b(?:product (?:page )?links?|product URLs?)\b/i, "url-to-video"],
+  [/\b(?:skincare|beauty (?:brands?|products?)|cosmetics)\b/i, "ind-beauty-skincare"],
+  [/\b(?:clothing|apparel|fashion brands?)\b/i, "ind-fashion-clothing"],
+  [/\b(?:shoes|sneakers|footwear)\b/i, "ind-shoes"],
+  [/\bjewelry\b/i, "ind-jewelry-accessories"],
+  [/\b(?:electronics|gadgets?)\b/i, "ind-electronics"],
+  [/\b(?:supplements?|wellness (?:brands?|products?))\b/i, "ind-health-wellness"],
+  [/\b(?:food and drinks?|food (?:brands?|products?)|beverages?)\b/i, "ind-food-drinks"],
+  [/\b(?:home goods|home decor|furniture)\b/i, "ind-home-living"],
+  [/\bsize comparisons?\b/i, "tpl-size"],
+  [/\b(?:colou?r (?:variants?|options)|colorways?)\b/i, "tpl-color"],
+  [/\b(?:close-ups?|macro (?:views?|shots?|details?))\b/i, "tpl-detail"],
+  [/\bpackaging (?:mockups?|designs?|previews?)\b/i, "tpl-pack"],
+  [/\blookbooks?\b/i, "tpl-look"],
+  [/\bstudio light(?:ing)?\b/i, "tpl-light"],
+  [/\b(?:what's in the box|gift sets?|bundles?)\b/i, "tpl-box"],
+  [/\bheadshots?\b/i, "tpl-head"],
+  [/\b(?:(?:square |sale )?banners?)\b/i, "tpl-sale"],
+  [/\b(?:promo clips?|teasers?)\b/i, "tpl-launch"],
+  [/\bTikTok\b/, "plat-tiktok"],
+  [/\b(?:Instagram|Reels)\b/, "plat-instagram"],
+  [/\bFacebook\b/, "plat-facebook"],
+  [/\bYouTube Shorts\b/, "plat-youtube-shorts"],
+  [/\bAmazon\b/, "plat-amazon"],
+  [/\bShopify\b/, "plat-shopify"],
+  [/\b(?:Reels|Stories)\b/, "plat-instagram"],
+  [/\bproduct (?:photos?|shots?)\b/i, "photo-hub"],
+  [/\b(?:(?:short|vertical|square) (?:product )?(?:videos?|clips?))\b/i, "video-hub"]
+];
+function autoLinks(model, paras, page) {
+  if (!Array.isArray(paras) || !paras.length) return paras;
+  const out = paras.map((para) => inlineLinks(model, para, page.id));
+  const linked = new Set(out.flatMap((para) => [...para.matchAll(INLINE_LINK)].map((match) => match[2])));
+  let added = 0;
+  model.autoLinkCount ??= {};
+  for (const [pattern, targetId] of AUTO_LINKS) {
+    if (added >= AUTO_LINK_MAX) break;
+    const target = model.byId[targetId];
+    if (!target || targetId === page.id || linked.has(target.url) || (model.autoLinkCount[targetId] ?? 0) >= AUTO_LINK_TARGET_CAP) continue;
+    for (let index = 0; index < out.length; index += 1) {
+      // Only plain text is searched, never the label or address of a link already in the paragraph.
+      const masked = out[index].replace(INLINE_LINK, (whole) => " ".repeat(whole.length));
+      const match = pattern.exec(masked);
+      if (!match) continue;
+      out[index] = `${out[index].slice(0, match.index)}[${out[index].slice(match.index, match.index + match[0].length)}](${target.url})${out[index].slice(match.index + match[0].length)}`;
+      linked.add(target.url); added += 1;
+      model.autoLinkCount[targetId] = (model.autoLinkCount[targetId] ?? 0) + 1;
+      break;
+    }
+  }
+  return out;
+}
+
+// The same contextual links across a page's opening paragraphs and the descriptions in its idea or benefit cards.
+function autoLinkPage(model, page, intro, groups) {
+  const paras = Array.isArray(intro) ? intro : [];
+  const lists = groups.map((items) => (Array.isArray(items) ? items : []));
+  const linked = autoLinks(model, [...paras, ...lists.flatMap((items) => items.map((item) => item.d ?? ""))], page) ?? [];
+  let at = paras.length;
+  return { intro: Array.isArray(intro) ? linked.slice(0, paras.length) : intro,
+    groups: lists.map((items) => items.map((item) => ({ ...item, d: linked[at++] }))) };
+}
+
 // Links in a spec row ("Best for", "Popular with"): the names stay readable as plain text
 // in `value`, and each one also leads to its page.
 function specLinks(model, ids) {
@@ -610,7 +700,7 @@ function payloadFor(model, page) {
     id: page.id, label: page.label, eyebrow: c.eyebrow || page.label, h1: c.h1, lead: c.lead,
     breadcrumbs: page.id === "home" ? [] : breadcrumbTrail(model, page),
     faq: (c.faq || []).map((item) => ({ q: item.q, a: item.a })),
-    startNote: START_NOTE
+    startNote: page.type === "pricing" ? START_NOTE_PLAIN : START_NOTE
   };
   const t = page.type;
   if (t === "home") {
@@ -624,12 +714,14 @@ function payloadFor(model, page) {
       templates: { title: c.templates_title, lead: c.templates_lead, cards: HOME_FEATURED.map((key) => cardRef(model, key, key === "creator" ? "alt" : "primary")).filter(Boolean), total: model.cards.length },
       platforms: { title: c.platforms_title, items: Object.entries(model.plat).map(([slug, label]) => ({ label, href: model.byId[`plat-${slug}`].url, spec: (model.content[`plat-${slug}`].specs || [["", ""]])[0][1] })) },
       steps: c.steps, compare: c.compare, plans: PLANS,
-      ...(c.ugc ? { ugc: c.ugc } : {}), ...(c.audience ? { audience: c.audience } : {}),
+      ...(c.ugc ? { ugc: { ...c.ugc, paras: (c.ugc.paras || []).map((para) => inlineLinks(model, para, page.id)) } } : {}),
+      ...(c.audience ? { audience: { ...c.audience, items: (c.audience.items || []).map((item) => ({ ...item, d: inlineLinks(model, item.d, page.id) })) } } : {}),
       examples: { flows: (c.example_flows || []).map((item) => exampleFlow(model, item)) }
     };
   }
   if (t === "hub") {
-    return { ...base, intro: c.intro, benefits: c.benefits, steps: c.steps, tools: VIDEO_TOOLS.map((id) => toolRef(model, id)),
+    const linkedCopy = autoLinkPage(model, page, c.intro, [c.benefits]);
+    return { ...base, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, tools: VIDEO_TOOLS.map((id) => toolRef(model, id)),
       heroCards: ["creator", "unbox", "beauty"].map((key) => cardRef(model, key, "primary")).filter(Boolean),
       cards: CARD_ORDER.filter((key) => model.cardByKey[key].kind === "video" && !["creator", "unbox", "beauty"].includes(key)).map((key) => cardRef(model, key, "primary")).filter(Boolean),
       appHref: appHref({ tool: "video-ads", size: "9:16", length: "15" }, true),
@@ -645,13 +737,15 @@ function payloadFor(model, page) {
     const industryIds = Object.entries(IND_TOOLS).filter(([, tools]) => tools.includes(page.id)).map(([slug]) => `ind-${slug}`).slice(0, 5);
     const platformIds = Object.entries(PLAT_TOOLS).filter(([, tools]) => tools.includes(page.id)).map(([slug]) => `plat-${slug}`).slice(0, 5);
     const names = (ids) => ids.map((id) => model.byId[id].label).join(", ");
-    return { ...base, group: page.group, intro: c.intro, benefits: c.benefits, steps: c.steps, uses: c.uses || [],
+    const linkedCopy = autoLinkPage(model, page, c.intro, [c.benefits, c.uses || []]);
+    return { ...base, group: page.group, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, uses: linkedCopy.groups[1],
       maker: { options: (c.maker?.options || []).slice(0, 3), cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(page, rel[0]?.key), urlInput: page.id === "url-to-video" },
       specs: [
         ...(video ? [["Sizes", "9:16 · 1:1 · 16:9"], ["Length", "6, 10 or 15 seconds"], ["You start with", page.id === "url-to-video" ? "A product page link" : "1 product photo"], ["Cost", "Shown before you start"]]
           : [["Size", "Square by default"], ["You upload", "1 product photo"], ["You get", "A new product photo"], ["Cost", "Shown before you start"]]),
         ...(platformIds.length ? [["Best for", names(platformIds), specLinks(model, platformIds)]] : []),
-        ...(industryIds.length ? [["Popular with", names(industryIds), specLinks(model, industryIds)]] : [])
+        ...(industryIds.length ? [["Popular with", names(industryIds), specLinks(model, industryIds)]] : []),
+        ...(OCCASION_TOOLS.includes(page.id) ? [["Good for", names(OCCASION_IDS), specLinks(model, OCCASION_IDS)]] : [])
       ],
       hero: page.id === "white-background" ? { single: imageRef(model, "p_white", "Running shoe on a pure white background") }
         : page.id === "spokesperson-videos" ? { single: imageRef(model, "presenter", "AI-generated presenter holding a skincare bottle") }
@@ -669,7 +763,8 @@ function payloadFor(model, page) {
     const industryIds = page.industries.map((slug) => `ind-${slug}`);
     const occasionIds = (page.occasions ?? []).map((slug) => `occ-${slug}`);
     const names = (ids) => ids.map((id) => model.byId[id].label).join(", ");
-    return { ...base, kind: page.group, intro: c.intro, tip: c.tip, steps: c.steps, ideas: c.ideas || [],
+    const linkedCopy = autoLinkPage(model, page, c.intro, [c.ideas || []]);
+    return { ...base, kind: page.group, intro: linkedCopy.intro, tip: c.tip, steps: c.steps, ideas: linkedCopy.groups[0],
       image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, `${page.label} example`),
       maker: { options: (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3), cta: c.maker?.cta || "Use this template", href: toolAppHref(tool, key) },
       specs: [
@@ -685,12 +780,13 @@ function payloadFor(model, page) {
     const slug = page.id.split("-").slice(1).join("-");
     const field = { industry: "ind", platform: "plat", occasion: "occ" }[t];
     const keys = model.cards.filter((card) => card[field].includes(slug)).map((card) => card.key);
-    const tools = (t === "industry" ? IND_TOOLS[slug] : t === "platform" ? PLAT_TOOLS[slug] : ["video-ads", "social-ad-photos", "unboxing-videos"]) || [];
+    const tools = (t === "industry" ? IND_TOOLS[slug] : t === "platform" ? PLAT_TOOLS[slug] : OCCASION_TOOLS) || [];
     const hasHero = Boolean(model.media.plan.pages[page.id]?.hero);
     const collage = hasHero ? [] : pickCards(model, keys, 3);
     const listed = pickCards(model, keys.filter((key) => !collage.some((card) => card.key === key)), 6);
     const paramKey = { industry: "industry", platform: "platform", occasion: "occasion" }[t];
-    return { ...base, kind: t, intro: c.intro, ideas: c.ideas || [], specs: c.specs || [], tips: c.tips || [], plan: c.plan || [],
+    const linkedCopy = autoLinkPage(model, page, c.intro, [c.ideas || []]);
+    return { ...base, kind: t, intro: linkedCopy.intro, ideas: linkedCopy.groups[0], specs: c.specs || [], tips: c.tips || [], plan: c.plan || [],
       cards: listed, heroCards: collage, tools: tools.map((id) => toolRef(model, id, false)),
       appHref: appHref({ [paramKey]: slug, ...(t === "platform" && ["tiktok", "youtube-shorts", "instagram"].includes(slug) ? { size: "9:16", length: "15" } : {}) }, t === "platform" && ["tiktok", "youtube-shorts"].includes(slug)),
       reading: readingFor(model, page) };

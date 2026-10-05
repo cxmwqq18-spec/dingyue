@@ -80,7 +80,7 @@ function HomePage({ data, r }: Props) {
                     <small>See the cost before you start</small>
                   </div>
                 </div>
-                <StartNote note={text(data.startNote)} />
+                <StartNote note={text(data.startNote)} r={r} />
               </div>
             </div>
             {heroMedia?.kind === "loop" ? (
@@ -126,7 +126,7 @@ function HomePage({ data, r }: Props) {
       </section>
       {ugc?.title ? (
         <Section eyebrow={ugc.eyebrow ?? "AI UGC ads"} title={ugc.title}>
-          <Intro paras={list<string>(ugc.paras)} />
+          <Intro paras={list<string>(ugc.paras)} r={r} />
           {list<V2Item>(ugc.formats).length ? <div style={{ marginTop: 22 }}><Boxes className="ideas" items={list<V2Item>(ugc.formats)} /></div> : null}
         </Section>
       ) : null}
@@ -150,7 +150,7 @@ function HomePage({ data, r }: Props) {
           <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/inspiration")}>See more examples →</a></div>
         </Section>
       ) : null}
-      {audience?.title ? <Section eyebrow="Who it's for" lead={audience.lead ?? ""} title={audience.title}><Boxes className="ideas" items={list<V2Item>(audience.items)} /></Section> : null}
+      {audience?.title ? <Section eyebrow="Who it's for" lead={audience.lead ?? ""} title={audience.title}><Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} /></Section> : null}
       <Section eyebrow="Why stores switch" title="Skip the photoshoot. Keep testing new ads.">
         <div className="cmp-wrap">
           <table className="cmp">
@@ -173,6 +173,11 @@ function HomePage({ data, r }: Props) {
 
 // Each step of a flow shares the row by the shape of its picture, so every step ends up the same height and the row fits its box.
 const flowAspect = (step: V2Flow["steps"][number]) => (step.tall ? 9 / 16 : (step.image.width ?? 4) / (step.image.height ?? 3)).toFixed(3);
+
+// A link to the full start-to-finish examples under a page's own examples.
+function MoreExamples({ r }: { r: V2Resolvers }) {
+  return <p className="meta-line" style={{ marginTop: 18 }}><a href={r.href("/inspiration")}>See start-to-finish product examples →</a></p>;
+}
 
 function Flows({ flows, r }: { flows: V2Flow[]; r: V2Resolvers }) {
   return (
@@ -201,9 +206,9 @@ function VideoHubPage({ data, r }: Props) {
       <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Collage cards={list<V2Card>(data.heroCards)} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={{ options: [["Size", "9:16 · TikTok & Reels"], ["Length", "15 seconds"]], cta: "Make my video", href: text(data.appHref) }} r={r} />
       </PageHero>
-      <Section eyebrow="About" title="Short videos from your product photos"><Intro paras={list<string>(data.intro)} /></Section>
+      <Section eyebrow="About" title="Short videos from your product photos"><Intro paras={list<string>(data.intro)} r={r} /></Section>
       <Section eyebrow="Video tools" title="Pick the video you need"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
-      <Section eyebrow="Why use it" title={`Why stores make videos with ${BRAND_NAME}`}><Boxes items={list<V2Item>(data.benefits)} /></Section>
+      <Section eyebrow="Why use it" title={`Why stores make videos with ${BRAND_NAME}`}><Boxes items={list<V2Item>(data.benefits)} r={r} /></Section>
       <Section eyebrow="How it works" title="Three steps"><Steps items={list<V2Item>(data.steps)} /></Section>
       <Section eyebrow="Video templates" title="Ready-made video ideas"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
       <Faq items={data.faq} title="Questions about AI video" />
@@ -226,15 +231,15 @@ function ToolPage({ data, r }: Props) {
       <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
       </PageHero>
-      {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} /></Section> : null}
-      {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /></Section> : null}
-      <Section eyebrow="What it is" title={`What ${data.label} can do for your store`}><Intro paras={list<string>(data.intro)} /></Section>
-      <Section eyebrow="Why use it" title={`Why stores use ${data.label}`}><Boxes items={list<V2Item>(data.benefits)} /></Section>
+      {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
+      {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
+      <Section eyebrow="What it is" title={`What ${data.label} can do for your store`}><Intro paras={list<string>(data.intro)} r={r} /></Section>
+      <Section eyebrow="Why use it" title={`Why stores use ${data.label}`}><Boxes items={list<V2Item>(data.benefits)} r={r} /></Section>
       <Section eyebrow="How it works" title="Three steps">
         <Steps items={list<V2Item>(data.steps)} />
         <div style={{ marginTop: 20 }}><Specs r={r} rows={list<V2SpecRow>(data.specs)} /></div>
       </Section>
-      {list<V2Item>(data.uses).length ? <Section eyebrow="Where to use it" title="Where it works best"><Boxes className="ideas" items={list<V2Item>(data.uses)} /></Section> : null}
+      {list<V2Item>(data.uses).length ? <Section eyebrow="Where to use it" title="Where it works best"><Boxes className="ideas" items={list<V2Item>(data.uses)} r={r} /></Section> : null}
       {list<V2Tool>(data.photoTools).length ? <Section eyebrow="Photo tools" title="All photo tools"><ToolRow r={r} tools={list<V2Tool>(data.photoTools)} /></Section> : null}
       {list<V2Card>(data.templates).length ? (
         <Section eyebrow="Templates" lead="Pick one, add your product photo and get the same look." title={`Templates for ${data.label}`}>
@@ -262,11 +267,11 @@ function TemplatePage({ data, r }: Props) {
       </PageHero>
       {gallery?.images.length ? <Section eyebrow="Examples" title="What this template looks like"><Gallery images={gallery.images} r={r} /></Section> : null}
       <Section eyebrow="About this template" title="What you get">
-        <Intro paras={list<string>(data.intro)} />
+        <Intro paras={list<string>(data.intro)} r={r} />
         <div style={{ marginTop: 20 }}><Specs r={r} rows={list<V2SpecRow>(data.specs)} /></div>
       </Section>
       <Section eyebrow="How it works" title="Three steps"><Steps items={list<V2Item>(data.steps)} /></Section>
-      {list<V2Item>(data.ideas).length ? <Section eyebrow="Ideas" title="Ways to use it"><Boxes className="ideas" items={list<V2Item>(data.ideas)} /></Section> : null}
+      {list<V2Item>(data.ideas).length ? <Section eyebrow="Ideas" title="Ways to use it"><Boxes className="ideas" items={list<V2Item>(data.ideas)} r={r} /></Section> : null}
       <Faq items={data.faq} title="Questions about this template" />
       <Section eyebrow="More templates" title="More like this"><TemplateGrid cards={list<V2Card>(data.more)} r={r} /></Section>
       <Reading items={list<V2Article>(data.reading)} r={r} />
@@ -287,8 +292,8 @@ function CollectionPage({ data, r }: Props) {
       <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Collage cards={list<V2Card>(data.heroCards)} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={{ options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
       </PageHero>
-      <Section eyebrow="Overview" title={overview}><Intro paras={list<string>(data.intro)} /></Section>
-      {gallery?.images.length ? <Section eyebrow="Examples" title={`${data.label} examples`}><Gallery images={gallery.images} r={r} /></Section> : null}
+      <Section eyebrow="Overview" title={overview}><Intro paras={list<string>(data.intro)} r={r} /></Section>
+      {gallery?.images.length ? <Section eyebrow="Examples" title={`${data.label} examples`}><Gallery images={gallery.images} r={r} /><MoreExamples r={r} /></Section> : null}
       {list<[string, string]>(data.specs).length ? (
         <Section eyebrow="Sizes and formats" title={`What works on ${data.label}`}>
           <Specs r={r} rows={list<V2SpecRow>(data.specs)} />
@@ -296,7 +301,7 @@ function CollectionPage({ data, r }: Props) {
         </Section>
       ) : null}
       {list<V2Item>(data.plan).length ? <Section eyebrow="Plan ahead" title="How to prepare"><Steps items={list<V2Item>(data.plan)} /></Section> : null}
-      {list<V2Item>(data.ideas).length ? <Section eyebrow="Ideas" title="What to make"><Boxes className="ideas" items={list<V2Item>(data.ideas)} /></Section> : null}
+      {list<V2Item>(data.ideas).length ? <Section eyebrow="Ideas" title="What to make"><Boxes className="ideas" items={list<V2Item>(data.ideas)} r={r} /></Section> : null}
       {cards.length ? (
         <Section eyebrow="Templates" lead={`${cards.length} ready-made looks. Pick one and add your product.`} title={`${data.label} templates`}>
           <TemplateGrid cards={cards} r={r} />
@@ -405,7 +410,7 @@ function ArticlePage({ data, r }: Props) {
                     <a className="btn btn-grad" href={r.href(tryBox.href)}>{tryBox.label} →</a>
                     {tryBox.more ? <a className="trymore" href={r.href(tryBox.more.href)}>{tryBox.more.label}</a> : null}
                   </div>
-                  <StartNote note={text(data.startNote)} />
+                  <StartNote note={text(data.startNote)} r={r} />
                 </aside>
               ) : null}
             </div>

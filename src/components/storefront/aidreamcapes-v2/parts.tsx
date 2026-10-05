@@ -72,14 +72,14 @@ export function Intro({ paras, r }: { paras: string[]; r?: V2Resolvers }) {
   return <div className="intro">{paras.map((para, index) => <p key={index}>{r ? <RichText r={r} text={para} /> : para}</p>)}</div>;
 }
 
-export function Boxes({ items, className = "ben" }: { items: V2Item[]; className?: string }) {
+export function Boxes({ items, className = "ben", r }: { items: V2Item[]; className?: string; r?: V2Resolvers }) {
   if (!items.length) return null;
   return (
     <div className={className}>
       {items.map((item) => (
         <div key={item.t}>
           <b>{item.t}</b>
-          <p>{item.d}</p>
+          <p>{r ? <RichText r={r} text={item.d} /> : item.d}</p>
         </div>
       ))}
     </div>
@@ -260,8 +260,8 @@ export function withStartLinks(r: V2Resolvers): V2Resolvers {
   };
 }
 
-export function StartNote({ note }: { note?: string }) {
-  return note ? <p className="start-note">{note}</p> : null;
+export function StartNote({ note, r }: { note?: string; r: V2Resolvers }) {
+  return note ? <p className="start-note"><RichText r={r} text={note} /></p> : null;
 }
 
 export function Maker({ maker, r, note }: { maker: V2Maker; r: V2Resolvers; note?: string }) {
@@ -295,7 +295,7 @@ export function Maker({ maker, r, note }: { maker: V2Maker; r: V2Resolvers; note
           <button className="btn btn-grad" type="submit">{maker.cta} →</button>
           <small>See the cost before you start</small>
         </div>
-        <StartNote note={note} />
+        <StartNote note={note} r={r} />
       </form>
     );
   }
@@ -313,7 +313,7 @@ export function Maker({ maker, r, note }: { maker: V2Maker; r: V2Resolvers; note
         <a className="btn btn-grad" href={r.href(maker.href)}>{maker.cta} →</a>
         <small>See the cost before you start</small>
       </div>
-      <StartNote note={note} />
+      <StartNote note={note} r={r} />
     </div>
   );
 }
@@ -429,7 +429,7 @@ export function CtaBand({ title, lead, href, r, note }: { title: string; lead: s
           <a className="btn btn-primary" href={r.href(href)}>Get started</a>
           <a className="btn btn-ghost" href={r.href("/templates")}>Browse templates</a>
         </div>
-        <StartNote note={note} />
+        <StartNote note={note} r={r} />
       </section>
     </div>
   );
