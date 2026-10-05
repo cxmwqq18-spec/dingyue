@@ -888,10 +888,12 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     const ogRef = model.media.plan.pages[page.id]?.og;
     const ogBase = ogRef ? mediaImage(model, ogRef, "og") : imageRef(model, page.img, c.h1);
     const ogImage = { src: ogBase.src, alt: ogBase.alt || heroImageOf(heroMedia)?.alt || c.h1, width: ogBase.width, height: ogBase.height };
-    const robots = page.noindex ? { index: false, follow: true } : { index: true, follow: true, maxImagePreview: "large" };
+    // Every public page is indexable; a page that is not ready is fixed or left out of the site, never hidden with noindex.
+    assert.ok(!("noindex" in page), `${page.id}: public pages may not be noindex`);
+    const robots = { index: true, follow: true, maxImagePreview: "large" };
     const seo = {
       title: c.title, description: c.description, keywords: (c.secondary_keywords || []).join(", "), primaryKeyword: page.primary_keyword,
-      canonicalPath: page.url, canonical: canonical(page), robots, index: !page.noindex,
+      canonicalPath: page.url, canonical: canonical(page), robots, index: true,
       ogImage: ogImage.src, ogImageAlt: ogImage.alt, twitterDescription: c.description,
       jsonLd: jsonLdFor(model, page, c, payload, ogImage)
     };
@@ -908,7 +910,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     for (const pair of pairs ?? []) { pushMedia(pair.after); pushMedia(pair.before); }
     const { pageType, templateKey } = livePageTypeFor(page);
     return {
-      id: page.id, slug: page.url, title: c.h1, pageType, templateKey, status: page.status, noindex: Boolean(page.noindex),
+      id: page.id, slug: page.url, title: c.h1, pageType, templateKey, status: page.status,
       contentJson: {
         version: 2, pageType,
         sectionsOrder: ["v2_main"],
@@ -959,7 +961,7 @@ function buildLlmsText(model) {
     ...c.facts.map(([k, v]) => `- ${k}: ${v}`), "",
     "## Not offered", ...c.not_offered.map((item) => `- ${item}`), "",
     "## Main pages",
-    ...["video-hub", "photo-hub", ...VIDEO_TOOLS.filter((id) => !model.byId[id].noindex), ...PHOTO_TOOLS.slice(1), "templates", "pricing", "faq", "trust", "ai-info"].map((id) => `- [${model.byId[id].label}](${canonical(model.byId[id])}): ${model.content[id].description}`)
+    ...["video-hub", "photo-hub", ...VIDEO_TOOLS, ...PHOTO_TOOLS.slice(1), "templates", "pricing", "faq", "trust", "ai-info"].map((id) => `- [${model.byId[id].label}](${canonical(model.byId[id])}): ${model.content[id].description}`)
   ];
   return lines.join("\n") + "\n";
 }
@@ -1011,6 +1013,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   const seen = { title: new Map(), description: new Map(), h1: new Map(), slug: new Map() };
   for (const page of build.pages) {
     const seo = page.contentJson.seo;
+    if (seo.index !== true || seo.robots?.index !== true) errors.push(`${page.id}: noindex is not allowed on public pages`);
     if (seo.title.length > 60) errors.push(`${page.id}: title ${seo.title.length} > 60`);
     if (seo.description.length < 120 || seo.description.length > 160) errors.push(`${page.id}: description ${seo.description.length} not in 120-160`);
     for (const [key, value] of [["title", seo.title], ["description", seo.description], ["h1", page.title], ["slug", page.slug]]) {
