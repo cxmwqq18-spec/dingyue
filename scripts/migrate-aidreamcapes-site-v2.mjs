@@ -141,6 +141,9 @@ try {
     await writeFile(backupPath, JSON.stringify({ site, existingPages, utilityPages: utilityRows, products: productRows, settings, profile }, null, 2) + "\n", "utf8");
     await prisma.$transaction(async (tx) => {
       for (const page of nextPages) {
+        // Unchanged pages are left alone so their updatedAt (the sitemap lastmod) only moves when the page really changes.
+        const existing = existingBySlug.get(page.slug);
+        if (existing && existing.title === page.title && hashJson(existing.contentJson) === hashJson(page.contentJson)) continue;
         await tx.livePage.upsert({
           where: { id: page.id },
           create: page,
@@ -193,6 +196,7 @@ try {
     assert.equal(hashJson(settingsReadback.draftJson.globalSections?.footer?.settings ?? null), hashJson(nextSettings(draftSettingsPatch).globalSections?.footer?.settings ?? null), "draft footer settings readback");
     console.log(JSON.stringify({ ok: true, mode: applyProduction ? "production-applied" : "local-applied", siteId: SITE_ID, backupPath,
       pages: report.length, creates: report.filter((item) => item.action === "CREATE").length, updates: report.filter((item) => item.action === "UPDATE").length,
+      changed: report.filter((item) => item.contentHash !== item.previousHash).length,
       navigationChanged, utilityPages: utilityReport, products: productReport, siteBranding: brandingReport, footerSettings: settingsReport, profile: profileReport, rename: renameReport, readback: "PASS" }, null, 2));
   }
 } finally {

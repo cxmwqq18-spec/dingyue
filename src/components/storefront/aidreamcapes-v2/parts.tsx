@@ -403,7 +403,12 @@ export function Gallery({ images, r }: { images: V2Image[]; r: V2Resolvers }) {
   return <div className="gal" data-n={images.length} data-shape={ratio > 0.9 && ratio < 1.1 ? "square" : "wide"}>{images.map((image) => <figure key={image.src}><Img image={image} r={r} /></figure>)}</div>;
 }
 
-export function PageHero({ eyebrow, title, lead, right, children }: { eyebrow: string; title: string; lead: string; right?: ReactNode; children?: ReactNode }) {
+// On phones the example picture sits between the lead and the full start box, so a compact start button follows the lead.
+export function QuickStart({ label, href, r }: { label: string; href: string; r: V2Resolvers }) {
+  return <div className="hero-quick"><a className="btn btn-grad" href={r.href(href)}>{label} →</a></div>;
+}
+
+export function PageHero({ eyebrow, title, lead, right, children, quick }: { eyebrow: string; title: string; lead: string; right?: ReactNode; children?: ReactNode; quick?: ReactNode }) {
   return (
     <section className="phero">
       <div className={right ? "wrap phero-grid" : "wrap"}>
@@ -411,6 +416,7 @@ export function PageHero({ eyebrow, title, lead, right, children }: { eyebrow: s
           <div className="eyebrow">{eyebrow}</div>
           <h1>{title}</h1>
           <p className="lead">{lead}</p>
+          {right ? quick : null}
           {children}
         </div>
         {right}

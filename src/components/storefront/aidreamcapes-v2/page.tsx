@@ -1,7 +1,7 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  BRAND_NAME, Boxes, Collage, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, HeroMedia, Img, Intro, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolLink, ToolRow
+  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, HeroMedia, Img, Intro, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolLink, ToolRow
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
@@ -50,6 +50,7 @@ function HomePage({ data, r }: Props) {
               <div className="eyebrow">{data.eyebrow}</div>
               <h1>{data.h1}</h1>
               <p className="lead">{data.lead}</p>
+              <QuickStart href={hero.videoHref} label="Make my first video" r={r} />
               <div aria-label="Start creating" className="maker" id="adc2-home-maker" role="group">
                 <div className="tabs" role="tablist">
                   <button aria-selected="true" data-mode="video" role="tab" type="button">Video</button>
@@ -228,7 +229,7 @@ function ToolPage({ data, r }: Props) {
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} label={maker.cta} r={r} />} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
       </PageHero>
       {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
@@ -261,7 +262,7 @@ function TemplatePage({ data, r }: Props) {
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Single image={data.image as V2Image} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Single image={data.image as V2Image} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
         {text(data.tip) ? <div className="tip"><b>Tip:</b> {text(data.tip)}</div> : null}
       </PageHero>
@@ -289,7 +290,7 @@ function CollectionPage({ data, r }: Props) {
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Collage cards={list<V2Card>(data.heroCards)} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={text(data.appHref)} label="Get started" r={r} />} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : <Collage cards={list<V2Card>(data.heroCards)} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={{ options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
       </PageHero>
       <Section eyebrow="Overview" title={overview}><Intro paras={list<string>(data.intro)} r={r} /></Section>
