@@ -456,13 +456,15 @@ const NEXT_LINKS = {
     ["Pricing", "/pricing", "Plans, credits and what each job costs."],
     ["Image to Video", "/ai-video-generation/image-to-video", "Start a video from one product photo."],
     ["Product photo tips", "/guides/product-photo-tips", "How to take a photo that gives good results."],
-    ["Contact support", "/contact-us", "Email us if your question isn't answered here."]
+    ["Contact support", "/contact-us", "Email us if your question isn't answered here."],
+    ["About AIVideosUGC", "/about-us", "Who we are and why we built it."]
   ],
   contact: [
     ["FAQ", "/faq", "Quick answers about credits, sizes and refunds."],
     ["Refund Policy", "/refunds", "When credits come back and how refund reviews work."],
     ["Pricing", "/pricing", "Plans and the credits each one includes."],
-    ["Trust and Safety", "/trust-and-safety", "How we handle uploads and report problems."]
+    ["Trust and Safety", "/trust-and-safety", "How we handle uploads and report problems."],
+    ["About AIVideosUGC", "/about-us", "Who we are and why we built it."]
   ],
   pricing: [
     ["FAQ", "/faq", "More about credits, refunds and video lengths."],
@@ -475,7 +477,8 @@ const NEXT_LINKS = {
     ["Content Policy", "/content", "What you can and can't upload."],
     ["Refund Policy", "/refunds", "How refund reviews and credit returns work."],
     ["Contact support", "/contact-us", "Report a problem with a result."],
-    ["Company Facts", "/ai-info", "The key facts about AIVideosUGC in one place."]
+    ["Company Facts", "/ai-info", "The key facts about AIVideosUGC in one place."],
+    ["About AIVideosUGC", "/about-us", "Who we are and why we built it."]
   ],
   "ai-info": [
     ["AI Video", "/ai-video-generation", "Video tools and templates for product ads."],
