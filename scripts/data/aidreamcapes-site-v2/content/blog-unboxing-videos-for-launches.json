@@ -72,6 +72,10 @@
     {
       "q": "What if the video shows something that isn't in my box?",
       "a": "Don't post that version. Make the clip again and name the exact contents in your description, such as \"a bottle, a pump, and a cotton pouch.\" Shoppers will compare their package with the unboxing they saw."
+    },
+    {
+      "q": "How long should an unboxing video be?",
+      "a": "Ten seconds covers opening the box and showing the product. Choose 15 seconds for a slower reveal with a closer look, or 6 seconds for a quick teaser."
     }
   ]
 }

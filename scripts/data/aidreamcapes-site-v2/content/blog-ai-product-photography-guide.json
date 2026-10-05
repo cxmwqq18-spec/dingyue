@@ -75,5 +75,14 @@
     "guide-product-photo-tips",
     "white-background"
   ],
-  "faq": []
+  "faq": [
+    {
+      "q": "Can AI product photos replace a photoshoot?",
+      "a": "For many listing and ad images, yes: one clear photo of your product becomes new scenes and backgrounds. A real photo is still the starting point, and each result should be checked against the actual item before it goes live."
+    },
+    {
+      "q": "What if the product in the result looks different from mine?",
+      "a": "Don't use that image. Make it again with a sharper photo or a clearer description. Each new image is its own request, with the cost shown before it starts."
+    }
+  ]
 }

@@ -73,5 +73,14 @@
     "guide-ad-sizes-by-platform",
     "video-hub"
   ],
-  "faq": []
+  "faq": [
+    {
+      "q": "What should I check before posting an AI-made video?",
+      "a": "Watch it all the way through and compare the product with the real item: shape, color, parts and any label. Make sure every action is something your product really does and that no stray text or logos appear."
+    },
+    {
+      "q": "What if only one small detail is wrong?",
+      "a": "Make another version rather than posting it. A wrong button or color can mislead buyers, and each new version shows its credit cost before it starts."
+    }
+  ]
 }

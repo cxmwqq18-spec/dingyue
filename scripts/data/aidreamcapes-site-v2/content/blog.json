@@ -18,5 +18,14 @@
     "Selling clothing or jewelry? [Model photos without a photoshoot](page:blog-model-photos-without-a-photoshoot) shows how a flat lay becomes an on-model image. Planning a release? [Unboxing videos for product launches](page:blog-unboxing-videos-for-launches) lays out the clips, and [what makes a UGC-style video ad work](page:blog-ai-ugc-video-ads-guide) covers creator-style ads for TikTok, Reels and Shorts.",
     "For step-by-step tasks, such as getting a white background photo ready for Amazon or testing two versions of an ad, see our [how-to guides](page:guides)."
   ],
-  "faq": []
+  "faq": [
+    {
+      "q": "Which article should I read first?",
+      "a": "Start with the guide to AI product photography. It covers the starting photo, describing the look you want and checking the result, which every other article builds on."
+    },
+    {
+      "q": "Do the tips work if I don't use AIVideosUGC?",
+      "a": "Yes. The advice on lighting, checking results and labeling AI content applies to any tool. Where an article mentions AIVideosUGC, it shows how that step works on our site."
+    }
+  ]
 }

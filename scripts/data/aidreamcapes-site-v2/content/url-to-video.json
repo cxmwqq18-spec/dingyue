@@ -91,10 +91,6 @@
     {
       "q": "Can I change the photo you picked?",
       "a": "Yes. If the photo isn't the best one, replace it with your own upload before you generate."
-    },
-    {
-      "q": "How do credits work?",
-      "a": "You see the credit cost before you start. Credits are held when your job starts and used when it is delivered. If something fails, you get the credits back."
     }
   ]
 }

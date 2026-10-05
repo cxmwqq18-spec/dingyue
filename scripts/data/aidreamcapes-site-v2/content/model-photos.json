@@ -86,10 +86,6 @@
     {
       "q": "Can I ask for a celebrity or a well-known model?",
       "a": "No. We may turn down requests that name celebrities or other famous people. Describe the look you want instead, such as hairstyle, outfit and mood."
-    },
-    {
-      "q": "How do credits work?",
-      "a": "You see the credit cost before you start. Credits are held when your job starts and used when it is delivered. If something fails, you get the credits back."
     }
   ]
 }

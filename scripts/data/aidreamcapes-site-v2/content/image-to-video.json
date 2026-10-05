@@ -85,10 +85,6 @@
     {
       "q": "Can I make several clips from the same photo?",
       "a": "Yes. Each run makes one clip, so change the motion or size and run it again. The credit cost is shown for every run before it starts."
-    },
-    {
-      "q": "How do credits work?",
-      "a": "You see the credit cost before you start. Credits are held when your job starts and used when it is delivered. If something fails, you get the credits back."
     }
   ]
 }

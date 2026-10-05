@@ -71,6 +71,10 @@
     {
       "q": "Do I need to say the model in my photos is AI-generated?",
       "a": "It depends on where you post. Some platforms ask sellers to label realistic AI-generated people, and those rules change from time to time, so look up the latest guidance from each site before your photos go up."
+    },
+    {
+      "q": "Will the same model appear in all my photos?",
+      "a": "Not automatically. There's no saved model to reuse, so the person can look different from one photo to the next. Describing age, hair and build in the same words each time helps the set look related."
     }
   ]
 }

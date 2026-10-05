@@ -72,6 +72,8 @@ const dreamshootLogoSrc = "/assets/dreamshoot/brand/dreamshootai-logo-refined.sv
 const aidreamcapesLogoSrc = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260919original";
 const myDreamShootsDisplayName = "myᕲreamshoots";
 const aidreamcapesDisplayName = "Aidreamcapes";
+// aidreamcapes.com was renamed AIVideosUGC; the French .eu store keeps the Aidreamcapes name.
+const aivideosugcDisplayName = "AIVideosUGC";
 
 function iconForMenuGroup(seed: string): LucideIcon {
   const normalized = seed.toLowerCase();
@@ -187,11 +189,12 @@ export function CustomerShellHeader({
   const pathModeBasePath = pathname.match(/^\/site\/[^/]+/)?.[0];
   const basePath = pathModeBasePath ?? hostAwareSitePath(site, "/").replace(/\/$/, "");
   const isAidreamcapes = isAidreamcapesCapabilitySite(site);
+  const isAivideosugc = site.id === "site_aidreamcapes";
   const isSpanishXby = isSpanishStorefrontSite(site);
   const isFrenchXby = isFrenchStorefrontSite(site);
   const isMyDreamShoots = isPrimaryMydreamshootsCapabilitySite(site);
-  const logoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? aidreamcapesDisplayName : isMyDreamShoots ? myDreamShootsDisplayName : site.branding.logoText || site.name;
-  const readableLogoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? "Aidreamcapes" : isMyDreamShoots ? "MyDreamShoots" : logoText;
+  const logoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? (isAivideosugc ? aivideosugcDisplayName : aidreamcapesDisplayName) : isMyDreamShoots ? myDreamShootsDisplayName : site.branding.logoText || site.name;
+  const readableLogoText = isSpanishXby ? site.branding.logoText || site.name : isAidreamcapes ? (isAivideosugc ? aivideosugcDisplayName : "Aidreamcapes") : isMyDreamShoots ? "MyDreamShoots" : logoText;
   const homeHref = basePath || "/";
   const workflowHref = `${basePath}/workflow`;
   const logoSrc = storefrontOriginalLogoUrl(site) || (site.branding as { logoImageUrl?: string }).logoImageUrl || (isAidreamcapes ? aidreamcapesLogoSrc : dreamshootLogoSrc);
@@ -202,7 +205,7 @@ export function CustomerShellHeader({
       ? `${readableLogoText} logo para albumes privados de fans y recuerdos festivos`
       : `${readableLogoText} logo para paquetes de fotos con IA y galerias privadas`
     : isAidreamcapes
-      ? "Aidreamcapes logo for private fan-scene and holiday photo albums"
+      ? isAivideosugc ? "AIVideosUGC logo" : "Aidreamcapes logo for private fan-scene and holiday photo albums"
       : isMyDreamShoots
         ? "MyDreamShoots heart camera logo for AI photo packages and private galleries"
         : `${readableLogoText} logo`;

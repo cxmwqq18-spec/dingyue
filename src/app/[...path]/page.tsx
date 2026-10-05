@@ -482,8 +482,8 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   if (firstSegment === "login") {
     if (hostSiteSlug === "aidreamcapes") {
       return {
-        title: "Sign in to Aidreamcapes | Private Workspace",
-        description: "Sign in to Aidreamcapes to create, review, and manage private AI image and video projects.",
+        title: "Sign in to AIVideosUGC | Private Workspace",
+        description: "Sign in to AIVideosUGC to create, review, and manage your product photos and video ads.",
         robots: { index: false, follow: false }
       };
     }
@@ -492,8 +492,8 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   }
   if (requestedPath === "/404" && hostSiteSlug === "aidreamcapes") {
     return {
-      title: "Page not found | Aidreamcapes",
-      description: "The page you requested is not available. Return to Aidreamcapes to explore AI image, video, pricing, and support workflows.",
+      title: "Page not found | AIVideosUGC",
+      description: "The page you requested is not available. Return to AIVideosUGC to find product photos, video ads, pricing and help.",
       robots: { index: false, follow: false }
     };
   }
