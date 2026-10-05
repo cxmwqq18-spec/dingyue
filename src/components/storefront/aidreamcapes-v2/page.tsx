@@ -38,6 +38,8 @@ function HomePage({ data, r }: Props) {
   const templates = data.templates as { title: string; lead: string; cards: V2Card[]; total: number };
   const platforms = data.platforms as { title: string; items: { label: string; href: string; spec: string }[] };
   const exampleFlows = homeExampleFlows(data.examples);
+  const ugc = data.ugc as { eyebrow?: string; title?: string; paras?: string[]; formats?: V2Item[] } | undefined;
+  const audience = data.audience as { title?: string; lead?: string; items?: V2Item[] } | undefined;
   const heroMedia = data.heroMedia as V2HeroMedia | undefined;
   return (
     <>
@@ -122,6 +124,12 @@ function HomePage({ data, r }: Props) {
           </div>
         </div>
       </section>
+      {ugc?.title ? (
+        <Section eyebrow={ugc.eyebrow ?? "AI UGC ads"} title={ugc.title}>
+          <Intro paras={list<string>(ugc.paras)} />
+          {list<V2Item>(ugc.formats).length ? <div style={{ marginTop: 22 }}><Boxes className="ideas" items={list<V2Item>(ugc.formats)} /></div> : null}
+        </Section>
+      ) : null}
       <Section eyebrow="Templates" lead={templates.lead} title={templates.title}>
         <TemplateGrid cards={templates.cards} r={r} />
         <div style={{ marginTop: 24 }}><a className="btn btn-ghost" href={r.href("/templates")}>See all {templates.total} templates →</a></div>
@@ -142,6 +150,7 @@ function HomePage({ data, r }: Props) {
           <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/inspiration")}>See more examples →</a></div>
         </Section>
       ) : null}
+      {audience?.title ? <Section eyebrow="Who it's for" lead={audience.lead ?? ""} title={audience.title}><Boxes className="ideas" items={list<V2Item>(audience.items)} /></Section> : null}
       <Section eyebrow="Why stores switch" title="Skip the photoshoot. Keep testing new ads.">
         <div className="cmp-wrap">
           <table className="cmp">
@@ -452,6 +461,12 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         {hero}
         <section style={{ paddingBottom: 64 }}><div className="wrap"><Plans plans={list<V2Plan>(data.plans)} r={r} /></div></section>
         {list<string>(data.credits).length ? <Section eyebrow="Credits" title="How credits work"><Intro paras={list<string>(data.credits)} /></Section> : null}
+        {list<V2SpecRow>(data.costs).length ? (
+          <Section eyebrow="Credits per job" lead="Each job shows its exact cost before it starts." title="What each photo and video costs">
+            <Specs r={r} rows={list<V2SpecRow>(data.costs)} />
+            {text(data.teams) ? <p className="meta-line" style={{ marginTop: 18 }}>{text(data.teams)}</p> : null}
+          </Section>
+        ) : null}
         <Faq items={data.faq} title="Pricing questions" />
         <NextLinks data={data} r={r} />
         <CtaBand note={text(data.startNote)} href="/app/create" lead="Pick a plan when you are ready." r={r} title="Start with one product photo" />

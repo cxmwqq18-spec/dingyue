@@ -392,10 +392,22 @@ function breadcrumbTrail(model, page) {
   return trail;
 }
 
-const PLANS = [
+// Credits each job uses in the workspace (standard-quality video; site_aidreamcapes has no custom pricing):
+// a photo or a 6-second video is 24, and longer videos scale with their length.
+const JOB_CREDITS = { photo: 24, video6: 24, video10: 40, video15: 60 };
+const planEstimate = (credits) => `About ${Math.floor(Number(credits) / JOB_CREDITS.photo)} product photos or ${Math.floor(Number(credits) / JOB_CREDITS.video15)} fifteen-second videos a month`;
+const PLANS_BASE = [
   { name: "Starter", price: "$24.50", credits: "200", who: "For trying video ads and product photos.", features: ["Videos and photos", "All templates", "9:16, 1:1 and 16:9 video sizes", "No watermark"], popular: false },
   { name: "Pro", price: "$35", credits: "300", who: "For stores testing new ads every week.", features: ["Everything in Starter", "100 more credits than Starter", "Room for weekly ad testing"], popular: true },
   { name: "Premium", price: "$63", credits: "600", who: "For brands and agencies with many products.", features: ["Everything in Pro", "Twice the credits of Pro", "Most room for new products"], popular: false }
+];
+
+const PLANS = PLANS_BASE.map((plan) => ({ ...plan, features: [planEstimate(plan.credits), ...plan.features] }));
+const JOB_COST_ROWS = [
+  ["Product photo", `${JOB_CREDITS.photo} credits`],
+  ["Video, 6 seconds", `${JOB_CREDITS.video6} credits`],
+  ["Video, 10 seconds", `${JOB_CREDITS.video10} credits`],
+  ["Video, 15 seconds", `${JOB_CREDITS.video15} credits`]
 ];
 
 // One line under every start button, so the price and what happens to credits are clear before a visitor signs up.
@@ -612,6 +624,7 @@ function payloadFor(model, page) {
       templates: { title: c.templates_title, lead: c.templates_lead, cards: HOME_FEATURED.map((key) => cardRef(model, key, key === "creator" ? "alt" : "primary")).filter(Boolean), total: model.cards.length },
       platforms: { title: c.platforms_title, items: Object.entries(model.plat).map(([slug, label]) => ({ label, href: model.byId[`plat-${slug}`].url, spec: (model.content[`plat-${slug}`].specs || [["", ""]])[0][1] })) },
       steps: c.steps, compare: c.compare, plans: PLANS,
+      ...(c.ugc ? { ugc: c.ugc } : {}), ...(c.audience ? { audience: c.audience } : {}),
       examples: { flows: (c.example_flows || []).map((item) => exampleFlow(model, item)) }
     };
   }
@@ -701,7 +714,7 @@ function payloadFor(model, page) {
       sections: (c.sections || []).map((section) => ({ ...section, paras: section.paras.map((para) => inlineLinks(model, para, page.id)) })), checklist: c.checklist || [],
       related: articleRelatedFor(model, page), ...articleTry(model, page) };
   }
-  if (t === "pricing") return { ...base, intro: c.intro || [], credits: c.credits_explained || [], plans: PLANS, next: nextLinks(model, t) };
+  if (t === "pricing") return { ...base, intro: c.intro || [], credits: c.credits_explained || [], costs: JOB_COST_ROWS, ...(c.teams ? { teams: c.teams } : {}), plans: PLANS, next: nextLinks(model, t) };
   if (t === "faq") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), next: nextLinks(model, t) };
   if (t === "contact") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), intro: c.intro || [], topics: c.topics || [], email: "support@aivideosugc.com", next: nextLinks(model, t) };
   if (t === "about") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
