@@ -353,10 +353,10 @@ function IndexPage({ data, r }: Props) {
         <section style={{ paddingBottom: 88 }}>
           <div className="wrap cardlist">
             {items.map((item) => (
-              <a href={r.href(item.href)} key={item.href}>
+              <article className="cardlist-card" key={item.href}>
                 <Img image={item.image} r={r} />
-                <div><b>{item.label}</b><span>{item.text}</span></div>
-              </a>
+                <div><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></div>
+              </article>
             ))}
           </div>
         </section>
@@ -421,7 +421,7 @@ function ArticlePage({ data, r }: Props) {
             <>
               <h2>Related</h2>
               <div className="related">
-                {related.map((item) => <a href={r.href(item.href)} key={item.href}><b>{item.label}</b><span>{item.text}</span></a>)}
+                {related.map((item) => <article className="related-card" key={item.href}><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></article>)}
               </div>
             </>
           ) : null}
@@ -452,7 +452,7 @@ function NextLinks({ data, r }: { data: V2Data; r: V2Resolvers }) {
   return (
     <Section eyebrow="Keep going" title="Where to go next">
       <div className="related">
-        {links.map((item) => <a href={r.href(item.href)} key={item.href}><b>{item.label}</b><span>{item.text}</span></a>)}
+        {links.map((item) => <article className="related-card" key={item.href}><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></article>)}
       </div>
     </Section>
   );

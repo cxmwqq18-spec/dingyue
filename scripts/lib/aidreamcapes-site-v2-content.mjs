@@ -511,6 +511,9 @@ function readingFor(model, page, limit = 3) {
   return [...new Set([...topical, ...fallback])].slice(0, limit).map((id) => articleCard(model, id));
 }
 
+const COMPACT_READING_TYPES = new Set(["template", "industry", "platform", "occasion"]);
+const readingLimitFor = (page) => COMPACT_READING_TYPES.has(page.type) ? 2 : 3;
+
 // What a page says about itself in a short line, for lists of related pages.
 function relatedText(model, id) {
   const page = model.byId[id];
@@ -556,15 +559,16 @@ const AUTO_LINK_MAX = 5;
 // Across the whole site a page receives at most this many automatic links, so common words (Reels, product photos)
 // don't pile links onto a few pages.
 const AUTO_LINK_TARGET_CAP = 8;
+const AUTO_LINK_TARGET_CAPS = { "video-ads": 12, "lifestyle-photos": 12, "model-photos": 12, "white-background": 12 };
 const AUTO_LINKS = [
   [/\b(?:Black Friday|Cyber Monday)\b/i, "occ-black-friday"],
   [/\bholiday (?:season|ads?|sales?|campaigns?|gifts?|shoppers)\b/i, "occ-holidays"],
   [/\b(?:product launch(?:es)?|new launch(?:es)?|launch day)\b/i, "occ-product-launch"],
   [/\b(?:(?:sale|discount|promo) (?:ads?|campaigns?|banners?|images?)|flash sales?|seasonal sales?)\b/i, "occ-sale-discount"],
-  [/\b(?:UGC(?:-style)? (?:video )?ads?|creator-style (?:video )?(?:ads?|clips?|videos?)|video ads?)\b/i, "video-ads"],
-  [/\bwhite[- ]background (?:photos?|images?|shots?|versions?)\b|\bwhite backgrounds?\b/i, "white-background"],
-  [/\blifestyle (?:photos?|scenes?|shots?|images?)\b/i, "lifestyle-photos"],
-  [/\b(?:on-model|model) (?:photos?|shots?|images?)\b/i, "model-photos"],
+  [/\b(?:UGC(?:-style)? (?:video )?ads?|creator-style (?:video )?(?:ads?|clips?|videos?)|creator videos?|video ads?)\b/i, "video-ads"],
+  [/\bwhite[- ]background (?:photos?|images?|shots?|versions?)\b|\bwhite backgrounds?\b|\bplain white (?:background|backdrop)\b|\bwhite backdrop\b/i, "white-background"],
+  [/\blifestyle (?:photos?|scenes?|shots?|images?|settings?)\b|\breal-life (?:scene|setting)\b/i, "lifestyle-photos"],
+  [/\b(?:on-model|model) (?:photos?|shots?|images?)\b|\bworn by a model\b/i, "model-photos"],
   [/\b(?:feed ad (?:images?|photos?)|social ad (?:images?|photos?)|feed ads?)\b/i, "social-ad-photos"],
   [/\b(?:unboxing (?:videos?|clips?)|reveal clips?)\b/i, "unboxing-videos"],
   [/\b(?:product (?:videos?|demos?)|demo(?:-style)? (?:videos?|clips?))\b/i, "product-videos"],
@@ -575,9 +579,11 @@ const AUTO_LINKS = [
   [/\b(?:skincare|beauty (?:brands?|products?)|cosmetics)\b/i, "ind-beauty-skincare"],
   [/\b(?:clothing|apparel|fashion brands?)\b/i, "ind-fashion-clothing"],
   [/\b(?:shoes|sneakers|footwear)\b/i, "ind-shoes"],
+  [/\b(?:trainers|running shoes|boots)\b/i, "ind-shoes"],
   [/\bjewelry\b/i, "ind-jewelry-accessories"],
   [/\b(?:electronics|gadgets?)\b/i, "ind-electronics"],
   [/\b(?:supplements?|wellness (?:brands?|products?))\b/i, "ind-health-wellness"],
+  [/\b(?:vitamins?|fitness gear)\b/i, "ind-health-wellness"],
   [/\b(?:food and drinks?|food (?:brands?|products?)|beverages?)\b/i, "ind-food-drinks"],
   [/\b(?:home goods|home decor|furniture)\b/i, "ind-home-living"],
   [/\bsize comparisons?\b/i, "tpl-size"],
@@ -590,6 +596,7 @@ const AUTO_LINKS = [
   [/\bheadshots?\b/i, "tpl-head"],
   [/\b(?:(?:square |sale )?banners?)\b/i, "tpl-sale"],
   [/\b(?:promo clips?|teasers?)\b/i, "tpl-launch"],
+  [/\b(?:multiple angles|every angle|front, side and back)\b/i, "tpl-angle"],
   [/\bTikTok\b/, "plat-tiktok"],
   [/\b(?:Instagram|Reels)\b/, "plat-instagram"],
   [/\bFacebook\b/, "plat-facebook"],
@@ -609,7 +616,8 @@ function autoLinks(model, paras, page) {
   for (const [pattern, targetId] of AUTO_LINKS) {
     if (added >= AUTO_LINK_MAX) break;
     const target = model.byId[targetId];
-    if (!target || targetId === page.id || linked.has(target.url) || (model.autoLinkCount[targetId] ?? 0) >= AUTO_LINK_TARGET_CAP) continue;
+    const targetCap = AUTO_LINK_TARGET_CAPS[targetId] ?? AUTO_LINK_TARGET_CAP;
+    if (!target || targetId === page.id || linked.has(target.url) || (model.autoLinkCount[targetId] ?? 0) >= targetCap) continue;
     for (let index = 0; index < out.length; index += 1) {
       // Only plain text is searched, never the label or address of a link already in the paragraph.
       const masked = out[index].replace(INLINE_LINK, (whole) => " ".repeat(whole.length));
@@ -725,7 +733,7 @@ function payloadFor(model, page) {
       heroCards: ["creator", "unbox", "beauty"].map((key) => cardRef(model, key, "primary")).filter(Boolean),
       cards: CARD_ORDER.filter((key) => model.cardByKey[key].kind === "video" && !["creator", "unbox", "beauty"].includes(key)).map((key) => cardRef(model, key, "primary")).filter(Boolean),
       appHref: appHref({ tool: "video-ads", size: "9:16", length: "15" }, true),
-      reading: readingFor(model, page) };
+      reading: readingFor(model, page, readingLimitFor(page)) };
   }
   if (t === "tool" || t === "hub-tool") {
     const hub = page.id === "photo-hub";
@@ -751,7 +759,7 @@ function payloadFor(model, page) {
         : page.id === "spokesperson-videos" ? { single: imageRef(model, "presenter", "AI-generated presenter holding a skincare bottle") }
         : hasHero ? {} : { cards: rel.slice(0, 3) },
       templates: hasHero ? rel : rel.slice(3), siblings: hub ? [] : siblings, photoTools: hub ? PHOTO_TOOLS.slice(1).map((id) => toolRef(model, id)) : [],
-      reading: readingFor(model, page) };
+      reading: readingFor(model, page, readingLimitFor(page)) };
   }
   if (t === "template") {
     const key = page.id.slice(4);
@@ -774,7 +782,7 @@ function payloadFor(model, page) {
         ["Made with", tool.label, specLinks(model, [tool.id])],
         ...(occasionIds.length ? [["Good for", names(occasionIds), specLinks(model, occasionIds)]] : [])
       ],
-      madeWith: { label: tool.label, href: tool.url }, more: pickCards(model, more, 3), reading: readingFor(model, page) };
+      madeWith: { label: tool.label, href: tool.url }, more: pickCards(model, more, 3), reading: readingFor(model, page, readingLimitFor(page)) };
   }
   if (t === "industry" || t === "platform" || t === "occasion") {
     const slug = page.id.split("-").slice(1).join("-");
@@ -789,7 +797,7 @@ function payloadFor(model, page) {
     return { ...base, kind: t, intro: linkedCopy.intro, ideas: linkedCopy.groups[0], specs: c.specs || [], tips: c.tips || [], plan: c.plan || [],
       cards: listed, heroCards: collage, tools: tools.map((id) => toolRef(model, id, false)),
       appHref: appHref({ [paramKey]: slug, ...(t === "platform" && ["tiktok", "youtube-shorts", "instagram"].includes(slug) ? { size: "9:16", length: "15" } : {}) }, t === "platform" && ["tiktok", "youtube-shorts"].includes(slug)),
-      reading: readingFor(model, page) };
+      reading: readingFor(model, page, readingLimitFor(page)) };
   }
   if (t === "index") {
     const out = { ...base, intro: Array.isArray(c.intro) ? c.intro.map((para) => inlineLinks(model, para, page.id)) : c.intro,

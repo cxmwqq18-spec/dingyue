@@ -153,11 +153,11 @@ export function Reading({ items, r }: { items: V2Article[]; r: V2Resolvers }) {
     <Section eyebrow="Keep reading" title="Guides and articles">
       <div className="related">
         {items.map((item) => (
-          <a href={r.href(item.href)} key={item.href}>
-            <b>{item.title}</b>
+          <article className="related-card" key={item.href}>
+            <b><a className="card-title" href={r.href(item.href)}>{item.title}</a></b>
             <span>{item.text}</span>
             <small>{item.minutes} min read</small>
-          </a>
+          </article>
         ))}
       </div>
     </Section>
@@ -190,18 +190,18 @@ export function Faq({ items, title = "Questions" }: { items: V2Faq[]; title?: st
 
 export function TemplateCard({ card, r }: { card: V2Card; r: V2Resolvers }) {
   return (
-    <a className="tc" data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind} href={r.href(card.href)}>
+    <article className="tc" data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
         <span className={card.kind === "video" ? "kind v" : "kind"}>{card.kind === "video" ? "Video" : "Photo"}</span>
         <Img image={card.image} r={r} />
       </div>
       <div className="tb">
-        <h3>{card.name}</h3>
+        <h3><a className="card-title" href={r.href(card.href)}>{card.name}</a></h3>
         <p>{card.line}</p>
         {card.tags.length ? <div className="tags">{card.tags.map((tag) => <span key={tag}>{tag}</span>)}</div> : null}
         <span className="use">Use this template →</span>
       </div>
-    </a>
+    </article>
   );
 }
 
@@ -222,13 +222,13 @@ const ToolIcon = ({ group }: { group?: string }) => (
 
 export function ToolLink({ tool, r }: { tool: V2Tool; r: V2Resolvers }) {
   return (
-    <a className="mi" href={r.href(tool.href)}>
+    <div className="mi">
       {tool.image ? <img alt="" decoding="async" height={46} loading="lazy" src={r.asset(tool.image.src)} width={46} /> : <ToolIcon group={tool.group} />}
       <div>
-        <b>{tool.label}</b>
+        <b><a className="card-title" href={r.href(tool.href)}>{tool.label}</a></b>
         <span>{tool.description}</span>
       </div>
-    </a>
+    </div>
   );
 }
 
