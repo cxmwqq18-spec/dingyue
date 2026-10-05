@@ -172,6 +172,86 @@
           "remove",
           "plan_rules_1",
           "rich_text"
+        ],
+        [
+          "field",
+          "trust_1",
+          "trust_signal_bar",
+          "title",
+          "How we look after your uploads.",
+          "What you can count on."
+        ],
+        [
+          "block",
+          "trust_1",
+          "trust_signal_bar",
+          0,
+          "value",
+          "No AI training on your photos",
+          "Private uploads"
+        ],
+        [
+          "block",
+          "trust_1",
+          "trust_signal_bar",
+          0,
+          "label",
+          "Your inputs are never used to train models.",
+          "Your uploads and finished files stay in your own account and are never shown publicly."
+        ],
+        [
+          "block",
+          "trust_1",
+          "trust_signal_bar",
+          1,
+          "value",
+          "30-day auto-delete",
+          "Cost shown first"
+        ],
+        [
+          "block",
+          "trust_1",
+          "trust_signal_bar",
+          1,
+          "label",
+          "Input photos automatically delete 30 days after generation.",
+          "Every photo and video shows its credit cost before it starts."
+        ],
+        [
+          "block",
+          "trust_1",
+          "trust_signal_bar",
+          2,
+          "value",
+          "Results-based refund review",
+          "Failed jobs give credits back"
+        ],
+        [
+          "block",
+          "trust_1",
+          "trust_signal_bar",
+          2,
+          "label",
+          "If a result misses what you asked for, ask us to review it for a refund, credit return or rerun.",
+          "If a job fails, its credits go back to your balance automatically."
+        ],
+        [
+          "block",
+          "trust_1",
+          "trust_signal_bar",
+          3,
+          "value",
+          "AES-256 at rest · TLS in transit",
+          "Encrypted connection"
+        ],
+        [
+          "block",
+          "trust_1",
+          "trust_signal_bar",
+          3,
+          "label",
+          "Encryption standards across the stack.",
+          "Every page and upload travels over an encrypted HTTPS connection."
         ]
       ]
     },
