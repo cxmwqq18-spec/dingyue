@@ -245,6 +245,10 @@ const UploadIcon = () => (
   </span>
 );
 
+// The storefront's name and icon (the brand was renamed from Aidreamcapes to AIVideosUGC).
+export const BRAND_NAME = "AIVideosUGC";
+export const BRAND_ICON = "/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-64.png";
+
 // Workspace links (/app/...) open the sign-up form first and continue to the workspace afterwards;
 // visitors who are already signed in are sent straight on.
 export function withStartLinks(r: V2Resolvers): V2Resolvers {

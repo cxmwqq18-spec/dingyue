@@ -1,7 +1,7 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  Boxes, Collage, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, HeroMedia, Img, Intro, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolLink, ToolRow
+  BRAND_NAME, Boxes, Collage, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, HeroMedia, Img, Intro, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolLink, ToolRow
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
@@ -145,7 +145,7 @@ function HomePage({ data, r }: Props) {
       <Section eyebrow="Why stores switch" title="Skip the photoshoot. Keep testing new ads.">
         <div className="cmp-wrap">
           <table className="cmp">
-            <thead><tr><th scope="col"><span className="sr-only">Topic</span></th><th scope="col">Photoshoot or creator</th><th scope="col">Aidreamcapes</th></tr></thead>
+            <thead><tr><th scope="col"><span className="sr-only">Topic</span></th><th scope="col">Photoshoot or creator</th><th scope="col">{BRAND_NAME}</th></tr></thead>
             <tbody>{list<string[]>(data.compare).map((row) => <tr key={row[0]}><td>{row[0]}</td><td>{row[1]}</td><td>{row[2]}</td></tr>)}</tbody>
           </table>
         </div>
@@ -194,7 +194,7 @@ function VideoHubPage({ data, r }: Props) {
       </PageHero>
       <Section eyebrow="About" title="Short videos from your product photos"><Intro paras={list<string>(data.intro)} /></Section>
       <Section eyebrow="Video tools" title="Pick the video you need"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
-      <Section eyebrow="Why use it" title="Why stores make videos with Aidreamcapes"><Boxes items={list<V2Item>(data.benefits)} /></Section>
+      <Section eyebrow="Why use it" title={`Why stores make videos with ${BRAND_NAME}`}><Boxes items={list<V2Item>(data.benefits)} /></Section>
       <Section eyebrow="How it works" title="Three steps"><Steps items={list<V2Item>(data.steps)} /></Section>
       <Section eyebrow="Video templates" title="Ready-made video ideas"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
       <Faq items={data.faq} title="Questions about AI video" />
@@ -379,7 +379,7 @@ function ArticlePage({ data, r }: Props) {
             <div className="eyebrow">{data.eyebrow}</div>
             <h1>{data.h1}</h1>
             <p className="lead">{data.lead}</p>
-            <p className="meta-line">{String(data.minutes)} min read · Aidreamcapes</p>
+            <p className="meta-line">{String(data.minutes)} min read · {BRAND_NAME}</p>
             <Img eager image={data.image as V2Image} r={r} />
           </div>
         </section>
@@ -470,7 +470,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
           </div>
         </section>
         {list<V2Item>(data.topics).length ? <Section eyebrow="We can help with" title="What to contact us about"><Boxes className="ideas" items={list<V2Item>(data.topics)} /></Section> : null}
-        {company ? <Section eyebrow="Company" lead={`${company.name} operates Aidreamcapes.`} title="Company details"><CompanyDetails className="company-card" company={company} /></Section> : null}
+        {company ? <Section eyebrow="Company" lead={`${company.name} operates ${BRAND_NAME}.`} title="Company details"><CompanyDetails className="company-card" company={company} /></Section> : null}
         <Faq items={data.faq} title="Questions" />
         <NextLinks data={data} r={r} />
       </>
@@ -481,7 +481,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
       <>
         {hero}
         <ProseSections sections={list<V2Section>(data.sections)} />
-        {layout === "about" && company ? <Section eyebrow="Company" lead={`Aidreamcapes is operated by ${company.name}.`} title="Who runs Aidreamcapes"><CompanyDetails className="company-card" company={company} /></Section> : null}
+        {layout === "about" && company ? <Section eyebrow="Company" lead={`${BRAND_NAME} is operated by ${company.name}.`} title={`Who runs ${BRAND_NAME}`}><CompanyDetails className="company-card" company={company} /></Section> : null}
         <Faq items={data.faq} title="Questions" />
         <NextLinks data={data} r={r} />
         {layout === "about" || layout === "trust" ? <CtaBand note={text(data.startNote)} href="/app/create" lead="Upload a product photo and try a template." r={r} title="See what you can make" /> : null}
@@ -506,7 +506,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
           </div>
           <h2>Not offered</h2>
           <ul>{list<string>(data.notOffered).map((item) => <li key={item}>{item}</li>)}</ul>
-          <h2>How to describe Aidreamcapes</h2>
+          <h2>How to describe {BRAND_NAME}</h2>
           {list<string>(data.describe).map((line) => <p key={line}>{line}</p>)}
         </div>
         <Faq items={data.faq} title="Common questions" />

@@ -835,7 +835,7 @@
    "type": "pricing",
    "url": "/pricing",
    "label": "Pricing",
-   "primary_keyword": "Aidreamcapes pricing",
+   "primary_keyword": "AIVideosUGC pricing",
    "img": "p_light",
    "status": "rewrite",
    "group": null
@@ -845,7 +845,7 @@
    "type": "faq",
    "url": "/faq",
    "label": "FAQ",
-   "primary_keyword": "Aidreamcapes FAQ",
+   "primary_keyword": "AIVideosUGC FAQ",
    "img": "p_detail",
    "status": "rewrite",
    "group": null
@@ -855,7 +855,7 @@
    "type": "contact",
    "url": "/contact-us",
    "label": "Contact",
-   "primary_keyword": "Aidreamcapes support",
+   "primary_keyword": "AIVideosUGC support",
    "img": "p_head",
    "status": "keep",
    "group": null
@@ -865,7 +865,7 @@
    "type": "about",
    "url": "/about-us",
    "label": "About",
-   "primary_keyword": "about Aidreamcapes",
+   "primary_keyword": "about AIVideosUGC",
    "img": "p_look",
    "status": "rewrite",
    "group": null
@@ -1025,7 +1025,7 @@
    "type": "ai-info",
    "url": "/ai-info",
    "label": "Company Facts",
-   "primary_keyword": "what is Aidreamcapes",
+   "primary_keyword": "what is AIVideosUGC",
    "img": "p_light",
    "status": "new",
    "group": null

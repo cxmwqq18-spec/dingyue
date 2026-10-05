@@ -453,7 +453,7 @@ function homepageOfferCatalogSchema(site: Site, routeMode: "host" | "path"): Jso
         ? site.id === "site_aidreamcapes_xby"
           ? "Forfaits photo et crédits Aidreamcapes"
           : site.id === "site_aidreamcapes"
-          ? "Aidreamcapes AI image and video plans"
+          ? "AIVideosUGC AI image and video plans"
           : "Aidreamcapes occasion portrait packages and credits"
         : "MyDreamShoots photo packages and credits",
     url: absoluteUrl(site, routeMode, schemaPagePath(site, routeMode, "/pricing"))

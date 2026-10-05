@@ -100,8 +100,8 @@ const LEADING_SEO_HEAD_TAG_RE =
 const ESSENTIAL_HEAD_TAG_RE =
   /<meta\b(?=[^>]*(?:charset=|name=["']viewport["']|http-equiv=["']Content-Language["']))[^>]*\/?>/gi;
 const ICON_HEAD_TAG_RE = /<link\b(?=[^>]*rel=["'][^"']*(?:icon|apple-touch-icon)[^"']*["'])[^>]*\/?>/gi;
-const AIDREAMCAPES_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg?v=20260920favicon";
-const AIDREAMCAPES_APPLE_ICON = "/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-180.png?v=20260919original";
+const AIDREAMCAPES_ICON = "/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-48.png";
+const AIDREAMCAPES_APPLE_ICON = "/assets/sites/site_aidreamcapes/brand/aivideosugc-apple-180.png";
 const AIDREAMCAPES_EU_ICON = "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-logo-refined.svg?v=20260920favicon";
 const AIDREAMCAPES_EU_APPLE_ICON = "/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-icon-180.png?v=20260919original";
 const AIDREAMSHOOTS_ICON = "/assets/sites/site_aidreamshoots/brand/aidreamshoots-logo-refined.svg?v=20260920favicon";
@@ -630,7 +630,7 @@ function siteIconForRequest(request: NextRequest): StorefrontIconSet | undefined
     if (identity.includes("aidreamcapes")) return { favicon: AIDREAMCAPES_EU_ICON, apple: AIDREAMCAPES_EU_APPLE_ICON };
     return { favicon: AIDREAMSHOOTS_ICON, apple: AIDREAMSHOOTS_APPLE_ICON };
   }
-  if (identity.includes("aidreamcapes")) return { favicon: AIDREAMCAPES_ICON, apple: AIDREAMCAPES_APPLE_ICON };
+  if (identity.includes("aidreamcapes") || identity.includes("aivideosugc")) return { favicon: AIDREAMCAPES_ICON, apple: AIDREAMCAPES_APPLE_ICON };
   if (identity.includes("mydreamshoots")) return { favicon: MYDREAMSHOOTS_ICON, apple: MYDREAMSHOOTS_APPLE_ICON };
   if (BROWSER_ICON_PATH_RE.test(request.nextUrl.pathname)) return { favicon: MYDREAMSHOOTS_ICON, apple: MYDREAMSHOOTS_APPLE_ICON };
   return undefined;
@@ -651,7 +651,7 @@ function withStorefrontIcons(html: string, icons: StorefrontIconSet | undefined)
   // Keep one browser favicon candidate and point it to the same site-specific
   // logo asset used by the visible storefront header. Apple touch icons remain
   // separate because they have a different platform-specific size contract.
-  const iconTags = `<link rel="icon" href="${icons.favicon}" type="image/svg+xml"/><link rel="apple-touch-icon" href="${icons.apple}" sizes="180x180"/>`;
+  const iconTags = `<link rel="icon" href="${icons.favicon}" type="${/\.png(?:\?|$)/i.test(icons.favicon) ? "image/png" : "image/svg+xml"}"/><link rel="apple-touch-icon" href="${icons.apple}" sizes="180x180"/>`;
   const insertionPoint = leadingSeoHeadLength(headContent);
   return `${beforeHeadContent}${headContent.slice(0, insertionPoint)}${iconTags}${headContent.slice(insertionPoint)}${afterHeadContent}`;
 }

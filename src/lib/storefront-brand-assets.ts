@@ -33,13 +33,14 @@ export function storefrontOriginalLogoUrl(site: BrandSite): string | undefined {
     case "aidreamcapes-eu":
       return versioned("/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-logo-refined.svg");
     case "aidreamcapes":
-      return versioned("/assets/sites/site_aidreamcapes/brand/aidreamcapesai-logo-refined.svg");
+      return "/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-512.png";
     default:
       return undefined;
   }
 }
 
 export function storefrontOriginalIconUrl(site: BrandSite): string | undefined {
+  if (brandKey(site) === "aidreamcapes") return "/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-48.png";
   return storefrontOriginalLogoUrl(site)?.replace(`?v=${ORIGINAL_BRAND_VERSION}`, `?v=${FAVICON_VERSION}`);
 }
 
@@ -50,7 +51,7 @@ export function storefrontOriginalAppleIconUrl(site: BrandSite): string | undefi
     case "aidreamcapes-eu":
       return versioned("/assets/sites/site_aidreamcapes_eu/brand/aidreamcapes-icon-180.png");
     case "aidreamcapes":
-      return versioned("/assets/sites/site_aidreamcapes/brand/aidreamcapes-icon-180.png");
+      return "/assets/sites/site_aidreamcapes/brand/aivideosugc-apple-180.png";
     default:
       return undefined;
   }

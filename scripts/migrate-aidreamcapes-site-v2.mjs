@@ -11,7 +11,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
-import { AIDREAMCAPES_SITE_ID, applyProductPatch, applySiteBrandingPatch, applyThemeSettingsPatch, applyUtilityPagePatch, buildSiteV2, loadProductPatches, loadSiteBrandingPatches, loadThemeSettingsPatches, loadUtilityPagePatches, validateSiteV2 } from "./lib/aidreamcapes-site-v2-content.mjs";
+import { AIDREAMCAPES_SITE_ID, rebrandProfile, rebrandSiteRecord, rebrandThemeSettings, applyProductPatch, applySiteBrandingPatch, applyThemeSettingsPatch, applyUtilityPagePatch, buildSiteV2, loadProductPatches, loadSiteBrandingPatches, loadThemeSettingsPatches, loadUtilityPagePatches, validateSiteV2 } from "./lib/aidreamcapes-site-v2-content.mjs";
 import { argumentValue, assertDatabaseTarget, assertNonProductionWriteTarget, hasArgument } from "./lib/database-target.mjs";
 
 const SITE_ID = AIDREAMCAPES_SITE_ID;
@@ -59,7 +59,7 @@ const fallbackPageId = (page) => `aidreamcapes_v2_${page.id.replace(/[^a-z0-9]+/
 
 const prisma = new PrismaClient();
 try {
-  const site = await prisma.site.findUnique({ where: { id: SITE_ID }, select: { id: true, slug: true, primaryDomain: true, branding: true } });
+  const site = await prisma.site.findUnique({ where: { id: SITE_ID }, select: { id: true, slug: true, primaryDomain: true, name: true, branding: true } });
   assert(site, `Site not found: ${SITE_ID}`);
   const slugs = build.pages.map((page) => page.slug);
   const existingPages = await prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: slugs } } });
@@ -82,10 +82,13 @@ try {
   const settingsPatches = loadThemeSettingsPatches();
   const publishedSettingsPatch = applyThemeSettingsPatch(settings.publishedJson, settingsPatches);
   const draftSettingsPatch = applyThemeSettingsPatch(settings.draftJson, settingsPatches);
-  const nextSettings = (patched) => ({ ...patched.next, aidreamcapesV2Navigation: build.navigation });
+  // Header, footer and site title settings also carry the brand name and email (see rebrandThemeSettings).
+  const publishedRename = rebrandThemeSettings(publishedSettingsPatch.next);
+  const draftRename = rebrandThemeSettings(draftSettingsPatch.next);
+  const nextSettings = (patched) => ({ ...(patched === publishedSettingsPatch ? publishedRename.next : draftRename.next), aidreamcapesV2Navigation: build.navigation });
   const navigationChanged = hashJson(settings.publishedJson?.aidreamcapesV2Navigation ?? null) !== hashJson(build.navigation)
     || hashJson(settings.draftJson?.aidreamcapesV2Navigation ?? null) !== hashJson(build.navigation);
-  const settingsChanged = navigationChanged || publishedSettingsPatch.applied.length > 0 || draftSettingsPatch.applied.length > 0;
+  const settingsChanged = navigationChanged || publishedSettingsPatch.applied.length > 0 || draftSettingsPatch.applied.length > 0 || publishedRename.changed.length > 0 || draftRename.changed.length > 0;
   const settingsReport = { published: { applied: publishedSettingsPatch.applied, unchanged: publishedSettingsPatch.unchanged, conflicts: publishedSettingsPatch.conflicts }, draft: { applied: draftSettingsPatch.applied, unchanged: draftSettingsPatch.unchanged, conflicts: draftSettingsPatch.conflicts } };
   // Utility pages keep their sections; only the named copy fields change (see utility-pages.json).
   const utilityPatches = loadUtilityPagePatches();
@@ -109,7 +112,14 @@ try {
   const productReport = productResults.map(({ next, ...item }) => item);
   // The site description used in the Organization structured data.
   const brandingResult = applySiteBrandingPatch(site.branding, loadSiteBrandingPatches());
-  const brandingReport = { applied: brandingResult.applied, unchanged: brandingResult.unchanged, conflicts: brandingResult.conflicts };
+  const siteRename = rebrandSiteRecord({ name: site.name, branding: brandingResult.next });
+  const brandingReport = { applied: brandingResult.applied, unchanged: brandingResult.unchanged, conflicts: brandingResult.conflicts, renamed: siteRename.changed };
+  // The company profile (support email shown on About, Contact and in the footer).
+  const profile = await prisma.storefrontProfile.findUnique({ where: { siteId: SITE_ID } });
+  const profilePublished = rebrandProfile(profile?.publishedJson);
+  const profileDraft = rebrandProfile(profile?.draftJson);
+  const profileReport = { published: profilePublished.changed, draft: profileDraft.changed };
+  const renameReport = { settingsPublished: publishedRename.changed, settingsDraft: draftRename.changed };
   const report = nextPages.map((page) => ({
     id: page.id,
     slug: page.slug,
@@ -123,12 +133,12 @@ try {
     const otherPages = await prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { notIn: slugs } }, select: { slug: true, title: true, pageType: true }, orderBy: { slug: "asc" } });
     console.log(JSON.stringify({ ok: true, mode: productionDryRun ? "production-dry-run" : "dry-run", siteId: SITE_ID, domain: site.primaryDomain, pages: report.length,
       creates: report.filter((item) => item.action === "CREATE").length, updates: report.filter((item) => item.action === "UPDATE").length,
-      navigationChanged, report, utilityPages: utilityReport, products: productReport, siteBranding: brandingReport, footerSettings: settingsReport, otherPages }, null, 2));
+      navigationChanged, report, utilityPages: utilityReport, products: productReport, siteBranding: brandingReport, footerSettings: settingsReport, profile: profileReport, rename: renameReport, otherPages }, null, 2));
   } else {
     const stamp = new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14);
     const backupPath = path.resolve(backupRoot, `site-v2-${applyProduction ? "production" : "local"}-${stamp}.json`);
     await mkdir(path.dirname(backupPath), { recursive: true });
-    await writeFile(backupPath, JSON.stringify({ site, existingPages, utilityPages: utilityRows, products: productRows, settings }, null, 2) + "\n", "utf8");
+    await writeFile(backupPath, JSON.stringify({ site, existingPages, utilityPages: utilityRows, products: productRows, settings, profile }, null, 2) + "\n", "utf8");
     await prisma.$transaction(async (tx) => {
       for (const page of nextPages) {
         await tx.livePage.upsert({
@@ -143,7 +153,10 @@ try {
       for (const item of productResults) {
         if (!item.missing && item.applied.length) await tx.product.update({ where: { id: item.id }, data: { metadata: item.next } });
       }
-      if (brandingResult.applied.length) await tx.site.update({ where: { id: SITE_ID }, data: { branding: brandingResult.next } });
+      if (brandingResult.applied.length || siteRename.changed.length) await tx.site.update({ where: { id: SITE_ID }, data: { name: siteRename.next.name, branding: siteRename.next.branding } });
+      if (profile && (profilePublished.changed.length || profileDraft.changed.length)) {
+        await tx.storefrontProfile.update({ where: { siteId: SITE_ID }, data: { publishedJson: profilePublished.next, draftJson: profileDraft.next } });
+      }
       if (settingsChanged) {
         await tx.themeSettings.update({
           where: { siteId: SITE_ID },
@@ -163,9 +176,15 @@ try {
       const row = await prisma.product.findUnique({ where: { id: item.id }, select: { metadata: true } });
       assert.equal(hashJson(row?.metadata), hashJson(item.next), `${item.id}: product readback`);
     }
-    if (brandingResult.applied.length) {
-      const row = await prisma.site.findUnique({ where: { id: SITE_ID }, select: { branding: true } });
-      assert.equal(hashJson(row?.branding), hashJson(brandingResult.next), "site branding readback");
+    if (brandingResult.applied.length || siteRename.changed.length) {
+      const row = await prisma.site.findUnique({ where: { id: SITE_ID }, select: { name: true, branding: true } });
+      assert.equal(row?.name, siteRename.next.name, "site name readback");
+      assert.equal(hashJson(row?.branding), hashJson(siteRename.next.branding), "site branding readback");
+    }
+    if (profile && (profilePublished.changed.length || profileDraft.changed.length)) {
+      const row = await prisma.storefrontProfile.findUnique({ where: { siteId: SITE_ID }, select: { publishedJson: true, draftJson: true } });
+      assert.equal(hashJson(row?.publishedJson), hashJson(profilePublished.next), "published profile readback");
+      assert.equal(hashJson(row?.draftJson), hashJson(profileDraft.next), "draft profile readback");
     }
     const settingsReadback = await prisma.themeSettings.findUnique({ where: { siteId: SITE_ID }, select: { publishedJson: true, draftJson: true } });
     assert.equal(hashJson(settingsReadback.publishedJson.aidreamcapesV2Navigation), hashJson(build.navigation), "published navigation readback");
@@ -174,7 +193,7 @@ try {
     assert.equal(hashJson(settingsReadback.draftJson.globalSections?.footer?.settings ?? null), hashJson(nextSettings(draftSettingsPatch).globalSections?.footer?.settings ?? null), "draft footer settings readback");
     console.log(JSON.stringify({ ok: true, mode: applyProduction ? "production-applied" : "local-applied", siteId: SITE_ID, backupPath,
       pages: report.length, creates: report.filter((item) => item.action === "CREATE").length, updates: report.filter((item) => item.action === "UPDATE").length,
-      navigationChanged, utilityPages: utilityReport, products: productReport, siteBranding: brandingReport, footerSettings: settingsReport, readback: "PASS" }, null, 2));
+      navigationChanged, utilityPages: utilityReport, products: productReport, siteBranding: brandingReport, footerSettings: settingsReport, profile: profileReport, rename: renameReport, readback: "PASS" }, null, 2));
   }
 } finally {
   await prisma.$disconnect();

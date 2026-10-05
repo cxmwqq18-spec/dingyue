@@ -165,7 +165,7 @@ const homepageApplication = homepageNodes.find((node) => node["@type"] === "Soft
 const homepageOrganization = homepageNodes.find((node) => node["@type"] === "Organization");
 const homepageCatalog = homepageNodes.find((node) => node["@type"] === "OfferCatalog") ?? homepageOrganization?.hasOfferCatalog;
 assert.equal(homepageApplication?.applicationCategory, "MultimediaApplication", "homepage application category");
-assert.equal(homepageCatalog?.name, "Aidreamcapes AI image and video plans", "homepage OfferCatalog name");
+assert.equal(homepageCatalog?.name, "AIVideosUGC AI image and video plans", "homepage OfferCatalog name");
 assert(Array.isArray(homepageApplication?.offers) && homepageApplication.offers.every((offer) => offer["@type"] === "Offer"), "application offers must not be an OfferCatalog");
 const publicOrigin = new URL(BASE_URL).hostname === "www.aivideosugc.com";
 // The apex host and the former aidreamcapes.com addresses move permanently to https://www.aivideosugc.com.
@@ -187,7 +187,7 @@ if (siteV2) {
   const llms = await get("/llms.txt");
   assert.equal(llms.status(), 200, `llms.txt status: ${llms.status()}`);
   assert.match(llms.headers()["content-type"] || "", /^text\/plain/, "llms.txt content type");
-  assert.match(await llms.text(), /^# Aidreamcapes/m, "llms.txt heading");
+  assert.match(await llms.text(), /^# (?:AIVideosUGC|Aidreamcapes)/m, "llms.txt heading");
   assert(homepageDom('header.site nav#adc2-main-nav a[href="/pricing"]').length > 0, "v2 header navigation");
   assert(homepageDom('footer.site a[href="/privacy"]').length > 0, "v2 footer legal links");
   // The company named in the Organization structured data is also visible on the page: in the
@@ -220,7 +220,8 @@ const metadataResults = await mapLimit(TARGET_PATHS, 3, async (path) => {
   const html = await response.text();
   const title = htmlTitle(html);
   const description = htmlMeta(html, "description");
-  assert(title.endsWith("| Aidreamcapes"), `${path}: missing brand suffix (${title})`);
+  // Titles come from the stored pages, which name the brand from before the rename (Aidreamcapes) until the page data is refreshed.
+  assert(/\| (?:AIVideosUGC|Aidreamcapes)$/.test(title), `${path}: missing brand suffix (${title})`);
   assert(title.length <= 60, `${path}: title too long (${title.length})`);
   assert(description.length >= 140 && description.length <= 160, `${path}: description length ${description.length}`);
   assert.equal(htmlCanonical(html), `https://www.aivideosugc.com${path}`, `${path}: canonical`);
@@ -232,7 +233,7 @@ const login = await get("/login");
 assert.equal(login.status(), 200, `login status: ${login.status()}`);
 const loginHtml = await login.text();
 assert.match(`${login.headers()["x-robots-tag"] || ""} ${htmlMeta(loginHtml, "robots")}`, /noindex\s*,?\s*nofollow/i, "login robots");
-assert.match(htmlTitle(loginHtml), /Aidreamcapes/i, "login title");
+assert.match(htmlTitle(loginHtml), /AIVideosUGC|Aidreamcapes/i, "login title");
 assert.equal(h1Count(loginHtml), 1, "login H1 count");
 assert.equal(htmlCanonical(loginHtml), "", "login should not require a canonical");
 
@@ -240,7 +241,7 @@ for (const missingPath of ["/404", "/seo-contract-missing-page-20261002", "/blog
 const notFound = await get(missingPath);
 assert.equal(notFound.status(), 404, `404 status: ${notFound.status()}`);
 const notFoundHtml = await notFound.text();
-assert.equal(htmlTitle(notFoundHtml), "Page not found | Aidreamcapes", "404 title");
+assert.match(htmlTitle(notFoundHtml), /^Page not found \| (?:AIVideosUGC|Aidreamcapes)$/, "404 title");
 assert.equal(h1Count(notFoundHtml), 1, "404 H1 count");
 assert.match(`${notFound.headers()["x-robots-tag"] || ""} ${htmlMeta(notFoundHtml, "robots")}`, /noindex\s*,?\s*nofollow/i, "404 robots");
 for (const path of ["/", "/ai-image-generation", "/ai-video-generation", "/pricing", "/contact-us"]) {

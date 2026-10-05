@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { AidreamcapesV2Navigation, ThemeNavLink } from "@/lib/types";
 import { AidreamcapesV2MenuBehavior } from "./behavior";
 import type { V2Company } from "./company";
-import { CompanyDetails, withStartLinks } from "./parts";
+import { BRAND_ICON, BRAND_NAME, CompanyDetails, withStartLinks } from "./parts";
 import { AIDREAMCAPES_V2_CSS } from "./styles";
 import type { V2Resolvers } from "./types";
 
@@ -31,9 +31,9 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
   return (
     <header className="site">
       <div className="wrap hbar">
-        <a aria-label="Aidreamcapes home" className="logo" href={r.href("/")}>
-          <i aria-hidden="true" />
-          Aidreamcapes
+        <a aria-label="AIVideosUGC home" className="logo" href={r.href("/")}>
+          <img alt="" className="logo-mark" height={28} src={r.asset(BRAND_ICON)} width={28} />
+          {BRAND_NAME}
         </a>
         <nav aria-label="Main" className="main" id="adc2-main-nav">
           {navigation.menus.map((menu) => {
@@ -103,8 +103,8 @@ export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: A
         <div className="fgrid seo">
           <div>
             <a className="logo" href={r.href("/")}>
-              <i aria-hidden="true" />
-              Aidreamcapes
+              <img alt="" className="logo-mark" height={28} loading="lazy" src={r.asset(BRAND_ICON)} width={28} />
+              {BRAND_NAME}
             </a>
             <p style={{ marginTop: 12, maxWidth: 280 }}>{navigation.footer.tagline}</p>
             {company ? <CompanyDetails className="company-foot" company={company} /> : null}

@@ -433,7 +433,7 @@ const NEXT_LINKS = {
     ["Product Photos", "/ai-image-generation", "White background, lifestyle and model photos."],
     ["Templates", "/templates", "Ready-made ideas for every product and platform."],
     ["Trust and Safety", "/trust-and-safety", "How we handle your uploads and AI content."],
-    ["Company Facts", "/ai-info", "The key facts about Aidreamcapes in one place."]
+    ["Company Facts", "/ai-info", "The key facts about AIVideosUGC in one place."]
   ],
   faq: [
     ["Pricing", "/pricing", "Plans, credits and what each job costs."],
@@ -458,13 +458,13 @@ const NEXT_LINKS = {
     ["Content Policy", "/content", "What you can and can't upload."],
     ["Refund Policy", "/refunds", "How refund reviews and credit returns work."],
     ["Contact support", "/contact-us", "Report a problem with a result."],
-    ["Company Facts", "/ai-info", "The key facts about Aidreamcapes in one place."]
+    ["Company Facts", "/ai-info", "The key facts about AIVideosUGC in one place."]
   ],
   "ai-info": [
     ["AI Video", "/ai-video-generation", "Video tools and templates for product ads."],
     ["Product Photos", "/ai-image-generation", "Photo tools for store listings and ads."],
     ["Pricing", "/pricing", "Plans, credits and what each job costs."],
-    ["About Aidreamcapes", "/about-us", "Who we are and why we built it."]
+    ["About AIVideosUGC", "/about-us", "Who we are and why we built it."]
   ]
 };
 const POLICY_PATHS = ["/privacy", "/terms", "/refunds", "/cookies", "/content", "/digital-delivery", "/children-privacy", "/state-privacy"];
@@ -703,7 +703,7 @@ function payloadFor(model, page) {
   }
   if (t === "pricing") return { ...base, intro: c.intro || [], credits: c.credits_explained || [], plans: PLANS, next: nextLinks(model, t) };
   if (t === "faq") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), next: nextLinks(model, t) };
-  if (t === "contact") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), intro: c.intro || [], topics: c.topics || [], email: "support@aidreamcapes.com", next: nextLinks(model, t) };
+  if (t === "contact") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), intro: c.intro || [], topics: c.topics || [], email: "support@aivideosugc.com", next: nextLinks(model, t) };
   if (t === "about") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
   if (t === "trust") return { ...base, image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, c.h1), sections: c.sections || [], next: nextLinks(model, t) };
   if (t === "ai-info") return { ...base, summary: c.summary, facts: c.facts, notOffered: c.not_offered, describe: c.describe, llmsText: buildLlmsText(model), next: nextLinks(model, t) };
@@ -715,9 +715,9 @@ function payloadFor(model, page) {
 }
 
 function jsonLdFor(model, page, c, payload, ogImage) {
-  const org = { "@type": "Organization", "@id": `${BASE}/#organization`, name: "Aidreamcapes", url: `${BASE}/` };
+  const org = { "@type": "Organization", "@id": `${BASE}/#organization`, name: "AIVideosUGC", url: `${BASE}/` };
   const graph = [org];
-  if (page.id === "home") graph.push({ "@type": "WebSite", "@id": `${BASE}/#website`, name: "Aidreamcapes", url: `${BASE}/`, inLanguage: "en", publisher: { "@id": `${BASE}/#organization` } });
+  if (page.id === "home") graph.push({ "@type": "WebSite", "@id": `${BASE}/#website`, name: "AIVideosUGC", url: `${BASE}/`, inLanguage: "en", publisher: { "@id": `${BASE}/#organization` } });
   else graph.push({ "@type": "BreadcrumbList", itemListElement: payload.breadcrumbs.map((crumb, index) => ({ "@type": "ListItem", position: index + 1, name: crumb.label, item: `${BASE}${crumb.href === "/" ? "/" : crumb.href}` })) });
   const absolute = (src) => `${BASE}${src}`;
   const primary = heroImageOf(payload.heroMedia) ?? ogImage;
@@ -740,7 +740,7 @@ function jsonLdFor(model, page, c, payload, ogImage) {
       step: payload.steps.map((step, index) => ({ "@type": "HowToStep", position: index + 1, name: step.t, text: step.d })) });
   }
   if (page.type === "tool" || page.type === "hub-tool") {
-    graph.push({ "@type": "SoftwareApplication", name: `Aidreamcapes ${page.label}`, applicationCategory: "MultimediaApplication", operatingSystem: "Web", url: canonical(page), description: c.description, publisher: { "@id": `${BASE}/#organization` } });
+    graph.push({ "@type": "SoftwareApplication", name: `AIVideosUGC ${page.label}`, applicationCategory: "MultimediaApplication", operatingSystem: "Web", url: canonical(page), description: c.description, publisher: { "@id": `${BASE}/#organization` } });
   }
   if (page.type === "index" && payload.cards) graph.push({ "@type": "ItemList", itemListElement: payload.cards.map((card, index) => ({ "@type": "ListItem", position: index + 1, url: `${BASE}${card.href}` })) });
   if (payload.faq?.length) graph.push({ "@type": "FAQPage", mainEntity: payload.faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })) });
@@ -827,7 +827,7 @@ function buildNavigation(model) {
         group("Platforms & help", [...Object.keys(model.plat).map((slug) => `plat-${slug}`), "pricing", "faq", "contact", "about", "trust", "ai-info", "blog", "guides"])
       ],
       legal: [{ label: "Privacy", href: "/privacy" }, { label: "Terms", href: "/terms" }, { label: "Refunds", href: "/refunds" }, { label: "Cookies", href: "/cookies" }],
-      copyright: "© 2026 Aidreamcapes. All rights reserved."
+      copyright: "© 2026 AIVideosUGC. All rights reserved."
     }
   };
 }
@@ -835,7 +835,7 @@ function buildNavigation(model) {
 function buildLlmsText(model) {
   const c = model.content["ai-info"];
   const lines = [
-    "# Aidreamcapes", "", `> ${c.summary}`, "",
+    "# AIVideosUGC", "", `> ${c.summary}`, "",
     ...c.facts.map(([k, v]) => `- ${k}: ${v}`), "",
     "## Not offered", ...c.not_offered.map((item) => `- ${item}`), "",
     "## Main pages",
@@ -1003,7 +1003,22 @@ export function loadUtilityPagePatches() {
 }
 
 // An unset field matches `null` in a change, so a change can fill in a field that was never set.
-const sameValue = (left, right) => JSON.stringify(left ?? null) === JSON.stringify(right ?? null);
+// The storefront was renamed from Aidreamcapes to AIVideosUGC and its support email moved to aivideosugc.com.
+// Stored text written before the rename is brought over by swapping these exact words; web addresses
+// (social profiles, asset paths) are left as they are.
+export const BRAND_SWAPS = [["support@aidreamcapes.com", "support@aivideosugc.com"], ["Aidreamcapes.com", "AIVideosUGC"], ["Aidreamcapes", "AIVideosUGC"]];
+export function rebrandText(value) {
+  if (typeof value !== "string" || /^\s*https?:\/\//i.test(value)) return value;
+  return BRAND_SWAPS.reduce((text, [from, to]) => text.split(from).join(to), value);
+}
+export function rebrandTree(value) {
+  if (typeof value === "string") return rebrandText(value);
+  if (Array.isArray(value)) return value.map((item) => rebrandTree(item));
+  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, rebrandTree(item)]));
+  return value;
+}
+// Patch values are compared with the brand words swapped, so a value that differs only by the rename still counts as the same.
+const sameValue = (left, right) => JSON.stringify(rebrandTree(left ?? null)) === JSON.stringify(rebrandTree(right ?? null));
 
 export function applyUtilityPagePatch(contentJson, changes) {
   const next = structuredClone(contentJson ?? {});
@@ -1021,7 +1036,7 @@ export function applyUtilityPagePatch(contentJson, changes) {
       const [, key, from, to] = change;
       const current = next.seo[key];
       if (sameValue(current, to)) result.unchanged.push(`seo.${key}`);
-      else if (sameValue(current, from)) { next.seo[key] = to; result.applied.push(`seo.${key}`); }
+      else if (sameValue(current, from)) { next.seo[key] = rebrandTree(to); result.applied.push(`seo.${key}`); }
       else result.conflicts.push(`seo.${key}`);
     } else if (kind === "field") {
       const [, id, type, key, from, to] = change;
@@ -1029,7 +1044,7 @@ export function applyUtilityPagePatch(contentJson, changes) {
       const current = section?.settings?.[key];
       if (!section) result.conflicts.push(`${id}.${key} (section missing)`);
       else if (sameValue(current, to)) result.unchanged.push(`${id}.${key}`);
-      else if (sameValue(current, from)) { section.settings[key] = to; result.applied.push(`${id}.${key}`); }
+      else if (sameValue(current, from)) { section.settings[key] = rebrandTree(to); result.applied.push(`${id}.${key}`); }
       else result.conflicts.push(`${id}.${key}`);
     } else if (kind === "block") {
       const [, id, type, index, key, from, to] = change;
@@ -1037,16 +1052,17 @@ export function applyUtilityPagePatch(contentJson, changes) {
       const current = block?.settings?.[key];
       if (!block) result.conflicts.push(`${id}.blocks[${index}].${key} (block missing)`);
       else if (sameValue(current, to)) result.unchanged.push(`${id}.blocks[${index}].${key}`);
-      else if (sameValue(current, from)) { block.settings[key] = to; result.applied.push(`${id}.blocks[${index}].${key}`); }
+      else if (sameValue(current, from)) { block.settings[key] = rebrandTree(to); result.applied.push(`${id}.blocks[${index}].${key}`); }
       else result.conflicts.push(`${id}.blocks[${index}].${key}`);
     } else if (kind === "replace") {
       // A change inside a longer text (such as a policy body): `from` and `to` are the exact words swapped.
       const [, id, type, key, from, to] = change;
       const section = sectionOf(id, type);
       const current = section?.settings?.[key];
+      const [text, oldWords, newWords] = [rebrandText(current), rebrandText(from), rebrandText(to)];
       if (!section || typeof current !== "string") result.conflicts.push(`${id}.${key} (text missing)`);
-      else if (current.includes(to) && !current.includes(from)) result.unchanged.push(`${id}.${key}`);
-      else if (current.split(from).length === 2) { section.settings[key] = current.replace(from, () => to); result.applied.push(`${id}.${key}`); }
+      else if (text.includes(newWords) && !text.includes(oldWords)) result.unchanged.push(`${id}.${key}`);
+      else if (text.split(oldWords).length === 2) { section.settings[key] = text.replace(oldWords, () => newWords); result.applied.push(`${id}.${key}`); }
       else result.conflicts.push(`${id}.${key}`);
     } else if (kind === "remove") {
       const [, id, type] = change;
@@ -1062,6 +1078,9 @@ export function applyUtilityPagePatch(contentJson, changes) {
       throw new Error(`Unknown utility page change: ${kind}`);
     }
   }
+  // Any other text on the page that still names the former brand or email.
+  const renamed = rebrandTree(result.next);
+  if (JSON.stringify(renamed) !== JSON.stringify(result.next)) { result.next = renamed; result.applied.push("brand name and email"); }
   return result;
 }
 
@@ -1092,7 +1111,7 @@ export function applyThemeSettingsPatch(settingsJson, patches) {
     if (!footer?.settings) { result.conflicts.push(`footer.${key} (footer missing)`); continue; }
     const current = footer.settings[key];
     if (sameValue(current, to)) result.unchanged.push(`footer.${key}`);
-    else if (from.some((value) => sameValue(current, value))) { footer.settings[key] = to; result.applied.push(`footer.${key}`); }
+    else if (from.some((value) => sameValue(current, value))) { footer.settings[key] = rebrandTree(to); result.applied.push(`footer.${key}`); }
     else result.conflicts.push(`footer.${key}`);
   }
   return result;
@@ -1111,10 +1130,33 @@ export function applySiteBrandingPatch(branding, patches) {
   const result = { next, applied: [], unchanged: [], conflicts: [] };
   for (const { key, from, to } of patches) {
     if (sameValue(next[key], to)) result.unchanged.push(key);
-    else if (from.some((value) => sameValue(next[key], value))) { next[key] = to; result.applied.push(key); }
+    else if (from.some((value) => sameValue(next[key], value))) { next[key] = rebrandTree(to); result.applied.push(key); }
     else result.conflicts.push(key);
   }
   return result;
+}
+
+// The site name, header and footer settings and the company profile carry the brand name and support
+// email too; these return the renamed copy and the fields that changed.
+const changedPaths = (before, after, base = "") => {
+  if (JSON.stringify(before) === JSON.stringify(after)) return [];
+  if (before && after && typeof before === "object" && typeof after === "object" && !Array.isArray(before)) return Object.keys(after).flatMap((key) => changedPaths(before[key], after[key], base ? `${base}.${key}` : key));
+  return [base];
+};
+export function rebrandSiteRecord(site) {
+  const next = { name: rebrandText(site.name), branding: rebrandTree(site.branding ?? {}) };
+  return { next, changed: changedPaths({ name: site.name, branding: site.branding ?? {} }, next) };
+}
+export function rebrandThemeSettings(settingsJson) {
+  const next = structuredClone(settingsJson ?? {});
+  for (const part of ["header", "footer"]) if (next.globalSections?.[part]?.settings) next.globalSections[part].settings = rebrandTree(next.globalSections[part].settings);
+  if (next.seo) for (const key of ["siteTitle", "titleTemplate", "siteDescription"]) if (typeof next.seo[key] === "string") next.seo[key] = rebrandText(next.seo[key]);
+  return { next, changed: changedPaths(settingsJson ?? {}, next) };
+}
+export function rebrandProfile(profileJson) {
+  const next = structuredClone(profileJson ?? {});
+  if (next.identity) next.identity = rebrandTree(next.identity);
+  return { next, changed: changedPaths(profileJson ?? {}, next) };
 }
 
 export function applyProductPatch(metadata, patch) {
@@ -1122,7 +1164,7 @@ export function applyProductPatch(metadata, patch) {
   const result = { next, applied: [], unchanged: [], conflicts: [] };
   for (const key of Object.keys(patch.to)) {
     if (sameValue(next[key], patch.to[key])) result.unchanged.push(key);
-    else if (sameValue(next[key], patch.from[key])) { next[key] = patch.to[key]; result.applied.push(key); }
+    else if (sameValue(next[key], patch.from[key])) { next[key] = rebrandTree(patch.to[key]); result.applied.push(key); }
     else result.conflicts.push(key);
   }
   return result;
