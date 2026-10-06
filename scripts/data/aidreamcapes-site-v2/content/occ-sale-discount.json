@@ -164,5 +164,28 @@
       "Promotions that depend on AI spelling a code correctly",
       "Comparison-price claims without a verified original price"
     ]
+  },
+  "examples": {
+    "h2": "More sale examples",
+    "lead": "Product scenes with open space for your discount, added after download.",
+    "groups": [
+      {
+        "label": "Room for the offer",
+        "items": [
+          {
+            "ref": "n:gen2:occ-sale-discount-g1",
+            "title": "Wool socks on the left, open space on the right",
+            "kind": "photo",
+            "product": "wool socks"
+          },
+          {
+            "ref": "n:gen2:occ-sale-discount-g2",
+            "title": "Three-piece bath bundle on a counter",
+            "kind": "photo",
+            "product": "bath bundle"
+          }
+        ]
+      }
+    ]
   }
 }

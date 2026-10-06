@@ -176,5 +176,34 @@
         "d": "Use a real package photo for ingredients, allergens, nutrition, and required notices."
       }
     ]
+  },
+  "examples": {
+    "h2": "More food and drink examples",
+    "lead": "Packaged food and drinks shown with real food, ready for a listing or a feed.",
+    "groups": [
+      {
+        "label": "With real food",
+        "items": [
+          {
+            "ref": "n:gen2:ind-food-drinks-g1",
+            "title": "Iced tea can opened on a sunny balcony",
+            "kind": "photo",
+            "product": "iced tea can"
+          },
+          {
+            "ref": "n:gen2:ind-food-drinks-g2",
+            "title": "Snack bag packed in a lunch bag with fruit",
+            "kind": "photo",
+            "product": "snack bag"
+          },
+          {
+            "ref": "n:gen2:ind-food-drinks-g3",
+            "title": "Pasta sauce jar beside a finished plate",
+            "kind": "photo",
+            "product": "pasta sauce jar"
+          }
+        ]
+      }
+    ]
   }
 }

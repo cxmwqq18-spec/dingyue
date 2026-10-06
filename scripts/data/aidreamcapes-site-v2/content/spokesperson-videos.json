@@ -13,7 +13,7 @@
   ],
   "intro": [
     "An AI spokesperson video puts your product in someone's hands. An AI-generated person picks it up, holds it near their face or chest, turns it to show the label and the sides, and points to details like a strap or a cap. It gives shoppers a sense of size and makes the product feel like something people use every day.",
-    "Upload a product photo and write one sentence about the person and setting, such as “woman in a denim jacket holding the tote bag on a city sidewalk.” Choose 6, 10, 15, or 30 seconds in 9:16, 1:1, 16:9, 4:3, or 3:4. Add your message as typed captions after download."
+    "Upload a product photo and write one sentence about the person and setting, such as \u201cwoman in a denim jacket holding the tote bag on a city sidewalk.\u201d Choose 6, 10, 15, or 30 seconds in 9:16, 1:1, 16:9, 4:3, or 3:4. Add your message as typed captions after download."
   ],
   "benefits": [
     {
@@ -36,7 +36,7 @@
     },
     {
       "t": "Describe the person and place",
-      "d": "Write who is holding it and where, for example “man in a gray hoodie at a kitchen table, holding the coffee bag.” Pick the size and length."
+      "d": "Write who is holding it and where, for example \u201cman in a gray hoodie at a kitchen table, holding the coffee bag.\u201d Pick the size and length."
     },
     {
       "t": "Save it or change the scene",
@@ -61,7 +61,7 @@
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 \u00b7 TikTok & Reels"
       ],
       [
         "Length",
@@ -73,7 +73,7 @@
   "faq": [
     {
       "q": "What does the person do in the video?",
-      "a": "They hold your product, turn it toward the camera, and show it from different sides. Describe the action in your sentence, like “lifts the bottle and taps the cap,” to guide the movement."
+      "a": "They hold your product, turn it toward the camera, and show it from different sides. Describe the action in your sentence, like \u201clifts the bottle and taps the cap,\u201d to guide the movement."
     },
     {
       "q": "Can I describe what the person looks like?",
@@ -115,7 +115,7 @@
       },
       {
         "t": "Choose one hand action",
-        "d": "Say “turns the bottle toward the camera,” “lifts the pouch,” or “points to the strap,” then keep the pose simple."
+        "d": "Say \u201cturns the bottle toward the camera,\u201d \u201clifts the pouch,\u201d or \u201cpoints to the strap,\u201d then keep the pose simple."
       },
       {
         "t": "Keep text out of the action",
@@ -197,6 +197,41 @@
     "not_ideal": [
       "Furniture or oversized goods that cannot be held naturally",
       "Messages that depend on a real person making a verified statement"
+    ]
+  },
+  "examples": {
+    "h2": "More presenter scenes",
+    "lead": "More settings for an AI presenter holding your product: outdoors, at a desk and in the kitchen.",
+    "groups": [
+      {
+        "label": "Presenter settings",
+        "items": [
+          {
+            "ref": "n:gen2:spokesperson-videos-g1",
+            "title": "Water bottle shown by a presenter near a park bench",
+            "kind": "scene",
+            "product": "steel water bottle"
+          },
+          {
+            "ref": "n:gen2:spokesperson-videos-g2",
+            "title": "Phone case turned toward the camera at a desk",
+            "kind": "scene",
+            "product": "phone case"
+          },
+          {
+            "ref": "n:gen2:spokesperson-videos-g3",
+            "title": "Snack pouch held up by a presenter in the kitchen",
+            "kind": "scene",
+            "product": "snack pouch"
+          },
+          {
+            "ref": "n:gen2:spokesperson-videos-g4",
+            "title": "Small handbag held at chest height by a presenter",
+            "kind": "scene",
+            "product": "small handbag"
+          }
+        ]
+      }
     ]
   }
 }

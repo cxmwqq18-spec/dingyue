@@ -216,5 +216,45 @@
         "d": "Use the cleanest view first, then follow with the scene or detail that answers the next shopper question."
       }
     ]
+  },
+  "examples": {
+    "h2": "More product photo examples",
+    "lead": "Square results across the main photo types: clean listing images, lifestyle scenes and feed-ready shots.",
+    "groups": [
+      {
+        "label": "Listing and lifestyle",
+        "items": [
+          {
+            "ref": "n:gen2:photo-hub-g1",
+            "title": "Glass perfume bottle cut out on pure white",
+            "kind": "photo",
+            "product": "glass perfume bottle"
+          },
+          {
+            "ref": "n:gen2:photo-hub-g2",
+            "title": "Steel travel tumbler on a lakeside rock at sunrise",
+            "kind": "photo",
+            "product": "steel travel tumbler"
+          },
+          {
+            "ref": "n:gen2:photo-hub-g3",
+            "title": "Snack box on a cafe table beside a latte",
+            "kind": "photo",
+            "product": "boxed snacks"
+          }
+        ]
+      },
+      {
+        "label": "Feed-ready",
+        "items": [
+          {
+            "ref": "n:gen2:photo-hub-g4",
+            "title": "Sunglasses on a deck with open space for a headline",
+            "kind": "photo",
+            "product": "sunglasses"
+          }
+        ]
+      }
+    ]
   }
 }

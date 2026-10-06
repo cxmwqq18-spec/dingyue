@@ -221,5 +221,40 @@
         "d": "Check the marketplace's latest primary-image requirements, then add any permitted text or badges in the correct place outside this clean image."
       }
     ]
+  },
+  "examples": {
+    "h2": "More white background examples",
+    "lead": "Full outlines, clean edges and an even white backdrop, the look Amazon and many stores ask for in a main image.",
+    "groups": [
+      {
+        "label": "Main image ready",
+        "items": [
+          {
+            "ref": "n:gen2:white-background-g1",
+            "title": "Leather bifold wallet on a clean white backdrop",
+            "kind": "photo",
+            "product": "leather bifold wallet"
+          },
+          {
+            "ref": "n:gen2:white-background-g2",
+            "title": "Clear spray bottle with a soft shadow on white",
+            "kind": "photo",
+            "product": "clear spray bottle"
+          },
+          {
+            "ref": "n:gen2:white-background-g3",
+            "title": "Running shoe in full side profile on white",
+            "kind": "photo",
+            "product": "running shoe"
+          },
+          {
+            "ref": "n:gen2:white-background-g4",
+            "title": "Bag buckle detail cropped on white",
+            "kind": "photo",
+            "product": "bag buckle"
+          }
+        ]
+      }
+    ]
   }
 }

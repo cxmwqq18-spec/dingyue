@@ -221,5 +221,45 @@
         "d": "Place logos, prices, dates, and sale language in a design tool where they can be edited precisely."
       }
     ]
+  },
+  "examples": {
+    "h2": "More background swaps",
+    "lead": "One product shown on different backdrops, from a plain color block to a seasonal scene.",
+    "groups": [
+      {
+        "label": "Same product, three backdrops",
+        "items": [
+          {
+            "ref": "n:gen2:change-background-g1",
+            "title": "Phone case on a soft blue color block",
+            "kind": "photo",
+            "product": "phone case"
+          },
+          {
+            "ref": "n:gen2:change-background-g2",
+            "title": "Same phone case on a textured stone slab",
+            "kind": "photo",
+            "product": "phone case"
+          },
+          {
+            "ref": "n:gen2:change-background-g3",
+            "title": "Same phone case among autumn leaves",
+            "kind": "photo",
+            "product": "phone case"
+          }
+        ]
+      },
+      {
+        "label": "New settings",
+        "items": [
+          {
+            "ref": "n:gen2:change-background-g4",
+            "title": "Rolled yoga mat on a beach at sunrise",
+            "kind": "photo",
+            "product": "yoga mat"
+          }
+        ]
+      }
+    ]
   }
 }

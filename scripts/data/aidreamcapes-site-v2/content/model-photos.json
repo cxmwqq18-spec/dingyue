@@ -104,7 +104,7 @@
     },
     {
       "h2": "Direct the look without naming a person",
-      "d": "Describe the outfit, pose, setting, and light in ordinary terms—“relaxed denim outfit, city sidewalk, soft morning light”—then compare versions. The request should define a visual direction, not imitate a celebrity or present the generated person as a real customer."
+      "d": "Describe the outfit, pose, setting, and light in ordinary terms\u2014\u201crelaxed denim outfit, city sidewalk, soft morning light\u201d\u2014then compare versions. The request should define a visual direction, not imitate a celebrity or present the generated person as a real customer."
     }
   ],
   "input_guide": {
@@ -219,6 +219,41 @@
       {
         "t": "Add campaign copy later",
         "d": "Type the price, date, and offer in your editor or social tool so the final message is accurate."
+      }
+    ]
+  },
+  "examples": {
+    "h2": "More on-model examples",
+    "lead": "Clothing and accessories shown on a person, so shoppers can judge fit, drape and scale.",
+    "groups": [
+      {
+        "label": "Worn and in context",
+        "items": [
+          {
+            "ref": "n:gen2:model-photos-g1",
+            "title": "Oversized hoodie worn in a bright studio",
+            "kind": "photo",
+            "product": "oversized hoodie"
+          },
+          {
+            "ref": "n:gen2:model-photos-g2",
+            "title": "Tortoiseshell sunglasses worn on a sunny street",
+            "kind": "photo",
+            "product": "tortoiseshell sunglasses"
+          },
+          {
+            "ref": "n:gen2:model-photos-g3",
+            "title": "Ankle boots worn mid-step on a sidewalk",
+            "kind": "photo",
+            "product": "leather ankle boots"
+          },
+          {
+            "ref": "n:gen2:model-photos-g4",
+            "title": "Small stud earrings worn, shown close up",
+            "kind": "photo",
+            "product": "stud earrings"
+          }
+        ]
       }
     ]
   }

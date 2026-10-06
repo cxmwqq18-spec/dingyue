@@ -169,5 +169,34 @@
       "Tiny lettering or technical specifications that must be generated perfectly"
     ]
   },
-  "output": "Square product photo \u00b7 Story layout"
+  "output": "Square product photo \u00b7 Story layout",
+  "examples": {
+    "h2": "More Story-style examples",
+    "lead": "Square images with the product centered and clear space above and below for Story stickers and text.",
+    "groups": [
+      {
+        "label": "Centered, with space to spare",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-story-g1",
+            "title": "Gift set centered with clear space above and below",
+            "kind": "photo",
+            "product": "gift set"
+          },
+          {
+            "ref": "n:gen2:tpl-story-g2",
+            "title": "Travel-size kit centered in a toiletry bag",
+            "kind": "photo",
+            "product": "travel-size kit"
+          },
+          {
+            "ref": "n:gen2:tpl-story-g3",
+            "title": "Bright yellow backdrop with a centered water bottle",
+            "kind": "photo",
+            "product": "water bottle"
+          }
+        ]
+      }
+    ]
+  }
 }

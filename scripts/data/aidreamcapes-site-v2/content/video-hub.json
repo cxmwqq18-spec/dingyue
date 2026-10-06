@@ -209,5 +209,51 @@
         "d": "The generated file is a starting visual; your team still controls the final wording, sound, placement, and approval."
       }
     ]
+  },
+  "examples": {
+    "h2": "Example scenes by video type",
+    "lead": "Opening setups for the product videos sellers make most often. Pick the one closest to your product and start from your own photo.",
+    "groups": [
+      {
+        "label": "Everyday product moments",
+        "items": [
+          {
+            "ref": "n:gen2:video-hub-g1",
+            "title": "Water bottle lifted out of a gym bag",
+            "kind": "scene",
+            "product": "insulated water bottle"
+          },
+          {
+            "ref": "n:gen2:video-hub-g2",
+            "title": "Bento lunch box snapped shut on the counter",
+            "kind": "scene",
+            "product": "bento lunch box"
+          }
+        ]
+      },
+      {
+        "label": "Reveals and room changes",
+        "items": [
+          {
+            "ref": "n:gen2:video-hub-g3",
+            "title": "Shoebox lid lifted on new sneakers in tissue",
+            "kind": "scene",
+            "product": "sneakers"
+          },
+          {
+            "ref": "n:gen2:video-hub-g4",
+            "title": "Coat hooks and a bench sorting out a small entryway",
+            "kind": "scene",
+            "product": "entryway bench and hooks"
+          },
+          {
+            "ref": "n:gen2:video-hub-g5",
+            "title": "Lit candle on a side table in warm evening light",
+            "kind": "scene",
+            "product": "glass candle"
+          }
+        ]
+      }
+    ]
   }
 }

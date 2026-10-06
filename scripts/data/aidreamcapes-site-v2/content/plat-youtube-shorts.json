@@ -68,7 +68,7 @@
     },
     {
       "q": "What are YouTube Shorts ad limits?",
-      "a": "Google recommends vertical 9:16 and videos under 60 seconds for Shorts; videos can be up to 3 minutes, but the first 60 seconds play in the Shorts feed. AIVideosUGC’s 30-second option fits."
+      "a": "Google recommends vertical 9:16 and videos under 60 seconds for Shorts; videos can be up to 3 minutes, but the first 60 seconds play in the Shorts feed. AIVideosUGC\u2019s 30-second option fits."
     }
   ],
   "overview": [
@@ -78,7 +78,7 @@
     },
     {
       "h2": "Use Google's guidance as the publishing check",
-      "d": "Google recommends a 9:16 vertical asset for Shorts. Its guidance says videos under 60 seconds fit the Shorts experience, while uploads can run up to 3 minutes and the Shorts feed first plays the opening 60 seconds. AIVideosUGC offers 6, 10, 15, and 30 second jobs in five shapes—9:16, 1:1, 16:9, 4:3, and 3:4— with cost shown before generation. Choose 16:9 when the same idea belongs in a standard YouTube placement or a wide product page."
+      "d": "Google recommends a 9:16 vertical asset for Shorts. Its guidance says videos under 60 seconds fit the Shorts experience, while uploads can run up to 3 minutes and the Shorts feed first plays the opening 60 seconds. AIVideosUGC offers 6, 10, 15, and 30 second jobs in five shapes\u20149:16, 1:1, 16:9, 4:3, and 3:4\u2014 with cost shown before generation. Choose 16:9 when the same idea belongs in a standard YouTube placement or a wide product page."
     }
   ],
   "input_guide": {
@@ -168,6 +168,35 @@
     "not_ideal": [
       "Scenes that need several paragraphs of explanation",
       "Tiny labels or interface screens that must be read inside the generated image"
+    ]
+  },
+  "examples": {
+    "h2": "More YouTube Shorts examples",
+    "lead": "Vertical moments with a clear start and finish, plus a wide frame for regular YouTube.",
+    "groups": [
+      {
+        "label": "Short and clear",
+        "items": [
+          {
+            "ref": "n:gen2:plat-youtube-shorts-g1",
+            "title": "Daypack lifted by its top handle",
+            "kind": "photo",
+            "product": "daypack"
+          },
+          {
+            "ref": "n:gen2:plat-youtube-shorts-g2",
+            "title": "Garlic press crushing a clove, close up",
+            "kind": "photo",
+            "product": "garlic press"
+          },
+          {
+            "ref": "n:gen2:plat-youtube-shorts-g3",
+            "title": "String lights switched on over a balcony at dusk",
+            "kind": "photo",
+            "product": "string lights"
+          }
+        ]
+      }
     ]
   }
 }

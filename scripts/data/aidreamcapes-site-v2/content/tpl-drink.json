@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 \u00b7 TikTok & Reels"
       ],
       [
         "Length",
@@ -173,6 +173,35 @@
     "not_ideal": [
       "Dry goods that do not have a meaningful pour",
       "Claims that depend on exact serving measurements"
+    ]
+  },
+  "examples": {
+    "h2": "More food and drink scenes",
+    "lead": "Pours, drizzles and fizz: close moments that show texture.",
+    "groups": [
+      {
+        "label": "Texture up close",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-drink-g1",
+            "title": "Sparkling water can opened beside an iced glass",
+            "kind": "scene",
+            "product": "sparkling water can"
+          },
+          {
+            "ref": "n:gen2:tpl-drink-g2",
+            "title": "Honey drizzled over a stack of pancakes",
+            "kind": "scene",
+            "product": "honey jar"
+          },
+          {
+            "ref": "n:gen2:tpl-drink-g3",
+            "title": "Berry smoothie poured into a tall glass",
+            "kind": "scene",
+            "product": "berry smoothie"
+          }
+        ]
+      }
     ]
   }
 }

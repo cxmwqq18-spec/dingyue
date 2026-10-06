@@ -68,17 +68,17 @@
     },
     {
       "q": "What are Shopify product video limits?",
-      "a": "Shopify accepts uploaded MP4, MOV, or WebM product videos up to 10 minutes, 1 GB, and 4K (4096×2160). Our generator can export 1:1, 9:16, or 16:9; upload the version that fits your store."
+      "a": "Shopify accepts uploaded MP4, MOV, or WebM product videos up to 10 minutes, 1 GB, and 4K (4096\u00d72160). Our generator can export 1:1, 9:16, or 16:9; upload the version that fits your store."
     }
   ],
   "overview": [
     {
       "h2": "Make a catalog feel like one store",
-      "d": "Shopify collection pages are easier to scan when product photos share a shape, background family, and camera height. Pick one visual rule for a collection—such as a warm neutral surface with the item centered—and repeat that rule in each prompt. AIVideosUGC creates square stills by default, which gives you a practical starting point for a tidy grid."
+      "d": "Shopify collection pages are easier to scan when product photos share a shape, background family, and camera height. Pick one visual rule for a collection\u2014such as a warm neutral surface with the item centered\u2014and repeat that rule in each prompt. AIVideosUGC creates square stills by default, which gives you a practical starting point for a tidy grid."
     },
     {
       "h2": "Choose media for the page job",
-      "d": "Use a square still as the collection anchor, then place a lifestyle image and a product-page video in the media gallery. Shopify's current limits allow images up to 5000×5000 pixels or 25 MP and under 20 MB. Uploaded product videos can be up to 10 minutes and 1 GB, up to 4K (4096×2160), in MP4, MOV, or WebM. AIVideosUGC offers 6, 10, 15, and 30 second jobs in five shapes—9:16, 1:1, 16:9, 4:3, and 3:4— with cost shown before the job starts."
+      "d": "Use a square still as the collection anchor, then place a lifestyle image and a product-page video in the media gallery. Shopify's current limits allow images up to 5000\u00d75000 pixels or 25 MP and under 20 MB. Uploaded product videos can be up to 10 minutes and 1 GB, up to 4K (4096\u00d72160), in MP4, MOV, or WebM. AIVideosUGC offers 6, 10, 15, and 30 second jobs in five shapes\u20149:16, 1:1, 16:9, 4:3, and 3:4\u2014 with cost shown before the job starts."
     }
   ],
   "input_guide": {
@@ -168,6 +168,35 @@
     "not_ideal": [
       "Listings that rely on exact generated text inside the image",
       "A catalog with no source photos for the products or their key components"
+    ]
+  },
+  "examples": {
+    "h2": "More Shopify store examples",
+    "lead": "Matching shots for collection grids, headers and product pages.",
+    "groups": [
+      {
+        "label": "Store-ready sets",
+        "items": [
+          {
+            "ref": "n:gen2:plat-shopify-g1",
+            "title": "Four ceramic bowls shot at the same height",
+            "kind": "photo",
+            "product": "ceramic bowls"
+          },
+          {
+            "ref": "n:gen2:plat-shopify-g2",
+            "title": "Linen tote packed at a market stall",
+            "kind": "photo",
+            "product": "linen tote"
+          },
+          {
+            "ref": "n:gen2:plat-shopify-g3",
+            "title": "Throw pillows on a sofa for a collection header",
+            "kind": "photo",
+            "product": "throw pillows"
+          }
+        ]
+      }
     ]
   }
 }

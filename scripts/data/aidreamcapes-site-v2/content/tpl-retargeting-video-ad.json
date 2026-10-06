@@ -48,7 +48,7 @@
     "options": [
       [
         "Size",
-        "1:1 · Feed"
+        "1:1 \u00b7 Feed"
       ],
       [
         "Length",
@@ -56,7 +56,7 @@
       ],
       [
         "Also try",
-        "9:16 · Reels"
+        "9:16 \u00b7 Reels"
       ]
     ],
     "cta": "Make my retargeting video"
@@ -68,7 +68,7 @@
     },
     {
       "q": "Can the video claim that someone viewed or abandoned a cart?",
-      "a": "Do not make that claim in the generated scene. It does not know a viewer’s history. Add only copy that matches your actual campaign and data."
+      "a": "Do not make that claim in the generated scene. It does not know a viewer\u2019s history. Add only copy that matches your actual campaign and data."
     },
     {
       "q": "Will it add the offer or price?",
@@ -76,7 +76,7 @@
     },
     {
       "q": "What campaign settings are outside this template?",
-      "a": "Set audience, exclusions, budget, frequency, and delivery in your ad platform. The template creates the video asset and does not read a viewer’s history."
+      "a": "Set audience, exclusions, budget, frequency, and delivery in your ad platform. The template creates the video asset and does not read a viewer\u2019s history."
     }
   ],
   "overview": [
@@ -176,6 +176,35 @@
     "not_ideal": [
       "Audience claims the platform cannot verify",
       "A campaign that needs automatic inventory or cart data inside the clip"
+    ]
+  },
+  "examples": {
+    "h2": "More return-visit scenes",
+    "lead": "Calm reminders that show the product in everyday use.",
+    "groups": [
+      {
+        "label": "Back in view",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-retargeting-video-ad-g1",
+            "title": "Brown boots laced on a bench by a coat",
+            "kind": "scene",
+            "product": "brown boots"
+          },
+          {
+            "ref": "n:gen2:tpl-retargeting-video-ad-g2",
+            "title": "Wireless mouse back beside a laptop",
+            "kind": "scene",
+            "product": "wireless mouse"
+          },
+          {
+            "ref": "n:gen2:tpl-retargeting-video-ad-g3",
+            "title": "Perfume left on a dresser by its gift bag",
+            "kind": "scene",
+            "product": "perfume bottle"
+          }
+        ]
+      }
     ]
   }
 }

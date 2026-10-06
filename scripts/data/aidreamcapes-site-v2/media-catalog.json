@@ -4917,6 +4917,2096 @@
     1280
    ],
    "source": "gen-list.json"
+  },
+  "gen2:video-hub-g1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Insulated water bottle lifted out of an open gym bag on a locker room bench.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:video-hub-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Bento lunch box lid snapped shut on a kitchen counter, hands at the edges.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:video-hub-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Shoebox lid lifted to show a new pair of sneakers wrapped in tissue paper.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:video-hub-g4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Small entryway sorted with a slim bench and a row of coat hooks in morning light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:video-hub-g5": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Lit glass candle on a wooden side table in warm evening light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:photo-hub-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Glass perfume bottle cut out on a pure white background with a soft shadow.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:photo-hub-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Steel travel tumbler on a lakeside rock at sunrise.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:photo-hub-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Box of snacks on a cafe table beside a latte.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:photo-hub-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Sunglasses on a sun-bleached wooden deck with open space on the right.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:image-to-video-g1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Close-up of a wristwatch dial with a narrow highlight across the glass on a dark background.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:image-to-video-g2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Ceramic mug with gentle steam rising in soft morning light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:image-to-video-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Folded linen shirt on a bed beside an open window with a light breeze.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:image-to-video-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Hand soap bottle on a bathroom shelf in a square frame.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:video-ads-g1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hand picking up a compact speaker from a desk beside a laptop.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:video-ads-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Canvas tote bag packed item by item on a hallway bench: wallet, book, water bottle.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:video-ads-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Snack pouch set down beside a lunch container on an office desk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:product-videos-g1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Folding camp chair half open beside a wooden patio table.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:product-videos-g2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Desk lamp just switched on in a dark room, a warm pool of light on the desk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:product-videos-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Top-down view of a drawer organizer being filled with cutlery, one slot at a time.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:unboxing-videos-g1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Rigid mailer box opened with tissue folded back to reveal a ceramic reed diffuser.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:unboxing-videos-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Ribbon-tied gift box open on a table with three skincare minis inside.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:unboxing-videos-g3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Subscription box open on a kitchen table with a tea tin, a honey jar and biscuits laid out beside it.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:before-after-videos-g1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Stainless steel pan split down the middle: one half scorched, the other half polished.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:before-after-videos-g2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Bathroom tile grout with one half grimy and the other clean, a small grout brush resting on it.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:before-after-videos-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Closet shelf with messy sweaters on one side and neatly folded sweaters in fabric bins on the other.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:spokesperson-videos-g1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Smiling woman beside a park bench holding a steel water bottle toward the camera.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:spokesperson-videos-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Man at a desk turning a phone case toward the camera with a relaxed smile.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:spokesperson-videos-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Person in a bright kitchen holding a snack pouch at chest height, smiling.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:spokesperson-videos-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Person holding a small handbag at chest height against a plain wall.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:url-to-video-g1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Glass olive oil bottle on a kitchen counter next to a cutting board with fresh herbs.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:url-to-video-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Throw pillow set on a reading chair beside a floor lamp.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:url-to-video-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Yoga mat bag hanging on a hook by the front door.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:white-background-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Leather bifold wallet on a clean white background.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:white-background-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Clear glass spray bottle with a soft shadow on a white background.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:white-background-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Running shoe in full side profile on a white background.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:white-background-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Close crop of a metal bag buckle on a white background.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:lifestyle-photos-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Leather handbag hanging on a cafe chair.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:lifestyle-photos-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Terracotta plant pot on a sunny plant shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:lifestyle-photos-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Gray hoodie folded on a park bench.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:lifestyle-photos-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Enamel camping mug on a snowy cabin porch rail.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:lifestyle-photos-g5": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same enamel camping mug on a summer picnic blanket.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:lifestyle-photos-g6": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Folded linen napkins on a table with quiet empty space above them.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:model-photos-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Model wearing an oversized hoodie in a bright studio, front view.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:model-photos-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Model wearing tortoiseshell sunglasses on a sunny street.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:model-photos-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Leather ankle boots worn mid-step on a city sidewalk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:model-photos-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Close view of small gold stud earrings worn on the ear.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:change-background-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Phone case on a soft blue color block.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:change-background-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same phone case on a textured stone slab.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:change-background-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same phone case among fallen autumn leaves.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:change-background-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Rolled yoga mat on a beach at sunrise.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:social-ad-photos-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Red lipstick on a pink backdrop with open space on the left.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:social-ad-photos-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Hot sauce bottle with fresh chilies and open space at the top.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:social-ad-photos-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Coffee bag on a cafe counter with open space on the right.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:social-ad-photos-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Canvas sneaker on a city curb.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:social-ad-photos-g5": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same canvas sneaker on a gym floor.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-angle-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Portable speaker front view on a light gray backdrop.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-angle-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same portable speaker turned to show the ports on its back.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-angle-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Top-down view of the portable speaker's control buttons.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-angle-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Underside of the portable speaker showing its rubber feet.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-detail-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Macro view of canvas sneaker eyelets and laces.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-detail-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Macro view of a rubber sole tread pattern.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-detail-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Close-up of a brass clasp on a leather bag.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-detail-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Close-up of metal zipper teeth on a denim jacket.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-size-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Small pendant resting on an open palm.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-size-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Canvas tote bag with a laptop inside.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-size-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same canvas tote bag beside a carry-on suitcase.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-size-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Wireless earbuds case held between two fingers.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-color-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Three ceramic storage jars in sage, cream and terracotta.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-color-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same running shoe in three colorways side by side.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-color-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Rain jacket in three colors on matching hangers.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-box-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Top-down layout of a camping breakfast kit: enamel mugs, coffee pouch, spork and small pan.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-box-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Pet grooming kit with a brush, a towel and a shampoo bottle laid out apart.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-box-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Tea gift set with a tin, an infuser and a cup.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-pack-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Coffee pouch standing on a cafe counter.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-pack-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same coffee pouch on a grocery shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-pack-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "A carton, a soft pouch and a bottle lined up together.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-light-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Amber glass bottle in warm side light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-light-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same amber glass bottle in cool, even light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-light-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Steel watch with a controlled highlight on a dark surface.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-light-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Glass honey jar with soft, even highlights.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-tryon-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Model wearing a bomber jacket, front view.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-tryon-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same bomber jacket seen from the back.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-tryon-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Seated model wearing a ribbed knit top.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-tryon-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Model walking in a satin midi skirt.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-jewel-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Enamel brooch pinned to a wool coat lapel.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-jewel-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Silver cufflinks on a white shirt cuff.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-jewel-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Thin gold anklet worn on an ankle on sand.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-jewel-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Ear cuff worn high on the ear.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-look-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Trench coat look under a stone archway in warm light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-look-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Knit dress look under the same stone archway.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-look-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Wide-leg suit look under the same stone archway.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-head-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Support lead headshot in a bright office.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-head-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Producer headshot in the same bright office.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-head-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Operations manager headshot beside a window.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-ugc-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Travel coffee cup held on a morning train.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-ugc-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Wool scarf pulled from a mailer box on a bed.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-ugc-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Small desk plant next to an open laptop.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-story-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Gift set centered with clear space above and below.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-story-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Travel-size toiletry kit centered in an open toiletry bag.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-story-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Water bottle centered on a bright yellow backdrop.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-sale-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Hard-shell suitcase with open space on the right.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-sale-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Summer sandals on sand with open space at the top.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-sale-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Kitchen gift set with open space on the left.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-howto-g1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Electric kettle being filled at a kitchen tap.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-howto-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Fabric shaver gliding over a pilled sweater sleeve.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-howto-g3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Filter cartridge being clicked into a water pitcher.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-film-g1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Camera lens catching a thin strip of window light in a dark room.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-film-g2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Headphones resting on a matte pedestal in side light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-film-g3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Ceramic vase in a beam of late-day light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-beauty-g1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Cream pumped onto the back of a hand beside a mirror and folded towel.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-beauty-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Cleansing balm scooped from its jar with a small spatula.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-beauty-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Hair oil worked through the ends of long hair.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-drink-g1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Sparkling water can opened beside a glass of ice.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-drink-g2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Honey drizzled from a jar over a stack of pancakes.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-drink-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Berry smoothie poured into a tall glass.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-home-g1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Bathroom drawer sorted into divided trays.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-home-g2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Linen closet stacked into woven baskets.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-home-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Fridge shelves reset with clear storage bins.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-outfit-g1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Long coat hem swinging as the wearer walks past a neutral wall.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-outfit-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Matching athletic set worn in a bright studio.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-outfit-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Slip dress outfit on a rooftop at sunset.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-launch-g1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Speaker revealed as a cloth slides off it on a table.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-launch-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "New toaster on a kitchen counter with open space at the side.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-launch-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "New backpack hanging alone on a white wall hook.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-compare-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Two phone cases side by side showing their finishes and cutouts.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-compare-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Single mug next to the same mug in its gift box.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-compare-g3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Two chef's knives of different lengths side by side on a board.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-bf-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Gaming monitor on a dark desk with open space at the side.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-bf-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Stand mixer under a single spotlight.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-bf-g3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Espresso machine with a red rim light in a dark kitchen.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-limited-drop-alert-video-g1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Wristwatch on a pedestal turned to show its caseback, open space above.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-limited-drop-alert-video-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Jacket folded into a shipping box.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-limited-drop-alert-video-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Handmade mugs lined up on a drying rack.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-product-feature-callout-video-g1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Wallet snap clasp opened in close-up.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-product-feature-callout-video-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Portable blender lid locked with one press.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-product-feature-callout-video-g3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Laptop stand being raised to a new height.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-carousel-video-ad-g1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Wristwatch out of its open box and worn on the wrist.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-carousel-video-ad-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Commuter backpack packed and set beside a coat.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-carousel-video-ad-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Picnic basket set laid out on a blanket.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-spark-ads-style-video-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Phone stand folded flat and tucked into a commuter bag.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-spark-ads-style-video-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Water bottle clipped to a backpack on a hiking trail.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-spark-ads-style-video-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Mini massage gun used on a calf after a run.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-retargeting-video-ad-g1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Brown boots laced on a bench beside a coat.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-retargeting-video-ad-g2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Wireless mouse beside a laptop on a desk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:tpl-retargeting-video-ad-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Perfume bottle on a dresser beside its gift bag.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-beauty-skincare-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Serum and cream textures swatched on glass.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-beauty-skincare-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Skincare set lined up on a vanity.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-beauty-skincare-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same skincare set packed into a travel pouch.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-beauty-skincare-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Toner bottle with its cap off on a bathroom shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-fashion-clothing-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Field jacket front view in neutral light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-fashion-clothing-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same field jacket seen from the back.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-fashion-clothing-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Close-up of the field jacket's fabric texture.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-fashion-clothing-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Full outfit worn on a walk through a park.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-shoes-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Running sneaker seen from the toe.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-shoes-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same running sneaker seen from the heel.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-shoes-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Sneaker outsole tread on a clean counter.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-shoes-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "White casual shoes worn with cropped trousers.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-shoes-g5": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Sneakers stepping up onto a city curb.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-jewelry-accessories-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Macro view of a ring's prong setting.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-jewelry-accessories-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Fine chain necklace worn at the collarbone.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-jewelry-accessories-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Drop earrings worn in soft window light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-jewelry-accessories-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Polished belt buckle under soft light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-electronics-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Wireless speaker unboxed with its cable.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-electronics-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Tablet stand holding a tablet with a dark screen on a desk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-electronics-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Charger and cable packed in a travel pouch.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-health-wellness-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Protein powder pouch on a gym bench after a workout.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-health-wellness-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Herbal tea tin beside an evening cup.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-health-wellness-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Sleep mask on a nightstand at bedtime.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-food-drinks-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Iced tea can opened on a sunny balcony.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-food-drinks-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Snack bag packed in a lunch bag with fresh fruit.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-food-drinks-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Pasta sauce jar beside a finished plate of pasta.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-home-living-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Fabric storage boxes on a tidy shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-home-living-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Ceramic planter beside a linen sofa.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-home-living-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Round side table beside an armchair.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:ind-home-living-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Floating shelf bracket mounted on a wall.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-tiktok-g1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Small bottle picked off a bathroom shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-tiktok-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Desk fan switched on at a home office desk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-tiktok-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Sneaker turned to show its sole on a plain floor.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-instagram-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Speckled ceramic cup in a clean square frame.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-instagram-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "The same speckled cup being filled from a carafe.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-instagram-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Necklace close-up with open space above and below.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-instagram-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Hand cream tube front view on a pastel backdrop.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-instagram-g5": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same hand cream tube by a bathroom sink.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-facebook-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Lunch box opened on a kitchen counter.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-facebook-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Cat asleep in a round pet bed in a sunny corner.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-facebook-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Insulated bottle on a pure white background.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-facebook-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same insulated bottle on a sunny desk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-youtube-shorts-g1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Daypack lifted by its top handle.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-youtube-shorts-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Garlic press crushing a clove, close up.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-youtube-shorts-g3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "String lights switched on over a balcony at dusk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-amazon-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Ceramic mug filling the frame on a pure white background.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-amazon-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same ceramic mug held in one hand to show its size.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-amazon-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same ceramic mug in use beside a kettle.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-amazon-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Daypack front view on a pure white background.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-amazon-g5": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same daypack opened to show its inner pocket.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-shopify-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Four ceramic bowls shot from the same height.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-shopify-g2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Linen tote packed at a farmers market stall.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:plat-shopify-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Throw pillows on a sofa for a collection header.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:occ-product-launch-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "New bottle half lit, showing only its outline.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:occ-product-launch-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "New product box preview on a plain backdrop.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:occ-product-launch-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "New water bottle in use on a morning run.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:occ-sale-discount-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Wool socks on the left with open space on the right.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:occ-sale-discount-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Three-piece bath bundle on a bathroom counter.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:occ-black-friday-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Leather duffel side-lit on a dark backdrop with open space.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:occ-black-friday-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Gift set arranged piece by piece on a dark table.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:occ-black-friday-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same leather duffel in brighter light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:occ-holidays-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Skincare gift set on a winter dinner table.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:occ-holidays-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Gift unwrapped to a bottle held in both hands.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
+  },
+  "gen2:occ-holidays-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Pillar candle on a spring brunch table.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gallery-brief.json"
   }
  }
 }

@@ -270,24 +270,21 @@ export function TemplateGrid({ cards, r, id }: { cards: V2Card[]; r: V2Resolvers
 }
 
 function ExampleCard({ item, r }: { item: V2Example; r: V2Resolvers }) {
-  const video = item.kind === "clip" ? item.video : undefined;
-  return (
-    <article className="tc example-card" data-type={item.kind}>
-      <div className="ti">
-        <span className={`kind${video ? " v" : ""}`}>{item.label}</span>
-        {video ? (
-          <video aria-label={item.title} autoPlay height={video.height} loop muted playsInline poster={r.asset(video.poster.src)} preload="none" width={video.width}>
-            <source src={r.asset(video.src)} type="video/mp4" />
-          </video>
-        ) : <Img image={item.image} r={r} />}
-      </div>
-      <div className="tb">
-        <h3>{item.title}</h3>
-        <p>{item.product}</p>
-        {video && item.spec ? <small className="example-spec">{item.spec}</small> : null}
-      </div>
-    </article>
-  );
+  return <CaseCard card={{
+    key: item.key,
+    name: item.title,
+    line: item.spec ?? "Photo",
+    kind: item.kind === "clip" ? "video" : "photo",
+    href: item.href,
+    image: item.image,
+    tags: [],
+    industries: [],
+    platforms: [],
+    label: item.label,
+    spec: item.spec ?? "Photo",
+    mediaRef: item.mediaRef,
+    ...(item.video ? { video: item.video } : {})
+  }} r={r} />;
 }
 
 export function ExampleGallery({ examples, r }: { examples?: V2Examples; r: V2Resolvers }) {

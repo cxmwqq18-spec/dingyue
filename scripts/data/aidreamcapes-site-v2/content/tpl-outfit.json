@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 \u00b7 TikTok & Reels"
       ],
       [
         "Length",
@@ -173,6 +173,35 @@
     "not_ideal": [
       "Exact fit guarantees",
       "Garments whose key details are hidden in a cropped input"
+    ]
+  },
+  "examples": {
+    "h2": "More outfit scenes",
+    "lead": "Full looks in motion, so shoppers see how the fabric moves.",
+    "groups": [
+      {
+        "label": "Looks in motion",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-outfit-g1",
+            "title": "Long coat hem swinging past a neutral wall",
+            "kind": "scene",
+            "product": "long coat"
+          },
+          {
+            "ref": "n:gen2:tpl-outfit-g2",
+            "title": "Matching athletic set in a bright studio",
+            "kind": "scene",
+            "product": "athletic set"
+          },
+          {
+            "ref": "n:gen2:tpl-outfit-g3",
+            "title": "Slip dress outfit on a rooftop at sunset",
+            "kind": "scene",
+            "product": "slip dress"
+          }
+        ]
+      }
     ]
   }
 }

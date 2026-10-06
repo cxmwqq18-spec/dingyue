@@ -176,5 +176,51 @@
         "d": "Do not use a generated angle as proof of a sole or interior feature absent from the input."
       }
     ]
+  },
+  "examples": {
+    "h2": "More shoe examples",
+    "lead": "Toe, heel and sole views, plus on-foot shots that show how a pair looks when worn.",
+    "groups": [
+      {
+        "label": "Every angle",
+        "items": [
+          {
+            "ref": "n:gen2:ind-shoes-g1",
+            "title": "Running sneaker from the toe",
+            "kind": "photo",
+            "product": "running sneaker"
+          },
+          {
+            "ref": "n:gen2:ind-shoes-g2",
+            "title": "Same sneaker from the heel",
+            "kind": "photo",
+            "product": "running sneaker"
+          },
+          {
+            "ref": "n:gen2:ind-shoes-g3",
+            "title": "Sneaker outsole tread on a clean counter",
+            "kind": "photo",
+            "product": "running sneaker"
+          }
+        ]
+      },
+      {
+        "label": "On foot",
+        "items": [
+          {
+            "ref": "n:gen2:ind-shoes-g4",
+            "title": "White casual shoes worn with cropped trousers",
+            "kind": "photo",
+            "product": "white casual shoes"
+          },
+          {
+            "ref": "n:gen2:ind-shoes-g5",
+            "title": "Shoes stepping up onto a city curb",
+            "kind": "photo",
+            "product": "sneakers"
+          }
+        ]
+      }
+    ]
   }
 }

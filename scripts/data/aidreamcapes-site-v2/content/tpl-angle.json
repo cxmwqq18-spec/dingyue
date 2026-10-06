@@ -183,5 +183,40 @@
       "Highly transparent or mirror-like objects where surface details are hard to inspect",
       "Items with moving mechanisms that need a demonstration rather than still views"
     ]
+  },
+  "examples": {
+    "h2": "More multi-angle sets",
+    "lead": "Front, back, top and underside views show the details a single photo can hide.",
+    "groups": [
+      {
+        "label": "One speaker, four views",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-angle-g1",
+            "title": "Portable speaker front view on light gray",
+            "kind": "photo",
+            "product": "portable speaker"
+          },
+          {
+            "ref": "n:gen2:tpl-angle-g2",
+            "title": "Same speaker turned to show the back ports",
+            "kind": "photo",
+            "product": "portable speaker"
+          },
+          {
+            "ref": "n:gen2:tpl-angle-g3",
+            "title": "Top-down view of the speaker's buttons",
+            "kind": "photo",
+            "product": "portable speaker"
+          },
+          {
+            "ref": "n:gen2:tpl-angle-g4",
+            "title": "Speaker underside with its rubber feet",
+            "kind": "photo",
+            "product": "portable speaker"
+          }
+        ]
+      }
+    ]
   }
 }

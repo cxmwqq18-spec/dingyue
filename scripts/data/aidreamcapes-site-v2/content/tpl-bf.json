@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 · Stories & Reels"
+        "9:16 \u00b7 Stories & Reels"
       ],
       [
         "Length",
@@ -57,7 +57,7 @@
       ],
       [
         "Also try",
-        "1:1 · Feed"
+        "1:1 \u00b7 Feed"
       ]
     ],
     "cta": "Make my Black Friday clip"
@@ -177,6 +177,35 @@
     "not_ideal": [
       "A promotion whose terms are not yet confirmed",
       "Claims of scarcity or savings the seller cannot substantiate"
+    ]
+  },
+  "examples": {
+    "h2": "More deal-day scenes",
+    "lead": "Dark, high-contrast setups with open space for your deal badge.",
+    "groups": [
+      {
+        "label": "Deal-day lighting",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-bf-g1",
+            "title": "Gaming monitor on a dark desk with open space",
+            "kind": "scene",
+            "product": "gaming monitor"
+          },
+          {
+            "ref": "n:gen2:tpl-bf-g2",
+            "title": "Stand mixer under a single spotlight",
+            "kind": "scene",
+            "product": "stand mixer"
+          },
+          {
+            "ref": "n:gen2:tpl-bf-g3",
+            "title": "Espresso machine with a red rim light",
+            "kind": "scene",
+            "product": "espresso machine"
+          }
+        ]
+      }
     ]
   }
 }

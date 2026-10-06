@@ -68,13 +68,13 @@
     },
     {
       "q": "What are Amazon main-image requirements?",
-      "a": "Amazon requires a realistic product on pure white, with the item filling at least 85% of the frame. The image must be 500–10,000 pixels on the longest side; 1,000+ enables zoom."
+      "a": "Amazon requires a realistic product on pure white, with the item filling at least 85% of the frame. The image must be 500\u201310,000 pixels on the longest side; 1,000+ enables zoom."
     }
   ],
   "overview": [
     {
       "h2": "Treat the main image as a proof of the item",
-      "d": "Amazon shoppers meet the product first in the main image. Start with a photo that shows the complete item, then use a pure white background and a centered composition with no extra words, badges, or props. Amazon's current guide says the product should fill at least 85% of the frame, the longest side should be 500–10,000 pixels, and 1,000 or more pixels enables zoom. Compare the downloaded result with the live requirement for your category before uploading."
+      "d": "Amazon shoppers meet the product first in the main image. Start with a photo that shows the complete item, then use a pure white background and a centered composition with no extra words, badges, or props. Amazon's current guide says the product should fill at least 85% of the frame, the longest side should be 500\u201310,000 pixels, and 1,000 or more pixels enables zoom. Compare the downloaded result with the live requirement for your category before uploading."
     },
     {
       "h2": "Use the gallery to answer the next questions",
@@ -168,6 +168,52 @@
     "not_ideal": [
       "Items whose critical features are absent from every source photo",
       "Claims that depend on an AI-generated label or measurement being exact"
+    ]
+  },
+  "examples": {
+    "h2": "More Amazon listing examples",
+    "lead": "A white main image, then the size and use shots that answer shoppers' questions.",
+    "groups": [
+      {
+        "label": "One mug, full listing",
+        "items": [
+          {
+            "ref": "n:gen2:plat-amazon-g1",
+            "title": "Ceramic mug filling the frame on pure white",
+            "kind": "photo",
+            "product": "ceramic mug"
+          },
+          {
+            "ref": "n:gen2:plat-amazon-g2",
+            "title": "Same mug held in one hand to show size",
+            "kind": "photo",
+            "product": "ceramic mug"
+          },
+          {
+            "ref": "n:gen2:plat-amazon-g3",
+            "title": "Same mug in use beside a kettle",
+            "kind": "photo",
+            "product": "ceramic mug"
+          }
+        ]
+      },
+      {
+        "label": "Inside view",
+        "items": [
+          {
+            "ref": "n:gen2:plat-amazon-g4",
+            "title": "Daypack front view on pure white",
+            "kind": "photo",
+            "product": "daypack"
+          },
+          {
+            "ref": "n:gen2:plat-amazon-g5",
+            "title": "Daypack opened to show the inner pocket",
+            "kind": "photo",
+            "product": "daypack"
+          }
+        ]
+      }
     ]
   }
 }

@@ -182,5 +182,34 @@
       "A product whose silhouette must fill the entire canvas",
       "Offers that change before the creative can be reviewed and updated"
     ]
+  },
+  "examples": {
+    "h2": "More sale key visuals",
+    "lead": "Each scene keeps a clear area for your offer, placed where it suits the product.",
+    "groups": [
+      {
+        "label": "Space for the offer",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-sale-g1",
+            "title": "Hard-shell suitcase with open space on the right",
+            "kind": "photo",
+            "product": "hard-shell suitcase"
+          },
+          {
+            "ref": "n:gen2:tpl-sale-g2",
+            "title": "Summer sandals on sand with room for an offer",
+            "kind": "photo",
+            "product": "summer sandals"
+          },
+          {
+            "ref": "n:gen2:tpl-sale-g3",
+            "title": "Kitchen gift set with space on the left for text",
+            "kind": "photo",
+            "product": "kitchen gift set"
+          }
+        ]
+      }
+    ]
   }
 }

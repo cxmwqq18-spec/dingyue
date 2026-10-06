@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "16:9 · YouTube & web"
+        "16:9 \u00b7 YouTube & web"
       ],
       [
         "Length",
@@ -57,7 +57,7 @@
       ],
       [
         "Also try",
-        "9:16 · Shorts & Reels"
+        "9:16 \u00b7 Shorts & Reels"
       ]
     ],
     "cta": "Make my cinematic clip"
@@ -177,6 +177,35 @@
     "not_ideal": [
       "Instruction-heavy products",
       "Tiny labels or claims that must be read inside the shot"
+    ]
+  },
+  "examples": {
+    "h2": "More cinematic scenes",
+    "lead": "Moody light, slow pacing and close details for products that sell on look and feel.",
+    "groups": [
+      {
+        "label": "Light and detail",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-film-g1",
+            "title": "Camera lens catching a thin strip of window light",
+            "kind": "scene",
+            "product": "camera lens"
+          },
+          {
+            "ref": "n:gen2:tpl-film-g2",
+            "title": "Headphones on a matte pedestal in side light",
+            "kind": "scene",
+            "product": "headphones"
+          },
+          {
+            "ref": "n:gen2:tpl-film-g3",
+            "title": "Ceramic vase in a beam of late-day light",
+            "kind": "scene",
+            "product": "ceramic vase"
+          }
+        ]
+      }
     ]
   }
 }

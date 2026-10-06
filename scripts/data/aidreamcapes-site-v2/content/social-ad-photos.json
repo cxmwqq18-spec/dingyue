@@ -104,7 +104,7 @@
     },
     {
       "h2": "Make versions that test a visual question",
-      "d": "Change one variable at a time—a pale kitchen versus a dark counter, a close crop versus a wider scene, or a product-only view versus a use moment. Keeping the product constant makes the comparison easier to understand when you place the files in your ad account."
+      "d": "Change one variable at a time\u2014a pale kitchen versus a dark counter, a close crop versus a wider scene, or a product-only view versus a use moment. Keeping the product constant makes the comparison easier to understand when you place the files in your ad account."
     }
   ],
   "input_guide": {
@@ -166,7 +166,7 @@
       },
       {
         "t": "Sunglasses",
-        "d": "Show the glasses on a café table with a soft street background, leaving open wall space to one side."
+        "d": "Show the glasses on a caf\u00e9 table with a soft street background, leaving open wall space to one side."
       },
       {
         "t": "Coffee beans",
@@ -219,6 +219,52 @@
       {
         "t": "Review platform policy",
         "d": "Check the current rules for AI-generated or edited images before you publish the campaign."
+      }
+    ]
+  },
+  "examples": {
+    "h2": "More feed ad examples",
+    "lead": "Square ads that leave room for your own headline and price, added after download in your design tool.",
+    "groups": [
+      {
+        "label": "Room for your text",
+        "items": [
+          {
+            "ref": "n:gen2:social-ad-photos-g1",
+            "title": "Lipstick on pink with open space on the left",
+            "kind": "photo",
+            "product": "red lipstick"
+          },
+          {
+            "ref": "n:gen2:social-ad-photos-g2",
+            "title": "Hot sauce with chilies and room at the top",
+            "kind": "photo",
+            "product": "hot sauce bottle"
+          },
+          {
+            "ref": "n:gen2:social-ad-photos-g3",
+            "title": "Coffee bag on a counter with room on the right",
+            "kind": "photo",
+            "product": "coffee bag"
+          }
+        ]
+      },
+      {
+        "label": "Carousel pair",
+        "items": [
+          {
+            "ref": "n:gen2:social-ad-photos-g4",
+            "title": "Canvas sneaker on a city curb",
+            "kind": "photo",
+            "product": "canvas sneaker"
+          },
+          {
+            "ref": "n:gen2:social-ad-photos-g5",
+            "title": "Same canvas sneaker on a gym floor",
+            "kind": "photo",
+            "product": "canvas sneaker"
+          }
+        ]
       }
     ]
   }

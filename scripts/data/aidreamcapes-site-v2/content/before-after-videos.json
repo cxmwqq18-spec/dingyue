@@ -13,7 +13,7 @@
   ],
   "intro": [
     "A before-and-after video shows two moments in a row: how things look without your product, then how they look with it. It's a simple story that shoppers follow in seconds. A tangled cable mess becomes a tidy desk. A greasy grill grate gets scrubbed clean. An empty balcony lights up with your string lights.",
-    "Start with a photo of the product, then write both halves as one line, such as “messy closet shelf, then folded sweaters in our fabric bins.” Choose 6, 10, 15, or 30 seconds and 9:16, 1:1, 16:9, 4:3, or 3:4 so each state has room to register."
+    "Start with a photo of the product, then write both halves as one line, such as \u201cmessy closet shelf, then folded sweaters in our fabric bins.\u201d Choose 6, 10, 15, or 30 seconds and 9:16, 1:1, 16:9, 4:3, or 3:4 so each state has room to register."
   ],
   "benefits": [
     {
@@ -61,7 +61,7 @@
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 \u00b7 TikTok & Reels"
       ],
       [
         "Length",
@@ -77,25 +77,25 @@
     },
     {
       "q": "How do I describe the before and the after?",
-      "a": "Use one sentence with two parts joined by “then.” For example: “cluttered entryway with shoes everywhere, then shoes lined up on our bamboo rack.”"
+      "a": "Use one sentence with two parts joined by \u201cthen.\u201d For example: \u201ccluttered entryway with shoes everywhere, then shoes lined up on our bamboo rack.\u201d"
     },
     {
       "q": "Can I make before and after videos for skincare or weight loss products?",
       "a": "We'd advise against it. Many ad platforms restrict before-and-after content about skin, body, or health results, and the change shown should always be one your product really makes. Show how the product is used rather than promising an outcome."
     },
     {
-      "q": "Can I add “Before” and “After” labels?",
+      "q": "Can I add \u201cBefore\u201d and \u201cAfter\u201d labels?",
       "a": "Yes, add them after you download, in CapCut or TikTok. Typed labels stay crisp and correctly spelled, which AI-generated lettering can't always manage."
     }
   ],
   "overview": [
     {
-      "h2": "Make the product’s job visible in two beats",
+      "h2": "Make the product\u2019s job visible in two beats",
       "p": "Before-and-after works for products that change a space, object, or arrangement in a way a viewer can recognize quickly. Name the starting condition first, then show the finished condition with the product present and the same subject still easy to compare."
     },
     {
       "h2": "Keep the promise inside the frame",
-      "p": "Use this format for organizing, cleaning, installing, covering, lighting, or styling. Avoid claims about a person’s body, skin, health, or guaranteed performance; show the physical change your product is actually designed to make."
+      "p": "Use this format for organizing, cleaning, installing, covering, lighting, or styling. Avoid claims about a person\u2019s body, skin, health, or guaranteed performance; show the physical change your product is actually designed to make."
     }
   ],
   "input_guide": {
@@ -178,7 +178,7 @@
     "items": [
       {
         "t": "Type the state labels",
-        "d": "Add “Before,” “After,” prices, dates, or offer text in your editor so the words stay crisp and approved."
+        "d": "Add \u201cBefore,\u201d \u201cAfter,\u201d prices, dates, or offer text in your editor so the words stay crisp and approved."
       },
       {
         "t": "Check the cause and effect",
@@ -201,6 +201,35 @@
     "not_ideal": [
       "Claims about weight, skin, medical outcomes, or guaranteed performance",
       "Changes that cannot be judged from the same scene"
+    ]
+  },
+  "examples": {
+    "h2": "More before-and-after ideas",
+    "lead": "Two-state stories work when the change is easy to see. Here are more pairs to try with your own product.",
+    "groups": [
+      {
+        "label": "Clear, visible changes",
+        "items": [
+          {
+            "ref": "n:gen2:before-after-videos-g1",
+            "title": "Steel pan, half scorched and half polished",
+            "kind": "scene",
+            "product": "stainless steel pan"
+          },
+          {
+            "ref": "n:gen2:before-after-videos-g2",
+            "title": "Grout line half cleaned with a small brush",
+            "kind": "scene",
+            "product": "grout brush"
+          },
+          {
+            "ref": "n:gen2:before-after-videos-g3",
+            "title": "Sweater shelf half sorted into fabric bins",
+            "kind": "scene",
+            "product": "fabric storage bins"
+          }
+        ]
+      }
     ]
   }
 }

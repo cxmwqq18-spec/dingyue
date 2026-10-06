@@ -68,7 +68,7 @@
     },
     {
       "q": "Do I need to label an AI-generated ad on TikTok?",
-      "a": "Check TikTok’s current AI-content labeling control when you upload. Requirements can differ by creative and market, so use the label when TikTok’s Ads Manager marks it as required."
+      "a": "Check TikTok\u2019s current AI-content labeling control when you upload. Requirements can differ by creative and market, so use the label when TikTok\u2019s Ads Manager marks it as required."
     }
   ],
   "overview": [
@@ -78,7 +78,7 @@
     },
     {
       "h2": "Match the file to the placement",
-      "d": "TikTok's In-Feed guide recommends 9:16 at 540×960 or larger for a vertical file; it also lists 1:1 at 640×640 and 16:9 at 960×540. Non-Spark In-Feed uploads can be up to 10 minutes and 500 MB, while the general ad format guide lists 5–60 seconds. AIVideosUGC offers five video shapes—9:16, 1:1, 16:9, 4:3, and 3:4—and 6, 10, 15, and 30 second jobs, with the cost shown before you run each one. Treat those product choices as the source for the file you export, then check TikTok's current guide before launch."
+      "d": "TikTok's In-Feed guide recommends 9:16 at 540\u00d7960 or larger for a vertical file; it also lists 1:1 at 640\u00d7640 and 16:9 at 960\u00d7540. Non-Spark In-Feed uploads can be up to 10 minutes and 500 MB, while the general ad format guide lists 5\u201360 seconds. AIVideosUGC offers five video shapes\u20149:16, 1:1, 16:9, 4:3, and 3:4\u2014and 6, 10, 15, and 30 second jobs, with the cost shown before you run each one. Treat those product choices as the source for the file you export, then check TikTok's current guide before launch."
     }
   ],
   "input_guide": {
@@ -168,6 +168,35 @@
     "not_ideal": [
       "Requests that depend on tiny label text being generated correctly",
       "Scenes that make a health or performance promise the product cannot support"
+    ]
+  },
+  "examples": {
+    "h2": "More TikTok-style examples",
+    "lead": "Product-first frames that hook in the first second.",
+    "groups": [
+      {
+        "label": "First-second hooks",
+        "items": [
+          {
+            "ref": "n:gen2:plat-tiktok-g1",
+            "title": "Small bottle picked off a bathroom shelf",
+            "kind": "photo",
+            "product": "small bottle"
+          },
+          {
+            "ref": "n:gen2:plat-tiktok-g2",
+            "title": "Desk fan switched on at a home office desk",
+            "kind": "photo",
+            "product": "desk fan"
+          },
+          {
+            "ref": "n:gen2:plat-tiktok-g3",
+            "title": "Sneaker turned to show the sole on a plain floor",
+            "kind": "photo",
+            "product": "sneaker"
+          }
+        ]
+      }
     ]
   }
 }

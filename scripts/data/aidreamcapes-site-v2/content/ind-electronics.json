@@ -176,5 +176,34 @@
         "d": "Keep real screenshots, labels, safety text, and serial information in the source or added design."
       }
     ]
+  },
+  "examples": {
+    "h2": "More electronics examples",
+    "lead": "What's in the box, the device in use and how it packs for travel.",
+    "groups": [
+      {
+        "label": "In the box and in use",
+        "items": [
+          {
+            "ref": "n:gen2:ind-electronics-g1",
+            "title": "Wireless speaker unboxed with its cable",
+            "kind": "photo",
+            "product": "wireless speaker"
+          },
+          {
+            "ref": "n:gen2:ind-electronics-g2",
+            "title": "Tablet stand holding a tablet on a desk",
+            "kind": "photo",
+            "product": "tablet stand"
+          },
+          {
+            "ref": "n:gen2:ind-electronics-g3",
+            "title": "Charger and cable packed in a travel pouch",
+            "kind": "photo",
+            "product": "charger and cable"
+          }
+        ]
+      }
+    ]
   }
 }

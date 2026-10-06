@@ -69,7 +69,7 @@
   "overview": [
     {
       "h2": "Make the product win the first glance",
-      "d": "Black Friday creative can be dramatic without hiding what is being sold. Use contrast, one hero product, and a single visible action—a lid opens, a bundle is arranged, or a lamp switches on. Keep the offer as a separate layer so the visual can be approved before the percentage, code, or final date is locked."
+      "d": "Black Friday creative can be dramatic without hiding what is being sold. Use contrast, one hero product, and a single visible action\u2014a lid opens, a bundle is arranged, or a lamp switches on. Keep the offer as a separate layer so the visual can be approved before the percentage, code, or final date is locked."
     },
     {
       "h2": "Prepare the five workspace shapes with purpose",
@@ -163,6 +163,35 @@
     "not_ideal": [
       "Promotions that rely on a generated countdown or price",
       "Claims about guaranteed approval or sales performance"
+    ]
+  },
+  "examples": {
+    "h2": "More Black Friday examples",
+    "lead": "Dark, dramatic product shots with space for a deal badge, plus a brighter take for Cyber Monday.",
+    "groups": [
+      {
+        "label": "Deal week",
+        "items": [
+          {
+            "ref": "n:gen2:occ-black-friday-g1",
+            "title": "Leather duffel side-lit on a dark backdrop",
+            "kind": "photo",
+            "product": "leather duffel"
+          },
+          {
+            "ref": "n:gen2:occ-black-friday-g2",
+            "title": "Gift set arranged piece by piece on a dark table",
+            "kind": "photo",
+            "product": "gift set"
+          },
+          {
+            "ref": "n:gen2:occ-black-friday-g3",
+            "title": "Same duffel in brighter light for Cyber Monday",
+            "kind": "photo",
+            "product": "leather duffel"
+          }
+        ]
+      }
     ]
   }
 }

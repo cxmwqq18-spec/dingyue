@@ -66,7 +66,7 @@
       ],
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 \u00b7 TikTok & Reels"
       ],
       [
         "Length",
@@ -202,6 +202,35 @@
     "not_ideal": [
       "Private pages that require a login or block public retrieval",
       "Listings where the hero image does not show the product variant clearly"
+    ]
+  },
+  "examples": {
+    "h2": "More product-page-to-video scenes",
+    "lead": "Start from a product page you already have. These scenes show where a listed product can go next.",
+    "groups": [
+      {
+        "label": "From listing to scene",
+        "items": [
+          {
+            "ref": "n:gen2:url-to-video-g1",
+            "title": "Olive oil bottle placed on a kitchen counter",
+            "kind": "scene",
+            "product": "olive oil bottle"
+          },
+          {
+            "ref": "n:gen2:url-to-video-g2",
+            "title": "Throw pillow set on a reading chair by a lamp",
+            "kind": "scene",
+            "product": "throw pillow"
+          },
+          {
+            "ref": "n:gen2:url-to-video-g3",
+            "title": "Yoga mat bag hung by the front door",
+            "kind": "scene",
+            "product": "yoga mat bag"
+          }
+        ]
+      }
     ]
   }
 }

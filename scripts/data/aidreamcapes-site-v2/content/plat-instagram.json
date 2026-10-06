@@ -169,5 +169,51 @@
       "Assets whose meaning depends on tiny generated text",
       "A single crop expected to look correct in every Instagram placement"
     ]
+  },
+  "examples": {
+    "h2": "More Instagram examples",
+    "lead": "Square feed images, a Reel-style moment and a two-card carousel.",
+    "groups": [
+      {
+        "label": "Feed and Reels",
+        "items": [
+          {
+            "ref": "n:gen2:plat-instagram-g1",
+            "title": "Speckled ceramic cup in a clean square frame",
+            "kind": "photo",
+            "product": "speckled ceramic cup"
+          },
+          {
+            "ref": "n:gen2:plat-instagram-g2",
+            "title": "Same speckled cup filled from a carafe",
+            "kind": "photo",
+            "product": "speckled ceramic cup"
+          },
+          {
+            "ref": "n:gen2:plat-instagram-g3",
+            "title": "Necklace close-up with space above and below",
+            "kind": "photo",
+            "product": "necklace"
+          }
+        ]
+      },
+      {
+        "label": "Carousel pair",
+        "items": [
+          {
+            "ref": "n:gen2:plat-instagram-g4",
+            "title": "Hand cream tube on a pastel backdrop",
+            "kind": "photo",
+            "product": "hand cream tube"
+          },
+          {
+            "ref": "n:gen2:plat-instagram-g5",
+            "title": "Hand cream tube by a bathroom sink",
+            "kind": "photo",
+            "product": "hand cream tube"
+          }
+        ]
+      }
+    ]
   }
 }

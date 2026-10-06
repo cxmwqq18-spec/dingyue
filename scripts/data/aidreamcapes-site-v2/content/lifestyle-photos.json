@@ -13,7 +13,7 @@
     "AI product scene generator"
   ],
   "intro": [
-    "A plain product shot tells shoppers what your item looks like. A lifestyle photo tells them how it fits into their day: a ceramic mug next to an open book, a backpack hanging on a café chair, a throw blanket draped over a sofa. Scenes like these help people picture owning the product, and they usually take a location, props and a photographer to shoot.",
+    "A plain product shot tells shoppers what your item looks like. A lifestyle photo tells them how it fits into their day: a ceramic mug next to an open book, a backpack hanging on a caf\u00e9 chair, a throw blanket draped over a sofa. Scenes like these help people picture owning the product, and they usually take a location, props and a photographer to shoot.",
     "With this tool you upload one clear product photo and describe the setting you want, or pick a ready-made scene. You get a square image with your item placed in that space. It's a good fit for small brands selling home goods, accessories, kitchenware and gifts that need fresh images for product pages, Instagram posts and email banners without booking a shoot every season."
   ],
   "benefits": [
@@ -104,7 +104,7 @@
     },
     {
       "h2": "Describe the scene like a small shot list",
-      "d": "Name the surface or room, the time of day, the product position, and one visual accent. “Candle on a stone bath ledge, warm evening light, label facing front” gives the generator more useful direction than “luxury mood.”"
+      "d": "Name the surface or room, the time of day, the product position, and one visual accent. \u201cCandle on a stone bath ledge, warm evening light, label facing front\u201d gives the generator more useful direction than \u201cluxury mood.\u201d"
     }
   ],
   "input_guide": {
@@ -158,7 +158,7 @@
     "items": [
       {
         "t": "Handbag",
-        "d": "Place the bag on a café chair beside a folded newspaper, with the strap visible and the front panel facing the viewer."
+        "d": "Place the bag on a caf\u00e9 chair beside a folded newspaper, with the strap visible and the front panel facing the viewer."
       },
       {
         "t": "Candle",
@@ -191,7 +191,7 @@
       },
       {
         "t": "Accessories and gifts",
-        "d": "Products that benefit from a café, travel, desk, or seasonal setting around them."
+        "d": "Products that benefit from a caf\u00e9, travel, desk, or seasonal setting around them."
       },
       {
         "t": "Second listing images",
@@ -223,6 +223,58 @@
       {
         "t": "Add exact copy later",
         "d": "Place a headline, price, date, or promotion in your editor so the wording stays accurate."
+      }
+    ]
+  },
+  "examples": {
+    "h2": "More lifestyle scene examples",
+    "lead": "Lifestyle scenes show the product in use, at a believable size, in a setting your buyer recognizes.",
+    "groups": [
+      {
+        "label": "Everyday settings",
+        "items": [
+          {
+            "ref": "n:gen2:lifestyle-photos-g1",
+            "title": "Leather handbag hung on a cafe chair",
+            "kind": "photo",
+            "product": "leather handbag"
+          },
+          {
+            "ref": "n:gen2:lifestyle-photos-g2",
+            "title": "Terracotta pot on a sunny plant shelf",
+            "kind": "photo",
+            "product": "terracotta pot"
+          },
+          {
+            "ref": "n:gen2:lifestyle-photos-g3",
+            "title": "Gray hoodie folded on a park bench",
+            "kind": "photo",
+            "product": "gray hoodie"
+          }
+        ]
+      },
+      {
+        "label": "One product, two seasons",
+        "items": [
+          {
+            "ref": "n:gen2:lifestyle-photos-g4",
+            "title": "Enamel mug on a snowy cabin porch",
+            "kind": "photo",
+            "product": "enamel camping mug"
+          },
+          {
+            "ref": "n:gen2:lifestyle-photos-g5",
+            "title": "Same enamel mug on a summer picnic blanket",
+            "kind": "photo",
+            "product": "enamel camping mug"
+          },
+          {
+            "ref": "n:gen2:lifestyle-photos-g6",
+            "title": "Linen napkins with quiet space for a headline",
+            "kind": "photo",
+            "product": "linen napkins"
+          }
+        ]
       }
     ]
   }

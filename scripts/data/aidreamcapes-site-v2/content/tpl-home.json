@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 \u00b7 TikTok & Reels"
       ],
       [
         "Length",
@@ -73,7 +73,7 @@
     },
     {
       "q": "Should I make a vertical or square home-product video?",
-      "a": "Use 9:16 for Stories, Reels, and TikTok, 1:1 for feed placements, or 16:9 for a wide product page. Keep the organizer’s real dimensions in your listing."
+      "a": "Use 9:16 for Stories, Reels, and TikTok, 1:1 for feed placements, or 16:9 for a wide product page. Keep the organizer\u2019s real dimensions in your listing."
     }
   ],
   "overview": [
@@ -173,6 +173,35 @@
     "not_ideal": [
       "Products whose value depends on an exact unverified measurement",
       "A full-room redesign that needs many simultaneous changes"
+    ]
+  },
+  "examples": {
+    "h2": "More home organization scenes",
+    "lead": "Tidy end states that show where each item goes.",
+    "groups": [
+      {
+        "label": "Sorted spaces",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-home-g1",
+            "title": "Bathroom drawer sorted into divided trays",
+            "kind": "scene",
+            "product": "drawer trays"
+          },
+          {
+            "ref": "n:gen2:tpl-home-g2",
+            "title": "Linen closet stacked into woven baskets",
+            "kind": "scene",
+            "product": "woven baskets"
+          },
+          {
+            "ref": "n:gen2:tpl-home-g3",
+            "title": "Fridge shelves reset with clear bins",
+            "kind": "scene",
+            "product": "clear fridge bins"
+          }
+        ]
+      }
     ]
   }
 }

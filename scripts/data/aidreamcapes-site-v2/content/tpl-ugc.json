@@ -182,5 +182,34 @@
       "Claims that depend on a before-and-after body result",
       "A package whose tiny label text must be exact inside the image"
     ]
+  },
+  "examples": {
+    "h2": "More creator-style stills",
+    "lead": "Casual, real-life shots that look like a customer took them, each with a different kind of product.",
+    "groups": [
+      {
+        "label": "Real-life moments",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-ugc-g1",
+            "title": "Travel coffee cup held on a morning train",
+            "kind": "photo",
+            "product": "travel coffee cup"
+          },
+          {
+            "ref": "n:gen2:tpl-ugc-g2",
+            "title": "Scarf pulled from a mailer box on a bed",
+            "kind": "photo",
+            "product": "wool scarf"
+          },
+          {
+            "ref": "n:gen2:tpl-ugc-g3",
+            "title": "Small desk plant next to an open laptop",
+            "kind": "photo",
+            "product": "desk plant"
+          }
+        ]
+      }
+    ]
   }
 }

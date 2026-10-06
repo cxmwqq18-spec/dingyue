@@ -182,5 +182,34 @@
       "A package whose back panel must be verified in full",
       "A final color calibration or dieline check for the printer"
     ]
+  },
+  "examples": {
+    "h2": "More packaging mockups",
+    "lead": "See your packaging in a shop setting before you print. Fine print is left out, so add it in your design file.",
+    "groups": [
+      {
+        "label": "Packaging in place",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-pack-g1",
+            "title": "Coffee pouch standing on a cafe counter",
+            "kind": "photo",
+            "product": "coffee pouch"
+          },
+          {
+            "ref": "n:gen2:tpl-pack-g2",
+            "title": "Same coffee pouch on a grocery shelf",
+            "kind": "photo",
+            "product": "coffee pouch"
+          },
+          {
+            "ref": "n:gen2:tpl-pack-g3",
+            "title": "Carton, pouch and bottle lined up together",
+            "kind": "photo",
+            "product": "carton, pouch and bottle"
+          }
+        ]
+      }
+    ]
   }
 }

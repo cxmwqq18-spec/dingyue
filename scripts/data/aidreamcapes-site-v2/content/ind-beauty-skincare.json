@@ -172,5 +172,40 @@
         "d": "Do not use a generated image as the sole proof of a precise color match; compare with a real swatch."
       }
     ]
+  },
+  "examples": {
+    "h2": "More beauty and skincare examples",
+    "lead": "Textures, sets and everyday shelf moments for beauty listings.",
+    "groups": [
+      {
+        "label": "Textures and sets",
+        "items": [
+          {
+            "ref": "n:gen2:ind-beauty-skincare-g1",
+            "title": "Serum and cream textures swatched on glass",
+            "kind": "photo",
+            "product": "serum and cream"
+          },
+          {
+            "ref": "n:gen2:ind-beauty-skincare-g2",
+            "title": "Skincare set lined up on a vanity",
+            "kind": "photo",
+            "product": "skincare set"
+          },
+          {
+            "ref": "n:gen2:ind-beauty-skincare-g3",
+            "title": "Same set packed into a travel pouch",
+            "kind": "photo",
+            "product": "skincare set"
+          },
+          {
+            "ref": "n:gen2:ind-beauty-skincare-g4",
+            "title": "Toner bottle on a bathroom shelf, cap off",
+            "kind": "photo",
+            "product": "toner bottle"
+          }
+        ]
+      }
+    ]
   }
 }

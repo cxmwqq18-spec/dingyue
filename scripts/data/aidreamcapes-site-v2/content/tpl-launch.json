@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 · Stories & Reels"
+        "9:16 \u00b7 Stories & Reels"
       ],
       [
         "Length",
@@ -57,7 +57,7 @@
       ],
       [
         "Also try",
-        "1:1 · Feed"
+        "1:1 \u00b7 Feed"
       ]
     ],
     "cta": "Make my launch video"
@@ -177,6 +177,35 @@
     "not_ideal": [
       "Live inventory or countdown information that must update automatically",
       "Products whose launch story needs several unrelated demonstrations"
+    ]
+  },
+  "examples": {
+    "h2": "More launch scenes",
+    "lead": "Reveal moments and clean hero frames with room for your launch line.",
+    "groups": [
+      {
+        "label": "Reveal and hero",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-launch-g1",
+            "title": "Speaker revealed as a cloth slides off",
+            "kind": "scene",
+            "product": "speaker"
+          },
+          {
+            "ref": "n:gen2:tpl-launch-g2",
+            "title": "New toaster on a counter with room for launch text",
+            "kind": "scene",
+            "product": "toaster"
+          },
+          {
+            "ref": "n:gen2:tpl-launch-g3",
+            "title": "New backpack on a single wall hook",
+            "kind": "scene",
+            "product": "backpack"
+          }
+        ]
+      }
     ]
   }
 }

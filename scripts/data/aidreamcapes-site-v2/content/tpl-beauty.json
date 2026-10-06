@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 \u00b7 TikTok & Reels"
       ],
       [
         "Length",
@@ -173,6 +173,35 @@
     "not_ideal": [
       "Products that need a medical result claim",
       "Tiny ingredient panels that must be read inside the video"
+    ]
+  },
+  "examples": {
+    "h2": "More beauty routine scenes",
+    "lead": "Texture and application moments that show how a product is used, step by step.",
+    "groups": [
+      {
+        "label": "Routine moments",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-beauty-g1",
+            "title": "Cream pumped onto the back of a hand",
+            "kind": "scene",
+            "product": "pump cream"
+          },
+          {
+            "ref": "n:gen2:tpl-beauty-g2",
+            "title": "Cleansing balm scooped with a small spatula",
+            "kind": "scene",
+            "product": "cleansing balm"
+          },
+          {
+            "ref": "n:gen2:tpl-beauty-g3",
+            "title": "Hair oil worked through the ends of long hair",
+            "kind": "scene",
+            "product": "hair oil"
+          }
+        ]
+      }
     ]
   }
 }

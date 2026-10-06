@@ -165,5 +165,34 @@
       "Products whose important details disappear behind decorations",
       "Seasonal claims that depend on an unverified delivery promise"
     ]
+  },
+  "examples": {
+    "h2": "More holiday examples",
+    "lead": "Seasonal tables, gift moments and spring scenes for year-round holidays.",
+    "groups": [
+      {
+        "label": "Through the year",
+        "items": [
+          {
+            "ref": "n:gen2:occ-holidays-g1",
+            "title": "Skincare gift set on a winter dinner table",
+            "kind": "photo",
+            "product": "skincare gift set"
+          },
+          {
+            "ref": "n:gen2:occ-holidays-g2",
+            "title": "Gift unwrapped to a bottle held in both hands",
+            "kind": "photo",
+            "product": "gift-wrapped bottle"
+          },
+          {
+            "ref": "n:gen2:occ-holidays-g3",
+            "title": "Pillar candle on a spring brunch table",
+            "kind": "photo",
+            "product": "pillar candle"
+          }
+        ]
+      }
+    ]
   }
 }

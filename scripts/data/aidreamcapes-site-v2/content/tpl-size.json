@@ -182,5 +182,40 @@
       "Items that must be measured to a regulated tolerance",
       "A reference object with no stable, recognizable size"
     ]
+  },
+  "examples": {
+    "h2": "More size reference examples",
+    "lead": "Hands and everyday objects make size easy to read. List exact measurements in your product text.",
+    "groups": [
+      {
+        "label": "Scale at a glance",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-size-g1",
+            "title": "Small pendant resting on an open palm",
+            "kind": "photo",
+            "product": "small pendant"
+          },
+          {
+            "ref": "n:gen2:tpl-size-g2",
+            "title": "Tote bag shown with a laptop inside",
+            "kind": "photo",
+            "product": "canvas tote bag"
+          },
+          {
+            "ref": "n:gen2:tpl-size-g3",
+            "title": "Same tote beside a carry-on suitcase",
+            "kind": "photo",
+            "product": "canvas tote bag"
+          },
+          {
+            "ref": "n:gen2:tpl-size-g4",
+            "title": "Earbuds case held between two fingers",
+            "kind": "photo",
+            "product": "earbuds case"
+          }
+        ]
+      }
+    ]
   }
 }

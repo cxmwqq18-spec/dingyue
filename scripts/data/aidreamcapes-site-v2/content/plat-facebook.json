@@ -169,5 +169,45 @@
       "Ads that require a spoken explanation to make sense",
       "Claims or fine print that must be rendered inside the generated frame"
     ]
+  },
+  "examples": {
+    "h2": "More Facebook ad examples",
+    "lead": "Clear, easy-to-read frames for busy feeds.",
+    "groups": [
+      {
+        "label": "Feed-ready frames",
+        "items": [
+          {
+            "ref": "n:gen2:plat-facebook-g1",
+            "title": "Lunch box opened on a kitchen counter",
+            "kind": "photo",
+            "product": "lunch box"
+          },
+          {
+            "ref": "n:gen2:plat-facebook-g2",
+            "title": "Cat asleep in a round pet bed",
+            "kind": "photo",
+            "product": "round pet bed"
+          }
+        ]
+      },
+      {
+        "label": "White and lifestyle pair",
+        "items": [
+          {
+            "ref": "n:gen2:plat-facebook-g3",
+            "title": "Insulated bottle on white for a feed ad",
+            "kind": "photo",
+            "product": "insulated bottle"
+          },
+          {
+            "ref": "n:gen2:plat-facebook-g4",
+            "title": "Same insulated bottle on a sunny desk",
+            "kind": "photo",
+            "product": "insulated bottle"
+          }
+        ]
+      }
+    ]
   }
 }

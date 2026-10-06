@@ -176,5 +176,40 @@
         "d": "Keep real manuals, hole spacing, and safety details for products where a mistake matters."
       }
     ]
+  },
+  "examples": {
+    "h2": "More home and living examples",
+    "lead": "Furniture and decor shown next to familiar pieces, so size and style are easy to judge.",
+    "groups": [
+      {
+        "label": "In the room",
+        "items": [
+          {
+            "ref": "n:gen2:ind-home-living-g1",
+            "title": "Fabric storage boxes on a tidy shelf",
+            "kind": "photo",
+            "product": "fabric storage boxes"
+          },
+          {
+            "ref": "n:gen2:ind-home-living-g2",
+            "title": "Ceramic planter beside a linen sofa",
+            "kind": "photo",
+            "product": "ceramic planter"
+          },
+          {
+            "ref": "n:gen2:ind-home-living-g3",
+            "title": "Round side table beside an armchair",
+            "kind": "photo",
+            "product": "round side table"
+          },
+          {
+            "ref": "n:gen2:ind-home-living-g4",
+            "title": "Floating shelf bracket mounted on a wall",
+            "kind": "photo",
+            "product": "floating shelf bracket"
+          }
+        ]
+      }
+    ]
   }
 }

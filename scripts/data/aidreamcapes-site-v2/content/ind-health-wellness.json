@@ -62,7 +62,7 @@
       },
       {
         "t": "Keep the package dependable",
-        "d": "Use a clear source that shows the bottle, pouch, tin, tool, or fabric item from a useful angle. Context can feel relaxed and handheld, while the ingredient panel and approved claims stay under your team’s control."
+        "d": "Use a clear source that shows the bottle, pouch, tin, tool, or fabric item from a useful angle. Context can feel relaxed and handheld, while the ingredient panel and approved claims stay under your team\u2019s control."
       }
     ]
   },
@@ -174,6 +174,35 @@
       {
         "t": "Clinical evidence",
         "d": "Generated imagery cannot prove a treatment, dosage outcome, or health result."
+      }
+    ]
+  },
+  "examples": {
+    "h2": "More health and wellness examples",
+    "lead": "Products shown in everyday routines, after a workout, with an evening cup, at bedtime.",
+    "groups": [
+      {
+        "label": "Daily routines",
+        "items": [
+          {
+            "ref": "n:gen2:ind-health-wellness-g1",
+            "title": "Protein pouch on a gym bench after a workout",
+            "kind": "photo",
+            "product": "protein powder pouch"
+          },
+          {
+            "ref": "n:gen2:ind-health-wellness-g2",
+            "title": "Herbal tea tin beside an evening cup",
+            "kind": "photo",
+            "product": "herbal tea tin"
+          },
+          {
+            "ref": "n:gen2:ind-health-wellness-g3",
+            "title": "Sleep mask on a nightstand at bedtime",
+            "kind": "photo",
+            "product": "sleep mask"
+          }
+        ]
       }
     ]
   }

@@ -182,5 +182,34 @@
       "Bundles where every piece needs its own instructional view",
       "Products with a dense written specification that cannot be shown visually"
     ]
+  },
+  "examples": {
+    "h2": "More bundle set examples",
+    "lead": "Show every item that ships in the set, and keep props clearly apart from what the buyer receives.",
+    "groups": [
+      {
+        "label": "Everything in the set",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-box-g1",
+            "title": "Camping breakfast kit laid out from above",
+            "kind": "photo",
+            "product": "camping breakfast kit"
+          },
+          {
+            "ref": "n:gen2:tpl-box-g2",
+            "title": "Pet grooming kit with brush, towel and shampoo",
+            "kind": "photo",
+            "product": "pet grooming kit"
+          },
+          {
+            "ref": "n:gen2:tpl-box-g3",
+            "title": "Tea gift set with tin, infuser and cup",
+            "kind": "photo",
+            "product": "tea gift set"
+          }
+        ]
+      }
+    ]
   }
 }

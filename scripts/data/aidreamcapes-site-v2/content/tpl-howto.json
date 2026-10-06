@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 · YouTube Shorts"
+        "9:16 \u00b7 YouTube Shorts"
       ],
       [
         "Length",
@@ -57,7 +57,7 @@
       ],
       [
         "Also try",
-        "16:9 · Product page"
+        "16:9 \u00b7 Product page"
       ]
     ],
     "cta": "Make my how-to video"
@@ -177,6 +177,35 @@
     "not_ideal": [
       "Products whose value depends on several hidden steps",
       "Claims that require a precise demonstration or measurement"
+    ]
+  },
+  "examples": {
+    "h2": "More how-to scenes",
+    "lead": "Step-by-step ideas where each action is easy to follow on a small screen.",
+    "groups": [
+      {
+        "label": "Step by step",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-howto-g1",
+            "title": "Electric kettle filled at the kitchen tap",
+            "kind": "scene",
+            "product": "electric kettle"
+          },
+          {
+            "ref": "n:gen2:tpl-howto-g2",
+            "title": "Fabric shaver gliding over a pilled sweater",
+            "kind": "scene",
+            "product": "fabric shaver"
+          },
+          {
+            "ref": "n:gen2:tpl-howto-g3",
+            "title": "Filter cartridge clicked into a water pitcher",
+            "kind": "scene",
+            "product": "water filter pitcher"
+          }
+        ]
+      }
     ]
   }
 }

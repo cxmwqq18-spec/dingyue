@@ -314,9 +314,9 @@ function TemplatePage({ data, r }: Props) {
       {list<V2Item>(data.ideas).length ? <Section eyebrow="Ideas" title="Ways to use it"><Boxes className="ideas" items={list<V2Item>(data.ideas)} r={r} /></Section> : null}
       <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
-      <Faq items={data.faq} title="Questions about this template" />
       <Section eyebrow="More templates" title="More like this"><TemplateGrid cards={list<V2Card>(data.more)} r={r} /></Section>
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
+      <Faq items={data.faq} title="Questions about this template" />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       <CtaBand note={text(data.startNote)} href={maker.href} lead="Upload one product photo. See the cost before you start." r={r} title={`Try ${data.label} with your product`} />
     </>

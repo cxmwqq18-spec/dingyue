@@ -182,5 +182,34 @@
       "Outfits whose exact print alignment must be proven",
       "A collection without enough source detail to identify each piece"
     ]
+  },
+  "examples": {
+    "h2": "More lookbook frames",
+    "lead": "Several looks shot in one location with the same light, so a collection reads as a set.",
+    "groups": [
+      {
+        "label": "One location, three looks",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-look-g1",
+            "title": "Trench coat look under a stone archway",
+            "kind": "photo",
+            "product": "trench coat"
+          },
+          {
+            "ref": "n:gen2:tpl-look-g2",
+            "title": "Knit dress look under the same archway",
+            "kind": "photo",
+            "product": "knit dress"
+          },
+          {
+            "ref": "n:gen2:tpl-look-g3",
+            "title": "Wide-leg suit look under the same archway",
+            "kind": "photo",
+            "product": "wide-leg suit"
+          }
+        ]
+      }
+    ]
   }
 }

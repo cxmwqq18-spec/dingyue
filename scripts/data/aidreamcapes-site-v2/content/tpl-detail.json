@@ -182,5 +182,40 @@
       "Plain objects whose selling point is only a printed number",
       "Reflective surfaces with uncontrolled glare across the feature"
     ]
+  },
+  "examples": {
+    "h2": "More close-up details",
+    "lead": "Macro shots of the parts shoppers zoom in on: laces, tread, clasps and zippers.",
+    "groups": [
+      {
+        "label": "Up close",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-detail-g1",
+            "title": "Canvas sneaker eyelets and laces, up close",
+            "kind": "photo",
+            "product": "canvas sneaker"
+          },
+          {
+            "ref": "n:gen2:tpl-detail-g2",
+            "title": "Rubber sole tread pattern in macro",
+            "kind": "photo",
+            "product": "rubber sole"
+          },
+          {
+            "ref": "n:gen2:tpl-detail-g3",
+            "title": "Brass bag clasp, close up",
+            "kind": "photo",
+            "product": "brass bag clasp"
+          },
+          {
+            "ref": "n:gen2:tpl-detail-g4",
+            "title": "Metal zipper teeth on a denim jacket",
+            "kind": "photo",
+            "product": "denim jacket zipper"
+          }
+        ]
+      }
+    ]
   }
 }

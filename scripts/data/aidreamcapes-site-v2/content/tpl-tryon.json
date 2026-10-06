@@ -182,5 +182,40 @@
       "Products requiring an exact fit or drape guarantee",
       "Very complex prints where every small motif must align perfectly"
     ]
+  },
+  "examples": {
+    "h2": "More try-on examples",
+    "lead": "Front, back and seated views help shoppers judge drape and fit. Put sizing details in your listing text.",
+    "groups": [
+      {
+        "label": "Fit from every side",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-tryon-g1",
+            "title": "Bomber jacket worn by a model, front view",
+            "kind": "photo",
+            "product": "bomber jacket"
+          },
+          {
+            "ref": "n:gen2:tpl-tryon-g2",
+            "title": "Same bomber jacket from the back",
+            "kind": "photo",
+            "product": "bomber jacket"
+          },
+          {
+            "ref": "n:gen2:tpl-tryon-g3",
+            "title": "Ribbed knit top on a seated model",
+            "kind": "photo",
+            "product": "ribbed knit top"
+          },
+          {
+            "ref": "n:gen2:tpl-tryon-g4",
+            "title": "Satin midi skirt on a model mid-step",
+            "kind": "photo",
+            "product": "satin midi skirt"
+          }
+        ]
+      }
+    ]
   }
 }

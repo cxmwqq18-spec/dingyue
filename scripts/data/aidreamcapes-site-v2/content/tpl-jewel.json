@@ -182,5 +182,40 @@
       "Highly mirrored pieces photographed with hard glare",
       "Listings that rely on a precise scale or regulated metal claim"
     ]
+  },
+  "examples": {
+    "h2": "More jewelry placement examples",
+    "lead": "Each piece shown where it is worn, so shoppers see size and position at a glance.",
+    "groups": [
+      {
+        "label": "Where it's worn",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-jewel-g1",
+            "title": "Enamel brooch pinned to a wool coat lapel",
+            "kind": "photo",
+            "product": "enamel brooch"
+          },
+          {
+            "ref": "n:gen2:tpl-jewel-g2",
+            "title": "Silver cufflinks on a white shirt cuff",
+            "kind": "photo",
+            "product": "silver cufflinks"
+          },
+          {
+            "ref": "n:gen2:tpl-jewel-g3",
+            "title": "Thin gold anklet worn on a sandy ankle",
+            "kind": "photo",
+            "product": "gold anklet"
+          },
+          {
+            "ref": "n:gen2:tpl-jewel-g4",
+            "title": "Ear cuff worn high on the ear",
+            "kind": "photo",
+            "product": "ear cuff"
+          }
+        ]
+      }
+    ]
   }
 }

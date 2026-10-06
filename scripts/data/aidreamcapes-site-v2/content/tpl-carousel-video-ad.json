@@ -48,7 +48,7 @@
     "options": [
       [
         "Size",
-        "1:1 · Feed"
+        "1:1 \u00b7 Feed"
       ],
       [
         "Length",
@@ -56,7 +56,7 @@
       ],
       [
         "Also try",
-        "9:16 · Reels"
+        "9:16 \u00b7 Reels"
       ]
     ],
     "cta": "Make my carousel video"
@@ -76,7 +76,7 @@
     },
     {
       "q": "Is the carousel output one file or a platform post?",
-      "a": "It is a creative asset, not a published carousel post. Download the scenes, then assemble and upload the final carousel in the platform’s ad manager."
+      "a": "It is a creative asset, not a published carousel post. Download the scenes, then assemble and upload the final carousel in the platform\u2019s ad manager."
     }
   ],
   "overview": [
@@ -176,6 +176,35 @@
     "not_ideal": [
       "Many unrelated products in one sequence",
       "Panels that depend on tiny generated lettering"
+    ]
+  },
+  "examples": {
+    "h2": "More carousel story scenes",
+    "lead": "Short product stories that move from box, to use, to the finished look.",
+    "groups": [
+      {
+        "label": "Story beats",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-carousel-video-ad-g1",
+            "title": "Watch out of its box and on the wrist",
+            "kind": "scene",
+            "product": "wristwatch"
+          },
+          {
+            "ref": "n:gen2:tpl-carousel-video-ad-g2",
+            "title": "Commuter backpack packed beside a coat",
+            "kind": "scene",
+            "product": "commuter backpack"
+          },
+          {
+            "ref": "n:gen2:tpl-carousel-video-ad-g3",
+            "title": "Picnic basket set laid out on a blanket",
+            "kind": "scene",
+            "product": "picnic basket set"
+          }
+        ]
+      }
     ]
   }
 }

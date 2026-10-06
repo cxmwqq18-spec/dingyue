@@ -442,9 +442,10 @@ function exampleGalleryFor(model, page) {
           product: entry.product,
           kind,
           label: `Example ${kind}`,
+          href: card.href,
           mediaRef: entry.ref,
           image: card.image,
-          ...(kind === "clip" ? { video: card.video, spec: card.spec } : { spec: kind === "scene" ? "Scene" : "Photo" })
+          ...(kind === "clip" ? { video: card.video, spec: card.spec } : { spec: "Photo" })
         };
       })
     };

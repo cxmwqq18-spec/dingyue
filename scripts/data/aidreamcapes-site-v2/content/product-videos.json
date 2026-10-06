@@ -36,7 +36,7 @@
     },
     {
       "t": "Describe one action",
-      "d": "Write what happens, such as “the lunch box lid clicks shut and the latch locks.” Then pick a size and 6, 10, 15, or 30 seconds."
+      "d": "Write what happens, such as \u201cthe lunch box lid clicks shut and the latch locks.\u201d Then pick a size and 6, 10, 15, or 30 seconds."
     },
     {
       "t": "Save it or show another feature",
@@ -65,7 +65,7 @@
     "options": [
       [
         "Size",
-        "16:9 · Product pages"
+        "16:9 \u00b7 Product pages"
       ],
       [
         "Length",
@@ -119,7 +119,7 @@
       },
       {
         "t": "Name one feature",
-        "d": "Write one action such as “the lid clicks shut and the latch locks” instead of asking for a complete how-to sequence."
+        "d": "Write one action such as \u201cthe lid clicks shut and the latch locks\u201d instead of asking for a complete how-to sequence."
       },
       {
         "t": "Avoid impossible mechanics",
@@ -205,6 +205,35 @@
     "not_ideal": [
       "Products whose value depends mainly on an exact printed claim",
       "Actions that require a real person to explain results aloud"
+    ]
+  },
+  "examples": {
+    "h2": "More product demo scenes",
+    "lead": "Demos work best when one action has a clear start and finish. Here are a few to try with your product.",
+    "groups": [
+      {
+        "label": "One action, start to finish",
+        "items": [
+          {
+            "ref": "n:gen2:product-videos-g1",
+            "title": "Folding chair opened beside a patio table",
+            "kind": "scene",
+            "product": "folding camp chair"
+          },
+          {
+            "ref": "n:gen2:product-videos-g2",
+            "title": "Desk lamp switched on in a dark room",
+            "kind": "scene",
+            "product": "desk lamp"
+          },
+          {
+            "ref": "n:gen2:product-videos-g3",
+            "title": "Cutlery tray filled one slot at a time",
+            "kind": "scene",
+            "product": "cutlery drawer organizer"
+          }
+        ]
+      }
     ]
   }
 }

@@ -182,5 +182,34 @@
       "Variants with different shapes or packaging in every color",
       "Highly reflective finishes that change dramatically with the light"
     ]
+  },
+  "examples": {
+    "h2": "More colorway sets",
+    "lead": "Same angle, same light, only the color changes, so shoppers compare shades instead of photos.",
+    "groups": [
+      {
+        "label": "Side-by-side shades",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-color-g1",
+            "title": "Ceramic storage jars in sage, cream and terracotta",
+            "kind": "photo",
+            "product": "ceramic storage jars"
+          },
+          {
+            "ref": "n:gen2:tpl-color-g2",
+            "title": "Running shoe in three colorways, side by side",
+            "kind": "photo",
+            "product": "running shoe"
+          },
+          {
+            "ref": "n:gen2:tpl-color-g3",
+            "title": "Rain jacket in three colors on matching hangers",
+            "kind": "photo",
+            "product": "rain jacket"
+          }
+        ]
+      }
+    ]
   }
 }

@@ -48,7 +48,7 @@
     "options": [
       [
         "Size",
-        "9:16 · TikTok"
+        "9:16 \u00b7 TikTok"
       ],
       [
         "Length",
@@ -56,7 +56,7 @@
       ],
       [
         "Also try",
-        "1:1 · Feed"
+        "1:1 \u00b7 Feed"
       ]
     ],
     "cta": "Make my Spark-style video"
@@ -176,6 +176,35 @@
     "not_ideal": [
       "A request for a real creator endorsement",
       "Campaign setup that depends on an automatic account connection"
+    ]
+  },
+  "examples": {
+    "h2": "More Spark Ads-style scenes",
+    "lead": "Casual, phone-shot moments that look like they came from a creator's feed.",
+    "groups": [
+      {
+        "label": "Creator-feed moments",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-spark-ads-style-video-g1",
+            "title": "Phone stand folded flat for a commuter bag",
+            "kind": "scene",
+            "product": "phone stand"
+          },
+          {
+            "ref": "n:gen2:tpl-spark-ads-style-video-g2",
+            "title": "Hiking pack with a water bottle clipped on",
+            "kind": "scene",
+            "product": "water bottle"
+          },
+          {
+            "ref": "n:gen2:tpl-spark-ads-style-video-g3",
+            "title": "Mini massage gun on a calf after a run",
+            "kind": "scene",
+            "product": "mini massage gun"
+          }
+        ]
+      }
     ]
   }
 }

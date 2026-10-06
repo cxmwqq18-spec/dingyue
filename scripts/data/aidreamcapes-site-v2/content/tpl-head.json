@@ -182,5 +182,34 @@
       "A page that needs an official employee ID photo standard",
       "People who have not agreed to the intended publication"
     ]
+  },
+  "examples": {
+    "h2": "More headshot examples",
+    "lead": "A matching set for a team page: same backdrop, same light, different people. Add names and roles in your page text.",
+    "groups": [
+      {
+        "label": "A matching team set",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-head-g1",
+            "title": "Support lead headshot in a bright office",
+            "kind": "photo",
+            "product": "headshot"
+          },
+          {
+            "ref": "n:gen2:tpl-head-g2",
+            "title": "Producer headshot in the same bright office",
+            "kind": "photo",
+            "product": "headshot"
+          },
+          {
+            "ref": "n:gen2:tpl-head-g3",
+            "title": "Operations manager headshot by a window",
+            "kind": "photo",
+            "product": "headshot"
+          }
+        ]
+      }
+    ]
   }
 }

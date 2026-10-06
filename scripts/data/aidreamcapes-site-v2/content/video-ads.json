@@ -214,5 +214,34 @@
       "Products that require an exact spoken explanation or precise on-screen lettering",
       "Claims that depend on a real customer's personal experience"
     ]
+  },
+  "examples": {
+    "h2": "More UGC ad scenes",
+    "lead": "Everyday moments that open with the product already in view, the way short creator-style ads usually start.",
+    "groups": [
+      {
+        "label": "Product-first openings",
+        "items": [
+          {
+            "ref": "n:gen2:video-ads-g1",
+            "title": "Compact speaker picked up from a laptop desk",
+            "kind": "scene",
+            "product": "compact speaker"
+          },
+          {
+            "ref": "n:gen2:video-ads-g2",
+            "title": "Tote bag packed item by item on a hallway bench",
+            "kind": "scene",
+            "product": "canvas tote bag"
+          },
+          {
+            "ref": "n:gen2:video-ads-g3",
+            "title": "Snack pouch set beside a lunch container",
+            "kind": "scene",
+            "product": "snack pouch"
+          }
+        ]
+      }
+    ]
   }
 }

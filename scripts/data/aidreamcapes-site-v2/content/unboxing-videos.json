@@ -36,7 +36,7 @@
     },
     {
       "t": "Describe the box and the reveal",
-      "d": "Name the box color, material, and what's inside, for example “white box, pink tissue, a candle on top.” Choose vertical or square and the length."
+      "d": "Name the box color, material, and what's inside, for example \u201cwhite box, pink tissue, a candle on top.\u201d Choose vertical or square and the length."
     },
     {
       "t": "Download or change the packaging",
@@ -65,7 +65,7 @@
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Shorts"
+        "9:16 \u00b7 TikTok & Shorts"
       ],
       [
         "Length",
@@ -89,7 +89,7 @@
     },
     {
       "q": "Can I make an unboxing video for a gift set or bundle?",
-      "a": "Yes. Upload a photo of the set and list what's inside, such as “three candles and a matchbox in a ribbon-tied box.” A few items usually come out cleaner than a crowded box."
+      "a": "Yes. Upload a photo of the set and list what's inside, such as \u201cthree candles and a matchbox in a ribbon-tied box.\u201d A few items usually come out cleaner than a crowded box."
     }
   ],
   "overview": [
@@ -205,6 +205,35 @@
     "not_ideal": [
       "Packaging whose value depends on perfectly readable small print",
       "Large assortments that cannot fit into one clear opening sequence"
+    ]
+  },
+  "examples": {
+    "h2": "More unboxing scenes",
+    "lead": "Different boxes, different reveals. Pick the one closest to how your product really ships.",
+    "groups": [
+      {
+        "label": "Box and reveal ideas",
+        "items": [
+          {
+            "ref": "n:gen2:unboxing-videos-g1",
+            "title": "Rigid mailer opened to a ceramic reed diffuser",
+            "kind": "scene",
+            "product": "ceramic reed diffuser"
+          },
+          {
+            "ref": "n:gen2:unboxing-videos-g2",
+            "title": "Ribbon gift box opened to three skincare minis",
+            "kind": "scene",
+            "product": "skincare minis"
+          },
+          {
+            "ref": "n:gen2:unboxing-videos-g3",
+            "title": "Subscription box with three items laid out",
+            "kind": "scene",
+            "product": "subscription box"
+          }
+        ]
+      }
     ]
   }
 }

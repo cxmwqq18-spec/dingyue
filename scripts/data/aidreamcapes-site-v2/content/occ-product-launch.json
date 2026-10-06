@@ -73,7 +73,7 @@
     },
     {
       "h2": "Prepare the visual before the wording is final",
-      "d": "AIVideosUGC offers five video shapes—9:16, 1:1, 16:9, 4:3, and 3:4—and 6, 10, 15, and 30 second jobs; each credit cost appears before generation. Make the scene while the launch copy is still moving, then add the exact name, price, date, code, and availability in Canva, CapCut, or your publishing tool. Uploaded source photos and generated drafts remain inside your account until you choose to download and share them."
+      "d": "AIVideosUGC offers five video shapes\u20149:16, 1:1, 16:9, 4:3, and 3:4\u2014and 6, 10, 15, and 30 second jobs; each credit cost appears before generation. Make the scene while the launch copy is still moving, then add the exact name, price, date, code, and availability in Canva, CapCut, or your publishing tool. Uploaded source photos and generated drafts remain inside your account until you choose to download and share them."
     }
   ],
   "input_guide": {
@@ -163,6 +163,35 @@
     "not_ideal": [
       "Products whose final form is still unknown",
       "Announcements that depend on AI-generated prices, dates, or technical labels"
+    ]
+  },
+  "examples": {
+    "h2": "More product launch examples",
+    "lead": "Teasers, packaging previews and first-use shots for launch week.",
+    "groups": [
+      {
+        "label": "Launch week",
+        "items": [
+          {
+            "ref": "n:gen2:occ-product-launch-g1",
+            "title": "New bottle half lit, showing only its outline",
+            "kind": "photo",
+            "product": "new bottle"
+          },
+          {
+            "ref": "n:gen2:occ-product-launch-g2",
+            "title": "New product box preview on a plain backdrop",
+            "kind": "photo",
+            "product": "product box"
+          },
+          {
+            "ref": "n:gen2:occ-product-launch-g3",
+            "title": "New bottle in use on a morning run",
+            "kind": "photo",
+            "product": "new water bottle"
+          }
+        ]
+      }
     ]
   }
 }

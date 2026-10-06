@@ -48,7 +48,7 @@
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 \u00b7 TikTok & Reels"
       ],
       [
         "Length",
@@ -56,7 +56,7 @@
       ],
       [
         "Also try",
-        "16:9 · Product page"
+        "16:9 \u00b7 Product page"
       ]
     ],
     "cta": "Make my feature video"
@@ -76,7 +76,7 @@
     },
     {
       "q": "How should I describe a product feature?",
-      "a": "Name one visible feature and one action, such as “presses the locking tab.” Add the exact feature label after download; generated text can contain errors."
+      "a": "Name one visible feature and one action, such as \u201cpresses the locking tab.\u201d Add the exact feature label after download; generated text can contain errors."
     }
   ],
   "overview": [
@@ -176,6 +176,35 @@
     "not_ideal": [
       "Performance or medical claims that need testing",
       "Features hidden inside software or unreadable small print"
+    ]
+  },
+  "examples": {
+    "h2": "More feature scenes",
+    "lead": "One feature at a time, shown in close-up, with the whole product before and after.",
+    "groups": [
+      {
+        "label": "One feature each",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-product-feature-callout-video-g1",
+            "title": "Wallet snap clasp opened in close-up",
+            "kind": "scene",
+            "product": "wallet"
+          },
+          {
+            "ref": "n:gen2:tpl-product-feature-callout-video-g2",
+            "title": "Portable blender lid locked with one press",
+            "kind": "scene",
+            "product": "portable blender"
+          },
+          {
+            "ref": "n:gen2:tpl-product-feature-callout-video-g3",
+            "title": "Laptop stand raised to a new height",
+            "kind": "scene",
+            "product": "laptop stand"
+          }
+        ]
+      }
     ]
   }
 }

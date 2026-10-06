@@ -76,13 +76,13 @@
     },
     {
       "q": "What lighting prompt should I start with?",
-      "a": "Describe one light source and a simple surface, such as “soft window light on a pale table.” A sharp source photo helps glass and metal edges stay readable."
+      "a": "Describe one light source and a simple surface, such as \u201csoft window light on a pale table.\u201d A sharp source photo helps glass and metal edges stay readable."
     }
   ],
   "overview": [
     {
       "h2": "Shape the Reflection Instead of Fighting It",
-      "p": "Glossy packaging can look premium in one light and unreadable in another. This template lets you explore a controlled direction—soft side light, an even studio wash, or a warmer tabletop mood—while keeping the product at the center of the frame."
+      "p": "Glossy packaging can look premium in one light and unreadable in another. This template lets you explore a controlled direction\u2014soft side light, an even studio wash, or a warmer tabletop mood\u2014while keeping the product at the center of the frame."
     },
     {
       "h2": "Describe Light in Parts",
@@ -181,6 +181,46 @@
       "A source with a large reflection hiding the product",
       "A label whose exact tiny type must be proven in the image",
       "A product whose appeal depends on a moving light demonstration"
+    ]
+  },
+  "examples": {
+    "h2": "More lighting examples",
+    "lead": "The same bottle under warm and cool light, plus shiny surfaces lit without harsh glare.",
+    "groups": [
+      {
+        "label": "Warm and cool",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-light-g1",
+            "title": "Amber glass bottle in warm side light",
+            "kind": "photo",
+            "product": "amber glass bottle"
+          },
+          {
+            "ref": "n:gen2:tpl-light-g2",
+            "title": "Same amber bottle in cool, even light",
+            "kind": "photo",
+            "product": "amber glass bottle"
+          }
+        ]
+      },
+      {
+        "label": "Shiny surfaces",
+        "items": [
+          {
+            "ref": "n:gen2:tpl-light-g3",
+            "title": "Steel watch with a controlled highlight",
+            "kind": "photo",
+            "product": "steel watch"
+          },
+          {
+            "ref": "n:gen2:tpl-light-g4",
+            "title": "Glass honey jar with soft, even highlights",
+            "kind": "photo",
+            "product": "glass honey jar"
+          }
+        ]
+      }
     ]
   }
 }

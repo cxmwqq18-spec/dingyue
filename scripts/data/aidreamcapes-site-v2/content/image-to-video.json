@@ -36,7 +36,7 @@
     },
     {
       "t": "Describe the motion",
-      "d": "Write one line about the movement, like “slow push-in while morning light moves across the bottle,” then choose the length and size."
+      "d": "Write one line about the movement, like \u201cslow push-in while morning light moves across the bottle,\u201d then choose the length and size."
     },
     {
       "t": "Download or try new motion",
@@ -65,7 +65,7 @@
     "options": [
       [
         "Size",
-        "9:16 · Reels & Stories"
+        "9:16 \u00b7 Reels & Stories"
       ],
       [
         "Length",
@@ -85,7 +85,7 @@
     },
     {
       "q": "Can I choose how the camera moves?",
-      "a": "Yes, describe it in your sentence. Phrases like “slow zoom in,” “orbit around the bottle,” or “pan left across the table” give the clearest direction. Motion can vary between runs, so a second try may land closer to what you pictured."
+      "a": "Yes, describe it in your sentence. Phrases like \u201cslow zoom in,\u201d \u201corbit around the bottle,\u201d or \u201cpan left across the table\u201d give the clearest direction. Motion can vary between runs, so a second try may land closer to what you pictured."
     },
     {
       "q": "Will my product look exactly like the photo?",
@@ -127,7 +127,7 @@
       },
       {
         "t": "Name the movement and pace",
-        "d": "Write one direction such as “slow push toward the bottle while morning light crosses the table,” rather than listing several unrelated actions."
+        "d": "Write one direction such as \u201cslow push toward the bottle while morning light crosses the table,\u201d rather than listing several unrelated actions."
       }
     ]
   },
@@ -205,6 +205,41 @@
     "not_ideal": [
       "Photos packed edge to edge with no room for a camera move",
       "Scenes where tiny labels or exact small text must remain unchanged"
+    ]
+  },
+  "examples": {
+    "h2": "Photo-to-video example scenes",
+    "lead": "Ideas for bringing one product photo to life: a slow push-in, rising steam, light moving across a surface.",
+    "groups": [
+      {
+        "label": "Subtle motion ideas",
+        "items": [
+          {
+            "ref": "n:gen2:image-to-video-g1",
+            "title": "Watch dial with a highlight sliding across the glass",
+            "kind": "scene",
+            "product": "wristwatch"
+          },
+          {
+            "ref": "n:gen2:image-to-video-g2",
+            "title": "Steam rising from a ceramic mug in morning light",
+            "kind": "scene",
+            "product": "ceramic mug"
+          },
+          {
+            "ref": "n:gen2:image-to-video-g3",
+            "title": "Folded linen shirt by an open window",
+            "kind": "scene",
+            "product": "linen shirt"
+          },
+          {
+            "ref": "n:gen2:image-to-video-g4",
+            "title": "Hand soap bottle framed square for a feed",
+            "kind": "scene",
+            "product": "hand soap bottle"
+          }
+        ]
+      }
     ]
   }
 }
