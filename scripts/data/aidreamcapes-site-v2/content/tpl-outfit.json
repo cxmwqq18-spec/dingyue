@@ -1,7 +1,7 @@
 {
   "id": "tpl-outfit",
   "title": "AI Fashion Reels: Show the Full Outfit | AIVideosUGC",
-  "description": "Create AI fashion reels from a photo of your jacket, jeans, or full outfit. Get a head-to-toe vertical video in 6, 10, or 15 seconds, ready for TikTok. Try it.",
+  "description": "Create AI fashion reels from a photo of your jacket, jeans, or full outfit. Get a head-to-toe 9:16 video in 6, 10, 15, or 30 seconds for TikTok.",
   "h1": "AI Fashion Reels That Show the Whole Look, Head to Toe",
   "eyebrow": "Fashion video template",
   "lead": "AI fashion reels put your jacket, jeans, or full outfit on a model, head to toe. Upload your clothing photo, describe the look and the pose, and receive a 9:16 reel ready for TikTok and Instagram.",
@@ -24,7 +24,7 @@
     },
     {
       "t": "Describe the model and backdrop",
-      "d": "Say who is wearing it, how they stand, and where. Pick 6 seconds for a quick look or 15 for a slower reveal."
+      "d": "Say who is wearing it, how they stand, and where. Pick 6 seconds for a quick look, 15 for a slower reveal, or 30 for a full outfit sequence."
     },
     {
       "t": "Add sizes and a sound",

@@ -31,7 +31,7 @@
     ],
     [
       "Video length",
-      "Pick 6, 10 or 15 seconds"
+      "Pick 6, 10, 15 or 30 seconds"
     ]
   ],
   "tips": [
@@ -64,7 +64,7 @@
     },
     {
       "q": "Can I make a video for my Amazon listing?",
-      "a": "Yes. Choose a 16:9 or 1:1 shape and 6, 10 or 15 seconds of run time, then download the file and add it to your listing from your seller account."
+      "a": "Yes. Choose a 16:9 or 1:1 shape and 6, 10, 15 or 30 seconds of run time, then download the file and add it to your listing from your seller account."
     }
   ]
 }

@@ -4,7 +4,7 @@
   "description": "Use this AI promo video maker to announce a new product with a warm, polished clip. Upload one photo, choose 9:16 or 1:1, and make your launch video today.",
   "h1": "AI Promo Video Maker for Your Next Product Launch",
   "eyebrow": "Launch video template",
-  "lead": "This AI promo video maker announces something new with a warm, styled clip. Start from a shot of the product, describe the room it belongs in, and get a short video for Facebook and Instagram. Clips run 6, 10, or 15 seconds.",
+  "lead": "This AI promo video maker announces something new with a warm, styled clip. Start from a shot of the product, describe the room it belongs in, and get a short video for Facebook and Instagram. Clips run 6, 10, 15, or 30 seconds.",
   "secondary_keywords": [
     "product launch video",
     "new product promo video",
@@ -24,7 +24,7 @@
     },
     {
       "t": "Choose the room and size",
-      "d": "Describe the space and mood, then pick 9:16 or 1:1. Six seconds suits a teaser; 10 or 15 gives a fuller scene."
+      "d": "Describe the space and mood, then pick 9:16 or 1:1. Six seconds suits a teaser; 10 or 15 gives a fuller scene, while 30 seconds gives room for a sequence."
     },
     {
       "t": "Add the launch details",

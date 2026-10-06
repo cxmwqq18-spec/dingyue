@@ -394,7 +394,7 @@ function breadcrumbTrail(model, page) {
 
 // Credits each job uses in the workspace (standard-quality video; site_aidreamcapes has no custom pricing):
 // a photo or a 6-second video is 24, and longer videos scale with their length.
-const JOB_CREDITS = { photo: 24, video6: 24, video10: 40, video15: 60 };
+const JOB_CREDITS = { photo: 24, video6: 24, video10: 40, video15: 60, video30: 120 };
 const planEstimate = (credits) => `About ${Math.floor(Number(credits) / JOB_CREDITS.photo)} product photos or ${Math.floor(Number(credits) / JOB_CREDITS.video15)} fifteen-second videos a month`;
 const PLANS_BASE = [
   { name: "Starter", price: "$24.50", credits: "200", who: "For trying video ads and product photos.", features: ["Videos and photos", "All templates", "9:16, 1:1 and 16:9 video sizes", "No watermark"], popular: false },
@@ -410,7 +410,8 @@ const JOB_COST_ROWS = [
   ["Product photo", `${JOB_CREDITS.photo} credits`],
   ["Video, 6 seconds", `${JOB_CREDITS.video6} credits`],
   ["Video, 10 seconds", `${JOB_CREDITS.video10} credits`],
-  ["Video, 15 seconds", `${JOB_CREDITS.video15} credits`]
+  ["Video, 15 seconds", `${JOB_CREDITS.video15} credits`],
+  ["Video, 30 seconds", `${JOB_CREDITS.video30} credits`]
 ];
 
 // One line under every start button, so the price and what happens to credits are clear before a visitor signs up.
@@ -752,7 +753,7 @@ function payloadFor(model, page) {
     return { ...base, group: page.group, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, uses: linkedCopy.groups[1],
       maker: { options: (c.maker?.options || []).slice(0, 3), cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(page, rel[0]?.key), urlInput: page.id === "url-to-video" },
       specs: [
-        ...(video ? [["Sizes", "9:16 · 1:1 · 16:9"], ["Length", "6, 10 or 15 seconds"], ["You start with", page.id === "url-to-video" ? "A product page link" : "1 product photo"], ["Cost", "Shown before you start"]]
+        ...(video ? [["Sizes", "9:16 · 1:1 · 16:9"], ["Length", "6, 10, 15 or 30 seconds"], ["You start with", page.id === "url-to-video" ? "A product page link" : "1 product photo"], ["Cost", "Shown before you start"]]
           : [["Size", "Square by default"], ["You upload", "1 product photo"], ["You get", "A new product photo"], ["Cost", "Shown before you start"]]),
         ...(platformIds.length ? [["Best for", names(platformIds), specLinks(model, platformIds)]] : []),
         ...(industryIds.length ? [["Popular with", names(industryIds), specLinks(model, industryIds)]] : []),

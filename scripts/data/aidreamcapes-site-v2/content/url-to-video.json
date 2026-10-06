@@ -14,7 +14,7 @@
   ],
   "intro": [
     "Most stores already have everything a short ad needs on the product page: a clean photo and a clear product name. URL to Video saves you the step of downloading the photo and typing out a description. Paste the link, and the photo and name appear in the workspace, ready for you to check.",
-    "From there it works like Image to Video. Pick the size and length, add a line about what should happen in the clip, and generate a 6, 10 or 15 second video. You always see the credit cost first, and you can change the photo or the description before anything is made."
+    "From there it works like Image to Video. Pick the size and length, add a line about what should happen in the clip, and generate a 6, 10, 15 or 30 second video. You always see the credit cost first, and you can change the photo or the description before anything is made."
   ],
   "benefits": [
     {
@@ -41,7 +41,7 @@
     },
     {
       "t": "Pick a size and generate",
-      "d": "Choose 9:16, 1:1 or 16:9 and 6, 10 or 15 seconds, then download your video."
+      "d": "Choose 9:16, 1:1 or 16:9 and 6, 10, 15 or 30 seconds, then download your video."
     }
   ],
   "uses": [

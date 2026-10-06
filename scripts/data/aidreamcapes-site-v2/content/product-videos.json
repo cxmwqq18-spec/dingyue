@@ -13,7 +13,7 @@
   ],
   "intro": [
     "A product demo shows the item doing its job. The kettle pours, the folding chair snaps open, the drawer organizer fills up with spoons and forks. Shoppers can't hold your product, so a few seconds of it in use answers questions a photo can't, like how big it looks in a hand or how the lid comes off.",
-    "With AIVideosUGC, you upload a product photo and describe one action in a sentence. Clips run 6, 10, or 15 seconds and come wide 16:9 for a product page, square for listings and feeds, or vertical for Shorts. It works well for home goods, kitchen tools, gadgets, and bags, where the way something moves or opens is part of the appeal. To show two of your own products side by side, such as two colors or sizes, use the [Side-by-Side Video template](page:tpl-compare). Keep each video to a single action, and make another one for the next feature."
+    "With AIVideosUGC, you upload a product photo and describe one action in a sentence. Clips run 6, 10, 15, or 30 seconds and come wide 16:9 for a product page, square for listings and feeds, or vertical for Shorts. It works well for home goods, kitchen tools, gadgets, and bags, where the way something moves or opens is part of the appeal. To show two of your own products side by side, such as two colors or sizes, use the [Side-by-Side Video template](page:tpl-compare). Keep each video to a single action, and make another one for the next feature."
   ],
   "benefits": [
     {
@@ -36,7 +36,7 @@
     },
     {
       "t": "Describe one action",
-      "d": "Write what happens, such as “the lunch box lid clicks shut and the latch locks.” Then pick a size and 6, 10, or 15 seconds."
+      "d": "Write what happens, such as “the lunch box lid clicks shut and the latch locks.” Then pick a size and 6, 10, 15, or 30 seconds."
     },
     {
       "t": "Save it or show another feature",
@@ -46,7 +46,7 @@
   "uses": [
     {
       "t": "Etsy listing video",
-      "d": "Etsy listings can show a short video alongside your photos, and a 6 to 15 second clip fits that slot."
+      "d": "Etsy listings can show a short video alongside your photos, and a 6 to 30 second clip fits that slot."
     },
     {
       "t": "Shopify product media",

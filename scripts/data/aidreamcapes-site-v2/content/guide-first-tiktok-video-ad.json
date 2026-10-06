@@ -33,7 +33,7 @@
       "h2": "Make the video from your product photo",
       "paras": [
         "In [AIVideosUGC Video Ads](page:video-ads), upload a clear photo of the product and write one sentence describing the scene, such as \"A hand unfolds a slim black phone stand on a cafe table and sets a phone in it, soft daylight.\" Choose 9:16, the full-screen vertical shape TikTok uses. The [ad sizes guide](page:guide-ad-sizes-by-platform) explains the other shapes. A [lifestyle product photo](page:lifestyle-photos) can give the same campaign a still image for the feed.",
-        "Then pick a length. Six seconds suits a single moment, like the stand snapping open. Ten seconds leaves room for a short demo. Fifteen seconds fits a simple sequence: unfold, place the phone, start a video call. The credit cost appears before the video starts.",
+        "Then pick a length. Six seconds suits a single moment, like the stand snapping open. Ten seconds leaves room for a short demo. Fifteen seconds fits a simple sequence: unfold, place the phone, start a video call. Thirty seconds leaves room for a longer sequence. The credit cost appears before the video starts.",
         "Each run makes one video. To try a second opening, run it again with a changed sentence. Keep the request about the scene and leave prices and headlines out. You'll add those next, where you control every letter."
       ]
     },
@@ -65,7 +65,7 @@
   "checklist": [
     "One product and one specific reason to buy",
     "An opening that shows the product in action",
-    "A 9:16 video at 6, 10, or 15 seconds",
+    "A 9:16 video at 6, 10, 15, or 30 seconds",
     "Text and price added in TikTok or CapCut, away from the edges",
     "Music that's licensed for ads",
     "A small budget and a few days before you decide"

@@ -15,7 +15,7 @@
   "faq": [
     {
       "q": "What can AIVideosUGC create for my store?",
-      "a": "Two things: new product photos and short product videos. Upload a photo of your item, choose a template or describe what you want, and you'll get either a square product image or a video that runs 6, 10 or 15 seconds."
+      "a": "Two things: new product photos and short product videos. Upload a photo of your item, choose a template or describe what you want, and you'll get either a square product image or a video that runs 6, 10, 15 or 30 seconds."
     },
     {
       "q": "What kind of product photo should I upload?",
@@ -27,7 +27,7 @@
     },
     {
       "q": "What video lengths and sizes are available?",
-      "a": "Videos are 6, 10 or 15 seconds long. You can make them vertical (9:16), square (1:1) or wide (16:9), and 3:4 and 4:3 are available too. Product photos are square by default."
+      "a": "Videos are 6, 10, 15 or 30 seconds long. You can make them vertical (9:16), square (1:1) or wide (16:9), and 3:4 and 4:3 are available too. Product photos are square by default."
     },
     {
       "q": "How do credits work?",

@@ -1,7 +1,7 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, HeroMedia, Img, Intro, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolLink, ToolRow
+  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, HeroMedia, Img, Intro, MakeToolGroup, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
@@ -104,7 +104,7 @@ function HomePage({ data, r }: Props) {
             )}
           </div>
           <div className="trust">
-            <span>Private uploads</span><span>Cost shown before every job</span><span>9:16, 1:1 or 16:9</span><span>6, 10 or 15 second videos</span>
+            <span>Private uploads</span><span>Cost shown before every job</span><span>9:16, 1:1 or 16:9</span><span>6, 10, 15 or 30 second videos</span>
           </div>
         </div>
       </section>
@@ -112,16 +112,30 @@ function HomePage({ data, r }: Props) {
         <div className="wrap">
           <SecHead eyebrow="What do you want to make?" lead={make.lead} title={make.title} />
           <div className="make">
-            <div className="mk">
-              <div className="mk-h"><div><h3>Video</h3><p>For TikTok, Reels, Shorts and your product page</p></div></div>
-              <div className="mlist">{make.video.map((tool) => <ToolLink key={tool.id} r={r} tool={tool} />)}</div>
-              <a className="btn btn-ghost" href={r.href("/ai-video-generation")}>All video tools →</a>
-            </div>
-            <div className="mk">
-              <div className="mk-h"><div><h3>Photo</h3><p>For Amazon, Shopify and social ads</p></div></div>
-              <div className="mlist">{make.photo.map((tool) => <ToolLink key={tool.id} r={r} tool={tool} />)}</div>
-              <a className="btn btn-ghost" href={r.href("/ai-image-generation")}>All photo tools →</a>
-            </div>
+            <MakeToolGroup
+              allHref="/ai-video-generation"
+              allLabel="All video tools"
+              guide={{
+                description: "Ready-made ideas for unboxing, before-and-after, beauty and more.",
+                href: "/templates",
+                label: "Browse video templates",
+                secondaryHref: "/ai-video-generation",
+                secondaryLabel: "All video tools",
+                title: "Start from a template"
+              }}
+              r={r}
+              subtitle="For TikTok, Reels, Shorts and your product page"
+              title="Video"
+              tools={make.video}
+            />
+            <MakeToolGroup
+              allHref="/ai-image-generation"
+              allLabel="All photo tools"
+              r={r}
+              subtitle="For Amazon, Shopify and social ads"
+              title="Photo"
+              tools={make.photo}
+            />
           </div>
         </div>
       </section>

@@ -237,6 +237,60 @@ export function ToolRow({ tools, r }: { tools: V2Tool[]; r: V2Resolvers }) {
   return <div className="toolrow">{tools.map((tool) => <ToolLink key={tool.id} r={r} tool={tool} />)}</div>;
 }
 
+type MakeTool = V2Tool;
+
+export function MakeToolCard({ tool, r }: { tool: MakeTool; r: V2Resolvers }) {
+  return (
+    <article className="make-card">
+      {tool.image ? <div className="make-card-media"><Img image={tool.image} r={r} /></div> : null}
+      <div className="make-card-body">
+        <h4><a className="card-title" href={r.href(tool.href)}>{tool.label}</a></h4>
+        <p>{tool.description}</p>
+      </div>
+    </article>
+  );
+}
+
+type MakeGuide = { title: string; description: string; href: string; label: string; secondaryHref: string; secondaryLabel: string };
+
+export function MakeToolGuide({ guide, r }: { guide: MakeGuide; r: V2Resolvers }) {
+  return (
+    <article className="make-guide">
+      <div className="make-guide-body">
+        <h4>{guide.title}</h4>
+        <p>{guide.description}</p>
+        <div className="make-guide-actions">
+          <a className="btn btn-grad" href={r.href(guide.href)}>{guide.label}</a>
+          <a className="btn btn-ghost" href={r.href(guide.secondaryHref)}>{guide.secondaryLabel}</a>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+export function MakeToolGroup({ title, subtitle, allLabel, allHref, tools, r, guide }: {
+  title: string;
+  subtitle: string;
+  allLabel: string;
+  allHref: string;
+  tools: V2Tool[];
+  r: V2Resolvers;
+  guide?: MakeGuide;
+}) {
+  return (
+    <div className="make-group">
+      <div className="make-group-head">
+        <div><h3>{title}</h3><p>{subtitle}</p></div>
+        <a className="make-all" href={r.href(allHref)}>{allLabel} →</a>
+      </div>
+      <div className="make-grid">
+        {tools.map((tool) => <MakeToolCard key={tool.id} r={r} tool={tool} />)}
+        {guide ? <MakeToolGuide guide={guide} r={r} /> : null}
+      </div>
+    </div>
+  );
+}
+
 const UploadIcon = () => (
   <span aria-hidden="true" className="upl">
     <svg fill="none" height="26" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24" width="26">

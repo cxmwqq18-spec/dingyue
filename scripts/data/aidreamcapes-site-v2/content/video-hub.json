@@ -1,7 +1,7 @@
 {
   "id": "video-hub",
   "title": "AI Video Generator for Ecommerce | AIVideosUGC",
-  "description": "Our AI video generator for ecommerce turns one product photo into a 6, 10, or 15 second clip for TikTok, Reels, or your store. Pick a video type to start.",
+  "description": "Our AI video generator for ecommerce turns one product photo into a 6, 10, 15, or 30 second clip for TikTok, Reels, or your store. Pick a video type to start.",
   "h1": "AI Video Generator for Ecommerce Ads and Listings",
   "eyebrow": "AI video tools",
   "lead": "Our AI video generator for ecommerce makes short clips sized for TikTok, Instagram, YouTube Shorts, or your product page. Pick the kind of video you need, add a product photo and one sentence, and download the result.",
@@ -13,7 +13,7 @@
     "vertical product videos for TikTok"
   ],
   "intro": [
-    "AIVideosUGC makes short videos for people who sell online. You add a photo of your product, write one sentence about the scene you want, and get back a single clip that runs 6, 10, or 15 seconds. Choose vertical 9:16 for TikTok, Reels, and Shorts, square 1:1 for social feeds, or wide 16:9 for a store banner. If you need something in between, 3:4 and 4:3 are available too.",
+    "AIVideosUGC makes short videos for people who sell online. You add a photo of your product, write one sentence about the scene you want, and get back a single clip that runs 6, 10, 15, or 30 seconds. Choose vertical 9:16 for TikTok, Reels, and Shorts, square 1:1 for social feeds, or wide 16:9 for a store banner. If you need something in between, 3:4 and 4:3 are available too.",
     "Each video type on this page heads in its own direction. Creator-style ads have the casual, handheld feel of a phone video. Demo videos show what the product does. Unboxing clips focus on the reveal, before-and-after clips show a change, and photo-to-video adds motion to a shot you already like. Videos are made one at a time, so if you want three openings to compare, run it three times and keep the one you like."
   ],
   "benefits": [
@@ -51,7 +51,7 @@
     },
     {
       "q": "How long are the videos, and what sizes can I choose?",
-      "a": "You can pick 6, 10, or 15 seconds. Formats include 9:16 vertical, 1:1 square, and 16:9 wide, plus 3:4 and 4:3."
+      "a": "You can pick 6, 10, 15, or 30 seconds. Formats include 9:16 vertical, 1:1 square, and 16:9 wide, plus 3:4 and 4:3."
     },
     {
       "q": "Can I add my price, captions, or music?",

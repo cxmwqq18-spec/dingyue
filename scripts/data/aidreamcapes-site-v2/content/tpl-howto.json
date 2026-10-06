@@ -4,7 +4,7 @@
   "description": "Use this AI how-to video maker to show your product in use, made from a single photo. Pick 9:16 for YouTube Shorts or 16:9 for your store page. Try it now.",
   "h1": "AI How-To Video Maker for Showing Products in Action",
   "eyebrow": "How-to video template",
-  "lead": "Use this AI how-to video maker to show shoppers how your product works in 10 or 15 seconds. Upload a photo, describe the task, and get a vertical or widescreen video for your store and YouTube Shorts.",
+  "lead": "Use this AI how-to video maker to show shoppers how your product works in 10, 15 or 30 seconds. Upload a photo, describe the task, and get a vertical or widescreen video for your store and YouTube Shorts.",
   "secondary_keywords": [
     "product how-to video",
     "product demo video from photo",
@@ -24,7 +24,7 @@
     },
     {
       "t": "Describe a single task",
-      "d": "Say who is using it, where, and what they do. Choose 10 seconds for a quick demo or 15 to slow it down."
+      "d": "Say who is using it, where, and what they do. Choose 10 seconds for a quick demo, 15 to slow it down, or 30 for a full walkthrough."
     },
     {
       "t": "Add step labels after download",
@@ -65,7 +65,7 @@
   "faq": [
     {
       "q": "Can one video show several steps in a row?",
-      "a": "Keep it to one clear task. At 10 or 15 seconds, steaming a single shirt reads better than a full laundry routine. For a longer guide, make a few clips and join them in your editing app."
+      "a": "Keep it to one clear task. At 10, 15 or 30 seconds, steaming a single shirt reads better than a full laundry routine. For a longer guide, make a few clips and join them in your editing app."
     },
     {
       "q": "Will the video include spoken instructions?",
