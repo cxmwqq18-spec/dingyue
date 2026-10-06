@@ -73,6 +73,10 @@
     {
       "q": "Are our team photos kept private?",
       "a": "Yes. The photos your team uploads and the headshots you get back are kept in your account, not posted anywhere public."
+    },
+    {
+      "q": "How many people can I put in one team headshot set?",
+      "a": "Create each person from a clear photo, then keep the background and lighting wording the same across runs. Review identity and facial details before using the set publicly."
     }
   ]
 }

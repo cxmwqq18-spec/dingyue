@@ -73,6 +73,10 @@
     {
       "q": "Can I use this for skincare and fragrance listings?",
       "a": "Yes. Let the photo show the bottle, the texture, and the finish, and leave claims about results, like smoother skin or all-day scent, out of the image and the listing text."
+    },
+    {
+      "q": "What lighting prompt should I start with?",
+      "a": "Describe one light source and a simple surface, such as “soft window light on a pale table.” A sharp source photo helps glass and metal edges stay readable."
     }
   ]
 }

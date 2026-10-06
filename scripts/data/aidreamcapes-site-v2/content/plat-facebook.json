@@ -68,7 +68,7 @@
     },
     {
       "q": "Will Facebook reject an ad because it was made with AI?",
-      "a": "Meta reviews every ad against its advertising policies whether or not AI was involved. Stick to those policies, avoid claims you can't back up, and use an AI label where Meta asks for one."
+      "a": "Meta reviews the ad against its current Advertising Standards. Review claims, rights, and any AI-label requirement in Ads Manager before launch; generation by itself does not guarantee approval."
     }
   ]
 }

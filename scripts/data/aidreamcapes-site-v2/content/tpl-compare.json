@@ -73,6 +73,10 @@
     {
       "q": "Which aspect ratio should I choose?",
       "a": "Square 1:1 works well in product galleries and feeds. Widescreen 16:9 suits a video in your product description. Vertical 9:16 is for YouTube Shorts and other phone-first feeds."
+    },
+    {
+      "q": "Can I put the comparison numbers inside the generated video?",
+      "a": "Type capacity, weight, price, and other numbers after download. AI-made lettering and figures can be wrong, so keep exact specifications in your editor."
     }
   ]
 }

@@ -20,12 +20,20 @@
   ],
   "faq": [
     {
-      "q": "Which article should I read first?",
-      "a": "Start with the guide to AI product photography. It covers the starting photo, describing the look you want and checking the result, which every other article builds on."
+      "q": "How do I start making ecommerce product content?",
+      "a": "Start with a clear product photo, make one 6-, 10-, or 15-second video or square photo, then review the output before adding text and publishing."
     },
     {
-      "q": "Do the tips work if I don't use AIVideosUGC?",
-      "a": "Yes. The advice on lighting, checking results and labeling AI content applies to any tool. Where an article mentions AIVideosUGC, it shows how that step works on our site."
+      "q": "How do I use AI product photography tips with my own tool?",
+      "a": "Use the same basics anywhere: upload a sharp, evenly lit source photo, describe one scene, and compare the result with the real product before publishing."
+    },
+    {
+      "q": "What should I review before using an AI product asset?",
+      "a": "Check product shape, color, parts, text, and claims against the real item. Add prices, captions, and music yourself after download."
+    },
+    {
+      "q": "Where can I find platform-specific answers?",
+      "a": "Start with the platform guides for TikTok, Meta, Amazon, Shopify, and YouTube Shorts. Each guide points to the official specification page used for the numbers."
     }
   ]
 }

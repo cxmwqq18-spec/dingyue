@@ -81,6 +81,14 @@
     {
       "q": "What if only one small detail is wrong?",
       "a": "Make another version rather than posting it. A wrong button or color can mislead buyers, and each new version shows its credit cost before it starts."
+    },
+    {
+      "q": "Can I publish a result with a small label error?",
+      "a": "No. Generate another version or use a real label photo. A wrong ingredient, size, color, or safety statement can mislead buyers."
+    },
+    {
+      "q": "What if a product detail is wrong in an AI video?",
+      "a": "No. Generate another version or use a real label photo. A wrong ingredient, size, color, or safety statement can mislead buyers."
     }
   ]
 }

@@ -61,6 +61,10 @@
     {
       "q": "Can my holiday ad include a famous character or celebrity?",
       "a": "Requests involving celebrities, public figures, or characters and logos owned by other brands may be declined. Generic seasonal touches like ornaments, snow and wrapping paper are fine to describe."
+    },
+    {
+      "q": "How should I prepare holiday product photos?",
+      "a": "Start with a clear product photo, name the holiday setting, and keep the product identity unchanged. Add dates and shipping cutoffs after download."
     }
   ]
 }

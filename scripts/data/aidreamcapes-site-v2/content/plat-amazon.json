@@ -65,6 +65,10 @@
     {
       "q": "Can I make a video for my Amazon listing?",
       "a": "Yes. Choose a 16:9 or 1:1 shape and 6, 10, 15 or 30 seconds of run time, then download the file and add it to your listing from your seller account."
+    },
+    {
+      "q": "What are Amazon main-image requirements?",
+      "a": "Amazon requires a realistic product on pure white, with the item filling at least 85% of the frame. The image must be 500–10,000 pixels on the longest side; 1,000+ enables zoom."
     }
   ]
 }

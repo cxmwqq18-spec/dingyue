@@ -74,6 +74,10 @@
     {
       "q": "How do I keep every angle looking like one set?",
       "a": "Use the same backdrop and lighting words each time you run it. Small differences can still appear between runs, so pick the results that sit well together."
+    },
+    {
+      "q": "How many product angles should I upload?",
+      "a": "Start with one sharp source photo for the requested view. Do not rely on AI to invent a hidden back or sole; upload a separate reference when that detail matters."
     }
   ]
 }

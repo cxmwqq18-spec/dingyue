@@ -73,6 +73,10 @@
     {
       "q": "Can it add my price and panel headlines?",
       "a": "Add them after downloading. Exact prices and small text should come from your editor or ad platform, not from the generated image."
+    },
+    {
+      "q": "Is the carousel output one file or a platform post?",
+      "a": "It is a creative asset, not a published carousel post. Download the scenes, then assemble and upload the final carousel in the platform’s ad manager."
     }
   ]
 }

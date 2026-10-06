@@ -60,6 +60,10 @@
     {
       "q": "Do I need a separate video for each platform?",
       "a": "Usually a 9:16 version covers TikTok, Reels and Stories, and a 1:1 version covers the feeds. Each one is its own generation, with its credit cost shown up front."
+    },
+    {
+      "q": "What size should a Black Friday ad use?",
+      "a": "Use 9:16 for vertical Stories, Reels, and TikTok; use 1:1 for feeds. Make a separate version when the crop would hide the product or offer."
     }
   ]
 }

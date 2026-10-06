@@ -74,6 +74,10 @@
     {
       "q": "Can I show my logo in the scene?",
       "a": "Your own logo on your product photo is fine. If a request shows another company's logo or trademark, it may be turned down."
+    },
+    {
+      "q": "What video size suits a cinematic product video?",
+      "a": "Use 16:9 for a wide site hero or YouTube placement, 9:16 for mobile feeds, and 1:1 for square feeds. Download the clip, then add licensed music yourself."
     }
   ]
 }

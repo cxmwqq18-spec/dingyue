@@ -73,6 +73,10 @@
     {
       "q": "Does the photo show the true fit?",
       "a": "It shows the style and how the fabric drapes, not an exact fit for every body. List your size chart and garment measurements alongside the photo so buyers can pick the right size."
+    },
+    {
+      "q": "What garment photo gives the cleanest virtual try-on?",
+      "a": "Lay the garment flat or hang it straight, show the full outline, and use even light. A clear front view gives the model photo more reliable shape and color."
     }
   ]
 }

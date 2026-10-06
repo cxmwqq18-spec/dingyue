@@ -70,6 +70,10 @@
     {
       "q": "How long should a pour video be?",
       "a": "Six seconds covers a single pour and loops nicely in a feed. Choose 10 seconds if you want a slower pour plus a moment on the finished glass."
+    },
+    {
+      "q": "How do I keep the drink color believable?",
+      "a": "Photograph the can or bottle in even light and name the real color in the prompt. Review the pour against the product; AI can drift on liquid color and label details."
     }
   ]
 }

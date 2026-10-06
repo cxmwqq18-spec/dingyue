@@ -84,6 +84,14 @@
     {
       "q": "Can I use one video for every platform?",
       "a": "You can, but it won't look right everywhere. A vertical video fills TikTok and Reels yet gets shrunk or cropped in some feeds. A 9:16 version plus a 1:1 version covers most social placements."
+    },
+    {
+      "q": "How do I keep text inside platform safe zones?",
+      "a": "Leave space around the edges for buttons, captions, and profile controls. Add final text after download, then inspect the placement preview in each ad manager."
+    },
+    {
+      "q": "Where should I place text in each ad format?",
+      "a": "Leave space around the edges for buttons, captions, and profile controls. Add final text after download, then inspect the placement preview in each ad manager."
     }
   ]
 }

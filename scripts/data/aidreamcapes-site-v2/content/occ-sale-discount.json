@@ -60,6 +60,10 @@
     {
       "q": "Can I show the original price next to the sale price?",
       "a": "Only show an original price you actually charged. Many places have advertising rules about comparison pricing, so check what applies where you sell."
+    },
+    {
+      "q": "What size should a sale ad use on social media?",
+      "a": "Use 9:16 for Stories and Reels, 1:1 for feed placements, and 16:9 for wide placements. Add the exact sale price and code after download."
     }
   ]
 }

@@ -17,8 +17,8 @@
   ],
   "faq": [
     {
-      "q": "What if my products fit more than one category?",
-      "a": "Start with the page closest to your top seller, then borrow ideas from the others. A candle shop, for example, might use home ideas for living room shots and wellness ideas for an evening wind-down post."
+      "q": "Which industry page should I use for a mixed catalog?",
+      "a": "Start with the page that matches your main product, then borrow scene ideas from the other relevant category. The same photo and video tools work across categories."
     },
     {
       "q": "My category isn't listed. Can I still use AIVideosUGC?",
@@ -27,6 +27,10 @@
     {
       "q": "Do I need professional product photos to get started?",
       "a": "No. A clear phone photo is enough. Make sure nothing is cut off at the edges, shoot in soft daylight, and leave the background simple so the item stands out."
+    },
+    {
+      "q": "Can I use a product photo from my phone?",
+      "a": "Yes. Use a sharp phone photo with the whole item visible and even light. Professional studio equipment is not required, but you must own or have permission to use the image."
     }
   ]
 }

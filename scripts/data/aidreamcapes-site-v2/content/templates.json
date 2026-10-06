@@ -17,12 +17,20 @@
   ],
   "faq": [
     {
-      "q": "Will my result look exactly like the example?",
-      "a": "It follows the same style, but it's built around your product, so the setting, any model, and small details will differ. If the first one isn't right, add a short description and make another version."
+      "q": "How do I adapt a product ad template to my item?",
+      "a": "Upload a sharp product photo and describe the action, setting, and crop you need. Templates set a starting composition; review each result for product drift."
     },
     {
       "q": "Can I adjust a template to suit my product?",
       "a": "Yes. Add a line of text, like \"on a marble counter\" or \"soft evening light,\" and the result leans that way while keeping the template's overall look."
+    },
+    {
+      "q": "How do I choose a template for my product?",
+      "a": "Choose by the buyer moment you need: white background for a listing, lifestyle for context, demo for use, or UGC for a creator-style ad."
+    },
+    {
+      "q": "Which product ad template fits my goal?",
+      "a": "Choose by the buyer moment you need: white background for a listing, lifestyle for context, demo for use, or UGC for a creator-style ad."
     }
   ]
 }

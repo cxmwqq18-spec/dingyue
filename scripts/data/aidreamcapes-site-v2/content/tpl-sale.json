@@ -73,6 +73,10 @@
     {
       "q": "Can I reuse one image for different offers?",
       "a": "Yes. Since the offer is added afterward, the same image can carry a percent-off headline in one ad and a free-shipping line in another."
+    },
+    {
+      "q": "Can I make a sale banner in a vertical format?",
+      "a": "The sale template produces a square image by default. Add a 9:16 canvas in your design tool after download if you need a Story or Reel placement."
     }
   ]
 }

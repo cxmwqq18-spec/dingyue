@@ -70,11 +70,19 @@
   "faq": [
     {
       "q": "Do I need to say the model in my photos is AI-generated?",
-      "a": "It depends on where you post. Some platforms ask sellers to label realistic AI-generated people, and those rules change from time to time, so look up the latest guidance from each site before your photos go up."
+      "a": "Check the destination’s current disclosure rule before publishing a realistic AI model photo. Amazon, TikTok, Meta, and local law can apply different labels; use the official rule for the placement."
     },
     {
       "q": "Will the same model appear in all my photos?",
       "a": "Not automatically. There's no saved model to reuse, so the person can look different from one photo to the next. Describing age, hair and build in the same words each time helps the set look related."
+    },
+    {
+      "q": "What source photo works for an AI model photo?",
+      "a": "Use a sharp, front-facing garment photo with the whole item visible. Smooth wrinkles and use even light so fabric, print, and trim are easier to review."
+    },
+    {
+      "q": "What should I photograph before using an AI model photo?",
+      "a": "Use a sharp, front-facing garment photo with the whole item visible. Smooth wrinkles and use even light so fabric, print, and trim are easier to review."
     }
   ]
 }

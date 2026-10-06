@@ -75,6 +75,14 @@
     {
       "q": "How long should a UGC-style video ad be?",
       "a": "Start with 6 or 10 seconds for a single moment, like picking up the product and showing it to the camera. Use 15 seconds when the clip needs to show the product being used."
+    },
+    {
+      "q": "What should I add after downloading an AI UGC ad?",
+      "a": "Add accurate captions, price, offer, music, and disclosure in TikTok, CapCut, Canva, or Ads Manager. The generated clip does not supply those items."
+    },
+    {
+      "q": "What length works for an AI UGC ad?",
+      "a": "Use 6 seconds for one product beat, 10 or 15 seconds for a short demo, and 30 seconds only where the public option is available."
     }
   ]
 }

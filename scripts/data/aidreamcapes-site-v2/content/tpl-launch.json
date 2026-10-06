@@ -74,6 +74,10 @@
     {
       "q": "Can I make a promo before my product photos are ready?",
       "a": "You can start from a text description alone, but the product won't match your real one. For an ad, wait until you have a clear photo of the final item so shoppers see what they'll actually get."
+    },
+    {
+      "q": "What length should a launch promo use?",
+      "a": "Use 6 seconds for a quick reveal, 10 or 15 seconds for a product action, and 30 seconds only where the public option is available. Choose 9:16 for vertical placements."
     }
   ]
 }

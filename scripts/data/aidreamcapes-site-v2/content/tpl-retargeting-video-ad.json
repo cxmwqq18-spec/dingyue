@@ -73,6 +73,10 @@
     {
       "q": "Will it add the offer or price?",
       "a": "No. Add the current offer, price, dates, and disclosure yourself after checking them in your editor or ad platform."
+    },
+    {
+      "q": "What campaign settings are outside this template?",
+      "a": "Set audience, exclusions, budget, frequency, and delivery in your ad platform. The template creates the video asset and does not read a viewer’s history."
     }
   ]
 }

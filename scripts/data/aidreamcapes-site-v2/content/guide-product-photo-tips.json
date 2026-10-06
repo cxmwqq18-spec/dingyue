@@ -86,6 +86,10 @@
     {
       "q": "Can I upload a photo that shows other brands' logos?",
       "a": "It's better not to. Requests that include logos or trademarks you don't own, or famous people, may be refused. Crop them out or reshoot with only your product in the frame."
+    },
+    {
+      "q": "What file types can I upload?",
+      "a": "The browser accepts image uploads, including JPG, JPEG, PNG, WebP, HEIC, HEIF, BMP, TIF, and TIFF. The default upload limit is 32 MB; deployments may configure a different limit."
     }
   ]
 }

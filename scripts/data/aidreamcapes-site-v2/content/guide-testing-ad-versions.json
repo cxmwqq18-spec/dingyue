@@ -84,6 +84,14 @@
     {
       "q": "Does AIVideosUGC run or score the tests for me?",
       "a": "No. You make each version on AIVideosUGC, one at a time, then download them and compare how they perform in your ad platform's reports."
+    },
+    {
+      "q": "What should change between ad versions?",
+      "a": "Change one variable at a time, such as the opening, length, or product action. Keep the offer, audience, and destination the same so the test is readable."
+    },
+    {
+      "q": "How do I compare ad versions fairly?",
+      "a": "Change one variable at a time, such as the opening, length, or product action. Keep the offer, audience, and destination the same so the test is readable."
     }
   ]
 }

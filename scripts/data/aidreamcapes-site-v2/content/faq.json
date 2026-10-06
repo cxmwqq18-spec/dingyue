@@ -14,18 +14,6 @@
   ],
   "faq": [
     {
-      "q": "What can AIVideosUGC create for my store?",
-      "a": "Two things: new product photos and short product videos. Upload a photo of your item, choose a template or describe what you want, and you'll get either a square product image or a video that runs 6, 10, 15 or 30 seconds."
-    },
-    {
-      "q": "What kind of product photo should I upload?",
-      "a": "A sharp, well-lit photo where the whole product is visible and nothing blocks it. A phone picture taken near a window is fine. Avoid strong filters and photos with lots of writing on top."
-    },
-    {
-      "q": "Do I need a photo to make a video?",
-      "a": "No. A photo helps the video show your real product, but you can also start from a written description alone."
-    },
-    {
       "q": "What video lengths and sizes are available?",
       "a": "Videos are 6, 10, 15 or 30 seconds long. You can make them vertical (9:16), square (1:1) or wide (16:9), and 3:4 and 4:3 are available too. Product photos are square by default."
     },
@@ -34,32 +22,20 @@
       "a": "You see the credit cost before you start. Credits are held when your job starts and used when it is delivered. If something fails, you get the credits back."
     },
     {
-      "q": "Can I get a refund?",
-      "a": "When a job fails, its credits come back to you on their own. Results that were already delivered are generally not refunded, which is why every cost is shown up front."
-    },
-    {
       "q": "Who can see my uploads and results?",
       "a": "Only you. The photos you upload and everything you create stay in your own account and are not made public."
-    },
-    {
-      "q": "Can I use the photos and videos in my ads?",
-      "a": "Yes. They're made for store listings and ads, so you can download them and use them on TikTok, Instagram, Facebook, YouTube Shorts, Amazon or your own website."
-    },
-    {
-      "q": "Do I need to label content as AI-generated?",
-      "a": "It depends on where you post. Some ad platforms and marketplaces ask you to disclose AI-generated or altered images and videos, and their rules change, so check each platform's current policy before you publish."
     },
     {
       "q": "How do I add prices, discount codes or headlines?",
       "a": "Add them after you download, in Canva, CapCut, Ads Manager or a similar tool. AI can get words and numbers wrong, so typing them yourself keeps your offer accurate. Captions and music go on the same way, in TikTok, CapCut or any editing app you like."
     },
     {
-      "q": "What kinds of requests might be refused?",
-      "a": "Requests involving celebrities or other public figures, logos or trademarks of brands you don't own, and images or videos packed with large blocks of text may be refused."
+      "q": "Can I use the images and videos I make commercially?",
+      "a": "Yes. You can use the images and videos you make in your own ads, product pages and social posts."
     },
     {
-      "q": "Can I make several versions of the same ad?",
-      "a": "Yes, one at a time. Each new version is its own job with its cost displayed before it starts, so you decide how many to make and stay in control of what you spend."
+      "q": "Do downloaded images and videos have an AIVideosUGC watermark?",
+      "a": "No. Downloaded images and videos do not include an AIVideosUGC watermark."
     }
   ]
 }

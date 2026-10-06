@@ -73,6 +73,10 @@
     {
       "q": "What objects make the clearest comparison?",
       "a": "Things with a size almost everyone knows: a phone, a bank card, a hand, a coffee mug, a soda can, a carry-on bag. Avoid objects that vary a lot, like plants or pets."
+    },
+    {
+      "q": "What should I place beside a product for scale?",
+      "a": "Use a familiar object with a stable size, such as a hand, standard card, or common bottle. Keep the real measurements in the listing because generated scale is only visual."
     }
   ]
 }

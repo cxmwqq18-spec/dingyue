@@ -47,12 +47,20 @@
   ],
   "faq": [
     {
-      "q": "Who owns the content I make?",
-      "a": "You can use the results for your business when you have the rights to the photos you uploaded. Check each platform's rules before you publish."
+      "q": "Can I download the product assets made in my account?",
+      "a": "Yes. Download the photos and videos from your signed-in account; review source-photo rights and each platform’s rules before publishing."
     },
     {
       "q": "Are my uploads used to show other customers?",
       "a": "No. Your uploads and results stay in your account and are not shown publicly."
+    },
+    {
+      "q": "Can other customers see my uploaded product photos?",
+      "a": "No. Uploaded photos and generated results stay in your account and are not displayed in a public gallery."
+    },
+    {
+      "q": "Where should I check content and data-use rules?",
+      "a": "Use the current Privacy, Terms, Content, and Refunds pages for policy details; this FAQ only states account-scoped storage and failed-job credit returns."
     }
   ]
 }

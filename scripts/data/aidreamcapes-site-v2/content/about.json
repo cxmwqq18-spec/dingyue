@@ -42,12 +42,20 @@
   ],
   "faq": [
     {
-      "q": "Is AIVideosUGC an agency or a tool?",
-      "a": "A self-serve online tool. You make the photos and videos yourself, from your own account, whenever you need them."
+      "q": "Can I make product ads without hiring an agency?",
+      "a": "Yes. AIVideosUGC is a self-serve tool: upload your product photo or describe the scene, review the result, and download the asset from your account."
     },
     {
       "q": "How do I get in touch with the AIVideosUGC team?",
       "a": "Write to support@aivideosugc.com with your question. We try to respond within two business days."
+    },
+    {
+      "q": "What can I upload to make a product asset?",
+      "a": "Upload a product photo you own or describe the product and scene. Review the result against the real item before you download or publish it."
+    },
+    {
+      "q": "Who is AIVideosUGC for?",
+      "a": "It is a self-serve tool for online sellers who need product photos and short ad videos from their own product images or descriptions."
     }
   ]
 }

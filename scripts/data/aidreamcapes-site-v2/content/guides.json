@@ -23,8 +23,12 @@
       "a": "Start with the product photo guide. The photo you shoot is the starting point for every image and video you make, so getting it right saves time on everything after."
     },
     {
-      "q": "Can I use these tips if I don't use AIVideosUGC?",
-      "a": "Yes. The advice on lighting, ad shapes, and comparing versions works with any tool. Where a guide mentions AIVideosUGC, it shows how that step works on our site."
+      "q": "How do I choose the right product photo guide?",
+      "a": "Start with product-photo tips for the source image, then use the platform guide for the destination. The steps are upload, describe, generate, and review."
+    },
+    {
+      "q": "Do these guides state platform requirements?",
+      "a": "The platform guides link to current official requirements. Check the linked TikTok, Meta, Amazon, Shopify, or Google page on the day you publish because specs can change."
     }
   ]
 }

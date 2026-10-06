@@ -83,6 +83,14 @@
     {
       "q": "What if the product in the result looks different from mine?",
       "a": "Don't use that image. Make it again with a sharper photo or a clearer description. Each new image is its own request, with the cost shown before it starts."
+    },
+    {
+      "q": "Can I start AI product photography without studio lighting?",
+      "a": "Yes. A sharp phone photo near a window works; use even light, keep the full product in frame, and avoid glare and heavy filters."
+    },
+    {
+      "q": "What lighting works for AI product photography?",
+      "a": "Yes. A sharp phone photo near a window works; use even light, keep the full product in frame, and avoid glare and heavy filters."
     }
   ]
 }

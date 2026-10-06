@@ -73,6 +73,10 @@
     {
       "q": "Why not crop a square photo to fit Stories?",
       "a": "Cropping a square to 9:16 cuts off the sides or leaves blank bands. Starting with a tall scene keeps the background complete from top to bottom."
+    },
+    {
+      "q": "What dimensions should an Instagram Story image use?",
+      "a": "Use a 9:16 vertical canvas for Stories. Add price, discount code, and readable text after download so you can check the copy before publishing."
     }
   ]
 }

@@ -73,6 +73,10 @@
     {
       "q": "Which products suit close-up details?",
       "a": "Anything where quality shows in small parts: leather goods, watches, rings, knitwear, wooden boxes, ceramic mugs. Plain items with no texture or hardware gain less from it."
+    },
+    {
+      "q": "How close should a product detail photo be?",
+      "a": "Start with a sharp crop that still shows the detail in context. If stitching, texture, or a label is blurry in the source, upload a closer, better-lit photo and generate again."
     }
   ]
 }

@@ -74,6 +74,10 @@
     {
       "q": "Can I show the same product in different scenes?",
       "a": "Yes. Each video is a separate run, so you can make a city version, a studio version, and a snowy one, with the credit cost shown up front each time."
+    },
+    {
+      "q": "When should I add Black Friday prices?",
+      "a": "Add the exact price, discount, and countdown after download in Canva, CapCut, or Ads Manager. This keeps every number editable and correct as the offer changes."
     }
   ]
 }

@@ -73,6 +73,10 @@
     {
       "q": "Can it guarantee TikTok approval or performance?",
       "a": "No. Platform review and campaign results depend on your account, creative, audience, offer, and TikTok policies."
+    },
+    {
+      "q": "What size should a Spark Ads style video use?",
+      "a": "Use 9:16 for a full-screen TikTok placement. TikTok lists 9:16, 1:1, and 16:9 as standard sizes; add the sound, captions, and authorization in TikTok Ads Manager."
     }
   ]
 }

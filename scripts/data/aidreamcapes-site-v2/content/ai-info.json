@@ -77,6 +77,10 @@
     {
       "q": "Does AIVideosUGC add voiceover or music?",
       "a": "No. Add sound, music and captions in TikTok, CapCut or another editing app after you download the video."
+    },
+    {
+      "q": "What video settings can I choose?",
+      "a": "Choose 6, 10, 15, or 30 seconds and 9:16, 1:1, or 16:9. The workbench currently offers 6, 10, and 15 seconds; 30 seconds is the planned public option."
     }
   ]
 }

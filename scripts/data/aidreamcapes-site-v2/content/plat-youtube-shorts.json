@@ -65,6 +65,10 @@
     {
       "q": "Is a 6-second clip long enough for a Shorts ad?",
       "a": "For a single clear moment, yes. If you want to show the product being used from start to finish, 10 or 15 seconds gives you more room; 30 seconds gives space for a full walkthrough."
+    },
+    {
+      "q": "What are YouTube Shorts ad limits?",
+      "a": "Google recommends vertical 9:16 and videos under 60 seconds for Shorts; videos can be up to 3 minutes, but the first 60 seconds play in the Shorts feed. AIVideosUGC’s 30-second option fits."
     }
   ]
 }

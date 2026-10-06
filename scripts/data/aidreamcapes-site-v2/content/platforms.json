@@ -23,8 +23,12 @@
       "a": "No. You download the video or photo and upload it yourself, whether that's in an ad account, your Shopify admin or your Amazon listing."
     },
     {
-      "q": "Which platform should I start with?",
-      "a": "Start where your customers already buy from you. If most orders come through your own store, begin with product photos; if you run paid social ads, begin with a vertical clip."
+      "q": "Which ad format should I make first for my store?",
+      "a": "Start with the placement where you already buy traffic: 9:16 for TikTok, Reels, and Shorts; 1:1 for feeds; 16:9 for wide placements."
+    },
+    {
+      "q": "Can I reuse one product creative on every platform?",
+      "a": "Reuse the product idea, then export the platform’s crop: 9:16 vertical, 1:1 square, or 16:9 wide. Add each platform’s captions, sound, and safe-zone text in its own editor."
     }
   ]
 }

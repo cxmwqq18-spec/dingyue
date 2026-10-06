@@ -73,6 +73,10 @@
     {
       "q": "What size are the lookbook photos?",
       "a": "Square by default, which suits Instagram feed posts and carousels. Ask for some space around the outfit in your description if you plan to crop later."
+    },
+    {
+      "q": "What photo format works for an AI lookbook?",
+      "a": "Use a consistent aspect ratio and repeated setting words across each run. Choose 9:16 for vertical social posts or 1:1 for a square collection grid."
     }
   ]
 }

@@ -74,6 +74,10 @@
     {
       "q": "Does the video have to match how my product really works?",
       "a": "Yes. Describe the real way your product is used and watch the clip before you post it. If it shows something your product can't do, generate it again with a clearer description."
+    },
+    {
+      "q": "How many steps fit in one how-to video?",
+      "a": "Keep one short task per clip. Use 10 or 15 seconds for several visible actions; write exact step labels yourself after download because generated text may be wrong."
     }
   ]
 }

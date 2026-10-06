@@ -73,6 +73,10 @@
     {
       "q": "Does the clip include a voiceover or music?",
       "a": "No. AIVideosUGC does not add voiceover, music, or captions. Add any spoken or written explanation yourself in your editor."
+    },
+    {
+      "q": "How should I describe a product feature?",
+      "a": "Name one visible feature and one action, such as “presses the locking tab.” Add the exact feature label after download; generated text can contain errors."
     }
   ]
 }

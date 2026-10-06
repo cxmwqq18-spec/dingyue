@@ -76,6 +76,14 @@
     {
       "q": "How long should an unboxing video be?",
       "a": "Ten seconds covers opening the box and showing the product. Choose 15 seconds for a slower reveal with a closer look, or 6 seconds for a quick teaser."
+    },
+    {
+      "q": "What source should I use for an unboxing video?",
+      "a": "Use a clear product or package photo and list every item in the box. Check the opening, reveal, and final contents against the real package."
+    },
+    {
+      "q": "What should I photograph for an unboxing video?",
+      "a": "Use a clear product or package photo and list every item in the box. Check the opening, reveal, and final contents against the real package."
     }
   ]
 }

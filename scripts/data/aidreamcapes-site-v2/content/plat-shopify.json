@@ -65,6 +65,10 @@
     {
       "q": "Will all my product photos look consistent?",
       "a": "Describing the same background each time helps a lot. Results can still vary slightly, so review each image before it goes on your store."
+    },
+    {
+      "q": "What are Shopify product video limits?",
+      "a": "Shopify accepts uploaded MP4, MOV, or WebM product videos up to 10 minutes, 1 GB, and 4K (4096×2160). Our generator can export 1:1, 9:16, or 16:9; upload the version that fits your store."
     }
   ]
 }

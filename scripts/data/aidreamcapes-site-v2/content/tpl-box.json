@@ -73,6 +73,10 @@
     {
       "q": "Can the photo show results like glowing skin?",
       "a": "Keep the photo about the products themselves. Showing the set is fine, but results such as clearer or younger-looking skin shouldn't be promised in the image or the listing text."
+    },
+    {
+      "q": "How do I keep a bundle photo accurate?",
+      "a": "Upload or describe every included item and state the exact count. Review the output against the real bundle before listing it; the tool can add or omit pieces."
     }
   ]
 }

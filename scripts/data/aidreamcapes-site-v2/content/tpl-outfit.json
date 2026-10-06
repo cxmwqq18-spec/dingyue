@@ -70,6 +70,10 @@
     {
       "q": "Which clothes come out well?",
       "a": "Garments with a strong outline and solid color, such as jackets, denim, knitwear, and dresses. Very fine patterns or tiny logos may lose sharpness, so shoot close and in good light."
+    },
+    {
+      "q": "What length works for an AI fashion reel?",
+      "a": "Use 6 seconds for one outfit reveal, 10 or 15 seconds for a turn or walk, and 30 seconds only when the public option is available. Choose 9:16 for Reels."
     }
   ]
 }

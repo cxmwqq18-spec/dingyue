@@ -82,6 +82,14 @@
     {
       "q": "Can an AI-made photo be my Amazon main image?",
       "a": "Amazon wants the main image to show the actual product a buyer will receive, so the result has to match your item closely in shape, color, parts, and label. Image rules differ by category and can change, so read the current requirements for your category in Seller Central before you upload."
+    },
+    {
+      "q": "How do I verify an Amazon white background?",
+      "a": "Check that the background is pure white, the whole product is visible, and the product fills at least 85% of the frame before uploading."
+    },
+    {
+      "q": "How do I check pure white before uploading to Amazon?",
+      "a": "Check that the background is pure white, the whole product is visible, and the product fills at least 85% of the frame before uploading."
     }
   ]
 }
