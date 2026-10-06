@@ -815,9 +815,15 @@ function layoutFor(page) {
 // Normalize them once while compiling so the public payload has only renderable fields and
 // never carries review notes or other editorial metadata.
 function enrichmentFor(model, c) {
-  const section = (value) => (Array.isArray(value) ? value : []).map((item) => ({ h2: item.h2, paras: [item.d ?? item.p ?? ""].filter(Boolean) }));
-  const block = (value) => value && typeof value === "object" ? { h2: value.h2, items: Array.isArray(value.items) ? value.items.map((item) => ({ t: item.t, d: item.d })) : [] } : undefined;
-  const fit = value => value && typeof value === "object" ? { h2: value.h2, good: Array.isArray(value.good) ? value.good : [], not_ideal: Array.isArray(value.not_ideal) ? value.not_ideal : [] } : undefined;
+  const item = (value) => typeof value === "string" ? { t: value, d: "" } : value && typeof value === "object" ? { t: value.t ?? "", d: value.d ?? "" } : { t: "", d: "" };
+  const items = (value) => Array.isArray(value) ? value.map(item).filter((entry) => entry.t) : [];
+  const section = (value) => {
+    if (Array.isArray(value)) return value.map((entry) => ({ h2: entry.h2, paras: [entry.d ?? entry.p ?? ""].filter(Boolean) }));
+    if (value && typeof value === "object") return [{ h2: value.h2, paras: [], items: items(value.items) }];
+    return [];
+  };
+  const block = (value) => value && typeof value === "object" ? { h2: value.h2, items: items(value.items) } : undefined;
+  const fit = value => value && typeof value === "object" ? { h2: value.h2, good: items(value.good), not_ideal: items(value.not_ideal) } : undefined;
   const compare = block(c.compare);
   return {
     ...(c.overview ? { overview: section(c.overview) } : {}),
@@ -1181,6 +1187,15 @@ export function renderedImages(layout, data) {
 export function validateSiteV2(build = buildSiteV2()) {
   const errors = [];
   const seen = { title: new Map(), description: new Map(), h1: new Map(), slug: new Map() };
+  const validationSource = loadSiteV2Source();
+  const technicalKeys = new Set(["href", "src", "srcset", "sizes", "key", "kind", "industries", "platforms", "id", "section", "tool_id", "mediaref", "url", "width", "height", "duration", "uploaddate"]);
+  const publicText = (value, key = "") => {
+    if (typeof value === "string") return [value];
+    if (Array.isArray(value)) return value.flatMap((item) => publicText(item));
+    if (!value || typeof value !== "object" || technicalKeys.has(key.toLowerCase())) return [];
+    return Object.entries(value).flatMap(([childKey, child]) => publicText(child, childKey));
+  };
+  const glossaryAnchor = (term) => term.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   for (const page of build.pages) {
     const seo = page.contentJson.seo;
     if (seo.index !== true || seo.robots?.index !== true) errors.push(`${page.id}: noindex is not allowed on public pages`);
@@ -1192,9 +1207,10 @@ export function validateSiteV2(build = buildSiteV2()) {
       seen[key].set(norm, page.id);
     }
     const data = page.contentJson.sections.v2_main.settings.data;
-    // Case metadata (titles, product labels, media specs) is user-facing product copy;
-    // do not flag a legitimate product name such as "small-batch" as an internal claim.
-    const visible = JSON.stringify(data).replace(/"(href|src|image|key|kind|industries|platforms|id|section|tool_id|name|product|mediaRef|line|spec)":"[^"]*"/g, "");
+    // Keep all strings that can be rendered by the storefront, including case names,
+    // product labels, specs and image alt text. Only asset references and layout metadata
+    // are excluded from copy checks.
+    const visible = publicText(data).join("\n");
     for (const [rx, why] of BANNED) {
       if (page.id === "glossary" && why === "voice claim") continue;
       if (page.id === "ai-info" && why !== "internal wording") continue;
@@ -1207,19 +1223,46 @@ export function validateSiteV2(build = buildSiteV2()) {
     const faq = data.faq || [];
     const ld = seo.jsonLd["@graph"].find((node) => node["@type"] === "FAQPage");
     if (faq.length && (!ld || ld.mainEntity.length !== faq.length)) errors.push(`${page.id}: FAQ JSON-LD mismatch`);
+
+    const sourceContent = validationSource.content[page.id] || {};
+    if (sourceContent.overview && (!Array.isArray(data.overview) || !data.overview.length)) errors.push(`${page.id}: overview content was dropped from the public payload`);
+    if (Array.isArray(data.overview)) for (const section of data.overview) {
+      if (!section || typeof section.h2 !== "string" || (!Array.isArray(section.paras) && !Array.isArray(section.items))) errors.push(`${page.id}: invalid overview section shape`);
+    }
+    if (data.fit !== undefined) {
+      const fit = data.fit;
+      if (!fit || typeof fit.h2 !== "string" || !Array.isArray(fit.good) || !Array.isArray(fit.not_ideal)) errors.push(`${page.id}: invalid fit block shape`);
+      else for (const item of [...fit.good, ...fit.not_ideal]) if (!item || typeof item.t !== "string" || typeof item.d !== "string") errors.push(`${page.id}: invalid fit item shape`);
+    }
+    if (page.id === "glossary") {
+      const entries = Array.isArray(data.entries) ? data.entries : [];
+      const anchors = new Map();
+      const termCodes = new Map();
+      for (const entry of entries) {
+        if (!entry || typeof entry.term !== "string" || !entry.term.trim() || typeof entry.definition !== "string" || !entry.definition.trim()) {
+          errors.push("glossary: term and definition must be non-empty strings");
+          continue;
+        }
+        const anchor = glossaryAnchor(entry.term);
+        if (anchors.has(anchor)) errors.push(`glossary: duplicate anchor ${anchor} with ${anchors.get(anchor)}`);
+        else anchors.set(anchor, entry.term);
+        if (termCodes.has(anchor)) errors.push(`glossary: duplicate termCode ${anchor} with ${termCodes.get(anchor)}`);
+        else termCodes.set(anchor, entry.term);
+      }
+    }
   }
   // Editorial metadata must never enter the public LivePage payload, even when a
   // future draft adds it beside an otherwise valid enrichment block.
   const internalKeys = new Set(["review", "media_wishlist", "facts_used", "word_count_added", "source"]);
   for (const page of build.pages) {
-    const walk = (value, path = "data") => {
+    const walk = (value, path = "contentJson") => {
       if (Array.isArray(value)) value.forEach((item, index) => walk(item, `${path}[${index}]`));
       else if (value && typeof value === "object") for (const [key, item] of Object.entries(value)) {
-        if (internalKeys.has(key)) errors.push(`${page.id}: internal field in contentJson (${path}.${key})`);
+        if (internalKeys.has(key.toLowerCase())) errors.push(`${page.id}: internal field in contentJson (${path}.${key})`);
         walk(item, `${path}.${key}`);
       }
     };
-    walk(page.contentJson.sections.v2_main.settings.data);
+    walk(page.contentJson);
   }
   // A sentence of eight or more words in a new enrichment block is page-specific
   // copy. Keep exact repeats out of the public set while allowing short labels.
@@ -1251,7 +1294,6 @@ export function validateSiteV2(build = buildSiteV2()) {
     ? (modelCaseMediaKey(card.mediaRef))
     : String(card.video?.src ?? card.image?.src ?? "").replace(/-v(?=\.|--)/, "");
   const modelCaseMediaKey = (ref) => String(ref).replace(/^f:/, "").replace(/-v$/, "");
-  const validationSource = loadSiteV2Source();
   const casePlan = validationSource.media.casePlan;
   const pageTypeById = Object.fromEntries(validationSource.master.pages.map((page) => [page.id, page.type]));
   const caseTitles = new Map();

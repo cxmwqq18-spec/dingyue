@@ -73,7 +73,9 @@ export function Intro({ paras, r }: { paras: string[]; r?: V2Resolvers }) {
 }
 
 export function EnrichmentOverview({ sections, r }: { sections: V2EnrichmentSection[]; r: V2Resolvers }) {
-  return <>{(sections ?? []).map((section) => <Section eyebrow="More to know" key={section.h2} title={section.h2}><Intro paras={section.paras} r={r} /></Section>)}</>;
+  return <>{(sections ?? []).map((section) => <Section eyebrow="More to know" key={section.h2} title={section.h2}>
+    {section.items?.length ? <Boxes className="ideas" items={section.items} r={r} /> : <Intro paras={section.paras} r={r} />}
+  </Section>)}</>;
 }
 
 export function EnrichmentBlockSection({ block, eyebrow, className = "ideas", r }: { block?: V2EnrichmentBlock; eyebrow: string; className?: string; r: V2Resolvers }) {
@@ -83,18 +85,23 @@ export function EnrichmentBlockSection({ block, eyebrow, className = "ideas", r 
 
 export function FitSection({ block, r }: { block?: V2FitBlock; r: V2Resolvers }) {
   if (!block) return null;
+  const fitList = (items: V2Item[]) => items.map((item) => <li key={item.t}><b>{item.t}</b>{item.d ? <p>{r ? <RichText r={r} text={item.d} /> : item.d}</p> : null}</li>);
   return <Section eyebrow="Good fit" title={block.h2}>
     <div className="two-col enrichment-fit">
-      <div><h3>Good matches</h3><ul className="prose check">{block.good.map((item) => <li key={item}>{item}</li>)}</ul></div>
-      <div><h3>Less ideal</h3><ul className="prose check">{block.not_ideal.map((item) => <li key={item}>{item}</li>)}</ul></div>
+      <div><h3>Good matches</h3><ul className="prose check">{fitList(block.good)}</ul></div>
+      <div><h3>Less ideal</h3><ul className="prose check">{fitList(block.not_ideal)}</ul></div>
     </div>
   </Section>;
+}
+
+function glossaryAnchor(term: string): string {
+  return term.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 }
 
 export function GlossaryEntries({ entries, r }: { entries: V2GlossaryEntry[]; r: V2Resolvers }) {
   if (!entries.length) return null;
   return <dl className="glossary-list">
-    {entries.map((entry) => <div className="glossary-entry" id={entry.term.toLowerCase().replace(/[^a-z0-9]+/g, "-")} key={entry.term}>
+    {entries.map((entry) => <div className="glossary-entry" id={glossaryAnchor(entry.term)} key={entry.term}>
       <dt>{entry.term}</dt>
       <dd><p>{entry.definition}</p>{entry.related.length ? <p className="glossary-related">Related: {entry.related.map((link, index) => <span key={link.href}>{index > 0 ? ", " : null}<a href={r.href(link.href)}>{link.label}</a></span>)}</p> : null}</dd>
     </div>)}

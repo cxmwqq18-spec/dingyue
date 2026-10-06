@@ -18,9 +18,9 @@ export type V2Flow = { t: string; d: string; steps: V2FlowStep[]; cta?: { label:
 export type V2Maker = { options: [string, string][]; cta: string; href: string; urlInput?: boolean };
 export type V2Plan = { name: string; price: string; credits: string; who: string; features: string[]; popular: boolean };
 export type V2Section = { h2: string; paras: string[] };
-export type V2EnrichmentSection = { h2: string; paras: string[] };
+export type V2EnrichmentSection = { h2: string; paras: string[]; items?: V2Item[] };
 export type V2EnrichmentBlock = { h2: string; items: V2Item[] };
-export type V2FitBlock = { h2: string; good: string[]; not_ideal: string[] };
+export type V2FitBlock = { h2: string; good: V2Item[]; not_ideal: V2Item[] };
 export type V2CompareBlock = { h2: string; items: V2Item[] };
 export type V2GlossaryEntry = { term: string; definition: string; related: { label: string; href: string }[] };
 // A row of facts. When `links` is present each name in `value` also leads to its own page.
