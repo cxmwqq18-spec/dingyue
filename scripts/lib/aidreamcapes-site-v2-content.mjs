@@ -409,7 +409,7 @@ function caseCardFor(model, page, entry, index) {
   const source = isClip ? clipRef(model, ref) : mediaImage(model, ref, "card");
   const kind = isClip ? "video" : "photo";
   const ratio = closestRatio(source.width, source.height);
-  const spec = isClip ? `Video · ${ratio} · ${source.duration} s` : `Photo · ${ratio}`;
+  const spec = isClip ? `Video · ${ratio} · ${source.duration} s` : "Photo";
   return {
     key: `case-${page.id}-${index + 1}`, cardType: "case", name: entry.title, product: entry.product, mediaRef: ref, line: spec, spec, kind,
     href: caseTarget(model, page), label: isClip ? "Example clip" : page.group === "video" ? "Example scene" : "Example photo",
@@ -1095,6 +1095,7 @@ function buildLlmsText(model) {
 const BANNED = [
   [/\bbulk\b|(?<![-\w])batch(?![-\w])|auto(matically)? (rank|publish)|\bAPI\b(?! is not)/i, "batch/auto/API claim"],
   [/voice-?over(?!, lip| or)|lip[- ]?sync(?! or)|text[- ]to[- ]speech/i, "voice claim"],
+  [/\bsilent\b|visual[- ]only|no audio|without sound/i, "audio omission wording"],
   [/\b\d+x\b(?! (lens|zoom))|\d+% (more|cheaper|higher|faster|lower)|#1\b|trusted by|thousands of|best-in-class/i, "unprovable claim"],
   [/\btheme\b|\bworkflow\b|\bSEO\b|landing page|proof moment/i, "internal wording"]
 ];
@@ -1216,11 +1217,12 @@ export function validateSiteV2(build = buildSiteV2()) {
         if (count > 3) errors.push(`${page.id}: case title opening is reused too often (${prefix})`);
       }
       if (card.kind !== "video" && /\b(?:clip|video|reel)\b/i.test(card.name)) errors.push(`${page.id}: photo case title uses video wording (${card.name})`);
+      if (card.kind !== "video" && /full[- ]screen|\bvertical\b|9:16/i.test(card.name)) errors.push(`${page.id}: photo case title uses video framing wording (${card.name})`);
       if (card.name === card.image?.alt || card.name === card.video?.name || card.name === card.video?.description) errors.push(`${page.id}: case title copies media metadata (${card.name})`);
       if (card.mediaRef === "social-proof-animation" || card.video?.src?.includes("/social-proof-animation.mp4")) errors.push(`${page.id}: retired social-proof-animation is not allowed in case media`);
       if (card.mediaRef === "ugc-ad-video" || card.video?.src?.includes("ugc-ad-video")) errors.push(`${page.id}: ugc-ad-video is not allowed in case media`);
       if (card.kind === "video" && !validationSource.media.catalog.clips?.[card.mediaRef]) errors.push(`${page.id}: video case is missing from the clip catalog (${card.mediaRef})`);
-      const expected = card.kind === "video" ? `Video · ${closestRatio(card.video.width, card.video.height)} · ${card.video.duration} s` : `Photo · ${closestRatio(card.image.width, card.image.height)}`;
+      const expected = card.kind === "video" ? `Video · ${closestRatio(card.video.width, card.video.height)} · ${card.video.duration} s` : "Photo";
       if (card.spec !== expected) errors.push(`${page.id}: case spec is not based on actual media dimensions (${card.name})`);
     }
   }

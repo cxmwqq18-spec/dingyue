@@ -2344,6 +2344,8 @@
    "w": 1280,
    "h": 720,
    "duration": 10.5,
+   "bytes": 1212444,
+   "sha256": "6a30eccd888275071d005269ce6261ff7269beff1e5821fc2d46b4d316cb395d",
    "uploadDate": "2026-10-06T00:00:00Z",
    "name": "Example clip: Hands fill a green insulated bottle at an office desk and lift it.",
    "description": "An example clip showing hands fill a green insulated bottle at an office desk and lift it. AIVideosUGC does not add voiceover, music, or captions."

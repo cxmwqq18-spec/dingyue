@@ -5,16 +5,31 @@
   "h1": "Turn One Product Photo into Video Ads and Store-Ready Images",
   "eyebrow": "AI video ads & product photos for online stores",
   "lead": "Upload one photo of your product and get a short video ad, a clean white-background photo or a lifestyle scene for your online store. You see the cost before anything is made.",
-  "secondary_keywords": ["AI product video generator", "AI product photo generator", "AI UGC video ads", "white background product photos", "AI ads for ecommerce"],
+  "secondary_keywords": [
+    "AI product video generator",
+    "AI product photo generator",
+    "AI UGC video ads",
+    "white background product photos",
+    "AI ads for ecommerce"
+  ],
   "make_title": "Videos that sell. Photos that look professional.",
   "make_lead": "Start with the result you need. Every option begins with your own product photo.",
   "templates_title": "Pick an idea. Add your product.",
   "templates_lead": "Ready-made looks for videos and photos. Choose one, upload your product photo and get the same style with your product.",
   "platforms_title": "The right size for every platform",
   "steps": [
-    {"t": "Upload your product photo", "d": "A clear photo of what you sell. A phone photo is fine."},
-    {"t": "Pick a template or describe your idea", "d": "Choose the size (9:16, 1:1 or 16:9) and, for video, 6, 10, 15 or 30 seconds."},
-    {"t": "Download, or make another version", "d": "Keep the one you like, or make a few more to see which works best in your ads."}
+    {
+      "t": "Upload your product photo",
+      "d": "A clear photo of what you sell. A phone photo is fine."
+    },
+    {
+      "t": "Pick a template or describe your idea",
+      "d": "Choose the size (9:16, 1:1 or 16:9) and, for video, 6, 10, 15 or 30 seconds."
+    },
+    {
+      "t": "Download, or make another version",
+      "d": "Keep the one you like, or make a few more to see which works best in your ads."
+    }
   ],
   "example_flows": [
     {
@@ -83,11 +98,31 @@
     ]
   },
   "compare": [
-    ["What you need", "Models or creators, a location, shipping the product", "One clear product photo"],
-    ["First result", "Days to weeks", "The same day"],
-    ["A new version", "Another booking or re-edit", "Make another version"],
-    ["Different platforms", "Re-crop and re-edit for each one", "Pick 9:16, 1:1 or 16:9 before you start"],
-    ["Knowing the cost", "Quotes, fees and invoices", "Cost shown before every job"]
+    [
+      "What you need",
+      "Models or creators, a location, shipping the product",
+      "One clear product photo"
+    ],
+    [
+      "First result",
+      "Days to weeks",
+      "The same day"
+    ],
+    [
+      "A new version",
+      "Another booking or re-edit",
+      "Make another version"
+    ],
+    [
+      "Different platforms",
+      "Re-crop and re-edit for each one",
+      "Pick 9:16, 1:1 or 16:9 before you start"
+    ],
+    [
+      "Knowing the cost",
+      "Quotes, fees and invoices",
+      "Cost shown before every job"
+    ]
   ],
   "faq": [
     {
@@ -115,8 +150,8 @@
       "a": "No. Add captions and music in TikTok or CapCut after you download, and type prices or offers in your editor or ad tool so every word is exactly right."
     },
     {
-      "q": "Is checkout available yet?",
-      "a": "Not yet. The pricing page currently shows “Checkout coming soon”; the listed Starter, Pro, and Premium prices are the planned offers."
+      "q": "Can I try it for free?",
+      "a": "Not right now. There's no free plan, and checkout isn't open yet — the pricing page lists the planned Starter, Pro and Premium offers. Every photo or video shows its credit cost before it's made."
     },
     {
       "q": "Can I use the images and videos I make commercially?",

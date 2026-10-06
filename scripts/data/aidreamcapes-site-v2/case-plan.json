@@ -483,22 +483,22 @@
       {
         "ref": "n:gen2:tpl-story-c1",
         "product": "sunscreen",
-        "title": "Full-screen sunscreen shot with space for text"
+        "title": "Sunscreen shot with open space for your Story text"
       },
       {
         "ref": "n:gen2:tpl-story-c2",
         "product": "canvas sneakers",
-        "title": "Vertical sneaker shot with room for a swipe-up"
+        "title": "Sneakers on steps with room for a swipe-up line"
       },
       {
         "ref": "n:gen2:tpl-story-c3",
         "product": "tall pillar candle",
-        "title": "Tall candle frame with blank space up top"
+        "title": "Pillar candle with blank wall space above it"
       },
       {
         "ref": "n:gen2:tpl-story-c4",
         "product": "smoothie bottle",
-        "title": "Smoothie bottle in a full-screen story layout"
+        "title": "Smoothie bottle on a counter with room for an offer"
       }
     ],
     "tpl-sale": [
