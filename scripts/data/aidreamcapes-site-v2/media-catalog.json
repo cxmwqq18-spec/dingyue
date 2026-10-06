@@ -2465,15 +2465,6 @@
    "name": "Example clip: Hands open a gray headphone package and remove the headphones and charging case.",
    "description": "An example clip showing hands open a gray headphone package and remove the headphones and charging case. AIVideosUGC does not add voiceover, music, or captions."
   },
-  "url-to-ad-a-p": {
-   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/url-to-ad-a-p.mp4",
-   "w": 720,
-   "h": 900,
-   "duration": 7.2,
-   "uploadDate": "2026-10-06T00:00:00Z",
-   "name": "Example clip: A hand views a product page, picks up a beige mug, and takes a drink.",
-   "description": "A silent example clip showing a hand views a product page, picks up a beige mug, and takes a drink."
-  },
   "url-to-ad-b": {
    "src": "/assets/sites/site_aidreamcapes/site-v2/clips/url-to-ad-b.mp4",
    "w": 1280,
@@ -2482,6 +2473,15 @@
    "uploadDate": "2026-10-06T00:00:00Z",
    "name": "Example clip: A hand views a product page, picks up a beige mug, and takes a drink.",
    "description": "An example clip showing a hand views a product page, picks up a beige mug, and takes a drink. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "url-to-ad-a-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/url-to-ad-a-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 7.2,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: A hand views a product page, picks up a beige mug, and takes a drink.",
+   "description": "AIVideosUGC example clip: a hand views a product page, picks up a beige mug, and takes a drink."
   }
  },
  "loop": {
@@ -2846,9 +2846,9 @@
    ],
    "clipPoster": true
   },
-  "url-to-ad-a-p": {
-   "w": 720,
-   "h": 900,
+  "url-to-ad-b": {
+   "w": 1280,
+   "h": 720,
    "alt": "A hand views a product page, picks up a beige mug, and takes a drink.",
    "variants": [
     640,
@@ -2856,9 +2856,9 @@
    ],
    "clipPoster": true
   },
-  "url-to-ad-b": {
-   "w": 1280,
-   "h": 720,
+  "url-to-ad-a-v": {
+   "w": 540,
+   "h": 960,
    "alt": "A hand views a product page, picks up a beige mug, and takes a drink.",
    "variants": [
     640,
@@ -3632,6 +3632,66 @@
    "w": 1536,
    "h": 1024,
    "alt": "Adult presenting a blue desk microphone from the side in a bright home office, soft light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-head-case-78": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Professional headshot of a smiling adult in a neutral studio, shoulders-up framing, soft window light, closed mouth, plain background",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-head-case-79": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Creator headshot of an adult with a relaxed closed-mouth expression, warm office background, soft daylight, shoulders-up portrait",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-head-case-80": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Team member headshot, adult framed from the shoulders up in a bright office, natural window light, closed mouth, clean background",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-ugc-case-81": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Creator-style product photo of an adult holding a clear reusable water bottle in a bright kitchen, candid side angle, closed mouth, natural daylight",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-ugc-case-82": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Creator-style product photo of an adult holding white wireless earbuds beside a desk, candid home setting, closed mouth, soft daylight",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-ugc-case-83": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Creator-style product photo of an adult lifting a ceramic mug at a breakfast table, candid home scene, closed mouth, warm morning light",
    "variants": [
     640,
     1280

@@ -1173,6 +1173,8 @@ export function validateSiteV2(build = buildSiteV2()) {
   const validationSource = loadSiteV2Source();
   const casePlan = validationSource.media.casePlan;
   const pageTypeById = Object.fromEntries(validationSource.master.pages.map((page) => [page.id, page.type]));
+  const caseTitles = new Map();
+  const caseTitlePrefixes = new Map();
   for (const page of build.pages) {
     const { layout, data } = page.contentJson.sections.v2_main.settings;
     if (!caseLayouts.has(layout)) continue;
@@ -1201,8 +1203,21 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (seenProducts.has(card.product)) errors.push(`${page.id}: case product repeats (${card.product})`);
       seenProducts.add(card.product);
       if (!card.name || card.name.length > 60 || /^Product example/i.test(card.name) || /starting photo/i.test(card.name)) errors.push(`${page.id}: invalid case title (${card.name || "empty"})`);
+      const titleNorm = String(card.name || "").toLowerCase();
+      if (caseTitles.has(titleNorm)) errors.push(`${page.id}: duplicate case title with ${caseTitles.get(titleNorm)} (${card.name})`);
+      else caseTitles.set(titleNorm, page.id);
+      const titleWords = titleNorm.replace(/[^a-z0-9 ]+/g, " ").trim().split(/\s+/).filter(Boolean);
+      const prefix = titleWords.slice(0, 2).join(" ");
+      if (prefix) {
+        const count = (caseTitlePrefixes.get(prefix) ?? 0) + 1;
+        caseTitlePrefixes.set(prefix, count);
+        if (count > 3) errors.push(`${page.id}: case title opening is reused too often (${prefix})`);
+      }
+      if (card.kind !== "video" && /\b(?:clip|video|reel)\b/i.test(card.name)) errors.push(`${page.id}: photo case title uses video wording (${card.name})`);
       if (card.name === card.image?.alt || card.name === card.video?.name || card.name === card.video?.description) errors.push(`${page.id}: case title copies media metadata (${card.name})`);
       if (card.mediaRef?.includes("social-proof-animation") || card.video?.src?.includes("social-proof-animation")) errors.push(`${page.id}: social-proof-animation is not allowed in case media`);
+      if (card.mediaRef === "ugc-ad-video" || card.video?.src?.includes("ugc-ad-video")) errors.push(`${page.id}: ugc-ad-video is not allowed in case media`);
+      if (card.kind === "video" && !validationSource.media.catalog.clips?.[card.mediaRef]) errors.push(`${page.id}: video case is missing from the clip catalog (${card.mediaRef})`);
       const expected = card.kind === "video" ? `Video · ${closestRatio(card.video.width, card.video.height)} · ${card.video.duration} s` : `Photo · ${closestRatio(card.image.width, card.image.height)}`;
       if (card.spec !== expected) errors.push(`${page.id}: case spec is not based on actual media dimensions (${card.name})`);
     }
