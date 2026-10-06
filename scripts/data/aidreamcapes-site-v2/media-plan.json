@@ -578,8 +578,7 @@
    },
    "gallery": [
     "g:bundle-sets/example-02",
-    "n:lipstick-swatch",
-    "f:beauty-routine"
+    "n:lipstick-swatch"
    ],
    "og": "n:lipstick-vanity"
   },
@@ -772,7 +771,6 @@
     "image": "g:sale-campaign-key-visual/example-02"
    },
    "gallery": [
-    "f:black-friday-countdown",
     "n:phonecase-desk",
     "n:handbag-carry"
    ],

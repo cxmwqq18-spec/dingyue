@@ -3,1245 +3,1245 @@
   "pages": {
     "photo-hub": [
       {
-        "ref": "g:ecommerce-main-image/example-01",
-        "product": "ceramic mug",
-        "title": "Bright Ceramic mug product view organized"
+        "ref": "n:gen2:photo-hub-c1",
+        "product": "leather crossbody bag",
+        "title": "Crossbody bag cut out on pure white for a listing"
       },
       {
-        "ref": "g:commercial-lighting/example-04",
-        "product": "perfume bottle",
-        "title": "Bright Perfume bottle product view lit"
+        "ref": "n:gen2:photo-hub-c2",
+        "product": "linen throw pillow",
+        "title": "Linen pillow styled on a sofa in morning light"
       },
       {
-        "ref": "g:ugc-still-ad/example-01",
-        "product": "green water bottle",
-        "title": "Bright Green water bottle product view unboxed"
+        "ref": "n:gen2:photo-hub-c3",
+        "product": "knit beanie",
+        "title": "Knit beanie worn outdoors for a winter post"
       }
     ],
     "image-to-video": [
       {
-        "ref": "beauty-routine",
-        "product": "amber face serum",
-        "title": "Warm Amber face serum video scene arranged"
+        "ref": "social-proof-animation-v",
+        "product": "green insulated bottle",
+        "title": "Green bottle lid twisted open in close-up"
       },
       {
-        "ref": "n:gen2:spokesperson-videos-1",
-        "product": "black smart speaker",
-        "title": "Warm Black smart speaker scene demonstrated"
+        "ref": "n:gen2:image-to-video-c2",
+        "product": "pour-over coffee dripper",
+        "title": "Pour-over dripper on a sunlit kitchen counter"
       },
       {
-        "ref": "n:gen2:tpl-product-feature-callout-video-2",
-        "product": "white foaming cleanser pump",
-        "title": "Warm White foaming cleanser pump scene shown"
+        "ref": "n:gen2:image-to-video-c3",
+        "product": "red lipstick",
+        "title": "Red lipstick standing on a marble vanity"
       }
     ],
     "video-ads": [
       {
-        "ref": "before-after-showcases-a",
-        "product": "gray drawer dividers",
-        "title": "Clean Gray drawer dividers video scene organized"
+        "ref": "pas-formula-ads",
+        "product": "air purifier",
+        "title": "Work-from-home slump that opens a problem-first ad"
       },
       {
-        "ref": "n:gen2:tpl-jewel-71",
-        "product": "silver bracelet",
-        "title": "Clean Silver bracelet scene lit"
+        "ref": "n:gen2:video-ads-c2",
+        "product": "pastel phone case",
+        "title": "Pastel phone case held up in a busy cafe"
       },
       {
-        "ref": "n:gen2:tpl-jewel-72",
-        "product": "pearl earrings",
-        "title": "Clean Pearl earrings scene unboxed"
+        "ref": "n:gen2:video-ads-c3",
+        "product": "insulated lunch bag",
+        "title": "Lunch bag packed on a kitchen island before work"
       }
     ],
     "product-videos": [
       {
-        "ref": "before-after-showcases-b",
-        "product": "gray drawer dividers",
-        "title": "Soft Gray drawer dividers video scene arranged"
+        "ref": "feature-callout",
+        "product": "foaming cleanser",
+        "title": "Foaming cleanser pump pressed into a rich lather"
       },
       {
-        "ref": "n:gen2:tpl-limited-drop-alert-video-3",
-        "product": "coral trail running shoe",
-        "title": "Soft Coral trail running shoe scene demonstrated"
+        "ref": "n:gen2:product-videos-c2",
+        "product": "handheld vacuum",
+        "title": "Handheld vacuum lifting crumbs off a dark sofa"
       },
       {
-        "ref": "n:gen2:tpl-retargeting-video-ad-4",
-        "product": "dark blue headphones",
-        "title": "Soft Dark blue headphones scene shown"
+        "ref": "n:gen2:product-videos-c3",
+        "product": "gooseneck kettle",
+        "title": "Gooseneck kettle pouring a slow, steady stream"
       }
     ],
     "unboxing-videos": [
       {
-        "ref": "black-friday-countdown",
-        "product": "folding electric bicycle",
-        "title": "Natural Folding electric bicycle video scene demonstrated"
+        "ref": "n:gen2:unboxing-videos-c1",
+        "product": "ceramic mug set",
+        "title": "Ceramic mug set lifted out of its gift box"
       },
       {
-        "ref": "n:gen2:ind-electronics-5",
-        "product": "teal travel charger",
-        "title": "Natural Teal travel charger scene shown"
+        "ref": "n:gen2:unboxing-videos-c2",
+        "product": "soy candle",
+        "title": "Kraft mailer opened to a tissue-wrapped candle"
       },
       {
-        "ref": "n:gen2:ind-health-wellness-6",
-        "product": "teal yoga mat",
-        "title": "Natural Teal yoga mat scene styled"
+        "ref": "n:gen2:unboxing-videos-c3",
+        "product": "wristwatch",
+        "title": "Watch box opened on a walnut desk"
       }
     ],
     "before-after-videos": [
       {
-        "ref": "carousel-storytelling",
-        "product": "commuter backpack",
-        "title": "Fresh Commuter backpack video scene ready"
+        "ref": "n:gen2:before-after-videos-c1",
+        "product": "lint roller",
+        "title": "Pet hair lifted off a sofa cushion with a lint roller"
       },
       {
-        "ref": "n:gen2:ind-home-living-7",
-        "product": "gray drawer dividers",
-        "title": "Fresh Gray drawer dividers scene framed"
+        "ref": "n:gen2:before-after-videos-c2",
+        "product": "white sneakers",
+        "title": "Scuffed sneaker beside the same pair after cleaning"
       },
       {
-        "ref": "n:gen2:ind-food-drinks-8",
-        "product": "sparkling citrus drink",
-        "title": "Fresh Sparkling citrus drink scene displayed"
+        "ref": "n:gen2:before-after-videos-c3",
+        "product": "wooden cutting board",
+        "title": "Dry cutting board next to its freshly oiled side"
       },
       {
-        "ref": "n:gen2:plat-facebook-ads-9",
-        "product": "home product and package",
-        "title": "Fresh Home product and package scene packed"
+        "ref": "n:gen2:before-after-videos-c4",
+        "product": "cable organizer box",
+        "title": "Cable tangle tidied into a desk cable box"
       }
     ],
     "spokesperson-videos": [
       {
-        "ref": "competitor-comparison-a",
-        "product": "insulated travel cups",
-        "title": "Modern Insulated travel cups video scene ready"
-      },
-      {
-        "ref": "n:gen2:plat-youtube-shorts-ads-10",
-        "product": "black espresso machine",
-        "title": "Modern Black espresso machine scene framed"
-      },
-      {
-        "ref": "n:gen2:occ-holidays-11",
-        "product": "ceramic scented candle",
-        "title": "Modern Ceramic scented candle scene displayed"
-      },
-      {
-        "ref": "n:gen2:blog-ai-video-review-checklist-12",
-        "product": "product review desk",
-        "title": "Modern Product review desk scene packed"
-      }
-    ],
-    "white-background": [
-      {
-        "ref": "g:ecommerce-main-image/example-01",
-        "product": "ceramic mug",
-        "title": "Quiet Ceramic mug product view shown"
-      },
-      {
-        "ref": "g:commercial-lighting/example-04",
-        "product": "perfume bottle",
-        "title": "Quiet Perfume bottle product view styled"
-      },
-      {
-        "ref": "g:ugc-still-ad/example-01",
-        "product": "green water bottle",
-        "title": "Quiet Green water bottle product view captured"
-      }
-    ],
-    "lifestyle-photos": [
-      {
-        "ref": "g:ecommerce-main-image/example-02",
-        "product": "ceramic mug",
-        "title": "Bold Ceramic mug product view shown"
-      },
-      {
-        "ref": "g:commercial-lighting/example-05",
-        "product": "perfume bottle",
-        "title": "Bold Perfume bottle product view styled"
-      },
-      {
-        "ref": "g:ugc-still-ad/example-02",
-        "product": "green water bottle",
-        "title": "Bold Green water bottle product view captured"
-      }
-    ],
-    "model-photos": [
-      {
-        "ref": "g:fashion-editorial/example-02",
-        "product": "linen clothing",
-        "title": "Crisp Linen clothing product view measured"
-      },
-      {
-        "ref": "n:gen2:ind-fashion-clothing-18",
-        "product": "linen overshirt",
-        "title": "Crisp Linen overshirt product view applied"
-      },
-      {
-        "ref": "n:gen2:reserve-35",
-        "product": "linen shirt",
-        "title": "Crisp Linen shirt product view arranged"
-      }
-    ],
-    "change-background": [
-      {
-        "ref": "g:ecommerce-main-image/example-03",
-        "product": "ceramic mug",
-        "title": "Calm Ceramic mug product view styled"
-      },
-      {
-        "ref": "g:commercial-lighting/example-06",
-        "product": "perfume bottle",
-        "title": "Calm Perfume bottle product view captured"
-      },
-      {
-        "ref": "g:ugc-still-ad/example-03",
-        "product": "green water bottle",
-        "title": "Calm Green water bottle product view ready"
-      }
-    ],
-    "social-ad-photos": [
-      {
-        "ref": "g:ecommerce-main-image/example-04",
-        "product": "ceramic mug",
-        "title": "Lively Ceramic mug product view shown"
-      },
-      {
-        "ref": "g:commercial-lighting/example-07",
-        "product": "perfume bottle",
-        "title": "Lively Perfume bottle product view styled"
-      },
-      {
-        "ref": "g:ugc-still-ad/example-04",
-        "product": "green water bottle",
-        "title": "Lively Green water bottle product view captured"
-      }
-    ],
-    "tpl-angle": [
-      {
-        "ref": "g:ecommerce-main-image/example-02",
-        "product": "ceramic mug",
-        "title": "Golden Ceramic mug example scene organized"
-      },
-      {
-        "ref": "g:commercial-lighting/example-05",
-        "product": "perfume bottle",
-        "title": "Golden Perfume bottle example scene lit"
-      },
-      {
-        "ref": "g:ugc-still-ad/example-02",
-        "product": "green water bottle",
-        "title": "Golden Green water bottle example scene unboxed"
-      },
-      {
-        "ref": "n:sunglasses-flatlay",
-        "product": "black sunglasses",
-        "title": "Golden Black sunglasses example scene measured"
-      }
-    ],
-    "tpl-detail": [
-      {
-        "ref": "g:ecommerce-main-image/example-03",
-        "product": "ceramic mug",
-        "title": "Airy Ceramic mug example scene lit"
-      },
-      {
-        "ref": "g:commercial-lighting/example-06",
-        "product": "perfume bottle",
-        "title": "Airy Perfume bottle example scene unboxed"
-      },
-      {
-        "ref": "g:ugc-still-ad/example-03",
-        "product": "green water bottle",
-        "title": "Airy Green water bottle example scene measured"
-      },
-      {
-        "ref": "n:sunglasses-cafe",
-        "product": "black sunglasses",
-        "title": "Airy Black sunglasses example scene applied"
-      }
-    ],
-    "tpl-size": [
-      {
-        "ref": "g:lifestyle-scene/example-01",
-        "product": "linen tote bag",
-        "title": "Tactile Linen tote bag example scene poured"
-      },
-      {
-        "ref": "g:on-model-generation/example-01",
-        "product": "olive backpack",
-        "title": "Tactile Olive backpack example scene organized"
-      },
-      {
-        "ref": "n:gen2:tpl-size-14",
-        "product": "canvas backpack",
-        "title": "Tactile Canvas backpack example scene lit"
-      },
-      {
-        "ref": "n:gen2:reserve-45",
-        "product": "travel pouch",
-        "title": "Tactile Travel pouch example scene unboxed"
-      }
-    ],
-    "tpl-color": [
-      {
-        "ref": "g:feed-ad-still/example-01",
-        "product": "running shoes",
-        "title": "Polished Running shoes example scene organized"
-      },
-      {
-        "ref": "n:gen2:ind-shoes-15",
-        "product": "tan hiking boot",
-        "title": "Polished Tan hiking boot example scene lit"
-      },
-      {
-        "ref": "n:gen2:ind-shoes-73",
-        "product": "black trail shoe",
-        "title": "Polished Black trail shoe example scene unboxed"
-      },
-      {
-        "ref": "n:gen2:ind-shoes-74",
-        "product": "white court sneaker",
-        "title": "Polished White court sneaker example scene measured"
-      }
-    ],
-    "tpl-box": [
-      {
-        "ref": "g:bundle-sets/example-07",
-        "product": "skincare set",
-        "title": "Sunny Skincare set example scene worn"
-      },
-      {
-        "ref": "g:commercial-lighting/example-02",
-        "product": "perfume bottle",
-        "title": "Sunny Perfume bottle example scene poured"
-      },
-      {
-        "ref": "g:story-ad-vertical/example-01",
-        "product": "sunscreen tube",
-        "title": "Sunny Sunscreen tube example scene organized"
-      },
-      {
-        "ref": "n:gen2:ind-beauty-skincare-17",
-        "product": "amber face serum",
-        "title": "Sunny Amber face serum example scene lit"
-      }
-    ],
-    "tpl-pack": [
-      {
-        "ref": "n:coffee-beans",
-        "product": "coffee beans",
-        "title": "Cosy Coffee beans example scene poured"
-      },
-      {
-        "ref": "n:drink-vertical",
-        "product": "sparkling citrus drink",
-        "title": "Cosy Sparkling citrus drink example scene organized"
-      },
-      {
-        "ref": "n:hotsauce-drip",
-        "product": "hot sauce",
-        "title": "Cosy Hot sauce example scene lit"
-      },
-      {
-        "ref": "g:packaging-mockup/example-07",
-        "product": "tea pouch",
-        "title": "Cosy Tea pouch example scene unboxed"
-      }
-    ],
-    "tpl-light": [
-      {
-        "ref": "g:bundle-sets/example-01",
-        "product": "skincare set",
-        "title": "Minimal Skincare set example scene organized"
-      },
-      {
-        "ref": "g:story-ad-vertical/example-02",
-        "product": "sunscreen tube",
-        "title": "Minimal Sunscreen tube example scene lit"
-      },
-      {
-        "ref": "n:gen2:reserve-48",
-        "product": "hand cream",
-        "title": "Minimal Hand cream example scene unboxed"
-      },
-      {
-        "ref": "n:gen2:reserve-63",
-        "product": "hair brush",
-        "title": "Minimal Hair brush example scene measured"
-      }
-    ],
-    "tpl-tryon": [
-      {
-        "ref": "g:fashion-editorial/example-01",
-        "product": "linen clothing",
-        "title": "Rich Linen clothing example scene organized"
-      },
-      {
-        "ref": "g:on-model-generation/example-02",
-        "product": "olive backpack",
-        "title": "Rich Olive backpack example scene lit"
-      },
-      {
-        "ref": "n:gen2:ind-fashion-clothing-18",
-        "product": "linen overshirt",
-        "title": "Rich Linen overshirt example scene unboxed"
-      },
-      {
-        "ref": "n:gen2:reserve-35",
-        "product": "linen shirt",
-        "title": "Rich Linen shirt example scene measured"
-      }
-    ],
-    "tpl-jewel": [
-      {
-        "ref": "g:jewelry-positioning/example-07",
-        "product": "silver pendant",
-        "title": "Clear Silver pendant example scene organized"
-      },
-      {
-        "ref": "n:gen2:ind-jewelry-accessories-16",
-        "product": "gold hoop earrings",
-        "title": "Clear Gold hoop earrings example scene lit"
-      },
-      {
-        "ref": "n:gen2:tpl-jewel-70",
-        "product": "gold ring",
-        "title": "Clear Gold ring example scene unboxed"
-      },
-      {
-        "ref": "n:gen2:tpl-jewel-71",
-        "product": "silver bracelet",
-        "title": "Clear Silver bracelet example scene measured"
-      }
-    ],
-    "tpl-look": [
-      {
-        "ref": "g:fashion-editorial/example-06",
-        "product": "linen clothing",
-        "title": "Gentle Linen clothing example scene poured"
-      },
-      {
-        "ref": "g:on-model-generation/example-03",
-        "product": "olive backpack",
-        "title": "Gentle Olive backpack example scene organized"
-      },
-      {
-        "ref": "n:gen2:reserve-42",
-        "product": "cotton hoodie",
-        "title": "Gentle Cotton hoodie example scene lit"
-      },
-      {
-        "ref": "n:gen2:reserve-50",
-        "product": "canvas cap",
-        "title": "Gentle Canvas cap example scene unboxed"
-      }
-    ],
-    "tpl-head": [
-      {
-        "ref": "g:professional-headshot/example-06",
-        "product": "business headshot",
-        "title": "Vivid Business headshot studio portrait"
-      },
-      {
-        "ref": "n:gen2:tpl-head-case-78",
-        "product": "professional headshot",
-        "title": "Vivid Professional headshot in soft light"
-      },
-      {
-        "ref": "n:gen2:tpl-head-case-79",
-        "product": "creator headshot",
-        "title": "Vivid Creator headshot at a desk"
-      },
-      {
-        "ref": "n:gen2:tpl-head-case-80",
-        "product": "team headshot",
-        "title": "Vivid Team headshot in an office"
-      }
-    ],
-    "tpl-ugc": [
-      {
-        "ref": "g:ugc-still-ad/example-07",
-        "product": "green water bottle",
-        "title": "Sleek Green water bottle in a creator scene"
-      },
-      {
-        "ref": "n:gen2:tpl-ugc-case-81",
-        "product": "reusable water bottle",
-        "title": "Sleek Reusable water bottle at home"
-      },
-      {
-        "ref": "n:gen2:tpl-ugc-case-82",
-        "product": "wireless earbuds",
-        "title": "Sleek Wireless earbuds on a desk"
-      },
-      {
-        "ref": "n:gen2:tpl-ugc-case-83",
-        "product": "ceramic mug",
-        "title": "Sleek Ceramic mug at breakfast"
-      }
-    ],
-    "tpl-story": [
-      {
-        "ref": "g:bundle-sets/example-02",
-        "product": "skincare set",
-        "title": "Light Skincare set example scene organized"
-      },
-      {
-        "ref": "g:commercial-lighting/example-01",
-        "product": "perfume bottle",
-        "title": "Light Perfume bottle example scene lit"
-      },
-      {
-        "ref": "g:story-ad-vertical/example-06",
-        "product": "sunscreen tube",
-        "title": "Light Sunscreen tube example scene unboxed"
-      },
-      {
-        "ref": "n:gen2:reserve-67",
-        "product": "night cream",
-        "title": "Light Night cream example scene measured"
-      }
-    ],
-    "tpl-sale": [
-      {
-        "ref": "g:fashion-editorial/example-02",
-        "product": "linen clothing",
-        "title": "Earthy Linen clothing example scene poured"
-      },
-      {
-        "ref": "g:on-model-generation/example-04",
-        "product": "olive backpack",
-        "title": "Earthy Olive backpack example scene organized"
-      },
-      {
-        "ref": "n:gen2:reserve-51",
-        "product": "wool scarf",
-        "title": "Earthy Wool scarf example scene lit"
-      },
-      {
-        "ref": "n:gen2:reserve-52",
-        "product": "striped tee",
-        "title": "Earthy Striped tee example scene unboxed"
-      }
-    ],
-    "tpl-howto": [
-      {
-        "ref": "competitor-comparison-b",
-        "product": "insulated travel cups",
-        "title": "Refined Insulated travel cups example scene organized"
+        "ref": "n:gen2:spokesperson-videos-c1",
+        "product": "toner bottle",
+        "title": "Presenter holding a toner bottle at eye level"
       },
       {
         "ref": "n:gen2:spokesperson-videos-1",
         "product": "black smart speaker",
-        "title": "Refined Black smart speaker example scene lit"
+        "title": "Presenter showing a smart speaker at home"
       },
       {
-        "ref": "n:gen2:tpl-product-feature-callout-video-2",
-        "product": "white foaming cleanser pump",
-        "title": "Refined White foaming cleanser pump example scene unboxed"
+        "ref": "n:gen2:spokesperson-videos-c3",
+        "product": "protein shaker",
+        "title": "Presenter holding a shaker bottle after a workout"
       },
       {
-        "ref": "n:gen2:tpl-limited-drop-alert-video-3",
-        "product": "coral trail running shoe",
-        "title": "Refined Coral trail running shoe example scene measured"
+        "ref": "n:gen2:spokesperson-videos-c4",
+        "product": "hardcover planner",
+        "title": "Presenter showing a planner's open spread at a desk"
       }
     ],
-    "tpl-film": [
+    "white-background": [
       {
-        "ref": "discount-free-shipping",
-        "product": "coffee beans",
-        "title": "Playful Coffee beans example scene poured"
+        "ref": "n:gen2:white-background-c1",
+        "product": "steel water bottle",
+        "title": "Steel water bottle cut out on pure white"
       },
       {
-        "ref": "n:gen2:tpl-retargeting-video-ad-4",
-        "product": "dark blue headphones",
-        "title": "Playful Dark blue headphones example scene organized"
+        "ref": "n:gen2:white-background-c2",
+        "product": "ceramic table lamp",
+        "title": "Ceramic table lamp on a pure white background"
       },
       {
-        "ref": "n:gen2:ind-electronics-5",
-        "product": "teal travel charger",
-        "title": "Playful Teal travel charger example scene lit"
-      },
-      {
-        "ref": "n:gen2:ind-health-wellness-6",
-        "product": "teal yoga mat",
-        "title": "Playful Teal yoga mat example scene unboxed"
+        "ref": "n:gen2:white-background-c3",
+        "product": "wooden toy train",
+        "title": "Wooden toy train ready for a main listing image"
       }
     ],
-    "tpl-beauty": [
+    "lifestyle-photos": [
       {
-        "ref": "fashion-try-on-reel",
-        "product": "beige overshirt",
-        "title": "Muted Beige overshirt example scene lit"
+        "ref": "n:gen2:lifestyle-photos-c1",
+        "product": "soy candle",
+        "title": "Soy candle glowing on a bedside table at dusk"
       },
       {
-        "ref": "n:gen2:ind-home-living-7",
-        "product": "gray drawer dividers",
-        "title": "Muted Gray drawer dividers example scene unboxed"
+        "ref": "n:gen2:lifestyle-photos-c2",
+        "product": "bamboo cutting board",
+        "title": "Bamboo board with sliced fruit on a kitchen counter"
       },
       {
-        "ref": "n:gen2:ind-food-drinks-8",
-        "product": "sparkling citrus drink",
-        "title": "Muted Sparkling citrus drink example scene measured"
-      },
-      {
-        "ref": "n:gen2:plat-facebook-ads-9",
-        "product": "home product and package",
-        "title": "Muted Home product and package example scene applied"
+        "ref": "n:gen2:lifestyle-photos-c3",
+        "product": "canvas weekender bag",
+        "title": "Canvas weekender bag ready on a car's back seat"
       }
     ],
-    "tpl-drink": [
+    "model-photos": [
       {
-        "ref": "feature-callout",
-        "product": "foaming cleanser",
-        "title": "Radiant Foaming cleanser example scene organized"
+        "ref": "n:gen2:model-photos-c1",
+        "product": "camel wool coat",
+        "title": "Camel wool coat worn on a city sidewalk"
       },
       {
-        "ref": "n:gen2:plat-youtube-shorts-ads-10",
-        "product": "black espresso machine",
-        "title": "Radiant Black espresso machine example scene lit"
+        "ref": "n:gen2:model-photos-c2",
+        "product": "leather messenger bag",
+        "title": "Leather messenger bag carried across the body"
       },
       {
-        "ref": "n:gen2:occ-holidays-11",
-        "product": "ceramic scented candle",
-        "title": "Radiant Ceramic scented candle example scene unboxed"
-      },
-      {
-        "ref": "n:gen2:blog-ai-video-review-checklist-12",
-        "product": "product review desk",
-        "title": "Radiant Product review desk example scene measured"
+        "ref": "n:gen2:model-photos-c3",
+        "product": "layered gold necklaces",
+        "title": "Layered gold necklaces on a model's neckline"
       }
     ],
-    "tpl-home": [
+    "change-background": [
       {
-        "ref": "food-beverage",
-        "product": "sparkling citrus drink",
-        "title": "Balanced Sparkling citrus drink example scene poured"
+        "ref": "n:gen2:change-background-c1",
+        "product": "blue ceramic vase",
+        "title": "Blue vase moved onto a sunny windowsill"
       },
       {
-        "ref": "n:gen2:plat-instagram-ads-13",
-        "product": "fashion accessories",
-        "title": "Balanced Fashion accessories example scene organized"
+        "ref": "n:gen2:change-background-c2",
+        "product": "face cream jar",
+        "title": "Face cream jar placed on wet stone by a pool"
       },
       {
-        "ref": "n:gen2:ind-home-living-19",
-        "product": "oak desk lamp",
-        "title": "Balanced Oak desk lamp example scene lit"
-      },
-      {
-        "ref": "n:gen2:ind-food-drinks-20",
-        "product": "berry granola jar",
-        "title": "Balanced Berry granola jar example scene unboxed"
+        "ref": "n:gen2:change-background-c3",
+        "product": "leather wallet",
+        "title": "Leather wallet set on a marble cafe table"
       }
     ],
-    "tpl-outfit": [
+    "social-ad-photos": [
       {
-        "ref": "home-organization",
-        "product": "gray drawer dividers",
-        "title": "Lush Gray drawer dividers example scene lit"
+        "ref": "n:gen2:social-ad-photos-c1",
+        "product": "iced coffee can",
+        "title": "Iced coffee can on a picnic blanket, room for a headline"
       },
       {
-        "ref": "n:gen2:ind-health-wellness-21",
-        "product": "foam roller",
-        "title": "Lush Foam roller example scene unboxed"
+        "ref": "n:gen2:social-ad-photos-c2",
+        "product": "wireless speaker",
+        "title": "Wireless speaker on a pool deck for a summer feed ad"
       },
       {
-        "ref": "n:gen2:plat-tiktok-22",
-        "product": "green insulated bottle",
-        "title": "Lush Green insulated bottle example scene measured"
-      },
-      {
-        "ref": "n:gen2:plat-amazon-23",
-        "product": "white running shoe",
-        "title": "Lush White running shoe example scene applied"
+        "ref": "n:gen2:social-ad-photos-c3",
+        "product": "hand cream tube",
+        "title": "Hand cream with lavender sprigs in a square feed ad"
       }
     ],
-    "tpl-launch": [
+    "tpl-angle": [
       {
-        "ref": "how-to-tutorial",
-        "product": "portable steam iron",
-        "title": "Fresh Portable steam iron example scene lit"
+        "ref": "n:gen2:tpl-angle-c1",
+        "product": "over-ear headphones",
+        "title": "Headphones head-on against a light gray sweep"
       },
       {
-        "ref": "n:gen2:plat-shopify-24",
-        "product": "ceramic travel mug",
-        "title": "Fresh Ceramic travel mug example scene unboxed"
+        "ref": "n:gen2:tpl-angle-c2",
+        "product": "hiking backpack",
+        "title": "Backpack turned to show the straps and back panel"
       },
       {
-        "ref": "n:gen2:occ-product-launch-25",
-        "product": "portable table lamp",
-        "title": "Fresh Portable table lamp example scene measured"
+        "ref": "n:gen2:tpl-angle-c3",
+        "product": "coffee grinder",
+        "title": "Coffee grinder photographed from directly above"
       },
       {
-        "ref": "n:gen2:occ-sale-discount-26",
-        "product": "winter jacket",
-        "title": "Fresh Winter jacket example scene applied"
+        "ref": "n:gen2:tpl-angle-c4",
+        "product": "office chair",
+        "title": "Office chair in a three-quarter studio view"
       }
     ],
-    "tpl-compare": [
+    "tpl-detail": [
       {
-        "ref": "limited-drop-alert",
-        "product": "coral trail shoes",
-        "title": "Open Coral trail shoes example scene unboxed"
+        "ref": "n:gen2:tpl-detail-c1",
+        "product": "leather card holder",
+        "title": "Stitching close-up on a leather card holder"
       },
       {
-        "ref": "n:gen2:occ-black-friday-27",
-        "product": "folding electric bicycle",
-        "title": "Open Folding electric bicycle example scene measured"
+        "ref": "n:gen2:tpl-detail-c2",
+        "product": "merino sweater",
+        "title": "Knit texture of a merino sweater, up close"
       },
+      {
+        "ref": "n:gen2:tpl-detail-c3",
+        "product": "steel watch",
+        "title": "Brushed metal finish on a watch case edge"
+      },
+      {
+        "ref": "n:gen2:tpl-detail-c4",
+        "product": "handmade ceramic mug",
+        "title": "Glaze drips on a handmade ceramic mug rim"
+      }
+    ],
+    "tpl-size": [
+      {
+        "ref": "n:gen2:tpl-size-c1",
+        "product": "mini backpack",
+        "title": "Mini backpack held at hip height for scale"
+      },
+      {
+        "ref": "n:gen2:tpl-size-c2",
+        "product": "travel candle",
+        "title": "Travel candle beside a coffee cup for size"
+      },
+      {
+        "ref": "n:gen2:tpl-size-c3",
+        "product": "phone stand",
+        "title": "Phone stand holding a phone to show its size"
+      },
+      {
+        "ref": "n:gen2:tpl-size-c4",
+        "product": "ceramic planter",
+        "title": "Planter shown on a bookshelf next to paperbacks"
+      }
+    ],
+    "tpl-color": [
+      {
+        "ref": "n:gen2:tpl-color-c1",
+        "product": "tumbler",
+        "title": "Four tumbler colors lined up in the same light"
+      },
+      {
+        "ref": "n:gen2:tpl-color-c2",
+        "product": "beanie",
+        "title": "Beanie in three shades on matching stools"
+      },
+      {
+        "ref": "n:gen2:tpl-color-c3",
+        "product": "phone case",
+        "title": "Phone cases in five colors fanned out"
+      },
+      {
+        "ref": "n:gen2:tpl-color-c4",
+        "product": "yoga block",
+        "title": "Yoga blocks in three colors stacked side by side"
+      }
+    ],
+    "tpl-box": [
+      {
+        "ref": "n:gen2:tpl-box-c1",
+        "product": "skincare trio",
+        "title": "Skincare trio arranged with its gift box"
+      },
+      {
+        "ref": "n:gen2:tpl-box-c2",
+        "product": "coffee starter kit",
+        "title": "Coffee kit with beans, grinder and mug in one frame"
+      },
+      {
+        "ref": "n:gen2:tpl-box-c3",
+        "product": "desk set",
+        "title": "Notebook, pen and organizer sold as one desk set"
+      },
+      {
+        "ref": "n:gen2:tpl-box-c4",
+        "product": "baby bath set",
+        "title": "Baby bath set with towel, sponge and wash"
+      }
+    ],
+    "tpl-pack": [
+      {
+        "ref": "n:gen2:tpl-pack-c1",
+        "product": "tea tin",
+        "title": "Tea tin design shown on a cafe shelf"
+      },
+      {
+        "ref": "n:gen2:tpl-pack-c2",
+        "product": "cereal box",
+        "title": "Cereal box mockup on a pantry shelf"
+      },
+      {
+        "ref": "n:gen2:tpl-pack-c3",
+        "product": "hot sauce bottle",
+        "title": "Hot sauce bottle mockup on a market shelf"
+      },
+      {
+        "ref": "n:gen2:tpl-pack-c4",
+        "product": "shipping box",
+        "title": "Printed shipping boxes stacked by a front door"
+      }
+    ],
+    "tpl-light": [
+      {
+        "ref": "n:gen2:tpl-light-c1",
+        "product": "perfume bottle",
+        "title": "Perfume bottle lit with a soft rim light"
+      },
+      {
+        "ref": "n:gen2:tpl-light-c2",
+        "product": "chrome espresso cup",
+        "title": "Chrome espresso cup with controlled reflections"
+      },
+      {
+        "ref": "n:gen2:tpl-light-c3",
+        "product": "nail polish bottle",
+        "title": "Glossy nail polish bottle on black acrylic"
+      },
+      {
+        "ref": "n:gen2:tpl-light-c4",
+        "product": "crystal glass",
+        "title": "Crystal glass against a clean gradient backdrop"
+      }
+    ],
+    "tpl-tryon": [
+      {
+        "ref": "n:gen2:tpl-tryon-c1",
+        "product": "denim jacket",
+        "title": "Denim jacket tried on by a model in a studio"
+      },
+      {
+        "ref": "n:gen2:tpl-tryon-c2",
+        "product": "floral summer dress",
+        "title": "Floral summer dress on a model by a window"
+      },
+      {
+        "ref": "n:gen2:tpl-tryon-c3",
+        "product": "hoodie",
+        "title": "Hoodie fit shown on a model from the side"
+      },
+      {
+        "ref": "n:gen2:tpl-tryon-c4",
+        "product": "tailored trousers",
+        "title": "Tailored trousers on a model, full length"
+      }
+    ],
+    "tpl-jewel": [
       {
         "ref": "n:gen2:tpl-jewel-28",
         "product": "silver pendant",
-        "title": "Open Silver pendant example scene applied"
-      },
-      {
-        "ref": "n:gen2:tpl-color-29",
-        "product": "sage canvas sneaker",
-        "title": "Open Sage canvas sneaker example scene arranged"
-      }
-    ],
-    "tpl-bf": [
-      {
-        "ref": "native-spark-ads",
-        "product": "green insulated bottle",
-        "title": "Smooth Green insulated bottle example scene packed"
-      },
-      {
-        "ref": "n:gen2:tpl-pack-30",
-        "product": "tea pouch",
-        "title": "Smooth Tea pouch example scene worn"
-      },
-      {
-        "ref": "n:gen2:tpl-tryon-31",
-        "product": "blue denim jacket",
-        "title": "Smooth Blue denim jacket example scene poured"
-      },
-      {
-        "ref": "n:gen2:tpl-sale-32",
-        "product": "red knit sweater",
-        "title": "Smooth Red knit sweater example scene organized"
-      }
-    ],
-    "tpl-limited-drop-alert-video": [
-      {
-        "ref": "pas-formula-ads",
-        "product": "white air purifier",
-        "title": "Textured White air purifier example scene measured"
-      },
-      {
-        "ref": "n:gen2:tpl-ugc-33",
-        "product": "reusable water bottle",
-        "title": "Textured Reusable water bottle example scene applied"
-      },
-      {
-        "ref": "n:gen2:video-ads-34",
-        "product": "yellow lunch box",
-        "title": "Textured Yellow lunch box example scene arranged"
-      },
-      {
-        "ref": "n:gen2:reserve-36",
-        "product": "ceramic bowl",
-        "title": "Textured Ceramic bowl example scene demonstrated"
-      }
-    ],
-    "tpl-product-feature-callout-video": [
-      {
-        "ref": "promo-launch-sale",
-        "product": "portable table lamp",
-        "title": "Simple Portable table lamp example scene styled"
-      },
-      {
-        "ref": "n:gen2:reserve-37",
-        "product": "black leather wallet",
-        "title": "Simple Black leather wallet example scene captured"
-      },
-      {
-        "ref": "n:gen2:reserve-38",
-        "product": "green kettle",
-        "title": "Simple Green kettle example scene ready"
-      },
-      {
-        "ref": "n:gen2:reserve-39",
-        "product": "leather belt",
-        "title": "Simple Leather belt example scene framed"
-      }
-    ],
-    "tpl-carousel-video-ad": [
-      {
-        "ref": "retargeting-urgency",
-        "product": "dark blue headphones",
-        "title": "Direct Dark blue headphones example scene displayed"
-      },
-      {
-        "ref": "n:gen2:reserve-40",
-        "product": "silver watch",
-        "title": "Direct Silver watch example scene packed"
-      },
-      {
-        "ref": "n:gen2:reserve-41",
-        "product": "blue tote bag",
-        "title": "Direct Blue tote bag example scene worn"
-      },
-      {
-        "ref": "n:gen2:reserve-43",
-        "product": "glass diffuser",
-        "title": "Direct Glass diffuser example scene poured"
-      }
-    ],
-    "tpl-spark-ads-style-video": [
-      {
-        "ref": "tiktok-reels-shorts",
-        "product": "white running shoes",
-        "title": "Elegant White running shoes example scene organized"
-      },
-      {
-        "ref": "n:gen2:reserve-44",
-        "product": "wood tray",
-        "title": "Elegant Wood tray example scene lit"
-      },
-      {
-        "ref": "n:gen2:reserve-46",
-        "product": "stainless bottle",
-        "title": "Elegant Stainless bottle example scene unboxed"
-      },
-      {
-        "ref": "n:gen2:reserve-47",
-        "product": "desk organizer",
-        "title": "Elegant Desk organizer example scene measured"
-      }
-    ],
-    "tpl-retargeting-video-ad": [
-      {
-        "ref": "trending-audio-sync",
-        "product": "transparent synthesizer",
-        "title": "Restful Transparent synthesizer example scene poured"
-      },
-      {
-        "ref": "n:gen2:reserve-49",
-        "product": "brown boot",
-        "title": "Restful Brown boot example scene organized"
-      },
-      {
-        "ref": "n:gen2:reserve-53",
-        "product": "wireless mouse",
-        "title": "Restful Wireless mouse example scene lit"
-      },
-      {
-        "ref": "n:gen2:reserve-54",
-        "product": "phone stand",
-        "title": "Restful Phone stand example scene unboxed"
-      }
-    ],
-    "ind-beauty-skincare": [
-      {
-        "ref": "g:bundle-sets/example-01",
-        "product": "skincare set",
-        "title": "Honest Skincare set in this category ready"
-      },
-      {
-        "ref": "g:commercial-lighting/example-01",
-        "product": "perfume bottle",
-        "title": "Honest Perfume bottle in this category framed"
-      },
-      {
-        "ref": "g:story-ad-vertical/example-01",
-        "product": "sunscreen tube",
-        "title": "Honest Sunscreen tube in this category displayed"
-      },
-      {
-        "ref": "n:gen2:ind-beauty-skincare-17",
-        "product": "amber face serum",
-        "title": "Honest Amber face serum in this category packed"
-      }
-    ],
-    "ind-fashion-clothing": [
-      {
-        "ref": "g:fashion-editorial/example-01",
-        "product": "linen clothing",
-        "title": "Curated Linen clothing in this category framed"
-      },
-      {
-        "ref": "g:on-model-generation/example-01",
-        "product": "olive backpack",
-        "title": "Curated Olive backpack in this category displayed"
-      },
-      {
-        "ref": "n:gen2:reserve-42",
-        "product": "cotton hoodie",
-        "title": "Curated Cotton hoodie in this category packed"
-      },
-      {
-        "ref": "n:gen2:reserve-50",
-        "product": "canvas cap",
-        "title": "Curated Canvas cap in this category worn"
-      }
-    ],
-    "ind-shoes": [
-      {
-        "ref": "g:feed-ad-still/example-01",
-        "product": "running shoes",
-        "title": "Practical Running shoes in this category organized"
-      },
-      {
-        "ref": "n:gen2:ind-shoes-15",
-        "product": "tan hiking boot",
-        "title": "Practical Tan hiking boot in this category lit"
-      },
-      {
-        "ref": "n:gen2:ind-shoes-73",
-        "product": "black trail shoe",
-        "title": "Practical Black trail shoe in this category unboxed"
-      },
-      {
-        "ref": "n:gen2:ind-shoes-74",
-        "product": "white court sneaker",
-        "title": "Practical White court sneaker in this category measured"
-      }
-    ],
-    "ind-jewelry-accessories": [
-      {
-        "ref": "g:jewelry-positioning/example-01",
-        "product": "silver pendant",
-        "title": "Weekend Silver pendant in this category worn"
-      },
-      {
-        "ref": "n:gen2:ind-jewelry-accessories-16",
-        "product": "gold hoop earrings",
-        "title": "Weekend Gold hoop earrings in this category poured"
+        "title": "Silver pendant resting on a linen neckline"
       },
       {
         "ref": "n:gen2:tpl-jewel-70",
         "product": "gold ring",
-        "title": "Weekend Gold ring in this category organized"
+        "title": "Gold ring on a hand holding a coffee cup"
+      },
+      {
+        "ref": "n:gen2:tpl-jewel-71",
+        "product": "silver bracelet",
+        "title": "Silver bracelet stacked on a wrist in daylight"
       },
       {
         "ref": "n:gen2:tpl-jewel-72",
         "product": "pearl earrings",
-        "title": "Weekend Pearl earrings in this category lit"
+        "title": "Pearl earrings shown on a model in profile"
+      }
+    ],
+    "tpl-look": [
+      {
+        "ref": "n:gen2:tpl-look-c1",
+        "product": "autumn outfit",
+        "title": "Autumn lookbook frame on a cobblestone street"
+      },
+      {
+        "ref": "n:gen2:tpl-look-c2",
+        "product": "linen two-piece set",
+        "title": "Minimal linen set in a sunlit studio"
+      },
+      {
+        "ref": "n:gen2:tpl-look-c3",
+        "product": "streetwear look",
+        "title": "Streetwear look against a concrete wall"
+      },
+      {
+        "ref": "n:gen2:tpl-look-c4",
+        "product": "evening dress",
+        "title": "Evening dress lookbook shot on a staircase"
+      }
+    ],
+    "tpl-head": [
+      {
+        "ref": "n:gen2:tpl-head-c1",
+        "product": "founder headshot",
+        "title": "Founder headshot on a soft gray backdrop"
+      },
+      {
+        "ref": "n:gen2:tpl-head-case-78",
+        "product": "consultant headshot",
+        "title": "Consultant headshot in warm window light"
+      },
+      {
+        "ref": "n:gen2:tpl-head-case-79",
+        "product": "designer headshot",
+        "title": "Designer headshot at a bright studio desk"
+      },
+      {
+        "ref": "n:gen2:tpl-head-case-80",
+        "product": "team headshot",
+        "title": "Team headshot with a soft office background"
+      }
+    ],
+    "tpl-ugc": [
+      {
+        "ref": "n:gen2:tpl-ugc-case-81",
+        "product": "reusable water bottle",
+        "title": "Water bottle snapped on a cluttered work desk"
+      },
+      {
+        "ref": "n:gen2:tpl-ugc-case-82",
+        "product": "wireless earbuds",
+        "title": "Earbuds case held up in a casual phone shot"
+      },
+      {
+        "ref": "n:gen2:tpl-ugc-case-83",
+        "product": "ceramic mug",
+        "title": "Ceramic mug at breakfast, shot across the table"
+      },
+      {
+        "ref": "n:gen2:tpl-ugc-c4",
+        "product": "face mist",
+        "title": "Face mist on a gym bench after a workout"
+      }
+    ],
+    "tpl-story": [
+      {
+        "ref": "n:gen2:tpl-story-c1",
+        "product": "sunscreen",
+        "title": "Full-screen sunscreen shot with space for text"
+      },
+      {
+        "ref": "n:gen2:tpl-story-c2",
+        "product": "canvas sneakers",
+        "title": "Vertical sneaker shot with room for a swipe-up"
+      },
+      {
+        "ref": "n:gen2:tpl-story-c3",
+        "product": "tall pillar candle",
+        "title": "Tall candle frame with blank space up top"
+      },
+      {
+        "ref": "n:gen2:tpl-story-c4",
+        "product": "smoothie bottle",
+        "title": "Smoothie bottle in a full-screen story layout"
+      }
+    ],
+    "tpl-sale": [
+      {
+        "ref": "n:gen2:tpl-sale-c1",
+        "product": "winter coat",
+        "title": "Winter coat key visual with space for the offer"
+      },
+      {
+        "ref": "n:gen2:tpl-sale-c2",
+        "product": "running sneakers",
+        "title": "Sneaker sale visual on a bold red backdrop"
+      },
+      {
+        "ref": "n:gen2:tpl-sale-c3",
+        "product": "skincare set",
+        "title": "Skincare promo scene with an empty headline area"
+      },
+      {
+        "ref": "n:gen2:tpl-sale-c4",
+        "product": "wool blanket",
+        "title": "Wool blanket stack framed for a sale banner"
+      }
+    ],
+    "tpl-howto": [
+      {
+        "ref": "how-to-tutorial",
+        "product": "steam iron",
+        "title": "Steam iron filled, then run down a shirt"
+      },
+      {
+        "ref": "n:gen2:tpl-howto-c2",
+        "product": "pour-over coffee set",
+        "title": "Pour-over set: filter placed before the first pour"
+      },
+      {
+        "ref": "n:gen2:tpl-howto-c3",
+        "product": "bike light",
+        "title": "Bike light clipped onto the handlebars"
+      },
+      {
+        "ref": "n:gen2:tpl-howto-c4",
+        "product": "self-watering planter",
+        "title": "Self-watering planter filled at the reservoir"
+      }
+    ],
+    "tpl-film": [
+      {
+        "ref": "trending-audio-sync",
+        "product": "transparent synth",
+        "title": "Clear synth keys glowing under neon light"
+      },
+      {
+        "ref": "n:gen2:tpl-film-c2",
+        "product": "perfume bottle",
+        "title": "Perfume bottle on dark water in moody light"
+      },
+      {
+        "ref": "n:gen2:tpl-film-c3",
+        "product": "dive watch",
+        "title": "Dive watch on a rock at sunrise"
+      },
+      {
+        "ref": "n:gen2:tpl-film-c4",
+        "product": "leather boots",
+        "title": "Leather boots on a misty forest trail"
+      }
+    ],
+    "tpl-beauty": [
+      {
+        "ref": "n:gen2:tpl-beauty-c1",
+        "product": "hydrating toner",
+        "title": "Toner soaked into a cotton pad at a sunny vanity"
+      },
+      {
+        "ref": "n:gen2:tpl-beauty-c2",
+        "product": "lip balm",
+        "title": "Lip balm ready on a vanity for the morning routine"
+      },
+      {
+        "ref": "n:gen2:tpl-beauty-c3",
+        "product": "jade face roller",
+        "title": "Face roller resting beside a jar of cream"
+      },
+      {
+        "ref": "n:gen2:tpl-beauty-c4",
+        "product": "sheet mask",
+        "title": "Sheet mask pouch opened on a bathroom counter"
+      }
+    ],
+    "tpl-drink": [
+      {
+        "ref": "food-beverage",
+        "product": "citrus soda",
+        "title": "Citrus soda poured over ice"
+      },
+      {
+        "ref": "n:gen2:tpl-drink-c2",
+        "product": "cold brew",
+        "title": "Cold brew poured from a glass bottle"
+      },
+      {
+        "ref": "n:gen2:tpl-drink-c3",
+        "product": "kombucha",
+        "title": "Kombucha bottle sweating on a picnic table"
+      },
+      {
+        "ref": "n:gen2:tpl-drink-c4",
+        "product": "granola",
+        "title": "Granola tipped into a bowl of yogurt"
+      }
+    ],
+    "tpl-home": [
+      {
+        "ref": "n:gen2:tpl-home-c1",
+        "product": "velvet hangers",
+        "title": "Closet rail reset with matching velvet hangers"
+      },
+      {
+        "ref": "n:gen2:tpl-home-c2",
+        "product": "pantry jars",
+        "title": "Pantry jars lined up after a shelf clear-out"
+      },
+      {
+        "ref": "n:gen2:tpl-home-c3",
+        "product": "under-sink bins",
+        "title": "Under-sink bins sliding into place"
+      },
+      {
+        "ref": "n:gen2:tpl-home-c4",
+        "product": "shoe rack",
+        "title": "Shoe rack filling a once-crowded entryway"
+      }
+    ],
+    "tpl-outfit": [
+      {
+        "ref": "n:gen2:tpl-outfit-c1",
+        "product": "knit sweater outfit",
+        "title": "Knit sweater outfit shown head to toe at home"
+      },
+      {
+        "ref": "n:gen2:tpl-outfit-c2",
+        "product": "denim outfit",
+        "title": "Full-length denim look in a bright hallway"
+      },
+      {
+        "ref": "n:gen2:tpl-outfit-c3",
+        "product": "linen suit",
+        "title": "Linen suit shown head to toe on a terrace"
+      },
+      {
+        "ref": "n:gen2:tpl-outfit-c4",
+        "product": "puffer jacket",
+        "title": "Puffer jacket outfit on a snowy street"
+      }
+    ],
+    "tpl-launch": [
+      {
+        "ref": "promo-launch-sale",
+        "product": "table lamp",
+        "title": "Table lamp switched on beside a reading chair"
+      },
+      {
+        "ref": "n:gen2:tpl-launch-c2",
+        "product": "water bottle new color",
+        "title": "New bottle color on a spotlit launch-day desk"
+      },
+      {
+        "ref": "n:gen2:tpl-launch-c3",
+        "product": "wireless charger",
+        "title": "Wireless charger revealed under a soft spotlight"
+      },
+      {
+        "ref": "n:gen2:tpl-launch-c4",
+        "product": "new candle scent",
+        "title": "New candle scent placed on a styled shelf"
+      }
+    ],
+    "tpl-compare": [
+      {
+        "ref": "n:gen2:tpl-compare-c1",
+        "product": "water bottles",
+        "title": "Two water bottle sizes side by side on a gym bench"
+      },
+      {
+        "ref": "n:gen2:tpl-compare-c2",
+        "product": "backpacks",
+        "title": "Two backpack sizes packed with the same gear"
+      },
+      {
+        "ref": "n:gen2:tpl-compare-c3",
+        "product": "lipstick finishes",
+        "title": "Matte and gloss lipstick finishes side by side"
+      },
+      {
+        "ref": "n:gen2:tpl-compare-c4",
+        "product": "planters",
+        "title": "Small and large planters on the same windowsill"
+      }
+    ],
+    "tpl-bf": [
+      {
+        "ref": "n:gen2:tpl-bf-c1",
+        "product": "robot vacuum",
+        "title": "Robot vacuum on a dark floor in dramatic light"
+      },
+      {
+        "ref": "n:gen2:tpl-bf-c2",
+        "product": "over-ear headphones",
+        "title": "Headphones under sharp deal-day lighting"
+      },
+      {
+        "ref": "n:gen2:tpl-bf-c3",
+        "product": "gift boxes",
+        "title": "Gift boxes stacked beside a laptop at night"
+      },
+      {
+        "ref": "n:gen2:tpl-bf-c4",
+        "product": "smartwatch",
+        "title": "Smartwatch on a black stand with a red glow"
+      }
+    ],
+    "tpl-limited-drop-alert-video": [
+      {
+        "ref": "n:gen2:tpl-limited-drop-alert-video-c1",
+        "product": "limited sneakers",
+        "title": "Limited sneaker pair on a concrete plinth"
+      },
+      {
+        "ref": "n:gen2:tpl-limited-drop-alert-video-c2",
+        "product": "small-batch hot sauce",
+        "title": "Small-batch hot sauce lined up on a counter"
+      },
+      {
+        "ref": "n:gen2:tpl-limited-drop-alert-video-c3",
+        "product": "canvas tote",
+        "title": "Restocked tote bags hanging on a studio rail"
+      },
+      {
+        "ref": "n:gen2:tpl-limited-drop-alert-video-c4",
+        "product": "ceramic vases",
+        "title": "Small-run ceramic vases on a gallery shelf"
+      }
+    ],
+    "tpl-product-feature-callout-video": [
+      {
+        "ref": "n:gen2:tpl-product-feature-callout-video-c1",
+        "product": "flip-top bottle",
+        "title": "Flip-top cap opened with one thumb"
+      },
+      {
+        "ref": "n:gen2:tpl-product-feature-callout-video-c2",
+        "product": "laptop backpack",
+        "title": "Backpack's hidden laptop sleeve pulled open"
+      },
+      {
+        "ref": "n:gen2:tpl-product-feature-callout-video-c3",
+        "product": "electric kettle",
+        "title": "Kettle lid popping open at the press of a button"
+      },
+      {
+        "ref": "n:gen2:tpl-product-feature-callout-video-c4",
+        "product": "auto-open umbrella",
+        "title": "Auto-open umbrella caught mid-bloom"
+      }
+    ],
+    "tpl-carousel-video-ad": [
+      {
+        "ref": "n:gen2:tpl-carousel-video-ad-c1",
+        "product": "skincare routine set",
+        "title": "Skincare steps laid out from cleanser to cream"
+      },
+      {
+        "ref": "n:gen2:tpl-carousel-video-ad-c2",
+        "product": "camping lantern",
+        "title": "Camping lantern lit beside a tent at dusk"
+      },
+      {
+        "ref": "n:gen2:tpl-carousel-video-ad-c3",
+        "product": "bento lunch box",
+        "title": "Lunch box opened to show each compartment"
+      },
+      {
+        "ref": "n:gen2:tpl-carousel-video-ad-c4",
+        "product": "tote bag",
+        "title": "Tote bag with its contents spread out beside it"
+      }
+    ],
+    "tpl-spark-ads-style-video": [
+      {
+        "ref": "n:gen2:tpl-spark-ads-style-video-c1",
+        "product": "phone tripod",
+        "title": "Phone tripod set up on a bedroom desk"
+      },
+      {
+        "ref": "n:gen2:tpl-spark-ads-style-video-c2",
+        "product": "snack pouch",
+        "title": "Snack pouch opened on a road-trip dashboard"
+      },
+      {
+        "ref": "n:gen2:tpl-spark-ads-style-video-c3",
+        "product": "lip oil",
+        "title": "Lip oil tucked into a gym bag pocket"
+      },
+      {
+        "ref": "n:gen2:tpl-spark-ads-style-video-c4",
+        "product": "pet brush",
+        "title": "Pet brush used on a dog on the couch"
+      }
+    ],
+    "tpl-retargeting-video-ad": [
+      {
+        "ref": "n:gen2:tpl-retargeting-video-ad-c1",
+        "product": "white sneakers",
+        "title": "Sneakers waiting by the door to be worn"
+      },
+      {
+        "ref": "n:gen2:tpl-retargeting-video-ad-c2",
+        "product": "serum bottle",
+        "title": "Serum bottle back on the bathroom shelf"
+      },
+      {
+        "ref": "n:gen2:tpl-retargeting-video-ad-c3",
+        "product": "knit throw blanket",
+        "title": "Knit throw draped on an empty armchair"
+      },
+      {
+        "ref": "n:gen2:tpl-retargeting-video-ad-c4",
+        "product": "hand coffee grinder",
+        "title": "Hand grinder ready on a morning counter"
+      }
+    ],
+    "ind-beauty-skincare": [
+      {
+        "ref": "beauty-routine",
+        "product": "face serum",
+        "title": "Amber serum dropped onto fingertips"
+      },
+      {
+        "ref": "n:gen2:ind-beauty-skincare-c2",
+        "product": "clay mask",
+        "title": "Clay mask jar open on a folded towel"
+      },
+      {
+        "ref": "n:gen2:ind-beauty-skincare-c3",
+        "product": "lipsticks",
+        "title": "Lipstick bullets in a row on pink acrylic"
+      },
+      {
+        "ref": "n:gen2:ind-beauty-skincare-c4",
+        "product": "sunscreen tube",
+        "title": "Sunscreen tube on a striped beach towel"
+      }
+    ],
+    "ind-fashion-clothing": [
+      {
+        "ref": "fashion-try-on-reel",
+        "product": "beige overshirt",
+        "title": "Overshirt checked in a fitting-room mirror"
+      },
+      {
+        "ref": "n:gen2:ind-fashion-clothing-c2",
+        "product": "knit cardigan",
+        "title": "Knit cardigan folded on a wooden bench"
+      },
+      {
+        "ref": "n:gen2:ind-fashion-clothing-c3",
+        "product": "pleated skirt",
+        "title": "Pleated skirt worn on a sunny sidewalk"
+      },
+      {
+        "ref": "n:gen2:ind-fashion-clothing-c4",
+        "product": "denim jeans",
+        "title": "Denim jeans laid flat with rolled cuffs"
+      }
+    ],
+    "ind-shoes": [
+      {
+        "ref": "limited-drop-alert",
+        "product": "trail running shoes",
+        "title": "Trail shoes laced up on a mountain path"
+      },
+      {
+        "ref": "n:gen2:ind-shoes-15",
+        "product": "hiking boot",
+        "title": "Tan hiking boot on a mossy rock"
+      },
+      {
+        "ref": "n:gen2:ind-shoes-74",
+        "product": "court sneaker",
+        "title": "White court sneaker in a clean side profile"
+      },
+      {
+        "ref": "n:gen2:ind-shoes-c4",
+        "product": "suede loafers",
+        "title": "Suede loafers on a herringbone floor"
+      }
+    ],
+    "ind-jewelry-accessories": [
+      {
+        "ref": "n:gen2:ind-jewelry-accessories-16",
+        "product": "gold hoop earrings",
+        "title": "Gold hoop earrings on a marble tray"
+      },
+      {
+        "ref": "n:gen2:ind-jewelry-accessories-c2",
+        "product": "leather watch",
+        "title": "Leather-strap watch on a wrist outdoors"
+      },
+      {
+        "ref": "n:gen2:ind-jewelry-accessories-c3",
+        "product": "silk scarf",
+        "title": "Silk scarf knotted on a handbag handle"
+      },
+      {
+        "ref": "n:gen2:ind-jewelry-accessories-c4",
+        "product": "sunglasses",
+        "title": "Sunglasses folded on a beach towel"
       }
     ],
     "ind-electronics": [
       {
-        "ref": "g:packshot-multi-angle/example-02",
-        "product": "wireless speaker",
-        "title": "Everyday Wireless speaker in this category demonstrated"
+        "ref": "trending-audio-sync",
+        "product": "transparent synth",
+        "title": "Synth pad lighting up on a studio desk"
       },
       {
-        "ref": "n:gen2:reserve-53",
-        "product": "wireless mouse",
-        "title": "Everyday Wireless mouse in this category shown"
+        "ref": "n:gen2:ind-electronics-5",
+        "product": "travel charger",
+        "title": "Travel charger plugged in at an airport gate"
       },
       {
-        "ref": "n:gen2:reserve-54",
-        "product": "phone stand",
-        "title": "Everyday Phone stand in this category styled"
+        "ref": "n:gen2:ind-electronics-c3",
+        "product": "smart speaker",
+        "title": "Smart speaker on a kitchen shelf"
       },
       {
-        "ref": "n:gen2:reserve-69",
-        "product": "travel adapter",
-        "title": "Everyday Travel adapter in this category captured"
+        "ref": "n:gen2:ind-electronics-c4",
+        "product": "mechanical keyboard",
+        "title": "Mechanical keyboard on a tidy desk"
       }
     ],
     "ind-health-wellness": [
       {
+        "ref": "n:gen2:ind-health-wellness-6",
+        "product": "yoga mat",
+        "title": "Yoga mat unrolled in a sunny living room"
+      },
+      {
         "ref": "n:gen2:ind-health-wellness-21",
         "product": "foam roller",
-        "title": "Studio Foam roller in this category ready"
+        "title": "Foam roller beside running shoes after a run"
       },
       {
-        "ref": "n:gen2:reserve-59",
-        "product": "yoga block",
-        "title": "Studio Yoga block in this category framed"
+        "ref": "n:gen2:ind-health-wellness-c3",
+        "product": "vitamin bottle",
+        "title": "Vitamin bottle by a glass of water at breakfast"
       },
       {
-        "ref": "n:protein-gym",
-        "product": "protein powder",
-        "title": "Studio Protein powder in this category displayed"
-      },
-      {
-        "ref": "n:yogamat-pack",
-        "product": "teal yoga mat",
-        "title": "Studio Teal yoga mat in this category packed"
+        "ref": "n:gen2:ind-health-wellness-c4",
+        "product": "resistance bands",
+        "title": "Resistance bands looped on a door handle"
       }
     ],
     "ind-food-drinks": [
       {
-        "ref": "n:coffee-beans",
-        "product": "coffee beans",
-        "title": "Outdoor Coffee beans in this category demonstrated"
-      },
-      {
-        "ref": "n:hotsauce-drip",
-        "product": "hot sauce",
-        "title": "Outdoor Hot sauce in this category shown"
-      },
-      {
-        "ref": "g:packaging-mockup/example-02",
-        "product": "tea pouch",
-        "title": "Outdoor Tea pouch in this category styled"
+        "ref": "food-beverage",
+        "product": "citrus soda",
+        "title": "Sparkling citrus drink poured into a glass"
       },
       {
         "ref": "n:gen2:ind-food-drinks-20",
-        "product": "berry granola jar",
-        "title": "Outdoor Berry granola jar in this category captured"
+        "product": "granola jar",
+        "title": "Berry granola jar on a breakfast table"
+      },
+      {
+        "ref": "n:gen2:ind-food-drinks-c3",
+        "product": "hot sauce",
+        "title": "Hot sauce dashed over street tacos"
+      },
+      {
+        "ref": "n:gen2:ind-food-drinks-c4",
+        "product": "loose-leaf tea",
+        "title": "Loose-leaf tea pouch beside a steaming cup"
       }
     ],
     "ind-home-living": [
       {
-        "ref": "n:planter-pack",
-        "product": "white planter",
-        "title": "Urban White planter in this category demonstrated"
-      },
-      {
-        "ref": "n:planter-shelf",
-        "product": "green houseplant",
-        "title": "Urban Green houseplant in this category shown"
-      },
-      {
-        "ref": "n:candle-flame",
-        "product": "white candle",
-        "title": "Urban White candle in this category styled"
-      },
-      {
-        "ref": "g:background-remove-replace/example-01",
-        "product": "home decor item",
-        "title": "Urban Home decor item in this category captured"
-      }
-    ],
-    "plat-tiktok": [
-      {
-        "ref": "g:story-ad-vertical/example-02",
-        "product": "sunscreen tube",
-        "title": "Coastal Sunscreen tube social composition unboxed"
-      },
-      {
-        "ref": "n:gen2:plat-tiktok-22",
-        "product": "green insulated bottle",
-        "title": "Coastal Green insulated bottle social composition measured"
-      },
-      {
-        "ref": "n:gen2:plat-instagram-ads-13",
-        "product": "fashion accessories",
-        "title": "Coastal Fashion accessories social composition applied"
-      },
-      {
-        "ref": "g:ecommerce-main-image/example-05",
-        "product": "ceramic mug",
-        "title": "Coastal Ceramic mug social composition arranged"
-      }
-    ],
-    "plat-instagram": [
-      {
-        "ref": "g:story-ad-vertical/example-03",
-        "product": "sunscreen tube",
-        "title": "Seasonal Sunscreen tube social composition arranged"
-      },
-      {
-        "ref": "g:ecommerce-main-image/example-06",
-        "product": "ceramic mug",
-        "title": "Seasonal Ceramic mug social composition demonstrated"
-      },
-      {
-        "ref": "g:ugc-still-ad/example-05",
-        "product": "green water bottle",
-        "title": "Seasonal Green water bottle social composition shown"
-      },
-      {
-        "ref": "n:sunglasses-cafe",
-        "product": "black sunglasses",
-        "title": "Seasonal Black sunglasses social composition styled"
-      }
-    ],
-    "plat-facebook": [
-      {
-        "ref": "g:ecommerce-main-image/example-07",
-        "product": "ceramic mug",
-        "title": "Festive Ceramic mug social composition applied"
-      },
-      {
-        "ref": "g:ugc-still-ad/example-06",
-        "product": "green water bottle",
-        "title": "Festive Green water bottle social composition arranged"
-      },
-      {
-        "ref": "n:sunglasses-flatlay",
-        "product": "black sunglasses",
-        "title": "Festive Black sunglasses social composition demonstrated"
-      },
-      {
-        "ref": "n:white-mug",
-        "product": "ceramic travel mug",
-        "title": "Festive Ceramic travel mug social composition shown"
-      }
-    ],
-    "plat-youtube-shorts": [
-      {
-        "ref": "g:story-ad-vertical/example-04",
-        "product": "sunscreen tube",
-        "title": "Launch Sunscreen tube social composition ready"
-      },
-      {
-        "ref": "g:ugc-still-ad/example-07",
-        "product": "green water bottle",
-        "title": "Launch Green water bottle social composition framed"
-      },
-      {
-        "ref": "n:sunglasses-pack",
-        "product": "black sunglasses",
-        "title": "Launch Black sunglasses social composition displayed"
-      },
-      {
-        "ref": "n:white-perfume",
-        "product": "clear perfume bottle",
-        "title": "Launch Clear perfume bottle social composition packed"
-      }
-    ],
-    "plat-amazon": [
-      {
-        "ref": "n:sunglasses-worn",
-        "product": "black sunglasses",
-        "title": "Limited Black sunglasses social composition unboxed"
-      },
-      {
-        "ref": "n:white-wallet",
-        "product": "brown leather wallet",
-        "title": "Limited Brown leather wallet social composition measured"
-      },
-      {
-        "ref": "n:gen2:reserve-46",
-        "product": "stainless bottle",
-        "title": "Limited Stainless bottle social composition applied"
-      },
-      {
-        "ref": "n:gen2:reserve-58",
-        "product": "pet leash",
-        "title": "Limited Pet leash social composition arranged"
-      }
-    ],
-    "plat-shopify": [
-      {
-        "ref": "n:gen2:reserve-60",
-        "product": "sunglasses",
-        "title": "Giftable Sunglasses social composition measured"
-      },
-      {
-        "ref": "n:gen2:reserve-62",
-        "product": "running shorts",
-        "title": "Giftable Running shorts social composition applied"
-      },
-      {
-        "ref": "n:gen2:reserve-66",
-        "product": "linen apron",
-        "title": "Giftable Linen apron social composition arranged"
-      },
-      {
-        "ref": "g:bundle-sets/example-02",
-        "product": "skincare set",
-        "title": "Giftable Skincare set social composition demonstrated"
-      }
-    ],
-    "occ-product-launch": [
-      {
-        "ref": "g:ecommerce-main-image/example-06",
-        "product": "ceramic mug",
-        "title": "Holiday Ceramic mug campaign scene captured"
-      },
-      {
-        "ref": "g:ugc-still-ad/example-05",
-        "product": "green water bottle",
-        "title": "Holiday Green water bottle campaign scene ready"
-      },
-      {
-        "ref": "n:sunglasses-worn",
-        "product": "black sunglasses",
-        "title": "Holiday Black sunglasses campaign scene framed"
-      },
-      {
-        "ref": "n:white-perfume",
-        "product": "clear perfume bottle",
-        "title": "Holiday Clear perfume bottle campaign scene displayed"
-      }
-    ],
-    "occ-sale-discount": [
-      {
-        "ref": "g:fashion-editorial/example-03",
-        "product": "linen clothing",
-        "title": "Social Linen clothing campaign scene styled"
-      },
-      {
-        "ref": "g:on-model-generation/example-02",
-        "product": "olive backpack",
-        "title": "Social Olive backpack campaign scene captured"
-      },
-      {
-        "ref": "n:gen2:reserve-51",
-        "product": "wool scarf",
-        "title": "Social Wool scarf campaign scene ready"
-      },
-      {
-        "ref": "n:gen2:reserve-52",
-        "product": "striped tee",
-        "title": "Social Striped tee campaign scene framed"
-      }
-    ],
-    "occ-black-friday": [
-      {
-        "ref": "g:ecommerce-main-image/example-07",
-        "product": "ceramic mug",
-        "title": "Vertical Ceramic mug campaign scene shown"
-      },
-      {
-        "ref": "g:ugc-still-ad/example-06",
-        "product": "green water bottle",
-        "title": "Vertical Green water bottle campaign scene styled"
-      },
-      {
-        "ref": "n:white-wallet",
-        "product": "brown leather wallet",
-        "title": "Vertical Brown leather wallet campaign scene captured"
-      },
-      {
-        "ref": "n:gen2:reserve-58",
-        "product": "pet leash",
-        "title": "Vertical Pet leash campaign scene ready"
-      }
-    ],
-    "occ-holidays": [
-      {
-        "ref": "n:coffee-counter",
-        "product": "coffee beans",
-        "title": "Square Coffee beans campaign scene measured"
-      },
-      {
-        "ref": "n:drink-vertical",
-        "product": "sparkling citrus drink",
-        "title": "Square Sparkling citrus drink campaign scene applied"
-      },
-      {
-        "ref": "n:hotsauce-pack",
-        "product": "hot sauce",
-        "title": "Square Hot sauce campaign scene arranged"
-      },
-      {
-        "ref": "g:packaging-mockup/example-01",
-        "product": "tea pouch",
-        "title": "Square Tea pouch campaign scene demonstrated"
-      }
-    ],
-    "url-to-video": [
-      {
-        "ref": "unboxing-experience",
-        "product": "wireless headphones",
-        "title": "Storefront Wireless headphones video scene measured"
-      },
-      {
-        "ref": "n:gen2:tpl-size-14",
-        "product": "canvas backpack",
-        "title": "Storefront Canvas backpack scene applied"
+        "ref": "home-organization",
+        "product": "drawer dividers",
+        "title": "Drawer dividers bringing order to a kitchen drawer"
       },
       {
         "ref": "n:gen2:ind-home-living-19",
         "product": "oak desk lamp",
-        "title": "Storefront Oak desk lamp scene arranged"
+        "title": "Oak desk lamp lit in a reading nook"
+      },
+      {
+        "ref": "n:gen2:ind-home-living-c3",
+        "product": "linen bedding",
+        "title": "Linen bedding on a freshly made bed"
+      },
+      {
+        "ref": "n:gen2:ind-home-living-c4",
+        "product": "wall shelf",
+        "title": "Wall shelf styled with plants and books"
+      }
+    ],
+    "plat-tiktok": [
+      {
+        "ref": "tiktok-reels-shorts-v",
+        "product": "running shoes",
+        "title": "Running shoes laced up for a quick vertical hook"
+      },
+      {
+        "ref": "n:gen2:plat-tiktok-c2",
+        "product": "hair claw set",
+        "title": "Hair claws tried on in a bathroom mirror"
+      },
+      {
+        "ref": "n:gen2:plat-tiktok-c3",
+        "product": "mini fridge",
+        "title": "Mini fridge stocked in a dorm room"
+      },
+      {
+        "ref": "n:gen2:plat-tiktok-c4",
+        "product": "glow phone case",
+        "title": "Glow-in-the-dark phone case in a dim room"
+      }
+    ],
+    "plat-instagram": [
+      {
+        "ref": "carousel-storytelling-v",
+        "product": "commuter backpack",
+        "title": "Commuter backpack opened in a cafe, vertical cut"
+      },
+      {
+        "ref": "n:gen2:plat-instagram-c2",
+        "product": "silk pillowcase",
+        "title": "Silk pillowcase on an unmade bed in soft light"
+      },
+      {
+        "ref": "n:gen2:plat-instagram-c3",
+        "product": "matcha set",
+        "title": "Matcha set arranged on a linen tablecloth"
+      },
+      {
+        "ref": "n:gen2:plat-instagram-c4",
+        "product": "eyeglasses",
+        "title": "Gold-rim eyeglasses on a wooden tray"
+      }
+    ],
+    "plat-facebook": [
+      {
+        "ref": "retargeting-urgency-v",
+        "product": "headphones",
+        "title": "Headphones packed into a bag for the commute"
+      },
+      {
+        "ref": "n:gen2:plat-facebook-c2",
+        "product": "hose nozzle",
+        "title": "Garden hose nozzle spraying over a lawn"
+      },
+      {
+        "ref": "n:gen2:plat-facebook-c3",
+        "product": "kids rain boots",
+        "title": "Kids' rain boots beside a puddle"
+      },
+      {
+        "ref": "n:gen2:plat-facebook-c4",
+        "product": "cast-iron skillet",
+        "title": "Cast-iron skillet with eggs on the stove"
+      }
+    ],
+    "plat-youtube-shorts": [
+      {
+        "ref": "how-to-tutorial-v",
+        "product": "steam iron",
+        "title": "Steam iron smoothing a shirt in a vertical cut"
+      },
+      {
+        "ref": "n:gen2:plat-youtube-shorts-c2",
+        "product": "electric toothbrush",
+        "title": "Electric toothbrush on a bathroom counter"
+      },
+      {
+        "ref": "n:gen2:plat-youtube-shorts-c3",
+        "product": "camping stove",
+        "title": "Camping stove boiling water at a campsite"
+      },
+      {
+        "ref": "n:gen2:plat-youtube-shorts-c4",
+        "product": "mini bike pump",
+        "title": "Mini bike pump topping up a tire"
+      }
+    ],
+    "plat-amazon": [
+      {
+        "ref": "n:gen2:plat-amazon-c1",
+        "product": "bluetooth speaker",
+        "title": "Speaker main image on pure white"
+      },
+      {
+        "ref": "n:gen2:plat-amazon-c2",
+        "product": "throw blanket",
+        "title": "Throw blanket folded to show its texture"
+      },
+      {
+        "ref": "n:gen2:plat-amazon-c3",
+        "product": "kitchen scale",
+        "title": "Kitchen scale in use with a bowl of flour"
+      },
+      {
+        "ref": "n:gen2:plat-amazon-c4",
+        "product": "dog harness",
+        "title": "Dog harness worn on a walk in the park"
+      }
+    ],
+    "plat-shopify": [
+      {
+        "ref": "n:gen2:plat-shopify-c1",
+        "product": "ceramic planter",
+        "title": "Ceramic planter styled for a store banner"
+      },
+      {
+        "ref": "n:gen2:plat-shopify-c2",
+        "product": "linen apron",
+        "title": "Linen apron worn in a home kitchen"
+      },
+      {
+        "ref": "n:gen2:plat-shopify-c3",
+        "product": "candle trio",
+        "title": "Candle trio for a collection tile"
+      },
+      {
+        "ref": "n:gen2:plat-shopify-c4",
+        "product": "leather notebook",
+        "title": "Leather notebook flat lay for a product page"
+      }
+    ],
+    "occ-product-launch": [
+      {
+        "ref": "promo-launch-sale",
+        "product": "table lamp",
+        "title": "Table lamp revealed for launch day"
+      },
+      {
+        "ref": "n:gen2:occ-product-launch-c2",
+        "product": "new sneaker colorway",
+        "title": "New sneaker colorway on a spotlit plinth"
+      },
+      {
+        "ref": "n:gen2:occ-product-launch-c3",
+        "product": "debut fragrance",
+        "title": "Debut fragrance unwrapped from tissue paper"
+      },
+      {
+        "ref": "n:gen2:occ-product-launch-c4",
+        "product": "coffee bags",
+        "title": "First-batch coffee bags lined up on a counter"
+      }
+    ],
+    "occ-sale-discount": [
+      {
+        "ref": "discount-free-shipping",
+        "product": "coffee beans",
+        "title": "Coffee beans weighed into a steel cup"
+      },
+      {
+        "ref": "n:gen2:occ-sale-discount-c2",
+        "product": "skincare minis",
+        "title": "Skincare minis bundled on a tray for a sale"
+      },
+      {
+        "ref": "n:gen2:occ-sale-discount-c3",
+        "product": "summer dresses",
+        "title": "Summer dresses on a rail for an end-of-season sale"
+      },
+      {
+        "ref": "n:gen2:occ-sale-discount-c4",
+        "product": "kitchen knife set",
+        "title": "Knife set on a board with room for the offer"
+      }
+    ],
+    "occ-black-friday": [
+      {
+        "ref": "black-friday-countdown-v",
+        "product": "folding e-bike",
+        "title": "Folding e-bike checked over before the big deal"
+      },
+      {
+        "ref": "n:gen2:occ-black-friday-c2",
+        "product": "gaming headset",
+        "title": "Gaming headset under dramatic dark lighting"
+      },
+      {
+        "ref": "n:gen2:occ-black-friday-c3",
+        "product": "air fryer",
+        "title": "Air fryer on a sleek counter in moody light"
+      },
+      {
+        "ref": "n:gen2:occ-black-friday-c4",
+        "product": "cashmere scarf",
+        "title": "Cashmere scarf gift boxes stacked in shadow"
+      }
+    ],
+    "occ-holidays": [
+      {
+        "ref": "n:gen2:occ-holidays-11",
+        "product": "scented candle",
+        "title": "Scented candle on a holiday table with pine"
+      },
+      {
+        "ref": "n:gen2:occ-holidays-c2",
+        "product": "gift box",
+        "title": "Ribboned gift box waiting by the fireplace"
+      },
+      {
+        "ref": "n:gen2:occ-holidays-c3",
+        "product": "hot cocoa set",
+        "title": "Hot cocoa set on a snowy windowsill"
+      },
+      {
+        "ref": "n:gen2:occ-holidays-c4",
+        "product": "knit stockings",
+        "title": "Knit stockings hung on the mantel"
+      }
+    ],
+    "url-to-video": [
+      {
+        "ref": "url-to-ad-a-v",
+        "product": "beige mug",
+        "title": "Mug picked up beside an open laptop"
+      },
+      {
+        "ref": "n:gen2:url-to-video-c2",
+        "product": "desk organizer",
+        "title": "Desk organizer shown on a tidy workspace"
+      },
+      {
+        "ref": "n:gen2:url-to-video-c3",
+        "product": "reusable straws",
+        "title": "Reusable straw set beside an iced drink"
       }
     ]
   }

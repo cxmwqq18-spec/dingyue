@@ -2861,277 +2861,685 @@
    "h": 960,
    "alt": "A hand views a product page, picks up a beige mug, and takes a drink.",
    "variants": [
-    640,
-    1280
+    540
+   ],
+   "clipPoster": true
+  },
+  "social-proof-animation-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands use a green water bottle on a desk while animated rating icons appear.",
+   "variants": [
+    540
    ],
    "clipPoster": true
   }
  },
  "gen2": {
+  "gen2:photo-hub-c1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Leather crossbody bag, front view, on a pure white background.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:photo-hub-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Linen throw pillow styled on a light sofa in soft morning light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:photo-hub-c3": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Knit beanie worn by an adult outdoors on a cold day, head and shoulders.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:image-to-video-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Ceramic pour-over coffee dripper on a sunlit kitchen counter with a little steam.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:image-to-video-c3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Red lipstick standing uncapped on a white marble vanity.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:video-ads-c2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Hand holding up a phone in a pastel phone case inside a busy cafe, casual handheld look.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:video-ads-c3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Insulated lunch bag being packed on a kitchen island in morning light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:product-videos-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Cordless handheld vacuum lifting crumbs off a dark fabric sofa.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:product-videos-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Matte gooseneck electric kettle pouring a slow stream into a mug.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:unboxing-videos-c1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands lifting a ceramic mug set out of a gift box with paper filling.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:unboxing-videos-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Kraft mailer box opened to reveal a candle wrapped in tissue paper.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:unboxing-videos-c3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Hands opening a matte black watch box on a walnut desk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:before-after-videos-c1": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Sofa cushion covered in pet hair on one side, the same cushion clean after a lint roller on the other.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:before-after-videos-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Scuffed white sneaker on the left, the same sneaker cleaned on the right, plain floor.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:before-after-videos-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Wooden cutting board, left half dry and pale, right half freshly oiled and rich.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:before-after-videos-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Tangled cables on a desk on one side, the same cables tidied into a cable box on the other.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:spokesperson-videos-c1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Adult holding a toner bottle at eye level in a bright bathroom, lips closed, gentle smile.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
   "gen2:spokesperson-videos-1": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Adult holding a matte black smart speaker in a bright modern living room, soft window light, product on the left and clean negative space on the right",
+   "w": 1280,
+   "h": 2276,
+   "alt": "Adult holding a matte black smart speaker in a bright living room, lips closed.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:tpl-product-feature-callout-video-2": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Close view of a white foaming cleanser pump pressed once by a clean hand, foam landing in the palm, bright bathroom light, uncluttered realistic ecommerce advertising photography.",
+  "gen2:spokesperson-videos-c3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Adult holding a protein shaker bottle in a gym after a workout, lips closed.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:tpl-limited-drop-alert-video-3": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Coral trail running shoe resting on dark rocks with the sole and upper both visible, mountain light, clean negative space for a web caption",
+  "gen2:spokesperson-videos-c4": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Adult holding an open hardcover planner with blank pages at a home desk, lips closed.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:tpl-retargeting-video-ad-4": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Dark blue over-ear headphones being placed into a commuter bag by a hand, blurred product page on a laptop in the background with, soft desk light",
+  "gen2:white-background-c1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Brushed steel water bottle on a pure white background, soft contact shadow.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-electronics-5": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Teal travel charger on a clean office desk beside a phone and a small pouch, soft morning window light, varied materials",
+  "gen2:white-background-c2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Ceramic table lamp with linen shade on a pure white background.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-health-wellness-6": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Teal yoga mat partly unrolled in a sunlit living room with a plain water bottle and folded towel, calm morning light",
+  "gen2:white-background-c3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Wooden toy train set on a pure white background.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-home-living-7": {
-   "w": 1200,
-   "h": 900,
-   "alt": "A hand placing cutlery into gray drawer dividers in a tidy kitchen, clear before and after areas, natural daylight",
+  "gen2:lifestyle-photos-c1": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Soy candle glowing on a bedside table at dusk.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-food-drinks-8": {
-   "w": 1200,
-   "h": 900,
-   "alt": "sparkling citrus drink bottle beside oranges and a glass filled with ice, a pouring action frozen midstream, bright kitchen light",
+  "gen2:lifestyle-photos-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Bamboo cutting board with sliced fruit on a kitchen counter.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:plat-facebook-ads-9": {
-   "w": 1024,
-   "h": 1024,
-   "alt": "A varied home product and its simple package arranged in a square social feed composition, left side left open for HTML copy, soft studio light",
+  "gen2:lifestyle-photos-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Canvas weekender bag on the back seat of a car, sunny road-trip light.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:plat-youtube-shorts-ads-10": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Black espresso machine dispensing coffee into a clear cup in a vertical composition, crisp steam and hand detail, warm cafe light",
+  "gen2:model-photos-c1": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Adult wearing a camel wool coat on a city sidewalk, full body.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:occ-holidays-11": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Ceramic scented candle beside wrapped gift paper and evergreen branches on a warm holiday table, cozy golden light, product fully visible",
+  "gen2:model-photos-c2": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Adult carrying a leather messenger bag across the body in an office lobby.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:blog-ai-video-review-checklist-12": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "product, color swatches and a laptop showing a video timeline on a clean review desk, bright neutral light",
+  "gen2:model-photos-c3": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Layered gold necklaces on a model's neckline, close crop, soft daylight.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:plat-instagram-ads-13": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Fashion accessories arranged on a small cafe table with a casually dressed person cropped above the mouth, soft street light, composition leaves room for a vertical crop",
+  "gen2:change-background-c1": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Blue ceramic vase on a sunny windowsill.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:tpl-size-14": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Canvas backpack held beside a small rolling suitcase and a hand for clear scale, bright airport lounge light, simple background with no writing",
+  "gen2:change-background-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Face cream jar on wet stone beside a pool.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-shoes-15": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Tan hiking boot on a gravel trail beside a folded map, clear tread detail, bright morning light",
+  "gen2:change-background-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Brown leather wallet on a marble cafe table.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-jewelry-accessories-16": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Gold hoop earrings arranged on a linen tray beside a small jewelry box, soft window light",
+  "gen2:social-ad-photos-c1": {
+   "w": 1280,
+   "h": 1600,
+   "alt": "Iced coffee can on a picnic blanket in bright summer light, empty sky at the top.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-beauty-skincare-17": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Amber face serum bottle beside a folded towel and green leaves on a bright bathroom shelf",
+  "gen2:social-ad-photos-c2": {
+   "w": 1280,
+   "h": 1600,
+   "alt": "Compact wireless speaker on a pool deck in sunshine.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-fashion-clothing-18": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Linen overshirt on a simple wooden hanger in a bright dressing room, natural side light",
+  "gen2:social-ad-photos-c3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Hand cream tube with lavender sprigs on a soft purple surface.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-home-living-19": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Oak desk lamp switched on beside a book and small plant in a calm home office, warm evening light",
+  "gen2:tpl-angle-c1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Over-ear headphones, straight-on front view on a light gray studio sweep.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-food-drinks-20": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Berry granola in a glass jar beside a bowl and spoon on a sunny breakfast table",
+  "gen2:tpl-angle-c2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Hiking backpack turned to show the back panel and shoulder straps, studio.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-health-wellness-21": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Blue foam roller beside a yoga mat and folded towel in a sunlit studio, calm morning light",
+  "gen2:tpl-angle-c3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Burr coffee grinder photographed from directly above, studio.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:plat-tiktok-22": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Green insulated bottle lifted from a tote bag in a vertical desk scene, bright natural light",
+  "gen2:tpl-angle-c4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Office chair in a three-quarter studio view on light gray.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:plat-amazon-23": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "White running shoe centered on a clean white studio surface with a soft grounded shadow",
+  "gen2:tpl-detail-c1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Macro close-up of stitching on a leather card holder edge.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:plat-shopify-24": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Ceramic travel mug on a styled desk with a notebook and soft window light, clean store photo",
+  "gen2:tpl-detail-c2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Macro close-up of the knit texture of a merino sweater.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:occ-product-launch-25": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Portable table lamp switched on beside a new book on a clean side table, warm launch lighting",
+  "gen2:tpl-detail-c3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Macro close-up of the brushed metal edge of a watch case.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:occ-sale-discount-26": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Winter jacket folded beside a scarf and gloves on a snowy bench, crisp daylight",
+  "gen2:tpl-detail-c4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Macro close-up of glaze drips on a handmade ceramic mug rim.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:occ-black-friday-27": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Black folding electric bicycle beside a dark wall with a single warm spotlight, product fully visible",
+  "gen2:tpl-size-c1": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Mini backpack held by an adult at hip height, showing its size against the body.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-size-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Small travel candle next to a coffee cup on a table for size.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-size-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Aluminum phone stand holding a smartphone with a dark screen on a desk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-size-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Small ceramic planter on a bookshelf next to plain paperback spines.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-color-c1": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Four insulated tumblers in four colors lined up in the same studio light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-color-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Three knit beanies in three shades on matching wooden stools.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-color-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Five phone cases in five colors fanned out on a plain surface.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-color-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Three cork-and-foam yoga blocks in three colors stacked side by side.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-box-c1": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Skincare trio of cleanser, serum and cream arranged with an open gift box,.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-box-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Coffee starter kit: bag of beans, hand grinder and mug together.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-box-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Desk set of notebook, pen and organizer tray in one frame.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-box-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Baby bath set with hooded towel, sponge and wash bottle.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-pack-c1": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Tea tin with an abstract color-block design on a cafe shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-pack-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Cereal box with abstract pattern artwork on a pantry shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-pack-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Hot sauce bottle with a blank graphic label on a farmers market shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-pack-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Printed shipping boxes with a simple pattern stacked by a front door.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-light-c1": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Glass perfume bottle with a soft rim light on a dark background.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-light-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Chrome espresso cup with controlled, clean reflections on a gradient.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-light-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Glossy nail polish bottle on black acrylic with a sharp reflection.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-light-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Crystal tumbler glass on a clean gradient backdrop with crisp highlights.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-tryon-c1": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Model wearing a denim jacket in a plain studio, full upper body.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-tryon-c2": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Model wearing a floral summer dress by a bright window.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-tryon-c3": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Model wearing a gray hoodie, side view to show the fit.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-tryon-c4": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Model wearing tailored trousers, full length, neutral studio.",
    "variants": [
     640,
     1280
@@ -3139,419 +3547,9 @@
    "source": "gen-list.json"
   },
   "gen2:tpl-jewel-28": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Silver pendant necklace resting at a collarbone in soft studio light, clear chain and pendant detail",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:tpl-color-29": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Sage canvas sneaker on a neutral studio surface with clean side light and visible texture",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:tpl-pack-30": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Tea pouch standing beside a matching box on a calm kitchen counter, soft morning light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:tpl-tryon-31": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Adult wearing a plain blue denim jacket in a bright fitting room, relaxed front pose",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:tpl-sale-32": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Red knit sweater folded with winter accessories on a clean seasonal table, soft light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:tpl-ugc-33": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Adult hand holding a reusable water bottle in a bright kitchen, natural phone photo composition",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:video-ads-34": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Yellow lunch box opened on a kitchen counter with fruit beside it, vertical natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-35": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Linen shirt arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-36": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Ceramic bowl arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-37": {
-   "w": 1536,
-   "h": 900,
-   "alt": "Black leather wallet arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-38": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Green kettle arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-39": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Leather belt arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-40": {
-   "w": 1536,
-   "h": 900,
-   "alt": "Silver watch arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-41": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Blue tote bag arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-42": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Cotton hoodie arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-43": {
-   "w": 1536,
-   "h": 900,
-   "alt": "Glass diffuser arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-44": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Wood tray arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-45": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Travel pouch arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-46": {
-   "w": 1536,
-   "h": 900,
-   "alt": "Stainless bottle arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-47": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Desk organizer arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-48": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Hand cream arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-49": {
-   "w": 1536,
-   "h": 900,
-   "alt": "Brown boot arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-50": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Canvas cap arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-51": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Wool scarf arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-52": {
-   "w": 1536,
-   "h": 900,
-   "alt": "Striped tee arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-53": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Wireless mouse arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-54": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Phone stand arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-55": {
-   "w": 1536,
-   "h": 900,
-   "alt": "Coffee grinder arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-56": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Soap bar arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-57": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Plant pot arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-58": {
-   "w": 1536,
-   "h": 900,
-   "alt": "Pet leash arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-59": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Yoga block arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-60": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Sunglasses arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-61": {
-   "w": 1536,
-   "h": 900,
-   "alt": "Crossbody bag arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-62": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Running shorts arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-63": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Hair brush arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-64": {
-   "w": 1536,
-   "h": 900,
-   "alt": "Tea tin arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-65": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Cutting board arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-66": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Linen apron arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-67": {
-   "w": 1536,
-   "h": 900,
-   "alt": "Night cream arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-68": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Folding chair arranged in a clean styled product scene with soft natural light",
-   "variants": [
-    640,
-    1280
-   ],
-   "source": "gen-list.json"
-  },
-  "gen2:reserve-69": {
-   "w": 1024,
-   "h": 1536,
-   "alt": "Travel adapter arranged in a clean styled product scene with soft natural light",
+   "w": 1280,
+   "h": 1707,
+   "alt": "Silver pendant necklace worn on a linen neckline.",
    "variants": [
     640,
     1280
@@ -3559,9 +3557,9 @@
    "source": "gen-list.json"
   },
   "gen2:tpl-jewel-70": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Gold ring resting on a hand in soft studio light with a clear polished band",
+   "w": 1280,
+   "h": 1707,
+   "alt": "Gold ring on a hand holding a coffee cup.",
    "variants": [
     640,
     1280
@@ -3569,9 +3567,9 @@
    "source": "gen-list.json"
   },
   "gen2:tpl-jewel-71": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Silver bracelet worn on a wrist beside a linen sleeve in bright window light",
+   "w": 1280,
+   "h": 1707,
+   "alt": "Silver bracelet stacked on a wrist in daylight.",
    "variants": [
     640,
     1280
@@ -3579,59 +3577,59 @@
    "source": "gen-list.json"
   },
   "gen2:tpl-jewel-72": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Pearl earrings displayed beside a small jewelry box on a pale stone surface, soft light",
+   "w": 1280,
+   "h": 1707,
+   "alt": "Pearl earrings on a model shown in profile.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-shoes-73": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Black trail shoe on a rocky path with the tread clearly visible, crisp morning light",
+  "gen2:tpl-look-c1": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Editorial lookbook frame of an autumn outfit on a cobblestone street.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-shoes-74": {
-   "w": 1200,
-   "h": 900,
-   "alt": "White court sneaker on a clean court surface with a soft side shadow, bright daylight",
+  "gen2:tpl-look-c2": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Minimal linen two-piece set on a model in a sunlit studio.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:ind-shoes-75": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Red running shoe beside a track lane with its sole and laces visible, morning light",
+  "gen2:tpl-look-c3": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Streetwear look against a concrete wall, editorial framing.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:spokesperson-videos-76": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Adult holding a matte black speaker toward the camera in a bright living room, natural window light",
+  "gen2:tpl-look-c4": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Evening dress lookbook shot on a stone staircase.",
    "variants": [
     640,
     1280
    ],
    "source": "gen-list.json"
   },
-  "gen2:spokesperson-videos-77": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Adult presenting a blue desk microphone from the side in a bright home office, soft light",
+  "gen2:tpl-head-c1": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Founder headshot on a soft gray backdrop.",
    "variants": [
     640,
     1280
@@ -3639,9 +3637,9 @@
    "source": "gen-list.json"
   },
   "gen2:tpl-head-case-78": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Professional headshot of a smiling adult in a neutral studio, shoulders-up framing, soft window light, closed mouth, plain background",
+   "w": 1280,
+   "h": 1707,
+   "alt": "Professional headshot in warm window light.",
    "variants": [
     640,
     1280
@@ -3649,9 +3647,9 @@
    "source": "gen-list.json"
   },
   "gen2:tpl-head-case-79": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Creator headshot of an adult with a relaxed closed-mouth expression, warm office background, soft daylight, shoulders-up portrait",
+   "w": 1280,
+   "h": 1707,
+   "alt": "Creator headshot at a bright studio desk.",
    "variants": [
     640,
     1280
@@ -3659,9 +3657,9 @@
    "source": "gen-list.json"
   },
   "gen2:tpl-head-case-80": {
-   "w": 1200,
-   "h": 900,
-   "alt": "Team member headshot, adult framed from the shoulders up in a bright office, natural window light, closed mouth, clean background",
+   "w": 1280,
+   "h": 1707,
+   "alt": "Team member headshot with a soft office background.",
    "variants": [
     640,
     1280
@@ -3669,9 +3667,9 @@
    "source": "gen-list.json"
   },
   "gen2:tpl-ugc-case-81": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Creator-style product photo of an adult holding a clear reusable water bottle in a bright kitchen, candid side angle, closed mouth, natural daylight",
+   "w": 1280,
+   "h": 1600,
+   "alt": "Reusable water bottle snapped on a cluttered work desk, phone-camera look.",
    "variants": [
     640,
     1280
@@ -3679,9 +3677,9 @@
    "source": "gen-list.json"
   },
   "gen2:tpl-ugc-case-82": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Creator-style product photo of an adult holding white wireless earbuds beside a desk, candid home setting, closed mouth, soft daylight",
+   "w": 1280,
+   "h": 1600,
+   "alt": "Earbuds case held up in a casual phone shot.",
    "variants": [
     640,
     1280
@@ -3689,9 +3687,1229 @@
    "source": "gen-list.json"
   },
   "gen2:tpl-ugc-case-83": {
-   "w": 1536,
-   "h": 1024,
-   "alt": "Creator-style product photo of an adult lifting a ceramic mug at a breakfast table, candid home scene, closed mouth, warm morning light",
+   "w": 1280,
+   "h": 1600,
+   "alt": "Ceramic mug at breakfast, shot from across the table.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-ugc-c4": {
+   "w": 1280,
+   "h": 1600,
+   "alt": "Face mist bottle on a gym bench after a workout, phone-camera look.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-story-c1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Sunscreen bottle full-screen vertical, beach light, empty space at the top.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-story-c2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Canvas sneakers on steps in a vertical frame, empty space at the bottom.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-story-c3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Tall pillar candle in a vertical frame with blank wall space above.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-story-c4": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Smoothie bottle on a kitchen counter, vertical layout.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-sale-c1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Winter coat on a model in snow, empty area on the right for an offer.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-sale-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Running sneakers on a bold red backdrop with open space.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-sale-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Skincare bottles on pastel podiums, empty headline area.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-sale-c4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Folded wool blankets stacked on a chair, warm light, open space for a banner.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-howto-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands placing a paper filter into a pour-over dripper over a carafe.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-howto-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands clipping a small bike light onto handlebars.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-howto-c4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands filling the water reservoir of a self-watering planter.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-film-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Perfume bottle on dark rippling water, dramatic low light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-film-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Dive watch on a rock at sunrise, wide cinematic frame.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-film-c4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Leather boots on a misty forest trail, cinematic depth.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-beauty-c1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Hydrating toner patted onto a cotton pad at a sunny vanity.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-beauty-c2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Lip balm tube on a vanity next to a round mirror, morning routine.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-beauty-c3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Jade face roller resting beside a jar of cream on a bathroom shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-beauty-c4": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Sheet mask pouch with opened on a bathroom counter.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-drink-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Cold brew coffee poured from a glass bottle into a tumbler with ice.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-drink-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Kombucha bottle sweating on a picnic table.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-drink-c4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Granola tipped from a pouch into a bowl of yogurt.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-home-c1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Closet rail with matching velvet hangers after a reset.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-home-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Matching glass pantry jars lined up on a cleared shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-home-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Clear storage bins sliding into place under a kitchen sink.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-home-c4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Slim shoe rack neatly filled in a small entryway.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-outfit-c1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Knit sweater and wide-leg trousers outfit shown head to toe in a living room.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-outfit-c2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Full-length denim outfit in a hallway, head to toe.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-outfit-c3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Linen suit shown head to toe on a sunny terrace.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-outfit-c4": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Puffer jacket outfit on a snowy street, full body.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-launch-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "New-color water bottle on a styled desk under a soft spotlight.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-launch-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Wireless charging pad revealed under a soft spotlight on dark fabric.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-launch-c4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "New candle placed on a styled shelf with dried flowers.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-compare-c1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Two water bottle sizes side by side on a gym bench.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-compare-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Two backpack sizes side by side, each packed with the same gear.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-compare-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Matte and glossy lipstick swatches and bullets side by side.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-compare-c4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Small and large ceramic planters on the same windowsill.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-bf-c1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Robot vacuum on a dark wood floor under dramatic low light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-bf-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Over-ear headphones on a black backdrop with sharp deal-day lighting.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-bf-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Black gift boxes with ribbons stacked beside a laptop, dark moody light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-bf-c4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Smartwatch with a dark screen on a black stand with a red accent light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-limited-drop-alert-video-c1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "One pair of limited-run sneakers on a concrete plinth under a spotlight.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-limited-drop-alert-video-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Small-batch hot sauce bottles lined up on a counter.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-limited-drop-alert-video-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Restocked canvas tote bags hanging on a studio rail.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-limited-drop-alert-video-c4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Small-run ceramic vases on a gallery shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-product-feature-callout-video-c1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Close-up of a flip-top bottle cap being opened with a thumb.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-product-feature-callout-video-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Backpack's padded laptop sleeve pulled open to show the inside.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-product-feature-callout-video-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Thumb pressing the lid button of an electric kettle, lid popping open.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-product-feature-callout-video-c4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Compact umbrella caught mid-opening on a rainy street.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-carousel-video-ad-c1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Skincare steps laid out left to right from cleanser to cream,.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-carousel-video-ad-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Camping lantern lit beside a tent at dusk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-carousel-video-ad-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Bento lunch box opened to show each compartment.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-carousel-video-ad-c4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Tote bag with its everyday contents spread out beside it.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-spark-ads-style-video-c1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Phone tripod set up on a bedroom desk, natural light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-spark-ads-style-video-c2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Snack pouch with opened on a car dashboard during a road trip.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-spark-ads-style-video-c3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Lip oil tucked into a gym bag pocket.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-spark-ads-style-video-c4": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Pet brush used on a relaxed dog on a couch.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-retargeting-video-ad-c1": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Clean white sneakers waiting by a front door.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-retargeting-video-ad-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Serum bottle back on a tidy bathroom shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-retargeting-video-ad-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Knit throw blanket draped on an empty armchair.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-retargeting-video-ad-c4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hand coffee grinder ready on a morning counter.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-beauty-skincare-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Clay mask jar open on a folded towel.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-beauty-skincare-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Lipstick bullets in a row on pink acrylic.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-beauty-skincare-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Sunscreen tube on a striped beach towel.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-fashion-clothing-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Knit cardigan folded on a wooden bench.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-fashion-clothing-c3": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Pleated skirt worn on a sunny sidewalk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-fashion-clothing-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Denim jeans laid flat with rolled cuffs.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-shoes-15": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Tan hiking boot on a mossy rock.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-shoes-74": {
+   "w": 1280,
+   "h": 960,
+   "alt": "White court sneaker in a clean side profile.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-shoes-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Suede loafers on a herringbone wood floor.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-jewelry-accessories-16": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Gold hoop earrings on a marble tray.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-jewelry-accessories-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Leather-strap watch on a wrist outdoors.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-jewelry-accessories-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Silk scarf knotted on a handbag handle.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-jewelry-accessories-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Sunglasses folded on a beach towel.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-electronics-5": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Teal travel charger plugged in at an airport gate seat.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-electronics-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Fabric smart speaker on a kitchen shelf.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-electronics-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Mechanical keyboard with blank keycaps on a tidy desk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-health-wellness-6": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Teal yoga mat unrolled in a sunny living room.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-health-wellness-21": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Foam roller beside running shoes after a run.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-health-wellness-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Vitamin bottle beside a glass of water at breakfast.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-health-wellness-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Resistance bands looped over a door handle.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-food-drinks-20": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Berry granola jar on a breakfast table.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-food-drinks-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Hot sauce dashed over street tacos.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-food-drinks-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Loose-leaf tea pouch beside a steaming cup.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-home-living-19": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Oak desk lamp lit in a reading nook.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-home-living-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Linen bedding on a freshly made bed.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-home-living-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Wall shelf styled with plants and plain-spined books.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-tiktok-c2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Set of hair claws being tried on in a bathroom mirror, phone-camera look.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-tiktok-c3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Mini fridge stocked with drinks in a dorm room.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-tiktok-c4": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Glow-in-the-dark phone case glowing in a dim room.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-instagram-c2": {
+   "w": 1280,
+   "h": 1600,
+   "alt": "Silk pillowcase on an unmade bed in soft light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-instagram-c3": {
+   "w": 1280,
+   "h": 1600,
+   "alt": "Matcha whisk, bowl and tin arranged on a linen tablecloth.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-instagram-c4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Gold-rim eyeglasses on a wooden tray.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-facebook-c2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Garden hose nozzle spraying over a green lawn.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-facebook-c3": {
+   "w": 1280,
+   "h": 1600,
+   "alt": "Kids' yellow rain boots beside a puddle.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-facebook-c4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Cast-iron skillet with eggs on a stovetop.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-youtube-shorts-c2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Electric toothbrush on a bathroom counter, vertical.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-youtube-shorts-c3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Camping stove boiling water at a campsite, vertical.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-youtube-shorts-c4": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Mini bike pump topping up a tire, vertical.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-amazon-c1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Bluetooth speaker on a pure white background, product fills most of the frame.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-amazon-c2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Throw blanket folded to show its weave texture, light background.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-amazon-c3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Kitchen scale in use with a bowl of flour, display dark.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-amazon-c4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Dog harness worn by a dog in a park.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-shopify-c1": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Ceramic planter with a fern on a styled shelf, wide banner framing.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-shopify-c2": {
+   "w": 1280,
+   "h": 1707,
+   "alt": "Linen apron worn in a home kitchen.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-shopify-c3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Three candles in amber glass for a collection tile.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-shopify-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Leather notebook flat lay with a pen on a desk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-product-launch-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "New sneaker colorway on a spotlit plinth.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-product-launch-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Debut fragrance bottle unwrapped from tissue paper.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-product-launch-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "First-batch coffee bags lined up on a counter.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-sale-discount-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Bundle of skincare minis arranged on a tray.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-sale-discount-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Summer dresses on a clothing rail in a bright shop.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-sale-discount-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Kitchen knife set on a board with open space on one side.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-black-friday-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Gaming headset under dramatic dark lighting.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-black-friday-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Air fryer on a sleek counter in moody evening light.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-black-friday-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Cashmere scarf gift boxes stacked in shadow.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-holidays-11": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Scented candle on a holiday table with pine branches.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-holidays-c2": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Wrapped gift box with a ribbon by a fireplace.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-holidays-c3": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Hot cocoa set on a snowy windowsill.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-holidays-c4": {
+   "w": 1280,
+   "h": 960,
+   "alt": "Knit stockings hung on a mantel.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:url-to-video-c2": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Wooden desk organizer on a tidy workspace.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:url-to-video-c3": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Reusable steel straw set beside an iced drink.",
    "variants": [
     640,
     1280

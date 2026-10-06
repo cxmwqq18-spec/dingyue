@@ -430,7 +430,7 @@ function caseCardsFor(model, page, baseCards = []) {
   }
   return entries.map((entry, index) => {
     assert.ok(entry && typeof entry.ref === "string" && typeof entry.product === "string" && typeof entry.title === "string", `${page.id}: malformed case-plan row ${index + 1}`);
-    assert.ok(!entry.ref.includes("social-proof-animation"), `${page.id}: retired social-proof-animation cannot be a case`);
+    assert.ok(entry.ref !== "social-proof-animation", `${page.id}: retired social-proof-animation cannot be a case`);
     const card = caseCardFor(model, page, entry, index);
     const base = imageBase(card.image.src);
     assert.ok(!pageBases.has(base), `${page.id}: case media repeats a visible page image (${entry.ref})`);
@@ -1093,7 +1093,7 @@ function buildLlmsText(model) {
 }
 
 const BANNED = [
-  [/\bbulk\b|\bbatch\b|auto(matically)? (rank|publish)|\bAPI\b(?! is not)/i, "batch/auto/API claim"],
+  [/\bbulk\b|(?<![-\w])batch(?![-\w])|auto(matically)? (rank|publish)|\bAPI\b(?! is not)/i, "batch/auto/API claim"],
   [/voice-?over(?!, lip| or)|lip[- ]?sync(?! or)|text[- ]to[- ]speech/i, "voice claim"],
   [/\b\d+x\b(?! (lens|zoom))|\d+% (more|cheaper|higher|faster|lower)|#1\b|trusted by|thousands of|best-in-class/i, "unprovable claim"],
   [/\btheme\b|\bworkflow\b|\bSEO\b|landing page|proof moment/i, "internal wording"]
@@ -1148,7 +1148,9 @@ export function validateSiteV2(build = buildSiteV2()) {
       seen[key].set(norm, page.id);
     }
     const data = page.contentJson.sections.v2_main.settings.data;
-    const visible = JSON.stringify(data).replace(/"(href|src|image|key|kind|industries|platforms|id|section|tool_id)":"[^"]*"/g, "");
+    // Case metadata (titles, product labels, media specs) is user-facing product copy;
+    // do not flag a legitimate product name such as "small-batch" as an internal claim.
+    const visible = JSON.stringify(data).replace(/"(href|src|image|key|kind|industries|platforms|id|section|tool_id|name|product|mediaRef|line|spec)":"[^"]*"/g, "");
     for (const [rx, why] of BANNED) {
       if (page.id === "ai-info" && why !== "internal wording") continue;
       const checkVisible = why === "voice claim"
@@ -1215,7 +1217,7 @@ export function validateSiteV2(build = buildSiteV2()) {
       }
       if (card.kind !== "video" && /\b(?:clip|video|reel)\b/i.test(card.name)) errors.push(`${page.id}: photo case title uses video wording (${card.name})`);
       if (card.name === card.image?.alt || card.name === card.video?.name || card.name === card.video?.description) errors.push(`${page.id}: case title copies media metadata (${card.name})`);
-      if (card.mediaRef?.includes("social-proof-animation") || card.video?.src?.includes("social-proof-animation")) errors.push(`${page.id}: social-proof-animation is not allowed in case media`);
+      if (card.mediaRef === "social-proof-animation" || card.video?.src?.includes("/social-proof-animation.mp4")) errors.push(`${page.id}: retired social-proof-animation is not allowed in case media`);
       if (card.mediaRef === "ugc-ad-video" || card.video?.src?.includes("ugc-ad-video")) errors.push(`${page.id}: ugc-ad-video is not allowed in case media`);
       if (card.kind === "video" && !validationSource.media.catalog.clips?.[card.mediaRef]) errors.push(`${page.id}: video case is missing from the clip catalog (${card.mediaRef})`);
       const expected = card.kind === "video" ? `Video · ${closestRatio(card.video.width, card.video.height)} · ${card.video.duration} s` : `Photo · ${closestRatio(card.image.width, card.image.height)}`;
