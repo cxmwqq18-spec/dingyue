@@ -390,6 +390,7 @@ function pickRelatedCards(model, direct, fallback, count) {
 }
 
 const CASE_PAGE_TYPES = new Set(["hub-tool", "tool", "template", "industry", "platform", "occasion"]);
+const EXAMPLE_PAGE_TYPES = new Set(["hub", "hub-tool", "tool", "template", "industry", "platform", "occasion"]);
 
 function caseTarget(model, page) {
   const preferred = page.type === "template" ? page.made_with : page.group === "photo" ? "photo-hub" : "video-ads";
@@ -405,7 +406,7 @@ function closestRatio(width, height) {
 
 function caseCardFor(model, page, entry, index) {
   const ref = entry.ref;
-  const isClip = Boolean(model.media.catalog.clips?.[ref]);
+  const isClip = entry.kind ? entry.kind === "clip" : Boolean(model.media.catalog.clips?.[ref]);
   const source = isClip ? clipRef(model, ref) : mediaImage(model, ref, "card");
   const kind = isClip ? "video" : "photo";
   const ratio = closestRatio(source.width, source.height);
@@ -415,6 +416,40 @@ function caseCardFor(model, page, entry, index) {
     href: caseTarget(model, page), label: isClip ? "Example clip" : page.group === "video" ? "Example scene" : "Example photo",
     image: isClip ? source.poster : source, ...(isClip ? { video: source } : {}), tags: [], industries: [], platforms: []
   };
+}
+
+function exampleGalleryFor(model, page) {
+  if (!EXAMPLE_PAGE_TYPES.has(page.type)) return undefined;
+  const source = model.content[page.id]?.examples;
+  if (source == null) return undefined;
+  assert.ok(source && typeof source === "object" && !Array.isArray(source), `${page.id}: examples must be an object`);
+  assert.ok(typeof source.h2 === "string" && source.h2.trim(), `${page.id}: examples.h2 is required`);
+  assert.ok(source.lead == null || typeof source.lead === "string", `${page.id}: examples.lead must be a string`);
+  assert.ok(Array.isArray(source.groups), `${page.id}: examples.groups must be an array`);
+  const groups = source.groups.map((group, groupIndex) => {
+    assert.ok(group && typeof group === "object" && typeof group.label === "string" && group.label.trim(), `${page.id}: malformed examples group ${groupIndex + 1}`);
+    assert.ok(Array.isArray(group.items), `${page.id}: examples group ${groupIndex + 1} items must be an array`);
+    return {
+      label: group.label,
+      items: group.items.map((entry, itemIndex) => {
+        assert.ok(entry && typeof entry === "object" && typeof entry.ref === "string" && typeof entry.title === "string" && typeof entry.product === "string", `${page.id}: malformed example ${groupIndex + 1}.${itemIndex + 1}`);
+        assert.ok(["clip", "scene", "photo"].includes(entry.kind), `${page.id}: invalid example kind ${entry.kind}`);
+        const card = caseCardFor(model, page, entry, `${groupIndex + 1}-${itemIndex + 1}`);
+        const kind = entry.kind;
+        return {
+          key: `example-${page.id}-${groupIndex + 1}-${itemIndex + 1}`,
+          title: entry.title,
+          product: entry.product,
+          kind,
+          label: `Example ${kind}`,
+          mediaRef: entry.ref,
+          image: card.image,
+          ...(kind === "clip" ? { video: card.video, spec: card.spec } : { spec: kind === "scene" ? "Scene" : "Photo" })
+        };
+      })
+    };
+  }).filter((group) => group.items.length);
+  return groups.length ? { h2: source.h2, ...(source.lead ? { lead: source.lead } : {}), groups } : undefined;
 }
 
 function caseCardsFor(model, page, baseCards = []) {
@@ -838,11 +873,13 @@ function enrichmentFor(model, c) {
 
 function payloadFor(model, page) {
   const c = model.content[page.id];
+  const examples = exampleGalleryFor(model, page);
   const base = {
     id: page.id, label: page.label, eyebrow: c.eyebrow || page.label, h1: c.h1, lead: c.lead,
     breadcrumbs: page.id === "home" ? [] : breadcrumbTrail(model, page),
     faq: (c.faq || []).map((item) => ({ q: item.q, a: item.a })),
     startNote: page.type === "pricing" ? START_NOTE_PLAIN : START_NOTE,
+    ...(examples ? { examples } : {}),
     ...enrichmentFor(model, c)
   };
   const t = page.type;
@@ -1075,6 +1112,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     for (const list of [payload.heroCards, payload.cards, payload.more, payload.templates?.cards]) {
       for (const card of list ?? []) pushMedia(card?.image);
     }
+    for (const group of payload.examples?.groups ?? []) for (const item of group.items ?? []) pushMedia(item.image);
     for (const item of [...(payload.items ?? []), ...(payload.articles ?? [])]) pushMedia(item?.image);
     const { pageType, templateKey } = livePageTypeFor(page);
     return {
@@ -1167,16 +1205,17 @@ export function renderedImages(layout, data) {
   const addGallery = () => (data.gallery?.images ?? []).forEach(add);
   const addPairs = () => (data.pairs ?? []).forEach((pair) => { add(pair.before); add(pair.after); });
   const addFlows = (flows) => (flows ?? []).forEach((flow) => flow.steps.forEach((step) => add(step.image)));
+  const addExamples = () => (data.examples?.groups ?? []).forEach((group) => (group.items ?? []).forEach((item) => add(item.image)));
   if (layout === "home") {
     add(data.hero.image);
     if (!addMedia(data.heroMedia)) { add(data.hero.output); (data.hero.versions ?? []).forEach(add); }
     addTools(data.make.video); addTools(data.make.photo); addCards(data.templates.cards); addFlows(data.examples.flows);
-  } else if (layout === "video-hub") { addCards(data.heroCards); addTools(data.tools); addCards(data.cards); }
+  } else if (layout === "video-hub") { addCards(data.heroCards); addTools(data.tools); addCards(data.cards); addExamples(); }
   else if (layout === "tool") {
     if (!addMedia(data.heroMedia)) { if (data.hero?.single) add(data.hero.single); else addCards(data.hero?.cards); }
-    addGallery(); addPairs(); addTools(data.photoTools); addCards(data.templates); addTools(data.siblings);
-  } else if (layout === "template") { if (!addMedia(data.heroMedia)) add(data.image); addGallery(); addCards(data.more); }
-  else if (layout === "collection") { if (!addMedia(data.heroMedia)) addCards(data.heroCards); addGallery(); addCards(data.cards); addTools(data.tools); }
+    addGallery(); addPairs(); addTools(data.photoTools); addCards(data.templates); addTools(data.siblings); addExamples();
+  } else if (layout === "template") { if (!addMedia(data.heroMedia)) add(data.image); addGallery(); addCards(data.more); addExamples(); }
+  else if (layout === "collection") { if (!addMedia(data.heroMedia)) addCards(data.heroCards); addGallery(); addCards(data.cards); addTools(data.tools); addExamples(); }
   else if (layout === "index") { addCards(data.cards); (data.items ?? []).forEach((item) => add(item.image)); (data.articles ?? []).forEach((article) => add(article.image)); }
   else if (layout === "article") add(data.image);
   else if (layout === "examples") { addFlows(data.flows); addPairs(); addCards(data.cards); }
@@ -1323,6 +1362,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   const pageTypeById = Object.fromEntries(validationSource.master.pages.map((page) => [page.id, page.type]));
   const caseTitles = new Map();
   const caseTitlePrefixes = new Map();
+  const pageMediaSeen = new Map();
   for (const page of build.pages) {
     const { layout, data } = page.contentJson.sections.v2_main.settings;
     if (!caseLayouts.has(layout)) continue;
@@ -1335,6 +1375,7 @@ export function validateSiteV2(build = buildSiteV2()) {
     const templates = cards.length - cases.length;
     if (templates < 2 || templates > 4 || cases.length < 3 || cases.length > 6) errors.push(`${page.id}: case/template card mix is not balanced (${templates} templates, ${cases.length} cases)`);
     const seenOnPage = new Set();
+    pageMediaSeen.set(page.id, seenOnPage);
     const seenProducts = new Set();
     for (const card of cases) {
       const key = caseMediaKey(card);
@@ -1371,6 +1412,54 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (card.spec !== expected) errors.push(`${page.id}: case spec is not based on actual media dimensions (${card.name})`);
     }
   }
+  // Optional example galleries share the case-card media budget and title rules. This
+  // keeps a gallery from repeating its page's case cards or becoming a second loophole
+  // around the site-wide media spread rules.
+  for (const page of build.pages) {
+    const data = page.contentJson.sections.v2_main.settings.data;
+    const groups = data.examples?.groups ?? [];
+    const items = groups.flatMap((group) => group.items ?? []);
+    if (!items.length) continue;
+    const seenOnPage = pageMediaSeen.get(page.id) ?? new Set();
+    pageMediaSeen.set(page.id, seenOnPage);
+    const pageType = pageTypeById[page.id] ?? page.pageType;
+    for (const item of items) {
+      const key = caseMediaKey(item);
+      if (!key) { errors.push(`${page.id}: example has no media`); continue; }
+      if (seenOnPage.has(key)) errors.push(`${page.id}: example media repeated on the page (${key})`);
+      seenOnPage.add(key);
+      const pages = caseMediaPages.get(key) ?? new Set();
+      pages.add(page.id); caseMediaPages.set(key, pages);
+      const types = caseMediaTypes.get(key) ?? new Set();
+      if ([...types].some((type) => type === pageType)) errors.push(`${page.id}: example media is shared by pages of the same type (${key})`);
+      types.add(pageType); caseMediaTypes.set(key, types);
+      const title = String(item.title ?? "");
+      if (!title || title.length > 60 || /^Product example/i.test(title) || /starting photo/i.test(title)) errors.push(`${page.id}: invalid example title (${title || "empty"})`);
+      const titleNorm = title.toLowerCase();
+      if (caseTitles.has(titleNorm)) errors.push(`${page.id}: duplicate example title with ${caseTitles.get(titleNorm)} (${title})`);
+      else caseTitles.set(titleNorm, page.id);
+      const titleWords = titleNorm.replace(/[^a-z0-9 ]+/g, " ").trim().split(/\s+/).filter(Boolean);
+      const prefix = titleWords.slice(0, 2).join(" ");
+      if (prefix) {
+        const count = (caseTitlePrefixes.get(prefix) ?? 0) + 1;
+        caseTitlePrefixes.set(prefix, count);
+        if (count > 3) errors.push(`${page.id}: example title opening is reused too often (${prefix})`);
+      }
+      if (item.kind !== "clip" && /\b(?:clip|video|reel)\b/i.test(title)) errors.push(`${page.id}: photo example title uses video wording (${title})`);
+      if (title === item.image?.alt || title === item.video?.name || title === item.video?.description) errors.push(`${page.id}: example title copies media metadata (${title})`);
+      const mediaText = `${item.mediaRef ?? ""} ${item.video?.src ?? ""} ${item.image?.src ?? ""}`;
+      if (/og(?:\.webp)?(?:$|[?#])/i.test(mediaText) || /source-input/i.test(mediaText) || /ugc-video-themes/i.test(mediaText) || /ugc-ad-video\.mp4/i.test(mediaText)) {
+        errors.push(`${page.id}: prohibited media is not allowed in examples (${item.mediaRef || mediaText})`);
+      }
+      const clip = validationSource.media.catalog.clips?.[item.mediaRef];
+      if (item.kind === "clip" && !clip) errors.push(`${page.id}: example clip is missing from the clip catalog (${item.mediaRef})`);
+      if (/social-proof-animation/i.test(mediaText) && Number(clip?.w) > Number(clip?.h)) errors.push(`${page.id}: horizontal social-proof-animation is not allowed in examples (${item.mediaRef})`);
+      if (item.kind === "clip") {
+        const expected = `Video · ${closestRatio(item.video.width, item.video.height)} · ${item.video.duration} s`;
+        if (item.spec !== expected) errors.push(`${page.id}: example spec is not based on actual media dimensions (${title})`);
+      }
+    }
+  }
   for (const [media, pages] of caseMediaPages) if (pages.size > 2) errors.push(`case media appears on ${pages.size} pages (max 2): ${media}`);
   for (const pageId of Object.keys(casePlan.pages ?? {})) if (!build.pages.some((page) => page.id === pageId)) errors.push(`${pageId}: case-plan points to a missing page`);
   // Media: pages of these layouts show their own picture, every image has a proper
@@ -1381,7 +1470,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   for (const page of build.pages) {
     const { layout, data } = page.contentJson.sections.v2_main.settings;
     const main = heroImageOf(data.heroMedia);
-    for (const image of [main, data.heroMedia?.before, ...(data.gallery?.images ?? []), ...(data.pairs ?? []).flatMap((pair) => [pair.before, pair.after])].filter(Boolean)) {
+    for (const image of [main, data.heroMedia?.before, ...(data.gallery?.images ?? []), ...(data.pairs ?? []).flatMap((pair) => [pair.before, pair.after]), ...(data.examples?.groups ?? []).flatMap((group) => (group.items ?? []).map((item) => item.image))].filter(Boolean)) {
       if (!image.alt || image.alt.length < 12) errors.push(`${page.id}: image without a proper description (${image.src})`);
       if (/\bunbranded\b|\bplaceholder\b|\bprompt\b/i.test(image.alt)) errors.push(`${page.id}: internal wording in an image description (${image.alt})`);
       if (!image.src.startsWith("/assets/sites/site_aidreamcapes/")) errors.push(`${page.id}: image outside the Aidreamcapes asset folder (${image.src})`);

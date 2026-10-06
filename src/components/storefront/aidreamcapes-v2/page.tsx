@@ -1,11 +1,11 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, EnrichmentOverview, EnrichmentBlockSection, FitSection
+  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
-import { list, text, type V2Article, type V2Card, type V2Data, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
+import { list, text, type V2Article, type V2Card, type V2Data, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
 
@@ -238,6 +238,7 @@ function VideoHubPage({ data, r }: Props) {
       <FitSection block={data.fit as never} r={r} />
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Section eyebrow="Video templates" title="Ready-made video ideas"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
+      <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <Faq items={data.faq} title="Questions about AI video" />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       <CtaBand note={text(data.startNote)} href={text(data.appHref)} lead="Upload a product photo and see the cost before you start." r={r} title="Make your first video today" />
@@ -279,6 +280,7 @@ function ToolPage({ data, r }: Props) {
           <TemplateGrid cards={list<V2Card>(data.templates)} r={r} />
         </Section>
       ) : null}
+      <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Faq items={data.faq} title={`Questions about ${data.label}`} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
@@ -314,6 +316,7 @@ function TemplatePage({ data, r }: Props) {
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Faq items={data.faq} title="Questions about this template" />
       <Section eyebrow="More templates" title="More like this"><TemplateGrid cards={list<V2Card>(data.more)} r={r} /></Section>
+      <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       <CtaBand note={text(data.startNote)} href={maker.href} lead="Upload one product photo. See the cost before you start." r={r} title={`Try ${data.label} with your product`} />
     </>
@@ -352,6 +355,7 @@ function CollectionPage({ data, r }: Props) {
           <TemplateGrid cards={cards} r={r} />
         </Section>
       ) : null}
+      <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <Section eyebrow="Tools" title="Tools that fit"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Faq items={data.faq} title="Questions" />

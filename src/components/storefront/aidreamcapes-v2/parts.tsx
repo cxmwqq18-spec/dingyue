@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { V2Article, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2Item, V2Maker, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry } from "./types";
+import type { V2Article, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2Item, V2Maker, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry } from "./types";
 import type { V2Company } from "./company";
 
 // Each candidate in a stored srcset goes through the same asset resolver as the main file.
@@ -267,6 +267,44 @@ export function CaseCard({ card, r }: { card: V2Card; r: V2Resolvers }) {
 export function TemplateGrid({ cards, r, id }: { cards: V2Card[]; r: V2Resolvers; id?: string }) {
   if (!cards.length) return null;
   return <div className="tgrid" id={id}>{cards.map((card) => <TemplateCard card={card} key={card.key} r={r} />)}</div>;
+}
+
+function ExampleCard({ item, r }: { item: V2Example; r: V2Resolvers }) {
+  const video = item.kind === "clip" ? item.video : undefined;
+  return (
+    <article className="tc example-card" data-type={item.kind}>
+      <div className="ti">
+        <span className={`kind${video ? " v" : ""}`}>{item.label}</span>
+        {video ? (
+          <video aria-label={item.title} autoPlay height={video.height} loop muted playsInline poster={r.asset(video.poster.src)} preload="none" width={video.width}>
+            <source src={r.asset(video.src)} type="video/mp4" />
+          </video>
+        ) : <Img image={item.image} r={r} />}
+      </div>
+      <div className="tb">
+        <h3>{item.title}</h3>
+        <p>{item.product}</p>
+        {video && item.spec ? <small className="example-spec">{item.spec}</small> : null}
+      </div>
+    </article>
+  );
+}
+
+export function ExampleGallery({ examples, r }: { examples?: V2Examples; r: V2Resolvers }) {
+  const groups = examples?.groups?.filter((group) => group.items?.length) ?? [];
+  if (!examples || !groups.length) return null;
+  return (
+    <Section eyebrow="Examples" lead={examples.lead} title={examples.h2}>
+      <div className="example-gallery">
+        {groups.map((group) => (
+          <div className="example-group" key={group.label}>
+            <h3>{group.label}</h3>
+            <div className="tgrid">{group.items.map((item) => <ExampleCard item={item} key={item.key} r={r} />)}</div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
 }
 
 const ToolIcon = ({ group }: { group?: string }) => (
