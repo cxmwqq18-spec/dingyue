@@ -21,7 +21,7 @@ const LINES = {
   box: "Show the full set or bundle", pack: "See your box or bag before printing", light: "Turn a flat photo into a studio shot",
   bg: "Same product, new setting", model: "Your product worn by a real-looking person", tryon: "See a piece worn before the shoot",
   jewel: "Necklaces, rings and earrings, worn", look: "Editorial photos for your collection", head: "Matching photos for your About page",
-  feed: "Scroll-stopping image for social feeds", ugc: "Looks like a customer shared it", story: "Full-screen vertical image ad",
+  feed: "Scroll-stopping image for social feeds", ugc: "Looks like a customer shared it", story: "Square image with room for Story text",
   sale: "Seasonal photo with room for your offer", creator: "Someone holding and showing your product", demo: "Show it working, start to finish",
   unbox: "Open the box, reveal the product", ba: "The difference, side by side", howto: "Show customers how to use it",
   film: "A cinematic clip for launches", beauty: "Your product in a daily routine", drink: "Fresh pour and serve moments",
@@ -1195,6 +1195,15 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (!value || typeof value !== "object" || technicalKeys.has(key.toLowerCase())) return [];
     return Object.entries(value).flatMap(([childKey, child]) => publicText(child, childKey));
   };
+  const storyFramingBanned = /full[- ]screen|\bvertical\b|9:16/i;
+  const checkPhotoCardLines = (value, pageId) => {
+    if (Array.isArray(value)) return value.forEach((item) => checkPhotoCardLines(item, pageId));
+    if (!value || typeof value !== "object") return;
+    if (value.kind === "photo" && typeof value.line === "string" && storyFramingBanned.test(value.line)) {
+      errors.push(`${pageId}: photo card line uses story framing wording (${value.line})`);
+    }
+    for (const item of Object.values(value)) checkPhotoCardLines(item, pageId);
+  };
   const glossaryAnchor = (term) => term.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   for (const page of build.pages) {
     const seo = page.contentJson.seo;
@@ -1207,6 +1216,22 @@ export function validateSiteV2(build = buildSiteV2()) {
       seen[key].set(norm, page.id);
     }
     const data = page.contentJson.sections.v2_main.settings.data;
+    checkPhotoCardLines(data, page.id);
+    if (page.id === "tpl-story") {
+      const storyMediaAlts = [];
+      const collectStoryAlts = (value) => {
+        if (Array.isArray(value)) return value.forEach(collectStoryAlts);
+        if (!value || typeof value !== "object") return;
+        if (typeof value.alt === "string") storyMediaAlts.push(value.alt);
+        for (const item of Object.values(value)) collectStoryAlts(item);
+      };
+      collectStoryAlts(data);
+      collectStoryAlts(page.contentJson.mediaManifest);
+      storyMediaAlts.push(page.contentJson.seo.ogImageAlt);
+      for (const alt of new Set(storyMediaAlts.filter((value) => typeof value === "string"))) {
+        if (storyFramingBanned.test(alt)) errors.push(`${page.id}: media alt uses story framing wording (${alt})`);
+      }
+    }
     // Keep all strings that can be rendered by the storefront, including case names,
     // product labels, specs and image alt text. Only asset references and layout metadata
     // are excluded from copy checks.

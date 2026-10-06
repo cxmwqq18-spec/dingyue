@@ -1052,12 +1052,12 @@
     "example-06": {
      "w": 1880,
      "h": 3344,
-     "alt": "Vertical product crop with open space for copy"
+     "alt": "Sunscreen bottle crop with open space for Story text"
     },
     "hero-output": {
      "w": 1880,
      "h": 3344,
-     "alt": "Vertical full-screen story image of a sunscreen bottle beside a bright pool towel"
+     "alt": "Story layout with a sunscreen bottle beside a bright pool towel"
     },
     "source-input": {
      "w": 1880,
@@ -3711,7 +3711,7 @@
   "gen2:tpl-story-c1": {
    "w": 1280,
    "h": 2276,
-   "alt": "Sunscreen bottle full-screen vertical, beach light, empty space at the top.",
+   "alt": "Sunscreen bottle in beach light with empty space at the top.",
    "variants": [
     640,
     1280
@@ -3721,7 +3721,7 @@
   "gen2:tpl-story-c2": {
    "w": 1280,
    "h": 2276,
-   "alt": "Canvas sneakers on steps in a vertical frame, empty space at the bottom.",
+   "alt": "Canvas sneakers on steps with empty space at the bottom.",
    "variants": [
     640,
     1280
@@ -3731,7 +3731,7 @@
   "gen2:tpl-story-c3": {
    "w": 1280,
    "h": 2276,
-   "alt": "Tall pillar candle in a vertical frame with blank wall space above.",
+   "alt": "Tall pillar candle with blank wall space above.",
    "variants": [
     640,
     1280
@@ -3741,7 +3741,7 @@
   "gen2:tpl-story-c4": {
    "w": 1280,
    "h": 2276,
-   "alt": "Smoothie bottle on a kitchen counter, vertical layout.",
+   "alt": "Smoothie bottle on a kitchen counter with room for an offer.",
    "variants": [
     640,
     1280
