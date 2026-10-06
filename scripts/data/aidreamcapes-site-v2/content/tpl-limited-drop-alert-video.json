@@ -1,0 +1,78 @@
+{
+  "id": "tpl-limited-drop-alert-video",
+  "title": "Limited Drop Alert Video Template | AIVideosUGC",
+  "description": "Make a limited drop alert video from one product photo. Build a short scene, then add your restock date, offer, and stock details in your editor.",
+  "h1": "Limited Drop Alert Videos for Restocks and New Drops",
+  "eyebrow": "Limited drop video template",
+  "lead": "Limited drop alert video ads give a new pair of shoes or a small release a clear moment. Upload a product photo, describe the scene, and get a short clip for your launch or restock; add exact dates and stock details yourself.",
+  "secondary_keywords": [
+    "restock alert video",
+    "limited release ad",
+    "shoe drop video",
+    "product restock reel"
+  ],
+  "intro": [
+    "This template gives a new release a moving product moment before you add the details that can change. The sample shows coral trail shoes being tied, turned to reveal the sole, and taken onto a mountain path.",
+    "Use it for a small footwear drop, a colorway returning to stock, or a launch with a short buying window. The clip does not know your inventory or schedule, so put the accurate date, quantity, and call to action on top in your editor."
+  ],
+  "tip": "Use a clear photo of the full product and describe where the scene should leave room for your drop date or restock message.",
+  "steps": [
+    {
+      "t": "Upload the product photo",
+      "d": "Choose a sharp image with the whole shoe, garment, or accessory visible so the scene keeps its shape."
+    },
+    {
+      "t": "Describe the drop moment",
+      "d": "Name the setting, movement, and mood, such as a trail shoe on rock with a close look at the tread."
+    },
+    {
+      "t": "Add the release details",
+      "d": "Type the real date, stock note, link, and call to action in your editor after downloading."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Restock reminder",
+      "d": "Show the same product in a new setting and add the time your back-in-stock email goes out."
+    },
+    {
+      "t": "Small colorway drop",
+      "d": "Use one color in each run and publish a short set when several colorways arrive."
+    },
+    {
+      "t": "Early access",
+      "d": "Make a quiet teaser for subscribers, then add the access window yourself."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Size",
+        "9:16 · TikTok & Reels"
+      ],
+      [
+        "Length",
+        "15 seconds"
+      ],
+      [
+        "Also try",
+        "16:9 · Product page"
+      ]
+    ],
+    "cta": "Make my drop video"
+  },
+  "faq": [
+    {
+      "q": "Can it add my restock date or stock count?",
+      "a": "Add those details after downloading. Dates, quantities, and short words made by AI can be wrong, so type them in your editor where you can check them."
+    },
+    {
+      "q": "Is this only for shoes?",
+      "a": "No. Use the format for apparel, accessories, cosmetics, or a small home goods release. Describe one product and one clear action per run."
+    },
+    {
+      "q": "Does AIVideosUGC add music or captions?",
+      "a": "No. The clip is delivered without voiceover, music, or captions. Add a track and the exact drop copy in TikTok, CapCut, or your ad platform."
+    }
+  ]
+}

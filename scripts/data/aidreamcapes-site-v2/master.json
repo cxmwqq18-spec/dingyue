@@ -610,6 +610,113 @@
    "made_with": "video-ads"
   },
   {
+   "id": "tpl-limited-drop-alert-video",
+   "type": "template",
+   "url": "/ai-video-generation/limited-drop-alert-video",
+   "label": "Limited Drop Alert Video",
+   "primary_keyword": "limited drop alert video",
+   "img": "v_launch",
+   "status": "new",
+   "group": "video",
+   "industries": [
+    "shoes",
+    "fashion-clothing"
+   ],
+   "platforms": [
+    "tiktok",
+    "instagram"
+   ],
+   "occasions": [
+    "sale-discount"
+   ],
+   "output": "9:16 or 16:9 video · 6–30 s",
+   "made_with": "video-ads"
+  },
+  {
+   "id": "tpl-product-feature-callout-video",
+   "type": "template",
+   "url": "/ai-video-generation/product-feature-callout-video",
+   "label": "Product Feature Callout Video",
+   "primary_keyword": "product feature callout video",
+   "img": "v_demo",
+   "status": "new",
+   "group": "video",
+   "industries": [
+    "beauty-skincare",
+    "electronics"
+   ],
+   "platforms": [
+    "tiktok",
+    "instagram",
+    "shopify"
+   ],
+   "occasions": [],
+   "output": "9:16 or 16:9 video · 6–30 s",
+   "made_with": "product-videos"
+  },
+  {
+   "id": "tpl-carousel-video-ad",
+   "type": "template",
+   "url": "/ai-video-generation/carousel-video-ad",
+   "label": "Carousel Video Ad",
+   "primary_keyword": "carousel video ad",
+   "img": "v_film",
+   "status": "new",
+   "group": "video",
+   "industries": [
+    "fashion-clothing",
+    "electronics"
+   ],
+   "platforms": [
+    "instagram",
+    "facebook"
+   ],
+   "occasions": [],
+   "output": "1:1 or 9:16 video · 6–30 s",
+   "made_with": "video-ads"
+  },
+  {
+   "id": "tpl-spark-ads-style-video",
+   "type": "template",
+   "url": "/ai-video-generation/spark-ads-style-video",
+   "label": "Spark Ads Style Video",
+   "primary_keyword": "Spark Ads style video",
+   "img": "v_creator_ad",
+   "status": "new",
+   "group": "video",
+   "industries": [
+    "food-drinks",
+    "electronics"
+   ],
+   "platforms": [
+    "tiktok"
+   ],
+   "occasions": [],
+   "output": "9:16 video · 6–30 s",
+   "made_with": "video-ads"
+  },
+  {
+   "id": "tpl-retargeting-video-ad",
+   "type": "template",
+   "url": "/ai-video-generation/retargeting-video-ad",
+   "label": "Retargeting Video Ad",
+   "primary_keyword": "retargeting video ad",
+   "img": "v_compare",
+   "status": "new",
+   "group": "video",
+   "industries": [
+    "electronics",
+    "fashion-clothing"
+   ],
+   "platforms": [
+    "facebook",
+    "instagram"
+   ],
+   "occasions": [],
+   "output": "1:1 or 9:16 video · 6–30 s",
+   "made_with": "video-ads"
+  },
+  {
    "id": "templates",
    "type": "index",
    "url": "/templates",

@@ -189,6 +189,7 @@ export function Faq({ items, title = "Questions" }: { items: V2Faq[]; title?: st
 }
 
 export function TemplateCard({ card, r }: { card: V2Card; r: V2Resolvers }) {
+  if (card.cardType === "case") return <CaseCard card={card} r={r} />;
   return (
     <article className="tc" data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
@@ -200,6 +201,28 @@ export function TemplateCard({ card, r }: { card: V2Card; r: V2Resolvers }) {
         <p>{card.line}</p>
         {card.tags.length ? <div className="tags">{card.tags.map((tag) => <span key={tag}>{tag}</span>)}</div> : null}
         <span className="use">Use this template →</span>
+      </div>
+    </article>
+  );
+}
+
+/** A page-specific example. Case cards keep the result, format and next action together. */
+export function CaseCard({ card, r }: { card: V2Card; r: V2Resolvers }) {
+  const video = card.video;
+  return (
+    <article className="tc case-card" data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
+      <div className="ti">
+        <span className={card.kind === "video" ? "kind v" : "kind"}>{card.label ?? (card.kind === "video" ? "Example clip" : "Example photo")}</span>
+        {video ? (
+          <video aria-label={video.name ?? card.name} autoPlay controls height={video.height} loop muted playsInline poster={r.asset(video.poster.src)} preload="none" width={video.width}>
+            <source src={r.asset(video.src)} type="video/mp4" />
+          </video>
+        ) : <Img image={card.image} r={r} />}
+      </div>
+      <div className="tb">
+        <h3>{card.name}</h3>
+        <p>{card.spec ?? card.line}</p>
+        <a className="use" href={r.href(card.href)}>Make one like this →</a>
       </div>
     </article>
   );

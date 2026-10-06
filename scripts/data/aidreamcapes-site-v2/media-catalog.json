@@ -2115,13 +2115,13 @@
    "description": "A 15-second example of a creator-style product video ad: a presenter shows a white smartwatch to the camera in a bright living room."
   },
   "unboxing-experience": {
-   "src": "/assets/sites/site_aidreamcapes/ugc-video-themes/unboxing-experience.mp4",
-   "w": 1344,
-   "h": 768,
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/unboxing-experience.mp4",
+   "w": 1280,
+   "h": 720,
    "duration": 15,
-   "uploadDate": "2026-09-29T16:15:59+08:00",
-   "name": "Example unboxing video: headphones and case",
-   "description": "A 15-second example of an unboxing video: hands open a box and reveal headphones and a charging case on a wooden table."
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands open a gray headphone package and remove the headphones and charging case.",
+   "description": "An example clip showing hands open a gray headphone package and remove the headphones and charging case. AIVideosUGC does not add voiceover, music, or captions."
   },
   "food-video": {
    "src": "/assets/sites/site_aidreamcapes/ugc-video-themes/food-video.mp4",
@@ -2131,6 +2131,366 @@
    "uploadDate": "2026-09-29T16:15:59+08:00",
    "name": "Example drink video: sparkling citrus drink",
    "description": "A 15-second example of a drink video: a golden sparkling citrus drink is poured over ice in a bright kitchen."
+  },
+  "beauty-routine": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/beauty-routine.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 15,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: A hand lifts an amber skincare dropper and applies serum to a face in a bathroom.",
+   "description": "An example clip showing a hand lifts an amber skincare dropper and applies serum to a face in a bathroom. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "before-after-showcases-a": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/before-after-showcases-a.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 4,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands measure a wardrobe organizer, install a divider, and arrange folded clothes.",
+   "description": "An example clip showing hands measure a wardrobe organizer, install a divider, and arrange folded clothes. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "before-after-showcases-b": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/before-after-showcases-b.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 6.2,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands measure a wardrobe organizer, install a divider, and arrange folded clothes.",
+   "description": "An example clip showing hands measure a wardrobe organizer, install a divider, and arrange folded clothes. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "black-friday-countdown": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/black-friday-countdown.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 10.6,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands unfold a black folding electric bicycle and inspect its hinge.",
+   "description": "An example clip showing hands unfold a black folding electric bicycle and inspect its hinge. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "black-friday-countdown-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/black-friday-countdown-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 10.6,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands unfold a black folding electric bicycle and inspect its hinge.",
+   "description": "An example clip showing hands unfold a black folding electric bicycle and inspect its hinge. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "carousel-storytelling": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/carousel-storytelling.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 11.2,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands open a black commuter backpack in a cafe, show its compartments, and put it on.",
+   "description": "An example clip showing hands open a black commuter backpack in a cafe, show its compartments, and put it on. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "carousel-storytelling-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/carousel-storytelling-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 11.2,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands open a black commuter backpack in a cafe, show its compartments, and put it on.",
+   "description": "An example clip showing hands open a black commuter backpack in a cafe, show its compartments, and put it on. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "competitor-comparison-a": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/competitor-comparison-a.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 6.5,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands pour liquid into two insulated cups and compare their bodies and grips.",
+   "description": "An example clip showing hands pour liquid into two insulated cups and compare their bodies and grips. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "competitor-comparison-b": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/competitor-comparison-b.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 4.6,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands pour liquid into two insulated cups and compare their bodies and grips.",
+   "description": "An example clip showing hands pour liquid into two insulated cups and compare their bodies and grips. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "discount-free-shipping": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/discount-free-shipping.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 10.3,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands weigh coffee beans, pour coffee, and handle a small shipping box.",
+   "description": "An example clip showing hands weigh coffee beans, pour coffee, and handle a small shipping box. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "discount-free-shipping-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/discount-free-shipping-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 10.3,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands weigh coffee beans, pour coffee, and handle a small shipping box.",
+   "description": "An example clip showing hands weigh coffee beans, pour coffee, and handle a small shipping box. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "fashion-try-on-reel": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/fashion-try-on-reel.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 8.4,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: A model puts on a beige overshirt, turns, and examines its fabric.",
+   "description": "An example clip showing a model puts on a beige overshirt, turns, and examines its fabric. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "fashion-try-on-reel-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/fashion-try-on-reel-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 8.4,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: A model puts on a beige overshirt, turns, and examines its fabric.",
+   "description": "An example clip showing a model puts on a beige overshirt, turns, and examines its fabric. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "feature-callout": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/feature-callout.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 10.5,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: A hand presses a white foaming cleanser pump and spreads foam while washing a face.",
+   "description": "An example clip showing a hand presses a white foaming cleanser pump and spreads foam while washing a face. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "feature-callout-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/feature-callout-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 10.5,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: A hand presses a white foaming cleanser pump and spreads foam while washing a face.",
+   "description": "An example clip showing a hand presses a white foaming cleanser pump and spreads foam while washing a face. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "food-beverage": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/food-beverage.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 15,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands fill a citrus sparkling drink bottle, pour it into an ice-filled glass, and lift the glass.",
+   "description": "An example clip showing hands fill a citrus sparkling drink bottle, pour it into an ice-filled glass, and lift the glass. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "food-beverage-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/food-beverage-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 15,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands fill a citrus sparkling drink bottle, pour it into an ice-filled glass, and lift the glass.",
+   "description": "An example clip showing hands fill a citrus sparkling drink bottle, pour it into an ice-filled glass, and lift the glass. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "home-organization": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/home-organization.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 15,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands remove utensils, place gray dividers in a kitchen drawer, and organize it.",
+   "description": "An example clip showing hands remove utensils, place gray dividers in a kitchen drawer, and organize it. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "home-organization-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/home-organization-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 15,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands remove utensils, place gray dividers in a kitchen drawer, and organize it.",
+   "description": "An example clip showing hands remove utensils, place gray dividers in a kitchen drawer, and organize it. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "how-to-tutorial": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/how-to-tutorial.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 8.4,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands fill a portable steam iron, switch it on, and press a blue shirt.",
+   "description": "An example clip showing hands fill a portable steam iron, switch it on, and press a blue shirt. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "how-to-tutorial-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/how-to-tutorial-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 8.4,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands fill a portable steam iron, switch it on, and press a blue shirt.",
+   "description": "An example clip showing hands fill a portable steam iron, switch it on, and press a blue shirt. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "limited-drop-alert": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/limited-drop-alert.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 15,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands tie coral trail shoes, show the sole, and step along a mountain path.",
+   "description": "An example clip showing hands tie coral trail shoes, show the sole, and step along a mountain path. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "limited-drop-alert-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/limited-drop-alert-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 15,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands tie coral trail shoes, show the sole, and step along a mountain path.",
+   "description": "An example clip showing hands tie coral trail shoes, show the sole, and step along a mountain path. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "native-spark-ads": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/native-spark-ads.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 14.5,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands fill a green insulated bottle at an office desk and lift it.",
+   "description": "An example clip showing hands fill a green insulated bottle at an office desk and lift it. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "native-spark-ads-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/native-spark-ads-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 14.5,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands fill a green insulated bottle at an office desk and lift it.",
+   "description": "An example clip showing hands fill a green insulated bottle at an office desk and lift it. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "pas-formula-ads": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/pas-formula-ads.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 7.8,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: A hand lifts a white air purifier from a desk beside a laptop.",
+   "description": "An example clip showing a hand lifts a white air purifier from a desk beside a laptop. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "pas-formula-ads-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/pas-formula-ads-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 7.8,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: A hand lifts a white air purifier from a desk beside a laptop.",
+   "description": "An example clip showing a hand lifts a white air purifier from a desk beside a laptop. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "promo-launch-sale": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/promo-launch-sale.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 8.5,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands switch on a portable table lamp beside a book and desk.",
+   "description": "An example clip showing hands switch on a portable table lamp beside a book and desk. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "promo-launch-sale-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/promo-launch-sale-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 8.5,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands switch on a portable table lamp beside a book and desk.",
+   "description": "An example clip showing hands switch on a portable table lamp beside a book and desk. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "retargeting-urgency": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/retargeting-urgency.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 4.8,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands inspect dark blue headphones and place them into a commuter bag.",
+   "description": "An example clip showing hands inspect dark blue headphones and place them into a commuter bag. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "retargeting-urgency-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/retargeting-urgency-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 4.8,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands inspect dark blue headphones and place them into a commuter bag.",
+   "description": "An example clip showing hands inspect dark blue headphones and place them into a commuter bag. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "social-proof-animation": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/social-proof-animation.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 4.3,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands use a green water bottle on a desk while animated rating icons appear.",
+   "description": "An example clip showing hands use a green water bottle on a desk while animated rating icons appear. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "social-proof-animation-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/social-proof-animation-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 4.3,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands use a green water bottle on a desk while animated rating icons appear.",
+   "description": "An example clip showing hands use a green water bottle on a desk while animated rating icons appear. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "tiktok-reels-shorts": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/tiktok-reels-shorts.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 8,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands tie white running shoes before feet run and show the soles.",
+   "description": "An example clip showing hands tie white running shoes before feet run and show the soles. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "tiktok-reels-shorts-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/tiktok-reels-shorts-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 8,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands tie white running shoes before feet run and show the soles.",
+   "description": "An example clip showing hands tie white running shoes before feet run and show the soles. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "trending-audio-sync": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/trending-audio-sync.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 10.8,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands press a transparent synthesizer on a neon desk and put on headphones.",
+   "description": "An example clip showing hands press a transparent synthesizer on a neon desk and put on headphones. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "trending-audio-sync-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/trending-audio-sync-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 10.8,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands press a transparent synthesizer on a neon desk and put on headphones.",
+   "description": "An example clip showing hands press a transparent synthesizer on a neon desk and put on headphones. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "unboxing-experience-v": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/unboxing-experience-v.mp4",
+   "w": 540,
+   "h": 960,
+   "duration": 15,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: Hands open a gray headphone package and remove the headphones and charging case.",
+   "description": "An example clip showing hands open a gray headphone package and remove the headphones and charging case. AIVideosUGC does not add voiceover, music, or captions."
+  },
+  "url-to-ad-a-p": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/url-to-ad-a-p.mp4",
+   "w": 720,
+   "h": 900,
+   "duration": 7.2,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: A hand views a product page, picks up a beige mug, and takes a drink.",
+   "description": "A silent example clip showing a hand views a product page, picks up a beige mug, and takes a drink."
+  },
+  "url-to-ad-b": {
+   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/url-to-ad-b.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": 4.5,
+   "uploadDate": "2026-10-06T00:00:00Z",
+   "name": "Example clip: A hand views a product page, picks up a beige mug, and takes a drink.",
+   "description": "An example clip showing a hand views a product page, picks up a beige mug, and takes a drink. AIVideosUGC does not add voiceover, music, or captions."
   }
  },
  "loop": {
@@ -2139,5 +2499,542 @@
   "w": 960,
   "h": 410,
   "alt": "Example video ads for different products: a creator showing a smartwatch, headphones being unboxed, a sparkling drink being poured, an espresso machine and a table lamp"
+ },
+ "clipFrames": {
+  "beauty-routine": {
+   "w": 1280,
+   "h": 720,
+   "alt": "A hand lifts an amber skincare dropper and applies serum to a face in a bathroom.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "before-after-showcases-a": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands measure a wardrobe organizer, install a divider, and arrange folded clothes.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "before-after-showcases-b": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands measure a wardrobe organizer, install a divider, and arrange folded clothes.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "black-friday-countdown": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands unfold a black folding electric bicycle and inspect its hinge.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "black-friday-countdown-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands unfold a black folding electric bicycle and inspect its hinge.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "carousel-storytelling": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands open a black commuter backpack in a cafe, show its compartments, and put it on.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "carousel-storytelling-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands open a black commuter backpack in a cafe, show its compartments, and put it on.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "competitor-comparison-a": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands pour liquid into two insulated cups and compare their bodies and grips.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "competitor-comparison-b": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands pour liquid into two insulated cups and compare their bodies and grips.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "discount-free-shipping": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands weigh coffee beans, pour coffee, and handle a small shipping box.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "discount-free-shipping-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands weigh coffee beans, pour coffee, and handle a small shipping box.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "fashion-try-on-reel": {
+   "w": 1280,
+   "h": 720,
+   "alt": "A model puts on a beige overshirt, turns, and examines its fabric.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "fashion-try-on-reel-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "A model puts on a beige overshirt, turns, and examines its fabric.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "feature-callout": {
+   "w": 1280,
+   "h": 720,
+   "alt": "A hand presses a white foaming cleanser pump and spreads foam while washing a face.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "feature-callout-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "A hand presses a white foaming cleanser pump and spreads foam while washing a face.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "food-beverage": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands fill a citrus sparkling drink bottle, pour it into an ice-filled glass, and lift the glass.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "food-beverage-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands fill a citrus sparkling drink bottle, pour it into an ice-filled glass, and lift the glass.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "home-organization": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands remove utensils, place gray dividers in a kitchen drawer, and organize it.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "home-organization-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands remove utensils, place gray dividers in a kitchen drawer, and organize it.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "how-to-tutorial": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands fill a portable steam iron, switch it on, and press a blue shirt.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "how-to-tutorial-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands fill a portable steam iron, switch it on, and press a blue shirt.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "limited-drop-alert": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands tie coral trail shoes, show the sole, and step along a mountain path.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "limited-drop-alert-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands tie coral trail shoes, show the sole, and step along a mountain path.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "native-spark-ads": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands fill a green insulated bottle at an office desk and lift it.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "native-spark-ads-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands fill a green insulated bottle at an office desk and lift it.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "pas-formula-ads": {
+   "w": 1280,
+   "h": 720,
+   "alt": "A hand lifts a white air purifier from a desk beside a laptop.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "pas-formula-ads-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "A hand lifts a white air purifier from a desk beside a laptop.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "promo-launch-sale": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands switch on a portable table lamp beside a book and desk.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "promo-launch-sale-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands switch on a portable table lamp beside a book and desk.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "retargeting-urgency": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands inspect dark blue headphones and place them into a commuter bag.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "retargeting-urgency-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands inspect dark blue headphones and place them into a commuter bag.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "social-proof-animation": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands use a green water bottle on a desk while animated rating icons appear.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "social-proof-animation-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands use a green water bottle on a desk while animated rating icons appear.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "tiktok-reels-shorts": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands tie white running shoes before feet run and show the soles.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "tiktok-reels-shorts-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands tie white running shoes before feet run and show the soles.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "trending-audio-sync": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands press a transparent synthesizer on a neon desk and put on headphones.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "trending-audio-sync-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands press a transparent synthesizer on a neon desk and put on headphones.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "unboxing-experience": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Hands open a gray headphone package and remove the headphones and charging case.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "unboxing-experience-v": {
+   "w": 540,
+   "h": 960,
+   "alt": "Hands open a gray headphone package and remove the headphones and charging case.",
+   "variants": [
+    540
+   ],
+   "clipPoster": true
+  },
+  "url-to-ad-a-p": {
+   "w": 720,
+   "h": 900,
+   "alt": "A hand views a product page, picks up a beige mug, and takes a drink.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  },
+  "url-to-ad-b": {
+   "w": 1280,
+   "h": 720,
+   "alt": "A hand views a product page, picks up a beige mug, and takes a drink.",
+   "variants": [
+    640,
+    1280
+   ],
+   "clipPoster": true
+  }
+ },
+ "gen2": {
+  "gen2:spokesperson-videos-1": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Adult with a closed mouth holding a matte black smart speaker in a bright modern living room, soft window light, product on the left and clean negative space on the right",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-product-feature-callout-video-2": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Close view of a white foaming cleanser pump pressed once by a clean hand, foam landing in the palm, bright bathroom light, uncluttered realistic ecommerce advertising photography.",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-limited-drop-alert-video-3": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Coral trail running shoe resting on dark rocks with the sole and upper both visible, mountain light, clean negative space for a web caption",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-retargeting-video-ad-4": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Dark blue over-ear headphones being placed into a commuter bag by a hand, blurred product page on a laptop in the background with no readable text, soft desk light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-electronics-5": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Teal travel charger on a clean office desk beside a phone and a small pouch, soft morning window light, varied materials and no brand marks",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-health-wellness-6": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Teal yoga mat partly unrolled in a sunlit living room with a plain water bottle and folded towel, calm morning light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-home-living-7": {
+   "w": 1200,
+   "h": 900,
+   "alt": "A hand placing cutlery into gray drawer dividers in a tidy kitchen, clear before and after areas, natural daylight",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-food-drinks-8": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Unbranded sparkling citrus drink bottle beside oranges and a glass filled with ice, a pouring action frozen midstream, bright kitchen light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-facebook-ads-9": {
+   "w": 1024,
+   "h": 1024,
+   "alt": "A varied home product and its simple package arranged in a square social feed composition, left side left open for HTML copy, soft studio light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-youtube-shorts-ads-10": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Black espresso machine dispensing coffee into a clear cup in a vertical composition, crisp steam and hand detail, warm cafe light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-holidays-11": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Ceramic scented candle beside wrapped gift paper and evergreen branches on a warm holiday table, cozy golden light, product fully visible",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:blog-ai-video-review-checklist-12": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Unbranded product, color swatches and a laptop showing a generic video timeline on a clean review desk, bright neutral light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-instagram-ads-13": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Fashion accessories arranged on a small cafe table with a casually dressed person cropped above the mouth, soft street light, composition leaves room for a vertical crop",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-size-14": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Canvas backpack held beside a small rolling suitcase and a hand for clear scale, bright airport lounge light, simple background with no writing",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  }
  }
 }

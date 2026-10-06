@@ -1,0 +1,78 @@
+{
+  "id": "tpl-retargeting-video-ad",
+  "title": "Retargeting Video Ad Template | AIVideosUGC",
+  "description": "Make a retargeting video ad from one product photo. Show a useful return-to-product moment, then set your audience, offer, and frequency in your ad platform.",
+  "h1": "Retargeting Video Ads for a Second Look",
+  "eyebrow": "Retargeting video template",
+  "lead": "Retargeting video ad creatives give a shopper a useful second look at a product. Upload a photo, describe a short return-to-product moment, and get a clip; the ad platform still controls who sees it.",
+  "secondary_keywords": [
+    "remarketing video ad",
+    "cart reminder video",
+    "returning shopper ad",
+    "retargeting creative"
+  ],
+  "intro": [
+    "The sample shows dark blue headphones being inspected and placed into a commuter bag. It suggests a return to something the shopper considered without claiming that a particular person has visited your site.",
+    "Use the clip with your own audience rules, offer, product page, and frequency settings. The workbench makes the visual asset; it does not know who viewed a product, whether someone abandoned a cart, or which offer is active."
+  ],
+  "tip": "Describe a quiet second-look action and leave the audience, price, and reminder wording to the ad platform and your editor.",
+  "steps": [
+    {
+      "t": "Choose the product",
+      "d": "Upload a clear product image that gives the clip a recognizable shape and useful detail."
+    },
+    {
+      "t": "Describe the second look",
+      "d": "Write a moment such as checking the ear cups and placing the headphones into a commuter bag."
+    },
+    {
+      "t": "Set the audience yourself",
+      "d": "Add your verified offer and product page, then choose visitors, cart users, exclusions, and frequency in your ad platform."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Feature reminder",
+      "d": "Use one close action to bring a useful product detail back into view."
+    },
+    {
+      "t": "Pack for later",
+      "d": "Show a product going into a bag, case, or drawer to suggest a next step without a promise."
+    },
+    {
+      "t": "New angle",
+      "d": "Make another run that shows the same product from a different useful angle."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Size",
+        "1:1 · Feed"
+      ],
+      [
+        "Length",
+        "10 seconds"
+      ],
+      [
+        "Also try",
+        "9:16 · Reels"
+      ]
+    ],
+    "cta": "Make my retargeting video"
+  },
+  "faq": [
+    {
+      "q": "Does AIVideosUGC choose my retargeting audience?",
+      "a": "No. The audience is set by the advertising platform. You choose the visitors, cart users, exclusions, budget, and frequency there."
+    },
+    {
+      "q": "Can the video claim that someone viewed or abandoned a cart?",
+      "a": "Do not make that claim in the generated scene. It does not know a viewer’s history. Add only copy that matches your actual campaign and data."
+    },
+    {
+      "q": "Will it add the offer or price?",
+      "a": "No. Add the current offer, price, dates, and disclosure yourself after checking them in your editor or ad platform."
+    }
+  ]
+}

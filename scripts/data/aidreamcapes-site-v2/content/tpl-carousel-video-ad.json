@@ -1,0 +1,78 @@
+{
+  "id": "tpl-carousel-video-ad",
+  "title": "Carousel Video Ad Template for Product Stories | AIVideosUGC",
+  "description": "Make a carousel video ad from one product photo. Plan a short sequence of scenes for social feeds, then add your panel copy and product facts in your editor.",
+  "h1": "Carousel Video Ads That Tell One Product Story",
+  "eyebrow": "Carousel video ad template",
+  "lead": "Carousel video ad creatives move through a few product moments in order. Upload a photo, describe the sequence, and get a short social clip; add panel copy, prices, and product facts yourself before publishing.",
+  "secondary_keywords": [
+    "carousel ad video",
+    "multi-panel product ad",
+    "Instagram carousel video",
+    "sequenced product ad"
+  ],
+  "intro": [
+    "This format is built around a sequence rather than a talking presenter. The sample opens a black commuter backpack in a cafe, shows its compartments, and ends with the bag on a person.",
+    "Use a sequence to show what is inside, how a product fits a routine, or why a detail matters. The workbench can create the visual progression, but it cannot guarantee exact object positions across every scene or the accuracy of tiny text; check the result and add your own copy."
+  ],
+  "tip": "Write three or four short beats in order and describe the product in each one so the transitions have a clear job.",
+  "steps": [
+    {
+      "t": "Pick the story beats",
+      "d": "Choose the product photo and outline three or four moments, such as open, reveal, use, and finish."
+    },
+    {
+      "t": "Describe each scene",
+      "d": "Say where each beat happens and how the camera moves, keeping the product and action simple."
+    },
+    {
+      "t": "Add panel copy",
+      "d": "Place your headline, price, dimensions, and call to action in your editor after reviewing the rendered clip."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "What is inside",
+      "d": "Open a bag, case, or bundle and move through the pieces one at a time."
+    },
+    {
+      "t": "From desk to door",
+      "d": "Show a product in its work setting, then in the moment it leaves with the customer."
+    },
+    {
+      "t": "Three reasons",
+      "d": "Give each scene one visual reason to keep watching, then add the verified wording yourself."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Size",
+        "1:1 · Feed"
+      ],
+      [
+        "Length",
+        "10 seconds"
+      ],
+      [
+        "Also try",
+        "9:16 · Reels"
+      ]
+    ],
+    "cta": "Make my carousel video"
+  },
+  "faq": [
+    {
+      "q": "Is this a real platform carousel post?",
+      "a": "It is a short video sequence that can support a carousel-style story. It does not create a platform post, upload it, or add real interaction."
+    },
+    {
+      "q": "Will each scene keep the product in exactly the same place?",
+      "a": "No. AI-generated scenes can shift object position, scale, or details. Review the clip and choose a simpler sequence if continuity matters."
+    },
+    {
+      "q": "Can it add my price and panel headlines?",
+      "a": "Add them after downloading. Exact prices and small text should come from your editor or ad platform, not from the generated image."
+    }
+  ]
+}

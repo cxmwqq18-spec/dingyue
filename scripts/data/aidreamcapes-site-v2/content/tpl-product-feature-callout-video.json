@@ -1,0 +1,78 @@
+{
+  "id": "tpl-product-feature-callout-video",
+  "title": "Product Feature Callout Video Template | AIVideosUGC",
+  "description": "Create a product feature callout video from one photo. Show one useful detail in a short scene, then add the verified feature name or label in your editor.",
+  "h1": "Product Feature Callout Videos for One Clear Detail",
+  "eyebrow": "Feature callout video template",
+  "lead": "Product feature callout video ads keep one useful detail in view. Upload a product photo, describe the action, and get a focused clip for a product page, TikTok, or Reels; add the verified feature name yourself.",
+  "secondary_keywords": [
+    "feature callout ad",
+    "product feature video",
+    "single benefit product video",
+    "ecommerce feature video"
+  ],
+  "intro": [
+    "A feature callout works when shoppers can see one thing happen. The sample presses a white cleanser pump, spreads the foam, and keeps the action close enough to understand without a presenter.",
+    "Use this format for a pump, hinge, texture, clasp, or other visible feature. AIVideosUGC can show the action, but it cannot verify ingredients, measurements, or small package text; add those facts in your editor after you check them."
+  ],
+  "tip": "Describe one visible feature and one action, then leave any ingredient, size, or performance statement for text you add yourself.",
+  "steps": [
+    {
+      "t": "Choose the feature",
+      "d": "Upload a photo where the pump, texture, clasp, or control you want to show is easy to see."
+    },
+    {
+      "t": "Describe one action",
+      "d": "Write a short scene such as a hand pressing the pump and spreading the foam in clean bathroom light."
+    },
+    {
+      "t": "Add the checked label",
+      "d": "Download the clip and add your product name, feature wording, and any required disclosure yourself."
+    }
+  ],
+  "ideas": [
+    {
+      "t": "Texture moment",
+      "d": "Show a cream, gel, or drink pouring into a glass without making an unsupported claim."
+    },
+    {
+      "t": "Small mechanism",
+      "d": "Use a close movement for a zipper, lid, hinge, button, or charging port."
+    },
+    {
+      "t": "Pack and use",
+      "d": "Show the feature once in the package and once in a real setting."
+    }
+  ],
+  "maker": {
+    "options": [
+      [
+        "Size",
+        "9:16 · TikTok & Reels"
+      ],
+      [
+        "Length",
+        "10 seconds"
+      ],
+      [
+        "Also try",
+        "16:9 · Product page"
+      ]
+    ],
+    "cta": "Make my feature video"
+  },
+  "faq": [
+    {
+      "q": "Will the video write my feature label correctly?",
+      "a": "No. The generated scene may not render small words accurately. Add the checked feature name, ingredients, measurements, and disclosures after downloading."
+    },
+    {
+      "q": "Can I show more than one feature?",
+      "a": "You can make separate runs for separate features. Keeping one detail per clip makes the action easier to understand."
+    },
+    {
+      "q": "Does the clip include a voiceover or music?",
+      "a": "No. AIVideosUGC does not add voiceover, music, or captions. Add any spoken or written explanation yourself in your editor."
+    }
+  ]
+}

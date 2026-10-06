@@ -560,16 +560,10 @@
   },
   "home": {
    "hero": {
-    "kind": "loop",
-    "clips": [
-     "ugc-ad-video",
-     "unboxing-experience",
-     "food-video",
-     "product-video",
-     "promo-video"
-    ]
+    "kind": "video",
+    "clip": "native-spark-ads"
    },
-   "og": "f:ugc-ad-video"
+   "og": "f:native-spark-ads"
   },
   "video-hub": {
    "og": "f:ugc-ad-video"
@@ -943,6 +937,41 @@
   },
   "blog": {
    "og": "g:packshot-multi-angle/example-04"
+  },
+  "tpl-limited-drop-alert-video": {
+   "hero": {
+    "kind": "video",
+    "clip": "limited-drop-alert"
+   },
+   "og": "f:limited-drop-alert"
+  },
+  "tpl-product-feature-callout-video": {
+   "hero": {
+    "kind": "video",
+    "clip": "feature-callout"
+   },
+   "og": "f:feature-callout"
+  },
+  "tpl-carousel-video-ad": {
+   "hero": {
+    "kind": "video",
+    "clip": "carousel-storytelling"
+   },
+   "og": "f:carousel-storytelling"
+  },
+  "tpl-spark-ads-style-video": {
+   "hero": {
+    "kind": "video",
+    "clip": "native-spark-ads"
+   },
+   "og": "f:native-spark-ads"
+  },
+  "tpl-retargeting-video-ad": {
+   "hero": {
+    "kind": "video",
+    "clip": "retargeting-urgency"
+   },
+   "og": "f:retargeting-urgency"
   }
  },
  "cards": {
