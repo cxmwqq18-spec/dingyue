@@ -78,5 +78,109 @@
       "q": "How close should a product detail photo be?",
       "a": "Start with a sharp crop that still shows the detail in context. If stitching, texture, or a label is blurry in the source, upload a closer, better-lit photo and generate again."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Let the Material Make Its Case",
+      "p": "A detail frame earns its place when the buyer is deciding whether a seam is neat, a clasp is substantial, or a surface has the finish you describe. Use it after the full product view, where a close crop answers a question the hero image leaves open."
+    },
+    {
+      "h2": "Enlarge Evidence You Actually Supplied",
+      "p": "The process can frame a real texture from your source, but it should not replace a missing weave, engraving, or hardware part. Choose one visible detail per run and keep the crop close enough for a phone shopper to inspect without turning the image into an abstract texture."
+    }
+  ],
+  "input_guide": {
+    "h2": "Give the Detail Room to Stay Sharp",
+    "items": [
+      {
+        "t": "Fill the frame with the feature",
+        "d": "Place the seam, clasp, grain, or mark near the center and avoid a source crop that cuts it in half."
+      },
+      {
+        "t": "Use a steady soft light",
+        "d": "Diffuse daylight reveals texture while reducing a hard reflection across metal or varnish."
+      },
+      {
+        "t": "Keep the product surface clean",
+        "d": "Remove lint, fingerprints, and stray props that could be mistaken for part of the finish."
+      },
+      {
+        "t": "Name the exact subject",
+        "d": "Say whether you want the corner stitching, zipper pull, brushed steel, or maker stamp in focus."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A Useful Close-Up Has a Job",
+    "items": [
+      {
+        "t": "Show construction",
+        "d": "Make stitching, seams, joins, and edge finishing legible beside the main image."
+      },
+      {
+        "t": "Show surface",
+        "d": "Give leather grain, canvas weave, ceramic glaze, or wood texture a dedicated view."
+      },
+      {
+        "t": "Show hardware",
+        "d": "Frame a buckle, snap, clasp, zipper pull, or watch crown without burying it in the whole product."
+      },
+      {
+        "t": "Support an honest claim",
+        "d": "Use the image as visual evidence for details you can verify in the item and product copy."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Close-Ups for Different Catalogs",
+    "items": [
+      {
+        "t": "Leather wallet",
+        "d": "Corner stitching and folded edge on a warm wood desk with the grain catching soft side light."
+      },
+      {
+        "t": "Canvas tote",
+        "d": "Handle seam and woven fabric beside a paper tag, cropped tightly enough to read the weave."
+      },
+      {
+        "t": "Watch",
+        "d": "Brushed metal case, crown, and strap connection on a dark stone surface with controlled highlights."
+      },
+      {
+        "t": "Handmade mug",
+        "d": "Glaze variation and maker mark near the base on a linen tabletop, with the rim still in context."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Place the Detail With the Right Context",
+    "items": [
+      {
+        "t": "Keep the whole item nearby",
+        "d": "Use the full product image first so the close crop has an obvious reference."
+      },
+      {
+        "t": "Verify the feature",
+        "d": "Compare grain direction, countable hardware, engraving, and color against the physical product."
+      },
+      {
+        "t": "Write exact specifications",
+        "d": "Add material, dimensions, care instructions, or personalization text yourself where the listing needs precision."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Best Uses and Boundaries",
+    "good": [
+      "Leather, canvas, knit, wood, ceramic, and other visibly textured products",
+      "Jewelry or watches with a meaningful clasp or finish",
+      "Handmade goods with a maker mark or construction detail",
+      "A listing that already has a clear full-product hero"
+    ],
+    "not_ideal": [
+      "A blurry source with no visible texture",
+      "Plain objects whose selling point is only a printed number",
+      "Reflective surfaces with uncontrolled glare across the feature"
+    ]
+  }
 }

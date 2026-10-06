@@ -64,9 +64,18 @@
   ],
   "maker": {
     "options": [
-      ["Photo", "Your product shot"],
-      ["Scene", "Describe a room or setting"],
-      ["Size", "Square by default"]
+      [
+        "Photo",
+        "Your product shot"
+      ],
+      [
+        "Scene",
+        "Describe a room or setting"
+      ],
+      [
+        "Size",
+        "Square by default"
+      ]
     ],
     "cta": "Make my lifestyle photo"
   },
@@ -87,5 +96,134 @@
       "q": "Can I use lifestyle photos in Facebook or Instagram ads?",
       "a": "Yes. Lifestyle scenes work in ads as well as on product pages. Keep words out of the scene itself and add your headline or price later in your ad tool."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Give the product a believable place in the day",
+      "d": "A lifestyle frame should answer a simple shopper question: where would I use or keep this? Choose a setting that follows the product's real routine, then let one or two supporting props establish context. The item should remain easy to recognize when the scene is viewed at feed size."
+    },
+    {
+      "h2": "Describe the scene like a small shot list",
+      "d": "Name the surface or room, the time of day, the product position, and one visual accent. “Candle on a stone bath ledge, warm evening light, label facing front” gives the generator more useful direction than “luxury mood.”"
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare a product that can be placed cleanly",
+    "items": [
+      {
+        "t": "Leave margin",
+        "d": "Keep the full item away from the source frame edges so a table, shelf, or bedding scene has room around it."
+      },
+      {
+        "t": "Show the usable face",
+        "d": "Point a label, opening, handle, or control toward the camera when that detail helps explain the product."
+      },
+      {
+        "t": "Choose a stable orientation",
+        "d": "Photograph bottles upright, bags with their base visible, and decor pieces in the position you want the new scene to echo."
+      },
+      {
+        "t": "Keep the source honest",
+        "d": "Use a clear, evenly lit product image; the new room can change, but it still starts from what the source shows."
+      },
+      {
+        "t": "Write a bounded brief",
+        "d": "Ask for one room, one surface, one light condition, and no more than a couple of props for a focused composition."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A square scene you can plan around",
+    "items": [
+      {
+        "t": "One generated image",
+        "d": "A lifestyle image uses 24 credits, with the charge visible before you launch it."
+      },
+      {
+        "t": "A familiar frame",
+        "d": "The default square shape fits a product-page gallery, a social feed, or an email module."
+      },
+      {
+        "t": "A context cue",
+        "d": "The setting shows use and placement, while the product remains the subject rather than becoming a generic room photo."
+      },
+      {
+        "t": "A private download",
+        "d": "The source and result stay inside your account as you decide where to publish them."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Six scenes sellers can describe",
+    "items": [
+      {
+        "t": "Handbag",
+        "d": "Place the bag on a café chair beside a folded newspaper, with the strap visible and the front panel facing the viewer."
+      },
+      {
+        "t": "Candle",
+        "d": "Set the jar on a stone bath ledge beside a rolled towel, with warm evening light and the label kept toward camera."
+      },
+      {
+        "t": "Planter",
+        "d": "Show the planter on a bright entry shelf with a few leaves rising above it and clear space around the rim."
+      },
+      {
+        "t": "Hoodie",
+        "d": "Arrange the folded hoodie on a wooden bench beside a beanie, with the chest graphic facing up and no person required."
+      },
+      {
+        "t": "Kitchen tool",
+        "d": "Place a compact scale beside a mixing bowl on a sunlit counter, keeping the display area visible for inspection later."
+      },
+      {
+        "t": "Throw blanket",
+        "d": "Drape the blanket over a neutral sofa arm with a reading lamp in the background, showing the weave at the front fold."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Use context where context helps",
+    "good": [
+      {
+        "t": "Home and kitchen goods",
+        "d": "Items whose value becomes clearer when a room, surface, or daily routine is visible."
+      },
+      {
+        "t": "Accessories and gifts",
+        "d": "Products that benefit from a café, travel, desk, or seasonal setting around them."
+      },
+      {
+        "t": "Second listing images",
+        "d": "A contextual follow-up after the clean product view has already established the item."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "The only proof of a technical feature",
+        "d": "Use real specifications and close-ups when a shopper must verify a measurement, port, ingredient, or safety detail."
+      },
+      {
+        "t": "A product that needs strict neutrality",
+        "d": "Keep the main view plain when marketplace rules or catalog consistency require no props or scene context."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Turn a scene into a dependable listing asset",
+    "items": [
+      {
+        "t": "Check placement",
+        "d": "Confirm that the product sits on a believable surface and that the scale does not make it look misleading."
+      },
+      {
+        "t": "Check the product",
+        "d": "Compare color, shape, label, and count with the real item before publishing the scene."
+      },
+      {
+        "t": "Add exact copy later",
+        "d": "Place a headline, price, date, or promotion in your editor so the wording stays accurate."
+      }
+    ]
+  }
 }

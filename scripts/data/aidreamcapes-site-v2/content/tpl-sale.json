@@ -78,5 +78,109 @@
       "q": "Can I make a sale banner in a vertical format?",
       "a": "The sale template produces a square image by default. Add a 9:16 canvas in your design tool after download if you need a Story or Reel placement."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Give the Offer a Place to Land",
+      "p": "A sale visual has to show the item and leave enough calm surface for the message. This template creates the scene first, with open sky, wall, snow, or another quiet area that you can use for a percentage, date, code, or shipping line later."
+    },
+    {
+      "h2": "Keep Promotion Facts in Your Hands",
+      "p": "The generated image supplies seasonal context; your store or design tool supplies the exact offer. Add only an approved discount, date, inventory note, and link after download so a customer never sees a guessed number."
+    }
+  ],
+  "input_guide": {
+    "h2": "Reserve Negative Space Before You Run",
+    "items": [
+      {
+        "t": "Choose the hero product",
+        "d": "Use a crisp source of the jacket, bag, shoe, or other item that is actually part of the sale."
+      },
+      {
+        "t": "Name the open area",
+        "d": "Say open sky on the left third, a clear wall above the product, or snow behind the subject."
+      },
+      {
+        "t": "Set the seasonal cues",
+        "d": "Mention winter, summer, holiday, or end-of-season details that support the campaign without adding a promotion claim."
+      },
+      {
+        "t": "Protect the product silhouette",
+        "d": "Keep the item away from the planned text zone so the offer and product can be read separately."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A Sale Key Visual Can Provide",
+    "items": [
+      {
+        "t": "A clear product hero",
+        "d": "Put the discounted item in a scene that matches the season or campaign mood."
+      },
+      {
+        "t": "A deliberate copy zone",
+        "d": "Leave open space for the offer you will add yourself."
+      },
+      {
+        "t": "A reusable background",
+        "d": "Carry the same visual into a percent-off post, free-shipping message, or reminder by changing the overlay."
+      },
+      {
+        "t": "A square campaign asset",
+        "d": "Use the download in Facebook or Instagram feed creative after verifying the promotion details."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Seasonal Sale Scenes",
+    "items": [
+      {
+        "t": "Black Friday apparel",
+        "d": "A dark coat or bag on a dramatic charcoal set with open space on the upper right for bold copy."
+      },
+      {
+        "t": "Summer clearance",
+        "d": "A dress or sandal on a late-season beach with bright sky left clear for the date and discount."
+      },
+      {
+        "t": "Holiday gifts",
+        "d": "A boxed product beside a decorated fireplace with a calm frosted window area for the offer."
+      },
+      {
+        "t": "Home refresh",
+        "d": "A lamp or cushion in a bright room with an uncluttered wall above the product for a short sale line."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Publish the Offer With Exact Information",
+    "items": [
+      {
+        "t": "Add the promotion in a design tool",
+        "d": "Type the approved percentage, price, dates, code, and link after the image is downloaded."
+      },
+      {
+        "t": "Check availability",
+        "d": "Confirm the featured color, size, and stock still match the products the campaign sends people to."
+      },
+      {
+        "t": "Preview every crop",
+        "d": "Review feed and mobile placements so the product and offer remain visible at the same time."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Promotions That Suit This Template",
+    "good": [
+      "Black Friday and holiday campaigns",
+      "End-of-season apparel or accessory clearance",
+      "Short product launches with a clear offer zone",
+      "Social feed posts that need one product and one message"
+    ],
+    "not_ideal": [
+      "A promotion that depends on dense legal copy in the image",
+      "A product whose silhouette must fill the entire canvas",
+      "Offers that change before the creative can be reviewed and updated"
+    ]
+  }
 }

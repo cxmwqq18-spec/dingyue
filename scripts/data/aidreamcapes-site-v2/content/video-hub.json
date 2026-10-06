@@ -13,8 +13,8 @@
     "vertical product videos for TikTok"
   ],
   "intro": [
-    "AIVideosUGC makes short videos for people who sell online. You add a photo of your product, write one sentence about the scene you want, and get back a single clip that runs 6, 10, 15, or 30 seconds. Choose vertical 9:16 for TikTok, Reels, and Shorts, square 1:1 for social feeds, or wide 16:9 for a store banner. If you need something in between, 3:4 and 4:3 are available too.",
-    "Each video type on this page heads in its own direction. Creator-style ads have the casual, handheld feel of a phone video. Demo videos show what the product does. Unboxing clips focus on the reveal, before-and-after clips show a change, and photo-to-video adds motion to a shot you already like. Videos are made one at a time, so if you want three openings to compare, run it three times and keep the one you like."
+    "AIVideosUGC makes short videos for people who sell online. Add a product photo, choose one video direction, and write one sentence about the scene. Choose 6, 10, 15, or 30 seconds and one of five frames: 9:16, 1:1, 16:9, 4:3, or 3:4.",
+    "Creator-style ads bring a casual product moment, demos show one action, unboxing clips reveal packaging, before-and-after clips show a visible change, and image-to-video adds motion to a still. Each run makes one clip, so you can test another opening by changing the scene sentence."
   ],
   "benefits": [
     {
@@ -59,11 +59,155 @@
     },
     {
       "q": "What does one video job cost?",
-      "a": "The displayed cost depends on length: 6 seconds uses 24 credits, 10 uses 40, 15 uses 60, and 30 uses 120. The workbench currently exposes 6, 10, and 15 seconds."
+      "a": "The displayed cost depends on length: 6 seconds uses 24 credits, 10 uses 40, 15 uses 60, and 30 uses 120. The workspace currently exposes 6, 10, and 15 seconds."
     },
     {
       "q": "Do downloaded images and videos have an AIVideosUGC watermark?",
       "a": "No. Downloaded images and videos do not include an AIVideosUGC watermark."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Choose the job before you write the prompt",
+      "p": "Start with the result you need: a casual product moment, a feature demonstration, a package reveal, a visible transformation, or movement added to a photo you already like. Each direction answers a different shopper question, so naming the job first keeps the scene focused."
+    },
+    {
+      "h2": "One product can support several tests",
+      "p": "Use the same approved product photo with different openings, settings, or actions when you want to compare creative angles. Every run is a separate clip, and the workspace shows its credit cost before you start."
+    },
+    {
+      "h2": "Plan the file around its destination",
+      "p": "Use 9:16 when the video will fill a vertical feed, 1:1 for a square placement, and 16:9 for a wide store area; 4:3 and 3:4 are also available when the placement calls for them. The finished file is yours to review, edit, and use in commercial ads, product pages, or social posts. Keep the source photo and scene sentence beside each version so your team can repeat a useful angle without guessing what changed later for testing."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare one product photo that can carry the scene",
+    "items": [
+      {
+        "t": "Show the full item",
+        "d": "Use a product shot where the complete shape, main color, and important parts are visible instead of cropping away the feature you want to show."
+      },
+      {
+        "t": "Leave visual breathing room",
+        "d": "A little space around the product gives camera movement and hand actions somewhere to happen without cutting into the object."
+      },
+      {
+        "t": "Match the photo to the job",
+        "d": "Choose a clean hero shot for motion, a feature view for a demo, and a packaging reference when the box or insert is part of the story."
+      },
+      {
+        "t": "Write one clear action",
+        "d": "Name one place, one main action, and one product detail. A single focused moment is easier to judge than a list of unrelated scenes."
+      },
+      {
+        "t": "Pick the placement first",
+        "d": "Decide on vertical, square, or wide before you describe the composition so the framing fits the place where you will post it."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What each run gives you",
+    "items": [
+      {
+        "t": "A short product clip",
+        "d": "Choose 6, 10, 15, or 30 seconds. The result is one downloadable clip per run."
+      },
+      {
+        "t": "Five usable shapes",
+        "d": "Generate 9:16, 1:1, 16:9, 4:3, or 3:4 to match the frame a placement needs."
+      },
+      {
+        "t": "A visible price before launch",
+        "d": "The credit charge is shown before generation. If the job fails, the reserved credits return to your balance."
+      },
+      {
+        "t": "A file for commercial editing",
+        "d": "Downloads do not carry a watermark. Add verified offer details, captions, and music in the editing or publishing tool you already use."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Five starting scenes to try",
+    "items": [
+      {
+        "t": "Creator-style opening",
+        "d": "A hand pulls a stainless water bottle from a canvas gym bag beside a bench, then turns it toward the light."
+      },
+      {
+        "t": "Feature demonstration",
+        "d": "A lunch box sits on a kitchen counter while its lid clicks shut and the front latch locks into place."
+      },
+      {
+        "t": "Packaging reveal",
+        "d": "A matte black mailer opens on a pale table, tissue folds back, and a candle is lifted into view."
+      },
+      {
+        "t": "Before and after",
+        "d": "A crowded entryway with loose shoes changes to the same space with pairs lined up on a bamboo rack."
+      },
+      {
+        "t": "Photo motion",
+        "d": "Morning light travels across a watch on a stone surface as the camera makes a slow, close push toward the face."
+      },
+      {
+        "t": "Lifestyle placement",
+        "d": "A compact speaker rests on a desk beside a laptop while a hand reaches in to turn the dial."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the message after download",
+    "items": [
+      {
+        "t": "Type exact offer details",
+        "d": "Add the price, date, discount code, or product name yourself so every small character matches the approved source."
+      },
+      {
+        "t": "Layer captions and sound",
+        "d": "Place captions and music in TikTok, CapCut, Ads Manager, or your normal editing process because AIVideosUGC supplies the visual clip only."
+      },
+      {
+        "t": "Check the product frame by frame",
+        "d": "Look for changes to labels, colors, edges, or small parts before publishing and keep the version that represents the item honestly."
+      },
+      {
+        "t": "Save versions with useful names",
+        "d": "Name files by product, scene, shape, and date so a later test does not overwrite the opening you want to reuse."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Where this hub helps most",
+    "good": [
+      "Small stores testing several product angles from an approved photo",
+      "Catalog teams that need short visual demos for different placements",
+      "Launch teams preparing a reveal before a full shoot is scheduled",
+      "Sellers who want product-specific scenes instead of a generic text overlay"
+    ],
+    "not_ideal": [
+      "Claims that depend on an exact medical, body, or performance transformation",
+      "Scenes where tiny printed text must remain perfectly accurate throughout"
+    ]
+  },
+  "compare": {
+    "h2": "How this fits with other ways to make a clip",
+    "items": [
+      {
+        "t": "Versus filming in-house",
+        "d": "You begin with one product photo and a written scene, so there is no camera setup or location schedule inside the process."
+      },
+      {
+        "t": "Versus hiring a creator",
+        "d": "You can test several openings from the same product reference without arranging sample shipping or a creator brief."
+      },
+      {
+        "t": "Versus a still image",
+        "d": "A clip can show an action, reveal, or change that a single frame cannot communicate by itself."
+      },
+      {
+        "t": "Versus a full campaign edit",
+        "d": "The generated file is a starting visual; your team still controls the final wording, sound, placement, and approval."
+      }
+    ]
+  }
 }

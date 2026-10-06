@@ -52,5 +52,129 @@
       "q": "Should I spray water on my can for a cold, fresh look?",
       "a": "No need. Ask for condensation in your description instead, then wipe off fingerprints and photograph the dry can near a window with the light coming from the side."
     }
-  ]
+  ],
+  "overview": {
+    "h2": "Make the serving moment easy to picture",
+    "items": [
+      {
+        "t": "Start with the real package",
+        "d": "A clear front-facing can, bag, bottle, or jar anchors the scene. Add a separate source for the back or side when the package information matters, because small generated lettering is not a substitute for the real label."
+      },
+      {
+        "t": "Give one action the frame",
+        "d": "A pour, crack, drizzle, snap, scoop, or plated finish is enough for a useful short clip. Let the scene suggest taste and occasion while ingredients, allergens, nutrition, and price stay in approved copy."
+      }
+    ]
+  },
+  "input_guide": {
+    "h2": "Prepare a food or drink upload",
+    "items": [
+      {
+        "t": "Face the package",
+        "d": "Photograph the can, bottle, pouch, box, or jar upright with the front label visible. Include the cap, lid, and base if they define the product."
+      },
+      {
+        "t": "Capture the texture",
+        "d": "Add a separate reference for crumb, sauce thickness, coffee color, fizz, tea leaves, or a cut surface when that detail carries the appeal."
+      },
+      {
+        "t": "Keep packs dry and clean",
+        "d": "Remove fingerprints and use side light for glossy cans and bottles. Ask for condensation or steam in the description rather than spraying the source."
+      },
+      {
+        "t": "Show every bundle piece",
+        "d": "For a multipack, gift box, or variety set, arrange every flavor or item in one frame so shoppers can count what arrives."
+      },
+      {
+        "t": "Choose a serving cue",
+        "d": "Name the glass, plate, table, lunch bag, shelf, or cutting board and keep the action focused on the food rather than invented label text."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Food and drink scenes you can describe",
+    "items": [
+      {
+        "t": "Cold pour",
+        "d": "A chilled coffee bottle pouring over ice into a tall clear glass on a kitchen counter, condensation on the bottle, front label facing camera."
+      },
+      {
+        "t": "Sauce finish",
+        "d": "A hot-sauce bottle beside tacos while a glossy red drizzle crosses the top, close crop on the bottle cap and serving texture."
+      },
+      {
+        "t": "Crunch moment",
+        "d": "A granola cluster breaking over a bowl of yogurt and berries, the jar behind it on a linen breakfast table."
+      },
+      {
+        "t": "Shelf-ready pack",
+        "d": "A tea pouch standing on a pantry shelf beside a mug and a small scoop, with the pouch front fully readable from a distance."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the food set can deliver",
+    "items": [
+      {
+        "t": "Appetite and context",
+        "d": "A pour, plate, drizzle, or break shows how the product might appear in a meal or routine."
+      },
+      {
+        "t": "Package recognition",
+        "d": "Use square product stills and a clean shelf scene to keep the actual pack central in a gallery."
+      },
+      {
+        "t": "Flexible framing",
+        "d": "Use 9:16, 1:1, or 16:9 as the main choices, with 4:3 and 3:4 available for other crops; choose 6, 10, 15, or 30 seconds for the action."
+      },
+      {
+        "t": "Known credit steps",
+        "d": "The cost steps from 24 credits for a photo or 6-second clip to 40 for 10 seconds, 60 for 15 seconds, and 120 for 30 seconds; you see it first."
+      },
+      {
+        "t": "A clean file to finish",
+        "d": "Use the watermark-free download in an ad, store listing, or social post, then add price, ingredients, allergens, dates, captions, or music yourself."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the food asset",
+    "items": [
+      {
+        "t": "Verify the package",
+        "d": "Compare flavor, size, ingredient panel, nutrition values, allergen callouts, and count with the real product."
+      },
+      {
+        "t": "Add the exact offer",
+        "d": "Place price, discount, launch date, stock note, and serving instructions in an approved layout where every character is controlled."
+      },
+      {
+        "t": "Add sound or captions",
+        "d": "AIVideosUGC provides no music, spoken narration, or subtitles. Add the track and readable captions after the food action is approved."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A good fit for food merchandising",
+    "good": [
+      {
+        "t": "Packaged foods",
+        "d": "Coffee, tea, snacks, sauces, condiments, jars, pouches, cans, and boxed sets with a visible package."
+      },
+      {
+        "t": "Simple serving actions",
+        "d": "Products that can be poured, drizzled, scooped, plated, opened, or broken in one clear moment."
+      },
+      {
+        "t": "Occasion-led launches",
+        "d": "New flavors, lunch moments, pantry shelves, gifting, and seasonal serving scenes."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "Tiny label evidence",
+        "d": "Use a real package photo for ingredients, allergens, nutrition, and required notices."
+      }
+    ]
+  }
 }

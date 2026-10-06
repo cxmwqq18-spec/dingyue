@@ -78,5 +78,109 @@
       "q": "What photo format works for an AI lookbook?",
       "a": "Use a consistent aspect ratio and repeated setting words across each run. Choose 9:16 for vertical social posts or 1:1 for a square collection grid."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Turn a Collection Into a Visual Story",
+      "p": "A lookbook frame does more than show a garment. It gives a launch a setting, pace, and point of view, so shoppers can understand how separate pieces belong together. Build each source as a complete outfit and repeat the visual language across the collection."
+    },
+    {
+      "h2": "Let the Setting Support the Clothes",
+      "p": "A pale stone arch, city corner, garden path, or seaside terrace can set a season without competing with the silhouette. Choose a location that your collection can carry through several looks, then vary the pose or grouping rather than changing the story every time."
+    }
+  ],
+  "input_guide": {
+    "h2": "Assemble Every Look Before Uploading",
+    "items": [
+      {
+        "t": "Include the full outfit",
+        "d": "Lay out top, bottom, outer layer, shoes, and the accessory you intend to show together."
+      },
+      {
+        "t": "Keep patterns visible",
+        "d": "Photograph each piece flat and separated enough that a print, collar, or hem is not hidden by another garment."
+      },
+      {
+        "t": "Choose one campaign location",
+        "d": "Name the architecture, landscape, time of day, and attitude that can work for the next several looks."
+      },
+      {
+        "t": "Describe the pose lightly",
+        "d": "Ask for relaxed standing, walking, or leaning rather than a pose that obscures the outfit."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What a Lookbook Set Can Do",
+    "items": [
+      {
+        "t": "Show the full silhouette",
+        "d": "Give the outfit room to read from shoulder to shoe in one editorial frame."
+      },
+      {
+        "t": "Connect separate pieces",
+        "d": "Use styling and location to suggest how a collection works as a wardrobe."
+      },
+      {
+        "t": "Open a launch story",
+        "d": "Arrange several images for a carousel, email, or collection page."
+      },
+      {
+        "t": "Create a reusable asset",
+        "d": "Download the square image for commercial campaigns after checking the garments and scene."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Editorial Directions for a Seasonal Drop",
+    "items": [
+      {
+        "t": "Coastal linen",
+        "d": "Linen suit and sandals against pale stone arches with a glimpse of sea and warm late-afternoon light."
+      },
+      {
+        "t": "City layers",
+        "d": "Coat, knit, and wide-leg trousers on a quiet concrete street after rain, with the full footwear visible."
+      },
+      {
+        "t": "Garden guest edit",
+        "d": "Slip dress and lightweight jacket beside a garden path with soft daylight and a relaxed stance."
+      },
+      {
+        "t": "Weekend knitwear",
+        "d": "Sweater, denim, and crossbody bag in a bright cafe corner with a consistent neutral palette."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Edit the Story Before You Share It",
+    "items": [
+      {
+        "t": "Check the outfit inventory",
+        "d": "Make sure every featured piece matches the stock you can ship and the product names you publish."
+      },
+      {
+        "t": "Order the collection",
+        "d": "Open with the hero look, then alternate silhouettes or color families so the carousel has rhythm."
+      },
+      {
+        "t": "Add launch copy yourself",
+        "d": "Place dates, prices, product names, and collection links in the email or design tool after download."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Collections That Suit a Lookbook",
+    "good": [
+      "Seasonal fashion drops with complete outfits",
+      "Editorial launches for apparel and accessories",
+      "Small catalogs that can share one location",
+      "Instagram carousels and launch emails"
+    ],
+    "not_ideal": [
+      "A single item that needs a technical product shot",
+      "Outfits whose exact print alignment must be proven",
+      "A collection without enough source detail to identify each piece"
+    ]
+  }
 }

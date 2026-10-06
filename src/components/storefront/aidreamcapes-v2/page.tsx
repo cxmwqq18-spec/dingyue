@@ -1,7 +1,7 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, HeroMedia, Img, Intro, MakeToolGroup, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow
+  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, EnrichmentOverview, EnrichmentBlockSection, FitSection
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
@@ -145,6 +145,7 @@ function HomePage({ data, r }: Props) {
           {list<V2Item>(ugc.formats).length ? <div style={{ marginTop: 22 }}><Boxes className="ideas" items={list<V2Item>(ugc.formats)} /></div> : null}
         </Section>
       ) : null}
+      <EnrichmentOverview r={r} sections={data.overview as never} />
       <Section eyebrow="Templates" lead={templates.lead} title={templates.title}>
         <TemplateGrid cards={templates.cards} r={r} />
         <div style={{ marginTop: 24 }}><a className="btn btn-ghost" href={r.href("/templates")}>See all {templates.total} templates →</a></div>
@@ -159,6 +160,10 @@ function HomePage({ data, r }: Props) {
         </div>
       </Section>
       <Section eyebrow="How it works" title="Three steps. No studio, no filming."><Steps items={list<V2Item>(data.steps)} /></Section>
+      <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />
+      <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />
+      <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />
+      <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       {exampleFlows.length ? (
         <Section eyebrow="Examples" title="One product photo, many results">
           <Flows flows={exampleFlows} r={r} />
@@ -222,9 +227,16 @@ function VideoHubPage({ data, r }: Props) {
         <Maker note={text(data.startNote)} maker={{ options: [["Size", "9:16 · TikTok & Reels"], ["Length", "15 seconds"]], cta: "Make my video", href: text(data.appHref) }} r={r} />
       </PageHero>
       <Section eyebrow="About" title="Short videos from your product photos"><Intro paras={list<string>(data.intro)} r={r} /></Section>
+      <EnrichmentOverview r={r} sections={data.overview as never} />
       <Section eyebrow="Video tools" title="Pick the video you need"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
       <Section eyebrow="Why use it" title={`Why stores make videos with ${BRAND_NAME}`}><Boxes items={list<V2Item>(data.benefits)} r={r} /></Section>
+      <EnrichmentBlockSection block={data.compare as never} eyebrow="Compare your options" r={r} />
       <Section eyebrow="How it works" title="Three steps"><Steps items={list<V2Item>(data.steps)} /></Section>
+      <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />
+      <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />
+      <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />
+      <FitSection block={data.fit as never} r={r} />
+      <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Section eyebrow="Video templates" title="Ready-made video ideas"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
       <Faq items={data.faq} title="Questions about AI video" />
       <Reading items={list<V2Article>(data.reading)} r={r} />
@@ -249,18 +261,25 @@ function ToolPage({ data, r }: Props) {
       {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
       {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
       <Section eyebrow="What it is" title={`What ${data.label} can do for your store`}><Intro paras={list<string>(data.intro)} r={r} /></Section>
+      <EnrichmentOverview r={r} sections={data.overview as never} />
       <Section eyebrow="Why use it" title={`Why stores use ${data.label}`}><Boxes items={list<V2Item>(data.benefits)} r={r} /></Section>
+      <EnrichmentBlockSection block={data.compare as never} eyebrow="Compare your options" r={r} />
       <Section eyebrow="How it works" title="Three steps">
         <Steps items={list<V2Item>(data.steps)} />
         <div style={{ marginTop: 20 }}><Specs r={r} rows={list<V2SpecRow>(data.specs)} /></div>
       </Section>
+      <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />
+      <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />
       {list<V2Item>(data.uses).length ? <Section eyebrow="Where to use it" title="Where it works best"><Boxes className="ideas" items={list<V2Item>(data.uses)} r={r} /></Section> : null}
+      <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />
+      <FitSection block={data.fit as never} r={r} />
       {list<V2Tool>(data.photoTools).length ? <Section eyebrow="Photo tools" title="All photo tools"><ToolRow r={r} tools={list<V2Tool>(data.photoTools)} /></Section> : null}
       {list<V2Card>(data.templates).length ? (
         <Section eyebrow="Templates" lead="Pick one, add your product photo and get the same look." title={`Templates for ${data.label}`}>
           <TemplateGrid cards={list<V2Card>(data.templates)} r={r} />
         </Section>
       ) : null}
+      <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Faq items={data.faq} title={`Questions about ${data.label}`} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="More tools" title="You might also need"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
@@ -285,8 +304,14 @@ function TemplatePage({ data, r }: Props) {
         <Intro paras={list<string>(data.intro)} r={r} />
         <div style={{ marginTop: 20 }}><Specs r={r} rows={list<V2SpecRow>(data.specs)} /></div>
       </Section>
+      <EnrichmentOverview r={r} sections={data.overview as never} />
+      <FitSection block={data.fit as never} r={r} />
+      <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />
+      <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />
       <Section eyebrow="How it works" title="Three steps"><Steps items={list<V2Item>(data.steps)} /></Section>
       {list<V2Item>(data.ideas).length ? <Section eyebrow="Ideas" title="Ways to use it"><Boxes className="ideas" items={list<V2Item>(data.ideas)} r={r} /></Section> : null}
+      <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />
+      <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Faq items={data.faq} title="Questions about this template" />
       <Section eyebrow="More templates" title="More like this"><TemplateGrid cards={list<V2Card>(data.more)} r={r} /></Section>
       <Reading items={list<V2Article>(data.reading)} r={r} />
@@ -308,6 +333,8 @@ function CollectionPage({ data, r }: Props) {
         <Maker note={text(data.startNote)} maker={{ options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
       </PageHero>
       <Section eyebrow="Overview" title={overview}><Intro paras={list<string>(data.intro)} r={r} /></Section>
+      <EnrichmentOverview r={r} sections={data.overview as never} />
+      <FitSection block={data.fit as never} r={r} />
       {gallery?.images.length ? <Section eyebrow="Examples" title={`${data.label} examples`}><Gallery images={gallery.images} r={r} /><MoreExamples r={r} /></Section> : null}
       {list<[string, string]>(data.specs).length ? (
         <Section eyebrow="Sizes and formats" title={`What works on ${data.label}`}>
@@ -316,13 +343,17 @@ function CollectionPage({ data, r }: Props) {
         </Section>
       ) : null}
       {list<V2Item>(data.plan).length ? <Section eyebrow="Plan ahead" title="How to prepare"><Steps items={list<V2Item>(data.plan)} /></Section> : null}
+      <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />
+      <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />
       {list<V2Item>(data.ideas).length ? <Section eyebrow="Ideas" title="What to make"><Boxes className="ideas" items={list<V2Item>(data.ideas)} r={r} /></Section> : null}
+      <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />
       {cards.length ? (
         <Section eyebrow="Templates" lead={`${cards.length} ready-made looks. Pick one and add your product.`} title={`${data.label} templates`}>
           <TemplateGrid cards={cards} r={r} />
         </Section>
       ) : null}
       <Section eyebrow="Tools" title="Tools that fit"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
+      <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Faq items={data.faq} title="Questions" />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       <CtaBand note={text(data.startNote)} href={text(data.appHref)} lead="Upload a product photo and pick a template." r={r} title={`Make ${data.label} content today`} />
@@ -554,13 +585,26 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
       <>
         {hero}
         <section style={{ paddingBottom: 20 }}><div className="wrap"><Intro paras={list<string>(data.intro)} /></div></section>
+        <EnrichmentOverview r={r} sections={data.overview as never} />
+        <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />
         <section style={{ paddingBottom: 40 }}><div className="wrap"><Flows flows={list<V2Flow>(data.flows)} r={r} /></div></section>
+        <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />
+        <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />
+        <FitSection block={data.fit as never} r={r} />
+        <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
         {list<{ before: V2Image; after: V2Image }>(data.pairs).length ? <Section eyebrow="White background" title="Normal photos turned into clean white-background shots"><PairGrid pairs={list<{ before: V2Image; after: V2Image }>(data.pairs)} r={r} /></Section> : null}
         <Section eyebrow="More results" title="Results by template"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
         <Faq items={data.faq} title="Questions" />
         {(data.cta as { href?: string } | undefined)?.href ? <CtaBand note={text(data.startNote)} href={text((data.cta as { href: string }).href)} lead={text((data.cta as { lead: string }).lead)} r={r} title={text((data.cta as { title: string }).title)} /> : null}
       </>
     );
+  }
+  if (layout === "glossary") {
+    return <>
+      <Crumbs items={data.breadcrumbs} r={r} />
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
+      <section className="sec glossary-section"><div className="wrap"><GlossaryEntries entries={list(data.entries) as never} r={r} /></div></section>
+    </>;
   }
   return hero;
 }

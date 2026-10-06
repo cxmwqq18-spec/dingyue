@@ -14,7 +14,7 @@
   ],
   "intro": [
     "Most stores already have everything a short ad needs on the product page: a clean photo and a clear product name. URL to Video saves you the step of downloading the photo and typing out a description. Paste the link, and the photo and name appear in the workspace, ready for you to check.",
-    "From there it works like Image to Video. Pick the size and length, add a line about what should happen in the clip, and generate a 6, 10, 15 or 30 second video. You always see the credit cost first, and you can change the photo or the description before anything is made."
+    "After the image and name appear, check them, choose 9:16, 1:1, 16:9, 4:3, or 3:4, add a sentence about the scene, and select 6, 10, 15, or 30 seconds. You can replace the image or edit the description before generation."
   ],
   "benefits": [
     {
@@ -92,5 +92,116 @@
       "q": "Can I change the photo you picked?",
       "a": "Yes. If the photo isn't the best one, replace it with your own upload before you generate."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Turn an existing product page into a checked starting point",
+      "p": "URL to Video removes two small chores: downloading the main product image and retyping its name. Paste a public product-page link, inspect what appears in the workspace, then decide what the clip should show before any credits are used."
+    },
+    {
+      "h2": "The link starts the job; your review finishes it",
+      "p": "The importer supplies a product image and title when the page exposes usable product data. It does not replace your judgment about the scene, the product variant, or the final wording, so review each field and swap the image whenever the picked frame is not the right one."
+    }
+  ],
+  "input_guide": {
+    "h2": "Use a product page that can be checked",
+    "items": [
+      {
+        "t": "Paste a public HTTPS page",
+        "d": "Use a product page you own or are allowed to advertise, without a login wall or private workspace requirement."
+      },
+      {
+        "t": "Give the page one clear hero image",
+        "d": "A main product photo with the item visible on its own gives the importer a stronger starting frame."
+      },
+      {
+        "t": "Check the selected title",
+        "d": "Confirm that the imported name matches the product variant you want to show before you write the scene."
+      },
+      {
+        "t": "Replace the image when needed",
+        "d": "If the page chooses a lifestyle crop, a swatch, or the wrong variant, upload the product photo you actually want to animate."
+      },
+      {
+        "t": "Describe the new action",
+        "d": "The link supplies a reference; your sentence still needs to say what happens, where it happens, and how the product enters the frame."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A link-led video process",
+    "items": [
+      {
+        "t": "A product reference from the page",
+        "d": "The importer brings in the main image and product name when the public page exposes usable product information."
+      },
+      {
+        "t": "Your final scene choice",
+        "d": "Edit the imported text, replace the image, choose 6, 10, 15, or 30 seconds, and select 9:16, 1:1, 16:9, 4:3, or 3:4."
+      },
+      {
+        "t": "A cost you can check first",
+        "d": "The workspace shows the credit amount before the run, and failed jobs return their reserved credits."
+      },
+      {
+        "t": "A clean file to review",
+        "d": "The download carries no watermark and can be used commercially after you verify that the item, variant, and final claims are accurate."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Scenes to write after the link imports",
+    "items": [
+      {
+        "t": "New launch opening",
+        "d": "A newly listed ceramic mug sits on a breakfast table while a hand lifts it toward the morning window."
+      },
+      {
+        "t": "Catalog refresh",
+        "d": "A product page image of a desk lamp becomes a close scene of the switch turning on beside a notebook."
+      },
+      {
+        "t": "Social hook",
+        "d": "The imported water bottle is pulled from a gym bag and placed beside a towel on a bench."
+      },
+      {
+        "t": "Packaging angle",
+        "d": "The imported candle appears in a kraft box as tissue folds back on a pale packing table."
+      },
+      {
+        "t": "Feature detail",
+        "d": "The product is shown from the side while a hand opens the lid and points to the inner compartment."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Review the imported product before publishing",
+    "items": [
+      {
+        "t": "Confirm the exact variant",
+        "d": "Compare the clip with the product page and check color, size, included pieces, and packaging before using it in an ad."
+      },
+      {
+        "t": "Add approved commerce copy",
+        "d": "Type the current price, date, discount, captions, and music in your editing or publishing tool."
+      },
+      {
+        "t": "Keep the source link with the file",
+        "d": "Store the page URL and the selected image alongside the download so your team can trace which product reference the scene used."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "When URL to Video saves the most setup",
+    "good": [
+      "Catalogs with public product pages and a strong main image",
+      "Launch teams that need a first visual when a listing goes live",
+      "Stores refreshing still-only pages with one additional moving asset",
+      "Sellers testing several scenes from one approved product reference"
+    ],
+    "not_ideal": [
+      "Private pages that require a login or block public retrieval",
+      "Listings where the hero image does not show the product variant clearly"
+    ]
+  }
 }

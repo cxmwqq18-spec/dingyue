@@ -78,5 +78,109 @@
       "q": "What lighting prompt should I start with?",
       "a": "Describe one light source and a simple surface, such as “soft window light on a pale table.” A sharp source photo helps glass and metal edges stay readable."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Shape the Reflection Instead of Fighting It",
+      "p": "Glossy packaging can look premium in one light and unreadable in another. This template lets you explore a controlled direction—soft side light, an even studio wash, or a warmer tabletop mood—while keeping the product at the center of the frame."
+    },
+    {
+      "h2": "Describe Light in Parts",
+      "p": "A useful brief names the direction, softness, surface, and shadow before it names the mood. That gives you a repeatable starting point for a perfume bottle, serum jar, watch, candle, or cookware item."
+    }
+  ],
+  "input_guide": {
+    "h2": "Remove the Hardest Glare Before You Start",
+    "items": [
+      {
+        "t": "Use a plain source",
+        "d": "Photograph the full product against a calm wall or table with no direct sun cutting across the label."
+      },
+      {
+        "t": "Keep the front readable",
+        "d": "Turn the bottle or jar so its main panel is visible before you ask for a new lighting setup."
+      },
+      {
+        "t": "Name the direction",
+        "d": "Say left, right, overhead, or backlight, then add whether the shadow should be long, soft, or barely visible."
+      },
+      {
+        "t": "Choose the surface",
+        "d": "Mention marble, matte paper, stone, wood, or a seamless studio surface so the reflection has somewhere to land."
+      }
+    ]
+  },
+  "results": {
+    "h2": "Lighting Choices You Can Compare",
+    "items": [
+      {
+        "t": "Soft morning side light",
+        "d": "Use a gentle highlight to reveal glass edges, liquid color, or a faceted cap."
+      },
+      {
+        "t": "Even studio light",
+        "d": "Keep the label and silhouette clear when a retail listing needs a calm, low-drama frame."
+      },
+      {
+        "t": "Warm tabletop light",
+        "d": "Give candles, tea, or amber bottles a cozy context without hiding the product."
+      },
+      {
+        "t": "Controlled metal highlights",
+        "d": "Show the shape of a watch, ring, or pan while keeping glare away from the key surface."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Commercial Lighting Directions",
+    "items": [
+      {
+        "t": "Perfume bottle",
+        "d": "Pale gold liquid on marble with a soft highlight from the left and small white flowers outside the label."
+      },
+      {
+        "t": "Serum jar",
+        "d": "Frosted glass and a gold lid on a pale stone counter under broad, even daylight."
+      },
+      {
+        "t": "Watch case",
+        "d": "Steel case on dark slate with a narrow controlled reflection across the bezel and no flash hotspot."
+      },
+      {
+        "t": "Cookware",
+        "d": "A polished pan on a neutral kitchen surface with a large soft source that shows its curve."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Review the Light Like a Product Photographer",
+    "items": [
+      {
+        "t": "Check the silhouette",
+        "d": "Make sure edges, caps, straps, and handles still match the real product."
+      },
+      {
+        "t": "Read the panel",
+        "d": "Inspect the label and color closely; do not rely on generated lettering for exact copy."
+      },
+      {
+        "t": "Choose one direction",
+        "d": "Keep the warmer or cooler version that matches your existing catalog rather than mixing moods without a plan."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Best Candidates for Lighting Studies",
+    "good": [
+      "Perfume, serum, candle, and beverage packaging",
+      "Watches, jewelry, cookware, and other metal goods",
+      "A product line that needs a consistent commercial mood",
+      "Listings where surface and silhouette matter"
+    ],
+    "not_ideal": [
+      "A source with a large reflection hiding the product",
+      "A label whose exact tiny type must be proven in the image",
+      "A product whose appeal depends on a moving light demonstration"
+    ]
+  }
 }

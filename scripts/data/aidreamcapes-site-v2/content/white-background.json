@@ -64,9 +64,18 @@
   ],
   "maker": {
     "options": [
-      ["Photo", "Your product shot"],
-      ["Background", "Pure white"],
-      ["Size", "Square by default"]
+      [
+        "Photo",
+        "Your product shot"
+      ],
+      [
+        "Background",
+        "Pure white"
+      ],
+      [
+        "Size",
+        "Square by default"
+      ]
     ],
     "cta": "Make my white background photo"
   },
@@ -87,5 +96,130 @@
       "q": "Will my product photos be public?",
       "a": "No. Your uploads and the white background versions are kept private in your account and never shown publicly."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Give the first listing slot a calm, repeatable look",
+      "d": "Use this process when the product itself needs to read before anything else. A plain white result creates a consistent starting point for a mug, shoe, wallet, or bottle, even when the original shots were taken in different rooms. Keep the scene simple here; add context in later listing images."
+    },
+    {
+      "h2": "A finished white photo, not an invisible cutout",
+      "d": "The download is a complete square image with the white background already applied. It is useful for a primary product view and catalog grid. If you need a transparent file or a composited design, plan that as a separate editing step."
+    }
+  ],
+  "input_guide": {
+    "h2": "Photograph the edges that matter",
+    "items": [
+      {
+        "t": "Show the whole outline",
+        "d": "Leave breathing room around every edge so a handle, sole, lid, or thin strap is not cut off before the background changes."
+      },
+      {
+        "t": "Face the selling side",
+        "d": "Turn a box, pouch, or bottle so the front label is legible in the source; a white backdrop cannot recover a hidden panel."
+      },
+      {
+        "t": "Control reflections",
+        "d": "For glass, metal, and glossy packaging, move away from harsh glare and keep the key surface visible rather than photographing a bright hotspot."
+      },
+      {
+        "t": "Keep transparent pieces readable",
+        "d": "Use a contrasting surface behind clear lids or glass so the original boundary is visible before the white treatment."
+      },
+      {
+        "t": "Skip heavy filters",
+        "d": "Use the real color in the source photo; strong filters can make the final catalog tone harder to judge."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the white-background job returns",
+    "items": [
+      {
+        "t": "Square output",
+        "d": "The default square frame suits a main image, collection grid, or marketplace thumbnail; crop a copy later if a placement needs another shape."
+      },
+      {
+        "t": "One image for 24 credits",
+        "d": "Each photo generation uses 24 credits, and the charge is shown before you confirm the job."
+      },
+      {
+        "t": "A clean starting point",
+        "d": "The finished file removes room clutter and props so the product can lead the listing sequence."
+      },
+      {
+        "t": "A private result",
+        "d": "The source and generated image remain in your account while you review them."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Catalog recipes for common products",
+    "items": [
+      {
+        "t": "Ceramic mug",
+        "d": "Use a straight front view that shows the rim, handle, and glaze; keep the handle from touching the frame edge."
+      },
+      {
+        "t": "Trail shoe",
+        "d": "Capture the outer side with the sole visible and laces tied, leaving enough room around the toe and heel."
+      },
+      {
+        "t": "Leather wallet",
+        "d": "Photograph it closed with the front grain facing up, then make a separate detail image for the open compartments."
+      },
+      {
+        "t": "Perfume bottle",
+        "d": "Set the bottle upright with its cap on and the front glass clear; avoid a reflection that hides the printed name."
+      },
+      {
+        "t": "Reusable bottle",
+        "d": "Show the full cylinder and lid in one frame, with the bottle standing straight so the white result reads like a catalog packshot."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Best uses and boundaries",
+    "good": [
+      {
+        "t": "Primary listing views",
+        "d": "Products whose shape, color, and front-facing details should be understood at a glance."
+      },
+      {
+        "t": "Consistent catalogs",
+        "d": "Stores replacing mixed phone backgrounds with one repeatable white presentation."
+      },
+      {
+        "t": "Extra marketplace images",
+        "d": "Sellers who want a clear item view before adding lifestyle, detail, or scale photos."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "A transparent-file process",
+        "d": "This output already contains white; use a separate editor when transparency is required."
+      },
+      {
+        "t": "Unreadable source details",
+        "d": "Tiny type, hidden labels, or cropped hardware cannot be reliably restored by changing the backdrop."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Check the image before it becomes the main photo",
+    "items": [
+      {
+        "t": "Inspect the silhouette",
+        "d": "Zoom around soles, handles, caps, and thin edges for any change that would misrepresent the item."
+      },
+      {
+        "t": "Verify the label",
+        "d": "Compare printed names, colors, and counts with the physical product before uploading."
+      },
+      {
+        "t": "Apply current rules",
+        "d": "Check the marketplace's latest primary-image requirements, then add any permitted text or badges in the correct place outside this clean image."
+      }
+    ]
+  }
 }

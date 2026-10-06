@@ -78,5 +78,109 @@
       "q": "How many people can I put in one team headshot set?",
       "a": "Create each person from a clear photo, then keep the background and lighting wording the same across runs. Review identity and facial details before using the set publicly."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Give a Small Team One Visual Home",
+      "p": "Customers often meet a shop through its About page, support email, or founder profile before they visit a product page. Matching portraits make those touchpoints feel connected, even when each person starts with a different phone photo."
+    },
+    {
+      "h2": "Consistency Comes From the Brief",
+      "p": "Use one backdrop, crop, light direction, and clothing level for the group. Keep each person's face supplied by that person and review every result privately before you publish it."
+    }
+  ],
+  "input_guide": {
+    "h2": "Collect Respectful, Usable Source Photos",
+    "items": [
+      {
+        "t": "Ask each person directly",
+        "d": "Use a recent photo shared by the person shown, with their agreement for the intended business use."
+      },
+      {
+        "t": "Face the camera",
+        "d": "Choose a front-facing head-and-shoulders frame in daylight, without sunglasses, hats, or a hand covering the face."
+      },
+      {
+        "t": "Set one visual standard",
+        "d": "Choose the backdrop, jacket level, crop, and light once, then reuse the same description for everyone."
+      },
+      {
+        "t": "Keep the background quiet",
+        "d": "A bright office wall, workshop corner, or plain warm surface keeps the portrait readable beside the next person."
+      }
+    ]
+  },
+  "results": {
+    "h2": "Places a Matching Portrait Can Help",
+    "items": [
+      {
+        "t": "Team page",
+        "d": "Arrange founders, makers, and support staff in a shared grid with the same visual treatment."
+      },
+      {
+        "t": "Founder profile",
+        "d": "Use one portrait on an Etsy shop, Shopify About section, or launch page."
+      },
+      {
+        "t": "Support touchpoint",
+        "d": "Add a friendly face beside a help reply or email signature when that suits your brand."
+      },
+      {
+        "t": "A commercial square file",
+        "d": "Download the image for business pages or social posts after the person approves the result."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Headshot Sets for Different Shops",
+    "items": [
+      {
+        "t": "Bright studio team",
+        "d": "Three people in neutral tops against a warm white wall, framed chest-up with soft window light."
+      },
+      {
+        "t": "Maker workshop",
+        "d": "Founder and craft team in a clean workshop corner, with tools blurred behind the same shoulder crop."
+      },
+      {
+        "t": "Food business",
+        "d": "Owner and kitchen lead in simple aprons near a quiet prep counter, without distracting product props."
+      },
+      {
+        "t": "Remote support crew",
+        "d": "A coordinated office-style background for team members photographed in different places."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Complete the Human Details Yourself",
+    "items": [
+      {
+        "t": "Get approval",
+        "d": "Let each person review their own image before it appears on a public page or profile."
+      },
+      {
+        "t": "Add names and roles",
+        "d": "Type the correct name, title, pronouns, and contact context in the page content around the image."
+      },
+      {
+        "t": "Write useful alt text",
+        "d": "Describe the person and role plainly for visitors who do not see the portrait."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "When Matching Headshots Make Sense",
+    "good": [
+      "Small ecommerce teams and family-run shops",
+      "Founder, About, support, and maker profiles",
+      "Teams that can collect an approved photo from each person",
+      "Pages that can place the portrait beside names and roles"
+    ],
+    "not_ideal": [
+      "A public figure or celebrity likeness without permission",
+      "A page that needs an official employee ID photo standard",
+      "People who have not agreed to the intended publication"
+    ]
+  }
 }

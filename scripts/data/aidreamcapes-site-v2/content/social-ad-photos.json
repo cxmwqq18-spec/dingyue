@@ -64,9 +64,18 @@
   ],
   "maker": {
     "options": [
-      ["Photo", "The product you're advertising"],
-      ["Scene", "Describe the ad setting"],
-      ["Size", "Square by default"]
+      [
+        "Photo",
+        "The product you're advertising"
+      ],
+      [
+        "Scene",
+        "Describe the ad setting"
+      ],
+      [
+        "Size",
+        "Square by default"
+      ]
     ],
     "cta": "Make my ad image"
   },
@@ -87,5 +96,130 @@
       "q": "Do I have to say my ad image was made with AI?",
       "a": "Ad platforms set their own rules for AI-generated or edited images, and those rules change. Check the current policy for each platform you advertise on before your campaign goes live."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Design the picture around the message you will add",
+      "d": "A feed still has one job before the caption is read: make the product easy to spot. Ask for one clear subject, a visual contrast that separates it from the background, and a quiet area where your exact headline or offer can sit later. The image supplies the scene; your ad tool supplies the words."
+    },
+    {
+      "h2": "Make versions that test a visual question",
+      "d": "Change one variable at a time—a pale kitchen versus a dark counter, a close crop versus a wider scene, or a product-only view versus a use moment. Keeping the product constant makes the comparison easier to understand when you place the files in your ad account."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare a source for fast recognition",
+    "items": [
+      {
+        "t": "One hero item",
+        "d": "Use a source photo with one main product and no unrelated packages or props competing for the first glance."
+      },
+      {
+        "t": "Readable shape",
+        "d": "Keep the full product visible when its silhouette matters; use a closer crop only when a texture or finish is the selling detail."
+      },
+      {
+        "t": "Plan the copy side",
+        "d": "In the scene brief, request open sky, a plain wall, or a quiet tabletop on the side where your headline will go."
+      },
+      {
+        "t": "Keep packaging honest",
+        "d": "If a bundle is the offer, show the actual pieces together in the source rather than asking the scene to invent what is inside the box."
+      },
+      {
+        "t": "Avoid built-in lettering",
+        "d": "Leave words out of the generated scene; type the price, date, and promotion later in the ad editor."
+      }
+    ]
+  },
+  "results": {
+    "h2": "Budget a feed still before you make it",
+    "items": [
+      {
+        "t": "One square creative",
+        "d": "An image generation uses 24 credits, and you see the charge before confirming it."
+      },
+      {
+        "t": "A deliberate copy area",
+        "d": "The scene can leave a calm side or top area for your later headline, offer, or price."
+      },
+      {
+        "t": "A repeatable test",
+        "d": "Make another image from the same product when you want a new setting to compare in the ad account."
+      },
+      {
+        "t": "A private file",
+        "d": "The input and output remain in your account while you prepare the campaign."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Five feed-ready scene briefs",
+    "items": [
+      {
+        "t": "Lipstick",
+        "d": "Place the tube on a bright vanity with the cap beside it, leaving clean pale space on the right for a shade name and offer."
+      },
+      {
+        "t": "Hot sauce",
+        "d": "Set the bottle beside tacos on a warm wood table, keeping the label forward and a darker empty area above for copy."
+      },
+      {
+        "t": "Sunglasses",
+        "d": "Show the glasses on a café table with a soft street background, leaving open wall space to one side."
+      },
+      {
+        "t": "Coffee beans",
+        "d": "Put the bag beside a pour-over cup at breakfast, with the bag upright and uncluttered room above for launch text."
+      },
+      {
+        "t": "Running shoe",
+        "d": "Place the shoe on a rocky trail with open sky behind it, keeping the tread edge visible and the sky clear for a short headline."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A useful still for paid-social work",
+    "good": [
+      {
+        "t": "Single-image feed ads",
+        "d": "Products that can be recognized quickly from one strong angle and one clear scene."
+      },
+      {
+        "t": "Carousel cards",
+        "d": "Teams that want one product or setting per card while keeping a consistent visual treatment."
+      },
+      {
+        "t": "Retargeting refreshes",
+        "d": "Stores that need a new visual for an item people have already seen in the catalog."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "Copy-heavy artwork",
+        "d": "Use a design editor when the creative depends on several lines, exact legal text, or a detailed price grid."
+      },
+      {
+        "t": "Claims hidden in the scene",
+        "d": "Use product-page details and verified copy for performance, ingredients, dimensions, or guarantees."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the ad in the place that runs it",
+    "items": [
+      {
+        "t": "Type the campaign copy",
+        "d": "Add headline, price, date, discount code, and any required wording in Ads Manager, Canva, or your normal editor."
+      },
+      {
+        "t": "Check the crop",
+        "d": "Preview the creative where it will run and make sure the product and the reserved message area survive the placement crop."
+      },
+      {
+        "t": "Review platform policy",
+        "d": "Check the current rules for AI-generated or edited images before you publish the campaign."
+      }
+    ]
+  }
 }

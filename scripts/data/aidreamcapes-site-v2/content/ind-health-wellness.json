@@ -49,8 +49,132 @@
       "a": "Describe a casual framing and setting, like \"phone photo, hand holding the jar over a kitchen counter, natural window light.\" Words such as \"phone photo\" and \"natural light\" help keep the look relaxed rather than polished."
     },
     {
-      "q": "Can I make vertical images for Instagram Stories?",
+      "q": "Can I use an image for Instagram Stories?",
       "a": "Images come out square by default. For a vertical piece, make a short 9:16 video and post that as your Story instead."
     }
-  ]
+  ],
+  "overview": {
+    "h2": "Put wellness products into a real routine",
+    "items": [
+      {
+        "t": "Show the moment, not a medical promise",
+        "d": "A jar beside breakfast, a mat in a studio, or a sleep mask on a nightstand helps someone picture when the product appears in a day. Keep health outcomes, testimonials, and before-and-after bodies out of the generated scene."
+      },
+      {
+        "t": "Keep the package dependable",
+        "d": "Use a clear source that shows the bottle, pouch, tin, tool, or fabric item from a useful angle. Context can feel relaxed and handheld, while the ingredient panel and approved claims stay under your team’s control."
+      }
+    ]
+  },
+  "input_guide": {
+    "h2": "Prepare a wellness product photo",
+    "items": [
+      {
+        "t": "Face the pack",
+        "d": "Center the front label, cap, lid, and base in the frame. Photograph a pouch or sachet flat enough that its shape is not folded away."
+      },
+      {
+        "t": "Reduce label glare",
+        "d": "Use side window light and turn glossy packaging slightly. Avoid a bright reflection across the product name or dosage panel."
+      },
+      {
+        "t": "Show the tool whole",
+        "d": "For a mat, roller, band, bottle, mask, or massage tool, include every edge, strap, handle, and attachment that a scene might expose."
+      },
+      {
+        "t": "Describe a routine",
+        "d": "Choose one time and place such as morning kitchen, gym bench, travel bag, or bedtime table. A focused moment reads more clearly than a list of benefits."
+      },
+      {
+        "t": "Keep claims approved",
+        "d": "Do not ask the image to show weight loss, pain relief, treatment, or a body change. Use the product photo for context and add only reviewed copy later."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Wellness scenes you can describe",
+    "items": [
+      {
+        "t": "Kitchen start",
+        "d": "A protein pouch beside a shaker and a glass of water on a quiet kitchen counter, front label facing the camera, natural morning light."
+      },
+      {
+        "t": "Studio setup",
+        "d": "A teal yoga mat and cork block laid on a sunlit wood floor with a folded towel at the edge, no posed transformation or medical cue."
+      },
+      {
+        "t": "Gym-bag pause",
+        "d": "A recovery tool resting beside a gym bag and clean towel on a locker-room bench, close enough to show the buttons and handle."
+      },
+      {
+        "t": "Tea wind-down",
+        "d": "A tea tin, warm mug, and book on a bedside table at dusk, with the tin lid and label clearly visible."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the wellness set can show",
+    "items": [
+      {
+        "t": "Routine stills",
+        "d": "Square photos put a product beside objects that explain when it is used."
+      },
+      {
+        "t": "Creator-style context",
+        "d": "A casual hand, kitchen counter, gym bench, or bedside crop can fit a social feed without presenting a result claim."
+      },
+      {
+        "t": "Short product moments",
+        "d": "Use 9:16, 1:1, or 16:9, with 4:3 and 3:4 available for other crops, for a 6-, 10-, 15-, or 30-second clip built around one placement or movement."
+      },
+      {
+        "t": "A known credit choice",
+        "d": "One photo costs 24 credits; a six-, ten-, fifteen-, or thirty-second video costs 24, 40, 60, or 120, and the balance is shown before generation."
+      },
+      {
+        "t": "A commercial file",
+        "d": "Download without a watermark for product pages, ads, or social posts, then add the approved ingredient, price, date, caption, and audio layers."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the wellness asset",
+    "items": [
+      {
+        "t": "Check the label",
+        "d": "Compare product name, flavor, quantity, dosage wording, and package color with the real item."
+      },
+      {
+        "t": "Add reviewed copy",
+        "d": "Place ingredient facts, directions, required notices, price, and promotion dates in your approved design or store editor."
+      },
+      {
+        "t": "Add the social layer",
+        "d": "AIVideosUGC adds no spoken narration, music, or subtitles. Add captions and a suitable track after checking the platform and your claims review."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A good fit for routine-led wellness",
+    "good": [
+      {
+        "t": "Packaged consumables",
+        "d": "Supplements, tea, powders, pouches, tins, and bottles with a clear physical form."
+      },
+      {
+        "t": "Movement accessories",
+        "d": "Mats, blocks, bands, rollers, masks, and tools that make sense in a room or bag."
+      },
+      {
+        "t": "Calm daily moments",
+        "d": "Products whose use can be shown through a counter, studio, gym, travel, or wind-down scene."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "Clinical evidence",
+        "d": "Generated imagery cannot prove a treatment, dosage outcome, or health result."
+      }
+    ]
+  }
 }

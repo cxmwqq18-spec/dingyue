@@ -78,5 +78,109 @@
       "q": "What source photo works for jewelry model photos?",
       "a": "Use a sharp, close photo with the entire piece visible, especially clasps, stones, and links. Diffused daylight reduces color casts on metal and gems."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Show Where the Piece Sits",
+      "p": "A jewelry image should answer a simple question quickly: where will this piece land when someone wears it? A close view on a neck, ear, hand, or wrist gives the product a sense of placement while your clean source shot continues to show the piece by itself."
+    },
+    {
+      "h2": "Give Small Details a Real Starting Point",
+      "p": "Jewelry is reflective and easy to misread. Supply a sharp source with the clasp, pendant, stone, or setting visible, then describe the placement and crop without inventing a carat, metal, or size claim."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare Jewelry for a Worn View",
+    "items": [
+      {
+        "t": "Use a neutral source surface",
+        "d": "Lay the item on light card or another calm surface with the clasp, chain, and main setting separated."
+      },
+      {
+        "t": "State the placement",
+        "d": "Mention collarbone, earlobe, relaxed hand, or wrist, plus the approximate chain length or pose you want shown."
+      },
+      {
+        "t": "Control reflective glare",
+        "d": "Use soft daylight and avoid a bright hotspot that hides a stone, engraving, or metal edge."
+      },
+      {
+        "t": "Keep the crop intentional",
+        "d": "Choose a close crop for an earring or ring and a little more space for a necklace to show where it falls."
+      }
+    ]
+  },
+  "results": {
+    "h2": "Useful Worn Views",
+    "items": [
+      {
+        "t": "Placement",
+        "d": "Let shoppers see whether a pendant rests at the collarbone or a ring sits across the hand."
+      },
+      {
+        "t": "Visual scale",
+        "d": "Give a practical sense of size alongside the exact measurements in your listing."
+      },
+      {
+        "t": "Styling context",
+        "d": "Pair the piece with lace, knitwear, or an evening neckline that fits the collection mood."
+      },
+      {
+        "t": "A second listing frame",
+        "d": "Use the download beside the standalone product image on a store page or social post."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Worn Jewelry Scenes",
+    "items": [
+      {
+        "t": "Pendant at the collarbone",
+        "d": "A clear teardrop pendant on a white lace top in soft morning light, with the full chain curve visible."
+      },
+      {
+        "t": "Stud earrings",
+        "d": "Hair swept behind one ear against a pale background so the post and stone remain easy to see."
+      },
+      {
+        "t": "Ring on a resting hand",
+        "d": "A single ring on a relaxed hand over knitwear, showing the band width without a dramatic pose."
+      },
+      {
+        "t": "Bracelet stack",
+        "d": "One hero bracelet on a wrist beside a second fine chain, leaving the clasp and focal charm unobscured."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Add the Facts the Image Cannot Guarantee",
+    "items": [
+      {
+        "t": "Inspect the piece",
+        "d": "Compare stone shape, prongs, clasp, chain links, and metal color with your real product."
+      },
+      {
+        "t": "Write exact specifications",
+        "d": "Add length, width, material, care, and any approved gemstone or plating information yourself."
+      },
+      {
+        "t": "Pair worn and plain views",
+        "d": "Keep a clean product image nearby so the styled frame never carries the entire product record."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Jewelry That Benefits From Placement",
+    "good": [
+      "Pendants, earrings, rings, bracelets, and brooches",
+      "Pieces where wear position helps with purchase confidence",
+      "Social posts and secondary Shopify listing images",
+      "Collections with a consistent crop and styling direction"
+    ],
+    "not_ideal": [
+      "Tiny engraving that must be read exactly",
+      "Highly mirrored pieces photographed with hard glare",
+      "Listings that rely on a precise scale or regulated metal claim"
+    ]
+  }
 }

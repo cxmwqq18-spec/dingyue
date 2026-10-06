@@ -75,5 +75,104 @@
       "q": "What length works for an AI fashion reel?",
       "a": "Use 6 seconds for one outfit reveal, 10 or 15 seconds for a turn or walk, and 30 seconds only when the public option is available. Choose 9:16 for Reels."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Let the full look answer styling questions",
+      "d": "An outfit reel should help a shopper see the silhouette, the relationship between pieces, and the setting where the clothes make sense. Choose one hero garment and one simple pose before adding accessories or a second outfit."
+    },
+    {
+      "h2": "Treat fit copy as a separate layer",
+      "d": "The visual can show length, drape, and color in motion. Add the size range, measurements, material, price, and care details from your listing after checking the rendered clip."
+    }
+  ],
+  "input_guide": {
+    "h2": "Photograph clothing for a readable full look",
+    "items": [
+      {
+        "t": "Show the full hem",
+        "d": "Use a flat lay, mannequin, or hanger photo where the bottom edge and overall length are not cropped."
+      },
+      {
+        "t": "Keep front and back details clear",
+        "d": "Buttons, zips, pockets, and seams should be visible if they are part of the styling story."
+      },
+      {
+        "t": "Include footwear when it matters",
+        "d": "For a head-to-toe look, mention the shoes or leave floor space so the complete outfit has a grounded finish."
+      },
+      {
+        "t": "Name one pose",
+        "d": "Hands in pockets, a walking turn, or a relaxed stand gives the model a single readable action."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the outfit reel can show",
+    "items": [
+      {
+        "t": "A head-to-toe composition",
+        "d": "The clothing sits in a styled scene with the model, floor, and backdrop chosen in your description."
+      },
+      {
+        "t": "Five useful frame choices",
+        "d": "Use 9:16 for Reels, 1:1 for a square feed, 16:9 for a wider lookbook, or 4:3 and 3:4 for other placements."
+      },
+      {
+        "t": "Known credit options",
+        "d": "A six-, ten-, fifteen-, or thirty-second clip uses 24, 40, 60, or 120 credits; you see the cost before submitting."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Outfit scenes to try",
+    "items": [
+      {
+        "t": "Jacket on a city walk",
+        "d": "A model in a stone jacket walks past a pale wall, pauses, and turns once to show the back seam."
+      },
+      {
+        "t": "Dress in a sunlit room",
+        "d": "A full-length dress moves beside a tall window as the model takes two slow steps across the floor."
+      },
+      {
+        "t": "Active set at a track",
+        "d": "A matching set appears on a running track, with a stretch and a short turn that keeps the waistband visible."
+      },
+      {
+        "t": "Three looks from one piece",
+        "d": "The same overshirt appears over a tee, a knit, and a dress in separate clips with the backdrop held consistent."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Add the shopping information",
+    "items": [
+      {
+        "t": "Type sizes and measurements",
+        "d": "Place the verified size range, model measurements, and garment dimensions in a quiet area of the frame."
+      },
+      {
+        "t": "Add the price and link",
+        "d": "Use your current offer and product URL rather than relying on generated lettering."
+      },
+      {
+        "t": "Choose the track",
+        "d": "Add licensed music and any channel-specific disclosure in the platform editor."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "When an outfit reel is useful",
+    "good": [
+      "Jackets, dresses, sets, and activewear",
+      "New-arrival styling ideas",
+      "Full-length looks for Reels and TikTok",
+      "One garment with a clear silhouette"
+    ],
+    "not_ideal": [
+      "Exact fit guarantees",
+      "Garments whose key details are hidden in a cropped input"
+    ]
+  }
 }

@@ -65,5 +65,104 @@
       "q": "What size should a sale ad use on social media?",
       "a": "Use 9:16 for Stories and Reels, 1:1 for feed placements, and 16:9 for wide placements. Add the exact sale price and code after download."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Build the scene first and the offer second",
+      "d": "A discount creative has two separate layers. The scene must identify the product and make the frame easy to scan; the offer layer must contain the exact percentage, code, date, and conditions. Leave a deliberate quiet area in the generated image or video, then type the deal yourself after download. When the offer changes, you can update the text without rebuilding the visual."
+    },
+    {
+      "h2": "Make each sale version answer a different question",
+      "d": "Use a clean square image when the feed needs a fast product read, a 9:16 clip when the sale is phone-first, and a 16:9 composition when the same visual belongs on a wide page; 4:3 and 3:4 are also available. AIVideosUGC offers 6, 10, 15, and 30 second jobs and shows their credit cost before generation. A second version can change the product action or camera angle; it should not invent a new discount."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare a sale source that leaves usable space",
+    "items": [
+      {
+        "t": "Choose the hero product",
+        "d": "Use a photo where the item is recognizable at a glance and its most important feature faces the camera."
+      },
+      {
+        "t": "Name the quiet side",
+        "d": "Describe the product on the left or right of a calm surface, wall, or color field so your editor has room for the offer."
+      },
+      {
+        "t": "Keep the code out of the scene",
+        "d": "Do not ask AI to render the discount code, price, or end date. Place those as editable text after download."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A sale asset ready for an accurate offer",
+    "items": [
+      {
+        "t": "Product-first frame",
+        "d": "The item remains visible even after you place the discount headline beside it."
+      },
+      {
+        "t": "Offer space",
+        "d": "A clean area gives your editor room to set hierarchy without covering the product."
+      },
+      {
+        "t": "Reusable base",
+        "d": "A scene without an embedded date can support another promotion after the text layer is replaced."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Sale scenes to hand to a designer",
+    "items": [
+      {
+        "t": "Single-item split",
+        "d": "A coffee grinder sits on the left side of a warm counter while the right side remains a clean, softly lit wall."
+      },
+      {
+        "t": "Bundle on a table",
+        "d": "A skincare set of three real bottles is grouped on a tray, with the labels facing forward and open space above."
+      },
+      {
+        "t": "Fast product turn",
+        "d": "A sneaker rotates once on a simple platform, leaving the upper part of the 9:16 frame clear for your offer."
+      },
+      {
+        "t": "Use before price",
+        "d": "A storage bin receives folded clothes in a tidy room, then the final frame holds on the product with no generated words."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Add the promotion with exact wording",
+    "items": [
+      {
+        "t": "Type the offer",
+        "d": "Add the percentage, code, original price, sale price, and end date in Canva, CapCut, or Ads Manager, then proofread each one."
+      },
+      {
+        "t": "Check comparison claims",
+        "d": "Only show an original price you actually charged and review the pricing rules that apply where you sell."
+      },
+      {
+        "t": "Preview the smallest placement",
+        "d": "Make sure the product and the offer remain readable in the feed, Story, or ad preview before spending budget."
+      },
+      {
+        "t": "Remove expired copy",
+        "d": "Take down old dates and codes when the promotion ends, even if the underlying scene remains useful."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Works for editable promotions",
+    "good": [
+      "Single products with an obvious visual identity",
+      "Bundles whose contents can be checked against a real inventory",
+      "Sales where the price or end date may change",
+      "Teams that want a clean base visual and a separate text layer"
+    ],
+    "not_ideal": [
+      "Promotions that depend on AI spelling a code correctly",
+      "Comparison-price claims without a verified original price"
+    ]
+  }
 }

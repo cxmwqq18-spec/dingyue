@@ -13,7 +13,7 @@
   ],
   "intro": [
     "An AI spokesperson video puts your product in someone's hands. An AI-generated person picks it up, holds it near their face or chest, turns it to show the label and the sides, and points to details like a strap or a cap. It gives shoppers a sense of size and makes the product feel like something people use every day.",
-    "Upload a product photo and write one sentence about the person and the setting, such as “woman in a denim jacket holding the tote bag on a city sidewalk.” Each video lasts 6, 10, 15, or 30 seconds and can be vertical, square, or wide. It suits handheld items like bottles, phone cases, mugs, headphones, and bags. Put your key message on screen as captions in CapCut or TikTok."
+    "Upload a product photo and write one sentence about the person and setting, such as “woman in a denim jacket holding the tote bag on a city sidewalk.” Choose 6, 10, 15, or 30 seconds in 9:16, 1:1, 16:9, 4:3, or 3:4. Add your message as typed captions after download."
   ],
   "benefits": [
     {
@@ -59,8 +59,14 @@
   ],
   "maker": {
     "options": [
-      ["Size", "9:16 · TikTok & Reels"],
-      ["Length", "10 seconds"]
+      [
+        "Size",
+        "9:16 · TikTok & Reels"
+      ],
+      [
+        "Length",
+        "10 seconds"
+      ]
     ],
     "cta": "Make my spokesperson video"
   },
@@ -81,5 +87,116 @@
       "q": "Which products work well in these videos?",
       "a": "Items that fit in one or two hands: skincare bottles, water bottles, phone cases, snack bags, headphones, and small purses. Large items like furniture are hard to show being held."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Let the person provide context, not a fake testimonial",
+      "p": "An AI spokesperson scene helps viewers judge scale and setting: a bottle beside a hand, a case near a phone, or a bag held at chest height. The person is a visual stand-in, not a customer or creator, so keep the message in typed captions you control."
+    },
+    {
+      "h2": "Use a simple pose with one product focus",
+      "p": "Describe who is holding the item, where they are, and what their hands do. A single turn, lift, or point gives the product room to remain visible throughout the short clip."
+    }
+  ],
+  "input_guide": {
+    "h2": "Give the model a clear hand-sized reference",
+    "items": [
+      {
+        "t": "Show the full product silhouette",
+        "d": "Choose a photo where the item is separate from other objects and its edges, handle, cap, or opening can be read."
+      },
+      {
+        "t": "Include a scale clue",
+        "d": "A bottle, mug, case, pouch, or small bag is easier to place when the intended size is obvious from the product shape."
+      },
+      {
+        "t": "Describe the person plainly",
+        "d": "Name an age range, clothing color, and setting without asking the scene to carry a long script."
+      },
+      {
+        "t": "Choose one hand action",
+        "d": "Say “turns the bottle toward the camera,” “lifts the pouch,” or “points to the strap,” then keep the pose simple."
+      },
+      {
+        "t": "Keep text out of the action",
+        "d": "Put product names, offers, and feature sentences into typed captions after download so they remain accurate."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A product-in-hand visual",
+    "items": [
+      {
+        "t": "A short on-camera scene",
+        "d": "Choose 6, 10, 15, or 30 seconds for one AI-generated person to hold and show the product."
+      },
+      {
+        "t": "Five frame choices",
+        "d": "Use 9:16, 1:1, 16:9, 4:3, or 3:4 depending on the placement you are preparing."
+      },
+      {
+        "t": "A cost visible before you run",
+        "d": "The credit amount appears before generation and returns when a job fails."
+      },
+      {
+        "t": "A clean visual starting point",
+        "d": "The watermark-free download contains no spoken narration, music, or captions; add those in your own editing process."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Product-in-hand scenes to brief",
+    "items": [
+      {
+        "t": "Bottle at a bench",
+        "d": "A person in a light jacket lifts a water bottle beside a park bench and turns the cap toward the camera."
+      },
+      {
+        "t": "Case at a desk",
+        "d": "A person in a gray sweater holds a phone case over a home-office desk and tilts it to show the corners."
+      },
+      {
+        "t": "Pouch at the counter",
+        "d": "A person in a linen shirt lifts a snack pouch from a kitchen counter and points to its resealable top."
+      },
+      {
+        "t": "Mug by the window",
+        "d": "A person holds a ceramic mug near a bright window, rotating the handle into view."
+      },
+      {
+        "t": "Small bag outdoors",
+        "d": "A person presents a crossbody bag on a quiet sidewalk and lifts the strap to show its length."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Add the message beside the product",
+    "items": [
+      {
+        "t": "Write captions in your editor",
+        "d": "Type product names, benefits, prices, and dates yourself because generated lettering may not stay exact."
+      },
+      {
+        "t": "Review hands and proportions",
+        "d": "Check that fingers, grip, product size, and label placement remain believable before using the file publicly."
+      },
+      {
+        "t": "Disclose the AI source where needed",
+        "d": "If the publishing channel offers an AI-content label, turn it on and never frame the person as a genuine buyer."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Products that read well in a hand",
+    "good": [
+      "Bottles, mugs, pouches, phone cases, headphones, and small bags",
+      "Products whose size is easier to understand beside a person",
+      "Feed ads that need a human context without a spoken presentation",
+      "Catalogs that want one product-in-hand view beside packshots"
+    ],
+    "not_ideal": [
+      "Furniture or oversized goods that cannot be held naturally",
+      "Messages that depend on a real person making a verified statement"
+    ]
+  }
 }

@@ -66,5 +66,104 @@
       "q": "How should I prepare holiday product photos?",
       "a": "Start with a clear product photo, name the holiday setting, and keep the product identity unchanged. Add dates and shipping cutoffs after download."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Use seasonal detail to explain the gift",
+      "d": "A holiday scene should answer why this item belongs in the moment: a candle beside a wrapped box, a serving piece on a dinner table, or a scarf laid beside a coat. Choose two or three props that support that use and leave the product's important surfaces visible. The result feels seasonal because of the setting, not because it depends on a generic greeting."
+    },
+    {
+      "h2": "Keep the visual reusable as dates move",
+      "d": "Make the scene without a shipping cutoff, price, or discount code. AIVideosUGC offers 9:16, 1:1, 16:9, 4:3, and 3:4 video shapes and 6, 10, 15, and 30 second lengths, with cost shown before each job. Use 9:16 for a phone-first clip, 1:1 for a gift-guide post, and 16:9 for a wide page when that composition needs it. Add the exact seasonal wording after download so one image can survive a changed deadline."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare a real product for a seasonal scene",
+    "items": [
+      {
+        "t": "Show the giftable view",
+        "d": "Use a source angle that makes the item's size, shape, and finish easy to recognize beside seasonal props."
+      },
+      {
+        "t": "List every set item",
+        "d": "For a gift box or bundle, name each product and insert that should appear. Check the result against the package before publishing."
+      },
+      {
+        "t": "Choose a restrained palette",
+        "d": "Describe a few colors and materials that complement the product; too many competing decorations can hide the item."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A seasonal asset set that stays useful",
+    "items": [
+      {
+        "t": "Gift-guide still",
+        "d": "A square image that shows the product and its gift context clearly enough for a shopper to recognize it."
+      },
+      {
+        "t": "Unwrapping clip",
+        "d": "A short vertical sequence from package to product, with the final frame held clean for your own message."
+      },
+      {
+        "t": "Use-at-home scene",
+        "d": "A lifestyle frame that shows the recipient's setting instead of relying on holiday decoration alone."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Gift-season scenes with a clear product role",
+    "items": [
+      {
+        "t": "Wrapped skincare set",
+        "d": "Three real bottles sit in a shallow gift box with tissue and ribbon, labels facing the camera and no invented copy."
+      },
+      {
+        "t": "Warm mantel candle",
+        "d": "A candle rests on a winter mantel beside pine branches and soft lights, with the jar and lid fully visible."
+      },
+      {
+        "t": "Table-ready serving piece",
+        "d": "A serving board sits on a holiday table beside folded napkins and a bowl, showing the surface and handle clearly."
+      },
+      {
+        "t": "Unwrap in one motion",
+        "d": "A hand removes paper from a small box, lifts the product, and pauses on its front detail in a 9:16 clip."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Add the season's facts after download",
+    "items": [
+      {
+        "t": "Type the shipping message",
+        "d": "Add order-by dates, delivery notes, and availability yourself so the copy can change when the carrier cutoff moves."
+      },
+      {
+        "t": "Proofread the offer",
+        "d": "Enter prices, codes, and gift-with-purchase terms in an editable layer, then compare them with the current promotion."
+      },
+      {
+        "t": "Review the physical match",
+        "d": "Check the product, packaging, and included pieces against what the recipient will receive."
+      },
+      {
+        "t": "Refresh after the season",
+        "d": "Remove expired holiday language and keep any evergreen product scene that still makes sense for the next gift moment."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A good fit for gift-led merchandising",
+    "good": [
+      "Products that can be understood in a home, table, or wrapped-gift setting",
+      "Gift sets with a known list of included pieces",
+      "Stores that need square guide images and vertical social clips",
+      "Teams that want shipping copy to stay editable"
+    ],
+    "not_ideal": [
+      "Products whose important details disappear behind decorations",
+      "Seasonal claims that depend on an unverified delivery promise"
+    ]
+  }
 }

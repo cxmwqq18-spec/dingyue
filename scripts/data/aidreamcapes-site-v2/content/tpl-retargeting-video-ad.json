@@ -78,5 +78,104 @@
       "q": "What campaign settings are outside this template?",
       "a": "Set audience, exclusions, budget, frequency, and delivery in your ad platform. The template creates the video asset and does not read a viewer’s history."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Remind the shopper with a useful second look",
+      "d": "A retargeting asset can bring one product detail back into view: a sole, clasp, wheel, texture, or packed-away form. The visual should stand on its own; your platform decides which audience receives it."
+    },
+    {
+      "h2": "Keep audience logic outside the video",
+      "d": "AIVideosUGC does not know who viewed a product, abandoned a cart, or qualifies for an offer. Add the accurate message and use your ad platform to choose audiences, exclusions, frequency, and timing."
+    }
+  ],
+  "input_guide": {
+    "h2": "Choose a product detail worth revisiting",
+    "items": [
+      {
+        "t": "Show the recognizable silhouette",
+        "d": "Use a photo where the product shape is clear before the second-look action begins."
+      },
+      {
+        "t": "Pick one inspection move",
+        "d": "A turn, close, lace, click, or pack-away motion gives the reminder a concrete reason to exist."
+      },
+      {
+        "t": "Include the useful angle",
+        "d": "Show the sole, ear cup, wheel, clasp, or pocket that a shopper may want to inspect again."
+      },
+      {
+        "t": "Keep temporary offers out",
+        "d": "Use a clean source photo and add the current price or promotion only after the clip is reviewed."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the reminder asset can provide",
+    "items": [
+      {
+        "t": "A fresh product angle",
+        "d": "The clip returns to a practical detail or use moment without claiming anything about a particular shopper."
+      },
+      {
+        "t": "Flexible feed framing",
+        "d": "Choose 1:1 for a feed, 9:16 for Reels, or 16:9, 4:3, or 3:4 when another placement requires it."
+      },
+      {
+        "t": "Four visible price points",
+        "d": "Six seconds uses 24 credits, ten 40, fifteen 60, and thirty 120; the charge is shown before you make the asset."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Second-look scenes to describe",
+    "items": [
+      {
+        "t": "Boot on a bench",
+        "d": "A brown boot is inspected at a bench, laced once, and placed beside a coat near the door."
+      },
+      {
+        "t": "Mouse beside a laptop",
+        "d": "A wireless mouse lifts from a desk, turns to show its wheel, and settles beside a laptop."
+      },
+      {
+        "t": "Headphones into a bag",
+        "d": "Dark headphones are checked at the ear cup, folded, and placed into a commuter bag."
+      },
+      {
+        "t": "Phone stand return",
+        "d": "A phone stand is opened beside a desk screen, adjusted once, and folded into a drawer."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Set the retargeting message in your tools",
+    "items": [
+      {
+        "t": "Add the current offer",
+        "d": "Place the verified price, promotion, or product link in your editor."
+      },
+      {
+        "t": "Choose the audience",
+        "d": "Set visitors, cart users, exclusions, and frequency in the ad platform that owns those rules."
+      },
+      {
+        "t": "Add sound and disclosure",
+        "d": "Apply licensed music, caption text, and any required disclosure before publishing."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A good fit for a reminder ad",
+    "good": [
+      "Products with one useful detail to revisit",
+      "Headphones, shoes, accessories, and desk goods",
+      "Feed and Reels return-to-product campaigns",
+      "Offers that the seller controls outside the asset"
+    ],
+    "not_ideal": [
+      "Audience claims the platform cannot verify",
+      "A campaign that needs automatic inventory or cart data inside the clip"
+    ]
+  }
 }

@@ -36,7 +36,7 @@
     },
     {
       "t": "Pick a template or describe it",
-      "d": "Choose a look such as white background or lifestyle scene, or write a line like “ceramic mug on a wooden table by a window.”"
+      "d": "Choose a look such as white background or lifestyle scene, or write a line like \u201cceramic mug on a wooden table by a window.\u201d"
     },
     {
       "t": "Download, or change the look",
@@ -63,8 +63,14 @@
   ],
   "maker": {
     "options": [
-      ["Size", "Square · 1:1"],
-      ["Start with", "Template or description"]
+      [
+        "Size",
+        "Square \u00b7 1:1"
+      ],
+      [
+        "Start with",
+        "Template or description"
+      ]
     ],
     "cta": "Make my product photo"
   },
@@ -85,5 +91,130 @@
       "q": "Can I put a price or sale text on the photo?",
       "a": "Add text after you download. Canva works well for prices, discount codes, and headlines. AI-generated lettering can contain typos, so typing it yourself keeps it accurate."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Pick the photo by the question it answers",
+      "d": "Use a white-background image when the item itself must read first. Choose a lifestyle scene when context matters, an on-model image when proportion or wear matters, a changed background when the product shot is good but the setting is wrong, and a social ad still when you need a visual with deliberate room for a headline."
+    },
+    {
+      "h2": "Build a small set from one source",
+      "d": "A useful product gallery often starts with one clear primary view, then adds a contextual scene and a detail or worn view. Reusing the source photo lets you test those roles separately while keeping the product recognizable across the set."
+    }
+  ],
+  "input_guide": {
+    "h2": "Match the source photo to the output",
+    "items": [
+      {
+        "t": "For a clean catalog view",
+        "d": "Show the full product straight on with its important face visible; this gives a white-background result a clear shape to preserve."
+      },
+      {
+        "t": "For a room or table scene",
+        "d": "Leave the whole item in frame and avoid props touching its edges, especially for mugs, candles, and small home goods."
+      },
+      {
+        "t": "For a worn view",
+        "d": "Photograph clothing or accessories flat, on a hanger, or on a mannequin with straps, openings, and hardware visible."
+      },
+      {
+        "t": "For a close detail",
+        "d": "Use a near view when the selling point is stitching, finish, a bottle cap, or a printed surface; do not ask a distant image to invent that detail."
+      },
+      {
+        "t": "For a feed still",
+        "d": "Keep packaging and neighboring products out of the source frame so the resulting composition has one obvious subject."
+      }
+    ]
+  },
+  "results": {
+    "h2": "The output is simple to budget",
+    "items": [
+      {
+        "t": "One square image",
+        "d": "Each image generation uses 24 credits. You see that cost before confirming the job."
+      },
+      {
+        "t": "Five useful directions",
+        "d": "The photo hub links to white background, lifestyle, model, background replacement, and social ad still processes."
+      },
+      {
+        "t": "A private file",
+        "d": "The uploaded source and generated image stay in your account rather than being shown in a public gallery."
+      },
+      {
+        "t": "A file you can finish",
+        "d": "Download the image, then add exact prices, dates, offers, or other copy in the editor where you can check every character."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Five ways to turn one item into a set",
+    "items": [
+      {
+        "t": "Ceramic mug",
+        "d": "Make a plain first view, a breakfast table with an open book, and a close crop that keeps the handle and glaze visible."
+      },
+      {
+        "t": "Crossbody bag",
+        "d": "Start with the bag laid flat, then request a shoulder-worn street scene and a quiet entryway hook shot showing the strap length."
+      },
+      {
+        "t": "Glass perfume bottle",
+        "d": "Use a clean front view for the catalog, a marble vanity for context, and a soft-color backdrop that keeps the bottle silhouette readable."
+      },
+      {
+        "t": "Reusable bottle",
+        "d": "Show the bottle upright on a white field, on a desk beside a notebook, and outdoors beside a trail, keeping the lid closed in each view."
+      },
+      {
+        "t": "Knit throw",
+        "d": "Use a folded product shot for the listing, a sofa scene for scale, and a close-up that shows the weave without covering the edge."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "When the photo tools fit",
+    "good": [
+      {
+        "t": "Small catalogs",
+        "d": "Stores adding several views for the same item without arranging a new location each time."
+      },
+      {
+        "t": "Seasonal refreshes",
+        "d": "Teams that need a new room, color, or social setting while keeping the product source unchanged."
+      },
+      {
+        "t": "Products with a clear outline",
+        "d": "Mugs, bottles, bags, boxes, shoes, and other items that are fully visible in the starting shot."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "Hidden or tiny details",
+        "d": "A source image cannot reliably supply a logo, measurement, ingredient, or texture that it never shows."
+      },
+      {
+        "t": "Exact fit decisions",
+        "d": "Generated scenes add context; use real measurements and product information for sizing or technical claims."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Make the downloaded photo publication-ready",
+    "items": [
+      {
+        "t": "Type the message",
+        "d": "Add sale language, prices, dates, and codes yourself so the published copy is exact."
+      },
+      {
+        "t": "Compare against stock",
+        "d": "Check color, count, shape, and printed details against the item you actually ship."
+      },
+      {
+        "t": "Place it in sequence",
+        "d": "Use the cleanest view first, then follow with the scene or detail that answers the next shopper question."
+      }
+    ]
+  }
 }

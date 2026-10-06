@@ -75,5 +75,104 @@
       "q": "How do I keep the drink color believable?",
       "a": "Photograph the can or bottle in even light and name the real color in the prompt. Review the pour against the product; AI can drift on liquid color and label details."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Make the liquid do the explaining",
+      "d": "A strong pour scene has three anchors: the package, the receiving food or glass, and one visible texture change. Ask for the liquid to flow, fizz, foam, or glaze while keeping the label and product color in view."
+    },
+    {
+      "h2": "Use the short version for the first sensation",
+      "d": "Six seconds can capture an opening splash or a quick drizzle; ten, fifteen, or thirty gives the viewer more time to see ice settle, foam rise, or a full glass reach its final level. Keep one pour per clip so the action stays legible."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare a package for a pour scene",
+    "items": [
+      {
+        "t": "Show the container upright",
+        "d": "A straight bottle, can, pouch, or jar photo gives the generated scene a stable shape to carry into the counter setup."
+      },
+      {
+        "t": "Keep color visible",
+        "d": "For translucent drinks or sauces, use a view where the liquid color is visible instead of hidden behind a dark label."
+      },
+      {
+        "t": "Choose the receiving vessel",
+        "d": "Name a tumbler, coupe, bowl, plate, or spoon so the pour has a clear destination and scale."
+      },
+      {
+        "t": "Call out texture",
+        "d": "Say crushed ice, foam, fizz, syrup ribbon, or glaze; one texture cue gives the shot a specific job."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the finished pour can show",
+    "items": [
+      {
+        "t": "Color and movement",
+        "d": "The package stays part of the composition while the liquid moves into a glass, bowl, or over food."
+      },
+      {
+        "t": "A feed-ready frame",
+        "d": "Choose 9:16 for TikTok or Reels, 1:1 for a product gallery, 16:9 for a wider placement, or 4:3 and 3:4 for another crop."
+      },
+      {
+        "t": "Known credit choices",
+        "d": "Six, ten, fifteen, and thirty seconds cost 24, 40, 60, and 120 credits; the charge is visible before you submit."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Pour scenes for food and drink products",
+    "items": [
+      {
+        "t": "Citrus soda over ice",
+        "d": "A chilled bottle pours into a tall glass with orange peel, cubes, and a bright counter catching the bubbles."
+      },
+      {
+        "t": "Cold brew swirl",
+        "d": "Dark coffee folds into milk over a clear glass beside a small jar of beans and a spoon."
+      },
+      {
+        "t": "Sauce on a bowl",
+        "d": "A squeeze bottle lays a glossy line of chili sauce across a finished noodle bowl from above."
+      },
+      {
+        "t": "Honey on toast",
+        "d": "Golden honey trails from a jar onto warm toast, ending with the jar and crumbs in the same frame."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Add the details your offer needs",
+    "items": [
+      {
+        "t": "Type the flavor and price",
+        "d": "Add the exact name, size, price, or launch date in a clear text layer."
+      },
+      {
+        "t": "Choose the sound",
+        "d": "Pair the pour with licensed music or a satisfying sound effect in your editing tool."
+      },
+      {
+        "t": "Check food presentation",
+        "d": "Review the glass, garnish, and package before publishing so the scene matches the product you sell."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Where a pour works best",
+    "good": [
+      "Bottled drinks, sauces, syrups, and condiments",
+      "Products with visible color or texture",
+      "Short social ads and square product galleries",
+      "One-action food demonstrations"
+    ],
+    "not_ideal": [
+      "Dry goods that do not have a meaningful pour",
+      "Claims that depend on exact serving measurements"
+    ]
+  }
 }

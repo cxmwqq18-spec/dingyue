@@ -52,5 +52,125 @@
       "q": "What kind of product photo should I upload for skincare?",
       "a": "A straight-on shot with the label toward the camera, on a plain surface, with no hands or clutter in the frame. Glossy tubes and clear glass pick up glare, so shoot beside a window rather than using flash."
     }
-  ]
+  ],
+  "overview": {
+    "h2": "Show the formula, the finish, and the routine",
+    "items": [
+      {
+        "t": "Let the product answer the first questions",
+        "d": "A bottle or jar photo establishes the pack. A close crop can show a serum, balm, or lipstick finish. Keep shade names and ingredient claims in approved copy; generated imagery supplies context."
+      },
+      {
+        "t": "Build a small set of useful views",
+        "d": "Use one result for the listing, one for a vanity or travel scene, and one short clip for a pump, dropper, or opened compact. That sequence gives shoppers context without pretending a generated face proves a skincare result."
+      }
+    ]
+  },
+  "input_guide": {
+    "h2": "Prepare a beauty product photo",
+    "items": [
+      {
+        "t": "Face the label",
+        "d": "Place the bottle, tube, or jar upright with the front label toward the camera. Include the full cap and base so the package shape is not guessed."
+      },
+      {
+        "t": "Tame reflections",
+        "d": "Use a window or diffused lamp beside the product instead of direct flash. Rotate glossy plastic and clear glass until the label is readable and hot spots are small."
+      },
+      {
+        "t": "Photograph the actual finish",
+        "d": "For a cream, balm, powder, or lipstick, add a separate swatch or texture photo. A packshot cannot reveal a finish that never appears in the upload."
+      },
+      {
+        "t": "Group every piece",
+        "d": "Lay out all bottles, minis, pouches, or tools for a bundle shot. Keep the pieces separated enough that the final count is easy to check."
+      },
+      {
+        "t": "Keep claims out of the scene",
+        "d": "Describe a bathroom shelf, mirror tray, or travel pouch rather than an implied medical outcome. Add approved claims later in the channel where your team controls the wording."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Beauty scenes you can describe",
+    "items": [
+      {
+        "t": "Dropper and morning light",
+        "d": "An amber serum bottle beside a white sink, cap off, one dropper hovering above the back of a hand, with soft morning window light."
+      },
+      {
+        "t": "Swatches on a clean card",
+        "d": "Three lipstick swatches on a warm ivory card beside the closed tubes, cropped close enough to show the different finishes."
+      },
+      {
+        "t": "Routine shelf",
+        "d": "A cleanser, toner, and moisturizer lined up on a small stone vanity with a folded towel and no extra brand marks."
+      },
+      {
+        "t": "Travel pouch",
+        "d": "A sunscreen tube and two minis inside an open canvas toiletry pouch on a hotel bathroom counter, labels facing out."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the page can show",
+    "items": [
+      {
+        "t": "Product and texture views",
+        "d": "Use a square photo for a gallery, then pair it with a close detail of the finish or applicator."
+      },
+      {
+        "t": "Routine context",
+        "d": "A vertical 9:16 clip can follow one simple action, while 1:1, 16:9, 4:3, and 3:4 frames cover other placements."
+      },
+      {
+        "t": "Credit visibility",
+        "d": "A photo costs 24 credits. Six-, ten-, fifteen-, and thirty-second videos cost 24, 40, 60, and 120 credits; the charge is shown before you run the job."
+      },
+      {
+        "t": "A usable file",
+        "d": "Downloads have no watermark and can support an ad, product page, or social post. Add approved shade names, prices, and dates yourself."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the beauty asset after download",
+    "items": [
+      {
+        "t": "Check the product",
+        "d": "Compare cap shape, label placement, shade, and item count with the real package before publishing."
+      },
+      {
+        "t": "Add controlled copy",
+        "d": "Place price, shade name, promotion dates, and approved claims in Canva, CapCut, or your ad editor so every character is exact."
+      },
+      {
+        "t": "Add the sound layer",
+        "d": "AIVideosUGC does not add music, spoken narration, or subtitles; add the channel-appropriate track or captions in your publishing tool."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A good fit for beauty products",
+    "good": [
+      {
+        "t": "Packaged formulas",
+        "d": "Bottles, jars, tubes, compacts, and boxed sets with a clear front view."
+      },
+      {
+        "t": "Visible texture",
+        "d": "Creams, powders, balms, drops, and swatches that you can photograph separately."
+      },
+      {
+        "t": "Routine-led merchandising",
+        "d": "Products that benefit from a shelf, vanity, travel, or gift-set context."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "Exact shade proof",
+        "d": "Do not use a generated image as the sole proof of a precise color match; compare with a real swatch."
+      }
+    ]
+  }
 }

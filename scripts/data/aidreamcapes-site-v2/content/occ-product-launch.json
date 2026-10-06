@@ -37,7 +37,7 @@
   "plan": [
     {
       "t": "Four to six weeks before",
-      "d": "Pick the photo you'll work from, make the white-background and lifestyle images for the product page, and decide which channels need vertical or square sizes."
+      "d": "Pick the photo you'll work from, make the white-background and lifestyle images for the product page, and decide which channels need video or square stills."
     },
     {
       "t": "Two to three weeks before",
@@ -65,5 +65,104 @@
       "q": "What video size should a product launch use?",
       "a": "Use 9:16 for Stories, Reels, and TikTok; 1:1 for feeds; and 16:9 for a wide product page or YouTube placement. Make each size as its own job."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Give every launch asset one job",
+      "d": "A teaser creates curiosity by withholding part of the product. A reveal identifies the item and shows its shape. A product-page image answers a buying question. Plan those jobs separately so the launch set does not repeat one pretty scene six times. If your sample changes before release, regenerate the visual from the newest photo and compare every result with the item customers will actually receive."
+    },
+    {
+      "h2": "Prepare the visual before the wording is final",
+      "d": "AIVideosUGC offers five video shapes—9:16, 1:1, 16:9, 4:3, and 3:4—and 6, 10, 15, and 30 second jobs; each credit cost appears before generation. Make the scene while the launch copy is still moving, then add the exact name, price, date, code, and availability in Canva, CapCut, or your publishing tool. Uploaded source photos and generated drafts remain inside your account until you choose to download and share them."
+    }
+  ],
+  "input_guide": {
+    "h2": "Start with the sample customers will recognize",
+    "items": [
+      {
+        "t": "Photograph the current version",
+        "d": "Use a clear view of the prototype or sample, including the parts that are likely to remain in the shipped product."
+      },
+      {
+        "t": "Choose what stays hidden",
+        "d": "For a teaser, name the material, edge, or silhouette you want to hint at; do not rely on generated text to hide the product cleanly."
+      },
+      {
+        "t": "Describe the reveal action",
+        "d": "Say whether the item turns, opens, slides from a box, or settles into its use setting. One reveal action is easier to review."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A launch set that moves from hint to proof",
+    "items": [
+      {
+        "t": "Teaser",
+        "d": "A partial view or material detail that earns a second look without making a claim about demand."
+      },
+      {
+        "t": "Reveal",
+        "d": "A complete product view in a video crop or square still chosen for the channel where you will announce it."
+      },
+      {
+        "t": "Store image",
+        "d": "A clean still or lifestyle frame that lets a shopper inspect the item after the announcement."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Launch scenes for one new product",
+    "items": [
+      {
+        "t": "Texture teaser",
+        "d": "A close view of a matte bottle shoulder catches a narrow beam of light while the full shape stays just outside the frame."
+      },
+      {
+        "t": "Box reveal",
+        "d": "A plain shipping box opens on a table and the new product is lifted into the center against a calm background."
+      },
+      {
+        "t": "First use",
+        "d": "A hand places the product in the room where it belongs, showing one real use without a testimonial or invented result."
+      },
+      {
+        "t": "Packaging preview",
+        "d": "The packed product rests beside tissue paper and an insert card, with the actual contents visible for review."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Lock the launch details in your editor",
+    "items": [
+      {
+        "t": "Add the announcement copy",
+        "d": "Type the product name, date, price, and availability yourself, then check every character against the launch plan."
+      },
+      {
+        "t": "Review the physical match",
+        "d": "Compare color, parts, packaging, and proportions with the sample that will ship. Regenerate a scene that changes a meaningful detail."
+      },
+      {
+        "t": "Make the channel versions",
+        "d": "For video, use 9:16 for phone-first placements, 1:1 for square feeds, or 16:9 for a wide page when the composition benefits from it."
+      },
+      {
+        "t": "Keep the draft private",
+        "d": "Download only when the launch team is ready to share; the source and generated work stay in your account before that point."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A good fit for staged launches",
+    "good": [
+      "Products with a photographed prototype or sample",
+      "Launches that need distinct teaser, reveal, and listing scenes",
+      "Teams whose date and offer copy may change during preparation",
+      "Sellers willing to inspect every generated detail against the final item"
+    ],
+    "not_ideal": [
+      "Products whose final form is still unknown",
+      "Announcements that depend on AI-generated prices, dates, or technical labels"
+    ]
+  }
 }

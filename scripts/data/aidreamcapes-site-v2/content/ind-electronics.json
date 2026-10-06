@@ -52,5 +52,129 @@
       "q": "My glossy device shows glare and fingerprints. How do I fix that?",
       "a": "Wipe off dust and fingerprints, peel away any shipping film, and shoot at a slight angle so the device's depth shows. Switch off overhead lights that leave hot spots on glossy cases."
     }
-  ]
+  ],
+  "overview": {
+    "h2": "Show the device before you explain the specs",
+    "items": [
+      {
+        "t": "Start with physical truth",
+        "d": "A front, side, and back source can establish ports, buttons, indicator lights, finish, and included pieces. Use the generated scene to explain where the device belongs in a day, not to replace a specification sheet."
+      },
+      {
+        "t": "Make one action the subject",
+        "d": "Unbox, place, clip, plug, carry, or set the device down. A single clear action gives a short clip structure while leaving battery life, wattage, compatibility, and interface screenshots to your approved product copy."
+      }
+    ]
+  },
+  "input_guide": {
+    "h2": "Prepare an electronics upload",
+    "items": [
+      {
+        "t": "Show all faces",
+        "d": "Photograph the front, back, and sides of the device. Include ports, buttons, vents, lens rings, or indicator lights that a scene may reveal."
+      },
+      {
+        "t": "Include the box contents",
+        "d": "Lay out the device, cable, adapter, case, manual, and retail box when an unboxing result should show what arrives."
+      },
+      {
+        "t": "Control glossy surfaces",
+        "d": "Wipe fingerprints and use side light rather than a hard overhead source. A small rotation can keep glare from covering a control or logo."
+      },
+      {
+        "t": "Use a real interface later",
+        "d": "Keep the uploaded screen dark or simple if text matters. Plan to place an approved screenshot over it after download instead of trusting generated interface lettering."
+      },
+      {
+        "t": "Describe a generic setting",
+        "d": "Name a desk, carry-on, locker bench, or nightstand and avoid another company's logo unless you have permission to show it."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Electronics scenes you can describe",
+    "items": [
+      {
+        "t": "Desk setup",
+        "d": "A compact mechanical keyboard and wireless mouse on a tidy oak desk, monitor glow in the background, camera angled to show the keycaps and cable-free surface."
+      },
+      {
+        "t": "Unbox the speaker",
+        "d": "A wireless speaker lifted from its box onto a linen table, charging cable and quick-start card placed beside it, no readable invented text."
+      },
+      {
+        "t": "Travel pouch",
+        "d": "A small power bank and cable sliding into a carry-on organizer beside a passport, close enough to show the ports and thickness."
+      },
+      {
+        "t": "Workout wrist",
+        "d": "A generic fitness tracker on a wrist beside a gym towel, display kept as a soft glow while the band shape remains clear."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What an electronics set can deliver",
+    "items": [
+      {
+        "t": "Physical detail",
+        "d": "Use front, side, and back stills to show shape, ports, controls, finish, and included pieces."
+      },
+      {
+        "t": "Use in context",
+        "d": "A desk, travel, fitness, or bedside scene answers who might reach for the product and where it fits."
+      },
+      {
+        "t": "Short product action",
+        "d": "Select 9:16, 1:1, or 16:9, with 4:3 and 3:4 also available, then choose a 6-, 10-, 15-, or 30-second clip for an unbox, place, plug, or carry moment."
+      },
+      {
+        "t": "Up-front cost",
+        "d": "A photo is 24 credits; a 6-second, 10-second, 15-second, or 30-second result is 24, 40, 60, or 120 credits, and the tool shows that amount before submission."
+      },
+      {
+        "t": "Commercial output",
+        "d": "Download a watermark-free file for a product page, ad, or social post, then insert real screenshots, specifications, prices, and dates."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Complete the electronics asset",
+    "items": [
+      {
+        "t": "Audit the hardware",
+        "d": "Check port count, button placement, cable type, indicator color, box contents, and logo treatment against the real item."
+      },
+      {
+        "t": "Add controlled information",
+        "d": "Place battery capacity, wattage, dimensions, compatibility, price, and release date in your own layout."
+      },
+      {
+        "t": "Add interface and sound",
+        "d": "AIVideosUGC does not generate reliable small interface text or add music, spoken narration, or subtitles. Add approved screenshots, captions, and a track after download."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A strong fit for visible, contextual products",
+    "good": [
+      {
+        "t": "Physical accessories",
+        "d": "Stands, cases, chargers, keyboards, speakers, lights, trackers, and other objects with a visible form."
+      },
+      {
+        "t": "Unboxing stories",
+        "d": "Products with a clear box, device, cable, and accessory sequence."
+      },
+      {
+        "t": "Everyday placement",
+        "d": "Gadgets whose value is easier to picture on a desk, in a bag, at a bedside, or during a workout."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "Tiny technical text",
+        "d": "Keep real screenshots, labels, safety text, and serial information in the source or added design."
+      }
+    ]
+  }
 }

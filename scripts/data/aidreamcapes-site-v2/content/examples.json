@@ -107,5 +107,117 @@
       "q": "How do I use the examples to plan a product ad?",
       "a": "Use the examples to compare openings, camera movement, and product framing. Build your own version with a sharp photo, a chosen size, and one clear action."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "How to read a product example",
+      "p": "Each card is a small record of a real content job: the product photo that went in, the scene direction, and the image or clip that came back. Look first at the product's outline, color, closure, label area, and other buying details; then look at the new setting or camera movement. The useful question is whether the result gives shoppers a new reason to understand the same item."
+    },
+    {
+      "h2": "Use the gallery as a starting point",
+      "p": "These examples show possible directions for your own product. They are prompts for a scene, not a promise that every run will copy every prop, hand, reflection, or fold. Start with the closest product type, borrow its level of detail, and make a separate version when you want another opening or setting."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare a source photo that can be compared",
+    "items": [
+      {
+        "t": "Show the whole item",
+        "d": "Keep the product in focus, uncropped, and large enough to inspect. For shoes, bags, jewelry, or electronics, photograph every side you expect the gallery to show."
+      },
+      {
+        "t": "Keep one product in the frame",
+        "d": "A single item makes it easier to tell whether the shape and color stayed consistent. If two products are the point of the comparison, make that relationship explicit in the description."
+      },
+      {
+        "t": "Describe one scene at a time",
+        "d": "Name the place, light, action, and useful framing detail: for example, a coffee bag beside a pour-over brewer on a bright kitchen counter. Save a second action for a new version."
+      },
+      {
+        "t": "Leave exact copy out",
+        "d": "Do not rely on generated lettering for a price, date, headline, or discount code. Keep open space where your message can go, then type the final words after download."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What each result can help you decide",
+    "items": [
+      {
+        "t": "Listing detail",
+        "d": "A packshot, close-up, side view, or size cue helps a shopper judge the object before ordering. Use it beside the main image when the shape or materials need more explanation."
+      },
+      {
+        "t": "Product in context",
+        "d": "A lifestyle scene shows where an item belongs: on a vanity, desk, breakfast table, street, or bath ledge. Choose a setting that makes sense for how the product is used."
+      },
+      {
+        "t": "A feed creative",
+        "d": "A square image can give a scrolling feed a clear product moment and room for your own offer. Add the message in the ad tool so every number stays accurate."
+      },
+      {
+        "t": "A new version to compare",
+        "d": "Change one meaningful variable, such as the opening scene or background, and make another job. Keeping the product and the rest of the direction steady gives you a cleaner comparison."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Scene directions you can adapt",
+    "items": [
+      {
+        "t": "Desk-to-hand product moment",
+        "d": "Phone case on a tidy desk beside earbuds and a notebook; a hand picks it up and turns the camera cutout toward the light."
+      },
+      {
+        "t": "Jewelry scale check",
+        "d": "Silver necklace on a dark top at a neckline; move from the worn view to a close view of the pendant so shoppers can judge length and size."
+      },
+      {
+        "t": "Coffee morning",
+        "d": "Kraft coffee bag on a kitchen counter beside a pour-over brewer, then at a breakfast table with a mug and croissant."
+      },
+      {
+        "t": "Yoga routine",
+        "d": "Teal yoga mat rolled with its strap in a bright room, then unrolled while someone stretches beside a window."
+      },
+      {
+        "t": "Food in use",
+        "d": "Red hot-sauce bottle on a rustic table with fresh chilies; a pour over tacos gives the clip one clear action."
+      },
+      {
+        "t": "Quiet evening product scene",
+        "d": "White candle jar on a living-room coffee table with books and a knit throw, then on a bath ledge beside a folded towel."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the example before you publish",
+    "items": [
+      {
+        "t": "Compare with the real product",
+        "d": "Put the downloaded result beside the item you ship. Check color, proportions, logos, labels, buttons, edges, and the number of pieces before a shopper sees it."
+      },
+      {
+        "t": "Add the words yourself",
+        "d": "Place the price, date, offer, headline, captions, and music in Canva, CapCut, TikTok, Ads Manager, or your usual editor. Typed copy keeps the campaign details exact."
+      },
+      {
+        "t": "Use an honest label",
+        "d": "AI-generated people are not customers. Keep the copy about the product and check the current disclosure guidance for the platform where you post the image or clip."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "When this gallery is useful",
+    "good": [
+      "Sellers building a listing gallery from one clear product photo",
+      "Small shops that need a few distinct settings for social posts or feed ads",
+      "Marketers comparing openings, scenes, or formats for the same product",
+      "Products whose use, scale, or setting is easier to understand in a picture or short clip"
+    ],
+    "not_ideal": [
+      "Exact small lettering, prices, dates, or technical specifications that must be copied without errors",
+      "A customer testimonial or review, because generated people are not real buyers",
+      "A hidden side or unseen feature; provide a source photo for every view you need to show"
+    ]
+  }
 }

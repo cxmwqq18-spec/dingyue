@@ -70,5 +70,104 @@
       "q": "Will my product photos appear on Instagram or anywhere public?",
       "a": "No. Everything you upload or create is kept private in your account. Nothing goes on Instagram unless you post it."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Make a set that belongs together",
+      "d": "Instagram rewards a consistent visual rhythm. Start with the product photo that best shows its shape, then describe one setting for a square feed image and another for a 9:16 Reel or Story. Keep the color and surface related across the set so the still post and the moving clip look like the same campaign, even when each is generated separately."
+    },
+    {
+      "h2": "Design for Reels, Stories, and the feed separately",
+      "d": "Meta recommends 9:16 for Reels and says to keep important content in the safe area. Use 9:16 for the full-screen version and 1:1 for the feed version; 16:9, 4:3, and 3:4 are also available for other placements; AIVideosUGC currently offers 6, 10, 15, and 30 second jobs, and shows the credit cost before each generation. Square images are the default still format. Preview every downloaded asset in its intended placement before adding your caption or offer."
+    }
+  ],
+  "input_guide": {
+    "h2": "Give the model a source that survives the crop",
+    "items": [
+      {
+        "t": "Use a clean hero angle",
+        "d": "Photograph the product at the angle you want shoppers to remember. Include handles, lids, straps, and other parts that should remain visible."
+      },
+      {
+        "t": "Describe the feed context",
+        "d": "Say whether the scene is a bathroom shelf, cafe table, closet rail, or outdoor bench so the background supports the product."
+      },
+      {
+        "t": "Keep the subject central",
+        "d": "Leave breathing room around the item. A centered product gives you more options when Instagram previews a square post or covers the edges with interface elements."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A useful Instagram content set",
+    "items": [
+      {
+        "t": "One square anchor",
+        "d": "Use a clean 1:1 image as the first feed post or carousel frame."
+      },
+      {
+        "t": "One vertical moment",
+        "d": "Show the product in use in a 9:16 clip for Reels or Stories, with the main action near the middle."
+      },
+      {
+        "t": "One supporting detail",
+        "d": "Add a close view of texture, hardware, packaging, or scale so the carousel answers a different question."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Instagram scenes with a clear focal point",
+    "items": [
+      {
+        "t": "Sink-side skincare",
+        "d": "A serum bottle stands beside a folded towel and a stone sink, while a hand turns the label toward the camera."
+      },
+      {
+        "t": "Weekend tote",
+        "d": "A canvas tote rests on a cafe chair, then moves to a shoulder in a 9:16 clip with the front pocket facing out."
+      },
+      {
+        "t": "Quiet desk light",
+        "d": "A small lamp switches on beside a notebook at dusk, leaving the glow and the product silhouette easy to read."
+      },
+      {
+        "t": "Carousel detail set",
+        "d": "Create square frames for the front view, a zipper or clasp close-up, and the item in its everyday room."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Polish each Instagram placement",
+    "items": [
+      {
+        "t": "Add accurate copy",
+        "d": "Type the product name, price, offer, and date in Instagram, Canva, CapCut, or Ads Manager instead of relying on generated lettering."
+      },
+      {
+        "t": "Keep audio intentional",
+        "d": "Choose music or a permitted sound after download; AIVideosUGC supplies the visual clip without audio."
+      },
+      {
+        "t": "Check the safe area",
+        "d": "Open the finished Reel or Story preview and move added text away from profile controls, reply areas, and edge crops."
+      },
+      {
+        "t": "Build the caption",
+        "d": "Use the caption to add details that do not belong inside the image, such as materials, sizing, or a shipping note."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Works well for visual product accounts",
+    "good": [
+      "Products with a recognizable silhouette or texture",
+      "Stores that publish a mix of carousels, Reels, and Stories",
+      "Collections that benefit from a shared color or surface",
+      "Sellers who want to add exact copy after seeing the image"
+    ],
+    "not_ideal": [
+      "Assets whose meaning depends on tiny generated text",
+      "A single crop expected to look correct in every Instagram placement"
+    ]
+  }
 }

@@ -70,5 +70,104 @@
       "q": "What are Shopify product video limits?",
       "a": "Shopify accepts uploaded MP4, MOV, or WebM product videos up to 10 minutes, 1 GB, and 4K (4096×2160). Our generator can export 1:1, 9:16, or 16:9; upload the version that fits your store."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Make a catalog feel like one store",
+      "d": "Shopify collection pages are easier to scan when product photos share a shape, background family, and camera height. Pick one visual rule for a collection—such as a warm neutral surface with the item centered—and repeat that rule in each prompt. AIVideosUGC creates square stills by default, which gives you a practical starting point for a tidy grid."
+    },
+    {
+      "h2": "Choose media for the page job",
+      "d": "Use a square still as the collection anchor, then place a lifestyle image and a product-page video in the media gallery. Shopify's current limits allow images up to 5000×5000 pixels or 25 MP and under 20 MB. Uploaded product videos can be up to 10 minutes and 1 GB, up to 4K (4096×2160), in MP4, MOV, or WebM. AIVideosUGC offers 6, 10, 15, and 30 second jobs in five shapes—9:16, 1:1, 16:9, 4:3, and 3:4— with cost shown before the job starts."
+    }
+  ],
+  "input_guide": {
+    "h2": "Set a repeatable source-photo rule",
+    "items": [
+      {
+        "t": "Keep the camera height similar",
+        "d": "Photograph each item from a comparable front or three-quarter angle so the collection grid does not jump from product to product."
+      },
+      {
+        "t": "Use the same background words",
+        "d": "Reuse a short description such as matte stone, warm daylight, and soft shadow, then change only the product and action."
+      },
+      {
+        "t": "Show the whole product",
+        "d": "Include handles, cords, lids, and the base in the source. A consistent crop cannot repair a missing component."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A Shopify media sequence that earns its space",
+    "items": [
+      {
+        "t": "Collection anchor",
+        "d": "A square image with the product clearly isolated enough to scan beside its neighbors."
+      },
+      {
+        "t": "Context image",
+        "d": "A lifestyle scene that shows where the item sits, hangs, or gets used without hiding its important parts."
+      },
+      {
+        "t": "Movement proof",
+        "d": "A short product-page clip that demonstrates opening, packing, pouring, folding, or another visible action."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Scenes for collection and product pages",
+    "items": [
+      {
+        "t": "Coordinated candle row",
+        "d": "Place three candle vessels on the same pale wood surface with matching daylight and enough space for each label to be reviewed later."
+      },
+      {
+        "t": "Blanket in use",
+        "d": "Drape a throw blanket over a reading chair with the full weave visible and one corner falling naturally toward the floor."
+      },
+      {
+        "t": "Bottle in a gym bag",
+        "d": "A water bottle slides into an open gym bag beside a towel, then reappears on a bench for a close look."
+      },
+      {
+        "t": "Planter by the window",
+        "d": "Show a planter on a sunny sill with the pot and leaves fully in frame, leaving room for a real size note later."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Load the files into Shopify with a final check",
+    "items": [
+      {
+        "t": "Check the media limits",
+        "d": "Confirm the image dimensions and file size, or the video duration, container, size, and resolution, against Shopify's current product-media guidance."
+      },
+      {
+        "t": "Write the metadata",
+        "d": "Add product names, descriptions, and alt text yourself; AI-generated lettering is not a reliable source for catalog copy."
+      },
+      {
+        "t": "Compare neighboring items",
+        "d": "View the new image beside the rest of the collection and adjust the crop or background when one item looks out of place."
+      },
+      {
+        "t": "Add social variants separately",
+        "d": "Keep a 9:16 clip for Stories or Reels as a separate asset instead of forcing a tall crop into the product gallery."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A practical fit for Shopify merchants",
+    "good": [
+      "Catalogs that need a consistent square collection grid",
+      "Products with a visible use or opening for a short gallery clip",
+      "Merchants who can supply repeatable source-photo angles",
+      "Stores that want one product-page set plus separate social crops"
+    ],
+    "not_ideal": [
+      "Listings that rely on exact generated text inside the image",
+      "A catalog with no source photos for the products or their key components"
+    ]
+  }
 }

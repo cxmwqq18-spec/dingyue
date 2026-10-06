@@ -65,5 +65,104 @@
       "q": "What size should a Black Friday ad use?",
       "a": "Use 9:16 for vertical Stories, Reels, and TikTok; use 1:1 for feeds. Make a separate version when the crop would hide the product or offer."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Make the product win the first glance",
+      "d": "Black Friday creative can be dramatic without hiding what is being sold. Use contrast, one hero product, and a single visible action—a lid opens, a bundle is arranged, or a lamp switches on. Keep the offer as a separate layer so the visual can be approved before the percentage, code, or final date is locked."
+    },
+    {
+      "h2": "Prepare the five workspace shapes with purpose",
+      "d": "AIVideosUGC offers 9:16, 1:1, 16:9, 4:3, and 3:4 video shapes, with 9:16, 1:1, and 16:9 covering the main phone, feed, and wide placements. Video choices are 6, 10, 15, and 30 seconds, and the cost is shown before each job. Make a new composition when the crop changes what the shopper can see; do not stretch one frame into every placement."
+    }
+  ],
+  "input_guide": {
+    "h2": "Start with a sale-ready product photo",
+    "items": [
+      {
+        "t": "Choose one hero item",
+        "d": "Use a photo where the product's silhouette and most important feature are obvious before the seasonal styling is added."
+      },
+      {
+        "t": "Name the seasonal surface",
+        "d": "Describe dark stone, deep fabric, metallic paper, or another real setting that supports the product without filling every corner."
+      },
+      {
+        "t": "Leave the offer editable",
+        "d": "Ask for open space at the top or side, but add the actual price, percentage, code, and deadline in your editor later."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A seasonal set with clear roles",
+    "items": [
+      {
+        "t": "Hero banner",
+        "d": "One product or bundle against a bold background, with a quiet area reserved for your exact offer."
+      },
+      {
+        "t": "Vertical sale moment",
+        "d": "A 9:16 clip that shows the product in use and keeps the top or center open for text you add later."
+      },
+      {
+        "t": "Feed version",
+        "d": "A 1:1 composition that remains recognizable when the viewer scrolls past quickly."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Black Friday prompts with room for the deal",
+    "items": [
+      {
+        "t": "Single-product spotlight",
+        "d": "A black coffee machine stands on a dark counter with a narrow highlight along its edges and clean space above."
+      },
+      {
+        "t": "Bundle table",
+        "d": "A real set of candles, matches, and a small tray is arranged on deep fabric, with each item visible from the front."
+      },
+      {
+        "t": "Gift reveal",
+        "d": "A ribbon-tied box opens on a dark table and reveals the product without any generated words on the lid."
+      },
+      {
+        "t": "Last-day close-up",
+        "d": "A watch or piece of jewelry turns slowly under a single light, with the top third left quiet for your final-day message."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Apply the Black Friday details yourself",
+    "items": [
+      {
+        "t": "Add verified numbers",
+        "d": "Type the discount, price, code, and end date in Canva, CapCut, or Ads Manager, then compare them with the live offer."
+      },
+      {
+        "t": "Preview every crop",
+        "d": "Inspect 9:16, 1:1, and any wide version in its actual placement so the product and message stay visible."
+      },
+      {
+        "t": "Keep urgency truthful",
+        "d": "Use a countdown or last-chance phrase only when the deadline and inventory support it."
+      },
+      {
+        "t": "Remove old versions",
+        "d": "Retire files that show an expired deal before reusing the underlying scene for another promotion."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Useful for a prepared seasonal sale",
+    "good": [
+      "Products with a strong silhouette that reads against a dark background",
+      "Gift sets whose actual contents are known",
+      "Teams that want the visual approved before final sale wording",
+      "Stores making separate square and vertical versions"
+    ],
+    "not_ideal": [
+      "Promotions that rely on a generated countdown or price",
+      "Claims about guaranteed approval or sales performance"
+    ]
+  }
 }

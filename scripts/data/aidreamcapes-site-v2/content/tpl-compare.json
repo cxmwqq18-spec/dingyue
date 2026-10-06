@@ -78,5 +78,104 @@
       "q": "Can I put the comparison numbers inside the generated video?",
       "a": "Type capacity, weight, price, and other numbers after download. AI-made lettering and figures can be wrong, so keep exact specifications in your editor."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Compare what the camera can actually show",
+      "d": "A side-by-side clip is useful for color, size, finish, included pieces, or packaging. Keep the two items in one stable composition and let the viewer inspect the difference; put performance claims and exact specifications in your verified listing copy."
+    },
+    {
+      "h2": "Keep the comparison about your range",
+      "d": "Use this template for your own variants, sizes, or bundles. It can clarify a choice without naming or implying a competing brand, and it leaves the final decision with the shopper."
+    }
+  ],
+  "input_guide": {
+    "h2": "Photograph both options for fair scale",
+    "items": [
+      {
+        "t": "Use one shared surface",
+        "d": "Place both items on the same plain surface so the scene does not invent a scale difference."
+      },
+      {
+        "t": "Match the camera angle",
+        "d": "Front views work for color and packaging; a three-quarter view can reveal a lid, handle, or side port on both products."
+      },
+      {
+        "t": "Leave a clear center gap",
+        "d": "A small space between the options gives each label and silhouette room after the clip is downloaded."
+      },
+      {
+        "t": "Name the exact difference",
+        "d": "Say charcoal versus cream, 12-ounce versus 20-ounce, or single item versus set instead of asking for a general comparison."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the side-by-side can settle",
+    "items": [
+      {
+        "t": "A visual choice",
+        "d": "The clip can make color, form, packaging, or included pieces easy to inspect in one frame."
+      },
+      {
+        "t": "Flexible placements",
+        "d": "Use 1:1 for a listing or feed, 16:9 for a wide product section, 9:16 for Shorts, or 4:3 and 3:4 for other crops."
+      },
+      {
+        "t": "A transparent test cost",
+        "d": "Six, ten, fifteen, and thirty seconds cost 24, 40, 60, and 120 credits; you see that amount before creating a version."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Comparisons you can describe",
+    "items": [
+      {
+        "t": "Two bottle sizes",
+        "d": "A small and large bottle stand on a counter at the same distance, with the height difference visible from base to cap."
+      },
+      {
+        "t": "Two finishes",
+        "d": "Matte black and brushed steel headphones rotate on matching stands while the ear-cup finish catches light."
+      },
+      {
+        "t": "New and previous pack",
+        "d": "Two boxes sit side by side on a shelf, then the camera passes across the changed front panel."
+      },
+      {
+        "t": "Single item versus set",
+        "d": "One mug stays left while the gift set opens on the right to reveal its extra pieces."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Add the facts the scene cannot verify",
+    "items": [
+      {
+        "t": "Label each option",
+        "d": "Place the variant name, size, color, or model above the correct side."
+      },
+      {
+        "t": "Add prices and measurements",
+        "d": "Use current listing data for price, capacity, dimensions, and included pieces."
+      },
+      {
+        "t": "Keep claims neutral",
+        "d": "Describe the visible difference without adding a performance winner the clip cannot prove."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "When a comparison is useful",
+    "good": [
+      "Your own colors, sizes, or finishes",
+      "Single product versus gift set",
+      "Old packaging beside a new design",
+      "Listings that need a quick visual choice"
+    ],
+    "not_ideal": [
+      "Unsupported claims about quality or performance",
+      "Two products that cannot share a truthful scale reference"
+    ]
+  }
 }

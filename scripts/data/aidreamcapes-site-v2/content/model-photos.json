@@ -64,9 +64,18 @@
   ],
   "maker": {
     "options": [
-      ["Photo", "Your clothing or accessory"],
-      ["Look", "Describe the styling and setting"],
-      ["Size", "Square by default"]
+      [
+        "Photo",
+        "Your clothing or accessory"
+      ],
+      [
+        "Look",
+        "Describe the styling and setting"
+      ],
+      [
+        "Size",
+        "Square by default"
+      ]
     ],
     "cta": "Make my model photo"
   },
@@ -87,5 +96,130 @@
       "q": "Can I ask for a celebrity or a well-known model?",
       "a": "No. We may turn down requests that name celebrities or other famous people. Describe the look you want instead, such as hairstyle, outfit and mood."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Show how a piece reads when worn",
+      "d": "An on-model image answers a visual question that a flat lay cannot: where does the garment, bag, or accessory sit on a person? Use it to show styling, proportion, and the mood of a collection. Keep your size chart and measurements as the source for fit decisions."
+    },
+    {
+      "h2": "Direct the look without naming a person",
+      "d": "Describe the outfit, pose, setting, and light in ordinary terms—“relaxed denim outfit, city sidewalk, soft morning light”—then compare versions. The request should define a visual direction, not imitate a celebrity or present the generated person as a real customer."
+    }
+  ],
+  "input_guide": {
+    "h2": "Give clothing and accessories a readable starting shape",
+    "items": [
+      {
+        "t": "Garments",
+        "d": "Photograph a shirt, dress, or hoodie flat, on a hanger, or on a mannequin with the full hem, sleeves, neckline, and any graphic visible."
+      },
+      {
+        "t": "Bags",
+        "d": "Show the body, handles, strap attachments, and closure in one clear frame; do not let a folded strap disappear behind the bag."
+      },
+      {
+        "t": "Shoes and boots",
+        "d": "Use a side or three-quarter view that includes the toe, heel, and sole edge, so the worn scene has a complete outline."
+      },
+      {
+        "t": "Jewelry",
+        "d": "Photograph the full piece on a plain surface with clasp, chain, or setting visible; use a scale cue only as context, never as a size claim."
+      },
+      {
+        "t": "Surface and color",
+        "d": "Avoid harsh filters and colored reflections that change the item before it is placed on the model."
+      }
+    ]
+  },
+  "results": {
+    "h2": "Budget the worn view clearly",
+    "items": [
+      {
+        "t": "One square image",
+        "d": "A model-photo generation uses 24 credits and the charge is shown before you begin."
+      },
+      {
+        "t": "A styled context",
+        "d": "You receive a person wearing or carrying the item in the described setting, ready to compare with your flat product view."
+      },
+      {
+        "t": "Visual fit, not measurement proof",
+        "d": "The result can show drape and placement; keep real measurements and the size chart beside it for sizing decisions."
+      },
+      {
+        "t": "A private file",
+        "d": "The source and finished image stay in your account while you choose where to publish it."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Five worn-view recipes",
+    "items": [
+      {
+        "t": "Linen overshirt",
+        "d": "Show the overshirt open over a plain tee on a bright city sidewalk, with sleeves relaxed and the front buttons visible."
+      },
+      {
+        "t": "Canvas backpack",
+        "d": "Place the backpack on one shoulder at a transit stop, keeping both straps and the front pocket in view."
+      },
+      {
+        "t": "Round sunglasses",
+        "d": "Use a close street-style frame with the sunglasses worn on the face, neutral styling, and enough light to show the frame shape."
+      },
+      {
+        "t": "Ankle boots",
+        "d": "Show the boots with straight-leg trousers on a store-floor setting, keeping heel, toe, and side panel visible."
+      },
+      {
+        "t": "Pendant necklace",
+        "d": "Place the pendant at the collarbone over a plain top, with the chain and central setting unobstructed."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Good for styling; limited for proof",
+    "good": [
+      {
+        "t": "New-arrival storytelling",
+        "d": "Fashion pages that need a worn view alongside a clean product image."
+      },
+      {
+        "t": "Accessories with visible structure",
+        "d": "Bags, hats, glasses, jewelry, and shoes whose main shape appears clearly in the source."
+      },
+      {
+        "t": "Collection mood boards",
+        "d": "Social or merchandising teams testing a setting and outfit direction before making final campaign assets."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "Precise sizing claims",
+        "d": "Do not use a generated pose as evidence of a garment measurement or exact fit."
+      },
+      {
+        "t": "Hidden construction",
+        "d": "A folded or obstructed source cannot reliably show an inner seam, closure, or back detail."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Pair the worn view with facts",
+    "items": [
+      {
+        "t": "Check the item",
+        "d": "Compare color, pattern, hardware, and logo placement with the physical piece before it goes on a product page."
+      },
+      {
+        "t": "Publish measurements separately",
+        "d": "Keep the size chart, dimensions, and material details in the listing beside the visual styling."
+      },
+      {
+        "t": "Add campaign copy later",
+        "d": "Type the price, date, and offer in your editor or social tool so the final message is accurate."
+      }
+    ]
+  }
 }

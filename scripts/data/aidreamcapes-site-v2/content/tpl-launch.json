@@ -79,5 +79,104 @@
       "q": "What length should a launch promo use?",
       "a": "Use 6 seconds for a quick reveal, 10 or 15 seconds for a product action, and 30 seconds only where the public option is available. Choose 9:16 for vertical placements."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Build anticipation with a place for the product",
+      "d": "A launch promo should establish what is new, where it belongs, and which visual detail deserves the first look. Describe the room, the light, and a small reveal or glow so the product feels introduced rather than merely displayed."
+    },
+    {
+      "h2": "Keep changing launch details editable",
+      "d": "Use the generated scene for the visual announcement, then add the exact date, offer, URL, and availability yourself. This lets you reuse the same scene when a release detail changes."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare a new product for its first scene",
+    "items": [
+      {
+        "t": "Show the launch hero angle",
+        "d": "Choose the view that makes the product recognizable before the room and props are added."
+      },
+      {
+        "t": "Include controls or light points",
+        "d": "For a lamp, speaker, or appliance, keep the button, shade, grille, or other launch-worthy detail visible."
+      },
+      {
+        "t": "Name the room role",
+        "d": "Say bedside table, kitchen counter, desk, entryway, or gift table so the scene explains where the item belongs."
+      },
+      {
+        "t": "Reserve copy space",
+        "d": "Ask for open wall, tabletop, or sky beside the product when a date or URL will sit over the finished clip."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the launch asset gives you",
+    "items": [
+      {
+        "t": "A contextual first look",
+        "d": "The product appears in a room that matches its use, with a reveal, glow, or camera move to mark the introduction."
+      },
+      {
+        "t": "Five usable frames",
+        "d": "Pick 9:16 for Stories and Reels, 1:1 for a feed, 16:9 for a wide launch placement, or 4:3 and 3:4 when needed."
+      },
+      {
+        "t": "A visible spend before testing",
+        "d": "Six, ten, fifteen, and thirty seconds cost 24, 40, 60, and 120 credits; the exact charge appears before generation."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Launch scenes to describe",
+    "items": [
+      {
+        "t": "Lamp reveal",
+        "d": "A slim lamp turns on beside books and a plant as evening light falls across the side table."
+      },
+      {
+        "t": "Kitchen arrival",
+        "d": "A new espresso machine sits on a clean counter while a cup enters the frame and the camera moves to its control panel."
+      },
+      {
+        "t": "Desk upgrade",
+        "d": "A compact speaker or monitor is unboxed onto a calm work desk, ending with a clear front view."
+      },
+      {
+        "t": "Gift-season opener",
+        "d": "A small device rests on a wrapped gift table with one slow pass across the package and product."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Put the launch facts on top",
+    "items": [
+      {
+        "t": "Add the release date",
+        "d": "Type the confirmed day, time, and timezone in a layer you can edit when plans change."
+      },
+      {
+        "t": "Place the offer and URL",
+        "d": "Use the current price, introductory offer, or product link from your launch plan."
+      },
+      {
+        "t": "Choose launch sound",
+        "d": "Add your licensed track or announcement voice once the reveal timing feels right."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A strong fit for launch promos",
+    "good": [
+      "Decor, appliances, gadgets, and gift items",
+      "Products with a clear room or use context",
+      "Coming-soon teasers and launch-week posts",
+      "Scenes that need editable copy space"
+    ],
+    "not_ideal": [
+      "Live inventory or countdown information that must update automatically",
+      "Products whose launch story needs several unrelated demonstrations"
+    ]
+  }
 }

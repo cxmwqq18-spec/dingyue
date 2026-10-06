@@ -69,7 +69,7 @@
     },
     {
       "q": "Will the video include spoken instructions?",
-      "a": "No. AIVideosUGC doesn't add a voiceover or music. If you want narration, record it yourself and add it in CapCut or another editing app along with any step text."
+      "a": "No. AIVideosUGC doesn't add a spoken narration or music. If you want narration, record it yourself and add it in CapCut or another editing app along with any step text."
     },
     {
       "q": "Does the video have to match how my product really works?",
@@ -79,5 +79,104 @@
       "q": "How many steps fit in one how-to video?",
       "a": "Keep one short task per clip. Use 10 or 15 seconds for several visible actions; write exact step labels yourself after download because generated text may be wrong."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Show one job from setup to result",
+      "d": "A useful how-to clip has a visible starting state, one product action, and a finished state. Ask for the hand position, the working surface, and the moment the task is complete so the scene explains the product without a spoken presenter."
+    },
+    {
+      "h2": "Choose the frame for the place it will live",
+      "d": "Use 9:16 when the lesson will sit in a Shorts feed, 16:9 when it belongs beside a product description, 1:1 for a square feed, or 4:3 and 3:4 when another crop fits better. Make separate versions when the crop would hide the tool or the finished result."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare a tool photo that can show the action",
+    "items": [
+      {
+        "t": "Keep the working end visible",
+        "d": "Photograph the nozzle, blade, whisk, brush, or handle in full so the requested movement has a clear reference."
+      },
+      {
+        "t": "Show the useful position",
+        "d": "For an item that opens, fills, clamps, or adjusts, include that part in its normal open position rather than hiding it in packaging."
+      },
+      {
+        "t": "Leave room around the object",
+        "d": "A little space around the product gives a hand, fabric, cup, or counter room to enter the scene without covering the tool."
+      },
+      {
+        "t": "Name one surface",
+        "d": "Say whether the action happens on a counter, hanger, sink, desk, or floor; one stable surface keeps the lesson readable."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the downloaded lesson contains",
+    "items": [
+      {
+        "t": "A single demonstrated task",
+        "d": "The generated scene is strongest when one action carries the whole clip, such as steaming one shirt panel or frothing one mug."
+      },
+      {
+        "t": "Four length choices",
+        "d": "Six, ten, fifteen, and thirty seconds use 24, 40, 60, and 120 credits; the exact cost is shown before you start."
+      },
+      {
+        "t": "A clean visual base",
+        "d": "The download gives you the moving product scene; add the step names, measurements, or instructions that must be exact."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "How-to scenes you can describe",
+    "items": [
+      {
+        "t": "Steam a sleeve",
+        "d": "A handheld steamer travels from cuff to shoulder on a hanging cotton shirt, ending on the smooth fabric."
+      },
+      {
+        "t": "Foam one cup",
+        "d": "A milk frother spins inside a clear mug on a breakfast counter, then lifts to reveal the foam."
+      },
+      {
+        "t": "Brush a keyboard",
+        "d": "A compact cleaning brush passes between keys on a desk beside the product box and a small pile of dust."
+      },
+      {
+        "t": "Seal a lunch container",
+        "d": "A hand closes the lid around prepared food on a kitchen table and presses the side latch once."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the lesson in your editor",
+    "items": [
+      {
+        "t": "Add numbered steps",
+        "d": "Place short labels such as Fill, Press, and Rinse beside the matching moment."
+      },
+      {
+        "t": "Check claims and measurements",
+        "d": "Type capacity, temperature, or cleaning directions from your product information rather than relying on generated lettering."
+      },
+      {
+        "t": "Add sound",
+        "d": "Choose music or a voice track that matches the pace when the clip is ready for its channel."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "When this template fits",
+    "good": [
+      "Tools with one visible job",
+      "Small appliances with a clear setup",
+      "Cleaning and organization products",
+      "Accessories that open, close, or adjust"
+    ],
+    "not_ideal": [
+      "Products whose value depends on several hidden steps",
+      "Claims that require a precise demonstration or measurement"
+    ]
+  }
 }

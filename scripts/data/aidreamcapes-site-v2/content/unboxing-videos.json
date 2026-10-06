@@ -13,7 +13,7 @@
   ],
   "intro": [
     "Unboxing videos are about the moment the product comes out of the box. Viewers watch the lid come off, the tissue paper fold back, and the item get lifted into the light. It answers what a new customer wonders about: what arrives at the door, how it's packed, and what the product looks like once it's out.",
-    "Add a picture of the product, then describe the packaging in words, such as “matte black box with gold tissue” or “kraft mailer with a small card on top.” AIVideosUGC turns that into one unboxing video, 6, 10, 15, or 30 seconds long, vertical for TikTok and YouTube Shorts or square for feeds. It fits launches, gift-ready products, subscription boxes, and any item where the packaging is part of the experience."
+    "Add a picture of the product, then describe the packaging in words, such as a matte black box with gold tissue or a kraft mailer with a card on top. Choose a 6, 10, 15, or 30 second reveal and frame it in 9:16, 1:1, 16:9, 4:3, or 3:4."
   ],
   "benefits": [
     {
@@ -63,8 +63,14 @@
   ],
   "maker": {
     "options": [
-      ["Size", "9:16 · TikTok & Shorts"],
-      ["Length", "10 seconds"]
+      [
+        "Size",
+        "9:16 · TikTok & Shorts"
+      ],
+      [
+        "Length",
+        "10 seconds"
+      ]
     ],
     "cta": "Make my unboxing video"
   },
@@ -85,5 +91,120 @@
       "q": "Can I make an unboxing video for a gift set or bundle?",
       "a": "Yes. Upload a photo of the set and list what's inside, such as “three candles and a matchbox in a ribbon-tied box.” A few items usually come out cleaner than a crowded box."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Build anticipation around the package",
+      "p": "An unboxing clip is a short sequence: the container appears, a layer opens, and the product comes into view. The visual question is what arrives and how the reveal feels, so describe the materials and order instead of trying to fit the whole brand story into one shot."
+    },
+    {
+      "h2": "Preview the experience before the shipment arrives",
+      "p": "A product photo can anchor the item while your description supplies the mailer, box, tissue, ribbon, card, or insert. Use the clip to plan a launch post or gift presentation, then compare the final packaging with the real stock before publishing."
+    }
+  ],
+  "input_guide": {
+    "h2": "Describe the layers people will open",
+    "items": [
+      {
+        "t": "Show the product itself",
+        "d": "Use a photo where the item or set is visible enough to recognize once it leaves the package."
+      },
+      {
+        "t": "Name the outer container",
+        "d": "Say whether the scene starts with a mailer, rigid box, drawer box, pouch, or another package shape."
+      },
+      {
+        "t": "List the reveal layers",
+        "d": "Mention tissue, a sleeve, a ribbon, a card, or a paper insert in the order the hands should uncover them."
+      },
+      {
+        "t": "Describe the finish",
+        "d": "Matte, kraft, glossy, soft-touch, or colored materials give the packaging a visual identity without depending on tiny printed words."
+      },
+      {
+        "t": "Keep the set count manageable",
+        "d": "For a bundle, name only the items that need to appear first so the box does not become visually crowded."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A reveal built for a quick watch",
+    "items": [
+      {
+        "t": "One package sequence",
+        "d": "Choose 6, 10, 15, or 30 seconds for a teaser, standard reveal, or slower presentation."
+      },
+      {
+        "t": "A feed-ready shape",
+        "d": "Use 9:16 for vertical social posts, 1:1 for square feeds, or 16:9 for a wide product area."
+      },
+      {
+        "t": "A cost shown in advance",
+        "d": "The credit amount is visible before the job starts, and failed attempts release the reserved credits."
+      },
+      {
+        "t": "A watermark-free download",
+        "d": "Review the package and item carefully, then use the file commercially with your own exact launch details added later."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Reveal scenes for different launches",
+    "items": [
+      {
+        "t": "Minimal mailer",
+        "d": "A kraft mailer opens on a pale desk, white tissue folds back, and a ceramic mug is lifted by its handle."
+      },
+      {
+        "t": "Gift-ready box",
+        "d": "A ribbon-tied cream box opens under warm light, revealing a small skincare set on a paper insert."
+      },
+      {
+        "t": "Subscription arrival",
+        "d": "A printed-color box opens to three snack pouches arranged in a single layer with tissue around them."
+      },
+      {
+        "t": "Tech accessory",
+        "d": "A slim black box slides open to reveal headphones resting in a molded tray."
+      },
+      {
+        "t": "Seasonal bundle",
+        "d": "A deep green box opens beside pine branches, revealing two candles and a matchbox tied together."
+      },
+      {
+        "t": "Single hero item",
+        "d": "A drawer-style package pulls open slowly and presents one watch against a dark foam insert."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Make the reveal ready for a real launch",
+    "items": [
+      {
+        "t": "Add exact package copy",
+        "d": "Type the product name, offer, date, and any insert wording in your editor rather than trusting generated lettering."
+      },
+      {
+        "t": "Match the stock on hand",
+        "d": "Compare the box color, tissue, included pieces, and order of opening with the package customers will actually receive."
+      },
+      {
+        "t": "Choose a clear disclosure",
+        "d": "If a channel asks you to label realistic AI content, enable its label before posting the reveal."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Packaging stories that fit this format",
+    "good": [
+      "Giftable products with a clear box, wrap, or insert",
+      "Subscription boxes with a small, curated set",
+      "Product launches where the package is part of the first impression",
+      "Bundles that can be shown in one uncluttered reveal"
+    ],
+    "not_ideal": [
+      "Packaging whose value depends on perfectly readable small print",
+      "Large assortments that cannot fit into one clear opening sequence"
+    ]
+  }
 }

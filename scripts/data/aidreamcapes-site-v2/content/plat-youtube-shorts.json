@@ -70,5 +70,104 @@
       "q": "What are YouTube Shorts ad limits?",
       "a": "Google recommends vertical 9:16 and videos under 60 seconds for Shorts; videos can be up to 3 minutes, but the first 60 seconds play in the Shorts feed. AIVideosUGC’s 30-second option fits."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Give a Short one clear product beat",
+      "d": "A Short works best when the viewer can understand the object and the action without waiting for a spoken narration. Start from a photo that shows the working parts, then describe a beginning, one movement, and a finish: the lid opens, the contents appear, and the product settles into use. That sequence also gives the clip a natural point to loop."
+    },
+    {
+      "h2": "Use Google's guidance as the publishing check",
+      "d": "Google recommends a 9:16 vertical asset for Shorts. Its guidance says videos under 60 seconds fit the Shorts experience, while uploads can run up to 3 minutes and the Shorts feed first plays the opening 60 seconds. AIVideosUGC offers 6, 10, 15, and 30 second jobs in five shapes—9:16, 1:1, 16:9, 4:3, and 3:4— with cost shown before generation. Choose 16:9 when the same idea belongs in a standard YouTube placement or a wide product page."
+    }
+  ],
+  "input_guide": {
+    "h2": "Photograph the parts that need to move",
+    "items": [
+      {
+        "t": "Include the working end",
+        "d": "Show the lid, hinge, nozzle, zipper, switch, or handle that the scene will use. The source image should give that part enough room to move."
+      },
+      {
+        "t": "Describe a three-part beat",
+        "d": "Write what is visible first, what happens next, and where the action ends. This keeps a short clip from trying to tell three stories."
+      },
+      {
+        "t": "Keep the vertical center open",
+        "d": "Place the product where the title, channel controls, and buttons are less likely to cover it; add any exact copy after download."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A Short that can stand on its own",
+    "items": [
+      {
+        "t": "Instant recognition",
+        "d": "The product should be visible before the movement begins, so the viewer knows what the clip is showing."
+      },
+      {
+        "t": "One complete action",
+        "d": "Show a single use or reveal from start to finish instead of relying on a title card."
+      },
+      {
+        "t": "A clean loop point",
+        "d": "End close to the opening position when the action naturally repeats, or use a decisive final frame for a product page."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Shorts prompts for product demonstrations",
+    "items": [
+      {
+        "t": "Pack and go",
+        "d": "A travel backpack receives one folded shirt, the zipper closes, and a hand lifts it from a bench."
+      },
+      {
+        "t": "Pour once",
+        "d": "A blender cup receives frozen fruit, the blade turns briefly, and the finished drink appears in a clear glass."
+      },
+      {
+        "t": "Light at dusk",
+        "d": "A desk lamp clicks on beside a notebook as the room changes from evening shade to a warm pool of light."
+      },
+      {
+        "t": "Unbox the useful part",
+        "d": "A plain box opens, the product is lifted into the center, and one key component is shown close to the camera."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the Short in your publishing tools",
+    "items": [
+      {
+        "t": "Add a readable caption",
+        "d": "Type the product name, price, offer, and any required disclosure yourself so the words are accurate."
+      },
+      {
+        "t": "Choose the soundtrack",
+        "d": "Select audio in YouTube, CapCut, or another editor; the generated clip does not include music or speech."
+      },
+      {
+        "t": "Watch the first and last seconds",
+        "d": "Confirm that the opening identifies the product and that the ending does not cut off the action or any added text."
+      },
+      {
+        "t": "Preview the final placement",
+        "d": "Open the asset in the Shorts player and inspect the center, bottom, and right edge before you promote it."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Best for compact, visible demonstrations",
+    "good": [
+      "Products with a simple opening, use, or reveal",
+      "Small items that remain clear in a vertical crop",
+      "Launch content that needs a quick unboxing or first look",
+      "Sellers who want a separate wide cut for a product page"
+    ],
+    "not_ideal": [
+      "Scenes that need several paragraphs of explanation",
+      "Tiny labels or interface screens that must be read inside the generated image"
+    ]
+  }
 }

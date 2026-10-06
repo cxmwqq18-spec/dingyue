@@ -393,7 +393,7 @@
    "occasions": [
     "holidays"
    ],
-   "output": "9:16 photo",
+   "output": "Square product photo · Story layout",
    "made_with": "social-ad-photos"
   },
   {
@@ -933,6 +933,16 @@
    "label": "Examples",
    "primary_keyword": "AI product photo and video examples",
    "img": "watch",
+   "status": "new",
+   "group": null
+  },
+  {
+   "id": "glossary",
+   "type": "glossary",
+   "url": "/glossary",
+   "label": "Glossary",
+   "primary_keyword": "AIVideosUGC glossary",
+   "img": "p_detail",
    "status": "new",
    "group": null
   },

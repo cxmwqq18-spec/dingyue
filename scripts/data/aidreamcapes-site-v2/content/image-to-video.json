@@ -13,7 +13,7 @@
   ],
   "intro": [
     "Image to video takes one still photo of your product and adds movement to it. The camera can push in slowly, circle the item, or pan across a table, while light, water, fabric, or steam moves around it. Because it starts from your photo, the clip stays close to the look you already chose: the same product, colors, and setting.",
-    "It suits sellers who have good photos but no video yet, like a candle shop with a polished hero image or a watch brand with clean studio shots. Use it to make a product page feel less static, or to give an existing ad photo a moving version for Reels and Stories. Pick a length of 6, 10, 15, or 30 seconds and any of five shapes: 9:16, 1:1, 16:9, 3:4, or 4:3."
+    "It suits sellers who have a strong product photo but no moving version yet. Use it for product galleries, Reels, Stories, or feed placements. Set the movement to 6, 10, 15, or 30 seconds, then choose 9:16, 1:1, 16:9, 4:3, or 3:4."
   ],
   "benefits": [
     {
@@ -50,7 +50,7 @@
     },
     {
       "t": "Instagram Reels and Stories",
-      "d": "Post a vertical version of an ad photo that already does well for you."
+      "d": "Post a vertical video based on an ad photo that already does well for you."
     },
     {
       "t": "Facebook feed ads",
@@ -63,9 +63,18 @@
   ],
   "maker": {
     "options": [
-      ["Size", "9:16 · Reels & Stories"],
-      ["Length", "6 seconds"],
-      ["Start from", "Your product photo"]
+      [
+        "Size",
+        "9:16 · Reels & Stories"
+      ],
+      [
+        "Length",
+        "6 seconds"
+      ],
+      [
+        "Start from",
+        "Your product photo"
+      ]
     ],
     "cta": "Animate my photo"
   },
@@ -86,5 +95,116 @@
       "q": "Can I make several clips from the same photo?",
       "a": "Yes. Each run makes one clip, so change the motion or size and run it again. The credit cost is shown for every run before it starts."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Animate the photograph you already approved",
+      "p": "Image to video is useful when the product photo is right but a still frame feels too quiet. Keep the product, palette, and setting as the visual anchor, then describe one movement that adds life around it."
+    },
+    {
+      "h2": "Ask for one kind of motion at a time",
+      "p": "A camera push, a slow pan, drifting steam, moving water, or a sweep of light each gives the model a clear job. Combining several large effects makes it harder to tell whether the product itself stayed accurate."
+    }
+  ],
+  "input_guide": {
+    "h2": "Give the camera a stable starting frame",
+    "items": [
+      {
+        "t": "Keep the whole product visible",
+        "d": "Use a frame that includes the complete object and its most important edges, handles, openings, or attachments."
+      },
+      {
+        "t": "Leave room around the subject",
+        "d": "A margin around the item gives a push or pan space to travel without clipping the product."
+      },
+      {
+        "t": "Control reflective surfaces",
+        "d": "For glass, metal, or glossy packaging, start with a highlight that does not hide the label or main shape."
+      },
+      {
+        "t": "Show transparent parts clearly",
+        "d": "Use a background with enough contrast behind clear lids, bottles, or lenses so their outline remains readable as the scene moves."
+      },
+      {
+        "t": "Name the movement and pace",
+        "d": "Write one direction such as “slow push toward the bottle while morning light crosses the table,” rather than listing several unrelated actions."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the motion version adds",
+    "items": [
+      {
+        "t": "A short moving frame",
+        "d": "Select 6, 10, 15, or 30 seconds and receive one clip for each run."
+      },
+      {
+        "t": "Your chosen crop",
+        "d": "Use 9:16, 1:1, 16:9, 4:3, or 3:4 when you need a particular frame."
+      },
+      {
+        "t": "A visible generation cost",
+        "d": "The workspace shows the credit amount before it runs, and a failed job returns those credits."
+      },
+      {
+        "t": "A reusable commercial asset",
+        "d": "The download has no watermark and can be reviewed for a product page, social post, or ad before you publish it."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Motion directions that stay product-led",
+    "items": [
+      {
+        "t": "Glass bottle",
+        "d": "Make a slow push toward a glass bottle as a slim ribbon of light moves across the label."
+      },
+      {
+        "t": "Hot drink",
+        "d": "Hold the mug in place while soft steam rises against a warm kitchen background."
+      },
+      {
+        "t": "Watch detail",
+        "d": "Pan from the crown to the watch face as a wrist rests on a dark tabletop."
+      },
+      {
+        "t": "Fabric texture",
+        "d": "Move gently across a folded knit sweater while one corner lifts in a light indoor breeze."
+      },
+      {
+        "t": "Water surface",
+        "d": "Orbit a skincare jar on a stone tray while small ripples move in the shallow water around it."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Check the moving details before posting",
+    "items": [
+      {
+        "t": "Compare the first and last frame",
+        "d": "Confirm the silhouette, color, cap, clasp, or printed panel still matches the approved photo."
+      },
+      {
+        "t": "Add the words yourself",
+        "d": "Type product names, prices, dates, and captions in your editing or publishing tool instead of relying on generated lettering."
+      },
+      {
+        "t": "Keep the calmer take",
+        "d": "If a second run changes the product less or keeps the camera steadier, use that version for the final placement."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Best matches for image to video",
+    "good": [
+      "Hero photos with space around a single product",
+      "Objects where light, steam, water, or fabric can move around the item",
+      "Product galleries that need one moving frame among still images",
+      "Brands testing a subtle visual opening before planning a larger shoot"
+    ],
+    "not_ideal": [
+      "Photos packed edge to edge with no room for a camera move",
+      "Scenes where tiny labels or exact small text must remain unchanged"
+    ]
+  }
 }

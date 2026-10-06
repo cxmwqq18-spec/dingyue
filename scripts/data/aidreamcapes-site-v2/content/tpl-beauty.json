@@ -75,5 +75,104 @@
       "q": "What product photo works best for a beauty video ad?",
       "a": "Use a sharp, front-facing photo with the full package visible and little glare. Keep claims out of the prompt; add only verified product wording later in your editor."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Show the product inside a real routine",
+      "d": "A beauty routine clip should answer two visual questions quickly: what the package looks like and how a person handles it. Pick one gesture, such as lifting a dropper or pressing a pump, and give that gesture enough room to read."
+    },
+    {
+      "h2": "Let the scene show texture without making a claim",
+      "d": "A swatch, a small pour, or a fingertip application can show a cream, oil, or gel. Keep benefits, ingredients, shade names, and usage directions in checked copy that you add after the scene is approved."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare a beauty photo for a close routine",
+    "items": [
+      {
+        "t": "Keep the dispenser front-facing",
+        "d": "A dropper, pump, or cap should be visible enough for the requested hand movement to make sense."
+      },
+      {
+        "t": "Control bottle reflections",
+        "d": "Use a soft angle on glossy glass or foil so highlights do not erase the color and silhouette."
+      },
+      {
+        "t": "Show the product alone",
+        "d": "A clean bottle or jar gives the scene a stable reference before you add a hand, basin, mirror, or towel."
+      },
+      {
+        "t": "Name the texture action",
+        "d": "Say fingertip swatch, cream spread, mist, or oil drop instead of asking for every routine step at once."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What your routine clip can make visible",
+    "items": [
+      {
+        "t": "Packaging in context",
+        "d": "The bottle, jar, pump, or dropper appears in a bathroom, vanity, bedside, or travel setting you describe."
+      },
+      {
+        "t": "One tactile moment",
+        "d": "A hand can lift, press, dispense, spread, or hold the product so shoppers see how it is handled."
+      },
+      {
+        "t": "Simple cost choices",
+        "d": "A six-, ten-, fifteen-, or thirty-second video costs 24, 40, 60, or 120 credits; you see the charge before generation."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Beauty routine scenes to describe",
+    "items": [
+      {
+        "t": "Morning serum",
+        "d": "A dropper lifts above a white sink, releases two drops onto fingertips, and returns beside the amber bottle."
+      },
+      {
+        "t": "Night cream",
+        "d": "A hand opens a low jar beside a warm bedside lamp and smooths a small amount across the back of the hand."
+      },
+      {
+        "t": "Hair oil",
+        "d": "A pump dispenses oil onto a palm beside a mirror, then the hand gathers the ends of damp hair."
+      },
+      {
+        "t": "Body mist",
+        "d": "A fine spray catches window light above a folded towel while the bottle remains centered and upright."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the beauty message after download",
+    "items": [
+      {
+        "t": "Add verified product words",
+        "d": "Type the shade, ingredient, volume, and usage line from your approved product information."
+      },
+      {
+        "t": "Choose the sound",
+        "d": "Place licensed music or a voice track under the visual once the pacing feels right."
+      },
+      {
+        "t": "Check hand and label details",
+        "d": "Review the package and action frame by frame before publishing the routine."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Good matches for this routine",
+    "good": [
+      "Serums, creams, oils, and mists",
+      "Products with a visible pump, dropper, or jar",
+      "TikTok and Reels routine posts",
+      "Quiet bathroom, vanity, or travel scenes"
+    ],
+    "not_ideal": [
+      "Products that need a medical result claim",
+      "Tiny ingredient panels that must be read inside the video"
+    ]
+  }
 }

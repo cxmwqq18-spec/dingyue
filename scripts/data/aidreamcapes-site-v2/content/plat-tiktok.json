@@ -17,10 +17,22 @@
     "It suits sellers trying their first TikTok ad and marketers who need a new angle every week without booking a shoot. Each video is made one at a time, with the credit cost shown before you start. Want a different opening? Run another version. Once you download the file, add captions, a sound and your offer in TikTok or CapCut, then upload it to TikTok Ads Manager."
   ],
   "specs": [
-    ["Shape", "9:16 vertical, full screen"],
-    ["Length", "6, 10, 15 or 30 seconds"],
-    ["Other shapes", "1:1 and 16:9 when you need them"],
-    ["Still images", "Square by default"]
+    [
+      "Shape",
+      "9:16 vertical, full screen"
+    ],
+    [
+      "Length",
+      "6, 10, 15 or 30 seconds"
+    ],
+    [
+      "Other shapes",
+      "1:1 and 16:9 when you need them"
+    ],
+    [
+      "Still images",
+      "Square by default"
+    ]
   ],
   "tips": [
     "Get the product on screen in the very first second, before anyone has a reason to swipe.",
@@ -58,5 +70,104 @@
       "q": "Do I need to label an AI-generated ad on TikTok?",
       "a": "Check TikTok’s current AI-content labeling control when you upload. Requirements can differ by creative and market, so use the label when TikTok’s Ads Manager marks it as required."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Build the first TikTok beat around the product",
+      "d": "Start with one product action that reads without an explanation: a lid opening, a zipper closing, a brush clearing crumbs, or a bottle placed beside a sink. Upload the clearest photo you own, name the setting and movement in one sentence, and keep the product in view before the action begins."
+    },
+    {
+      "h2": "Match the file to the placement",
+      "d": "TikTok's In-Feed guide recommends 9:16 at 540×960 or larger for a vertical file; it also lists 1:1 at 640×640 and 16:9 at 960×540. Non-Spark In-Feed uploads can be up to 10 minutes and 500 MB, while the general ad format guide lists 5–60 seconds. AIVideosUGC offers five video shapes—9:16, 1:1, 16:9, 4:3, and 3:4—and 6, 10, 15, and 30 second jobs, with the cost shown before you run each one. Treat those product choices as the source for the file you export, then check TikTok's current guide before launch."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare one photo for a readable first frame",
+    "items": [
+      {
+        "t": "Show the full item",
+        "d": "Include the parts that will move or be handled, such as a bottle cap, shoe laces, or a bag strap. A missing edge gives the scene less to work with."
+      },
+      {
+        "t": "Choose one action",
+        "d": "Describe one handoff, pour, open, turn, or use. A single action is easier to judge than a list of unrelated movements."
+      },
+      {
+        "t": "Leave room for controls",
+        "d": "Compose the source so the product can sit away from the lower and side edges. Add exact captions later, after seeing where TikTok places buttons and text."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the first version should answer",
+    "items": [
+      {
+        "t": "What is it?",
+        "d": "The opening frame should make the product recognizable without a title card."
+      },
+      {
+        "t": "What changes?",
+        "d": "The movement should show one use or one useful detail, rather than a vague camera sweep."
+      },
+      {
+        "t": "What can I edit?",
+        "d": "The downloaded clip is a visual starting point. Add the exact price, claim, caption, sound, and call to action in TikTok or another editor."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Scenes to describe in one sentence",
+    "items": [
+      {
+        "t": "Desk reset",
+        "d": "A hand places a compact cable organizer beside a laptop, then closes the case on a tidy desk."
+      },
+      {
+        "t": "Morning pour",
+        "d": "A chilled tea can opens beside a glass with ice, and the amber drink pours across the center of the frame."
+      },
+      {
+        "t": "Shoe detail",
+        "d": "A sneaker rotates slowly on a clean bench, revealing the side stitching before the toe points toward camera."
+      },
+      {
+        "t": "Bag in use",
+        "d": "A canvas tote moves from a cafe chair to a shoulder, with the handles and front pocket visible."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the TikTok file before upload",
+    "items": [
+      {
+        "t": "Add the words yourself",
+        "d": "Type prices, offers, dates, and product names in TikTok, CapCut, or your chosen editor so every character is correct."
+      },
+      {
+        "t": "Choose permitted sound",
+        "d": "Add music or a sound in TikTok or an editing app; the generated file does not include an audio track."
+      },
+      {
+        "t": "Check the preview",
+        "d": "Watch the complete file in the intended placement and make sure controls do not cover the product or your added copy."
+      },
+      {
+        "t": "Handle disclosure",
+        "d": "Review TikTok's current AI-content and advertising controls when you upload, because requirements can vary by creative and market."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A good fit for TikTok testing",
+    "good": [
+      "Small products with one easy-to-see action",
+      "Launches that need several openings from one product photo",
+      "Sellers who will add their own caption, sound, and offer",
+      "Products that remain recognizable in a tight vertical crop"
+    ],
+    "not_ideal": [
+      "Requests that depend on tiny label text being generated correctly",
+      "Scenes that make a health or performance promise the product cannot support"
+    ]
+  }
 }

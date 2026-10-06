@@ -78,5 +78,109 @@
       "q": "Can I keep the same framing across product colors?",
       "a": "Use the same camera and background wording for each run, then compare the outputs side by side. Each color is a separate job, so review the product identity before publishing."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Make Every Swatch Feel Like Part of One Product",
+      "p": "When a shopper taps from black to cream, the product should stay in the same place and the setting should stay quiet. A coordinated colorway set keeps the comparison on the shade instead of making the shopper compare different rooms, crops, or camera angles."
+    },
+    {
+      "h2": "Use the Real Item for Every Variant",
+      "p": "Different dyes, materials, and finishes react differently to light. Supply a source photo for each shade you sell, then reuse the scene description so the setting remains stable while the product color changes."
+    }
+  ],
+  "input_guide": {
+    "h2": "Line Up the Color Sources",
+    "items": [
+      {
+        "t": "Capture each physical variant",
+        "d": "Photograph the actual black, cream, olive, or seasonal item rather than asking one shade to stand in for the rest."
+      },
+      {
+        "t": "Fix the camera position",
+        "d": "Use the same distance, tilt, crop, and product orientation for every source image."
+      },
+      {
+        "t": "Control the light",
+        "d": "Choose neutral daylight and avoid a colored wall or strong reflection that shifts how the shade reads."
+      },
+      {
+        "t": "Name the shade plainly",
+        "d": "Use the catalog color name in your notes so a downloaded file cannot be attached to the wrong swatch."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A Variant Set Built for Comparison",
+    "items": [
+      {
+        "t": "One setting",
+        "d": "Keep the table, backdrop, and shadow language aligned across the collection."
+      },
+      {
+        "t": "One product view",
+        "d": "Let shoppers compare shape, stitching, and proportions without a new angle in every file."
+      },
+      {
+        "t": "One image per shade",
+        "d": "Give each Shopify or Amazon variant its own supporting image."
+      },
+      {
+        "t": "A visual color cue",
+        "d": "Use the result to support the swatch, then verify the physical color before treating it as a catalog reference."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Colorway Sets for More Than Sneakers",
+    "items": [
+      {
+        "t": "Canvas sneakers",
+        "d": "Cream, navy, black, and olive pairs on a linen runner with the same low side angle."
+      },
+      {
+        "t": "Reusable bottles",
+        "d": "Four matte bottles aligned on a pale kitchen counter with identical caps facing forward."
+      },
+      {
+        "t": "Tote collection",
+        "d": "Natural, rust, and charcoal totes hanging from the same wooden peg in soft window light."
+      },
+      {
+        "t": "Lip balm shades",
+        "d": "Small tubes standing upright on a stone tray, with each cap facing the same direction."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Audit the Set Before Linking Variants",
+    "items": [
+      {
+        "t": "Compare with the physical stock",
+        "d": "Check hue, finish, stitching, and hardware against each item in your inventory."
+      },
+      {
+        "t": "Match names to files",
+        "d": "Use a simple filename such as product-color so the correct image follows the correct swatch."
+      },
+      {
+        "t": "Add the exact shade language",
+        "d": "Type your approved color name, price, and availability in the store system rather than inside the generated image."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Where Color Variations Work Best",
+    "good": [
+      "Apparel, footwear, bags, bottles, and accessories sold in clear colorways",
+      "Products with similar shape across variants",
+      "Shopify or Amazon catalogs using swatches",
+      "Social carousels introducing a new seasonal shade"
+    ],
+    "not_ideal": [
+      "Products whose color depends on an exact calibrated print proof",
+      "Variants with different shapes or packaging in every color",
+      "Highly reflective finishes that change dramatically with the light"
+    ]
+  }
 }

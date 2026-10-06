@@ -52,5 +52,129 @@
       "q": "My sneakers look flat or creased in the results. What should I change?",
       "a": "Stuff the shoe with tissue so it holds its shape, set it on a plain surface at eye level, and shoot in soft daylight. Lace it exactly the way you want it shown, because messy laces carry into the result."
     }
-  ]
+  ],
+  "overview": {
+    "h2": "Build the footwear set buyers actually inspect",
+    "items": [
+      {
+        "t": "Start with what the camera can see",
+        "d": "A shoe can only be restaged faithfully when its construction is present in the source. Give the model a profile, a heel, a toe, and an outsole reference when those details matter to the listing."
+      },
+      {
+        "t": "Pair evidence with context",
+        "d": "Use a clean product frame for shape and materials, then put the pair on a foot, a stair, a trail, or a studio floor to explain the intended use. Keep size and performance claims in your real product information."
+      }
+    ]
+  },
+  "input_guide": {
+    "h2": "Prepare a shoe upload",
+    "items": [
+      {
+        "t": "Photograph every planned view",
+        "d": "Take separate straight-on photos of the outer side, inner side, toe, heel, and outsole. Do not expect a side photo to reveal tread that was never visible."
+      },
+      {
+        "t": "Hold the form",
+        "d": "Stuff boots or sneakers lightly so the toe box and collar keep their shape. Lace the pair exactly as you want it shown before taking the source image."
+      },
+      {
+        "t": "Preserve the material",
+        "d": "Use soft side light for suede nap, mesh, leather grain, stitching, and reflective panels. Wipe fingerprints from smooth finishes before shooting."
+      },
+      {
+        "t": "Separate colorways",
+        "d": "Use one clean input per colorway and reuse a scene description only after checking that the colors stay distinct. Keep the pair centered and fully in frame."
+      },
+      {
+        "t": "Include a scale cue",
+        "d": "For on-foot or floor scenes, state the surface and surrounding object, then keep actual size, width, and fit information in the listing."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Footwear scenes you can describe",
+    "items": [
+      {
+        "t": "Clean side profile",
+        "d": "A tan hiking boot standing alone on a pale stone background, outer profile and lugged outsole visible, with no props or added lettering."
+      },
+      {
+        "t": "Court-to-street",
+        "d": "A white court sneaker worn with cropped trousers on a city sidewalk, camera low enough to show the toe shape and ankle line."
+      },
+      {
+        "t": "Trail step",
+        "d": "A black trail shoe landing on a damp forest path, close crop on the outsole edge and textured upper, with natural overcast light."
+      },
+      {
+        "t": "At-home comfort",
+        "d": "A soft slide sandal beside a woven pool towel, one foot stepping into it, with the strap and footbed facing the camera."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What a shoe content set can deliver",
+    "items": [
+      {
+        "t": "Merchandising views",
+        "d": "Use profile, toe, heel, and outsole stills to fill detail gaps in a product gallery."
+      },
+      {
+        "t": "On-foot context",
+        "d": "A worn frame communicates ankle height and styling while your size chart handles fit information."
+      },
+      {
+        "t": "Motion for feeds",
+        "d": "Choose 9:16 for a vertical step, 1:1 for a square feed, or 16:9, 4:3, or 3:4 for other crops; clips can be 6, 10, 15, or 30 seconds."
+      },
+      {
+        "t": "A visible budget",
+        "d": "Budget a 24-credit photo, or 24/40/60/120 credits as the clip length moves from 6 to 10 to 15 to 30 seconds; the exact charge appears before generation."
+      },
+      {
+        "t": "A clean download",
+        "d": "Use the watermark-free file in an ad, gallery, or social post, then add size notes, price, and permitted brand information yourself."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the footwear asset",
+    "items": [
+      {
+        "t": "Inspect the shape",
+        "d": "Compare toe width, sole pattern, heel height, logo placement, laces, and color with the real pair."
+      },
+      {
+        "t": "Add exact details",
+        "d": "Overlay size range, width, material, price, delivery date, or promotion in your own editor so every number stays accurate."
+      },
+      {
+        "t": "Add the channel layer",
+        "d": "The download has no music, spoken narration, or subtitles. Add a track, captions, and any required disclosures in the publishing tool."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A strong fit for footwear merchandising",
+    "good": [
+      {
+        "t": "Shape-led products",
+        "d": "Sneakers, boots, sandals, loafers, and slippers with a clear, photographable silhouette."
+      },
+      {
+        "t": "Several colorways",
+        "d": "Collections that need a consistent composition while keeping each pair visibly different."
+      },
+      {
+        "t": "Lifestyle and motion",
+        "d": "Products that benefit from a trail, sidewalk, gym, poolside, or everyday styling cue."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "Unseen construction",
+        "d": "Do not use a generated angle as proof of a sole or interior feature absent from the input."
+      }
+    ]
+  }
 }

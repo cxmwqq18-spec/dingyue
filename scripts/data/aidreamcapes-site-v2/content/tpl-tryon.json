@@ -78,5 +78,109 @@
       "q": "What garment photo gives the cleanest virtual try-on?",
       "a": "Lay the garment flat or hang it straight, show the full outline, and use even light. A clear front view gives the model photo more reliable shape and color."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Show the Garment in a Wearable Context",
+      "p": "A flat lay tells shoppers what the garment looks like on a table. A model view adds the hem, sleeve, neckline, and overall silhouette in a room that helps them picture the piece in use. Use it as a supporting image beside your clean product shot."
+    },
+    {
+      "h2": "Style the Scene Without Promising a Fit",
+      "p": "Choose the model, pose, base layer, and setting to express your brand. Keep size charts and garment measurements in your listing, because a styled image is a visual reference rather than a replacement for those specifications."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare the Garment for a Reliable Try-On",
+    "items": [
+      {
+        "t": "Show one item clearly",
+        "d": "Photograph the front with collar, pockets, closures, and full hem visible; smooth folds that are not part of the design."
+      },
+      {
+        "t": "Keep the silhouette honest",
+        "d": "Use a straight or gently angled source rather than a bundle of garments that hides the cut."
+      },
+      {
+        "t": "Describe the styling",
+        "d": "Name model age range, pose, base layer, footwear, room, and light without adding a body measurement claim."
+      },
+      {
+        "t": "Plan the second view",
+        "d": "If the back matters, supply a rear source or run a separate rear composition rather than asking the front to reveal hidden construction."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What a Try-On Image Adds",
+    "items": [
+      {
+        "t": "Hem and sleeve context",
+        "d": "Show where a jacket, cardigan, shirt, or dress visually falls on the body."
+      },
+      {
+        "t": "Layering idea",
+        "d": "Place the piece over a simple tee, shirt, or tank so customers can see a complete outfit direction."
+      },
+      {
+        "t": "Collection consistency",
+        "d": "Use one room and lighting language for several new arrivals."
+      },
+      {
+        "t": "A commercial listing asset",
+        "d": "Use the downloaded photo on a product page, launch email, or social post after checking the garment."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Try-On Directions for a Small Collection",
+    "items": [
+      {
+        "t": "Lightweight jacket",
+        "d": "Blue zip jacket over a white tee with hands in pockets, standing beside a fitting-room mirror in soft daylight."
+      },
+      {
+        "t": "Slip dress",
+        "d": "A neutral slip dress on a model near a pale window, with relaxed stance and the full hem visible."
+      },
+      {
+        "t": "Wide-leg trousers",
+        "d": "Trousers styled with a tucked knit top and simple shoes on a clean city sidewalk, cropped from head to toe."
+      },
+      {
+        "t": "Knit cardigan",
+        "d": "Cardigan worn open over a tank in a warm living room, with the sleeve cuff and button placket clear."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Review the Garment Before It Goes Live",
+    "items": [
+      {
+        "t": "Compare construction",
+        "d": "Check pockets, buttons, zipper direction, collar shape, seams, and hem against the real piece."
+      },
+      {
+        "t": "Keep size facts in text",
+        "d": "Add the approved measurements, model notes, and size chart in your store editor."
+      },
+      {
+        "t": "Choose a useful crop",
+        "d": "Use a full-body frame when hem and proportion matter; use a closer crop when fabric or neckline is the point."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Good Garments for Try-On",
+    "good": [
+      "Jackets, overshirts, cardigans, dresses, and tops",
+      "New arrivals that need a styled scene quickly",
+      "Collections that can share one model direction and room",
+      "Listings that also provide real size and measurement information"
+    ],
+    "not_ideal": [
+      "Garments whose construction is hidden in the source",
+      "Products requiring an exact fit or drape guarantee",
+      "Very complex prints where every small motif must align perfectly"
+    ]
+  }
 }

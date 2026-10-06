@@ -75,5 +75,104 @@
       "q": "Should I make a vertical or square home-product video?",
       "a": "Use 9:16 for Stories, Reels, and TikTok, 1:1 for feed placements, or 16:9 for a wide product page. Keep the organizer’s real dimensions in your listing."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Make the reset prove the organizer's job",
+      "d": "A before-and-after clip earns its place when the same space appears twice: a recognizable mess first, then a tidy arrangement that uses the product. Keep the camera path simple so the change reads as an organization result rather than a room makeover."
+    },
+    {
+      "h2": "Show the space before you show the claim",
+      "d": "Use the visual reset to explain where the tray, bin, divider, rack, or box belongs. Add capacities, dimensions, and price as checked text after download, once you have confirmed the real product details."
+    }
+  ],
+  "input_guide": {
+    "h2": "Photograph an organizer that can be placed",
+    "items": [
+      {
+        "t": "Show the empty interior",
+        "d": "For trays, bins, and drawer inserts, include the inside walls so the scene can place items within the product."
+      },
+      {
+        "t": "Keep the product separate",
+        "d": "An organizer on its own gives a clearer reference than a photo where it is already buried in clutter."
+      },
+      {
+        "t": "Name the destination",
+        "d": "Specify a kitchen drawer, pantry shelf, closet, entryway, bathroom cabinet, or desk rather than a generic room."
+      },
+      {
+        "t": "Describe the before mess",
+        "d": "List the actual objects that create the problem, such as loose chargers, pans, shoes, or hair tools."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the reset can deliver",
+    "items": [
+      {
+        "t": "A visible problem and solution",
+        "d": "The scene moves from clutter to an organized arrangement that puts the product at the center of the change."
+      },
+      {
+        "t": "A format for the channel",
+        "d": "Use 9:16 for TikTok or Reels, 1:1 for a square feed, 16:9 for a product page, or 4:3 and 3:4 when those crops fit."
+      },
+      {
+        "t": "Clear length pricing",
+        "d": "A six-, ten-, fifteen-, or thirty-second reset costs 24, 40, 60, or 120 credits; the amount appears before you start."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Organization resets to describe",
+    "items": [
+      {
+        "t": "Kitchen drawer",
+        "d": "Mixed utensils slide into a dark divider tray, ending with forks, spoons, and spatulas in separate rows."
+      },
+      {
+        "t": "Pantry shelf",
+        "d": "Half-open packets move into clear bins on one shelf, leaving a visible space for the next grocery run."
+      },
+      {
+        "t": "Entryway drop zone",
+        "d": "Loose keys and mail collect in a wall organizer beside hooks, then the floor stays clear."
+      },
+      {
+        "t": "Home-office cables",
+        "d": "Chargers disappear into a cable box beneath a desk while the laptop and notebook remain in place."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the before-and-after story",
+    "items": [
+      {
+        "t": "Add before and after labels",
+        "d": "Place the labels where they do not cover the product or the change in the room."
+      },
+      {
+        "t": "Type fit information",
+        "d": "Add dimensions, capacity, compatible drawer size, or price from your verified listing."
+      },
+      {
+        "t": "Set the sound",
+        "d": "Choose a light track or sound effect that gives the reset a satisfying final beat."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A good fit for this reset",
+    "good": [
+      "Drawer dividers, bins, racks, and trays",
+      "Pantry, closet, entryway, and desk products",
+      "One clear clutter problem",
+      "Scenes where the after state is visible"
+    ],
+    "not_ideal": [
+      "Products whose value depends on an exact unverified measurement",
+      "A full-room redesign that needs many simultaneous changes"
+    ]
+  }
 }

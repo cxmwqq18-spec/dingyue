@@ -71,12 +71,111 @@
       "a": "You can make separate runs for separate features. Keeping one detail per clip makes the action easier to understand."
     },
     {
-      "q": "Does the clip include a voiceover or music?",
-      "a": "No. AIVideosUGC does not add voiceover, music, or captions. Add any spoken or written explanation yourself in your editor."
+      "q": "Does the clip include a spoken narration or music?",
+      "a": "No. AIVideosUGC does not add spoken narration, music, or captions. Add any spoken or written explanation yourself in your editor."
     },
     {
       "q": "How should I describe a product feature?",
       "a": "Name one visible feature and one action, such as “presses the locking tab.” Add the exact feature label after download; generated text can contain errors."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Make one feature easy to notice",
+      "d": "A callout clip should have one subject and one visible action: a pump pressed, a clasp closed, a hinge opened, or a texture spread. Start with the detail a shopper needs to inspect, then keep the scene close enough to follow."
+    },
+    {
+      "h2": "Let the overlay carry verified wording",
+      "d": "The generated motion can show what happens, but ingredients, measurements, compatibility, and performance statements belong in copy you have checked. This keeps the demonstration useful without turning it into an unsupported claim."
+    }
+  ],
+  "input_guide": {
+    "h2": "Photograph the feature before you describe it",
+    "items": [
+      {
+        "t": "Frame the moving part",
+        "d": "Keep the pump head, clasp, zipper, button, hinge, or port large enough to remain visible through the action."
+      },
+      {
+        "t": "Show the surrounding shape",
+        "d": "Include enough of the full product that the viewer can tell where the feature belongs."
+      },
+      {
+        "t": "Use a useful angle",
+        "d": "A side view suits a hinge or zipper; a top view can suit a pump or lid; choose the angle that shows movement."
+      },
+      {
+        "t": "Name one result",
+        "d": "Describe opens, closes, dispenses, pours, or connects rather than listing several benefits in one request."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the callout can show",
+    "items": [
+      {
+        "t": "A readable mechanism",
+        "d": "The short scene puts one physical detail at the center so shoppers can see how it moves."
+      },
+      {
+        "t": "A channel-ready frame",
+        "d": "Use 9:16 for social, 1:1 for a feed, 16:9 for a product page, or 4:3 and 3:4 for another crop."
+      },
+      {
+        "t": "A measured test cost",
+        "d": "Six, ten, fifteen, and thirty seconds use 24, 40, 60, and 120 credits; the cost is visible before creation."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Feature callouts to describe",
+    "items": [
+      {
+        "t": "Pump and foam",
+        "d": "A hand presses a cleanser pump once, foam gathers on fingertips, and the bottle remains upright beside the sink."
+      },
+      {
+        "t": "Wallet clasp",
+        "d": "A leather wallet opens on a desk, the clasp closes with one motion, and the camera returns to the full shape."
+      },
+      {
+        "t": "Kettle lid",
+        "d": "A hand lifts the lid, steam leaves the spout, and the kettle settles back on its base."
+      },
+      {
+        "t": "Charging port",
+        "d": "A cable connects to a small device on a desk, with the port and plug visible in one close movement."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Write the checked feature layer",
+    "items": [
+      {
+        "t": "Name the feature",
+        "d": "Add the exact feature title and model wording from your product information."
+      },
+      {
+        "t": "Add measurements or ingredients",
+        "d": "Type capacity, dimensions, ingredients, or compatibility only after checking the source listing."
+      },
+      {
+        "t": "Choose sound",
+        "d": "Add music, a short sound effect, or spoken narration in the editor that will publish the clip."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "When a feature callout fits",
+    "good": [
+      "Pumps, caps, hinges, clasps, and ports",
+      "Visible textures and simple pours",
+      "One product detail on a product page",
+      "Short social demonstrations without a presenter"
+    ],
+    "not_ideal": [
+      "Performance or medical claims that need testing",
+      "Features hidden inside software or unreadable small print"
+    ]
+  }
 }

@@ -52,5 +52,129 @@
       "q": "How do I make a TikTok video of my clothes being worn?",
       "a": "Choose 9:16 and a length of 6, 10, 15, or 30 seconds, then describe the movement, like a slow turn or a walk toward the camera. Videos are made one at a time, so run another if you want the same outfit in a different setting."
     }
-  ]
+  ],
+  "overview": {
+    "h2": "Show the cut, then show the life around it",
+    "items": [
+      {
+        "t": "Give the garment a dependable starting point",
+        "d": "Photograph the whole piece laid flat or hanging, then add a close view of any print, embroidery, hardware, or unusual hem. A clean source helps the result keep the details that make the item yours."
+      },
+      {
+        "t": "Use context without inventing fit",
+        "d": "An on-body image can show styling, length, and the mood of a collection. Keep your size chart, garment measurements, and fabric notes beside it; a generated model cannot replace those references."
+      }
+    ]
+  },
+  "input_guide": {
+    "h2": "Prepare a clothing upload",
+    "items": [
+      {
+        "t": "Include the full outline",
+        "d": "Lay a dress, shirt, trouser, or coat flat with sleeves and hems visible, or hang it against a plain wall. Do not crop off straps, cuffs, or pockets."
+      },
+      {
+        "t": "Capture the reverse",
+        "d": "Use a second photo for the back when the back panel, hood, split, or pocket changes the silhouette. The model cannot show an unseen construction detail reliably."
+      },
+      {
+        "t": "Show the material",
+        "d": "Add a close crop for knit, denim, embroidery, sequins, or a fine print. Soft, even light helps the texture stay legible without hard shadows."
+      },
+      {
+        "t": "Keep the styling decision clear",
+        "d": "Decide whether the garment should be tucked, belted, layered, or loose before you write the scene. Describe one complete outfit instead of several competing looks."
+      },
+      {
+        "t": "Keep measurements separate",
+        "d": "Store chest, waist, rise, inseam, length, and size-chart information in your listing. Use the generated image to show styling, not to promise a particular fit."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Fashion scenes you can describe",
+    "items": [
+      {
+        "t": "Studio silhouette",
+        "d": "A full-length model in a bright studio wearing the black linen dress, standing still with the hem and sleeves fully visible against a pale wall."
+      },
+      {
+        "t": "Street-layered look",
+        "d": "A cropped denim jacket over a white tee, walking past a brick storefront with the jacket open so the collar, pockets, and back yoke show."
+      },
+      {
+        "t": "Desk-to-evening styling",
+        "d": "A tailored blazer over a knit top at a café table, then a close crop of the cuff and button beside a notebook."
+      },
+      {
+        "t": "Colorway lineup",
+        "d": "Three hoodies in charcoal, oat, and forest green folded on the same bench, one person lifting the forest green version to show the front graphic."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What a clothing set can include",
+    "items": [
+      {
+        "t": "Listing-ready stills",
+        "d": "Use an on-body frame beside your flat lay and detail photo so shoppers connect silhouette with construction."
+      },
+      {
+        "t": "Collection context",
+        "d": "A consistent lookbook scene lets pieces share light, crop, and styling language."
+      },
+      {
+        "t": "Short movement",
+        "d": "Choose 9:16 for an outfit reel, 1:1 for a feed, or 16:9, 4:3, or 3:4 for a wider or taller placement; clip lengths are 6, 10, 15, or 30 seconds."
+      },
+      {
+        "t": "Visible pricing",
+        "d": "The preview displays the credit price: photos are 24 credits, while six-, ten-, fifteen-, and thirty-second videos are 24, 40, 60, and 120 credits."
+      },
+      {
+        "t": "A clean commercial file",
+        "d": "Download without a watermark for an ad, product page, or social post, then add your own discount, date, captions, and music."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Complete the outfit asset",
+    "items": [
+      {
+        "t": "Check construction",
+        "d": "Compare cuffs, buttons, pockets, print placement, and the number of garments with your sample before publishing."
+      },
+      {
+        "t": "Add the facts",
+        "d": "Place measurements, fabric composition, size availability, sale price, and end date in your store or ad editor."
+      },
+      {
+        "t": "Add the reel layer",
+        "d": "AIVideosUGC does not supply spoken narration, music, or subtitles. Add captions or a licensed track after download, and keep the product facts readable."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "When this approach fits a fashion range",
+    "good": [
+      {
+        "t": "Visible silhouettes",
+        "d": "Dresses, tops, trousers, outerwear, knitwear, and accessories photographed in full."
+      },
+      {
+        "t": "Style-led collections",
+        "d": "Pieces that benefit from a location, layered outfit, or consistent lookbook treatment."
+      },
+      {
+        "t": "Repeatable colorways",
+        "d": "Multiple versions that can share one composition while retaining their own product photos."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "Exact fit evidence",
+        "d": "Use real measurements and sample photography for stretch, compression, or a precise size promise."
+      }
+    ]
+  }
 }

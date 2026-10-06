@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { V2Article, V2Card, V2Crumb, V2Faq, V2HeroMedia, V2Image, V2Item, V2Maker, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video } from "./types";
+import type { V2Article, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2Item, V2Maker, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry } from "./types";
 import type { V2Company } from "./company";
 
 // Each candidate in a stored srcset goes through the same asset resolver as the main file.
@@ -70,6 +70,35 @@ export function Section({ eyebrow, title, lead, children, id }: { eyebrow: strin
 export function Intro({ paras, r }: { paras: string[]; r?: V2Resolvers }) {
   if (!paras.length) return null;
   return <div className="intro">{paras.map((para, index) => <p key={index}>{r ? <RichText r={r} text={para} /> : para}</p>)}</div>;
+}
+
+export function EnrichmentOverview({ sections, r }: { sections: V2EnrichmentSection[]; r: V2Resolvers }) {
+  return <>{(sections ?? []).map((section) => <Section eyebrow="More to know" key={section.h2} title={section.h2}><Intro paras={section.paras} r={r} /></Section>)}</>;
+}
+
+export function EnrichmentBlockSection({ block, eyebrow, className = "ideas", r }: { block?: V2EnrichmentBlock; eyebrow: string; className?: string; r: V2Resolvers }) {
+  if (!block?.items?.length) return null;
+  return <Section eyebrow={eyebrow} title={block.h2}><Boxes className={className} items={block.items} r={r} /></Section>;
+}
+
+export function FitSection({ block, r }: { block?: V2FitBlock; r: V2Resolvers }) {
+  if (!block) return null;
+  return <Section eyebrow="Good fit" title={block.h2}>
+    <div className="two-col enrichment-fit">
+      <div><h3>Good matches</h3><ul className="prose check">{block.good.map((item) => <li key={item}>{item}</li>)}</ul></div>
+      <div><h3>Less ideal</h3><ul className="prose check">{block.not_ideal.map((item) => <li key={item}>{item}</li>)}</ul></div>
+    </div>
+  </Section>;
+}
+
+export function GlossaryEntries({ entries, r }: { entries: V2GlossaryEntry[]; r: V2Resolvers }) {
+  if (!entries.length) return null;
+  return <dl className="glossary-list">
+    {entries.map((entry) => <div className="glossary-entry" id={entry.term.toLowerCase().replace(/[^a-z0-9]+/g, "-")} key={entry.term}>
+      <dt>{entry.term}</dt>
+      <dd><p>{entry.definition}</p>{entry.related.length ? <p className="glossary-related">Related: {entry.related.map((link, index) => <span key={link.href}>{index > 0 ? ", " : null}<a href={r.href(link.href)}>{link.label}</a></span>)}</p> : null}</dd>
+    </div>)}
+  </dl>;
 }
 
 export function Boxes({ items, className = "ben", r }: { items: V2Item[]; className?: string; r?: V2Resolvers }) {

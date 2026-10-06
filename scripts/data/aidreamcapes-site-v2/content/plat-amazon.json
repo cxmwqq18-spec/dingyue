@@ -70,5 +70,104 @@
       "q": "What are Amazon main-image requirements?",
       "a": "Amazon requires a realistic product on pure white, with the item filling at least 85% of the frame. The image must be 500–10,000 pixels on the longest side; 1,000+ enables zoom."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Treat the main image as a proof of the item",
+      "d": "Amazon shoppers meet the product first in the main image. Start with a photo that shows the complete item, then use a pure white background and a centered composition with no extra words, badges, or props. Amazon's current guide says the product should fill at least 85% of the frame, the longest side should be 500–10,000 pixels, and 1,000 or more pixels enables zoom. Compare the downloaded result with the live requirement for your category before uploading."
+    },
+    {
+      "h2": "Use the gallery to answer the next questions",
+      "d": "Secondary images can show a close-up, a scale comparison, the parts in the box, and the product in a room. Build each view from a source photo that actually shows the relevant side or component. AIVideosUGC currently returns square stills by default and can make 6, 10, 15, or 30 second clips in 9:16, 1:1, 16:9, 4:3, or 3:4 when your listing supports video; the cost appears before each job."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare a source for a trustworthy listing",
+    "items": [
+      {
+        "t": "Photograph the whole item",
+        "d": "Keep every part that ships with the product inside the frame. Do not expect a hidden side, cable, or accessory to appear accurately later."
+      },
+      {
+        "t": "Use a straight product view",
+        "d": "For the main-image starting point, face the product toward the camera and keep the lens level so its proportions are easier to compare."
+      },
+      {
+        "t": "Capture separate details",
+        "d": "Take additional photos of the sole, clasp, ports, texture, or inside compartment when a shopper needs that information."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A gallery with a job for every frame",
+    "items": [
+      {
+        "t": "Main image",
+        "d": "A pure-white product view that follows the current Amazon category rules and leaves out promotional text."
+      },
+      {
+        "t": "Detail frame",
+        "d": "A close view of the material, mechanism, finish, or label that cannot be judged from the first shot."
+      },
+      {
+        "t": "Scale frame",
+        "d": "A scene with a familiar object or a clearly stated real dimension added by you, so shoppers are not asked to guess."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Gallery scenes that answer shopper questions",
+    "items": [
+      {
+        "t": "Kitchen scale",
+        "d": "Place a cutting board beside a mixing bowl on a kitchen counter, with a familiar mug nearby for context and no invented measurements."
+      },
+      {
+        "t": "Open the storage",
+        "d": "Show a backpack standing upright with its main compartment open and the zipper, lining, and pockets visible."
+      },
+      {
+        "t": "Show the hardware",
+        "d": "Lay a watch or bag on a plain surface with the clasp, buckle, or stitching close enough to inspect."
+      },
+      {
+        "t": "Room placement",
+        "d": "Put a bath mat in front of a real-looking tub or a lamp on a side table, keeping the product's edges clear."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Review every file before Seller Central",
+    "items": [
+      {
+        "t": "Compare the real item",
+        "d": "Check shape, color, parts, finish, and label against the physical product before you upload the asset."
+      },
+      {
+        "t": "Measure the frame",
+        "d": "Verify the pure-white background, product coverage, and pixel dimensions against Amazon's current category guidance."
+      },
+      {
+        "t": "Add accurate callouts",
+        "d": "Type dimensions, material names, prices, and feature labels yourself on secondary images, where the wording can be checked."
+      },
+      {
+        "t": "Keep the main slot plain",
+        "d": "Remove props, added text, badges, and watermarks from the main image when the current rules require a clean product view."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Useful for an Amazon image set",
+    "good": [
+      "Physical products with a clear, complete source photo",
+      "Listings that need a white main image plus detail and lifestyle frames",
+      "Sellers willing to verify the current category rules before upload",
+      "Products whose dimensions and claims can be added accurately after download"
+    ],
+    "not_ideal": [
+      "Items whose critical features are absent from every source photo",
+      "Claims that depend on an AI-generated label or measurement being exact"
+    ]
+  }
 }

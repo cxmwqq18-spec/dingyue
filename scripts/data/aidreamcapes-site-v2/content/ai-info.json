@@ -56,7 +56,7 @@
     ]
   ],
   "not_offered": [
-    "Voiceover, lip sync or translation",
+    "spoken narration, lip sync or translation",
     "Music or caption generation",
     "A library of saved presenters",
     "Automatic publishing to ad platforms",
@@ -75,12 +75,12 @@
       "a": "Monthly plans start at $24.50 with 200 credits. The credit cost of each video or photo is shown before it is made."
     },
     {
-      "q": "Does AIVideosUGC add voiceover or music?",
+      "q": "Does AIVideosUGC add spoken narration or music?",
       "a": "No. Add sound, music and captions in TikTok, CapCut or another editing app after you download the video."
     },
     {
       "q": "What video settings can I choose?",
-      "a": "Choose 6, 10, 15, or 30 seconds and 9:16, 1:1, or 16:9. The workbench currently offers 6, 10, and 15 seconds; 30 seconds is the planned public option."
+      "a": "Choose 6, 10, 15, or 30 seconds and 9:16, 1:1, or 16:9. The workspace currently offers 6, 10, and 15 seconds; 30 seconds is the planned public option."
     }
   ]
 }

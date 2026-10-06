@@ -52,5 +52,129 @@
       "q": "Does this work for bags, watches, and sunglasses?",
       "a": "Yes. Show the hardware up close, then show the item carried or worn so its size is obvious. A tote on a shoulder or sunglasses pushed up on someone's head does that in one frame."
     }
-  ]
+  ],
+  "overview": {
+    "h2": "Make detail and scale easy to judge",
+    "items": [
+      {
+        "t": "Give small pieces room to read",
+        "d": "Use a sharp macro source for prongs, links, clasps, hallmarks, and stone settings. Then create a worn or tabletop view that shows where the piece sits in relation to a person or familiar object."
+      },
+      {
+        "t": "Keep visual context honest",
+        "d": "A model image can show a necklace on a collarbone or a bag across a shoulder. It cannot replace millimeter measurements, metal specifications, or a real view of an engraving."
+      }
+    ]
+  },
+  "input_guide": {
+    "h2": "Prepare jewelry and accessory photos",
+    "items": [
+      {
+        "t": "Use diffused light",
+        "d": "Set the piece near a window or soft light source and avoid direct flash. Rotate polished metal until reflections do not cover the setting or clasp."
+      },
+      {
+        "t": "Make a macro source",
+        "d": "Fill the frame with the ring, stone, chain link, watch face, or bag hardware you want to show. Dust and fingerprints become obvious when a small piece is enlarged."
+      },
+      {
+        "t": "Show the underside",
+        "d": "Photograph the clasp, back of an earring, ring band, or bag base separately when those parts affect a purchase decision."
+      },
+      {
+        "t": "Add a scale reference",
+        "d": "Place a coin, card, or hand beside the piece for a visual cue, while keeping the exact length, diameter, and weight in your product information."
+      },
+      {
+        "t": "Keep the finish true",
+        "d": "State polished, brushed, hammered, matte, or woven when it matters. Use a real color reference and compare the generated result before publishing."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Jewelry and accessory scenes you can describe",
+    "items": [
+      {
+        "t": "Neckline crop",
+        "d": "A silver pendant resting on a black crew-neck top, cropped at the collarbone with the chain and pendant centered in warm window light."
+      },
+      {
+        "t": "Earring detail",
+        "d": "Gold hoops on an ear with hair tucked behind it, close enough to show the hinge and polished edge, with a quiet neutral background."
+      },
+      {
+        "t": "Ring beside a coin",
+        "d": "A gold ring beside a common coin on matte ivory card, camera overhead, prongs and band visible without decorative lettering."
+      },
+      {
+        "t": "Watch at a café",
+        "d": "A watch on a wrist resting beside a coffee cup, cropped at the forearm so the face, strap grain, and buckle are easy to inspect."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the accessory set can show",
+    "items": [
+      {
+        "t": "Craftsmanship close-ups",
+        "d": "Use macro stills for settings, links, hallmarks, stitching, and clasps, keeping a real detail photo in the product gallery."
+      },
+      {
+        "t": "Worn context",
+        "d": "Place the piece on a hand, ear, neckline, wrist, or shoulder so the buyer can judge position and styling."
+      },
+      {
+        "t": "A measured choice",
+        "d": "A 24-credit photo can carry a scale cue; add exact dimensions yourself rather than asking generated imagery to print them."
+      },
+      {
+        "t": "Motion where it helps",
+        "d": "A 6-, 10-, 15-, or 30-second clip in 9:16, 1:1, 16:9, 4:3, or 3:4 can catch a stone turning or a clasp opening without needing a spoken presenter."
+      },
+      {
+        "t": "A publishable download",
+        "d": "Commercial files arrive without a watermark. Add engraving, price, care instructions, dates, and music or captions after download."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the jewelry asset",
+    "items": [
+      {
+        "t": "Compare the real piece",
+        "d": "Check stone count, prong shape, chain thickness, clasp, metal color, and hardware against the sample."
+      },
+      {
+        "t": "Add the exact facts",
+        "d": "Overlay measurements, materials, plating, care, price, and any engraving in your approved design file."
+      },
+      {
+        "t": "Add the publishing layer",
+        "d": "AIVideosUGC does not include spoken narration, music, or subtitles. Add the sound and text treatment that fits your channel."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A good fit for detail-led products",
+    "good": [
+      {
+        "t": "Small crafted pieces",
+        "d": "Rings, earrings, pendants, watches, bags, belts, sunglasses, and other products with visible finish."
+      },
+      {
+        "t": "Worn merchandising",
+        "d": "Items whose scale and position become clearer on a hand, ear, neck, wrist, or shoulder."
+      },
+      {
+        "t": "Hardware stories",
+        "d": "Pieces where a clasp, strap, hinge, chain, or closure deserves its own frame."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "Tiny text evidence",
+        "d": "Keep a real macro photo for serial numbers, hallmarks, engraving, or fine compliance text."
+      }
+    ]
+  }
 }

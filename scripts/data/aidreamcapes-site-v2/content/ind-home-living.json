@@ -52,5 +52,129 @@
       "q": "Can I start from a photo on a white background?",
       "a": "Yes, a white background or cutout photo is a good starting point. Keep the whole product in frame, including legs, handles, and cords, since the AI won't add parts it can't see."
     }
-  ]
+  ],
+  "overview": {
+    "h2": "Show where the product belongs",
+    "items": [
+      {
+        "t": "Let the room answer scale",
+        "d": "A planter beside a windowsill, a side table beside a chair, or a rack in a hallway gives shoppers a reference they already understand. Keep the real dimensions visible in your listing as the authoritative source."
+      },
+      {
+        "t": "Make one setup step clear",
+        "d": "Open the cabinet, attach the bracket, place the bin, or pull the shade. A focused action can explain use while staying honest about what the product actually does and holds."
+      }
+    ]
+  },
+  "input_guide": {
+    "h2": "Prepare a home product photo",
+    "items": [
+      {
+        "t": "Keep the whole item in frame",
+        "d": "Include legs, handles, cords, lids, brackets, and edges. A cut-off product gives the scene too much room to guess."
+      },
+      {
+        "t": "Photograph working parts",
+        "d": "Add separate views of a drawer, hinge, fold, plug, mounting hole, or closure when a setup scene needs to reveal it."
+      },
+      {
+        "t": "State the dimensions",
+        "d": "Write the width, height, depth, and capacity in your product information. Use nearby furniture or a doorway as a visual cue, not as a measurement."
+      },
+      {
+        "t": "Choose one room",
+        "d": "Name a narrow entryway, rental kitchen, nursery, dorm, patio, or living room and describe where the item sits. One clear space keeps the composition believable."
+      },
+      {
+        "t": "Plan the before state",
+        "d": "For an organizer or storage item, describe clutter that your actual product can handle and keep the after state within its real capacity."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Home scenes you can describe",
+    "items": [
+      {
+        "t": "Entryway scale",
+        "d": "A narrow console table beside a front door with a small planter and bowl on top, camera wide enough to show the walkway around it."
+      },
+      {
+        "t": "Pantry reset",
+        "d": "An overfilled pantry shelf opening on clutter, then matching clear bins lined up with labels added later in the editor."
+      },
+      {
+        "t": "Reading corner",
+        "d": "A round side table beside a reading chair and floor lamp, a book and mug giving the table a familiar scale."
+      },
+      {
+        "t": "One installation step",
+        "d": "A shelf bracket aligned against a wall with a drill and level nearby, close crop on the bracket while leaving exact instructions for the caption."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What a home set can deliver",
+    "items": [
+      {
+        "t": "Room context",
+        "d": "Square or landscape stills let a shopper see the product beside furniture, shelves, walls, and everyday objects."
+      },
+      {
+        "t": "Before-and-after structure",
+        "d": "A clear opening state and a believable finished state can explain organizers without promising more capacity than the product has."
+      },
+      {
+        "t": "Flexible crops",
+        "d": "Choose 9:16, 1:1, or 16:9 for primary placements, with 4:3 and 3:4 available when a room needs a different frame; clips run 6, 10, 15, or 30 seconds."
+      },
+      {
+        "t": "Credit clarity",
+        "d": "A 24-credit still or a 24-, 40-, 60-, or 120-credit clip for 6, 10, 15, or 30 seconds lets you choose the scope before you run it."
+      },
+      {
+        "t": "A file ready to finish",
+        "d": "Use the watermark-free download in an ad, product page, or social post, then add dimensions, price, installation notes, dates, captions, or music yourself."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Finish the home asset",
+    "items": [
+      {
+        "t": "Check the room",
+        "d": "Compare product color, hardware, cord routing, legs, handles, and the number of included pieces with the real item."
+      },
+      {
+        "t": "Add exact specifications",
+        "d": "Overlay dimensions, weight limit, capacity, material, price, delivery date, and installation steps in your approved layout."
+      },
+      {
+        "t": "Add the instructional layer",
+        "d": "AIVideosUGC does not add spoken narration, music, or subtitles. Add captions or a track after checking that each step remains readable."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A good fit for home and living products",
+    "good": [
+      {
+        "t": "Room-scale goods",
+        "d": "Planters, lamps, tables, rugs, baskets, organizers, textiles, and decor with visible form."
+      },
+      {
+        "t": "Placement-led selling",
+        "d": "Products that become easier to judge beside a chair, shelf, countertop, doorway, or bed."
+      },
+      {
+        "t": "Simple setup stories",
+        "d": "Items whose use can be shown in one placement, opening, fitting, or organizing step."
+      }
+    ],
+    "not_ideal": [
+      {
+        "t": "Exact installation proof",
+        "d": "Keep real manuals, hole spacing, and safety details for products where a mistake matters."
+      }
+    ]
+  }
 }

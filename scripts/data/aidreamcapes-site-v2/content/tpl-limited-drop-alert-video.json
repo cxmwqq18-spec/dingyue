@@ -72,11 +72,110 @@
     },
     {
       "q": "Does AIVideosUGC add music or captions?",
-      "a": "No. The clip is delivered without voiceover, music, or captions. Add a track and the exact drop copy in TikTok, CapCut, or your ad platform."
+      "a": "No. The clip is delivered without spoken narration, music, or captions. Add a track and the exact drop copy in TikTok, CapCut, or your ad platform."
     },
     {
       "q": "What video length fits a limited drop alert?",
       "a": "Use 6 seconds for one product-and-date beat or 10–15 seconds for a reveal plus call to action. Add the exact stock count and drop date after download."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Give a small release one clear reveal",
+      "d": "A drop alert is strongest when the product moves once in a way that identifies the release: a sole turn, a color reveal, a zip, or a package opening. Let that movement carry the excitement while your verified availability details stay editable."
+    },
+    {
+      "h2": "Use the asset for several release moments",
+      "d": "Make one visual for coming soon, another for release day, or a third for a confirmed restock. Keep the scene consistent and change only the date, stock note, and link you add after download."
+    }
+  ],
+  "input_guide": {
+    "h2": "Photograph footwear or apparel for a drop",
+    "items": [
+      {
+        "t": "Show the product edge to edge",
+        "d": "A full shoe, jacket, or accessory gives the scene a reliable silhouette during the reveal."
+      },
+      {
+        "t": "Include the defining side",
+        "d": "For footwear, show the side profile and sole; for apparel, keep the front closure, hem, or colorway visible."
+      },
+      {
+        "t": "Avoid temporary labels",
+        "d": "Use a clean product image without a date or stock sticker so the release copy stays current."
+      },
+      {
+        "t": "Reserve an alert area",
+        "d": "Ask for open sky, wall, or floor beside the product for the date, quantity, and call to action."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the drop alert gives you",
+    "items": [
+      {
+        "t": "A recognizable reveal",
+        "d": "The product turns, opens, or enters a setting in a way that makes the new colorway or release visible."
+      },
+      {
+        "t": "Five ratio choices",
+        "d": "Use 9:16 for TikTok or Reels, 1:1 for a square feed, 16:9 for a product page, or 4:3 and 3:4 when needed."
+      },
+      {
+        "t": "A clear credit choice",
+        "d": "A six-, ten-, fifteen-, or thirty-second clip costs 24, 40, 60, or 120 credits; the amount appears before you create it."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Drop scenes to describe",
+    "items": [
+      {
+        "t": "Sole reveal",
+        "d": "A trail sneaker is tied on a stone bench, turns to show its tread, and ends on an open mountain path."
+      },
+      {
+        "t": "Colorway rack",
+        "d": "One jacket slides along a clothing rail, pauses on the new color, and faces the camera in soft studio light."
+      },
+      {
+        "t": "Restock pack",
+        "d": "A pair of shoes enters a shipping box beside tissue paper, leaving a clean corner for the restock message."
+      },
+      {
+        "t": "Subscriber preview",
+        "d": "A close fabric detail moves into a full product view on a neutral backdrop for an early-access teaser."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Set the release details yourself",
+    "items": [
+      {
+        "t": "Type date and quantity",
+        "d": "Add the confirmed launch time, inventory note, and timezone in a layer you can revise."
+      },
+      {
+        "t": "Add the product link",
+        "d": "Use the live product page or sign-up link that belongs to this release."
+      },
+      {
+        "t": "Choose alert sound",
+        "d": "Place licensed music or a short notification effect under the final reveal."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A good fit for a drop alert",
+    "good": [
+      "Limited sneakers, apparel, and accessories",
+      "New colorways and confirmed restocks",
+      "Subscriber previews and launch-day posts",
+      "Products with a visible side or detail"
+    ],
+    "not_ideal": [
+      "Automatically changing inventory notices",
+      "A release whose key information is only tiny printed text"
+    ]
+  }
 }

@@ -78,5 +78,104 @@
       "q": "Is the carousel output one file or a platform post?",
       "a": "It is a creative asset, not a published carousel post. Download the scenes, then assemble and upload the final carousel in the platform’s ad manager."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Plan a sequence that earns each beat",
+      "d": "A carousel-style clip works when every moment answers the next shopper question: what is it, what is inside, how is it used, and what should I notice? Keep the same product description in each beat so the object does not change between scenes."
+    },
+    {
+      "h2": "Use the frame to separate the story from the facts",
+      "d": "Let the visual progression carry the narrative, then add price, dimensions, materials, and a call to action in your editor. The sequence can stay useful when those details change."
+    }
+  ],
+  "input_guide": {
+    "h2": "Give a multi-beat story one stable anchor",
+    "items": [
+      {
+        "t": "Choose one hero photo",
+        "d": "Use a product view that shows the main silhouette and the detail each later beat will revisit."
+      },
+      {
+        "t": "Write three or four beats",
+        "d": "Open, reveal, use, and finish is enough for a short sequence; extra beats can blur the story."
+      },
+      {
+        "t": "Repeat the product description",
+        "d": "Name the same color, material, and shape in every scene so transitions have a consistent reference."
+      },
+      {
+        "t": "Reserve panel space",
+        "d": "Describe a clear wall, tabletop, or background area for headline and price layers added later."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the sequence can deliver",
+    "items": [
+      {
+        "t": "A beginning, middle, and close",
+        "d": "The clip can move from product introduction through one useful detail to a finished use scene."
+      },
+      {
+        "t": "Two practical layouts",
+        "d": "Choose 1:1 for a square feed or 9:16 for a vertical placement; 16:9, 4:3, and 3:4 are also available when the destination calls for them."
+      },
+      {
+        "t": "Four transparent durations",
+        "d": "Six, ten, fifteen, and thirty seconds use 24, 40, 60, and 120 credits; you see the charge before you run a version."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Carousel stories to describe",
+    "items": [
+      {
+        "t": "Bag from open to commute",
+        "d": "A backpack opens on a cafe table, reveals a laptop sleeve, then appears on a shoulder beside a train platform."
+      },
+      {
+        "t": "Watch from box to wrist",
+        "d": "A watch box opens, the dial catches light, and the watch ends on a wrist near a window."
+      },
+      {
+        "t": "Diffuser in a room",
+        "d": "A glass diffuser starts on a shelf, receives reeds, and finishes beside a chair in soft evening light."
+      },
+      {
+        "t": "Bundle laid out",
+        "d": "A kit begins closed, opens to reveal the pieces, and ends arranged beside the product it supports."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Turn each beat into a shoppable panel",
+    "items": [
+      {
+        "t": "Add one headline per scene",
+        "d": "Use short, checked copy that matches the action rather than repeating a general benefit."
+      },
+      {
+        "t": "Place prices and dimensions",
+        "d": "Add the current figures and product URL after reviewing the rendered sequence."
+      },
+      {
+        "t": "Choose sound and final call",
+        "d": "Add licensed music, captions, and the action you want the viewer to take in the publishing editor."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "A good fit for a carousel story",
+    "good": [
+      "Bags, kits, and products with several visible parts",
+      "A product that moves from package to use",
+      "Square feed and vertical story placements",
+      "Stories where each beat has a separate job"
+    ],
+    "not_ideal": [
+      "Many unrelated products in one sequence",
+      "Panels that depend on tiny generated lettering"
+    ]
+  }
 }

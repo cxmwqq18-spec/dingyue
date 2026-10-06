@@ -79,5 +79,104 @@
       "q": "When should I add Black Friday prices?",
       "a": "Add the exact price, discount, and countdown after download in Canva, CapCut, or Ads Manager. This keeps every number editable and correct as the offer changes."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Make the product the fixed point of the sale",
+      "d": "A Black Friday scene can be vivid without carrying every promotion detail. Choose one product, one visual hook, and one area for your offer; then reuse the visual while the confirmed price, date, or code is finalized."
+    },
+    {
+      "h2": "Separate urgency from unsupported promises",
+      "d": "Use your real stock note, end date, and offer language in the final edit. The generated clip supplies a moving backdrop for the sale rather than inventing inventory, countdowns, or savings."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare a sale product with overlay room",
+    "items": [
+      {
+        "t": "Show the whole item",
+        "d": "A complete product silhouette gives the sale scene a reliable hero even when the background becomes dramatic."
+      },
+      {
+        "t": "Leave one side open",
+        "d": "Choose an angle with sky, wall, floor, or desk space where a discount badge will remain readable."
+      },
+      {
+        "t": "Keep the offer out of the photo",
+        "d": "Use a clean image without temporary price stickers so the final promotion can be changed safely."
+      },
+      {
+        "t": "Name the sale mood",
+        "d": "Say neon street, warm gift table, or focused studio light and keep the product action simple."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What the sale clip can do",
+    "items": [
+      {
+        "t": "Create a visual hook",
+        "d": "A city glow, spotlight, or gift setting makes the product ready for a seasonal ad without embedding changing numbers."
+      },
+      {
+        "t": "Fit common placements",
+        "d": "Use 9:16 for Stories and Reels, 1:1 for a feed, 16:9 for a wider placement, or 4:3 and 3:4 when the crop calls for it."
+      },
+      {
+        "t": "Show the spend upfront",
+        "d": "A six-, ten-, fifteen-, or thirty-second version costs 24, 40, 60, or 120 credits; the charge appears before generation."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Black Friday scenes to describe",
+    "items": [
+      {
+        "t": "Neon electronics",
+        "d": "A gaming headset rests on a dark desk while red and blue light moves across the ear cups and cable."
+      },
+      {
+        "t": "Golden-hour bike",
+        "d": "A folding bike stands on an open city plaza with warm light and clear sky beside the frame for an offer."
+      },
+      {
+        "t": "Appliance spotlight",
+        "d": "A countertop appliance turns slightly under one bright studio beam, ending on its control panel."
+      },
+      {
+        "t": "Gift pick",
+        "d": "Earbuds or a smart light sit on a wrapped gift table with one slow pass for a seasonal bundle."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Apply the promotion when it is final",
+    "items": [
+      {
+        "t": "Add the offer",
+        "d": "Type the confirmed percentage, price, code, or bundle terms in your editor."
+      },
+      {
+        "t": "Set the dates",
+        "d": "Place the real start and end dates, timezone, and stock wording on a layer you can update."
+      },
+      {
+        "t": "Choose sale sound",
+        "d": "Add licensed music or a countdown effect only after the visual timing is approved."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Best fits for a sale clip",
+    "good": [
+      "Electronics, bikes, appliances, and gift items",
+      "Black Friday and Cyber Monday feeds",
+      "Visuals with clear copy space",
+      "Reusable teasers while offers change"
+    ],
+    "not_ideal": [
+      "A promotion whose terms are not yet confirmed",
+      "Claims of scarcity or savings the seller cannot substantiate"
+    ]
+  }
 }

@@ -553,6 +553,7 @@ const NEXT_LINKS = {
   ],
   faq: [
     ["Pricing", "/pricing", "Plans, credits and what each job costs."],
+    ["Glossary", "/glossary", "Plain-English definitions for credits, formats and product content."],
     ["Image to Video", "/ai-video-generation/image-to-video", "Start a video from one product photo."],
     ["Product photo tips", "/guides/product-photo-tips", "How to take a photo that gives good results."],
     ["Contact support", "/contact-us", "Email us if your question isn't answered here."],
@@ -567,6 +568,7 @@ const NEXT_LINKS = {
   ],
   pricing: [
     ["FAQ", "/faq", "More about credits, refunds and video lengths."],
+    ["Glossary", "/glossary", "Understand credits and the formats used across the site."],
     ["Templates", "/templates", "See what your credits can make."],
     ["Refund Policy", "/refunds", "How refund reviews and credit returns work."],
     ["Contact support", "/contact-us", "Questions about a plan or a charge."]
@@ -806,7 +808,26 @@ function articleTry(model, page) {
 
 function layoutFor(page) {
   return { home: "home", hub: "video-hub", "hub-tool": "tool", tool: "tool", template: "template", industry: "collection", platform: "collection", occasion: "collection",
-    index: "index", article: "article", pricing: "pricing", faq: "faq", contact: "contact", about: "about", examples: "examples", trust: "trust", "ai-info": "ai-info" }[page.type];
+    index: "index", glossary: "glossary", article: "article", pricing: "pricing", faq: "faq", contact: "contact", about: "about", examples: "examples", trust: "trust", "ai-info": "ai-info" }[page.type];
+}
+
+// Enrichment drafts use compact copy-writing shapes (overview paragraphs use `d` or `p`).
+// Normalize them once while compiling so the public payload has only renderable fields and
+// never carries review notes or other editorial metadata.
+function enrichmentFor(model, c) {
+  const section = (value) => (Array.isArray(value) ? value : []).map((item) => ({ h2: item.h2, paras: [item.d ?? item.p ?? ""].filter(Boolean) }));
+  const block = (value) => value && typeof value === "object" ? { h2: value.h2, items: Array.isArray(value.items) ? value.items.map((item) => ({ t: item.t, d: item.d })) : [] } : undefined;
+  const fit = value => value && typeof value === "object" ? { h2: value.h2, good: Array.isArray(value.good) ? value.good : [], not_ideal: Array.isArray(value.not_ideal) ? value.not_ideal : [] } : undefined;
+  const compare = block(c.compare);
+  return {
+    ...(c.overview ? { overview: section(c.overview) } : {}),
+    ...(c.input_guide ? { inputGuide: block(c.input_guide) } : {}),
+    ...(c.results ? { results: block(c.results) } : {}),
+    ...(c.scene_recipes ? { sceneRecipes: block(c.scene_recipes) } : {}),
+    ...(c.after_download ? { afterDownload: block(c.after_download) } : {}),
+    ...(c.fit ? { fit: fit(c.fit) } : {}),
+    ...(compare ? { compare } : {})
+  };
 }
 
 function payloadFor(model, page) {
@@ -815,7 +836,8 @@ function payloadFor(model, page) {
     id: page.id, label: page.label, eyebrow: c.eyebrow || page.label, h1: c.h1, lead: c.lead,
     breadcrumbs: page.id === "home" ? [] : breadcrumbTrail(model, page),
     faq: (c.faq || []).map((item) => ({ q: item.q, a: item.a })),
-    startNote: page.type === "pricing" ? START_NOTE_PLAIN : START_NOTE
+    startNote: page.type === "pricing" ? START_NOTE_PLAIN : START_NOTE,
+    ...enrichmentFor(model, c)
   };
   const t = page.type;
   if (t === "home") {
@@ -943,6 +965,18 @@ function payloadFor(model, page) {
     return { ...base, intro: c.intro || [], flows: (c.cases || []).map((item) => exampleFlow(model, item)), cards: pickCards(model, CARD_ORDER, 12),
       cta: { title: "Make this with your own product", lead: "Upload one product photo and pick the look you liked.", href: "/app/create" } };
   }
+  if (t === "glossary") {
+    const entries = (c.entries || []).slice().sort((a, b) => String(a.term).localeCompare(String(b.term))).map((entry) => ({
+      term: entry.term,
+      definition: entry.definition,
+      related: (entry.related_page_ids || []).map((id) => {
+        const target = model.byId[id];
+        assert.ok(target, `glossary: related page ${id} is missing`);
+        return { label: target.label, href: target.url };
+      })
+    }));
+    return { ...base, entries };
+  }
   throw new Error(`unsupported page type ${t}`);
 }
 
@@ -975,6 +1009,8 @@ function jsonLdFor(model, page, c, payload, ogImage) {
     graph.push({ "@type": "SoftwareApplication", name: `AIVideosUGC ${page.label}`, applicationCategory: "MultimediaApplication", operatingSystem: "Web", url: canonical(page), description: c.description, publisher: { "@id": `${BASE}/#organization` } });
   }
   if (page.type === "index" && payload.cards) graph.push({ "@type": "ItemList", itemListElement: payload.cards.map((card, index) => ({ "@type": "ListItem", position: index + 1, url: `${BASE}${card.href}` })) });
+  if (page.type === "glossary") graph.push({ "@type": "DefinedTermSet", "@id": `${canonical(page)}#terms`, name: c.h1, description: c.description,
+    hasDefinedTerm: payload.entries.map((entry) => ({ "@type": "DefinedTerm", name: entry.term, termCode: entry.term.toLowerCase().replace(/[^a-z0-9]+/g, "-"), description: entry.definition })) });
   if (payload.faq?.length) graph.push({ "@type": "FAQPage", mainEntity: payload.faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })) });
   return { "@context": "https://schema.org", "@graph": graph };
 }
@@ -1061,7 +1097,7 @@ function buildNavigation(model) {
       { label: "Video", groups: [{ label: "Make a video", items: VIDEO_TOOLS.map(tool) }], popular: popular(["unbox", "ba", "beauty"]), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
       { label: "Photo", groups: [{ label: "Make photos", items: PHOTO_TOOLS.map(tool) }], popular: popular(["size", "color", "box"]), footerLink: { label: "Browse all photo templates →", href: "/templates?type=photo" } },
       { label: "Templates", groups: [group("By industry", Object.keys(model.ind).map((slug) => `ind-${slug}`)), group("By platform", Object.keys(model.plat).map((slug) => `plat-${slug}`)), group("By occasion", Object.keys(model.occ).map((slug) => `occ-${slug}`))], footerLink: { label: `See all ${model.cards.length} templates →`, href: "/templates" } },
-      { label: "Resources", groups: [group("Learn and get help", ["examples", "guides", "blog", "faq", "contact"])] }
+      { label: "Resources", groups: [group("Learn and get help", ["examples", "guides", "blog", "faq", "glossary", "contact"])] }
     ],
     links: [{ label: "Pricing", href: "/pricing" }],
     actions: { login: { label: "Log in", href: "/login" }, getStarted: { label: "Get started", href: "/app/create" } },
@@ -1072,7 +1108,7 @@ function buildNavigation(model) {
         group("Photo", PHOTO_TOOLS),
         group("Templates", [...tplFirst, "templates"]),
         group("Industries", [...Object.keys(model.ind).map((slug) => `ind-${slug}`), "industries"]),
-        group("Platforms & help", [...Object.keys(model.plat).map((slug) => `plat-${slug}`), "pricing", "faq", "contact", "about", "trust", "ai-info", "blog", "guides"])
+        group("Platforms & help", [...Object.keys(model.plat).map((slug) => `plat-${slug}`), "pricing", "faq", "glossary", "contact", "about", "trust", "ai-info", "blog", "guides"])
       ],
       legal: [{ label: "Privacy", href: "/privacy" }, { label: "Terms", href: "/terms" }, { label: "Refunds", href: "/refunds" }, { label: "Cookies", href: "/cookies" }],
       copyright: "© 2026 AIVideosUGC. All rights reserved."
@@ -1098,6 +1134,13 @@ const BANNED = [
   [/\bsilent\b|visual[- ]only|no audio|without sound/i, "audio omission wording"],
   [/\b\d+x\b(?! (lens|zoom))|\d+% (more|cheaper|higher|faster|lower)|#1\b|trusted by|thousands of|best-in-class/i, "unprovable claim"],
   [/\btheme\b|\bworkflow\b|\bSEO\b|landing page|proof moment/i, "internal wording"]
+];
+const PUBLIC_ENRICHMENT_BANNED = [
+  [/\bsilent\b/i, "banned silent wording"],
+  [/visual-only/i, "banned visual-only wording"],
+  [/no audio/i, "banned no-audio wording"],
+  [/without sound/i, "banned without-sound wording"],
+  [/\bworkbench\b/i, "banned workbench wording"]
 ];
 
 // The pictures a page actually shows, in the order its layout draws them (mirrors the layouts in
@@ -1153,16 +1196,51 @@ export function validateSiteV2(build = buildSiteV2()) {
     // do not flag a legitimate product name such as "small-batch" as an internal claim.
     const visible = JSON.stringify(data).replace(/"(href|src|image|key|kind|industries|platforms|id|section|tool_id|name|product|mediaRef|line|spec)":"[^"]*"/g, "");
     for (const [rx, why] of BANNED) {
+      if (page.id === "glossary" && why === "voice claim") continue;
       if (page.id === "ai-info" && why !== "internal wording") continue;
       const checkVisible = why === "voice claim"
         ? visible.replace(/\b(?:does not|doesn't)\s+add\b[^.!?]*\bvoice-?over\b/gi, "").replace(/\b(?:without|no)\s+voice-?over\b/gi, "")
         : visible;
       if (rx.test(checkVisible)) errors.push(`${page.id}: ${why}`);
     }
+    for (const [rx, why] of PUBLIC_ENRICHMENT_BANNED) if (rx.test(visible)) errors.push(`${page.id}: ${why}`);
     const faq = data.faq || [];
     const ld = seo.jsonLd["@graph"].find((node) => node["@type"] === "FAQPage");
     if (faq.length && (!ld || ld.mainEntity.length !== faq.length)) errors.push(`${page.id}: FAQ JSON-LD mismatch`);
   }
+  // Editorial metadata must never enter the public LivePage payload, even when a
+  // future draft adds it beside an otherwise valid enrichment block.
+  const internalKeys = new Set(["review", "media_wishlist", "facts_used", "word_count_added", "source"]);
+  for (const page of build.pages) {
+    const walk = (value, path = "data") => {
+      if (Array.isArray(value)) value.forEach((item, index) => walk(item, `${path}[${index}]`));
+      else if (value && typeof value === "object") for (const [key, item] of Object.entries(value)) {
+        if (internalKeys.has(key)) errors.push(`${page.id}: internal field in contentJson (${path}.${key})`);
+        walk(item, `${path}.${key}`);
+      }
+    };
+    walk(page.contentJson.sections.v2_main.settings.data);
+  }
+  // A sentence of eight or more words in a new enrichment block is page-specific
+  // copy. Keep exact repeats out of the public set while allowing short labels.
+  const sentencePages = new Map();
+  const enrichKeys = ["overview", "inputGuide", "results", "sceneRecipes", "afterDownload", "fit", "compare"];
+  const collectSentences = (value) => {
+    const out = [];
+    if (Array.isArray(value)) value.forEach((item) => out.push(...collectSentences(item)));
+    else if (value && typeof value === "object") Object.values(value).forEach((item) => out.push(...collectSentences(item)));
+    else if (typeof value === "string") out.push(...value.split(/[.!?]+/).map((sentence) => sentence.trim()).filter(Boolean));
+    return out;
+  };
+  for (const page of build.pages) {
+    const data = page.contentJson.sections.v2_main.settings.data;
+    for (const key of enrichKeys) for (const sentence of collectSentences(data[key])) {
+      const normalized = sentence.toLowerCase().replace(/\[[^\]]+\]\([^)]*\)/g, "").replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
+      if (normalized.split(" ").filter(Boolean).length < 8) continue;
+      const pages = sentencePages.get(normalized) ?? new Set(); pages.add(page.id); sentencePages.set(normalized, pages);
+    }
+  }
+  for (const [sentence, pages] of sentencePages) if (pages.size > 1) errors.push(`enrichment sentence repeated across pages (${[...pages].join(", ")}): ${sentence}`);
   // Every public selling page with a template area gets a balanced seven-card set:
   // its existing template cards plus page-specific case cards. A case asset may be
   // sampled on two pages at most, and never twice on one page.

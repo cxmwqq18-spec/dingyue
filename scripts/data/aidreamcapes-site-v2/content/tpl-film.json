@@ -79,5 +79,104 @@
       "q": "What video size suits a cinematic product video?",
       "a": "Use 16:9 for a wide site hero or YouTube placement, 9:16 for mobile feeds, and 1:1 for square feeds. Download the clip, then add licensed music yourself."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Build the mood around one product detail",
+      "d": "A brand film works when the setting supports a single visual idea: a reflective edge, a soft glow, a textured shell, or the way an object sits on a surface. Name that detail first, then let the light and camera movement lead the eye toward it."
+    },
+    {
+      "h2": "Keep atmosphere separate from product facts",
+      "d": "The scene can feel quiet, warm, or dramatic, while your verified name, price, release date, and specifications remain your own overlay. This keeps the film expressive without asking generated lettering to carry information it may distort."
+    }
+  ],
+  "input_guide": {
+    "h2": "Give a moody scene a stable reference",
+    "items": [
+      {
+        "t": "Show the finish without glare",
+        "d": "For glass or polished metal, use an angle that reveals the surface instead of a blown-out reflection."
+      },
+      {
+        "t": "Include the product edge",
+        "d": "A complete silhouette helps the object survive low-key lighting and prevents the background from swallowing it."
+      },
+      {
+        "t": "Choose one hero surface",
+        "d": "Stone, wood, brushed metal, or fabric gives the camera a place to land and a texture to contrast with the product."
+      },
+      {
+        "t": "State the camera path",
+        "d": "Say slow push-in, side reveal, or gentle orbit; avoid asking for several unrelated moves in one short clip."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What this film gives you",
+    "items": [
+      {
+        "t": "A controlled visual mood",
+        "d": "The output centers a product in a composed environment instead of trying to explain every specification at once."
+      },
+      {
+        "t": "Flexible framing",
+        "d": "Use 16:9 for a wide store or video placement, 9:16 for a phone feed, 1:1 for a square feed, or 4:3 and 3:4 when the destination needs another crop."
+      },
+      {
+        "t": "A testable credit cost",
+        "d": "A six-, ten-, fifteen-, or thirty-second version costs 24, 40, 60, or 120 credits; the amount is visible before generation."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Cinematic scenes to try",
+    "items": [
+      {
+        "t": "Speaker at dusk",
+        "d": "A matte speaker rests on dark stone as blue window light slides across its grille and the camera eases closer."
+      },
+      {
+        "t": "Watch on walnut",
+        "d": "A watch lies on walnut beside a folded map while a narrow morning beam reveals the dial and crown."
+      },
+      {
+        "t": "Lamp in a quiet room",
+        "d": "A table lamp warms one corner of a reading chair as the camera crosses from shade to glowing pool of light."
+      },
+      {
+        "t": "Fragrance by rain glass",
+        "d": "A perfume bottle stands beside a rain-streaked window, with one slow move revealing the shoulders and cap."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Add the brand layer yourself",
+    "items": [
+      {
+        "t": "Set the soundtrack",
+        "d": "Choose a licensed track or your own sound bed after reviewing the finished movement."
+      },
+      {
+        "t": "Place exact launch copy",
+        "d": "Add the product name, date, offer, or URL in a readable area that the camera does not cross."
+      },
+      {
+        "t": "Check the crop",
+        "d": "Review the chosen ratio on the real placement so the hero detail remains visible on phones and wide screens."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Best uses for a brand film",
+    "good": [
+      "Speakers, headphones, watches, and lamps",
+      "Perfume and packaging with a distinctive finish",
+      "Launch openers and store banners",
+      "Products sold through visual mood"
+    ],
+    "not_ideal": [
+      "Instruction-heavy products",
+      "Tiny labels or claims that must be read inside the shot"
+    ]
+  }
 }

@@ -78,5 +78,109 @@
       "q": "Can I use a packaging mockup as my product listing photo?",
       "a": "Use the mockup to show a setting or concept. Use a clear photo of the real package for ingredients, measurements, or other details a buyer must verify."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "See the Package Before the Shipment Arrives",
+      "p": "A packaging mockup helps you judge shelf presence, camera angle, and surrounding mood while artwork is still being revised. It can support a launch post, a retailer conversation, or an internal design choice before cartons and pouches come off the press."
+    },
+    {
+      "h2": "Use the Preview to Choose a Direction",
+      "p": "Treat the result as a visual concept, not a print proof. Keep the approved flat artwork and your production file as the authority for ingredients, warnings, dates, barcodes, and every small character."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare Artwork for a Useful Mockup",
+    "items": [
+      {
+        "t": "Start from the front panel",
+        "d": "Upload a flat, high-resolution design or a clear printed sample with the brand mark facing the camera."
+      },
+      {
+        "t": "Name the package shape",
+        "d": "Say whether it is a carton, stand-up pouch, bottle, sleeve, tin, or gift box, and mention its closure."
+      },
+      {
+        "t": "Keep fine print out of the brief",
+        "d": "Describe the broad front design while leaving ingredient lists, dates, and tiny legal lines to the approved artwork."
+      },
+      {
+        "t": "Choose a credible surface",
+        "d": "Ask for a shelf, kitchen counter, cafe bar, or gift table that matches how the product will be presented."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What a Packaging Preview Helps You Decide",
+    "items": [
+      {
+        "t": "Shelf presence",
+        "d": "Check whether the color block and silhouette stand out against the intended retail background."
+      },
+      {
+        "t": "Scene direction",
+        "d": "Compare a morning kitchen, cafe counter, or gift table before planning launch photography."
+      },
+      {
+        "t": "Package hierarchy",
+        "d": "See how a carton, pouch, bottle, or sleeve sits beside other items in the line."
+      },
+      {
+        "t": "A shareable concept",
+        "d": "Use a downloaded square preview for a design discussion or coming-soon post after reviewing it."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Packaging Scenes to Explore",
+    "items": [
+      {
+        "t": "Tea carton and pouch",
+        "d": "A tall carton and matching pouch on a wooden shelf beside a cup and loose leaves in morning light."
+      },
+      {
+        "t": "Hot sauce label refresh",
+        "d": "A glass bottle on a kitchen counter with peppers nearby, leaving the front label as the hero."
+      },
+      {
+        "t": "Coffee launch",
+        "d": "A printed bag beside a grinder and ceramic cup on a cafe bar with warm side light."
+      },
+      {
+        "t": "Holiday gift sleeve",
+        "d": "A gift box with a paper sleeve on a table with ribbon and soft window light, with no invented offer copy."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Turn the Concept Into an Approved Asset",
+    "items": [
+      {
+        "t": "Compare against the artwork",
+        "d": "Check logo shape, panel order, colors, and package proportions against the source file."
+      },
+      {
+        "t": "Protect exact wording",
+        "d": "Use the approved production file for ingredients, allergens, dates, barcodes, and required marks."
+      },
+      {
+        "t": "Label it as a preview",
+        "d": "Keep mockup images separate from final pack photography until the printed item has been inspected."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "When a Mockup Is the Right Tool",
+    "good": [
+      "New packaging still at the design or printer stage",
+      "Food, drink, beauty, and household packs with a clear front panel",
+      "Comparing two approved label directions",
+      "Launch, retailer, and coming-soon visual planning"
+    ],
+    "not_ideal": [
+      "A legal or ingredient proof that depends on tiny lettering",
+      "A package whose back panel must be verified in full",
+      "A final color calibration or dieline check for the printer"
+    ]
+  }
 }

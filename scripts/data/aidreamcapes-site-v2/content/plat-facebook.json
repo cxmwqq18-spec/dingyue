@@ -4,7 +4,7 @@
   "description": "Try an AI Facebook ad generator made for sellers: turn a product photo into square feed videos and ad images, then add your offer in Ads Manager. Get started.",
   "h1": "AI Facebook Ad Generator for Square and Vertical Ads",
   "eyebrow": "Facebook ads",
-  "lead": "Use this AI Facebook ad generator to make square and vertical ads from one product photo, then write the headline and offer in Ads Manager, where you can change them anytime.",
+  "lead": "Use this AI Facebook ad generator to make square image or vertical video ads from one product photo, then write the headline and offer in Ads Manager, where you can change them anytime.",
   "card": "Square and vertical ads for the feed, Stories and Reels.",
   "secondary_keywords": [
     "Facebook video ads for ecommerce",
@@ -70,5 +70,104 @@
       "q": "Will Facebook reject an ad because it was made with AI?",
       "a": "Meta reviews the ad against its current Advertising Standards. Review claims, rights, and any AI-label requirement in Ads Manager before launch; generation by itself does not guarantee approval."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Make the product legible without a voice track",
+      "d": "A Facebook feed ad may be encountered while the viewer's sound is off. Build the visual around one unmistakable action: open the container, attach the clip, turn the dial, or place the item where it is used. Use the source photo to keep the product's shape and color anchored, then write the headline and offer in Ads Manager where you can revise them."
+    },
+    {
+      "h2": "Choose a shape for each Meta placement",
+      "d": "Use 1:1 when the feed is the main destination and 9:16 when the same idea will run in Stories or Reels; 16:9, 4:3, and 3:4 are available when a different crop is needed. Meta recommends 9:16 for Reels and says to keep important content inside the safe area. AIVideosUGC currently offers 6, 10, 15, and 30 second jobs and displays the credit cost first; make each shape as its own job when the crop changes the composition."
+    }
+  ],
+  "input_guide": {
+    "h2": "Prepare a feed-friendly source photo",
+    "items": [
+      {
+        "t": "Keep the product identifiable",
+        "d": "Use a front or three-quarter photo where the useful parts are visible, such as a latch, handle, control, or opening."
+      },
+      {
+        "t": "Describe one clear action",
+        "d": "Choose a movement that communicates through the picture alone. A hand placing or using the product works better than an explanation that would need narration."
+      },
+      {
+        "t": "Leave the edges calm",
+        "d": "Keep the important object away from corners and lower controls so you can add a headline without hiding the product."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What a useful Facebook asset contains",
+    "items": [
+      {
+        "t": "A fast visual read",
+        "d": "The item and its use should be apparent before the viewer reaches the end of a short clip."
+      },
+      {
+        "t": "A placement-ready crop",
+        "d": "Keep one square feed image and make a vertical video when Stories or Reels need a taller composition."
+      },
+      {
+        "t": "A flexible text layer",
+        "d": "Leave the generated scene free of the exact price and code; place those in Ads Manager or an editor."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Product moments for a Facebook scroll",
+    "items": [
+      {
+        "t": "Packed lunch",
+        "d": "A reusable lunch box opens on a bright counter, the compartments fill, and the lid closes in one square sequence."
+      },
+      {
+        "t": "Dog-walk clip",
+        "d": "A dog harness is clipped on near a front door, with the product hardware visible before the walk begins."
+      },
+      {
+        "t": "Desk organization",
+        "d": "A cable tray moves under a desk, then the cords settle into separate channels with the item still in view."
+      },
+      {
+        "t": "Gift bundle still",
+        "d": "Two matching products sit beside plain wrapping paper and a ribbon, leaving a quiet area for your seasonal offer."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Set up the ad in Ads Manager",
+    "items": [
+      {
+        "t": "Add the campaign text",
+        "d": "Write the primary text, headline, price, code, and call to action in Ads Manager so each version stays easy to edit."
+      },
+      {
+        "t": "Add sound only when useful",
+        "d": "Choose licensed music or another permitted track after download; the generated video arrives without audio."
+      },
+      {
+        "t": "Inspect the placement preview",
+        "d": "Check feed, Stories, and Reels previews separately. Move added copy if a profile control, button, or caption covers it."
+      },
+      {
+        "t": "Compare one change",
+        "d": "If you make several creatives, alter one opening or scene at a time and keep the audience and offer consistent for a readable comparison."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Good candidates for Facebook creative",
+    "good": [
+      "Products whose use can be understood visually",
+      "Stores that manage their own campaigns in Ads Manager",
+      "Catalogs needing both square feed and vertical placement assets",
+      "Promotions where the offer changes after the scene is made"
+    ],
+    "not_ideal": [
+      "Ads that require a spoken explanation to make sense",
+      "Claims or fine print that must be rendered inside the generated frame"
+    ]
+  }
 }

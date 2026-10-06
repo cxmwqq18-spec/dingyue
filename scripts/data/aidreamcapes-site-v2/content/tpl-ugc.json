@@ -76,7 +76,111 @@
     },
     {
       "q": "What size works for a UGC style product photo?",
-      "a": "Use a square image for feed listings or a vertical 9:16 canvas for Stories and Reels. Add exact claims and pricing yourself after download."
+      "a": "Use a square image for feed listings or place it on a tall Story canvas in your editor. For full-screen motion, use a 9:16 video. Add exact claims and pricing yourself after download."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Start With a Moment Someone Recognizes",
+      "p": "A creator-style still works when the product has a place in a believable routine: a bottle after a workout, a tea tin beside breakfast, or a package opened in a hallway. Describe that moment rather than asking for a vague feeling such as authentic."
+    },
+    {
+      "h2": "Keep the Product More Specific Than the Mood",
+      "p": "The scene can feel relaxed, but the source must still show the package, label, cap, or main feature clearly. Use the image to show use and context; add a precise offer or product claim outside the generated frame."
+    }
+  ],
+  "input_guide": {
+    "h2": "Write the Moment in Four Parts",
+    "items": [
+      {
+        "t": "Name the person",
+        "d": "Give an age range, clothing direction, or body position without implying a real customer testimonial."
+      },
+      {
+        "t": "Name the place",
+        "d": "Choose a kitchen, gym corner, hallway, sidewalk, desk, or bedroom that fits the product routine."
+      },
+      {
+        "t": "Name the action",
+        "d": "Say holding, opening, packing, pouring, reaching, or setting down instead of only saying lifestyle."
+      },
+      {
+        "t": "Keep the product readable",
+        "d": "Upload a source with the label facing forward and the whole bottle, jar, pack, or tool visible."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A Creator-Style Still Can Show",
+    "items": [
+      {
+        "t": "Daily use",
+        "d": "Put an ordinary product into a recognizable routine without needing a polished studio backdrop."
+      },
+      {
+        "t": "A sense of scale",
+        "d": "Use a hand, bag, desk, or room to help the viewer understand how the item fits into life."
+      },
+      {
+        "t": "A feed-ready square",
+        "d": "Use the output in an Instagram or TikTok photo post after adding your own copy."
+      },
+      {
+        "t": "A product-first moment",
+        "d": "Keep packaging and main features clear enough for a shopper to identify the item."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Everyday Moments to Describe",
+    "items": [
+      {
+        "t": "Breakfast prep",
+        "d": "Tea tin or supplement jar on a kitchen counter beside toast and a mug in quiet morning light."
+      },
+      {
+        "t": "After the workout",
+        "d": "Water bottle held by a person on a living-room floor with a yoga mat and towel nearby."
+      },
+      {
+        "t": "Desk reset",
+        "d": "Notebook, pen set, or small desk lamp being used beside a laptop during an afternoon work break."
+      },
+      {
+        "t": "Just delivered",
+        "d": "A parcel opened on a hallway floor with the product lifted toward the camera and the label visible."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Make the Still Ready for a Real Ad",
+    "items": [
+      {
+        "t": "Inspect the label",
+        "d": "Check logos, caps, countable pieces, and packaging shape against the product you sell."
+      },
+      {
+        "t": "Add the offer yourself",
+        "d": "Place price, discount, date, URL, and required disclaimer in your design or ad editor."
+      },
+      {
+        "t": "Remove unsupported claims",
+        "d": "Keep the message about the scene and product use unless your approved copy supports a stronger statement."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Products That Read Well in a Casual Scene",
+    "good": [
+      "Bottles, snacks, tea, stationery, and small household goods",
+      "Fitness accessories shown during ordinary use",
+      "Products with a clear package or recognizable silhouette",
+      "Square social posts that need a relaxed visual entry point"
+    ],
+    "not_ideal": [
+      "A regulated product that needs a clinical demonstration",
+      "Claims that depend on a before-and-after body result",
+      "A package whose tiny label text must be exact inside the image"
+    ]
+  }
 }

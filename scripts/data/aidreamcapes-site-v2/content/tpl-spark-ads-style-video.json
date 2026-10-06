@@ -68,7 +68,7 @@
     },
     {
       "q": "Will it include captions or trending audio?",
-      "a": "No. AIVideosUGC does not add music, voiceover, or captions. Add the track and exact text in TikTok or your editor."
+      "a": "No. AIVideosUGC does not add music, spoken narration, or captions. Add the track and exact text in TikTok or your editor."
     },
     {
       "q": "Can it guarantee TikTok approval or performance?",
@@ -78,5 +78,104 @@
       "q": "What size should a Spark Ads style video use?",
       "a": "Use 9:16 for a full-screen TikTok placement. TikTok lists 9:16, 1:1, and 16:9 as standard sizes; add the sound, captions, and authorization in TikTok Ads Manager."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Make natural footage without inventing a creator",
+      "d": "This style is about ordinary product use: a hand fills, opens, packs, lifts, or sets down the item. It can sit beside creator posts as product footage while staying honest about the source of the clip."
+    },
+    {
+      "h2": "Keep the TikTok setup in your hands",
+      "d": "AIVideosUGC supplies the visual asset. You still choose the account, sound, caption, disclosure, authorization, audience, and campaign settings in TikTok."
+    }
+  ],
+  "input_guide": {
+    "h2": "Give an everyday scene a believable scale",
+    "items": [
+      {
+        "t": "Show the hand-held edge",
+        "d": "Photograph the product with the opening, grip, lid, or button visible so a hand can interact with it naturally."
+      },
+      {
+        "t": "Name a familiar surface",
+        "d": "Desk, counter, gym bench, coat pocket, or kitchen shelf gives the scene a real place to happen."
+      },
+      {
+        "t": "Choose one quiet action",
+        "d": "Filling, opening, packing, lifting, or setting down is enough; avoid an invented creator performance."
+      },
+      {
+        "t": "Keep text out of the source photo",
+        "d": "Add the final caption, disclosure, and offer in TikTok after you review the rendered footage."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What this style can supply",
+    "items": [
+      {
+        "t": "A natural product moment",
+        "d": "The item appears in a familiar routine with hands and surroundings doing the storytelling."
+      },
+      {
+        "t": "TikTok-friendly framing",
+        "d": "Use the primary 9:16 layout, with 1:1, 16:9, 4:3, and 3:4 also available when another placement needs the same scene."
+      },
+      {
+        "t": "A clear testing ladder",
+        "d": "Six seconds costs 24 credits, ten 40, fifteen 60, and thirty 120; the exact amount is shown before a version runs."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Natural product moments to describe",
+    "items": [
+      {
+        "t": "Bottle at a desk",
+        "d": "A hand fills an insulated bottle beside a laptop, takes it outside, and sets it near a notebook."
+      },
+      {
+        "t": "Snack between tasks",
+        "d": "A pouch opens on a kitchen counter, one snack is placed beside a notebook, and the pouch closes."
+      },
+      {
+        "t": "Phone stand in a bag",
+        "d": "A compact stand folds on a desk, slips into a work bag, and returns beside a phone."
+      },
+      {
+        "t": "Beauty item by a mirror",
+        "d": "A hand lifts a small cream jar at a vanity and sets it beside a comb without a spoken pitch."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Complete the TikTok process",
+    "items": [
+      {
+        "t": "Choose the account and authorization",
+        "d": "Connect the post and any Spark Ads permissions through your own TikTok process."
+      },
+      {
+        "t": "Add sound, caption, and disclosure",
+        "d": "Use the current channel controls to apply music, caption text, and the required disclosure."
+      },
+      {
+        "t": "Set the campaign",
+        "d": "Choose the audience, budget, placement, and timing in TikTok Ads Manager."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "When this style fits",
+    "good": [
+      "Bottles, snacks, desk goods, and beauty items",
+      "Simple hand-led product actions",
+      "TikTok product footage beside creator posts",
+      "Scenes where the product is the subject"
+    ],
+    "not_ideal": [
+      "A request for a real creator endorsement",
+      "Campaign setup that depends on an automatic account connection"
+    ]
+  }
 }

@@ -13,7 +13,7 @@
   ],
   "intro": [
     "A before-and-after video shows two moments in a row: how things look without your product, then how they look with it. It's a simple story that shoppers follow in seconds. A tangled cable mess becomes a tidy desk. A greasy grill grate gets scrubbed clean. An empty balcony lights up with your string lights.",
-    "Start with a photo of your product, then write both halves as one line, such as “messy closet shelf, then folded sweaters in our fabric bins.” Lengths are 6, 10, 15, or 30 seconds, and the longer options give each half enough time to register. It works for organizers, cleaning tools, home decor, furniture covers, car accessories, and other products that change how a space or object looks."
+    "Start with a photo of the product, then write both halves as one line, such as “messy closet shelf, then folded sweaters in our fabric bins.” Choose 6, 10, 15, or 30 seconds and 9:16, 1:1, 16:9, 4:3, or 3:4 so each state has room to register."
   ],
   "benefits": [
     {
@@ -59,8 +59,14 @@
   ],
   "maker": {
     "options": [
-      ["Size", "9:16 · TikTok & Reels"],
-      ["Length", "15 seconds"]
+      [
+        "Size",
+        "9:16 · TikTok & Reels"
+      ],
+      [
+        "Length",
+        "15 seconds"
+      ]
     ],
     "cta": "Make my before & after video"
   },
@@ -81,5 +87,120 @@
       "q": "Can I add “Before” and “After” labels?",
       "a": "Yes, add them after you download, in CapCut or TikTok. Typed labels stay crisp and correctly spelled, which AI-generated lettering can't always manage."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Make the product’s job visible in two beats",
+      "p": "Before-and-after works for products that change a space, object, or arrangement in a way a viewer can recognize quickly. Name the starting condition first, then show the finished condition with the product present and the same subject still easy to compare."
+    },
+    {
+      "h2": "Keep the promise inside the frame",
+      "p": "Use this format for organizing, cleaning, installing, covering, lighting, or styling. Avoid claims about a person’s body, skin, health, or guaranteed performance; show the physical change your product is actually designed to make."
+    }
+  ],
+  "input_guide": {
+    "h2": "Give both halves a fair comparison",
+    "items": [
+      {
+        "t": "Photograph the change-maker",
+        "d": "Upload the organizer, brush, cover, shelf, light, or accessory that causes the visible difference."
+      },
+      {
+        "t": "Name one starting problem",
+        "d": "Describe a single messy, empty, dirty, exposed, or unfinished state instead of combining several rooms or objects."
+      },
+      {
+        "t": "Keep the subject recognizable",
+        "d": "Use the same shelf, wall, desk, grill, or entryway in both halves so the viewer can compare what changed."
+      },
+      {
+        "t": "Describe the finished arrangement",
+        "d": "Say where the product ends up and what the space looks like once the action is complete."
+      },
+      {
+        "t": "Stay away from personal outcomes",
+        "d": "Show a product or room transformation rather than a promise about weight, skin, pain, or another regulated result."
+      }
+    ]
+  },
+  "results": {
+    "h2": "A change that reads at a glance",
+    "items": [
+      {
+        "t": "Two visual beats",
+        "d": "Choose 6, 10, 15, or 30 seconds; longer options give the starting and finished states more room to register."
+      },
+      {
+        "t": "A format for the placement",
+        "d": "Use 9:16, 1:1, 16:9, 4:3, or 3:4 for vertical, square, or wide presentation."
+      },
+      {
+        "t": "A transparent job cost",
+        "d": "You see the credit amount before generation, and a failed task restores its credits."
+      },
+      {
+        "t": "A file to finish yourself",
+        "d": "The download is watermark-free. Add typed labels and approved claims after you confirm that both states match the real product use."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Transformations shoppers can understand",
+    "items": [
+      {
+        "t": "Entryway order",
+        "d": "Loose shoes cover a narrow entryway, then the same pairs sit neatly on a bamboo rack beside the door."
+      },
+      {
+        "t": "Kitchen drawer",
+        "d": "A drawer holds scattered utensils, then the organizer separates spoons, forks, and chopsticks into rows."
+      },
+      {
+        "t": "Wall storage",
+        "d": "A blank wall stands above a desk, then a floating shelf holds books and a small plant."
+      },
+      {
+        "t": "Grill cleanup",
+        "d": "A grill grate carries dark residue, then the cleaning brush leaves an even, ready-to-use surface."
+      },
+      {
+        "t": "Car seat cover",
+        "d": "A back seat is exposed to muddy shoes, then the fitted cover protects the same seat."
+      },
+      {
+        "t": "Outdoor lighting",
+        "d": "An empty balcony sits at dusk, then warm string lights trace its railing."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Label the two moments clearly",
+    "items": [
+      {
+        "t": "Type the state labels",
+        "d": "Add “Before,” “After,” prices, dates, or offer text in your editor so the words stay crisp and approved."
+      },
+      {
+        "t": "Check the cause and effect",
+        "d": "Make sure the product appears in the finished state and that the change shown is one it can really make."
+      },
+      {
+        "t": "Review sensitive categories carefully",
+        "d": "If the product touches health, skin, or body outcomes, use a product-use demonstration instead of a personal transformation claim."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Good subjects for a before-and-after story",
+    "good": [
+      "Organizers that create a visible change in a drawer, shelf, or entryway",
+      "Cleaning tools that reveal a cleaner surface",
+      "Covers, shelves, and lighting that alter a room or object",
+      "Decor products where the finished arrangement is easy to compare"
+    ],
+    "not_ideal": [
+      "Claims about weight, skin, medical outcomes, or guaranteed performance",
+      "Changes that cannot be judged from the same scene"
+    ]
+  }
 }

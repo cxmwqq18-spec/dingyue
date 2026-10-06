@@ -78,5 +78,109 @@
       "q": "How do I keep a bundle photo accurate?",
       "a": "Upload or describe every included item and state the exact count. Review the output against the real bundle before listing it; the tool can add or omit pieces."
     }
-  ]
+  ],
+  "overview": [
+    {
+      "h2": "Answer the Bundle Question in One Frame",
+      "p": "A bundle image is useful when the shopper can count the pieces without opening a dropdown or reading a long description. Lay out the products, packaging, and any included accessory as one clear group, while keeping decorative props quiet and separate."
+    },
+    {
+      "h2": "Treat the Contents List as the Source of Truth",
+      "p": "The picture helps people understand the set at a glance; your written contents list still defines what ships. Build the source around the exact inventory so a refill pouch, spare lid, or gift box does not disappear from the composition."
+    }
+  ],
+  "input_guide": {
+    "h2": "Gather the Set Before You Write the Scene",
+    "items": [
+      {
+        "t": "Count every shipped piece",
+        "d": "Place the main item, refills, tools, inserts, and box together before taking the source photo."
+      },
+      {
+        "t": "Separate decorative props",
+        "d": "If flowers, towels, ribbons, or food are only styling, keep them visibly outside the bundle group."
+      },
+      {
+        "t": "Show packaging that matters",
+        "d": "Include the carton, sleeve, pouch, or branded box when it is part of what the customer receives."
+      },
+      {
+        "t": "Describe the arrangement",
+        "d": "Name the count and placement, such as one bottle, one refill, one scoop, and one box on a stone tray."
+      }
+    ]
+  },
+  "results": {
+    "h2": "What a Bundle Photo Clarifies",
+    "items": [
+      {
+        "t": "Piece count",
+        "d": "Give the shopper a visual inventory before they compare price or size."
+      },
+      {
+        "t": "Set relationship",
+        "d": "Show which refill, accessory, or smaller item belongs with the main product."
+      },
+      {
+        "t": "Gift presentation",
+        "d": "Use the box, sleeve, ribbon, or tray to set expectations for a ready-to-give set."
+      },
+      {
+        "t": "A clean square asset",
+        "d": "Use the downloaded frame in a product gallery, feed post, or bundle announcement after checking it."
+      }
+    ]
+  },
+  "scene_recipes": {
+    "h2": "Bundle Layouts Buyers Can Scan",
+    "items": [
+      {
+        "t": "Skincare starter set",
+        "d": "Cleanser, serum, cream jar, and printed carton on a round stone tray with no extra bottles."
+      },
+      {
+        "t": "Coffee welcome kit",
+        "d": "Coffee pouch, scoop, mug, and brewing guide on a kitchen counter, with the plant kept as a background accent."
+      },
+      {
+        "t": "Phone protection kit",
+        "d": "Case, screen protector, cleaning cloth, and alignment tool in one ordered row beside the box."
+      },
+      {
+        "t": "Candle gift set",
+        "d": "Two candles, match tin, and gift sleeve on a wood table with one small seasonal branch outside the group."
+      }
+    ]
+  },
+  "after_download": {
+    "h2": "Reconcile the Image With the Offer",
+    "items": [
+      {
+        "t": "Count against the SKU",
+        "d": "Check lids, refills, tools, and packaging against the actual kit before publishing."
+      },
+      {
+        "t": "Label the bundle in copy",
+        "d": "Write the precise contents, quantity, and size in your product title or description."
+      },
+      {
+        "t": "Remove misleading extras",
+        "d": "Crop or replace any frame where a prop could be mistaken for a shipped item."
+      }
+    ]
+  },
+  "fit": {
+    "h2": "Good Fits for a Bundle Frame",
+    "good": [
+      "Fixed gift sets and starter kits",
+      "Refill packs with a main product",
+      "Subscription boxes with a stable contents list",
+      "Accessories sold together as one SKU"
+    ],
+    "not_ideal": [
+      "Mystery boxes whose contents change per order",
+      "Bundles where every piece needs its own instructional view",
+      "Products with a dense written specification that cannot be shown visually"
+    ]
+  }
 }
