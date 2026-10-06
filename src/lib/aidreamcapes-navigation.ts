@@ -69,7 +69,12 @@ export const AIDREAMCAPES_PUBLIC_AI_VIDEO_GENERATION_SLUGS = [
   "fashion-try-on-reel",
   "promo-video",
   "competitor-comparison",
-  "black-friday-countdown"
+  "black-friday-countdown",
+  "limited-drop-alert-video",
+  "product-feature-callout-video",
+  "carousel-video-ad",
+  "spark-ads-style-video",
+  "retargeting-video-ad"
 ];
 
 export function isAidreamcapesPublicVideoGenerationSlug(slug: string | undefined): boolean {

@@ -2343,7 +2343,7 @@
    "src": "/assets/sites/site_aidreamcapes/site-v2/clips/native-spark-ads.mp4",
    "w": 1280,
    "h": 720,
-   "duration": 14.5,
+   "duration": 10.5,
    "uploadDate": "2026-10-06T00:00:00Z",
    "name": "Example clip: Hands fill a green insulated bottle at an office desk and lift it.",
    "description": "An example clip showing hands fill a green insulated bottle at an office desk and lift it. AIVideosUGC does not add voiceover, music, or captions."
@@ -2352,7 +2352,7 @@
    "src": "/assets/sites/site_aidreamcapes/site-v2/clips/native-spark-ads-v.mp4",
    "w": 540,
    "h": 960,
-   "duration": 14.5,
+   "duration": 10.5,
    "uploadDate": "2026-10-06T00:00:00Z",
    "name": "Example clip: Hands fill a green insulated bottle at an office desk and lift it.",
    "description": "An example clip showing hands fill a green insulated bottle at an office desk and lift it. AIVideosUGC does not add voiceover, music, or captions."
@@ -2410,15 +2410,6 @@
    "uploadDate": "2026-10-06T00:00:00Z",
    "name": "Example clip: Hands inspect dark blue headphones and place them into a commuter bag.",
    "description": "An example clip showing hands inspect dark blue headphones and place them into a commuter bag. AIVideosUGC does not add voiceover, music, or captions."
-  },
-  "social-proof-animation": {
-   "src": "/assets/sites/site_aidreamcapes/site-v2/clips/social-proof-animation.mp4",
-   "w": 1280,
-   "h": 720,
-   "duration": 4.3,
-   "uploadDate": "2026-10-06T00:00:00Z",
-   "name": "Example clip: Hands use a green water bottle on a desk while animated rating icons appear.",
-   "description": "An example clip showing hands use a green water bottle on a desk while animated rating icons appear. AIVideosUGC does not add voiceover, music, or captions."
   },
   "social-proof-animation-v": {
    "src": "/assets/sites/site_aidreamcapes/site-v2/clips/social-proof-animation-v.mp4",
@@ -2798,25 +2789,6 @@
    ],
    "clipPoster": true
   },
-  "social-proof-animation": {
-   "w": 1280,
-   "h": 720,
-   "alt": "Hands use a green water bottle on a desk while animated rating icons appear.",
-   "variants": [
-    640,
-    1280
-   ],
-   "clipPoster": true
-  },
-  "social-proof-animation-v": {
-   "w": 540,
-   "h": 960,
-   "alt": "Hands use a green water bottle on a desk while animated rating icons appear.",
-   "variants": [
-    540
-   ],
-   "clipPoster": true
-  },
   "tiktok-reels-shorts": {
    "w": 1280,
    "h": 720,
@@ -2899,7 +2871,7 @@
   "gen2:spokesperson-videos-1": {
    "w": 1536,
    "h": 1024,
-   "alt": "Adult with a closed mouth holding a matte black smart speaker in a bright modern living room, soft window light, product on the left and clean negative space on the right",
+   "alt": "Adult holding a matte black smart speaker in a bright modern living room, soft window light, product on the left and clean negative space on the right",
    "variants": [
     640,
     1280
@@ -2929,7 +2901,7 @@
   "gen2:tpl-retargeting-video-ad-4": {
    "w": 1536,
    "h": 1024,
-   "alt": "Dark blue over-ear headphones being placed into a commuter bag by a hand, blurred product page on a laptop in the background with no readable text, soft desk light",
+   "alt": "Dark blue over-ear headphones being placed into a commuter bag by a hand, blurred product page on a laptop in the background with, soft desk light",
    "variants": [
     640,
     1280
@@ -2939,7 +2911,7 @@
   "gen2:ind-electronics-5": {
    "w": 1200,
    "h": 900,
-   "alt": "Teal travel charger on a clean office desk beside a phone and a small pouch, soft morning window light, varied materials and no brand marks",
+   "alt": "Teal travel charger on a clean office desk beside a phone and a small pouch, soft morning window light, varied materials",
    "variants": [
     640,
     1280
@@ -2969,7 +2941,7 @@
   "gen2:ind-food-drinks-8": {
    "w": 1200,
    "h": 900,
-   "alt": "Unbranded sparkling citrus drink bottle beside oranges and a glass filled with ice, a pouring action frozen midstream, bright kitchen light",
+   "alt": "sparkling citrus drink bottle beside oranges and a glass filled with ice, a pouring action frozen midstream, bright kitchen light",
    "variants": [
     640,
     1280
@@ -3009,7 +2981,7 @@
   "gen2:blog-ai-video-review-checklist-12": {
    "w": 1536,
    "h": 1024,
-   "alt": "Unbranded product, color swatches and a laptop showing a generic video timeline on a clean review desk, bright neutral light",
+   "alt": "product, color swatches and a laptop showing a video timeline on a clean review desk, bright neutral light",
    "variants": [
     640,
     1280
@@ -3030,6 +3002,636 @@
    "w": 1200,
    "h": 900,
    "alt": "Canvas backpack held beside a small rolling suitcase and a hand for clear scale, bright airport lounge light, simple background with no writing",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-shoes-15": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Tan hiking boot on a gravel trail beside a folded map, clear tread detail, bright morning light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-jewelry-accessories-16": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Gold hoop earrings arranged on a linen tray beside a small jewelry box, soft window light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-beauty-skincare-17": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Amber face serum bottle beside a folded towel and green leaves on a bright bathroom shelf",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-fashion-clothing-18": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Linen overshirt on a simple wooden hanger in a bright dressing room, natural side light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-home-living-19": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Oak desk lamp switched on beside a book and small plant in a calm home office, warm evening light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-food-drinks-20": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Berry granola in a glass jar beside a bowl and spoon on a sunny breakfast table",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-health-wellness-21": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Blue foam roller beside a yoga mat and folded towel in a sunlit studio, calm morning light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-tiktok-22": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Green insulated bottle lifted from a tote bag in a vertical desk scene, bright natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-amazon-23": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "White running shoe centered on a clean white studio surface with a soft grounded shadow",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:plat-shopify-24": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Ceramic travel mug on a styled desk with a notebook and soft window light, clean store photo",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-product-launch-25": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Portable table lamp switched on beside a new book on a clean side table, warm launch lighting",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-sale-discount-26": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Winter jacket folded beside a scarf and gloves on a snowy bench, crisp daylight",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:occ-black-friday-27": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Black folding electric bicycle beside a dark wall with a single warm spotlight, product fully visible",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-jewel-28": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Silver pendant necklace resting at a collarbone in soft studio light, clear chain and pendant detail",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-color-29": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Sage canvas sneaker on a neutral studio surface with clean side light and visible texture",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-pack-30": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Tea pouch standing beside a matching box on a calm kitchen counter, soft morning light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-tryon-31": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Adult wearing a plain blue denim jacket in a bright fitting room, relaxed front pose",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-sale-32": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Red knit sweater folded with winter accessories on a clean seasonal table, soft light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-ugc-33": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Adult hand holding a reusable water bottle in a bright kitchen, natural phone photo composition",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:video-ads-34": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Yellow lunch box opened on a kitchen counter with fruit beside it, vertical natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-35": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Linen shirt arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-36": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Ceramic bowl arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-37": {
+   "w": 1536,
+   "h": 900,
+   "alt": "Black leather wallet arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-38": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Green kettle arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-39": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Leather belt arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-40": {
+   "w": 1536,
+   "h": 900,
+   "alt": "Silver watch arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-41": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Blue tote bag arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-42": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Cotton hoodie arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-43": {
+   "w": 1536,
+   "h": 900,
+   "alt": "Glass diffuser arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-44": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Wood tray arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-45": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Travel pouch arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-46": {
+   "w": 1536,
+   "h": 900,
+   "alt": "Stainless bottle arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-47": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Desk organizer arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-48": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Hand cream arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-49": {
+   "w": 1536,
+   "h": 900,
+   "alt": "Brown boot arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-50": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Canvas cap arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-51": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Wool scarf arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-52": {
+   "w": 1536,
+   "h": 900,
+   "alt": "Striped tee arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-53": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Wireless mouse arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-54": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Phone stand arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-55": {
+   "w": 1536,
+   "h": 900,
+   "alt": "Coffee grinder arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-56": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Soap bar arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-57": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Plant pot arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-58": {
+   "w": 1536,
+   "h": 900,
+   "alt": "Pet leash arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-59": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Yoga block arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-60": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Sunglasses arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-61": {
+   "w": 1536,
+   "h": 900,
+   "alt": "Crossbody bag arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-62": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Running shorts arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-63": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Hair brush arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-64": {
+   "w": 1536,
+   "h": 900,
+   "alt": "Tea tin arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-65": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Cutting board arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-66": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Linen apron arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-67": {
+   "w": 1536,
+   "h": 900,
+   "alt": "Night cream arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-68": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Folding chair arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:reserve-69": {
+   "w": 1024,
+   "h": 1536,
+   "alt": "Travel adapter arranged in a clean styled product scene with soft natural light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-jewel-70": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Gold ring resting on a hand in soft studio light with a clear polished band",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-jewel-71": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Silver bracelet worn on a wrist beside a linen sleeve in bright window light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:tpl-jewel-72": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Pearl earrings displayed beside a small jewelry box on a pale stone surface, soft light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-shoes-73": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Black trail shoe on a rocky path with the tread clearly visible, crisp morning light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-shoes-74": {
+   "w": 1200,
+   "h": 900,
+   "alt": "White court sneaker on a clean court surface with a soft side shadow, bright daylight",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:ind-shoes-75": {
+   "w": 1200,
+   "h": 900,
+   "alt": "Red running shoe beside a track lane with its sole and laces visible, morning light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:spokesperson-videos-76": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Adult holding a matte black speaker toward the camera in a bright living room, natural window light",
+   "variants": [
+    640,
+    1280
+   ],
+   "source": "gen-list.json"
+  },
+  "gen2:spokesperson-videos-77": {
+   "w": 1536,
+   "h": 1024,
+   "alt": "Adult presenting a blue desk microphone from the side in a bright home office, soft light",
    "variants": [
     640,
     1280

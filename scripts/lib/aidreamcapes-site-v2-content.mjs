@@ -147,7 +147,11 @@ export function loadSiteV2Source() {
     for (const key of ["intro", "credits_explained"]) if (typeof value[key] === "string") value[key] = [value[key]];
     content[page.id] = value;
   }
-  const media = { catalog: readJson(path.join(DATA_DIR, "media-catalog.json")), plan: readJson(path.join(DATA_DIR, "media-plan.json")) };
+  const media = {
+    catalog: readJson(path.join(DATA_DIR, "media-catalog.json")),
+    plan: readJson(path.join(DATA_DIR, "media-plan.json")),
+    casePlan: readJson(path.join(DATA_DIR, "case-plan.json"))
+  };
   return { master, images, content, media };
 }
 
@@ -385,73 +389,7 @@ function pickRelatedCards(model, direct, fallback, count) {
   return [...chosen, ...pickCards(model, fallback.filter((key) => !used.has(key)), count - chosen.length)];
 }
 
-// Page-specific examples use the same card grid as templates, but keep the asset,
-// format and action together. The clip allocation mirrors the media review: a
-// source clip is deliberately assigned to no more than two public pages.
-const CASE_CLIPS = {
-  "tpl-limited-drop-alert-video": "limited-drop-alert",
-  "tpl-product-feature-callout-video": "feature-callout",
-  "tpl-carousel-video-ad": "carousel-storytelling",
-  "tpl-spark-ads-style-video": "native-spark-ads",
-  "tpl-retargeting-video-ad": "retargeting-urgency",
-  "tpl-beauty": "beauty-routine", "ind-beauty-skincare": "beauty-routine",
-  "before-after-videos": "before-after-showcases-a", "ind-home-living": "before-after-showcases-b",
-  "occ-black-friday": "black-friday-countdown", "tpl-bf": "black-friday-countdown",
-  "tpl-carousel-video-ad": "carousel-storytelling", "plat-instagram": "carousel-storytelling",
-  "tpl-compare": "competitor-comparison-a", "plat-youtube-shorts": "competitor-comparison-b",
-  "occ-sale-discount": "discount-free-shipping", "plat-facebook": "retargeting-urgency",
-  "tpl-outfit": "fashion-try-on-reel", "ind-fashion-clothing": "fashion-try-on-reel",
-  "tpl-product-feature-callout-video": "feature-callout", "product-videos": "feature-callout",
-  "tpl-drink": "food-beverage", "ind-food-drinks": "food-beverage",
-  "tpl-home": "home-organization", "plat-tiktok": "home-organization",
-  "tpl-howto": "how-to-tutorial", "occ-holidays": "pas-formula-ads",
-  "tpl-limited-drop-alert-video": "limited-drop-alert", "ind-shoes": "limited-drop-alert",
-  "tpl-spark-ads-style-video": "native-spark-ads", "video-ads": "native-spark-ads",
-  "tpl-launch": "promo-launch-sale", "occ-product-launch": "promo-launch-sale",
-  "tpl-retargeting-video-ad": "retargeting-urgency", "plat-facebook-retargeting": "retargeting-urgency",
-  "ind-health-wellness": "social-proof-animation", "tpl-film": "trending-audio-sync",
-  "ind-electronics": "trending-audio-sync", "unboxing-videos": "unboxing-experience",
-  "url-to-video": "url-to-ad-b", "occ-product-launch-url": "url-to-ad-b"
-};
-const CASE_GEN2 = {
-  "spokesperson-videos": "gen2:spokesperson-videos-1",
-  "tpl-product-feature-callout-video": "gen2:tpl-product-feature-callout-video-2",
-  "tpl-limited-drop-alert-video": "gen2:tpl-limited-drop-alert-video-3",
-  "tpl-retargeting-video-ad": "gen2:tpl-retargeting-video-ad-4",
-  "ind-electronics": "gen2:ind-electronics-5",
-  "ind-health-wellness": "gen2:ind-health-wellness-6",
-  "ind-home-living": "gen2:ind-home-living-7",
-  "ind-food-drinks": "gen2:ind-food-drinks-8",
-  "plat-facebook": "gen2:plat-facebook-ads-9",
-  "plat-youtube-shorts": "gen2:plat-youtube-shorts-ads-10",
-  "occ-holidays": "gen2:occ-holidays-11",
-  "blog-ai-video-review-checklist": "gen2:blog-ai-video-review-checklist-12",
-  "plat-instagram": "gen2:plat-instagram-ads-13",
-  "tpl-size": "gen2:tpl-size-14"
-};
 const CASE_PAGE_TYPES = new Set(["hub-tool", "tool", "template", "industry", "platform", "occasion"]);
-
-function casePool(model) {
-  if (model.casePool) return model.casePool;
-  const out = [];
-  for (const [tool, gallery] of Object.entries(model.media.catalog.galleries ?? {})) {
-    for (const file of Object.keys(gallery.items ?? {})) out.push(`g:${tool}/${file}`);
-  }
-  for (const key of Object.keys(model.media.catalog.gen2 ?? {})) out.push(`n:${key}`);
-  // Existing generated and frame stills are valid fallback examples when a page
-  // has no matching gallery. Their files may be absent locally during development.
-  for (const key of Object.keys(model.media.catalog.gen ?? {})) out.push(`n:${key}`);
-  for (const key of Object.keys(model.media.catalog.frames ?? {})) out.push(`f:${key}`);
-  model.casePool = out;
-  return out;
-}
-
-function caseName(meta, fallback) {
-  const text = String(meta?.alt ?? fallback).replace(/\s+/g, " ").trim();
-  if (!text) return fallback;
-  const sentence = text.replace(/[.!?]+$/, "");
-  return sentence.length > 72 ? `${sentence.slice(0, 69).replace(/\s+\S*$/, "")}…` : sentence;
-}
 
 function caseTarget(model, page) {
   const preferred = page.type === "template" ? page.made_with : page.group === "photo" ? "photo-hub" : "video-ads";
@@ -459,15 +397,21 @@ function caseTarget(model, page) {
   return toolAppHref(tool, page.type === "template" ? page.id.slice(4) : undefined);
 }
 
-function caseCardFor(model, page, ref, index, clipId) {
-  const isClip = Boolean(clipId);
-  const source = isClip ? clipRef(model, clipId) : mediaImage(model, ref, "card");
-  const meta = isClip ? model.media.catalog.frames[clipId] : source;
+const CASE_RATIOS = [["1:1", 1], ["4:5", 4 / 5], ["3:4", 3 / 4], ["4:3", 4 / 3], ["3:2", 3 / 2], ["16:9", 16 / 9], ["9:16", 9 / 16]];
+function closestRatio(width, height) {
+  const value = Number(width) / Number(height);
+  return CASE_RATIOS.reduce((best, item) => Math.abs(item[1] - value) < Math.abs(best[1] - value) ? item : best, CASE_RATIOS[0])[0];
+}
+
+function caseCardFor(model, page, entry, index) {
+  const ref = entry.ref;
+  const isClip = Boolean(model.media.catalog.clips?.[ref]);
+  const source = isClip ? clipRef(model, ref) : mediaImage(model, ref, "card");
   const kind = isClip ? "video" : "photo";
-  const title = isClip ? source.name.replace(/^Example (?:clip|video)[: ]*/i, "") : caseName(meta, `Product example ${index + 1}`);
-  const spec = isClip ? `Video · ${source.width === source.height ? "1:1" : source.width > source.height ? "16:9" : "9:16"} · ${source.duration ?? 15} s` : `Photo · ${source.width === source.height ? "1:1" : source.width > source.height ? "4:3" : "9:16"}`;
+  const ratio = closestRatio(source.width, source.height);
+  const spec = isClip ? `Video · ${ratio} · ${source.duration} s` : `Photo · ${ratio}`;
   return {
-    key: `case-${page.id}-${index + 1}`, cardType: "case", name: title, line: spec, spec, kind,
+    key: `case-${page.id}-${index + 1}`, cardType: "case", name: entry.title, product: entry.product, mediaRef: ref, line: spec, spec, kind,
     href: caseTarget(model, page), label: isClip ? "Example clip" : page.group === "video" ? "Example scene" : "Example photo",
     image: isClip ? source.poster : source, ...(isClip ? { video: source } : {}), tags: [], industries: [], platforms: []
   };
@@ -476,43 +420,23 @@ function caseCardFor(model, page, ref, index, clipId) {
 function caseCardsFor(model, page, baseCards = []) {
   if (!CASE_PAGE_TYPES.has(page.type)) return [];
   const need = Math.max(0, 7 - baseCards.length);
-  if (!need) return [];
-  model.caseMediaUse ??= new Map();
-  model.casePageUse ??= new Set();
-  const selected = [];
+  const entries = model.media.casePlan?.pages?.[page.id];
+  assert.ok(Array.isArray(entries), `${page.id}: case-plan entry is required`);
+  assert.equal(entries.length, need, `${page.id}: case-plan has ${entries.length} cases; expected ${need}`);
   const pageBases = new Set();
   for (const card of baseCards) if (card?.image?.src) pageBases.add(imageBase(card.image.src));
   for (const ref of plannedRefs(model, page.id)) {
-    try { pageBases.add(imageBase(mediaImage(model, ref, "card").src)); } catch { /* optional missing local media is allowed */ }
+    try { pageBases.add(imageBase(mediaImage(model, ref, "card").src)); } catch { /* media may be generated later */ }
   }
-  const clipId = CASE_CLIPS[page.id];
-  if (clipId && selected.length < need && (model.caseMediaUse.get(`clip:${clipId}`) ?? 0) < 2) {
-    const clip = caseCardFor(model, page, `f:${clipId}`, selected.length, clipId);
-    const base = imageBase(clip.image.src);
-    if (!pageBases.has(base)) { selected.push(clip); pageBases.add(base); model.caseMediaUse.set(`clip:${clipId}`, (model.caseMediaUse.get(`clip:${clipId}`) ?? 0) + 1); }
-  }
-  for (const genId of (CASE_GEN2[page.id] ? [CASE_GEN2[page.id]] : [])) {
-    if (selected.length >= need) break;
-    const image = mediaImage(model, `n:${genId}`, "card");
-    const base = imageBase(image.src);
-    if (pageBases.has(base) || (model.caseMediaUse.get(base) ?? 0) >= 2) continue;
-    selected.push(caseCardFor(model, page, `n:${genId}`, selected.length, null));
+  return entries.map((entry, index) => {
+    assert.ok(entry && typeof entry.ref === "string" && typeof entry.product === "string" && typeof entry.title === "string", `${page.id}: malformed case-plan row ${index + 1}`);
+    assert.ok(!entry.ref.includes("social-proof-animation"), `${page.id}: retired social-proof-animation cannot be a case`);
+    const card = caseCardFor(model, page, entry, index);
+    const base = imageBase(card.image.src);
+    assert.ok(!pageBases.has(base), `${page.id}: case media repeats a visible page image (${entry.ref})`);
     pageBases.add(base);
-    model.caseMediaUse.set(base, (model.caseMediaUse.get(base) ?? 0) + 1);
-  }
-  const pool = casePool(model);
-  for (const ref of pool) {
-    if (selected.length >= need) break;
-    let image;
-    try { image = mediaImage(model, ref, "card"); } catch { continue; }
-    const base = imageBase(image.src);
-    if (pageBases.has(base) || (model.caseMediaUse.get(base) ?? 0) >= 2) continue;
-    selected.push(caseCardFor(model, page, ref, selected.length, null));
-    pageBases.add(base);
-    model.caseMediaUse.set(base, (model.caseMediaUse.get(base) ?? 0) + 1);
-  }
-  model.casePageUse.add(page.id);
-  return selected;
+    return card;
+  });
 }
 
 // The pictures a page's own plan puts on it (main picture, gallery, before and after pairs), so cards never repeat them.
@@ -1241,16 +1165,27 @@ export function validateSiteV2(build = buildSiteV2()) {
   // sampled on two pages at most, and never twice on one page.
   const caseLayouts = new Set(["tool", "template", "collection"]);
   const caseMediaPages = new Map();
-  const caseMediaKey = (card) => String(card.video?.src ?? card.image?.src ?? "").replace(/-v(?=\.|--)/, "");
+  const caseMediaTypes = new Map();
+  const caseMediaKey = (card) => card.mediaRef
+    ? (modelCaseMediaKey(card.mediaRef))
+    : String(card.video?.src ?? card.image?.src ?? "").replace(/-v(?=\.|--)/, "");
+  const modelCaseMediaKey = (ref) => String(ref).replace(/^f:/, "").replace(/-v$/, "");
+  const validationSource = loadSiteV2Source();
+  const casePlan = validationSource.media.casePlan;
+  const pageTypeById = Object.fromEntries(validationSource.master.pages.map((page) => [page.id, page.type]));
   for (const page of build.pages) {
     const { layout, data } = page.contentJson.sections.v2_main.settings;
     if (!caseLayouts.has(layout)) continue;
     const cards = layout === "tool" ? (data.templates ?? []) : layout === "template" ? (data.more ?? []) : (data.cards ?? []);
     const cases = cards.filter((card) => card.cardType === "case");
+    const planned = casePlan.pages?.[page.id];
+    if (!Array.isArray(planned)) errors.push(`${page.id}: missing case-plan page`);
+    else if (planned.length !== cases.length) errors.push(`${page.id}: case-plan has ${planned.length} rows but build has ${cases.length} cases`);
     if (cards.length < 7 || cards.length > 8) errors.push(`${page.id}: case area has ${cards.length} cards (needs 7-8)`);
     const templates = cards.length - cases.length;
     if (templates < 2 || templates > 4 || cases.length < 3 || cases.length > 6) errors.push(`${page.id}: case/template card mix is not balanced (${templates} templates, ${cases.length} cases)`);
     const seenOnPage = new Set();
+    const seenProducts = new Set();
     for (const card of cases) {
       const key = caseMediaKey(card);
       if (!key) { errors.push(`${page.id}: case card has no media`); continue; }
@@ -1258,9 +1193,22 @@ export function validateSiteV2(build = buildSiteV2()) {
       seenOnPage.add(key);
       const pages = caseMediaPages.get(key) ?? new Set();
       pages.add(page.id); caseMediaPages.set(key, pages);
+      const types = caseMediaTypes.get(key) ?? new Set();
+      const pageType = pageTypeById[page.id] ?? page.pageType;
+      if ([...types].some((type) => type === pageType)) errors.push(`${page.id}: case media is shared by pages of the same type (${key})`);
+      types.add(pageType); caseMediaTypes.set(key, types);
+      if (!card.product || card.product !== card.product.toLowerCase()) errors.push(`${page.id}: case product must be lowercase English (${card.product || "missing"})`);
+      if (seenProducts.has(card.product)) errors.push(`${page.id}: case product repeats (${card.product})`);
+      seenProducts.add(card.product);
+      if (!card.name || card.name.length > 60 || /^Product example/i.test(card.name) || /starting photo/i.test(card.name)) errors.push(`${page.id}: invalid case title (${card.name || "empty"})`);
+      if (card.name === card.image?.alt || card.name === card.video?.name || card.name === card.video?.description) errors.push(`${page.id}: case title copies media metadata (${card.name})`);
+      if (card.mediaRef?.includes("social-proof-animation") || card.video?.src?.includes("social-proof-animation")) errors.push(`${page.id}: social-proof-animation is not allowed in case media`);
+      const expected = card.kind === "video" ? `Video · ${closestRatio(card.video.width, card.video.height)} · ${card.video.duration} s` : `Photo · ${closestRatio(card.image.width, card.image.height)}`;
+      if (card.spec !== expected) errors.push(`${page.id}: case spec is not based on actual media dimensions (${card.name})`);
     }
   }
   for (const [media, pages] of caseMediaPages) if (pages.size > 2) errors.push(`case media appears on ${pages.size} pages (max 2): ${media}`);
+  for (const pageId of Object.keys(casePlan.pages ?? {})) if (!build.pages.some((page) => page.id === pageId)) errors.push(`${pageId}: case-plan points to a missing page`);
   // Media: pages of these layouts show their own picture, every image has a proper
   // description, nothing comes from another store's folders, and no two pages share the
   // same main image.
