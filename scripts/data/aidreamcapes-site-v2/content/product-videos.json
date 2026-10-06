@@ -233,6 +233,23 @@
             "product": "cutlery drawer organizer"
           }
         ]
+      },
+      {
+        "label": "Kitchen and desk demos",
+        "items": [
+          {
+            "ref": "n:gen2:product-videos-g4",
+            "title": "Collapsible bottle expanded to full size",
+            "kind": "scene",
+            "product": "collapsible water bottle"
+          },
+          {
+            "ref": "n:gen2:product-videos-g5",
+            "title": "Milk frother foaming milk in a glass cup",
+            "kind": "scene",
+            "product": "milk frother"
+          }
+        ]
       }
     ]
   }

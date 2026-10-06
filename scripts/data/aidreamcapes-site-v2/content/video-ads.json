@@ -241,6 +241,23 @@
             "product": "snack pouch"
           }
         ]
+      },
+      {
+        "label": "Out and about",
+        "items": [
+          {
+            "ref": "n:gen2:video-ads-g4",
+            "title": "Lip balm pulled from a jacket pocket outdoors",
+            "kind": "scene",
+            "product": "lip balm"
+          },
+          {
+            "ref": "n:gen2:video-ads-g5",
+            "title": "Travel mug grabbed from a car cup holder",
+            "kind": "scene",
+            "product": "travel mug"
+          }
+        ]
       }
     ]
   }

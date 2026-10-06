@@ -219,7 +219,7 @@
     "items": [
       {
         "t": "Running shoe",
-        "d": "Place the shoe on a damp trail beside a small puddle, with the side profile facing the camera and open sky above for later ad copy."
+        "d": "Place the shoe on a damp trail beside a small puddle, with the side profile facing the camera and open sky above for your ad text later."
       },
       {
         "t": "Ceramic mug",
@@ -257,6 +257,99 @@
       {
         "t": "Check the product",
         "d": "Compare the file with the real item before it goes live, especially the label, color, count, and small hardware details."
+      }
+    ]
+  },
+  "examples": {
+    "h2": "Examples by product type",
+    "lead": "One product photo can become listing images, lifestyle scenes and short video ideas. Here are examples across common store categories.",
+    "groups": [
+      {
+        "label": "Photos",
+        "items": [
+          {
+            "ref": "n:gen2:home-g1",
+            "title": "Ceramic vase cut out on pure white",
+            "kind": "photo",
+            "product": "ceramic vase"
+          },
+          {
+            "ref": "n:gen2:home-g2",
+            "title": "Leather backpack resting on a cafe chair",
+            "kind": "photo",
+            "product": "leather backpack"
+          },
+          {
+            "ref": "n:gen2:home-g3",
+            "title": "Silk scarf worn on a breezy park walk",
+            "kind": "photo",
+            "product": "silk scarf"
+          },
+          {
+            "ref": "n:gen2:home-g4",
+            "title": "Skincare bottle on wet stone with room for text",
+            "kind": "photo",
+            "product": "skincare bottle"
+          }
+        ]
+      },
+      {
+        "label": "Video scenes",
+        "items": [
+          {
+            "ref": "n:gen2:home-g5",
+            "title": "Smartwatch strapped on before a run",
+            "kind": "scene",
+            "product": "smartwatch"
+          },
+          {
+            "ref": "n:gen2:home-g6",
+            "title": "Air purifier switched on in a bright bedroom",
+            "kind": "scene",
+            "product": "air purifier"
+          },
+          {
+            "ref": "n:gen2:home-g7",
+            "title": "Dog leash clipped on at the front door",
+            "kind": "scene",
+            "product": "dog leash"
+          },
+          {
+            "ref": "n:gen2:home-g8",
+            "title": "Board game opened on a family table",
+            "kind": "scene",
+            "product": "board game"
+          }
+        ]
+      }
+    ]
+  },
+  "limitations": {
+    "h2": "What a generated scene cannot confirm",
+    "items": [
+      {
+        "t": "A scene is not a measurement",
+        "d": "A hand beside a mug can suggest scale, but perspective does not establish capacity or exact dimensions. Use measurements from your product record for size, fit, weight, and compatibility; keep the scene from implying proportions those specifications do not support. If shoppers need an exact size comparison, show the verified measurement in the listing."
+      },
+      {
+        "t": "One source view has limits",
+        "d": "A front-facing input does not document the back, fasteners, ports, seams, or package insert. If one of those details affects a buying decision, include a real, approved view of that area beside the generated setting so customers can inspect it clearly."
+      },
+      {
+        "t": "An action is not a performance test",
+        "d": "A hand opening a case or switching on a lamp can illustrate a use moment; it is not a durability or safety test. Keep performance and before-and-after statements tied to evidence your team can substantiate, and let the scene provide context for the product."
+      },
+      {
+        "t": "Match the asset to the exact version",
+        "d": "When nearby variants differ by shade, size, trim, or bundle count, verify the chosen asset against the exact SKU before linking it to the listing. Keep the displayed item aligned with the selection a customer will add to the cart, especially when a small component separates one version from another."
+      },
+      {
+        "t": "Get package wording from a verified record",
+        "d": "Ingredients, warnings, sizing marks, and tiny label details should come from your approved product record, not generated lettering. Add the verified information after download, then compare the final frame with the actual package. Generated lettering may contain errors, so leave it out when precision matters."
+      },
+      {
+        "t": "Refresh offer details at launch",
+        "d": "Price, dates, inventory, and promotion terms can change between asset prep and launch. Add them from the current offer record during the final edit, then confirm stock and expiration again when you schedule the post. This keeps a timely scene from carrying yesterday's offer."
       }
     ]
   }

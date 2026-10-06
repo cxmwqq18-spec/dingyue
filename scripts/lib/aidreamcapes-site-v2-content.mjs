@@ -390,7 +390,7 @@ function pickRelatedCards(model, direct, fallback, count) {
 }
 
 const CASE_PAGE_TYPES = new Set(["hub-tool", "tool", "template", "industry", "platform", "occasion"]);
-const EXAMPLE_PAGE_TYPES = new Set(["hub", "hub-tool", "tool", "template", "industry", "platform", "occasion"]);
+const EXAMPLE_PAGE_TYPES = new Set(["home", "hub", "hub-tool", "tool", "template", "industry", "platform", "occasion", "examples"]);
 
 function caseTarget(model, page) {
   const preferred = page.type === "template" ? page.made_with : page.group === "photo" ? "photo-hub" : "video-ads";
@@ -850,21 +850,28 @@ function layoutFor(page) {
 // Enrichment drafts use compact copy-writing shapes (overview paragraphs use `d` or `p`).
 // Normalize them once while compiling so the public payload has only renderable fields and
 // never carries review notes or other editorial metadata.
-function enrichmentFor(model, c) {
-  const item = (value) => typeof value === "string" ? { t: value, d: "" } : value && typeof value === "object" ? { t: value.t ?? "", d: value.d ?? "" } : { t: "", d: "" };
-  const items = (value) => Array.isArray(value) ? value.map(item).filter((entry) => entry.t) : [];
+function enrichmentFor(model, page, c) {
+  const item = (value, linkify = false) => {
+    const entry = typeof value === "string" ? { t: value, d: "" } : value && typeof value === "object" ? { t: value.t ?? "", d: value.d ?? "" } : { t: "", d: "" };
+    return linkify ? { ...entry, d: inlineLinks(model, entry.d, page.id) } : entry;
+  };
+  const items = (value, linkify = false) => Array.isArray(value) ? value.map((entry) => item(entry, linkify)).filter((entry) => entry.t) : [];
   const section = (value) => {
     if (Array.isArray(value)) return value.map((entry) => ({ h2: entry.h2, paras: [entry.d ?? entry.p ?? ""].filter(Boolean) }));
     if (value && typeof value === "object") return [{ h2: value.h2, paras: [], items: items(value.items) }];
     return [];
   };
-  const block = (value) => value && typeof value === "object" ? { h2: value.h2, items: items(value.items) } : undefined;
+  const block = (value, linkify = false) => value && typeof value === "object" ? { h2: value.h2, items: items(value.items, linkify) } : undefined;
   const fit = value => value && typeof value === "object" ? { h2: value.h2, good: items(value.good), not_ideal: items(value.not_ideal) } : undefined;
   const compare = block(c.compare);
   return {
     ...(c.overview ? { overview: section(c.overview) } : {}),
     ...(c.input_guide ? { inputGuide: block(c.input_guide) } : {}),
     ...(c.results ? { results: block(c.results) } : {}),
+    ...(c.scene_prompt_examples ? { scenePromptExamples: block(c.scene_prompt_examples) } : {}),
+    ...(c.troubleshooting ? { troubleshooting: block(c.troubleshooting) } : {}),
+    ...(c.tool_chooser ? { toolChooser: block(c.tool_chooser, true) } : {}),
+    ...(c.limitations ? { limitations: block(c.limitations) } : {}),
     ...(c.scene_recipes ? { sceneRecipes: block(c.scene_recipes) } : {}),
     ...(c.after_download ? { afterDownload: block(c.after_download) } : {}),
     ...(c.fit ? { fit: fit(c.fit) } : {}),
@@ -881,7 +888,7 @@ function payloadFor(model, page) {
     faq: (c.faq || []).map((item) => ({ q: item.q, a: item.a })),
     startNote: page.type === "pricing" ? START_NOTE_PLAIN : START_NOTE,
     ...(examples ? { examples } : {}),
-    ...enrichmentFor(model, c)
+    ...enrichmentFor(model, page, c)
   };
   const t = page.type;
   if (t === "home") {
@@ -897,6 +904,7 @@ function payloadFor(model, page) {
       steps: c.steps, compare: c.compare, plans: PLANS,
       ...(c.ugc ? { ugc: { ...c.ugc, paras: (c.ugc.paras || []).map((para) => inlineLinks(model, para, page.id)) } } : {}),
       ...(c.audience ? { audience: { ...c.audience, items: (c.audience.items || []).map((item) => ({ ...item, d: inlineLinks(model, item.d, page.id) })) } } : {}),
+      exampleGallery: examples,
       examples: { flows: (c.example_flows || []).map((item) => exampleFlow(model, item)) }
     };
   }
@@ -1113,7 +1121,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     for (const list of [payload.heroCards, payload.cards, payload.more, payload.templates?.cards]) {
       for (const card of list ?? []) pushMedia(card?.image);
     }
-    for (const group of payload.examples?.groups ?? []) for (const item of group.items ?? []) pushMedia(item.image);
+    for (const group of [...(payload.examples?.groups ?? []), ...(payload.exampleGallery?.groups ?? [])]) for (const item of group.items ?? []) pushMedia(item.image);
     for (const item of [...(payload.items ?? []), ...(payload.articles ?? [])]) pushMedia(item?.image);
     const { pageType, templateKey } = livePageTypeFor(page);
     return {
@@ -1206,11 +1214,11 @@ export function renderedImages(layout, data) {
   const addGallery = () => (data.gallery?.images ?? []).forEach(add);
   const addPairs = () => (data.pairs ?? []).forEach((pair) => { add(pair.before); add(pair.after); });
   const addFlows = (flows) => (flows ?? []).forEach((flow) => flow.steps.forEach((step) => add(step.image)));
-  const addExamples = () => (data.examples?.groups ?? []).forEach((group) => (group.items ?? []).forEach((item) => add(item.image)));
+  const addExamples = (examples = data.examples) => (examples?.groups ?? []).forEach((group) => (group.items ?? []).forEach((item) => add(item.image)));
   if (layout === "home") {
     add(data.hero.image);
     if (!addMedia(data.heroMedia)) { add(data.hero.output); (data.hero.versions ?? []).forEach(add); }
-    addTools(data.make.video); addTools(data.make.photo); addCards(data.templates.cards); addFlows(data.examples.flows);
+    addTools(data.make.video); addTools(data.make.photo); addCards(data.templates.cards); addFlows(data.examples.flows); addExamples(data.exampleGallery);
   } else if (layout === "video-hub") { addCards(data.heroCards); addTools(data.tools); addCards(data.cards); addExamples(); }
   else if (layout === "tool") {
     if (!addMedia(data.heroMedia)) { if (data.hero?.single) add(data.hero.single); else addCards(data.hero?.cards); }
@@ -1219,7 +1227,7 @@ export function renderedImages(layout, data) {
   else if (layout === "collection") { if (!addMedia(data.heroMedia)) addCards(data.heroCards); addGallery(); addCards(data.cards); addTools(data.tools); addExamples(); }
   else if (layout === "index") { addCards(data.cards); (data.items ?? []).forEach((item) => add(item.image)); (data.articles ?? []).forEach((article) => add(article.image)); }
   else if (layout === "article") add(data.image);
-  else if (layout === "examples") { addFlows(data.flows); addPairs(); addCards(data.cards); }
+  else if (layout === "examples") { addFlows(data.flows); addPairs(); addCards(data.cards); addExamples(); }
   else add(data.image);
   return out;
 }
@@ -1291,6 +1299,12 @@ export function validateSiteV2(build = buildSiteV2()) {
 
     const sourceContent = validationSource.content[page.id] || {};
     if (sourceContent.overview && (!Array.isArray(data.overview) || !data.overview.length)) errors.push(`${page.id}: overview content was dropped from the public payload`);
+    for (const [sourceKey, payloadKey] of [["scene_prompt_examples", "scenePromptExamples"], ["troubleshooting", "troubleshooting"], ["tool_chooser", "toolChooser"], ["limitations", "limitations"]]) {
+      if (!sourceContent[sourceKey]) continue;
+      const block = data[payloadKey];
+      if (!block || typeof block.h2 !== "string" || !Array.isArray(block.items)) errors.push(`${page.id}: ${sourceKey} content was dropped from the public payload`);
+      else for (const item of block.items) if (!item || typeof item.t !== "string" || typeof item.d !== "string") errors.push(`${page.id}: invalid ${sourceKey} item shape`);
+    }
     if (Array.isArray(data.overview)) for (const section of data.overview) {
       if (!section || typeof section.h2 !== "string" || (!Array.isArray(section.paras) && !Array.isArray(section.items))) errors.push(`${page.id}: invalid overview section shape`);
     }
@@ -1332,7 +1346,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   // A sentence of eight or more words in a new enrichment block is page-specific
   // copy. Keep exact repeats out of the public set while allowing short labels.
   const sentencePages = new Map();
-  const enrichKeys = ["overview", "inputGuide", "results", "sceneRecipes", "afterDownload", "fit", "compare"];
+  const enrichKeys = ["overview", "inputGuide", "results", "scenePromptExamples", "troubleshooting", "toolChooser", "limitations", "sceneRecipes", "afterDownload", "fit", "compare"];
   const collectSentences = (value) => {
     const out = [];
     if (Array.isArray(value)) value.forEach((item) => out.push(...collectSentences(item)));
@@ -1418,7 +1432,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   // around the site-wide media spread rules.
   for (const page of build.pages) {
     const data = page.contentJson.sections.v2_main.settings.data;
-    const groups = data.examples?.groups ?? [];
+    const groups = [...(data.examples?.groups ?? []), ...(data.exampleGallery?.groups ?? [])];
     const items = groups.flatMap((group) => group.items ?? []);
     if (!items.length) continue;
     const seenOnPage = pageMediaSeen.get(page.id) ?? new Set();
@@ -1471,7 +1485,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   for (const page of build.pages) {
     const { layout, data } = page.contentJson.sections.v2_main.settings;
     const main = heroImageOf(data.heroMedia);
-    for (const image of [main, data.heroMedia?.before, ...(data.gallery?.images ?? []), ...(data.pairs ?? []).flatMap((pair) => [pair.before, pair.after]), ...(data.examples?.groups ?? []).flatMap((group) => (group.items ?? []).map((item) => item.image))].filter(Boolean)) {
+    for (const image of [main, data.heroMedia?.before, ...(data.gallery?.images ?? []), ...(data.pairs ?? []).flatMap((pair) => [pair.before, pair.after]), ...[...(data.examples?.groups ?? []), ...(data.exampleGallery?.groups ?? [])].flatMap((group) => (group.items ?? []).map((item) => item.image))].filter(Boolean)) {
       if (!image.alt || image.alt.length < 12) errors.push(`${page.id}: image without a proper description (${image.src})`);
       if (/\bunbranded\b|\bplaceholder\b|\bprompt\b/i.test(image.alt)) errors.push(`${page.id}: internal wording in an image description (${image.alt})`);
       if (!image.src.startsWith("/assets/sites/site_aidreamcapes/")) errors.push(`${page.id}: image outside the Aidreamcapes asset folder (${image.src})`);

@@ -219,5 +219,74 @@
       "A customer testimonial or review, because generated people are not real buyers",
       "A hidden side or unseen feature; provide a source photo for every view you need to show"
     ]
+  },
+  "examples": {
+    "h2": "One product, many outputs",
+    "lead": "The same product photo can lead to different openings, scenes and close-ups. The product stays the same while the setting changes.",
+    "groups": [
+      {
+        "label": "Three openings for one bottle",
+        "items": [
+          {
+            "ref": "n:gen2:examples-g1",
+            "title": "Glass bottle pulled from a tote on a park bench",
+            "kind": "scene",
+            "product": "green glass water bottle"
+          },
+          {
+            "ref": "n:gen2:examples-g2",
+            "title": "Same glass bottle filled at a kitchen tap",
+            "kind": "scene",
+            "product": "green glass water bottle"
+          },
+          {
+            "ref": "n:gen2:examples-g3",
+            "title": "Same glass bottle on a desk in afternoon light",
+            "kind": "scene",
+            "product": "green glass water bottle"
+          }
+        ]
+      },
+      {
+        "label": "Plain, in use, up close",
+        "items": [
+          {
+            "ref": "n:gen2:examples-g4",
+            "title": "Cork yoga block on a plain table",
+            "kind": "photo",
+            "product": "cork yoga block"
+          },
+          {
+            "ref": "n:gen2:examples-g5",
+            "title": "Same cork block in use on a yoga mat",
+            "kind": "photo",
+            "product": "cork yoga block"
+          },
+          {
+            "ref": "n:gen2:examples-g6",
+            "title": "Close-up of the cork block's grain and edge",
+            "kind": "photo",
+            "product": "cork yoga block"
+          }
+        ]
+      },
+      {
+        "label": "Two seasons",
+        "items": [
+          {
+            "ref": "n:gen2:examples-g7",
+            "title": "Wool throw on an armchair by a snowy window",
+            "kind": "photo",
+            "product": "wool throw"
+          },
+          {
+            "ref": "n:gen2:examples-g8",
+            "title": "Same wool throw on a garden bench in spring",
+            "kind": "photo",
+            "product": "wool throw"
+          }
+        ]
+      }
+    ]
   }
 }

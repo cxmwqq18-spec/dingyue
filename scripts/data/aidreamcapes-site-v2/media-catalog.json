@@ -7007,6 +7007,296 @@
     1280
    ],
    "source": "gallery-brief.json"
-  }
+  },
+ "gen2:video-hub-g6": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Pendant lamp glowing above a dining table at dusk.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:video-hub-g7": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Perfume bottle on a mirrored tray with light rippling across the glass.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:video-hub-g8": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Sneaker turning slowly on a plain turntable.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:video-ads-g4": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Lip balm pulled from a jacket pocket on a city street.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:video-ads-g5": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Travel mug grabbed from a car cup holder on a morning drive.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:product-videos-g4": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Collapsible silicone water bottle expanded to full size on a desk.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:product-videos-g5": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Handheld milk frother foaming milk in a glass cup.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:unboxing-videos-g4": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Small jewelry box opened to reveal a gold ring on velvet.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:unboxing-videos-g5": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Headphones lifted out of a fitted foam box insert.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:url-to-video-g4": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Ceramic teapot set on a wooden tray with two cups.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:url-to-video-g5": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Running cap pulled on before a morning jog.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:occ-sale-discount-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Denim jacket on a hanger against a plain wall with open space on the left.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:occ-sale-discount-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Stacked ceramic bowls on a counter with open space above them.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:home-g1": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Ceramic vase on a pure white background.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:home-g2": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Leather backpack resting on a cafe chair.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:home-g3": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Silk scarf worn on a breezy park walk.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:home-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Skincare bottle on wet stone with open space beside it.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:home-g5": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Smartwatch strapped on before a run.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:home-g6": {
+   "w": 1280,
+   "h": 720,
+   "alt": "Air purifier switched on in a bright bedroom.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:home-g7": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Dog leash clipped on at the front door.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:home-g8": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Board game box opened on a family table.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:examples-g1": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "Green glass water bottle pulled from a tote bag on a park bench.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:examples-g2": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "The same green glass water bottle being filled at a kitchen tap.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:examples-g3": {
+   "w": 1280,
+   "h": 2276,
+   "alt": "The same green glass water bottle on a desk in afternoon light.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:examples-g4": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Cork yoga block on a plain table.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:examples-g5": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same cork yoga block in use on a yoga mat.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:examples-g6": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Close-up of the same cork yoga block's grain and edge.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:examples-g7": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "Wool throw on an armchair by a snowy window.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
+ },
+ "gen2:examples-g8": {
+   "w": 1280,
+   "h": 1280,
+   "alt": "The same wool throw on a garden bench in spring.",
+   "variants": [
+     640,
+     1280
+   ],
+   "source": "gallery-brief-c2.json"
  }
+}
 }

@@ -164,12 +164,14 @@ function HomePage({ data, r }: Props) {
       <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />
       <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
+      <EnrichmentBlockSection block={data.limitations as never} eyebrow="Before you publish" r={r} />
       {exampleFlows.length ? (
         <Section eyebrow="Examples" title="One product photo, many results">
           <Flows flows={exampleFlows} r={r} />
           <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/inspiration")}>See more examples →</a></div>
         </Section>
       ) : null}
+      <ExampleGallery examples={data.exampleGallery as V2Examples | undefined} r={r} />
       {audience?.title ? <Section eyebrow="Who it's for" lead={audience.lead ?? ""} title={audience.title}><Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} /></Section> : null}
       <Section eyebrow="Why stores switch" title="Skip the photoshoot. Keep testing new ads.">
         <div className="cmp-wrap">
@@ -229,11 +231,14 @@ function VideoHubPage({ data, r }: Props) {
       <Section eyebrow="About" title="Short videos from your product photos"><Intro paras={list<string>(data.intro)} r={r} /></Section>
       <EnrichmentOverview r={r} sections={data.overview as never} />
       <Section eyebrow="Video tools" title="Pick the video you need"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section>
+      <EnrichmentBlockSection block={data.toolChooser as never} eyebrow="Choose a tool" r={r} />
       <Section eyebrow="Why use it" title={`Why stores make videos with ${BRAND_NAME}`}><Boxes items={list<V2Item>(data.benefits)} r={r} /></Section>
       <EnrichmentBlockSection block={data.compare as never} eyebrow="Compare your options" r={r} />
       <Section eyebrow="How it works" title="Three steps"><Steps items={list<V2Item>(data.steps)} /></Section>
       <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />
+      <EnrichmentBlockSection block={data.scenePromptExamples as never} eyebrow="Scene examples" r={r} />
       <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />
+      <EnrichmentBlockSection block={data.troubleshooting as never} eyebrow="Adjust a result" r={r} />
       <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />
       <FitSection block={data.fit as never} r={r} />
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
@@ -598,6 +603,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
         {list<{ before: V2Image; after: V2Image }>(data.pairs).length ? <Section eyebrow="White background" title="Normal photos turned into clean white-background shots"><PairGrid pairs={list<{ before: V2Image; after: V2Image }>(data.pairs)} r={r} /></Section> : null}
         <Section eyebrow="More results" title="Results by template"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
+        <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
         <Faq items={data.faq} title="Questions" />
         {(data.cta as { href?: string } | undefined)?.href ? <CtaBand note={text(data.startNote)} href={text((data.cta as { href: string }).href)} lead={text((data.cta as { lead: string }).lead)} r={r} title={text((data.cta as { title: string }).title)} /> : null}
       </>

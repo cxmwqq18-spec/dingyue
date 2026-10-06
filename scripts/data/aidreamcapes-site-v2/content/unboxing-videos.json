@@ -233,6 +233,23 @@
             "product": "subscription box"
           }
         ]
+      },
+      {
+        "label": "Small-box reveals",
+        "items": [
+          {
+            "ref": "n:gen2:unboxing-videos-g4",
+            "title": "Jewelry box opened to a ring on velvet",
+            "kind": "scene",
+            "product": "jewelry box"
+          },
+          {
+            "ref": "n:gen2:unboxing-videos-g5",
+            "title": "Headphones lifted from a fitted foam insert",
+            "kind": "scene",
+            "product": "headphones"
+          }
+        ]
       }
     ]
   }

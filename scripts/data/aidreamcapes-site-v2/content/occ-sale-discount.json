@@ -185,6 +185,23 @@
             "product": "bath bundle"
           }
         ]
+      },
+      {
+        "label": "More offer layouts",
+        "items": [
+          {
+            "ref": "n:gen2:occ-sale-discount-g3",
+            "title": "Denim jacket with open space on the left",
+            "kind": "photo",
+            "product": "denim jacket"
+          },
+          {
+            "ref": "n:gen2:occ-sale-discount-g4",
+            "title": "Stacked ceramic bowls with space above for an offer",
+            "kind": "photo",
+            "product": "ceramic bowls"
+          }
+        ]
       }
     ]
   }

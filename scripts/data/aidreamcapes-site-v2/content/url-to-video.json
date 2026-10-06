@@ -230,6 +230,23 @@
             "product": "yoga mat bag"
           }
         ]
+      },
+      {
+        "label": "More listed products",
+        "items": [
+          {
+            "ref": "n:gen2:url-to-video-g4",
+            "title": "Ceramic teapot set on a tray with two cups",
+            "kind": "scene",
+            "product": "ceramic teapot"
+          },
+          {
+            "ref": "n:gen2:url-to-video-g5",
+            "title": "Running cap pulled on before a morning jog",
+            "kind": "scene",
+            "product": "running cap"
+          }
+        ]
       }
     ]
   }

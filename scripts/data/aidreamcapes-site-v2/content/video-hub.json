@@ -173,6 +173,10 @@
       {
         "t": "Save versions with useful names",
         "d": "Name files by product, scene, shape, and date so a later test does not overwrite the opening you want to reuse."
+      },
+      {
+        "t": "Refresh current availability",
+        "d": "Add the live stock status and offer conditions from your seller record, then verify them again before scheduling; inventory or deadlines may change after a scene is prepared."
       }
     ]
   },
@@ -253,6 +257,96 @@
             "product": "glass candle"
           }
         ]
+      },
+      {
+        "label": "Photo to motion",
+        "items": [
+          {
+            "ref": "n:gen2:video-hub-g6",
+            "title": "Pendant lamp glowing above a dining table at dusk",
+            "kind": "scene",
+            "product": "pendant lamp"
+          },
+          {
+            "ref": "n:gen2:video-hub-g7",
+            "title": "Perfume bottle on a mirrored tray in rippling light",
+            "kind": "scene",
+            "product": "perfume bottle"
+          },
+          {
+            "ref": "n:gen2:video-hub-g8",
+            "title": "Sneaker turning slowly on a plain turntable",
+            "kind": "scene",
+            "product": "sneaker"
+          }
+        ]
+      }
+    ]
+  },
+  "scene_prompt_examples": {
+    "h2": "Turn a broad idea into a clear shot",
+    "items": [
+      {
+        "t": "Skin care jar",
+        "d": "Broad: “Show this jar.” More specific: “A hand turns the glass moisturizer jar on a pale vanity; tight product framing, soft morning light from the right.” This names one movement, one place, the distance of the shot, and the light source, so the jar stays in focus."
+      },
+      {
+        "t": "Daypack",
+        "d": "Broad: “Show my backpack.” More specific: “A hand pulls the zipper on a navy daypack beside an open train seat; medium close-up, window light across the fabric.” The action and setting tell viewers what to look at, while the framing gives the bag more attention than the passing background."
+      },
+      {
+        "t": "Tea tin",
+        "d": "Broad: “Make a video of my tea.” More specific: “A round tea tin turns on a wooden breakfast table beside a cup; close framing, side light through a kitchen window.” The concrete direction sets the location, the change in the scene, and which product details should stay in view."
+      },
+      {
+        "t": "Wireless speaker",
+        "d": "Broad: “Show how this speaker works.” More specific: “A finger presses the top dial on the speaker at a desk; tight shot, cool daylight from a side window.” One visible gesture gives the scene a clear subject and beat instead of leaving a long sequence open to interpretation."
+      }
+    ]
+  },
+  "troubleshooting": {
+    "h2": "Make one focused change when a result misses",
+    "items": [
+      {
+        "t": "The product shape drifts",
+        "d": "Switch to a straight-on photo that shows the whole item, then simplify the scene to one small movement. Compare the result with the actual product before using it."
+      },
+      {
+        "t": "Label lettering looks wrong",
+        "d": "Keep exact words out of the visual direction. Use a clean product view, then add verified brand, ingredient, or offer wording in your editor after download."
+      },
+      {
+        "t": "The action changes",
+        "d": "Describe one starting position and one visible action, such as a lid closing. If two movements compete, split them into separate clips or try the Product Videos tool for a single feature."
+      },
+      {
+        "t": "The product looks too small",
+        "d": "Ask for a close shot with the item in the foreground and drop extra props from the description. Fewer objects leave more of the frame for the product."
+      }
+    ]
+  },
+  "tool_chooser": {
+    "h2": "Choose the video tool by your starting point",
+    "items": [
+      {
+        "t": "I have a product page link",
+        "d": "Start with [URL to Video](page:url-to-video) to bring a product image and name into the workspace for review."
+      },
+      {
+        "t": "I want one feature in motion",
+        "d": "Try [Product Videos](page:product-videos) when a single action, such as opening or switching, explains the item."
+      },
+      {
+        "t": "I like my still photo",
+        "d": "Use [Image to Video](page:image-to-video) to add a camera move or a small change in light around the frame."
+      },
+      {
+        "t": "I want a casual product moment",
+        "d": "Choose [Video Ads](page:video-ads) for a creator-style scene centered on the product."
+      },
+      {
+        "t": "I need a package reveal",
+        "d": "Choose [Unboxing Videos](page:unboxing-videos) when the first look inside the package is the main event."
       }
     ]
   }
