@@ -8233,7 +8233,7 @@
         "file": "gen2guide-ind-electronics-m5-soft-focus",
         "w": 1280,
         "h": 1280,
-        "alt": "Portable speaker ports softened by blur.",
+        "alt": "Portable speaker ports and woven grille softened by blur.",
         "variants": [
           640,
           1280
@@ -8243,7 +8243,7 @@
         "file": "gen2guide-ind-electronics-m5-cropped",
         "w": 1280,
         "h": 1280,
-        "alt": "Portable speaker cropped so the outer edge is missing.",
+        "alt": "Portable speaker enlarged until part of its rim falls outside the frame.",
         "variants": [
           640,
           1280
@@ -8253,7 +8253,7 @@
         "file": "gen2guide-ind-fashion-clothing-m5-soft-focus",
         "w": 1280,
         "h": 720,
-        "alt": "Canvas tote bags blurred so their shapes and colors run together.",
+        "alt": "Canvas tote bags softened by blur so their edges blend together.",
         "variants": [
           640,
           1280
@@ -8262,8 +8262,8 @@
       "ind-fashion-clothing-m5-cropped": {
         "file": "gen2guide-ind-fashion-clothing-m5-cropped",
         "w": 1280,
-        "h": 720,
-        "alt": "The outer tote bags are cut off by a tight horizontal crop.",
+        "h": 2276,
+        "alt": "Puffer jacket enlarged until part of the outfit meets the image edges.",
         "variants": [
           640,
           1280
@@ -8273,7 +8273,7 @@
         "file": "gen2guide-ind-food-drinks-m5-soft-focus",
         "w": 1280,
         "h": 1280,
-        "alt": "Snack pouch details softened into blur.",
+        "alt": "Snack pouch and lunch container softened by blur.",
         "variants": [
           640,
           1280
@@ -8283,7 +8283,7 @@
         "file": "gen2guide-ind-food-drinks-m5-cropped",
         "w": 1280,
         "h": 1280,
-        "alt": "Snack box clipped at the edge of the frame.",
+        "alt": "Open snack box enlarged until its edge reaches the frame.",
         "variants": [
           640,
           1280
@@ -8293,7 +8293,7 @@
         "file": "gen2guide-ind-health-wellness-m5-soft-focus",
         "w": 1280,
         "h": 1280,
-        "alt": "Cork yoga block grain lost in soft focus.",
+        "alt": "Cork yoga block softened by blur.",
         "variants": [
           640,
           1280
@@ -8303,7 +8303,7 @@
         "file": "gen2guide-ind-health-wellness-m5-cropped",
         "w": 1280,
         "h": 1280,
-        "alt": "Cork yoga block with one side edge cropped by a tight frame.",
+        "alt": "Cork yoga block enlarged until one side meets the frame edge.",
         "variants": [
           640,
           1280
@@ -8313,7 +8313,7 @@
         "file": "gen2guide-ind-home-living-m5-soft-focus",
         "w": 1280,
         "h": 2276,
-        "alt": "Floor lamp shade and stem blurred beside a reading chair.",
+        "alt": "Throw pillow and chair softened by blur beside a floor lamp.",
         "variants": [
           640,
           1280
@@ -8322,18 +8322,18 @@
       "ind-home-living-m5-cropped": {
         "file": "gen2guide-ind-home-living-m5-cropped",
         "w": 1280,
-        "h": 2276,
-        "alt": "Floor lamp shade and base clipped by a tight frame beside a chair.",
+        "h": 960,
+        "alt": "Fern planter enlarged until the pot edge is cut off by a tight frame.",
         "variants": [
           640,
           1280
         ]
       },
-      "ind-jewelry-accessories-m5-soft-focus": {
-        "file": "gen2guide-ind-jewelry-accessories-m5-soft-focus",
-        "w": 1280,
-        "h": 2276,
-        "alt": "Watch caseback and brown strap softened by blur.",
+    "ind-jewelry-accessories-m5-soft-focus": {
+      "file": "gen2guide-ind-jewelry-accessories-m5-soft-focus",
+      "w": 1280,
+      "h": 1280,
+      "alt": "Ring prong setting softened by blur.",
         "variants": [
           640,
           1280
@@ -8343,7 +8343,7 @@
         "file": "gen2guide-ind-jewelry-accessories-m5-cropped",
         "w": 1280,
         "h": 2276,
-        "alt": "Wristwatch case and strap cut off by a tight crop.",
+        "alt": "Wristwatch enlarged until its case and strap reach the frame edge.",
         "variants": [
           640,
           1280
@@ -8353,7 +8353,7 @@
         "file": "gen2guide-ind-shoes-m5-soft-focus",
         "w": 1280,
         "h": 1280,
-        "alt": "Running shoe profile softened out of focus.",
+        "alt": "Running shoe softened by blur so its profile loses detail.",
         "variants": [
           640,
           1280
@@ -8362,8 +8362,8 @@
       "ind-shoes-m5-cropped": {
         "file": "gen2guide-ind-shoes-m5-cropped",
         "w": 1280,
-        "h": 1280,
-        "alt": "Sneaker lace detail clipped by the frame.",
+        "h": 720,
+        "alt": "Running shoes enlarged until the pair is cut by the frame.",
         "variants": [
           640,
           1280
@@ -8373,7 +8373,7 @@
         "file": "gen2guide-plat-facebook-m5-soft-focus",
         "w": 1280,
         "h": 1280,
-        "alt": "Headphone padding blurred into the background.",
+        "alt": "Over-ear headphones softened by blur.",
         "variants": [
           640,
           1280
@@ -8383,7 +8383,7 @@
         "file": "gen2guide-plat-facebook-m5-cropped",
         "w": 1280,
         "h": 960,
-        "alt": "Backpack handle and bottom edge cropped away.",
+        "alt": "Mini backpack cut off at the side edge by a tight crop.",
         "variants": [
           640,
           1280
@@ -8393,7 +8393,7 @@
         "file": "gen2guide-plat-instagram-m5-soft-focus",
         "w": 1280,
         "h": 1600,
-        "alt": "Face mist bottle softened by blur.",
+        "alt": "Face mist bottle and towel softened by blur on a gym bench.",
         "variants": [
           640,
           1280
@@ -8403,7 +8403,7 @@
         "file": "gen2guide-plat-instagram-m5-cropped",
         "w": 1280,
         "h": 1280,
-        "alt": "Toner bottle cap clipped by the frame.",
+        "alt": "Toner bottle lower half cut off by a tight crop.",
         "variants": [
           640,
           1280
@@ -8413,7 +8413,7 @@
         "file": "gen2guide-plat-youtube-shorts-m5-soft-focus",
         "w": 1024,
         "h": 1024,
-        "alt": "Trail shoe mesh softened into blur.",
+        "alt": "Coral trail shoe softened by blur on a stone display.",
         "variants": [
           640,
           1280
@@ -8423,7 +8423,7 @@
         "file": "gen2guide-plat-youtube-shorts-m5-cropped",
         "w": 1024,
         "h": 1536,
-        "alt": "Front of the trail shoe clipped in a vertical crop.",
+        "alt": "Trail shoe cut off by a tight vertical frame.",
         "variants": [
           640,
           1280

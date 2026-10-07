@@ -241,8 +241,8 @@
       "n:boots-pack",
       "n:guide:ind-shoes-m2-result",
       "f:tiktok-reels-shorts-v",
-      "n:gen2:tpl-story-c2",
-      "n:gen2:tpl-sale-c2",
+      "n:boots-street",
+      "n:boots-doorway",
       "n:gen2:tpl-film-c4"
     ],
     "steps": {
@@ -267,19 +267,19 @@
       "chips": [
         {
           "id": "angle",
-          "label": "Show the angle"
+          "label": "Boots in everyday settings"
         },
         {
           "id": "wear",
-          "label": "Show them worn"
+          "label": "Unboxing and display"
         },
         {
           "id": "detail",
-          "label": "Show the finish"
+          "label": "Shoe storage and display"
         },
         {
           "id": "arrival",
-          "label": "Unbox the pair"
+          "label": "Rain and shoe care"
         }
       ],
       "cards": [
@@ -380,22 +380,22 @@
         "bad_label": "The shoe profile loses detail in blur"
       },
       {
-        "good": "n:gen2:tpl-detail-g1",
+        "good": "n:gen2:tpl-sale-c2",
         "bad": "n:guide:ind-shoes-m5-cropped",
-        "good_label": "Laces and eyelets remain easy to see",
-        "bad_label": "The toe and heel are clipped from view"
+        "good_label": "Both running shoes stay fully inside the frame",
+        "bad_label": "The running shoes are cut off by a tight crop"
       }
     ],
     "outputs": [
       {
-        "ref": "n:gen2:social-ad-photos-g4",
+        "ref": "n:white-shoe",
         "frame": "1:1",
-        "label": "Canvas sneaker on a city curb"
+        "label": "Gray knit running shoe on a white background"
       },
       {
-        "ref": "n:gen2:social-ad-photos-g5",
+        "ref": "n:boots-detail",
         "frame": "1:1",
-        "label": "Canvas sneaker on a gym floor"
+        "label": "Brown leather boot detail"
       }
     ],
     "after": {

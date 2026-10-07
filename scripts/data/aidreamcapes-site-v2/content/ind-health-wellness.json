@@ -175,7 +175,7 @@
   },
   "examples": {
     "h2": "More health and wellness examples",
-    "lead": "Products shown in everyday routines, after a workout, with an evening cup, at bedtime.",
+    "lead": "Products shown after a workout and in a simple skin-care routine.",
     "groups": [
       {
         "label": "Daily routines",
@@ -187,16 +187,10 @@
             "product": "protein powder pouch"
           },
           {
-            "ref": "n:gen2:ind-health-wellness-g2",
-            "title": "Herbal tea tin beside an evening cup",
+            "ref": "n:gen2:social-ad-photos-c3",
+            "title": "Hand cream beside lavender",
             "kind": "photo",
-            "product": "herbal tea tin"
-          },
-          {
-            "ref": "n:gen2:ind-health-wellness-g3",
-            "title": "Sleep mask on a nightstand at bedtime",
-            "kind": "photo",
-            "product": "sleep mask"
+            "product": "hand cream"
           }
         ]
       }
@@ -246,11 +240,11 @@
     },
     "picker": {
       "title": "Choose a wellness scene for daily use",
-      "lead": "Choose a routine that shows the item without implying an outcome.",
+      "lead": "Pick the moment in the day when someone reaches for the product.",
       "chips": [
         {
           "id": "movement",
-          "label": "Movement gear"
+          "label": "Workout routines"
         },
         {
           "id": "routine",
@@ -321,18 +315,18 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-story-c4",
-          "label": "Smoothie bottle on a kitchen counter",
-          "prompt": "Keep the full bottle centered and leave room above the counter scene.",
+          "ref": "n:gen2:ind-health-wellness-g2",
+          "label": "Herbal tea beside an evening cup",
+          "prompt": "Set the herbal tea tin beside a warm cup in soft evening light.",
           "chips": [
             "quiet"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:photo-hub-g1",
-          "label": "Perfume bottle on a white background",
-          "prompt": "Show the bottle upright with a soft shadow and no extra props.",
+          "ref": "n:gen2:ind-health-wellness-g3",
+          "label": "Sleep mask on a nightstand",
+          "prompt": "Place the sleep mask beside a bedside lamp in a quiet bedroom.",
           "chips": [
             "quiet"
           ],

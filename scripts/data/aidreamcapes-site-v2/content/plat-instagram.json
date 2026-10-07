@@ -268,7 +268,7 @@
         },
         {
           "id": "texture",
-          "label": "Shade and texture"
+          "label": "Skin-care product scenes"
         },
         {
           "id": "feed",
@@ -379,8 +379,8 @@
       {
         "good": "n:gen2:ind-beauty-skincare-g4",
         "bad": "n:guide:plat-instagram-m5-cropped",
-        "good_label": "The full tube stays inside the photo",
-        "bad_label": "The tube edge disappears beyond the frame"
+        "good_label": "The full toner bottle stays inside the photo",
+        "bad_label": "The toner bottle is cut off at the frame edge"
       }
     ],
     "outputs": [
@@ -436,15 +436,11 @@
       "m5": {
         "h2": "Keep the product clear in an Instagram image"
       },
-      "m6": {
-        "h2": "One Instagram product in three frame sizes"
-      },
+      "m6": "Instagram posts made from product photos",
       "m7": {
         "h2": "Add the caption and offer after download"
       },
-      "m8": {
-        "h2": "One cup, three Instagram product frames"
-      },
+      "m8": "One cup, three Instagram product frames",
       "examples": {
         "h2": "More Instagram examples",
         "lead": "Square skincare details, a routine image, and a two-card carousel with one product."

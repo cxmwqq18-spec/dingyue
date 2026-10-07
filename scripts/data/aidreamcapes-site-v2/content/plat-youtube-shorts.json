@@ -220,7 +220,7 @@
     "strip": [
       "n:guide:plat-youtube-shorts-m2-source",
       "n:guide:plat-youtube-shorts-m2-result-vertical",
-      "n:gen2:tpl-story-c2",
+      "n:gen2:ind-shoes-74",
       "n:gen2:tpl-story-c3",
       "n:gen2:ind-electronics-5",
       "n:gen2:plat-tiktok-c4"
@@ -248,15 +248,15 @@
       "chips": [
         {
           "id": "open",
-          "label": "Open or reveal"
+          "label": "Bottles in everyday scenes"
         },
         {
           "id": "demo",
-          "label": "Show it working"
+          "label": "Daily care products"
         },
         {
           "id": "style",
-          "label": "Show it styled"
+          "label": "Styled product frames"
         },
         {
           "id": "detail",
@@ -319,18 +319,18 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-outfit-c4",
-          "label": "Puffer jacket in winter light",
-          "prompt": "Show the full jacket on a snowy street with open space around it.",
+          "ref": "n:gen2:tpl-angle-g3",
+          "label": "Speaker controls in close view",
+          "prompt": "Move across the speaker's top controls and keep the buttons in focus.",
           "chips": [
             "detail"
           ],
           "kind": "video"
         },
         {
-          "ref": "n:gen2:plat-tiktok-c3",
-          "label": "Mini fridge stocked with drinks",
-          "prompt": "Open the dorm-room mini fridge and show the drinks in neat rows.",
+          "ref": "n:gen2:tpl-detail-g3",
+          "label": "Leather bag clasp in close view",
+          "prompt": "Open the brass clasp and keep the hinge and locking edge in the center.",
           "chips": [
             "detail"
           ],
@@ -371,13 +371,13 @@
       {
         "ref": "n:gen2:plat-tiktok-c2",
         "frame": "9:16",
-        "label": "Hair clips tried on in a mirror",
+        "label": "6-second vertical demo: hair clips tried on in a mirror",
         "length": 6
       },
       {
         "ref": "n:gen2:video-ads-g2",
         "frame": "9:16",
-        "label": "Tote packed for a hallway trip",
+        "label": "10-second vertical demo: tote packed for a hallway trip",
         "length": 10
       }
     ],
@@ -401,12 +401,12 @@
       {
         "frame": "1:1",
         "ref": "n:guide:plat-youtube-shorts-size-square-ebike",
-        "label": "1:1 · Square placements"
+        "label": "1:1 · square posts on other channels"
       },
       {
         "frame": "16:9",
         "ref": "f:black-friday-countdown",
-        "label": "16:9 · Landscape video"
+        "label": "16:9 · regular YouTube videos"
       }
     ],
     "titles": {
@@ -422,15 +422,11 @@
       "m5": {
         "h2": "Keep the product centered in a YouTube Shorts frame"
       },
-      "m6": {
-        "h2": "One product in three YouTube Shorts ad sizes"
-      },
+      "m6": "YouTube Shorts made from product photos",
       "m7": {
         "h2": "Add music and details after download"
       },
-      "m8": {
-        "h2": "One e-bike, three YouTube Shorts ad sizes"
-      },
+      "m8": "One e-bike in three sizes: Shorts, square, and regular YouTube",
       "examples": {
         "h2": "More YouTube Shorts examples",
         "lead": "Vertical product moments with one clear start and finish."

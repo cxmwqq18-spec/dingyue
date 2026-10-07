@@ -175,17 +175,11 @@
   },
   "examples": {
     "h2": "More jewelry and accessory examples",
-    "lead": "Macro settings and worn shots that show sparkle, size and placement.",
+    "lead": "Worn pieces and close views that show scale, finish and placement.",
     "groups": [
       {
         "label": "Close and worn",
         "items": [
-          {
-            "ref": "n:gen2:ind-jewelry-accessories-g1",
-            "title": "Ring prong setting in macro",
-            "kind": "photo",
-            "product": "ring"
-          },
           {
             "ref": "n:gen2:ind-jewelry-accessories-g2",
             "title": "Fine chain necklace worn at the collarbone",
@@ -230,7 +224,7 @@
       "n:guide:ind-jewelry-accessories-m2-source",
       "n:guide:ind-jewelry-accessories-m2-result",
       "n:gen2:tpl-jewel-28",
-      "n:gen2:tpl-jewel-71",
+      "n:gen2:plat-instagram-c4",
       "n:gen2:tpl-jewel-72",
       "n:gen2:white-background-g4"
     ],
@@ -264,11 +258,11 @@
         },
         {
           "id": "gift",
-          "label": "Gift-ready pieces"
+          "label": "Watch details"
         },
         {
           "id": "daily",
-          "label": "Everyday style"
+          "label": "Accessory presentation"
         }
       ],
       "cards": [
@@ -350,23 +344,23 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:gen2:tpl-film-c3",
-        "h": "Place a watch in a wider listing image",
-        "d": "A dive watch on a rock gives its case a clear outdoor context."
+        "ref": "n:gen2:tpl-jewel-70",
+        "h": "Show a gold ring in a product listing",
+        "d": "The hand beside a coffee cup gives the ring a familiar sense of scale."
       },
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-bf-c4",
-        "h": "Make a smartwatch feel like a gift",
-        "d": "A dark display stand gives the watch a focused holiday look."
+        "ref": "n:gen2:tpl-jewel-71",
+        "h": "Show a silver bracelet in a styled post",
+        "d": "The bracelet's linked shape stays clear against the wrist."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:tpl-jewel-70",
+        "good": "n:gen2:ind-jewelry-accessories-g1",
         "bad": "n:guide:ind-jewelry-accessories-m5-soft-focus",
-        "good_label": "The ring outline remains clear against the surface",
-        "bad_label": "The ring edge blends into the soft background"
+        "good_label": "The ring setting stays clear at close range",
+        "bad_label": "The ring prongs soften into blur"
       },
       {
         "good": "n:gen2:tpl-limited-drop-alert-video-g1",

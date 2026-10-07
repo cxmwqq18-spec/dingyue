@@ -222,7 +222,7 @@
     "overview": "Electronics shoppers need to see the shape, ports, controls, and scale of a device. Start from a clean product shot, then describe one movement that makes a feature easy to understand.",
     "strip": [
       "n:guide:ind-electronics-m2-source",
-      "f:cinematic-video-t14",
+      "f:cinematic-video",
       "n:gen2:tpl-angle-c1",
       "n:gen2:tpl-film-g2",
       "n:gen2:tpl-spark-ads-style-video-c1",
@@ -230,10 +230,10 @@
     ],
     "steps": {
       "source": "n:guide:ind-electronics-m2-source",
-      "result": "f:cinematic-video-t14",
+      "result": "f:cinematic-video",
       "mode": "video",
       "length": 10,
-      "prompt": "Show this speaker on a dark stone table as soft window light moves across the woven grille.",
+      "prompt": "Set this compact speaker on a low dark table beside a window, keeping its woven grille visible.",
       "options": [
         [
           "Size",
@@ -255,7 +255,7 @@
         },
         {
           "id": "desk",
-          "label": "Desk setup"
+          "label": "Desk and travel use"
         },
         {
           "id": "detail",
@@ -263,7 +263,7 @@
         },
         {
           "id": "travel",
-          "label": "On the go"
+          "label": "Phone case styles"
         }
       ],
       "cards": [
@@ -346,14 +346,14 @@
       {
         "frame": "listing",
         "ref": "n:gen2:tpl-launch-c3",
-        "h": "Show a small device on a product page",
-        "d": "A charging pad beside a laptop helps shoppers understand its footprint."
+        "h": "Show a charging pad on a product page",
+        "d": "The isolated pad keeps its circular surface and outline easy to see."
       },
       {
         "frame": "post",
         "ref": "n:gen2:tpl-angle-c2",
-        "h": "Give a travel accessory a feed post",
-        "d": "A compact backpack can show its pockets before a shopper opens the listing."
+        "h": "Show a full-size hiking backpack in a feed post",
+        "d": "A turned pack shows its shoulder straps and back panel before a shopper opens the listing."
       }
     ],
     "input": [

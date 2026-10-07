@@ -237,7 +237,7 @@
       "n:gen2:tpl-tryon-c1",
       "n:gen2:tpl-tryon-c2",
       "n:gen2:tpl-look-c1",
-      "n:gen2:tpl-detail-c4"
+      "n:gen2:image-to-video-g3"
     ],
     "steps": {
       "source": "n:hoodie-pack",
@@ -371,13 +371,13 @@
         "good": "n:gen2:tpl-limited-drop-alert-video-c3",
         "bad": "n:guide:ind-fashion-clothing-m5-soft-focus",
         "good_label": "The full row of tote bags stays visible",
-        "bad_label": "Both outer totes are clipped"
+        "bad_label": "The tote bag shapes blur together"
       },
       {
         "good": "n:gen2:tpl-outfit-c4",
         "bad": "n:guide:ind-fashion-clothing-m5-cropped",
         "good_label": "The jacket and sleeves fit inside the frame",
-        "bad_label": "The coat is cut off by a tight crop"
+        "bad_label": "The puffer jacket is cut off by a tight crop"
       }
     ],
     "outputs": [

@@ -262,7 +262,7 @@
         },
         {
           "id": "unbox",
-          "label": "Unboxing scene"
+          "label": "Bath and grooming"
         },
         {
           "id": "daily",
@@ -374,14 +374,14 @@
         "good": "n:gen2:tpl-size-c1",
         "bad": "n:guide:plat-facebook-m5-cropped",
         "good_label": "The backpack remains fully inside the frame",
-        "bad_label": "The backpack is clipped along the top edge"
+        "bad_label": "The backpack is cut off at the side of the frame"
       }
     ],
     "outputs": [
       {
-        "ref": "n:gen2:tpl-light-c1",
+        "ref": "n:gen2:tpl-light-c2",
         "frame": "1:1",
-        "label": "Perfume bottle with a soft rim light"
+        "label": "Chrome espresso cup on a clean gradient"
       },
       {
         "ref": "n:gen2:tpl-pack-c3",
@@ -430,15 +430,11 @@
       "m5": {
         "h2": "Keep the product readable in a Facebook ad"
       },
-      "m6": {
-        "h2": "Facebook ad images for Square, 9:16, and 16:9"
-      },
+      "m6": "Facebook ad examples made from product photos",
       "m7": {
         "h2": "Add the offer after download in Ads Manager"
       },
-      "m8": {
-        "h2": "One backpack, three Facebook ad sizes"
-      },
+      "m8": "One backpack, three Facebook ad sizes",
       "examples": {
         "h2": "More Facebook ad examples",
         "lead": "Product moments for busy feeds, from a lunchbox to a pet bed."

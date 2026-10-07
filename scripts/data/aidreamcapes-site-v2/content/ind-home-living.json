@@ -230,7 +230,7 @@
       "n:guide:ind-home-living-m2-source",
       "f:promo-launch-sale",
       "n:gen2:tpl-home-c1",
-      "n:gen2:tpl-home-c2",
+      "n:gen2:tpl-sale-c4",
       "n:gen2:tpl-home-c3",
       "n:gen2:tpl-home-c4"
     ],
@@ -261,7 +261,7 @@
         },
         {
           "id": "storage",
-          "label": "Storage fixes"
+          "label": "Plant care and display"
         },
         {
           "id": "decor",
@@ -269,23 +269,23 @@
         },
         {
           "id": "setup",
-          "label": "Easy setup"
+          "label": "Organizing and cleaning"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-size-c4",
-          "label": "Small planter on a shelf",
-          "prompt": "Place the ceramic planter beside two plain books to show its scale.",
+          "ref": "n:gen2:product-videos-g2",
+          "label": "Desk lamp switched on",
+          "prompt": "Let the lamp switch on and spread a warm pool of light across the desk.",
           "chips": [
             "lighting"
           ],
           "kind": "video"
         },
         {
-          "ref": "n:gen2:video-hub-g4",
-          "label": "Entryway with coat hooks",
-          "prompt": "Show the slim bench and coat hooks in a bright, uncluttered entryway.",
+          "ref": "n:guide:white-background-desk-lamp",
+          "label": "Curved brass desk lamp on white",
+          "prompt": "Show the full brass desk lamp with its curved arm and base in view.",
           "chips": [
             "lighting"
           ],
@@ -293,8 +293,8 @@
         },
         {
           "ref": "n:gen2:tpl-howto-c4",
-          "label": "Filling a self-watering planter",
-          "prompt": "Pour water into the reservoir before setting the planter by the window.",
+          "label": "Watering a self-watering planter",
+          "prompt": "Pour water into the planter reservoir before setting it by a window.",
           "chips": [
             "storage"
           ],
@@ -319,18 +319,18 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:product-videos-g1",
-          "label": "Camp chair beside a patio table",
-          "prompt": "Open the folding chair beside a small wooden table outdoors.",
+          "ref": "n:gen2:tpl-film-g3",
+          "label": "Ceramic vase in late-day light",
+          "prompt": "Place the ceramic vase where a beam of late-day light picks out its shape.",
           "chips": [
             "decor"
           ],
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-compare-c4",
-          "label": "Two planters on a windowsill",
-          "prompt": "Place the small and large planters side by side on the same windowsill.",
+          "ref": "n:gen2:product-videos-g3",
+          "label": "Filling a drawer organizer",
+          "prompt": "Sort cutlery into the drawer organizer, keeping each utensil in its own section.",
           "chips": [
             "setup"
           ],
@@ -357,17 +357,17 @@
       },
       {
         "frame": "post",
-        "ref": "n:gen2:product-videos-g2",
-        "h": "Give a table lamp a warm evening post",
-        "d": "A pool of light on the desk shows the lamp switched on."
+        "ref": "n:gen2:tpl-home-c2",
+        "h": "Show matching jars in a kitchen post",
+        "d": "A neat pantry shelf shows the glass jars together in a home setting."
       }
     ],
     "input": [
       {
         "good": "n:gen2:url-to-video-g2",
         "bad": "n:guide:ind-home-living-m5-soft-focus",
-        "good_label": "The whole floor lamp stays in view",
-        "bad_label": "The lamp shade and base are clipped by the crop"
+        "good_label": "The throw pillow and reading chair stay in view",
+        "bad_label": "The pillow and chair soften into blur"
       },
       {
         "good": "n:gen2:plat-shopify-c1",
