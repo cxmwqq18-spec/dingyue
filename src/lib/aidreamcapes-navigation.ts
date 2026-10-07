@@ -68,7 +68,7 @@ export const AIDREAMCAPES_PUBLIC_AI_VIDEO_GENERATION_SLUGS = [
   "home-organization",
   "fashion-try-on-reel",
   "promo-video",
-  "competitor-comparison",
+  "product-comparison-video",
   "black-friday-countdown",
   "limited-drop-alert-video",
   "product-feature-callout-video",

@@ -15,6 +15,8 @@ import { AIDREAMCAPES_SITE_ID, rebrandProfile, rebrandSiteRecord, rebrandThemeSe
 import { argumentValue, assertDatabaseTarget, assertNonProductionWriteTarget, hasArgument } from "./lib/database-target.mjs";
 
 const SITE_ID = AIDREAMCAPES_SITE_ID;
+// This route rename keeps the old LivePage as a separate row until it is backed up and retired below.
+const retiredRouteSlugs = Object.freeze(["/ai-video-generation/competitor-comparison"]);
 const applyLocal = hasArgument("--apply-local");
 const applyProduction = hasArgument("--apply-production");
 assert(!(applyLocal && applyProduction), "Choose one database write target.");
@@ -55,7 +57,11 @@ function hashJson(value) {
   };
   return createHash("sha256").update(JSON.stringify(stable(value))).digest("hex");
 }
-const fallbackPageId = (page) => `aidreamcapes_v2_${page.id.replace(/[^a-z0-9]+/gi, "_")}`;
+// The legacy tpl-compare row already owns aidreamcapes_v2_tpl_compare; a new ID
+// prevents the slug change from moving that row before the explicit retirement.
+const fallbackPageId = (page) => page.slug === "/ai-video-generation/product-comparison-video"
+  ? "aidreamcapes_v2_tpl_compare_product_comparison_video"
+  : `aidreamcapes_v2_${page.id.replace(/[^a-z0-9]+/gi, "_")}`;
 
 const prisma = new PrismaClient();
 try {
@@ -63,6 +69,8 @@ try {
   assert(site, `Site not found: ${SITE_ID}`);
   const slugs = build.pages.map((page) => page.slug);
   const existingPages = await prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: slugs } } });
+  const retiredPages = await prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: [...retiredRouteSlugs] } } });
+  assert(retiredPages.every((page) => page.siteId === SITE_ID && retiredRouteSlugs.includes(page.slug)), "Unexpected row in retired route query.");
   const settings = await prisma.themeSettings.findUnique({ where: { siteId: SITE_ID } });
   assert(settings, `ThemeSettings not found for ${SITE_ID}`);
   const existingBySlug = new Map(existingPages.map((page) => [page.slug, page]));
@@ -78,6 +86,11 @@ try {
       contentJson: page.contentJson
     };
   });
+  const idOwners = await prisma.livePage.findMany({ where: { siteId: SITE_ID, id: { in: nextPages.map((page) => page.id) } }, select: { id: true, slug: true } });
+  for (const page of nextPages) {
+    const owner = idOwners.find((candidate) => candidate.id === page.id);
+    if (owner) assert.equal(owner.slug, page.slug, `LivePage id ${page.id} is already assigned to ${owner.slug}; refusing to overwrite it for ${page.slug}.`);
+  }
   // Footer settings (the company's tax ID) are patched in the published and draft settings alike.
   const settingsPatches = loadThemeSettingsPatches();
   const publishedSettingsPatch = applyThemeSettingsPatch(settings.publishedJson, settingsPatches);
@@ -130,15 +143,16 @@ try {
 
   if (!apply) {
     // Every other page of this site, so each one can be checked against the v2 redirects.
-    const otherPages = await prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { notIn: slugs } }, select: { slug: true, title: true, pageType: true }, orderBy: { slug: "asc" } });
+    const otherPages = await prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { notIn: [...slugs, ...retiredRouteSlugs] } }, select: { slug: true, title: true, pageType: true }, orderBy: { slug: "asc" } });
+    const retired = retiredPages.map(({ id, siteId, slug, pageType, templateKey, title, updatedAt }) => ({ id, siteId, slug, pageType, templateKey, title, updatedAt }));
     console.log(JSON.stringify({ ok: true, mode: productionDryRun ? "production-dry-run" : "dry-run", siteId: SITE_ID, domain: site.primaryDomain, pages: report.length,
       creates: report.filter((item) => item.action === "CREATE").length, updates: report.filter((item) => item.action === "UPDATE").length,
-      navigationChanged, report, utilityPages: utilityReport, products: productReport, siteBranding: brandingReport, footerSettings: settingsReport, profile: profileReport, rename: renameReport, otherPages }, null, 2));
+      navigationChanged, report, retiredRoutes: { slugs: [...retiredRouteSlugs], count: retired.length, wouldDelete: retired }, utilityPages: utilityReport, products: productReport, siteBranding: brandingReport, footerSettings: settingsReport, profile: profileReport, rename: renameReport, otherPages }, null, 2));
   } else {
     const stamp = new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14);
     const backupPath = path.resolve(backupRoot, `site-v2-${applyProduction ? "production" : "local"}-${stamp}.json`);
     await mkdir(path.dirname(backupPath), { recursive: true });
-    await writeFile(backupPath, JSON.stringify({ site, existingPages, utilityPages: utilityRows, products: productRows, settings, profile }, null, 2) + "\n", "utf8");
+    await writeFile(backupPath, JSON.stringify({ site, existingPages, retiredPages, utilityPages: utilityRows, products: productRows, settings, profile }, null, 2) + "\n", "utf8");
     await prisma.$transaction(async (tx) => {
       for (const page of nextPages) {
         // Unchanged pages are left alone so their updatedAt (the sitemap lastmod) only moves when the page really changes.
@@ -150,6 +164,14 @@ try {
           update: { pageType: page.pageType, templateKey: page.templateKey, slug: page.slug, title: page.title, contentJson: page.contentJson }
         });
       }
+      const retiredNow = await tx.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: [...retiredRouteSlugs] } }, orderBy: [{ slug: "asc" }, { id: "asc" }] });
+      assert.equal(hashJson(retiredNow), hashJson([...retiredPages].sort((left, right) => left.slug.localeCompare(right.slug) || left.id.localeCompare(right.id))), "Retired LivePage rows changed after backup; refusing to delete.");
+      const retiredDelete = await tx.livePage.deleteMany({
+        where: { siteId: SITE_ID, slug: { in: [...retiredRouteSlugs] }, id: { in: retiredPages.map((page) => page.id) } }
+      });
+      assert.equal(retiredDelete.count, retiredPages.length, "Deleted retired row count did not match the backed-up row count.");
+      const retiredTransactionReadback = await tx.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: [...retiredRouteSlugs] } }, select: { id: true, siteId: true, slug: true } });
+      assert.equal(retiredTransactionReadback.length, 0, "Retired route still exists inside the transaction.");
       for (const item of utilityResults) {
         if (!item.missing && item.applied.length) await tx.livePage.update({ where: { id: item.id }, data: { contentJson: item.next } });
       }
@@ -171,6 +193,8 @@ try {
     assert.equal(readback.length, nextPages.length, "LivePage readback count");
     const readbackBySlug = new Map(readback.map((page) => [page.slug, page]));
     for (const page of nextPages) assert.equal(hashJson(readbackBySlug.get(page.slug)?.contentJson), hashJson(page.contentJson), `${page.slug}: content hash readback`);
+    const retiredReadback = await prisma.livePage.findMany({ where: { siteId: SITE_ID, slug: { in: [...retiredRouteSlugs] } }, select: { id: true, siteId: true, slug: true } });
+    assert.equal(retiredReadback.length, 0, "Retired route still exists after commit.");
     for (const item of utilityResults.filter((candidate) => !candidate.missing && candidate.applied.length)) {
       const row = await prisma.livePage.findUnique({ where: { id: item.id }, select: { contentJson: true } });
       assert.equal(hashJson(row?.contentJson), hashJson(item.next), `${item.slug}: utility page readback`);
@@ -196,7 +220,7 @@ try {
     assert.equal(hashJson(settingsReadback.draftJson.globalSections?.footer?.settings ?? null), hashJson(nextSettings(draftSettingsPatch).globalSections?.footer?.settings ?? null), "draft footer settings readback");
     console.log(JSON.stringify({ ok: true, mode: applyProduction ? "production-applied" : "local-applied", siteId: SITE_ID, backupPath,
       pages: report.length, creates: report.filter((item) => item.action === "CREATE").length, updates: report.filter((item) => item.action === "UPDATE").length,
-      changed: report.filter((item) => item.contentHash !== item.previousHash).length,
+      changed: report.filter((item) => item.contentHash !== item.previousHash).length, retiredRoutes: { slugs: [...retiredRouteSlugs], deletedCount: retiredPages.length, readback: "PASS" },
       navigationChanged, utilityPages: utilityReport, products: productReport, siteBranding: brandingReport, footerSettings: settingsReport, profile: profileReport, rename: renameReport, readback: "PASS" }, null, 2));
   }
 } finally {

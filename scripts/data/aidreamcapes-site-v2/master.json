@@ -568,7 +568,7 @@
   {
    "id": "tpl-compare",
    "type": "template",
-   "url": "/ai-video-generation/competitor-comparison",
+   "url": "/ai-video-generation/product-comparison-video",
    "label": "Side-by-Side Video",
    "primary_keyword": "product comparison video",
    "img": "v_compare",
