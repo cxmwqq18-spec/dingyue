@@ -1,10 +1,10 @@
 {
   "id": "lifestyle-photos",
-  "title": "AI Lifestyle Product Photos for Your Store | AIVideosUGC",
-  "description": "Create AI lifestyle product photos that place your item on a kitchen shelf, a desk or a beach towel. Upload one photo, describe the scene and get started.",
-  "h1": "AI Lifestyle Product Photos in Everyday Settings",
+  "title": "Lifestyle Product Photos for Ecommerce | AIVideosUGC",
+  "description": "Create a lifestyle product photo from one plain product image by choosing a table, room or café setting for your online shop or social feed.",
+  "h1": "Lifestyle Product Photos for Product Pages and Social Posts",
   "eyebrow": "Photo tool",
-  "lead": "AI lifestyle product photos show shoppers where your product belongs. Upload one photo, describe a setting like a sunny patio or a cozy reading nook, and get a square scene built around your item.",
+  "lead": "Put your product on a breakfast table, a reading corner or a café counter, starting from one plain product photo. No props, no photoshoot.",
   "secondary_keywords": [
     "lifestyle product photography with AI",
     "product in a home setting photo",
@@ -12,50 +12,18 @@
     "Instagram product scene photos",
     "AI product scene generator"
   ],
-  "intro": [
-    "A plain product shot tells shoppers what your item looks like. A lifestyle photo tells them how it fits into their day: a ceramic mug next to an open book, a backpack hanging on a caf\u00e9 chair, a throw blanket draped over a sofa. Scenes like these help people picture owning the product, and they usually take a location, props and a photographer to shoot.",
-    "With this tool you upload one clear product photo and describe the setting you want, or pick a ready-made scene. You get a square image with your item placed in that space. It's a good fit for small brands selling home goods, accessories, kitchenware and gifts that need fresh images for product pages, Instagram posts and email banners without booking a shoot every season."
-  ],
-  "benefits": [
-    {
-      "t": "A scene for every season",
-      "d": "Trade a summer patio for a snowy windowsill without reshooting. Same product, different setting, whenever your store needs a refresh."
-    },
-    {
-      "t": "No props to buy",
-      "d": "Skip the trip for flowers, linens and backdrops. Describe the details you have in mind and the tool builds them into the scene."
-    }
-  ],
   "steps": [
     {
       "t": "Upload a clear product photo",
-      "d": "Use a shot where the item is fully visible and evenly lit. A plain background makes it easier to place in a new scene."
+      "d": "Whole product in frame and in focus. A plain background works best."
     },
     {
-      "t": "Describe or pick a setting",
-      "d": "Choose a ready-made scene or write your own, such as \"linen bedding, morning light, a small plant on the nightstand.\""
+      "t": "Name the setting",
+      "d": "One place, one surface, the light and a prop or two, like \"marble café table, morning sun, a cappuccino\"."
     },
     {
-      "t": "Download or make another scene",
-      "d": "Save the square image you like. To try a different room or time of day, start a fresh version with a reworded description."
-    }
-  ],
-  "uses": [
-    {
-      "t": "Second image on product pages",
-      "d": "Place a lifestyle shot right after your main photo so shoppers see the item in context before they scroll further."
-    },
-    {
-      "t": "Instagram posts between launches",
-      "d": "Keep your grid active with styled scenes of products you already sell, no new photoshoot required."
-    },
-    {
-      "t": "Email headers and banners",
-      "d": "Give newsletters and promo emails an inviting picture that matches the time of year."
-    },
-    {
-      "t": "Etsy listing extras",
-      "d": "Add a styled scene to your handmade listings alongside your close-ups and measurement shots."
+      "t": "Download, or try another setting",
+      "d": "If the scene feels busy, ask for fewer props and compare."
     }
   ],
   "maker": {
@@ -66,165 +34,42 @@
       ],
       [
         "Scene",
-        "Describe a room or setting"
+        "Café table"
       ],
       [
         "Size",
-        "Square by default"
+        "Square"
       ]
     ],
-    "cta": "Make my lifestyle photo"
+    "cta": "Make a lifestyle photo"
   },
   "faq": [
     {
-      "q": "Can I choose where my product sits in the scene?",
-      "a": "You can steer it in your description, for example \"on the left side of a wooden table.\" Results won't always follow every word, so short and specific descriptions tend to work well."
+      "q": "Can I choose where the product sits in the scene?",
+      "a": "Name the surface, the product’s position and one or two props; for example, a handbag on a marble café table beside a cappuccino."
     },
     {
-      "q": "Will the product look the same as in my original photo?",
-      "a": "The tool works from your photo to keep the product's shape, color and details. Compare each result with the real item before you publish it, so shoppers get what they see."
+      "q": "Can a lifestyle image replace a product listing photo?",
+      "a": "Keep a plain product view available for shoppers who need to see the item, its closures and dimensions without a styled setting."
     },
     {
-      "q": "What lifestyle scenes work well for home goods?",
-      "a": "Rooms where the item is naturally used: a mug on a breakfast table, a candle on a bathtub ledge, a vase on an entry console. One or two props keep the attention on your product."
+      "q": "What lifestyle scenes work for home goods?",
+      "a": "A bedside table, calm shelf or kitchen counter gives a lamp, pillow or serving dish a recognizable place in the home."
     },
     {
-      "q": "Can I use lifestyle photos in Facebook or Instagram ads?",
-      "a": "Yes. Lifestyle scenes work in ads as well as on product pages. Keep words out of the scene itself and add your headline or price later in your ad tool."
+      "q": "Can I use lifestyle photos in Facebook or Instagram posts?",
+      "a": "Yes. Add your caption and link in the post, and put any price or offer in your ad editor."
     }
   ],
   "overview": [
     {
-      "h2": "Give the product a believable place in the day",
-      "d": "A lifestyle frame should answer a simple shopper question: where would I use or keep this? Choose a setting that follows the product's real routine, then let one or two supporting props establish context. The item should remain easy to recognize when the scene is viewed at feed size."
-    },
-    {
-      "h2": "Describe the scene like a small shot list",
-      "d": "Name the surface or room, the time of day, the product position, and one visual accent. \u201cCandle on a stone bath ledge, warm evening light, label facing front\u201d gives the generator more useful direction than \u201cluxury mood.\u201d"
+      "h2": "",
+      "d": "Create a lifestyle product photo from a plain image by naming one setting. A breakfast table, reading corner or café counter gives the item a place in a buyer’s routine. Name one surface, the light and a prop or two so the scene stays focused on the product."
     }
   ],
-  "input_guide": {
-    "h2": "Prepare a product that can be placed cleanly",
-    "items": [
-      {
-        "t": "Leave margin",
-        "d": "Keep the full item away from the source frame edges so a table, shelf, or bedding scene has room around it."
-      },
-      {
-        "t": "Show the usable face",
-        "d": "Point a label, opening, handle, or control toward the camera when that detail helps explain the product."
-      },
-      {
-        "t": "Choose a stable orientation",
-        "d": "Photograph bottles upright, bags with their base visible, and decor pieces in the position you want the new scene to echo."
-      },
-      {
-        "t": "Keep the source honest",
-        "d": "Use a clear, evenly lit product image; the new room can change, but it still starts from what the source shows."
-      },
-      {
-        "t": "Write a bounded brief",
-        "d": "Ask for one room, one surface, one light condition, and no more than a couple of props for a focused composition."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A square scene you can plan around",
-    "items": [
-      {
-        "t": "One generated image",
-        "d": "A lifestyle image uses 24 credits, and the credit cost appears before you start."
-      },
-      {
-        "t": "A familiar frame",
-        "d": "The default square shape fits a product-page gallery, a social feed, or an email module."
-      },
-      {
-        "t": "A context cue",
-        "d": "The setting shows use and placement, while the product remains the subject rather than becoming a generic room photo."
-      },
-      {
-        "t": "A private download",
-        "d": "The source and result stay inside your account as you decide where to publish them."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Six scenes sellers can describe",
-    "items": [
-      {
-        "t": "Handbag",
-        "d": "Place the bag on a caf\u00e9 chair beside a folded newspaper, with the strap visible and the front panel facing the viewer."
-      },
-      {
-        "t": "Candle",
-        "d": "Set the jar on a stone bath ledge beside a rolled towel, with warm evening light and the label kept toward camera."
-      },
-      {
-        "t": "Planter",
-        "d": "Show the planter on a bright entry shelf with a few leaves rising above it and clear space around the rim."
-      },
-      {
-        "t": "Hoodie",
-        "d": "Arrange the folded hoodie on a wooden bench beside a beanie, with the chest graphic facing up and no person required."
-      },
-      {
-        "t": "Kitchen tool",
-        "d": "Place a compact scale beside a mixing bowl on a sunlit counter, keeping the display area visible for inspection later."
-      },
-      {
-        "t": "Throw blanket",
-        "d": "Drape the blanket over a neutral sofa arm with a reading lamp in the background, showing the weave at the front fold."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Use context where context helps",
-    "good": [
-      {
-        "t": "Home and kitchen goods",
-        "d": "Items whose value becomes clearer when a room, surface, or daily routine is visible."
-      },
-      {
-        "t": "Accessories and gifts",
-        "d": "Products that benefit from a caf\u00e9, travel, desk, or seasonal setting around them."
-      },
-      {
-        "t": "Second listing images",
-        "d": "A contextual follow-up after the clean product view has already established the item."
-      }
-    ],
-    "not_ideal": [
-      {
-        "t": "The only proof of a technical feature",
-        "d": "Use real specifications and close-ups when a shopper must verify a measurement, port, ingredient, or safety detail."
-      },
-      {
-        "t": "A product that needs strict neutrality",
-        "d": "Keep the main view plain when marketplace rules or catalog consistency require no props or scene context."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Turn a scene into a dependable listing asset",
-    "items": [
-      {
-        "t": "Check placement",
-        "d": "Confirm that the product sits on a believable surface and that the scale does not make it look misleading."
-      },
-      {
-        "t": "Check the product",
-        "d": "Compare color, shape, label, and count with the real item before publishing the scene."
-      },
-      {
-        "t": "Add exact wording later",
-        "d": "Place a headline, price, date, or promotion in your editor so the wording stays accurate."
-      }
-    ]
-  },
   "examples": {
-    "h2": "More lifestyle scene examples",
-    "lead": "Lifestyle scenes show the product in use, at a believable size, in a setting your buyer recognizes.",
+    "h2": "More lifestyle product photos",
+    "lead": "See a handbag, planter, hoodie, mug or linen product placed in a recognizable everyday setting.",
     "groups": [
       {
         "label": "Everyday settings",
@@ -260,7 +105,7 @@
           },
           {
             "ref": "n:gen2:lifestyle-photos-g5",
-            "title": "Same enamel mug on a summer picnic blanket",
+            "title": "Enamel mug on a summer picnic blanket",
             "kind": "photo",
             "product": "enamel camping mug"
           },
@@ -273,5 +118,239 @@
         ]
       }
     ]
+  },
+  "limitations": {
+    "h2": "What a lifestyle scene can show",
+    "items": [
+      {
+        "t": "A product in context",
+        "d": "Use a familiar surface or room to show where the item might sit or be used.",
+        "supported": true
+      },
+      {
+        "t": "It does not confirm dimensions",
+        "d": "Add verified size and measurements to your listing.",
+        "supported": false
+      },
+      {
+        "t": "Small details can look different",
+        "d": "Generated light and styling can change the appearance of hardware or color.",
+        "supported": false
+      }
+    ]
+  },
+  "visual": {
+    "strip": [
+      "n:handbag-cafe",
+      "n:gen2:tpl-retargeting-video-ad-c4",
+      "n:gen2:ind-home-living-g3",
+      "n:gen2:ind-food-drinks-g1",
+      "n:gen2:tpl-carousel-video-ad-c2",
+      "n:gen2:tpl-retargeting-video-ad-c3"
+    ],
+    "steps": {
+      "source": "n:handbag-pack",
+      "result": "n:handbag-cafe",
+      "mode": "photo",
+      "prompt": "Put this tan leather handbag on a marble café table next to a cappuccino, keeping the handle and gold clasp exactly as they are.",
+      "options": [
+        [
+          "Photo",
+          "Your product shot"
+        ],
+        [
+          "Scene",
+          "Café table"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a lifestyle scene by product type",
+      "lead": "Pick a table, room or outdoor setting that fits an item in your shop.",
+      "chips": [
+        {
+          "id": "home",
+          "label": "Home"
+        },
+        {
+          "id": "kitchen",
+          "label": "Kitchen"
+        },
+        {
+          "id": "style",
+          "label": "Style"
+        },
+        {
+          "id": "outdoors",
+          "label": "Outdoors"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:ind-home-living-g2",
+          "label": "Planter beside a sofa",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Place the planter by a linen sofa in soft window light, keeping its rim and full outline clear.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:plat-instagram-c2",
+          "label": "Pillowcase on an unmade bed",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Set the product on relaxed linen bedding with gentle morning light and uncluttered surroundings.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-food-drinks-g2",
+          "label": "Snack bag with fresh fruit",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Arrange the package beside fresh fruit on a calm kitchen surface, leaving the front easy to read.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-food-drinks-g3",
+          "label": "Sauce jar beside dinner",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Place the jar near a finished pasta dish on a warm kitchen table and keep its label visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-shoes-c4",
+          "label": "Suede loafers by the door",
+          "chips": [
+            "style"
+          ],
+          "prompt": "Set both loafers on a quiet entryway floor with their stitching and full shape visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-jewelry-accessories-c3",
+          "label": "Silk scarf on a handbag",
+          "chips": [
+            "style"
+          ],
+          "prompt": "Tie the scarf on a simple handbag handle with soft light and enough space to see its pattern.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-shoes-15",
+          "label": "Hiking boot above a lake",
+          "chips": [
+            "outdoors"
+          ],
+          "prompt": "Show the boot on a mossy rock above a distant lake, keeping its laces and sole clear.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:plat-shopify-g2",
+          "label": "Market tote with produce",
+          "chips": [
+            "outdoors"
+          ],
+          "prompt": "Place the tote at a farmers market stall with a few fresh items and its handles visible.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a lifestyle photo"
+    },
+    "uses": [
+      {
+        "frame": "browser",
+        "ref": "n:gen2:plat-shopify-c1",
+        "h": "Product page, second image",
+        "d": "After the white-background shot, a scene shows the size and where the product belongs."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:plat-instagram-c3",
+        "h": "Instagram and Facebook posts",
+        "d": "A product in a real setting gets noticed faster than a cut-out. Put the caption and link in the post."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:ind-home-living-g1",
+        "bad": "n:guide:lifestyle-photos-storage-box-cropped",
+        "good_label": "Whole storage set, shelf in view",
+        "bad_label": "Storage set cut off at the frame edge"
+      },
+      {
+        "good": "n:gen2:ind-food-drinks-c4",
+        "bad": "n:guide:lifestyle-photos-tea-blurred",
+        "good_label": "Tea pouch and label stay sharp",
+        "bad_label": "Pouch details lost in soft focus"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:tpl-carousel-video-ad-c1",
+        "frame": "1:1",
+        "label": "Skincare on a morning counter"
+      },
+      {
+        "ref": "n:gen2:tpl-launch-c4",
+        "frame": "1:1",
+        "label": "Candle styled on a shelf"
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:plat-shopify-g3",
+      "zones": [
+        "Your caption",
+        "Shop link"
+      ],
+      "items": [
+        "Write your caption and link in the post, not on the image.",
+        "Check hardware, stitching and color against your product.",
+        "Make a second setting for another season or audience."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "How to make lifestyle product photos in 3 steps"
+      },
+      "m3": {
+        "h2": "Lifestyle product photo ideas for everyday settings",
+        "lead": "Choose a scene that feels natural for the item and your shoppers."
+      },
+      "m4": {
+        "h2": "Where lifestyle product photos help you sell"
+      },
+      "m5": {
+        "h2": "What photo to upload for a lifestyle scene"
+      },
+      "m6": {
+        "h2": "Lifestyle photo size and credits"
+      },
+      "m7": {
+        "h2": "Add your caption after download"
+      },
+      "gallery": {
+        "h2": "AI lifestyle product photo examples"
+      },
+      "examples": {
+        "h2": "More lifestyle product photos"
+      },
+      "examplesLead": "Browse product scenes for breakfast tables, reading corners, cafés and outdoor settings.",
+      "templates": {
+        "h2": "Lifestyle photo templates",
+        "lead": "Start from a table, room or café scene and adapt it to your product photo."
+      },
+      "faq": {
+        "h2": "Lifestyle product photo FAQs"
+      }
+    }
   }
 }

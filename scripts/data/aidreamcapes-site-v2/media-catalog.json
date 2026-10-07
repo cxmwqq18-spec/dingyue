@@ -7429,6 +7429,196 @@
           640,
           1280
         ]
+      },
+      "white-background-soap-dispenser": {
+        "file": "gen2guide-white-background-soap-dispenser",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pale sage ceramic soap dispenser with a brushed metal pump on seamless white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "white-background-desk-lamp": {
+        "file": "gen2guide-white-background-desk-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brass curved desk lamp shown alone on seamless white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "white-background-leather-sandals": {
+        "file": "gen2guide-white-background-leather-sandals",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of cognac leather sandals with both straps visible on seamless white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "white-background-canvas-tote": {
+        "file": "gen2guide-white-background-canvas-tote",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Natural canvas tote bag shown upright on seamless white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "white-background-kettle": {
+        "file": "gen2guide-white-background-kettle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sea-glass green kettle shown alone on seamless white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "white-background-serving-bowl": {
+        "file": "gen2guide-white-background-serving-bowl",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cream stoneware serving bowl shown alone on seamless white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "white-background-desk-organizer": {
+        "file": "gen2guide-white-background-desk-organizer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Walnut desk organizer shown with its full outline on seamless white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "white-background-reading-glasses": {
+        "file": "gen2guide-white-background-reading-glasses",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tortoiseshell reading glasses shown open on seamless white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "white-background-daypack-cropped": {
+        "file": "gen2guide-white-background-daypack-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Open blue daypack with its top handle cropped by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "white-background-shoe-blurred": {
+        "file": "gen2guide-white-background-shoe-blurred",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Running shoe softened out of focus so its shape and laces are unclear.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "lifestyle-photos-storage-box-cropped": {
+        "file": "gen2guide-lifestyle-photos-storage-box-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Storage boxes enlarged until the shelf edges and full set are cropped.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "lifestyle-photos-tea-blurred": {
+        "file": "gen2guide-lifestyle-photos-tea-blurred",
+        "w": 1280,
+        "h": 960,
+        "alt": "Tea pouch and cup softened out of focus on a counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "model-photos-jeans-cropped": {
+        "file": "gen2guide-model-photos-jeans-cropped",
+        "w": 1280,
+        "h": 960,
+        "alt": "Jeans enlarged with their waistband and cuffs cut by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "model-photos-hoops-blurred": {
+        "file": "gen2guide-model-photos-hoops-blurred",
+        "w": 1280,
+        "h": 960,
+        "alt": "Gold hoop earrings softened out of focus on marble.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "social-ad-photos-bottle-blurred": {
+        "file": "gen2guide-social-ad-photos-bottle-blurred",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Insulated bottle softened out of focus on a sunny desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "social-ad-photos-tea-cropped": {
+        "file": "gen2guide-social-ad-photos-tea-cropped",
+        "w": 1280,
+        "h": 960,
+        "alt": "Tea pouch enlarged with its top and cup partly cropped by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "white-background-fix-m1-house-slippers": {
+        "file": "gen2guide-white-background-fix-m1-house-slippers",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of oatmeal felt house slippers on seamless white, with both slippers fully in frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "white-background-fix-m1-planter": {
+        "file": "gen2guide-white-background-fix-m1-planter",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Wide terracotta ceramic planter with an open rim on seamless white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "white-background-fix-m6-coaster-set": {
+        "file": "gen2guide-white-background-fix-m6-coaster-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three slate-blue felt coasters arranged on seamless white.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

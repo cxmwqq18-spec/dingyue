@@ -197,5 +197,21 @@
         "alt": "Full-length denim outfit in a hallway, head to toe."
       }
     }
+  },
+  "social-ad-photos": {
+    "images": {
+      "feed": {
+        "ref": "n:gen2:tpl-sale-c1",
+        "alt": "Winter coat on a model in snow, with open room for an offer."
+      }
+    }
+  },
+  "model-photos": {
+    "images": {
+      "jewel": {
+        "ref": "n:gen2:tpl-jewel-g2",
+        "alt": "Silver cufflinks worn with a white shirt cuff, framed around the accessory."
+      }
+    }
   }
 }

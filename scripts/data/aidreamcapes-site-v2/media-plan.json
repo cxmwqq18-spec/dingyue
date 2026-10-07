@@ -6,24 +6,7 @@
     "before": "g:ecommerce-main-image/source-input",
     "after": "n:white-mug"
    },
-   "pairs": [
-    {
-     "before": "g:feed-ad-still/source-input",
-     "after": "n:white-shoe"
-    },
-    {
-     "before": "g:on-model-generation/source-input",
-     "after": "n:white-backpack"
-    },
-    {
-     "before": "g:macro-details/source-input",
-     "after": "n:white-wallet"
-    },
-    {
-     "before": "g:commercial-lighting/source-input",
-     "after": "n:white-perfume"
-    }
-   ],
+   "pairs": [],
    "og": "n:white-mug"
   },
   "lifestyle-photos": {
@@ -41,24 +24,7 @@
     "g:lifestyle-scene/example-06"
    ],
    "og": "g:lifestyle-scene/og",
-   "pairs": [
-    {
-     "before": "n:handbag-pack",
-     "after": "n:handbag-cafe"
-    },
-    {
-     "before": "n:candle-pack",
-     "after": "n:candle-table"
-    },
-    {
-     "before": "n:planter-pack",
-     "after": "n:planter-shelf"
-    },
-    {
-     "before": "n:hoodie-pack",
-     "after": "n:hoodie-flatlay"
-    }
-   ]
+   "pairs": []
   },
   "model-photos": {
    "hero": {
@@ -75,24 +41,7 @@
     "g:on-model-generation/example-06"
    ],
    "og": "g:on-model-generation/og",
-   "pairs": [
-    {
-     "before": "n:hoodie-pack",
-     "after": "n:hoodie-street"
-    },
-    {
-     "before": "n:handbag-pack",
-     "after": "n:handbag-carry"
-    },
-    {
-     "before": "n:sunglasses-pack",
-     "after": "n:sunglasses-worn"
-    },
-    {
-     "before": "n:boots-pack",
-     "after": "n:boots-street"
-    }
-   ]
+   "pairs": []
   },
   "change-background": {
    "hero": {
@@ -143,24 +92,7 @@
     "g:feed-ad-still/example-06"
    ],
    "og": "g:feed-ad-still/og",
-   "pairs": [
-    {
-     "before": "n:lipstick-pack",
-     "after": "n:lipstick-ad"
-    },
-    {
-     "before": "n:hotsauce-pack",
-     "after": "n:hotsauce-tacos"
-    },
-    {
-     "before": "n:sunglasses-pack",
-     "after": "n:sunglasses-cafe"
-    },
-    {
-     "before": "n:coffee-pack",
-     "after": "n:coffee-breakfast"
-    }
-   ]
+   "pairs": []
   },
   "tpl-angle": {
    "hero": {
