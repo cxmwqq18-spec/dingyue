@@ -738,7 +738,7 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
   const stepMode = steps.mode ?? (video ? "video" : "photo");
   assert.ok(stepMode === "photo" || stepMode === "video", `${page.id}: visual step mode must be photo or video`);
   const configuredOptions = Array.isArray(maker?.options) ? maker.options.slice(0, 3) : [];
-  const options = (stepMode === "video" ? maker?.videoOptions : maker?.photoOptions) ?? configuredOptions;
+  const options = Array.isArray(steps.options) ? steps.options : (stepMode === "video" ? maker?.videoOptions : maker?.photoOptions) ?? configuredOptions;
   const stepLength = stepMode === "video" ? visualLength(options, steps.length, page.id) : undefined;
   const stepCredits = stepMode === "video" ? JOB_CREDITS[`video${stepLength}`] : JOB_CREDITS.photo;
   const picker = source.picker && typeof source.picker === "object" ? source.picker : {};

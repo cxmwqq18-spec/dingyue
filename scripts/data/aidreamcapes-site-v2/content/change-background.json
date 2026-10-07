@@ -113,7 +113,7 @@
     ]
   },
   "examples": {
-    "h2": "AI background changer examples: one vase, five backgrounds",
+    "h2": "More background swaps",
     "lead": "One product shown on different backdrops, from a plain color block to a seasonal scene.",
     "groups": [
       {
@@ -207,13 +207,13 @@
           "prompt": "Use a simple desk surface and a quiet background, leaving the product fully visible.",
           "kind": "photo"
         },
-      {
-        "ref": "n:gen2:ind-shoes-c4",
-        "label": "Suede loafers by the door",
+        {
+          "ref": "n:gen2:ind-shoes-c4",
+          "label": "Suede loafers by the door",
           "chips": [
             "entryway"
           ],
-        "prompt": "Move the loafers to a calm entryway bench with a warm wall, leaving room around their shape and stitching.",
+          "prompt": "Move the loafers to a calm entryway bench with a warm wall, leaving room around their shape and stitching.",
           "kind": "photo"
         },
         {
@@ -300,7 +300,7 @@
       },
       {
         "ref": "n:gen2:plat-shopify-c4",
-        "frame": "4:5",
+        "frame": "1:1",
         "label": "Desk setting"
       }
     ],
@@ -316,16 +316,40 @@
       ]
     },
     "titles": {
-      "m2": { "h2": "How to change a product photo background in 3 steps" },
-      "m3": { "h2": "Background ideas by room", "lead": "Pick the room your shopper would put it in." },
-      "m4": { "h2": "Where new-background photos help" },
-      "m5": { "h2": "Which photos work best for background replacement" },
-      "m6": { "h2": "Output sizes and credits" },
-      "m7": { "h2": "Add price and logo in your editor" },
-      "beforeAfter": { "h2": "Product photo background, before and after" },
-      "examples": { "h2": "AI background changer examples: one vase, five backgrounds" },
-      "templates": { "h2": "Background templates" },
-      "faq": { "h2": "Background changer FAQ" }
+      "m2": {
+        "h2": "How to change a product photo background in 3 steps"
+      },
+      "m3": {
+        "h2": "Background ideas by room",
+        "lead": "Pick the room your shopper would put it in."
+      },
+      "m4": {
+        "h2": "Where new-background photos help"
+      },
+      "m5": {
+        "h2": "Which photos work best for background replacement"
+      },
+      "m6": {
+        "h2": "Output sizes and credits"
+      },
+      "m7": {
+        "h2": "Add price and logo in your editor"
+      },
+      "beforeAfter": {
+        "h2": "Product photo background, before and after"
+      },
+      "examples": {
+        "h2": "More background swaps"
+      },
+      "templates": {
+        "h2": "Background templates"
+      },
+      "faq": {
+        "h2": "Background changer FAQ"
+      },
+      "gallery": {
+        "h2": "AI background changer examples: one vase, five backgrounds"
+      }
     }
   }
 }

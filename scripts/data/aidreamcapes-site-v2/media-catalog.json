@@ -7380,6 +7380,55 @@
           640,
           1280
         ]
+      },
+      "mug-breakfast-916": {
+        "file": "gen2guide-mug-breakfast-916",
+        "w": 1280,
+        "h": 1920,
+        "alt": "White ceramic mug of coffee on a sunlit breakfast table beside a croissant.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "mug-steam-169": {
+        "file": "gen2guide-mug-steam-169",
+        "w": 1280,
+        "h": 853,
+        "alt": "White ceramic mug with steam rising on an oak table in morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "pv-mug-lift": {
+        "file": "gen2guide-pv-mug-lift",
+        "w": 1280,
+        "h": 853,
+        "alt": "Hand lifting a white ceramic mug of coffee off a wooden counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "home-steamer-frame": {
+        "file": "gen2guide-home-steamer-frame",
+        "w": 540,
+        "h": 960,
+        "alt": "Hand switching on a white handheld garment steamer, its power button lit.",
+        "variants": [
+          540
+        ]
+      },
+      "product-lunchbox-cut": {
+        "file": "gen2guide-product-lunchbox-cut",
+        "w": 1280,
+        "h": 1282,
+        "alt": "Lunch box with its lid and latch cut off at the frame edge.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

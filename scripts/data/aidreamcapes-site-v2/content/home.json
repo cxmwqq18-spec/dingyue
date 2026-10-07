@@ -264,7 +264,17 @@
       "source": "n:gen2:lifestyle-photos-g4",
       "result": "n:gen2:lifestyle-photos-g5",
       "mode": "photo",
-      "prompt": "Move the mug from the snowy porch to a picnic blanket in bright summer sun. Keep the enamel chips and the handle exactly as they are."
+      "prompt": "Move the mug from the snowy porch to a picnic blanket in bright summer sun. Keep the enamel chips and the handle exactly as they are.",
+      "options": [
+        [
+          "Template",
+          "Lifestyle scene"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
     },
     "picker": {
       "title": "Choose a scene for your product",
@@ -407,13 +417,13 @@
     "outputs": [
       {
         "ref": "n:gen2:social-ad-photos-c1",
-        "frame": "4:5",
+        "frame": "1:1",
         "label": "Feed photo"
       },
       {
-        "ref": "f:how-to-tutorial-v",
+        "ref": "n:guide:home-steamer-frame",
         "frame": "9:16",
-        "label": "Steam iron demo",
+        "label": "Garment steamer demo",
         "length": 10
       }
     ],
@@ -432,7 +442,7 @@
     "sizes": [
       {
         "frame": "9:16",
-        "ref": "n:gen2:tpl-ugc-case-83",
+        "ref": "n:guide:mug-breakfast-916",
         "label": "TikTok, Reels and YouTube Shorts"
       },
       {
@@ -442,20 +452,39 @@
       },
       {
         "frame": "16:9",
-        "ref": "n:gen2:image-to-video-g2",
+        "ref": "n:guide:mug-steam-169",
         "label": "YouTube, website banners and product-page video"
       }
     ],
     "titles": {
-      "m2": { "h2": "How to make AI product photos and videos in 3 steps" },
-      "m3": { "h2": "AI product photo scenes for the kitchen, desk, bathroom and outdoors", "lead": "Tap a room to see examples. Each card shows one product in one real setting." },
-      "m4": { "h2": "Where to use your AI product photos and videos" },
-      "m5": { "h2": "What makes a good product photo for AI" },
-      "m6": { "h2": "What you get and what each one costs" },
-      "m8": { "h2": "Sizes for TikTok, Reels, Instagram and Shopify" },
-      "examples": { "h2": "AI product photo and video examples" },
-      "templates": { "h2": "AI product photo and video templates" },
-      "faq": { "h2": "Questions about AI product photos and videos" }
+      "m2": {
+        "h2": "How to make AI product photos and videos in 3 steps"
+      },
+      "m3": {
+        "h2": "AI product photo scenes for the kitchen, desk, bathroom and outdoors",
+        "lead": "Tap a room to see examples. Each card shows one product in one real setting."
+      },
+      "m4": {
+        "h2": "Where to use your AI product photos and videos"
+      },
+      "m5": {
+        "h2": "What makes a good product photo for AI"
+      },
+      "m6": {
+        "h2": "What you get and what each one costs"
+      },
+      "m8": {
+        "h2": "Sizes for TikTok, Reels, Instagram and Shopify"
+      },
+      "examples": {
+        "h2": "AI product photo and video examples"
+      },
+      "templates": {
+        "h2": "AI product photo and video templates"
+      },
+      "faq": {
+        "h2": "Questions about AI product photos and videos"
+      }
     }
   }
 }

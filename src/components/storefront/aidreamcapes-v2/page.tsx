@@ -277,7 +277,7 @@ function ToolPage({ data, r }: Props) {
       </PageHero>
       {visual ? <>
         <VisualStrip visual={visual} r={r} />
-        {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
+        {gallery?.images.length ? <Section eyebrow="Examples" title={visual.titles?.gallery?.h2 ?? `What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
         {pairs.length ? <Section eyebrow="Before and after" title={visual.titles?.beforeAfter?.h2 ?? "Your photo, then the result"}><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
         <VisualOverview visual={visual} r={r} />
         <VisualSteps buttonLabel={maker.cta} visual={visual} r={r} />

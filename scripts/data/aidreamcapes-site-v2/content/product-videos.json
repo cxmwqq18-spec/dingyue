@@ -94,7 +94,7 @@
     ]
   },
   "examples": {
-    "h2": "AI product demo video examples",
+    "h2": "More product demo video ideas",
     "lead": "Demos work best when one action has a clear start and finish. Here are a few to try with your product.",
     "groups": [
       {
@@ -151,7 +151,7 @@
     "steps": {
       "source": "n:gen2:plat-amazon-g2",
       "sourceAlt": "Ceramic mug held in one hand to show its size.",
-      "result": "n:url-to-video-concept",
+      "result": "n:guide:pv-mug-lift",
       "mode": "video",
       "length": 10,
       "prompt": "Lift the mug off the counter, take a slow sip, then set it back down with the handle facing the camera."
@@ -265,15 +265,15 @@
         "frame": "phone",
         "ref": "n:gen2:tpl-product-feature-callout-video-g2",
         "h": "Put the clip next to the feature it shows",
-        "d": "Place the latch clip right under the line about the leak-proof lid on your product page."
+        "d": "Place the blending clip right next to the line that explains how it blends on your product page."
       }
     ],
     "input": [
       {
         "good": "n:gen2:plat-facebook-g1",
-        "bad": "n:guide:product-lunchbox-cropped",
+        "bad": "n:guide:product-lunchbox-cut",
         "good_label": "Whole lid and latch in frame",
-        "bad_label": "Lunch box cropped at bottom edge"
+        "bad_label": "Lid and latch cut off at the edge"
       },
       {
         "good": "n:gen2:ind-food-drinks-c4",
@@ -309,15 +309,37 @@
       ]
     },
     "titles": {
-      "m2": { "h2": "How to make a product demo video in 3 steps" },
-      "m3": { "h2": "Product demo ideas: one action per video", "lead": "Lids, latches, zippers, pumps and pours. Each idea shows one action from start to finish." },
-      "m4": { "h2": "Where product demo videos help you sell" },
-      "m5": { "h2": "What photo to upload for a product demo video" },
-      "m6": { "h2": "Demo video size, length and credits" },
-      "m7": { "h2": "Add text in CapCut or Canva after download" },
-      "examples": { "h2": "AI product demo video examples" },
-      "templates": { "h2": "Product demo video templates" },
-      "faq": { "h2": "Product demo video FAQ" }
+      "m2": {
+        "h2": "How to make a product demo video in 3 steps"
+      },
+      "m3": {
+        "h2": "Product demo ideas: one action per video",
+        "lead": "Lids, latches, zippers, pumps and pours. Each idea shows one action from start to finish."
+      },
+      "m4": {
+        "h2": "Where product demo videos help you sell"
+      },
+      "m5": {
+        "h2": "What photo to upload for a product demo video"
+      },
+      "m6": {
+        "h2": "Demo video size, length and credits"
+      },
+      "m7": {
+        "h2": "Add text in CapCut or Canva after download"
+      },
+      "examples": {
+        "h2": "More product demo video ideas"
+      },
+      "templates": {
+        "h2": "Product demo video templates"
+      },
+      "faq": {
+        "h2": "Product demo video FAQ"
+      },
+      "gallery": {
+        "h2": "AI product demo video examples"
+      }
     }
   }
 }
