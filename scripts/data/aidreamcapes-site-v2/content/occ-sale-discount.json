@@ -1,10 +1,10 @@
 {
   "id": "occ-sale-discount",
   "title": "Sale Ad Creatives for Discounts and Promos | AIVideosUGC",
-  "description": "Make sale ad creatives from your product photos: banners with open space for your offer and short promo clips. Add the price yourself and get your sale live.",
+  "description": "Plan sale ad creatives from product photos, with room for offer text and promo clips. Add exact prices, codes, and dates after download.",
   "h1": "Sale Ad Creatives With Room for Your Offer",
   "eyebrow": "Sales and promos",
-  "lead": "Get sale ad creatives with clean visuals for your next markdown and a clear spot left for the percentage off, the code and the end date you add yourself.",
+  "lead": "Plan sale ad creatives around product views and placements, leaving confirmed discount terms for a separate text layer.",
   "card": "Clean visuals with room for the percentage off, the code and the end date.",
   "secondary_keywords": [
     "discount ad images",
@@ -13,14 +13,10 @@
     "flash sale ad ideas"
   ],
   "intro": [
-    "A sale ad has one job: get people to notice the deal and tap. That means the product should be easy to recognize, and there should be a clean area where the offer can sit without fighting the background.",
+    "For a sale creative, keep the product easy to recognize and leave a clear area for the confirmed offer. Put the exact price, code, and end date in an editable text layer.",
     "AIVideosUGC makes the visual part. Choose a square image with your product on one side and open space on the other, or a short promo clip in 9:16 or 1:1. The numbers, like the amount off, a code or \"ends Sunday,\" get added in Canva, CapCut or Ads Manager. That keeps AI typos off your ads, and the same visual is ready to use again for the next sale."
   ],
   "ideas": [
-    {
-      "t": "Banner with open space",
-      "d": "Your product on one side and a plain, colored area on the other, ready for the offer text."
-    },
     {
       "t": "Bundle deal shot",
       "d": "Two or three products grouped together for a buy-more-save-more offer."
@@ -62,8 +58,8 @@
       "a": "Only show an original price you actually charged. Many places have advertising rules about comparison pricing, so check what applies where you sell."
     },
     {
-      "q": "What size should a sale ad use on social media?",
-      "a": "Use 9:16 for Stories and Reels, 1:1 for feed placements, and 16:9 for wide placements. Add the exact sale price and code after download."
+      "q": "How much open space should I leave for the offer?",
+      "a": "Leave enough clear space for the offer line and code without covering the product. Preview the smallest placement to check that both remain readable."
     }
   ],
   "overview": [
@@ -147,7 +143,7 @@
         "d": "Make sure the product and the offer remain readable in the feed, Story, or ad preview before spending budget."
       },
       {
-        "t": "Remove expired copy",
+        "t": "Remove expired offer text",
         "d": "Take down old dates and codes when the promotion ends, even if the underlying scene remains useful."
       }
     ]
@@ -204,5 +200,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Choose a product scene with room for the offer details you will add later.",
+  "cta_lead": "Stage the product on one side and leave room to add confirmed offer details."
 }

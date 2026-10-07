@@ -1,10 +1,10 @@
 {
   "id": "occ-product-launch",
   "title": "Product Launch Video and Photos for New Drops | AIVideosUGC",
-  "description": "Plan your product launch video and photos early: teaser clips, a reveal video and lifestyle shots from one sample photo. Start building your launch set today.",
+  "description": "Plan product launch video and photos: prepare teaser clips, a reveal video, and product-page scenes around each launch milestone.",
   "h1": "Product Launch Video and Photos, Ready Before Launch Day",
   "eyebrow": "New product launch",
-  "lead": "For a product launch, video and photos can start from your first sample shot: build teasers, a reveal clip and product page photos, so launch week goes to selling instead of scrambling.",
+  "lead": "Plan teaser clips, a reveal video, and product-page photos around each launch milestone, with final dates and prices added after download.",
   "card": "Teasers, a reveal clip and product page photos from your first sample shot.",
   "secondary_keywords": [
     "new product launch video",
@@ -13,8 +13,8 @@
     "new product announcement photos"
   ],
   "intro": [
-    "A launch asks for a lot of visuals at once: a teaser to build interest, a reveal for the big day, clean photos for the product page, and something new to post the week after. Arranging a photoshoot for all of that can take as long as getting the product ready.",
-    "With AIVideosUGC, you can start from a single photo of a sample, or from a written description if the product isn't in hand yet. Make a short teaser that only hints at the product, a vertical reveal clip, and square photos in a few different settings. Your launch date, price and \"new\" tag go on later in Canva or CapCut, so a shifted date never means remaking the visuals."
+    "A launch can call for a teaser, a reveal, product-page photos, and a follow-up post. List the placements and visual stages before choosing which assets to prepare.",
+    "If you have a photo of a sample, use it to make launch clips and product photos. If you do not have a product photo yet, you can start a video with a written description; every product photo requires an uploaded photo. Add the launch date, price, and product name after download in Canva or CapCut."
   ],
   "ideas": [
     {
@@ -27,7 +27,7 @@
     },
     {
       "t": "Packaging preview",
-      "d": "A square photo of the packaged product on a doorstep or shelf, so early buyers know what will arrive."
+      "d": "A square photo showing the sample package in a room or delivery setting."
     },
     {
       "t": "First lifestyle set",
@@ -51,11 +51,11 @@
   "faq": [
     {
       "q": "Can I make launch content before my product is finished?",
-      "a": "Yes, as long as you have a photo of a sample or prototype. You can also start a video from a written description alone, though a real photo keeps the result closer to what customers will receive."
+      "a": "A video can start from a written description alone. Every product photo requires one uploaded photo, such as a clear image of a sample or prototype."
     },
     {
-      "q": "How do I add my launch date to the video?",
-      "a": "Put it on after download in CapCut, Canva or your ad tool. That way a date that moves only means editing one text layer, and you avoid the spelling slips AI can make with words and numbers."
+      "q": "Can I change launch details after making a video?",
+      "a": "Yes. Add the date, price, or code as editable text after download so you can update confirmed details without regenerating the scene."
     },
     {
       "q": "Will anyone see my unreleased product before I announce it?",
@@ -135,7 +135,7 @@
     "h2": "Lock the launch details in your editor",
     "items": [
       {
-        "t": "Add the announcement copy",
+        "t": "Add the announcement details",
         "d": "Type the product name, date, price, and availability yourself, then check every character against the launch plan."
       },
       {
@@ -157,7 +157,7 @@
     "good": [
       "Products with a photographed prototype or sample",
       "Launches that need distinct teaser, reveal, and listing scenes",
-      "Teams whose date and offer copy may change during preparation",
+      "Teams whose launch dates and offer details may change during preparation",
       "Sellers willing to inspect every generated detail against the final item"
     ],
     "not_ideal": [
@@ -193,5 +193,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Choose a teaser, reveal, or product-page scene for the launch stage.",
+  "cta_lead": "Plan the teaser or reveal first, then add launch details after download."
 }

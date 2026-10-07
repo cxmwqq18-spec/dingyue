@@ -23,10 +23,6 @@
       "d": "Place a side table beside a reading chair or a rug under a dining set so buyers can judge scale against furniture they already know."
     },
     {
-      "t": "Before-and-after organizing",
-      "d": "Open on an overstuffed pantry shelf and end on the same shelf with your bins lined up. Under-sink cabinets, closets, and garage shelves work the same way."
-    },
-    {
       "t": "Quick how-to demos",
       "d": "Show a shelf bracket clicking into place or a vacuum storage bag shrinking down a duvet. A 10-second vertical clip covers one clear step."
     },
@@ -133,7 +129,7 @@
       },
       {
         "t": "A file ready to finish",
-        "d": "Use the watermark-free download in an ad, product page, or social post, then add dimensions, price, installation notes, dates, captions, or music yourself."
+        "d": "Visit the [FAQ](/faq) for commercial-use and watermark information for downloaded files."
       }
     ]
   },
@@ -150,7 +146,7 @@
       },
       {
         "t": "Add the instructional layer",
-        "d": "AIVideosUGC does not add spoken narration, music, or subtitles. Add captions or a track after checking that each step remains readable."
+        "d": "AIVideosUGC does not add voiceover, music, or captions; add dimensions and installation steps after checking each scene."
       }
     ]
   },
@@ -211,5 +207,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Choose a room, organizing step, or placement that fits the home product.",
+  "cta_lead": "Select the room or use scene where your home product belongs."
 }

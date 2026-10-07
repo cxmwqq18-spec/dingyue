@@ -1,27 +1,23 @@
 {
   "id": "ind-fashion-clothing",
   "title": "AI Model Photos and Videos for Fashion Brands | AIVideosUGC",
-  "description": "Create AI model photos and videos for fashion brands: on-body shots, lookbook scenes, and outfit reels from flat lay or hanger photos. Try it on your next drop.",
+  "description": "Create AI model photos and videos for fashion brands from garment photos laid flat or on a hanger: on-body shots, lookbook scenes, and outfit reels.",
   "h1": "AI Model Photos and Videos for Fashion Brands and Boutiques",
   "eyebrow": "Fashion & clothing",
-  "lead": "AI model photos and videos for fashion brands turn a flat lay or hanger photo into images of the piece being worn, styled lookbook scenes, and short outfit clips for Reels and TikTok.",
-  "card": "Flat lay to on-model photos, lookbook scenes and short outfit clips.",
+  "lead": "For fashion catalogs, combine on-model previews with garment detail photos, collection scenes, and short outfit videos from your product photos.",
+  "card": "Garment photos to on-model views, lookbook scenes, and short outfit clips.",
   "secondary_keywords": [
     "AI on-model clothing photos",
     "AI lookbook for clothing brands",
     "fashion outfit reels",
-    "flat lay to model photo",
+    "garment photo to model photo",
     "clothing product photos for Shopify"
   ],
   "intro": [
-    "Clothing sells on fit and movement. Someone looking at a linen dress wants to know where the hem lands, how the fabric drapes, and what to pair it with. Flat lays and hanger shots show the cut and the print, but they rarely answer those questions, and booking a model for every new arrival adds up fast for a small label.",
+    "Clothing shoppers compare hem length, fabric drape, print, and what to pair with a piece. Photos of a garment laid flat or on a hanger show its cut; an on-model view adds a styling reference, which shoppers can compare with the listed measurements.",
     "Upload a clean photo of the garment and describe how it should be worn: walking down a city street, seated on a stool in a bright studio, or styled as a full look for a lookbook page. For motion, a short vertical clip of someone turning in the outfit shows swing and drape in a way a still can't. On-model photos give a collection a consistent way to show the cut. Let your size chart and measurements do the job of explaining fit."
   ],
   "ideas": [
-    {
-      "t": "On-body listing photos",
-      "d": "Show each new arrival being worn against a plain backdrop, so it sits neatly beside your other product photos and shoppers can judge length and silhouette."
-    },
     {
       "t": "Lookbook scenes",
       "d": "Style a trench coat on a rainy street or a sundress on a boardwalk for a collection page, a newsletter, or Instagram posts announcing the drop."
@@ -37,7 +33,7 @@
   ],
   "faq": [
     {
-      "q": "Can I turn a flat lay photo into an on-model photo?",
+      "q": "Can I turn a photo of a garment laid flat into an on-model photo?",
       "a": "Yes. Lay the garment flat or hang it on a plain wall, smooth out the wrinkles, and photograph the whole piece in even light. Then describe the person and setting, for example \"full-length, standing in a bright studio.\""
     },
     {
@@ -107,7 +103,7 @@
         "d": "A tailored blazer over a knit top at a caf\u00e9 table, then a close crop of the cuff and button beside a notebook."
       },
       {
-        "t": "Colorway lineup",
+        "t": "Color option lineup",
         "d": "Three hoodies in charcoal, oat, and forest green folded on the same bench, one person lifting the forest green version to show the front graphic."
       }
     ]
@@ -117,7 +113,7 @@
     "items": [
       {
         "t": "Listing-ready stills",
-        "d": "Use an on-body frame beside your flat lay and detail photo so shoppers connect silhouette with construction."
+        "d": "Use an on-body frame beside your photo of the garment laid flat and a detail photo so shoppers connect silhouette with construction."
       },
       {
         "t": "Collection context",
@@ -129,11 +125,11 @@
       },
       {
         "t": "Visible pricing",
-        "d": "The preview displays the credit price: photos are 24 credits, while six-, ten-, fifteen-, and thirty-second videos are 24, 40, 60, and 120 credits."
+        "d": "The preview displays the credit cost: photos are 24 credits, while six-, ten-, fifteen-, and thirty-second videos are 24, 40, 60, and 120 credits."
       },
       {
-        "t": "A clean commercial file",
-        "d": "Download without a watermark for an ad, product page, or social post, then add your own discount, date, captions, and music."
+        "t": "Download details",
+        "d": "For commercial-use and watermark guidance, read the [FAQ](/faq) before using a file."
       }
     ]
   },
@@ -150,7 +146,7 @@
       },
       {
         "t": "Add the reel layer",
-        "d": "AIVideosUGC does not supply spoken narration, music, or subtitles. Add captions or a licensed track after download, and keep the product facts readable."
+        "d": "AIVideosUGC does not add voiceover, music, or captions; place approved size details and channel text in your editor after download."
       }
     ]
   },
@@ -166,7 +162,7 @@
         "d": "Pieces that benefit from a location, layered outfit, or consistent lookbook treatment."
       },
       {
-        "t": "Repeatable colorways",
+        "t": "Repeatable color options",
         "d": "Multiple versions that can share one composition while retaining their own product photos."
       }
     ],
@@ -216,5 +212,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Pick a garment view, an on-model look, or a collection scene for this apparel range.",
+  "cta_lead": "Upload a garment photo and select a styling view to review."
 }

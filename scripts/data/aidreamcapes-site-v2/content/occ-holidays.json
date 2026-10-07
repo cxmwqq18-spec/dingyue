@@ -20,15 +20,11 @@
   "ideas": [
     {
       "t": "Gift-wrapped scene",
-      "d": "Your product beside wrapping paper, ribbon and a handwritten tag, as if it's about to be given."
+      "d": "Place your product beside wrapping paper, ribbon, and a blank gift tag. Add the exact handwritten message after download."
     },
     {
       "t": "Table or mantel setting",
       "d": "Candles, pine branches and soft lights around the product for a cozy winter mood."
-    },
-    {
-      "t": "Unwrapping moment",
-      "d": "A short vertical clip of a box opening to reveal the product, made for Stories and Reels."
     },
     {
       "t": "Same product, new season",
@@ -116,7 +112,7 @@
     "items": [
       {
         "t": "Wrapped skincare set",
-        "d": "Three real bottles sit in a shallow gift box with tissue and ribbon, labels facing the camera and no invented copy."
+        "d": "Three real bottles sit in a shallow gift box with tissue and ribbon, labels facing the camera and no invented lettering."
       },
       {
         "t": "Warm mantel candle",
@@ -137,7 +133,7 @@
     "items": [
       {
         "t": "Type the shipping message",
-        "d": "Add order-by dates, delivery notes, and availability yourself so the copy can change when the carrier cutoff moves."
+        "d": "Add order-by dates, delivery notes, and availability yourself so the order-by date can change when the carrier cutoff moves."
       },
       {
         "t": "Proofread the offer",
@@ -159,7 +155,7 @@
       "Products that can be understood in a home, table, or wrapped-gift setting",
       "Gift sets with a known list of included pieces",
       "Stores that need square guide images and vertical social clips",
-      "Teams that want shipping copy to stay editable"
+      "Teams that want shipping dates and details to stay editable"
     ],
     "not_ideal": [
       "Products whose important details disappear behind decorations",
@@ -194,5 +190,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Pick a gift setting, seasonal table, or unwrapping scene for the product.",
+  "cta_lead": "Choose the seasonal moment, then add shipping dates and offers after download."
 }

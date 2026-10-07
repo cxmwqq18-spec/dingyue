@@ -19,10 +19,6 @@
   ],
   "ideas": [
     {
-      "t": "Morning counter shots",
-      "d": "A supplement jar beside a glass of water and a coffee mug places your product in an ordinary morning that buyers recognize from their own kitchens."
-    },
-    {
       "t": "Creator-style photos",
       "d": "Handheld-looking images of someone holding a protein powder pouch or a tin of loose-leaf tea feel at home in Instagram and TikTok feeds."
     },
@@ -87,7 +83,7 @@
       },
       {
         "t": "Keep claims approved",
-        "d": "Do not ask the image to show weight loss, pain relief, treatment, or a body change. Use the product photo for context and add only reviewed copy later."
+        "d": "Do not ask the image to show weight loss, pain relief, treatment, or a body change. Use the product photo for context, then add only health claims your team has approved."
       }
     ]
   },
@@ -132,8 +128,8 @@
         "d": "One photo costs 24 credits; a six-, ten-, fifteen-, or thirty-second video costs 24, 40, 60, or 120, and the balance is shown before generation."
       },
       {
-        "t": "A commercial file",
-        "d": "Download without a watermark for product pages, ads, or social posts, then add the approved ingredient, price, date, caption, and audio layers."
+        "t": "Download details",
+        "d": "Read the [FAQ](/faq) for commercial-use terms and watermark information before sharing."
       }
     ]
   },
@@ -145,12 +141,12 @@
         "d": "Compare product name, flavor, quantity, dosage wording, and package color with the real item."
       },
       {
-        "t": "Add reviewed copy",
+        "t": "Add approved product details",
         "d": "Place ingredient facts, directions, required notices, price, and promotion dates in your approved design or store editor."
       },
       {
         "t": "Add the social layer",
-        "d": "AIVideosUGC adds no spoken narration, music, or subtitles. Add captions and a suitable track after checking the platform and your claims review."
+        "d": "AIVideosUGC does not add voiceover, music, or captions; add ingredient facts and required notices after your claims review."
       }
     ]
   },
@@ -205,5 +201,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Choose a routine, workout, or wind-down scene for your wellness product.",
+  "cta_lead": "Choose an everyday setting for your wellness product, such as a counter or gym bag."
 }

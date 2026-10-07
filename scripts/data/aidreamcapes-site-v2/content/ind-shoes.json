@@ -1,30 +1,26 @@
 {
   "id": "ind-shoes",
   "title": "AI Product Photos for Shoe Brands | AIVideosUGC",
-  "description": "Make AI product photos for shoe brands: clean side profiles, colorway sets, and on-foot shots built from photos you already have. Upload a pair to get started.",
-  "h1": "AI Product Photos for Shoe Brands: Profiles, Colorways, and On-Foot Shots",
+  "description": "Make AI product photos for shoe brands: side profiles, color options, and on-foot views from clear shoe photos. Upload a pair to begin.",
+  "h1": "AI Product Photos for Shoe Brands: Profiles, Color Options, and On-Foot Shots",
   "eyebrow": "Shoes & sneakers",
   "lead": "AI product photos for shoe brands cover what buyers zoom in on: the sole, the heel, and how a pair looks on a foot. Start from your own photos and fill in the shots your listing is missing.",
-  "card": "Side profiles, colorways and on-foot shots your listing is missing.",
+  "card": "Side profiles, color options and on-foot shots your listing is missing.",
   "secondary_keywords": [
     "sneaker product photos",
-    "shoe colorway photos",
+    "shoe color option photos",
     "on-foot shoe photos",
     "AI shoe photography",
     "shoe photos for Amazon listings"
   ],
   "intro": [
-    "Hardly anyone buys shoes from a single picture. Shoppers check the side profile, then the toe box, the heel tab, the outsole, and finally how the pair looks when someone is wearing it. Every colorway needs that same set, and that is where small brands run out of time and studio budget.",
+    "Show the side profile, toe, heel, and outsole so shoppers can inspect the pair from several angles. Use a separate photo for each color option, then check the views before adding them to a listing.",
     "AIVideosUGC builds on what you upload. It can restage a view you've photographed, but it has no way of knowing what an unseen outsole looks like, so shoot each side you plan to show. From there, put a runner on a clean white background for marketplaces, set a leather boot on wet cobblestones, or show a slide sandal worn poolside. For TikTok and Reels, a vertical clip of a sneaker stepping off a curb adds motion."
   ],
   "ideas": [
     {
-      "t": "Matching colorway sets",
-      "d": "Upload one photo per colorway and reuse the same scene description each time, so the black, white, and tan versions look like they belong together on your product page."
-    },
-    {
-      "t": "On-foot shots",
-      "d": "Show the pair worn with cuffed jeans, joggers, or a midi dress so buyers can picture the silhouette and see how the shoe sits at the ankle."
+      "t": "Matching color option sets",
+      "d": "Upload one photo per color option and reuse the same scene description each time, so the black, white, and tan versions look like they belong together on your product page."
     },
     {
       "t": "Detail close-ups",
@@ -50,7 +46,7 @@
     },
     {
       "q": "My sneakers look flat or creased in the results. What should I change?",
-      "a": "Stuff the shoe with tissue so it holds its shape, set it on a plain surface at eye level, and shoot in soft daylight. Lace it exactly the way you want it shown, because messy laces carry into the result."
+      "a": "Photograph the laces arranged the way you want them shown, then review the result for loose or uneven laces."
     }
   ],
   "overview": {
@@ -82,8 +78,8 @@
         "d": "Use soft side light for suede nap, mesh, leather grain, stitching, and reflective panels. Wipe fingerprints from smooth finishes before shooting."
       },
       {
-        "t": "Separate colorways",
-        "d": "Use one clean input per colorway and reuse a scene description only after checking that the colors stay distinct. Keep the pair centered and fully in frame."
+        "t": "Separate color options",
+        "d": "Use one clean input per color option and reuse a scene description only after checking that the colors stay distinct. Keep the pair centered and fully in frame."
       },
       {
         "t": "Include a scale cue",
@@ -133,7 +129,7 @@
       },
       {
         "t": "A clean download",
-        "d": "Use the watermark-free file in an ad, gallery, or social post, then add size notes, price, and permitted brand information yourself."
+        "d": "The [FAQ](/faq) explains commercial use and the watermark on downloads."
       }
     ]
   },
@@ -150,7 +146,7 @@
       },
       {
         "t": "Add the channel layer",
-        "d": "The download has no music, spoken narration, or subtitles. Add a track, captions, and any required disclosures in the publishing tool."
+        "d": "AIVideosUGC does not add voiceover, music, or captions; add size notes, required disclosures, and channel text in your publishing tool after download."
       }
     ]
   },
@@ -162,7 +158,7 @@
         "d": "Sneakers, boots, sandals, loafers, and slippers with a clear, photographable silhouette."
       },
       {
-        "t": "Several colorways",
+        "t": "Several color options",
         "d": "Collections that need a consistent composition while keeping each pair visibly different."
       },
       {
@@ -222,5 +218,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Compare side profiles, color options, and on-foot scenes for one pair.",
+  "cta_lead": "Pick a shoe angle, color option, or on-foot setting to build."
 }

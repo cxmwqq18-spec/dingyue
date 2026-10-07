@@ -4,7 +4,7 @@
   "description": "Make AI product videos for electronics: unboxing clips, desk and travel scenes, and sleek hero shots of your gadget from one product photo. Try your first one.",
   "h1": "AI Product Videos for Electronics, From Unboxing to Everyday Use",
   "eyebrow": "Consumer electronics",
-  "lead": "AI product videos for electronics show what gadget buyers want to see: what's in the box, how big the device is in a hand, and where it fits into their day. One clear product photo is enough to set the scene.",
+  "lead": "AI product videos for electronics start with one clear product photo; upload more views when a scene needs another side or small detail.",
   "card": "What's in the box, scale in a hand and gadgets in everyday use.",
   "secondary_keywords": [
     "AI unboxing video for gadgets",
@@ -14,14 +14,10 @@
     "product video for tech accessories"
   ],
   "intro": [
-    "Electronics shoppers compare specs, but they decide when they can picture the thing in use: earbuds on a morning run, a power bank in a carry-on, a ring light clipped to a desk. They also want to know what comes in the box and what the device looks like once it's out, which is why unboxing clips are a staple for gadget sellers.",
+    "AI product videos for electronics can use a context scene to show where a device fits: earbuds on a run, a power bank in a carry-on, or a ring light at a desk. Keep verified specifications in the listing and use separate photos to show physical details.",
     "Upload a clear shot of your product with its ports, buttons, and indicator lights visible, then describe what should happen: a lid lifting off the box, a cable clicking into place, a speaker sitting on a picnic blanket at sunset. Each clip is 6, 10, 15, or 30 seconds long. Battery life, wattage, and other specs belong in the text you add yourself, where you control the exact figures. For gallery photos, photograph the front, side and back so every detail shown comes from a real upload."
   ],
   "ideas": [
-    {
-      "t": "Unboxing clips",
-      "d": "Show the lid coming off, the device lifted out, and the cable and adapter laid beside it. If you want your retail box in the shot, upload a photo that shows the device with its packaging."
-    },
     {
       "t": "Everyday use scenes",
       "d": "Put a mechanical keyboard on a tidy desk, a fitness tracker on a wrist mid-workout, or a mini projector lighting up a bedroom wall. Context tells a shopper who the product is for faster than a spec sheet does."
@@ -62,7 +58,7 @@
       },
       {
         "t": "Make one action the subject",
-        "d": "Unbox, place, clip, plug, carry, or set the device down. A single clear action gives a short clip structure while leaving battery life, wattage, compatibility, and interface screenshots to your approved product copy."
+        "d": "Unbox, place, clip, plug, carry, or set the device down. One clear action gives a short clip structure; keep battery life, wattage, compatibility, and interface screenshots with the verified details on your product listing."
       }
     ]
   },
@@ -132,8 +128,8 @@
         "d": "A photo is 24 credits; a 6-second, 10-second, 15-second, or 30-second result is 24, 40, 60, or 120 credits, and the tool shows that amount before submission."
       },
       {
-        "t": "Commercial output",
-        "d": "Download a watermark-free file for a product page, ad, or social post, then insert real screenshots, specifications, prices, and dates."
+        "t": "Download details",
+        "d": "See the [FAQ](/faq) to review commercial-use terms and download watermark details."
       }
     ]
   },
@@ -150,7 +146,7 @@
       },
       {
         "t": "Add interface and sound",
-        "d": "AIVideosUGC does not generate reliable small interface text or add music, spoken narration, or subtitles. Add approved screenshots, captions, and a track after download."
+        "d": "AIVideosUGC does not add voiceover, music, or captions; add approved screenshots and verified specifications in your editor after download."
       }
     ]
   },
@@ -205,5 +201,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Choose an unboxing, desk, or travel scene that shows your device\u2019s physical details.",
+  "cta_lead": "Select one device action or setting to show beside the visible hardware."
 }

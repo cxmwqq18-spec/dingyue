@@ -14,17 +14,13 @@
     "jewelry photos for Etsy"
   ],
   "intro": [
-    "A ring or a pair of studs looks tiny on a phone screen, and buyers know it. They study the setting, the finish, the clasp, and any engraving, then try to work out how big the piece really is. A pendant that looks substantial against a white backdrop can turn out to be the size of a fingernail, and a buyer who guessed wrong is likely to send it back.",
-    "Start from a sharp, well-lit photo and restage it: a macro view of a pav\u00e9 band, a necklace on a collarbone in warm light, a watch on a wrist at a coffee shop table, a belt bag worn across the chest. Model photos can show how a piece sits without replacing its measurements. Square images sit neatly in a product gallery or a carousel post. For movement, a short clip of light moving across a stone shows the sparkle that a still photo flattens."
+    "A ring or a pair of studs looks small on a phone screen. Shoppers may compare the setting, finish, clasp, engraving, and overall scale. A familiar size reference helps shoppers compare the piece before they buy.",
+    "Start from a sharp, well-lit photo and restage it: a macro view of a ring band set with small stones, a necklace on a collarbone in warm light, a watch on a wrist at a coffee shop table, a belt bag worn across the chest. Model photos can show how a piece sits without replacing its measurements. Square images sit neatly in a product gallery or a carousel post. For movement, a short clip of light moving across a stone shows the sparkle that a still photo flattens."
   ],
   "ideas": [
     {
       "t": "Macro detail shots",
       "d": "Show prongs, chain links, hallmarks, or the grain of a leather watch strap. The sharper your upload, the more of that detail carries into the result."
-    },
-    {
-      "t": "Worn on a person",
-      "d": "Place earrings on an ear with the hair tucked back, a bracelet on a wrist, or layered necklaces on a collarbone so buyers can judge how each piece sits."
     },
     {
       "t": "Size next to everyday objects",
@@ -133,7 +129,7 @@
       },
       {
         "t": "A publishable download",
-        "d": "Commercial files arrive without a watermark. Add engraving, price, care instructions, dates, and music or captions after download."
+        "d": "Check the [FAQ](/faq) for the rules on commercial use and watermark-free files."
       }
     ]
   },
@@ -150,7 +146,7 @@
       },
       {
         "t": "Add the publishing layer",
-        "d": "AIVideosUGC does not include spoken narration, music, or subtitles. Add the sound and text treatment that fits your channel."
+        "d": "AIVideosUGC does not add voiceover, music, or captions; add engraving, care details, and required disclosures in your editor after download."
       }
     ]
   },
@@ -211,5 +207,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Begin with the setting and metal color, then pick a worn view or close detail.",
+  "cta_lead": "Upload a clear jewelry photo and choose the detail or scale view to review."
 }

@@ -14,14 +14,10 @@
     "snack brand TikTok videos"
   ],
   "intro": [
-    "People buy food and drinks with their eyes first. A cold brew needs beads of condensation on the glass, a hot sauce needs a drizzle over tacos, and a granola needs a bowl with milk and berries. Packaging matters just as much, because that's what shoppers look for on a store shelf and in a delivery app.",
+    "Show the package clearly, then use a serving scene to show the product\u2019s color, texture, or portion. A cold brew needs beads of condensation on the glass, a hot sauce needs a drizzle over tacos, and granola can be shown with a bowl of milk and berries. Packaging matters just as much, because that is what shoppers look for on a store shelf and in a delivery app.",
     "Send in a clean shot of the package and spell out the serving moment: a can cracking open over ice, a cookie snapping in half, honey dripping from a dipper onto toast. Six- or ten-second vertical clips suit TikTok and Reels, while square photos fit your store and marketplace listings. Prices and offers are easiest to get right when you type them in afterward with Canva or CapCut."
   ],
   "ideas": [
-    {
-      "t": "Pour shots",
-      "d": "Coffee, soda, kombucha, or sparkling water poured over ice shows color, fizz, and texture in one simple clip. Keep it to 6 seconds so the pour is the whole story."
-    },
     {
       "t": "Plated and served",
       "d": "Show your pasta sauce on a bowl of rigatoni or your spice blend on roasted vegetables, so shoppers see the finished dish and not just the jar."
@@ -62,7 +58,7 @@
       },
       {
         "t": "Give one action the frame",
-        "d": "A pour, crack, drizzle, snap, scoop, or plated finish is enough for a useful short clip. Let the scene suggest taste and occasion while ingredients, allergens, nutrition, and price stay in approved copy."
+        "d": "A pour, crack, drizzle, snap, scoop, or plated finish is enough for a useful short clip. Keep ingredients, allergens, nutrition, and price on the verified package photo or product listing."
       }
     ]
   },
@@ -133,7 +129,7 @@
       },
       {
         "t": "A clean file to finish",
-        "d": "Use the watermark-free download in an ad, store listing, or social post, then add price, ingredients, allergens, dates, captions, or music yourself."
+        "d": "The [FAQ](/faq) covers commercial-use details and whether downloads include a watermark."
       }
     ]
   },
@@ -150,7 +146,7 @@
       },
       {
         "t": "Add sound or captions",
-        "d": "AIVideosUGC provides no music, spoken narration, or subtitles. Add the track and readable captions after the food action is approved."
+        "d": "AIVideosUGC does not add voiceover, music, or captions; add verified ingredients and nutrition details, then caption the serving action in your editor."
       }
     ]
   },
@@ -205,5 +201,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Select a pour, serving, or package scene that fits the product you sell.",
+  "cta_lead": "Begin with your package photo and choose the serving moment to build around."
 }
