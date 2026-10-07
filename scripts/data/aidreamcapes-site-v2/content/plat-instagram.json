@@ -55,8 +55,8 @@
   ],
   "faq": [
     {
-      "q": "What size should an Instagram Reels ad be?",
-      "a": "Pick 9:16 so the clip fills the phone screen. If the same ad will also run in the feed, make a separate 1:1 version."
+      "q": "How can I check an Instagram ad before publishing?",
+      "a": "Preview the asset in its intended placement and check that captions, reply areas, and profile controls do not cover key product details."
     },
     {
       "q": "Can I use one video for both Stories and Reels?",
@@ -74,11 +74,11 @@
   "overview": [
     {
       "h2": "Make a set that belongs together",
-      "d": "Instagram rewards a consistent visual rhythm. Start with the product photo that best shows its shape, then describe one setting for a square feed image and another for a 9:16 Reel or Story. Keep the color and surface related across the set so the still post and the moving clip look like the same campaign, even when each is generated separately."
+      "d": "A consistent background and color palette can make a set of Instagram posts look like one campaign. Start with the product photo that best shows its shape, then describe one setting for a square feed image and another for a 9:16 Reel or Story. Keep the color and surface related across the set so the still post and the moving clip look like the same campaign, even when each is generated separately."
     },
     {
       "h2": "Design for Reels, Stories, and the feed separately",
-      "d": "Meta recommends 9:16 for Reels and says to keep important content in the safe area. Use 9:16 for the full-screen version and 1:1 for the feed version; 16:9, 4:3, and 3:4 are also available for other placements; AIVideosUGC currently offers 6, 10, 15, and 30 second jobs, and shows the credit cost before each generation. Square images are the default still format. Preview every downloaded asset in its intended placement before adding your caption or offer."
+      "d": "Meta's Reels guidance recommends 9:16 and keeping important content inside the safe area. Preview each downloaded file in its intended placement before adding your caption or offer. AIVideosUGC currently offers 6, 10, 15, and 30 second jobs, and shows the credit cost before each generation. Square images are the default still format."
     }
   ],
   "input_guide": {
@@ -140,12 +140,12 @@
     "h2": "Polish each Instagram placement",
     "items": [
       {
-        "t": "Add accurate copy",
+        "t": "Add accurate text",
         "d": "Type the product name, price, offer, and date in Instagram, Canva, CapCut, or Ads Manager instead of relying on generated lettering."
       },
       {
         "t": "Keep audio intentional",
-        "d": "Choose music or a permitted sound after download; AIVideosUGC supplies the visual clip without audio."
+        "d": "Add music or another permitted sound after download; AIVideosUGC does not add voiceover, music, or captions."
       },
       {
         "t": "Check the safe area",
@@ -163,7 +163,7 @@
       "Products with a recognizable silhouette or texture",
       "Stores that publish a mix of carousels, Reels, and Stories",
       "Collections that benefit from a shared color or surface",
-      "Sellers who want to add exact copy after seeing the image"
+      "Sellers who want to add exact text after seeing the image"
     ],
     "not_ideal": [
       "Assets whose meaning depends on tiny generated text",
@@ -215,5 +215,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Choose a look for a Reel, Story, or square feed post featuring your product.",
+  "cta_lead": "Choose the Instagram placement first, then make an image or clip that fits it."
 }

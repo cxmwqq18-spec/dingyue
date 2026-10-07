@@ -4,7 +4,7 @@
   "description": "Learn how to make a TikTok ad from a single product photo: plan the opening, make a vertical video, add captions and music in TikTok, then launch. Start here.",
   "h1": "How to Make a TikTok Ad When You've Never Made One",
   "eyebrow": "TikTok guide",
-  "lead": "Here's how to make a TikTok ad without a creator, a script, or a studio. You need one product, one clear reason to buy it, and a short vertical video.",
+  "lead": "Learn how to make a TikTok ad for one product: choose a clear reason to buy, plan the opening, then review each publishing step.",
   "secondary_keywords": [
     "TikTok ads for small business",
     "TikTok video ad tips",
@@ -18,7 +18,7 @@
       "h2": "Pick one product and one reason to buy",
       "paras": [
         "First ads often try to say too much. Choose one product and finish this sentence: \"People buy this because...\" Keep the answer short and specific.",
-        "\"A phone stand that folds flat enough to slip into a jacket pocket\" is a strong reason. \"High quality, versatile, and stylish\" isn't, because there's nothing to show. The specific version tells you exactly what the video needs to show.",
+        "\"A phone stand that folds flat enough to slip into a jacket pocket\" is a strong reason. \"High quality, versatile, and stylish\" isn't, because there's nothing to show. That specific answer gives you a clear scene to plan.",
         "A few more examples: a candle that burns evenly to the bottom of the jar, a dog leash with a clip you can open with one hand, a lunch box with a lid that doesn't leak when tipped. Each one points to a scene you can picture."
       ]
     },
@@ -48,7 +48,7 @@
     {
       "h2": "Run a quick check before launch",
       "paras": [
-        "Watch the finished ad on your own phone, once with sound and once without. Many people scroll with the sound off, so the product and the main line of text should make sense in silence.",
+        "Check that the product and main text still make sense with the sound off, then confirm the soundtrack is clear with the sound on.",
         "Then ask a few plain questions. Is the product on screen within the first second? Can you read every word without pausing? Do the color and version in the video match what the product page sells? Is the price in the ad the same as the price at checkout?",
         "If any answer is no, fix it now. A mismatch between the ad and the product page is one of the fastest ways to waste a click you paid for."
       ]
@@ -58,7 +58,7 @@
       "paras": [
         "In TikTok Ads Manager, create a campaign with a goal that matches what you want, such as traffic to your store or sales. Set a daily budget you're comfortable spending while you learn, send viewers to the product page for the item in the video, and add a clear button like \"Shop now.\"",
         "Write the ad caption the way you'd text a friend about the product: one line, plain words, no wall of hashtags. For the phone stand, \"Fits in your pocket, holds your phone at eye level\" says enough.",
-        "Let it run for a few days before you judge it. Look at how many people watch past the first few seconds, how many click, and what each sale costs. If you made a second opening, run both in the same ad group and see which one people stay with. The [guide to testing ad versions](page:guide-testing-ad-versions) shows how to compare them fairly."
+        "Let it run for a few days before you judge it. Look at how many people watch past the first few seconds, how many click, and what each sale costs. If you made a second opening, compare both in the same group of ads and see which one people stay with. The [guide to testing ad versions](page:guide-testing-ad-versions) shows how to compare them fairly."
       ]
     }
   ],
@@ -77,19 +77,15 @@
   ],
   "faq": [
     {
-      "q": "How long should my first TikTok ad be?",
-      "a": "Shorter is easier to get right. Six to ten seconds is plenty for one product moment. Go to fifteen seconds when you need to show a few steps in order."
+      "q": "How can I compare two TikTok openings?",
+      "a": "Make two versions with the same product, offer, and destination. Change only the opening, then compare the results in Ads Manager."
     },
     {
       "q": "Do I need to label an AI-made video on TikTok?",
-      "a": "TikTok expects realistic AI-generated content to be labeled, and its ad setup includes a way to mark it. Its policies change from time to time, so read TikTok's current advertising rules before you launch."
+      "a": "Review TikTok's current AI-content ad policy and Ads Manager disclaimer steps for the creative and market before launch."
     },
     {
       "q": "What should I add after downloading the TikTok ad?",
-      "a": "Add captions, licensed sound, price, and call to action in TikTok or CapCut. Upload the finished 9:16 file in TikTok Ads Manager."
-    },
-    {
-      "q": "What do I add before uploading a TikTok ad?",
       "a": "Add captions, licensed sound, price, and call to action in TikTok or CapCut. Upload the finished 9:16 file in TikTok Ads Manager."
     }
   ]

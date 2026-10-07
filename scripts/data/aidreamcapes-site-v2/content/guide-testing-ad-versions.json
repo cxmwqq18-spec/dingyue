@@ -41,8 +41,8 @@
     {
       "h2": "Run them side by side in your ad platform",
       "paras": [
-        "Put all three versions in the same campaign with the same audience, budget, and product page. Most ad platforms let you place several ads in one ad set or ad group. Some also offer a split test tool that divides the audience evenly between versions. If this is your first TikTok campaign, start with [Your First TikTok Video Ad](page:guide-first-tiktok-video-ad).",
-        "Expect the platform to push more spend to one version early on. That's normal, but a version that barely ran hasn't really been tested. If that happens, a split test or a separate ad set for each version gives a fairer comparison.",
+        "Put all three versions in the same campaign with the same audience, budget, and product page. Most ad platforms let you place several ads in one group with the same audience and budget. Some also offer a built-in test that shows each version to part of the audience. If this is your first TikTok campaign, start with [Your First TikTok Video Ad](page:guide-first-tiktok-video-ad).",
+        "Expect the platform to push more spend to one version early on. That's normal, but a version that barely ran hasn't really been tested. If that happens, a built-in test or separate groups for each version gives a fairer comparison.",
         "Avoid editing the ads while the test runs. Changes can reset how the platform delivers them and blur the results."
       ]
     },
@@ -91,7 +91,7 @@
     },
     {
       "q": "How do I compare ad versions fairly?",
-      "a": "Change one variable at a time, such as the opening, length, or product action. Keep the offer, audience, and destination the same so the test is readable."
+      "a": "Use the same audience, budget, offer, and destination for each version. Compare the results after each has had a chance to reach viewers."
     }
   ]
 }

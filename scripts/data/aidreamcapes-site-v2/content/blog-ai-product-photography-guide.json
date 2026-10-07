@@ -57,7 +57,7 @@
     {
       "h2": "Keep costs and files under control",
       "paras": [
-        "Credits are held while an image is being made and only used once it's delivered. If a job fails, they go back to your balance. Delivered images generally aren't refunded, so test one look on one product before you make a full set.",
+        "The credit cost appears before each generation. If a job fails, its credits return to your balance.",
         "Your uploads and results stay in your own account and aren't shown publicly, so you can try ideas for an unreleased product without them turning up anywhere else."
       ]
     }
@@ -86,10 +86,6 @@
     },
     {
       "q": "Can I start AI product photography without studio lighting?",
-      "a": "Yes. A sharp phone photo near a window works; use even light, keep the full product in frame, and avoid glare and heavy filters."
-    },
-    {
-      "q": "What lighting works for AI product photography?",
       "a": "Yes. A sharp phone photo near a window works; use even light, keep the full product in frame, and avoid glare and heavy filters."
     }
   ]

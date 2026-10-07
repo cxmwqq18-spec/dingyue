@@ -4,7 +4,7 @@
   "description": "Use our AI TikTok ad generator to turn one product photo into a 9:16 ad of 6, 10, 15 or 30 seconds. See the credit cost up front and make your first ad today.",
   "h1": "AI TikTok Ads Generator for Small Online Shops",
   "eyebrow": "TikTok ads",
-  "lead": "Use this AI TikTok ads generator to turn a product photo into a vertical clip for the For You feed: describe the scene in a sentence and download the result. Captions and sound go on in TikTok or CapCut.",
+  "lead": "Use this AI TikTok ads generator to make a product clip for TikTok In-Feed ads. Describe the action, download the file, then add the caption and sound in TikTok or CapCut.",
   "card": "Vertical 9:16 clips for the For You feed, from one product photo.",
   "secondary_keywords": [
     "TikTok video ads for products",
@@ -35,9 +35,8 @@
     ]
   ],
   "tips": [
-    "Get the product on screen in the very first second, before anyone has a reason to swipe.",
     "Keep the product clear of the right edge and the bottom of the frame, where TikTok's buttons and caption sit.",
-    "Swap in a fresh version once an ad starts to feel familiar, because the same clip wears out quickly in a fast feed."
+    "To compare a new opening, make another version and change only the first scene; use Ads Manager to compare the results."
   ],
   "ideas": [
     {
@@ -68,7 +67,7 @@
     },
     {
       "q": "Do I need to label an AI-generated ad on TikTok?",
-      "a": "Check TikTok\u2019s current AI-content labeling control when you upload. Requirements can differ by creative and market, so use the label when TikTok\u2019s Ads Manager marks it as required."
+      "a": "Check TikTok’s current AI-content labeling control when you upload. Requirements can differ by creative and market, so use the label when TikTok’s Ads Manager marks it as required."
     }
   ],
   "overview": [
@@ -78,7 +77,7 @@
     },
     {
       "h2": "Match the file to the placement",
-      "d": "TikTok's In-Feed guide recommends 9:16 at 540\u00d7960 or larger for a vertical file; it also lists 1:1 at 640\u00d7640 and 16:9 at 960\u00d7540. Non-Spark In-Feed uploads can be up to 10 minutes and 500 MB, while the general ad format guide lists 5\u201360 seconds. AIVideosUGC offers five video shapes\u20149:16, 1:1, 16:9, 4:3, and 3:4\u2014and 6, 10, 15, and 30 second jobs, with the cost shown before you run each one. Treat those product choices as the source for the file you export, then check TikTok's current guide before launch."
+      "d": "TikTok's In-Feed guide recommends 9:16 at 540×960 or larger for a vertical file; it also lists 1:1 at 640×640 and 16:9 at 960×540. Non-Spark In-Feed uploads can be up to 10 minutes and 500 MB, while TikTok's ad format guide lists 5–60 seconds. AIVideosUGC offers five video shapes—9:16, 1:1, 16:9, 4:3, and 3:4—and 6, 10, 15, and 30 second jobs, with the cost shown before you run each one. Treat those product choices as the source for the file you export, then check TikTok's current guide before launch."
     }
   ],
   "input_guide": {
@@ -149,7 +148,7 @@
       },
       {
         "t": "Check the preview",
-        "d": "Watch the complete file in the intended placement and make sure controls do not cover the product or your added copy."
+        "d": "Watch the complete file in the intended placement and make sure controls do not cover the product or your added text."
       },
       {
         "t": "Handle disclosure",
@@ -172,10 +171,9 @@
   },
   "examples": {
     "h2": "More TikTok-style examples",
-    "lead": "Product-first frames that hook in the first second.",
     "groups": [
       {
-        "label": "First-second hooks",
+        "label": "Product action examples",
         "items": [
           {
             "ref": "n:gen2:plat-tiktok-g1",
@@ -198,5 +196,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Pick a look that puts one clear product action at the center of your TikTok opening.",
+  "cta_lead": "Build your TikTok clip around a clear product action and a placement you plan to use."
 }

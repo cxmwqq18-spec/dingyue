@@ -18,8 +18,8 @@
     {
       "h2": "Why a quick review is worth it",
       "paras": [
-        "An AI photo or video is a new picture of your product, not a copy of your original. Most of the time it's close. Now and then a logo loses a letter, a button moves, a set gains an extra piece, or a color drifts a shade warmer.",
-        "Shoppers notice these things when the package arrives, which is the worst time for you to find out. A few minutes of checking before you publish costs far less than a return, a refund, or an unhappy review. The checks below work for listing photos, social posts, and paid ads alike."
+        "An AI photo or video is a newly generated version of your product image, not a duplicate of the original photo. AI can still change a logo letter, move a button, add a piece, or shift a color.",
+        "Reviewing before you publish gives you a chance to catch product mismatches before customers see the content. The checks below work for listing photos, social posts, and paid ads alike."
       ]
     },
     {
@@ -84,10 +84,6 @@
     },
     {
       "q": "Can I publish a result with a small label error?",
-      "a": "No. Generate another version or use a real label photo. A wrong ingredient, size, color, or safety statement can mislead buyers."
-    },
-    {
-      "q": "What if a product detail is wrong in an AI video?",
       "a": "No. Generate another version or use a real label photo. A wrong ingredient, size, color, or safety statement can mislead buyers."
     }
   ]

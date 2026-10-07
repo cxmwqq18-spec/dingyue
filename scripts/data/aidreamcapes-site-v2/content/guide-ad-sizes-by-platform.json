@@ -19,7 +19,7 @@
       "h2": "Think in shapes, not pixel sizes",
       "paras": [
         "An aspect ratio is the shape of the frame. 9:16 means 9 units wide for every 16 tall, so it's a tall rectangle. 1:1 is a square. 16:9 is the wide shape of a TV screen.",
-        "Exact pixel sizes vary by placement and shift as apps get updated. If your shape is right and your file is sharp, the platform scales it to fit. Platforms do revise their ad specs, so open each one's current spec page before you upload."
+        "Exact pixel sizes vary by placement and change as apps update. A matching aspect ratio helps, but check the crop in the placement preview. Before uploading, review each platform's current specifications: TikTok In-Feed ads, Meta Reels ads, and YouTube Shorts ads."
       ]
     },
     {
@@ -87,10 +87,6 @@
     },
     {
       "q": "How do I keep text inside platform safe zones?",
-      "a": "Leave space around the edges for buttons, captions, and profile controls. Add final text after download, then inspect the placement preview in each ad manager."
-    },
-    {
-      "q": "Where should I place text in each ad format?",
       "a": "Leave space around the edges for buttons, captions, and profile controls. Add final text after download, then inspect the placement preview in each ad manager."
     }
   ]

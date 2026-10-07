@@ -35,7 +35,7 @@
     ]
   ],
   "tips": [
-    "Plenty of people scroll Facebook with the sound off, so make sure the video makes sense on mute.",
+    "Check that the product and any key wording still make sense with the sound off.",
     "Keep any words on the visual short, and put the details in the primary text and headline fields in Ads Manager.",
     "Upload both a square and a vertical version so each placement gets a shape that fits it."
   ],
@@ -55,8 +55,8 @@
   ],
   "faq": [
     {
-      "q": "Does a square video work for Facebook feed ads?",
-      "a": "Yes. Square fits the feed on phones and computers alike. Make a 9:16 version too if the ad will also run in Stories or Reels."
+      "q": "How can I check a Facebook ad before it runs?",
+      "a": "Open the Feed, Stories, and Reels previews separately and check that product details stay clear of buttons, captions, and profile controls."
     },
     {
       "q": "Can AIVideosUGC run my Facebook campaign?",
@@ -68,17 +68,17 @@
     },
     {
       "q": "Will Facebook reject an ad because it was made with AI?",
-      "a": "Meta reviews the ad against its current Advertising Standards. Review claims, rights, and any AI-label requirement in Ads Manager before launch; generation by itself does not guarantee approval."
+      "a": "Meta reviews each ad under its current Advertising Standards. Review claims, rights, and any AI-label requirement in Ads Manager before launch."
     }
   ],
   "overview": [
     {
-      "h2": "Make the product legible without a voice track",
+      "h2": "Show one clear product action",
       "d": "A Facebook feed ad may be encountered while the viewer's sound is off. Build the visual around one unmistakable action: open the container, attach the clip, turn the dial, or place the item where it is used. Use the source photo to keep the product's shape and color anchored, then write the headline and offer in Ads Manager where you can revise them."
     },
     {
       "h2": "Choose a shape for each Meta placement",
-      "d": "Use 1:1 when the feed is the main destination and 9:16 when the same idea will run in Stories or Reels; 16:9, 4:3, and 3:4 are available when a different crop is needed. Meta recommends 9:16 for Reels and says to keep important content inside the safe area. AIVideosUGC currently offers 6, 10, 15, and 30 second jobs and displays the credit cost first; make each shape as its own job when the crop changes the composition."
+      "d": "Meta's Reels guidance recommends 9:16 and keeping important content inside its safe area. AIVideosUGC currently offers 6, 10, 15, and 30 second jobs and displays the credit cost first; make each shape as its own job when the crop changes the composition."
     }
   ],
   "input_guide": {
@@ -145,11 +145,11 @@
       },
       {
         "t": "Add sound only when useful",
-        "d": "Choose licensed music or another permitted track after download; the generated video arrives without audio."
+        "d": "Add a licensed track in Ads Manager or an editor after download; AIVideosUGC does not add voiceover, music, or captions."
       },
       {
         "t": "Inspect the placement preview",
-        "d": "Check feed, Stories, and Reels previews separately. Move added copy if a profile control, button, or caption covers it."
+        "d": "Check feed, Stories, and Reels previews separately. Move added text if a profile control, button, or caption covers it."
       },
       {
         "t": "Compare one change",
@@ -209,5 +209,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Pick a scene that keeps your product clear in the Facebook placement you choose.",
+  "cta_lead": "Choose a Facebook placement, then prepare product media for Ads Manager."
 }

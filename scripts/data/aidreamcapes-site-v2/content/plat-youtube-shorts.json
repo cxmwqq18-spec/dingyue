@@ -37,7 +37,7 @@
   "tips": [
     "Keep the product and any text you add near the center, since the title, channel name and buttons run along the bottom and right side.",
     "Shorts replay on their own, so an ending that flows back into the opening makes the loop feel smooth.",
-    "Let the first frames show the product mid-action, such as a zipper closing or a lid popping open, so the clip makes sense instantly."
+    "Let the first frames show the product mid-action, such as a zipper closing or a lid popping open, so viewers can recognize the product and action from the opening."
   ],
   "ideas": [
     {
@@ -68,7 +68,7 @@
     },
     {
       "q": "What are YouTube Shorts ad limits?",
-      "a": "Google recommends vertical 9:16 and videos under 60 seconds for Shorts; videos can be up to 3 minutes, but the first 60 seconds play in the Shorts feed. AIVideosUGC\u2019s 30-second option fits."
+      "a": "Google recommends vertical 9:16 and videos under 60 seconds for Shorts; videos can be up to 3 minutes, but the first 60 seconds play in the Shorts feed. AIVideosUGC’s 30-second option fits."
     }
   ],
   "overview": [
@@ -78,7 +78,7 @@
     },
     {
       "h2": "Use Google's guidance as the publishing check",
-      "d": "Google recommends a 9:16 vertical asset for Shorts. Its guidance says videos under 60 seconds fit the Shorts experience, while uploads can run up to 3 minutes and the Shorts feed first plays the opening 60 seconds. AIVideosUGC offers 6, 10, 15, and 30 second jobs in five shapes\u20149:16, 1:1, 16:9, 4:3, and 3:4\u2014 with cost shown before generation. Choose 16:9 when the same idea belongs in a standard YouTube placement or a wide product page."
+      "d": "Google recommends a 9:16 vertical asset for Shorts. Its guidance says videos under 60 seconds fit the Shorts experience, while uploads can run up to 3 minutes and the Shorts feed first plays the opening 60 seconds. AIVideosUGC offers 6, 10, 15, and 30 second jobs in five shapes—9:16, 1:1, 16:9, 4:3, and 3:4— with cost shown before generation. Choose 16:9 when the same idea belongs in a standard YouTube placement or a wide product page."
     }
   ],
   "input_guide": {
@@ -94,7 +94,7 @@
       },
       {
         "t": "Keep the vertical center open",
-        "d": "Place the product where the title, channel controls, and buttons are less likely to cover it; add any exact copy after download."
+        "d": "Place the product where the title, channel controls, and buttons are less likely to cover it; add any exact text after download."
       }
     ]
   },
@@ -198,5 +198,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Choose a template that shows one useful product action from the opening frame.",
+  "cta_lead": "Start with one product action, then shape a clip for your YouTube Shorts placement."
 }

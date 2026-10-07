@@ -4,7 +4,7 @@
   "description": "Learn how to take product photos for AI tools with just a phone: light, angles, framing, and a quick check before upload, for cleaner results. Read the guide.",
   "h1": "How to Take Product Photos for AI With Just Your Phone",
   "eyebrow": "Photo guide",
-  "lead": "Learn how to take product photos for AI with just a phone, a window, and about ten minutes: the photo you upload shapes every image and video made from it.",
+  "lead": "Learn how to take product photos for AI with just a phone and a window: the photo you upload shapes every image and video made from it.",
   "secondary_keywords": [
     "product photography with a phone",
     "product photo lighting at home",
@@ -12,17 +12,17 @@
     "product photo angles"
   ],
   "read_minutes": 4,
-  "summary": "Shoot a clear, well-lit product photo on your phone so the images and videos you make from it look like the real thing.",
+  "summary": "Shoot a clear, well-lit source photo with details the generator can reference, then review each result against your product.",
   "sections": [
     {
       "h2": "Why the starting photo matters",
       "paras": [
         "An AI tool can only work with what it can see. If the label is blurry in your photo, the new image has to guess what it says. If your kitchen light turned a white mug slightly yellow, that yellow tends to carry into every version you make.",
-        "A sharp, evenly lit photo gives you results that look like your actual product. It also means fewer do-overs, and fewer credits spent on them."
+        "A sharp, evenly lit source photo gives the generator clearer product details to work from. Review each result against the real item; the credit cost appears before you start."
       ]
     },
     {
-      "h2": "Set up in five minutes",
+      "h2": "Set up the shot",
       "paras": [
         "Start with light. Put a table next to a window during the day, where the light is bright but indirect. If the sun hits the table directly, tape a thin white sheet or baking paper over the glass to soften it. Turn off ceiling lights so warm and cool light don't mix on the product.",
         "Next, the background. A plain surface is enough. A sheet of white poster board, curved so it runs under the product and up the wall behind it, hides the table edge. Plain gray card or a light wooden tabletop also works. Skip patterned tablecloths and busy shelves.",
@@ -34,7 +34,7 @@
       "paras": [
         "Hold the phone at the same height as the product for the main front view. Shooting from above makes bottles and boxes look like they're tipping backward.",
         "Fill most of the frame with the product, but leave a little space on every side so nothing gets cut off. Use the regular 1x lens and step closer instead of pinching to zoom, which softens fine detail.",
-        "Tap the screen on the label to focus. If white areas look washed out, slide the brightness down a little until texture comes back. Turn off portrait mode, filters, and any beauty setting. They change edges and colors, and the AI will copy those changes.",
+        "Tap the screen on the label to focus. If white areas look washed out, slide the brightness down a little until texture comes back. Turn off portrait mode, filters, and any beauty setting. They change edges and colors, and the AI may carry those changes into a new result.",
         "Keep the phone still. Rest it on a stack of books or a small tripod and use the volume button or a two-second timer to take the shot. Even a slight shake is enough to soften small print."
       ]
     },
@@ -50,7 +50,7 @@
       "h2": "Check the photo before you upload",
       "paras": [
         "Zoom in on your phone screen. Is the text on the label sharp enough to read? Are the product's edges crisp rather than smeared? Hold the real item next to the screen in daylight and compare the color.",
-        "Make sure your product is the only thing in the frame. Move anything that pulls attention, like a coffee cup or a laptop lid. Upload the original photo file, not a screenshot or a copy sent through a chat app, since those are usually shrunk."
+        "Make sure your product is the only thing in the frame. Move anything that pulls attention, like a coffee cup or a laptop lid. Upload the original photo file, not a screenshot or a file transferred through a chat app, since those are usually shrunk."
       ]
     },
     {

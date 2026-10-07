@@ -36,7 +36,7 @@
       "paras": [
         "One or two sentences is plenty. Cover the person, the pose, the place, and the light. You don't need to describe the clothing in detail, since that comes from your photo. If you'd rather not write anything, the [Clothing Try-On](page:tpl-tryon), [Jewelry On Model](page:tpl-jewel), and [Lookbook](page:tpl-look) templates give you a ready-made starting point.",
         "Some examples. Linen dress: \"A woman in her 40s walking along a sunny beach path, relaxed smile, late afternoon light.\" Hoodie: \"A young man leaning on a brick wall on a city street, hands in the front pocket, overcast daylight.\" Drop earrings: \"Close-up of a woman's profile with her hair tucked behind her ear, soft studio light, neutral backdrop.\"",
-        "Showing a range of ages and body types across your collection helps more shoppers picture themselves in your pieces. Don't describe a celebrity or ask for a lookalike; those requests may be refused."
+        "Use model examples that reflect the sizes and styles you sell, and keep the garment details visible for review. Don't describe a celebrity or ask for a lookalike; those requests may be refused."
       ]
     },
     {
@@ -70,7 +70,7 @@
   "faq": [
     {
       "q": "Do I need to say the model in my photos is AI-generated?",
-      "a": "Check the destination’s current disclosure rule before publishing a realistic AI model photo. Amazon, TikTok, Meta, and local law can apply different labels; use the official rule for the placement."
+      "a": "Check the current disclosure rules for the platform or marketplace where the image will appear. Amazon, TikTok, Meta, and local law can apply different labels; use the official rule for the placement."
     },
     {
       "q": "Will the same model appear in all my photos?",
@@ -78,10 +78,6 @@
     },
     {
       "q": "What source photo works for an AI model photo?",
-      "a": "Use a sharp, front-facing garment photo with the whole item visible. Smooth wrinkles and use even light so fabric, print, and trim are easier to review."
-    },
-    {
-      "q": "What should I photograph before using an AI model photo?",
       "a": "Use a sharp, front-facing garment photo with the whole item visible. Smooth wrinkles and use even light so fabric, print, and trim are easier to review."
     }
   ]

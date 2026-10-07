@@ -68,17 +68,17 @@
     },
     {
       "q": "What are Shopify product video limits?",
-      "a": "Shopify accepts uploaded MP4, MOV, or WebM product videos up to 10 minutes, 1 GB, and 4K (4096\u00d72160). Our generator can export 1:1, 9:16, or 16:9; upload the version that fits your store."
+      "a": "Our generator offers 1:1, 9:16, and 16:9 clips; upload the shape that fits your store."
     }
   ],
   "overview": [
     {
       "h2": "Make a catalog feel like one store",
-      "d": "Shopify collection pages are easier to scan when product photos share a shape, background family, and camera height. Pick one visual rule for a collection\u2014such as a warm neutral surface with the item centered\u2014and repeat that rule in each prompt. AIVideosUGC creates square stills by default, which gives you a practical starting point for a tidy grid."
+      "d": "Shopify collection pages are easier to scan when product photos share a shape, background family, and camera height. Pick one visual rule for a collection—such as a warm neutral surface with the item centered—and repeat that rule in each prompt. AIVideosUGC creates square stills by default, which gives you a practical starting point for a tidy grid."
     },
     {
       "h2": "Choose media for the page job",
-      "d": "Use a square still as the collection anchor, then place a lifestyle image and a product-page video in the media gallery. Shopify's current limits allow images up to 5000\u00d75000 pixels or 25 MP and under 20 MB. Uploaded product videos can be up to 10 minutes and 1 GB, up to 4K (4096\u00d72160), in MP4, MOV, or WebM. AIVideosUGC offers 6, 10, 15, and 30 second jobs in five shapes\u20149:16, 1:1, 16:9, 4:3, and 3:4\u2014 with cost shown before the job starts."
+      "d": "Use a square still as the collection anchor, then place a lifestyle image and a product-page video in the media gallery. Shopify's current media limits allow images up to 5000×5000 pixels or 25 MP and under 20 MB. Uploaded product videos can be up to 10 minutes and 1 GB, up to 4K (4096×2160), in MP4, MOV, or WebM. AIVideosUGC offers 6, 10, 15, and 30 second jobs in five shapes—9:16, 1:1, 16:9, 4:3, and 3:4— with cost shown before the job starts."
     }
   ],
   "input_guide": {
@@ -145,7 +145,7 @@
       },
       {
         "t": "Write the metadata",
-        "d": "Add product names, descriptions, and alt text yourself; AI-generated lettering is not a reliable source for catalog copy."
+        "d": "Add product names, descriptions, and alt text yourself; AI-generated lettering is not a reliable source for product descriptions or labels."
       },
       {
         "t": "Compare neighboring items",
@@ -198,5 +198,7 @@
         ]
       }
     ]
-  }
+  },
+  "templates_lead": "Pick matching looks for your product grid, detail page, and short product video.",
+  "cta_lead": "Start with one product and plan matching images for its collection and detail pages."
 }

@@ -18,7 +18,7 @@
       "h2": "What Amazon expects from a main image",
       "paras": [
         "[Amazon](page:plat-amazon) treats the main image differently from the rest of your gallery. It appears in search results right next to other sellers' listings, so the rules aim to keep every main image clean and easy to compare.",
-        "These are the core rules most sellers work with. The background is pure white (RGB 255, 255, 255). The product fills 85% or more of the frame. Only the item being sold appears, with no props or accessories that don't come with it. Nothing is added on top: no text, logos, badges, borders, or watermarks. The image shows the actual product, not a drawing, mockup, or placeholder.",
+        "These are the core rules in Amazon Seller Central's product image guide. The background is pure white (RGB 255, 255, 255). The product fills 85% or more of the frame. Only the item being sold appears, with no props or accessories that don't come with it. Nothing is added on top: no text, logos, badges, borders, or watermarks. The image shows the actual product, not a drawing, mockup, or placeholder.",
         "Some categories, such as clothing and jewelry, have extra rules about models and mannequins."
       ]
     },
@@ -85,10 +85,6 @@
     },
     {
       "q": "How do I verify an Amazon white background?",
-      "a": "Check that the background is pure white, the whole product is visible, and the product fills at least 85% of the frame before uploading."
-    },
-    {
-      "q": "How do I check pure white before uploading to Amazon?",
       "a": "Check that the background is pure white, the whole product is visible, and the product fills at least 85% of the frame before uploading."
     }
   ]
