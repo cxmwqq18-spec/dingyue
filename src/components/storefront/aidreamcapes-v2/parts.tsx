@@ -310,7 +310,7 @@ function ExampleCard({ item, r }: { item: V2Example; r: V2Resolvers }) {
   }} r={r} />;
 }
 
-export function ExampleGallery({ examples, r, asSubsection = false }: { examples?: V2Examples; r: V2Resolvers; asSubsection?: boolean }) {
+export function ExampleGallery({ examples, r, asSubsection = false, title, lead }: { examples?: V2Examples; r: V2Resolvers; asSubsection?: boolean; title?: string; lead?: string }) {
   const groups = examples?.groups?.filter((group) => group.items?.length) ?? [];
   if (!examples || !groups.length) return null;
   const gallery = <div className="example-gallery">
@@ -321,9 +321,9 @@ export function ExampleGallery({ examples, r, asSubsection = false }: { examples
       </div>
     ))}
   </div>;
-  if (asSubsection) return <div className="example-gallery-subsection"><h3>{examples.h2}</h3>{examples.lead ? <p>{examples.lead}</p> : null}{gallery}</div>;
+  if (asSubsection) return <div className="example-gallery-subsection"><h3>{title ?? examples.h2}</h3>{(lead ?? examples.lead) ? <p>{lead ?? examples.lead}</p> : null}{gallery}</div>;
   return (
-    <Section eyebrow="Examples" lead={examples.lead} title={examples.h2}>
+    <Section eyebrow="Examples" lead={lead ?? examples.lead} title={title ?? examples.h2}>
       {gallery}
     </Section>
   );

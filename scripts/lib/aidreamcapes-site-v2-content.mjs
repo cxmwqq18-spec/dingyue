@@ -734,10 +734,13 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
   if (source == null) return undefined;
   assert.ok(source && typeof source === "object" && !Array.isArray(source), `${page.id}: visual must be an object`);
   const video = group === "video";
-  const options = Array.isArray(maker?.options) ? maker.options.slice(0, 3) : [];
-  const stepLength = video ? visualLength(options, undefined, page.id) : undefined;
-  const stepCredits = video ? JOB_CREDITS[`video${stepLength}`] : JOB_CREDITS.photo;
   const steps = source.steps && typeof source.steps === "object" ? source.steps : {};
+  const stepMode = steps.mode ?? (video ? "video" : "photo");
+  assert.ok(stepMode === "photo" || stepMode === "video", `${page.id}: visual step mode must be photo or video`);
+  const configuredOptions = Array.isArray(maker?.options) ? maker.options.slice(0, 3) : [];
+  const options = (stepMode === "video" ? maker?.videoOptions : maker?.photoOptions) ?? configuredOptions;
+  const stepLength = stepMode === "video" ? visualLength(options, steps.length, page.id) : undefined;
+  const stepCredits = stepMode === "video" ? JOB_CREDITS[`video${stepLength}`] : JOB_CREDITS.photo;
   const picker = source.picker && typeof source.picker === "object" ? source.picker : {};
   const pickerCards = Array.isArray(picker.cards) ? picker.cards : [];
   const chips = Array.isArray(picker.chips) ? picker.chips : [];
@@ -748,10 +751,12 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
   const visual = {
     strip: (Array.isArray(source.strip) ? source.strip : []).map((ref) => visualImage(model, ref)),
     steps: {
-      source: visualImage(model, steps.source, "photo"),
-      result: visualImage(model, steps.result, video ? "video" : "photo"),
+      source: { ...visualImage(model, steps.source, "photo"), ...(steps.sourceAlt ? { alt: String(steps.sourceAlt) } : {}) },
+      result: visualImage(model, steps.result, stepMode === "video" ? "video" : "photo"),
       options,
       credits: `${stepCredits} credits`,
+      ...(steps.prompt ? { prompt: String(steps.prompt) } : {}),
+      mode: stepMode,
       items: Array.isArray(content.steps) ? content.steps.map((item) => ({ t: item.t ?? "", d: item.d ?? "" })) : []
     },
     picker: {
@@ -808,6 +813,7 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
         return { label, supported, ...(item?.d ? { detail: String(item.d) } : {}) };
       })
     },
+    ...(source.titles ? { titles: source.titles } : {}),
     ...(overview ? { overview: String(overview) } : {})
   };
   return visual;
@@ -1183,14 +1189,19 @@ function payloadFor(model, page) {
     const homeTemplateCards = applyCardOverrides(model, page, HOME_FEATURED.map((key) => cardRef(model, key, key === "creator" ? "alt" : "primary")).filter(Boolean));
     const videoHref = appHref({ tool: "video-ads", template: "creator", size: "9:16", length: "15", prompt: TEMPLATE_PROMPTS.creator }, true);
     const photoHref = appHref({ tool_id: "image_generator", tool: "white-background", template: "white", prompt: TEMPLATE_PROMPTS.white }, false);
-    const homeMaker = { uploadTitle: c.maker?.upload_title || "", videoOptions: HOME_VIDEO_OPTIONS, photoOptions: HOME_PHOTO_OPTIONS };
-    const visual = visualFor(model, page, c.visual, { options: HOME_VIDEO_OPTIONS }, "video", videoHref, c);
+    const homeMaker = {
+      uploadTitle: c.maker?.upload_title || "",
+      cta: c.visual?.steps?.mode === "photo" ? "Make my photos" : "Make my video",
+      videoOptions: HOME_VIDEO_OPTIONS,
+      photoOptions: HOME_PHOTO_OPTIONS
+    };
+    const visual = visualFor(model, page, c.visual, homeMaker, "video", videoHref, c);
     return { ...base,
       maker: homeMaker,
       ...(visual ? { visual } : {}),
       // `output` and `versions` belong to the picture layout used when the hero has no video; with the video reel they are not shown, so they stay out of the data.
       hero: { image: mediaImage(model, "g:feed-ad-still/source-input", "inset"),
-        ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: imageRef(model, "watchugc", "Creator holding the same white smartwatch toward the camera"), versions: [0, 1, 2].map((i) => imageRef(model, `var${i}`, `Smartwatch opening version ${"ABC"[i]}`)) }),
+        ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: mediaImage(model, "g:feed-ad-still/hero-output", "inset"), versions: [0, 1, 2].map((i) => imageRef(model, `var${i}`, `Smartwatch opening version ${"ABC"[i]}`)) }),
         videoHref, photoHref },
       make: { title: c.make_title, lead: c.make_lead, video: VIDEO_TOOLS.map((id) => toolRef(model, id)), photo: PHOTO_TOOLS.map((id) => toolRef(model, id)) },
       templates: { title: c.templates_title, lead: c.templates_lead, cards: homeTemplateCards, total: model.cards.length },
@@ -1623,8 +1634,10 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (visual.input.length < 2 || visual.input.length > 4) errors.push(`${pageId}: visual input guide must contain 2-4 pairs`);
     for (const item of visual.input) {
       if (imageBase(item.good.src) === imageBase(item.bad.src)) errors.push(`${pageId}: visual input good and bad photos must differ`);
-      for (const label of [item.good_label, item.bad_label]) if (wordCount(label) < 3 || wordCount(label) > 8) errors.push(`${pageId}: visual input labels must contain 3-8 words (${label})`);
+      for (const label of [item.good_label, item.bad_label]) if (wordCount(label) < 3 || wordCount(label) > 12) errors.push(`${pageId}: visual input labels must contain 3-12 words (${label})`);
     }
+    if (!(visual.steps.mode === "photo" || visual.steps.mode === "video")) errors.push(`${pageId}: visual steps need a photo or video mode`);
+    if (typeof visual.steps.prompt !== "string" || !visual.steps.prompt.trim()) errors.push(`${pageId}: visual steps need an example prompt`);
     if (visual.outputs.length < 2 || visual.outputs.length > 4) errors.push(`${pageId}: visual outputs must contain 2-4 cards`);
     if (pageId === "home" && (!visual.sizes || visual.sizes.length < 3 || visual.sizes.length > 4)) errors.push(`${pageId}: home visual sizes must contain 3-4 frames`);
     if (visual.after && (visual.after.items.length < 2 || visual.after.items.length > 3)) errors.push(`${pageId}: visual after-download list must contain 2-3 items`);
@@ -2019,13 +2032,16 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (pages.size > 2) errors.push(`${page.id}: same main image appears on ${pages.size} pages`);
     }
   }
-  // The opening paragraph names the page's topic: the words of its primary keyword appear in it.
+  // The opening copy or SEO metadata names the page's topic with its primary keyword.
   const plain = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
   for (const page of build.pages) {
+    const seo = page.contentJson.seo;
     const lead = plain(page.contentJson.sections.v2_main.settings.data.lead);
+    const metadata = plain(`${seo.title} ${seo.description}`);
     const keyword = plain(page.contentJson.seo.primaryKeyword).split(" ").filter((word) => word.length > 2);
-    const found = keyword.filter((word) => lead.includes(word.replace(/s$/, ""))).length;
-    if (keyword.length && found / keyword.length < 0.75) errors.push(`${page.id}: opening paragraph does not name the topic "${page.contentJson.seo.primaryKeyword}"`);
+    const foundInLead = keyword.filter((word) => lead.includes(word.replace(/s$/, ""))).length;
+    const foundInMetadata = keyword.filter((word) => metadata.includes(word.replace(/s$/, ""))).length;
+    if (keyword.length && foundInLead / keyword.length < 0.75 && foundInMetadata / keyword.length < 0.75) errors.push(`${page.id}: opening copy and SEO metadata do not name the topic "${page.contentJson.seo.primaryKeyword}"`);
   }
   // No picture appears twice on a page.
   for (const page of build.pages) {

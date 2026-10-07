@@ -19,16 +19,16 @@
   "platforms_title": "The right size for every platform",
   "steps": [
     {
-      "t": "Upload your product photo",
-      "d": "Start with a clear photo of the product you sell; a phone photo can work."
+      "t": "Upload one product photo",
+      "d": "A phone photo works if the whole product is in frame and the label is readable."
     },
     {
-      "t": "Pick a template or describe your idea",
-      "d": "Choose a template and frame; for video, pick a supported clip length."
+      "t": "Describe the scene and pick a size",
+      "d": "Write where the product should be, or start from a template. The credit cost shows before you click."
     },
     {
-      "t": "Download, or make another version",
-      "d": "Download the version you want and make another to compare."
+      "t": "Download, then make another version",
+      "d": "Keep the one that looks right. Change one thing, like the surface, the light or the size, and compare."
     }
   ],
   "example_flows": [
@@ -130,11 +130,11 @@
     },
     {
       "q": "Can I use a product page link to start a video?",
-      "a": "Yes. Use [URL to Video](/ai-video-generation/url-to-video) with your product page link to start a video generation."
+      "a": "Yes. Paste the link into URL to Video, choose the size and length, and you'll see the cost before it starts."
     },
     {
       "q": "How many videos and photos do I get each month?",
-      "a": "A product photo or a 6-second video uses 24 credits, a 10-second video 40, a 15-second video 60 and a 30-second video 120. The Starter plan's 200 credits cover about eight photos or three 15-second videos a month."
+      "a": "The amount depends on the plan and the type and length of each job. The tool shows its credit cost before you start."
     },
     {
       "q": "Is the person in the video a real creator?",
@@ -150,17 +150,11 @@
     },
     {
       "q": "What should I make first for a new product?",
-      "a": "Start with a clear product image for the listing. Add a lifestyle or detail photo when shoppers need context, then use a video when movement helps show the product."
+      "a": "A clean white-background photo for the listing first, then one lifestyle photo. Add a short clip if the product opens, pours, folds or switches on."
     },
     {
       "q": "Which video type should I make first?",
-      "a": "Choose an ad to introduce the product, a demo for one action, an unboxing to show the package reveal, or photo animation to add movement to a still image."
-    }
-  ],
-  "overview": [
-    {
-      "h2": "Choose the first asset your product needs",
-      "d": "Start with the asset that answers the next shopper question: a clear listing photo, a setting that adds context, or a short clip that shows movement. Use one product photo to make and compare several options, then place each result where it helps shoppers understand the item. Review the generated details against the product you sell, and add current pricing, offers, and final text in your editor."
+      "a": "An ad if you're launching it, a demo if one feature sells it (a lid, a zipper, a switch), an unboxing if the packaging is part of the gift."
     }
   ],
   "examples": {
@@ -260,7 +254,7 @@
   "visual": {
     "strip": [
       "f:carousel-storytelling-v",
-      "f:social-proof-animation-v",
+      "f:tiktok-reels-shorts-v",
       "n:gen2:photo-hub-c1",
       "n:gen2:image-to-video-c2",
       "n:gen2:product-videos-c3",
@@ -268,7 +262,9 @@
     ],
     "steps": {
       "source": "n:gen2:lifestyle-photos-g4",
-      "result": "n:gen2:lifestyle-photos-g5"
+      "result": "n:gen2:lifestyle-photos-g5",
+      "mode": "photo",
+      "prompt": "Move the mug from the snowy porch to a picnic blanket in bright summer sun. Keep the enamel chips and the handle exactly as they are."
     },
     "picker": {
       "title": "Choose a scene for your product",
@@ -294,21 +290,12 @@
       "cards": [
         {
           "ref": "n:gen2:ind-shoes-g5",
-          "label": "Trail shoe on a path",
+          "label": "Sneakers on a city curb",
           "chips": [
             "outdoor"
           ],
-          "prompt": "Place the shoe on a damp trail beside a small puddle, with the side profile facing the camera and open sky above for your ad text later.",
+          "prompt": "Show a person stepping up onto a city curb in white running shoes, with the shoe side profile visible.",
           "kind": "photo"
-        },
-      {
-        "ref": "n:gen2:tpl-angle-c1",
-        "label": "Over-ear headphones",
-        "chips": [
-          "desk"
-        ],
-        "prompt": "Place the headphones on a tidy desk beside a laptop, with the ear cups facing forward and the controls easy to see.",
-        "kind": "photo"
         },
         {
           "ref": "n:gen2:unboxing-videos-c1",
@@ -316,16 +303,7 @@
           "chips": [
             "kitchen"
           ],
-          "prompt": "Set a ceramic mug beside an open book on a breakfast table, with its handle turned toward the viewer and morning light from one side.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:plat-amazon-c1",
-          "label": "Compact speaker",
-          "chips": [
-            "desk"
-          ],
-          "prompt": "Place the compact speaker on a tidy desk beside a laptop, with its front grille facing the viewer.",
+          "prompt": "Show a hand lifting one ceramic mug from an open gift box lined with paper filling.",
           "kind": "photo"
         },
         {
@@ -338,17 +316,17 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:social-ad-photos-c3",
-          "label": "Hand cream with lavender",
+          "ref": "n:gen2:ind-beauty-skincare-c2",
+          "label": "Open clay mask on towels",
           "chips": [
             "bathroom"
           ],
-          "prompt": "Set the tube on a bright bathroom shelf beside a folded towel, keeping the front label facing forward and the background quiet.",
+          "prompt": "Show an open pale green clay mask jar on folded white towels, with its lid beside the jar.",
           "kind": "photo"
         },
         {
           "ref": "n:gen2:tpl-beauty-c3",
-          "label": "Face roller by the sink",
+          "label": "Face roller beside cream",
           "chips": [
             "bathroom"
           ],
@@ -357,20 +335,29 @@
         },
         {
           "ref": "n:gen2:tpl-size-g2",
-          "label": "Canvas tote with essentials",
+          "label": "Canvas tote with laptop",
           "chips": [
             "outdoor"
           ],
-          "prompt": "Show the bag on a city doorway hook with the handles clear, then make a second frame with the same bag carried at a weekend market.",
+          "prompt": "Show the canvas tote open with a laptop inside, held at the top by a person in a bright room.",
           "kind": "photo"
         },
         {
           "ref": "n:gen2:ind-food-drinks-c3",
-          "label": "Hot sauce beside tacos",
+          "label": "Hot sauce over tacos",
           "chips": [
             "kitchen"
           ],
-          "prompt": "Place the bottle beside tacos on a wooden table, leaving one open side for a headline that you will add after download.",
+          "prompt": "Pour hot sauce from the bottle over a plate of tacos on a wooden table.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-home-living-19",
+          "label": "Lamp and mug on a desk",
+          "chips": [
+            "desk"
+          ],
+          "prompt": "Show a small lamp beside an open book on a desk near a cushioned chair.",
           "kind": "photo"
         }
       ],
@@ -379,15 +366,28 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:gen2:photo-hub-c2",
-        "h": "Add a clear product view",
-        "d": "Pair a simple product photo with verified size details on its product page."
+        "ref": "n:gen2:plat-amazon-c1",
+        "h": "Product page",
+        "d": "Lead with the clean photo, then add one scene so shoppers see the size and where it goes."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:social-ad-photos-c2",
+        "h": "Social post",
+        "d": "A product in a real setting gets noticed faster than a cut-out. Type the offer in your editor after download."
       },
       {
         "frame": "phone",
-        "ref": "n:gen2:plat-youtube-shorts-g1",
-        "h": "Introduce a product in a post",
-        "d": "Use a setting that shows where the item belongs, then add the current offer after download."
+        "ref": "f:social-proof-animation-v",
+        "h": "TikTok or Reels",
+        "d": "A 9:16 clip that shows the product moving: opening, pouring, switching on."
+      },
+      {
+        "frame": "split",
+        "ref": "n:gen2:plat-facebook-g3",
+        "ref_b": "n:gen2:plat-facebook-g4",
+        "h": "Ad test",
+        "d": "Make two versions from the same photo and keep the one that gets more clicks."
       }
     ],
     "input": [
@@ -433,18 +433,29 @@
       {
         "frame": "9:16",
         "ref": "n:gen2:tpl-ugc-case-83",
-        "label": "TikTok, Reels, Shorts"
+        "label": "TikTok, Reels and YouTube Shorts"
       },
       {
         "frame": "1:1",
         "ref": "n:gen2:plat-amazon-g1",
-        "label": "Instagram and Facebook feeds"
+        "label": "Instagram and Facebook feeds, Amazon and Shopify listings"
       },
       {
         "frame": "16:9",
         "ref": "n:gen2:image-to-video-g2",
-        "label": "Shopify product pages"
+        "label": "YouTube, website banners and product-page video"
       }
-    ]
+    ],
+    "titles": {
+      "m2": { "h2": "How to make AI product photos and videos in 3 steps" },
+      "m3": { "h2": "AI product photo scenes for the kitchen, desk, bathroom and outdoors", "lead": "Tap a room to see examples. Each card shows one product in one real setting." },
+      "m4": { "h2": "Where to use your AI product photos and videos" },
+      "m5": { "h2": "What makes a good product photo for AI" },
+      "m6": { "h2": "What you get and what each one costs" },
+      "m8": { "h2": "Sizes for TikTok, Reels, Instagram and Shopify" },
+      "examples": { "h2": "AI product photo and video examples" },
+      "templates": { "h2": "AI product photo and video templates" },
+      "faq": { "h2": "Questions about AI product photos and videos" }
+    }
   }
 }

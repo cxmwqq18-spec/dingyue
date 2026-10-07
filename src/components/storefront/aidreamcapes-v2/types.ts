@@ -5,7 +5,9 @@ export type V2Image = { src: string; alt: string; width?: number; height?: numbe
 export type V2VisualImage = { src: string; w: number; h: number; alt: string; kind: "photo" | "video" };
 export type V2VisualFrame = "1:1" | "9:16" | "16:9" | "4:5";
 export type V2VisualStripItem = V2VisualImage;
-export type V2VisualStep = { source: V2VisualImage; result: V2VisualImage; options: [string, string][]; credits: string; items: V2Item[] };
+export type V2VisualStep = { source: V2VisualImage; result: V2VisualImage; options: [string, string][]; credits: string; prompt?: string; mode?: "photo" | "video"; items: V2Item[] };
+export type V2VisualTitle = { h2: string; lead?: string };
+export type V2VisualTitles = Partial<Record<"m2" | "m3" | "m4" | "m5" | "m6" | "m7" | "m8" | "examples" | "templates" | "faq" | "beforeAfter", V2VisualTitle>>;
 export type V2VisualPickerCard = { image: V2VisualImage; label: string; chips: string[]; href: string; prompt: string; kind: "photo" | "video" };
 export type V2VisualPicker = { title: string; lead?: string; chips: { id: string; label: string }[]; cards: V2VisualPickerCard[]; button: string; href: string };
 export type V2VisualUse = { frame: "phone" | "browser" | "listing" | "post" | "split"; image: V2VisualImage; imageB?: V2VisualImage; h: string; d: string };
@@ -24,6 +26,7 @@ export type V2Visual = {
   after?: V2VisualAfter;
   sizes?: V2VisualSize[];
   limitations: { h2: string; items: V2VisualLimitation[] };
+  titles?: V2VisualTitles;
   overview?: string;
 };
 export type V2Video = { src: string; width: number; height: number; duration?: number; name?: string; description?: string; uploadDate?: string; poster: V2Image };

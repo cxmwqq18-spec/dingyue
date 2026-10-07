@@ -4,7 +4,7 @@
   "description": "Use our AI product background changer to move your item from a cluttered table to a marble counter, a sunny shelf or a soft color. Upload a photo to begin.",
   "h1": "AI Product Background Changer for a New Setting",
   "eyebrow": "Photo tool",
-  "lead": "Took a good photo in a messy room? Our AI product background changer aims to keep your product as it appears in the photo while replacing the setting. Compare product details and edges with the original before publishing.",
+  "lead": "Took a good photo in a messy room? Keep the product and swap the room for a marble counter, a sunny shelf or a plain color. Check the label and edges against your original before you post.",
   "secondary_keywords": [
     "change product photo background",
     "replace the background of a product image",
@@ -33,15 +33,15 @@
   "steps": [
     {
       "t": "Upload the original photo",
-      "d": "Choose a sharp photo with the whole product in frame, even if the room behind it is cluttered."
+      "d": "Whole product in frame and in focus. A messy room behind it is fine."
     },
     {
-      "t": "Describe the new background",
-      "d": "Name a color, surface, or setting, or choose a ready-made background."
+      "t": "Name the new background",
+      "d": "One surface, color or room, or pick a ready-made background."
     },
     {
-      "t": "Download or test another backdrop",
-      "d": "Download the version you prefer, or compare another background description."
+      "t": "Download, or try another background",
+      "d": "Keep the one that fits your store and try another if it doesn't."
     }
   ],
   "maker": {
@@ -82,7 +82,7 @@
   "overview": [
     {
       "h2": "Use the photo as a reference for a new setting",
-      "d": "Use this tool when the product angle is worth keeping but its counter, wall, or surface does not fit the page. A simple color can bring a collection together, a quiet material can support a close view, and a complete room can add context. Start with a bounded request—one surface, color, or setting—then compare each result with the original before publishing."
+      "d": "Keep the angle you already like and change only what's behind it. Ask for one thing at a time, like \"white marble counter\" or \"pale sage wall\", and compare each result with your original."
     }
   ],
   "fit": {
@@ -113,7 +113,7 @@
     ]
   },
   "examples": {
-    "h2": "More background swaps",
+    "h2": "AI background changer examples: one vase, five backgrounds",
     "lead": "One product shown on different backdrops, from a plain color block to a seasonal scene.",
     "groups": [
       {
@@ -163,7 +163,9 @@
     ],
     "steps": {
       "source": "n:gen2:plat-instagram-g4",
-      "result": "n:gen2:plat-instagram-g5"
+      "result": "n:gen2:plat-instagram-g5",
+      "mode": "photo",
+      "prompt": "Move the tube onto a white bathroom sink counter with soft window light. Keep the label straight and readable."
     },
     "picker": {
       "title": "Pick a new setting",
@@ -267,13 +269,13 @@
         "frame": "browser",
         "ref": "n:gen2:plat-shopify-c1",
         "h": "Match a collection page",
-        "d": "Give products photographed in different rooms a consistent surface or color, then check each label and edge."
+        "d": "Products shot in different rooms look like one set when they share a surface or color."
       },
       {
         "frame": "post",
         "ref": "n:gen2:social-ad-photos-c2",
         "h": "Refresh a seasonal post",
-        "d": "Move a familiar product into a timely setting; add the current offer after download."
+        "d": "Move the speaker to a pool deck in summer or a cabin in winter, then type the offer in your editor."
       }
     ],
     "input": [
@@ -284,10 +286,10 @@
         "bad_label": "Top handle clipped by frame"
       },
       {
-        "good": "n:gen2:tpl-detail-c4",
+        "good": "n:gen2:plat-instagram-g1",
         "bad": "n:guide:background-mug-blurred",
-        "good_label": "Rim and glaze in sharp focus",
-        "bad_label": "Rim glaze blurred out of focus"
+        "good_label": "Whole speckled mug, handle in frame",
+        "bad_label": "Too close: only the rim, nothing to set on a new background"
       }
     ],
     "outputs": [
@@ -309,10 +311,21 @@
         "Your headline"
       ],
       "items": [
-        "Add prices and product details yourself in an editor after download.",
-        "Place logos and sale dates in your editor after download.",
-        "Compare labels, patterns, and small controls with the real product before posting."
+        "Type prices, logos and sale dates in Canva or your editor. AI lettering can come out misspelled.",
+        "Zoom in on labels, patterns and small buttons and compare them with the real product."
       ]
+    },
+    "titles": {
+      "m2": { "h2": "How to change a product photo background in 3 steps" },
+      "m3": { "h2": "Background ideas by room", "lead": "Pick the room your shopper would put it in." },
+      "m4": { "h2": "Where new-background photos help" },
+      "m5": { "h2": "Which photos work best for background replacement" },
+      "m6": { "h2": "Output sizes and credits" },
+      "m7": { "h2": "Add price and logo in your editor" },
+      "beforeAfter": { "h2": "Product photo background, before and after" },
+      "examples": { "h2": "AI background changer examples: one vase, five backgrounds" },
+      "templates": { "h2": "Background templates" },
+      "faq": { "h2": "Background changer FAQ" }
     }
   }
 }

@@ -107,7 +107,7 @@ function HomePage({ data, r }: Props) {
             )}
           </div>
           <div className="trust">
-            <span>Private uploads</span><span>Cost shown before every job</span><span>9:16, 1:1 or 16:9</span><span>6, 10, 15 or 30 second videos</span>
+            <span>Private uploads</span><span>Cost shown before every job</span><span>9:16, 1:1 or 16:9</span><span>6, 10 or 15 second videos</span>
           </div>
         </div>
       </section>
@@ -170,7 +170,7 @@ function HomePage({ data, r }: Props) {
       {visual ? <VisualOutputs includeLimitations={data.id === "home" && Boolean(visual.limitations.items.length)} visual={visual} r={r} /> : <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />}
       {!visual ? <EnrichmentBlockSection block={data.limitations as never} eyebrow="Before you publish" r={r} /> : null}
       {exampleFlows.length > 0 || hasExampleGallery ? (
-        <Section eyebrow="Examples" title="One product photo, many results">
+        <Section eyebrow="Examples" title={visual?.titles?.examples?.h2 ?? "One product photo, many results"}>
           {exampleFlows.length ? <Flows flows={exampleFlows} r={r} /> : null}
           <ExampleGallery asSubsection examples={exampleGallery} r={r} />
           {exampleFlows.length ? <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/inspiration")}>See more examples →</a></div> : null}
@@ -178,7 +178,7 @@ function HomePage({ data, r }: Props) {
       ) : null}
       {visual ? <VisualUses visual={visual} r={r} /> : null}
       {visual && data.id !== "home" ? <VisualLimitations visual={visual} /> : null}
-      {visual ? <Section eyebrow="Templates" lead={templates.lead} title={templates.title}>
+      {visual ? <Section eyebrow="Templates" lead={visual.titles?.templates?.lead ?? templates.lead} title={visual.titles?.templates?.h2 ?? templates.title}>
         <TemplateGrid cards={templates.cards} r={r} />
         <div style={{ marginTop: 24 }}><a className="btn btn-ghost" href={r.href("/templates")}>See all {templates.total} templates →</a></div>
       </Section> : null}
@@ -195,7 +195,7 @@ function HomePage({ data, r }: Props) {
         <Plans plans={list<V2Plan>(data.plans)} r={r} />
         <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/pricing")}>See full pricing →</a></div>
       </Section>
-      <Faq items={data.faq} title="Questions before you start" r={r} />
+      <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />
       <CtaBand href="/app/create" lead={text(data.ctaLead) || "Upload a photo, pick a template and get a video ad or store-ready photos."} r={r} title="Your next ad starts with one product photo" />
       <AidreamcapesV2HeroTabs />
       <AidreamcapesV2MotionPreference />
@@ -278,7 +278,7 @@ function ToolPage({ data, r }: Props) {
       {visual ? <>
         <VisualStrip visual={visual} r={r} />
         {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
-        {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
+        {pairs.length ? <Section eyebrow="Before and after" title={visual.titles?.beforeAfter?.h2 ?? "Your photo, then the result"}><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
         <VisualOverview visual={visual} r={r} />
         <VisualSteps buttonLabel={maker.cta} visual={visual} r={r} />
         <VisualPicker pageId={data.id} visual={visual} r={r} />
@@ -289,11 +289,11 @@ function ToolPage({ data, r }: Props) {
         <VisualAfter visual={visual} r={r} />
         <VisualLimitations visual={visual} />
         {list<V2Card>(data.templates).length ? (
-          <Section eyebrow="Templates" lead="Pick one, add your product photo and get the same look." title={`Templates for ${data.label}`}>
+          <Section eyebrow="Templates" lead={visual.titles?.templates?.lead ?? "Pick one, add your product photo and get the same look."} title={visual.titles?.templates?.h2 ?? `Templates for ${data.label}`}>
             <TemplateGrid cards={list<V2Card>(data.templates)} r={r} />
           </Section>
         ) : null}
-        <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
+        <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />
       </> : <>
       {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
       {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
@@ -319,7 +319,7 @@ function ToolPage({ data, r }: Props) {
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       </>}
-      <Faq items={data.faq} title={`Questions about ${data.label}`} r={r} />
+      <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="More tools" title="You might also need"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
       <CtaBand href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title={`Make your first ${video ? "video" : "photo"} today`} />

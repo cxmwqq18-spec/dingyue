@@ -31,16 +31,16 @@
   ],
   "steps": [
     {
-      "t": "Add a photo of the product",
-      "d": "Frame the moving part, button, cap, latch, or handle so its position is clear."
+      "t": "Upload a photo of the product",
+      "d": "Show the part that moves, like the lid, latch, zipper or button, fully in frame. A phone photo works."
     },
     {
       "t": "Describe one action",
-      "d": "Describe one action and choose a frame and a supported clip length."
+      "d": "One action per clip. Pick 16:9 for your product page or 9:16 for TikTok and Reels."
     },
     {
-      "t": "Save it or show another feature",
-      "d": "Download the clip, then describe another feature for a separate demo."
+      "t": "Download, then show the next feature",
+      "d": "Watch it next to the real product, then describe the next feature as its own clip."
     }
   ],
   "maker": {
@@ -63,7 +63,7 @@
     },
     {
       "q": "Can I use the video on Etsy or Shopify?",
-      "a": "Yes. For Etsy, make a 6, 10, or 15 second clip, then crop the download to a 2:1 or 1:2 frame in an editor and preview it in Etsy before posting. On Shopify, add the clip to your product media the same way you add a photo."
+      "a": "Yes. Etsy listing videos run 5 to 15 seconds, so make a 6, 10 or 15 second clip. On Shopify, add it to your product media the same way you add a photo."
     },
     {
       "q": "Will the video show my product accurately?",
@@ -77,7 +77,7 @@
   "overview": [
     {
       "h2": "Show one useful action, not a feature list",
-      "p": "A product demo works best when the motion answers a practical question: how a lid closes, a switch works, a bag opens, or a part fits. Build one short clip around one action, then create another for a separate feature. Include the hinge, button, zipper, cap, latch, or handle in your source photo so its movement is easier to review."
+      "p": "Pick one thing a shopper would ask about (does the lid lock, how big is it inside) and make one short clip of it."
     }
   ],
   "fit": {
@@ -94,7 +94,7 @@
     ]
   },
   "examples": {
-    "h2": "More product demo scenes",
+    "h2": "AI product demo video examples",
     "lead": "Demos work best when one action has a clear start and finish. Here are a few to try with your product.",
     "groups": [
       {
@@ -149,8 +149,12 @@
       "f:url-to-ad-a-v"
     ],
     "steps": {
-      "source": "n:white-mug",
-      "result": "n:url-to-video-concept"
+      "source": "n:gen2:plat-amazon-g2",
+      "sourceAlt": "Ceramic mug held in one hand to show its size.",
+      "result": "n:url-to-video-concept",
+      "mode": "video",
+      "length": 10,
+      "prompt": "Lift the mug off the counter, take a slow sip, then set it back down with the handle facing the camera."
     },
     "picker": {
       "title": "Choose one action to show",
@@ -229,15 +233,6 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-product-feature-callout-video-c3",
-          "label": "Kettle lid pops open",
-          "chips": [
-            "kitchen"
-          ],
-          "prompt": "Press the kettle lid button once, then show the lid pop open.",
-          "kind": "video"
-        },
-        {
           "ref": "n:gen2:tpl-product-feature-callout-video-c2",
           "label": "Laptop sleeve opened",
           "chips": [
@@ -263,14 +258,14 @@
         "frame": "split",
         "ref": "n:gen2:plat-facebook-g3",
         "ref_b": "n:gen2:plat-facebook-g4",
-        "h": "Compare clean and in-use views",
-        "d": "Review both placements, then keep the version that shows how your product fits its setting."
+        "h": "Test a clean shot against an in-use shot",
+        "d": "Run the bottle on white in one ad and on a desk in the other. Keep the one that gets more clicks."
       },
       {
         "frame": "phone",
-        "ref": "n:gen2:examples-g2",
-        "h": "Place a demo beside the feature",
-        "d": "A vertical clip can show one useful switch or opening next to a short product description."
+        "ref": "n:gen2:tpl-product-feature-callout-video-g2",
+        "h": "Put the clip next to the feature it shows",
+        "d": "Place the latch clip right under the line about the leak-proof lid on your product page."
       }
     ],
     "input": [
@@ -308,10 +303,21 @@
         "Your product name"
       ],
       "items": [
-        "Compare the motion and proportions with the real item before posting.",
-        "Add names, dimensions, and approved claims in your editor after download.",
-        "The downloaded file has no watermark; review commercial-use terms in the FAQ."
+        "Type the product name and price in your editor. AI-made letters can come out misspelled.",
+        "Check the motion against the real product: the lid, the color, the size in a hand.",
+        "The download has no watermark and can be used in your ads and on your store."
       ]
+    },
+    "titles": {
+      "m2": { "h2": "How to make a product demo video in 3 steps" },
+      "m3": { "h2": "Product demo ideas: one action per video", "lead": "Lids, latches, zippers, pumps and pours. Each idea shows one action from start to finish." },
+      "m4": { "h2": "Where product demo videos help you sell" },
+      "m5": { "h2": "What photo to upload for a product demo video" },
+      "m6": { "h2": "Demo video size, length and credits" },
+      "m7": { "h2": "Add text in CapCut or Canva after download" },
+      "examples": { "h2": "AI product demo video examples" },
+      "templates": { "h2": "Product demo video templates" },
+      "faq": { "h2": "Product demo video FAQ" }
     }
   }
 }
