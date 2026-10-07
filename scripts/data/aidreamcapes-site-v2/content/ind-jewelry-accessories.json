@@ -271,16 +271,16 @@
           "label": "Enamel brooch on a coat",
           "prompt": "Pin the enamel brooch to a wool lapel and keep the flower shape visible.",
           "chips": [
-            "worn"
+            "daily"
           ],
           "kind": "photo"
         },
         {
           "ref": "n:gen2:plat-instagram-g3",
-          "label": "Necklace in open space",
-          "prompt": "Show the necklace close up with open space above and below.",
+          "label": "Necklace displayed in open space",
+          "prompt": "Lay the necklace flat with its pendant centered and open space around it.",
           "chips": [
-            "worn"
+            "daily"
           ],
           "kind": "photo"
         },
@@ -289,7 +289,7 @@
           "label": "Gold anklet on a bare ankle",
           "prompt": "Frame the anklet against warm sand with the clasp visible.",
           "chips": [
-            "close"
+            "worn"
           ],
           "kind": "photo"
         },
@@ -298,7 +298,7 @@
           "label": "Ear cuff worn high",
           "prompt": "Crop close to the ear cuff and show the full curve along the ear.",
           "chips": [
-            "close"
+            "worn"
           ],
           "kind": "photo"
         },
@@ -334,7 +334,25 @@
           "label": "Layered necklaces at the collar",
           "prompt": "Show the layered chains against a plain neckline in soft daylight.",
           "chips": [
-            "daily"
+            "worn"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:ind-jewelry-accessories-m3-necklace-clasp",
+          "label": "Necklace clasp and chain links",
+          "prompt": "Keep the spring ring and fine chain links large and sharply visible.",
+          "chips": [
+            "close"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:ind-jewelry-accessories-m3-gem-prongs",
+          "label": "Gemstone and prongs in macro detail",
+          "prompt": "Show the stone facets and simple gold prongs sharply in neutral light.",
+          "chips": [
+            "close"
           ],
           "kind": "photo"
         }
@@ -382,7 +400,7 @@
       }
     ],
     "after": {
-      "ref": "n:gen2:home-g5",
+      "ref": "n:guide:ind-jewelry-accessories-m7-steel-watch",
       "zones": [
         "Metal tone",
         "Care"

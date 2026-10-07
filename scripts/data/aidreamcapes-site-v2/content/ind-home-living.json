@@ -283,9 +283,9 @@
           "kind": "video"
         },
         {
-          "ref": "n:guide:white-background-desk-lamp",
-          "label": "Curved brass desk lamp on white",
-          "prompt": "Show the full brass desk lamp with its curved arm and base in view.",
+          "ref": "n:guide:ind-home-living-m3-lit-lamp",
+          "label": "Lit brass lamp beside a book",
+          "prompt": "Show a brass lamp glowing beside an open book in a warm, lived-in room.",
           "chips": [
             "lighting"
           ],

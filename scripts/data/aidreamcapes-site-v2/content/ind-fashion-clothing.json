@@ -282,7 +282,7 @@
           "label": "Camel coat on a sidewalk",
           "prompt": "Show the coat from shoulder to hem on a quiet city sidewalk.",
           "chips": [
-            "fit"
+            "season"
           ],
           "kind": "photo"
         },
@@ -333,10 +333,10 @@
         },
         {
           "ref": "n:gen2:tpl-tryon-g1",
-          "label": "Olive bomber shown from the front",
+          "label": "Olive bomber jacket, front view",
           "prompt": "Show the bomber jacket from the front with its full shape visible.",
           "chips": [
-            "season"
+            "fit"
           ],
           "kind": "photo"
         },
@@ -368,16 +368,16 @@
     ],
     "input": [
       {
-        "good": "n:gen2:tpl-limited-drop-alert-video-c3",
+        "good": "n:gen2:occ-sale-discount-g3",
         "bad": "n:guide:ind-fashion-clothing-m5-soft-focus",
-        "good_label": "The full row of tote bags stays visible",
-        "bad_label": "The tote bag shapes blur together"
+        "good_label": "The denim jacket stays clear on its hanger",
+        "bad_label": "The jacket seams and buttons blur together"
       },
       {
         "good": "n:gen2:tpl-outfit-c4",
         "bad": "n:guide:ind-fashion-clothing-m5-cropped",
         "good_label": "The jacket and sleeves fit inside the frame",
-        "bad_label": "The puffer jacket is cut off by a tight crop"
+        "bad_label": "The puffer jacket sleeve is cut off by a tight crop"
       }
     ],
     "outputs": [

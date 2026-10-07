@@ -351,9 +351,9 @@
       },
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-angle-c2",
-        "h": "Show a full-size hiking backpack in a feed post",
-        "d": "A turned pack shows its shoulder straps and back panel before a shopper opens the listing."
+        "ref": "n:guide:ind-electronics-m4-headphones",
+        "h": "Show over-ear headphones in a feed post",
+        "d": "Keep the padded earcups and folded headband clear against a dark studio background."
       }
     ],
     "input": [
@@ -379,7 +379,7 @@
       },
       {
         "ref": "n:gen2:change-background-g3",
-        "frame": "16:9",
+        "frame": "1:1",
         "label": "Phone case among autumn leaves",
         "length": 10
       }

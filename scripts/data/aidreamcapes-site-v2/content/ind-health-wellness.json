@@ -345,8 +345,8 @@
       {
         "frame": "post",
         "ref": "n:gen2:tpl-ugc-case-81",
-        "h": "Give a reusable bottle a gym-bag moment",
-        "d": "A bottle in a work bag can show how it travels between routines."
+        "h": "Style a reusable bottle on a work desk",
+        "d": "A bottle on a desk shows where it fits into a daily work routine."
       }
     ],
     "input": [
@@ -360,7 +360,7 @@
         "good": "n:gen2:examples-g5",
         "bad": "n:guide:ind-health-wellness-m5-cropped",
         "good_label": "The block and mat fit inside the image",
-        "bad_label": "One side of the yoga block is cropped away"
+        "bad_label": "One end of the yoga block is cut off by the frame"
       }
     ],
     "outputs": [

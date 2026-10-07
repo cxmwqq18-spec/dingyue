@@ -259,7 +259,7 @@
         },
         {
           "id": "breakfast",
-          "label": "Morning food"
+          "label": "Morning coffee"
         },
         {
           "id": "snack",
@@ -352,7 +352,7 @@
       {
         "frame": "post",
         "ref": "n:gen2:url-to-video-g1",
-        "h": "Place an ingredient beside the finished dish",
+        "h": "Show the bottle with fresh ingredients",
         "d": "Fresh herbs and olive oil make the cooking use clear in one frame."
       }
     ],
@@ -372,15 +372,15 @@
     ],
     "outputs": [
       {
-        "ref": "f:food-video-t13",
+        "ref": "f:product-video-t09",
         "frame": "16:9",
-        "label": "Bottle and glass on a counter",
+        "label": "Espresso poured beside coffee beans",
         "length": 6
       },
       {
-        "ref": "f:food-video",
+        "ref": "f:food-video-t13",
         "frame": "16:9",
-        "label": "Citrus bottle beside fresh fruit",
+        "label": "Citrus drink bottle beside a glass",
         "length": 10
       }
     ],

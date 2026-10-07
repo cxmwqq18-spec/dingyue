@@ -8262,8 +8262,8 @@
       "ind-fashion-clothing-m5-soft-focus": {
         "file": "gen2guide-ind-fashion-clothing-m5-soft-focus",
         "w": 1280,
-        "h": 720,
-        "alt": "Canvas tote bags softened by blur so their edges blend together.",
+        "h": 1280,
+        "alt": "Blue denim jacket softened by blur so its seams and buttons are unclear.",
         "variants": [
           640,
           1280
@@ -8273,7 +8273,7 @@
         "file": "gen2guide-ind-fashion-clothing-m5-cropped",
         "w": 1280,
         "h": 2276,
-        "alt": "Puffer jacket enlarged until part of the outfit meets the image edges.",
+        "alt": "Puffer jacket sleeve cut off by a tight side crop.",
         "variants": [
           640,
           1280
@@ -8313,7 +8313,7 @@
         "file": "gen2guide-ind-health-wellness-m5-cropped",
         "w": 1280,
         "h": 1280,
-        "alt": "Cork yoga block enlarged until one side meets the frame edge.",
+        "alt": "Cork yoga block with one short end clipped by the edge of the frame.",
         "variants": [
           640,
           1280
@@ -8339,11 +8339,31 @@
           1280
         ]
       },
-    "ind-jewelry-accessories-m5-soft-focus": {
-      "file": "gen2guide-ind-jewelry-accessories-m5-soft-focus",
-      "w": 1280,
-      "h": 1280,
-      "alt": "Ring prong setting softened by blur.",
+      "ind-jewelry-accessories-m3-necklace-clasp": {
+        "file": "gen2guide-ind-jewelry-accessories-m3-necklace-clasp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold necklace clasp and chain links shown in sharp macro detail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m3-gem-prongs": {
+        "file": "gen2guide-ind-jewelry-accessories-m3-gem-prongs",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear gemstone secured by simple gold prongs, shown in sharp macro detail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m5-soft-focus": {
+        "file": "gen2guide-ind-jewelry-accessories-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Ring prong setting softened by blur.",
         "variants": [
           640,
           1280
@@ -8374,6 +8394,16 @@
         "w": 1280,
         "h": 720,
         "alt": "Running shoes enlarged until the pair is cut by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-shoes-m6-boot-detail": {
+        "file": "gen2guide-ind-shoes-m6-boot-detail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Single brown leather Chelsea boot shown in a square close-up, with its elastic side panel, stitching, and toe visible.",
         "variants": [
           640,
           1280
@@ -8434,6 +8464,36 @@
         "w": 1024,
         "h": 1536,
         "alt": "Trail shoe cut off by a tight vertical frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-electronics-m4-headphones": {
+        "file": "gen2guide-ind-electronics-m4-headphones",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Generic charcoal over-ear headphones fully visible on a wood desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-home-living-m3-lit-lamp": {
+        "file": "gen2guide-ind-home-living-m3-lit-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brass table lamp glowing beside an open book in a cozy living room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m7-steel-watch": {
+        "file": "gen2guide-ind-jewelry-accessories-m7-steel-watch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded analog steel watch with a silver bracelet and white dial on linen.",
         "variants": [
           640,
           1280
