@@ -76,17 +76,13 @@
     },
     {
       "q": "What photo format works for an AI lookbook?",
-      "a": "Use a consistent aspect ratio and repeated setting words across each run. Choose 9:16 for vertical social posts or 1:1 for a square collection grid."
+      "a": "Lookbook photos are square by default, and the photo tool does not offer another ratio. Place a square image on a 9:16 canvas in your design tool for a Story layout."
     }
   ],
   "overview": [
     {
       "h2": "Turn a Collection Into a Visual Story",
       "p": "A lookbook frame does more than show a garment. It gives a launch a setting, pace, and point of view, so shoppers can understand how separate pieces belong together. Build each source as a complete outfit and repeat the visual language across the collection."
-    },
-    {
-      "h2": "Let the Setting Support the Clothes",
-      "p": "A pale stone arch, city corner, garden path, or seaside terrace can set a season without competing with the silhouette. Choose a location that your collection can carry through several looks, then vary the pose or grouping rather than changing the story every time."
     }
   ],
   "input_guide": {
@@ -164,7 +160,7 @@
         "d": "Open with the hero look, then alternate silhouettes or color families so the carousel has rhythm."
       },
       {
-        "t": "Add launch copy yourself",
+        "t": "Add launch details yourself",
         "d": "Place dates, prices, product names, and collection links in the email or design tool after download."
       }
     ]

@@ -1,10 +1,10 @@
 {
   "id": "tpl-story",
-  "title": "Instagram Story Ad Images | AIVideosUGC",
+  "title": "Instagram Story Ad Images with Square Photos | AIVideosUGC",
   "description": "Square product images for Instagram Story layouts, with room for your offer in Canva or Ads Manager. Use a 9:16 video for full-screen motion.",
   "h1": "Instagram Story Ad Images Built Around a Square Product Photo",
   "eyebrow": "Ad photo template",
-  "lead": "Create a square product image for an Instagram or Facebook Story layout, then place it on a tall canvas with your headline, price, and offer in the surrounding space. For full-screen motion, use a 9:16 video.",
+  "lead": "Instagram Story ad images from this template are square product photos for a 9:16 Story canvas. Add the image to the layout in your design tool, then place your headline, price, and offer around it.",
   "secondary_keywords": [
     "square Story ad image",
     "square Story product image",
@@ -13,7 +13,7 @@
   ],
   "intro": [
     "This template gives you a square product image with a scene that can sit inside an Instagram or Facebook Story design. Place the image in the middle of a tall canvas, keep the upper and lower areas open for your headline and offer, and finish the layout in Canva or Ads Manager.",
-    "A square source keeps the product easy to inspect in feed posts, carousels, and listing galleries while giving you one clean visual to reuse in a Story layout. When the Story needs full-screen movement instead of a still image, use the [Video Ads tool](/ai-video-generation/ugc-ad-video) and choose the 9:16 video frame."
+    "A square photo can also be used in feed posts, carousels, and listing galleries, or placed in a Story layout. For full-screen movement, use the [Video Ads tool](/ai-video-generation/ugc-ad-video) and choose a 9:16 video frame."
   ],
   "tip": "Keep the product clear in the square image, then reserve the top and bottom of the Story canvas for your account name, headline, price, and ad button.",
   "steps": [
@@ -26,7 +26,7 @@
       "d": "Choose a calm setting such as a pool deck, shelf, doorway, or wall, and leave room around the product for a Story layout."
     },
     {
-      "t": "Add text before it runs",
+      "t": "Add text after download",
       "d": "Download the square image, place it on your Story canvas, and add your headline, price, or code in Canva or Ads Manager."
     }
   ],
@@ -76,7 +76,7 @@
     },
     {
       "q": "What dimensions should an Instagram Story image use?",
-      "a": "Start with the square product image from this template, then place it on a tall Story canvas and add your exact price, discount code, and readable text in the editor. For a full-screen moving Story, make a separate 9:16 video."
+      "a": "This template outputs a square still, not a finished Story-size file. Place it on a 9:16 canvas in your design tool."
     }
   ],
   "overview": [
@@ -101,7 +101,7 @@
         "d": "Use a simple pool deck, shelf, doorway, or wall that supports the product without competing with your message."
       },
       {
-        "t": "Leave copy for later",
+        "t": "Add text after download",
         "d": "Add prices, dates, codes, and claims in Canva, Ads Manager, or your usual editor."
       }
     ]
@@ -136,7 +136,7 @@
       },
       {
         "t": "New color launch",
-        "d": "Arrange one product color against a simple backdrop so your Story copy can name the shade and launch date accurately."
+        "d": "Arrange one product color against a simple backdrop so your Story text can name the shade and launch date accurately."
       }
     ]
   },
@@ -169,7 +169,7 @@
       "Tiny lettering or technical specifications that must be generated perfectly"
     ]
   },
-  "output": "Square product photo \u00b7 Story layout",
+  "output": "Square product photo · Story layout",
   "examples": {
     "h2": "More Story-style examples",
     "lead": "Square images with the product centered and clear space above and below for Story stickers and text.",

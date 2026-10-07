@@ -4,7 +4,7 @@
   "description": "Create product detail photos that bring stitching, leather grain, and hardware up close. Upload a sharp shot of your item and make your first close-up now.",
   "h1": "Close-Up Product Detail Photos of Stitching, Grain, and Finish",
   "eyebrow": "Product photo template",
-  "lead": "Product detail photos turn one sharp product photo into a square close-up that lets shoppers inspect the stitching, texture, and finish they would normally check in a store.",
+  "lead": "Product detail photos start with a sharp source photo where the stitching, texture, clasp, or finish is clearly visible. The square close-up can frame that detail; compare the result with the real item before publishing.",
   "secondary_keywords": [
     "close-up product photos",
     "macro product photography",
@@ -67,10 +67,6 @@
       "a": "It works from what's in your upload. If the stitching is blurry or cut off in your photo, the close-up may come out soft or show details your product doesn't have, so start with a sharp shot."
     },
     {
-      "q": "Where should a detail photo go in my listing?",
-      "a": "Right after the full product view, so shoppers see the whole item first and the close-up next. On Amazon and Shopify, that usually means image two or three."
-    },
-    {
       "q": "Which products suit close-up details?",
       "a": "Anything where quality shows in small parts: leather goods, watches, rings, knitwear, wooden boxes, ceramic mugs. Plain items with no texture or hardware gain less from it."
     },
@@ -127,7 +123,7 @@
       },
       {
         "t": "Support an honest claim",
-        "d": "Use the image as visual evidence for details you can verify in the item and product copy."
+        "d": "Use the image as visual evidence for details you can verify in the item and product description."
       }
     ]
   },

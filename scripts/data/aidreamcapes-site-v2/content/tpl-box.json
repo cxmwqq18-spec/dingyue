@@ -1,10 +1,10 @@
 {
   "id": "tpl-box",
-  "title": "Product Bundle Photos That Show the Full Set | AIVideosUGC",
-  "description": "Create product bundle photos that show every piece of your set in one styled frame. Upload each item in the kit and make a clear what's-in-the-box image.",
-  "h1": "Product Bundle Photos with Every Piece in One Frame",
+  "title": "Product Bundle Photos for a Set of Items | AIVideosUGC",
+  "description": "Make a square bundle photo from clear images of items in your set. Compare each object with the kit, then list exact contents in your product description.",
+  "h1": "Product Bundle Photos for Items Sold Together",
   "eyebrow": "Product photo template",
-  "lead": "Product bundle photos put every bottle, jar, and box from your kit in one square frame, so buyers know exactly what arrives when they order the set.",
+  "lead": "Use clear photos of the items in your kit to build a bundle photo in one square scene. Review every object against your actual kit and list the exact contents in your product description.",
   "secondary_keywords": [
     "what's in the box photo",
     "skincare set product photo",
@@ -73,10 +73,6 @@
     {
       "q": "Can the photo show results like glowing skin?",
       "a": "Keep the photo about the products themselves. Showing the set is fine, but results such as clearer or younger-looking skin shouldn't be promised in the image or the listing text."
-    },
-    {
-      "q": "How do I keep a bundle photo accurate?",
-      "a": "Upload or describe every included item and state the exact count. Review the output against the real bundle before listing it; the tool can add or omit pieces."
     }
   ],
   "overview": [
@@ -156,11 +152,11 @@
     "h2": "Reconcile the Image With the Offer",
     "items": [
       {
-        "t": "Count against the SKU",
+        "t": "Compare with the bundle you sell",
         "d": "Check lids, refills, tools, and packaging against the actual kit before publishing."
       },
       {
-        "t": "Label the bundle in copy",
+        "t": "List the bundle contents in your product description",
         "d": "Write the precise contents, quantity, and size in your product title or description."
       },
       {

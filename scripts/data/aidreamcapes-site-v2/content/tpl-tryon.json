@@ -1,10 +1,10 @@
 {
   "id": "tpl-tryon",
   "title": "AI Virtual Try-On for Clothing Photos | AIVideosUGC",
-  "description": "Use AI virtual try-on for clothing to show your jacket, shirt, or dress on a model without a photoshoot. Upload a flat lay or hanger shot and see it worn.",
+  "description": "Preview one garment on a model with AI virtual try-on for clothing. Upload a flat lay or hanger photo, then use size charts for fit details.",
   "h1": "AI Virtual Try-On for Clothing: Your Garment on a Model",
   "eyebrow": "Model photo template",
-  "lead": "AI virtual try-on for clothing turns a flat lay or hanger photo of one garment into a photo of it worn by a model, so shoppers can see how it hangs on a body.",
+  "lead": "Use AI virtual try-on for clothing to create a visual preview of one garment on a model. It does not measure or verify fit.",
   "secondary_keywords": [
     "clothing on model from flat lay",
     "AI fashion model photos",
@@ -86,7 +86,7 @@
     },
     {
       "h2": "Style the Scene Without Promising a Fit",
-      "p": "Choose the model, pose, base layer, and setting to express your brand. Keep size charts and garment measurements in your listing, because a styled image is a visual reference rather than a replacement for those specifications."
+      "p": "Choose a model, pose, base layer, and setting that fit your collection."
     }
   ],
   "input_guide": {
@@ -179,7 +179,7 @@
     ],
     "not_ideal": [
       "Garments whose construction is hidden in the source",
-      "Products requiring an exact fit or drape guarantee",
+      "Products where fit or drape needs to be measured or confirmed",
       "Very complex prints where every small motif must align perfectly"
     ]
   },

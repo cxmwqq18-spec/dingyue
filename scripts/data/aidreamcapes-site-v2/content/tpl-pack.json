@@ -1,10 +1,10 @@
 {
   "id": "tpl-pack",
-  "title": "Packaging Mockup Generator for Styled Scenes | AIVideosUGC",
-  "description": "Use this packaging mockup generator to see your box, pouch, or label design in a styled scene. Upload your artwork and get a launch photo before stock lands.",
-  "h1": "Packaging Mockup Generator: See Your Design on the Shelf",
+  "title": "Packaging Mockup Generator for Scene Previews | AIVideosUGC",
+  "description": "Preview your box, pouch, or label design in a styled scene with this packaging mockup generator. Explore a setting before ordering printed stock.",
+  "h1": "Packaging Mockup Generator for a Scene Preview",
   "eyebrow": "Product photo template",
-  "lead": "Use this packaging mockup generator to see your box or pouch artwork on a sunny shelf, a coffee shop counter, or a kitchen table, ready to share before the first print run arrives.",
+  "lead": "Use this packaging mockup generator to preview your box or pouch artwork on a sunny shelf, a coffee shop counter, or a kitchen table before you choose a setting to share.",
   "secondary_keywords": [
     "box mockup from design file",
     "pouch packaging mockup",
@@ -64,7 +64,7 @@
   "faq": [
     {
       "q": "Can I use the mockup to check colors before printing?",
-      "a": "Use it to judge the overall look in a real setting, not exact color or folds. Ask your printer for a printed sample before you place a full order."
+      "a": "Ask your printer for a printed sample before you place a full order."
     },
     {
       "q": "Will the small text on my label come out right?",
@@ -148,7 +148,7 @@
       },
       {
         "t": "Holiday gift sleeve",
-        "d": "A gift box with a paper sleeve on a table with ribbon and soft window light, with no invented offer copy."
+        "d": "A gift box with a paper sleeve on a table with ribbon and soft window light, with no made-up offer text."
       }
     ]
   },
@@ -180,7 +180,7 @@
     "not_ideal": [
       "A legal or ingredient proof that depends on tiny lettering",
       "A package whose back panel must be verified in full",
-      "A final color calibration or dieline check for the printer"
+      "A final color calibration or package layout proof for the printer"
     ]
   },
   "examples": {

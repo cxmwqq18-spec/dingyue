@@ -59,7 +59,8 @@
         "Each person's own photo"
       ]
     ],
-    "cta": "Make a team headshot"
+    "cta": "Make a team headshot",
+    "upload_title": "Drop a photo of the person here"
   },
   "faq": [
     {
@@ -76,7 +77,7 @@
     },
     {
       "q": "How many people can I put in one team headshot set?",
-      "a": "Create each person from a clear photo, then keep the background and lighting wording the same across runs. Review identity and facial details before using the set publicly."
+      "a": "This template makes one portrait per run. Create a separate run for each team member; the credit cost appears before each job."
     }
   ],
   "overview": [
@@ -211,5 +212,6 @@
         ]
       }
     ]
-  }
+  },
+  "cta_lead": "Upload one clear photo of the person. See the cost before you start."
 }

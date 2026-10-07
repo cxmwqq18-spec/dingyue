@@ -1,8 +1,8 @@
 {
   "id": "tpl-sale",
-  "title": "Sale Banner Maker for Seasonal Promotions | AIVideosUGC",
+  "title": "Sale Banner Maker for Square Offer Images | AIVideosUGC",
   "description": "Use this sale banner maker to put your product in a seasonal scene with open space for the offer. Add your discount in Canva later. Make your sale image now.",
-  "h1": "Sale Banner Maker with Room Left for Your Offer",
+  "h1": "Sale Banner Maker with Open Space for Offer Text",
   "eyebrow": "Ad photo template",
   "lead": "Use this sale banner maker to create a seasonal image of your product with a clear patch of sky, wall, or snow where your discount and dates can go once you add them.",
   "secondary_keywords": [
@@ -118,10 +118,6 @@
         "d": "Put the discounted item in a scene that matches the season or campaign mood."
       },
       {
-        "t": "A deliberate copy zone",
-        "d": "Leave open space for the offer you will add yourself."
-      },
-      {
         "t": "A reusable background",
         "d": "Carry the same visual into a percent-off post, free-shipping message, or reminder by changing the overlay."
       },
@@ -136,7 +132,7 @@
     "items": [
       {
         "t": "Black Friday apparel",
-        "d": "A dark coat or bag on a dramatic charcoal set with open space on the upper right for bold copy."
+        "d": "A dark coat or bag on a dramatic charcoal set with open space on the upper right for bold offer text."
       },
       {
         "t": "Summer clearance",
@@ -178,7 +174,7 @@
       "Social feed posts that need one product and one message"
     ],
     "not_ideal": [
-      "A promotion that depends on dense legal copy in the image",
+      "A promotion that depends on dense legal text in the image",
       "A product whose silhouette must fill the entire canvas",
       "Offers that change before the creative can be reviewed and updated"
     ]

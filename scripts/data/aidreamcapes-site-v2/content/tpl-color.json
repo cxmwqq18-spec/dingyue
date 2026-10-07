@@ -1,10 +1,10 @@
 {
   "id": "tpl-color",
-  "title": "Product Color Variations in One Matching Set | AIVideosUGC",
-  "description": "Show product color variations in matching square photos, one for each shade you sell. Upload a photo of every colorway and build your swatch set today.",
-  "h1": "Product Color Variations Shot in the Same Light and Setting",
+  "title": "Product Color Variations in a Coordinated Set | AIVideosUGC",
+  "description": "Create a coordinated square photo for each product color. Upload each actual shade and compare the result with the item before adding it to a swatch.",
+  "h1": "Product Color Variations for a Coordinated Photo Set",
   "eyebrow": "Product photo template",
-  "lead": "Product color variations work best when only the color changes. Every colorway gets its own square photo with the same table, light, and angle, so shoppers can compare shades without a change of backdrop getting in the way.",
+  "lead": "Product color variations start with a photo of each actual shade and the same scene description to aim for a coordinated set. Separate results can still vary, so compare each image with the item you sell.",
   "secondary_keywords": [
     "colorway product photos",
     "product variant images for Shopify",
@@ -75,8 +75,8 @@
       "a": "Keep your description word for word the same and upload photos taken from the same angle. If one result drifts, run that color again."
     },
     {
-      "q": "Can I keep the same framing across product colors?",
-      "a": "Use the same camera and background wording for each run, then compare the outputs side by side. Each color is a separate job, so review the product identity before publishing."
+      "q": "What should I do if one color result looks different?",
+      "a": "If one result drifts from the set, rerun that color and compare it with the physical item."
     }
   ],
   "overview": [

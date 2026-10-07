@@ -4,7 +4,7 @@
   "description": "Make a product size reference photo that sets your item beside a suitcase, phone, or hand. Upload your product photo and show its scale at a glance. Start now.",
   "h1": "Product Size Reference Photo Next to Objects Shoppers Know",
   "eyebrow": "Product photo template",
-  "lead": "A product size reference photo places your product next to something everyone recognizes, so shoppers get a quick feel for its size before they read the measurements.",
+  "lead": "A product size reference photo starts with a clear picture of your item and pairs it with a familiar object, giving shoppers a visual sense of scale before they read exact measurements.",
   "secondary_keywords": [
     "size comparison product photo",
     "scale photo for Amazon listing",
@@ -71,18 +71,14 @@
       "a": "Yes, as one of the extra images in your gallery. A scale shot placed right after the main image helps buyers picture the size before they scroll to the details."
     },
     {
-      "q": "What objects make the clearest comparison?",
-      "a": "Things with a size almost everyone knows: a phone, a bank card, a hand, a coffee mug, a soda can, a carry-on bag. Avoid objects that vary a lot, like plants or pets."
-    },
-    {
-      "q": "What should I place beside a product for scale?",
-      "a": "Use a familiar object with a stable size, such as a hand, standard card, or common bottle. Keep the real measurements in the listing because generated scale is only visual."
+      "q": "What object should I use to show a product’s size?",
+      "a": "Choose a familiar object with a stable size, such as a standard card or common bottle. Generated scale may vary, so include exact measurements in your product description."
     }
   ],
   "overview": [
     {
       "h2": "Give Shoppers a Familiar Sense of Scale",
-      "p": "Dimensions are precise, but a shopper still wants to picture a bag in a hand, a pendant at the collarbone, or a case beside the phone it protects. A scale image adds that visual shortcut to the gallery while leaving the official numbers in your listing copy."
+      "p": "Dimensions are precise, but shoppers still want to picture a bag in a hand, a pendant at the collarbone, or a case beside the phone it protects. A scale image adds that visual cue to the gallery while leaving the official numbers in your product description."
     },
     {
       "h2": "Choose Context That Matches the Purchase",
@@ -124,10 +120,6 @@
       {
         "t": "Travel context",
         "d": "Set a case, bottle, or backpack beside luggage or a seat-side object people already know."
-      },
-      {
-        "t": "A visual cue, not a ruler",
-        "d": "Use the scene to orient shoppers, then rely on the real dimensions you provide for exact decisions."
       }
     ]
   },

@@ -1,10 +1,10 @@
 {
   "id": "tpl-angle",
-  "title": "Product Packshot Photos from Every Angle | AIVideosUGC",
+  "title": "Product Packshot Photos for Multiple Views | AIVideosUGC",
   "description": "Make product packshot photos that show the front, back, and buttons of your item on a clean backdrop. Upload one photo per side and build your gallery today.",
-  "h1": "Product Packshot Photos for Every Side of Your Item",
+  "h1": "Product Packshot Photos for Multiple Views of Your Item",
   "eyebrow": "Product photo template",
-  "lead": "Upload a photo of each side of your product and get a clean, square packshot for every view, ready for an Amazon or Shopify image gallery.",
+  "lead": "Product packshot photos start with a separate source photo for each side you want to show. Build a square set around the front, back, top, or base views buyers need in your gallery.",
   "secondary_keywords": [
     "multi-angle product photos",
     "product photos from different angles",
@@ -64,8 +64,8 @@
   },
   "faq": [
     {
-      "q": "Can I use these packshots as my Amazon main image?",
-      "a": "Amazon's main image has to sit on pure white, so ask for a white backdrop for that shot and check the result before you upload it. Gray or softly tinted backdrops suit the other gallery slots."
+      "q": "Which views belong in a product photo set?",
+      "a": "Start with a clear front view, then add separately photographed sides and close-ups of details such as ports or controls. Choose views that answer different buyer questions instead of repeating the same angle."
     },
     {
       "q": "Will the AI guess what the back of my product looks like?",
