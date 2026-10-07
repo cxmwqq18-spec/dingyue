@@ -8169,6 +8169,16 @@
           1280
         ]
       },
+      "plat-facebook-size-portrait-backpack": {
+        "file": "gen2guide-plat-facebook-size-portrait-backpack",
+        "w": 1080,
+        "h": 1920,
+        "alt": "Black commuter backpack shown full length in a vertical studio frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
       "plat-instagram-size-wide": {
         "file": "gen2guide-plat-instagram-size-wide",
         "w": 1536,
