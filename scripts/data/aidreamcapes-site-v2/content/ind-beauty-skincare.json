@@ -14,7 +14,7 @@
     "makeup product photos"
   ],
   "intro": [
-    "Show a cream\u2019s texture in a separate swatch photo and place the bottle in a hand for scale. A routine scene can add context, while clear product-only photos still suit a product page or marketplace listing.",
+    "Show a cream’s texture in a separate swatch photo and place the bottle in a hand for scale. A routine scene can add context, while clear product-only photos still suit a product page or marketplace listing.",
     "Pair a photo of your serum or balm with a sentence about the setting you picture: a marble vanity in soft morning light, toner pressed onto a cotton pad, a travel kit laid out on a folded towel. Videos can run 6, 10, 15, or 30 seconds, vertical for TikTok and Reels or square for feeds. Every photo comes out square by default, a good fit for listings and carousel posts."
   ],
   "ideas": [
@@ -34,7 +34,7 @@
   "faq": [
     {
       "q": "Can I make before-and-after videos for a skincare product?",
-      "a": "We\u2019d steer away from it for skin results. A generated face is not evidence of what your product does, and a visible change in skin can read as a promise. Show application, texture, and packaging instead, and leave claims about results out of your request and the claims you use in an ad."
+      "a": "We’d steer away from it for skin results. A generated face is not evidence of what your product does, and a visible change in skin can read as a promise. Show application, texture, and packaging instead, and leave claims about results out of your request and the claims you use in an ad."
     },
     {
       "q": "Will the video match my exact foundation or lipstick shade?",
@@ -205,5 +205,217 @@
     ]
   },
   "templates_lead": "Choose a serum, jar, or set for your next texture or routine scene.",
-  "cta_lead": "Choose the next view for your serum, jar, or skincare set."
+  "cta_lead": "Choose the next view for your serum, jar, or skincare set.",
+  "steps": [
+    {
+      "t": "Upload a clear product photo",
+      "d": "Show the whole bottle, jar, or tube in good light, with the label and package shape visible."
+    },
+    {
+      "t": "Choose a routine or display scene",
+      "d": "Name the surface, light, and one simple action while keeping the package and shade easy to see."
+    },
+    {
+      "t": "Download and add the shade name",
+      "d": "Type the shade name and key ingredients as text in your editor, so small print stays sharp."
+    }
+  ],
+  "visual": {
+    "overview": "Beauty shoppers look at the package, shade, texture, and place in a routine. Use clear product photos for the listing, then add a vanity, shelf, or travel scene for context.",
+    "strip": [
+      "n:gen2:tpl-beauty-c1",
+      "n:gen2:tpl-beauty-c2",
+      "n:gen2:tpl-beauty-c3",
+      "n:skincare-vertical",
+      "n:gen2:tpl-beauty-g2",
+      "n:gen2:tpl-light-g2"
+    ],
+    "steps": {
+      "source": "n:lipstick-pack",
+      "result": "n:lipstick-vanity",
+      "mode": "photo",
+      "prompt": "Place the coral lipstick upright on a white marble vanity beside a pink flower and round mirror, with the tube and cap visible.",
+      "options": [
+        [
+          "Template",
+          "Lifestyle photo"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a beauty product scene",
+      "lead": "Pick whether shoppers should see the shade, the texture, or where the product sits in a routine.",
+      "chips": [
+        {
+          "id": "routine",
+          "label": "Daily routine"
+        },
+        {
+          "id": "texture",
+          "label": "Shade and texture"
+        },
+        {
+          "id": "travel",
+          "label": "Travel kit"
+        },
+        {
+          "id": "shelf",
+          "label": "Shelf display"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:image-to-video-c3",
+          "label": "Uncapped coral lipstick",
+          "chips": [
+            "routine"
+          ],
+          "prompt": "Stand the uncapped coral lipstick on a bright vanity with its shade visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:social-ad-photos-c3",
+          "label": "Hand cream with lavender",
+          "chips": [
+            "routine"
+          ],
+          "prompt": "Place the hand cream tube beside lavender sprigs in soft light.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-compare-c3",
+          "label": "Matte and glossy lipstick",
+          "chips": [
+            "texture"
+          ],
+          "prompt": "Show matte and glossy lipstick shades side by side with both bullets visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:social-ad-photos-g1",
+          "label": "Red lipstick on a pink backdrop",
+          "chips": [
+            "texture"
+          ],
+          "prompt": "Place the red lipstick on a clean pink backdrop in even light.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-story-c1",
+          "label": "Sunscreen in beach light",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Set the sunscreen tube beside a striped towel in beach light.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-story-g2",
+          "label": "Travel-size skincare kit",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Arrange the travel-size bottles inside an open toiletry pouch.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-retargeting-video-ad-c2",
+          "label": "Serum on a bathroom shelf",
+          "chips": [
+            "shelf"
+          ],
+          "prompt": "Place the serum bottle on a tidy bathroom shelf with the label facing forward.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:home-g4",
+          "label": "Skincare bottle on wet stone",
+          "chips": [
+            "shelf"
+          ],
+          "prompt": "Set the skincare bottle on a wet stone surface with the full shape visible.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a beauty product photo"
+    },
+    "uses": [
+      {
+        "frame": "browser",
+        "ref": "n:gen2:plat-instagram-g5",
+        "h": "Add a routine photo to a product page",
+        "d": "Show the serum or cream where it is used, next to the plain pack shot on your listing."
+      },
+      {
+        "frame": "post",
+        "ref": "n:lipstick-ad",
+        "h": "Show a shade in a social post",
+        "d": "A close view of the bullet shows the shade; type the shade name over it in your editor."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-beauty-c4",
+        "bad": "n:guide:beauty-skincare-soft-focus",
+        "good_label": "Sheet mask package stays fully visible",
+        "bad_label": "Package details blur together"
+      },
+      {
+        "good": "n:gen2:tpl-beauty-g3",
+        "bad": "n:guide:beauty-sunscreen-crop",
+        "good_label": "Hair oil bottle stays fully in frame",
+        "bad_label": "Bottle is cut off at the frame edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:tpl-sale-c3",
+        "frame": "1:1",
+        "label": "Square skincare set photo"
+      },
+      {
+        "ref": "n:gen2:tpl-light-c3",
+        "frame": "1:1",
+        "label": "Square single-product photo"
+      }
+    ],
+    "after": {
+      "ref": "n:lipstick-swatch",
+      "zones": [
+        "Shade",
+        "Ingredients"
+      ],
+      "items": [
+        "Small label text can come out soft, so add the shade name as text instead of relying on the photo.",
+        "Copy key ingredients from your listing word for word, so the ad and the product page match."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Show the same lipstick shade in a new setting"
+      },
+      "m3": {
+        "h2": "Choose a scene for your beauty product"
+      },
+      "m4": {
+        "h2": "Use beauty photos on listings and social"
+      },
+      "m5": {
+        "h2": "Start with a photo that shows the package"
+      },
+      "m6": {
+        "h2": "Square skincare photos for sets and single products"
+      },
+      "m7": {
+        "h2": "Add shade names and ingredients after download"
+      },
+      "faq": {
+        "h2": "Questions about beauty product photos"
+      }
+    }
+  }
 }

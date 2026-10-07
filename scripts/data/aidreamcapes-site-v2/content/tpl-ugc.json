@@ -18,16 +18,16 @@
   "tip": "Describe a specific moment, like \"sitting on the floor after a home workout, morning light,\" rather than a vague style word such as \"authentic.\"",
   "steps": [
     {
-      "t": "Upload a clean product shot",
-      "d": "A well-lit photo of the bottle, jar, or pack with the label facing forward."
+      "t": "Upload a clear product photo",
+      "d": "Show the whole bottle, jar, or package in good light, with its front label facing the camera."
     },
     {
-      "t": "Write the moment",
-      "d": "Name the person, the place, and the time of day, for example \"woman in workout clothes on her living-room floor, towel on her shoulders.\""
+      "t": "Describe an everyday moment",
+      "d": "Name the person, place, and one action, such as setting a bottle beside a gym bag after a workout."
     },
     {
-      "t": "Post it in the feed",
-      "d": "Download the photo for an Instagram ad or a TikTok photo post, and add any offer text yourself before it goes out."
+      "t": "Download and add your caption",
+      "d": "Download the photo, then add your caption and any offer in your editor."
     }
   ],
   "ideas": [
@@ -211,5 +211,203 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A creator-style photo places a product in an everyday routine, with the product still easy to recognize. Use a clear source image, then describe the setting and one natural action.",
+    "strip": [
+      "g:ugc-still-ad/example-01",
+      "g:ugc-still-ad/example-02",
+      "g:ugc-still-ad/example-03",
+      "g:ugc-still-ad/example-04",
+      "g:ugc-still-ad/example-05",
+      "g:ugc-still-ad/example-06"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-ugc-m2-source",
+      "result": "g:ugc-still-ad/hero-output",
+      "mode": "photo",
+      "prompt": "Show this bottle in a relaxed after-workout moment at home, with the sage lid facing the camera.",
+      "options": [
+        [
+          "Template",
+          "Creator-style photo"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose an everyday scene",
+      "lead": "Pick a moment that suits how someone might use the product.",
+      "chips": [
+        {
+          "id": "morning",
+          "label": "Morning routine"
+        },
+        {
+          "id": "commute",
+          "label": "On the go"
+        },
+        {
+          "id": "unboxing",
+          "label": "Unboxing"
+        },
+        {
+          "id": "workday",
+          "label": "Workday"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:video-ads-c2",
+          "label": "Phone case in a cafe",
+          "chips": [
+            "commute"
+          ],
+          "prompt": "Turn the phone case toward the light while seated at a cafe table.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:lifestyle-photos-c3",
+          "label": "Weekender in a car",
+          "chips": [
+            "commute"
+          ],
+          "prompt": "Set the weekender on the back seat of a parked car before a road trip.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:unboxing-videos-g1",
+          "label": "Diffuser unpacked at home",
+          "chips": [
+            "unboxing"
+          ],
+          "prompt": "Unwrap the reed diffuser and set it beside the open box.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:unboxing-videos-c3",
+          "label": "Watch box opened on a desk",
+          "chips": [
+            "unboxing"
+          ],
+          "prompt": "Open the watch box and lift out the watch on a clear desk.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:image-to-video-g2",
+          "label": "Steaming mug by a window",
+          "chips": [
+            "morning"
+          ],
+          "prompt": "Place the ceramic mug by a bright window with gentle steam rising.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:occ-product-launch-g3",
+          "label": "Bottle on a morning run",
+          "chips": [
+            "morning"
+          ],
+          "prompt": "Carry the water bottle on a quiet morning run outdoors.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:video-ads-c3",
+          "label": "Lunch bag packed in the kitchen",
+          "chips": [
+            "workday"
+          ],
+          "prompt": "Pack the insulated lunch bag on a kitchen island in morning light.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:url-to-video-c2",
+          "label": "Desk organizer at work",
+          "chips": [
+            "workday"
+          ],
+          "prompt": "Arrange the wooden desk organizer on a tidy work surface beside a notebook.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a creator-style photo"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:gen2:tpl-story-c2",
+        "h": "Add context to a feed post",
+        "d": "A kitchen counter or a gym bag shows followers when they would reach for the product."
+      },
+      {
+        "frame": "listing",
+        "ref": "n:gen2:tpl-story-c4",
+        "h": "Give a product page another view",
+        "d": "Place it after your white-background photo so shoppers can judge the size next to everyday things."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-story-g3",
+        "bad": "n:guide:tpl-ugc-soft-focus",
+        "good_label": "Full bottle and cap stay clear",
+        "bad_label": "Bottle details blur into the backdrop"
+      },
+      {
+        "good": "g:ugc-still-ad/example-07",
+        "bad": "n:guide:tpl-ugc-breakfast-crop",
+        "good_label": "Full bottle fits inside the frame",
+        "bad_label": "Bottle is cropped at the frame edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:lifestyle-photos-g1",
+        "frame": "1:1",
+        "label": "Casual square product photo"
+      },
+      {
+        "ref": "n:gen2:lifestyle-photos-g5",
+        "frame": "1:1",
+        "label": "Outdoor lifestyle photo"
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:lifestyle-photos-g3",
+      "zones": [
+        "Caption",
+        "Offer"
+      ],
+      "items": [
+        "Write a short caption in your editor, such as where the bottle goes with you each day.",
+        "Put the offer or code in an empty corner of the scene so it never covers the product."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Turn one product photo into a UGC-style scene"
+      },
+      "m3": {
+        "h2": "Pick an everyday moment for your UGC photo"
+      },
+      "m4": {
+        "h2": "Where creator-style photos work: feed posts and listings"
+      },
+      "m5": {
+        "h2": "Start with a clear, complete product photo"
+      },
+      "m6": {
+        "h2": "Square UGC photos for Instagram and product pages"
+      },
+      "m7": {
+        "h2": "Add your caption and offer after download"
+      },
+      "faq": {
+        "h2": "Questions about creator-style product photos"
+      }
+    }
   }
 }

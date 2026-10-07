@@ -67,7 +67,7 @@
     },
     {
       "q": "Do I need to label an AI-generated ad on TikTok?",
-      "a": "Check TikTok’s current AI-content labeling control when you upload. Requirements can differ by creative and market, so use the label when TikTok’s Ads Manager marks it as required."
+      "a": "TikTok’s AI-content labeling control can vary by creative and market. Apply the in-app label when Ads Manager marks it as required."
     }
   ],
   "overview": [
@@ -198,5 +198,241 @@
     ]
   },
   "templates_lead": "Pick a look that puts one clear product action at the center of your TikTok opening.",
-  "cta_lead": "Build your TikTok clip around a clear product action and a placement you plan to use."
+  "cta_lead": "Build your TikTok clip around a clear product action and a placement you plan to use.",
+  "steps": [
+    {
+      "t": "Upload a clear product photo",
+      "d": "Keep the product centered and fully in frame so it remains visible in a vertical crop."
+    },
+    {
+      "t": "Choose a 9:16 action",
+      "d": "Describe one movement viewers can follow, such as opening a box or turning the product toward camera."
+    },
+    {
+      "t": "Download and add sound in TikTok",
+      "d": "Add a caption, a sound, and any offer in TikTok or CapCut before you post."
+    }
+  ],
+  "visual": {
+    "overview": "For TikTok In-Feed video ads, 9:16 vertical is the recommended shape; square 1:1 and horizontal 16:9 are also listed. Keep the product visible early and leave room for the app interface. [TikTok's current In-Feed ad specifications](https://ads.tiktok.com/resources/help/article/tiktok-auction-in-feed-ads?lang=en-GB) describe the placements and file requirements.",
+    "strip": [
+      "f:social-proof-animation-v",
+      "f:how-to-tutorial-v",
+      "f:retargeting-urgency-v",
+      "f:black-friday-countdown-v",
+      "f:carousel-storytelling-v",
+      "f:url-to-ad-a-v"
+    ],
+    "steps": {
+      "source": "n:gen2:tpl-angle-c1",
+      "result": "f:unboxing-experience-v",
+      "mode": "video",
+      "length": 15,
+      "prompt": "Open the headphone box, lift the gray headphones from the fitted insert, and keep them in the middle of a vertical 9:16 frame.",
+      "options": [
+        [
+          "Size",
+          "9:16 · TikTok & Reels"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Pick one product action",
+      "lead": "Choose a simple movement that reads quickly in a vertical feed.",
+      "chips": [
+        {
+          "id": "open",
+          "label": "Open or unbox"
+        },
+        {
+          "id": "use",
+          "label": "Show it in use"
+        },
+        {
+          "id": "detail",
+          "label": "Show a detail"
+        },
+        {
+          "id": "routine",
+          "label": "Daily routine"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-product-feature-callout-video-c1",
+          "label": "Bottle cap opens with a press",
+          "chips": [
+            "open"
+          ],
+          "prompt": "Press the flip-top cap and show it pop open.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-howto-g1",
+          "label": "Kettle filled at the sink",
+          "chips": [
+            "routine"
+          ],
+          "prompt": "Fill the kettle at the sink, then set it on the counter.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-product-feature-callout-video-c2",
+          "label": "Backpack sleeve opened",
+          "chips": [
+            "use"
+          ],
+          "prompt": "Open the backpack sleeve and show its padded interior.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-howto-g2",
+          "label": "Fabric shaver in use",
+          "chips": [
+            "use"
+          ],
+          "prompt": "Move the fabric shaver across the sweater sleeve.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-product-feature-callout-video-c3",
+          "label": "Kettle lid opens with a press",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Press the kettle button and show the lid opening.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-howto-g3",
+          "label": "Filter clicks into pitcher",
+          "chips": [
+            "detail"
+          ],
+          "prompt": "Fit the filter cartridge into the water pitcher.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-product-feature-callout-video-c4",
+          "label": "Umbrella opens on a rainy street",
+          "chips": [
+            "open"
+          ],
+          "prompt": "Open the compact umbrella and show its canopy settle.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-carousel-video-ad-c1",
+          "label": "Skincare steps on a vanity",
+          "chips": [
+            "routine"
+          ],
+          "prompt": "Lay cleanser, serum, and cream out in order on a clean vanity.",
+          "kind": "video"
+        }
+      ],
+      "button": "Make a TikTok-style video"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "n:gen2:tpl-spark-ads-style-video-c1",
+        "h": "Use 9:16 for full-screen In-Feed",
+        "d": "Keep the product in the middle of the frame; TikTok's caption, buttons, and profile icon sit along the bottom and right edges."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:tpl-spark-ads-style-video-c2",
+        "h": "Use 1:1 for square feed placements",
+        "d": "Re-frame the product for a square layout instead of cropping the 9:16 video."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:ind-shoes-g3",
+        "bad": "n:guide:tiktok-bottle-soft-focus",
+        "good_label": "Sneaker outsole tread stays sharp",
+        "bad_label": "Outsole details blur together"
+      },
+      {
+        "good": "n:gen2:tpl-angle-g1",
+        "bad": "n:guide:tiktok-speaker-crop",
+        "good_label": "Portable speaker stays fully in frame",
+        "bad_label": "Portable speaker is cut off by a tight crop"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:tpl-spark-ads-style-video-c3",
+        "frame": "9:16",
+        "length": 6,
+        "label": "6-second vertical product hook"
+      },
+      {
+        "ref": "n:gen2:tpl-spark-ads-style-video-c4",
+        "frame": "9:16",
+        "length": 10,
+        "label": "10-second vertical product demo"
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:tpl-retargeting-video-ad-c1",
+      "zones": [
+        "Caption",
+        "Sound",
+        "Offer"
+      ],
+      "items": [
+        "Type captions and the offer in TikTok or CapCut, away from the bottom edge where the app shows its own caption.",
+        "Choose a sound in TikTok or CapCut before publishing."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Turn a product photo into a vertical TikTok clip"
+      },
+      "m3": {
+        "h2": "Choose the action viewers see in the first seconds"
+      },
+      "m4": {
+        "h2": "Match the video to its TikTok placement"
+      },
+      "m5": {
+        "h2": "Keep the product clear in a vertical crop"
+      },
+      "m6": {
+        "h2": "Pick a 6, 10, or 15-second TikTok video"
+      },
+      "m7": {
+        "h2": "Add the caption and sound after download"
+      },
+      "m8": {
+        "h2": "One product, three frames: 9:16, 1:1, and 16:9"
+      },
+      "faq": {
+        "h2": "Questions about TikTok product ads"
+      }
+    },
+    "sizes": [
+      {
+        "frame": "9:16",
+        "ref": "f:unboxing-experience-v-m8",
+        "label": "9:16 · In-Feed, full screen"
+      },
+      {
+        "frame": "1:1",
+        "ref": "n:guide:tiktok-headphones-square",
+        "label": "1:1 · square feed placements"
+      },
+      {
+        "frame": "16:9",
+        "ref": "f:unboxing-experience-t08",
+        "label": "16:9 · horizontal placements"
+      }
+    ]
+  }
 }
