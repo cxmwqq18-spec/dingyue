@@ -33,33 +33,15 @@
   "steps": [
     {
       "t": "Upload the original photo",
-      "d": "Choose a shot where the product is in focus and not cut off at the edges, even if the room behind it is a mess."
+      "d": "Choose a sharp photo with the whole product in frame, even if the room behind it is cluttered."
     },
     {
       "t": "Describe the new background",
-      "d": "Type a color, surface or setting, or pick a ready-made backdrop, such as \"terracotta wall with a linen tablecloth.\""
+      "d": "Name a color, surface, or setting, or choose a ready-made background."
     },
     {
       "t": "Download or test another backdrop",
-      "d": "Keep the version you like. Curious how a lighter or darker option would look? Run a new version with a changed description."
-    }
-  ],
-  "uses": [
-    {
-      "t": "Collection pages",
-      "d": "Put products shot in different rooms on matching backdrops so the whole collection looks planned."
-    },
-    {
-      "t": "Seasonal homepage updates",
-      "d": "Swap neutral backgrounds for autumn leaves or winter tones when your homepage changes for the season."
-    },
-    {
-      "t": "Social media posts",
-      "d": "Turn an everyday product photo into a styled post that fits the colors of your feed."
-    },
-    {
-      "t": "Extra marketplace images",
-      "d": "Follow your white main image with a styled backdrop version that shows the product in a warmer setting."
+      "d": "Download the version you prefer, or compare another background description."
     }
   ],
   "maker": {
@@ -100,84 +82,9 @@
   "overview": [
     {
       "h2": "Use the photo as a reference for a new setting",
-      "d": "Use this tool when the angle and product detail are worth keeping but the counter, wall, or surface is working against the page. A plain color can unify a collection, a quiet material can support a close product view, and a complete room can add context without another shoot."
-    },
-    {
-      "h2": "Choose the smallest background change that solves the problem",
-      "d": "For a catalog mismatch, ask for a color or simple surface. For a seasonal post, name the setting and light. A bounded request can make versions easier to compare and give the product a simpler backdrop."
+      "d": "Use this tool when the product angle is worth keeping but its counter, wall, or surface does not fit the page. A simple color can bring a collection together, a quiet material can support a close view, and a complete room can add context. Start with a bounded request—one surface, color, or setting—then compare each result with the original before publishing."
     }
   ],
-  "input_guide": {
-    "h2": "Give the original edge room to survive",
-    "items": [
-      {
-        "t": "Full silhouette",
-        "d": "Keep the item entirely in frame, including handles, straps, soles, and thin protruding parts that a new background must surround."
-      },
-      {
-        "t": "Clear separation",
-        "d": "Avoid a source wall or prop that has the same color as the product edge; visible contrast helps the boundary read before replacement."
-      },
-      {
-        "t": "Stable focus",
-        "d": "Use a sharp frame with the product in focus even when the room behind it is cluttered or uneven."
-      },
-      {
-        "t": "Describe one layer",
-        "d": "Name a wall color, surface material, or simple scene first; add light direction only when it helps the intended mood."
-      },
-      {
-        "t": "Protect fine marks",
-        "d": "For printed labels, woven patterns, and tiny controls, use a closer source view or plan a manual check after generation."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the replacement job delivers",
-    "items": [
-      {
-        "t": "A square finished photo",
-        "d": "The new backdrop is already composited into the image; the default frame is square."
-      },
-      {
-        "t": "One version for 24 credits",
-        "d": "Each image generation uses 24 credits, and the credit cost appears before you start."
-      },
-      {
-        "t": "A coordinated setting",
-        "d": "Use the same color or surface language across products that were photographed in different places."
-      },
-      {
-        "t": "No transparent layer",
-        "d": "If your process needs transparency, use a separate editor; this tool returns a complete scene."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Five background briefs to try",
-    "items": [
-      {
-        "t": "Phone case",
-        "d": "Move the case from a messy table to a clean pale desk with a laptop edge in the distance, keeping the camera opening visible."
-      },
-      {
-        "t": "Yoga mat",
-        "d": "Place the rolled mat beside a bright studio wall and light wood floor, with enough empty space around the cylinder."
-      },
-      {
-        "t": "Ankle boots",
-        "d": "Replace a bedroom floor with a calm entryway bench and warm wall, keeping both soles and the leather texture readable."
-      },
-      {
-        "t": "Protein package",
-        "d": "Use a simple gym shelf with muted colors and the front label facing forward; keep equipment soft in the background."
-      },
-      {
-        "t": "Ceramic vase",
-        "d": "Swap a cluttered kitchen table for a linen-covered console with soft window shadows, leaving the opening and rim unobstructed."
-      }
-    ]
-  },
   "fit": {
     "h2": "A good fix for setting problems",
     "good": [
@@ -202,23 +109,6 @@
       {
         "t": "Unreadable originals",
         "d": "A tiny label or obscured pattern may not remain exact after the setting changes."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Review the new setting before publishing",
-    "items": [
-      {
-        "t": "Inspect the boundary",
-        "d": "Zoom around handles, hairline edges, soles, and reflective rims for an unwanted blend or missing piece."
-      },
-      {
-        "t": "Read the product",
-        "d": "Compare labels, patterns, colors, and small controls with the real item; make a new version if a detail drifted."
-      },
-      {
-        "t": "Add the message yourself",
-        "d": "Place logos, prices, dates, and sale language in a design tool where they can be edited precisely."
       }
     ]
   },
@@ -261,5 +151,168 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "strip": [
+      "n:gen2:plat-instagram-g4",
+      "n:gen2:plat-instagram-g5",
+      "n:gen2:change-background-c1",
+      "n:gen2:change-background-c2",
+      "n:gen2:change-background-c3",
+      "n:gen2:plat-instagram-c2"
+    ],
+    "steps": {
+      "source": "n:gen2:plat-instagram-g4",
+      "result": "n:gen2:plat-instagram-g5"
+    },
+    "picker": {
+      "title": "Pick a new setting",
+      "lead": "Choose a background that suits the product and where shoppers will see it.",
+      "chips": [
+        {
+          "id": "desk",
+          "label": "Desk"
+        },
+        {
+          "id": "entryway",
+          "label": "Entryway"
+        },
+        {
+          "id": "living-room",
+          "label": "Living room"
+        },
+        {
+          "id": "kitchen",
+          "label": "Kitchen"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:ind-electronics-g2",
+          "label": "Tablet stand on a desk",
+          "chips": [
+            "desk"
+          ],
+          "prompt": "Move the product to a clean pale desk with a laptop edge in the distance, keeping its useful details clear.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-electronics-c4",
+          "label": "Keyboard on a worktable",
+          "chips": [
+            "desk"
+          ],
+          "prompt": "Use a simple desk surface and a quiet background, leaving the product fully visible.",
+          "kind": "photo"
+        },
+      {
+        "ref": "n:gen2:ind-shoes-c4",
+        "label": "Suede loafers by the door",
+          "chips": [
+            "entryway"
+          ],
+        "prompt": "Move the loafers to a calm entryway bench with a warm wall, leaving room around their shape and stitching.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-home-c4",
+          "label": "Shoe rack by the door",
+          "chips": [
+            "entryway"
+          ],
+          "prompt": "Set the product near a simple entryway bench and warm wall, with clear space around its edges.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-home-living-g2",
+          "label": "Planter beside the sofa",
+          "chips": [
+            "living-room"
+          ],
+          "prompt": "Swap a cluttered surface for a linen-covered console with soft window shadows, leaving the product rim clear.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-home-living-c4",
+          "label": "Plants on a wall shelf",
+          "chips": [
+            "living-room"
+          ],
+          "prompt": "Place the product against a calm wall and light shelf, with enough open space around its full shape.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-food-drinks-g2",
+          "label": "Snack bag with fruit",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Use a simple kitchen shelf with muted colors and the front label facing forward; keep other items soft in the background.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-food-drinks-g3",
+          "label": "Sauce jar by dinner",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Place the product on a calm kitchen surface near a finished meal, keeping the label facing forward.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Try this background"
+    },
+    "uses": [
+      {
+        "frame": "browser",
+        "ref": "n:gen2:plat-shopify-c1",
+        "h": "Match a collection page",
+        "d": "Give products photographed in different rooms a consistent surface or color, then check each label and edge."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:social-ad-photos-c2",
+        "h": "Refresh a seasonal post",
+        "d": "Move a familiar product into a timely setting; add the current offer after download."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:plat-amazon-g5",
+        "bad": "n:guide:background-daypack-cropped",
+        "good_label": "Open bag, full handle visible",
+        "bad_label": "Top handle clipped by frame"
+      },
+      {
+        "good": "n:gen2:tpl-detail-c4",
+        "bad": "n:guide:background-mug-blurred",
+        "good_label": "Rim and glaze in sharp focus",
+        "bad_label": "Rim glaze blurred out of focus"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:tpl-light-c2",
+        "frame": "1:1",
+        "label": "Polished product view"
+      },
+      {
+        "ref": "n:gen2:plat-shopify-c4",
+        "frame": "4:5",
+        "label": "Desk setting"
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:ind-home-living-g1",
+      "zones": [
+        "Your price",
+        "Your headline"
+      ],
+      "items": [
+        "Add prices and product details yourself in an editor after download.",
+        "Place logos and sale dates in your editor after download.",
+        "Compare labels, patterns, and small controls with the real product before posting."
+      ]
+    }
   }
 }

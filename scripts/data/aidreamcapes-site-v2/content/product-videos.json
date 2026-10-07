@@ -32,33 +32,15 @@
   "steps": [
     {
       "t": "Add a photo of the product",
-      "d": "Use a photo that shows the part that moves or opens, so the video has the right detail to work with."
+      "d": "Frame the moving part, button, cap, latch, or handle so its position is clear."
     },
     {
       "t": "Describe one action",
-      "d": "Write what happens, such as “the lunch box lid clicks shut and the latch locks.” Then pick a size and 6, 10, 15, or 30 seconds."
+      "d": "Describe one action and choose a frame and a supported clip length."
     },
     {
       "t": "Save it or show another feature",
-      "d": "Download the clip, then write a new action to make a separate video for the next feature."
-    }
-  ],
-  "uses": [
-    {
-      "t": "Etsy listing video",
-      "d": "Etsy's [listing video guidance](https://help.etsy.com/hc/en-us/articles/360053206073-How-to-Add-Listing-Videos) says videos can be 3–15 seconds and use a 2:1 or 1:2 aspect ratio. AIVideosUGC offers different ratios, so crop the downloaded clip in an editor and check it in Etsy before posting."
-    },
-    {
-      "t": "Shopify product media",
-      "d": "Place a wide or square demo with your product photos so shoppers see it work before they buy."
-    },
-    {
-      "t": "YouTube Shorts demos",
-      "d": "Post a vertical cut that shows one feature to reach people browsing Shorts."
-    },
-    {
-      "t": "Amazon listing",
-      "d": "If your seller account can add videos to listings, a short demo can sit next to your images."
+      "d": "Download the clip, then describe another feature for a separate demo."
     }
   ],
   "maker": {
@@ -95,105 +77,9 @@
   "overview": [
     {
       "h2": "Show one useful action, not a feature list",
-      "p": "A product demo earns its place when the motion answers a practical question: how a lid closes, how a switch works, how a bag opens, or how a part fits into the whole. Build one short clip around one action, then make another clip for the next feature."
-    },
-    {
-      "h2": "Use the source photo to protect the details",
-      "p": "The starting image should make the moving component easy to see. If the action depends on a latch, hinge, handle, button, or opening, include that area in the photo and leave enough space for it to move."
+      "p": "A product demo works best when the motion answers a practical question: how a lid closes, a switch works, a bag opens, or a part fits. Build one short clip around one action, then create another for a separate feature. Include the hinge, button, zipper, cap, latch, or handle in your source photo so its movement is easier to review."
     }
   ],
-  "input_guide": {
-    "h2": "Photograph the part that has to move",
-    "items": [
-      {
-        "t": "Show the operating side",
-        "d": "Aim the camera at the hinge, button, zipper, cap, latch, or handle that the action will use."
-      },
-      {
-        "t": "Keep the product fully in frame",
-        "d": "Include enough of the surrounding object to show where the moving part belongs after it changes position."
-      },
-      {
-        "t": "Use a clear orientation",
-        "d": "A front, three-quarter, or side angle should make the intended direction understandable without a long explanation."
-      },
-      {
-        "t": "Name one feature",
-        "d": "Write one action such as “the lid clicks shut and the latch locks” instead of asking for a complete how-to sequence."
-      },
-      {
-        "t": "Avoid impossible mechanics",
-        "d": "Describe what the real product can do so the finished clip can be compared with the item a shopper will receive."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A focused demonstration clip",
-    "items": [
-      {
-        "t": "One action per run",
-        "d": "Generate 6, 10, 15, or 30 seconds around a single feature."
-      },
-      {
-        "t": "A chosen frame shape",
-        "d": "Use 9:16, 1:1, 16:9, 4:3, or 3:4 for the destination where the demo will appear."
-      },
-      {
-        "t": "A cost shown before launch",
-        "d": "Before generation, the editor shows what the job costs in credits; failed jobs return those credits."
-      },
-      {
-        "t": "A clean file for editing",
-        "d": "The file has no watermark; the [FAQ](/faq) covers commercial-use terms. Review the mechanics and add approved text before posting."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Feature-led demo ideas",
-    "items": [
-      {
-        "t": "Closure",
-        "d": "A lunch box lid lowers onto the rim, then the front latch clicks into its locked position."
-      },
-      {
-        "t": "Expansion",
-        "d": "A folding chair opens beside a dining table while the seat settles flat and ready to use."
-      },
-      {
-        "t": "Control",
-        "d": "A hand turns the dial on a compact desk lamp and the pool of light grows across the work surface."
-      },
-      {
-        "t": "Storage",
-        "d": "A drawer organizer slides into a kitchen drawer and holds spoons, forks, and chopsticks in separate sections."
-      },
-      {
-        "t": "Opening",
-        "d": "A zipper travels across a travel pouch, revealing the divided pockets inside."
-      },
-      {
-        "t": "Pouring",
-        "d": "A glass carafe tips over a tumbler on a breakfast table while the handle remains visible."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Approve the mechanics before you publish",
-    "items": [
-      {
-        "t": "Compare the action with the real item",
-        "d": "Check the direction, proportions, moving parts, and final position against the product you sell."
-      },
-      {
-        "t": "Add exact listing information",
-        "d": "Type product names, dimensions, prices, dates, or feature labels in your editor so the small details are correct."
-      },
-      {
-        "t": "Place clips beside the right photos",
-        "d": "Use one focused demo near the feature it explains instead of asking one video to carry the whole listing."
-      }
-    ]
-  },
   "fit": {
     "h2": "When a product demo is the right format",
     "good": [
@@ -252,5 +138,180 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "strip": [
+      "f:discount-free-shipping",
+      "n:gen2:plat-amazon-g2",
+      "f:tiktok-reels-shorts-v",
+      "n:gen2:plat-youtube-shorts-c4",
+      "n:gen2:ind-shoes-g1",
+      "f:url-to-ad-a-v"
+    ],
+    "steps": {
+      "source": "n:gen2:plat-amazon-g2",
+      "result": "f:url-to-ad-a-v"
+    },
+    "picker": {
+      "title": "Choose one action to show",
+      "lead": "A focused clip can explain a lid, hinge, switch, zipper, pump, or pour.",
+      "chips": [
+        {
+          "id": "kitchen",
+          "label": "Kitchen"
+        },
+        {
+          "id": "home",
+          "label": "Home"
+        },
+        {
+          "id": "travel",
+          "label": "Travel"
+        },
+        {
+          "id": "outdoor",
+          "label": "Outdoor"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:video-hub-g2",
+          "label": "Lunch box latch closes",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Lower the lunch box lid onto its rim, then let the front latch click into its locked position.",
+          "kind": "video"
+        },
+        {
+          "ref": "f:black-friday-countdown-v",
+          "label": "Folding bike opened",
+          "chips": [
+            "outdoor"
+          ],
+          "prompt": "Unfold the product beside a table, then show it settled fully into a ready position.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:ind-home-living-19",
+          "label": "Warm lamp on a desk",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Turn the desk lamp dial and let its light spread across the work surface.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-home-g1",
+          "label": "Drawer trays filled",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Slide the organizer into a drawer and place everyday items in separate sections.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:ind-electronics-g3",
+          "label": "Charger packed in pouch",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Move the zipper across the travel pouch to reveal the divided pockets inside.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:product-videos-c3",
+          "label": "Kettle pours into a mug",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Tip the kettle over a mug on the breakfast table while keeping its handle in view.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-product-feature-callout-video-c3",
+          "label": "Kettle lid pops open",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Press the kettle lid button once, then show the lid pop open.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-product-feature-callout-video-c2",
+          "label": "Laptop sleeve opened",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Open the padded sleeve and reveal the laptop space inside.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-product-feature-callout-video-c4",
+          "label": "Compact umbrella opened",
+          "chips": [
+            "outdoor"
+          ],
+          "prompt": "Open the compact umbrella and show its canopy settle into place.",
+          "kind": "video"
+        }
+      ],
+      "button": "Make a video like this"
+    },
+    "uses": [
+      {
+        "frame": "split",
+        "ref": "n:gen2:plat-facebook-g3",
+        "ref_b": "n:gen2:plat-facebook-g4",
+        "h": "Compare clean and in-use views",
+        "d": "Review both placements, then keep the version that shows how your product fits its setting."
+      },
+      {
+        "frame": "phone",
+        "ref": "n:gen2:examples-g2",
+        "h": "Place a demo beside the feature",
+        "d": "A vertical clip can show one useful switch or opening next to a short product description."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:plat-facebook-g1",
+        "bad": "n:guide:product-lunchbox-cropped",
+        "good_label": "Whole lid and latch in frame",
+        "bad_label": "Lunch box cropped at bottom edge"
+      },
+      {
+        "good": "n:gen2:ind-food-drinks-c4",
+        "bad": "n:guide:product-tea-dark",
+        "good_label": "Pouch front, evenly lit",
+        "bad_label": "Low light hides the pouch front"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "f:product-video-t03",
+        "frame": "16:9",
+        "label": "Preparing espresso",
+        "length": 10
+      },
+      {
+        "ref": "f:feature-callout",
+        "frame": "16:9",
+        "label": "Pressing the pump",
+        "length": 10
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:ind-electronics-g1",
+      "zones": [
+        "Your feature",
+        "Your product name"
+      ],
+      "items": [
+        "Compare the motion and proportions with the real item before posting.",
+        "Add names, dimensions, and approved claims in your editor after download.",
+        "The downloaded file has no watermark; review commercial-use terms in the FAQ."
+      ]
+    }
   }
 }

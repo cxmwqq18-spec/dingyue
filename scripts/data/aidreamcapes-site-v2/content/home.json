@@ -20,15 +20,15 @@
   "steps": [
     {
       "t": "Upload your product photo",
-      "d": "A clear photo of what you sell. A phone photo is fine."
+      "d": "Start with a clear photo of the product you sell; a phone photo can work."
     },
     {
       "t": "Pick a template or describe your idea",
-      "d": "Choose the size (9:16, 1:1 or 16:9) and, for video, 6, 10, 15 or 30 seconds."
+      "d": "Choose a template and frame; for video, pick a supported clip length."
     },
     {
       "t": "Download, or make another version",
-      "d": "Keep the one you like, or make a few more to see which works best in your ads."
+      "d": "Download the version you want and make another to compare."
     }
   ],
   "example_flows": [
@@ -160,101 +160,9 @@
   "overview": [
     {
       "h2": "Choose the first asset your product needs",
-      "d": "Start with the decision in front of you. A new listing usually needs a clean product view; a product already on sale may need a social image or a short video opening. One upload can lead to several tests, so you can build a small set around the same item instead of planning a new shoot for every placement. Read our [seller articles](page:blog) for planning tips, or [browse product ideas by industry](page:industries)."
-    },
-    {
-      "h2": "Use the output for its job",
-      "d": "Keep a white-background image for the main product view, use a lifestyle frame to show context, and reserve a short video for movement or an unboxing moment. The result is generated from your product photo, while your final price, date, offer, music, and captions stay under your control in the editor or ad tool."
+      "d": "Start with the asset that answers the next shopper question: a clear listing photo, a setting that adds context, or a short clip that shows movement. Use one product photo to make and compare several options, then place each result where it helps shoppers understand the item. Review the generated details against the product you sell, and add current pricing, offers, and final text in your editor."
     }
   ],
-  "input_guide": {
-    "h2": "Prepare one photo that can carry the details",
-    "items": [
-      {
-        "t": "Hard edges",
-        "d": "For bottles, boxes, and electronics, show the entire outline and keep labels facing the camera so the shape is easy to preserve."
-      },
-      {
-        "t": "Soft goods",
-        "d": "Lay clothing, bedding, or bags flat or on a hanger with straps and openings visible; a hidden corner gives later scenes less to work with."
-      },
-      {
-        "t": "Small accessories",
-        "d": "Include the whole piece and a useful scale cue for jewelry, glasses, or a watch, then choose a close-up or worn scene that matches that scale."
-      },
-      {
-        "t": "Reflective surfaces",
-        "d": "Use a clean angle for metal, glass, and glossy packaging; strong glare can make a color or printed mark harder to carry into a new scene."
-      }
-    ]
-  },
-  "results": {
-    "h2": "Know what each choice costs and returns",
-    "items": [
-      {
-        "t": "A square product image",
-        "d": "An image generation uses 24 credits and is square by default for a listing, collection grid, or feed post."
-      },
-      {
-        "t": "A short moving asset",
-        "d": "A 6, 10, 15, or 30 second video uses 24, 40, 60, or 120 credits. The exact cost appears before the job starts."
-      },
-      {
-        "t": "A chosen frame",
-        "d": "Pick 9:16 for vertical short-form placements, 1:1 for a feed, or 16:9 for a wide placement; 4:3 and 3:4 are also available when a destination calls for them."
-      },
-      {
-        "t": "A private result",
-        "d": "Your upload and the finished file stay inside your account, ready for you to download and place in your store or ad process."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Six starting recipes for one product",
-    "items": [
-      {
-        "t": "Running shoe",
-        "d": "Place the shoe on a damp trail beside a small puddle, with the side profile facing the camera and open sky above for your ad text later."
-      },
-      {
-        "t": "Ceramic mug",
-        "d": "Show the mug beside an open book on a breakfast table, with the handle turned toward the viewer and morning light from one side."
-      },
-      {
-        "t": "Wireless earbuds",
-        "d": "Open the charging case on a tidy desk beside a laptop, with both earbuds visible and no extra device competing for attention."
-      },
-      {
-        "t": "Hand cream",
-        "d": "Set the tube on a bright bathroom shelf beside a folded towel, keeping the front label facing forward and the background quiet."
-      },
-      {
-        "t": "Canvas tote",
-        "d": "Show the bag on a city doorway hook with the handles clear, then make a second frame with the same bag carried at a weekend market."
-      },
-      {
-        "t": "Hot sauce",
-        "d": "Place the bottle beside tacos on a wooden table, leaving one open side for a headline that you will add after download."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Finish the asset before publishing",
-    "items": [
-      {
-        "t": "Add exact words",
-        "d": "Type the price, date, discount code, and product claims in your design or ad tool instead of relying on lettering inside the generated image."
-      },
-      {
-        "t": "Add the soundtrack",
-        "d": "For a video, choose the music, captions, and any voice treatment in the destination editor where you can check timing and spelling."
-      },
-      {
-        "t": "Check the product",
-        "d": "Compare the file with the real item before it goes live, especially the label, color, count, and small hardware details."
-      }
-    ]
-  },
   "examples": {
     "h2": "Examples by product type",
     "lead": "One product photo can become listing images, lifestyle scenes and short video ideas. Here are examples across common store categories.",
@@ -323,28 +231,214 @@
     "h2": "What a generated scene cannot confirm",
     "items": [
       {
-        "t": "A scene is not a measurement",
-        "d": "A hand beside a mug can suggest scale, but perspective does not establish capacity or exact dimensions. Use measurements from your product record for size, fit, weight, and compatibility; keep the scene from implying proportions those specifications do not support. If shoppers need an exact size comparison, show the verified measurement in the listing."
+        "t": "✗ Measurements need verification.",
+        "d": "Confirm size, weight, fit, and compatibility separately."
       },
       {
-        "t": "One source view has limits",
-        "d": "A front-facing input does not document the back, fasteners, ports, seams, or package insert. If one of those details affects a buying decision, include a real, approved view of that area beside the generated setting so customers can inspect it clearly."
+        "t": "✗ Hidden details need real views.",
+        "d": "Show ports, seams, fasteners, and included parts."
       },
       {
-        "t": "An action is not a performance test",
-        "d": "A hand opening a case or switching on a lamp can illustrate a use moment; it is not a durability or safety test. Keep performance and before-and-after statements tied to evidence your team can substantiate, and let the scene provide context for the product."
+        "t": "✗ Actions are not performance tests.",
+        "d": "Use evidence for safety and durability claims."
       },
       {
-        "t": "Match the asset to the exact version",
-        "d": "When nearby variants differ by shade, size, trim, or bundle count, verify the chosen asset against the exact SKU before linking it to the listing. Keep the displayed item aligned with the selection a customer will add to the cart, especially when a small component separates one version from another."
+        "t": "✗ Generated text may be wrong.",
+        "d": "Add approved names and claims yourself."
       },
       {
-        "t": "Get package wording from a verified record",
-        "d": "Ingredients, warnings, sizing marks, and tiny label details should come from your approved product record, not generated lettering. Add the verified information after download, then compare the final frame with the actual package. Generated lettering may contain errors, so leave it out when precision matters."
+        "t": "✓ Match the product version.",
+        "d": "Check color, size, and included items."
+      }
+    ]
+  },
+  "visual": {
+    "strip": [
+      "f:carousel-storytelling-v",
+      "f:social-proof-animation-v",
+      "n:gen2:photo-hub-c1",
+      "n:gen2:image-to-video-c2",
+      "n:gen2:product-videos-c3",
+      "n:gen2:lifestyle-photos-c1"
+    ],
+    "steps": {
+      "source": "n:gen2:lifestyle-photos-g4",
+      "result": "n:gen2:lifestyle-photos-g5"
+    },
+    "picker": {
+      "title": "Choose a scene for your product",
+      "lead": "Start with a product and choose a setting that fits its next use.",
+      "chips": [
+        {
+          "id": "kitchen",
+          "label": "Kitchen"
+        },
+        {
+          "id": "desk",
+          "label": "Desk"
+        },
+        {
+          "id": "bathroom",
+          "label": "Bathroom"
+        },
+        {
+          "id": "outdoor",
+          "label": "Outdoor"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:ind-shoes-g5",
+          "label": "Trail shoe on a path",
+          "chips": [
+            "outdoor"
+          ],
+          "prompt": "Place the shoe on a damp trail beside a small puddle, with the side profile facing the camera and open sky above for your ad text later.",
+          "kind": "photo"
+        },
+      {
+        "ref": "n:gen2:tpl-angle-c1",
+        "label": "Over-ear headphones",
+        "chips": [
+          "desk"
+        ],
+        "prompt": "Place the headphones on a tidy desk beside a laptop, with the ear cups facing forward and the controls easy to see.",
+        "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:unboxing-videos-c1",
+          "label": "Ceramic mug gift set",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Set a ceramic mug beside an open book on a breakfast table, with its handle turned toward the viewer and morning light from one side.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:plat-amazon-c1",
+          "label": "Compact speaker",
+          "chips": [
+            "desk"
+          ],
+          "prompt": "Place the compact speaker on a tidy desk beside a laptop, with its front grille facing the viewer.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:tiktok-hand-vertical",
+          "label": "Open earbuds at a desk",
+          "chips": [
+            "desk"
+          ],
+          "prompt": "Open the charging case on a tidy desk beside a laptop, keeping both earbuds visible and the background simple.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:social-ad-photos-c3",
+          "label": "Hand cream with lavender",
+          "chips": [
+            "bathroom"
+          ],
+          "prompt": "Set the tube on a bright bathroom shelf beside a folded towel, keeping the front label facing forward and the background quiet.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-beauty-c3",
+          "label": "Face roller by the sink",
+          "chips": [
+            "bathroom"
+          ],
+          "prompt": "Place a small skincare product on a bright bathroom shelf beside folded towels, with its front label facing forward.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-size-g2",
+          "label": "Canvas tote with essentials",
+          "chips": [
+            "outdoor"
+          ],
+          "prompt": "Show the bag on a city doorway hook with the handles clear, then make a second frame with the same bag carried at a weekend market.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-food-drinks-c3",
+          "label": "Hot sauce beside tacos",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Place the bottle beside tacos on a wooden table, leaving one open side for a headline that you will add after download.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make an image like this"
+    },
+    "uses": [
+      {
+        "frame": "browser",
+        "ref": "n:gen2:photo-hub-c2",
+        "h": "Add a clear product view",
+        "d": "Pair a simple product photo with verified size details on its product page."
       },
       {
-        "t": "Refresh offer details at launch",
-        "d": "Price, dates, inventory, and promotion terms can change between asset prep and launch. Add them from the current offer record during the final edit, then confirm stock and expiration again when you schedule the post. This keeps a timely scene from carrying yesterday's offer."
+        "frame": "phone",
+        "ref": "n:gen2:plat-youtube-shorts-g1",
+        "h": "Introduce a product in a post",
+        "d": "Use a setting that shows where the item belongs, then add the current offer after download."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:white-background-c1",
+        "bad": "n:guide:home-bottle-cropped",
+        "good_label": "Bottle fully inside frame",
+        "bad_label": "Bottle cap clipped by top edge"
+      },
+      {
+        "good": "n:gen2:plat-amazon-g4",
+        "bad": "n:guide:home-daypack-blurred",
+        "good_label": "Backpack edges stay sharp",
+        "bad_label": "Backpack details blurred"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:social-ad-photos-c1",
+        "frame": "4:5",
+        "label": "Feed photo"
+      },
+      {
+        "ref": "f:how-to-tutorial-v",
+        "frame": "9:16",
+        "label": "Steam iron demo",
+        "length": 10
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:lifestyle-photos-c2",
+      "zones": [
+        "Your price",
+        "Your headline"
+      ],
+      "items": [
+        "Add approved prices and offer dates in your editor after download.",
+        "Place captions and music yourself in an editor after download.",
+        "Compare labels and small product details with the real item before posting."
+      ]
+    },
+    "sizes": [
+      {
+        "frame": "9:16",
+        "ref": "n:gen2:tpl-ugc-case-83",
+        "label": "TikTok, Reels, Shorts"
+      },
+      {
+        "frame": "1:1",
+        "ref": "n:gen2:plat-amazon-g1",
+        "label": "Instagram and Facebook feeds"
+      },
+      {
+        "frame": "16:9",
+        "ref": "n:gen2:image-to-video-g2",
+        "label": "Shopify product pages"
       }
     ]
   }

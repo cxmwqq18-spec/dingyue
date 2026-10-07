@@ -7313,5 +7313,74 @@
       ],
       "source": "gallery-brief-c2.json"
     }
+  },
+  "guide": {
+    "dir": "/assets/sites/site_aidreamcapes/site-v2/guide",
+    "variants": [
+      640,
+      1280
+    ],
+    "items": {
+      "home-bottle-cropped": {
+        "file": "gen2guide-home-bottle-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Stainless steel bottle with its cap clipped by the top edge on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "home-daypack-blurred": {
+        "file": "gen2guide-home-daypack-blurred",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Blue daypack in soft focus on a white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "product-lunchbox-cropped": {
+        "file": "gen2guide-product-lunchbox-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Lunch container cropped at the lower frame edge on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "product-tea-dark": {
+        "file": "gen2guide-product-tea-dark",
+        "w": 1280,
+        "h": 960,
+        "alt": "Tea pouch and cup in dim light with the front label hard to read.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "background-daypack-cropped": {
+        "file": "gen2guide-background-daypack-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Open blue backpack with its top handle cut off at the frame edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "background-mug-blurred": {
+        "file": "gen2guide-background-mug-blurred",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Close-up of a ceramic mug rim blurred out of focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      }
+    }
   }
 }
