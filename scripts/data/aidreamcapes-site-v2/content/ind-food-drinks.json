@@ -14,7 +14,7 @@
     "snack brand TikTok videos"
   ],
   "intro": [
-    "Show the package clearly, then use a serving scene to show the product\u2019s color, texture, or portion. A cold brew needs beads of condensation on the glass, a hot sauce needs a drizzle over tacos, and granola can be shown with a bowl of milk and berries. Packaging matters just as much, because that is what shoppers look for on a store shelf and in a delivery app.",
+    "Show the package clearly, then use a serving scene to show the product’s color, texture, or portion. A cold brew needs beads of condensation on the glass, a hot sauce needs a drizzle over tacos, and granola can be shown with a bowl of milk and berries. Packaging matters just as much, because that is what shoppers look for on a store shelf and in a delivery app.",
     "Send in a clean shot of the package and spell out the serving moment: a can cracking open over ice, a cookie snapping in half, honey dripping from a dipper onto toast. Six- or ten-second vertical clips suit TikTok and Reels, while square photos fit your store and marketplace listings. Prices and offers are easiest to get right when you type them in afterward with Canva or CapCut."
   ],
   "ideas": [
@@ -121,11 +121,11 @@
       },
       {
         "t": "Flexible framing",
-        "d": "Use 9:16, 1:1, or 16:9 as the main choices, with 4:3 and 3:4 available for other crops; choose 6, 10, 15, or 30 seconds for the action."
+        "d": "Use 9:16, 1:1, or 16:9 as the main choices, with 4:3 and 3:4 available for other crops; choose 6, 10, or 15 seconds for the action."
       },
       {
-        "t": "Known credit steps",
-        "d": "The cost steps from 24 credits for a photo or 6-second clip to 40 for 10 seconds, 60 for 15 seconds, and 120 for 30 seconds; you see it first."
+        "t": "See the cost first",
+        "d": "The tool shows the credit cost before you start, so you can choose a photo or clip that fits the product story."
       },
       {
         "t": "A clean file to finish",
@@ -203,5 +203,224 @@
     ]
   },
   "templates_lead": "Select a pour, serving, or package scene that fits the product you sell.",
-  "cta_lead": "Begin with your package photo and choose the serving moment to build around."
+  "cta_lead": "Begin with your package photo and choose the serving moment to build around.",
+  "steps": [
+    {
+      "t": "Start with one package",
+      "d": "Photograph the golden citrus bottle upright with its cap and full silhouette visible."
+    },
+    {
+      "t": "Describe the serving moment",
+      "d": "Pour this sparkling citrus drink over ice, then set the glass beside an orange slice."
+    },
+    {
+      "t": "Add the exact details",
+      "d": "After download, add ingredients, serving notes, or offer terms in your editor."
+    }
+  ],
+  "visual": {
+    "overview": "Food and drink imagery should show the package clearly before it shows the serving idea. A single pour, opening, or plating moment gives shoppers useful context without obscuring the product.",
+    "strip": [
+      "n:guide:ind-food-drinks-m2-source",
+      "f:food-video-t06",
+      "n:gen2:tpl-pack-c2",
+      "n:gen2:tpl-drink-c3",
+      "n:gen2:tpl-pack-c1",
+      "n:gen2:tpl-pack-c3"
+    ],
+    "steps": {
+      "source": "n:guide:ind-food-drinks-m2-source",
+      "result": "f:food-video-t06",
+      "mode": "video",
+      "length": 10,
+      "prompt": "Pour this golden citrus drink over ice and finish with the bottle beside an orange slice.",
+      "options": [
+        [
+          "Size",
+          "16:9"
+        ],
+        [
+          "Length",
+          "10 seconds"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a food video around one product moment",
+      "lead": "Pick one serving or package moment that reads clearly at a glance.",
+      "chips": [
+        {
+          "id": "pour",
+          "label": "Pour or serve"
+        },
+        {
+          "id": "pack",
+          "label": "Show the package"
+        },
+        {
+          "id": "breakfast",
+          "label": "Morning food"
+        },
+        {
+          "id": "snack",
+          "label": "A quick snack"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-drink-c4",
+          "label": "Granola poured into yogurt",
+          "prompt": "Tip the granola pouch into a bowl of yogurt and keep the texture visible.",
+          "chips": [
+            "pour"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-box-c2",
+          "label": "Coffee starter set on a table",
+          "prompt": "Arrange the coffee bag, hand grinder, and mug as one simple starter set.",
+          "chips": [
+            "pack"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-compare-c1",
+          "label": "Two bottle sizes side by side",
+          "prompt": "Set both water bottle sizes on a gym bench for an easy size comparison.",
+          "chips": [
+            "pack"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:unboxing-videos-g3",
+          "label": "Tea and honey from a box",
+          "prompt": "Arrange the tea tin, honey jar, and biscuits beside the open subscription box.",
+          "chips": [
+            "breakfast"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:image-to-video-c2",
+          "label": "Coffee dripper on a sunny counter",
+          "prompt": "Let a little steam rise beside the ceramic dripper in morning light.",
+          "chips": [
+            "breakfast"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-spark-ads-style-video-c2",
+          "label": "Snack pouch on a road trip",
+          "prompt": "Place the opened snack pouch beside the dashboard on a parked drive.",
+          "chips": [
+            "snack"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:social-ad-photos-g2",
+          "label": "Hot sauce with fresh chilies",
+          "prompt": "Show a hot sauce bottle with fresh chilies and leave space above.",
+          "chips": [
+            "snack"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-drink-g2",
+          "label": "Honey drizzled over pancakes",
+          "prompt": "Drizzle honey from a small jar over pancakes and keep the food in view.",
+          "chips": [
+            "pour"
+          ],
+          "kind": "video"
+        }
+      ],
+      "button": "Make a product video"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:gen2:tpl-size-c2",
+        "h": "Show a food product beside a familiar item",
+        "d": "A travel candle beside a mug gives shoppers a quick sense of scale."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:url-to-video-g1",
+        "h": "Place an ingredient beside the finished dish",
+        "d": "Fresh herbs and olive oil make the cooking use clear in one frame."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:video-ads-g3",
+        "bad": "n:guide:ind-food-drinks-m5-soft-focus",
+        "good_label": "The snack pouch and full top seal stay clear",
+        "bad_label": "Small package details merge into the blur"
+      },
+      {
+        "good": "n:gen2:photo-hub-g3",
+        "bad": "n:guide:ind-food-drinks-m5-cropped",
+        "good_label": "The package stays inside the square frame",
+        "bad_label": "The package edge is clipped by a tight crop"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "f:food-video-t13",
+        "frame": "16:9",
+        "label": "Bottle and glass on a counter",
+        "length": 6
+      },
+      {
+        "ref": "f:food-video",
+        "frame": "16:9",
+        "label": "Citrus bottle beside fresh fruit",
+        "length": 10
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:tpl-retargeting-video-ad-c4",
+      "zones": [
+        "Ingredients",
+        "Serving idea"
+      ],
+      "items": [
+        "Enter ingredients and allergen details from the package in the product description.",
+        "Add serving notes beside the clip after you download it."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make a food and drink video in three steps"
+      },
+      "m3": {
+        "h2": "Choose a food video around one product moment"
+      },
+      "m4": {
+        "h2": "Use food videos on product pages and social feeds"
+      },
+      "m5": {
+        "h2": "Start with a clear food package photo"
+      },
+      "m6": {
+        "h2": "Pick a food video shape and length"
+      },
+      "m7": {
+        "h2": "Add ingredients and offer details after download"
+      },
+      "examples": {
+        "h2": "More food and drink examples",
+        "lead": "Packaged foods and drinks beside the ingredients or serving ideas shoppers recognize."
+      },
+      "faq": {
+        "h2": "Questions about food and drink videos"
+      }
+    }
+  }
 }

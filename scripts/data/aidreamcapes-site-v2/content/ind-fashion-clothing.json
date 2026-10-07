@@ -24,7 +24,7 @@
     },
     {
       "t": "Outfit reels",
-      "d": "A 6- to 30-second vertical clip of the outfit turning, walking, or sitting shows movement. Add music and captions afterward in TikTok or CapCut."
+      "d": "A 6- to 15-second vertical clip of the outfit turning, walking, or sitting shows movement. Add music and captions afterward in TikTok or CapCut."
     },
     {
       "t": "Sale graphics",
@@ -46,7 +46,7 @@
     },
     {
       "q": "How do I make a TikTok video of my clothes being worn?",
-      "a": "Choose 9:16 and a length of 6, 10, 15, or 30 seconds, then describe the movement, like a slow turn or a walk toward the camera. Videos are made one at a time, so run another if you want the same outfit in a different setting."
+      "a": "Choose 9:16 and a length of 6, 10, or 15 seconds, then describe a slow turn or short walk. Run another version when you want a different setting."
     }
   ],
   "overview": {
@@ -100,7 +100,7 @@
       },
       {
         "t": "Desk-to-evening styling",
-        "d": "A tailored blazer over a knit top at a caf\u00e9 table, then a close crop of the cuff and button beside a notebook."
+        "d": "A tailored blazer over a knit top at a café table, then a close crop of the cuff and button beside a notebook."
       },
       {
         "t": "Color option lineup",
@@ -121,11 +121,11 @@
       },
       {
         "t": "Short movement",
-        "d": "Choose 9:16 for an outfit reel, 1:1 for a feed, or 16:9, 4:3, or 3:4 for a wider or taller placement; clip lengths are 6, 10, 15, or 30 seconds."
+        "d": "Choose 9:16 for an outfit reel, 1:1 for a feed, or 16:9, 4:3, or 3:4 for a wider or taller placement; clip lengths are 6, 10, or 15 seconds."
       },
       {
         "t": "Visible pricing",
-        "d": "The preview displays the credit cost: photos are 24 credits, while six-, ten-, fifteen-, and thirty-second videos are 24, 40, 60, and 120 credits."
+        "d": "The preview displays the credit cost before you start, so you can choose a photo or clip with the scope that suits the outfit."
       },
       {
         "t": "Download details",
@@ -214,5 +214,221 @@
     ]
   },
   "templates_lead": "Pick a garment view, an on-model look, or a collection scene for this apparel range.",
-  "cta_lead": "Upload a garment photo and select a styling view to review."
+  "cta_lead": "Upload a garment photo and select a styling view to review.",
+  "steps": [
+    {
+      "t": "Photograph the full garment",
+      "d": "Lay the heather-gray hoodie flat with its sleeves, drawstrings, and front pocket visible."
+    },
+    {
+      "t": "Describe the fit and setting",
+      "d": "Show this hoodie on a person in a bright studio, cropped from neck to hips."
+    },
+    {
+      "t": "Finish the listing",
+      "d": "Add the fabric name, size range, or care details after you download the photo."
+    }
+  ],
+  "visual": {
+    "overview": "Fashion photos help shoppers judge fabric, fit, and how a piece works in an outfit. Use a clean garment image first, then choose a setting that keeps the clothing in view.",
+    "strip": [
+      "n:hoodie-pack",
+      "n:guide:ind-fashion-clothing-m2-result",
+      "n:gen2:tpl-tryon-c1",
+      "n:gen2:tpl-tryon-c2",
+      "n:gen2:tpl-look-c1",
+      "n:gen2:tpl-detail-c4"
+    ],
+    "steps": {
+      "source": "n:hoodie-pack",
+      "result": "n:guide:ind-fashion-clothing-m2-result",
+      "mode": "photo",
+      "prompt": "Show this heather-gray hoodie worn in a bright studio, with its drawstrings and front pocket clearly visible.",
+      "options": [
+        [
+          "Template",
+          "Lifestyle photo"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Pick a clothing scene for fit and fabric",
+      "lead": "Choose a scene that helps shoppers judge fit, fabric, or layering.",
+      "chips": [
+        {
+          "id": "fit",
+          "label": "Show the fit"
+        },
+        {
+          "id": "fabric",
+          "label": "Show the fabric"
+        },
+        {
+          "id": "outfit",
+          "label": "Build an outfit"
+        },
+        {
+          "id": "season",
+          "label": "Set the scene"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:model-photos-c1",
+          "label": "Camel coat on a sidewalk",
+          "prompt": "Show the coat from shoulder to hem on a quiet city sidewalk.",
+          "chips": [
+            "fit"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-tryon-c4",
+          "label": "Trousers in a studio",
+          "prompt": "Frame the trousers from waist to ankle against a plain studio wall.",
+          "chips": [
+            "fit"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-detail-c2",
+          "label": "Merino sweater knit close up",
+          "prompt": "Move close enough to show the sweater's knit texture and soft edge.",
+          "chips": [
+            "fabric"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-detail-g4",
+          "label": "Denim zipper teeth in focus",
+          "prompt": "Show the zipper and denim stitching under even daylight.",
+          "chips": [
+            "fabric"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-look-c3",
+          "label": "Streetwear by a concrete wall",
+          "prompt": "Style the outfit against a simple concrete wall with room around the silhouette.",
+          "chips": [
+            "outfit"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-look-c4",
+          "label": "Evening dress on stone steps",
+          "prompt": "Keep the full evening dress visible as the model stands on stone steps.",
+          "chips": [
+            "outfit"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-tryon-g1",
+          "label": "Olive bomber shown from the front",
+          "prompt": "Show the bomber jacket from the front with its full shape visible.",
+          "chips": [
+            "season"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:occ-sale-discount-c3",
+          "label": "Dresses beside a bright window",
+          "prompt": "Hang the floral dresses near the window and keep each hem visible.",
+          "chips": [
+            "season"
+          ],
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a product photo"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:gen2:tpl-tryon-g2",
+        "h": "Show the jacket from the back",
+        "d": "A back view makes the jacket length and shoulder seams easy to see."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:tpl-outfit-c3",
+        "h": "Show a lighter outfit in a feed post",
+        "d": "A linen suit on a sunny terrace feels distinct from a plain catalog image."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-limited-drop-alert-video-c3",
+        "bad": "n:guide:ind-fashion-clothing-m5-soft-focus",
+        "good_label": "The full row of tote bags stays visible",
+        "bad_label": "Both outer totes are clipped"
+      },
+      {
+        "good": "n:gen2:tpl-outfit-c4",
+        "bad": "n:guide:ind-fashion-clothing-m5-cropped",
+        "good_label": "The jacket and sleeves fit inside the frame",
+        "bad_label": "The coat is cut off by a tight crop"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:model-photos-g1",
+        "frame": "1:1",
+        "label": "Hoodie photo in a bright studio"
+      },
+      {
+        "ref": "n:gen2:tpl-tryon-g3",
+        "frame": "1:1",
+        "label": "Ribbed top styled for a listing"
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:tpl-look-c2",
+      "zones": [
+        "Size",
+        "Fabric"
+      ],
+      "items": [
+        "Add the size range and fabric content beside the image in your store editor.",
+        "Keep care instructions in text so shoppers can read the exact wording."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Create a fashion clothing photo with three clear steps"
+      },
+      "m3": {
+        "h2": "Pick a clothing scene for fit and fabric"
+      },
+      "m4": {
+        "h2": "Use clothing photos on listings and social feeds"
+      },
+      "m5": {
+        "h2": "Keep the whole clothing item in the frame"
+      },
+      "m6": {
+        "h2": "Square clothing photos for product listings"
+      },
+      "m7": {
+        "h2": "Add size and color details after download"
+      },
+      "examples": {
+        "h2": "More fashion and clothing examples",
+        "lead": "Front, back, fabric, and outfit views that help shoppers picture a garment."
+      },
+      "faq": {
+        "h2": "Questions about fashion clothing photos"
+      }
+    }
+  }
 }

@@ -8078,6 +8078,356 @@
           640,
           1280
         ]
+      },
+      "ind-electronics-m2-source": {
+        "file": "gen2guide-ind-electronics-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact black portable speaker with a woven grille, shown alone on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-electronics-m3-headphones": {
+        "file": "gen2guide-ind-electronics-m3-headphones",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gray over-ear headphones lifted from an open gray product box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-fashion-clothing-m2-result": {
+        "file": "gen2guide-ind-fashion-clothing-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Heather-gray pullover hoodie worn in a bright studio, cropped from chin to hips.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-food-drinks-m2-source": {
+        "file": "gen2guide-ind-food-drinks-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Single glass bottle of golden citrus drink, upright on a white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-home-living-m2-source": {
+        "file": "gen2guide-ind-home-living-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White portable table lamp with shade, stem, and base visible on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m2-result": {
+        "file": "gen2guide-ind-jewelry-accessories-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Polished gold band on an ivory display card beside a small coin.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m2-source": {
+        "file": "gen2guide-ind-jewelry-accessories-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Single polished gold band ring centered on a plain white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-shoes-m2-result": {
+        "file": "gen2guide-ind-shoes-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown Chelsea boots worn on a cobblestone path, cropped below the knees.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-facebook-size-square-backpack": {
+        "file": "gen2guide-plat-facebook-size-square-backpack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black commuter backpack, front view, centered on a pale studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-instagram-size-wide": {
+        "file": "gen2guide-plat-instagram-size-wide",
+        "w": 1536,
+        "h": 1024,
+        "alt": "Speckled ceramic cup beside a small plant and linen napkin on a sunlit table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-m2-result-vertical": {
+        "file": "gen2guide-plat-youtube-shorts-m2-result-vertical",
+        "w": 1024,
+        "h": 1536,
+        "alt": "White handheld steamer smoothing a blue shirt in a vertical product scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-m2-source": {
+        "file": "gen2guide-plat-youtube-shorts-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White handheld garment steamer with water reservoir and cord on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-size-square-ebike": {
+        "file": "gen2guide-plat-youtube-shorts-size-square-ebike",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black folding electric bicycle in side view on a light studio floor.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-example-trail-square": {
+        "file": "gen2guide-plat-youtube-shorts-example-trail-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral trail running shoes on a gray stone plinth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-example-trail-tall": {
+        "file": "gen2guide-plat-youtube-shorts-example-trail-tall",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Coral trail running shoes on a rocky mountain path in daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-electronics-m5-soft-focus": {
+        "file": "gen2guide-ind-electronics-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Portable speaker ports softened by blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-electronics-m5-cropped": {
+        "file": "gen2guide-ind-electronics-m5-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Portable speaker cropped so the outer edge is missing.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-fashion-clothing-m5-soft-focus": {
+        "file": "gen2guide-ind-fashion-clothing-m5-soft-focus",
+        "w": 1280,
+        "h": 720,
+        "alt": "Canvas tote bags blurred so their shapes and colors run together.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-fashion-clothing-m5-cropped": {
+        "file": "gen2guide-ind-fashion-clothing-m5-cropped",
+        "w": 1280,
+        "h": 720,
+        "alt": "The outer tote bags are cut off by a tight horizontal crop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-food-drinks-m5-soft-focus": {
+        "file": "gen2guide-ind-food-drinks-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Snack pouch details softened into blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-food-drinks-m5-cropped": {
+        "file": "gen2guide-ind-food-drinks-m5-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Snack box clipped at the edge of the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-health-wellness-m5-soft-focus": {
+        "file": "gen2guide-ind-health-wellness-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Cork yoga block grain lost in soft focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-health-wellness-m5-cropped": {
+        "file": "gen2guide-ind-health-wellness-m5-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Cork yoga block with one side edge cropped by a tight frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-home-living-m5-soft-focus": {
+        "file": "gen2guide-ind-home-living-m5-soft-focus",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Floor lamp shade and stem blurred beside a reading chair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-home-living-m5-cropped": {
+        "file": "gen2guide-ind-home-living-m5-cropped",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Floor lamp shade and base clipped by a tight frame beside a chair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m5-soft-focus": {
+        "file": "gen2guide-ind-jewelry-accessories-m5-soft-focus",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Watch caseback and brown strap softened by blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m5-cropped": {
+        "file": "gen2guide-ind-jewelry-accessories-m5-cropped",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Wristwatch case and strap cut off by a tight crop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-shoes-m5-soft-focus": {
+        "file": "gen2guide-ind-shoes-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Running shoe profile softened out of focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-shoes-m5-cropped": {
+        "file": "gen2guide-ind-shoes-m5-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Sneaker lace detail clipped by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-facebook-m5-soft-focus": {
+        "file": "gen2guide-plat-facebook-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Headphone padding blurred into the background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-facebook-m5-cropped": {
+        "file": "gen2guide-plat-facebook-m5-cropped",
+        "w": 1280,
+        "h": 960,
+        "alt": "Backpack handle and bottom edge cropped away.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-instagram-m5-soft-focus": {
+        "file": "gen2guide-plat-instagram-m5-soft-focus",
+        "w": 1280,
+        "h": 1600,
+        "alt": "Face mist bottle softened by blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-instagram-m5-cropped": {
+        "file": "gen2guide-plat-instagram-m5-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Toner bottle cap clipped by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-m5-soft-focus": {
+        "file": "gen2guide-plat-youtube-shorts-m5-soft-focus",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Trail shoe mesh softened into blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-m5-cropped": {
+        "file": "gen2guide-plat-youtube-shorts-m5-cropped",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Front of the trail shoe clipped in a vertical crop.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

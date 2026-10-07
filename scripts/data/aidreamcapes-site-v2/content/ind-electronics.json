@@ -15,7 +15,7 @@
   ],
   "intro": [
     "AI product videos for electronics can use a context scene to show where a device fits: earbuds on a run, a power bank in a carry-on, or a ring light at a desk. Keep verified specifications in the listing and use separate photos to show physical details.",
-    "Upload a clear shot of your product with its ports, buttons, and indicator lights visible, then describe what should happen: a lid lifting off the box, a cable clicking into place, a speaker sitting on a picnic blanket at sunset. Each clip is 6, 10, 15, or 30 seconds long. Battery life, wattage, and other specs belong in the text you add yourself, where you control the exact figures. For gallery photos, photograph the front, side and back so every detail shown comes from a real upload."
+    "Upload a clear shot of your product with its ports, buttons, and indicator lights visible, then describe what should happen: a lid lifting off the box, a cable clicking into place, a speaker sitting on a picnic blanket at sunset. Choose a 6-, 10-, or 15-second clip for the product moment. Battery life, wattage, and other specs belong in the text you add yourself, where you control the exact figures. For gallery photos, photograph the front, side and back so every detail shown comes from a real upload."
   ],
   "ideas": [
     {
@@ -121,11 +121,11 @@
       },
       {
         "t": "Short product action",
-        "d": "Select 9:16, 1:1, or 16:9, with 4:3 and 3:4 also available, then choose a 6-, 10-, 15-, or 30-second clip for an unbox, place, plug, or carry moment."
+        "d": "Select 9:16, 1:1, or 16:9, with 4:3 and 3:4 also available, then choose a 6-, 10-, or 15-second clip for an unbox, place, plug, or carry moment."
       },
       {
         "t": "Up-front cost",
-        "d": "A photo is 24 credits; a 6-second, 10-second, 15-second, or 30-second result is 24, 40, 60, or 120 credits, and the tool shows that amount before submission."
+        "d": "The tool shows the credit cost before you start, so you can choose a photo or clip with the scope that suits the product."
       },
       {
         "t": "Download details",
@@ -202,6 +202,225 @@
       }
     ]
   },
-  "templates_lead": "Choose an unboxing, desk, or travel scene that shows your device\u2019s physical details.",
-  "cta_lead": "Select one device action or setting to show beside the visible hardware."
+  "templates_lead": "Choose an unboxing, desk, or travel scene that shows your device’s physical details.",
+  "cta_lead": "Select one device action or setting to show beside the visible hardware.",
+  "steps": [
+    {
+      "t": "Upload one clear speaker photo",
+      "d": "Include the woven grille, top controls, and full side profile in the source image."
+    },
+    {
+      "t": "Describe one useful movement",
+      "d": "Show this speaker on a table as soft window light travels across its grille."
+    },
+    {
+      "t": "Add the product details",
+      "d": "After download, place the feature name, price, or web address in your editor."
+    }
+  ],
+  "visual": {
+    "overview": "Electronics shoppers need to see the shape, ports, controls, and scale of a device. Start from a clean product shot, then describe one movement that makes a feature easy to understand.",
+    "strip": [
+      "n:guide:ind-electronics-m2-source",
+      "f:cinematic-video-t14",
+      "n:gen2:tpl-angle-c1",
+      "n:gen2:tpl-film-g2",
+      "n:gen2:tpl-spark-ads-style-video-c1",
+      "n:gen2:before-after-videos-c4"
+    ],
+    "steps": {
+      "source": "n:guide:ind-electronics-m2-source",
+      "result": "f:cinematic-video-t14",
+      "mode": "video",
+      "length": 10,
+      "prompt": "Show this speaker on a dark stone table as soft window light moves across the woven grille.",
+      "options": [
+        [
+          "Size",
+          "16:9"
+        ],
+        [
+          "Length",
+          "10 seconds"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose an electronics scene for the first shot",
+      "lead": "Choose a device moment that makes one feature easy to see.",
+      "chips": [
+        {
+          "id": "unbox",
+          "label": "Unboxing"
+        },
+        {
+          "id": "desk",
+          "label": "Desk setup"
+        },
+        {
+          "id": "detail",
+          "label": "Product detail"
+        },
+        {
+          "id": "travel",
+          "label": "On the go"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:unboxing-videos-g5",
+          "label": "Headphones lifted from foam",
+          "prompt": "Lift the headphones from the fitted insert and keep both earcups visible.",
+          "chips": [
+            "unbox"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:ind-electronics-m3-headphones",
+          "label": "Headphones out of the box",
+          "prompt": "Raise the gray headphones from the open box and show their padded earcups.",
+          "chips": [
+            "unbox"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-size-c3",
+          "label": "Phone stand holding a device",
+          "prompt": "Place the dark-screen phone on the aluminum stand beside a notebook.",
+          "chips": [
+            "desk"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-spark-ads-style-video-g1",
+          "label": "Phone stand in a commuter bag",
+          "prompt": "Fold the phone stand and slide it into an open commuter bag.",
+          "chips": [
+            "desk"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-angle-g1",
+          "label": "Portable speaker front view",
+          "prompt": "Turn this compact speaker slightly so its woven front grille catches the light.",
+          "chips": [
+            "detail"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-angle-g3",
+          "label": "Speaker control buttons close up",
+          "prompt": "Move across the top buttons of the speaker without hiding its edge.",
+          "chips": [
+            "detail"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-color-c3",
+          "label": "Phone cases in five colors",
+          "prompt": "Fan the five plain phone cases across a clean tabletop.",
+          "chips": [
+            "travel"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:change-background-g1",
+          "label": "Phone case on a blue block",
+          "prompt": "Set the phone case on a simple blue display block.",
+          "chips": [
+            "travel"
+          ],
+          "kind": "video"
+        }
+      ],
+      "button": "Make a product video"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:gen2:tpl-launch-c3",
+        "h": "Show a small device on a product page",
+        "d": "A charging pad beside a laptop helps shoppers understand its footprint."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:tpl-angle-c2",
+        "h": "Give a travel accessory a feed post",
+        "d": "A compact backpack can show its pockets before a shopper opens the listing."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-angle-g2",
+        "bad": "n:guide:ind-electronics-m5-soft-focus",
+        "good_label": "Back ports remain sharp and visible",
+        "bad_label": "Ports and grille blur into the background"
+      },
+      {
+        "good": "n:gen2:tpl-angle-g4",
+        "bad": "n:guide:ind-electronics-m5-cropped",
+        "good_label": "The full speaker fits inside the frame",
+        "bad_label": "The speaker edge is cut off by the crop"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:tpl-launch-g1",
+        "frame": "16:9",
+        "label": "Speaker revealed on a table",
+        "length": 6
+      },
+      {
+        "ref": "n:gen2:change-background-g3",
+        "frame": "16:9",
+        "label": "Phone case among autumn leaves",
+        "length": 10
+      }
+    ],
+    "after": {
+      "ref": "f:cinematic-video-t06",
+      "zones": [
+        "Feature name",
+        "Price"
+      ],
+      "items": [
+        "Type exact specs in your editor so every model number stays readable.",
+        "Place the price and product link in open space beside the device."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make an electronics product video in three steps"
+      },
+      "m3": {
+        "h2": "Choose an electronics scene for the first shot"
+      },
+      "m4": {
+        "h2": "Use electronics videos on listings and social feeds"
+      },
+      "m5": {
+        "h2": "Start with a clear electronics product photo"
+      },
+      "m6": {
+        "h2": "Pick an electronics video shape and length"
+      },
+      "m7": {
+        "h2": "Add offer details after downloading the electronics video"
+      },
+      "examples": {
+        "h2": "More electronics examples",
+        "lead": "Speaker, device, and travel-accessory views for product listings and social ads."
+      },
+      "faq": {
+        "h2": "Questions about electronics product videos"
+      }
+    }
+  }
 }
