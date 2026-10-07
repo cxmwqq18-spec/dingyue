@@ -221,12 +221,15 @@ function mediaSource(model, ref) {
       const file = rest;
       return { meta: clipFrame, alt: clipFrame.alt, variants: clipFrame.variants ?? [], original: `${ASSET_ROOT}/clips/${file}--${clipFrame.w > clipFrame.h ? "1280" : "540"}.webp`, variantUrl: (w) => `${ASSET_ROOT}/clips/${file}--${w}.webp` };
     }
+    const guideId = kind === "n:" && rest.startsWith("guide:") ? rest.slice("guide:".length) : "";
+    const guideMeta = guideId ? catalog.guide?.items?.[guideId] : undefined;
+    const isGuide = Boolean(guideMeta);
     const isGen2 = kind === "n:" && catalog.gen2?.[rest];
-    const folder = kind === "f:" ? "frames" : isGen2 ? "gen2" : "gen";
-    const group = kind === "f:" ? catalog.frames : isGen2 ? catalog.gen2 : catalog.gen;
-    const meta = group[rest];
+    const folder = kind === "f:" ? "frames" : isGuide ? "guide" : isGen2 ? "gen2" : "gen";
+    const group = kind === "f:" ? catalog.frames : isGuide ? catalog.guide.items : isGen2 ? catalog.gen2 : catalog.gen;
+    const meta = isGuide ? guideMeta : group[rest];
     assert.ok(meta, `unknown ${folder} image ${ref}`);
-    const file = isGen2 ? rest.replace(/:/g, "") : rest;
+    const file = isGuide ? meta.file : isGen2 ? rest.replace(/:/g, "") : rest;
     return { meta, alt: meta.alt, variants: meta.variants ?? [], original: `${ASSET_ROOT}/${folder}/${file}.webp`, variantUrl: (w) => `${ASSET_ROOT}/${folder}/${file}--${w}.webp` };
   }
   assert.fail(`unknown media reference ${ref}`);
@@ -1637,14 +1640,33 @@ export function validateSiteV2(build = buildSiteV2()) {
       const filePath = path.resolve(publicRoot, image.src.replace(/^\/+/, "").split(/[?#]/)[0]);
       if (!filePath.startsWith(`${publicRoot}${path.sep}`) || !fs.existsSync(filePath)) errors.push(`${pageId}: visual image file is missing from public (${image.src})`);
     }
-    const moduleSections = [
-      visual.strip.length > 0, visual.steps.items.length > 0, cards.length > 0,
-      visual.uses.length > 0, visual.input.length > 0, visual.outputs.length > 0,
-      Boolean(visual.after), Boolean(visual.sizes?.length)
-    ].filter(Boolean).length;
     const hasExamples = Boolean(data.gallery?.images?.length || data.pairs?.length || data.exampleGallery?.groups?.length || data.examples?.flows?.length || data.examples?.groups?.length);
-    const contentSections = moduleSections + (visual.overview ? 1 : 0) + (visual.limitations.items.length ? 1 : 0) + (hasExamples ? 1 : 0);
-    const imageSections = moduleSections + (hasExamples ? 1 : 0);
+    let contentSections;
+    let imageSections;
+    if (layout === "home") {
+      // Count the homepage H2 content blocks as rendered: tool chooser, visual modules,
+      // examples, templates and comparison. The limits list is an H3 within results,
+      // and the examples gallery is an H3 within the examples block. Pricing is a
+      // user-facing plan card section, exempt like FAQ and CTA from explainer counts.
+      const homeSections = [
+        Boolean(data.make?.video?.length || data.make?.photo?.length),
+        visual.steps.items.length > 0, cards.length > 0, Boolean(visual.sizes?.length),
+        visual.input.length > 0, visual.outputs.length > 0, hasExamples,
+        visual.uses.length > 0, Boolean(data.templates?.cards?.length), Boolean(data.compare?.length)
+      ];
+      contentSections = homeSections.filter(Boolean).length;
+      // Every listed homepage content block has imagery except the comparison table.
+      imageSections = contentSections - (data.compare?.length ? 1 : 0);
+    } else {
+      const moduleSections = [
+        visual.strip.length > 0, visual.steps.items.length > 0, cards.length > 0,
+        visual.uses.length > 0, visual.input.length > 0, visual.outputs.length > 0,
+        Boolean(visual.after), Boolean(visual.sizes?.length)
+      ].filter(Boolean).length;
+      const overviewSection = visual.overview ? 1 : 0;
+      contentSections = moduleSections + overviewSection + (visual.limitations.items.length ? 1 : 0) + (hasExamples ? 1 : 0);
+      imageSections = moduleSections + (hasExamples ? 1 : 0);
+    }
     if (contentSections > 10) errors.push(`${pageId}: visual page has ${contentSections} content sections (maximum 10)`);
     if (contentSections && imageSections / contentSections < 0.8) errors.push(`${pageId}: only ${Math.round(imageSections / contentSections * 100)}% of visual content sections contain images`);
   };

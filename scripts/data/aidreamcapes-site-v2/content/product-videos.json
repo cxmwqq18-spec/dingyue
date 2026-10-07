@@ -149,8 +149,8 @@
       "f:url-to-ad-a-v"
     ],
     "steps": {
-      "source": "n:gen2:plat-amazon-g2",
-      "result": "f:url-to-ad-a-v"
+      "source": "n:white-mug",
+      "result": "n:url-to-video-concept"
     },
     "picker": {
       "title": "Choose one action to show",
@@ -220,12 +220,12 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:product-videos-c3",
-          "label": "Kettle pours into a mug",
+          "ref": "n:gen2:tpl-product-feature-callout-video-c1",
+          "label": "Bottle cap opens",
           "chips": [
             "kitchen"
           ],
-          "prompt": "Tip the kettle over a mug on the breakfast table while keeping its handle in view.",
+          "prompt": "Press the flip-top cap once and show it pop open.",
           "kind": "video"
         },
         {
@@ -289,15 +289,15 @@
     ],
     "outputs": [
       {
-        "ref": "f:product-video-t03",
+        "ref": "n:gen2:tpl-product-feature-callout-video-g1",
         "frame": "16:9",
-        "label": "Preparing espresso",
+        "label": "Wallet clasp opens",
         "length": 10
       },
       {
-        "ref": "f:feature-callout",
+        "ref": "n:gen2:tpl-product-feature-callout-video-g3",
         "frame": "16:9",
-        "label": "Pressing the pump",
+        "label": "Laptop stand rises",
         "length": 10
       }
     ],

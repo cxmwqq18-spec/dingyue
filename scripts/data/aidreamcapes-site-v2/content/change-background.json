@@ -156,9 +156,9 @@
     "strip": [
       "n:gen2:plat-instagram-g4",
       "n:gen2:plat-instagram-g5",
-      "n:gen2:change-background-c1",
-      "n:gen2:change-background-c2",
-      "n:gen2:change-background-c3",
+      "n:gen2:plat-instagram-c3",
+      "n:gen2:plat-shopify-c3",
+      "n:gen2:ind-home-living-g3",
       "n:gen2:plat-instagram-c2"
     ],
     "steps": {

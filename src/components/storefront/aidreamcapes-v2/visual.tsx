@@ -64,7 +64,7 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video" }: { visu
         <article className="v-step-card">
           <div className="v-step-art v-step-options">
             <div className="maker v-step-maker">
-              <div aria-label="Example description" className="v-step-prompt">{examplePrompt}</div>
+              <div aria-label="Example description" className="v-step-prompt"><span className="v-step-prompt-text">{examplePrompt}</span></div>
               <div className="opts">{step.options.map(([label, value]) => <span className="opt" key={label}>{label} <b>{value}</b></span>)}</div>
               <div className="maker-foot"><small>Cost</small><strong>{step.credits}</strong></div>
               <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>
@@ -74,7 +74,7 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video" }: { visu
         </article>
         <article className="v-step-card">
           <div className="v-step-art v-step-result">
-            <VisualImage image={step.result} r={r} />
+            <VisualImage image={step.result} r={r} className={step.result.w < step.result.h ? "v-step-result-portrait" : undefined} />
             <span aria-hidden="true" className="btn btn-ghost v-download">Download</span>
           </div>
           <div className="v-step-copy"><span className="v-step-number">Step 03</span><h3>{step.items[2]?.t}</h3><p>{step.items[2]?.d}</p></div>
@@ -143,8 +143,8 @@ function OutputCard({ item, r }: { item: V2VisualOutput; r: V2Resolvers }) {
   return <article className="v-output-card" data-frame={item.frame}><figure className="v-output-frame" data-frame={item.frame}><VisualImage image={item.image} r={r} /></figure><div className="v-output-copy"><b>{item.label}</b><span>{item.spec}</span></div></article>;
 }
 
-export function VisualOutputs({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {
-  return <Section eyebrow="Your result" title="See the format and cost"><div className="v-output-grid">{visual.outputs.map((item, index) => <OutputCard item={item} key={`${item.image.src}-${index}`} r={r} />)}</div></Section>;
+export function VisualOutputs({ visual, r, includeLimitations = false }: { visual: V2Visual; r: V2Resolvers; includeLimitations?: boolean }) {
+  return <Section eyebrow="Your result" title="See the format and cost"><div className="v-output-grid">{visual.outputs.map((item, index) => <OutputCard item={item} key={`${item.image.src}-${index}`} r={r} />)}</div>{includeLimitations ? <VisualLimitations asSubsection visual={visual} /> : null}</Section>;
 }
 
 export function VisualAfter({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {
@@ -160,7 +160,8 @@ export function VisualSizes({ visual, r }: { visual: V2Visual; r: V2Resolvers })
   return <Section eyebrow="Formats" title="Choose a frame for each placement"><div className="v-size-grid">{visual.sizes.map((item, index) => <figure className="v-size-card" data-frame={item.frame} key={`${item.frame}-${index}`}><div className="v-size-frame" data-frame={item.frame}><VisualImage image={item.image} r={r} /></div><figcaption><b>{item.frame}</b><span>{item.label}</span></figcaption></figure>)}</div></Section>;
 }
 
-export function VisualLimitations({ visual }: { visual: V2Visual }) {
+export function VisualLimitations({ visual, asSubsection = false }: { visual: V2Visual; asSubsection?: boolean }) {
   if (!visual.limitations.items.length) return null;
-  return <Section eyebrow="Before you publish" title={visual.limitations.h2}><ul className="v-limit-list">{visual.limitations.items.map((item, index) => <li key={`${item.label}-${index}`}><span aria-hidden="true" className={item.supported ? "is-supported" : "is-limited"}>{item.supported ? "✓" : "✕"}</span><span>{item.label}</span></li>)}</ul></Section>;
+  const list = <ul className="v-limit-list">{visual.limitations.items.map((item, index) => <li key={`${item.label}-${index}`}><span aria-hidden="true" className={item.supported ? "is-supported" : "is-limited"}>{item.supported ? "✓" : "✕"}</span><span>{item.label}</span></li>)}</ul>;
+  return asSubsection ? <div className="v-limit-inline"><h3>{visual.limitations.h2}</h3>{list}</div> : <Section eyebrow="Before you publish" title={visual.limitations.h2}>{list}</Section>;
 }

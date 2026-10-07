@@ -310,19 +310,21 @@ function ExampleCard({ item, r }: { item: V2Example; r: V2Resolvers }) {
   }} r={r} />;
 }
 
-export function ExampleGallery({ examples, r }: { examples?: V2Examples; r: V2Resolvers }) {
+export function ExampleGallery({ examples, r, asSubsection = false }: { examples?: V2Examples; r: V2Resolvers; asSubsection?: boolean }) {
   const groups = examples?.groups?.filter((group) => group.items?.length) ?? [];
   if (!examples || !groups.length) return null;
+  const gallery = <div className="example-gallery">
+    {groups.map((group) => (
+      <div className="example-group" key={group.label}>
+        <h3>{group.label}</h3>
+        <div className="tgrid">{group.items.map((item) => <ExampleCard item={item} key={item.key} r={r} />)}</div>
+      </div>
+    ))}
+  </div>;
+  if (asSubsection) return <div className="example-gallery-subsection"><h3>{examples.h2}</h3>{examples.lead ? <p>{examples.lead}</p> : null}{gallery}</div>;
   return (
     <Section eyebrow="Examples" lead={examples.lead} title={examples.h2}>
-      <div className="example-gallery">
-        {groups.map((group) => (
-          <div className="example-group" key={group.label}>
-            <h3>{group.label}</h3>
-            <div className="tgrid">{group.items.map((item) => <ExampleCard item={item} key={item.key} r={r} />)}</div>
-          </div>
-        ))}
-      </div>
+      {gallery}
     </Section>
   );
 }

@@ -42,6 +42,8 @@ function HomePage({ data, r }: Props) {
   const templates = data.templates as { title: string; lead: string; cards: V2Card[]; total: number };
   const platforms = data.platforms as { title: string; items: { label: string; href: string; spec: string }[] };
   const exampleFlows = homeExampleFlows(data.examples);
+  const exampleGallery = data.exampleGallery as V2Examples | undefined;
+  const hasExampleGallery = Boolean(exampleGallery?.groups?.some((group) => group.items?.length));
   const ugc = data.ugc as { eyebrow?: string; title?: string; paras?: string[]; formats?: V2Item[] } | undefined;
   const audience = data.audience as { title?: string; lead?: string; items?: V2Item[] } | undefined;
   const heroMedia = data.heroMedia as V2HeroMedia | undefined;
@@ -165,17 +167,17 @@ function HomePage({ data, r }: Props) {
       {visual ? <VisualPicker pageId={data.id} visual={visual} r={r} /> : <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />}
       {visual ? <VisualSizes visual={visual} r={r} /> : <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />}
       {visual ? <VisualInput visual={visual} r={r} /> : <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />}
-      {visual ? <VisualOutputs visual={visual} r={r} /> : <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />}
+      {visual ? <VisualOutputs includeLimitations={data.id === "home" && Boolean(visual.limitations.items.length)} visual={visual} r={r} /> : <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />}
       {!visual ? <EnrichmentBlockSection block={data.limitations as never} eyebrow="Before you publish" r={r} /> : null}
-      {exampleFlows.length ? (
+      {exampleFlows.length > 0 || hasExampleGallery ? (
         <Section eyebrow="Examples" title="One product photo, many results">
-          <Flows flows={exampleFlows} r={r} />
-          <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/inspiration")}>See more examples →</a></div>
+          {exampleFlows.length ? <Flows flows={exampleFlows} r={r} /> : null}
+          <ExampleGallery asSubsection examples={exampleGallery} r={r} />
+          {exampleFlows.length ? <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/inspiration")}>See more examples →</a></div> : null}
         </Section>
       ) : null}
-      <ExampleGallery examples={data.exampleGallery as V2Examples | undefined} r={r} />
       {visual ? <VisualUses visual={visual} r={r} /> : null}
-      {visual ? <VisualLimitations visual={visual} /> : null}
+      {visual && data.id !== "home" ? <VisualLimitations visual={visual} /> : null}
       {visual ? <Section eyebrow="Templates" lead={templates.lead} title={templates.title}>
         <TemplateGrid cards={templates.cards} r={r} />
         <div style={{ marginTop: 24 }}><a className="btn btn-ghost" href={r.href("/templates")}>See all {templates.total} templates →</a></div>
