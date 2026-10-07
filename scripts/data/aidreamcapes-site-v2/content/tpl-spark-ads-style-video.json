@@ -1,25 +1,25 @@
 {
   "id": "tpl-spark-ads-style-video",
   "title": "Spark Ads Style Video Template for TikTok | AIVideosUGC",
-  "description": "Create a Spark Ads style video from one product photo. Get a natural TikTok-ready scene, then add captions, music, and campaign settings in TikTok Ads Manager.",
-  "h1": "Spark Ads Style Videos With Natural Product B-Roll",
+  "description": "Create an AI-generated Spark Ads style video from one photo. Describe one product action, then manage post authorization and campaign settings in TikTok.",
+  "h1": "Spark Ads Style Videos with Everyday Product Footage",
   "eyebrow": "Spark Ads style template",
-  "lead": "Spark Ads style video creatives use natural product B-roll that feels at home in a TikTok feed. Upload a photo, describe a simple everyday action, and get a short clip; add captions and campaign settings yourself.",
+  "lead": "Spark Ads are TikTok ads that promote existing posts. This template creates an AI-generated product-use video in that style; it does not create or publish a Spark Ad post or connect your account.",
   "secondary_keywords": [
     "TikTok Spark Ads creative",
     "native TikTok ad",
     "Spark Ads video template",
-    "TikTok product b-roll"
+    "TikTok product footage"
   ],
   "intro": [
-    "The sample shows a green insulated bottle being filled at an office desk and lifted for a quick look. It is quiet product footage that can sit beside creator posts without pretending that a customer filmed it.",
-    "Use the style for a bottle, snack, desk item, or beauty product when you want a natural scene without an on-camera speaker. AIVideosUGC supplies the visual clip only; it does not create a TikTok post, attach an account, or set up Spark Ads targeting."
+    "The sample is an AI-generated product-use scene: a green insulated bottle is filled at an office desk and lifted for a quick look. It is not customer footage or an endorsement.",
+    "Use this style for a bottle, snack, desk item, or beauty product when one everyday action helps explain it. Handle post authorization, audience, and targeting in TikTok Ads Manager."
   ],
-  "tip": "Describe a simple action in a familiar setting, then add the real caption, sound, disclosure, and account connection in TikTok.",
+  "tip": "Describe one everyday action in a familiar setting, then complete TikTok authorization and campaign setup before publishing.",
   "steps": [
     {
       "t": "Add a product photo",
-      "d": "Use one clear image with the product shape and color visible so the B-roll stays focused."
+      "d": "Use one clear image where the product shape and color are visible."
     },
     {
       "t": "Describe the everyday action",
@@ -27,7 +27,7 @@
     },
     {
       "t": "Finish in TikTok",
-      "d": "Add music, captions, disclosure, account authorization, and campaign settings in TikTok Ads Manager."
+      "d": "Review the finished video, then set up authorization and campaign details in TikTok Ads Manager."
     }
   ],
   "ideas": [
@@ -40,7 +40,7 @@
       "d": "Move from a counter to a bag or coat pocket for a simple leaving-home beat."
     },
     {
-      "t": "Quiet close-up",
+      "t": "Clear close-up",
       "d": "Use a hand, texture, lid, or button when you want a natural product detail."
     }
   ],
@@ -64,19 +64,19 @@
   "faq": [
     {
       "q": "Does this create a real Spark Ad?",
-      "a": "No. It creates a video asset in a natural TikTok style. Your TikTok account, post authorization, audience, budget, and campaign setup stay in TikTok Ads Manager."
+      "a": "No. The template creates a video file; account authorization and campaign setup stay in TikTok Ads Manager."
     },
     {
       "q": "Will it include captions or trending audio?",
-      "a": "No. AIVideosUGC does not add music, spoken narration, or captions. Add the track and exact text in TikTok or your editor."
+      "a": "Add music, spoken narration, or captions in TikTok or your editor after download."
     },
     {
-      "q": "Can it guarantee TikTok approval or performance?",
+      "q": "Will TikTok approve the video or will it perform well?",
       "a": "No. Platform review and campaign results depend on your account, creative, audience, offer, and TikTok policies."
     },
     {
       "q": "What size should a Spark Ads style video use?",
-      "a": "Use 9:16 for a full-screen TikTok placement. TikTok lists 9:16, 1:1, and 16:9 as standard sizes; add the sound, captions, and authorization in TikTok Ads Manager."
+      "a": "Use 9:16 for a full-screen TikTok placement. TikTok lists 9:16, 1:1, and 16:9 as standard sizes."
     }
   ],
   "overview": [
@@ -98,15 +98,15 @@
       },
       {
         "t": "Name a familiar surface",
-        "d": "Desk, counter, gym bench, coat pocket, or kitchen shelf gives the scene a real place to happen."
+        "d": "A desk, counter, gym bench, coat pocket, or kitchen shelf sets a familiar backdrop."
       },
       {
-        "t": "Choose one quiet action",
+        "t": "Choose one simple action",
         "d": "Filling, opening, packing, lifting, or setting down is enough; avoid an invented creator performance."
       },
       {
         "t": "Keep text out of the source photo",
-        "d": "Add the final caption, disclosure, and offer in TikTok after you review the rendered footage."
+        "d": "Review the finished video, then add any offer or disclosure text in TikTok."
       }
     ]
   },
@@ -156,10 +156,6 @@
         "d": "Connect the post and any Spark Ads permissions through your own TikTok process."
       },
       {
-        "t": "Add sound, caption, and disclosure",
-        "d": "Use the current channel controls to apply music, caption text, and the required disclosure."
-      },
-      {
         "t": "Set the campaign",
         "d": "Choose the audience, budget, placement, and timing in TikTok Ads Manager."
       }
@@ -170,7 +166,7 @@
     "good": [
       "Bottles, snacks, desk goods, and beauty items",
       "Simple hand-led product actions",
-      "TikTok product footage beside creator posts",
+      "AI-generated product scenes for a TikTok feed",
       "Scenes where the product is the subject"
     ],
     "not_ideal": [
@@ -180,7 +176,7 @@
   },
   "examples": {
     "h2": "More Spark Ads-style scenes",
-    "lead": "Casual, phone-shot moments that look like they came from a creator's feed.",
+    "lead": "Everyday product scenes composed for a casual TikTok feed.",
     "groups": [
       {
         "label": "Creator-feed moments",

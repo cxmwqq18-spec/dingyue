@@ -14,7 +14,7 @@
   ],
   "intro": [
     "Your new product appears in the room where it belongs, styled like an ad on launch day. The sample clip features a slim white cordless lamp glowing on a wooden side table beside a stack of books, a mug, and a potted plant in a cozy, dim room.",
-    "Seeing the product in a real space helps people picture it at home before they read a word. It works for decor, small appliances, gadgets, and gift items. Use 9:16 for Stories and Reels, or 1:1 for the Facebook and Instagram feed."
+    "A styled room scene shows one place where shoppers could use the product. It works for decor, small appliances, gadgets, and gift items. Use 9:16 for Stories and Reels, or 1:1 for the Facebook and Instagram feed."
   ],
   "tip": "Describe the time of day and the room, like \"evening living room, warm light, lamp on a side table,\" so the product looks lived with rather than staged.",
   "steps": [
@@ -28,7 +28,7 @@
     },
     {
       "t": "Add the launch details",
-      "d": "Type \"New,\" your release date, and any offer in Canva or Ads Manager so every word is exactly right."
+      "d": "Type \u201cNew,\u201d the release date, and any offer in Canva or Ads Manager, where you can check each detail before publishing."
     }
   ],
   "ideas": [
@@ -63,10 +63,6 @@
     "cta": "Make my launch video"
   },
   "faq": [
-    {
-      "q": "Can the video show my launch date and price?",
-      "a": "Add those yourself after downloading. AI can misspell words or scramble numbers, so dates, prices, and \"New\" badges are safer typed in Canva, CapCut, or Ads Manager."
-    },
     {
       "q": "Should I make a square or a vertical version?",
       "a": "Vertical 9:16 fills the screen in Stories and Reels, and square 1:1 sits neatly in the feed. You can make one of each. Every version is its own run, with the cost shown before it starts."
@@ -106,8 +102,8 @@
         "d": "Say bedside table, kitchen counter, desk, entryway, or gift table so the scene explains where the item belongs."
       },
       {
-        "t": "Reserve copy space",
-        "d": "Ask for open wall, tabletop, or sky beside the product when a date or URL will sit over the finished clip."
+        "t": "Leave room for on-screen text",
+        "d": "Ask for open wall, tabletop, or sky beside the product so you can add a date or URL after download."
       }
     ]
   },
@@ -172,7 +168,7 @@
       "Decor, appliances, gadgets, and gift items",
       "Products with a clear room or use context",
       "Coming-soon teasers and launch-week posts",
-      "Scenes that need editable copy space"
+      "Scenes with open space for on-screen text"
     ],
     "not_ideal": [
       "Live inventory or countdown information that must update automatically",

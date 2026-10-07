@@ -14,7 +14,7 @@
   ],
   "intro": [
     "You get a short, full-length outfit clip, the kind shoppers scroll through for styling ideas. Our sample has a young man standing in a light gray studio in a stone-colored zip jacket over a white tee, straight blue jeans, and white sneakers.",
-    "Seeing the whole look helps buyers judge fit, length, and how the pieces work together, something a flat lay can't show. Use it for new arrivals, outfit pairing ideas, or to give one key piece a styled setting. Menswear, womenswear, and activewear all work."
+    "An AI-generated model can show an outfit's silhouette and styling; use your listing's size chart for actual fit details. Use it for new arrivals, outfit pairing ideas, or to give one key piece a styled setting. Menswear, womenswear, and activewear all work."
   ],
   "tip": "Photograph the outfit laid flat or on a mannequin in one well-lit shot, then describe the model and pose, like \"man in his 20s, hands in pockets, light gray studio.\"",
   "steps": [
@@ -82,7 +82,7 @@
       "d": "An outfit reel should help a shopper see the silhouette, the relationship between pieces, and the setting where the clothes make sense. Choose one hero garment and one simple pose before adding accessories or a second outfit."
     },
     {
-      "h2": "Treat fit copy as a separate layer",
+      "h2": "Add fit details after reviewing the clip",
       "d": "The visual can show length, drape, and color in motion. Add the size range, measurements, material, price, and care details from your listing after checking the rendered clip."
     }
   ],
@@ -150,7 +150,7 @@
     "items": [
       {
         "t": "Type sizes and measurements",
-        "d": "Place the verified size range, model measurements, and garment dimensions in a quiet area of the frame."
+        "d": "Add your product's verified size range and garment measurements from the listing. Include model measurements only when they describe a real model used for that listing."
       },
       {
         "t": "Add the price and link",
@@ -171,7 +171,7 @@
       "One garment with a clear silhouette"
     ],
     "not_ideal": [
-      "Exact fit guarantees",
+      "Sizing decisions that depend on a real model\u2019s measurements",
       "Garments whose key details are hidden in a cropped input"
     ]
   },

@@ -63,16 +63,12 @@
   },
   "faq": [
     {
-      "q": "Can it add my restock date or stock count?",
-      "a": "Add those details after downloading. Dates, quantities, and short words made by AI can be wrong, so type them in your editor where you can check them."
-    },
-    {
       "q": "Is this only for shoes?",
       "a": "No. Use the format for apparel, accessories, cosmetics, or a small home goods release. Describe one product and one clear action per run."
     },
     {
       "q": "Does AIVideosUGC add music or captions?",
-      "a": "No. The clip is delivered without spoken narration, music, or captions. Add a track and the exact drop copy in TikTok, CapCut, or your ad platform."
+      "a": "AIVideosUGC does not add narration, music, or captions. Add a track, recorded narration, and text in your editor after download."
     },
     {
       "q": "What video length fits a limited drop alert?",
@@ -102,7 +98,7 @@
       },
       {
         "t": "Avoid temporary labels",
-        "d": "Use a clean product image without a date or stock sticker so the release copy stays current."
+        "d": "Use a clean product image without a date or stock sticker so your release details stay current."
       },
       {
         "t": "Reserve an alert area",

@@ -27,7 +27,7 @@
       "d": "Describe the surface, the light, and the move, like \"blue dusk light, slow push-in.\" Pick 16:9 for widescreen or 9:16 for phones."
     },
     {
-      "t": "Score it in your editor",
+      "t": "Add music in your editor",
       "d": "Download the clip, then lay in music and your brand name in CapCut so the mood carries through."
     }
   ],
@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "16:9 \u00b7 YouTube & web"
+        "9:16 \u00b7 Shorts & Reels"
       ],
       [
         "Length",
@@ -57,7 +57,7 @@
       ],
       [
         "Also try",
-        "9:16 \u00b7 Shorts & Reels"
+        "16:9 \u00b7 YouTube & web"
       ]
     ],
     "cta": "Make my cinematic clip"
@@ -69,7 +69,7 @@
     },
     {
       "q": "Does the clip come with music?",
-      "a": "No. AIVideosUGC doesn't add a soundtrack or title text. Add them in CapCut or a similar app once you've downloaded the clip."
+      "a": "AIVideosUGC does not add a music track or captions. Add a licensed track in your editor after download."
     },
     {
       "q": "Can I show my logo in the scene?",
@@ -77,7 +77,7 @@
     },
     {
       "q": "What video size suits a cinematic product video?",
-      "a": "Use 16:9 for a wide site hero or YouTube placement, 9:16 for mobile feeds, and 1:1 for square feeds. Download the clip, then add licensed music yourself."
+      "a": "Use 16:9 for a wide site hero or YouTube placement, 9:16 for mobile feeds, and 1:1 for square feeds."
     }
   ],
   "overview": [
@@ -157,7 +157,7 @@
         "d": "Choose a licensed track or your own sound bed after reviewing the finished movement."
       },
       {
-        "t": "Place exact launch copy",
+        "t": "Add launch details",
         "d": "Add the product name, date, offer, or URL in a readable area that the camera does not cross."
       },
       {

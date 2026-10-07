@@ -1,10 +1,10 @@
 {
   "id": "tpl-carousel-video-ad",
   "title": "Carousel Video Ad Template for Product Stories | AIVideosUGC",
-  "description": "Make a carousel video ad from one product photo. Plan a short sequence of scenes for social feeds, then add your panel copy and product facts in your editor.",
+  "description": "Create a carousel video ad as one downloadable product-story video. Plan short scenes, then add verified on-screen text and product details in your editor.",
   "h1": "Carousel Video Ads That Tell One Product Story",
   "eyebrow": "Carousel video ad template",
-  "lead": "Carousel video ad creatives move through a few product moments in order. Upload a photo, describe the sequence, and get a short social clip; add panel copy, prices, and product facts yourself before publishing.",
+  "lead": "This template creates one product-story video from a few short scenes, not a published carousel post. Upload one product photo, describe the sequence, then review the video before adding prices and verified product details.",
   "secondary_keywords": [
     "carousel ad video",
     "multi-panel product ad",
@@ -13,7 +13,7 @@
   ],
   "intro": [
     "This format is built around a sequence rather than a talking presenter. The sample opens a black commuter backpack in a cafe, shows its compartments, and ends with the bag on a person.",
-    "Use a sequence to show what is inside, how a product fits a routine, or why a detail matters. AIVideosUGC can create the visual progression, but it cannot guarantee exact object positions across every scene or the accuracy of tiny text; check the result and add your own copy."
+    "A short sequence can show what is inside, how a product fits a routine, or why a visible detail matters. Product position, size, and small lettering can vary between scenes, so review the video and add verified on-screen text in your editor."
   ],
   "tip": "Write three or four short beats in order and describe the product in each one so the transitions have a clear job.",
   "steps": [
@@ -26,7 +26,7 @@
       "d": "Say where each beat happens and how the camera moves, keeping the product and action simple."
     },
     {
-      "t": "Add panel copy",
+      "t": "Add on-screen text",
       "d": "Place your headline, price, dimensions, and call to action in your editor after reviewing the rendered clip."
     }
   ],
@@ -48,7 +48,7 @@
     "options": [
       [
         "Size",
-        "1:1 \u00b7 Feed"
+        "9:16 \u00b7 Reels"
       ],
       [
         "Length",
@@ -56,7 +56,7 @@
       ],
       [
         "Also try",
-        "9:16 \u00b7 Reels"
+        "1:1 \u00b7 Feed"
       ]
     ],
     "cta": "Make my carousel video"
@@ -64,19 +64,15 @@
   "faq": [
     {
       "q": "Is this a real platform carousel post?",
-      "a": "It is a short video sequence that can support a carousel-style story. It does not create a platform post, upload it, or add real interaction."
+      "a": "No. A swipe-through post needs separate cards assembled and uploaded through your ad platform."
     },
     {
-      "q": "Will each scene keep the product in exactly the same place?",
-      "a": "No. AI-generated scenes can shift object position, scale, or details. Review the clip and choose a simpler sequence if continuity matters."
-    },
-    {
-      "q": "Can it add my price and panel headlines?",
-      "a": "Add them after downloading. Exact prices and small text should come from your editor or ad platform, not from the generated image."
+      "q": "Can the product move between scenes?",
+      "a": "Yes. AI-generated scenes can shift the product\u2019s position, scale, or details. Review the video and simplify the sequence if a steadier composition matters."
     },
     {
       "q": "Is the carousel output one file or a platform post?",
-      "a": "It is a creative asset, not a published carousel post. Download the scenes, then assemble and upload the final carousel in the platform\u2019s ad manager."
+      "a": "This template exports one downloadable video file; it does not create or publish a platform post. For a swipe-through carousel, create separate cards in your editor or ad platform."
     }
   ],
   "overview": [
@@ -153,7 +149,7 @@
     "items": [
       {
         "t": "Add one headline per scene",
-        "d": "Use short, checked copy that matches the action rather than repeating a general benefit."
+        "d": "Use short, verified wording that matches each scene rather than repeating a general benefit."
       },
       {
         "t": "Place prices and dimensions",

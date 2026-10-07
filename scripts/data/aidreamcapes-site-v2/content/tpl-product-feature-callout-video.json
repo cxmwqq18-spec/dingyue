@@ -72,11 +72,11 @@
     },
     {
       "q": "Does the clip include a spoken narration or music?",
-      "a": "No. AIVideosUGC does not add spoken narration, music, or captions. Add any spoken or written explanation yourself in your editor."
+      "a": "AIVideosUGC does not add spoken narration, music, or captions. Add your spoken or written explanation in your editor after download."
     },
     {
       "q": "How should I describe a product feature?",
-      "a": "Name one visible feature and one action, such as \u201cpresses the locking tab.\u201d Add the exact feature label after download; generated text can contain errors."
+      "a": "Name one visible feature and one action, such as \u201cpresses the locking tab.\u201d"
     }
   ],
   "overview": [
@@ -86,7 +86,7 @@
     },
     {
       "h2": "Let the overlay carry verified wording",
-      "d": "The generated motion can show what happens, but ingredients, measurements, compatibility, and performance statements belong in copy you have checked. This keeps the demonstration useful without turning it into an unsupported claim."
+      "d": "The generated motion can show what happens, but verify ingredients, measurements, compatibility, and performance statements before adding them as text."
     }
   ],
   "input_guide": {

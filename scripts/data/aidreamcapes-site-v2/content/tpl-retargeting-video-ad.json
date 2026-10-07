@@ -48,7 +48,7 @@
     "options": [
       [
         "Size",
-        "1:1 \u00b7 Feed"
+        "9:16 \u00b7 Reels"
       ],
       [
         "Length",
@@ -56,7 +56,7 @@
       ],
       [
         "Also try",
-        "9:16 \u00b7 Reels"
+        "1:1 \u00b7 Feed"
       ]
     ],
     "cta": "Make my retargeting video"
@@ -64,19 +64,15 @@
   "faq": [
     {
       "q": "Does AIVideosUGC choose my retargeting audience?",
-      "a": "No. The audience is set by the advertising platform. You choose the visitors, cart users, exclusions, budget, and frequency there."
+      "a": "No. Set visitors, cart users, exclusions, budget, frequency, and delivery in your ad platform."
     },
     {
       "q": "Can the video claim that someone viewed or abandoned a cart?",
-      "a": "Do not make that claim in the generated scene. It does not know a viewer\u2019s history. Add only copy that matches your actual campaign and data."
+      "a": "Do not make that claim in the generated scene. It does not know a viewer\u2019s history. Add only text that matches your actual campaign and data."
     },
     {
       "q": "Will it add the offer or price?",
       "a": "No. Add the current offer, price, dates, and disclosure yourself after checking them in your editor or ad platform."
-    },
-    {
-      "q": "What campaign settings are outside this template?",
-      "a": "Set audience, exclusions, budget, frequency, and delivery in your ad platform. The template creates the video asset and does not read a viewer\u2019s history."
     }
   ],
   "overview": [
@@ -149,7 +145,7 @@
     ]
   },
   "after_download": {
-    "h2": "Set the retargeting message in your tools",
+    "h2": "Set the retargeting message in your ad platform",
     "items": [
       {
         "t": "Add the current offer",

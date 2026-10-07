@@ -41,14 +41,14 @@
     },
     {
       "t": "Single or set",
-      "d": "Compare one item with your gift set to show exactly what the extra pieces are."
+      "d": "Compare one item with your gift set to show which pieces come in the bundle."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "1:1 \u00b7 Product listing"
+        "9:16 \u00b7 Shorts & Reels"
       ],
       [
         "Length",
@@ -56,7 +56,7 @@
       ],
       [
         "Also try",
-        "16:9 \u00b7 Widescreen"
+        "1:1 \u00b7 Product listing"
       ]
     ],
     "cta": "Make my comparison video"
@@ -73,16 +73,12 @@
     {
       "q": "Which aspect ratio should I choose?",
       "a": "Square 1:1 works well in product galleries and feeds. Widescreen 16:9 suits a video in your product description. Vertical 9:16 is for YouTube Shorts and other phone-first feeds."
-    },
-    {
-      "q": "Can I put the comparison numbers inside the generated video?",
-      "a": "Type capacity, weight, price, and other numbers after download. AI-made lettering and figures can be wrong, so keep exact specifications in your editor."
     }
   ],
   "overview": [
     {
       "h2": "Compare what the camera can actually show",
-      "d": "A side-by-side clip is useful for color, size, finish, included pieces, or packaging. Keep the two items in one stable composition and let the viewer inspect the difference; put performance claims and exact specifications in your verified listing copy."
+      "d": "A side-by-side clip is useful for color, size, finish, included pieces, or packaging. Keep the two items in one stable composition and let viewers inspect the difference; put performance claims and exact specifications in your verified product listing."
     },
     {
       "h2": "Keep the comparison about your range",
@@ -206,5 +202,6 @@
         ]
       }
     ]
-  }
+  },
+  "cta_lead": "Upload one photo that shows both options. See the cost before you start."
 }
