@@ -13,7 +13,7 @@
     "Facebook ads for small business"
   ],
   "intro": [
-    "Facebook ads reach people in the feed, in Stories and in Reels, often while they're scrolling quickly past posts from friends and groups. A clear look at the product matters more there than anything clever. AIVideosUGC creates square 1:1 videos for the feed and 9:16 videos for Stories and Reels, in 6, 10, 15 or 30 seconds, plus square ad images from the same product photo.",
+    "Facebook ads reach people in the feed, in Stories and in Reels, often while they're scrolling quickly past posts from friends and groups. A clear look at the product matters more there than anything clever. AIVideosUGC creates square 1:1 videos for the feed and 9:16 videos for Stories and Reels, in 6, 10 or 15 seconds, plus square ad images from the same product photo.",
     "It fits store owners who run their own campaigns and need something new to try without a photoshoot. Describe the scene you want, such as a lunch box packed on a kitchen counter or a dog harness on a morning walk, and check the credit cost before you start. Your headline, price and button text belong in Ads Manager, where they stay easy to edit."
   ],
   "specs": [
@@ -27,7 +27,7 @@
     ],
     [
       "Duration",
-      "Choose 6, 10, 15 or 30 seconds"
+      "Choose 6, 10 or 15 seconds"
     ],
     [
       "Ad images",
@@ -42,7 +42,7 @@
   "ideas": [
     {
       "t": "Messy to tidy",
-      "d": "For an organizer or storage bin, describe the cluttered space first and the neat result after, in one 10-, 15- or 30-second clip."
+      "d": "For an organizer or storage bin, describe the cluttered space first and the neat result after, in one 10- or 15-second clip."
     },
     {
       "t": "Gift-ready still",
@@ -78,7 +78,7 @@
     },
     {
       "h2": "Choose a shape for each Meta placement",
-      "d": "Meta's Reels guidance recommends 9:16 and keeping important content inside its safe area. AIVideosUGC currently offers 6, 10, 15, and 30 second jobs and displays the credit cost first; make each shape as its own job when the crop changes the composition."
+      "d": "Meta's Reels guidance recommends 9:16 and keeping important content inside its safe area. AIVideosUGC offers 6, 10, and 15 second jobs; make each shape as its own job when the crop changes the composition."
     }
   ],
   "input_guide": {
@@ -172,7 +172,7 @@
   },
   "examples": {
     "h2": "More Facebook ad examples",
-    "lead": "Clear, easy-to-read frames for busy feeds.",
+    "lead": "Products in bright, familiar settings for a busy Facebook feed.",
     "groups": [
       {
         "label": "Feed-ready frames",
@@ -192,24 +192,260 @@
         ]
       },
       {
-        "label": "White and lifestyle pair",
+        "label": "Seasonal and color choices",
         "items": [
           {
-            "ref": "n:gen2:plat-facebook-g3",
-            "title": "Insulated bottle on white for a feed ad",
+            "ref": "n:gen2:occ-holidays-11",
+            "title": "Scented candle on a holiday table",
             "kind": "photo",
-            "product": "insulated bottle"
+            "product": "scented candle"
           },
           {
-            "ref": "n:gen2:plat-facebook-g4",
-            "title": "Same insulated bottle on a sunny desk",
+            "ref": "n:gen2:tpl-color-c1",
+            "title": "Insulated tumblers in four colors",
             "kind": "photo",
-            "product": "insulated bottle"
+            "product": "insulated tumblers"
           }
         ]
       }
     ]
   },
   "templates_lead": "Pick a scene that keeps your product clear in the Facebook placement you choose.",
-  "cta_lead": "Choose a Facebook placement, then prepare product media for Ads Manager."
+  "cta_lead": "Choose a Facebook placement, then prepare product media for Ads Manager.",
+  "steps": [
+    {
+      "t": "Choose a clear product photo",
+      "d": "Upload one insulated bottle with its cap, body, and base fully visible."
+    },
+    {
+      "t": "Give the feed a simple setting",
+      "d": "Place this bottle on a bright desk with clear space around the product."
+    },
+    {
+      "t": "Add the campaign details",
+      "d": "After download, add the price, dates, or call to action in Ads Manager."
+    }
+  ],
+  "visual": {
+    "overview": "Facebook ads can appear in Feed, Stories, and Reels. Start with a clear product image, then choose a crop and setting that leave room around the item.",
+    "strip": [
+      "n:gen2:plat-facebook-g3",
+      "n:gen2:plat-facebook-g4",
+      "n:gen2:tpl-box-c2",
+      "n:gen2:occ-black-friday-c2",
+      "n:gen2:tpl-size-c2",
+      "n:gen2:tpl-ugc-g1"
+    ],
+    "steps": {
+      "source": "n:gen2:plat-facebook-g3",
+      "result": "n:gen2:plat-facebook-g4",
+      "mode": "photo",
+      "prompt": "Place this insulated bottle on a sunny desk, keeping the cap and full body visible.",
+      "options": [
+        [
+          "Template",
+          "Product photo"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a Facebook ad scene that fits the feed",
+      "lead": "Pick a product moment that suits the space in a Facebook placement.",
+      "chips": [
+        {
+          "id": "feed",
+          "label": "Feed photo"
+        },
+        {
+          "id": "unbox",
+          "label": "Unboxing scene"
+        },
+        {
+          "id": "daily",
+          "label": "Daily use"
+        },
+        {
+          "id": "feature",
+          "label": "Product feature"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-compare-c2",
+          "label": "Two backpack sizes side by side",
+          "prompt": "Lay out both backpack sizes with the same items beside each one.",
+          "chips": [
+            "feed"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-carousel-video-ad-c3",
+          "label": "Bento box opened on a counter",
+          "prompt": "Open the lunch box and show each compartment clearly.",
+          "chips": [
+            "feed"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-box-c4",
+          "label": "Baby bath set ready to use",
+          "prompt": "Arrange the towel, sponge, and wash bottle together on a shelf.",
+          "chips": [
+            "unbox"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-spark-ads-style-video-c4",
+          "label": "Brush on a relaxed dog",
+          "prompt": "Brush the dog's coat in a calm living room scene.",
+          "chips": [
+            "unbox"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-ugc-case-81",
+          "label": "Reusable bottle on a work desk",
+          "prompt": "Place the bottle near a notebook in a casual phone photo.",
+          "chips": [
+            "daily"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-home-c2",
+          "label": "Matching jars on a pantry shelf",
+          "prompt": "Line up the glass pantry jars with their lids easy to see.",
+          "chips": [
+            "daily"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-light-c4",
+          "label": "Crystal tumbler on a clean backdrop",
+          "prompt": "Let the tumbler catch a crisp reflection against a soft gradient.",
+          "chips": [
+            "feature"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-angle-c2",
+          "label": "Backpack turned to show its straps",
+          "prompt": "Turn the backpack around so its padded straps face the camera.",
+          "chips": [
+            "feature"
+          ],
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a product photo"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:gen2:tpl-launch-c2",
+        "h": "Use a new product in a feed post",
+        "d": "A colored bottle on a styled desk keeps the object easy to spot."
+      },
+      {
+        "frame": "phone",
+        "ref": "n:gen2:tpl-ugc-case-83",
+        "h": "Show an everyday morning moment",
+        "d": "A ceramic mug at breakfast feels at home in a casual feed."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-angle-c1",
+        "bad": "n:guide:plat-facebook-m5-soft-focus",
+        "good_label": "The headphone shape stays sharp and complete",
+        "bad_label": "The headphone edges fade into soft focus"
+      },
+      {
+        "good": "n:gen2:tpl-size-c1",
+        "bad": "n:guide:plat-facebook-m5-cropped",
+        "good_label": "The backpack remains fully inside the frame",
+        "bad_label": "The backpack is clipped along the top edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:tpl-light-c1",
+        "frame": "1:1",
+        "label": "Perfume bottle with a soft rim light"
+      },
+      {
+        "ref": "n:gen2:tpl-pack-c3",
+        "frame": "1:1",
+        "label": "Hot sauce bottle on a market shelf"
+      }
+    ],
+    "after": {
+      "ref": "f:discount-free-shipping",
+      "zones": [
+        "Price",
+        "Call to action"
+      ],
+      "items": [
+        "Add the exact price and campaign dates after download.",
+        "Place a short call to action where it does not cover the product."
+      ]
+    },
+    "sizes": [
+      {
+        "frame": "16:9",
+        "ref": "f:carousel-storytelling",
+        "label": "16:9 · Facebook video placements"
+      },
+      {
+        "frame": "1:1",
+        "ref": "n:guide:plat-facebook-size-square-backpack",
+        "label": "1:1 · Square Feed placements"
+      },
+      {
+        "frame": "9:16",
+        "ref": "f:carousel-storytelling-v",
+        "label": "9:16 · Stories and Reels"
+      }
+    ],
+    "titles": {
+      "m2": {
+        "h2": "Create a Facebook ad from one product photo"
+      },
+      "m3": {
+        "h2": "Choose a Facebook ad scene that fits the feed"
+      },
+      "m4": {
+        "h2": "Use Facebook ads in Feed, Stories, and Reels"
+      },
+      "m5": {
+        "h2": "Keep the product readable in a Facebook ad"
+      },
+      "m6": {
+        "h2": "Facebook ad images for Square, 9:16, and 16:9"
+      },
+      "m7": {
+        "h2": "Add the offer after download in Ads Manager"
+      },
+      "m8": {
+        "h2": "One backpack, three Facebook ad sizes"
+      },
+      "examples": {
+        "h2": "More Facebook ad examples",
+        "lead": "Product moments for busy feeds, from a lunchbox to a pet bed."
+      },
+      "faq": {
+        "h2": "Questions about Facebook ad creative"
+      }
+    }
+  }
 }

@@ -13,7 +13,7 @@
     "product ads for Instagram"
   ],
   "intro": [
-    "Instagram ads show up in three main spots: Reels, Stories and the feed. Reels and Stories fill the whole phone screen, while the feed sits between posts from friends and creators, so an ad has to look at home in each. AIVideosUGC makes 9:16 videos for Reels and Stories and 1:1 videos for the feed, each running 6, 10, 15 or 30 seconds. You can also create square product images for feed posts and carousels.",
+    "Instagram ads show up in three main spots: Reels, Stories and the feed. Reels and Stories fill the whole phone screen, while the feed sits between posts from friends and creators, so an ad has to look at home in each. AIVideosUGC makes 9:16 videos for Reels and Stories and 1:1 videos for the feed, each running 6, 10 or 15 seconds. You can also create square product images for feed posts and carousels.",
     "Upload your product shot along with a line about the setting: a serum bottle on a marble sink, sunglasses on a beach towel, a candle beside an open book. The result comes back to your account, private to you. Download it, write your caption, and add any text or stickers in Instagram, Canva or Ads Manager."
   ],
   "specs": [
@@ -27,7 +27,7 @@
     ],
     [
       "Clip length",
-      "6, 10, 15 or 30 seconds each"
+      "6, 10 or 15 seconds each"
     ],
     [
       "Photos",
@@ -78,7 +78,7 @@
     },
     {
       "h2": "Design for Reels, Stories, and the feed separately",
-      "d": "Meta's Reels guidance recommends 9:16 and keeping important content inside the safe area. Preview each downloaded file in its intended placement before adding your caption or offer. AIVideosUGC currently offers 6, 10, 15, and 30 second jobs, and shows the credit cost before each generation. Square images are the default still format."
+      "d": "Meta's Reels guidance recommends 9:16 and keeping important content inside the safe area. Preview each downloaded file in its intended placement before adding your caption or offer. AIVideosUGC offers 6, 10, and 15 second jobs. Square images are the default still format."
     }
   ],
   "input_guide": {
@@ -172,28 +172,28 @@
   },
   "examples": {
     "h2": "More Instagram examples",
-    "lead": "Square feed images, a Reel-style moment and a two-card carousel.",
+    "lead": "Product details, routines, and a two-card view of one skincare set.",
     "groups": [
       {
         "label": "Feed and Reels",
         "items": [
           {
-            "ref": "n:gen2:plat-instagram-g1",
-            "title": "Speckled ceramic cup in a clean square frame",
+            "ref": "n:gen2:occ-sale-discount-c2",
+            "title": "Skincare minis arranged on a tray",
             "kind": "photo",
-            "product": "speckled ceramic cup"
+            "product": "skincare minis"
           },
           {
-            "ref": "n:gen2:plat-instagram-g2",
-            "title": "Same speckled cup filled from a carafe",
+            "ref": "n:gen2:tpl-sale-c3",
+            "title": "Skincare bottles on pastel podiums",
             "kind": "photo",
-            "product": "speckled ceramic cup"
+            "product": "skincare bottles"
           },
           {
-            "ref": "n:gen2:plat-instagram-g3",
-            "title": "Necklace close-up with space above and below",
+            "ref": "n:gen2:change-background-c2",
+            "title": "Cream jar on wet stone",
             "kind": "photo",
-            "product": "necklace"
+            "product": "cream jar"
           }
         ]
       },
@@ -201,21 +201,257 @@
         "label": "Carousel pair",
         "items": [
           {
-            "ref": "n:gen2:plat-instagram-g4",
-            "title": "Hand cream tube on a pastel backdrop",
+            "ref": "n:gen2:ind-beauty-skincare-g2",
+            "title": "Skincare bottles together on a vanity",
             "kind": "photo",
-            "product": "hand cream tube"
+            "product": "skincare set"
           },
           {
-            "ref": "n:gen2:plat-instagram-g5",
-            "title": "Hand cream tube by a bathroom sink",
+            "ref": "n:gen2:ind-beauty-skincare-g3",
+            "title": "Same skincare set packed for travel",
             "kind": "photo",
-            "product": "hand cream tube"
+            "product": "skincare set"
           }
         ]
       }
     ]
   },
   "templates_lead": "Choose a look for a Reel, Story, or square feed post featuring your product.",
-  "cta_lead": "Choose the Instagram placement first, then make an image or clip that fits it."
+  "cta_lead": "Choose the Instagram placement first, then make an image or clip that fits it.",
+  "steps": [
+    {
+      "t": "Photograph the full tube",
+      "d": "Upload one hand-cream tube with its cap and package visible."
+    },
+    {
+      "t": "Choose a calm routine",
+      "d": "Set this tube beside a bathroom sink in soft morning light."
+    },
+    {
+      "t": "Finish the post",
+      "d": "Add the price or offer in your editor after downloading the image."
+    }
+  ],
+  "visual": {
+    "overview": "Instagram supports product photos, Stories, and Reels. Show the package first, then match the frame to the placement and leave breathing room for the interface.",
+    "strip": [
+      "n:gen2:plat-instagram-g4",
+      "n:gen2:plat-instagram-g5",
+      "n:gen2:ind-beauty-skincare-c2",
+      "n:gen2:ind-beauty-skincare-c3",
+      "n:gen2:ind-beauty-skincare-c4",
+      "n:gen2:tpl-ugc-g1"
+    ],
+    "steps": {
+      "source": "n:gen2:plat-instagram-g4",
+      "result": "n:gen2:plat-instagram-g5",
+      "mode": "photo",
+      "prompt": "Place this hand-cream tube beside a bathroom sink, with its package facing forward.",
+      "options": [
+        [
+          "Template",
+          "Product photo"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose an Instagram scene for feed, Story, or Reel",
+      "lead": "Pick a view for the product, setting, and Instagram placement.",
+      "chips": [
+        {
+          "id": "routine",
+          "label": "Daily routine"
+        },
+        {
+          "id": "texture",
+          "label": "Shade and texture"
+        },
+        {
+          "id": "feed",
+          "label": "Feed photo"
+        },
+        {
+          "id": "carousel",
+          "label": "Carousel card"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:social-ad-photos-c3",
+          "label": "Hand cream beside lavender",
+          "prompt": "Set the tube beside a few lavender sprigs on a soft purple surface.",
+          "chips": [
+            "routine"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-beauty-c3",
+          "label": "Face roller on a vanity",
+          "prompt": "Place the jade roller beside a cream jar on a tidy bathroom shelf.",
+          "chips": [
+            "routine"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-beauty-c4",
+          "label": "Sheet mask on a counter",
+          "prompt": "Lay the opened mask pouch beside a folded white towel.",
+          "chips": [
+            "texture"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-story-c1",
+          "label": "Sunscreen in beach light",
+          "prompt": "Stand the sunscreen tube beside a striped towel in bright beach light.",
+          "chips": [
+            "texture"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:video-ads-g4",
+          "label": "Lip balm from a jacket pocket",
+          "prompt": "Show lip balm being taken from a jacket pocket on a city street.",
+          "chips": [
+            "feed"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-light-c2",
+          "label": "Chrome espresso cup on a gradient",
+          "prompt": "Place the cup against a clean gradient and keep its rim reflective.",
+          "chips": [
+            "feed"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:model-photos-c3",
+          "label": "Gold necklaces in soft daylight",
+          "prompt": "Show layered chains against a plain neckline with a close crop.",
+          "chips": [
+            "carousel"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-health-wellness-g3",
+          "label": "Sleep mask on a nightstand",
+          "prompt": "Set the sleep mask on a nightstand in soft evening light.",
+          "chips": [
+            "carousel"
+          ],
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a product photo"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:gen2:tpl-size-c2",
+        "h": "Give a product photo room to breathe",
+        "d": "A travel candle beside a cup gives a small item a familiar scale."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:tpl-color-g1",
+        "h": "Use a color set in a feed carousel",
+        "d": "Three ceramic jars make a simple sequence of color choices."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-ugc-c4",
+        "bad": "n:guide:plat-instagram-m5-soft-focus",
+        "good_label": "The bottle shape and cap stay easy to see",
+        "bad_label": "The bottle detail softens into the background"
+      },
+      {
+        "good": "n:gen2:ind-beauty-skincare-g4",
+        "bad": "n:guide:plat-instagram-m5-cropped",
+        "good_label": "The full tube stays inside the photo",
+        "bad_label": "The tube edge disappears beyond the frame"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:plat-instagram-g3",
+        "frame": "1:1",
+        "label": "Necklace in soft daylight"
+      },
+      {
+        "ref": "n:gen2:unboxing-videos-g2",
+        "frame": "1:1",
+        "label": "Skincare minis in a gift box"
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:tpl-compare-c3",
+      "zones": [
+        "Caption",
+        "Offer"
+      ],
+      "items": [
+        "Type the caption and discount in your editor so the wording stays exact.",
+        "Keep the offer clear of the product and the Instagram interface."
+      ]
+    },
+    "sizes": [
+      {
+        "frame": "1:1",
+        "ref": "n:gen2:plat-instagram-g1",
+        "label": "1:1 · Instagram Feed"
+      },
+      {
+        "frame": "9:16",
+        "ref": "n:gen2:plat-instagram-g2",
+        "label": "9:16 · Instagram Stories and Reels"
+      },
+      {
+        "frame": "16:9",
+        "ref": "n:guide:plat-instagram-size-wide",
+        "label": "16:9 · Landscape placements"
+      }
+    ],
+    "titles": {
+      "m2": {
+        "h2": "Make an Instagram ad from a clear product image"
+      },
+      "m3": {
+        "h2": "Choose an Instagram scene for feed, Story, or Reel"
+      },
+      "m4": {
+        "h2": "Use Instagram photos across product posts and listings"
+      },
+      "m5": {
+        "h2": "Keep the product clear in an Instagram image"
+      },
+      "m6": {
+        "h2": "One Instagram product in three frame sizes"
+      },
+      "m7": {
+        "h2": "Add the caption and offer after download"
+      },
+      "m8": {
+        "h2": "One cup, three Instagram product frames"
+      },
+      "examples": {
+        "h2": "More Instagram examples",
+        "lead": "Square skincare details, a routine image, and a two-card carousel with one product."
+      },
+      "faq": {
+        "h2": "Questions about Instagram product ads"
+      }
+    }
+  }
 }
