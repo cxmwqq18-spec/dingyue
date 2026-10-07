@@ -13,7 +13,7 @@ export type V2VisualInput = { good: V2VisualImage; bad: V2VisualImage; good_labe
 export type V2VisualOutput = { image: V2VisualImage; frame: V2VisualFrame; label: string; length?: 6 | 10 | 15; spec: string };
 export type V2VisualAfter = { image: V2VisualImage; zones: string[]; items: string[] };
 export type V2VisualSize = { frame: V2VisualFrame; image: V2VisualImage; label: string };
-export type V2VisualLimitation = { label: string; supported: boolean };
+export type V2VisualLimitation = { label: string; detail?: string; supported: boolean };
 export type V2Visual = {
   strip: V2VisualStripItem[];
   steps: V2VisualStep;

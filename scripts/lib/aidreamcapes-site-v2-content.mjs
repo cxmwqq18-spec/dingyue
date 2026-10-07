@@ -804,8 +804,8 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
         const label = typeof item === "string" ? item : item?.t ?? item?.d ?? "";
         const sourceText = `${label} ${item?.status ?? item?.kind ?? ""}`;
         const negative = /\b(can't|cannot|does not|doesn't|won't|not prove|not confirm)\b/i.test(sourceText);
-        const supported = item?.supported === true || item?.status === "can" || (!negative && /\b(can|shows|show|makes|helps|lets)\b/i.test(sourceText));
-        return { label, supported };
+        const supported = item?.supported === false ? false : item?.supported === true || item?.status === "can" || (!negative && /\b(can|shows|show|makes|helps|lets)\b/i.test(sourceText));
+        return { label, supported, ...(item?.d ? { detail: String(item.d) } : {}) };
       })
     },
     ...(overview ? { overview: String(overview) } : {})

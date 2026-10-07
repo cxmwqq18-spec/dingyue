@@ -228,27 +228,32 @@
     ]
   },
   "limitations": {
-    "h2": "What a generated scene cannot confirm",
+    "h2": "What AI can't check for you",
     "items": [
       {
-        "t": "✗ Measurements need verification.",
-        "d": "Confirm size, weight, fit, and compatibility separately."
+        "t": "Exact size and fit",
+        "d": "Add measurements from your own listing.",
+        "supported": false
       },
       {
-        "t": "✗ Hidden details need real views.",
-        "d": "Show ports, seams, fasteners, and included parts."
+        "t": "Parts your photo doesn't show",
+        "d": "Ports, seams or the back side need a real photo.",
+        "supported": false
       },
       {
-        "t": "✗ Actions are not performance tests.",
-        "d": "Use evidence for safety and durability claims."
+        "t": "Proof that it works",
+        "d": "A clip of a kettle pouring isn't a test result.",
+        "supported": false
       },
       {
-        "t": "✗ Generated text may be wrong.",
-        "d": "Add approved names and claims yourself."
+        "t": "Printed words and prices",
+        "d": "Type them in your editor; AI letters can come out wrong.",
+        "supported": false
       },
       {
-        "t": "Color, size, and included items need review.",
-        "d": "Check color, size, and included items."
+        "t": "Exact color and what's in the box",
+        "d": "Compare with the real product before you post.",
+        "supported": false
       }
     ]
   },

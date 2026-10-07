@@ -162,6 +162,6 @@ export function VisualSizes({ visual, r }: { visual: V2Visual; r: V2Resolvers })
 
 export function VisualLimitations({ visual, asSubsection = false }: { visual: V2Visual; asSubsection?: boolean }) {
   if (!visual.limitations.items.length) return null;
-  const list = <ul className="v-limit-list">{visual.limitations.items.map((item, index) => <li key={`${item.label}-${index}`}><span aria-hidden="true" className={item.supported ? "is-supported" : "is-limited"}>{item.supported ? "✓" : "✕"}</span><span>{item.label}</span></li>)}</ul>;
+  const list = <ul className="v-limit-list">{visual.limitations.items.map((item, index) => <li key={`${item.label}-${index}`}><span aria-hidden="true" className={item.supported ? "is-supported" : "is-limited"}>{item.supported ? "✓" : "✕"}</span><span className="v-limit-copy"><b>{item.label}</b>{item.detail ? <small>{item.detail}</small> : null}</span></li>)}</ul>;
   return asSubsection ? <div className="v-limit-inline"><h3>{visual.limitations.h2}</h3>{list}</div> : <Section eyebrow="Before you publish" title={visual.limitations.h2}>{list}</Section>;
 }
