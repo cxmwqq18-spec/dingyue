@@ -15,7 +15,7 @@
   ],
   "intro": [
     "Home shoppers are buying for a specific space. They want to know whether a planter suits a small apartment windowsill, whether a shoe rack fits a narrow hallway, and what a set of drawer dividers does to a junk drawer. Room scenes and before-and-after clips answer those questions in a way a cutout photo can't.",
-    "Pick the room your buyer lives in and describe it alongside your product photo: a sunlit Scandinavian living room, a rental kitchen with little counter space, a kid's closet. For organizers, a 10-, 15- or 30-second clip that opens on clutter and ends tidy shows the payoff. Square photos fill out a listing gallery, and the same item can be restaged in a bedroom, an entryway, or a dorm for different buyers."
+    "Pick the room your buyer lives in and describe it alongside your product photo: a sunlit Scandinavian living room, a rental kitchen with little counter space, a kid's closet. For organizers, a 10- or 15-second clip that opens on clutter and ends tidy shows the payoff. Square photos fill out a listing gallery, and the same item can be restaged in a bedroom, an entryway, or a dorm for different buyers."
   ],
   "ideas": [
     {
@@ -121,11 +121,11 @@
       },
       {
         "t": "Flexible crops",
-        "d": "Choose 9:16, 1:1, or 16:9 for primary placements, with 4:3 and 3:4 available when a room needs a different frame; clips run 6, 10, 15, or 30 seconds."
+        "d": "Choose 9:16, 1:1, or 16:9 for primary placements, with 4:3 and 3:4 available when a room needs a different frame; clips run 6, 10, or 15 seconds."
       },
       {
-        "t": "Credit clarity",
-        "d": "A 24-credit still or a 24-, 40-, 60-, or 120-credit clip for 6, 10, 15, or 30 seconds lets you choose the scope before you run it."
+        "t": "See the cost first",
+        "d": "The tool shows the credit cost before you start, so you can choose a photo or clip that fits the room and product story."
       },
       {
         "t": "A file ready to finish",
@@ -209,5 +209,224 @@
     ]
   },
   "templates_lead": "Choose a room, organizing step, or placement that fits the home product.",
-  "cta_lead": "Select the room or use scene where your home product belongs."
+  "cta_lead": "Select the room or use scene where your home product belongs.",
+  "steps": [
+    {
+      "t": "Photograph the whole lamp",
+      "d": "Include this white table lamp's shade, stem, and base in one clean product shot."
+    },
+    {
+      "t": "Choose one room action",
+      "d": "Switch on this lamp on a small desk beside a book, keeping its shape clear."
+    },
+    {
+      "t": "Add room measurements",
+      "d": "After download, place the height, material, or price beside the finished clip."
+    }
+  ],
+  "visual": {
+    "overview": "Home shoppers judge scale, materials, and how a piece fits the room. Start from a full product photo, then show one useful action such as switching on, opening, or placing the item.",
+    "strip": [
+      "n:guide:ind-home-living-m2-source",
+      "f:promo-launch-sale",
+      "n:gen2:tpl-home-c1",
+      "n:gen2:tpl-home-c2",
+      "n:gen2:tpl-home-c3",
+      "n:gen2:tpl-home-c4"
+    ],
+    "steps": {
+      "source": "n:guide:ind-home-living-m2-source",
+      "result": "f:promo-launch-sale",
+      "mode": "video",
+      "length": 10,
+      "prompt": "Switch on this white table lamp beside a book, keeping its shade, stem, and base visible.",
+      "options": [
+        [
+          "Size",
+          "16:9"
+        ],
+        [
+          "Length",
+          "10 seconds"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a home scene with a useful action",
+      "lead": "Pick a room action that helps shoppers picture the product in use.",
+      "chips": [
+        {
+          "id": "lighting",
+          "label": "Room lighting"
+        },
+        {
+          "id": "storage",
+          "label": "Storage fixes"
+        },
+        {
+          "id": "decor",
+          "label": "Decor details"
+        },
+        {
+          "id": "setup",
+          "label": "Easy setup"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-size-c4",
+          "label": "Small planter on a shelf",
+          "prompt": "Place the ceramic planter beside two plain books to show its scale.",
+          "chips": [
+            "lighting"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:video-hub-g4",
+          "label": "Entryway with coat hooks",
+          "prompt": "Show the slim bench and coat hooks in a bright, uncluttered entryway.",
+          "chips": [
+            "lighting"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-howto-c4",
+          "label": "Filling a self-watering planter",
+          "prompt": "Pour water into the reservoir before setting the planter by the window.",
+          "chips": [
+            "storage"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-limited-drop-alert-video-c4",
+          "label": "Small vases on a gallery shelf",
+          "prompt": "Arrange the ceramic vases with space between each silhouette.",
+          "chips": [
+            "storage"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:lifestyle-photos-c1",
+          "label": "Candle on a bedside table",
+          "prompt": "Set the candle on a bedside table as evening light fades.",
+          "chips": [
+            "decor"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:product-videos-g1",
+          "label": "Camp chair beside a patio table",
+          "prompt": "Open the folding chair beside a small wooden table outdoors.",
+          "chips": [
+            "decor"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-compare-c4",
+          "label": "Two planters on a windowsill",
+          "prompt": "Place the small and large planters side by side on the same windowsill.",
+          "chips": [
+            "setup"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:before-after-videos-c1",
+          "label": "Sofa cushion cleaned with a roller",
+          "prompt": "Show the lint roller moving across the sofa cushion in one clear pass.",
+          "chips": [
+            "setup"
+          ],
+          "kind": "video"
+        }
+      ],
+      "button": "Make a product video"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:gen2:photo-hub-c2",
+        "h": "Show a soft furnishing in its room",
+        "d": "A linen pillow on a sofa gives shoppers a sense of color and texture."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:product-videos-g2",
+        "h": "Give a table lamp a warm evening post",
+        "d": "A pool of light on the desk shows the lamp switched on."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:url-to-video-g2",
+        "bad": "n:guide:ind-home-living-m5-soft-focus",
+        "good_label": "The whole floor lamp stays in view",
+        "bad_label": "The lamp shade and base are clipped by the crop"
+      },
+      {
+        "good": "n:gen2:plat-shopify-c1",
+        "bad": "n:guide:ind-home-living-m5-cropped",
+        "good_label": "The planter shape and leaves stay crisp",
+        "bad_label": "The planter is cut off at the frame edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:video-hub-g5",
+        "frame": "16:9",
+        "label": "Candle in warm evening light",
+        "length": 6
+      },
+      {
+        "ref": "n:gen2:product-videos-c2",
+        "frame": "16:9",
+        "label": "Vacuum lifting crumbs from a sofa",
+        "length": 10
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:tpl-launch-c4",
+      "zones": [
+        "Dimensions",
+        "Finish"
+      ],
+      "items": [
+        "Place the exact dimensions beside the scene in your store editor.",
+        "Add material and finish details as text so the photo stays uncluttered."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make a home product video in three steps"
+      },
+      "m3": {
+        "h2": "Choose a home scene with a useful action"
+      },
+      "m4": {
+        "h2": "Use home videos on product pages and social feeds"
+      },
+      "m5": {
+        "h2": "Start with a clear home product photo"
+      },
+      "m6": {
+        "h2": "Choose a home video shape and length"
+      },
+      "m7": {
+        "h2": "Add dimensions after downloading your home video"
+      },
+      "examples": {
+        "h2": "More home and living examples",
+        "lead": "Furniture, storage, and decor shown beside pieces that help shoppers judge scale."
+      },
+      "faq": {
+        "h2": "Questions about home product videos"
+      }
+    }
+  }
 }

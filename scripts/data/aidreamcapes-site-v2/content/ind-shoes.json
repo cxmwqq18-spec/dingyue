@@ -121,11 +121,11 @@
       },
       {
         "t": "Motion for feeds",
-        "d": "Choose 9:16 for a vertical step, 1:1 for a square feed, or 16:9, 4:3, or 3:4 for other crops; clips can be 6, 10, 15, or 30 seconds."
+        "d": "Choose 9:16 for a vertical step, 1:1 for a square feed, or 16:9, 4:3, or 3:4 for other crops; clips can be 6, 10, or 15 seconds."
       },
       {
         "t": "A visible budget",
-        "d": "Budget a 24-credit photo, or 24/40/60/120 credits as the clip length moves from 6 to 10 to 15 to 30 seconds; the exact charge appears before generation."
+        "d": "The tool shows the credit cost before you start, so you can choose a photo or clip that suits the shoe and planned action."
       },
       {
         "t": "A clean download",
@@ -220,5 +220,221 @@
     ]
   },
   "templates_lead": "Compare side profiles, color options, and on-foot scenes for one pair.",
-  "cta_lead": "Pick a shoe angle, color option, or on-foot setting to build."
+  "cta_lead": "Pick a shoe angle, color option, or on-foot setting to build.",
+  "steps": [
+    {
+      "t": "Start with both boots",
+      "d": "Photograph the brown Chelsea boots together so each toe and sole stays visible."
+    },
+    {
+      "t": "Show the boots being worn",
+      "d": "Frame these boots on a cobblestone path, cropped below the knees."
+    },
+    {
+      "t": "Finish the product listing",
+      "d": "Add sizes, material, and care information after downloading the photo."
+    }
+  ],
+  "visual": {
+    "overview": "Shoe shoppers look for the toe shape, heel, sole, and fit on foot. A clean product shot gives the pair a baseline; separate angles show details that one side view cannot.",
+    "strip": [
+      "n:boots-pack",
+      "n:guide:ind-shoes-m2-result",
+      "f:tiktok-reels-shorts-v",
+      "n:gen2:tpl-story-c2",
+      "n:gen2:tpl-sale-c2",
+      "n:gen2:tpl-film-c4"
+    ],
+    "steps": {
+      "source": "n:boots-pack",
+      "result": "n:guide:ind-shoes-m2-result",
+      "mode": "photo",
+      "prompt": "Show these brown Chelsea boots worn on a cobblestone path, cropped below the knees.",
+      "options": [
+        [
+          "Template",
+          "Product photo"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a shoe scene that shows the fit",
+      "lead": "Choose an angle that shows fit, finish, or how a pair is worn.",
+      "chips": [
+        {
+          "id": "angle",
+          "label": "Show the angle"
+        },
+        {
+          "id": "wear",
+          "label": "Show them worn"
+        },
+        {
+          "id": "detail",
+          "label": "Show the finish"
+        },
+        {
+          "id": "arrival",
+          "label": "Unbox the pair"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:model-photos-g3",
+          "label": "Leather boots mid-step",
+          "prompt": "Show the ankle boots in motion along a quiet city sidewalk.",
+          "chips": [
+            "angle"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-retargeting-video-ad-g1",
+          "label": "Brown boots beside a coat",
+          "prompt": "Set the laced boots on a bench next to a folded coat.",
+          "chips": [
+            "angle"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:video-hub-g3",
+          "label": "Sneakers in an open shoebox",
+          "prompt": "Lift the lid and show the pair resting in tissue paper.",
+          "chips": [
+            "wear"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:video-hub-g8",
+          "label": "Sneaker on a plain turntable",
+          "prompt": "Turn the sneaker slowly on a simple product display.",
+          "chips": [
+            "wear"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-home-c4",
+          "label": "Shoe rack in a small entryway",
+          "prompt": "Show the slim rack holding several pairs beside the front door.",
+          "chips": [
+            "detail"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:occ-product-launch-c2",
+          "label": "White sneaker on a plinth",
+          "prompt": "Center the sneaker on a pale round stand under focused light.",
+          "chips": [
+            "detail"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:plat-facebook-c3",
+          "label": "Yellow rain boots beside a puddle",
+          "prompt": "Arrange the rain boots beside a shallow puddle on a wet path.",
+          "chips": [
+            "arrival"
+          ],
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:before-after-videos-c2",
+          "label": "Scuffed sneaker after cleaning",
+          "prompt": "Show the white sneaker before and after a careful cleaning.",
+          "chips": [
+            "arrival"
+          ],
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a product photo"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:gen2:tpl-retargeting-video-ad-c1",
+        "h": "Add a clean pair to a product page",
+        "d": "A pair by the front door suggests where shoppers might wear it."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:tpl-sale-g2",
+        "h": "Show sandals in a summer post",
+        "d": "The sand and open sky give the pair a warm-weather setting."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:white-background-g3",
+        "bad": "n:guide:ind-shoes-m5-soft-focus",
+        "good_label": "The full running shoe fits on white",
+        "bad_label": "The shoe profile loses detail in blur"
+      },
+      {
+        "good": "n:gen2:tpl-detail-g1",
+        "bad": "n:guide:ind-shoes-m5-cropped",
+        "good_label": "Laces and eyelets remain easy to see",
+        "bad_label": "The toe and heel are clipped from view"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:social-ad-photos-g4",
+        "frame": "1:1",
+        "label": "Canvas sneaker on a city curb"
+      },
+      {
+        "ref": "n:gen2:social-ad-photos-g5",
+        "frame": "1:1",
+        "label": "Canvas sneaker on a gym floor"
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:tpl-limited-drop-alert-video-c1",
+      "zones": [
+        "Size",
+        "Material"
+      ],
+      "items": [
+        "Add the size range and material beside the photo in your listing.",
+        "Put return or care details in text rather than on the shoe image."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Create a shoe product photo in three steps"
+      },
+      "m3": {
+        "h2": "Choose a shoe scene that shows the fit"
+      },
+      "m4": {
+        "h2": "Use shoe photos on listings and social posts"
+      },
+      "m5": {
+        "h2": "Start with a clear shoe photo from every angle"
+      },
+      "m6": {
+        "h2": "Square shoe photos for product listings"
+      },
+      "m7": {
+        "h2": "Add size and material details after download"
+      },
+      "examples": {
+        "h2": "More shoe examples",
+        "lead": "Toe, heel, sole, and on-foot views that help shoppers judge a pair."
+      },
+      "faq": {
+        "h2": "Questions about shoe product photos"
+      }
+    }
+  }
 }
