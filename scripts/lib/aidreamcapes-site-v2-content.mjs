@@ -532,17 +532,18 @@ function displayedMakerVideoSize(model, page) {
   return undefined;
 }
 
-function caseTarget(model, page, entry, source, isClip) {
+function caseTarget(model, page, entry, source, isClip, promptOverride) {
   const isVideoExample = isClip || entry.kind === "scene" || (!entry.kind && page.group === "video");
   if (!isVideoExample) {
-    if (page.id === "home") return toolAppHref(model, model.byId["white-background"], "white");
-    if (page.id === "photo-hub") return toolAppHref(model, page, TOOL_REL[page.id]?.[0]);
-    if (page.type === "tool" && page.group === "photo") return toolAppHref(model, page, undefined, { prompt: DEFAULT_PHOTO_PROMPT });
-    if (page.type === "template" && page.group === "photo") return toolAppHref(model, model.byId[page.made_with], page.id.slice(4));
+    const promptOptions = promptOverride === undefined ? undefined : { promptOverride };
+    if (page.id === "home") return toolAppHref(model, model.byId["white-background"], "white", promptOptions);
+    if (page.id === "photo-hub") return toolAppHref(model, page, TOOL_REL[page.id]?.[0], promptOptions);
+    if (page.type === "tool" && page.group === "photo") return toolAppHref(model, page, undefined, promptOptions ?? { prompt: DEFAULT_PHOTO_PROMPT });
+    if (page.type === "template" && page.group === "photo") return toolAppHref(model, model.byId[page.made_with], page.id.slice(4), promptOptions);
     if (page.type === "industry" || page.type === "platform" || page.type === "occasion") {
-      return toolAppHref(model, recommendedPhotoTool(model, page), undefined, { prompt: DEFAULT_PHOTO_PROMPT });
+      return toolAppHref(model, recommendedPhotoTool(model, page), undefined, promptOptions ?? { prompt: DEFAULT_PHOTO_PROMPT });
     }
-    return toolAppHref(model, model.byId["lifestyle-photos"], undefined, { prompt: DEFAULT_PHOTO_PROMPT });
+    return toolAppHref(model, model.byId["lifestyle-photos"], undefined, promptOptions ?? { prompt: DEFAULT_PHOTO_PROMPT });
   }
 
   const isVideoToolPage = (page.type === "tool" || page.type === "hub-tool") && page.group === "video";
@@ -550,7 +551,7 @@ function caseTarget(model, page, entry, source, isClip) {
   const tool = isVideoToolPage ? page : isVideoTemplatePage ? model.byId[page.made_with] : recommendedVideoTool(model, page);
   const templateKey = isVideoTemplatePage ? page.id.slice(4) : undefined;
   const size = isClip ? videoSizeForDimensions(source.width, source.height) : displayedMakerVideoSize(model, page);
-  return toolAppHref(model, tool, templateKey, { size, explicitSize: true });
+  return toolAppHref(model, tool, templateKey, { size, explicitSize: true, ...(promptOverride === undefined ? {} : { promptOverride }) });
 }
 
 const CASE_RATIOS = [["1:1", 1], ["4:5", 4 / 5], ["3:4", 3 / 4], ["4:3", 4 / 3], ["3:2", 3 / 2], ["16:9", 16 / 9], ["9:16", 9 / 16]];
@@ -667,10 +668,10 @@ function toolAppHref(model, page, templateKey, options = {}) {
   if (!page) return "/app/create";
   if (page.group === "video") {
     const size = options.explicitSize ? (VIDEO_SIZES.includes(options.size) ? options.size : undefined) : displayedVideoSize(model, page, templateKey);
-    const prompt = templateKey ? (TEMPLATE_PROMPTS[templateKey] ?? "") : (options.prompt ?? "");
+    const prompt = options.promptOverride ?? (templateKey ? (TEMPLATE_PROMPTS[templateKey] ?? "") : (options.prompt ?? ""));
     return appHref({ tool: page.id, template: templateKey, size, length: options.length ?? "15", prompt }, true);
   }
-  const prompt = templateKey ? (TEMPLATE_PROMPTS[templateKey] ?? "") : (options.prompt ?? DEFAULT_PHOTO_PROMPT);
+  const prompt = options.promptOverride ?? (templateKey ? (TEMPLATE_PROMPTS[templateKey] ?? "") : (options.prompt ?? DEFAULT_PHOTO_PROMPT));
   return appHref({ tool_id: "image_generator", tool: page.id, template: templateKey, prompt }, false);
 }
 function canonical(page) { return `${BASE}${page.url === "/" ? "/" : page.url}`; }
@@ -707,6 +708,107 @@ const JOB_COST_ROWS = [
   ["Video, 15 seconds", `${JOB_CREDITS.video15} credits`],
   ["Video, 30 seconds", `${JOB_CREDITS.video30} credits`]
 ];
+
+const VISUAL_VIDEO_LENGTHS = [6, 10, 15];
+const HOME_VIDEO_OPTIONS = [["Size", "9:16 · TikTok & Reels"], ["Length", "15 seconds"], ["Template", "Creator video ad"]];
+const HOME_PHOTO_OPTIONS = [["Template", "White background"], ["Size", "Square"]];
+
+function visualLength(options, requested, pageId) {
+  const configured = options.find(([label]) => String(label).toLowerCase() === "length")?.[1];
+  const raw = requested ?? configured;
+  const length = Number(String(raw ?? "15").match(/\d+/)?.[0] ?? 15);
+  assert.ok(VISUAL_VIDEO_LENGTHS.includes(length), `${pageId}: visual video length must be 6, 10, or 15 seconds`);
+  return length;
+}
+
+function visualImage(model, ref, kind) {
+  assert.ok(typeof ref === "string" && ref.trim(), "visual media ref is required");
+  const image = mediaImage(model, ref, "card");
+  return { src: image.src, w: image.width, h: image.height, alt: image.alt, kind: kind ?? (ref.startsWith("f:") ? "video" : "photo") };
+}
+
+function visualFor(model, page, source, maker, group, buttonHref, content) {
+  if (source == null) return undefined;
+  assert.ok(source && typeof source === "object" && !Array.isArray(source), `${page.id}: visual must be an object`);
+  const video = group === "video";
+  const options = Array.isArray(maker?.options) ? maker.options.slice(0, 3) : [];
+  const stepLength = video ? visualLength(options, undefined, page.id) : undefined;
+  const stepCredits = video ? JOB_CREDITS[`video${stepLength}`] : JOB_CREDITS.photo;
+  const steps = source.steps && typeof source.steps === "object" ? source.steps : {};
+  const picker = source.picker && typeof source.picker === "object" ? source.picker : {};
+  const pickerCards = Array.isArray(picker.cards) ? picker.cards : [];
+  const chips = Array.isArray(picker.chips) ? picker.chips : [];
+  const overviewRows = Array.isArray(content.overview) ? content.overview : [];
+  const overviewValue = overviewRows[0];
+  const overview = typeof overviewValue === "string" ? overviewValue : overviewValue?.d ?? overviewValue?.p ?? content.intro?.[0] ?? "";
+  const limits = content.limitations?.items ?? [];
+  const visual = {
+    strip: (Array.isArray(source.strip) ? source.strip : []).map((ref) => visualImage(model, ref)),
+    steps: {
+      source: visualImage(model, steps.source, "photo"),
+      result: visualImage(model, steps.result, video ? "video" : "photo"),
+      options,
+      credits: `${stepCredits} credits`,
+      items: Array.isArray(content.steps) ? content.steps.map((item) => ({ t: item.t ?? "", d: item.d ?? "" })) : []
+    },
+    picker: {
+      title: picker.title ?? "",
+      ...(picker.lead ? { lead: picker.lead } : {}),
+      chips: chips.map((chip) => ({ id: String(chip.id ?? ""), label: String(chip.label ?? "") })),
+      cards: pickerCards.map((card) => {
+        const cardKind = card.kind;
+        assert.ok(cardKind === "photo" || cardKind === "video", `${page.id}: visual picker card kind must be photo or video`);
+        const image = visualImage(model, card.ref, cardKind);
+        const entry = { kind: cardKind === "video" ? "scene" : "photo" };
+        const href = caseTarget(model, page, entry, { width: image.w, height: image.h }, cardKind === "video", card.prompt);
+        return { image, label: card.label ?? "", chips: Array.isArray(card.chips) ? card.chips.map(String) : [], href, kind: cardKind };
+      }),
+      button: picker.button ?? "",
+      href: buttonHref
+    },
+    uses: (Array.isArray(source.uses) ? source.uses : []).map((item) => ({
+      frame: item.frame,
+      image: visualImage(model, item.ref, video ? "video" : "photo"),
+      ...(item.frame === "split" ? { imageB: visualImage(model, item.ref_b, video ? "video" : "photo") } : {}),
+      h: item.h ?? "", d: item.d ?? ""
+    })),
+    input: (Array.isArray(source.input) ? source.input : []).map((item) => ({
+      good: visualImage(model, item.good, "photo"), bad: visualImage(model, item.bad, "photo"),
+      good_label: item.good_label ?? "", bad_label: item.bad_label ?? ""
+    })),
+    outputs: (Array.isArray(source.outputs) ? source.outputs : []).map((item) => {
+      const outputVideo = page.id === "home" ? item.length != null : video;
+      const length = outputVideo ? visualLength(options, item.length, page.id) : undefined;
+      assert.ok(["1:1", "9:16", "16:9", "4:5"].includes(item.frame), `${page.id}: visual output frame is unsupported`);
+      const credits = outputVideo ? JOB_CREDITS[`video${length}`] : JOB_CREDITS.photo;
+      const format = outputVideo ? `${item.frame} video` : item.frame === "1:1" ? "Square photo" : `${item.frame} photo`;
+      return {
+        image: visualImage(model, item.ref, video ? "video" : "photo"), frame: item.frame, label: item.label ?? "",
+        ...(length ? { length } : {}), spec: `${format}${length ? ` · ${length} s` : ""} · ${credits} credits`
+      };
+    }),
+    ...(source.after ? { after: {
+      image: visualImage(model, source.after.ref, video ? "video" : "photo"),
+      zones: Array.isArray(source.after.zones) ? source.after.zones.map(String) : [],
+      items: Array.isArray(source.after.items) ? source.after.items.map(String) : []
+    } } : {}),
+    ...(Array.isArray(source.sizes) ? { sizes: source.sizes.map((item) => ({
+      frame: item.frame, image: visualImage(model, item.ref), label: item.label ?? ""
+    })) } : {}),
+    limitations: {
+      h2: content.limitations?.h2 ?? "Before you publish",
+      items: limits.map((item) => {
+        const label = typeof item === "string" ? item : item?.t ?? item?.d ?? "";
+        const sourceText = `${label} ${item?.status ?? item?.kind ?? ""}`;
+        const negative = /\b(can't|cannot|does not|doesn't|won't|not prove|not confirm)\b/i.test(sourceText);
+        const supported = item?.supported === true || item?.status === "can" || (!negative && /\b(can|shows|show|makes|helps|lets)\b/i.test(sourceText));
+        return { label, supported };
+      })
+    },
+    ...(overview ? { overview: String(overview) } : {})
+  };
+  return visual;
+}
 
 // One line under every start button, so the price and what happens to credits are clear before a visitor signs up.
 const START_NOTE_TEXT = (lead) => `${lead}. You see the credit cost before every job, and if a job fails its credits go back to your balance.`;
@@ -1076,12 +1178,17 @@ function payloadFor(model, page) {
   const t = page.type;
   if (t === "home") {
     const homeTemplateCards = applyCardOverrides(model, page, HOME_FEATURED.map((key) => cardRef(model, key, key === "creator" ? "alt" : "primary")).filter(Boolean));
+    const videoHref = appHref({ tool: "video-ads", template: "creator", size: "9:16", length: "15", prompt: TEMPLATE_PROMPTS.creator }, true);
+    const photoHref = appHref({ tool_id: "image_generator", tool: "white-background", template: "white", prompt: TEMPLATE_PROMPTS.white }, false);
+    const homeMaker = { uploadTitle: c.maker?.upload_title || "", videoOptions: HOME_VIDEO_OPTIONS, photoOptions: HOME_PHOTO_OPTIONS };
+    const visual = visualFor(model, page, c.visual, { options: HOME_VIDEO_OPTIONS }, "video", videoHref, c);
     return { ...base,
+      maker: homeMaker,
+      ...(visual ? { visual } : {}),
       // `output` and `versions` belong to the picture layout used when the hero has no video; with the video reel they are not shown, so they stay out of the data.
       hero: { image: mediaImage(model, "g:feed-ad-still/source-input", "inset"),
         ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: imageRef(model, "watchugc", "Creator holding the same white smartwatch toward the camera"), versions: [0, 1, 2].map((i) => imageRef(model, `var${i}`, `Smartwatch opening version ${"ABC"[i]}`)) }),
-        videoHref: appHref({ tool: "video-ads", template: "creator", size: "9:16", length: "15", prompt: TEMPLATE_PROMPTS.creator }, true),
-        photoHref: appHref({ tool_id: "image_generator", tool: "white-background", template: "white", prompt: TEMPLATE_PROMPTS.white }, false) },
+        videoHref, photoHref },
       make: { title: c.make_title, lead: c.make_lead, video: VIDEO_TOOLS.map((id) => toolRef(model, id)), photo: PHOTO_TOOLS.map((id) => toolRef(model, id)) },
       templates: { title: c.templates_title, lead: c.templates_lead, cards: homeTemplateCards, total: model.cards.length },
       platforms: { title: c.platforms_title, items: Object.entries(model.plat).map(([slug, label]) => ({ label, href: model.byId[`plat-${slug}`].url, spec: (model.content[`plat-${slug}`].specs || [["", ""]])[0][1] })) },
@@ -1113,8 +1220,11 @@ function payloadFor(model, page) {
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.benefits, c.uses || []]);
     const templateCards = applyCardOverrides(model, page, hub ? rel.slice(3) : hasHero ? rel : rel.slice(2));
     const caseCards = caseCardsFor(model, page, templateCards);
+    const maker = { options: (c.maker?.options || []).slice(0, 3), cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(model, page, rel[0]?.key), urlInput: page.id === "url-to-video", ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
+    const visual = visualFor(model, page, c.visual, maker, page.group, maker.href, c);
     return { ...base, group: page.group, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, uses: linkedCopy.groups[1],
-      maker: { options: (c.maker?.options || []).slice(0, 3), cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(model, page, rel[0]?.key), urlInput: page.id === "url-to-video", ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) },
+      maker,
+      ...(visual ? { visual } : {}),
       specs: [
         ...(video ? [["Sizes", "9:16 · 1:1 · 16:9"], ["Length", "6, 10, 15 or 30 seconds"], ["You start with", page.id === "url-to-video" ? "A product page link" : "1 product photo"], ["Cost", "Shown before you start"]]
           : [["Size", "Square by default"], ["You upload", "1 product photo"], ["You get", "A new product photo"], ["Cost", "Shown before you start"]]),
@@ -1307,6 +1417,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     }
     for (const group of [...(payload.examples?.groups ?? []), ...(payload.exampleGallery?.groups ?? [])]) for (const item of group.items ?? []) pushMedia(item.image);
     for (const item of [...(payload.items ?? []), ...(payload.articles ?? [])]) pushMedia(item?.image);
+    for (const image of visualPayloadImages(payload.visual)) pushMedia({ src: image.src, alt: image.alt, width: image.w, height: image.h });
     const { pageType, templateKey } = livePageTypeFor(page);
     return {
       id: page.id, slug: page.url, title: c.h1, pageType, templateKey, status: page.status,
@@ -1385,6 +1496,18 @@ const PUBLIC_ENRICHMENT_BANNED = [
 
 // The pictures a page actually shows, in the order its layout draws them (mirrors the layouts in
 // src/components/storefront/aidreamcapes-v2/page.tsx). Used to make sure no picture appears twice on a page.
+function visualPayloadImages(visual) {
+  if (!visual) return [];
+  const images = [...(visual.strip ?? []), visual.steps?.source, visual.steps?.result];
+  for (const card of visual.picker?.cards ?? []) images.push(card.image);
+  for (const item of visual.uses ?? []) images.push(item.image, item.imageB);
+  for (const item of visual.input ?? []) images.push(item.good, item.bad);
+  for (const item of visual.outputs ?? []) images.push(item.image);
+  if (visual.after?.image) images.push(visual.after.image);
+  for (const item of visual.sizes ?? []) images.push(item.image);
+  return images.filter((image) => image?.src);
+}
+
 export function renderedImages(layout, data) {
   const out = [];
   const add = (image) => { if (image?.src) out.push(image.src); };
@@ -1416,6 +1539,7 @@ export function renderedImages(layout, data) {
   else if (layout === "article") add(data.image);
   else if (layout === "examples") { addFlows(data.flows); addPairs(); addCards(data.cards); addExamples(); }
   else add(data.image);
+  for (const image of visualPayloadImages(data.visual)) add(image);
   return out;
 }
 
@@ -1423,7 +1547,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   const errors = [];
   const seen = { title: new Map(), description: new Map(), h1: new Map(), slug: new Map() };
   const validationSource = loadSiteV2Source();
-  const technicalKeys = new Set(["href", "src", "srcset", "sizes", "key", "kind", "industries", "platforms", "id", "section", "tool_id", "mediaref", "url", "width", "height", "duration", "uploaddate"]);
+  const technicalKeys = new Set(["href", "src", "srcset", "sizes", "key", "kind", "industries", "platforms", "id", "section", "tool_id", "mediaref", "ref", "url", "width", "height", "duration", "uploaddate", "w", "h"]);
   const publicText = (value, key = "") => {
     if (typeof value === "string") return [value];
     if (Array.isArray(value)) return value.flatMap((item) => publicText(item));
@@ -1460,6 +1584,70 @@ export function validateSiteV2(build = buildSiteV2()) {
     for (const item of Object.values(value)) checkPhotoCardLines(item, pageId);
   };
   const glossaryAnchor = (term) => term.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const wordCount = (value) => String(value ?? "").trim().split(/\s+/u).filter(Boolean).length;
+  const validateVisual = (pageId, layout, data, source) => {
+    if (!source.visual) return;
+    const visual = data.visual;
+    if (!visual) { errors.push(`${pageId}: visual data was not compiled`); return; }
+    if (!(["home", "tool"].includes(layout))) errors.push(`${pageId}: visual is only supported on home and tool layouts`);
+    if (visual.strip.length < 6 || visual.strip.length > 8) errors.push(`${pageId}: visual strip must contain 6-8 images`);
+    if (!Array.isArray(visual.steps.items) || visual.steps.items.length !== 3) errors.push(`${pageId}: visual steps must contain three copy rows`);
+    else for (const [index, item] of visual.steps.items.entries()) if (wordCount(item.d) > 25) errors.push(`${pageId}: visual step ${index + 1} description exceeds 25 words`);
+    const chips = visual.picker.chips;
+    const cards = visual.picker.cards;
+    if (chips.length < 4 || chips.length > 8) errors.push(`${pageId}: visual picker must contain 4-8 scene filters`);
+    if (cards.length < 8 || cards.length > 16) errors.push(`${pageId}: visual picker must contain 8-16 cards`);
+    if (!visual.picker.title.trim() || !visual.picker.button.trim()) errors.push(`${pageId}: visual picker title and button are required`);
+    if (new Set(chips.map((chip) => chip.id)).size !== chips.length) errors.push(`${pageId}: visual picker filter ids must be unique`);
+    for (const chip of chips) {
+      const count = cards.filter((card) => card.chips.includes(chip.id)).length;
+      if (count < 2) errors.push(`${pageId}: visual picker filter ${chip.id} has fewer than two cards`);
+    }
+    for (const card of cards) {
+      const labelWords = wordCount(card.label);
+      if (labelWords < 2 || labelWords > 6) errors.push(`${pageId}: visual picker card labels must contain 2-6 words (${card.label})`);
+      if (!card.chips.length || card.chips.some((id) => !chips.some((chip) => chip.id === id))) errors.push(`${pageId}: visual picker card has an unknown or missing filter (${card.label})`);
+      const params = searchParamsForHref(card.href);
+      if (card.kind === "photo") {
+        if (params.get("tool_id") !== "image_generator" || !params.get("prompt")?.trim()) errors.push(`${pageId}: photo picker link must use image_generator and include a prompt (${card.label})`);
+      } else {
+        const expectedSize = videoSizeForDimensions(card.image.w, card.image.h);
+        if (params.get("tool_id") === "image_generator") errors.push(`${pageId}: video picker link uses image_generator (${card.label})`);
+        if (!expectedSize || params.get("size") !== expectedSize) errors.push(`${pageId}: video picker link must use the card's supported frame (${card.label})`);
+      }
+    }
+    if (visual.uses.length < 2 || visual.uses.length > 4) errors.push(`${pageId}: visual uses must contain 2-4 rows`);
+    if (visual.input.length < 2 || visual.input.length > 4) errors.push(`${pageId}: visual input guide must contain 2-4 pairs`);
+    for (const item of visual.input) {
+      if (imageBase(item.good.src) === imageBase(item.bad.src)) errors.push(`${pageId}: visual input good and bad photos must differ`);
+      for (const label of [item.good_label, item.bad_label]) if (wordCount(label) < 3 || wordCount(label) > 8) errors.push(`${pageId}: visual input labels must contain 3-8 words (${label})`);
+    }
+    if (visual.outputs.length < 2 || visual.outputs.length > 4) errors.push(`${pageId}: visual outputs must contain 2-4 cards`);
+    if (pageId === "home" && (!visual.sizes || visual.sizes.length < 3 || visual.sizes.length > 4)) errors.push(`${pageId}: home visual sizes must contain 3-4 frames`);
+    if (visual.after && (visual.after.items.length < 2 || visual.after.items.length > 3)) errors.push(`${pageId}: visual after-download list must contain 2-3 items`);
+    if (visual.limitations.items.length > 5) errors.push(`${pageId}: visual limitations must contain at most five items`);
+    for (const item of visual.limitations.items) if (wordCount(item.label) > 12) errors.push(`${pageId}: visual limitation exceeds 12 words (${item.label})`);
+    if (wordCount(visual.overview) > 120) errors.push(`${pageId}: visual overview exceeds 120 words`);
+    const imageRows = visualPayloadImages(visual);
+    const publicRoot = path.resolve(process.cwd(), "public");
+    for (const image of imageRows) {
+      if (!image.src.startsWith("/assets/sites/site_aidreamcapes/")) errors.push(`${pageId}: visual image is outside the Aidreamcapes asset folder (${image.src})`);
+      if (!image.alt || image.alt.trim().length < 12) errors.push(`${pageId}: visual image alt is missing or too short (${image.src})`);
+      if (!(Number(image.w) > 0) || !(Number(image.h) > 0)) errors.push(`${pageId}: visual image dimensions are invalid (${image.src})`);
+      const filePath = path.resolve(publicRoot, image.src.replace(/^\/+/, "").split(/[?#]/)[0]);
+      if (!filePath.startsWith(`${publicRoot}${path.sep}`) || !fs.existsSync(filePath)) errors.push(`${pageId}: visual image file is missing from public (${image.src})`);
+    }
+    const moduleSections = [
+      visual.strip.length > 0, visual.steps.items.length > 0, cards.length > 0,
+      visual.uses.length > 0, visual.input.length > 0, visual.outputs.length > 0,
+      Boolean(visual.after), Boolean(visual.sizes?.length)
+    ].filter(Boolean).length;
+    const hasExamples = Boolean(data.gallery?.images?.length || data.pairs?.length || data.exampleGallery?.groups?.length || data.examples?.flows?.length || data.examples?.groups?.length);
+    const contentSections = moduleSections + (visual.overview ? 1 : 0) + (visual.limitations.items.length ? 1 : 0) + (hasExamples ? 1 : 0);
+    const imageSections = moduleSections + (hasExamples ? 1 : 0);
+    if (contentSections > 10) errors.push(`${pageId}: visual page has ${contentSections} content sections (maximum 10)`);
+    if (contentSections && imageSections / contentSections < 0.8) errors.push(`${pageId}: only ${Math.round(imageSections / contentSections * 100)}% of visual content sections contain images`);
+  };
   for (const page of build.pages) {
     const seo = page.contentJson.seo;
     if (seo.index !== true || seo.robots?.index !== true) errors.push(`${page.id}: noindex is not allowed on public pages`);
@@ -1471,6 +1659,7 @@ export function validateSiteV2(build = buildSiteV2()) {
       seen[key].set(norm, page.id);
     }
     const data = page.contentJson.sections.v2_main.settings.data;
+    validateVisual(page.id, page.contentJson.sections.v2_main.settings.layout, data, validationSource.content[page.id] ?? {});
     checkPhotoCardLines(data, page.id);
     const checkCaseLinks = (value) => {
       if (Array.isArray(value)) return value.forEach(checkCaseLinks);
@@ -1645,7 +1834,8 @@ export function validateSiteV2(build = buildSiteV2()) {
     const walk = (value, path = "contentJson") => {
       if (Array.isArray(value)) value.forEach((item, index) => walk(item, `${path}[${index}]`));
       else if (value && typeof value === "object") for (const [key, item] of Object.entries(value)) {
-        if (internalKeys.has(key.toLowerCase())) errors.push(`${page.id}: internal field in contentJson (${path}.${key})`);
+        const visualSourceImage = key.toLowerCase() === "source" && path.endsWith(".data.visual.steps") && item && typeof item.src === "string" && typeof item.alt === "string";
+        if (internalKeys.has(key.toLowerCase()) && !visualSourceImage) errors.push(`${page.id}: internal field in contentJson (${path}.${key})`);
         walk(item, `${path}.${key}`);
       }
     };
@@ -1818,11 +2008,23 @@ export function validateSiteV2(build = buildSiteV2()) {
   // No picture appears twice on a page.
   for (const page of build.pages) {
     const { layout, data } = page.contentJson.sections.v2_main.settings;
-    const seenImages = new Set();
+    const imageCounts = new Map();
+    const stripCounts = new Map();
+    for (const image of data.visual?.strip ?? []) {
+      const key = imageBase(image.src);
+      stripCounts.set(key, (stripCounts.get(key) ?? 0) + 1);
+    }
+    const allowedVisualRepeats = new Set();
+    for (const image of [data.visual?.steps?.source, data.visual?.steps?.result]) {
+      if (!image?.src) continue;
+      const key = imageBase(image.src);
+      if (stripCounts.get(key) === 1) allowedVisualRepeats.add(key);
+    }
     for (const src of renderedImages(layout, data)) {
       const key = imageBase(src);
-      if (seenImages.has(key)) errors.push(`${page.id}: the picture ${key.split("/").slice(-2).join("/")} appears twice on the page`);
-      seenImages.add(key);
+      const count = (imageCounts.get(key) ?? 0) + 1;
+      imageCounts.set(key, count);
+      if (count > 1 && !(count === 2 && allowedVisualRepeats.has(key))) errors.push(`${page.id}: the picture ${key.split("/").slice(-2).join("/")} appears twice on the page`);
     }
   }
   // Internal links: every guide and article is linked from at least five other pages, every

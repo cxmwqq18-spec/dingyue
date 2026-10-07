@@ -6,6 +6,8 @@ import {
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
 import { list, text, type V2Article, type V2Card, type V2Data, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
+import { VisualAfter, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
+import type { V2Visual } from "./types";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
 
@@ -34,7 +36,8 @@ function homeExampleFlows(examples: unknown): V2Flow[] {
 
 function HomePage({ data, r }: Props) {
   const hero = data.hero as { image: V2Image; output?: V2Image; versions?: V2Image[]; videoHref: string; photoHref: string };
-  const maker = data.maker as V2Maker | undefined;
+  const maker = data.maker as (V2Maker & { videoOptions?: [string, string][]; photoOptions?: [string, string][] }) | undefined;
+  const visual = data.visual as V2Visual | undefined;
   const make = data.make as { title: string; lead: string; video: V2Tool[]; photo: V2Tool[] };
   const templates = data.templates as { title: string; lead: string; cards: V2Card[]; total: number };
   const platforms = data.platforms as { title: string; items: { label: string; href: string; spec: string }[] };
@@ -63,9 +66,7 @@ function HomePage({ data, r }: Props) {
                 </div>
                 <div data-pane="video">
                   <div className="opts">
-                    <span className="opt">Size <b>9:16 · TikTok &amp; Reels</b></span>
-                    <span className="opt">Length <b>15 seconds</b></span>
-                    <span className="opt">Template <b>Creator video ad</b></span>
+                    {(maker?.videoOptions ?? [["Size", "9:16 · TikTok & Reels"], ["Length", "15 seconds"], ["Template", "Creator video ad"]]).map(([label, value]) => <span className="opt" key={label}>{label} <b>{value}</b></span>)}
                   </div>
                   <div className="maker-foot" style={{ marginTop: 14 }}>
                     <a className="btn btn-grad" href={r.href(hero.videoHref)}>Make my video →</a>
@@ -74,8 +75,7 @@ function HomePage({ data, r }: Props) {
                 </div>
                 <div data-pane="photo" hidden>
                   <div className="opts">
-                    <span className="opt">Template <b>White background</b></span>
-                    <span className="opt">Size <b>Square</b></span>
+                    {(maker?.photoOptions ?? [["Template", "White background"], ["Size", "Square"]]).map(([label, value]) => <span className="opt" key={label}>{label} <b>{value}</b></span>)}
                   </div>
                   <div className="maker-foot" style={{ marginTop: 14 }}>
                     <a className="btn btn-grad" href={r.href(hero.photoHref)}>Make my photos →</a>
@@ -109,6 +109,7 @@ function HomePage({ data, r }: Props) {
           </div>
         </div>
       </section>
+      {visual ? <VisualStrip includeOverview visual={visual} r={r} /> : null}
       <section className="sec">
         <div className="wrap">
           <SecHead eyebrow="What do you want to make?" lead={make.lead} title={make.title} />
@@ -140,18 +141,18 @@ function HomePage({ data, r }: Props) {
           </div>
         </div>
       </section>
-      {ugc?.title ? (
+      {!visual && ugc?.title ? (
         <Section eyebrow={ugc.eyebrow ?? "AI UGC ads"} title={ugc.title}>
           <Intro paras={list<string>(ugc.paras)} r={r} />
           {list<V2Item>(ugc.formats).length ? <div style={{ marginTop: 22 }}><Boxes className="ideas" items={list<V2Item>(ugc.formats)} /></div> : null}
         </Section>
       ) : null}
-      <EnrichmentOverview r={r} sections={data.overview as never} />
-      <Section eyebrow="Templates" lead={templates.lead} title={templates.title}>
+      {!visual ? <EnrichmentOverview r={r} sections={data.overview as never} /> : null}
+      {!visual ? <Section eyebrow="Templates" lead={templates.lead} title={templates.title}>
         <TemplateGrid cards={templates.cards} r={r} />
         <div style={{ marginTop: 24 }}><a className="btn btn-ghost" href={r.href("/templates")}>See all {templates.total} templates →</a></div>
-      </Section>
-      <Section eyebrow="Made for where you sell" title={platforms.title}>
+      </Section> : null}
+      {!visual ? <Section eyebrow="Made for where you sell" title={platforms.title}>
         <div className="plats">
           {platforms.items.map((item) => (
             <a className="plat" href={r.href(item.href)} key={item.href}>
@@ -159,13 +160,13 @@ function HomePage({ data, r }: Props) {
             </a>
           ))}
         </div>
-      </Section>
-      <Section eyebrow="How it works" title="Three steps. No studio, no filming."><Steps items={list<V2Item>(data.steps)} /></Section>
-      <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />
-      <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />
-      <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />
-      <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
-      <EnrichmentBlockSection block={data.limitations as never} eyebrow="Before you publish" r={r} />
+      </Section> : null}
+      {visual ? <VisualSteps visual={visual} r={r} /> : <Section eyebrow="How it works" title="Three steps. No studio, no filming."><Steps items={list<V2Item>(data.steps)} /></Section>}
+      {visual ? <VisualPicker pageId={data.id} visual={visual} r={r} /> : <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />}
+      {visual ? <VisualSizes visual={visual} r={r} /> : <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />}
+      {visual ? <VisualInput visual={visual} r={r} /> : <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />}
+      {visual ? <VisualOutputs visual={visual} r={r} /> : <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />}
+      {!visual ? <EnrichmentBlockSection block={data.limitations as never} eyebrow="Before you publish" r={r} /> : null}
       {exampleFlows.length ? (
         <Section eyebrow="Examples" title="One product photo, many results">
           <Flows flows={exampleFlows} r={r} />
@@ -173,7 +174,13 @@ function HomePage({ data, r }: Props) {
         </Section>
       ) : null}
       <ExampleGallery examples={data.exampleGallery as V2Examples | undefined} r={r} />
-      {audience?.title ? <Section eyebrow="Who it's for" lead={audience.lead ?? ""} title={audience.title}><Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} /></Section> : null}
+      {visual ? <VisualUses visual={visual} r={r} /> : null}
+      {visual ? <VisualLimitations visual={visual} /> : null}
+      {visual ? <Section eyebrow="Templates" lead={templates.lead} title={templates.title}>
+        <TemplateGrid cards={templates.cards} r={r} />
+        <div style={{ marginTop: 24 }}><a className="btn btn-ghost" href={r.href("/templates")}>See all {templates.total} templates →</a></div>
+      </Section> : null}
+      {!visual && audience?.title ? <Section eyebrow="Who it's for" lead={audience.lead ?? ""} title={audience.title}><Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} /></Section> : null}
       <Section eyebrow="Why stores switch" title="Skip the photoshoot. Keep testing new ads.">
         <div className="cmp-wrap">
           <table className="cmp">
@@ -258,6 +265,7 @@ function ToolPage({ data, r }: Props) {
   const gallery = data.gallery as { images: V2Image[] } | undefined;
   const pairs = list<{ before: V2Image; after: V2Image }>(data.pairs);
   const maker = data.maker as V2Maker;
+  const visual = data.visual as V2Visual | undefined;
   const video = data.group === "video";
   return (
     <>
@@ -265,6 +273,26 @@ function ToolPage({ data, r }: Props) {
       <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} label={maker.cta} r={r} />} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
       </PageHero>
+      {visual ? <>
+        <VisualStrip visual={visual} r={r} />
+        {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
+        {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
+        <VisualOverview visual={visual} r={r} />
+        <VisualSteps visual={visual} r={r} />
+        <VisualPicker pageId={data.id} visual={visual} r={r} />
+        <VisualSizes visual={visual} r={r} />
+        <VisualInput visual={visual} r={r} />
+        <VisualOutputs visual={visual} r={r} />
+        <VisualUses visual={visual} r={r} />
+        <VisualAfter visual={visual} r={r} />
+        <VisualLimitations visual={visual} />
+        {list<V2Card>(data.templates).length ? (
+          <Section eyebrow="Templates" lead="Pick one, add your product photo and get the same look." title={`Templates for ${data.label}`}>
+            <TemplateGrid cards={list<V2Card>(data.templates)} r={r} />
+          </Section>
+        ) : null}
+        <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
+      </> : <>
       {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
       {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
       <Section eyebrow="What it is" title={`What ${data.label} can do for your store`}><Intro paras={list<string>(data.intro)} r={r} /></Section>
@@ -288,6 +316,7 @@ function ToolPage({ data, r }: Props) {
       ) : null}
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
+      </>}
       <Faq items={data.faq} title={`Questions about ${data.label}`} r={r} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="More tools" title="You might also need"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
