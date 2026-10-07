@@ -38,10 +38,6 @@
     {
       "q": "What happens to credits when a job fails?",
       "a": "A failed job releases its reserved credits back to your balance automatically. Check the job status and credit history if the balance does not update."
-    },
-    {
-      "q": "Can I use the images and videos I make commercially?",
-      "a": "Yes. You can use the images and videos you make in your own ads, product pages and social posts."
     }
   ]
 }

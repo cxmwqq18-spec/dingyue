@@ -4,7 +4,7 @@
   "description": "Learn about AIVideosUGC, the online tool that helps small shops turn one product photo into short video ads and store images, with private uploads. Read on.",
   "h1": "About AIVideosUGC: Product Visuals Made Simple",
   "eyebrow": "About us",
-  "lead": "Here's what AIVideosUGC is about: tools that help online sellers make product photos and short video ads from a single picture, so less time goes into shoots and more into running the store.",
+  "lead": "Learn about AIVideosUGC: our tools help online sellers make product photos and short video ads from a product photo.",
   "secondary_keywords": [
     "AI visuals for Shopify sellers",
     "product content tool for Etsy shops",
@@ -51,7 +51,7 @@
     },
     {
       "q": "What can I upload to make a product asset?",
-      "a": "Upload a product photo you own or describe the product and scene. Review the result against the real item before you download or publish it."
+      "a": "Upload a product photo for an image. For a video, you can upload a photo or describe the product and scene. Review the result against the real item before downloading or publishing it."
     },
     {
       "q": "Who is AIVideosUGC for?",

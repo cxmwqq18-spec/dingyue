@@ -4,7 +4,7 @@
   "description": "Product photo and video guides for online sellers: shoot a usable photo, meet Amazon's white background rules, size ads, and compare versions. Pick a guide.",
   "h1": "Product Photo and Video Guides for Online Sellers",
   "eyebrow": "How-to guides",
-  "lead": "These product photo and video guides are short, practical reads for Shopify, Amazon, and Etsy sellers. Each guide covers one task you can finish in an afternoon, from your first product photo to your first ad.",
+  "lead": "These product photo and video guides are practical reads for Shopify, Amazon, and Etsy sellers. Each guide walks through one task, from your first product photo to your first ad.",
   "card": "Short how-to guides for sellers, from first photo to first ad.",
   "secondary_keywords": [
     "product photography tips for online sellers",
@@ -21,10 +21,6 @@
     {
       "q": "Which guide should I read first?",
       "a": "Start with the product photo guide. The photo you shoot is the starting point for every image and video you make, so getting it right saves time on everything after."
-    },
-    {
-      "q": "How do I choose the right product photo guide?",
-      "a": "Start with product-photo tips for the source image, then use the platform guide for the destination. The steps are upload, describe, generate, and review."
     },
     {
       "q": "Do these guides state platform requirements?",

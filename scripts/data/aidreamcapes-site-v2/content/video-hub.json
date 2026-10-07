@@ -2,9 +2,9 @@
   "id": "video-hub",
   "title": "AI Video Generator for Ecommerce | AIVideosUGC",
   "description": "Our AI video generator for ecommerce turns one product photo into a 6, 10, 15, or 30 second clip for TikTok, Reels, or your store. Pick a video type to start.",
-  "h1": "AI Video Generator for Ecommerce Ads and Listings",
+  "h1": "AI Video Generator for Ecommerce: Choose a Video Type",
   "eyebrow": "AI video tools",
-  "lead": "Our AI video generator for ecommerce makes short clips sized for TikTok, Instagram, YouTube Shorts, or your product page. Pick the kind of video you need, add a product photo and one sentence, and download the result.",
+  "lead": "The AI video generator for ecommerce offers ads, demos, unboxing, before-and-after clips, and motion from still photos. Add a product photo or describe the scene, then choose its frame.",
   "card": "Short video ads, demos and unboxings made from one product photo.",
   "secondary_keywords": [
     "ecommerce video maker",
@@ -27,7 +27,7 @@
     },
     {
       "t": "Cost shown up front",
-      "d": "The credit price appears before anything runs. When a video fails, those credits go straight back to your balance."
+      "d": "The credit cost appears before a job starts. When a video fails, those credits go straight back to your balance."
     }
   ],
   "steps": [
@@ -62,8 +62,8 @@
       "a": "The displayed cost depends on length: 6 seconds uses 24 credits, 10 uses 40, 15 uses 60, and 30 uses 120. The workspace currently exposes 6, 10, and 15 seconds."
     },
     {
-      "q": "Do downloaded images and videos have an AIVideosUGC watermark?",
-      "a": "No. Downloaded images and videos do not include an AIVideosUGC watermark."
+      "q": "Can each video run make more than one clip?",
+      "a": "No. Each generation makes one clip. Change the scene description to make another version, and review the credit cost before you start."
     }
   ],
   "overview": [
@@ -73,7 +73,7 @@
     },
     {
       "h2": "One product can support several tests",
-      "p": "Use the same approved product photo with different openings, settings, or actions when you want to compare creative angles. Every run is a separate clip, and the workspace shows its credit cost before you start."
+      "p": "Use the same approved product photo with different openings, settings, or actions when you want to compare creative angles. Every run is a separate clip, and the AIVideosUGC editor shows the credit cost before you start."
     },
     {
       "h2": "Plan the file around its destination",
@@ -164,7 +164,7 @@
       },
       {
         "t": "Layer captions and sound",
-        "d": "Place captions and music in TikTok, CapCut, Ads Manager, or your normal editing process because AIVideosUGC supplies the visual clip only."
+        "d": "AIVideosUGC does not add voiceover, music, or captions."
       },
       {
         "t": "Check the product frame by frame",
@@ -330,7 +330,7 @@
     "items": [
       {
         "t": "I have a product page link",
-        "d": "Start with [URL to Video](page:url-to-video) to bring a product image and name into the workspace for review."
+        "d": "Start with [URL to Video](page:url-to-video) to bring a product image and name into the AIVideosUGC editor for review."
       },
       {
         "t": "I want one feature in motion",

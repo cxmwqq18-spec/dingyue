@@ -104,14 +104,14 @@
       "a": "Use the examples to compare openings, camera movement, and product framing. Build your own version with a sharp photo, a chosen size, and one clear action."
     },
     {
-      "q": "How do I use the examples to plan a product ad?",
-      "a": "Use the examples to compare openings, camera movement, and product framing. Build your own version with a sharp photo, a chosen size, and one clear action."
+      "q": "How do I choose between a photo and video example?",
+      "a": "Use photo examples to plan listing, lifestyle, or detail images. Use video examples when movement or a product action helps explain how the item is used."
     }
   ],
   "overview": [
     {
       "h2": "How to read a product example",
-      "p": "Each card is a small record of a real content job: the product photo that went in, the scene direction, and the image or clip that came back. Look first at the product's outline, color, closure, label area, and other buying details; then look at the new setting or camera movement. The useful question is whether the result gives shoppers a new reason to understand the same item."
+      "p": "Each card shows an example product photo, scene direction, and generated result. Look first at the product's outline, color, closure, label area, and other buying details; then look at the new setting or camera movement. The useful question is whether the result gives shoppers a new reason to understand the same item."
     },
     {
       "h2": "Use the gallery as a starting point",
@@ -134,7 +134,7 @@
         "d": "Name the place, light, action, and useful framing detail: for example, a coffee bag beside a pour-over brewer on a bright kitchen counter. Save a second action for a new version."
       },
       {
-        "t": "Leave exact copy out",
+        "t": "Add exact wording after download",
         "d": "Do not rely on generated lettering for a price, date, headline, or discount code. Keep open space where your message can go, then type the final words after download."
       }
     ]
@@ -198,11 +198,11 @@
       },
       {
         "t": "Add the words yourself",
-        "d": "Place the price, date, offer, headline, captions, and music in Canva, CapCut, TikTok, Ads Manager, or your usual editor. Typed copy keeps the campaign details exact."
+        "d": "Place the price, date, offer, headline, captions, and music in Canva, CapCut, TikTok, Ads Manager, or your usual editor. Type the details yourself to keep campaign wording accurate."
       },
       {
         "t": "Use an honest label",
-        "d": "AI-generated people are not customers. Keep the copy about the product and check the current disclosure guidance for the platform where you post the image or clip."
+        "d": "AI-generated people are not customers. Keep the text focused on the product and check the current disclosure guidance for the platform where you post the image or clip."
       }
     ]
   },

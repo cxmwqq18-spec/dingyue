@@ -4,7 +4,7 @@
   "description": "Plain-English definitions for the product photo, video, advertising, and ecommerce terms used across AIVideosUGC and links to the pages where each term matters.",
   "h1": "AIVideosUGC Glossary: Terms for Product Photos and Videos",
   "eyebrow": "Glossary",
-  "lead": "New to product content or paid social? Use this glossary to understand the words you see in AIVideosUGC, from credits and aspect ratios to UGC, packshots, and retargeting.",
+  "lead": "New to product content or paid social? Use this glossary to understand AIVideosUGC terms for product footage, credits, ad formats, and the platforms where you promote a store.",
   "secondary_keywords": [
     "ecommerce glossary",
     "product video terms",
@@ -23,7 +23,7 @@
     },
     {
       "term": "Aspect ratio",
-      "definition": "Aspect ratio describes a frame's width compared with its height. For video jobs, AIVideosUGC's workspace offers five choices: 9:16 tall, 1:1 square, 16:9 wide, plus 4:3 and 3:4 for other layouts. The first three cover the main phone, feed, and product-page cases. Pick the ratio that matches the place you will post, then check the edges after download.",
+      "definition": "Aspect ratio describes a frame's width compared with its height. For video jobs, the AIVideosUGC editor offers five choices: 9:16 tall, 1:1 square, 16:9 wide, plus 4:3 and 3:4 for other layouts. The first three cover the main phone, feed, and product-page cases. Pick the ratio that matches the place you will post, then check the edges after download.",
       "related_page_ids": [
         "guide-ad-sizes-by-platform",
         "tpl-compare",
@@ -69,7 +69,7 @@
     },
     {
       "term": "B-roll",
-      "definition": "B-roll is supporting footage that shows the product, a hand, a detail, or an everyday action rather than a presenter speaking to camera. The Spark Ads style template uses natural product B-roll, such as filling a bottle at a desk. AIVideosUGC supplies the visual clip; captions, music, and campaign setup happen later in your editor or ad platform.",
+      "definition": "B-roll is supporting footage that shows a product, a hand, a detail, or an everyday action instead of a presenter speaking to camera. AIVideosUGC uses product footage such as a bottle being filled at a desk. AIVideosUGC does not add voiceover, music, or captions. Add music, a voiceover, or captions in your editor after download.",
       "related_page_ids": [
         "tpl-spark-ads-style-video",
         "video-ads"
@@ -77,7 +77,7 @@
     },
     {
       "term": "Spark Ads",
-      "definition": "On AIVideosUGC, \u201cSpark Ads style\u201d means a natural-looking TikTok creative that can sit beside creator posts. The template makes the visual B-roll only; it does not create a TikTok post, connect an account, authorize a creator, choose targeting, or set up a campaign. Finish captions, music, disclosure, and campaign settings in TikTok Ads Manager.",
+      "definition": "Spark Ads are TikTok ads that promote an existing post. The AIVideosUGC Spark Ads style template creates a product clip, but it does not make a TikTok post, connect an account, authorize a creator, choose targeting, or set up a campaign. AIVideosUGC does not add voiceover, music, or captions; add them in your editor after download. Finish campaign settings in TikTok Ads Manager.",
       "related_page_ids": [
         "tpl-spark-ads-style-video",
         "plat-tiktok"
@@ -93,7 +93,7 @@
     },
     {
       "term": "Safe zone",
-      "definition": "A safe zone is the part of a social frame where important text and product details remain visible after the platform places buttons, captions, or profile controls over the edges. AIVideosUGC leaves final text to you. Keep the main subject and copy away from the lower and right edges, then inspect the placement preview in each ad manager.",
+      "definition": "A safe zone is the part of a social frame where important text and product details remain visible after the platform places buttons, captions, or profile controls over the edges. AIVideosUGC leaves final text to you. Keep the main subject and text away from the lower and right edges, then inspect the placement preview in each ad manager.",
       "related_page_ids": [
         "guide-ad-sizes-by-platform",
         "guide-first-tiktok-video-ad",
@@ -112,7 +112,7 @@
     },
     {
       "term": "Ads Manager",
-      "definition": "Ads Manager is the platform workspace where you upload an ad creative and set its text, audience, budget, placement, and schedule. AIVideosUGC gives you the product photo or video file; it does not publish campaigns or add prices, captions, music, or targeting. Those final choices stay in TikTok, Meta, or another ad tool.",
+      "definition": "Ads Manager is the platform tool where you upload an ad and set its text, audience, budget, placement, and schedule. AIVideosUGC gives you the product photo or video file; it does not publish campaigns or add prices, captions, music, or targeting. Those final choices stay in TikTok, Meta, or another ad tool.",
       "related_page_ids": [
         "plat-tiktok",
         "plat-facebook",
@@ -131,7 +131,7 @@
     },
     {
       "term": "Unboxing",
-      "definition": "An unboxing video focuses on the reveal when a package opens and the product comes out. The box, tissue, insert, and order of the reveal come from your description, while the product photo anchors the item itself. Use this format for launches, gift-ready products, or subscription boxes, then add exact copy and music after download.",
+      "definition": "An unboxing video focuses on the reveal when a package opens and the product comes out. The box, tissue, insert, and order of the reveal come from your description, while the product photo anchors the item itself. Use this format for launches, gift-ready products, or subscription boxes, then add verified product and offer text and music after download.",
       "related_page_ids": [
         "unboxing-videos",
         "blog-unboxing-videos-for-launches",
@@ -195,7 +195,7 @@
     },
     {
       "term": "Carousel",
-      "definition": "A carousel combines several cards in one social ad so people can swipe through different products, angles, scenes, or variants. AIVideosUGC makes the individual images or clips; combine them, choose the order, and add the copy and destination in your social ad account. Keep each card readable on its own so the product remains clear while someone swipes.",
+      "definition": "A carousel combines several cards in one social ad so people can swipe through different products, angles, scenes, or variants. AIVideosUGC makes the individual images or clips; combine them, choose the order, and add the text and destination in your social ad account. Keep each card readable on its own so the product remains clear while someone swipes.",
       "related_page_ids": [
         "social-ad-photos",
         "tpl-carousel-video-ad",
@@ -223,7 +223,7 @@
     },
     {
       "term": "Caption",
-      "definition": "A caption is the written text that accompanies a social post or appears as timed text in a video. AIVideosUGC downloads do not include captions. Add your own caption in TikTok, CapCut, Canva, Ads Manager, or another editor so the spelling, price, date, discount code, and disclosure match the offer you are actually running.",
+      "definition": "A caption is the written text that accompanies a social post or appears as timed text in a video. AIVideosUGC does not add voiceover, music, or captions. Add your own caption in TikTok, CapCut, Canva, Ads Manager, or another editor so the spelling, price, date, discount code, and disclosure match the offer you are actually running.",
       "related_page_ids": [
         "ai-info",
         "video-hub",
@@ -233,7 +233,7 @@
     },
     {
       "term": "spoken narration",
-      "definition": "A spoken narration is spoken narration recorded over a video. AIVideosUGC supplies the visual clip without spoken narration, music, or automatic captions. If narration helps, record it yourself or use your usual editing app after downloading, then review the words and timing before posting. The generated scene should still make sense without treating the voice as a customer testimonial.",
+      "definition": "A spoken narration is a voice track recorded over a video. AIVideosUGC does not add voiceover, music, or captions. Add music, a voiceover, or captions in your editor after download. Watch it with the sound off: the product and main text should still make sense. Do not present generated speech as a customer testimonial.",
       "related_page_ids": [
         "ai-info",
         "tpl-howto",

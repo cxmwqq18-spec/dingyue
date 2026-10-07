@@ -28,7 +28,7 @@
     },
     {
       "q": "Can I reuse one product creative on every platform?",
-      "a": "Reuse the product idea, then export the platform’s crop: 9:16 vertical, 1:1 square, or 16:9 wide. Add each platform’s captions, sound, and safe-zone text in its own editor."
+      "a": "Choose a ratio for each separate generation; one run makes one video. Add captions, sound, and on-screen text in the platform editor."
     }
   ]
 }

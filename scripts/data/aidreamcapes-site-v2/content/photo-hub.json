@@ -1,10 +1,10 @@
 {
   "id": "photo-hub",
   "title": "AI Product Photo Generator for Sellers | AIVideosUGC",
-  "description": "Try an AI product photo generator for sellers: turn one picture into white background, lifestyle, or on-model shots for your store. Upload your first photo.",
-  "h1": "AI Product Photo Generator: New Shots From One Photo",
+  "description": "Make square listing, lifestyle, on-model, and detail images with an AI product photo generator. Start from a product photo; review results before publishing.",
+  "h1": "AI Product Photo Generator for Listing, Lifestyle, and Detail Photos",
   "eyebrow": "AI photo tools",
-  "lead": "Our AI product photo generator turns one product photo into a fresh square image for your listings, store, and social posts. Pick a template or describe the scene and download the result.",
+  "lead": "Use the AI product photo generator to make square listing, lifestyle, on-model, or detail photos from a product photo. Compare each result with your source before publishing.",
   "secondary_keywords": [
     "AI product image generator",
     "AI photos for Shopify products",
@@ -84,8 +84,8 @@
       "a": "Use a sharp photo where the whole product is visible and nothing is cut off at the edges. Even light and a plain background help, but a clear phone photo works too."
     },
     {
-      "q": "Can I use these photos as my Amazon main image?",
-      "a": "Use the white background option for that slot. Amazon's main image rules call for a pure white background with no added text, graphics, or watermarks, so compare your result with Amazon's current requirements before you upload it."
+      "q": "Which product photo type should I make first?",
+      "a": "Start with a clean product view for the listing. Add a lifestyle, detail, on-model, or feed image when shoppers need context or a closer look."
     },
     {
       "q": "Can I put a price or sale text on the photo?",
@@ -144,7 +144,7 @@
       },
       {
         "t": "A file you can finish",
-        "d": "Download the image, then add exact prices, dates, offers, or other copy in the editor where you can check every character."
+        "d": "Download the image, then add exact prices, dates, offers, or other text in the editor where you can check every character."
       }
     ]
   },
@@ -205,7 +205,7 @@
     "items": [
       {
         "t": "Type the message",
-        "d": "Add sale language, prices, dates, and codes yourself so the published copy is exact."
+        "d": "Add sale language, prices, dates, and codes yourself so the published text is exact."
       },
       {
         "t": "Compare against stock",
