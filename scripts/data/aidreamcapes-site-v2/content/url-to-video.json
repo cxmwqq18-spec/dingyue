@@ -1,10 +1,10 @@
 {
   "id": "url-to-video",
   "title": "URL to Video: Product Link to Video Ad | AIVideosUGC",
-  "description": "Start from a public product page, review its photo and name in the AIVideosUGC editor, and describe a video scene. Upload a photo if the page cannot be read.",
+  "description": "Make a short product video from the photo and name on a public product page. If the page can't be read, upload a product photo instead.",
   "h1": "URL to Video: Turn a Product Link into a Video Ad",
   "eyebrow": "Video tool",
-  "lead": "When a public product page has a photo and name, URL to Video brings them into the AIVideosUGC editor for review. Check both details before choosing a scene for your video ad.",
+  "lead": "Paste your product page link and get a short product video made from the photo and name on that page.",
   "secondary_keywords": [
     "product link to video",
     "URL to video ad",
@@ -12,50 +12,18 @@
     "turn a link into a video",
     "Shopify product video"
   ],
-  "intro": [
-    "Use a public page for a product you own or can advertise. Compare the selected photo with the variant you sell, then replace it if it shows the wrong item.",
-    "After the image and name appear, check them, choose 9:16, 1:1, 16:9, 4:3, or 3:4, add a sentence about the scene, and select 6, 10, 15, or 30 seconds. You can replace the image or edit the description before generation."
-  ],
-  "benefits": [
-    {
-      "t": "No downloading or retyping",
-      "d": "If the public page includes them, the product photo and name appear for you to check."
-    },
-    {
-      "t": "You stay in control",
-      "d": "Check the photo and edit the description before you generate."
-    },
-    {
-      "t": "Works with your store",
-      "d": "Use the link to any public product page you own or sell on."
-    }
-  ],
   "steps": [
     {
       "t": "Paste your product link",
-      "d": "Paste the address of a product page into the link box."
+      "d": "A public product page for an item you sell."
     },
     {
-      "t": "Check the photo and description",
-      "d": "We fill in the main product photo and the product name. Swap the photo or edit the text if you like."
+      "t": "Check the photo and name it found",
+      "d": "If the page has several colors or sizes, make sure it picked the right one."
     },
     {
-      "t": "Pick a size and generate",
-      "d": "Choose 9:16, 1:1 or 16:9 and 6, 10, 15 or 30 seconds, then download your video."
-    }
-  ],
-  "uses": [
-    {
-      "t": "New product launches",
-      "d": "Plan a product scene from a public product page as part of your launch preparation."
-    },
-    {
-      "t": "Catalog refresh",
-      "d": "Make a short clip for products that only have still photos today."
-    },
-    {
-      "t": "Testing ideas fast",
-      "d": "Paste the same link again with a different description to try another angle."
+      "t": "Describe one action and download",
+      "d": "One everyday action, like \"open the lid and show the compartments\"."
     }
   ],
   "maker": {
@@ -66,7 +34,7 @@
       ],
       [
         "Size",
-        "9:16 \u00b7 TikTok & Reels"
+        "9:16 · TikTok & Reels"
       ],
       [
         "Length",
@@ -78,7 +46,7 @@
   "faq": [
     {
       "q": "Which product links work?",
-      "a": "Some public product pages may not load if they require a login or block access. If the tool cannot read a page, upload the product photo instead."
+      "a": "A public product page can still block access or require a login. If it does, upload the product photo instead."
     },
     {
       "q": "What do you take from the page?",
@@ -95,112 +63,10 @@
   ],
   "overview": [
     {
-      "h2": "Turn an existing product page into a checked starting point",
-      "h2": "The link starts the job; your review finishes it",
-      "p": "When a public product page includes a usable photo and name, they appear in the AIVideosUGC editor for review. Replace either if it does not match the product you want to show, then describe the scene you want."
+      "h2": "Start with the product page you already have",
+      "p": "A public product page can provide a starting photo and name. Describe one everyday action, such as opening a lid or lifting a bag, to turn the listing into a short scene."
     }
   ],
-  "input_guide": {
-    "h2": "Use a product page that can be checked",
-    "items": [
-      {
-        "t": "Paste a public HTTPS page",
-        "d": "Use a public product page you own or are allowed to advertise. If it requires a login, upload a product photo instead."
-      },
-      {
-        "t": "Give the page one clear hero image",
-        "d": "A clear product photo with the item visible on its own gives the editor a useful starting frame."
-      },
-      {
-        "t": "Check the product name",
-        "d": "Confirm that the name matches the product variant you want to show before you write the scene."
-      },
-      {
-        "t": "Replace the image when needed",
-        "d": "If the page chooses a lifestyle crop, a swatch, or the wrong variant, upload the product photo you actually want to animate."
-      },
-      {
-        "t": "Describe the new action",
-        "d": "The link supplies a reference; your sentence still needs to say what happens, where it happens, and how the product enters the frame."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A link-led video process",
-    "items": [
-      {
-        "t": "A product reference from the page",
-      "d": "A public product page may provide a photo and name. Confirm that both match the item you plan to promote."
-      },
-      {
-        "t": "Your final scene choice",
-      "d": "Review the product name, replace the image if needed, choose 6, 10, 15, or 30 seconds, and select 9:16, 1:1, 16:9, 4:3, or 3:4."
-      },
-      {
-        "t": "A cost you can check first",
-      "d": "Before a job starts, you can see its credit cost in the AIVideosUGC editor; failed jobs return those credits."
-      },
-      {
-        "t": "A clean file to review",
-        "d": "This downloaded clip carries no watermark; for commercial-use terms, see the [FAQ](/faq). Review the item, variant, and claims before publishing."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Scenes to write after the link imports",
-    "items": [
-      {
-        "t": "New launch opening",
-        "d": "A newly listed ceramic mug sits on a breakfast table while a hand lifts it toward the morning window."
-      },
-      {
-        "t": "Catalog refresh",
-        "d": "A product page image of a desk lamp becomes a close scene of the switch turning on beside a notebook."
-      },
-      {
-        "t": "Social hook",
-        "d": "The imported water bottle is pulled from a gym bag and placed beside a towel on a bench."
-      },
-      {
-        "t": "Packaging angle",
-        "d": "The imported candle appears in a kraft box as tissue folds back on a pale packing table."
-      },
-      {
-        "t": "Feature detail",
-        "d": "The product is shown from the side while a hand opens the lid and points to the inner compartment."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Review the imported product before publishing",
-    "items": [
-      {
-        "t": "Confirm the exact variant",
-        "d": "Compare the clip with the product page and check color, size, included pieces, and packaging before using it in an ad."
-      },
-      {
-        "t": "Add approved product and offer text",
-        "d": "Type the current price, date, discount, captions, and music in your editing or publishing tool."
-      },
-      {
-        "t": "Keep the source link with the file",
-        "d": "Store the page URL and the selected image alongside the download so your team can trace which product reference the scene used."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "When URL to Video saves the most setup",
-    "good": [
-      "Catalogs with public product pages and a strong main image",
-      "Launch teams that need a first visual when a listing goes live",
-      "Stores refreshing still-only pages with one additional moving asset",
-      "Sellers testing several scenes from one approved product reference"
-    ],
-    "not_ideal": [
-      "Private pages that require a login or block public retrieval",
-      "Listings where the hero image does not show the product variant clearly"
-    ]
-  },
   "examples": {
     "h2": "More product-page-to-video scenes",
     "lead": "Start from a product page you already have. These scenes show where a listed product can go next.",
@@ -246,5 +112,208 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "strip": [
+      "n:guide:b1-url-to-video-source",
+      "n:guide:b1-url-to-video-result",
+      "n:gen2:photo-hub-g4",
+      "n:gen2:white-background-g3",
+      "n:gen2:tpl-color-g1",
+      "n:gen2:occ-product-launch-g3"
+    ],
+    "steps": {
+      "source": "n:guide:b1-url-to-video-source",
+      "sourceAlt": "Sage-green insulated lunch container photographed closed on a bright kitchen counter.",
+      "result": "n:guide:b1-url-to-video-result",
+      "mode": "video",
+      "length": 15,
+      "prompt": "Open this sage-green lunch container to show the compartments, then set the lid beside it.",
+      "sourceTitle": "Paste your product page link",
+      "sourceHint": "Like yourstore.com/products/lunch-container"
+    },
+    "picker": {
+      "title": "Pick a scene for the listed product",
+      "lead": "Start with an item from a public product page, then show one everyday action.",
+      "chips": [
+        {
+          "id": "home",
+          "label": "Home"
+        },
+        {
+          "id": "food",
+          "label": "Food & drink"
+        },
+        {
+          "id": "travel",
+          "label": "Travel"
+        },
+        {
+          "id": "personal",
+          "label": "Everyday"
+        }
+      ],
+      "cards": [
+        {
+      "ref": "n:gen2:tpl-carousel-video-ad-g3",
+      "label": "Picnic basket set out",
+      "chips": [
+        "travel",
+        "home",
+        "food"
+          ],
+          "prompt": "Open the picnic basket and set two pieces beside it on a blanket.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-carousel-video-ad-c4",
+          "label": "Tote packed for commute",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Set the tote on a bench, then place its everyday contents beside it.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-retargeting-video-ad-c1",
+          "label": "Sneaker turned by doorstep",
+          "chips": [
+            "home",
+            "travel"
+          ],
+          "prompt": "Lift one sneaker and turn it slowly to show the full side profile.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-retargeting-video-ad-c3",
+          "label": "Throw blanket smoothed on chair",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Drape the throw over the chair and smooth one corner by hand.",
+          "kind": "video"
+        },
+        {
+      "ref": "n:gen2:tpl-pack-c3",
+      "label": "Hot sauce bottle on counter",
+          "chips": [
+            "food"
+          ],
+      "prompt": "Set the sauce bottle beside a small bowl, then turn its blank label toward the camera.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-limited-drop-alert-video-c4",
+          "label": "Ceramic vase lifted from tissue",
+          "chips": [
+            "home",
+            "personal"
+          ],
+          "prompt": "Lift the vase from tissue paper and place it on the shelf.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-launch-c2",
+          "label": "Water bottle turned on a desk",
+          "chips": [
+            "travel",
+            "personal"
+          ],
+          "prompt": "Pick up the bottle from the desk, turn it once, and set it back down.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-launch-c3",
+          "label": "Charging pad revealed",
+          "chips": [
+            "personal",
+            "home"
+          ],
+          "prompt": "Slide the cloth aside to reveal the charging pad, then place a phone on it.",
+          "kind": "video"
+        }
+      ],
+      "button": "Try this video idea"
+    },
+    "uses": [
+      {
+        "frame": "browser",
+        "ref": "n:gen2:tpl-carousel-video-ad-c3",
+        "h": "Product page",
+        "d": "A clip next to your listing photos shows what photos can't, like how the lid comes off."
+      },
+      {
+        "frame": "listing",
+        "ref": "n:gen2:video-ads-g3",
+        "h": "Ads for your best sellers",
+        "d": "Turn your top products into short ads straight from their links."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-angle-c1",
+        "bad": "n:guide:b1-url-to-video-bad-crop",
+        "good_label": "Headphones shown front-on and fully in frame",
+        "bad_label": "Left ear cup clipped by the edge"
+      },
+      {
+        "good": "n:gen2:tpl-angle-c2",
+        "bad": "n:guide:b1-url-to-video-bad-blur",
+        "good_label": "Backpack straps and seams in focus",
+        "bad_label": "Blur softens the backpack straps and seams"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:video-hub-g1",
+        "frame": "9:16",
+        "label": "Bottle lifted from gym bag",
+        "length": 15
+      },
+      {
+        "ref": "n:gen2:tpl-retargeting-video-ad-g2",
+        "frame": "16:9",
+        "label": "Mouse shown beside a laptop",
+        "length": 15
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:tpl-retargeting-video-ad-c2",
+      "zones": [
+        "Product name",
+        "Caption"
+      ],
+      "items": [
+        "Make sure the video shows the color and size you sell.",
+        "Add prices and offers in your editor. AI-made letters can come out wrong."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "How to turn a product link into a video in 3 steps"
+      },
+      "m3": {
+        "h2": "URL to video ideas for everyday products",
+        "lead": "Start with an item from a public product page, then show one everyday action."
+      },
+      "m4": {
+        "h2": "Where product link videos help you sell"
+      },
+      "m5": {
+        "h2": "Which product page photo works best"
+      },
+      "m6": {
+        "h2": "URL to video length, size and credits"
+      },
+      "m7": {
+        "h2": "Before you post: check the color and size"
+      },
+      "gallery": {
+        "h2": "URL to video examples"
+      },
+      "examples": {
+        "h2": "More product link video scenes"
+      }
+    }
   }
 }

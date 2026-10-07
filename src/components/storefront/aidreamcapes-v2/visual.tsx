@@ -55,7 +55,7 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video" }: { visu
           <div className="v-step-art v-step-source">
             <div className="drop v-step-drop">
               <VisualImage image={step.source} r={r} className="v-step-thumb" />
-              <div><b>Drop your product photo here</b><span>JPG, PNG or WebP · any clear photo works</span></div>
+              <div><b>{step.sourceTitle ?? "Drop your product photo here"}</b><span>{step.sourceHint ?? "JPG, PNG or WebP · any clear photo works"}</span></div>
             </div>
           </div>
           <div className="v-step-copy"><span className="v-step-number">Step 01</span><h3>{step.items[0]?.t}</h3><p>{step.items[0]?.d}</p></div>

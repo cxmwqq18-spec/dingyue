@@ -4,64 +4,32 @@
   "description": "Make an AI spokesperson video where an AI-generated person holds your product up to the camera and shows it from every side. Upload a product photo to try it.",
   "h1": "AI Spokesperson Video With a Person Holding Your Product",
   "eyebrow": "On-camera product video",
-  "lead": "An AI spokesperson video has an AI-generated person hold your product, turn it toward the camera, and show it off in a short clip. Add your message as captions after you download.",
+  "lead": "An AI-generated presenter holds your product and turns it toward the camera, so shoppers see its size in a real hand. No filming, no booking.",
   "secondary_keywords": [
     "AI person holding product video",
     "AI model product video",
     "AI actor product ads",
     "on-camera product showcase"
   ],
-  "intro": [
-    "An AI spokesperson video puts your product in someone's hands. An AI-generated person picks it up, holds it near their face or chest, turns it to show the label and the sides, and points to details like a strap or a cap. It gives shoppers a sense of size and makes the product feel like something people use every day.",
-    "Upload a product photo and write one sentence about the person and setting, such as \u201cwoman in a denim jacket holding the tote bag on a city sidewalk.\u201d Choose 6, 10, 15, or 30 seconds in 9:16, 1:1, 16:9, 4:3, or 3:4. Add your message as typed captions after download."
-  ],
-  "benefits": [
-    {
-      "t": "A clear sense of size",
-      "d": "A hand gives general context, not a measurement. Add the product's actual dimensions to the listing."
-    },
-    {
-      "t": "Describe who and where",
-      "d": "Set the person and the place in your own words, from a home office to a park bench."
-    },
-    {
-      "t": "Captions carry the message",
-      "d": "Keep the video focused on the product, then add your main points as on-screen captions before posting."
-    }
-  ],
   "steps": [
     {
-      "t": "Upload a photo of the product",
-      "d": "Pick a photo where the item stands alone and its full shape is visible."
+      "t": "Upload a product photo",
+      "d": "Whole product in frame, with its color clear."
     },
     {
-      "t": "Describe the person and place",
-      "d": "Write who is holding it and where, for example \u201cman in a gray hoodie at a kitchen table, holding the coffee bag.\u201d Pick the size and length."
+      "t": "Describe the presenter and the pose",
+      "d": "Where they stand and how they hold it, like \"kitchen counter, chest height, turns it slowly\"."
     },
     {
-      "t": "Save it or change the scene",
-      "d": "Download the clip, or change the person or location in your sentence for another version."
-    }
-  ],
-  "uses": [
-    {
-      "t": "TikTok and Instagram Reels",
-      "d": "A vertical clip of someone showing the product feels at home among everyday creator posts."
-    },
-    {
-      "t": "Shopify listing gallery",
-      "d": "Add it to the product gallery so shoppers get a feel for how big the item is in a hand."
-    },
-    {
-      "t": "Facebook and Instagram feed ads",
-      "d": "Use a square cut in feed ads, where a person holding the item draws the eye to it."
+      "t": "Download and add your message",
+      "d": "The presenter doesn't speak. Type your message as captions."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 \u00b7 TikTok & Reels"
+        "9:16 · TikTok & Reels"
       ],
       [
         "Length",
@@ -81,7 +49,7 @@
     },
     {
       "q": "Is the person in the video real?",
-      "a": "No. The person is AI-generated, so do not present the clip as a real customer's experience or endorsement. Check the publishing platform's current disclosure rules and use its AI label when required."
+      "a": "No. The presenter is AI-generated."
     },
     {
       "q": "Which products work well in these videos?",
@@ -90,148 +58,211 @@
   ],
   "overview": [
     {
-      "h2": "Let the person provide context, not a fake testimonial",
-      "p": "An AI spokesperson scene helps viewers judge scale and setting: a bottle beside a hand, a case near a phone, or a bag held at chest height. The person is a visual stand-in, not a customer or creator, so keep the message in typed captions you control."
-    },
-    {
-      "h2": "Use a simple pose with one product focus",
-      "p": "Describe who is holding the item, where they are, and what their hands do. A single turn, lift, or point gives the product room to remain visible throughout the short clip."
+      "h2": "Let the presenter provide context, not a testimonial",
+      "p": "A presenter can show a product’s size and shape in a familiar setting. Keep the item near the center of the shot, with room for its details to show."
     }
   ],
-  "input_guide": {
-    "h2": "Give the model a clear hand-sized reference",
-    "items": [
-      {
-        "t": "Show the full product silhouette",
-        "d": "Choose a photo where the item is separate from other objects and its edges, handle, cap, or opening can be read."
-      },
-      {
-        "t": "Include a scale clue",
-        "d": "A bottle, mug, case, pouch, or small bag is easier to place when the intended size is obvious from the product shape."
-      },
-      {
-        "t": "Describe the person plainly",
-        "d": "Name an age range, clothing color, and setting without asking the scene to carry a long script."
-      },
-      {
-        "t": "Choose one hand action",
-        "d": "Say \u201cturns the bottle toward the camera,\u201d \u201clifts the pouch,\u201d or \u201cpoints to the strap,\u201d then keep the pose simple."
-      },
-      {
-        "t": "Keep text out of the action",
-        "d": "Put product names, offers, and feature sentences into typed captions after download so they remain accurate."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A product-in-hand visual",
-    "items": [
-      {
-        "t": "A short on-camera scene",
-        "d": "Choose 6, 10, 15, or 30 seconds for one AI-generated person to hold and show the product."
-      },
-      {
-        "t": "Five frame choices",
-        "d": "Use 9:16, 1:1, 16:9, 4:3, or 3:4 depending on the placement you are preparing."
-      },
-      {
-        "t": "A cost visible before you run",
-        "d": "Check the credit cost before generation; failed jobs return the credits to your balance."
-      },
-      {
-        "t": "A clean visual starting point",
-        "d": "Add music or captions in your editor after download."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Product-in-hand scenes to brief",
-    "items": [
-      {
-        "t": "Bottle at a bench",
-        "d": "A person in a light jacket lifts a water bottle beside a park bench and turns the cap toward the camera."
-      },
-      {
-        "t": "Case at a desk",
-        "d": "A person in a gray sweater holds a phone case over a home-office desk and tilts it to show the corners."
-      },
-      {
-        "t": "Pouch at the counter",
-        "d": "A person in a linen shirt lifts a snack pouch from a kitchen counter and points to its resealable top."
-      },
-      {
-        "t": "Mug by the window",
-        "d": "A person holds a ceramic mug near a bright window, rotating the handle into view."
-      },
-      {
-        "t": "Small bag outdoors",
-        "d": "A person presents a crossbody bag on a quiet sidewalk and lifts the strap to show its length."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Add the message beside the product",
-    "items": [
-      {
-        "t": "Write captions in your editor",
-        "d": "Type product names, benefits, prices, and dates yourself because generated lettering may not stay exact."
-      },
-      {
-        "t": "Review hands and proportions",
-        "d": "Check that fingers, grip, product size, and label placement remain believable before using the file publicly."
-      },
-      {
-        "t": "Disclose the AI source where needed",
-        "d": "If the publishing channel offers an AI-content label, turn it on and never frame the person as a genuine buyer."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Products that read well in a hand",
-    "good": [
-      "Bottles, mugs, pouches, phone cases, headphones, and small bags",
-      "Products whose size is easier to understand beside a person",
-      "Feed ads that need a human context without a spoken presentation",
-      "Catalogs that want one product-in-hand view beside packshots"
+  "visual": {
+    "strip": [
+      "n:guide:b1-spokesperson-videos-source",
+      "n:guide:b1-spokesperson-videos-result",
+      "n:lipstick-ad",
+      "n:phonecase-hand",
+    "n:guide:b1-spokesperson-strip",
+      "n:gen2:tpl-jewel-g3"
     ],
-    "not_ideal": [
-      "Furniture or oversized goods that cannot be held naturally",
-      "Messages that depend on a real person making a verified statement"
-    ]
-  },
-  "examples": {
-    "h2": "More presenter scenes",
-    "lead": "More settings for an AI presenter holding your product: outdoors, at a desk and in the kitchen.",
-    "groups": [
+    "steps": {
+      "source": "n:guide:b1-spokesperson-videos-source",
+      "sourceAlt": "Matte forest-green water bottle standing alone on a bright kitchen counter.",
+      "result": "n:guide:b1-spokesperson-videos-result",
+      "mode": "video",
+      "length": 10,
+      "prompt": "At a bright kitchen counter, a presenter holds this forest-green bottle at chest height and turns its blank front toward the viewer."
+    },
+    "picker": {
+      "title": "Choose how a presenter shows the product",
+      "lead": "See a presenter turn a bottle, hold a pouch or show a small bag.",
+      "chips": [
+        {
+          "id": "drinkware",
+          "label": "Drinkware"
+        },
+        {
+          "id": "tech",
+          "label": "Everyday tech"
+        },
+        {
+          "id": "everyday",
+          "label": "Daily products"
+        },
+        {
+          "id": "accessories",
+          "label": "Accessories"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:spokesperson-videos-g1",
+          "label": "Steel bottle beside a park bench",
+          "chips": [
+            "drinkware",
+            "everyday"
+          ],
+          "prompt": "Hold the bottle at chest height and turn it once to show its side and lid.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:spokesperson-videos-g2",
+          "label": "Phone case at a desk",
+          "chips": [
+            "tech",
+            "everyday"
+          ],
+          "prompt": "Hold the phone case beside the phone and tilt it to show the camera opening.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:spokesperson-videos-g3",
+          "label": "Snack pouch in the kitchen",
+          "chips": [
+            "everyday",
+            "accessories"
+          ],
+          "prompt": "Raise the pouch to chest height, keeping its front visible and the face secondary.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:spokesperson-videos-g4",
+          "label": "Handbag held at chest height",
+          "chips": [
+            "accessories",
+            "everyday"
+          ],
+          "prompt": "Hold the handbag against a plain wall, then turn it slightly to reveal the strap.",
+          "kind": "video"
+        },
+        {
+      "ref": "n:guide:b1-spokesperson-card",
+      "label": "Headphones shown at chest height",
+      "chips": [
+        "tech",
+        "everyday"
+      ],
+      "prompt": "Hold the headphones at chest height, then turn them once to show both ear cups.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-ugc-g1",
+          "label": "Travel cup on the train",
+          "chips": [
+            "drinkware",
+            "everyday"
+          ],
+          "prompt": "Hold the cup by its handle and rotate it slowly in the window light.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-size-g4",
+          "label": "Earbuds case between fingers",
+          "chips": [
+            "tech",
+            "accessories"
+          ],
+          "prompt": "Turn the compact earbuds case between your fingers so its hinge is visible.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:tiktok-hand-vertical",
+          "label": "Earbuds case opened at desk",
+          "chips": [
+            "tech",
+            "everyday"
+          ],
+          "prompt": "Open the case once and hold it steady so the earbuds remain in focus.",
+          "kind": "video"
+        }
+      ],
+      "button": "Try this video idea"
+    },
+    "uses": [
       {
-        "label": "Presenter settings",
-        "items": [
-          {
-            "ref": "n:gen2:spokesperson-videos-g1",
-            "title": "Water bottle shown by a presenter near a park bench",
-            "kind": "scene",
-            "product": "steel water bottle"
-          },
-          {
-            "ref": "n:gen2:spokesperson-videos-g2",
-            "title": "Phone case turned toward the camera at a desk",
-            "kind": "scene",
-            "product": "phone case"
-          },
-          {
-            "ref": "n:gen2:spokesperson-videos-g3",
-            "title": "Snack pouch held up by a presenter in the kitchen",
-            "kind": "scene",
-            "product": "snack pouch"
-          },
-          {
-            "ref": "n:gen2:spokesperson-videos-g4",
-            "title": "Small handbag held at chest height by a presenter",
-            "kind": "scene",
-            "product": "small handbag"
-          }
-        ]
+        "frame": "listing",
+        "ref": "n:gen2:tpl-size-c1",
+        "h": "Product page",
+        "d": "A product in someone's hands shows its real size better than a photo on white."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:tpl-jewel-70",
+        "h": "Social post",
+        "d": "A person holding the item makes a small product easy to read in the feed."
       }
-    ]
+    ],
+    "input": [
+      {
+        "good": "n:gen2:white-background-c1",
+        "bad": "n:guide:b1-spokesperson-videos-bad-crop",
+        "good_label": "Full bottle shape in clear light",
+        "bad_label": "Bottle cap cut off at the edge"
+      },
+      {
+        "good": "n:gen2:photo-hub-c1",
+        "bad": "n:guide:b1-spokesperson-videos-bad-blur",
+        "good_label": "Bag silhouette clear against white",
+        "bad_label": "Blurred seams hide the bag shape"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:b1-spokesperson-output-audio",
+        "frame": "9:16",
+        "label": "Presenter holds earbuds case",
+        "length": 10
+      },
+      {
+        "ref": "n:guide:b1-spokesperson-output-bag",
+        "frame": "1:1",
+        "label": "Presenter shows canvas bag",
+        "length": 10
+      }
+    ],
+    "after": {
+      "ref": "n:guide:b1-spokesperson-output-coffee",
+      "zones": [
+        "Caption",
+        "Product name"
+      ],
+      "items": [
+        "Type your message as captions. The presenter doesn't speak.",
+        "Don't present the presenter as a real customer."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "How to make an AI spokesperson video in 3 steps"
+      },
+      "m3": {
+        "h2": "Spokesperson video ideas that keep the product in view",
+        "lead": "See a presenter turn a bottle, hold a pouch or show a small bag."
+      },
+      "m4": {
+        "h2": "Where spokesperson videos help you sell"
+      },
+      "m5": {
+        "h2": "What photo to upload for a spokesperson video"
+      },
+      "m6": {
+        "h2": "Spokesperson video length, size and credits"
+      },
+      "m7": {
+        "h2": "Add your message as captions"
+      },
+      "gallery": {
+        "h2": "AI spokesperson video examples"
+      },
+      "examples": {
+        "h2": "More ways to show a product in hand"
+      }
+    }
   }
 }

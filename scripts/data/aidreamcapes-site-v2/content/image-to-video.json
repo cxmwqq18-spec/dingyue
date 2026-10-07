@@ -4,68 +4,32 @@
   "description": "Use AI image to video to add gentle motion to a product photo you already like. Download a short clip for Reels, TikTok, or your shop. Upload a shot to start.",
   "h1": "Turn a Product Photo Into Motion With AI Image to Video",
   "eyebrow": "Photo to video",
-  "lead": "AI image to video turns a product shot you already like into a short clip. Add a slow camera move, drifting light, or steam rising from a cup, and download it in the size you need.",
+  "lead": "Turn one product photo into a short video: steam rising from a mug, light sliding across a bottle, a slow push-in on a shoe.",
   "secondary_keywords": [
     "product photo to video",
     "animate product photo",
     "turn image into video ad",
     "AI photo animation for ads"
   ],
-  "intro": [
-    "AI image to video starts with one still product photo and adds a requested camera or scene movement. Describe one motion, such as a slow push, drifting light, or rising steam, then review the clip for changes to the product.",
-    "It suits sellers who have a strong product photo but no moving version yet. Use it for product galleries, Reels, Stories, or feed placements. Set the movement to 6, 10, 15, or 30 seconds, then choose 9:16, 1:1, 16:9, 4:3, or 3:4."
-  ],
-  "benefits": [
-    {
-      "t": "Reuse photos you have",
-      "d": "There's no new shoot to plan. The photo on your product page right now can be the starting point for a video."
-    },
-    {
-      "t": "Subtle, believable motion",
-      "d": "Ask for small moves like a slow zoom or a light sweep. Gentle motion keeps attention on the product instead of the effect."
-    },
-    {
-      "t": "Lengths that suit feeds",
-      "d": "Choose 6, 10, 15, or 30 seconds. The shortest option is handy for Reels and Stories, where clips replay on their own."
-    }
-  ],
   "steps": [
     {
-      "t": "Upload the photo to animate",
-      "d": "Pick a sharp image with some space around the product so the camera has room to move."
+      "t": "Upload one product photo",
+      "d": "Sharp, with a little space around the product and nothing crossing it."
     },
     {
-      "t": "Describe the motion",
-      "d": "Write one line about the movement, like \u201cslow push-in while morning light moves across the bottle,\u201d then choose the length and size."
+      "t": "Describe one movement",
+      "d": "One motion per clip, like \"slow push-in\" or \"steam rising\". Pick 6, 10 or 15 seconds."
     },
     {
-      "t": "Download or try new motion",
-      "d": "Keep the clip you like. If the movement feels too fast, rewrite your line and run it once more."
-    }
-  ],
-  "uses": [
-    {
-      "t": "Product page gallery",
-      "d": "Add the clip to your Shopify product gallery so shoppers see a little movement among the still photos."
-    },
-    {
-      "t": "Instagram Reels and Stories",
-      "d": "Post a vertical video based on an ad photo that already does well for you."
-    },
-    {
-      "t": "Facebook feed ads",
-      "d": "Swap a still feed ad for a square moving version of the same image."
-    },
-    {
-      "t": "Store homepage banner",
-      "d": "A wide 16:9 clip with slow motion makes a calm header at the top of your shop."
+      "t": "Download, or try another motion",
+      "d": "If a label or edge shifts, ask for a simpler movement and make another."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 \u00b7 Reels & Stories"
+        "9:16 · Reels & Stories"
       ],
       [
         "Length",
@@ -85,128 +49,23 @@
     },
     {
       "q": "Can I choose how the camera moves?",
-      "a": "Yes, describe it in your sentence. Phrases like \u201cslow zoom in,\u201d \u201corbit around the bottle,\u201d or \u201cpan left across the table\u201d give the clearest direction. Motion can vary between runs, so a second try may land closer to what you pictured."
+      "a": "Yes. Describe one move, such as a slow push-in, a pan across the table or a gentle orbit around a bottle. Each generation can vary, so simple directions are easiest to follow."
     },
     {
-      "q": "Will my product look exactly like the photo?",
-      "a": "It stays close, but fine details like small printed text, buttons, or label lettering can shift once things move. Watch the clip all the way through before posting it, and run it again if something looks off."
+      "q": "Will the product stay close to my photo?",
+      "a": "Motion can shift fine details such as label text, buttons or edges while the product moves through the scene. A simpler movement leaves fewer details changing at once."
     },
     {
       "q": "Can I make several clips from the same photo?",
-      "a": "Yes. Each run makes one clip, so change the motion or size and run it again. The credit cost is shown for every run before it starts."
+      "a": "Yes. Change the movement or clip length for each run. The editor shows the credit cost before generation."
     }
   ],
   "overview": [
     {
-      "h2": "Animate the photograph you already approved",
-      "p": "Image to video is useful when the product photo is right but a still frame feels too quiet. Keep the product, palette, and setting as the visual anchor, then describe one movement that adds life around it."
-    },
-    {
-      "h2": "Ask for one kind of motion at a time",
-      "p": "A camera push, a slow pan, drifting steam, moving water, or a sweep of light each gives the model a clear job. Combining several large effects makes it harder to tell whether the product itself stayed accurate."
+      "h2": "Bring one product photo into motion",
+      "p": "Start with the photo you already use, then add one camera or scene movement. A restrained push, pour, opening or light shift gives the clip motion while leaving the item easy to recognize."
     }
   ],
-  "input_guide": {
-    "h2": "Give the camera a stable starting frame",
-    "items": [
-      {
-        "t": "Keep the whole product visible",
-        "d": "Use a frame that includes the complete object and its most important edges, handles, openings, or attachments."
-      },
-      {
-        "t": "Leave room around the subject",
-        "d": "A margin around the item gives a push or pan space to travel without clipping the product."
-      },
-      {
-        "t": "Control reflective surfaces",
-        "d": "For glass, metal, or glossy packaging, start with a highlight that does not hide the label or main shape."
-      },
-      {
-        "t": "Show transparent parts clearly",
-        "d": "Use a background with enough contrast behind clear lids, bottles, or lenses so their outline remains readable as the scene moves."
-      },
-      {
-        "t": "Name the movement and pace",
-        "d": "Write one direction such as \u201cslow push toward the bottle while morning light crosses the table,\u201d rather than listing several unrelated actions."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the motion version adds",
-    "items": [
-      {
-        "t": "A short moving frame",
-        "d": "Select 6, 10, 15, or 30 seconds and receive one clip for each run."
-      },
-      {
-        "t": "Your chosen crop",
-        "d": "Use 9:16, 1:1, 16:9, 4:3, or 3:4 when you need a particular frame."
-      },
-      {
-        "t": "A visible generation cost",
-        "d": "The AIVideosUGC editor shows the credit cost before a job starts. If it fails, those credits return to your balance."
-      },
-      {
-        "t": "A review-ready download",
-        "d": "There is no watermark on the file; read the [FAQ](/faq) for commercial-use terms. Review the clip before using it on a product page, in a social post, or in an ad."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Motion directions that stay product-led",
-    "items": [
-      {
-        "t": "Glass bottle",
-        "d": "Make a slow push toward a glass bottle as a slim ribbon of light moves across the label."
-      },
-      {
-        "t": "Hot drink",
-        "d": "Hold the mug in place while soft steam rises against a warm kitchen background."
-      },
-      {
-        "t": "Watch detail",
-        "d": "Pan from the crown to the watch face as a wrist rests on a dark tabletop."
-      },
-      {
-        "t": "Fabric texture",
-        "d": "Move gently across a folded knit sweater while one corner lifts in a light indoor breeze."
-      },
-      {
-        "t": "Water surface",
-        "d": "Orbit a skincare jar on a stone tray while small ripples move in the shallow water around it."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Check the moving details before posting",
-    "items": [
-      {
-        "t": "Compare the first and last frame",
-        "d": "Confirm the silhouette, color, cap, clasp, or printed panel still matches the approved photo."
-      },
-      {
-        "t": "Add the words yourself",
-        "d": "Type product names, prices, dates, and captions in your editing or publishing tool instead of relying on generated lettering."
-      },
-      {
-        "t": "Keep the calmer take",
-        "d": "If a second run changes the product less or keeps the camera steadier, use that version for the final placement."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Best matches for image to video",
-    "good": [
-      "Hero photos with space around a single product",
-      "Objects where light, steam, water, or fabric can move around the item",
-      "Product galleries that need one moving frame among still images",
-      "Brands testing a subtle visual opening before planning a larger shoot"
-    ],
-    "not_ideal": [
-      "Photos packed edge to edge with no room for a camera move",
-      "Scenes where tiny labels or exact small text must remain unchanged"
-    ]
-  },
   "examples": {
     "h2": "Photo-to-video example scenes",
     "lead": "Ideas for bringing one product photo to life: a slow push-in, rising steam, light moving across a surface.",
@@ -241,5 +100,206 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "strip": [
+      "n:guide:b1-image-to-video-source",
+      "n:guide:b1-image-to-video-result",
+      "n:gen2:tpl-howto-g1",
+      "n:gen2:video-hub-g7",
+      "n:gen2:tpl-film-g2",
+      "n:gen2:plat-instagram-g2"
+    ],
+    "steps": {
+      "source": "n:guide:b1-image-to-video-source",
+      "sourceAlt": "Cream ceramic mug with blue flecks on a wooden kitchen counter.",
+      "result": "n:guide:b1-image-to-video-result",
+      "mode": "video",
+      "length": 6,
+      "prompt": "Push in slowly on this speckled mug while a thin ribbon of steam rises. Keep the shape, handle and glaze as they are."
+    },
+    "picker": {
+      "title": "Choose one motion for the photo",
+      "lead": "Each idea uses one short action, from pouring water to switching on a light.",
+      "chips": [
+        {
+          "id": "kitchen",
+          "label": "Kitchen"
+        },
+        {
+          "id": "home",
+          "label": "Home"
+        },
+        {
+          "id": "beauty",
+          "label": "Beauty"
+        },
+        {
+          "id": "outdoor",
+          "label": "Outdoor"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-howto-c2",
+          "label": "Coffee filter filled",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Lower a paper filter into the dripper, then pour hot water in one slow circle.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-howto-c3",
+          "label": "Bike light switched on",
+          "chips": [
+            "outdoor",
+            "home"
+          ],
+          "prompt": "Clip the small light onto the handlebar, then press its switch once.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-howto-c4",
+          "label": "Planter reservoir filled",
+          "chips": [
+            "home",
+            "outdoor"
+          ],
+          "prompt": "Add water through the planter opening, then pause as it settles into the reservoir.",
+          "kind": "video"
+        },
+        {
+      "ref": "n:gen2:tpl-drink-g1",
+      "label": "Can opened beside ice",
+          "chips": [
+            "kitchen"
+          ],
+      "prompt": "Open the sparkling water can beside an ice-filled glass, then tilt it toward the light.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-drink-c3",
+          "label": "Bottle catches cool light",
+          "chips": [
+            "kitchen",
+            "home"
+          ],
+          "prompt": "Move slowly past the chilled bottle as fine droplets catch the window light.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-beauty-c1",
+          "label": "Cream pump dispenses once",
+          "chips": [
+            "beauty"
+          ],
+          "prompt": "Press the cream pump once and show a small amount on the back of a hand.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-beauty-c2",
+          "label": "Balm lifted from jar",
+          "chips": [
+            "beauty",
+            "home"
+          ],
+          "prompt": "Lift one small scoop of balm from the jar with a clean spatula.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-beauty-c3",
+          "label": "Roller glides along cheek",
+          "chips": [
+            "beauty",
+            "home"
+          ],
+          "prompt": "Glide the jade roller once along the cheek in a calm, even motion.",
+          "kind": "video"
+        }
+      ],
+      "button": "Try this video idea"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:gen2:tpl-detail-c4",
+        "h": "Product page",
+        "d": "A 6-second clip next to your photos shows how the glaze catches the light."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:tpl-light-g2",
+        "h": "Feed post",
+        "d": "A slow light sweep turns a still product shot into a post that moves."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-light-g4",
+        "bad": "n:guide:b1-image-to-video-bad-crop",
+        "good_label": "Honey jar fully in frame with soft highlights",
+        "bad_label": "Honey jar cut off at the left edge"
+      },
+      {
+        "good": "n:gen2:plat-instagram-g1",
+        "bad": "n:guide:b1-image-to-video-bad-blur",
+        "good_label": "Speckled cup sharp in a square frame",
+        "bad_label": "Soft focus hides the cup handle"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:video-hub-g5",
+        "frame": "16:9",
+        "label": "Candle in warm evening light",
+        "length": 6
+      },
+      {
+      "ref": "n:gen2:tpl-beauty-g2",
+        "frame": "9:16",
+      "label": "Balm lifted from a jar",
+        "length": 6
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:tpl-film-g1",
+      "zones": [
+        "Product name",
+        "Caption"
+      ],
+      "items": [
+        "Add captions and prices in CapCut or Canva. AI-made letters can come out wrong.",
+        "Watch the clip once next to your product: labels, color and shape.",
+        "Check it where it will run: feed, product page or story."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "How to turn a product photo into a video in 3 steps"
+      },
+      "m3": {
+        "h2": "Image to video ideas: one motion per clip",
+        "lead": "Each idea uses one short action, from pouring water to switching on a light."
+      },
+      "m4": {
+        "h2": "Where image to video clips help you sell"
+      },
+      "m5": {
+        "h2": "What photo works best for image to video"
+      },
+      "m6": {
+        "h2": "Image to video length, size and credits"
+      },
+      "m7": {
+        "h2": "Add captions after download"
+      },
+      "gallery": {
+        "h2": "AI image to video examples"
+      },
+      "examples": {
+        "h2": "More product motion ideas"
+      }
+    }
   }
 }

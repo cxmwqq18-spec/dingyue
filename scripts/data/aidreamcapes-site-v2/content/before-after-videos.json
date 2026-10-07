@@ -4,64 +4,32 @@
   "description": "Use this before and after video maker to show a messy shelf turn tidy or a scuffed sneaker come clean in one short clip for TikTok or Reels. Upload a photo now.",
   "h1": "Before and After Video Maker: Show the Change Your Product Makes",
   "eyebrow": "Before & after video",
-  "lead": "This before and after video maker shows the problem, then the fix. A cluttered drawer gets organized, a bare wall gets a shelf, a worn car seat gets a cover, all in one short clip.",
+  "lead": "Show the before and the after in one short clip, like a tangled desk that ends tidy. Start from one product photo.",
   "secondary_keywords": [
     "AI before and after video",
     "before and after product video",
     "transformation video for ads",
     "before and after TikTok video"
   ],
-  "intro": [
-    "Plan a sequence that starts with a visible condition before the product is used and ends after the product changes the scene. Keep the same space in view so shoppers can compare the two moments. Examples include a tangled cable area before an organizer and the same desk afterward.",
-    "Start with a photo of the product, then write both halves as one line, such as \u201cmessy closet shelf, then folded sweaters in our fabric bins.\u201d Choose 6, 10, 15, or 30 seconds and 9:16, 1:1, 16:9, 4:3, or 3:4 so each state has room to register."
-  ],
-  "benefits": [
-    {
-      "t": "A story in two scenes",
-      "d": "Viewers see the problem and the answer back to back, with no explanation needed."
-    },
-    {
-      "t": "Made for visible changes",
-      "d": "Organizers, covers, cleaning tools, and decor can each provide a clear subject for a before-and-after scene."
-    },
-    {
-      "t": "Easy to follow quickly",
-      "d": "Two clear halves make sense even to someone scrolling fast past your post."
-    }
-  ],
   "steps": [
     {
-      "t": "Start with your product photo",
-      "d": "Upload a clear photo of the product that makes the change, such as the storage bin, seat cover, or brush."
+      "t": "Upload the product photo",
+      "d": "The item that makes the change, clear and in focus."
     },
     {
-      "t": "Write the before and the after",
-      "d": "Describe the starting mess and the finished look in one sentence, then pick 10, 15 or 30 seconds so both halves have time."
+      "t": "Describe the before and the after",
+      "d": "One short sentence each, like \"tangled cords\" and then \"three cords neatly in the slots\"."
     },
     {
-      "t": "Download or try a new scene",
-      "d": "Keep the clip, or swap the room or problem in your sentence and generate another version."
-    }
-  ],
-  "uses": [
-    {
-      "t": "TikTok and Reels",
-      "d": "Vertical transformation clips are a natural match for home and cleaning content in both feeds."
-    },
-    {
-      "t": "Square ads on Facebook",
-      "d": "Use a square version in Ads Manager to show the change your product makes at a glance."
-    },
-    {
-      "t": "Shopify product page",
-      "d": "Place the clip near the top of the product page so shoppers see the difference before reading the details."
+      "t": "Download and add labels",
+      "d": "Type \"Before\" and \"After\" in your editor if you want them on screen."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 \u00b7 TikTok & Reels"
+        "9:16 · TikTok & Reels"
       ],
       [
         "Length",
@@ -73,139 +41,30 @@
   "faq": [
     {
       "q": "How can I make the two scenes easy to compare?",
-      "a": "Keep the same space and main object in view, then describe one visible change the product is meant to make. Review the clip against your source photo before posting."
+      "a": "Keep the camera position fixed and describe one visible change, such as loose cords moving into an organizer. This makes both states easy to follow."
     },
     {
       "q": "How do I describe the before and the after?",
-      "a": "Use one sentence with two parts joined by \u201cthen.\u201d For example: \u201ccluttered entryway with shoes everywhere, then shoes lined up on our bamboo rack.\u201d"
+      "a": "Use one sentence with two parts joined by “then.” For example: “cluttered entryway with shoes everywhere, then shoes lined up on our bamboo rack.”"
     },
     {
-      "q": "Can I make before and after videos for skincare or weight loss products?",
-      "a": "We'd advise against it. Many ad platforms restrict before-and-after content about skin, body, or health results, and the change shown should always be one your product really makes. Show how the product is used rather than promising an outcome."
+      "q": "Can I show skincare or health results?",
+      "a": "Show a change to the product or the space around it, such as lint lifted from a cushion. Do not imply a health, skin or body result."
     },
     {
-      "q": "Can I add \u201cBefore\u201d and \u201cAfter\u201d labels?",
+      "q": "Can I add “Before” and “After” labels?",
       "a": "Yes, add them after you download, in CapCut or TikTok. Typed labels stay crisp and correctly spelled, which AI-generated lettering can't always manage."
     }
   ],
   "overview": [
     {
-      "h2": "Make the product\u2019s job visible in two beats",
-      "p": "Before-and-after works for products that change a space, object, or arrangement in a way a viewer can recognize quickly. Name the starting condition first, then show the finished condition with the product present and the same subject still easy to compare."
-    },
-    {
-      "h2": "Keep the promise inside the frame",
-      "p": "Use this format for organizing, cleaning, installing, covering, lighting, or styling. Avoid personal claims about body, skin, or health outcomes; describe changes that match the product information."
+      "h2": "Make the product’s role in the change easy to see",
+      "p": "A useful comparison keeps the same space or object in view while one clear change happens. Show the starting condition first, then show the product in use and the finished state without adding a claim the product cannot support."
     }
   ],
-  "input_guide": {
-    "h2": "Give both halves a fair comparison",
-    "items": [
-      {
-        "t": "Photograph the change-maker",
-        "d": "Upload the organizer, brush, cover, shelf, light, or accessory that causes the visible difference."
-      },
-      {
-        "t": "Name one starting problem",
-        "d": "Describe a single messy, empty, dirty, exposed, or unfinished state instead of combining several rooms or objects."
-      },
-      {
-        "t": "Keep the subject recognizable",
-        "d": "Use the same shelf, wall, desk, grill, or entryway in both halves so the viewer can compare what changed."
-      },
-      {
-        "t": "Describe the finished arrangement",
-        "d": "Say where the product ends up and what the space looks like once the action is complete."
-      },
-      {
-        "t": "Stay away from personal outcomes",
-        "d": "Show a product or room transformation rather than a promise about weight, skin, pain, or another regulated result."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A change that reads at a glance",
-    "items": [
-      {
-        "t": "Two visual beats",
-        "d": "Choose 6, 10, 15, or 30 seconds; longer options give the starting and finished states more room to register."
-      },
-      {
-        "t": "A format for the placement",
-        "d": "Use 9:16, 1:1, 16:9, 4:3, or 3:4 for vertical, square, or wide presentation."
-      },
-      {
-        "t": "A transparent job cost",
-        "d": "See the credit cost before generation; if a job fails, those credits return to your balance."
-      },
-      {
-        "t": "A file to finish yourself",
-        "d": "This file has no watermark; check the [FAQ](/faq) for commercial-use terms. Add typed labels after checking both states against the product's actual use."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Transformations shoppers can understand",
-    "items": [
-      {
-        "t": "Entryway order",
-        "d": "Loose shoes cover a narrow entryway, then the same pairs sit neatly on a bamboo rack beside the door."
-      },
-      {
-        "t": "Kitchen drawer",
-        "d": "A drawer holds scattered utensils, then the organizer separates spoons, forks, and chopsticks into rows."
-      },
-      {
-        "t": "Wall storage",
-        "d": "A blank wall stands above a desk, then a floating shelf holds books and a small plant."
-      },
-      {
-        "t": "Grill cleanup",
-        "d": "A grill grate carries dark residue, then the cleaning brush leaves an even, ready-to-use surface."
-      },
-      {
-        "t": "Car seat cover",
-        "d": "A back seat is exposed to muddy shoes, then the fitted cover protects the same seat."
-      },
-      {
-        "t": "Outdoor lighting",
-        "d": "An empty balcony sits at dusk, then warm string lights trace its railing."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Label the two moments clearly",
-    "items": [
-      {
-        "t": "Type the state labels",
-        "d": "Add \u201cBefore,\u201d \u201cAfter,\u201d prices, dates, or offer text in your editor so the words stay crisp and approved."
-      },
-      {
-        "t": "Check the cause and effect",
-        "d": "Make sure the product appears in the finished state and that the change shown is one it can really make."
-      },
-      {
-        "t": "Review sensitive categories carefully",
-        "d": "If the product touches health, skin, or body outcomes, use a product-use demonstration instead of a personal transformation claim."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Good subjects for a before-and-after story",
-    "good": [
-      "Organizers that create a visible change in a drawer, shelf, or entryway",
-      "Cleaning tools that reveal a cleaner surface",
-      "Covers, shelves, and lighting that alter a room or object",
-      "Decor products where the finished arrangement is easy to compare"
-    ],
-    "not_ideal": [
-      "Claims about weight, skin, medical outcomes, or product results beyond verified details",
-      "Changes that cannot be judged from the same scene"
-    ]
-  },
   "examples": {
     "h2": "More before-and-after ideas",
-    "lead": "Two-state stories work when the change is easy to see. Here are more pairs to try with your own product.",
+    "lead": "Try a half-polished pan, a brushed grout line or a sweater shelf sorted into bins.",
     "groups": [
       {
         "label": "Clear, visible changes",
@@ -231,5 +90,206 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "strip": [
+      "n:guide:b1-before-after-videos-source",
+      "n:guide:b1-before-after-videos-result",
+      "n:gen2:tpl-home-g1",
+      "n:gen2:tpl-home-g2",
+      "n:gen2:tpl-home-g3",
+      "n:gen2:home-g4"
+    ],
+    "steps": {
+      "source": "n:guide:b1-before-after-videos-source",
+      "sourceAlt": "Compact matte-black cable organizer with three empty front slots on a pale oak desk.",
+      "result": "n:guide:b1-before-after-videos-result",
+      "mode": "video",
+      "length": 15,
+      "prompt": "Start with this empty cable organizer, feed three loose cords through its slots, and end on a clear desk."
+    },
+    "picker": {
+      "title": "Choose one visible change",
+      "lead": "Show one visible change, from a lint roller crossing a cushion to a cable organizer clearing a desk.",
+      "chips": [
+        {
+          "id": "storage",
+          "label": "Storage"
+        },
+        {
+          "id": "kitchen",
+          "label": "Kitchen"
+        },
+        {
+          "id": "home",
+          "label": "Home"
+        },
+        {
+          "id": "entryway",
+          "label": "Entryway"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-home-c1",
+          "label": "Velvet hangers along a closet rail",
+          "chips": [
+            "storage",
+            "home"
+          ],
+          "prompt": "Show the crowded rail first, then space the hangers evenly along it.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-home-c2",
+          "label": "Pantry jars lined up",
+          "chips": [
+            "kitchen",
+            "storage"
+          ],
+          "prompt": "Clear one shelf, then line up the matching pantry jars.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-home-c3",
+          "label": "Under-sink bins arranged",
+          "chips": [
+            "kitchen",
+            "storage"
+          ],
+          "prompt": "Move the loose bottles aside, then slide clear storage bins into the cabinet.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-home-c4",
+          "label": "Shoe rack filled neatly",
+          "chips": [
+            "entryway",
+            "storage"
+          ],
+          "prompt": "Start with shoes on the floor, then place them on the slim entryway rack.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:home-g6",
+          "label": "Air purifier by the bed",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Show the room before, then place the purifier beside the bed and switch it on.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:home-g8",
+          "label": "Board game box opened",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Clear the table, then set out the board game and its pieces.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:ind-home-living-g1",
+          "label": "Storage boxes on a shelf",
+          "chips": [
+            "storage",
+            "home"
+          ],
+          "prompt": "Move the loose items away, then line up the fabric boxes on the shelf.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:video-hub-g4",
+          "label": "Coats and bags by the door",
+          "chips": [
+            "entryway",
+            "home"
+          ],
+          "prompt": "Show the busy entryway, then arrange coats and bags by the hooks.",
+          "kind": "video"
+        }
+      ],
+      "button": "Try this video idea"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "f:home-organization",
+        "h": "Product page",
+        "d": "One clip shows a result that would take a paragraph to explain."
+      },
+      {
+        "frame": "phone",
+        "ref": "f:home-organization-t10",
+        "h": "Social post",
+        "d": "Keep both scenes in the same spot so the change is obvious at a glance."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-bf-c1",
+        "bad": "n:guide:b1-before-after-videos-bad-crop",
+        "good_label": "Robot vacuum fully in frame on a wood floor",
+        "bad_label": "Robot vacuum clipped at the lower edge"
+      },
+      {
+    "good": "n:gen2:tpl-bf-c4",
+    "bad": "n:guide:b1-before-after-videos-bad-blur",
+        "good_label": "Watch face and case sharp on a black stand",
+        "bad_label": "Blur hides the smartwatch screen"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:home-g2",
+        "frame": "1:1",
+        "label": "Backpack set in a cafe",
+        "length": 15
+      },
+      {
+        "ref": "n:gen2:home-g7",
+        "frame": "1:1",
+        "label": "Leash clipped by the door",
+        "length": 15
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:home-g3",
+      "zones": [
+        "Before",
+        "After"
+      ],
+      "items": [
+        "Show only a change your product really makes.",
+        "No health, skin or body results."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "How to make a before and after video in 3 steps"
+      },
+      "m3": {
+        "h2": "Before and after video ideas",
+        "lead": "Try a lint roller on a cushion, a tidy cable desk or a cleaned sneaker."
+      },
+      "m4": {
+        "h2": "Where before and after videos help you sell"
+      },
+      "m5": {
+        "h2": "What photo to upload for a before and after video"
+      },
+      "m6": {
+        "h2": "Before and after video length, size and credits"
+      },
+      "m7": {
+        "h2": "Before you post the comparison"
+      },
+      "gallery": {
+        "h2": "AI before and after video examples"
+      },
+      "examples": {
+        "h2": "More before-and-after ideas"
+      }
+    }
   }
 }

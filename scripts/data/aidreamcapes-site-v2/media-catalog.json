@@ -7429,6 +7429,316 @@
           640,
           1280
         ]
+      },
+      "b1-image-to-video-source": {
+        "file": "gen2guide-b1-image-to-video-source",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Cream ceramic mug with blue flecks on a wooden kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-image-to-video-result": {
+        "file": "gen2guide-b1-image-to-video-result",
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same speckled ceramic mug with a curl of steam in morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-url-to-video-source": {
+        "file": "gen2guide-b1-url-to-video-source",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Sage-green insulated lunch container closed on a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-url-to-video-result": {
+        "file": "gen2guide-b1-url-to-video-result",
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same sage-green lunch container open with its lid beside it.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-video-ads-source": {
+        "file": "gen2guide-b1-video-ads-source",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Soft sage insulated lunch bag standing on a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-video-ads-result": {
+        "file": "gen2guide-b1-video-ads-result",
+        "w": 1280,
+        "h": 1280,
+        "alt": "A hand lifts the same sage lunch bag beside a packed lunch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-unboxing-videos-source": {
+        "file": "gen2guide-b1-unboxing-videos-source",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Plain white ceramic candle jar on a neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-unboxing-videos-result": {
+        "file": "gen2guide-b1-unboxing-videos-result",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands open a kraft carton to reveal the plain white candle jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-before-after-videos-source": {
+        "file": "gen2guide-b1-before-after-videos-source",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Compact matte-black cable organizer with three empty front slots.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-before-after-videos-result": {
+        "file": "gen2guide-b1-before-after-videos-result",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Three desk cables routed through the same black organizer on a clear desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-spokesperson-videos-source": {
+        "file": "gen2guide-b1-spokesperson-videos-source",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Matte forest-green water bottle standing alone on a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-spokesperson-videos-result": {
+        "file": "gen2guide-b1-spokesperson-videos-result",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Presenter holding the same forest-green water bottle at chest height.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-spokesperson-output-audio": {
+        "file": "gen2guide-b1-spokesperson-output-audio",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Presenter holding an open matte-black earbuds case with the product in focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-spokesperson-output-coffee": {
+        "file": "gen2guide-b1-spokesperson-output-coffee",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Presenter showing a speckled ceramic mug with both hands.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-spokesperson-output-bag": {
+        "file": "gen2guide-b1-spokesperson-output-bag",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Presenter holding a tan canvas crossbody bag at chest height.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-image-to-video-bad-crop": {
+        "file": "gen2guide-b1-image-to-video-bad-crop",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Honey jar partly cropped at the left frame edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-image-to-video-bad-blur": {
+        "file": "gen2guide-b1-image-to-video-bad-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Ceramic cup in soft focus, with the handle hard to see.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-url-to-video-bad-crop": {
+        "file": "gen2guide-b1-url-to-video-bad-crop",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Left headphone ear cup clipped by the frame edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-url-to-video-bad-blur": {
+        "file": "gen2guide-b1-url-to-video-bad-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Backpack straps and seams softened by heavy blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-video-ads-bad-dark": {
+        "file": "gen2guide-b1-video-ads-bad-dark",
+        "w": 1280,
+        "h": 720,
+        "alt": "Running shoes in low light with color and details obscured.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-video-ads-bad-blur": {
+        "file": "gen2guide-b1-video-ads-bad-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Folded socks with the knit texture hidden by heavy blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-unboxing-videos-bad-crop": {
+        "file": "gen2guide-b1-unboxing-videos-bad-crop",
+        "w": 1280,
+        "h": 720,
+        "alt": "Candle jar cropped through its upper half at the frame edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-unboxing-videos-bad-dark": {
+        "file": "gen2guide-b1-unboxing-videos-bad-dark",
+        "w": 1280,
+        "h": 960,
+        "alt": "Coffee kit dimly lit so the objects blend into the counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-before-after-videos-bad-crop": {
+        "file": "gen2guide-b1-before-after-videos-bad-crop",
+        "w": 1280,
+        "h": 720,
+        "alt": "Lower part of the robot vacuum cut off at the bottom frame edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-before-after-videos-bad-blur": {
+        "file": "gen2guide-b1-before-after-videos-bad-blur",
+        "w": 1280,
+        "h": 720,
+        "alt": "Smartwatch and stand blurred so screen details are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-spokesperson-videos-bad-crop": {
+        "file": "gen2guide-b1-spokesperson-videos-bad-crop",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Bottle cap cropped out at the top edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-spokesperson-videos-bad-blur": {
+        "file": "gen2guide-b1-spokesperson-videos-bad-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Leather bag softened so its seams and shape are hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-spokesperson-strip": {
+        "file": "gen2guide-b1-spokesperson-strip",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Presenter holding a compact espresso maker at chest height, looking at the product.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-spokesperson-card": {
+        "file": "gen2guide-b1-spokesperson-card",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Presenter displaying matte-black headphones at chest height, with both ear cups clearly visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-unboxing-card": {
+        "file": "gen2guide-b1-unboxing-card",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands lifting matte-black headphones from an open kraft box with pale tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "b1-unboxing-output": {
+        "file": "gen2guide-b1-unboxing-output",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands present a brown leather wallet above an open kraft gift box.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

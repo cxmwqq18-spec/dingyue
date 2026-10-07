@@ -4,68 +4,32 @@
   "description": "Create an AI unboxing video from one product photo: hands open the box, fold back the tissue, and reveal your item. Sized for TikTok and Shorts. Make yours now.",
   "h1": "Make an AI Unboxing Video of Your Product",
   "eyebrow": "Unboxing video",
-  "lead": "An AI unboxing video shows hands opening the box, folding back the tissue paper, and lifting your product into view. Add a photo, describe the packaging, and get a short reveal clip.",
+  "lead": "Show hands opening a box and lifting your product out, starting from one product photo. Describe the box and tissue you really ship with.",
   "secondary_keywords": [
     "unboxing video maker",
     "product unboxing video for TikTok",
     "packaging reveal video",
     "AI unboxing ad"
   ],
-  "intro": [
-    "Unboxing videos are about the moment the product comes out of the box. Viewers watch the lid come off, the tissue paper fold back, and the item get lifted into the light. It answers what a new customer wonders about: what arrives at the door, how it's packed, and what the product looks like once it's out.",
-    "Add a picture of the product, then describe the packaging in words, such as a matte black box with gold tissue or a kraft mailer with a card on top. Choose a 6, 10, 15, or 30 second reveal and frame it in 9:16, 1:1, 16:9, 4:3, or 3:4."
-  ],
-  "benefits": [
-    {
-      "t": "Show the reveal moment",
-      "d": "Show the outer package first, open the wrapping layers, then bring the product into view."
-    },
-    {
-      "t": "No boxes to film",
-      "d": "There's no need to set up lights, a table, and a stack of packaging. Describe the box in a sentence instead."
-    },
-    {
-      "t": "Ready before stock arrives",
-      "d": "If you already have a product photo, you can make a launch clip while inventory is still on its way."
-    }
-  ],
   "steps": [
     {
-      "t": "Upload the product photo",
-      "d": "Use a clear shot of the item itself. The packaging comes from your description, so it doesn't need to be in the photo."
+      "t": "Upload a product photo",
+      "d": "The product on its own, with its whole shape visible. You describe the box in step 2."
     },
     {
       "t": "Describe the box and the reveal",
-      "d": "Name the box color, material, and what's inside, for example \u201cwhite box, pink tissue, a candle on top.\u201d Choose vertical or square and the length."
+      "d": "Box, wrapping and what comes out first, like \"kraft box, cream tissue, candle\"."
     },
     {
-      "t": "Download or change the packaging",
-      "d": "Save the clip, or try a different box or wrapping in a new version to see which feels more like your brand."
-    }
-  ],
-  "uses": [
-    {
-      "t": "TikTok launch posts",
-      "d": "Post a vertical unboxing on launch day so followers see what arrives when they order."
-    },
-    {
-      "t": "YouTube Shorts",
-      "d": "A 15-second reveal fits Shorts and gives viewers a full look at the product once it's out."
-    },
-    {
-      "t": "Your product page",
-      "d": "Add the clip below your Shopify product photos to show what comes in the box."
-    },
-    {
-      "t": "Holiday gift guide posts",
-      "d": "Use a square version in Instagram or Facebook posts that show off gift-ready packaging."
+      "t": "Download, or change the packaging",
+      "d": "If the box doesn't look like yours, describe it again and make another."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 \u00b7 TikTok & Shorts"
+        "9:16 · TikTok & Shorts"
       ],
       [
         "Length",
@@ -77,7 +41,7 @@
   "faq": [
     {
       "q": "Do I need a photo of my packaging?",
-      "a": "No. Use a product photo, then describe the box, wrapping, and inserts. Review the result against the package you actually ship before publishing it."
+      "a": "No. Upload the product itself and describe the box, wrapping and inserts you use."
     },
     {
       "q": "Will my logo appear on the box?",
@@ -85,128 +49,19 @@
     },
     {
       "q": "What length works for an unboxing video?",
-      "a": "Ten seconds covers opening the box and showing the product. Choose 15 seconds for a slower reveal, 30 seconds for a full unboxing, or 6 seconds for a quick teaser."
+      "a": "Choose 6 seconds for a quick reveal, 10 to open the box and lift the item, or 15 to show several pieces."
     },
     {
       "q": "Can I make an unboxing video for a gift set or bundle?",
-      "a": "Yes. Upload a photo of the set and list what's inside, such as \u201cthree candles and a matchbox in a ribbon-tied box.\u201d A few items usually come out cleaner than a crowded box."
+      "a": "Yes. Upload a photo of the set and list what's inside, such as “three candles and a matchbox in a ribbon-tied box.” A few items usually come out cleaner than a crowded box."
     }
   ],
   "overview": [
     {
-      "h2": "Build anticipation around the package",
-      "p": "An unboxing clip is a short sequence: the container appears, a layer opens, and the product comes into view. The visual question is what arrives and how the reveal feels, so describe the materials and order instead of trying to fit the whole brand story into one shot."
-    },
-    {
-      "h2": "Preview the experience before the shipment arrives",
-      "p": "A product photo can anchor the item while your description supplies the mailer, box, tissue, ribbon, card, or insert. Use the clip to plan a launch post or gift presentation, then compare the final packaging with the real stock before publishing."
+      "h2": "Build a clear open-and-reveal sequence",
+      "p": "An unboxing clip follows a simple reveal: open the outer package, move aside one layer of wrapping, and show the item. Describe the materials and order you use so the preview stays close to the package customers receive."
     }
   ],
-  "input_guide": {
-    "h2": "Describe the layers people will open",
-    "items": [
-      {
-        "t": "Show the product itself",
-        "d": "Use a photo where the item or set is visible enough to recognize once it leaves the package."
-      },
-      {
-        "t": "Name the outer container",
-        "d": "Say whether the scene starts with a mailer, rigid box, drawer box, pouch, or another package shape."
-      },
-      {
-        "t": "List the reveal layers",
-        "d": "Mention tissue, a sleeve, a ribbon, a card, or a paper insert in the order the hands should uncover them."
-      },
-      {
-        "t": "Describe the finish",
-        "d": "Matte, kraft, glossy, soft-touch, or colored materials give the packaging a visual identity without depending on tiny printed words."
-      },
-      {
-        "t": "Keep the set count manageable",
-        "d": "For a bundle, name only the items that need to appear first so the box does not become visually crowded."
-      }
-    ]
-  },
-  "results": {
-    "h2": "A reveal built for a quick watch",
-    "items": [
-      {
-        "t": "One package sequence",
-        "d": "Choose 6, 10, 15, or 30 seconds for a teaser, standard reveal, or slower presentation."
-      },
-      {
-        "t": "A feed-ready shape",
-        "d": "Use 9:16 for vertical social posts, 1:1 for square feeds, or 16:9 for a wide product area."
-      },
-      {
-        "t": "A cost shown in advance",
-        "d": "The credit cost appears before a job starts, and failed jobs return those credits."
-      },
-      {
-        "t": "A download to review",
-        "d": "Review the downloaded file, which has no watermark; the [FAQ](/faq) outlines commercial-use terms. Then add accurate launch details."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Reveal scenes for different launches",
-    "items": [
-      {
-        "t": "Minimal mailer",
-        "d": "A kraft mailer opens on a pale desk, white tissue folds back, and a ceramic mug is lifted by its handle."
-      },
-      {
-        "t": "Gift-ready box",
-        "d": "A ribbon-tied cream box opens under warm light, revealing a small skincare set on a paper insert."
-      },
-      {
-        "t": "Subscription arrival",
-        "d": "A printed-color box opens to three snack pouches arranged in a single layer with tissue around them."
-      },
-      {
-        "t": "Tech accessory",
-        "d": "A slim black box slides open to reveal headphones resting in a molded tray."
-      },
-      {
-        "t": "Seasonal bundle",
-        "d": "A deep green box opens beside pine branches, revealing two candles and a matchbox tied together."
-      },
-      {
-        "t": "Single hero item",
-        "d": "A drawer-style package pulls open slowly and presents one watch against a dark foam insert."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Make the reveal ready for a real launch",
-    "items": [
-      {
-        "t": "Add package wording",
-        "d": "Type the product name, offer, date, and any insert wording in your editor rather than trusting generated lettering."
-      },
-      {
-        "t": "Match the stock on hand",
-        "d": "Compare the box color, tissue, included pieces, and order of opening with the package customers will actually receive."
-      },
-      {
-        "t": "Choose a clear disclosure",
-        "d": "If a channel asks you to label realistic AI content, enable its label before posting the reveal."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Packaging stories that fit this format",
-    "good": [
-      "Giftable products with a clear box, wrap, or insert",
-      "Subscription boxes with a small, curated set",
-      "Product launches where the package is part of the first impression",
-      "Bundles that can be shown in one uncluttered reveal"
-    ],
-    "not_ideal": [
-      "Packaging whose value depends on perfectly readable small print",
-      "Large assortments that cannot fit into one clear opening sequence"
-    ]
-  },
   "examples": {
     "h2": "More unboxing scenes",
     "lead": "Different boxes, different reveals. Pick the one closest to how your product really ships.",
@@ -252,5 +107,208 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "strip": [
+      "n:guide:b1-unboxing-videos-source",
+      "n:guide:b1-unboxing-videos-result",
+      "n:gen2:tpl-pack-g1",
+      "n:gen2:tpl-pack-g2",
+      "n:gen2:occ-holidays-g1",
+      "n:gen2:occ-holidays-g3"
+    ],
+    "steps": {
+      "source": "n:guide:b1-unboxing-videos-source",
+      "sourceAlt": "Plain white ceramic candle jar standing by itself on a neutral surface.",
+      "result": "n:guide:b1-unboxing-videos-result",
+      "mode": "video",
+      "length": 10,
+      "prompt": "Open a kraft box, fold back cream tissue paper and lift out this plain white candle jar."
+    },
+    "picker": {
+      "title": "Choose a package and reveal",
+      "lead": "See a kraft box open, cream tissue fold back and a candle lift into view.",
+      "chips": [
+        {
+          "id": "gift",
+          "label": "Gift sets"
+        },
+        {
+          "id": "kitchen",
+          "label": "Kitchen"
+        },
+        {
+          "id": "care",
+          "label": "Care"
+        },
+        {
+          "id": "small",
+          "label": "Small items"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-box-g1",
+          "label": "Camping breakfast kit",
+          "chips": [
+            "gift",
+            "kitchen"
+          ],
+          "prompt": "Lift the lid, then arrange the mug, coffee pouch and spork on the blanket.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-box-g2",
+          "label": "Pet grooming kit revealed",
+          "chips": [
+            "gift",
+            "care"
+          ],
+          "prompt": "Open the small kit box and set the brush and towel beside the shampoo bottle.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-box-g3",
+          "label": "Tea gift set opened",
+          "chips": [
+            "gift",
+            "kitchen"
+          ],
+          "prompt": "Open the tea tin set and place the infuser and cup beside it.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-ugc-g2",
+          "label": "Scarf pulled from mailer",
+          "chips": [
+            "gift",
+            "small"
+          ],
+          "prompt": "Open the mailer and lift the folded scarf out onto the bed.",
+          "kind": "video"
+        },
+        {
+      "ref": "n:guide:b1-unboxing-card",
+      "label": "Headphones lifted from a box",
+      "chips": [
+        "gift",
+        "small"
+      ],
+      "prompt": "Lift the headphones from the open box, then turn them to show both ear cups.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:ind-electronics-g1",
+          "label": "Speaker beside open box",
+          "chips": [
+            "small",
+            "care"
+          ],
+          "prompt": "Open the carton and place the speaker and cable beside the box.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-pack-g3",
+          "label": "Three package types together",
+          "chips": [
+            "small",
+            "kitchen"
+          ],
+          "prompt": "Set the carton, pouch and bottle in a row, then turn each one toward the camera.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-limited-drop-alert-video-g3",
+          "label": "Handmade mugs unboxed",
+          "chips": [
+            "gift",
+            "kitchen"
+          ],
+          "prompt": "Lift one handmade mug from the box and show its blank glaze in the light.",
+          "kind": "video"
+        }
+      ],
+      "button": "Try this video idea"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:gen2:tpl-compare-g2",
+        "h": "Launch post",
+        "d": "Show the box and the product together before launch day."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:gen2:tpl-pack-c4",
+        "h": "Product page",
+        "d": "Shoppers see what arrives at their door, box and all."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-launch-c4",
+        "bad": "n:guide:b1-unboxing-videos-bad-crop",
+        "good_label": "Full candle jar in even light",
+        "bad_label": "Top of candle jar cut by frame"
+      },
+      {
+        "good": "n:gen2:tpl-box-c2",
+        "bad": "n:guide:b1-unboxing-videos-bad-dark",
+        "good_label": "Kit parts visible with clear spacing",
+        "bad_label": "Low light hides items in the set"
+      }
+    ],
+    "outputs": [
+      {
+      "ref": "n:guide:b1-unboxing-output",
+      "frame": "1:1",
+      "label": "Wallet lifted from a gift box",
+        "length": 10
+      },
+      {
+        "ref": "n:gen2:ind-electronics-g2",
+        "frame": "1:1",
+        "label": "Tablet stand beside a desk",
+        "length": 10
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:occ-holidays-c2",
+      "zones": [
+        "Product name",
+        "Caption"
+      ],
+      "items": [
+        "Describe only packaging you actually ship.",
+        "Add your logo or a printed note in your editor."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "How to make an unboxing video in 3 steps"
+      },
+      "m3": {
+        "h2": "Unboxing video ideas by product",
+        "lead": "See box and reveal ideas for a mug set, a candle and small everyday items."
+      },
+      "m4": {
+        "h2": "Where unboxing videos help you sell"
+      },
+      "m5": {
+        "h2": "What photo to upload for an unboxing video"
+      },
+      "m6": {
+        "h2": "Unboxing video length, size and credits"
+      },
+      "m7": {
+        "h2": "Add your logo after download"
+      },
+      "gallery": {
+        "h2": "AI unboxing video examples"
+      },
+      "examples": {
+        "h2": "More unboxing scenes"
+      }
+    }
   }
 }

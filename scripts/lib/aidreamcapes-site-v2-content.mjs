@@ -752,6 +752,8 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
     strip: (Array.isArray(source.strip) ? source.strip : []).map((ref) => visualImage(model, ref)),
     steps: {
       source: { ...visualImage(model, steps.source, "photo"), ...(steps.sourceAlt ? { alt: String(steps.sourceAlt) } : {}) },
+      ...(steps.sourceTitle ? { sourceTitle: String(steps.sourceTitle) } : {}),
+      ...(steps.sourceHint ? { sourceHint: String(steps.sourceHint) } : {}),
       result: visualImage(model, steps.result, stepMode === "video" ? "video" : "photo"),
       options,
       credits: `${stepCredits} credits`,
@@ -1637,6 +1639,8 @@ export function validateSiteV2(build = buildSiteV2()) {
       for (const label of [item.good_label, item.bad_label]) if (wordCount(label) < 3 || wordCount(label) > 12) errors.push(`${pageId}: visual input labels must contain 3-12 words (${label})`);
     }
     if (!(visual.steps.mode === "photo" || visual.steps.mode === "video")) errors.push(`${pageId}: visual steps need a photo or video mode`);
+    if (visual.steps.sourceTitle != null && (typeof visual.steps.sourceTitle !== "string" || !visual.steps.sourceTitle.trim() || visual.steps.sourceTitle.length > 60)) errors.push(`${pageId}: visual source title must be a non-empty string of at most 60 characters`);
+    if (visual.steps.sourceHint != null && (typeof visual.steps.sourceHint !== "string" || !visual.steps.sourceHint.trim() || visual.steps.sourceHint.length > 100)) errors.push(`${pageId}: visual source hint must be a non-empty string of at most 100 characters`);
     if (typeof visual.steps.prompt !== "string" || !visual.steps.prompt.trim()) errors.push(`${pageId}: visual steps need an example prompt`);
     if (visual.outputs.length < 2 || visual.outputs.length > 4) errors.push(`${pageId}: visual outputs must contain 2-4 cards`);
     if (pageId === "home" && (!visual.sizes || visual.sizes.length < 3 || visual.sizes.length > 4)) errors.push(`${pageId}: home visual sizes must contain 3-4 frames`);

@@ -1,64 +1,28 @@
 {
   "id": "video-ads",
   "title": "AI UGC Video Ads for TikTok and Reels | AIVideosUGC",
-  "description": "Create AI UGC video ads with a casual creator-style look from a product photo. Review the scene, then add captions in TikTok, Reels, or Facebook.",
+  "description": "Create AI UGC video ads with a casual creator-style look from a product photo. Download the clip and add captions in TikTok, Reels, or Facebook.",
   "h1": "AI UGC Video Ads With a Casual, Creator-Style Look",
   "eyebrow": "Creator-style ads",
-  "lead": "AI UGC video ads use creator-style visuals made with an AI-generated person. UGC describes the style here, not a real customer review or endorsement.",
+  "lead": "Make short UGC-style video ads for TikTok, Reels and Shorts from one product photo. The person in the video is AI-generated, so show the product, not a fake review.",
   "secondary_keywords": [
     "UGC style video ads",
     "creator-style product ads",
     "AI UGC ads for TikTok",
     "UGC video ad maker"
   ],
-  "intro": [
-    "Creator-style videos use casual handheld framing, everyday light, and a familiar setting. The person and scene are AI-generated, so do not present them as a customer's experience or endorsement.",
-    "AIVideosUGC builds this visual style from your product photo and one sentence. Describe the moment you want, then choose 9:16, 1:1, 16:9, 4:3, or 3:4 and 6, 10, 15, or 30 seconds. Each run creates one AI-generated clip for you to review and edit."
-  ],
-  "benefits": [
-    {
-      "t": "Fits in with real posts",
-      "d": "Show one product action, such as a hand opening, lifting, or using the item in a familiar setting."
-    },
-    {
-      "t": "No samples to ship",
-      "d": "Skip finding creators and mailing them products. All you need is a clear photo of the item."
-    },
-    {
-      "t": "Easy to try new openings",
-      "d": "Change the first scene in your description and run it again. Each version is a separate video, with its cost shown before it starts."
-    }
-  ],
   "steps": [
     {
-      "t": "Add a shot of your product",
-      "d": "A clean shot of the item on its own gives the video an accurate picture of what to put in someone's hand."
+      "t": "Upload a product photo",
+      "d": "Well lit, with the whole product in frame."
     },
     {
-      "t": "Describe the everyday moment",
-      "d": "Say where it happens and what the hands do, like “unzipping the backpack on a train seat.” Then choose 9:16 and a length."
+      "t": "Describe one everyday moment",
+      "d": "Where it happens and one action, like \"grab the lunch bag on the way out\". Pick 9:16 for TikTok and Reels."
     },
     {
-      "t": "Download and make another take",
-      "d": "Save the ad for TikTok or Ads Manager. For a different first second, rewrite the scene and generate a new take."
-    }
-  ],
-  "uses": [
-    {
-      "t": "TikTok in-feed ads",
-      "d": "Run the vertical clip as an in-feed ad, adding your captions and music inside TikTok before it goes live."
-    },
-    {
-      "t": "Instagram Reels ads",
-      "d": "A casual 9:16 clip fills the Reels placement in Ads Manager with no cropping."
-    },
-    {
-      "t": "Facebook feed",
-      "d": "Make a 1:1 version for the feed, where a square video takes up more of the screen than a wide one."
-    },
-    {
-      "t": "Your brand's own accounts",
-      "d": "Post the clip on your TikTok or Instagram profile to gauge interest in a product before you spend on ads."
+      "t": "Download, then add your hook",
+      "d": "Type the headline and offer in CapCut or Ads Manager."
     }
   ],
   "maker": {
@@ -81,7 +45,7 @@
     },
     {
       "q": "Can I present an AI-generated person as a real customer?",
-      "a": "No. The person and scene are AI-generated, so do not describe them as a real buyer or add quotes they never gave. Follow the publishing platform's disclosure rules and avoid false endorsements."
+      "a": "No. The person and scene are AI-generated; they are not customer footage or a real endorsement."
     },
     {
       "q": "Can I add captions, a price, or music?",
@@ -90,123 +54,10 @@
   ],
   "overview": [
     {
-      "h2": "Make the first second feel lived in",
-      "p": "A creator-style ad works when the product enters an ordinary moment: a bag opens, a hand reaches across a desk, or a package is set down before the feature appears. Describe the setting and action plainly so the clip feels like an observation rather than a polished advertising claim."
-    },
-    {
-      "h2": "Keep the visual honest about its source",
-      "p": "This is an AI-generated product scene, not footage from a real buyer. Use the casual visual language for an ad concept or social post, then add your approved wording and any required AI disclosure in the publishing tool."
+      "h2": "Keep the product at the center of a casual scene",
+      "p": "A casual scene can show a product in an ordinary moment, such as packing a lunch bag or picking up a speaker. The person and setting are AI-generated."
     }
   ],
-  "input_guide": {
-    "h2": "Set up a believable handheld moment",
-    "items": [
-      {
-        "t": "Choose an item people can hold",
-        "d": "Bottles, pouches, mugs, phone cases, small bags, and desk accessories give hands a clear relationship to the product."
-      },
-      {
-        "t": "Show the product without clutter",
-        "d": "Use a photo where the silhouette and main color are easy to recognize before the scene adds a room or prop."
-      },
-      {
-        "t": "Name the place",
-        "d": "A kitchen counter, hallway bench, gym bag, or home office gives the opening a natural context without requiring a long story."
-      },
-      {
-        "t": "Describe one hand action",
-        "d": "Write “pulls the bottle from the side pocket” or “sets the pouch beside a lunch box,” then stop before adding a second plot."
-      },
-      {
-        "t": "Leave the claim for the edit",
-        "d": "Use the generated clip to show the moment; add verified features, prices, and calls to action as typed captions later."
-      }
-    ]
-  },
-  "results": {
-    "h2": "What the ad draft contains",
-    "items": [
-      {
-        "t": "A short creator-style scene",
-        "d": "Choose 6, 10, 15, or 30 seconds and receive one social-ready visual per run."
-      },
-      {
-        "t": "Placement-friendly framing",
-        "d": "Use 9:16 for vertical feeds, 1:1 for square placements, 16:9 for a wide surface, or 4:3 and 3:4 when those crops fit better."
-      },
-      {
-        "t": "A price you see first",
-        "d": "The credit cost is displayed before generation, and failed jobs return the reserved amount."
-      },
-      {
-        "t": "A clean download",
-        "d": "The download carries no watermark; for commercial-use terms, visit the [FAQ](/faq). Review the claims and labels before publishing."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Everyday openings to brief",
-    "items": [
-      {
-        "t": "Desk setup",
-        "d": "A hand slides a compact keyboard toward a laptop on a cluttered home-office desk, then taps one key."
-      },
-      {
-        "t": "Gym bag reach",
-        "d": "A water bottle is pulled from a side pocket on a bench and turned so the cap faces the camera."
-      },
-      {
-        "t": "Morning counter",
-        "d": "A soap bar is picked up beside a sunny bathroom sink while a towel sits in the background."
-      },
-      {
-        "t": "Commute-ready tote",
-        "d": "A canvas tote is lifted from a hallway hook, and a hand drops a notebook into its open top."
-      },
-      {
-        "t": "Snack break",
-        "d": "A resealable snack pouch is opened beside a lunch container on a kitchen table."
-      },
-      {
-        "t": "Nightstand moment",
-        "d": "A phone case is placed beside a charging cable on a bedroom nightstand under a small lamp."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Turn the scene into a finished ad",
-    "items": [
-      {
-        "t": "Add the message in typed text",
-        "d": "Use your editor or ad platform for captions, product names, prices, and dates so small characters remain accurate."
-      },
-      {
-        "t": "Add sound separately",
-        "d": "AIVideosUGC does not add voiceover, music, or captions."
-      },
-      {
-        "t": "Label the source when required",
-        "d": "If the destination asks for an AI-generated content label, enable it before the post or ad goes live."
-      },
-      {
-        "t": "Check that the scene matches reality",
-        "d": "Review hands, product color, packaging, and the action before using the clip in paid media."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "Products that suit a creator-style frame",
-    "good": [
-      "Small items that naturally fit in one hand",
-      "Everyday goods used at a desk, counter, bench, or entryway",
-      "Launches that need several opening scenes to compare",
-      "Social ads where a casual visual can sit beside ordinary posts"
-    ],
-    "not_ideal": [
-      "Products that require an exact spoken explanation or precise on-screen lettering",
-      "Claims that depend on a real customer's personal experience"
-    ]
-  },
   "examples": {
     "h2": "More UGC ad scenes",
     "lead": "Everyday moments that open with the product already in view, the way short creator-style ads usually start.",
@@ -252,5 +103,208 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "strip": [
+      "n:guide:b1-video-ads-source",
+      "n:guide:b1-video-ads-result",
+      "n:gen2:tpl-story-g1",
+      "n:gen2:tpl-story-g2",
+      "n:gen2:tpl-story-g3",
+      "n:gen2:tpl-ugc-g3"
+    ],
+    "steps": {
+      "source": "n:guide:b1-video-ads-source",
+      "sourceAlt": "Soft sage insulated lunch bag standing on a bright kitchen counter.",
+      "result": "n:guide:b1-video-ads-result",
+      "mode": "video",
+      "length": 15,
+      "prompt": "A hand lifts this sage lunch bag by its handle and sets it next to a packed lunch on a kitchen counter."
+    },
+    "picker": {
+      "title": "Choose a casual product moment",
+      "lead": "A scene can show a snack pouch on a trip or a lamp by the tent.",
+      "chips": [
+        {
+          "id": "home",
+          "label": "At home"
+        },
+        {
+          "id": "travel",
+          "label": "On the go"
+        },
+        {
+          "id": "beauty",
+          "label": "Beauty & care"
+        },
+        {
+          "id": "daily",
+          "label": "Daily life"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-spark-ads-style-video-c1",
+          "label": "Phone tripod set on desk",
+          "chips": [
+            "home",
+            "daily"
+          ],
+          "prompt": "Set the phone tripod on a desk and place the product in soft window light.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-spark-ads-style-video-c2",
+          "label": "Snack pouch on road trip",
+          "chips": [
+            "travel",
+            "daily"
+          ],
+          "prompt": "Open the snack pouch on a car dashboard and place it beside the seat.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-spark-ads-style-video-c3",
+          "label": "Lip oil from gym bag",
+          "chips": [
+            "beauty",
+            "daily"
+          ],
+          "prompt": "Take the lip oil from a gym bag pocket and turn its blank front toward the camera.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-spark-ads-style-video-c4",
+          "label": "Pet brush in use",
+          "chips": [
+            "daily"
+          ],
+          "prompt": "Brush a relaxed dog once, keeping the brush visible in the foreground.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-carousel-video-ad-c1",
+          "label": "Cleanser and cream lined up",
+          "chips": [
+            "beauty",
+            "home"
+          ],
+          "prompt": "Move from cleanser to cream across the counter in a slow horizontal pan.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-carousel-video-ad-c2",
+          "label": "Lantern lit beside tent",
+          "chips": [
+            "travel",
+            "home"
+          ],
+          "prompt": "Switch on the camping lantern beside the tent as the light fades.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-retargeting-video-ad-c2",
+          "label": "Serum back on bathroom shelf",
+          "chips": [
+            "beauty",
+            "daily"
+          ],
+          "prompt": "Place the serum bottle back on the shelf and turn its front toward the light.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-retargeting-video-ad-c4",
+          "label": "Coffee grinder on morning counter",
+          "chips": [
+            "home",
+            "daily"
+          ],
+          "prompt": "Turn the hand grinder once, then set it beside a cup on the counter.",
+          "kind": "video"
+        }
+      ],
+      "button": "Try this video idea"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "n:gen2:examples-g1",
+        "h": "TikTok and Reels",
+        "d": "A casual clip fits the feed better than a polished studio shot."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:examples-g2",
+        "h": "Ad testing",
+        "d": "Make two moments with the same product and keep the one that gets more clicks."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-sale-c2",
+        "bad": "n:guide:b1-video-ads-bad-dark",
+        "good_label": "Running shoes fully in frame on a red backdrop",
+        "bad_label": "Dim light hides the shoe details"
+      },
+      {
+        "good": "n:gen2:occ-sale-discount-g1",
+        "bad": "n:guide:b1-video-ads-bad-blur",
+        "good_label": "Wool socks clear against a quiet background",
+        "bad_label": "Soft focus blurs the wool knit"
+      }
+    ],
+    "outputs": [
+      {
+      "ref": "n:gen2:tpl-spark-ads-style-video-g3",
+      "frame": "9:16",
+      "label": "Mini massage gun after a run",
+        "length": 15
+      },
+      {
+        "ref": "n:gen2:tpl-retargeting-video-ad-g3",
+        "frame": "16:9",
+        "label": "Perfume bottle by its gift bag",
+        "length": 15
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:tpl-launch-g2",
+      "zones": [
+        "Caption",
+        "Offer"
+      ],
+      "items": [
+        "Only claim what your product really does.",
+        "Label it as AI-generated where the platform asks you to.",
+        "Don't present the person as a real customer."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "How to make an AI UGC video ad in 3 steps"
+      },
+      "m3": {
+        "h2": "UGC video ad ideas for everyday moments",
+        "lead": "See one product in a desk scene, lunch break or quick errand."
+      },
+      "m4": {
+        "h2": "Where AI UGC video ads work"
+      },
+      "m5": {
+        "h2": "What product photo works for a video ad"
+      },
+      "m6": {
+        "h2": "Video ad length, size and credits"
+      },
+      "m7": {
+        "h2": "Before you run the ad"
+      },
+      "gallery": {
+        "h2": "AI UGC video ad examples"
+      },
+      "examples": {
+        "h2": "More UGC-style ad scenes"
+      }
+    }
   }
 }
