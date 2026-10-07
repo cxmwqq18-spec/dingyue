@@ -13,7 +13,7 @@
     "clean product shots without a studio"
   ],
   "intro": [
-    "For Amazon, compare the final image with current requirements on our [Amazon product photos page](/platforms/amazon-product-photos). Check each other marketplace's own image rules before uploading. Start with a clear photo of the whole item and its important edges; the tool creates a square image on a plain white background.",
+    "Amazon asks for a main image on a pure white background with the product filling most of the frame; our [Amazon product photos page](/platforms/amazon-product-photos) covers the details, and other marketplaces set their own rules. Getting that look by hand usually means a lightbox, careful lighting, and time spent cleaning up edges. Here you start from a clear photo of the whole item, and the tool creates a square image on a plain white background.",
     "It suits sellers who list often and shoot on a phone: a candle maker adding new scents, a reseller with a shelf of sneakers, a shop owner tidying up old listings. Each result is square by default, which works for main images, collection grids and marketplace thumbnails. If a result isn't quite right, run it again with a short note such as \"show the front label\" or \"keep the strap visible.\""
   ],
   "benefits": [

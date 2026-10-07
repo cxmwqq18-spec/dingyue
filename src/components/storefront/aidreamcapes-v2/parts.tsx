@@ -223,7 +223,7 @@ export function Reading({ items, r }: { items: V2Article[]; r: V2Resolvers }) {
   );
 }
 
-export function Faq({ items, title = "Questions" }: { items: V2Faq[]; title?: string }) {
+export function Faq({ items, title = "Questions", r }: { items: V2Faq[]; title?: string; r: V2Resolvers }) {
   if (!items.length) return null;
   return (
     <section className="sec" id="faq">
@@ -237,7 +237,7 @@ export function Faq({ items, title = "Questions" }: { items: V2Faq[]; title?: st
             {items.map((item, index) => (
               <details key={item.q} open={index === 0}>
                 <summary>{item.q}</summary>
-                <p>{item.a}</p>
+                <p><RichText r={r} text={item.a} /></p>
               </details>
             ))}
           </div>

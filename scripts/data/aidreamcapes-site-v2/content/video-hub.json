@@ -4,7 +4,7 @@
   "description": "Our AI video generator for ecommerce turns one product photo into a 6, 10, 15, or 30 second clip for TikTok, Reels, or your store. Pick a video type to start.",
   "h1": "AI Video Generator for Ecommerce: Choose a Video Type",
   "eyebrow": "AI video tools",
-  "lead": "The AI video generator for ecommerce offers ads, demos, unboxing, before-and-after clips, and motion from still photos. Add a product photo or describe the scene, then choose its frame.",
+  "lead": "The AI video generator for ecommerce offers ads, demos, unboxing, before-and-after clips, and motion from still photos. Add a product photo or describe the scene, then choose the video size.",
   "card": "Short video ads, demos and unboxings made from one product photo.",
   "secondary_keywords": [
     "ecommerce video maker",
@@ -62,8 +62,8 @@
       "a": "The displayed cost depends on length: 6 seconds uses 24 credits, 10 uses 40, 15 uses 60, and 30 uses 120. The workspace currently exposes 6, 10, and 15 seconds."
     },
     {
-      "q": "Can each video run make more than one clip?",
-      "a": "No. Each generation makes one clip. Change the scene description to make another version, and review the credit cost before you start."
+      "q": "What should the first shot of a product video show?",
+      "a": "Show the item clearly before it moves. Use one action that explains its purpose, and keep the label and important parts in view as the scene develops."
     }
   ],
   "overview": [
@@ -164,7 +164,7 @@
       },
       {
         "t": "Layer captions and sound",
-        "d": "AIVideosUGC does not add voiceover, music, or captions."
+        "d": "Add captions, music, or a voiceover in TikTok, CapCut, Ads Manager, or your usual editor after download, since the generated clip doesn't include them."
       },
       {
         "t": "Check the product frame by frame",

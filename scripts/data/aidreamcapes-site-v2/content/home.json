@@ -35,17 +35,17 @@
     {
       "id": "lipstick",
       "t": "Lipstick: one studio shot becomes a vanity scene and a shade swatch",
-      "d": "A lipstick photo illustrates a vanity scene and a close-up beside a shade swatch."
+      "d": "One lipstick photo became a vanity scene and a close-up beside a matching shade swatch."
     },
     {
       "id": "hoodie",
       "t": "Hoodie: a flat product photo becomes street style and a flat lay",
-      "d": "A gray hoodie photo illustrates a street scene and a flat lay with a beanie and scarf."
+      "d": "One gray hoodie photo became a street scene and a flat lay with a beanie and scarf."
     },
     {
       "id": "coffee",
       "t": "Coffee beans: a plain bag in a kitchen and at a breakfast table",
-      "d": "A coffee bag photo illustrates a kitchen-counter setting and a breakfast-table scene."
+      "d": "One coffee bag photo became a kitchen-counter scene and a breakfast-table setting."
     }
   ],
   "ugc": {
@@ -142,7 +142,7 @@
     },
     {
       "q": "Does AIVideosUGC add narration, music, or captions?",
-      "a": "AIVideosUGC does not add voiceover, music, or captions."
+      "a": "No. AIVideosUGC does not add voiceover, music, or captions. Add them in TikTok, CapCut, or your usual editor after you download, and type prices or offers there so every word is right."
     },
     {
       "q": "Can I try it for free?",

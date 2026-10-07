@@ -179,7 +179,7 @@ function buildModel(source) {
   const cardByKey = Object.fromEntries(cards.map((card) => [card.key, card]));
   // Which pictures are already on the page being built, and how often each has been used on the
   // site so far. Cards use these to pick a picture that is not repeated (see cardRef).
-  return { pages, byId, content, images, media, cardOverrides, cardOverrideErrors: [], ind, plat, occ, cards, cardByKey, cardRefInfo: new WeakMap(), pageUse: new Set(), globalUse: new Map(), cardUse: new Map(), spreadUse: new Map(), spreadEnabled: true, currentPageId: "", currentPageIsTool: false, currentPageIsOccasion: false, currentPageIsPlatform: false, currentPageIsCollection: false, currentPageCardCount: 0 };
+  return { pages, byId, content, images, media, cardOverrides, cardOverrideErrors: [], cardOverrideCardKeys: new Map(), ind, plat, occ, cards, cardByKey, cardRefInfo: new WeakMap(), pageUse: new Set(), globalUse: new Map(), cardUse: new Map(), spreadUse: new Map(), spreadEnabled: true, currentPageId: "", currentPageIsTool: false, currentPageIsOccasion: false, currentPageIsPlatform: false, currentPageIsCollection: false, currentPageCardCount: 0 };
 }
 
 function imageRef(model, key, alt) {
@@ -422,28 +422,24 @@ function knownMediaRef(model, ref) {
   try { mediaSource(model, ref); return true; } catch { return false; }
 }
 
-// Overrides are applied only after the page's template list has been selected. The hero collage,
-// case examples, and other pages keep their own cards and pictures.
+// Overrides are applied only after a page's rendered template card lists have been selected.
+// Some pages render templates in more than one list (for example, a collection collage and its
+// template area), so keep the union of the actual source and resulting card keys for validation.
 function applyCardOverrides(model, page, cards) {
   const override = model.cardOverrides?.[page.id];
   if (!override || !Array.isArray(cards)) return cards;
   const result = [...cards];
+  const cardKeys = model.cardOverrideCardKeys.get(page.id) ?? { source: new Set(), rendered: new Set() };
+  for (const card of result) cardKeys.source.add(card.key);
   const swaps = override.swap && typeof override.swap === "object" && !Array.isArray(override.swap) ? override.swap : {};
-  const appliedSwaps = new Set();
   for (let index = 0; index < result.length; index += 1) {
     const original = result[index];
     const target = swaps[original.key];
     if (typeof target !== "string" || target === original.key || !model.cardByKey[target]) continue;
-    appliedSwaps.add(original.key);
     releaseCardRef(model, original);
     const replacement = cardRef(model, target, "alt", true);
     if (replacement) result[index] = replacement;
     else model.cardOverrideErrors.push(`${page.id}: card swap ${original.key} -> ${target} could not be rendered`);
-  }
-  for (const [from, to] of Object.entries(swaps)) {
-    if (typeof to === "string" && to !== from && model.cardByKey[to] && !appliedSwaps.has(from)) {
-      model.cardOverrideErrors.push(`${page.id}: card swap source ${from} is not in the selected template list`);
-    }
   }
   const images = override.images && typeof override.images === "object" && !Array.isArray(override.images) ? override.images : {};
   for (const card of result) {
@@ -464,7 +460,21 @@ function applyCardOverrides(model, page, cards) {
     adjustUseCount(model.globalUse, imageOverride.ref, 1);
     model.cardRefInfo.set(card, { ...info, ref: imageOverride.ref });
   }
+  for (const card of result) cardKeys.rendered.add(card.key);
+  model.cardOverrideCardKeys.set(page.id, cardKeys);
   return result;
+}
+
+function finalizeCardOverrides(model) {
+  for (const [pageId, override] of Object.entries(model.cardOverrides ?? {})) {
+    const keys = model.cardOverrideCardKeys.get(pageId) ?? { source: new Set(), rendered: new Set() };
+    for (const from of Object.keys(override?.swap ?? {})) {
+      if (!keys.source.has(from)) model.cardOverrideErrors.push(`${pageId}: card swap source ${from} is not in rendered template cards`);
+    }
+    for (const key of Object.keys(override?.images ?? {})) {
+      if (!keys.rendered.has(key)) model.cardOverrideErrors.push(`${pageId}: image override card ${key} is not in rendered template cards`);
+    }
+  }
 }
 
 const CASE_PAGE_TYPES = new Set(["hub-tool", "tool", "template", "industry", "platform", "occasion"]);
@@ -1027,8 +1037,8 @@ function enrichmentFor(model, page, c) {
   };
   const items = (value, linkify = false) => Array.isArray(value) ? value.map((entry) => item(entry, linkify)).filter((entry) => entry.t) : [];
   const section = (value) => {
-    if (Array.isArray(value)) return value.map((entry) => ({ h2: entry.h2, paras: [entry.d ?? entry.p ?? ""].filter(Boolean) }));
-    if (value && typeof value === "object") return [{ h2: value.h2, paras: [], items: items(value.items) }];
+    if (Array.isArray(value)) return value.map((entry) => ({ h2: entry.h2, paras: [inlineLinks(model, entry.d ?? entry.p ?? "", page.id)].filter(Boolean) }));
+    if (value && typeof value === "object") return [{ h2: value.h2, paras: [], items: items(value.items, true) }];
     return [];
   };
   const block = (value, linkify = false) => value && typeof value === "object" ? { h2: value.h2, items: items(value.items, linkify) } : undefined;
@@ -1055,7 +1065,7 @@ function payloadFor(model, page) {
   const base = {
     id: page.id, label: page.label, eyebrow: c.eyebrow || page.label, h1: c.h1, lead: c.lead,
     breadcrumbs: page.id === "home" ? [] : breadcrumbTrail(model, page),
-    faq: (c.faq || []).map((item) => ({ q: item.q, a: item.a })),
+    faq: (c.faq || []).map((item) => ({ q: item.q, a: inlineLinks(model, item.a, page.id) })),
     startNote: page.type === "pricing" ? START_NOTE_PLAIN : START_NOTE,
     ...(typeof c.cta_lead === "string" ? { ctaLead: c.cta_lead } : {}),
     ...(typeof c.templates_lead === "string" ? { templatesLead: c.templates_lead } : {}),
@@ -1065,6 +1075,7 @@ function payloadFor(model, page) {
   };
   const t = page.type;
   if (t === "home") {
+    const homeTemplateCards = applyCardOverrides(model, page, HOME_FEATURED.map((key) => cardRef(model, key, key === "creator" ? "alt" : "primary")).filter(Boolean));
     return { ...base,
       // `output` and `versions` belong to the picture layout used when the hero has no video; with the video reel they are not shown, so they stay out of the data.
       hero: { image: mediaImage(model, "g:feed-ad-still/source-input", "inset"),
@@ -1072,7 +1083,7 @@ function payloadFor(model, page) {
         videoHref: appHref({ tool: "video-ads", template: "creator", size: "9:16", length: "15", prompt: TEMPLATE_PROMPTS.creator }, true),
         photoHref: appHref({ tool_id: "image_generator", tool: "white-background", template: "white", prompt: TEMPLATE_PROMPTS.white }, false) },
       make: { title: c.make_title, lead: c.make_lead, video: VIDEO_TOOLS.map((id) => toolRef(model, id)), photo: PHOTO_TOOLS.map((id) => toolRef(model, id)) },
-      templates: { title: c.templates_title, lead: c.templates_lead, cards: HOME_FEATURED.map((key) => cardRef(model, key, key === "creator" ? "alt" : "primary")).filter(Boolean), total: model.cards.length },
+      templates: { title: c.templates_title, lead: c.templates_lead, cards: homeTemplateCards, total: model.cards.length },
       platforms: { title: c.platforms_title, items: Object.entries(model.plat).map(([slug, label]) => ({ label, href: model.byId[`plat-${slug}`].url, spec: (model.content[`plat-${slug}`].specs || [["", ""]])[0][1] })) },
       steps: c.steps, compare: c.compare, plans: PLANS,
       ...(c.ugc ? { ugc: { ...c.ugc, paras: (c.ugc.paras || []).map((para) => inlineLinks(model, para, page.id)) } } : {}),
@@ -1128,7 +1139,7 @@ function payloadFor(model, page) {
     const occasionIds = (page.occasions ?? []).map((slug) => `occ-${slug}`);
     const names = (ids) => ids.map((id) => model.byId[id].label).join(", ");
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.ideas || []]);
-    const moreCards = pickRelatedCards(model, related, fallback, 3);
+    const moreCards = applyCardOverrides(model, page, pickRelatedCards(model, related, fallback, 3));
     const caseCards = caseCardsFor(model, page, moreCards);
     return { ...base, kind: page.group, intro: linkedCopy.intro, tip: c.tip, steps: c.steps, ideas: linkedCopy.groups[0],
       image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, `${page.label} template preview`),
@@ -1149,7 +1160,7 @@ function payloadFor(model, page) {
     const direct = model.cards.filter((card) => card[field].includes(slug)).map((card) => card.key);
     const keys = collectionCardKeys(model, field, slug, tools);
     const hasHero = Boolean(model.media.plan.pages[page.id]?.hero);
-    const collage = hasHero ? [] : pickRelatedCards(model, direct, keys.filter((key) => !direct.includes(key)), 2);
+    const collage = hasHero ? [] : applyCardOverrides(model, page, pickRelatedCards(model, direct, keys.filter((key) => !direct.includes(key)), 2));
     const directRemaining = direct.filter((key) => !collage.some((card) => card.key === key));
     const fallbackRemaining = keys.filter((key) => !direct.includes(key) && !collage.some((card) => card.key === key));
     const listed = applyCardOverrides(model, page, pickRelatedCards(model, directRemaining, fallbackRemaining, hasHero ? 3 : 2));
@@ -1308,6 +1319,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
       }
     };
   });
+  finalizeCardOverrides(model);
   return { pages, navigation: buildNavigation(model), redirects: SITE_V2_REDIRECTS, llms: buildLlmsText(model), cardOverrideErrors: model.cardOverrideErrors };
 }
 
@@ -1519,7 +1531,11 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (page.id === "glossary" && why === "voice claim") continue;
       if (page.id === "ai-info" && why !== "internal wording") continue;
       const checkVisible = why === "voice claim"
-        ? visible.replace(/\b(?:does not|doesn't)\s+add\b[^.!?]*\bvoice-?over\b/gi, "").replace(/\b(?:without|no)\s+voice-?over\b/gi, "")
+        ? visible
+          .replace(/\b(?:does not|doesn't)\s+add\b[^.!?]*\bvoice-?over\b/gi, "")
+          .replace(/\b(?:without|no)\s+voice-?over\b/gi, "")
+          // A voiceover mentioned as an optional edit after download is not a product capability claim.
+          .replace(/\bAdd (?:captions, music, or a voiceover in TikTok, CapCut, Ads Manager, or your usual editor after download, since the generated clip doesn't include them|music, a voiceover, or captions in your editor after download)\.?/gi, "")
         : visible;
       if (rx.test(checkVisible)) errors.push(`${page.id}: ${why}`);
     }
@@ -1572,7 +1588,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   for (const [pageId, override] of Object.entries(overrideSource)) {
     const pageMeta = sourcePages.get(pageId);
     if (!pageMeta) errors.push(`card-overrides: unknown page ${pageId}`);
-    else if (!["tool", "hub-tool", "industry", "platform", "occasion"].includes(pageMeta.type)) errors.push(`card-overrides: page ${pageId} cannot receive card overrides`);
+    else if (!["home", "tool", "hub-tool", "template", "industry", "platform", "occasion"].includes(pageMeta.type)) errors.push(`card-overrides: page ${pageId} cannot receive card overrides`);
     if (!override || typeof override !== "object" || Array.isArray(override)) {
       errors.push(`card-overrides: invalid override for ${pageId}`);
       continue;
@@ -1597,7 +1613,7 @@ export function validateSiteV2(build = buildSiteV2()) {
     const publicPage = build.pages.find((page) => page.id === pageId);
     if (!publicPage) continue;
     const { layout, data } = publicPage.contentJson.sections.v2_main.settings;
-    const templateCards = (layout === "tool" ? data.templates ?? [] : layout === "template" ? data.more ?? [] : layout === "collection" ? data.cards ?? [] : []).filter((card) => card.cardType !== "case");
+    const templateCards = (layout === "home" ? data.templates?.cards ?? [] : layout === "tool" ? data.templates ?? [] : layout === "template" ? data.more ?? [] : layout === "collection" ? [...(data.heroCards ?? []), ...(data.cards ?? [])] : []).filter((card) => card.cardType !== "case");
     const keys = templateCards.map((card) => card.key);
     if (new Set(keys).size !== keys.length) errors.push(`${pageId}: card overrides create duplicate template cards`);
     for (const [key, imageOverride] of Object.entries(imageOverrides)) {
@@ -1673,7 +1689,7 @@ export function validateSiteV2(build = buildSiteV2()) {
   for (const page of build.pages) {
     const { layout, data } = page.contentJson.sections.v2_main.settings;
     if (!caseLayouts.has(layout)) continue;
-    const cards = layout === "tool" ? (data.templates ?? []) : layout === "template" ? (data.more ?? []) : (data.cards ?? []);
+    const cards = layout === "home" ? (data.templates?.cards ?? []) : layout === "tool" ? (data.templates ?? []) : layout === "template" ? (data.more ?? []) : layout === "collection" ? [...(data.heroCards ?? []), ...(data.cards ?? [])] : (data.cards ?? []);
     const cases = cards.filter((card) => card.cardType === "case");
     const planned = casePlan.pages?.[page.id];
     if (!Array.isArray(planned)) errors.push(`${page.id}: missing case-plan page`);

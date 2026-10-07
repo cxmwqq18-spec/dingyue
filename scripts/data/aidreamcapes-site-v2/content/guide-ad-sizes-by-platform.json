@@ -19,7 +19,7 @@
       "h2": "Think in shapes, not pixel sizes",
       "paras": [
         "An aspect ratio is the shape of the frame. 9:16 means 9 units wide for every 16 tall, so it's a tall rectangle. 1:1 is a square. 16:9 is the wide shape of a TV screen.",
-        "Exact pixel sizes vary by placement and change as apps update. A matching aspect ratio helps, but check the crop in the placement preview. Before uploading, review each platform's current specifications: TikTok In-Feed ads, Meta Reels ads, and YouTube Shorts ads."
+        "Exact pixel sizes vary by placement and change as apps update. A matching aspect ratio helps, but check the crop in the placement preview. Before uploading, review each platform's current specifications: TikTok In-Feed ads, Meta Reels ads, and [Google's YouTube Shorts guidance](https://support.google.com/google-ads/answer/16041697?hl=en-GB)."
       ]
     },
     {

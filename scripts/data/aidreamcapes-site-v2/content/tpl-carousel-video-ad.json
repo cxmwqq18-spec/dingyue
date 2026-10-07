@@ -48,7 +48,7 @@
     "options": [
       [
         "Size",
-        "9:16 \u00b7 Reels"
+        "1:1 · Feed"
       ],
       [
         "Length",
@@ -56,7 +56,7 @@
       ],
       [
         "Also try",
-        "1:1 \u00b7 Feed"
+        "9:16 · Reels"
       ]
     ],
     "cta": "Make my carousel video"
@@ -68,7 +68,7 @@
     },
     {
       "q": "Can the product move between scenes?",
-      "a": "Yes. AI-generated scenes can shift the product\u2019s position, scale, or details. Review the video and simplify the sequence if a steadier composition matters."
+      "a": "Yes. AI-generated scenes can shift the product’s position, scale, or details. Review the video and simplify the sequence if a steadier composition matters."
     },
     {
       "q": "Is the carousel output one file or a platform post?",

@@ -48,7 +48,7 @@
     "options": [
       [
         "Size",
-        "9:16 \u00b7 Reels"
+        "1:1 · Feed"
       ],
       [
         "Length",
@@ -56,7 +56,7 @@
       ],
       [
         "Also try",
-        "1:1 \u00b7 Feed"
+        "9:16 · Reels"
       ]
     ],
     "cta": "Make my retargeting video"
@@ -68,7 +68,7 @@
     },
     {
       "q": "Can the video claim that someone viewed or abandoned a cart?",
-      "a": "Do not make that claim in the generated scene. It does not know a viewer\u2019s history. Add only text that matches your actual campaign and data."
+      "a": "Do not make that claim in the generated scene. It does not know a viewer’s history. Add only text that matches your actual campaign and data."
     },
     {
       "q": "Will it add the offer or price?",
