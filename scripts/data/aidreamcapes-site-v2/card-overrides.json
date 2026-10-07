@@ -1,1 +1,188 @@
-{}
+{
+  "ind-fashion-clothing": {
+    "images": {
+      "retargeting-video-ad": {
+        "ref": "n:gen2:tpl-limited-drop-alert-video-g2",
+        "alt": "Jacket folded into a shipping box."
+      }
+    }
+  },
+  "ind-food-drinks": {
+    "images": {
+      "spark-ads-style-video": {
+        "ref": "u:demo",
+        "alt": "Creator makes coffee with a compact machine in a kitchen."
+      }
+    }
+  },
+  "ind-health-wellness": {
+    "swap": {
+      "creator": "demo",
+      "outfit": "howto",
+      "launch": "ugc"
+    },
+    "images": {
+      "demo": {
+        "ref": "n:gen2:tpl-compare-c1",
+        "alt": "Two water bottle sizes side by side on a gym bench."
+      },
+      "howto": {
+        "ref": "n:gen2:change-background-g4",
+        "alt": "Rolled yoga mat on a beach at sunrise."
+      },
+      "ugc": {
+        "ref": "n:gen2:tpl-spark-ads-style-video-g2",
+        "alt": "Water bottle clipped to a backpack on a hiking trail."
+      }
+    }
+  },
+  "ind-home-living": {
+    "images": {
+      "bg": {
+        "ref": "n:gen2:video-hub-g6",
+        "alt": "Pendant lamp glowing above a dining table at dusk."
+      }
+    }
+  },
+  "ind-jewelry-accessories": {
+    "images": {
+      "size": {
+        "ref": "n:gen2:tpl-size-g1",
+        "alt": "Small pendant resting on an open palm."
+      },
+      "detail": {
+        "ref": "n:gen2:unboxing-videos-g4",
+        "alt": "Small jewelry box opened to reveal a gold ring on velvet."
+      }
+    }
+  },
+  "ind-beauty-skincare": {
+    "images": {
+      "light": {
+        "ref": "n:gen2:tpl-light-g1",
+        "alt": "Amber glass bottle in warm side light."
+      }
+    }
+  },
+  "ind-shoes": {
+    "images": {
+      "white": {
+        "ref": "n:gen2:white-background-g3",
+        "alt": "Running shoe in full side profile on a white background."
+      },
+      "color": {
+        "ref": "n:gen2:tpl-color-g2",
+        "alt": "The same running shoe in three colorways side by side."
+      }
+    }
+  },
+  "plat-amazon": {
+    "images": {
+      "white": {
+        "ref": "n:gen2:ind-shoes-74",
+        "alt": "White court sneaker in a clean side profile."
+      }
+    }
+  },
+  "plat-shopify": {
+    "images": {
+      "color": {
+        "ref": "n:gen2:tpl-color-g3",
+        "alt": "Rain jacket in three colors on matching hangers."
+      }
+    }
+  },
+  "home": {
+    "images": {
+      "creator": {
+        "ref": "g:ugc-still-ad/example-05",
+        "alt": "Hand holds the pale green lid of a clear water bottle beside a plant."
+      }
+    }
+  },
+  "video-ads": {
+    "images": {
+      "creator": {
+        "ref": "g:ugc-still-ad/example-06",
+        "alt": "Clear water bottle beside a plant near a bright window."
+      }
+    }
+  },
+  "unboxing-videos": {
+    "images": {
+      "creator": {
+        "ref": "g:ugc-still-ad/example-07",
+        "alt": "Clear bottle with a sage lid stands beside a rolled teal mat near a window."
+      }
+    }
+  },
+  "tpl-carousel-video-ad": {
+    "images": {
+      "creator": {
+        "ref": "n:gen2:video-ads-g2",
+        "alt": "Canvas tote packed with a book, wallet and water bottle on a hallway bench."
+      }
+    }
+  },
+  "tpl-color": {
+    "images": {
+      "life": {
+        "ref": "n:gen2:tpl-look-g1",
+        "alt": "Trench coat look under a stone archway in warm light."
+      },
+      "box": {
+        "ref": "n:gen2:tpl-box-c1",
+        "alt": "Skincare trio arranged with an open gift box."
+      }
+    }
+  },
+  "tpl-box": {
+    "images": {
+      "bg": {
+        "ref": "n:gen2:tpl-film-g3",
+        "alt": "White ceramic vase with flowers on a wooden table in late-day light."
+      }
+    }
+  },
+  "tpl-jewel": {
+    "images": {
+      "feed": {
+        "ref": "g:feed-ad-still/example-06",
+        "alt": "Pair of running shoes arranged together in a clean product photo."
+      }
+    }
+  },
+  "occ-black-friday": {
+    "swap": {
+      "story": "sale"
+    },
+    "images": {
+      "sale": {
+        "ref": "n:gen2:tpl-bf-c3",
+        "alt": "Black gift boxes with ribbons stacked beside a laptop under dark lighting."
+      }
+    }
+  },
+  "occ-holidays": {
+    "swap": {
+      "story": "unbox"
+    },
+    "images": {
+      "unbox": {
+        "ref": "n:gen2:occ-black-friday-g2",
+        "alt": "Gift set arranged piece by piece on a dark table."
+      }
+    }
+  },
+  "occ-sale-discount": {
+    "swap": {
+      "launch": "limited-drop-alert-video"
+    },
+    "images": {
+      "limited-drop-alert-video": {
+        "ref": "g:sale-campaign-key-visual/example-07",
+        "alt": "Olive winter jacket displayed against a snowy backdrop."
+      }
+    }
+  }
+}

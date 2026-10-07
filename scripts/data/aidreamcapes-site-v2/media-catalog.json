@@ -8,6 +8,21 @@
   },
   "presenter": {
    "alt": "AI-generated presenter holding a skincare bottle"
+  },
+  "v_compare": {
+   "alt": "Coffee pours between two insulated mugs"
+  },
+  "v_creator_ad": {
+   "alt": "Creator holds a smartwatch toward the camera"
+  },
+  "v_demo": {
+   "alt": "Hand operates a compact espresso maker"
+  },
+  "v_film": {
+   "alt": "Black speaker sits beside a tall window"
+  },
+  "v_launch": {
+   "alt": "White desk lamp glows beside a laptop"
   }
  },
  "galleries": {
@@ -862,7 +877,7 @@
     "example-04": {
      "w": 3344,
      "h": 1880,
-     "alt": "Accessory detail with no visible brand"
+     "alt": "Model in a light trouser suit carries a small brown handbag in a sunlit courtyard"
     },
     "example-05": {
      "w": 3344,
@@ -2419,8 +2434,8 @@
    "h": 960,
    "duration": 4.3,
    "uploadDate": "2026-10-06T00:00:00Z",
-   "name": "Example clip: Hands use a green water bottle on a desk while animated rating icons appear.",
-   "description": "An example clip showing hands use a green water bottle on a desk while animated rating icons appear. AIVideosUGC does not add voiceover, music, or captions."
+   "name": "Example clip: Hands open a sage-green bottle and refill it.",
+   "description": "Hands unscrew the lid of a sage-green insulated bottle and pour water into its open mouth. AIVideosUGC does not add voiceover, music, or captions."
   },
   "tiktok-reels-shorts": {
    "src": "/assets/sites/site_aidreamcapes/site-v2/clips/tiktok-reels-shorts.mp4",
@@ -2870,7 +2885,7 @@
   "social-proof-animation-v": {
    "w": 540,
    "h": 960,
-   "alt": "Hands use a green water bottle on a desk while animated rating icons appear.",
+   "alt": "Hands unscrew a sage-green bottle lid and pour water into its open mouth.",
    "variants": [
     540
    ],
@@ -4311,7 +4326,7 @@
   "gen2:ind-beauty-skincare-c2": {
    "w": 1280,
    "h": 960,
-   "alt": "Clay mask jar open on a folded towel.",
+   "alt": "Pale green clay mask sits open on folded white towels with its lid beside the jar.",
    "variants": [
     640,
     1280
@@ -4341,7 +4356,7 @@
   "gen2:ind-fashion-clothing-c2": {
    "w": 1280,
    "h": 960,
-   "alt": "Knit cardigan folded on a wooden bench.",
+   "alt": "Cream cardigan buttons face up on a weathered wooden bench beside a leafy plant.",
    "variants": [
     640,
     1280
@@ -4371,7 +4386,7 @@
   "gen2:ind-shoes-15": {
    "w": 1280,
    "h": 960,
-   "alt": "Tan hiking boot on a mossy rock.",
+   "alt": "Tan leather hiking boot with dark laces stands on moss above a lake and distant hills.",
    "variants": [
     640,
     1280
@@ -4401,7 +4416,7 @@
   "gen2:ind-jewelry-accessories-16": {
    "w": 1280,
    "h": 960,
-   "alt": "Gold hoop earrings on a marble tray.",
+   "alt": "Two polished gold hoops rest on veined marble with a leafy sprig nearby.",
    "variants": [
     640,
     1280
@@ -4481,7 +4496,7 @@
   "gen2:ind-health-wellness-21": {
    "w": 1280,
    "h": 960,
-   "alt": "Foam roller beside running shoes after a run.",
+   "alt": "Foam roller and gray running shoes rest on rough paving beside a water bottle, with water in the distance.",
    "variants": [
     640,
     1280
@@ -4511,7 +4526,7 @@
   "gen2:ind-food-drinks-20": {
    "w": 1280,
    "h": 960,
-   "alt": "Berry granola jar on a breakfast table.",
+   "alt": "Clear granola jar sits between bowls of berries, with a glass bottle behind it.",
    "variants": [
     640,
     1280
@@ -4541,7 +4556,7 @@
   "gen2:ind-home-living-19": {
    "w": 1280,
    "h": 960,
-   "alt": "Oak desk lamp lit in a reading nook.",
+   "alt": "Lit oak lamp stands beside an open book and small mug on a desk near a cushioned chair.",
    "variants": [
     640,
     1280
@@ -4771,7 +4786,7 @@
   "gen2:occ-product-launch-c2": {
    "w": 1280,
    "h": 960,
-   "alt": "New sneaker colorway on a spotlit plinth.",
+   "alt": "White sneaker with pale green panels rests on a round plinth beneath a focused spotlight.",
    "variants": [
     640,
     1280
@@ -4811,7 +4826,7 @@
   "gen2:occ-sale-discount-c3": {
    "w": 1280,
    "h": 960,
-   "alt": "Summer dresses on a clothing rail in a bright shop.",
+   "alt": "Pastel floral dresses hang on wooden hangers before a bright window beside a leafy plant.",
    "variants": [
     640,
     1280
@@ -4831,7 +4846,7 @@
   "gen2:occ-black-friday-c2": {
    "w": 1280,
    "h": 960,
-   "alt": "Gaming headset under dramatic dark lighting.",
+   "alt": "Black headset with a boom microphone sits on a desk beside a keyboard under blue light.",
    "variants": [
     640,
     1280
@@ -4881,7 +4896,7 @@
   "gen2:occ-holidays-c3": {
    "w": 1280,
    "h": 960,
-   "alt": "Hot cocoa set on a snowy windowsill.",
+   "alt": "Marshmallow-topped cocoa mug sits beside a bowl and folded knit throw against a snowy window.",
    "variants": [
     640,
     1280
@@ -6541,7 +6556,7 @@
   "gen2:ind-electronics-g1": {
    "w": 1280,
    "h": 1280,
-   "alt": "Wireless speaker unboxed with its cable.",
+   "alt": "Open kraft box sits behind a charcoal speaker, with its white cable arranged on the wooden table.",
    "variants": [
     640,
     1280
