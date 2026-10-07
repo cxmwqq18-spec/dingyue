@@ -161,7 +161,7 @@ function HomePage({ data, r }: Props) {
           ))}
         </div>
       </Section> : null}
-      {visual ? <VisualSteps visual={visual} r={r} /> : <Section eyebrow="How it works" title="Three steps. No studio, no filming."><Steps items={list<V2Item>(data.steps)} /></Section>}
+      {visual ? <VisualSteps buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} visual={visual} r={r} /> : <Section eyebrow="How it works" title="Three steps. No studio, no filming."><Steps items={list<V2Item>(data.steps)} /></Section>}
       {visual ? <VisualPicker pageId={data.id} visual={visual} r={r} /> : <EnrichmentBlockSection block={data.inputGuide as never} eyebrow="Before you start" r={r} />}
       {visual ? <VisualSizes visual={visual} r={r} /> : <EnrichmentBlockSection block={data.results as never} eyebrow="Your result" r={r} />}
       {visual ? <VisualInput visual={visual} r={r} /> : <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />}
@@ -278,7 +278,7 @@ function ToolPage({ data, r }: Props) {
         {gallery?.images.length ? <Section eyebrow="Examples" title={`What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
         {pairs.length ? <Section eyebrow="Before and after" title="Your photo, then the result"><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
         <VisualOverview visual={visual} r={r} />
-        <VisualSteps visual={visual} r={r} />
+        <VisualSteps buttonLabel={maker.cta} visual={visual} r={r} />
         <VisualPicker pageId={data.id} visual={visual} r={r} />
         <VisualSizes visual={visual} r={r} />
         <VisualInput visual={visual} r={r} />

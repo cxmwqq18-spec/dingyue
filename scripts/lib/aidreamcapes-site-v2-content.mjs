@@ -761,7 +761,7 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
         const image = visualImage(model, card.ref, cardKind);
         const entry = { kind: cardKind === "video" ? "scene" : "photo" };
         const href = caseTarget(model, page, entry, { width: image.w, height: image.h }, cardKind === "video", card.prompt);
-        return { image, label: card.label ?? "", chips: Array.isArray(card.chips) ? card.chips.map(String) : [], href, kind: cardKind };
+        return { image, label: card.label ?? "", chips: Array.isArray(card.chips) ? card.chips.map(String) : [], href, prompt: String(card.prompt ?? ""), kind: cardKind };
       }),
       button: picker.button ?? "",
       href: buttonHref

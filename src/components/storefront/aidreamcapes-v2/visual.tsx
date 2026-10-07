@@ -1,5 +1,5 @@
 import { Img, RichText, Section } from "./parts";
-import { AIDREAMCAPES_V2_VISUAL_CSS } from "./styles";
+import { AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type {
   V2Resolvers,
   V2Visual,
@@ -24,12 +24,12 @@ function visualRatio(image: V2VisualImage): string {
 export function VisualStrip({ visual, r, includeOverview = false }: { visual: V2Visual; r: V2Resolvers; includeOverview?: boolean }) {
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_VISUAL_CSS }} />
+      <style dangerouslySetInnerHTML={{ __html: `${AIDREAMCAPES_V2_VISUAL_CSS}\n${AIDREAMCAPES_V2_VISUAL_CSS_POLISH}` }} />
       <section aria-label="Product examples" className="sec v-strip-section">
         <div className="wrap">
-          <div className="v-strip">
+          <div className="v-strip" data-count={visual.strip.length}>
             {visual.strip.map((item, index) => (
-              <figure className="v-strip-card" key={`${item.src}-${index}`}>
+              <figure className="v-strip-card" data-kind={item.kind} data-ratio={visualRatio(item)} key={`${item.src}-${index}`}>
                 <VisualImage image={item} r={r} />
                 <figcaption>{item.kind === "video" ? `Video · ${visualRatio(item)}` : "Photo"}</figcaption>
               </figure>
@@ -46,8 +46,9 @@ export function VisualOverview({ visual, r }: { visual: V2Visual; r: V2Resolvers
   return visual.overview ? <div className="v-overview"><p><RichText r={r} text={visual.overview} /></p></div> : null;
 }
 
-export function VisualSteps({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {
+export function VisualSteps({ visual, r, buttonLabel = "Make my video" }: { visual: V2Visual; r: V2Resolvers; buttonLabel?: string }) {
   const step = visual.steps;
+  const examplePrompt = visual.picker.cards[0]?.prompt ?? "";
   return (
     <Section eyebrow="How it works" title="Three steps">
       <div className="v-steps">
@@ -55,7 +56,7 @@ export function VisualSteps({ visual, r }: { visual: V2Visual; r: V2Resolvers })
           <div className="v-step-art v-step-source">
             <div className="drop v-step-drop">
               <VisualImage image={step.source} r={r} className="v-step-thumb" />
-              <div><b>Product photo</b><span>Ready to use</span></div>
+              <div><b>Drop your product photo here</b><span>JPG, PNG or WebP · any clear photo works</span></div>
             </div>
           </div>
           <div className="v-step-copy"><span className="v-step-number">Step 01</span><h3>{step.items[0]?.t}</h3><p>{step.items[0]?.d}</p></div>
@@ -63,8 +64,10 @@ export function VisualSteps({ visual, r }: { visual: V2Visual; r: V2Resolvers })
         <article className="v-step-card">
           <div className="v-step-art v-step-options">
             <div className="maker v-step-maker">
+              <div aria-label="Example description" className="v-step-prompt">{examplePrompt}</div>
               <div className="opts">{step.options.map(([label, value]) => <span className="opt" key={label}>{label} <b>{value}</b></span>)}</div>
               <div className="maker-foot"><small>Cost</small><strong>{step.credits}</strong></div>
+              <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>
             </div>
           </div>
           <div className="v-step-copy"><span className="v-step-number">Step 02</span><h3>{step.items[1]?.t}</h3><p>{step.items[1]?.d}</p></div>
@@ -125,7 +128,7 @@ function MockFrame({ item, r }: { item: V2VisualUse; r: V2Resolvers }) {
 }
 
 export function VisualUses({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {
-  return <Section eyebrow="Where to use it" title="Put each result to work"><div className="v-uses">{visual.uses.map((item, index) => <article className="v-use-row" key={`${item.frame}-${index}`}><div className="v-use-art"><MockFrame item={item} r={r} /></div><div className="v-use-copy"><h3>{item.h}</h3><p>{item.d}</p></div></article>)}</div></Section>;
+  return <Section eyebrow="Where to use it" title="Put each result to work"><div className="v-uses">{visual.uses.map((item, index) => <article className="v-use-row" key={`${item.frame}-${index}`}><div className="v-use-art"><div className="v-use-art-inner"><MockFrame item={item} r={r} /></div></div><div className="v-use-copy"><h3>{item.h}</h3><p>{item.d}</p></div></article>)}</div></Section>;
 }
 
 function InputPair({ item, r }: { item: V2VisualInput; r: V2Resolvers }) {
@@ -137,7 +140,7 @@ export function VisualInput({ visual, r }: { visual: V2Visual; r: V2Resolvers })
 }
 
 function OutputCard({ item, r }: { item: V2VisualOutput; r: V2Resolvers }) {
-  return <article className="v-output-card"><figure className="v-output-frame" data-frame={item.frame}><VisualImage image={item.image} r={r} /></figure><div className="v-output-copy"><b>{item.label}</b><span>{item.spec}</span></div></article>;
+  return <article className="v-output-card" data-frame={item.frame}><figure className="v-output-frame" data-frame={item.frame}><VisualImage image={item.image} r={r} /></figure><div className="v-output-copy"><b>{item.label}</b><span>{item.spec}</span></div></article>;
 }
 
 export function VisualOutputs({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {
@@ -146,12 +149,15 @@ export function VisualOutputs({ visual, r }: { visual: V2Visual; r: V2Resolvers 
 
 export function VisualAfter({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {
   if (!visual.after) return null;
-  return <Section eyebrow="After download" title="Add your final details in an editor"><div className="v-after"><div className="v-after-art"><VisualImage image={visual.after.image} r={r} /><div className="v-after-zones">{visual.after.zones.map((zone, index) => <span key={`${zone}-${index}`}>{zone}</span>)}</div></div><div className="v-after-copy"><p>These details are added in your editor after download.</p><ul>{visual.after.items.map((item, index) => <li key={`${item}-${index}`}>{item}</li>)}</ul></div></div></Section>;
+  return <Section eyebrow="After download" title="Add your final details in an editor"><div className="v-after"><div className="v-after-art"><VisualImage image={visual.after.image} r={r} /><div className="v-after-zones">{visual.after.zones.map((zone, index) => {
+    const role = /headline/i.test(zone) ? "headline" : /price/i.test(zone) ? "price" : `zone-${index}`;
+    return <span data-zone-index={index} data-zone-role={role} key={`${zone}-${index}`}>{zone}</span>;
+  })}</div></div><div className="v-after-copy"><p>These details are added in your editor after download.</p><ul>{visual.after.items.map((item, index) => <li key={`${item}-${index}`}>{item}</li>)}</ul></div></div></Section>;
 }
 
 export function VisualSizes({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {
   if (!visual.sizes?.length) return null;
-  return <Section eyebrow="Formats" title="Choose a frame for each placement"><div className="v-size-grid">{visual.sizes.map((item, index) => <figure className="v-size-card" key={`${item.frame}-${index}`}><div className="v-size-frame" data-frame={item.frame}><VisualImage image={item.image} r={r} /></div><figcaption><b>{item.frame}</b><span>{item.label}</span></figcaption></figure>)}</div></Section>;
+  return <Section eyebrow="Formats" title="Choose a frame for each placement"><div className="v-size-grid">{visual.sizes.map((item, index) => <figure className="v-size-card" data-frame={item.frame} key={`${item.frame}-${index}`}><div className="v-size-frame" data-frame={item.frame}><VisualImage image={item.image} r={r} /></div><figcaption><b>{item.frame}</b><span>{item.label}</span></figcaption></figure>)}</div></Section>;
 }
 
 export function VisualLimitations({ visual }: { visual: V2Visual }) {
