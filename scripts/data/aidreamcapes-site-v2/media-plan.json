@@ -1001,7 +1001,7 @@
   "bg": "g:background-remove-replace/example-03",
   "model": "g:on-model-generation/hero-output",
   "feed": "g:feed-ad-still/hero-output",
-  "creator": "f:ugc-ad-video",
+  "creator": "n:gen2:product-videos-c2",
   "demo": "f:product-video",
   "unbox": "f:unboxing-experience",
   "ba": "f:before-after-showcases"
@@ -1015,8 +1015,12 @@
    "n:white-sneaker"
   ],
   "creator": [
-   "u:review",
-   "u:script"
+   "n:gen2:product-videos-g5",
+   "n:gen2:tpl-howto-c2",
+   "n:gen2:tpl-howto-c3",
+   "n:gen2:tpl-howto-c4",
+   "n:gen2:before-after-videos-c4",
+   "n:gen2:tpl-ugc-case-83"
   ],
   "unbox": [
    "f:unboxing-experience-t05",
@@ -1055,7 +1059,7 @@
    "f:beauty-routine-t05",
    "f:beauty-routine-t10",
    "f:beauty-routine-t14",
-   "u:hook"
+   "n:gen2:tpl-beauty-c2"
   ],
   "home": [
    "f:home-organization-t07",

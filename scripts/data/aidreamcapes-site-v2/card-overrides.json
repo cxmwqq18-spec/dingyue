@@ -28,6 +28,10 @@
       "ugc": {
         "ref": "n:gen2:tpl-spark-ads-style-video-g2",
         "alt": "Water bottle clipped to a backpack on a hiking trail."
+      },
+      "carousel-video-ad": {
+        "ref": "n:gen2:tpl-color-c4",
+        "alt": "Three cork-and-foam yoga blocks in three colors stacked side by side."
       }
     }
   },
@@ -56,6 +60,10 @@
       "light": {
         "ref": "n:gen2:tpl-light-g1",
         "alt": "Amber glass bottle in warm side light."
+      },
+      "beauty": {
+        "ref": "n:gen2:tpl-beauty-g1",
+        "alt": "Cream pumped onto the back of a hand beside a mirror and folded towel."
       }
     }
   },
@@ -104,6 +112,10 @@
       "creator": {
         "ref": "g:ugc-still-ad/example-07",
         "alt": "Clear bottle with a sage lid stands beside a rolled teal mat near a window."
+      },
+      "unbox": {
+        "ref": "n:gen2:occ-holidays-g2",
+        "alt": "Gift unwrapped to a bottle held in both hands."
       }
     }
   },
@@ -125,12 +137,21 @@
   },
   "occ-black-friday": {
     "swap": {
-      "story": "sale"
+      "story": "sale",
+      "outfit": "demo"
     },
     "images": {
       "sale": {
         "ref": "n:gen2:tpl-bf-c3",
         "alt": "Black gift boxes with ribbons stacked beside a laptop under dark lighting."
+      },
+      "creator": {
+        "ref": "n:gen2:tpl-limited-drop-alert-video-c2",
+        "alt": "Small-batch hot sauce bottles lined up on a counter."
+      },
+      "demo": {
+        "ref": "n:gen2:product-videos-g5",
+        "alt": "Handheld milk frother foaming milk in a glass cup."
       }
     }
   },
@@ -142,6 +163,38 @@
       "unbox": {
         "ref": "n:gen2:occ-black-friday-g2",
         "alt": "Gift set arranged piece by piece on a dark table."
+      }
+    }
+  },
+  "ind-electronics": {
+    "images": {
+      "creator": {
+        "ref": "n:gen2:video-ads-g1",
+        "alt": "Hand picking up a compact speaker from a desk beside a laptop."
+      }
+    }
+  },
+  "tpl-limited-drop-alert-video": {
+    "images": {
+      "creator": {
+        "ref": "n:gen2:tpl-bf-c2",
+        "alt": "Over-ear headphones on a black backdrop with sharp deal-day lighting."
+      }
+    }
+  },
+  "tpl-carousel-video-ad": {
+    "images": {
+      "outfit": {
+        "ref": "n:gen2:tpl-outfit-c1",
+        "alt": "Knit sweater and wide-leg trousers outfit shown head to toe in a living room."
+      }
+    }
+  },
+  "plat-tiktok": {
+    "images": {
+      "outfit": {
+        "ref": "n:gen2:tpl-outfit-c2",
+        "alt": "Full-length denim outfit in a hallway, head to toe."
       }
     }
   }
