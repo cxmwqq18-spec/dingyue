@@ -1,7 +1,7 @@
 {
   "id": "url-to-video",
   "title": "URL to Video: Product Link to Video Ad | AIVideosUGC",
-  "description": "Make a short product video from the photo and name on a public product page. If the page can't be read, upload a product photo instead.",
+  "description": "Make a short product video from the photo and name on a public product page. If the page can't be read, upload a product photo and describe the scene.",
   "h1": "URL to Video: Turn a Product Link into a Video Ad",
   "eyebrow": "Video tool",
   "lead": "Paste your product page link and get a short product video made from the photo and name on that page.",
@@ -155,12 +155,12 @@
       ],
       "cards": [
         {
-      "ref": "n:gen2:tpl-carousel-video-ad-g3",
-      "label": "Picnic basket set out",
-      "chips": [
-        "travel",
-        "home",
-        "food"
+          "ref": "n:gen2:tpl-carousel-video-ad-g3",
+          "label": "Picnic basket set out",
+          "chips": [
+            "travel",
+            "home",
+            "food"
           ],
           "prompt": "Open the picnic basket and set two pieces beside it on a blanket.",
           "kind": "video"
@@ -194,12 +194,12 @@
           "kind": "video"
         },
         {
-      "ref": "n:gen2:tpl-pack-c3",
-      "label": "Hot sauce bottle on counter",
+          "ref": "n:gen2:tpl-pack-c3",
+          "label": "Hot sauce bottle on counter",
           "chips": [
             "food"
           ],
-      "prompt": "Set the sauce bottle beside a small bowl, then turn its blank label toward the camera.",
+          "prompt": "Set the sauce bottle beside a small bowl, then turn its blank label toward the camera.",
           "kind": "video"
         },
         {
