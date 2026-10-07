@@ -1,10 +1,10 @@
 {
   "id": "social-ad-photos",
-  "title": "AI Ad Image Generator for Social Feed Ads | AIVideosUGC",
-  "description": "Create square feed ad images from a product photo, with room to add a verified headline or price in Ads Manager or Canva before posting.",
-  "h1": "AI Ad Image Generator for Facebook and Instagram Feeds",
+  "title": "AI Ad Image Generator | AIVideosUGC",
+  "description": "Create square Facebook and Instagram ad photos from one product shot, with space to add your headline or offer in Ads Manager or Canva.",
+  "h1": "AI Ad Image Generator for Facebook and Instagram",
   "eyebrow": "Photo tool",
-  "lead": "Use this AI ad image generator to make a square product image for a Facebook or Instagram feed ad. Leave space around the product, then add your approved headline and price in Ads Manager or Canva.",
+  "lead": "Make square ad images for Facebook and Instagram from one product photo, with room left for your headline. Type the offer in Ads Manager or Canva.",
   "secondary_keywords": [
     "Facebook ad image maker",
     "Instagram feed ad photos",
@@ -12,219 +12,64 @@
     "square ad images for social media",
     "AI images for paid social ads"
   ],
-  "intro": [
-    "A feed ad gets only a moment to catch someone's eye while they scroll. Most of that work is done by the picture: a bright setting, a clear product and a bit of open space where your message can go. This tool takes one product photo and builds a square ad image around it, like a running shoe on a sunlit rock above a mountain lake.",
-    "It's made for shop owners and marketers who run ads on Facebook and Instagram and need new pictures often, since people stop noticing an image they've seen many times. Keep words out of the image itself. Add your headline, price or offer in Ads Manager, Canva or your usual design app, where you control spelling and layout, then compare the new ad with the one you're already running."
-  ],
-  "benefits": [
-    {
-      "t": "Fresh pictures for tired ads",
-      "d": "When an ad stops getting attention, give the same product a different setting and try again."
-    },
-    {
-      "t": "Room for your message",
-      "d": "Ask for open sky, a plain wall or empty space at one side so your headline has somewhere to sit."
-    },
-    {
-      "t": "Your product, front and center",
-      "d": "The item stays the focus, so people know what you're selling before they read anything."
-    }
-  ],
   "steps": [
     {
-      "t": "Upload the product you're promoting",
-      "d": "Use a clean shot of just the item, without packaging or other products crowding it."
+      "t": "Upload one product photo",
+      "d": "Clear and in focus. The product has to read at thumbnail size."
     },
     {
-      "t": "Describe the ad scene and its open space",
-      "d": "Pick a ready-made ad look or describe one, for example \"running shoe on a rocky trail, lake behind, empty sky at the top.\""
+      "t": "Describe the scene and leave room for text",
+      "d": "One backdrop or setting, and where the headline goes, like \"open space on the left\"."
     },
     {
-      "t": "Download, add text, make another",
-      "d": "Save the image, place your headline and price in your ad tool, and create a second version if you'd like another option to compare."
-    }
-  ],
-  "uses": [
-    {
-      "t": "Facebook feed ads",
-      "d": "Use the square image in a single-image ad and write your headline and offer in Ads Manager."
-    },
-    {
-      "t": "Instagram feed ads",
-      "d": "Run it as a sponsored post that sits naturally among the photos people already scroll past."
-    },
-    {
-      "t": "Carousel ad cards",
-      "d": "Make one image per product or per setting, then combine them into a carousel in your ad account."
-    },
-    {
-      "t": "Ads for past store visitors",
-      "d": "Show people who browsed your shop a fresh look at the item they viewed, instead of the same store photo."
+      "t": "Add your headline in your ad tool",
+      "d": "Type the price and offer in Ads Manager or Canva so every word is spelled right."
     }
   ],
   "maker": {
     "options": [
       [
         "Photo",
-        "The product you're advertising"
+        "Your product shot"
       ],
       [
         "Scene",
-        "Describe the ad setting"
+        "Soft pink backdrop"
       ],
       [
         "Size",
-        "Square by default"
+        "Square"
       ]
     ],
-    "cta": "Make my ad image"
+    "cta": "Make a social ad photo"
   },
   "faq": [
     {
       "q": "Can the AI put my headline and price on the image?",
-      "a": "Add them yourself in Ads Manager, Canva or another design tool. AI-generated lettering can come out misspelled or garbled, and requests with a lot of text may be refused, so typing it yourself keeps prices and offers accurate."
+      "a": "No. It creates the product scene with open space but does not render readable campaign text."
     },
     {
       "q": "What size are the ad images?",
-      "a": "They're square by default, a shape that works in both Facebook and Instagram feeds."
+      "a": "The examples on this page use square feed images. Other placements may use different dimensions or crops."
     },
     {
-      "q": "Can I create a few different ad images to compare?",
-      "a": "Yes, one at a time. Generate another image whenever you want a new option, with the cost shown before each one, then compare them in your ad account."
+      "q": "Can I test two scene options?",
+      "a": "Yes. Keep the audience and offer consistent so the scene is the main change between versions."
     },
     {
       "q": "Do I have to say my ad image was made with AI?",
-      "a": "Ad platforms set their own rules for AI-generated or edited images, and those rules change. Check the current policy for each platform you advertise on before your campaign goes live."
+      "a": "Disclosure rules vary by platform, location and use. Follow the guidance shown in the ad tool for your campaign."
     }
   ],
   "overview": [
     {
-      "h2": "Design the picture around the message you will add",
-      "d": "A feed still has one job before the caption is read: make the product easy to spot. Ask for one clear subject, a visual contrast that separates it from the background, and a quiet area where your exact headline or offer can sit later. The image supplies the scene; your ad tool supplies the words."
-    },
-    {
-      "h2": "Make versions that test a visual question",
-      "d": "Change one variable at a time\u2014a pale kitchen versus a dark counter, a close crop versus a wider scene, or a product-only view versus a use moment. Keeping the product constant makes the comparison easier to understand when you place the files in your ad account."
+      "h2": "",
+      "d": "Square product visuals give a feed concept a clear focal point while people scroll. Start with one product photo, choose one scene and leave part of the frame open. Product claims and offers come from your approved campaign details."
     }
   ],
-  "input_guide": {
-    "h2": "Prepare a source for fast recognition",
-    "items": [
-      {
-        "t": "One hero item",
-        "d": "Use a source photo with one main product and no unrelated packages or props competing for the first glance."
-      },
-      {
-        "t": "Readable shape",
-        "d": "Keep the full product visible when its silhouette matters; use a closer crop only when a texture or finish is the selling detail."
-      },
-      {
-        "t": "Plan space for text",
-        "d": "In the scene brief, request open sky, a plain wall, or a quiet tabletop on the side where your headline will go."
-      },
-      {
-        "t": "Keep packaging honest",
-        "d": "If a bundle is the offer, show the actual pieces together in the source rather than asking the scene to invent what is inside the box."
-      },
-      {
-        "t": "Avoid built-in lettering",
-        "d": "Leave words out of the generated scene; type the price, date, and promotion later in the ad editor."
-      }
-    ]
-  },
-  "results": {
-    "h2": "Budget a feed still before you make it",
-    "items": [
-      {
-        "t": "One square creative",
-        "d": "An image generation uses 24 credits, and the credit cost appears before you confirm it."
-      },
-      {
-        "t": "Open space for text",
-        "d": "The scene can leave a calm side or top area for your later headline, offer, or price."
-      },
-      {
-        "t": "A repeatable test",
-        "d": "Make another image from the same product when you want a new setting to compare in the ad account."
-      },
-      {
-        "t": "A private file",
-        "d": "The input and output remain in your account while you prepare the campaign."
-      }
-    ]
-  },
-  "scene_recipes": {
-    "h2": "Five feed-ready scene briefs",
-    "items": [
-      {
-        "t": "Lipstick",
-        "d": "Place the tube on a bright vanity with the cap beside it, leaving clean pale space on the right for a shade name and offer."
-      },
-      {
-        "t": "Hot sauce",
-        "d": "Set the bottle beside tacos on a warm wood table, keeping the label forward and a darker empty area above for a headline."
-      },
-      {
-        "t": "Sunglasses",
-        "d": "Show the glasses on a caf\u00e9 table with a soft street background, leaving open wall space to one side."
-      },
-      {
-        "t": "Coffee beans",
-        "d": "Put the bag beside a pour-over cup at breakfast, with the bag upright and uncluttered room above for launch text."
-      },
-      {
-        "t": "Running shoe",
-        "d": "Place the shoe on a rocky trail with open sky behind it, keeping the tread edge visible and the sky clear for a short headline."
-      }
-    ]
-  },
-  "fit": {
-    "h2": "A useful still for paid-social work",
-    "good": [
-      {
-        "t": "Single-image feed ads",
-        "d": "Products that can be recognized quickly from one strong angle and one clear scene."
-      },
-      {
-        "t": "Carousel cards",
-        "d": "Teams that want one product or setting per card while keeping a consistent visual treatment."
-      },
-      {
-        "t": "Retargeting refreshes",
-        "d": "Stores that need a new visual for an item people have already seen in the catalog."
-      }
-    ],
-    "not_ideal": [
-      {
-        "t": "Text-heavy artwork",
-        "d": "Use a design editor when the creative depends on several lines, exact legal text, or a detailed price grid."
-      },
-      {
-        "t": "Claims hidden in the scene",
-        "d": "Base claims about performance, ingredients, and dimensions on verified product details."
-      }
-    ]
-  },
-  "after_download": {
-    "h2": "Finish the ad in the place that runs it",
-    "items": [
-      {
-        "t": "Type the campaign wording",
-        "d": "Add headline, price, date, discount code, and any required wording in Ads Manager, Canva, or your normal editor."
-      },
-      {
-        "t": "Check the crop",
-        "d": "Preview the creative where it will run and make sure the product and the reserved message area survive the placement crop."
-      },
-      {
-        "t": "Review platform policy",
-        "d": "Check the current rules for AI-generated or edited images before you publish the campaign."
-      }
-    ]
-  },
   "examples": {
-    "h2": "More feed ad examples",
-    "lead": "Square ads that leave room for your own headline and price, added after download in your design tool.",
+    "h2": "More square product ad photos for social feeds",
+    "lead": "See product scenes that leave clear space for a headline or offer added in your ad editor.",
     "groups": [
       {
         "label": "Room for your text",
@@ -260,12 +105,247 @@
           },
           {
             "ref": "n:gen2:social-ad-photos-g5",
-            "title": "Same canvas sneaker on a gym floor",
+            "title": "Canvas sneaker on a gym floor",
             "kind": "photo",
             "product": "canvas sneaker"
           }
         ]
       }
     ]
+  },
+  "limitations": {
+    "h2": "What a square ad photo can provide",
+    "items": [
+      {
+        "t": "A clear product scene",
+        "d": "Choose a simple backdrop and reserve part of the frame for your headline or offer.",
+        "supported": true
+      },
+      {
+        "t": "No verified offer terms",
+        "d": "Price, promotion dates and discount terms come from your approved campaign.",
+        "supported": false
+      },
+      {
+        "t": "Placement controls the crop",
+        "d": "Your ad tool determines the dimensions and crop used for each placement.",
+        "supported": false
+      }
+    ]
+  },
+  "visual": {
+    "strip": [
+      "n:lipstick-ad",
+      "n:gen2:occ-product-launch-g3",
+      "n:gen2:tpl-launch-g1",
+      "n:gen2:tpl-sale-c2",
+      "n:gen2:tpl-carousel-video-ad-c2",
+      "n:gen2:occ-sale-discount-g4"
+    ],
+    "steps": {
+      "source": "n:lipstick-pack",
+      "result": "n:lipstick-ad",
+      "mode": "photo",
+      "prompt": "Put this coral lipstick on a soft pink backdrop, with open space on the left for a headline.",
+      "options": [
+        [
+          "Photo",
+          "Your product shot"
+        ],
+        [
+          "Scene",
+          "Soft pink backdrop"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Social ad photo ideas by product",
+      "lead": "Browse square campaign scenes for beauty, kitchen, fashion and home products.",
+      "chips": [
+        {
+          "id": "beauty",
+          "label": "Beauty"
+        },
+        {
+          "id": "kitchen",
+          "label": "Kitchen"
+        },
+        {
+          "id": "fashion",
+          "label": "Fashion"
+        },
+        {
+          "id": "home",
+          "label": "Home"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-sale-c3",
+          "label": "Skincare on pastel podiums",
+          "chips": [
+            "beauty"
+          ],
+          "prompt": "Arrange the skincare bottles on soft pastel podiums with clear space for a short headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:occ-sale-discount-c2",
+          "label": "Skincare minis in a bundle",
+          "chips": [
+            "beauty"
+          ],
+          "prompt": "Show the minis together on a simple tray and leave open space beside the bundle.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-sale-g3",
+          "label": "Kitchen gift set on counter",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Place the gift set on a calm kitchen surface with one clear area for an offer.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-launch-g2",
+          "label": "Toaster on a kitchen counter",
+          "chips": [
+            "kitchen"
+          ],
+          "prompt": "Show the toaster on a clean counter with its product shape clear and open room beside it for a short headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-sale-g2",
+          "label": "Summer sandals on sand",
+          "chips": [
+            "fashion"
+          ],
+          "prompt": "Arrange the sandals on sand with their straps visible and open sky above for a headline.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:occ-sale-discount-c3",
+          "label": "Floral dress by a window",
+          "chips": [
+            "fashion"
+          ],
+          "prompt": "Show the dress on a hanger beside a bright window with space for a short offer.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-sale-c4",
+          "label": "Folded wool blankets on chair",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Stack the blankets on a simple chair and leave an uncluttered area beside them.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-launch-c4",
+          "label": "Candle on a styled shelf",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Place the candle on a styled shelf with uncluttered room for a short offer added later.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a social ad photo"
+    },
+    "uses": [
+      {
+        "frame": "split",
+        "ref": "n:hotsauce-pack",
+        "ref_b": "n:hotsauce-peppers",
+        "h": "Ad test",
+        "d": "Keep the offer the same, test two scenes and keep the one with more clicks."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:tpl-carousel-video-ad-c3",
+        "h": "Feed preview",
+        "d": "Check the square on a phone screen before you launch. Small products need a tighter crop."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:plat-facebook-g4",
+        "bad": "n:guide:social-ad-photos-bottle-blurred",
+        "good_label": "Bottle outline and cap in focus",
+        "bad_label": "Bottle details softened by blur"
+      },
+      {
+        "good": "n:gen2:ind-food-drinks-c4",
+        "bad": "n:guide:social-ad-photos-tea-cropped",
+        "good_label": "Tea pouch and cup fully visible",
+        "bad_label": "Pouch and cup cropped at frame edges"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:occ-product-launch-c2",
+        "frame": "1:1",
+        "label": "Product reveal for a feed ad"
+      },
+      {
+        "ref": "n:gen2:tpl-sale-g1",
+        "frame": "1:1",
+        "label": "Square campaign image"
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:plat-instagram-c4",
+      "zones": [
+        "Your headline",
+        "Your price"
+      ],
+      "items": [
+        "Type the headline, price and offer in your ad editor.",
+        "Proofread dates and terms before the ad goes live.",
+        "Preview on a phone: the product should read at thumbnail size."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "How to make a square social ad photo in 3 steps"
+      },
+      "m3": {
+        "h2": "Social ad photo ideas by product",
+        "lead": "Choose an item and leave clear space for your headline."
+      },
+      "m4": {
+        "h2": "Where to use social ad product photos"
+      },
+      "m5": {
+        "h2": "How to leave room for text in a product ad photo"
+      },
+      "m6": {
+        "h2": "Ad image size and credits"
+      },
+      "m7": {
+        "h2": "Add your headline and offer after download"
+      },
+      "gallery": {
+        "h2": "AI social ad photo examples for product feeds"
+      },
+      "examples": {
+        "h2": "More square product ad photos for social feeds"
+      },
+      "examplesLead": "Browse square product scenes with room for your headline after download.",
+      "templates": {
+        "h2": "Social ad photo templates",
+        "lead": "Choose a square product scene that leaves a clear area for your campaign headline."
+      },
+      "faq": {
+        "h2": "Social ad photo FAQs"
+      }
+    }
   }
 }
