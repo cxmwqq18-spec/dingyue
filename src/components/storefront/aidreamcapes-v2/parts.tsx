@@ -168,14 +168,37 @@ export function CompanyDetails({ company, className }: { company: V2Company; cla
   );
 }
 
-// Text with links written as [words](/page). Only links inside this site are turned into anchors.
+const OFFICIAL_EXTERNAL_HOSTS = new Set(["ads.tiktok.com", "support.google.com", "help.shopify.com", "help.etsy.com"]);
+const OWN_SITE_HOSTS = new Set(["aivideosugc.com", "www.aivideosugc.com"]);
+function isApprovedExternalHref(href: string): boolean {
+  try {
+    const url = new URL(href);
+    return url.protocol === "https:" && OFFICIAL_EXTERNAL_HOSTS.has(url.hostname.toLowerCase()) && !url.username && !url.password;
+  } catch { return false; }
+}
+function localPathFromAbsoluteHref(href: string): string | undefined {
+  try {
+    const url = new URL(href);
+    if (url.protocol === "https:" && OWN_SITE_HOSTS.has(url.hostname.toLowerCase()) && !url.username && !url.password) {
+      return `${url.pathname}${url.search}${url.hash}`;
+    }
+  } catch { /* Non-URL targets are handled as local paths below. */ }
+  return undefined;
+}
+
+// Inline Markdown links support internal paths and the approved official references.
 export function RichText({ text, r }: { text: string; r: V2Resolvers }) {
   const parts: ReactNode[] = [];
   let last = 0;
-  for (const match of text.matchAll(/\[([^\]\n]+)\]\((\/[^)\s]*)\)/g)) {
+  for (const match of text.matchAll(/\[([^\]\n]+)\]\((https:\/\/[^)\s]+|\/[^)\s]*)\)/g)) {
     const at = match.index ?? 0;
     if (at > last) parts.push(text.slice(last, at));
-    parts.push(<a href={r.href(match[2])} key={at}>{match[1]}</a>);
+    if (/^https:\/\//i.test(match[2])) {
+      const localPath = localPathFromAbsoluteHref(match[2]);
+      if (localPath) parts.push(<a href={r.href(localPath)} key={at}>{match[1]}</a>);
+      else if (isApprovedExternalHref(match[2])) parts.push(<a href={match[2]} key={at} rel="noopener noreferrer" target="_blank">{match[1]}</a>);
+      else parts.push(match[0]);
+    } else parts.push(<a href={r.href(match[2])} key={at}>{match[1]}</a>);
     last = at + match[0].length;
   }
   if (last < text.length) parts.push(text.slice(last));
@@ -258,7 +281,7 @@ export function CaseCard({ card, r }: { card: V2Card; r: V2Resolvers }) {
       <div className="tb">
         <h3>{card.name}</h3>
         <p>{card.spec ?? card.line}</p>
-        <a className="use" href={r.href(card.href)}>Make one like this →</a>
+        <a className="use" href={r.href(card.href)}>Make a {card.kind === "video" || card.label === "Example scene" ? "video" : "photo"} like this →</a>
       </div>
     </article>
   );
@@ -452,7 +475,7 @@ export function Maker({ maker, r, note }: { maker: V2Maker; r: V2Resolvers; note
       <div className="drop">
         <UploadIcon />
         <div>
-          <b>Drop your product photo here</b>
+          <b>{maker.uploadTitle || "Drop your product photo here"}</b>
           <span>JPG, PNG or WebP · any clear photo works</span>
         </div>
       </div>

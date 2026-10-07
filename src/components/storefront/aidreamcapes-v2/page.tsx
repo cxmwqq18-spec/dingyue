@@ -34,6 +34,7 @@ function homeExampleFlows(examples: unknown): V2Flow[] {
 
 function HomePage({ data, r }: Props) {
   const hero = data.hero as { image: V2Image; output?: V2Image; versions?: V2Image[]; videoHref: string; photoHref: string };
+  const maker = data.maker as V2Maker | undefined;
   const make = data.make as { title: string; lead: string; video: V2Tool[]; photo: V2Tool[] };
   const templates = data.templates as { title: string; lead: string; cards: V2Card[]; total: number };
   const platforms = data.platforms as { title: string; items: { label: string; href: string; spec: string }[] };
@@ -58,7 +59,7 @@ function HomePage({ data, r }: Props) {
                 </div>
                 <div className="drop">
                   <Img image={hero.image} r={r} className="drop-thumb" eager />
-                  <div><b>Drop your product photo here</b><span>JPG, PNG or WebP · any clear photo works</span></div>
+                  <div><b>{maker?.uploadTitle || "Drop your product photo here"}</b><span>JPG, PNG or WebP · any clear photo works</span></div>
                 </div>
                 <div data-pane="video">
                   <div className="opts">
@@ -186,7 +187,7 @@ function HomePage({ data, r }: Props) {
         <div style={{ marginTop: 22 }}><a className="btn btn-ghost" href={r.href("/pricing")}>See full pricing →</a></div>
       </Section>
       <Faq items={data.faq} title="Questions before you start" />
-      <CtaBand note={text(data.startNote)} href="/app/create" lead="Upload a photo, pick a template and get a video ad or store-ready photos." r={r} title="Your next ad starts with one product photo" />
+      <CtaBand href="/app/create" lead={text(data.ctaLead) || "Upload a photo, pick a template and get a video ad or store-ready photos."} r={r} title="Your next ad starts with one product photo" />
       <AidreamcapesV2HeroTabs />
       <AidreamcapesV2MotionPreference />
     </>
@@ -246,7 +247,7 @@ function VideoHubPage({ data, r }: Props) {
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <Faq items={data.faq} title="Questions about AI video" />
       <Reading items={list<V2Article>(data.reading)} r={r} />
-      <CtaBand note={text(data.startNote)} href={text(data.appHref)} lead="Upload a product photo and see the cost before you start." r={r} title="Make your first video today" />
+      <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title="Make your first video today" />
     </>
   );
 }
@@ -290,7 +291,7 @@ function ToolPage({ data, r }: Props) {
       <Faq items={data.faq} title={`Questions about ${data.label}`} />
       <Reading items={list<V2Article>(data.reading)} r={r} />
       {list<V2Tool>(data.siblings).length ? <Section eyebrow="More tools" title="You might also need"><ToolRow r={r} tools={list<V2Tool>(data.siblings)} /></Section> : null}
-      <CtaBand note={text(data.startNote)} href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} lead="Upload a product photo and see the cost before you start." r={r} title={`Make your first ${video ? "video" : "photo"} today`} />
+      <CtaBand href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title={`Make your first ${video ? "video" : "photo"} today`} />
     </>
   );
 }
@@ -323,7 +324,7 @@ function TemplatePage({ data, r }: Props) {
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       <Faq items={data.faq} title="Questions about this template" />
       <Reading items={list<V2Article>(data.reading)} r={r} />
-      <CtaBand note={text(data.startNote)} href={maker.href} lead="Upload one product photo. See the cost before you start." r={r} title={`Try ${data.label} with your product`} />
+      <CtaBand href={maker.href} lead={text(data.ctaLead) || "Upload one product photo. See the cost before you start."} r={r} title={`Try ${data.label} with your product`} />
     </>
   );
 }
@@ -356,7 +357,7 @@ function CollectionPage({ data, r }: Props) {
       {list<V2Item>(data.ideas).length ? <Section eyebrow="Ideas" title="What to make"><Boxes className="ideas" items={list<V2Item>(data.ideas)} r={r} /></Section> : null}
       <EnrichmentBlockSection block={data.sceneRecipes as never} eyebrow="Ideas" r={r} />
       {cards.length ? (
-        <Section eyebrow="Templates" lead={`${cards.length} ready-made looks. Pick one and add your product.`} title={`${data.label} templates`}>
+        <Section eyebrow="Templates" lead={text(data.templatesLead) || `${cards.filter((card) => card.cardType !== "case").length} ready-made looks. Pick one and add your product.`} title={`${data.label} templates`}>
           <TemplateGrid cards={cards} r={r} />
         </Section>
       ) : null}
@@ -365,7 +366,7 @@ function CollectionPage({ data, r }: Props) {
       <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
       <Faq items={data.faq} title="Questions" />
       <Reading items={list<V2Article>(data.reading)} r={r} />
-      <CtaBand note={text(data.startNote)} href={text(data.appHref)} lead="Upload a product photo and pick a template." r={r} title={`Make ${data.label} content today`} />
+      <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and pick a template."} r={r} title={`Make ${data.label} content today`} />
     </>
   );
 }
@@ -391,6 +392,7 @@ function IndexPage({ data, r }: Props) {
       {cards.length && filters ? (
         <section style={{ paddingBottom: 88 }}>
           <div className="wrap">
+            <h2>All templates</h2>
             <div className="filters" id="adc2-tpl-filters">
               {filterRow("Type", "type", filters.types)}
               {filterRow("Industry", "ind", filters.industries)}
@@ -418,6 +420,7 @@ function IndexPage({ data, r }: Props) {
       {articles.length ? (
         <section style={{ paddingBottom: 88 }}>
           <div className="wrap articles">
+            {data.id === "guides" ? <h2>All guides</h2> : data.id === "blog" ? <h2>All articles</h2> : null}
             {articles.map((article) => (
               <a className="art" href={r.href(article.href)} key={article.href}>
                 <Img image={article.image} r={r} />
@@ -519,7 +522,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
     return (
       <>
         {hero}
-        <section style={{ paddingBottom: 64 }}><div className="wrap"><Plans plans={list<V2Plan>(data.plans)} r={r} /></div></section>
+        <Section eyebrow="Plans" title="Monthly plans"><Plans plans={list<V2Plan>(data.plans)} r={r} /></Section>
         {list<string>(data.credits).length ? <Section eyebrow="Credits" title="How credits work"><Intro paras={list<string>(data.credits)} /></Section> : null}
         {list<V2SpecRow>(data.costs).length ? (
           <Section eyebrow="Credits per job" lead="Each job shows its exact cost before it starts." title="What each photo and video costs">

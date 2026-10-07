@@ -10,6 +10,9 @@ export const SITE_V2_SOURCE_REVISION = "aidreamcapes-site-v2";
 const BASE = "https://www.aivideosugc.com";
 const ASSET_ROOT = "/assets/sites/site_aidreamcapes/site-v2";
 const DATA_DIR = path.join(process.cwd(), "scripts", "data", "aidreamcapes-site-v2");
+// Keep in sync with src/lib/aidreamcapes-create-intent.ts.
+const VIDEO_SIZES = ["9:16", "1:1", "16:9", "4:3", "3:4"];
+const DEFAULT_PHOTO_PROMPT = "Create a product photo from my uploaded photo.";
 const CREDITS_FAQ = {
   q: "How do credits work?",
   a: "You see the credit cost before you start. Credits are held when your job starts and used when it is delivered. If something fails, you get the credits back."
@@ -19,9 +22,9 @@ const LINES = {
   white: "Clean main photo for Amazon and Shopify", life: "Your product out in the real world", angle: "Front, side, back and top views",
   detail: "Show materials and finish up close", size: "Help shoppers see the real size", color: "Every color you sell, same style",
   box: "Show the full set or bundle", pack: "See your box or bag before printing", light: "Turn a flat photo into a studio shot",
-  bg: "Same product, new setting", model: "Your product worn by a real-looking person", tryon: "See a piece worn before the shoot",
+  bg: "Same product, new setting", model: "Your product shown on an AI-generated model", tryon: "See a piece worn before the shoot",
   jewel: "Necklaces, rings and earrings, worn", look: "Editorial photos for your collection", head: "Matching photos for your About page",
-  feed: "Scroll-stopping image for social feeds", ugc: "Looks like a customer shared it", story: "Square image with room for Story text",
+  feed: "Scroll-stopping image for social feeds", ugc: "Looks like a customer shared it", story: "Square product photo for a Story layout after cropping",
   sale: "Seasonal photo with room for your offer", creator: "Someone holding and showing your product", demo: "Show it working, start to finish",
   unbox: "Open the box, reveal the product", ba: "The difference, side by side", howto: "Show customers how to use it",
   film: "A cinematic clip for launches", beauty: "Your product in a daily routine", drink: "Fresh pour and serve moments",
@@ -48,7 +51,7 @@ const TEMPLATE_PROMPTS = {
   head: "Professional headshot on a neutral background, soft light.",
   feed: "Product as the hero of a bright social feed image with space for a headline.",
   ugc: "A person casually holding the product at home, phone-camera feel.",
-  story: "Vertical full-screen image of the product in a fitting scene.",
+  story: "Square image of the product in a fitting scene, with open space above and below for Story text.",
   sale: "Seasonal styled scene around the product with empty space for an offer.",
   creator: "A creator holds the product toward the camera in a bright room and turns it slowly.",
   demo: "Hands use the product and show what it does, close-up, steady camera.",
@@ -79,9 +82,9 @@ const TOOL_REL = {
   "image-to-video": ["ba", "bf", "compare", "film"], "url-to-video": ["ba", "beauty", "drink", "home"],
   "video-ads": ["bf", "creator", "launch", "outfit"], "product-videos": ["demo", "drink", "howto", "launch"],
   "unboxing-videos": ["creator", "demo", "film", "unbox"], "before-after-videos": ["ba", "compare", "home", "howto"],
-  "spokesperson-videos": ["beauty", "outfit", "unbox"], "photo-hub": ["size", "box", "head", "model", "feed", "angle", "pack"],
+  "spokesperson-videos": ["beauty", "outfit", "unbox"], "photo-hub": ["white", "size", "life", "model", "head", "angle", "pack"],
   "white-background": ["white", "color", "angle", "detail"], "lifestyle-photos": ["life", "bg", "pack", "ugc"], "model-photos": ["model", "tryon", "jewel", "look"],
-  "change-background": ["bg", "white", "light", "box"], "social-ad-photos": ["feed", "story", "ugc", "sale"]
+  "change-background": ["white", "light", "bg", "life"], "social-ad-photos": ["feed", "white", "ugc", "sale"]
 };
 const OCCASION_SPREAD_KEYS = new Set(["sale", "bf", "story", "ugc"]);
 const PLATFORM_SPREAD_KEYS = new Set(["creator", "demo", "unbox", "ba", "howto", "film", "beauty", "drink", "home", "outfit", "launch", "compare", "bf", "white", "life", "bg", "model", "feed", "angle", "detail", "pack", "tryon", "jewel", "look", "story", "sale", "ugc", "color", "light", "box", "size", "head"]);
@@ -152,11 +155,12 @@ export function loadSiteV2Source() {
     plan: readJson(path.join(DATA_DIR, "media-plan.json")),
     casePlan: readJson(path.join(DATA_DIR, "case-plan.json"))
   };
-  return { master, images, content, media };
+  const cardOverrides = readJson(path.join(DATA_DIR, "card-overrides.json"));
+  return { master, images, content, media, cardOverrides };
 }
 
 function buildModel(source) {
-  const { master, images, content, media } = source;
+  const { master, images, content, media, cardOverrides = {} } = source;
   const pages = master.pages.map((page) => ({ ...page, url: page.url === "/" ? "/" : page.url.replace(/\/+$/, "") }));
   const byId = Object.fromEntries(pages.map((page) => [page.id, page]));
   const ind = Object.fromEntries(master.industries.map(([slug, label]) => [slug, label]));
@@ -175,13 +179,14 @@ function buildModel(source) {
   const cardByKey = Object.fromEntries(cards.map((card) => [card.key, card]));
   // Which pictures are already on the page being built, and how often each has been used on the
   // site so far. Cards use these to pick a picture that is not repeated (see cardRef).
-  return { pages, byId, content, images, media, ind, plat, occ, cards, cardByKey, pageUse: new Set(), globalUse: new Map(), cardUse: new Map(), spreadUse: new Map(), spreadEnabled: true, currentPageId: "", currentPageIsTool: false, currentPageIsOccasion: false, currentPageIsPlatform: false, currentPageIsCollection: false, currentPageCardCount: 0 };
+  return { pages, byId, content, images, media, cardOverrides, cardOverrideErrors: [], ind, plat, occ, cards, cardByKey, cardRefInfo: new WeakMap(), pageUse: new Set(), globalUse: new Map(), cardUse: new Map(), spreadUse: new Map(), spreadEnabled: true, currentPageId: "", currentPageIsTool: false, currentPageIsOccasion: false, currentPageIsPlatform: false, currentPageIsCollection: false, currentPageCardCount: 0 };
 }
 
 function imageRef(model, key, alt) {
   const meta = model.images[key];
   assert.ok(meta, `unknown image ${key}`);
-  return { src: img(key), alt, width: meta.w, height: meta.h };
+  const catalogAlt = model.media.catalog.site?.[key]?.alt;
+  return { src: img(key), alt: typeof catalogAlt === "string" && catalogAlt.trim() ? catalogAlt : alt, width: meta.w, height: meta.h };
 }
 
 // ---------------------------------------------------------------------------
@@ -315,7 +320,7 @@ function cardChoices(model, key) {
   return [...new Set([primary, ...planned, ...fromGallery])];
 }
 
-function cardRef(model, key, role = "alt") {
+function cardRef(model, key, role = "alt", force = false) {
   const card = model.cardByKey[key];
   assert.ok(card, `unknown card ${key}`);
   const reserveForUrl = model.spreadEnabled && !model.currentPageIsTool && model.currentPageId !== "url-to-video" && TOOL_REL["url-to-video"].includes(key);
@@ -325,7 +330,7 @@ function cardRef(model, key, role = "alt") {
   const reserveForHoliday = model.spreadEnabled && model.currentPageId !== "occ-holidays" && OCCASION_SPREAD_KEYS.has(key);
   const limit = reserveForBlackFriday || reserveForOccasion ? 4 : reserveForHoliday ? 5 : reserveForUrl || reserveForPlatform ? 5 : 6;
   const preserveMinimum = model.currentPageIsCollection && model.currentPageCardCount < 3 && (model.spreadUse.get(key) ?? 0) < 6 && !reserveForUrl && !reserveForOccasion && !reserveForBlackFriday && !reserveForHoliday && (!reserveForPlatform || model.currentPageIsPlatform);
-  if (model.spreadEnabled && (model.spreadUse.get(key) ?? 0) >= limit && !preserveMinimum) return null;
+  if (!force && model.spreadEnabled && (model.spreadUse.get(key) ?? 0) >= limit && !preserveMinimum) return null;
   const choices = cardChoices(model, key);
   let ref = choices[0];
   if (role === "alt" && choices.length > 1) {
@@ -339,12 +344,14 @@ function cardRef(model, key, role = "alt") {
   model.cardUse.set(key, (model.cardUse.get(key) ?? 0) + 1);
   if (model.spreadEnabled) model.spreadUse.set(key, (model.spreadUse.get(key) ?? 0) + 1);
   model.currentPageCardCount += 1;
-  return {
+  const result = {
     key, name: card.name, line: LINES[key], kind: card.kind, href: model.byId[card.pageId].url,
-    image: ref ? mediaImage(model, ref, "card") : imageRef(model, card.img, `${card.name} example`),
+    image: ref ? mediaImage(model, ref, "card") : imageRef(model, card.img, `${card.name} template preview`),
     tags: [...card.ind.map((slug) => model.ind[slug]), ...card.plat.map((slug) => model.plat[slug])],
     industries: card.ind, platforms: card.plat
   };
+  model.cardRefInfo.set(result, { key, ref });
+  return result;
 }
 
 // How much its freshest available picture has been used so far; cards whose pictures are all
@@ -389,13 +396,151 @@ function pickRelatedCards(model, direct, fallback, count) {
   return [...chosen, ...pickCards(model, fallback.filter((key) => !used.has(key)), count - chosen.length)];
 }
 
+function adjustUseCount(map, key, amount) {
+  if (!key) return;
+  const next = (map.get(key) ?? 0) + amount;
+  if (next > 0) map.set(key, next);
+  else map.delete(key);
+}
+
+function releaseCardRef(model, card) {
+  const info = model.cardRefInfo.get(card);
+  if (!info) return;
+  if (info.ref) {
+    model.pageUse.delete(info.ref);
+    adjustUseCount(model.globalUse, info.ref, -1);
+  }
+  adjustUseCount(model.cardUse, info.key, -1);
+  if (model.spreadEnabled) adjustUseCount(model.spreadUse, info.key, -1);
+  model.currentPageCardCount = Math.max(0, model.currentPageCardCount - 1);
+  model.cardRefInfo.delete(card);
+}
+
+function knownMediaRef(model, ref) {
+  if (typeof ref !== "string" || !ref) return false;
+  if (ref.startsWith("s:")) return Boolean(model.images[ref.slice(2)] && model.media.catalog.site?.[ref.slice(2)]);
+  try { mediaSource(model, ref); return true; } catch { return false; }
+}
+
+// Overrides are applied only after the page's template list has been selected. The hero collage,
+// case examples, and other pages keep their own cards and pictures.
+function applyCardOverrides(model, page, cards) {
+  const override = model.cardOverrides?.[page.id];
+  if (!override || !Array.isArray(cards)) return cards;
+  const result = [...cards];
+  const swaps = override.swap && typeof override.swap === "object" && !Array.isArray(override.swap) ? override.swap : {};
+  const appliedSwaps = new Set();
+  for (let index = 0; index < result.length; index += 1) {
+    const original = result[index];
+    const target = swaps[original.key];
+    if (typeof target !== "string" || target === original.key || !model.cardByKey[target]) continue;
+    appliedSwaps.add(original.key);
+    releaseCardRef(model, original);
+    const replacement = cardRef(model, target, "alt", true);
+    if (replacement) result[index] = replacement;
+    else model.cardOverrideErrors.push(`${page.id}: card swap ${original.key} -> ${target} could not be rendered`);
+  }
+  for (const [from, to] of Object.entries(swaps)) {
+    if (typeof to === "string" && to !== from && model.cardByKey[to] && !appliedSwaps.has(from)) {
+      model.cardOverrideErrors.push(`${page.id}: card swap source ${from} is not in the selected template list`);
+    }
+  }
+  const images = override.images && typeof override.images === "object" && !Array.isArray(override.images) ? override.images : {};
+  for (const card of result) {
+    const imageOverride = images[card.key];
+    if (!imageOverride || typeof imageOverride !== "object" || !knownMediaRef(model, imageOverride.ref) || typeof imageOverride.alt !== "string") continue;
+    const info = model.cardRefInfo.get(card) ?? { key: card.key, ref: undefined };
+    const nextImage = mediaImage(model, imageOverride.ref, "card");
+    const nextImageBase = imageBase(nextImage.src);
+    const alreadyVisible = [...model.pageUse].some((ref) => ref !== info.ref && knownMediaRef(model, ref) && imageBase(mediaImage(model, ref, "card").src) === nextImageBase);
+    const repeatedCard = result.some((other) => other !== card && other.image?.src && imageBase(other.image.src) === nextImageBase);
+    if (alreadyVisible || repeatedCard) model.cardOverrideErrors.push(`${page.id}: image override repeats media on the same page (${imageOverride.ref})`);
+    if (info.ref) {
+      model.pageUse.delete(info.ref);
+      adjustUseCount(model.globalUse, info.ref, -1);
+    }
+    card.image = { ...nextImage, alt: imageOverride.alt };
+    model.pageUse.add(imageOverride.ref);
+    adjustUseCount(model.globalUse, imageOverride.ref, 1);
+    model.cardRefInfo.set(card, { ...info, ref: imageOverride.ref });
+  }
+  return result;
+}
+
 const CASE_PAGE_TYPES = new Set(["hub-tool", "tool", "template", "industry", "platform", "occasion"]);
 const EXAMPLE_PAGE_TYPES = new Set(["home", "hub", "hub-tool", "tool", "template", "industry", "platform", "occasion", "examples"]);
 
-function caseTarget(model, page) {
-  const preferred = page.type === "template" ? page.made_with : page.group === "photo" ? "photo-hub" : "video-ads";
-  const tool = model.byId[preferred] ?? model.byId[page.type === "platform" ? "video-ads" : "photo-hub"];
-  return toolAppHref(tool, page.type === "template" ? page.id.slice(4) : undefined);
+function firstVideoSize(value) {
+  if (typeof value !== "string") return undefined;
+  return value.match(/9:16|1:1|16:9|4:3|3:4/)?.[0];
+}
+
+function displayedVideoSize(model, page, templateKey) {
+  const templatePage = templateKey && model.pages.find((candidate) => candidate.type === "template" && candidate.id.slice(4) === templateKey);
+  const sourcePage = templatePage ?? page;
+  const content = model.content[sourcePage.id];
+  const sizeOption = content?.maker?.options?.find(([label]) => String(label).toLowerCase() === "size");
+  return firstVideoSize(sizeOption?.[1]) ?? firstVideoSize(sourcePage.output);
+}
+
+function videoSizeForDimensions(width, height) {
+  const ratio = Number(width) / Number(height);
+  if (!Number.isFinite(ratio) || ratio <= 0) return undefined;
+  const choices = VIDEO_SIZES.map((size) => {
+    const [w, h] = size.split(":").map(Number);
+    return { size, ratio: w / h };
+  });
+  const closest = choices.reduce((best, candidate) => Math.abs(candidate.ratio - ratio) < Math.abs(best.ratio - ratio) ? candidate : best);
+  return Math.abs(closest.ratio - ratio) <= 0.02 ? closest.size : undefined;
+}
+
+function recommendedVideoTool(model, page) {
+  const slug = page.id.split("-").slice(1).join("-");
+  const candidates = page.type === "industry" ? IND_TOOLS[slug]
+    : page.type === "platform" ? PLAT_TOOLS[slug]
+      : page.type === "occasion" ? OCCASION_TOOLS : [];
+  const id = candidates?.find((candidate) => model.byId[candidate]?.group === "video");
+  return model.byId[id ?? "video-ads"];
+}
+
+function recommendedPhotoTool(model, page) {
+  const slug = page.id.split("-").slice(1).join("-");
+  const candidates = page.type === "industry" ? IND_TOOLS[slug]
+    : page.type === "platform" ? PLAT_TOOLS[slug]
+      : page.type === "occasion" ? OCCASION_TOOLS : [];
+  const id = candidates?.find((candidate) => model.byId[candidate]?.group === "photo");
+  return model.byId[id ?? "lifestyle-photos"];
+}
+
+function displayedMakerVideoSize(model, page) {
+  if (page.type === "tool" && page.group === "video") return displayedVideoSize(model, page);
+  if (page.type === "template" && page.group === "video") return displayedVideoSize(model, page, page.id.slice(4));
+  const optionSize = firstVideoSize(model.content[page.id]?.maker?.options?.find(([label]) => String(label).toLowerCase() === "size")?.[1]);
+  if (optionSize) return optionSize;
+  if (page.id === "home" || page.id === "video-hub") return "9:16";
+  if (page.type === "platform" && ["tiktok", "youtube-shorts", "instagram"].includes(page.id.slice("plat-".length))) return "9:16";
+  return undefined;
+}
+
+function caseTarget(model, page, entry, source, isClip) {
+  const isVideoExample = isClip || entry.kind === "scene" || (!entry.kind && page.group === "video");
+  if (!isVideoExample) {
+    if (page.id === "home") return toolAppHref(model, model.byId["white-background"], "white");
+    if (page.id === "photo-hub") return toolAppHref(model, page, TOOL_REL[page.id]?.[0]);
+    if (page.type === "tool" && page.group === "photo") return toolAppHref(model, page, undefined, { prompt: DEFAULT_PHOTO_PROMPT });
+    if (page.type === "template" && page.group === "photo") return toolAppHref(model, model.byId[page.made_with], page.id.slice(4));
+    if (page.type === "industry" || page.type === "platform" || page.type === "occasion") {
+      return toolAppHref(model, recommendedPhotoTool(model, page), undefined, { prompt: DEFAULT_PHOTO_PROMPT });
+    }
+    return toolAppHref(model, model.byId["lifestyle-photos"], undefined, { prompt: DEFAULT_PHOTO_PROMPT });
+  }
+
+  const isVideoToolPage = (page.type === "tool" || page.type === "hub-tool") && page.group === "video";
+  const isVideoTemplatePage = page.type === "template" && page.group === "video";
+  const tool = isVideoToolPage ? page : isVideoTemplatePage ? model.byId[page.made_with] : recommendedVideoTool(model, page);
+  const templateKey = isVideoTemplatePage ? page.id.slice(4) : undefined;
+  const size = isClip ? videoSizeForDimensions(source.width, source.height) : displayedMakerVideoSize(model, page);
+  return toolAppHref(model, tool, templateKey, { size, explicitSize: true });
 }
 
 const CASE_RATIOS = [["1:1", 1], ["4:5", 4 / 5], ["3:4", 3 / 4], ["4:3", 4 / 3], ["3:2", 3 / 2], ["16:9", 16 / 9], ["9:16", 9 / 16]];
@@ -408,12 +553,13 @@ function caseCardFor(model, page, entry, index) {
   const ref = entry.ref;
   const isClip = entry.kind ? entry.kind === "clip" : Boolean(model.media.catalog.clips?.[ref]);
   const source = isClip ? clipRef(model, ref) : mediaImage(model, ref, "card");
+  const isVideoExample = isClip || entry.kind === "scene" || (!entry.kind && page.group === "video");
   const kind = isClip ? "video" : "photo";
   const ratio = closestRatio(source.width, source.height);
-  const spec = isClip ? `Video · ${ratio} · ${source.duration} s` : "Photo";
+  const spec = isClip ? `Video · ${ratio}` : "Photo";
   return {
     key: `case-${page.id}-${index + 1}`, cardType: "case", name: entry.title, product: entry.product, mediaRef: ref, line: spec, spec, kind,
-    href: caseTarget(model, page), label: isClip ? "Example clip" : page.group === "video" ? "Example scene" : "Example photo",
+    href: caseTarget(model, page, entry, source, isClip), label: isClip ? "Example clip" : isVideoExample ? "Example scene" : "Example photo",
     image: isClip ? source.poster : source, ...(isClip ? { video: source } : {}), tags: [], industries: [], platforms: []
   };
 }
@@ -507,11 +653,15 @@ function appHref(params, video) {
   const query = new URLSearchParams(Object.entries(params).filter(([, value]) => value));
   return `/app/create?${query.toString()}${video ? "#step-video" : ""}`;
 }
-function toolAppHref(page, templateKey) {
+function toolAppHref(model, page, templateKey, options = {}) {
+  if (!page) return "/app/create";
   if (page.group === "video") {
-    return appHref({ tool: page.id, template: templateKey, size: "9:16", length: "15", prompt: templateKey ? TEMPLATE_PROMPTS[templateKey] : "" }, true);
+    const size = options.explicitSize ? (VIDEO_SIZES.includes(options.size) ? options.size : undefined) : displayedVideoSize(model, page, templateKey);
+    const prompt = templateKey ? (TEMPLATE_PROMPTS[templateKey] ?? "") : (options.prompt ?? "");
+    return appHref({ tool: page.id, template: templateKey, size, length: options.length ?? "15", prompt }, true);
   }
-  return appHref({ tool_id: "image_generator", tool: page.id, template: templateKey, prompt: templateKey ? TEMPLATE_PROMPTS[templateKey] : "" }, false);
+  const prompt = templateKey ? (TEMPLATE_PROMPTS[templateKey] ?? "") : (options.prompt ?? DEFAULT_PHOTO_PROMPT);
+  return appHref({ tool_id: "image_generator", tool: page.id, template: templateKey, prompt }, false);
 }
 function canonical(page) { return `${BASE}${page.url === "/" ? "/" : page.url}`; }
 function breadcrumbTrail(model, page) {
@@ -684,9 +834,29 @@ function articleRelatedFor(model, page) {
 // Links inside article text are written [text](page:<page id>) or [text](/policy-path) and
 // stored as [text](/url), so a page that moves never leaves a dead link behind.
 const INLINE_LINK = /\[([^\]\n]+)\]\(([^)\s]+)\)/g;
+const OFFICIAL_EXTERNAL_HOSTS = new Set(["ads.tiktok.com", "support.google.com", "help.shopify.com", "help.etsy.com"]);
+const OWN_SITE_HOSTS = new Set(["aivideosugc.com", "www.aivideosugc.com"]);
+function localPathFromAbsoluteUrl(value) {
+  try {
+    const url = new URL(value);
+    if (url.protocol === "https:" && OWN_SITE_HOSTS.has(url.hostname.toLowerCase()) && !url.username && !url.password) {
+      return `${url.pathname}${url.search}${url.hash}`;
+    }
+  } catch { /* Non-URL targets are handled as local paths below. */ }
+  return undefined;
+}
+function isExternalUrl(value) { return /^https?:\/\//i.test(String(value ?? "")) && !localPathFromAbsoluteUrl(value); }
+function isApprovedExternalUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" && OFFICIAL_EXTERNAL_HOSTS.has(url.hostname.toLowerCase()) && !url.username && !url.password;
+  } catch { return false; }
+}
 function inlineLinks(model, value, where) {
   return value.replace(INLINE_LINK, (_, label, target) => {
-    const href = target.startsWith("page:") ? model.byId[target.slice(5)]?.url : target;
+    if (isExternalUrl(target)) return `[${label}](${target})`;
+    const localPath = localPathFromAbsoluteUrl(target);
+    const href = target.startsWith("page:") ? model.byId[target.slice(5)]?.url : localPath ?? target;
     assert.ok(href && (model.pages.some((page) => page.url === href) || POLICY_PATHS.includes(href)), `${where}: link target ${target} not found`);
     return `[${label}](${href})`;
   });
@@ -755,7 +925,7 @@ const AUTO_LINKS = [
 function autoLinks(model, paras, page) {
   if (!Array.isArray(paras) || !paras.length) return paras;
   const out = paras.map((para) => inlineLinks(model, para, page.id));
-  const linked = new Set(out.flatMap((para) => [...para.matchAll(INLINE_LINK)].map((match) => match[2])));
+  const linked = new Set(out.flatMap((para) => [...para.matchAll(INLINE_LINK)].map((match) => match[2]).filter((target) => !isExternalUrl(target)).map((target) => localPathFromAbsoluteUrl(target) ?? target)));
   let added = 0;
   model.autoLinkCount ??= {};
   for (const [pattern, targetId] of AUTO_LINKS) {
@@ -814,7 +984,7 @@ const EXAMPLE_FLOWS = {
 
 function flowCta(model, id) {
   const tool = model.byId[FLOW_TOOL[id]];
-  return tool ? { cta: { label: "Try this with your product", href: toolAppHref(tool) } } : {};
+  return tool ? { cta: { label: "Try this with your product", href: toolAppHref(model, tool) } } : {};
 }
 
 function exampleFlow(model, item) {
@@ -839,7 +1009,7 @@ function articleTry(model, page) {
   if (!tool) return {};
   const video = tool.group === "video";
   return { tryBox: { title: `Try ${tool.label}`, text: `${TOOL_DESC[tool.id]}. Upload one product photo and see the cost before you start.`,
-    href: toolAppHref(tool), label: video ? "Make my video" : "Make my photo", more: { label: `How ${tool.label} works`, href: tool.url } } };
+    href: toolAppHref(model, tool), label: video ? "Make my video" : "Make my photo", more: { label: `How ${tool.label} works`, href: tool.url } } };
 }
 
 function layoutFor(page) {
@@ -887,6 +1057,9 @@ function payloadFor(model, page) {
     breadcrumbs: page.id === "home" ? [] : breadcrumbTrail(model, page),
     faq: (c.faq || []).map((item) => ({ q: item.q, a: item.a })),
     startNote: page.type === "pricing" ? START_NOTE_PLAIN : START_NOTE,
+    ...(typeof c.cta_lead === "string" ? { ctaLead: c.cta_lead } : {}),
+    ...(typeof c.templates_lead === "string" ? { templatesLead: c.templates_lead } : {}),
+    ...(typeof c.maker?.upload_title === "string" ? { maker: { uploadTitle: c.maker.upload_title } } : {}),
     ...(examples ? { examples } : {}),
     ...enrichmentFor(model, page, c)
   };
@@ -927,10 +1100,10 @@ function payloadFor(model, page) {
     const platformIds = Object.entries(PLAT_TOOLS).filter(([, tools]) => tools.includes(page.id)).map(([slug]) => `plat-${slug}`).slice(0, 5);
     const names = (ids) => ids.map((id) => model.byId[id].label).join(", ");
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.benefits, c.uses || []]);
-    const templateCards = hub ? rel.slice(3) : hasHero ? rel : rel.slice(2);
+    const templateCards = applyCardOverrides(model, page, hub ? rel.slice(3) : hasHero ? rel : rel.slice(2));
     const caseCards = caseCardsFor(model, page, templateCards);
     return { ...base, group: page.group, intro: linkedCopy.intro, benefits: linkedCopy.groups[0], steps: c.steps, uses: linkedCopy.groups[1],
-      maker: { options: (c.maker?.options || []).slice(0, 3), cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(page, rel[0]?.key), urlInput: page.id === "url-to-video" },
+      maker: { options: (c.maker?.options || []).slice(0, 3), cta: c.maker?.cta || (video ? "Make my video" : "Make my photos"), href: toolAppHref(model, page, rel[0]?.key), urlInput: page.id === "url-to-video", ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) },
       specs: [
         ...(video ? [["Sizes", "9:16 · 1:1 · 16:9"], ["Length", "6, 10, 15 or 30 seconds"], ["You start with", page.id === "url-to-video" ? "A product page link" : "1 product photo"], ["Cost", "Shown before you start"]]
           : [["Size", "Square by default"], ["You upload", "1 product photo"], ["You get", "A new product photo"], ["Cost", "Shown before you start"]]),
@@ -958,8 +1131,8 @@ function payloadFor(model, page) {
     const moreCards = pickRelatedCards(model, related, fallback, 3);
     const caseCards = caseCardsFor(model, page, moreCards);
     return { ...base, kind: page.group, intro: linkedCopy.intro, tip: c.tip, steps: c.steps, ideas: linkedCopy.groups[0],
-      image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, `${page.label} example`),
-      maker: { options: (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3), cta: c.maker?.cta || "Use this template", href: toolAppHref(tool, key) },
+      image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, `${page.label} template preview`),
+      maker: { options: (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3), cta: c.maker?.cta || "Use this template", href: toolAppHref(model, tool, key), ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) },
       specs: [
         ["Output", page.output],
         page.platforms.length ? ["Best for", names(platformIds), specLinks(model, platformIds)] : ["Best for", "Your website"],
@@ -979,7 +1152,7 @@ function payloadFor(model, page) {
     const collage = hasHero ? [] : pickRelatedCards(model, direct, keys.filter((key) => !direct.includes(key)), 2);
     const directRemaining = direct.filter((key) => !collage.some((card) => card.key === key));
     const fallbackRemaining = keys.filter((key) => !direct.includes(key) && !collage.some((card) => card.key === key));
-    const listed = pickRelatedCards(model, directRemaining, fallbackRemaining, hasHero ? 3 : 2);
+    const listed = applyCardOverrides(model, page, pickRelatedCards(model, directRemaining, fallbackRemaining, hasHero ? 3 : 2));
     const paramKey = { industry: "industry", platform: "platform", occasion: "occasion" }[t];
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.ideas || []]);
     const caseCards = caseCardsFor(model, page, listed);
@@ -1135,7 +1308,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
       }
     };
   });
-  return { pages, navigation: buildNavigation(model), redirects: SITE_V2_REDIRECTS, llms: buildLlmsText(model) };
+  return { pages, navigation: buildNavigation(model), redirects: SITE_V2_REDIRECTS, llms: buildLlmsText(model), cardOverrideErrors: model.cardOverrideErrors };
 }
 
 function buildNavigation(model) {
@@ -1184,9 +1357,11 @@ function buildLlmsText(model) {
 const BANNED = [
   [/\bbulk\b|(?<![-\w])batch(?![-\w])|auto(matically)? (rank|publish)|\bAPI\b(?! is not)/i, "batch/auto/API claim"],
   [/voice-?over(?!, lip| or)|lip[- ]?sync(?! or)|text[- ]to[- ]speech/i, "voice claim"],
-  [/\bsilent\b|visual[- ]only|no audio|without sound/i, "audio omission wording"],
+  [/\bsilent\b|visual[- ]only|no audio|without sound|\bin silence\b|visual[- ]clip only|without (?:audio|sound)|once without\b|\bquiet (?:product )?footage\b/i, "audio omission wording"],
+  [/\b(?:ad|ads|product|listing|offer|launch|sale|promo|marketing|editable|headline|campaign|banner|story)\s+copy\b|\bcopy[- ](?:zone|space|area|block|room|slot)\b|\bcopywriting\b/i, "internal copy wording"],
+  [/exactly what arrives|same table, light, and angle|look the way it does in person|real-looking person|\breal space\b|most marketplaces|from any shot|\bthe same day\b/i, "unsupported result claim"],
   [/\b\d+x\b(?! (lens|zoom))|\d+% (more|cheaper|higher|faster|lower)|#1\b|trusted by|thousands of|best-in-class/i, "unprovable claim"],
-  [/\btheme\b|\bworkflow\b|\bSEO\b|landing page|proof moment/i, "internal wording"]
+  [/\btheme\b|\bworkflow\b|\bSEO\b|landing page|proof moment|for AI assistants|search engines|real content job/i, "internal wording"]
 ];
 const PUBLIC_ENRICHMENT_BANNED = [
   [/\bsilent\b/i, "banned silent wording"],
@@ -1244,6 +1419,26 @@ export function validateSiteV2(build = buildSiteV2()) {
     return Object.entries(value).flatMap(([childKey, child]) => publicText(child, childKey));
   };
   const storyFramingBanned = /full[- ]screen|\bvertical\b|9:16/i;
+  const photoPromptFramingBanned = /full[- ]screen|\bvertical\b|9:16|\bportrait\b/i;
+  for (const page of validationSource.master.pages.filter((item) => item.type === "template" && item.group === "photo")) {
+    const key = page.id.slice(4);
+    const prompt = TEMPLATE_PROMPTS[key];
+    if (prompt && photoPromptFramingBanned.test(prompt)) errors.push(`${page.id}: photo template prompt uses video framing wording (${prompt})`);
+  }
+  const searchParamsForHref = (href) => {
+    const query = String(href ?? "").split("?")[1]?.split("#")[0] ?? "";
+    return new URLSearchParams(query);
+  };
+  const checkCaseHref = (pageId, card, video, label) => {
+    const params = searchParamsForHref(card.href);
+    if (video) {
+      if (params.get("tool_id") === "image_generator") errors.push(`${pageId}: video card link uses image_generator (${label})`);
+      const size = params.get("size");
+      if (size && !VIDEO_SIZES.includes(size)) errors.push(`${pageId}: video card link has unsupported size ${size} (${label})`);
+    } else if (params.get("tool_id") !== "image_generator" || !params.get("prompt")?.trim()) {
+      errors.push(`${pageId}: photo card link must include image_generator and a prompt (${label})`);
+    }
+  };
   const checkPhotoCardLines = (value, pageId) => {
     if (Array.isArray(value)) return value.forEach((item) => checkPhotoCardLines(item, pageId));
     if (!value || typeof value !== "object") return;
@@ -1265,6 +1460,25 @@ export function validateSiteV2(build = buildSiteV2()) {
     }
     const data = page.contentJson.sections.v2_main.settings.data;
     checkPhotoCardLines(data, page.id);
+    const checkCaseLinks = (value) => {
+      if (Array.isArray(value)) return value.forEach(checkCaseLinks);
+      if (!value || typeof value !== "object") return;
+      if (value.cardType === "case" && typeof value.href === "string") {
+        checkCaseHref(page.id, value, value.kind === "video" || value.label === "Example scene", value.key ?? "case card");
+      } else if (["clip", "scene", "photo"].includes(value.kind) && typeof value.href === "string" && typeof value.mediaRef === "string") {
+        checkCaseHref(page.id, value, value.kind === "clip" || value.kind === "scene", value.key ?? "example");
+      }
+      Object.values(value).forEach(checkCaseLinks);
+    };
+    checkCaseLinks(data);
+    const pageMeta = validationSource.master.pages.find((item) => item.id === page.id);
+    if ((pageMeta?.type === "tool" || pageMeta?.type === "hub-tool" || pageMeta?.type === "template") && pageMeta?.group === "video") {
+      const maker = data.maker;
+      const displayed = firstVideoSize(maker?.options?.find(([label]) => String(label).toLowerCase() === "size")?.[1]) ?? firstVideoSize(pageMeta.output);
+      const buttonSize = searchParamsForHref(maker?.href).get("size");
+      if (!displayed || !VIDEO_SIZES.includes(displayed)) errors.push(`${page.id}: video maker has no supported displayed Size`);
+      else if (buttonSize !== displayed) errors.push(`${page.id}: video maker size ${buttonSize ?? "(missing)"} does not match displayed Size ${displayed}`);
+    }
     if (page.id === "tpl-story") {
       const storyMediaAlts = [];
       const collectStoryAlts = (value) => {
@@ -1280,10 +1494,27 @@ export function validateSiteV2(build = buildSiteV2()) {
         if (storyFramingBanned.test(alt)) errors.push(`${page.id}: media alt uses story framing wording (${alt})`);
       }
     }
+    const visibleAlts = [];
+    const collectVisibleAlts = (value) => {
+      if (Array.isArray(value)) return value.forEach(collectVisibleAlts);
+      if (!value || typeof value !== "object") return;
+      if (typeof value.alt === "string") visibleAlts.push({ alt: value.alt, src: value.src, mediaRef: value.mediaRef });
+      for (const item of Object.values(value)) collectVisibleAlts(item);
+    };
+    collectVisibleAlts(data);
+    collectVisibleAlts(page.contentJson.mediaManifest);
+    if (typeof seo.ogImageAlt === "string") visibleAlts.push({ alt: seo.ogImageAlt, src: seo.ogImage });
+    for (const { alt, src, mediaRef } of visibleAlts) {
+      if (/ example$/i.test(alt.trim())) errors.push(`${page.id}: visible image alt must not end with " example" (${mediaRef ?? src ?? alt})`);
+    }
     // Keep all strings that can be rendered by the storefront, including case names,
     // product labels, specs and image alt text. Only asset references and layout metadata
     // are excluded from copy checks.
-    const visible = publicText(data).join("\n");
+    const visible = [...publicText(data), seo.title, seo.description].join("\n");
+    for (const match of visible.matchAll(INLINE_LINK)) {
+      const target = match[2];
+      if (isExternalUrl(target) && !isApprovedExternalUrl(target)) errors.push(`${page.id}: external link must use an approved HTTPS domain (${target})`);
+    }
     for (const [rx, why] of BANNED) {
       if (page.id === "glossary" && why === "voice claim") continue;
       if (page.id === "ai-info" && why !== "internal wording") continue;
@@ -1329,6 +1560,67 @@ export function validateSiteV2(build = buildSiteV2()) {
         else termCodes.set(anchor, entry.term);
       }
     }
+  }
+  const overrideSource = validationSource.cardOverrides ?? {};
+  const overrideModel = buildModel(validationSource);
+  const sourcePages = new Map(validationSource.master.pages.map((page) => [page.id, page]));
+  const sourceCardKeys = new Set([
+    ...validationSource.master.pages.filter((page) => page.type === "template").map((page) => page.id.slice(4)),
+    ...(validationSource.master.toolcards ?? []).map(([key]) => key)
+  ]);
+  const overrideMediaBases = new Map();
+  for (const [pageId, override] of Object.entries(overrideSource)) {
+    const pageMeta = sourcePages.get(pageId);
+    if (!pageMeta) errors.push(`card-overrides: unknown page ${pageId}`);
+    else if (!["tool", "hub-tool", "industry", "platform", "occasion"].includes(pageMeta.type)) errors.push(`card-overrides: page ${pageId} cannot receive card overrides`);
+    if (!override || typeof override !== "object" || Array.isArray(override)) {
+      errors.push(`card-overrides: invalid override for ${pageId}`);
+      continue;
+    }
+    const swaps = override.swap ?? {};
+    const imageOverrides = override.images ?? {};
+    if (!swaps || typeof swaps !== "object" || Array.isArray(swaps)) errors.push(`card-overrides: invalid swap map for ${pageId}`);
+    if (!imageOverrides || typeof imageOverrides !== "object" || Array.isArray(imageOverrides)) errors.push(`card-overrides: invalid images map for ${pageId}`);
+    for (const [from, to] of Object.entries(swaps)) {
+      if (!sourceCardKeys.has(from)) errors.push(`card-overrides: unknown card key ${from} on ${pageId}`);
+      if (!sourceCardKeys.has(to)) errors.push(`card-overrides: unknown replacement card key ${to} on ${pageId}`);
+    }
+    for (const [key, imageOverride] of Object.entries(imageOverrides)) {
+      if (!sourceCardKeys.has(key)) errors.push(`card-overrides: unknown image card key ${key} on ${pageId}`);
+      if (!imageOverride || typeof imageOverride !== "object" || Array.isArray(imageOverride)) {
+        errors.push(`card-overrides: invalid image override for ${pageId}.${key}`);
+        continue;
+      }
+      if (!knownMediaRef(overrideModel, imageOverride.ref)) errors.push(`card-overrides: unknown media id ${imageOverride.ref ?? "(missing)"} on ${pageId}.${key}`);
+      if (typeof imageOverride.alt !== "string" || imageOverride.alt.trim().length < 12) errors.push(`card-overrides: image alt must be a specific description for ${pageId}.${key}`);
+    }
+    const publicPage = build.pages.find((page) => page.id === pageId);
+    if (!publicPage) continue;
+    const { layout, data } = publicPage.contentJson.sections.v2_main.settings;
+    const templateCards = (layout === "tool" ? data.templates ?? [] : layout === "template" ? data.more ?? [] : layout === "collection" ? data.cards ?? [] : []).filter((card) => card.cardType !== "case");
+    const keys = templateCards.map((card) => card.key);
+    if (new Set(keys).size !== keys.length) errors.push(`${pageId}: card overrides create duplicate template cards`);
+    for (const [key, imageOverride] of Object.entries(imageOverrides)) {
+      if (!knownMediaRef(overrideModel, imageOverride?.ref) || !templateCards.some((card) => card.key === key)) continue;
+      const expected = mediaImage(overrideModel, imageOverride.ref, "card");
+      const actual = templateCards.find((card) => card.key === key)?.image;
+      if (!actual || imageBase(actual.src) !== imageBase(expected.src)) errors.push(`${pageId}: image override was not applied to ${key}`);
+      const base = imageBase(expected.src);
+      (overrideMediaBases.get(base) ?? overrideMediaBases.set(base, { ref: imageOverride.ref, pages: new Set() }).get(base)).pages.add(pageId);
+    }
+  }
+  for (const message of build.cardOverrideErrors ?? []) errors.push(message);
+  const imagePages = new Map();
+  for (const page of build.pages) {
+    const { layout, data } = page.contentJson.sections.v2_main.settings;
+    for (const src of renderedImages(layout, data)) {
+      const base = imageBase(src);
+      (imagePages.get(base) ?? imagePages.set(base, new Set()).get(base)).add(page.id);
+    }
+  }
+  for (const [base, override] of overrideMediaBases) {
+    const pages = imagePages.get(base) ?? override.pages;
+    if (pages.size > 2) errors.push(`card-overrides: media ${override.ref} appears on ${pages.size} pages (max 2)`);
   }
   // Editorial metadata must never enter the public LivePage payload, even when a
   // future draft adds it beside an otherwise valid enrichment block.
@@ -1423,7 +1715,7 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (card.mediaRef === "social-proof-animation" || card.video?.src?.includes("/social-proof-animation.mp4")) errors.push(`${page.id}: retired social-proof-animation is not allowed in case media`);
       if (card.mediaRef === "ugc-ad-video" || card.video?.src?.includes("ugc-ad-video")) errors.push(`${page.id}: ugc-ad-video is not allowed in case media`);
       if (card.kind === "video" && !validationSource.media.catalog.clips?.[card.mediaRef]) errors.push(`${page.id}: video case is missing from the clip catalog (${card.mediaRef})`);
-      const expected = card.kind === "video" ? `Video · ${closestRatio(card.video.width, card.video.height)} · ${card.video.duration} s` : "Photo";
+      const expected = card.kind === "video" ? `Video · ${closestRatio(card.video.width, card.video.height)}` : "Photo";
       if (card.spec !== expected) errors.push(`${page.id}: case spec is not based on actual media dimensions (${card.name})`);
     }
   }
@@ -1470,7 +1762,7 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (item.kind === "clip" && !clip) errors.push(`${page.id}: example clip is missing from the clip catalog (${item.mediaRef})`);
       if (/social-proof-animation/i.test(mediaText) && Number(clip?.w) > Number(clip?.h)) errors.push(`${page.id}: horizontal social-proof-animation is not allowed in examples (${item.mediaRef})`);
       if (item.kind === "clip") {
-        const expected = `Video · ${closestRatio(item.video.width, item.video.height)} · ${item.video.duration} s`;
+        const expected = `Video · ${closestRatio(item.video.width, item.video.height)}`;
         if (item.spec !== expected) errors.push(`${page.id}: example spec is not based on actual media dimensions (${title})`);
       }
     }
@@ -1532,7 +1824,8 @@ export function validateSiteV2(build = buildSiteV2()) {
     } else if (typeof value === "string") for (const match of value.matchAll(INLINE_LINK)) add(match[2], from);
   };
   const add = (href, from) => {
-    const target = href.split(/[?#]/)[0];
+    if (isExternalUrl(href)) return;
+    const target = (localPathFromAbsoluteUrl(href) ?? href).split(/[?#]/)[0];
     if (target === from || !pageSlugs.has(target)) return;
     (inbound.get(target) ?? inbound.set(target, new Set()).get(target)).add(from);
   };
