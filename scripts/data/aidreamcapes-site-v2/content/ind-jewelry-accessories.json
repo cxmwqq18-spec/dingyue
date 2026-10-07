@@ -267,15 +267,6 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-jewel-g1",
-          "label": "Enamel brooch on a coat",
-          "prompt": "Pin the enamel brooch to a wool lapel and keep the flower shape visible.",
-          "chips": [
-            "daily"
-          ],
-          "kind": "photo"
-        },
-        {
           "ref": "n:gen2:plat-instagram-g3",
           "label": "Necklace displayed in open space",
           "prompt": "Lay the necklace flat with its pendant centered and open space around it.",
@@ -326,15 +317,6 @@
           "prompt": "Lift the watch box lid on a walnut desk and keep the watch visible.",
           "chips": [
             "daily"
-          ],
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:model-photos-c3",
-          "label": "Layered necklaces at the collar",
-          "prompt": "Show the layered chains against a plain neckline in soft daylight.",
-          "chips": [
-            "worn"
           ],
           "kind": "photo"
         },

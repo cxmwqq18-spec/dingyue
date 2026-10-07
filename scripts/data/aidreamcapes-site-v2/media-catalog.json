@@ -8498,6 +8498,16 @@
           640,
           1280
         ]
+      },
+      "plat-youtube-shorts-size-portrait-ebike": {
+        "file": "gen2guide-plat-youtube-shorts-size-portrait-ebike",
+        "w": 1024,
+        "h": 1536,
+        "alt": "The same gray folding e-bike shown whole in a vertical frame on a pale studio background.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
