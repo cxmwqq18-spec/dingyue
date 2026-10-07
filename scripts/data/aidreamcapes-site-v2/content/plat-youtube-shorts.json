@@ -1,7 +1,7 @@
 {
   "id": "plat-youtube-shorts",
   "title": "YouTube Shorts Ads From Product Photos | AIVideosUGC",
-  "description": "Create YouTube Shorts ads from one product photo: a full-screen vertical clip in 6, 10, 15 or 30 seconds. See the cost first and start yours now.",
+  "description": "Create YouTube Shorts ads from one product photo: a full-screen vertical clip in 6, 10 or 15 seconds. See the cost first and start yours now.",
   "h1": "YouTube Shorts Ads Made From a Single Product Photo",
   "eyebrow": "YouTube Shorts",
   "lead": "YouTube Shorts ads play full screen on a phone. Turn a product photo into a vertical clip that shows what the product does before the viewer moves on.",
@@ -13,7 +13,7 @@
     "short product videos for YouTube"
   ],
   "intro": [
-    "YouTube Shorts sit between quick videos people chose to watch, so an ad there works when it feels like one more useful clip: a product shown clearly, doing something real. Upload a product photo, add a sentence about what should happen, and AIVideosUGC returns a 9:16 clip that fills the screen, in your choice of 6, 10, 15 or 30 seconds. Need a wider cut for a regular YouTube placement or your product page? Choose 16:9 instead.",
+    "YouTube Shorts sit between quick videos people chose to watch, so an ad there works when it feels like one more useful clip: a product shown clearly, doing something real. Upload a product photo, add a sentence about what should happen, and AIVideosUGC returns a 9:16 clip that fills the screen, in your choice of 6, 10 or 15 seconds. Need a wider cut for a regular YouTube placement or your product page? Choose 16:9 instead.",
     "Demo-style clips suit Shorts well. Try a hand blender whirring in a glass, a backpack being packed for a trip, or a desk lamp clicking on at dusk. Each clip is made separately and shows its cost first. Add any music and on-screen text in CapCut or another editor, then upload the finished file to your YouTube channel or ad account."
   ],
   "specs": [
@@ -23,7 +23,7 @@
     ],
     [
       "Run time",
-      "6, 10, 15 or 30 seconds per Short"
+      "6, 10 or 15 seconds per Short"
     ],
     [
       "Wide option",
@@ -64,11 +64,11 @@
     },
     {
       "q": "Is a 6-second clip long enough for a Shorts ad?",
-      "a": "For a single clear moment, yes. If you want to show the product being used from start to finish, 10 or 15 seconds gives you more room; 30 seconds gives space for a full walkthrough."
+      "a": "For one clear product moment, six seconds can work. Ten or fifteen seconds leaves more room for a demonstration from start to finish."
     },
     {
       "q": "What are YouTube Shorts ad limits?",
-      "a": "Google recommends vertical 9:16 and videos under 60 seconds for Shorts; videos can be up to 3 minutes, but the first 60 seconds play in the Shorts feed. AIVideosUGC’s 30-second option fits."
+      "a": "Google recommends a vertical 9:16 frame for Shorts. Keep the product near the middle of the screen and choose a short length that fits the action."
     }
   ],
   "overview": [
@@ -78,7 +78,7 @@
     },
     {
       "h2": "Use Google's guidance as the publishing check",
-      "d": "Google recommends a 9:16 vertical asset for Shorts. Its guidance says videos under 60 seconds fit the Shorts experience, while uploads can run up to 3 minutes and the Shorts feed first plays the opening 60 seconds. AIVideosUGC offers 6, 10, 15, and 30 second jobs in five shapes—9:16, 1:1, 16:9, 4:3, and 3:4— with cost shown before generation. Choose 16:9 when the same idea belongs in a standard YouTube placement or a wide product page. Review [Google's YouTube Shorts guidance](https://support.google.com/google-ads/answer/16041697?hl=en-GB) before publishing."
+      "d": "Google recommends a 9:16 vertical asset for Shorts. Its guidance says videos under 60 seconds fit the Shorts experience, while uploads can run up to 3 minutes and the Shorts feed first plays the opening 60 seconds. AIVideosUGC offers 6, 10, and 15 second jobs in five shapes—9:16, 1:1, 16:9, 4:3, and 3:4. Choose 16:9 when the same idea belongs in a standard YouTube placement or a wide product page. Review Google's YouTube Shorts guidance before publishing."
     }
   ],
   "input_guide": {
@@ -200,5 +200,240 @@
     ]
   },
   "templates_lead": "Choose a template that shows one useful product action from the opening frame.",
-  "cta_lead": "Start with one product action, then shape a clip for your YouTube Shorts placement."
+  "cta_lead": "Start with one product action, then shape a clip for your YouTube Shorts placement.",
+  "steps": [
+    {
+      "t": "Upload one clean product photo",
+      "d": "Show the white steamer, water reservoir, and cord against a plain background."
+    },
+    {
+      "t": "Describe one quick action",
+      "d": "Press this steamer across a blue shirt in a bright, uncluttered room."
+    },
+    {
+      "t": "Finish the vertical clip",
+      "d": "After download, add music, captions, or the product link in your editor."
+    }
+  ],
+  "visual": {
+    "overview": "YouTube Shorts ads work best when one product action reads quickly on a phone. Keep the object near the center and leave room around the frame edges for app controls.",
+    "strip": [
+      "n:guide:plat-youtube-shorts-m2-source",
+      "n:guide:plat-youtube-shorts-m2-result-vertical",
+      "n:gen2:ind-shoes-74",
+      "n:gen2:tpl-story-c3",
+      "n:gen2:ind-electronics-5",
+      "n:gen2:plat-tiktok-c4"
+    ],
+    "steps": {
+      "source": "n:guide:plat-youtube-shorts-m2-source",
+      "result": "n:guide:plat-youtube-shorts-m2-result-vertical",
+      "mode": "video",
+      "length": 15,
+      "prompt": "Press this white garment steamer across a blue shirt in a centered vertical frame.",
+      "options": [
+        [
+          "Size",
+          "9:16"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a YouTube Shorts scene with one action",
+      "lead": "Pick one quick product action that reads on a phone screen.",
+      "chips": [
+        {
+          "id": "open",
+          "label": "Bottles in everyday scenes"
+        },
+        {
+          "id": "demo",
+          "label": "Daily care products"
+        },
+        {
+          "id": "style",
+          "label": "Styled product frames"
+        },
+        {
+          "id": "detail",
+          "label": "Show one detail"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-story-c1",
+          "label": "Sunscreen in beach light",
+          "prompt": "Stand the tube beside a striped towel and keep the product centered.",
+          "chips": [
+            "open"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-story-c4",
+          "label": "Smoothie bottle on a counter",
+          "prompt": "Place the bottle on a kitchen counter with the label area facing forward.",
+          "chips": [
+            "open"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-beauty-c2",
+          "label": "Lip balm on a vanity",
+          "prompt": "Set the lip balm beside a small mirror in warm morning light.",
+          "chips": [
+            "demo"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-beauty-c3",
+          "label": "Face roller by a cream jar",
+          "prompt": "Show the roller resting beside a cream jar on a tidy shelf.",
+          "chips": [
+            "demo"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-beauty-c4",
+          "label": "Sheet mask beside a towel",
+          "prompt": "Lay the pouch next to a folded towel on a bathroom counter.",
+          "chips": [
+            "style"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-compare-g1",
+          "label": "Two phone cases side by side",
+          "prompt": "Show two phone cases beside each other with their colors and camera cutouts visible.",
+          "chips": [
+            "style"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-angle-g3",
+          "label": "Speaker controls in close view",
+          "prompt": "Move across the speaker's top controls and keep the buttons in focus.",
+          "chips": [
+            "detail"
+          ],
+          "kind": "video"
+        },
+        {
+          "ref": "n:gen2:tpl-detail-g3",
+          "label": "Leather bag clasp in close view",
+          "prompt": "Open the brass clasp and keep the hinge and locking edge in the center.",
+          "chips": [
+            "detail"
+          ],
+          "kind": "video"
+        }
+      ],
+      "button": "Make a product video"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "n:gen2:video-hub-g1",
+        "h": "Use a vertical product reveal",
+        "d": "A water bottle lifted from a gym bag makes a quick opening moment."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:spokesperson-videos-c3",
+        "h": "Keep a product demo on screen",
+        "d": "A protein shaker in a gym gives a short use scene without a long explanation."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:plat-youtube-shorts-example-trail-square",
+        "bad": "n:guide:plat-youtube-shorts-m5-soft-focus",
+        "good_label": "The trail shoe has room around its toe and heel",
+        "bad_label": "The shoe mesh blurs together at this size"
+      },
+      {
+        "good": "n:guide:plat-youtube-shorts-example-trail-tall",
+        "bad": "n:guide:plat-youtube-shorts-m5-cropped",
+        "good_label": "The shoes stay centered in the vertical frame",
+        "bad_label": "The front of the shoe is cut off"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:plat-tiktok-c2",
+        "frame": "9:16",
+        "label": "6-second vertical demo: hair clips tried on in a mirror",
+        "length": 6
+      },
+      {
+        "ref": "n:gen2:video-ads-g2",
+        "frame": "9:16",
+        "label": "10-second vertical demo: tote packed for a hallway trip",
+        "length": 10
+      }
+    ],
+    "after": {
+      "ref": "f:url-to-ad-a-v",
+      "zones": [
+        "Music",
+        "Product link"
+      ],
+      "items": [
+        "Choose music in your editor or YouTube after downloading the clip.",
+        "Add the product link in the placement where viewers can open it."
+      ]
+    },
+    "sizes": [
+      {
+        "frame": "9:16",
+        "ref": "f:black-friday-countdown-v",
+        "label": "9:16 · YouTube Shorts"
+      },
+      {
+        "frame": "1:1",
+        "ref": "n:guide:plat-youtube-shorts-size-square-ebike",
+        "label": "1:1 · square posts on other channels"
+      },
+      {
+        "frame": "16:9",
+        "ref": "f:black-friday-countdown",
+        "label": "16:9 · regular YouTube videos"
+      }
+    ],
+    "titles": {
+      "m2": {
+        "h2": "Create a YouTube Shorts ad from one product photo"
+      },
+      "m3": {
+        "h2": "Choose a YouTube Shorts scene with one action"
+      },
+      "m4": {
+        "h2": "Use YouTube Shorts for a quick product demonstration"
+      },
+      "m5": {
+        "h2": "Keep the product centered in a YouTube Shorts frame"
+      },
+      "m6": "YouTube Shorts made from product photos",
+      "m7": {
+        "h2": "Add music and details after download"
+      },
+      "m8": "One e-bike in three sizes: Shorts, square, and regular YouTube",
+      "examples": {
+        "h2": "More YouTube Shorts examples",
+        "lead": "Vertical product moments with one clear start and finish."
+      },
+      "faq": {
+        "h2": "Questions about YouTube Shorts ads"
+      }
+    }
+  }
 }

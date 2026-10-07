@@ -8078,6 +8078,426 @@
           640,
           1280
         ]
+      },
+      "ind-electronics-m2-source": {
+        "file": "gen2guide-ind-electronics-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact black portable speaker with a woven grille, shown alone on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-electronics-m3-headphones": {
+        "file": "gen2guide-ind-electronics-m3-headphones",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gray over-ear headphones lifted from an open gray product box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-fashion-clothing-m2-result": {
+        "file": "gen2guide-ind-fashion-clothing-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Heather-gray pullover hoodie worn in a bright studio, cropped from chin to hips.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-food-drinks-m2-source": {
+        "file": "gen2guide-ind-food-drinks-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Single glass bottle of golden citrus drink, upright on a white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-home-living-m2-source": {
+        "file": "gen2guide-ind-home-living-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White portable table lamp with shade, stem, and base visible on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m2-result": {
+        "file": "gen2guide-ind-jewelry-accessories-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Polished gold band on an ivory display card beside a small coin.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m2-source": {
+        "file": "gen2guide-ind-jewelry-accessories-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Single polished gold band ring centered on a plain white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-shoes-m2-result": {
+        "file": "gen2guide-ind-shoes-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown Chelsea boots worn on a cobblestone path, cropped below the knees.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-facebook-size-square-backpack": {
+        "file": "gen2guide-plat-facebook-size-square-backpack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black commuter backpack, front view, centered on a pale studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-facebook-size-portrait-backpack": {
+        "file": "gen2guide-plat-facebook-size-portrait-backpack",
+        "w": 1080,
+        "h": 1920,
+        "alt": "Black commuter backpack shown full length in a vertical studio frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-instagram-size-wide": {
+        "file": "gen2guide-plat-instagram-size-wide",
+        "w": 1536,
+        "h": 1024,
+        "alt": "Speckled ceramic cup beside a small plant and linen napkin on a sunlit table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-m2-result-vertical": {
+        "file": "gen2guide-plat-youtube-shorts-m2-result-vertical",
+        "w": 1024,
+        "h": 1536,
+        "alt": "White handheld steamer smoothing a blue shirt in a vertical product scene.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-m2-source": {
+        "file": "gen2guide-plat-youtube-shorts-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White handheld garment steamer with water reservoir and cord on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-size-square-ebike": {
+        "file": "gen2guide-plat-youtube-shorts-size-square-ebike",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black folding electric bicycle in side view on a light studio floor.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-example-trail-square": {
+        "file": "gen2guide-plat-youtube-shorts-example-trail-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral trail running shoes on a gray stone plinth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-example-trail-tall": {
+        "file": "gen2guide-plat-youtube-shorts-example-trail-tall",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Coral trail running shoes on a rocky mountain path in daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-electronics-m5-soft-focus": {
+        "file": "gen2guide-ind-electronics-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Portable speaker ports and woven grille softened by blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-electronics-m5-cropped": {
+        "file": "gen2guide-ind-electronics-m5-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Portable speaker enlarged until part of its rim falls outside the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-fashion-clothing-m5-soft-focus": {
+        "file": "gen2guide-ind-fashion-clothing-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Blue denim jacket softened by blur so its seams and buttons are unclear.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-fashion-clothing-m5-cropped": {
+        "file": "gen2guide-ind-fashion-clothing-m5-cropped",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Puffer jacket sleeve cut off by a tight side crop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-food-drinks-m5-soft-focus": {
+        "file": "gen2guide-ind-food-drinks-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Snack pouch and lunch container softened by blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-food-drinks-m5-cropped": {
+        "file": "gen2guide-ind-food-drinks-m5-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Open snack box enlarged until its edge reaches the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-health-wellness-m5-soft-focus": {
+        "file": "gen2guide-ind-health-wellness-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Cork yoga block softened by blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-health-wellness-m5-cropped": {
+        "file": "gen2guide-ind-health-wellness-m5-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Cork yoga block with one short end clipped by the edge of the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-home-living-m5-soft-focus": {
+        "file": "gen2guide-ind-home-living-m5-soft-focus",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Throw pillow and chair softened by blur beside a floor lamp.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-home-living-m5-cropped": {
+        "file": "gen2guide-ind-home-living-m5-cropped",
+        "w": 1280,
+        "h": 960,
+        "alt": "Fern planter enlarged until the pot edge is cut off by a tight frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m3-necklace-clasp": {
+        "file": "gen2guide-ind-jewelry-accessories-m3-necklace-clasp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold necklace clasp and chain links shown in sharp macro detail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m3-gem-prongs": {
+        "file": "gen2guide-ind-jewelry-accessories-m3-gem-prongs",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear gemstone secured by simple gold prongs, shown in sharp macro detail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m5-soft-focus": {
+        "file": "gen2guide-ind-jewelry-accessories-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Ring prong setting softened by blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m5-cropped": {
+        "file": "gen2guide-ind-jewelry-accessories-m5-cropped",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Wristwatch enlarged until its case and strap reach the frame edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-shoes-m5-soft-focus": {
+        "file": "gen2guide-ind-shoes-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Running shoe softened by blur so its profile loses detail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-shoes-m5-cropped": {
+        "file": "gen2guide-ind-shoes-m5-cropped",
+        "w": 1280,
+        "h": 720,
+        "alt": "Running shoes enlarged until the pair is cut by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-shoes-m6-boot-detail": {
+        "file": "gen2guide-ind-shoes-m6-boot-detail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Single brown leather Chelsea boot shown in a square close-up, with its elastic side panel, stitching, and toe visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-facebook-m5-soft-focus": {
+        "file": "gen2guide-plat-facebook-m5-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Over-ear headphones softened by blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-facebook-m5-cropped": {
+        "file": "gen2guide-plat-facebook-m5-cropped",
+        "w": 1280,
+        "h": 960,
+        "alt": "Mini backpack cut off at the side edge by a tight crop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-instagram-m5-soft-focus": {
+        "file": "gen2guide-plat-instagram-m5-soft-focus",
+        "w": 1280,
+        "h": 1600,
+        "alt": "Face mist bottle and towel softened by blur on a gym bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-instagram-m5-cropped": {
+        "file": "gen2guide-plat-instagram-m5-cropped",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Toner bottle lower half cut off by a tight crop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-m5-soft-focus": {
+        "file": "gen2guide-plat-youtube-shorts-m5-soft-focus",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral trail shoe softened by blur on a stone display.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "plat-youtube-shorts-m5-cropped": {
+        "file": "gen2guide-plat-youtube-shorts-m5-cropped",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Trail shoe cut off by a tight vertical frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-electronics-m4-headphones": {
+        "file": "gen2guide-ind-electronics-m4-headphones",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Generic charcoal over-ear headphones fully visible on a wood desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-home-living-m3-lit-lamp": {
+        "file": "gen2guide-ind-home-living-m3-lit-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brass table lamp glowing beside an open book in a cozy living room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "ind-jewelry-accessories-m7-steel-watch": {
+        "file": "gen2guide-ind-jewelry-accessories-m7-steel-watch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded analog steel watch with a silver bracelet and white dial on linen.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
