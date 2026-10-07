@@ -2890,6 +2890,15 @@
         540
       ],
       "clipPoster": true
+    },
+    "unboxing-experience-v-m8": {
+      "w": 540,
+      "h": 960,
+      "alt": "Hands open a gray headphone package and remove the headphones and charging case.",
+      "variants": [
+        540
+      ],
+      "clipPoster": true
     }
   },
   "gen2": {
@@ -7425,6 +7434,146 @@
         "w": 1280,
         "h": 1282,
         "alt": "Lunch box with its lid and latch cut off at the frame edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-ugc-soft-focus": {
+        "file": "gen2guide-tpl-ugc-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Blue bottle and cap softly blurred on a bright yellow background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-ugc-breakfast-crop": {
+        "file": "gen2guide-tpl-ugc-breakfast-crop",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Reusable bottle framed too tightly at the image edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "beauty-skincare-soft-focus": {
+        "file": "gen2guide-beauty-skincare-soft-focus",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Sheet mask package softly blurred on a bathroom counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "beauty-sunscreen-crop": {
+        "file": "gen2guide-beauty-sunscreen-crop",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Hair oil application shown in a tight crop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tiktok-bottle-soft-focus": {
+        "file": "gen2guide-tiktok-bottle-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Sneaker outsole tread softly blurred so its texture is hard to inspect.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tiktok-clips-crop": {
+        "file": "gen2guide-tiktok-clips-crop",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Canvas sneaker cut off by a tight crop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "black-friday-duffel-soft-focus": {
+        "file": "gen2guide-black-friday-duffel-soft-focus",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Gaming monitor and stand softly blurred on a dark desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "black-friday-giftbox-crop": {
+        "file": "gen2guide-black-friday-giftbox-crop",
+        "w": 1280,
+        "h": 720,
+        "alt": "Espresso machine framed too tightly on a dark counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "black-friday-m2-source": {
+        "file": "gen2guide-black-friday-m2-source",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Leather duffel filling more of the frame on a dark backdrop, with handles and stitching visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "black-friday-m2-result": {
+        "file": "gen2guide-black-friday-m2-result",
+        "w": 1280,
+        "h": 1280,
+        "alt": "The same leather duffel larger in the frame on a light wood surface with brighter natural light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-ugc-m2-source": {
+        "file": "gen2guide-tpl-ugc-m2-source",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Clear reusable water bottle with a sage green lid alone on a neutral background, front view.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tiktok-headphones-square": {
+        "file": "gen2guide-tiktok-headphones-square",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Gray over-ear headphones lifted from an open box, centered with the charging case nearby.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tiktok-speaker-crop": {
+        "file": "gen2guide-tiktok-speaker-crop",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Portable speaker cut off at the left edge by a tight crop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "black-friday-m2-source-use": {
+        "file": "gen2guide-black-friday-m2-source-use",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Leather duffel filling more of the frame on a dark backdrop, with handles and stitching visible.",
         "variants": [
           640,
           1280

@@ -746,7 +746,7 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
   const chips = Array.isArray(picker.chips) ? picker.chips : [];
   const overviewRows = Array.isArray(content.overview) ? content.overview : [];
   const overviewValue = overviewRows[0];
-  const overview = typeof overviewValue === "string" ? overviewValue : overviewValue?.d ?? overviewValue?.p ?? content.intro?.[0] ?? "";
+  const overview = typeof source.overview === "string" ? source.overview : typeof overviewValue === "string" ? overviewValue : overviewValue?.d ?? overviewValue?.p ?? content.intro?.[0] ?? "";
   const limits = content.limitations?.items ?? [];
   const visual = {
     strip: (Array.isArray(source.strip) ? source.strip : []).map((ref) => visualImage(model, ref)),
@@ -1265,9 +1265,12 @@ function payloadFor(model, page) {
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.ideas || []]);
     const moreCards = applyCardOverrides(model, page, pickRelatedCards(model, related, fallback, 3));
     const caseCards = caseCardsFor(model, page, moreCards);
+    const maker = { options: (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3), cta: c.maker?.cta || "Use this template", href: toolAppHref(model, tool, key), ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) };
+    const visual = visualFor(model, page, c.visual, maker, page.group, maker.href, c);
     return { ...base, kind: page.group, intro: linkedCopy.intro, tip: c.tip, steps: c.steps, ideas: linkedCopy.groups[0],
       image: heroImageOf(heroMediaFor(model, page.id)) ?? imageRef(model, page.img, `${page.label} template preview`),
-      maker: { options: (c.maker?.options || [["Template", page.label], ["Output", page.output]]).slice(0, 3), cta: c.maker?.cta || "Use this template", href: toolAppHref(model, tool, key), ...(typeof c.maker?.upload_title === "string" ? { uploadTitle: c.maker.upload_title } : {}) },
+      maker,
+      ...(visual ? { visual } : {}),
       specs: [
         ["Output", page.output],
         page.platforms.length ? ["Best for", names(platformIds), specLinks(model, platformIds)] : ["Best for", "Your website"],
@@ -1289,11 +1292,26 @@ function payloadFor(model, page) {
     const fallbackRemaining = keys.filter((key) => !direct.includes(key) && !collage.some((card) => card.key === key));
     const listed = applyCardOverrides(model, page, pickRelatedCards(model, directRemaining, fallbackRemaining, hasHero ? 3 : 2));
     const paramKey = { industry: "industry", platform: "platform", occasion: "occasion" }[t];
+    const collectionHref = appHref({ [paramKey]: slug, ...(t === "platform" && ["tiktok", "youtube-shorts", "instagram"].includes(slug) ? { size: "9:16", length: "15" } : {}) }, t === "platform" && ["tiktok", "youtube-shorts"].includes(slug));
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.ideas || []]);
     const caseCards = caseCardsFor(model, page, listed);
+    let visual;
+    let visualMaker;
+    if (c.visual) {
+      const visualMode = c.visual.steps?.mode ?? "photo";
+      const visualTool = visualMode === "video" ? recommendedVideoTool(model, page) : recommendedPhotoTool(model, page);
+      const toolMaker = model.content[visualTool.id]?.maker ?? {};
+      visualMaker = {
+        options: (toolMaker.options || []).slice(0, 3),
+        cta: toolMaker.cta || (visualMode === "video" ? "Make my video" : "Make my photos"),
+        href: collectionHref
+      };
+      visual = visualFor(model, page, c.visual, visualMaker, visualMode, collectionHref, c);
+    }
     return { ...base, kind: t, intro: linkedCopy.intro, ideas: linkedCopy.groups[0], specs: c.specs || [], tips: c.tips || [], plan: c.plan || [],
       cards: [...listed, ...caseCards], heroCards: collage, tools: tools.map((id) => toolRef(model, id, false)),
-      appHref: appHref({ [paramKey]: slug, ...(t === "platform" && ["tiktok", "youtube-shorts", "instagram"].includes(slug) ? { size: "9:16", length: "15" } : {}) }, t === "platform" && ["tiktok", "youtube-shorts"].includes(slug)),
+      appHref: collectionHref,
+      ...(visual ? { visual, maker: visualMaker } : {}),
       reading: readingFor(model, page, readingLimitFor(page)) };
   }
   if (t === "index") {
@@ -1547,8 +1565,13 @@ export function renderedImages(layout, data) {
   else if (layout === "tool") {
     if (!addMedia(data.heroMedia)) { if (data.hero?.single) add(data.hero.single); else addCards(data.hero?.cards); }
     addGallery(); addPairs(); addTools(data.photoTools); addCards(data.templates); addTools(data.siblings); addExamples();
-  } else if (layout === "template") { if (!addMedia(data.heroMedia)) add(data.image); addGallery(); addCards(data.more); addExamples(); }
-  else if (layout === "collection") { if (!addMedia(data.heroMedia)) addCards(data.heroCards); addGallery(); addCards(data.cards); addTools(data.tools); addExamples(); }
+  } else if (layout === "template") {
+    if (!data.visual) { if (!addMedia(data.heroMedia)) add(data.image); addGallery(); addCards(data.more); addExamples(); }
+    else { addCards(data.more); addExamples(); }
+  } else if (layout === "collection") {
+    if (!data.visual) { if (!addMedia(data.heroMedia)) addCards(data.heroCards); addGallery(); addCards(data.cards); addTools(data.tools); addExamples(); }
+    else { addCards(data.cards); addTools(data.tools); addExamples(); }
+  }
   else if (layout === "index") { addCards(data.cards); (data.items ?? []).forEach((item) => add(item.image)); (data.articles ?? []).forEach((article) => add(article.image)); }
   else if (layout === "article") add(data.image);
   else if (layout === "examples") { addFlows(data.flows); addPairs(); addCards(data.cards); addExamples(); }
@@ -1603,7 +1626,7 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (!source.visual) return;
     const visual = data.visual;
     if (!visual) { errors.push(`${pageId}: visual data was not compiled`); return; }
-    if (!(["home", "tool"].includes(layout))) errors.push(`${pageId}: visual is only supported on home and tool layouts`);
+    if (!(["home", "tool", "template", "collection"].includes(layout))) errors.push(`${pageId}: visual is not supported on this layout`);
     if (visual.strip.length < 6 || visual.strip.length > 8) errors.push(`${pageId}: visual strip must contain 6-8 images`);
     if (!Array.isArray(visual.steps.items) || visual.steps.items.length !== 3) errors.push(`${pageId}: visual steps must contain three copy rows`);
     else for (const [index, item] of visual.steps.items.entries()) if (wordCount(item.d) > 25) errors.push(`${pageId}: visual step ${index + 1} description exceeds 25 words`);
@@ -1640,6 +1663,13 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (typeof visual.steps.prompt !== "string" || !visual.steps.prompt.trim()) errors.push(`${pageId}: visual steps need an example prompt`);
     if (visual.outputs.length < 2 || visual.outputs.length > 4) errors.push(`${pageId}: visual outputs must contain 2-4 cards`);
     if (pageId === "home" && (!visual.sizes || visual.sizes.length < 3 || visual.sizes.length > 4)) errors.push(`${pageId}: home visual sizes must contain 3-4 frames`);
+    if (layout === "collection" && data.kind === "platform" && (!visual.sizes || visual.sizes.length < 3 || visual.sizes.length > 4)) errors.push(`${pageId}: platform visual sizes must contain 3-4 frames`);
+    if (visual.sizes?.length && !(layout === "home" || (layout === "collection" && data.kind === "platform"))) errors.push(`${pageId}: visual sizes are only supported on home and platform pages`);
+    if (["template", "collection"].includes(layout)) {
+      const allowedFrames = new Set(["1:1", "9:16", "16:9"]);
+      for (const item of visual.outputs) if (!allowedFrames.has(item.frame)) errors.push(`${pageId}: visual output frame must be Square, 9:16 or 16:9 (${item.frame})`);
+      for (const item of visual.sizes ?? []) if (!allowedFrames.has(item.frame)) errors.push(`${pageId}: visual size frame must be Square, 9:16 or 16:9 (${item.frame})`);
+    }
     if (visual.after && (visual.after.items.length < 2 || visual.after.items.length > 3)) errors.push(`${pageId}: visual after-download list must contain 2-3 items`);
     if (visual.limitations.items.length > 5) errors.push(`${pageId}: visual limitations must contain at most five items`);
     for (const item of visual.limitations.items) if (wordCount(item.label) > 12) errors.push(`${pageId}: visual limitation exceeds 12 words (${item.label})`);
@@ -1670,6 +1700,19 @@ export function validateSiteV2(build = buildSiteV2()) {
       contentSections = homeSections.filter(Boolean).length;
       // Every listed homepage content block has imagery except the comparison table.
       imageSections = contentSections - (data.compare?.length ? 1 : 0);
+    } else if (["template", "collection"].includes(layout)) {
+      const preservedSections = [
+        layout === "template" ? Boolean(data.more?.length) : Boolean(data.cards?.length),
+        Boolean(data.examples?.groups?.length)
+      ].filter(Boolean).length;
+      const moduleSections = [
+        visual.strip.length > 0, visual.steps.items.length > 0, cards.length > 0,
+        visual.uses.length > 0, visual.input.length > 0, visual.outputs.length > 0,
+        Boolean(visual.after), Boolean(visual.sizes?.length)
+      ].filter(Boolean).length;
+      const planSection = layout === "collection" && data.kind === "occasion" && data.plan?.length ? 1 : 0;
+      contentSections = moduleSections + preservedSections + planSection;
+      imageSections = moduleSections + preservedSections;
     } else {
       const moduleSections = [
         visual.strip.length > 0, visual.steps.items.length > 0, cards.length > 0,

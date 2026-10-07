@@ -4,7 +4,7 @@
   "description": "Plan Black Friday ad creatives with bold product scenes and room for a confirmed offer. Add prices and dates after download.",
   "h1": "Black Friday Ad Creatives You Can Prepare Weeks Ahead",
   "eyebrow": "Black Friday",
-  "lead": "Plan a Black Friday creative set around featured products and placements, then add confirmed offer details after download.",
+  "lead": "Plan a Black Friday creative set around featured products and placements, then add the price, code, and end date after download.",
   "card": "Clips and banners made ahead, with every size ready for sale weekend.",
   "secondary_keywords": [
     "Black Friday video ads",
@@ -37,7 +37,7 @@
     },
     {
       "t": "Three to four weeks out",
-      "d": "Make the final clips and banners in each size, add the offer text, and submit ads early to leave time for platform review; timing and approval depend on the platform."
+      "d": "Make the final clips and banners in each size, then put them into your campaign calendar ahead of launch."
     },
     {
       "t": "The week of",
@@ -47,7 +47,7 @@
   "faq": [
     {
       "q": "How early should I make my Black Friday ads?",
-      "a": "Several weeks ahead gives you time to try a few versions and leaves room for ad review. Because prices go on afterward, you can finish the visuals before your discounts are settled."
+      "a": "Several weeks ahead gives you time to try a few versions and finish the visuals before your discounts are set."
     },
     {
       "q": "Can you add a countdown timer to my video?",
@@ -59,13 +59,13 @@
     },
     {
       "q": "Which Black Friday details should stay editable until the offer is final?",
-      "a": "Keep the price, discount, code, and end date editable until they are confirmed. Add them after download so you can update the wording without rebuilding the product scene."
+      "a": "Keep the price, discount, code, and end date editable so you can update the wording after download without rebuilding the product scene."
     }
   ],
   "overview": [
     {
       "h2": "Make the product win the first glance",
-      "d": "Black Friday creative can be dramatic without hiding what is being sold. Use contrast, one hero product, and a single visible action\u2014a lid opens, a bundle is arranged, or a lamp switches on. Keep the offer as a separate layer so the visual can be approved before the percentage, code, or final date is locked."
+      "d": "Black Friday creative can be dramatic without hiding what is being sold. Use contrast, one hero product, and a single visible action—a lid opens, a bundle is arranged, or a lamp switches on. Keep the offer as a separate layer so the visual can be approved before the percentage, code, or final date is locked."
     },
     {
       "h2": "Choose a video frame shape for each placement.",
@@ -191,5 +191,217 @@
     ]
   },
   "templates_lead": "Choose the product and placements for your Black Friday creative set.",
-  "cta_lead": "Plan each Black Friday scene, then add the confirmed price, code, and date."
+  "cta_lead": "Plan each Black Friday scene, then add the confirmed price, code, and date.",
+  "steps": [
+    {
+      "t": "Choose the featured product",
+      "d": "Upload a clear photo of the item or bundle you plan to promote, with its shape and details visible."
+    },
+    {
+      "t": "Describe the campaign scene",
+      "d": "Choose a surface, the light, and which side of the frame stays empty for the sale price."
+    },
+    {
+      "t": "Download and add the deal",
+      "d": "Type the price, code, and end date as text, so you can update them for Cyber Monday."
+    }
+  ],
+  "visual": {
+    "overview": "Make your Black Friday product photos and clips before prices are locked. Leave clear space beside the product, then drop in the discount, code, and end date once they are set.",
+    "strip": [
+      "n:gen2:tpl-bf-c1",
+      "n:gen2:plat-amazon-g1",
+      "n:gen2:occ-product-launch-c2",
+      "n:gen2:product-videos-g2",
+      "n:gen2:tpl-sale-c1",
+      "n:gen2:tpl-sale-c2"
+    ],
+    "steps": {
+      "source": "n:guide:black-friday-m2-source",
+      "result": "n:guide:black-friday-m2-result",
+      "mode": "photo",
+      "prompt": "Put this leather duffel on a light wood surface in bright natural light, with empty space above it for the sale price.",
+      "options": [
+        [
+          "Template",
+          "Sale product photo"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a Black Friday creative",
+      "lead": "Pick the product or bundle you plan to discount; each scene leaves room for the price.",
+      "chips": [
+        {
+          "id": "featured",
+          "label": "Featured products"
+        },
+        {
+          "id": "gift",
+          "label": "Gift bundles"
+        },
+        {
+          "id": "home-tech",
+          "label": "Home and tech"
+        },
+        {
+          "id": "apparel",
+          "label": "Apparel"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:occ-holidays-c2",
+          "label": "Wrapped gift by a fireplace",
+          "chips": [
+            "gift"
+          ],
+          "prompt": "Place the wrapped gift box beside the fireplace with its ribbon visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-box-g3",
+          "label": "Tea set ready to gift",
+          "chips": [
+            "gift"
+          ],
+          "prompt": "Arrange the tea tin, infuser, and cup together on a clean table.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-electronics-c3",
+          "label": "Fabric speaker on a shelf",
+          "chips": [
+            "home-tech"
+          ],
+          "prompt": "Show the smart speaker on a shelf with its front fabric visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-launch-g2",
+          "label": "New toaster on a counter",
+          "chips": [
+            "home-tech"
+          ],
+          "prompt": "Place the toaster on a counter with room beside it for the sale price.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:occ-sale-discount-g1",
+          "label": "Wool socks with offer space",
+          "chips": [
+            "apparel"
+          ],
+          "prompt": "Arrange the wool socks to one side and leave room for offer details.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:occ-sale-discount-c3",
+          "label": "Dresses ready for a sale",
+          "chips": [
+            "apparel"
+          ],
+          "prompt": "Show the dresses together on hangers with space beside them for a deal.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:occ-sale-discount-c2",
+          "label": "Skincare bundle on a tray",
+          "chips": [
+            "featured"
+          ],
+          "prompt": "Arrange the bundle neatly on a tray with each item visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:occ-sale-discount-c4",
+          "label": "Knife set with offer space",
+          "chips": [
+            "featured"
+          ],
+          "prompt": "Place the knife set on a board with clear space beside it.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a sale product photo"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "n:gen2:occ-product-launch-g1",
+        "h": "Tease the product before the sale starts",
+        "d": "Post the product on its own a week ahead, then reuse the same photo with the discount on launch day."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:black-friday-m2-source-use",
+        "h": "Use the same photo on the ad and the listing",
+        "d": "Shoppers who click a Black Friday ad should land on the product they just saw."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-bf-g1",
+        "bad": "n:guide:black-friday-duffel-soft-focus",
+        "good_label": "Monitor shape and stand stay sharp",
+        "bad_label": "Screen and stand blur together"
+      },
+      {
+        "good": "n:gen2:tpl-bf-g3",
+        "bad": "n:guide:black-friday-giftbox-crop",
+        "good_label": "Whole coffee machine stays in frame",
+        "bad_label": "Machine edge is cropped from view"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:occ-sale-discount-g2",
+        "frame": "1:1",
+        "label": "Square featured-product photo"
+      },
+      {
+        "ref": "n:gen2:tpl-sale-g1",
+        "frame": "1:1",
+        "label": "Square sale campaign photo"
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:occ-sale-discount-g4",
+      "zones": [
+        "Discount",
+        "End date"
+      ],
+      "items": [
+        "Keep the price, code, and end date as editable text layers instead of baking them into the photo.",
+        "Use the same discount wording as your store banner, so shoppers see one offer everywhere."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make your Black Friday product photo before prices are set"
+      },
+      "m3": {
+        "h2": "Choose a product or gift bundle to feature"
+      },
+      "m4": {
+        "h2": "Use one Black Friday photo from teaser to sale day"
+      },
+      "m5": {
+        "h2": "Start with a clear product or bundle photo"
+      },
+      "m6": {
+        "h2": "Square Black Friday photos for feeds and listings"
+      },
+      "m7": {
+        "h2": "Add the discount and end date after download"
+      },
+      "faq": {
+        "h2": "Questions about Black Friday ad creatives"
+      }
+    }
+  }
 }

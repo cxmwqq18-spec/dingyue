@@ -331,6 +331,32 @@ function TemplatePage({ data, r }: Props) {
   const maker = data.maker as V2Maker;
   const heroMedia = data.heroMedia as V2HeroMedia | undefined;
   const gallery = data.gallery as { images: V2Image[] } | undefined;
+  const visual = data.visual as V2Visual | undefined;
+  if (visual) return (
+    <>
+      <Crumbs items={data.breadcrumbs} r={r} />
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} title={data.h1}>
+        <Maker note={text(data.startNote)} maker={maker} r={r} />
+        {text(data.tip) ? <div className="tip"><b>Tip:</b> {text(data.tip)}</div> : null}
+      </PageHero>
+      <VisualStrip includeOverview visual={visual} r={r} />
+      <VisualSteps buttonLabel={maker.cta} visual={visual} r={r} />
+      <VisualPicker pageId={data.id} visual={visual} r={r} />
+      <VisualUses visual={visual} r={r} />
+      <VisualInput visual={visual} r={r} />
+      <VisualOutputs visual={visual} r={r} />
+      <VisualAfter visual={visual} r={r} />
+      {list<V2Card>(data.more).length ? (
+        <Section eyebrow="More templates" lead="Choose another everyday scene, then add your product photo." title={visual.titles?.templates?.h2 ?? "More creator-style photo templates"}>
+          <TemplateGrid cards={list<V2Card>(data.more)} r={r} />
+        </Section>
+      ) : null}
+      <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />
+      <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? "Questions about this template"} r={r} />
+      <Reading items={list<V2Article>(data.reading)} r={r} />
+      <CtaBand href={maker.href} lead={text(data.ctaLead) || "Upload one product photo. See the cost before you start."} r={r} title={`Try ${data.label} with your product`} />
+    </>
+  );
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
@@ -366,6 +392,35 @@ function CollectionPage({ data, r }: Props) {
   const cards = list<V2Card>(data.cards);
   const heroMedia = data.heroMedia as V2HeroMedia | undefined;
   const gallery = data.gallery as { images: V2Image[] } | undefined;
+  const visual = data.visual as V2Visual | undefined;
+  const visualMaker = data.maker as V2Maker | undefined;
+  if (visual) return (
+    <>
+      <Crumbs items={data.breadcrumbs} r={r} />
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={text(data.appHref)} label={visualMaker?.cta ?? "Get started"} r={r} />} title={data.h1}>
+        <Maker note={text(data.startNote)} maker={visualMaker ?? { options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
+      </PageHero>
+      <VisualStrip includeOverview visual={visual} r={r} />
+      {kind === "occasion" && list<V2Item>(data.plan).length ? <Section eyebrow="Plan your campaign" title="When to prepare your Black Friday ads"><Steps items={list<V2Item>(data.plan)} /></Section> : null}
+      <VisualSteps buttonLabel={visualMaker?.cta ?? "Get started"} visual={visual} r={r} />
+      <VisualPicker pageId={data.id} visual={visual} r={r} />
+      <VisualUses visual={visual} r={r} />
+      <VisualSizes visual={visual} r={r} />
+      <VisualInput visual={visual} r={r} />
+      <VisualOutputs visual={visual} r={r} />
+      <VisualAfter visual={visual} r={r} />
+      {cards.length ? (
+        <Section eyebrow="Templates" lead={text(data.templatesLead) || `${cards.filter((card) => card.cardType !== "case").length} ready-made looks. Pick one and add your product.`} title={`${data.label} templates`}>
+          <TemplateGrid cards={cards} r={r} />
+        </Section>
+      ) : null}
+      <ExampleGallery examples={data.examples as V2Examples | undefined} lead={visual.titles?.examples?.lead} r={r} title={visual.titles?.examples?.h2} />
+      {list<V2Tool>(data.tools).length ? <Section eyebrow="Tools" title="Tools that fit"><ToolRow r={r} tools={list<V2Tool>(data.tools)} /></Section> : null}
+      <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? "Questions"} r={r} />
+      <Reading items={list<V2Article>(data.reading)} r={r} />
+      <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and choose a look for your next campaign."} r={r} title={`Make ${data.label} content today`} />
+    </>
+  );
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
