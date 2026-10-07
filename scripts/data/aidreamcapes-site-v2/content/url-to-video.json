@@ -1,10 +1,10 @@
 {
   "id": "url-to-video",
   "title": "URL to Video: Product Link to Video Ad | AIVideosUGC",
-  "description": "URL to video for online stores: paste a product page link and get a short vertical video ad. We pull the photo and product name, you check them and press go.",
+  "description": "Start from a public product page, review its photo and name in the AIVideosUGC editor, and describe a video scene. Upload a photo if the page cannot be read.",
   "h1": "URL to Video: Turn a Product Link into a Video Ad",
   "eyebrow": "Video tool",
-  "lead": "URL to video starts with the link to your product page. We pull the main product photo and the product name, you check them, and we turn them into a short video ad.",
+  "lead": "When a public product page has a photo and name, URL to Video brings them into the AIVideosUGC editor for review. Check both details before choosing a scene for your video ad.",
   "secondary_keywords": [
     "product link to video",
     "URL to video ad",
@@ -13,13 +13,13 @@
     "Shopify product video"
   ],
   "intro": [
-    "Most stores already have everything a short ad needs on the product page: a clean photo and a clear product name. URL to Video saves you the step of downloading the photo and typing out a description. Paste the link, and the photo and name appear in the workspace, ready for you to check.",
+    "Use a public page for a product you own or can advertise. Compare the selected photo with the variant you sell, then replace it if it shows the wrong item.",
     "After the image and name appear, check them, choose 9:16, 1:1, 16:9, 4:3, or 3:4, add a sentence about the scene, and select 6, 10, 15, or 30 seconds. You can replace the image or edit the description before generation."
   ],
   "benefits": [
     {
       "t": "No downloading or retyping",
-      "d": "The product photo and name come straight from your product page."
+      "d": "If the public page includes them, the product photo and name appear for you to check."
     },
     {
       "t": "You stay in control",
@@ -33,7 +33,7 @@
   "steps": [
     {
       "t": "Paste your product link",
-      "d": "Copy the address of a product page and paste it into the link box."
+      "d": "Paste the address of a product page into the link box."
     },
     {
       "t": "Check the photo and description",
@@ -47,7 +47,7 @@
   "uses": [
     {
       "t": "New product launches",
-      "d": "Turn a fresh product page into a first ad the same day it goes live."
+      "d": "Plan a product scene from a public product page as part of your launch preparation."
     },
     {
       "t": "Catalog refresh",
@@ -78,7 +78,7 @@
   "faq": [
     {
       "q": "Which product links work?",
-      "a": "Most public product pages work, including many Shopify and WooCommerce stores. If a page is private, needs a login or blocks automated visits, upload the product photo instead."
+      "a": "Some public product pages may not load if they require a login or block access. If the tool cannot read a page, upload the product photo instead."
     },
     {
       "q": "What do you take from the page?",
@@ -96,11 +96,8 @@
   "overview": [
     {
       "h2": "Turn an existing product page into a checked starting point",
-      "p": "URL to Video removes two small chores: downloading the main product image and retyping its name. Paste a public product-page link, inspect what appears in the workspace, then decide what the clip should show before any credits are used."
-    },
-    {
       "h2": "The link starts the job; your review finishes it",
-      "p": "The importer supplies a product image and title when the page exposes usable product data. It does not replace your judgment about the scene, the product variant, or the final wording, so review each field and swap the image whenever the picked frame is not the right one."
+      "p": "When a public product page includes a usable photo and name, they appear in the AIVideosUGC editor for review. Replace either if it does not match the product you want to show, then describe the scene you want."
     }
   ],
   "input_guide": {
@@ -108,15 +105,15 @@
     "items": [
       {
         "t": "Paste a public HTTPS page",
-        "d": "Use a product page you own or are allowed to advertise, without a login wall or private workspace requirement."
+        "d": "Use a public product page you own or are allowed to advertise. If it requires a login, upload a product photo instead."
       },
       {
         "t": "Give the page one clear hero image",
-        "d": "A main product photo with the item visible on its own gives the importer a stronger starting frame."
+        "d": "A clear product photo with the item visible on its own gives the editor a useful starting frame."
       },
       {
-        "t": "Check the selected title",
-        "d": "Confirm that the imported name matches the product variant you want to show before you write the scene."
+        "t": "Check the product name",
+        "d": "Confirm that the name matches the product variant you want to show before you write the scene."
       },
       {
         "t": "Replace the image when needed",
@@ -133,19 +130,19 @@
     "items": [
       {
         "t": "A product reference from the page",
-        "d": "The importer brings in the main image and product name when the public page exposes usable product information."
+      "d": "A public product page may provide a photo and name. Confirm that both match the item you plan to promote."
       },
       {
         "t": "Your final scene choice",
-        "d": "Edit the imported text, replace the image, choose 6, 10, 15, or 30 seconds, and select 9:16, 1:1, 16:9, 4:3, or 3:4."
+      "d": "Review the product name, replace the image if needed, choose 6, 10, 15, or 30 seconds, and select 9:16, 1:1, 16:9, 4:3, or 3:4."
       },
       {
         "t": "A cost you can check first",
-        "d": "The workspace shows the credit amount before the run, and failed jobs return their reserved credits."
+      "d": "Before a job starts, you can see its credit cost in the AIVideosUGC editor; failed jobs return those credits."
       },
       {
         "t": "A clean file to review",
-        "d": "The download carries no watermark and can be used commercially after you verify that the item, variant, and final claims are accurate."
+        "d": "This downloaded clip carries no watermark; for commercial-use terms, see the [FAQ](/faq). Review the item, variant, and claims before publishing."
       }
     ]
   },
@@ -182,7 +179,7 @@
         "d": "Compare the clip with the product page and check color, size, included pieces, and packaging before using it in an ad."
       },
       {
-        "t": "Add approved commerce copy",
+        "t": "Add approved product and offer text",
         "d": "Type the current price, date, discount, captions, and music in your editing or publishing tool."
       },
       {

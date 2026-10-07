@@ -18,7 +18,7 @@
   "benefits": [
     {
       "t": "Show the reveal moment",
-      "d": "The opening seconds build anticipation: lid off, paper back, product up. That reveal is what keeps people watching."
+      "d": "Show the outer package first, open the wrapping layers, then bring the product into view."
     },
     {
       "t": "No boxes to film",
@@ -77,7 +77,7 @@
   "faq": [
     {
       "q": "Do I need a photo of my packaging?",
-      "a": "No. Just use a product photo, then describe the box, wrapping, and any inserts in your sentence. The more specific you are about color and material, the closer the packaging gets to what you had in mind."
+      "a": "No. Use a product photo, then describe the box, wrapping, and inserts. Review the result against the package you actually ship before publishing it."
     },
     {
       "q": "Will my logo appear on the box?",
@@ -140,11 +140,11 @@
       },
       {
         "t": "A cost shown in advance",
-        "d": "The credit amount is visible before the job starts, and failed attempts release the reserved credits."
+        "d": "The credit cost appears before a job starts, and failed jobs return those credits."
       },
       {
-        "t": "A watermark-free download",
-        "d": "Review the package and item carefully, then use the file commercially with your own exact launch details added later."
+        "t": "A download to review",
+        "d": "Review the downloaded file, which has no watermark; the [FAQ](/faq) outlines commercial-use terms. Then add accurate launch details."
       }
     ]
   },
@@ -181,7 +181,7 @@
     "h2": "Make the reveal ready for a real launch",
     "items": [
       {
-        "t": "Add exact package copy",
+        "t": "Add package wording",
         "d": "Type the product name, offer, date, and any insert wording in your editor rather than trusting generated lettering."
       },
       {

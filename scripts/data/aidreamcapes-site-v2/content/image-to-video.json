@@ -12,7 +12,7 @@
     "AI photo animation for ads"
   ],
   "intro": [
-    "Image to video takes one still photo of your product and adds movement to it. The camera can push in slowly, circle the item, or pan across a table, while light, water, fabric, or steam moves around it. Because it starts from your photo, the clip stays close to the look you already chose: the same product, colors, and setting.",
+    "AI image to video starts with one still product photo and adds a requested camera or scene movement. Describe one motion, such as a slow push, drifting light, or rising steam, then review the clip for changes to the product.",
     "It suits sellers who have a strong product photo but no moving version yet. Use it for product galleries, Reels, Stories, or feed placements. Set the movement to 6, 10, 15, or 30 seconds, then choose 9:16, 1:1, 16:9, 4:3, or 3:4."
   ],
   "benefits": [
@@ -144,11 +144,11 @@
       },
       {
         "t": "A visible generation cost",
-        "d": "The workspace shows the credit amount before it runs, and a failed job returns those credits."
+        "d": "The AIVideosUGC editor shows the credit cost before a job starts. If it fails, those credits return to your balance."
       },
       {
-        "t": "A reusable commercial asset",
-        "d": "The download has no watermark and can be reviewed for a product page, social post, or ad before you publish it."
+        "t": "A review-ready download",
+        "d": "There is no watermark on the file; read the [FAQ](/faq) for commercial-use terms. Review the clip before using it on a product page, in a social post, or in an ad."
       }
     ]
   },

@@ -18,7 +18,7 @@
   "benefits": [
     {
       "t": "A clear sense of size",
-      "d": "Seeing the product in a hand shows how big it is better than a photo on a plain background."
+      "d": "A hand gives general context, not a measurement. Add the product's actual dimensions to the listing."
     },
     {
       "t": "Describe who and where",
@@ -72,8 +72,8 @@
   },
   "faq": [
     {
-      "q": "What does the person do in the video?",
-      "a": "They hold your product, turn it toward the camera, and show it from different sides. Describe the action in your sentence, like \u201clifts the bottle and taps the cap,\u201d to guide the movement."
+      "q": "Does the AI-generated person speak?",
+      "a": "No. Add the message as captions in your editor after download."
     },
     {
       "q": "Can I describe what the person looks like?",
@@ -81,7 +81,7 @@
     },
     {
       "q": "Is the person in the video real?",
-      "a": "No. Every person in these videos is AI-generated, not a real customer or creator, so don't present the clip as a genuine review. Some platforms require you to label realistic AI-generated content, so turn on the AI label wherever it's offered."
+      "a": "No. The person is AI-generated, so do not present the clip as a real customer's experience or endorsement. Check the publishing platform's current disclosure rules and use its AI label when required."
     },
     {
       "q": "Which products work well in these videos?",
@@ -136,11 +136,11 @@
       },
       {
         "t": "A cost visible before you run",
-        "d": "The credit amount appears before generation and returns when a job fails."
+        "d": "Check the credit cost before generation; failed jobs return the credits to your balance."
       },
       {
         "t": "A clean visual starting point",
-        "d": "The watermark-free download contains no spoken narration, music, or captions; add those in your own editing process."
+        "d": "Add music or captions in your editor after download."
       }
     ]
   },

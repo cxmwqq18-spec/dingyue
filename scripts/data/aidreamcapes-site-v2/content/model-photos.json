@@ -4,7 +4,7 @@
   "description": "Get AI model photos for clothing, bags and jewelry from one product shot. Show how a piece looks when worn, with no model booking. Upload yours to start.",
   "h1": "AI Model Photos for Clothing, Bags and Jewelry",
   "eyebrow": "Photo tool",
-  "lead": "AI model photos for clothing and accessories start from a photo of a dress, a canvas backpack or a pair of earrings, and show it worn by a model in a natural setting, ready for your product page or Instagram feed.",
+  "lead": "AI model photos for clothing and accessories use a product image as a reference for a visual preview on an AI-generated model. The result does not verify fit or replace the size chart in your listing.",
   "secondary_keywords": [
     "on-model photos for clothing",
     "AI fashion model images",
@@ -137,7 +137,7 @@
     "items": [
       {
         "t": "One square image",
-        "d": "A model-photo generation uses 24 credits and the charge is shown before you begin."
+        "d": "A model-photo generation uses 24 credits, and the credit cost appears before you begin."
       },
       {
         "t": "A styled context",
@@ -217,7 +217,7 @@
         "d": "Keep the size chart, dimensions, and material details in the listing beside the visual styling."
       },
       {
-        "t": "Add campaign copy later",
+        "t": "Add campaign text later",
         "d": "Type the price, date, and offer in your editor or social tool so the final message is accurate."
       }
     ]

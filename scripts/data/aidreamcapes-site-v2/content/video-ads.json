@@ -1,10 +1,10 @@
 {
   "id": "video-ads",
   "title": "AI UGC Video Ads for TikTok and Reels | AIVideosUGC",
-  "description": "Make AI UGC video ads with a casual, phone-filmed look: handheld clips of your product for TikTok, Reels, and Facebook. Add a photo and make your first ad.",
-  "h1": "AI UGC Video Ads That Look Like a Customer Filmed Them",
+  "description": "Create AI UGC video ads with a casual creator-style look from a product photo. Review the scene, then add captions in TikTok, Reels, or Facebook.",
+  "h1": "AI UGC Video Ads With AI-Generated Creator-Style Scenes",
   "eyebrow": "Creator-style ads",
-  "lead": "UGC means user-generated content. AI UGC video ads are creator-style videos: casual, handheld clips that look like a real customer shot them on a phone, not a studio ad.",
+  "lead": "AI UGC video ads use creator-style visuals made with an AI-generated person. UGC describes the style here, not a real customer review or endorsement.",
   "secondary_keywords": [
     "UGC style video ads",
     "creator-style product ads",
@@ -12,13 +12,13 @@
     "UGC video ad maker"
   ],
   "intro": [
-    "UGC stands for user-generated content. In ads, it describes creator-style videos that look like something a real customer filmed on their phone: a handheld shot, a kitchen or bedroom in the background, natural light, and the product being used the way people actually use it. On TikTok and Reels, that look sits comfortably next to the posts around it.",
+    "Creator-style videos use casual handheld framing, everyday light, and a familiar setting. The person and scene are AI-generated, so do not present them as a customer's experience or endorsement.",
     "AIVideosUGC builds this visual style from your product photo and one sentence. Describe the moment you want, then choose 9:16, 1:1, 16:9, 4:3, or 3:4 and 6, 10, 15, or 30 seconds. Each run creates one AI-generated clip for you to review and edit."
   ],
   "benefits": [
     {
       "t": "Fits in with real posts",
-      "d": "The casual, phone-shot style feels at home between the videos people already scroll past."
+      "d": "Show one product action, such as a hand opening, lifting, or using the item in a familiar setting."
     },
     {
       "t": "No samples to ship",
@@ -76,30 +76,22 @@
   },
   "faq": [
     {
-      "q": "What does UGC mean in a video ad?",
-      "a": "UGC is short for user-generated content. For ads, it means a creator-style video: handheld, casual, and set somewhere that looks like a real home or street, as if a customer recorded it rather than a production team."
-    },
-    {
       "q": "What should I write in the description?",
       "a": "One everyday moment with your product in it. Name the place, the light, and the action, for example \u201csunny bathroom counter, hand picks up the soap bar and turns it.\u201d Keep it to a single scene so the clip stays focused."
     },
     {
-      "q": "Can I present this video as a real customer review?",
-      "a": "No. The video is AI-generated in a creator style, and no customer filmed it, so don't caption it as a review or add quotes from buyers. Some platforms also ask you to label AI-generated content."
+      "q": "Can I present an AI-generated person as a real customer?",
+      "a": "No. The person and scene are AI-generated, so do not describe them as a real buyer or add quotes they never gave. Follow the publishing platform's disclosure rules and avoid false endorsements."
     },
     {
       "q": "Can I add captions, a price, or music?",
       "a": "Yes, once the clip is downloaded. Captions and music go on in TikTok or CapCut, and prices or discount codes can be added in CapCut or Ads Manager. Typing text yourself avoids the spelling slips that AI-made lettering can have."
-    },
-    {
-      "q": "Can I use the images and videos I make commercially?",
-      "a": "Yes. You can use the images and videos you make in your own ads, product pages and social posts."
     }
   ],
   "overview": [
     {
       "h2": "Make the first second feel lived in",
-      "p": "A creator-style ad works when the product enters an ordinary moment: a bag opens, a hand reaches across a desk, or a package is set down before the feature appears. Describe the setting and action plainly so the clip feels like an observation rather than a polished commercial claim."
+      "p": "A creator-style ad works when the product enters an ordinary moment: a bag opens, a hand reaches across a desk, or a package is set down before the feature appears. Describe the setting and action plainly so the clip feels like an observation rather than a polished advertising claim."
     },
     {
       "h2": "Keep the visual honest about its source",
@@ -148,7 +140,7 @@
       },
       {
         "t": "A clean download",
-        "d": "The file has no watermark and can be edited for a commercial ad, provided the final claims and labels are reviewed by your team."
+        "d": "The download carries no watermark; for commercial-use terms, visit the [FAQ](/faq). Review the claims and labels before publishing."
       }
     ]
   },
@@ -190,7 +182,7 @@
       },
       {
         "t": "Add sound separately",
-        "d": "Choose music or other audio in the publishing tool because the generated file is a visual clip."
+        "d": "AIVideosUGC does not add voiceover, music, or captions."
       },
       {
         "t": "Label the source when required",

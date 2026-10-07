@@ -4,7 +4,7 @@
   "description": "Our AI product video generator shows your item in action, from a lid clicking shut to a lamp switching on. Make a short demo for Etsy, Shopify, or your ads.",
   "h1": "AI Product Video Generator for Showing How It Works",
   "eyebrow": "Product demo video",
-  "lead": "Our AI product video generator shows what your product does, not just what it looks like. Describe one action, add a photo, and get a short demo clip for your product page, Etsy listing, or ads.",
+  "lead": "Use an AI product video generator to plan a short demo around one visible action, such as a lid closing or a lamp switching on. Add a clear photo of that part and describe the movement you want to show.",
   "secondary_keywords": [
     "AI product demo video",
     "product video for Shopify",
@@ -12,7 +12,7 @@
     "how it works product video"
   ],
   "intro": [
-    "A product demo shows the item doing its job. The kettle pours, the folding chair snaps open, the drawer organizer fills up with spoons and forks. Shoppers can't hold your product, so a few seconds of it in use answers questions a photo can't, like how big it looks in a hand or how the lid comes off.",
+    "Product Videos focuses on one visible product action: a kettle pouring, a chair unfolding, or a drawer organizer holding cutlery. A focused demo can help shoppers understand how a feature works without turning one clip into a full tutorial.",
     "With AIVideosUGC, upload a product photo and describe one action in a sentence. Pick the clip length and frame that suit the product action, from 6, 10, 15, or 30 seconds and 9:16, 1:1, 16:9, 4:3, or 3:4. It works well for home goods, kitchen tools, gadgets, bags, and other products where movement helps explain the feature."
   ],
   "benefits": [
@@ -46,7 +46,7 @@
   "uses": [
     {
       "t": "Etsy listing video",
-      "d": "Etsy listings can show a short video alongside your photos, and a 6 to 30 second clip fits that slot."
+      "d": "According to Etsy Help's listing video guidance, videos can be 3–15 seconds and use a 2:1 or 1:2 aspect ratio. AIVideosUGC offers different ratios, so crop the downloaded clip in an editor and check it in Etsy before posting."
     },
     {
       "t": "Shopify product media",
@@ -77,11 +77,11 @@
   "faq": [
     {
       "q": "How is this different from image to video?",
-      "a": "Image to video adds camera movement to a photo you already have and keeps its look. A product video shows the item being used, like a zipper opening or a pump being pressed, so the scene can change more."
+      "a": "Image to video adds requested camera movement to an existing still photo. A product demo focuses on one action, such as a zipper opening or a pump being pressed."
     },
     {
       "q": "Can I use the video on Etsy or Shopify?",
-      "a": "Yes. Etsy accepts short listing videos with your photos, and Shopify lets you add video to product media. Download the clip and upload it much like you'd add a photo."
+      "a": "AIVideosUGC's frame choices differ from Etsy's listing-video ratios, so crop the download in an editor and check it in Etsy before posting. Shopify also lets you add video to product media."
     },
     {
       "q": "Will the video show my product accurately?",
@@ -140,11 +140,11 @@
       },
       {
         "t": "A cost shown before launch",
-        "d": "The credit charge appears before generation, and failed jobs restore the reserved credits."
+        "d": "Before generation, the editor shows what the job costs in credits; failed jobs return those credits."
       },
       {
         "t": "A clean file for editing",
-        "d": "The download has no watermark and can sit beside product photos after you review the mechanics and add exact copy."
+        "d": "The file has no watermark; the [FAQ](/faq) covers commercial-use terms. Review the mechanics and add approved text before posting."
       }
     ]
   },

@@ -12,7 +12,7 @@
     "before and after TikTok video"
   ],
   "intro": [
-    "A before-and-after video shows two moments in a row: how things look without your product, then how they look with it. It's a simple story that shoppers follow in seconds. A tangled cable mess becomes a tidy desk. A greasy grill grate gets scrubbed clean. An empty balcony lights up with your string lights.",
+    "Plan a sequence that starts with a visible condition before the product is used and ends after the product changes the scene. Keep the same space in view so shoppers can compare the two moments. Examples include a tangled cable area before an organizer and the same desk afterward.",
     "Start with a photo of the product, then write both halves as one line, such as \u201cmessy closet shelf, then folded sweaters in our fabric bins.\u201d Choose 6, 10, 15, or 30 seconds and 9:16, 1:1, 16:9, 4:3, or 3:4 so each state has room to register."
   ],
   "benefits": [
@@ -22,7 +22,7 @@
     },
     {
       "t": "Made for visible changes",
-      "d": "Organizers, covers, cleaning tools, and decor all change something you can see, which is exactly what this format shows."
+      "d": "Organizers, covers, cleaning tools, and decor can each provide a clear subject for a before-and-after scene."
     },
     {
       "t": "Easy to follow quickly",
@@ -72,8 +72,8 @@
   },
   "faq": [
     {
-      "q": "What products work for before and after videos?",
-      "a": "Products that make a visible change to a space or object: closet and pantry organizers, cleaning brushes, furniture covers, wall shelves, lighting, and car accessories."
+      "q": "How can I make the two scenes easy to compare?",
+      "a": "Keep the same space and main object in view, then describe one visible change the product is meant to make. Review the clip against your source photo before posting."
     },
     {
       "q": "How do I describe the before and the after?",
@@ -95,7 +95,7 @@
     },
     {
       "h2": "Keep the promise inside the frame",
-      "p": "Use this format for organizing, cleaning, installing, covering, lighting, or styling. Avoid claims about a person\u2019s body, skin, health, or guaranteed performance; show the physical change your product is actually designed to make."
+      "p": "Use this format for organizing, cleaning, installing, covering, lighting, or styling. Avoid personal claims about body, skin, or health outcomes; describe changes that match the product information."
     }
   ],
   "input_guide": {
@@ -136,11 +136,11 @@
       },
       {
         "t": "A transparent job cost",
-        "d": "You see the credit amount before generation, and a failed task restores its credits."
+        "d": "See the credit cost before generation; if a job fails, those credits return to your balance."
       },
       {
         "t": "A file to finish yourself",
-        "d": "The download is watermark-free. Add typed labels and approved claims after you confirm that both states match the real product use."
+        "d": "This file has no watermark; check the [FAQ](/faq) for commercial-use terms. Add typed labels after checking both states against the product's actual use."
       }
     ]
   },
@@ -199,7 +199,7 @@
       "Decor products where the finished arrangement is easy to compare"
     ],
     "not_ideal": [
-      "Claims about weight, skin, medical outcomes, or guaranteed performance",
+      "Claims about weight, skin, medical outcomes, or product results beyond verified details",
       "Changes that cannot be judged from the same scene"
     ]
   },

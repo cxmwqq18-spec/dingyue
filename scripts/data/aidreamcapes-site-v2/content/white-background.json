@@ -1,10 +1,10 @@
 {
   "id": "white-background",
   "title": "White Background Product Photos With AI | AIVideosUGC",
-  "description": "Turn a phone snapshot into clean white background product photos for Amazon, Shopify and Etsy. Upload one shot and get a square image back. Try it now.",
-  "h1": "Make White Background Product Photos From Any Shot",
+  "description": "Create a square white background product photo from a clear image of your item. Check product details before uploading to Amazon, Shopify, or Etsy.",
+  "h1": "Make White Background Product Photos From a Clear Shot",
   "eyebrow": "Photo tool",
-  "lead": "White background product photos start from a photo of your product taken anywhere, on a kitchen counter or a cluttered desk. Upload it and get back a clean square image on pure white.",
+  "lead": "A clear photo of the whole item gives a useful starting point for white background product photos. The tool creates a square image on plain white; compare product details and edges with the original before uploading.",
   "secondary_keywords": [
     "white background product photo maker",
     "pure white main image for marketplaces",
@@ -13,7 +13,7 @@
     "clean product shots without a studio"
   ],
   "intro": [
-    "Most marketplaces, Amazon included, ask for a main image with a pure white background and the product filling the frame. Getting that look by hand usually means a lightbox, careful lighting and a long session cleaning up edges. Here you start from the photo you already have. The tool sets your item on plain white with soft, even light, so it sits neatly next to other listings in search results.",
+    "For Amazon, compare the final image with current requirements on our [Amazon product photos page](/platforms/amazon-product-photos). Check each other marketplace's own image rules before uploading. Start with a clear photo of the whole item and its important edges; the tool creates a square image on a plain white background.",
     "It suits sellers who list often and shoot on a phone: a candle maker adding new scents, a reseller with a shelf of sneakers, a shop owner tidying up old listings. Each result is square by default, which works for main images, collection grids and marketplace thumbnails. If a result isn't quite right, run it again with a short note such as \"show the front label\" or \"keep the strap visible.\""
   ],
   "benefits": [
@@ -81,8 +81,8 @@
   },
   "faq": [
     {
-      "q": "Can I use these white background photos as Amazon main images?",
-      "a": "It's made for that kind of shot: a pure white background with your product filling the frame. Amazon and other marketplaces update their image rules from time to time, so check the current requirements in your seller account before you upload."
+      "q": "Does this tool make an Amazon-ready main image?",
+      "a": "It creates a square product photo on white, but does not verify every Amazon main-image rule. Review the result against [Amazon's current photo requirements](/platforms/amazon-product-photos) before uploading."
     },
     {
       "q": "What kind of photo should I upload for a white background?",
@@ -137,11 +137,11 @@
     "items": [
       {
         "t": "Square output",
-        "d": "The default square frame suits a main image, collection grid, or marketplace thumbnail; crop a copy later if a placement needs another shape."
+        "d": "The default square frame suits a main image, collection grid, or marketplace thumbnail; crop the image later if a placement needs another shape."
       },
       {
         "t": "One image for 24 credits",
-        "d": "Each photo generation uses 24 credits, and the charge is shown before you confirm the job."
+        "d": "Each photo job uses 24 credits, and the credit cost appears before you confirm it."
       },
       {
         "t": "A clean starting point",

@@ -2,9 +2,9 @@
   "id": "change-background",
   "title": "AI Product Background Changer for Shop Photos | AIVideosUGC",
   "description": "Use our AI product background changer to move your item from a cluttered table to a marble counter, a sunny shelf or a soft color. Upload a photo to begin.",
-  "h1": "AI Product Background Changer: Same Product, New Setting",
+  "h1": "AI Product Background Changer for a New Setting",
   "eyebrow": "Photo tool",
-  "lead": "Took a good photo in a messy room? Our AI product background changer keeps the product and swaps everything behind it for a clean color, a styled surface or a whole new setting.",
+  "lead": "Took a good photo in a messy room? Our AI product background changer aims to keep your product as it appears in the photo while replacing the setting. Compare product details and edges with the original before publishing.",
   "secondary_keywords": [
     "change product photo background",
     "replace the background of a product image",
@@ -13,13 +13,13 @@
     "AI backdrop for product shots"
   ],
   "intro": [
-    "Sometimes the product looks great but the background doesn't: a cluttered counter, a wrinkled sheet, a wall that clashes with your brand colors. Reshooting takes time you may not have. This tool keeps your product and replaces what's behind it, so a vase photographed on a kitchen table can end up against a warm beige wall with soft window shadows.",
+    "Sometimes a product photo is usable but the background does not fit: a cluttered counter, a wrinkled sheet, or a wall that clashes with your brand colors. Use the photo as a reference for a new setting, then compare the product and edges with the original before publishing.",
     "Use it to match a new collection to your store's colors, give old listings a seasonal backdrop, or line up products shot in different places so they look like one set. Describe the background in a few words, like \"sage green wall, light wood shelf,\" or pick a ready-made option. Each result is a complete square photo with the new background already in place."
   ],
   "benefits": [
     {
       "t": "Save the shot you have",
-      "d": "A good angle and sharp focus are hard to get. Keep them and fix only what's behind the product."
+      "d": "Start with a sharp photo that shows the angle you want to use. Review the generated details before publishing the new setting."
     },
     {
       "t": "Match your brand colors",
@@ -99,12 +99,12 @@
   ],
   "overview": [
     {
-      "h2": "Keep the product; change the visual environment",
+      "h2": "Use the photo as a reference for a new setting",
       "d": "Use this tool when the angle and product detail are worth keeping but the counter, wall, or surface is working against the page. A plain color can unify a collection, a quiet material can support a close product view, and a complete room can add context without another shoot."
     },
     {
       "h2": "Choose the smallest background change that solves the problem",
-      "d": "For a catalog mismatch, ask for a color or simple surface. For a seasonal post, name the setting and light. A bounded request makes it easier to compare versions and keeps the product from competing with a busy backdrop."
+      "d": "For a catalog mismatch, ask for a color or simple surface. For a seasonal post, name the setting and light. A bounded request can make versions easier to compare and give the product a simpler backdrop."
     }
   ],
   "input_guide": {
@@ -141,7 +141,7 @@
       },
       {
         "t": "One version for 24 credits",
-        "d": "Each image generation uses 24 credits, and the charge appears before you start."
+        "d": "Each image generation uses 24 credits, and the credit cost appears before you start."
       },
       {
         "t": "A coordinated setting",
@@ -227,7 +227,7 @@
     "lead": "One product shown on different backdrops, from a plain color block to a seasonal scene.",
     "groups": [
       {
-        "label": "Same product, three backdrops",
+        "label": "Three backdrop variations",
         "items": [
           {
             "ref": "n:gen2:change-background-g1",

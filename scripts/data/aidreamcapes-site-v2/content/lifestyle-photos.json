@@ -18,10 +18,6 @@
   ],
   "benefits": [
     {
-      "t": "Show where it belongs",
-      "d": "Put your product in a kitchen, a bedroom, a garden or a desk setup so shoppers can imagine it in their own home."
-    },
-    {
       "t": "A scene for every season",
       "d": "Trade a summer patio for a snowy windowsill without reshooting. Same product, different setting, whenever your store needs a refresh."
     },
@@ -137,7 +133,7 @@
     "items": [
       {
         "t": "One generated image",
-        "d": "A lifestyle image uses 24 credits, with the charge visible before you launch it."
+        "d": "A lifestyle image uses 24 credits, and the credit cost appears before you start."
       },
       {
         "t": "A familiar frame",
@@ -221,7 +217,7 @@
         "d": "Compare color, shape, label, and count with the real item before publishing the scene."
       },
       {
-        "t": "Add exact copy later",
+        "t": "Add exact wording later",
         "d": "Place a headline, price, date, or promotion in your editor so the wording stays accurate."
       }
     ]

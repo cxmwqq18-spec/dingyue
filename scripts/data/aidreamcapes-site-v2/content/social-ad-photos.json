@@ -1,10 +1,10 @@
 {
   "id": "social-ad-photos",
   "title": "AI Ad Image Generator for Social Feed Ads | AIVideosUGC",
-  "description": "Use our AI ad image generator to make eye-catching product images for Facebook and Instagram feeds. Upload one photo, add text in Ads Manager. Start now.",
+  "description": "Create square feed ad images from a product photo, with room to add a verified headline or price in Ads Manager or Canva before posting.",
   "h1": "AI Ad Image Generator for Facebook and Instagram Feeds",
   "eyebrow": "Photo tool",
-  "lead": "This AI ad image generator turns a product photo into a bold, square ad image with room for your message. You add the headline and price later in Ads Manager or Canva, so every word is right.",
+  "lead": "Use this AI ad image generator to make a square product image for a Facebook or Instagram feed ad. Leave space around the product, then add your approved headline and price in Ads Manager or Canva.",
   "secondary_keywords": [
     "Facebook ad image maker",
     "Instagram feed ad photos",
@@ -119,7 +119,7 @@
         "d": "Keep the full product visible when its silhouette matters; use a closer crop only when a texture or finish is the selling detail."
       },
       {
-        "t": "Plan the copy side",
+        "t": "Plan space for text",
         "d": "In the scene brief, request open sky, a plain wall, or a quiet tabletop on the side where your headline will go."
       },
       {
@@ -137,10 +137,10 @@
     "items": [
       {
         "t": "One square creative",
-        "d": "An image generation uses 24 credits, and you see the charge before confirming it."
+        "d": "An image generation uses 24 credits, and the credit cost appears before you confirm it."
       },
       {
-        "t": "A deliberate copy area",
+        "t": "Open space for text",
         "d": "The scene can leave a calm side or top area for your later headline, offer, or price."
       },
       {
@@ -162,7 +162,7 @@
       },
       {
         "t": "Hot sauce",
-        "d": "Set the bottle beside tacos on a warm wood table, keeping the label forward and a darker empty area above for copy."
+        "d": "Set the bottle beside tacos on a warm wood table, keeping the label forward and a darker empty area above for a headline."
       },
       {
         "t": "Sunglasses",
@@ -196,12 +196,12 @@
     ],
     "not_ideal": [
       {
-        "t": "Copy-heavy artwork",
+        "t": "Text-heavy artwork",
         "d": "Use a design editor when the creative depends on several lines, exact legal text, or a detailed price grid."
       },
       {
         "t": "Claims hidden in the scene",
-        "d": "Use product-page details and verified copy for performance, ingredients, dimensions, or guarantees."
+        "d": "Base claims about performance, ingredients, and dimensions on verified product details."
       }
     ]
   },
@@ -209,7 +209,7 @@
     "h2": "Finish the ad in the place that runs it",
     "items": [
       {
-        "t": "Type the campaign copy",
+        "t": "Type the campaign wording",
         "d": "Add headline, price, date, discount code, and any required wording in Ads Manager, Canva, or your normal editor."
       },
       {
