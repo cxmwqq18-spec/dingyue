@@ -679,6 +679,9 @@ function toolAppHref(model, page, templateKey, options = {}) {
   const prompt = options.promptOverride ?? (templateKey ? (TEMPLATE_PROMPTS[templateKey] ?? "") : (options.prompt ?? DEFAULT_PHOTO_PROMPT));
   return appHref({ tool_id: "image_generator", tool: page.id, template: templateKey, prompt }, false);
 }
+function actorSeedancePrompt(actor) {
+  return `Use the uploaded product image and preserve its shape, colors and label. In a ${actor.scene} setting, ${actor.talent} holds the ${actor.product} and says: "${actor.line}" ${actor.action} Handheld front-camera selfie, eye-level chest-up framing, natural light and skin texture, casual creator delivery with slight natural sway. Sound: ${actor.ambient}; no music, text or logos.`;
+}
 function canonical(page) { return `${BASE}${page.url === "/" ? "/" : page.url}`; }
 function breadcrumbTrail(model, page) {
   const trail = [{ label: "Home", href: "/" }];
@@ -1376,7 +1379,23 @@ function payloadFor(model, page) {
       ...(INDEX_CTA[page.id] ? { cta: { ...INDEX_CTA[page.id], href: "/app/create" } } : {}) };
     const visual = visualFor(model, page, c.visual, { photoOptions: HOME_PHOTO_OPTIONS }, "photo", "/app/create", c);
     if (visual) out.visual = visual;
-    if (page.id === "templates") {
+    if (page.id === "ai-actors") {
+      const spokespersonTool = model.byId["spokesperson-videos"];
+      out.actorScenes = c.actor_scenes;
+      out.howTo = c.how_to;
+      out.honesty = c.honesty;
+      out.actors = c.actor_cards.map((actor) => ({
+        id: actor.id,
+        name: actor.name,
+        style: actor.style,
+        scene: actor.scene,
+        age: actor.age,
+        category: actor.category,
+        image: mediaImage(model, actor.ref, "card"),
+        href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true, length: "10", promptOverride: actorSeedancePrompt(actor) })
+      }));
+      out.cta = { title: "Create a product ad with an AI actor", lead: "Start with a product detail you can support and a short line for the presenter.", href: toolAppHref(model, spokespersonTool, undefined, { size: "9:16", explicitSize: true }) };
+    } else if (page.id === "templates") {
       const chips = c.visual?.picker ?? [];
       const groups = c.visual?.directoryFilters?.templateGroups ?? {};
       const cards = model.cards.map((item) => {
@@ -1570,7 +1589,7 @@ function buildNavigation(model) {
   return {
     version: 2,
     menus: [
-      { label: "Video", groups: [{ label: "Make a video", items: VIDEO_TOOLS.map(tool) }], popular: popular(["unbox", "ba", "beauty"]), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
+      { label: "Video", groups: [{ label: "Make a video", items: [...VIDEO_TOOLS.map(tool), link("ai-actors")] }], popular: popular(["unbox", "ba", "beauty"]), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
       { label: "Photo", groups: [{ label: "Make photos", items: PHOTO_TOOLS.map(tool) }], popular: popular(["size", "color", "box"]), footerLink: { label: "Browse all photo templates →", href: "/templates?type=photo" } },
       { label: "Templates", groups: [group("By industry", Object.keys(model.ind).map((slug) => `ind-${slug}`)), group("By platform", Object.keys(model.plat).map((slug) => `plat-${slug}`)), group("By occasion", Object.keys(model.occ).map((slug) => `occ-${slug}`))], footerLink: { label: `See all ${model.cards.length} templates →`, href: "/templates" } },
       { label: "Resources", groups: [group("Learn and get help", ["examples", "guides", "blog", "faq", "glossary", "contact"])] }
@@ -1580,7 +1599,7 @@ function buildNavigation(model) {
     footer: {
       tagline: "AI video ads and product photos for online stores.",
       groups: [
-        group("Video", ["video-hub", ...VIDEO_TOOLS]),
+        group("Video", ["video-hub", "ai-actors", ...VIDEO_TOOLS]),
         group("Photo", PHOTO_TOOLS),
         group("Templates", [...tplFirst, "templates"]),
         group("Industries", [...Object.keys(model.ind).map((slug) => `ind-${slug}`), "industries"]),
@@ -2016,6 +2035,22 @@ export function validateSiteV2(build = buildSiteV2()) {
     }
     const data = page.contentJson.sections.v2_main.settings.data;
     validateVisual(page.id, page.contentJson.sections.v2_main.settings.layout, data, validationSource.content[page.id] ?? {});
+    if (page.id === "ai-actors") {
+      const scenes = Array.isArray(data.actorScenes) ? data.actorScenes : [];
+      const actors = Array.isArray(data.actors) ? data.actors : [];
+      if (actors.length !== 24) errors.push(`ai-actors: expected 24 actor cards, got ${actors.length}`);
+      if (new Set(actors.map((actor) => actor.name)).size !== actors.length) errors.push("ai-actors: actor names must be unique");
+      for (const actor of actors) {
+        if (!scenes.includes(actor.scene)) errors.push(`ai-actors: unknown scene on ${actor.name}`);
+        if (!actor.image || !videoSizeForDimensions(actor.image.width, actor.image.height)) errors.push(`ai-actors: ${actor.name} portrait must use a supported video frame`);
+        if (/\b(photo|clip|example)\b/i.test(`${actor.name} ${actor.style} ${actor.image?.alt ?? ""}`)) errors.push(`ai-actors: prohibited image label on ${actor.name}`);
+        const params = searchParamsForHref(actor.href);
+        const prompt = params.get("prompt") ?? "";
+        if (params.get("tool") !== "spokesperson-videos" || params.get("size") !== "9:16" || !prompt.includes("says:") || !prompt.includes("Sound:")) {
+          errors.push(`ai-actors: ${actor.name} must link to a 9:16 speaking prompt in the spokesperson workspace`);
+        }
+      }
+    }
     checkPhotoCardLines(data, page.id);
     const checkCaseLinks = (value) => {
       if (Array.isArray(value)) return value.forEach(checkCaseLinks);

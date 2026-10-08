@@ -91,6 +91,16 @@
    "group": "video"
   },
   {
+   "id": "ai-actors",
+   "type": "index",
+   "url": "/ai-video-generation/ai-actors",
+   "label": "AI Actors",
+   "primary_keyword": "AI actors for UGC ads",
+   "img": "presenter",
+   "status": "new",
+   "group": null
+  },
+  {
    "id": "white-background",
    "type": "tool",
    "url": "/ai-image-generation/ecommerce-main-image",

@@ -489,6 +489,7 @@ function CollectionPage({ data, r }: Props) {
 }
 
 function IndexPage({ data, r }: Props) {
+  if (data.id === "ai-actors") return <ActorDirectoryPage data={data} r={r} />;
   const cards = list<V2Card>(data.cards);
   const filters = data.filters as { types: [string, string][]; industries: [string, string][]; platforms: [string, string][] } | undefined;
   const items = list<{ label: string; href: string; text: string; image: V2Image; filterTags?: string[] }>(data.items);
@@ -573,6 +574,90 @@ function IndexPage({ data, r }: Props) {
       </>}
     </>
   );
+}
+
+type V2ActorCard = { id: string; name: string; style: string; scene: string; age: string; category: string; image: V2Image; href: string };
+const actorDirectoryCss = `
+.adc2 .actor-directory-shell{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 245px;gap:36px;align-items:start}
+.adc2 .actor-directory-shell>.actor-state{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.adc2 .actor-main{min-width:0}
+.adc2 .actor-scene-group{padding:0 0 40px;scroll-margin-top:28px}
+.adc2 .actor-scene-group h2{font-size:clamp(22px,2.5vw,30px);margin:0 0 16px}
+.adc2 .actor-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.adc2 .actor-card{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--card);display:flex;flex-direction:column}
+.adc2 .actor-card-image{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;background:#15151a}
+.adc2 .actor-card-copy{display:flex;flex:1;flex-direction:column;align-items:flex-start;padding:14px;gap:8px}
+.adc2 .actor-card h3{margin:0;font-size:19px;line-height:1.2}
+.adc2 .actor-style{color:var(--ink-2);font-size:14px;line-height:1.45}
+.adc2 .actor-tags{color:var(--ink-3);font-size:12px;line-height:1.5;margin:0}
+.adc2 .actor-card .btn{margin-top:auto;padding:9px 12px;font-size:13px}
+.adc2 .actor-filters{position:sticky;top:100px;display:flex;flex-direction:column;gap:8px;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--card)}
+.adc2 .actor-filters h2{font-size:17px;margin:0 0 4px}
+.adc2 .actor-filter-chip{display:flex;justify-content:space-between;gap:12px;padding:9px 11px;border:1px solid var(--line);border-radius:999px;color:var(--ink-2);font-size:13px;cursor:pointer}
+.adc2 .actor-filter-chip span:last-child{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.adc2 .actor-directory-shell #actor-filter-all:checked~.actor-layout .actor-scene-group{display:block}
+${Array.from({ length: 12 }, (_, i) => `.adc2 .actor-directory-shell #actor-filter-${i}:checked~.actor-layout .actor-scene-group:not([data-scene-index="${i}"]){display:none}\n.adc2 .actor-directory-shell #actor-filter-${i}:checked~.actor-layout .actor-filters label[for="actor-filter-${i}"]{border-color:var(--pink);color:var(--ink);background:rgba(236,72,153,.1)}`).join("\n")}
+.adc2 .actor-directory-shell #actor-filter-all:checked~.actor-layout .actor-filters label[for="actor-filter-all"]{border-color:var(--pink);color:var(--ink);background:rgba(236,72,153,.1)}
+.adc2 .actor-directory-shell>.actor-state:focus-visible~.actor-layout .actor-filters label[for]{outline:2px solid var(--pink);outline-offset:2px}
+.adc2 .actor-support-copy{padding-top:4px}
+@media(max-width:1150px){.adc2 .actor-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){.adc2 .actor-directory-shell{grid-template-columns:minmax(0,1fr);gap:20px}.adc2 .actor-filters{position:static;grid-row:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}.adc2 .actor-filters h2{grid-column:1/-1}}
+@media(max-width:640px){.adc2 .actor-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.adc2 .actor-card-copy{padding:11px}.adc2 .actor-card h3{font-size:17px}.adc2 .actor-card .btn{font-size:12px}.adc2 .actor-filters{grid-template-columns:repeat(2,minmax(0,1fr));padding:13px}.adc2 .actor-filter-chip{font-size:12px;padding:8px 9px}}
+`;
+
+function ActorDirectoryPage({ data, r }: Props) {
+  const actors = list<V2ActorCard>(data.actors);
+  const scenes = list<string>(data.actorScenes);
+  const howTo = list<V2Item>(data.howTo);
+  const honesty = data.honesty as { h2: string; items: V2Item[] } | undefined;
+  const cta = data.cta as { title: string; lead: string; href: string } | undefined;
+  return <>
+    <Crumbs items={data.breadcrumbs} r={r} />
+    <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
+    <section className="actor-directory-section" aria-label="AI actor directory">
+      <div className="wrap">
+        <style>{actorDirectoryCss}</style>
+        <div className="actor-directory-shell">
+          <input aria-label="Show all actors" className="actor-state sr-only" defaultChecked id="actor-filter-all" name="actor-scene" type="radio" />
+          {scenes.map((scene, index) => <input aria-label={`Show ${scene} actors`} className="actor-state sr-only" id={`actor-filter-${index}`} key={`state-${scene}`} name="actor-scene" type="radio" />)}
+          <div className="actor-layout">
+            <main className="actor-main">
+              {scenes.map((scene, index) => {
+                const group = actors.filter((actor) => actor.scene === scene);
+                if (!group.length) return null;
+                return <section className="actor-scene-group" data-scene-index={index} id={`actor-scene-${index}`} key={scene}>
+                  <h2>{scene}</h2>
+                  <div className="actor-grid">
+                    {group.map((actor, actorIndex) => <article className="actor-card" key={actor.id}>
+                      <Img className="actor-card-image" eager={index === 0 && actorIndex < 2} image={actor.image} r={r} />
+                      <div className="actor-card-copy">
+                        <h3>{actor.name}</h3>
+                        <p className="actor-style">{actor.style}</p>
+                        <p className="actor-tags">{actor.scene} · {actor.age} · {actor.category}</p>
+                        <a className="btn btn-grad" href={r.href(actor.href)}>Use {actor.name} →</a>
+                      </div>
+                    </article>)}
+                  </div>
+                </section>;
+              })}
+            </main>
+            <aside aria-label="Filter actors by scene" className="actor-filters">
+              <h2>Scenes</h2>
+              <label className="actor-filter-chip" htmlFor="actor-filter-all"><span>All actors</span><span>{actors.length}</span></label>
+              {scenes.map((scene, index) => <label className="actor-filter-chip" htmlFor={`actor-filter-${index}`} key={scene}>
+                <span>{scene}</span><span>{actors.filter((actor) => actor.scene === scene).length}</span>
+              </label>)}
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section className="actor-support-copy"><div className="wrap"><Intro paras={list<string>(data.intro)} r={r} /></div></section>
+    {howTo.length ? <Section eyebrow="How it works" title="Make a spoken product ad"><Steps items={howTo} /></Section> : null}
+    {honesty ? <Section eyebrow="Responsible use" title={honesty.h2}><Boxes className="ben" items={honesty.items} /></Section> : null}
+    <Faq items={data.faq} title="Questions" r={r} />
+    {cta?.href ? <CtaBand href={r.href(cta.href)} lead={cta.lead} r={r} title={cta.title} /> : null}
+  </>;
 }
 
 function ArticlePage({ data, r }: Props) {

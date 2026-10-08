@@ -1,0 +1,413 @@
+{
+  "id": "ai-actors",
+  "title": "AI Actors for UGC Ads | AIVideosUGC",
+  "description": "Choose a named AI actor for a UGC-style product ad. Browse selfie-style presenters by scene, age range and product category, then start with a spoken prompt.",
+  "h1": "Choose an AI Actor for UGC Ads",
+  "eyebrow": "AI actor directory",
+  "lead": "Browse on-camera actors by setting and style. Each presenter holds a sample product and delivers a short line straight to camera.",
+  "intro": [
+    "These generated adult presenters are designed for product ads. Choose a setting and a delivery format, then replace the sample product and line with details you can support.",
+    "Every card opens the spokesperson workspace with a Seedance-style prompt. The people shown are AI-generated actors, not customers or independent reviewers."
+  ],
+  "actor_scenes": [
+    "Car",
+    "Bathroom",
+    "Kitchen",
+    "Gym",
+    "Podcast",
+    "Studio",
+    "Office",
+    "Outdoor",
+    "Pet",
+    "Balcony",
+    "Cafe",
+    "Living Room"
+  ],
+  "actor_cards": [
+    {
+      "id": "maya",
+      "name": "Maya",
+      "style": "Why-I-switched",
+      "scene": "Car",
+      "age": "25–34",
+      "category": "Beauty",
+      "talent": "an adult Latina woman in her early thirties",
+      "product": "plain serum bottle",
+      "line": "Here’s the routine detail I wanted to show: the pump is easy to reach.",
+      "action": "She turns the bottle once so its pump faces the lens.",
+      "ambient": "her voice and soft parked-car room tone",
+      "ref": "n:guide:q4-actor-maya"
+    },
+    {
+      "id": "theo",
+      "name": "Theo",
+      "style": "Get-ready-with-me try-on",
+      "scene": "Car",
+      "age": "25–34",
+      "category": "Apparel",
+      "talent": "an adult white man in his late twenties",
+      "product": "pair of plain sunglasses",
+      "line": "Get ready with me; I’m checking how these frames sit in daylight.",
+      "action": "He places the sunglasses on, then looks back into the lens.",
+      "ambient": "his voice and faint outdoor ambience through the closed car",
+      "ref": "n:guide:q4-actor-theo"
+    },
+    {
+      "id": "kavya",
+      "name": "Kavya",
+      "style": "Simple routine demo",
+      "scene": "Bathroom",
+      "age": "25–34",
+      "category": "Beauty",
+      "talent": "an adult South Asian woman in her late twenties",
+      "product": "plain moisturizer jar",
+      "line": "This is the moisturizer step I keep beside the sink.",
+      "action": "She pats a small amount onto one cheek and holds the jar beside her face.",
+      "ambient": "her voice and quiet bathroom room tone",
+      "ref": "n:guide:q4-actor-kavya"
+    },
+    {
+      "id": "adele",
+      "name": "Adele",
+      "style": "Problem then solution",
+      "scene": "Bathroom",
+      "age": "35–49",
+      "category": "Beauty",
+      "talent": "an adult Black woman in her early forties",
+      "product": "plain cleanser pump bottle",
+      "line": "If the pump gets messy, I keep the bottle upright beside the sink.",
+      "action": "She points to the pump and keeps the bottle label area facing the lens.",
+      "ambient": "her voice and soft bathroom ambience",
+      "ref": "n:guide:q4-actor-adele"
+    },
+    {
+      "id": "nico",
+      "name": "Nico",
+      "style": "Taste-test reaction",
+      "scene": "Kitchen",
+      "age": "25–34",
+      "category": "Drinks",
+      "talent": "an adult Black man in his early thirties",
+      "product": "unbranded sparkling water can",
+      "line": "First note: citrus, then a little fizz.",
+      "action": "He takes one small sip and holds the can up beside his face.",
+      "ambient": "his voice, a light can tap and quiet kitchen ambience",
+      "ref": "n:guide:q4-actor-nico"
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "style": "Recipe or ritual",
+      "scene": "Kitchen",
+      "age": "35–49",
+      "category": "Drinks",
+      "talent": "an adult East Asian man in his early forties",
+      "product": "plain drink-mix pouch",
+      "line": "I stir one scoop into cold water, then give it a moment to settle.",
+      "action": "He stirs the drink once and raises the pouch toward the lens.",
+      "ambient": "his voice, a spoon swirl and quiet kitchen ambience",
+      "ref": "n:guide:q4-actor-daniel"
+    },
+    {
+      "id": "juniper",
+      "name": "Juniper",
+      "style": "One clean rep or use",
+      "scene": "Gym",
+      "age": "18–24",
+      "category": "Fitness",
+      "talent": "an adult white woman in her early twenties",
+      "product": "stainless fitness bottle",
+      "line": "One squeeze shows how the cap opens with one hand.",
+      "action": "She presses the cap once and holds the bottle still at chest height.",
+      "ambient": "her voice and low gym room tone",
+      "ref": "n:guide:q4-actor-juniper"
+    },
+    {
+      "id": "javier",
+      "name": "Javier",
+      "style": "Gym-bag essentials",
+      "scene": "Gym",
+      "age": "18–24",
+      "category": "Fitness",
+      "talent": "an adult Latino nonbinary person in their early twenties",
+      "product": "plain black gym duffel",
+      "line": "The bottle and band fit beside my training gear.",
+      "action": "They open the duffel and lift its shoulder strap into view.",
+      "ambient": "their voice and soft gym ambience",
+      "ref": "n:guide:q4-actor-javier"
+    },
+    {
+      "id": "henry",
+      "name": "Henry",
+      "style": "Three features in 20 seconds",
+      "scene": "Podcast",
+      "age": "35–49",
+      "category": "Electronics",
+      "talent": "an adult Black man in his late thirties",
+      "product": "plain over-ear headphones",
+      "line": "Here are three details I can show: the ear cups, hinge and button placement.",
+      "action": "He turns the headphones once to show the hinge and ear cups.",
+      "ambient": "his voice and quiet podcast-room tone",
+      "ref": "n:guide:q4-actor-henry"
+    },
+    {
+      "id": "charlie",
+      "name": "Charlie",
+      "style": "Three reasons",
+      "scene": "Podcast",
+      "age": "25–34",
+      "category": "Snacks",
+      "talent": "an adult mixed-race nonbinary creator around thirty",
+      "product": "plain protein snack bar",
+      "line": "Start with the wrapper, check the size, then read the ingredients together.",
+      "action": "They hold the bar beside the microphone and turn its blank front toward the lens.",
+      "ambient": "their voice and quiet podcast-room tone",
+      "ref": "n:guide:q4-actor-charlie"
+    },
+    {
+      "id": "anvesha",
+      "name": "Anvesha",
+      "style": "Close-up detail",
+      "scene": "Studio",
+      "age": "35–49",
+      "category": "Jewelry",
+      "talent": "an adult South Asian woman in her late thirties",
+      "product": "pair of simple gold-tone hoop earrings",
+      "line": "The curved edges catch the light when I turn these hoops.",
+      "action": "She brings one hoop closer to the lens, then holds it steady.",
+      "ambient": "her voice and soft room tone",
+      "ref": "n:guide:q4-actor-anvesha"
+    },
+    {
+      "id": "simon",
+      "name": "Simon",
+      "style": "Gift angle",
+      "scene": "Studio",
+      "age": "18–24",
+      "category": "Jewelry",
+      "talent": "an adult East Asian man in his early twenties",
+      "product": "simple pendant necklace in a plain gift box",
+      "line": "Here’s how the necklace sits inside a simple gift box.",
+      "action": "He opens the box and holds the pendant at chest height.",
+      "ambient": "his voice and a light box hinge sound",
+      "ref": "n:guide:q4-actor-simon"
+    },
+    {
+      "id": "rosa",
+      "name": "Rosa",
+      "style": "Screen-share walkthrough",
+      "scene": "Office",
+      "age": "50+",
+      "category": "Apps & tech",
+      "talent": "an adult Latina woman in her early sixties",
+      "product": "smartphone showing a simple unbranded app screen",
+      "line": "I tap the search field, choose a category and save the result.",
+      "action": "She taps the phone screen once, then tilts the phone toward the lens.",
+      "ambient": "her voice and a quiet home-office room tone",
+      "ref": "n:guide:q4-actor-rosa"
+    },
+    {
+      "id": "stephan",
+      "name": "Stephan",
+      "style": "Before-and-after planning",
+      "scene": "Office",
+      "age": "35–49",
+      "category": "Apps & tech",
+      "talent": "an adult Middle Eastern man in his early forties",
+      "product": "smartphone showing a simple weekly planning app",
+      "line": "Here’s the same week before and after I put the tasks in one place.",
+      "action": "He swipes once from a plain note list to a clean weekly view.",
+      "ambient": "his voice and a quiet office room tone",
+      "ref": "n:guide:q4-actor-stephan"
+    },
+    {
+      "id": "vikram",
+      "name": "Vikram",
+      "style": "Day-in-the-life integration",
+      "scene": "Outdoor",
+      "age": "50+",
+      "category": "Beauty",
+      "talent": "an adult South Asian man in his late fifties",
+      "product": "plain sunscreen tube",
+      "line": "I keep this sunscreen in the side pocket before heading outdoors.",
+      "action": "He places the tube beside the pocket opening and turns its front to camera.",
+      "ambient": "his voice and light outdoor wind",
+      "ref": "n:guide:q4-actor-vikram"
+    },
+    {
+      "id": "serah",
+      "name": "Serah",
+      "style": "Fit-check honesty",
+      "scene": "Outdoor",
+      "age": "25–34",
+      "category": "Apparel",
+      "talent": "an adult Black woman in her late twenties",
+      "product": "lightweight zip jacket",
+      "line": "The sleeve reaches my wrist when I lift my arm.",
+      "action": "She lifts one arm once and holds the jacket cuff toward the lens.",
+      "ambient": "her voice and soft outdoor street ambience",
+      "ref": "n:guide:q4-actor-serah"
+    },
+    {
+      "id": "hailey",
+      "name": "Hailey",
+      "style": "Pet reaction",
+      "scene": "Pet",
+      "age": "25–34",
+      "category": "Pet supplies",
+      "talent": "an adult East Asian woman in her late twenties",
+      "product": "plain rubber dog toy",
+      "line": "That short squeak is what gets the dog’s attention.",
+      "action": "She squeezes the toy once beside a calm adult dog, then looks back to camera.",
+      "ambient": "her voice, one soft toy squeak and room tone",
+      "ref": "n:guide:q4-actor-hailey"
+    },
+    {
+      "id": "adam",
+      "name": "Adam",
+      "style": "Problem-solving for owners",
+      "scene": "Pet",
+      "age": "50+",
+      "category": "Pet supplies",
+      "talent": "an adult white man in his late fifties",
+      "product": "treat pouch with a leash clip",
+      "line": "The clip keeps the treat pouch attached to the lead.",
+      "action": "He fastens the clip once to a leash and holds it up beside his face.",
+      "ambient": "his voice and a light collar jingle",
+      "ref": "n:guide:q4-actor-adam"
+    },
+    {
+      "id": "lisa",
+      "name": "Lisa",
+      "style": "Before and after",
+      "scene": "Balcony",
+      "age": "50+",
+      "category": "Cleaning tools",
+      "talent": "an adult Middle Eastern woman in her late fifties",
+      "product": "reusable fabric lint remover",
+      "line": "Here’s the fabric before, and here it is after one pass.",
+      "action": "She makes one short pass over a sleeve and holds the tool beside the clean area.",
+      "ambient": "her voice and soft outdoor ambience",
+      "ref": "n:guide:q4-actor-lisa"
+    },
+    {
+      "id": "frankie",
+      "name": "Frankie",
+      "style": "Restock and organize",
+      "scene": "Balcony",
+      "age": "50+",
+      "category": "Beauty",
+      "talent": "an adult white nonbinary creator in their early sixties",
+      "product": "small sunscreen and lip balm pouch",
+      "line": "I keep these two daily essentials together in one pouch.",
+      "action": "They place the sunscreen and balm into the open pouch and hold it up.",
+      "ambient": "their voice and quiet balcony ambience",
+      "ref": "n:guide:q4-actor-frankie"
+    },
+    {
+      "id": "olivia",
+      "name": "Olivia",
+      "style": "Styling three ways",
+      "scene": "Cafe",
+      "age": "25–34",
+      "category": "Apparel",
+      "talent": "an adult white woman around thirty",
+      "product": "soft everyday cardigan",
+      "line": "Same cardigan, three layers: tee, button-down and tank.",
+      "action": "She lifts the cardigan by its shoulders and gestures to the three visible layers.",
+      "ambient": "her voice and quiet cafe ambience",
+      "ref": "n:guide:q4-actor-olivia"
+    },
+    {
+      "id": "megha",
+      "name": "Megha",
+      "style": "Answering a real question",
+      "scene": "Cafe",
+      "age": "18–24",
+      "category": "Drinks",
+      "talent": "an adult South Asian woman in her early twenties",
+      "product": "clear bottle of unsweetened iced tea",
+      "line": "Is it sweetened? The ingredients list is right here on the bottle.",
+      "action": "She points to the blank label area, then holds the bottle steady beside her face.",
+      "ambient": "her voice and low cafe ambience",
+      "ref": "n:guide:q4-actor-megha"
+    },
+    {
+      "id": "aruna",
+      "name": "Aruna",
+      "style": "Unboxing and first impression",
+      "scene": "Living Room",
+      "age": "50+",
+      "category": "Electronics",
+      "talent": "an adult South Asian woman in her early sixties",
+      "product": "small black wireless-earbud case with stemless round earbuds",
+      "line": "Let’s open the case and see what comes in the box.",
+      "action": "She opens a small plain box and lifts the dark case toward the lens.",
+      "ambient": "her voice, soft packaging rustle and room tone",
+      "ref": "n:guide:q4-actor-aruna"
+    },
+    {
+      "id": "trevor",
+      "name": "Trevor",
+      "style": "Problem it solves",
+      "scene": "Living Room",
+      "age": "18–24",
+      "category": "Electronics",
+      "talent": "an adult Latino man in his early twenties",
+      "product": "folding smartphone stand",
+      "line": "If your phone keeps sliding on calls, this stand holds the angle in place.",
+      "action": "He opens the stand once and sets a phone into its cradle.",
+      "ambient": "his voice and quiet living-room tone",
+      "ref": "n:guide:q4-actor-trevor"
+    }
+  ],
+  "how_to": [
+    {
+      "t": "Add your product",
+      "d": "Start with a clear view of the product and keep its real details intact."
+    },
+    {
+      "t": "Choose an actor and format",
+      "d": "Pick a scene and delivery style that fits the product and audience."
+    },
+    {
+      "t": "Write one spoken line",
+      "d": "Use a specific, supportable detail, then review the generated result before publishing."
+    }
+  ],
+  "honesty": {
+    "h2": "Use AI actors transparently",
+    "items": [
+      {
+        "t": "AI actors are not customers.",
+        "d": "Do not present a generated person as someone who bought or used the product."
+      },
+      {
+        "t": "Keep endorsements accurate.",
+        "d": "A testimonial must reflect a real, authorized customer statement; do not invent personal experience."
+      },
+      {
+        "t": "Avoid false credentials or claims.",
+        "d": "Do not portray an actor as a doctor or make unsupported health or performance claims."
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Can AI actors speak in UGC ads?",
+      "a": "Yes. The spokesperson workspace can generate an actor delivering a short spoken line that you provide."
+    },
+    {
+      "q": "Are AI actors real customers?",
+      "a": "No. They are generated presenters and should never be described as actual customers."
+    },
+    {
+      "q": "Can an AI actor give a testimonial?",
+      "a": "Do not invent a customer testimonial. Use real, authorized customer words or frame the line as a brand-written product explanation."
+    },
+    {
+      "q": "How do I create an AI actor product ad?",
+      "a": "Add your product, choose an actor and delivery style, write a supportable line, then review the result."
+    }
+  ]
+}
