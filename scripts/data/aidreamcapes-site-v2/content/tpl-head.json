@@ -193,9 +193,9 @@
     ],
     "steps": {
       "source": "g:professional-headshot/source-input",
-      "result": "n:guide:tpl-head-round4-01",
+      "result": "n:guide:q9-head-step-output",
       "mode": "photo",
-      "prompt": "Create a polished square team headshot of this adult against a soft light-gray office background, with a relaxed expression and shoulders in frame.",
+      "prompt": "Use the uploaded photo as an identity reference. Retain the person’s facial features, hair, and skin tone while creating a square team headshot against a soft light-gray background, with head and shoulders in frame. Use a black blazer, white top, natural skin texture, and even daylight; no props, text, or logos.",
       "options": [
         [
           "Template",
@@ -213,96 +213,104 @@
     },
     "picker": {
       "title": "Choose a team portrait setting",
-      "lead": "Pick a backdrop that feels consistent across the team page.",
+      "lead": "Pick a studio or workplace background that keeps each teammate’s face clear.",
       "chips": [
         {
           "id": "studio",
-          "label": "Studio backdrop"
+          "label": "Studio Backdrops"
         },
         {
-          "id": "office",
-          "label": "Office setting"
+          "id": "workplace",
+          "label": "Office & Workspaces"
         },
         {
-          "id": "window",
-          "label": "Window light"
+          "id": "warm",
+          "label": "Warm Neutrals"
         },
         {
-          "id": "portrait",
-          "label": "Simple portrait"
+          "id": "cool",
+          "label": "Cool Neutrals"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-head-c1",
-          "label": "Founder portrait on gray",
+          "ref": "n:guide:q9-head-card-01-warm-studio",
+          "label": "Studio Headshot: Warm Taupe Backdrop",
           "chips": [
-            "studio"
+            "studio",
+            "warm"
           ],
-          "prompt": "Use a plain gray studio background for this head-and-shoulders portrait.",
+          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against a warm taupe studio backdrop, with natural skin texture and soft even light. No props, text, or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-head-case-79",
-          "label": "Headshot at a studio desk",
+          "ref": "n:guide:q9-head-card-02-blue-office",
+          "label": "Office Headshot: Blue-Gray Wall",
           "chips": [
-            "studio"
+            "workplace",
+            "cool"
           ],
-          "prompt": "Keep the face and shoulders clear against the bright studio desk.",
+          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against a pale blue-gray office wall, with natural skin texture and soft window light. No props, text, or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-head-g1",
-          "label": "Founder studio headshot",
+          "ref": "n:guide:q9-head-card-03-olive-studio",
+          "label": "Team Portrait: Olive Plaster Backdrop",
           "chips": [
-            "office"
+            "studio",
+            "warm"
           ],
-          "prompt": "Keep the founder’s face and shoulders centered against the neutral background.",
+          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against an olive plaster studio backdrop, with natural skin texture and soft even light. No props, text, or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-head-case-80",
-          "label": "Team portrait in an office",
+          "ref": "n:guide:q9-head-card-04-charcoal-studio",
+          "label": "Studio Headshot: Charcoal Backdrop",
           "chips": [
-            "office"
+            "studio",
+            "cool"
           ],
-          "prompt": "Keep the soft office background behind the headshot.",
+          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against a charcoal studio background, with natural skin texture and soft even light. No props, text, or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-head-case-78",
-          "label": "Portrait in warm window light",
+          "ref": "n:guide:q9-head-card-05-wood-workspace",
+          "label": "Creative Lead Portrait: Wood Workspace",
           "chips": [
-            "window"
+            "workplace",
+            "warm"
           ],
-          "prompt": "Use warm window light behind the head and shoulders.",
+          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait in a brick-and-wood creative workspace, with natural skin texture and soft window light. No props, text, or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-head-g3",
-          "label": "Manager beside an office window",
+          "ref": "n:guide:q9-head-card-06-dusty-blue",
+          "label": "Team Headshot: Dusty Blue Wall",
           "chips": [
-            "window"
+            "studio",
+            "cool"
           ],
-          "prompt": "Place the portrait beside a bright office window.",
+          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against a dusty blue studio wall, with natural skin texture and soft even light. No props, text, or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-head-g2",
-          "label": "Producer headshot in profile",
+          "ref": "n:guide:q9-head-card-07-pale-blush",
+          "label": "Studio Portrait: Pale Blush Backdrop",
           "chips": [
-            "portrait"
+            "studio",
+            "warm"
           ],
-          "prompt": "Keep this professional headshot simple and uncluttered.",
+          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against a pale blush studio backdrop, with natural skin texture and soft even light. No props, text, or logos.",
           "kind": "photo"
         },
         {
-          "ref": "g:professional-headshot/example-04",
-          "label": "Portrait in an outdoor neutral setting",
+          "ref": "n:guide:q9-head-card-08-olive-office",
+          "label": "Office Headshot: Olive Wall",
           "chips": [
-            "portrait"
+            "workplace",
+            "cool"
           ],
-          "prompt": "Use a clear head-and-shoulders portrait against a soft outdoor background.",
+          "prompt": "Use the uploaded photo as an identity reference. Create a square head-and-shoulders team portrait against an olive office wall, with natural skin texture and soft window light. No props, text, or logos.",
           "kind": "photo"
         }
       ],
@@ -311,15 +319,15 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:guide:tpl-head-m4-team-row",
+        "ref": "n:guide:tpl-head-round4-10",
         "h": "Build a consistent team page",
-        "d": "Keep a consistent head-and-shoulders crop, neutral background, and soft light for each teammate."
+        "d": "Use a shared head-and-shoulders crop and soft light so the team portraits sit together cleanly."
       },
       {
         "frame": "browser",
-        "ref": "g:professional-headshot/example-05",
+        "ref": "n:guide:tpl-head-m3-office",
         "h": "Show a portrait on a professional profile",
-        "d": "Use a clear three-quarter portrait beside the team introduction when a wide crop fits the page."
+        "d": "Pair a clear square portrait with the person’s role and introduction."
       }
     ],
     "input": [

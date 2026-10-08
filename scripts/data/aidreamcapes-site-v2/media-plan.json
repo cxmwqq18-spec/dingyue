@@ -196,8 +196,8 @@
     "tpl-jewel": {
       "hero": {
         "kind": "pair",
-        "before": "g:jewelry-positioning/source-input",
-        "after": "g:jewelry-positioning/hero-output"
+        "before": "n:guide:q9-media-jewel-source",
+        "after": "n:guide:q9-media-jewel-output"
       },
       "gallery": [],
       "og": "g:jewelry-positioning/og"
@@ -205,8 +205,8 @@
     "tpl-look": {
       "hero": {
         "kind": "pair",
-        "before": "g:fashion-editorial/source-input",
-        "after": "g:fashion-editorial/hero-output"
+        "before": "n:guide:q9-media-look-source",
+        "after": "n:guide:q9-media-look-output"
       },
       "gallery": [],
       "og": "g:fashion-editorial/og"
@@ -214,8 +214,8 @@
     "tpl-head": {
       "hero": {
         "kind": "pair",
-        "before": "g:professional-headshot/source-input",
-        "after": "g:professional-headshot/hero-output"
+        "before": "n:guide:q9-media-head-source",
+        "after": "n:guide:q9-media-head-output"
       },
       "gallery": [],
       "og": "g:professional-headshot/og"
@@ -223,16 +223,16 @@
     "tpl-ugc": {
       "hero": {
         "kind": "pair",
-        "before": "g:ugc-still-ad/source-input",
-        "after": "g:ugc-still-ad/hero-output"
+        "before": "n:guide:q9-media-ugc-source",
+        "after": "n:guide:q9-media-ugc-output"
       },
       "gallery": [
-        "g:ugc-still-ad/example-01",
-        "g:ugc-still-ad/example-02",
-        "g:ugc-still-ad/example-03",
-        "g:ugc-still-ad/example-04",
-        "g:ugc-still-ad/example-05",
-        "g:ugc-still-ad/example-06"
+        "n:guide:q9-ugc-gallery-weekender-unboxing",
+        "n:guide:q9-ugc-gallery-serum-review",
+        "n:guide:q9-ugc-gallery-earring-grwm",
+        "n:guide:q9-ugc-gallery-protein-reaction",
+        "n:guide:q9-ugc-gallery-pet-hair-demo",
+        "n:guide:q9-ugc-gallery-jacket-tryon"
       ],
       "og": "g:ugc-still-ad/og"
     },

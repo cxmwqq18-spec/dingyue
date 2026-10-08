@@ -1,20 +1,17 @@
 {
   "id": "tpl-jewel",
-  "title": "AI Jewelry Model Photos, Worn Up Close | AIVideosUGC",
-  "description": "Make AI jewelry model photos that show your necklace, earrings, or ring worn up close in soft light. Upload a clear photo of the piece to see it on a model.",
-  "h1": "AI Jewelry Model Photos That Show Each Piece Being Worn",
+  "title": "AI Jewelry Model Photos and Ad Scenes",
+  "description": "Create AI jewelry model photos showing fit and detail on adult models. Choose a creator review, try-on or hand demonstration for social ads and product pages.",
+  "h1": "Show jewelry in a clear ad scene",
   "eyebrow": "Model photo template",
-  "lead": "AI jewelry model photos show where a necklace sits on the collarbone, how far an earring drops, or how a ring looks on a hand, starting from one clear photo of the piece.",
+  "lead": "Use try-on, close-detail and creator-review formats to help shoppers see how a jewelry piece looks and fits.",
   "secondary_keywords": [
     "necklace on model photo",
     "jewelry lifestyle photos for Instagram",
     "earrings on a model",
     "worn jewelry product photos"
   ],
-  "intro": [
-    "The example shows a fine chain with a clear teardrop pendant resting just below the collarbone, on a model in a white lace top in soft morning light. The crop is close enough to see the pendant and wide enough to judge where it sits.",
-    "Jewelry is small, and a flat shot on velvet doesn't tell anyone how a piece will look on. A worn close-up does. It suits Instagram posts and the second image on your Shopify listing, next to your clean product shot."
-  ],
+  "intro": "A useful jewelry ad shows scale and fit while keeping the piece easy to recognize. Start with a clean product image, then choose a format that fits the design.",
   "tip": "Set the piece on a plain surface with the clasp and pendant visible, and add the chain length to your description so it sits at a believable height.",
   "steps": [
     {
@@ -180,20 +177,20 @@
     ]
   },
   "visual": {
-    "overview": "Show how a jewelry piece sits on the ear, hand, or neckline while keeping the design recognizable. Start with a clear photo of the piece by itself.",
+    "overview": "Show a jewelry piece worn or handled by an adult, with its scale and key detail easy to see. Begin with a clear product image and choose a format for the ad.",
     "strip": [
-      "g:jewelry-positioning/example-01",
+      "n:guide:q9-jewel-alt-gold-hoop",
       "n:guide:tpl-jewel-m1-hoop",
-      "n:guide:ind-jewelry-accessories-m7-steel-watch",
-      "n:guide:ind-jewelry-accessories-m2-result",
+      "n:guide:q9-jewel-alt-brooch",
+      "n:guide:q9-jewel-alt-silver-pendant",
       "n:guide:tpl-jewel-round4-hoop-earrings",
-      "n:gen2:tpl-jewel-g3"
+      "n:guide:q9-jewel-alt-stud-earring"
     ],
     "steps": {
       "source": "n:guide:tpl-jewel-m2-source",
       "result": "n:guide:tpl-jewel-m2-square",
       "mode": "photo",
-      "prompt": "Create a square on-model photo of this delicate silver necklace worn at the collarbone over a simple linen neckline, with the pendant centered and the chain visible.",
+      "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult wears the silver pendant at the collarbone and lightly touches the chain so its scale is clear. Chest-up portrait, soft window light, natural skin texture, clean styling, no text or logos.",
       "options": [
         [
           "Template",
@@ -210,110 +207,101 @@
       ]
     },
     "picker": {
-      "title": "Choose a jewelry photo style",
-      "lead": "Pick an on-model or close-up view that keeps the jewelry easy to see.",
+      "title": "Choose a jewelry ad format",
+      "lead": "Pick a try-on, creator review or hand demonstration that makes the piece easy to judge.",
       "chips": [
         {
-          "id": "neckline",
-          "label": "On-model styling"
+          "id": "review",
+          "label": "Creator Reviews"
         },
         {
-          "id": "metal",
-          "label": "Metal details"
+          "id": "hands",
+          "label": "Hand Demonstrations"
         },
         {
-          "id": "fabric",
-          "label": "Texture and materials"
+          "id": "tryon",
+          "label": "Try-On Styling"
         },
         {
-          "id": "close",
-          "label": "Close product crop"
+          "id": "texture",
+          "label": "Texture Details"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-jewel-g1",
-          "label": "Brooch on wool lapel",
+          "ref": "n:guide:q9-jewel-hoop-review",
+          "label": "Creator Review: Gold Hoop Earrings",
           "chips": [
-            "neckline",
-            "fabric"
+            "review"
           ],
-          "prompt": "Pin the enamel brooch on a wool coat lapel.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult creator wears the gold hoop earrings and turns her head slightly so both hoops catch the light. Chest-up portrait, natural skin texture, soft window light, candid creator-review still, uncluttered background, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-jewel-28",
-          "label": "Silver pendant necklace at the collarbone",
+          "ref": "n:guide:q9-jewel-brooch-demo",
+          "label": "Hand Demo: Brooch on Coat",
           "chips": [
-            "neckline",
-            "metal"
+            "hands"
           ],
-          "prompt": "Keep the silver pendant centered against the linen neckline and the chain visible.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult pins the enamel brooch to a wool coat lapel, with the hand and finished placement clearly visible. Chest-up three-quarter portrait, soft daylight, natural creator-ad still, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "g:jewelry-positioning/example-06",
-          "label": "Necklace worn in a three-quarter view",
+          "ref": "n:guide:q9-jewel-necklace-tryon",
+          "label": "Try-On: Silver Pendant at the Neckline",
           "chips": [
-            "neckline",
-            "fabric",
-            "close"
+            "tryon"
           ],
-          "prompt": "Keep the chain and pendant centered against a simple neckline with open space for product details.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult wears the silver pendant at the collarbone and lightly touches the chain so its scale is clear. Chest-up portrait, soft window light, natural skin texture, clean styling, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "g:jewelry-positioning/example-03",
-          "label": "Bracelet worn on the wrist",
+          "ref": "n:guide:q9-jewel-bracelet-clasp",
+          "label": "Product Detail: Bracelet Clasp",
           "chips": [
-            "neckline",
-            "close"
+            "texture"
           ],
-          "prompt": "Show the bracelet on the wrist with its links and fit in clear view.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. A hand holds the bracelet clasp near the wrist so the fastening and metal finish are sharply visible. Tight macro crop, directional daylight, crisp product detail, neutral background, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:tpl-jewel-round4-necklace-source",
-          "label": "Silver pendant at the neckline",
+          "ref": "n:guide:q9-jewel-pendant-review",
+          "label": "Spokesperson Read: Pendant Fit",
           "chips": [
-            "metal",
-            "close"
+            "review"
           ],
-          "prompt": "Center the delicate pendant over the linen neckline and keep its shape clear.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult creator wears the pendant and holds it beside the neckline to show its scale. Chest-up portrait with direct eye contact, soft daylight, honest creator-ad still, natural skin texture, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-jewel-71",
-          "label": "Silver bracelet stacked on a wrist",
+          "ref": "n:guide:q9-jewel-bracelet-tryon",
+          "label": "Try-On: Silver Bracelet Stack",
           "chips": [
-            "metal",
-            "close"
+            "tryon"
           ],
-          "prompt": "Show the silver bracelet stacked neatly on the wrist.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult wears the silver bracelet stack and turns the wrist slightly to show how the pieces sit together. Close wrist-and-sleeve framing, soft side light, clean fashion-ad still, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-jewel-g2",
-          "label": "Silver cufflinks on shirt",
+          "ref": "n:guide:q9-jewel-cufflinks-demo",
+          "label": "Hand Demo: Fasten Silver Cufflinks",
           "chips": [
-            "neckline",
-            "metal"
+            "hands"
           ],
-          "prompt": "Keep both cufflinks visible against the white shirt cuff.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. An adult fastens the silver cufflinks on a white shirt cuff, with the fingers and finished fastening clear. Tight hand close-up, bright window light, clean product-demo still, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:ind-jewelry-accessories-m3-gem-prongs",
-          "label": "Gold prongs holding a clear gemstone",
+          "ref": "n:guide:q9-jewel-ring-macro",
+          "label": "Product Detail: Gold Ring",
           "chips": [
-            "metal",
-            "close"
+            "texture"
           ],
-          "prompt": "Frame the gemstone and its simple gold prongs sharply in a square close-up.",
+          "prompt": "Use the uploaded photo as the jewelry and keep its shape, color and details exactly. A hand tilts the gold ring slightly so the setting and gemstone catch a narrow beam of light. Extreme macro, crisp metal and stone detail, controlled studio light, neutral background, no text or logos.",
           "kind": "photo"
         }
       ],
-      "button": "Make a jewelry model photo"
+      "button": "Create a jewelry ad scene"
     },
     "uses": [
       {
@@ -324,9 +312,9 @@
       },
       {
         "frame": "listing",
-        "ref": "n:gen2:tpl-jewel-72",
-        "h": "Add a worn view to a product page",
-        "d": "Place the on-model photo beside the clear product shot so shoppers can see how it sits."
+        "ref": "n:guide:q9-jewel-use-silver-bracelet",
+        "h": "Add a silver bracelet worn on a wrist",
+        "d": "Place the bracelet photo beside a clear product shot so shoppers can see how the chain and bar charm sit."
       }
     ],
     "input": [
@@ -337,10 +325,10 @@
         "bad_label": "The single pendant loses focus"
       },
       {
-        "good": "n:gen2:tpl-jewel-g4",
-        "bad": "n:guide:tpl-jewel-m5-crop",
-        "good_label": "Ear cuff stays in frame",
-        "bad_label": "The face is clipped while the ear cuff remains visible"
+        "good": "n:guide:q9-jewel-alt-gold-ring",
+        "bad": "n:guide:q9-jewel-ring-crop",
+        "good_label": "Gold band and stone stay in frame",
+        "bad_label": "Gold band is clipped at the frame edge"
       }
     ],
     "outputs": [

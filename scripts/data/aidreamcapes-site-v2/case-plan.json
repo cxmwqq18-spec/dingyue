@@ -420,9 +420,9 @@
         "title": "Gray tailored outfit in a neutral studio"
       },
       {
-        "ref": "g:on-model-generation/hero-output",
-        "product": "city daypack outfit",
-        "title": "Layered city outfit with a practical daypack"
+        "ref": "n:guide:q9-look-alt-navy-suit",
+        "product": "navy tailored suit and work bag",
+        "title": "Navy suit and structured bag on a city walk"
       },
       {
         "ref": "g:fashion-editorial/example-07",
@@ -430,30 +430,30 @@
         "title": "Close fashion portrait with an editorial crop"
       },
       {
-        "ref": "g:on-model-generation/example-05",
-        "product": "desk-side bag styling",
-        "title": "Compact backpack beside a prepared work desk"
+        "ref": "n:guide:q9-look-alt-office-bag",
+        "product": "messenger bag",
+        "title": "Messenger bag carried through a bright office lobby"
       }
     ],
     "tpl-head": [
       {
-        "ref": "n:guide:tpl-head-round4-10",
-        "product": "professional headshot",
-        "title": "Square professional portrait in a quiet office"
+        "ref": "n:guide:q9-head-case-founder",
+        "product": "founder headshot",
+        "title": "Founder portrait against warm gray plaster"
       },
       {
-        "ref": "n:guide:tpl-head-case-plan-02",
-        "product": "designer portrait",
-        "title": "Designer portrait against an olive studio wall"
+        "ref": "n:guide:q9-head-case-designer",
+        "product": "designer headshot",
+        "title": "Designer headshot against olive plaster"
       },
       {
-        "ref": "n:guide:tpl-head-case-plan-03",
-        "product": "consultant headshot",
-        "title": "Consultant headshot beside a blue-gray window"
+        "ref": "n:guide:q9-head-case-consultant",
+        "product": "consultant portrait",
+        "title": "Consultant portrait by a pale blue-gray office window"
       },
       {
-        "ref": "n:guide:tpl-head-case-plan-04",
-        "product": "operations headshot",
+        "ref": "n:guide:q9-head-case-operations",
+        "product": "operations portrait",
         "title": "Operations portrait in a warm wood workshop"
       }
     ],
@@ -464,9 +464,9 @@
         "title": "Water bottle snapped on a cluttered work desk"
       },
       {
-        "ref": "n:gen2:tpl-ugc-case-82",
-        "product": "wireless earbuds",
-        "title": "Earbuds case held up in a casual phone shot"
+        "ref": "n:guide:q9-ugc-case-phone-grip",
+        "product": "phone grip",
+        "title": "Plain phone grip attached at a cafe table"
       },
       {
         "ref": "n:guide:k6-tpl-ugc-case-breakfast-mug",

@@ -1,20 +1,17 @@
 {
   "id": "tpl-look",
-  "title": "AI Lookbook Photos for New Collections | AIVideosUGC",
-  "description": "Create AI lookbook photos for a new collection, with your outfits on a model in sunlit, editorial settings. Upload each outfit and build your launch looks.",
-  "h1": "AI Lookbook Photos with an Editorial Feel",
+  "title": "Fashion Lookbook Photos and Outfit Ads",
+  "description": "Create fashion lookbook photos for full outfits, fit and fabric detail. Choose try-ons, street walks or creator reviews for ads and product pages.",
+  "h1": "Show complete looks in a fashion ad scene",
   "eyebrow": "Model photo template",
-  "lead": "AI lookbook photos put your outfits in a magazine-style setting, like a sunlit stone archway by the sea, so you can build a lookbook for a new drop one look at a time.",
+  "lead": "Use street-walk, try-on and creator-review formats to show how a collection fits and moves in real settings.",
   "secondary_keywords": [
     "fashion editorial photos",
     "collection launch lookbook",
     "menswear lookbook photos",
     "Instagram lookbook images"
   ],
-  "intro": [
-    "In the example, a relaxed sand-colored suit with wide-leg trousers stands against pale stone arches with a glimpse of the sea. The light is warm, the pose is easy, and the setting supports the outfit instead of competing with it.",
-    "A lookbook sets the mood for a collection in a way plain product shots don't. Use it to announce a seasonal drop on Instagram, open a launch email with a few outfit ideas, or give stockists a feel for the season ahead."
-  ],
+  "intro": "A useful outfit ad shows the whole silhouette and the details shoppers want to compare. Start with a clear garment image, then choose a format for the collection.",
   "tip": "Upload each outfit as a full flat lay, top and bottom together, and choose one location for the whole collection so the images feel like one story.",
   "steps": [
     {
@@ -189,10 +186,10 @@
             "product": "beige coat outfit"
           },
           {
-            "ref": "n:guide:ind-fashion-clothing-m2-result",
-            "title": "Gray pullover hoodie cropped chin to hips",
+            "ref": "n:guide:q9-look-example-gray-hoodie",
+            "title": "Gray pullover hoodie cropped from chin to hips",
             "kind": "photo",
-            "product": "pullover hoodie"
+            "product": "gray pullover hoodie"
           },
           {
             "ref": "n:guide:tpl-look-reuse-jacket-hanger",
@@ -205,20 +202,20 @@
     ]
   },
   "visual": {
-    "overview": "A lookbook photo can show a complete outfit in a setting that fits the collection. Start with a clear view of each garment, then keep the location and mood consistent.",
+    "overview": "Show a complete outfit on an adult model in a believable ad moment, with fit, movement or fabric detail easy to see.",
     "strip": [
-      "g:fashion-editorial/example-01",
-      "g:fashion-editorial/example-02",
-      "g:fashion-editorial/example-03",
-      "g:fashion-editorial/example-04",
-      "g:fashion-editorial/example-05",
-      "g:fashion-editorial/example-06"
+      "n:guide:q9-look-alt-pleated-skirt",
+      "n:guide:q9-look-alt-knit-beanie",
+      "n:guide:q9-look-alt-beige-suit",
+      "n:guide:q9-look-alt-layered-streetwear",
+      "n:guide:q9-look-alt-crossbody-outfit",
+      "n:guide:q9-look-alt-knit-texture"
     ],
     "steps": {
       "source": "g:fashion-editorial/source-input",
       "result": "n:guide:tpl-look-m2-result",
       "mode": "photo",
-      "prompt": "Photograph this light-beige tailored women’s outfit from the source on an adult woman model, head to toe, in a neutral studio, with the full silhouette visible in a square frame.",
+      "prompt": "Use the uploaded photo as the garment and preserve its shape, color, and details. An adult wears the light beige tailored suit, smooths the jacket lapel once, and faces the camera with the full outfit visible. Full-body fashion photo, bright studio daylight, natural styling, no text or logos.",
       "options": [
         [
           "Template",
@@ -235,101 +232,101 @@
       ]
     },
     "picker": {
-      "title": "Choose a lookbook setting",
-      "lead": "Pick a setting that supports the collection and outfit.",
+      "title": "Choose a fashion ad format",
+      "lead": "Pick a street walk, try-on or creator review to show how the outfit fits and moves.",
       "chips": [
         {
           "id": "street",
-          "label": "Street style"
+          "label": "Street Walks"
         },
         {
-          "id": "studio",
-          "label": "Studio look"
+          "id": "review",
+          "label": "Creator Reviews"
         },
         {
-          "id": "workwear",
-          "label": "Workwear"
+          "id": "tryon",
+          "label": "Try-On Styling"
         },
         {
-          "id": "evening",
-          "label": "Evening look"
+          "id": "fabric",
+          "label": "Fabric Details"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:ind-fashion-clothing-c3",
-          "label": "Pleated skirt on sidewalk",
+          "ref": "n:guide:q9-look-pleated-skirt-walk",
+          "label": "Street Walk: Pleated Skirt in Motion",
           "chips": [
             "street"
           ],
-          "prompt": "Show the skirt in a relaxed sidewalk look.",
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the garment and keep its shape, color and details exactly. An adult wears the pleated skirt mid-step on a sunlit city sidewalk, with the full outfit visible and the pleats lightly in motion. Full-body street-style still, natural daylight, clean storefront background, no text or logos."
+        },
+        {
+          "ref": "n:guide:q9-look-messenger-bag-looks",
+          "label": "Creator Review: Work Bag Fit",
+          "chips": [
+            "review"
+          ],
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the bag and keep its shape, color and details exactly. An adult creator wears the messenger bag crossbody and turns slightly so the strap length and bag scale are clear. Three-quarter portrait, bright office daylight, casual creator-review still, no text or logos."
+        },
+        {
+          "ref": "n:guide:q9-look-beanie-grwm",
+          "label": "GRWM: Knit Beanie for a Commute",
+          "chips": [
+            "tryon"
+          ],
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the beanie and keep its shape, color and details exactly. An adult wears the knit beanie and adjusts its edge before heading outside, with the fit around the face clear. Chest-up portrait, cool morning light, relaxed creator-style still, no text or logos."
+        },
+        {
+          "ref": "n:guide:q9-look-beige-suit-transition",
+          "label": "Outfit Transition: Beige Suit Fit",
+          "chips": [
+            "tryon"
+          ],
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the suit and keep its shape, color and details exactly. An adult model stands front-facing in the beige suit with the full silhouette and tailoring visible. Full-body eye-level fashion still, soft studio daylight, clean neutral background, no text or logos."
+        },
+        {
+          "ref": "n:guide:q9-look-fabric-blazer-detail",
+          "label": "Fabric Detail: Navy Blazer Cuff",
+          "chips": [
+            "fabric"
+          ],
+          "prompt": "Use the uploaded garment as the exact product. Show a close detail of its navy blazer cuff, preserving the original fabric color and weave. Tight square crop with the seam and one button in focus, soft side daylight, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:model-photos-c2",
-          "label": "Messenger bag with a smart-casual look",
+          "ref": "n:guide:q9-look-workwear-street",
+          "label": "Street Walk: Layered Workwear Look",
           "chips": [
             "street"
           ],
-          "prompt": "Show the adult with the leather messenger bag in a polished office-lobby outfit.",
-          "kind": "photo"
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the outfit and keep its shape, color and details exactly. An adult wears the layered workwear look on a city block, pausing mid-stride so each garment remains visible. Full-body street-style still, soft overcast light, no text or logos."
         },
         {
-          "ref": "n:gen2:photo-hub-c3",
-          "label": "Knit beanie in a cool-weather look",
+          "ref": "n:guide:q9-look-slip-dress-review",
+          "label": "Creator Review: Navy Dress Fit",
           "chips": [
-            "studio"
+            "review"
           ],
-          "prompt": "Show the knit beanie as part of a relaxed outdoor outfit.",
-          "kind": "photo"
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the dress and keep its shape, color and details exactly. An adult creator wears the navy slip dress and turns slightly to show its drape and neckline. Three-quarter portrait, warm late-day light, natural creator-review still, no text or logos."
         },
         {
-          "ref": "g:fashion-editorial/hero-output",
-          "label": "Beige tailored suit in a studio",
+          "ref": "n:guide:q9-look-knit-texture",
+          "label": "Product Detail: Knit Sleeve",
           "chips": [
-            "studio"
+            "fabric"
           ],
-          "prompt": "Show the complete beige suit on a model in a neutral studio.",
-          "kind": "photo"
-        },
-        {
-          "ref": "g:fashion-editorial/example-08",
-          "label": "Magazine-ready fashion crop",
-          "chips": [
-            "workwear"
-          ],
-          "prompt": "Keep the full outfit and its styling clear in a clean editorial crop.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:tpl-look-c1",
-          "label": "Autumn workwear on a city street",
-          "chips": [
-            "workwear"
-          ],
-          "prompt": "Show the complete autumn outfit on a city street, with the garments and footwear clearly visible.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:tpl-look-reuse-slip-dress",
-          "label": "Navy slip dress at sunset",
-          "chips": [
-            "evening"
-          ],
-          "prompt": "Show the full navy satin slip dress against the warm rooftop light.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:tpl-look-g2",
-          "label": "Knit dress under a stone archway",
-          "chips": [
-            "evening"
-          ],
-          "prompt": "Show the knit dress under a stone archway in warm light.",
-          "kind": "photo"
+          "kind": "photo",
+          "prompt": "Use the uploaded photo as the garment and keep its shape, color and details exactly. A hand gently pinches the knit sleeve so the weave and fabric drape are clear, with part of the worn outfit visible. Close fabric-detail still, soft directional daylight, no text or logos."
         }
       ],
-      "button": "Make a lookbook photo"
+      "button": "Create a fashion ad scene"
     },
     "uses": [
       {
@@ -339,10 +336,10 @@
         "d": "Use a natural office scene to show how the backpack fits into an everyday outfit."
       },
       {
-        "frame": "browser",
-        "ref": "g:on-model-generation/example-06",
-        "h": "Build a collection page around outdoor looks",
-        "d": "Use a consistent outdoor setting and crop so shoppers can compare the garments and carry items."
+        "frame": "listing",
+        "ref": "n:guide:q9-look-alt-messenger-bag",
+        "h": "Build a collection page around a work bag",
+        "d": "Pair the outfit with a plain messenger bag so shoppers can see how it works in a commute look."
       }
     ],
     "input": [
