@@ -2524,6 +2524,204 @@
         640,
         1280
       ]
+    },
+    "k3-video-step-green-bottle-result": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Hand lifts a green glass bottle at a bright kitchen counter.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-picker-phone-tripod": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Plain phone tripod set on a bedroom desk in natural light.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-picker-snack-pouch": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Blank snack pouch opened on a generic car dashboard during a road trip.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-picker-lip-oil": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Hand lifts a plain lip oil tube from a gym bag pocket.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-picker-pet-brush": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Hand uses a simple pet brush once on a relaxed dog.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-picker-cleanser": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Plain cleanser and cream arranged left to right on a bathroom counter.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-picker-lantern": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Small metal camping lantern glowing beside a tent at dusk.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-picker-serum": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Plain amber serum bottle placed on a tidy bathroom shelf.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-picker-coffee-grinder": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hand turns a compact plain metal coffee grinder beside a cup.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-output-massage-gun": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Compact massage gun gently used on a runner’s calf after a run.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-output-portable-lamp": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Portable table lamp glowing beside a book on a table.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-after-toaster": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Compact stainless toaster on a bright kitchen counter.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-template-creator": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hand holds a sage insulated bottle in a bright kitchen.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-template-outfit": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Adult in a plain beige overshirt and dark trousers in a bright hallway.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-template-launch": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hands switch on a slim table lamp beside a book in a calm room.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-template-black-friday": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hands unfold a plain black folding electric bicycle in a bright garage.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-gallery-try-on": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hands smooth a plain olive overshirt sleeve in soft window light.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-gallery-unboxing": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hands open a blank kraft parcel and lift folded beige fabric.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-gallery-broll": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hands plate toast beside a blank tea pouch and ceramic cup.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-ads-hero": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Plain sage insulated bottle beside an open laptop and plant on a sunlit desk.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-ads-og": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hand sets a blank snack pouch beside a lunch container on a sunny table.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k3-video-ads-case-citrus": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hands pour sparkling citrus drink over ice on a bright kitchen counter.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -3501,6 +3699,26 @@
       "uploadDate": "2026-10-06T00:00:00Z",
       "name": "Example clip: Over-ear headphones removed from simple packaging.",
       "description": "A short product unboxing clip showing over-ear headphones removed from their packaging."
+    },
+    "k3-video-ads-hero": {
+      "src": "/assets/sites/site_aidreamcapes/site-v2/clips/native-spark-ads.mp4",
+      "w": 1280,
+      "h": 720,
+      "duration": 10.5,
+      "bytes": 1212444,
+      "sha256": "6a30eccd888275071d005269ce6261ff7269beff1e5821fc2d46b4d316cb395d",
+      "uploadDate": "2026-10-06T00:00:00Z",
+      "name": "Example clip: Hands fill a green insulated bottle at an office desk and lift it.",
+      "description": "An example clip showing hands fill a green insulated bottle at an office desk and lift it. AIVideosUGC does not add voiceover, music, or captions."
+    },
+    "k3-video-ads-case-citrus": {
+      "src": "/assets/sites/site_aidreamcapes/site-v2/clips/food-beverage.mp4",
+      "w": 1280,
+      "h": 720,
+      "duration": 15,
+      "uploadDate": "2026-10-06T00:00:00Z",
+      "name": "Example clip: Hands fill a citrus sparkling drink bottle, pour it into an ice-filled glass, and lift the glass.",
+      "description": "An example clip showing hands fill a citrus sparkling drink bottle, pour it into an ice-filled glass, and lift the glass. AIVideosUGC does not add voiceover, music, or captions."
     }
   },
   "loop": {
@@ -18937,6 +19155,646 @@
         "w": 1024,
         "h": 1024,
         "alt": "Compact kitchen knife set in a dark block on a pale counter, with the handles visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-example-lipstick": {
+        "file": "k3-social-example-lipstick",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral lipstick in a matte black tube with its cap on a soft pink backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-example-hot-sauce": {
+        "file": "k3-social-example-hot-sauce",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hot sauce bottle with a blank cream label, red chilies and a small sauce bowl.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-example-coffee-bag": {
+        "file": "k3-social-example-coffee-bag",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee pouch on a counter with open space for a headline.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-example-trainer-city": {
+        "file": "k3-social-example-trainer-city",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown suede trainer with a gum sole on a city curb.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-example-trainer-source": {
+        "file": "k3-social-example-trainer-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown suede trainer with a gum sole on a neutral studio surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-strip-water-bottle": {
+        "file": "k3-social-strip-water-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Green reusable bottle beside a laptop and blank notepad on a tidy desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-strip-speaker": {
+        "file": "k3-social-strip-speaker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand lifts a cloth from a rectangular charcoal speaker on a wood table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-strip-trail-shoe": {
+        "file": "k3-social-strip-trail-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of plain charcoal hiking shoes with smooth side panels on a bold red backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-strip-camping-lantern": {
+        "file": "k3-social-strip-camping-lantern",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small metal camping lantern glowing beside a tent at dusk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-strip-bowls": {
+        "file": "k3-social-strip-bowls",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Stacked ceramic bowls on a counter with clear space above them.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-strip-planter": {
+        "file": "k3-social-strip-planter",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Terracotta herb planter with fresh basil on a bright windowsill.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-step-lipstick-source": {
+        "file": "k3-social-step-lipstick-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral lipstick in a matte black tube on a light studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-step-lipstick-result": {
+        "file": "k3-social-step-lipstick-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral lipstick on a soft pink backdrop with open space for a headline.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-picker-skincare-podiums": {
+        "file": "k3-social-picker-skincare-podiums",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain skincare bottles arranged on pastel podiums with open headline space.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-picker-skincare-minis": {
+        "file": "k3-social-picker-skincare-minis",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small skincare bottles grouped on a simple tray.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-picker-kitchen-set": {
+        "file": "k3-social-picker-kitchen-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Kitchen gift set arranged on a counter with space for an offer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-picker-toaster": {
+        "file": "k3-social-picker-toaster",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact toaster on a clean kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-picker-sandals": {
+        "file": "k3-social-picker-sandals",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Simple summer sandals arranged on sand with open space above.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-picker-floral-dress": {
+        "file": "k3-social-picker-floral-dress",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Floral dress hanging beside a bright window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-picker-blankets": {
+        "file": "k3-social-picker-blankets",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Folded wool blankets stacked on a chair in warm light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-picker-candle": {
+        "file": "k3-social-picker-candle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain candle jar on a styled shelf with open space beside it.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-use-hot-sauce-source": {
+        "file": "k3-social-use-hot-sauce-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank-label hot sauce bottle on a light studio surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-use-hot-sauce-alt": {
+        "file": "k3-social-use-hot-sauce-alt",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank-label hot sauce bottle with red chilies and a sauce dish on a wood counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-use-lunchbox": {
+        "file": "k3-social-use-lunchbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage insulated lunch container with its lid on a bright counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-input-bottle-good": {
+        "file": "k3-social-input-bottle-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Green insulated bottle and cap in sharp focus on a sunny desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-input-bottle-blurred": {
+        "file": "k3-social-input-bottle-blurred",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Green insulated bottle on a sunny desk with details softened by blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-input-tea-good": {
+        "file": "k3-social-input-tea-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tea pouch and cup fully visible on a bright counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-input-tea-cropped": {
+        "file": "k3-social-input-tea-cropped",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tea pouch and cup near the frame edges, with part of the pouch top cut off.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-output-trail-shoe": {
+        "file": "k3-social-output-trail-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain charcoal hiking shoe on a clean red backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-output-suitcase": {
+        "file": "k3-social-output-suitcase",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hard-shell suitcase with open space to one side for an ad headline.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-after-eyeglasses": {
+        "file": "k3-social-after-eyeglasses",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold-rim eyeglasses on a wooden tray.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-template-feed-coat": {
+        "file": "k3-social-template-feed-coat",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Camel coat worn in a snowy city scene with open space for an offer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-template-tacos": {
+        "file": "k3-social-template-tacos",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hot sauce poured over tacos on a rustic table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-template-hoodie": {
+        "file": "k3-social-template-hoodie",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Folded gray hoodie with a beanie and scarf on a wooden bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-template-case-iced-coffee": {
+        "file": "k3-social-template-case-iced-coffee",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Iced coffee can on a picnic blanket with open space above.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-template-case-speaker": {
+        "file": "k3-social-template-case-speaker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact rectangular wireless speaker on a sunny pool deck.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-template-case-hand-cream": {
+        "file": "k3-social-template-case-hand-cream",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank hand cream tube with lavender sprigs on a soft purple surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-hero-trainer-source": {
+        "file": "k3-social-hero-trainer-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain charcoal hiking shoe with a simple side panel on a pale studio surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-hero-trainer-output": {
+        "file": "k3-social-hero-trainer-output",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain charcoal hiking shoe on a red backdrop with clear open space.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-og": {
+        "file": "k3-social-og",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral cosmetic tube, coffee pouch and ceramic cup on a blush tabletop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-gallery-closeup": {
+        "file": "k3-social-gallery-closeup",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain charcoal hiking shoe in a crisp three-quarter view on pale stone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-gallery-gym-bag": {
+        "file": "k3-social-gallery-gym-bag",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain charcoal hiking shoe beside a charcoal gym bag on a bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-gallery-city-curb": {
+        "file": "k3-social-gallery-city-curb",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain charcoal hiking shoe on a clean city sidewalk curb.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-gallery-pine-trail": {
+        "file": "k3-social-gallery-pine-trail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain charcoal hiking shoe on a quiet pine forest path.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-gallery-pair": {
+        "file": "k3-social-gallery-pair",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of plain charcoal hiking shoes on a muted red studio surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-social-gallery-tread": {
+        "file": "k3-social-gallery-tread",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain charcoal hiking shoe at a low angle with its textured sole visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-example-speaker": {
+        "file": "k3-video-example-speaker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact rectangular speaker beside a laptop on a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-example-tote": {
+        "file": "k3-video-example-tote",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Canvas tote bag with a book, wallet and bottle on a hallway bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-example-snack-pouch": {
+        "file": "k3-video-example-snack-pouch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank snack pouch beside a lunch container on an office desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-example-lip-balm": {
+        "file": "k3-video-example-lip-balm",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain lip balm beside a jacket pocket outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-example-travel-mug": {
+        "file": "k3-video-example-travel-mug",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Travel mug beside a generic car cup holder on a quiet road stop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-strip-lunchbag-source": {
+        "file": "k3-video-strip-lunchbag-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage insulated lunch bag standing on a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-strip-gift-set": {
+        "file": "k3-video-strip-gift-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ceramic mug set arranged in a plain kraft gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-strip-travel-kit": {
+        "file": "k3-video-strip-travel-kit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Travel toiletry kit in a plain open bag on a stone counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-strip-yellow-bottle": {
+        "file": "k3-video-strip-yellow-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Reusable bottle on a bright yellow surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-strip-desk-plant": {
+        "file": "k3-video-strip-desk-plant",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small desk plant beside an open laptop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-strip-ceramic-cup": {
+        "file": "k3-video-strip-ceramic-cup",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Speckled ceramic travel cup beside a folded map and keys.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-use-bottle-kitchen": {
+        "file": "k3-video-use-bottle-kitchen",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Green glass bottle being filled at a kitchen tap.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-case-citrus-photo": {
+        "file": "k3-video-case-citrus-photo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Golden sparkling citrus drink bottle beside orange slices on a bright counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-input-shoe-good": {
+        "file": "k3-video-input-shoe-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Technical running shoe fully visible on a red studio backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-input-socks-good": {
+        "file": "k3-video-input-socks-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Wool socks clearly arranged against a quiet neutral background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-case-phonecase": {
+        "file": "k3-video-case-phonecase",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sage silicone phone case lying open on a cafe table beside a coffee cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-case-lunchbag": {
+        "file": "k3-video-case-lunchbag",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage insulated lunch bag packed with food on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k3-video-input-shoe-bad-dark": {
+        "file": "k3-video-input-shoe-bad-dark",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Charcoal technical shoe in low, moody light against a red background; its details are hard to see.",
         "variants": [
           640,
           1280

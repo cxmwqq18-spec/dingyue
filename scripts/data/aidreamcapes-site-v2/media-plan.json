@@ -80,18 +80,18 @@
     "social-ad-photos": {
       "hero": {
         "kind": "pair",
-        "before": "g:feed-ad-still/source-input",
-        "after": "g:feed-ad-still/hero-output"
+        "before": "n:guide:k3-social-hero-trainer-source",
+        "after": "n:guide:k3-social-hero-trainer-output"
       },
       "gallery": [
-        "g:feed-ad-still/example-01",
-        "g:feed-ad-still/example-02",
-        "g:feed-ad-still/example-03",
-        "g:feed-ad-still/example-04",
-        "g:feed-ad-still/example-05",
-        "g:feed-ad-still/example-06"
+        "n:guide:k3-social-gallery-closeup",
+        "n:guide:k3-social-gallery-gym-bag",
+        "n:guide:k3-social-gallery-city-curb",
+        "n:guide:k3-social-gallery-pine-trail",
+        "n:guide:k3-social-gallery-pair",
+        "n:guide:k3-social-gallery-tread"
       ],
-      "og": "g:feed-ad-still/og",
+      "og": "n:guide:k3-social-og",
       "pairs": []
     },
     "tpl-angle": {
@@ -270,14 +270,14 @@
     "video-ads": {
       "hero": {
         "kind": "video",
-        "clip": "ugc-ad-video"
+        "clip": "k3-video-ads-hero"
       },
       "gallery": [
-        "u:try-on",
-        "u:unboxing",
-        "u:broll"
+        "f:k3-video-gallery-try-on",
+        "f:k3-video-gallery-unboxing",
+        "f:k3-video-gallery-broll"
       ],
-      "og": "f:ugc-ad-video"
+      "og": "f:k3-video-ads-og"
     },
     "unboxing-videos": {
       "hero": {

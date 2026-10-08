@@ -75,19 +75,19 @@
         "label": "Room for your text",
         "items": [
           {
-            "ref": "n:gen2:social-ad-photos-g1",
+            "ref": "n:guide:k3-social-example-lipstick",
             "title": "Lipstick on pink with open space on the left",
             "kind": "photo",
             "product": "red lipstick"
           },
           {
-            "ref": "n:gen2:social-ad-photos-g2",
+            "ref": "n:guide:k3-social-example-hot-sauce",
             "title": "Hot sauce with chilies and room at the top",
             "kind": "photo",
             "product": "hot sauce bottle"
           },
           {
-            "ref": "n:gen2:social-ad-photos-g3",
+            "ref": "n:guide:k3-social-example-coffee-bag",
             "title": "Coffee bag on a counter with room on the right",
             "kind": "photo",
             "product": "coffee bag"
@@ -98,16 +98,16 @@
         "label": "Carousel pair",
         "items": [
           {
-            "ref": "n:gen2:social-ad-photos-g4",
-            "title": "Canvas sneaker on a city curb",
+            "ref": "n:guide:k3-social-example-trainer-city",
+            "title": "Brown suede trainer on a city curb",
             "kind": "photo",
-            "product": "canvas sneaker"
+            "product": "brown suede trainer"
           },
           {
-            "ref": "n:gen2:social-ad-photos-g5",
-            "title": "Canvas sneaker on a gym floor",
+            "ref": "n:guide:k3-social-example-trainer-source",
+            "title": "Brown suede trainer on a neutral studio surface",
             "kind": "photo",
-            "product": "canvas sneaker"
+            "product": "brown suede trainer"
           }
         ]
       }
@@ -135,16 +135,16 @@
   },
   "visual": {
     "strip": [
-      "n:lipstick-ad",
-      "n:gen2:occ-product-launch-g3",
-      "n:gen2:tpl-launch-g1",
-      "n:gen2:tpl-sale-c2",
-      "n:gen2:tpl-carousel-video-ad-c2",
-      "n:gen2:occ-sale-discount-g4"
+      "n:guide:k3-social-strip-water-bottle",
+      "n:guide:k3-social-strip-speaker",
+      "n:guide:k3-social-strip-trail-shoe",
+      "n:guide:k3-social-strip-camping-lantern",
+      "n:guide:k3-social-strip-bowls",
+      "n:guide:k3-social-strip-planter"
     ],
     "steps": {
-      "source": "n:lipstick-pack",
-      "result": "n:lipstick-ad",
+      "source": "n:guide:k3-social-step-lipstick-source",
+      "result": "n:guide:k3-social-step-lipstick-result",
       "mode": "photo",
       "prompt": "Put this coral lipstick on a soft pink backdrop, with open space on the left for a headline.",
       "options": [
@@ -185,7 +185,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-sale-c3",
+          "ref": "n:guide:k3-social-picker-skincare-podiums",
           "label": "Skincare on pastel podiums",
           "chips": [
             "beauty"
@@ -194,7 +194,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:occ-sale-discount-c2",
+          "ref": "n:guide:k3-social-picker-skincare-minis",
           "label": "Skincare minis in a bundle",
           "chips": [
             "beauty"
@@ -203,7 +203,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-sale-g3",
+          "ref": "n:guide:k3-social-picker-kitchen-set",
           "label": "Kitchen gift set on counter",
           "chips": [
             "kitchen"
@@ -212,7 +212,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-launch-g2",
+          "ref": "n:guide:k3-social-picker-toaster",
           "label": "Toaster on a kitchen counter",
           "chips": [
             "kitchen"
@@ -221,7 +221,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-sale-g2",
+          "ref": "n:guide:k3-social-picker-sandals",
           "label": "Summer sandals on sand",
           "chips": [
             "fashion"
@@ -230,7 +230,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:occ-sale-discount-c3",
+          "ref": "n:guide:k3-social-picker-floral-dress",
           "label": "Floral dress by a window",
           "chips": [
             "fashion"
@@ -239,7 +239,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-sale-c4",
+          "ref": "n:guide:k3-social-picker-blankets",
           "label": "Folded wool blankets on chair",
           "chips": [
             "home"
@@ -248,7 +248,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-launch-c4",
+          "ref": "n:guide:k3-social-picker-candle",
           "label": "Candle on a styled shelf",
           "chips": [
             "home"
@@ -262,46 +262,46 @@
     "uses": [
       {
         "frame": "split",
-        "ref": "n:hotsauce-pack",
-        "ref_b": "n:hotsauce-peppers",
+        "ref": "n:guide:k3-social-use-hot-sauce-source",
+        "ref_b": "n:guide:k3-social-use-hot-sauce-alt",
         "h": "Ad test",
-        "d": "Keep the offer the same, test two scenes and keep the one with more clicks."
+        "d": "Hold the offer steady, test two scenes, and compare which gets more clicks."
       },
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-carousel-video-ad-c3",
+        "ref": "n:guide:k3-social-use-lunchbox",
         "h": "Feed preview",
         "d": "Check the square on a phone screen before you launch. Small products need a tighter crop."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:plat-facebook-g4",
-        "bad": "n:guide:social-ad-photos-bottle-blurred",
+        "good": "n:guide:k3-social-input-bottle-good",
+        "bad": "n:guide:k3-social-input-bottle-blurred",
         "good_label": "Bottle outline and cap in focus",
         "bad_label": "Bottle details softened by blur"
       },
       {
-        "good": "n:gen2:ind-food-drinks-c4",
-        "bad": "n:guide:social-ad-photos-tea-cropped",
+        "good": "n:guide:k3-social-input-tea-good",
+        "bad": "n:guide:k3-social-input-tea-cropped",
         "good_label": "Tea pouch and cup fully visible",
         "bad_label": "Pouch and cup cropped at frame edges"
       }
     ],
     "outputs": [
       {
-        "ref": "n:gen2:occ-product-launch-c2",
+        "ref": "n:guide:k3-social-output-trail-shoe",
         "frame": "1:1",
         "label": "Product reveal for a feed ad"
       },
       {
-        "ref": "n:gen2:tpl-sale-g1",
+        "ref": "n:guide:k3-social-output-suitcase",
         "frame": "1:1",
         "label": "Square campaign image"
       }
     ],
     "after": {
-      "ref": "n:gen2:plat-instagram-c4",
+      "ref": "n:guide:k3-social-after-eyeglasses",
       "zones": [
         "Your headline",
         "Your price"

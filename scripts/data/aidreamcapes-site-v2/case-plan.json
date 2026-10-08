@@ -40,19 +40,19 @@
     ],
     "video-ads": [
       {
-        "ref": "pas-formula-ads",
-        "product": "air purifier",
-        "title": "Work-from-home slump that opens a problem-first ad"
+        "ref": "k3-video-ads-case-citrus",
+        "product": "sparkling citrus drink",
+        "title": "Hands pour sparkling citrus drink over ice"
       },
       {
-        "ref": "n:gen2:video-ads-c2",
-        "product": "pastel phone case",
-        "title": "Pastel phone case held up in a busy cafe"
+        "ref": "n:guide:k3-video-case-phonecase",
+        "product": "sage silicone phone case",
+        "title": "Plain sage silicone phone case beside coffee on a cafe table"
       },
       {
-        "ref": "n:gen2:video-ads-c3",
+        "ref": "n:guide:k3-video-case-lunchbag",
         "product": "insulated lunch bag",
-        "title": "Lunch bag packed on a kitchen island before work"
+        "title": "Sage lunch bag packed on a kitchen counter before work"
       }
     ],
     "product-videos": [
@@ -203,17 +203,17 @@
     ],
     "social-ad-photos": [
       {
-        "ref": "n:gen2:social-ad-photos-c1",
+        "ref": "n:guide:k3-social-template-case-iced-coffee",
         "product": "iced coffee can",
         "title": "Iced coffee can on a picnic blanket, room for a headline"
       },
       {
-        "ref": "n:gen2:social-ad-photos-c2",
+        "ref": "n:guide:k3-social-template-case-speaker",
         "product": "wireless speaker",
         "title": "Wireless speaker on a pool deck for a summer feed ad"
       },
       {
-        "ref": "n:gen2:social-ad-photos-c3",
+        "ref": "n:guide:k3-social-template-case-hand-cream",
         "product": "hand cream tube",
         "title": "Hand cream with lavender sprigs in a square feed ad"
       }

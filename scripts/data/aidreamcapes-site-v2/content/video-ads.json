@@ -18,7 +18,7 @@
     },
     {
       "t": "Describe one everyday moment",
-      "d": "Where it happens and one action, like \"grab the lunch bag on the way out\". Pick 9:16 for TikTok and Reels."
+      "d": "Name the setting and one action, such as filling a reusable bottle at the kitchen sink. Pick 9:16 for TikTok and Reels."
     },
     {
       "t": "Download, then add your hook",
@@ -66,19 +66,19 @@
         "label": "Product-first openings",
         "items": [
           {
-            "ref": "n:gen2:video-ads-g1",
+            "ref": "n:guide:k3-video-example-speaker",
             "title": "Compact speaker picked up from a laptop desk",
             "kind": "scene",
             "product": "compact speaker"
           },
           {
-            "ref": "n:gen2:video-ads-g2",
+            "ref": "n:guide:k3-video-example-tote",
             "title": "Tote bag packed item by item on a hallway bench",
             "kind": "scene",
             "product": "canvas tote bag"
           },
           {
-            "ref": "n:gen2:video-ads-g3",
+            "ref": "n:guide:k3-video-example-snack-pouch",
             "title": "Snack pouch set beside a lunch container",
             "kind": "scene",
             "product": "snack pouch"
@@ -89,14 +89,14 @@
         "label": "Out and about",
         "items": [
           {
-            "ref": "n:gen2:video-ads-g4",
+            "ref": "n:guide:k3-video-example-lip-balm",
             "title": "Lip balm pulled from a jacket pocket outdoors",
             "kind": "scene",
             "product": "lip balm"
           },
           {
-            "ref": "n:gen2:video-ads-g5",
-            "title": "Travel mug grabbed from a car cup holder",
+            "ref": "n:guide:k3-video-example-travel-mug",
+            "title": "Travel mug beside a car cup holder on a morning stop",
             "kind": "scene",
             "product": "travel mug"
           }
@@ -106,20 +106,20 @@
   },
   "visual": {
     "strip": [
-      "n:guide:b1-video-ads-source",
-      "n:guide:b1-video-ads-result",
-      "n:gen2:tpl-story-g1",
-      "n:gen2:tpl-story-g2",
-      "n:gen2:tpl-story-g3",
-      "n:gen2:tpl-ugc-g3"
+      "n:guide:k3-video-strip-lunchbag-source",
+      "n:guide:k3-video-strip-gift-set",
+      "n:guide:k3-video-strip-travel-kit",
+      "n:guide:k3-video-strip-yellow-bottle",
+      "n:guide:k3-video-strip-desk-plant",
+      "n:guide:k3-video-strip-ceramic-cup"
     ],
     "steps": {
-      "source": "n:guide:b1-video-ads-source",
-      "sourceAlt": "Soft sage insulated lunch bag standing on a bright kitchen counter.",
-      "result": "n:guide:b1-video-ads-result",
+      "source": "n:guide:k3-video-use-bottle-kitchen",
+      "sourceAlt": "Green glass bottle beside a water glass at a bright kitchen sink.",
+      "result": "f:k3-video-step-green-bottle-result",
       "mode": "video",
       "length": 15,
-      "prompt": "A hand lifts this sage lunch bag by its handle and sets it next to a packed lunch on a kitchen counter."
+      "prompt": "A hand lifts this green glass bottle from a bright kitchen counter and fills a clear glass with water."
     },
     "picker": {
       "title": "Choose a casual product moment",
@@ -144,7 +144,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-spark-ads-style-video-c1",
+          "ref": "f:k3-video-picker-phone-tripod",
           "label": "Phone tripod set on desk",
           "chips": [
             "home",
@@ -154,7 +154,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-spark-ads-style-video-c2",
+          "ref": "f:k3-video-picker-snack-pouch",
           "label": "Snack pouch on road trip",
           "chips": [
             "travel",
@@ -164,7 +164,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-spark-ads-style-video-c3",
+          "ref": "f:k3-video-picker-lip-oil",
           "label": "Lip oil from gym bag",
           "chips": [
             "beauty",
@@ -174,7 +174,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-spark-ads-style-video-c4",
+          "ref": "f:k3-video-picker-pet-brush",
           "label": "Pet brush in use",
           "chips": [
             "daily"
@@ -183,7 +183,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-carousel-video-ad-c1",
+          "ref": "f:k3-video-picker-cleanser",
           "label": "Cleanser and cream lined up",
           "chips": [
             "beauty",
@@ -193,7 +193,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-carousel-video-ad-c2",
+          "ref": "f:k3-video-picker-lantern",
           "label": "Lantern lit beside tent",
           "chips": [
             "travel",
@@ -203,7 +203,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-retargeting-video-ad-c2",
+          "ref": "f:k3-video-picker-serum",
           "label": "Serum back on bathroom shelf",
           "chips": [
             "beauty",
@@ -213,7 +213,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-retargeting-video-ad-c4",
+          "ref": "f:k3-video-picker-coffee-grinder",
           "label": "Coffee grinder on morning counter",
           "chips": [
             "home",
@@ -234,20 +234,20 @@
       },
       {
         "frame": "post",
-        "ref": "n:gen2:examples-g2",
+        "ref": "n:guide:k3-video-case-citrus-photo",
         "h": "Ad testing",
-        "d": "Make two moments with the same product and keep the one that gets more clicks."
+        "d": "Create two short clips with one product and compare the clicks."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:tpl-sale-c2",
-        "bad": "n:guide:b1-video-ads-bad-dark",
-        "good_label": "Running shoes fully in frame on a red backdrop",
+        "good": "n:guide:k3-video-input-shoe-good",
+        "bad": "n:guide:k3-video-input-shoe-bad-dark",
+        "good_label": "Technical running shoe fully in frame on a red backdrop",
         "bad_label": "Dim light hides the shoe details"
       },
       {
-        "good": "n:gen2:occ-sale-discount-g1",
+        "good": "n:guide:k3-video-input-socks-good",
         "bad": "n:guide:b1-video-ads-bad-blur",
         "good_label": "Wool socks clear against a quiet background",
         "bad_label": "Soft focus blurs the wool knit"
@@ -255,20 +255,20 @@
     ],
     "outputs": [
       {
-      "ref": "n:gen2:tpl-spark-ads-style-video-g3",
-      "frame": "9:16",
-      "label": "Mini massage gun after a run",
+        "ref": "f:k3-video-output-massage-gun",
+        "frame": "9:16",
+        "label": "Mini massage gun after a run",
         "length": 15
       },
       {
-        "ref": "n:gen2:tpl-retargeting-video-ad-g3",
+        "ref": "f:k3-video-output-portable-lamp",
         "frame": "16:9",
-        "label": "Perfume bottle by its gift bag",
+        "label": "Portable lamp beside a book",
         "length": 15
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-launch-g2",
+      "ref": "f:k3-video-after-toaster",
       "zones": [
         "Caption",
         "Offer"

@@ -168,8 +168,20 @@
   "video-ads": {
     "images": {
       "creator": {
-        "ref": "g:ugc-still-ad/example-06",
-        "alt": "Clear water bottle beside a plant near a bright window."
+        "ref": "f:k3-video-template-creator",
+        "alt": "Hand holding a sage insulated bottle in a bright kitchen."
+      },
+      "outfit": {
+        "ref": "f:k3-video-template-outfit",
+        "alt": "Adult wearing a plain beige overshirt and dark trousers in a bright hallway."
+      },
+      "launch": {
+        "ref": "f:k3-video-template-launch",
+        "alt": "Hands switch on a slim portable lamp beside a book."
+      },
+      "bf": {
+        "ref": "f:k3-video-template-black-friday",
+        "alt": "Hands unfold a plain black folding electric bicycle in a bright garage."
       }
     }
   },
@@ -291,8 +303,16 @@
   "social-ad-photos": {
     "images": {
       "feed": {
-        "ref": "n:gen2:tpl-sale-c1",
-        "alt": "Winter coat on a model in snow, with open room for an offer."
+        "ref": "n:guide:k3-social-template-feed-coat",
+        "alt": "Camel coat in a snowy city scene with clear room for an offer."
+      },
+      "ugc": {
+        "ref": "n:guide:k3-social-template-tacos",
+        "alt": "Hot sauce poured over tacos on a rustic table."
+      },
+      "sale": {
+        "ref": "n:guide:k3-social-template-hoodie",
+        "alt": "Folded gray hoodie with a beanie and scarf on a wooden bench."
       }
     }
   },
