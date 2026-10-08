@@ -1012,44 +1012,44 @@
     ],
     "plat-tiktok": [
       {
-        "ref": "tiktok-reels-shorts-v",
+        "ref": "k4-plat-tiktok-03-cards-3-image",
         "product": "running shoes",
         "title": "Running shoes laced up for a quick vertical hook"
       },
       {
-        "ref": "n:gen2:plat-tiktok-c2",
+        "ref": "n:guide:k4-plat-tiktok-26-case-hair-claws",
         "product": "hair claw set",
         "title": "Hair claws tried on in a bathroom mirror"
       },
       {
-        "ref": "n:gen2:plat-tiktok-c3",
+        "ref": "n:guide:k4-plat-tiktok-04-cards-5-image",
         "product": "mini fridge",
         "title": "Mini fridge stocked in a dorm room"
       },
       {
-        "ref": "n:gen2:plat-tiktok-c4",
+        "ref": "n:guide:k4-plat-tiktok-27-case-phone-case",
         "product": "glow phone case",
         "title": "Glow-in-the-dark phone case in a dim room"
       }
     ],
     "plat-instagram": [
       {
-        "ref": "carousel-storytelling-v",
+        "ref": "k4-plat-instagram-01-cards-3-image",
         "product": "commuter backpack",
         "title": "Commuter backpack opened in a cafe, vertical cut"
       },
       {
-        "ref": "n:gen2:plat-instagram-c2",
+        "ref": "n:guide:k4-plat-instagram-02-cards-4-image",
         "product": "silk pillowcase",
         "title": "Silk pillowcase on an unmade bed in soft light"
       },
       {
-        "ref": "n:gen2:plat-instagram-c3",
+        "ref": "n:guide:k4-plat-instagram-03-cards-5-image",
         "product": "matcha set",
         "title": "Matcha set arranged on a linen tablecloth"
       },
       {
-        "ref": "n:gen2:plat-instagram-c4",
+        "ref": "n:guide:k4-plat-instagram-04-cards-6-image",
         "product": "eyeglasses",
         "title": "Gold-rim eyeglasses on a wooden tray"
       }
@@ -1078,22 +1078,22 @@
     ],
     "plat-youtube-shorts": [
       {
-        "ref": "how-to-tutorial-v",
+        "ref": "k4-plat-youtube-shorts-03-cards-3-image",
         "product": "steam iron",
         "title": "Steam iron smoothing a shirt in a vertical cut"
       },
       {
-        "ref": "n:gen2:plat-youtube-shorts-c2",
+        "ref": "n:guide:k4-plat-youtube-shorts-04-cards-4-image",
         "product": "electric toothbrush",
         "title": "Electric toothbrush on a bathroom counter"
       },
       {
-        "ref": "n:gen2:plat-youtube-shorts-c3",
+        "ref": "n:guide:k4-plat-youtube-shorts-05-cards-5-image",
         "product": "camping stove",
         "title": "Camping stove boiling water at a campsite"
       },
       {
-        "ref": "n:gen2:plat-youtube-shorts-c4",
+        "ref": "n:guide:k4-plat-youtube-shorts-31-case-bike-pump",
         "product": "mini bike pump",
         "title": "Mini bike pump topping up a tire"
       }

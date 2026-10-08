@@ -178,19 +178,19 @@
         "label": "Feed and Reels",
         "items": [
           {
-            "ref": "n:gen2:occ-sale-discount-c2",
+            "ref": "n:guide:k4-plat-instagram-05-examples-groups-0-items-0-image",
             "title": "Skincare minis arranged on a tray",
             "kind": "photo",
             "product": "skincare minis"
           },
           {
-            "ref": "n:gen2:tpl-sale-c3",
+            "ref": "n:guide:k4-plat-instagram-06-examples-groups-0-items-1-image",
             "title": "Skincare bottles on pastel podiums",
             "kind": "photo",
             "product": "skincare bottles"
           },
           {
-            "ref": "n:gen2:change-background-c2",
+            "ref": "n:guide:k4-plat-instagram-07-examples-groups-0-items-2-image",
             "title": "Cream jar on wet stone",
             "kind": "photo",
             "product": "cream jar"
@@ -201,13 +201,13 @@
         "label": "Carousel pair",
         "items": [
           {
-            "ref": "n:gen2:ind-beauty-skincare-g2",
+            "ref": "n:guide:k4-plat-instagram-08-examples-groups-1-items-0-image",
             "title": "Skincare bottles together on a vanity",
             "kind": "photo",
             "product": "skincare set"
           },
           {
-            "ref": "n:gen2:ind-beauty-skincare-g3",
+            "ref": "n:guide:k4-plat-instagram-09-examples-groups-1-items-1-image",
             "title": "Same skincare set packed for travel",
             "kind": "photo",
             "product": "skincare set"
@@ -235,16 +235,16 @@
   "visual": {
     "overview": "Instagram supports product photos, Stories, and Reels. Show the package first, then match the frame to the placement and leave breathing room for the interface.",
     "strip": [
-      "n:gen2:plat-instagram-g4",
-      "n:gen2:plat-instagram-g5",
-      "n:gen2:ind-beauty-skincare-c2",
-      "n:gen2:ind-beauty-skincare-c3",
-      "n:gen2:ind-beauty-skincare-c4",
-      "n:gen2:tpl-ugc-g1"
+      "n:guide:k4-plat-instagram-25-visual-strip-0",
+      "n:guide:k4-plat-instagram-27-visual-strip-1",
+      "n:guide:k4-plat-instagram-28-visual-strip-2",
+      "n:guide:k4-plat-instagram-29-visual-strip-3",
+      "n:guide:k4-plat-instagram-30-visual-strip-4",
+      "n:guide:k4-plat-instagram-31-visual-strip-5"
     ],
     "steps": {
-      "source": "n:gen2:plat-instagram-g4",
-      "result": "n:gen2:plat-instagram-g5",
+      "source": "n:guide:k4-plat-instagram-24-visual-strip-0",
+      "result": "n:guide:k4-plat-instagram-26-visual-strip-1",
       "mode": "photo",
       "prompt": "Place this hand-cream tube beside a bathroom sink, with its package facing forward.",
       "options": [
@@ -281,7 +281,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:social-ad-photos-c3",
+          "ref": "n:guide:k4-plat-instagram-14-visual-picker-cards-0-image",
           "label": "Hand cream beside lavender",
           "prompt": "Set the tube beside a few lavender sprigs on a soft purple surface.",
           "chips": [
@@ -290,7 +290,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-beauty-c3",
+          "ref": "n:guide:k4-plat-instagram-15-visual-picker-cards-1-image",
           "label": "Face roller on a vanity",
           "prompt": "Place the jade roller beside a cream jar on a tidy bathroom shelf.",
           "chips": [
@@ -299,7 +299,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-beauty-c4",
+          "ref": "n:guide:k4-plat-instagram-16-visual-picker-cards-2-image",
           "label": "Sheet mask on a counter",
           "prompt": "Lay the opened mask pouch beside a folded white towel.",
           "chips": [
@@ -308,7 +308,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-story-c1",
+          "ref": "n:guide:k4-plat-instagram-17-visual-picker-cards-3-image",
           "label": "Sunscreen in beach light",
           "prompt": "Stand the sunscreen tube beside a striped towel in bright beach light.",
           "chips": [
@@ -317,7 +317,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:video-ads-g4",
+          "ref": "n:guide:k4-plat-instagram-77-visual-picker-4",
           "label": "Lip balm from a jacket pocket",
           "prompt": "Show lip balm being taken from a jacket pocket on a city street.",
           "chips": [
@@ -326,7 +326,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-light-c2",
+          "ref": "n:guide:k4-plat-instagram-18-visual-picker-cards-5-image",
           "label": "Chrome espresso cup on a gradient",
           "prompt": "Place the cup against a clean gradient and keep its rim reflective.",
           "chips": [
@@ -335,7 +335,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:model-photos-c3",
+          "ref": "n:guide:k4-plat-instagram-19-visual-picker-cards-6-image",
           "label": "Gold necklaces in soft daylight",
           "prompt": "Show layered chains against a plain neckline with a close crop.",
           "chips": [
@@ -344,7 +344,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-health-wellness-g3",
+          "ref": "n:guide:k4-plat-instagram-20-visual-picker-cards-7-image",
           "label": "Sleep mask on a nightstand",
           "prompt": "Set the sleep mask on a nightstand in soft evening light.",
           "chips": [
@@ -358,7 +358,7 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:gen2:tpl-size-c2",
+        "ref": "n:guide:k4-plat-instagram-32-visual-uses-0-image",
         "h": "Give a product photo room to breathe",
         "d": "A travel candle beside a cup gives a small item a familiar scale."
       },
@@ -371,13 +371,13 @@
     ],
     "input": [
       {
-        "good": "n:gen2:tpl-ugc-c4",
-        "bad": "n:guide:plat-instagram-m5-soft-focus",
-        "good_label": "The bottle shape and cap stay easy to see",
-        "bad_label": "The bottle detail softens into the background"
+        "good": "n:guide:k4-plat-instagram-11-visual-input-0-good",
+        "bad": "n:guide:k4-plat-instagram-m5-soft-focus-bad",
+        "good_label": "Face mist bottle stays clear and sharp on a gym bench",
+        "bad_label": "Blur softens the bottle edges and details"
       },
       {
-        "good": "n:gen2:ind-beauty-skincare-g4",
+        "good": "n:guide:k4-plat-instagram-12-visual-input-1-good",
         "bad": "n:guide:plat-instagram-m5-cropped",
         "good_label": "The full toner bottle stays inside the photo",
         "bad_label": "The toner bottle is cut off at the frame edge"
@@ -385,7 +385,7 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:plat-instagram-g3",
+        "ref": "n:guide:k4-plat-instagram-13-visual-outputs-0-image",
         "frame": "1:1",
         "label": "Necklace in soft daylight"
       },
@@ -396,7 +396,7 @@
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-compare-c3",
+      "ref": "n:guide:k4-plat-instagram-10-visual-after-image",
       "zones": [
         "Caption",
         "Offer"
@@ -409,17 +409,17 @@
     "sizes": [
       {
         "frame": "1:1",
-        "ref": "n:gen2:plat-instagram-g1",
+        "ref": "n:guide:k4-plat-instagram-21-visual-sizes-0-image",
         "label": "1:1 · Instagram Feed"
       },
       {
         "frame": "9:16",
-        "ref": "n:gen2:plat-instagram-g2",
+        "ref": "f:k4-plat-instagram-22-visual-sizes-1-image",
         "label": "9:16 · Instagram Stories and Reels"
       },
       {
         "frame": "16:9",
-        "ref": "n:guide:plat-instagram-size-wide",
+        "ref": "f:k4-plat-instagram-23-visual-sizes-2-image",
         "label": "16:9 · Landscape placements"
       }
     ],

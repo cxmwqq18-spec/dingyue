@@ -59,7 +59,7 @@
   "overview": [
     {
       "h2": "Make the product’s role in the change easy to see",
-      "p": "A useful comparison keeps the same space or object in view while one clear change happens. Show the starting condition first, then show the product in use and the finished state without adding a claim the product cannot support."
+      "p": "Keep one space or object in view across both scenes so the difference reads quickly. Show the starting condition first, then the product in use and the finished state without adding a claim the product cannot support."
     }
   ],
   "examples": {
@@ -95,9 +95,9 @@
     "strip": [
       "n:guide:b1-before-after-videos-source",
       "n:guide:b1-before-after-videos-result",
-      "n:gen2:tpl-home-g1",
-      "n:gen2:tpl-home-g2",
-      "n:gen2:tpl-home-g3",
+      "n:guide:k4-before-after-videos-strip-drawer",
+      "n:guide:k4-before-after-videos-strip-linen",
+      "n:guide:k4-before-after-videos-strip-fridge",
       "n:gen2:home-g4"
     ],
     "steps": {
@@ -220,9 +220,9 @@
       },
       {
         "frame": "phone",
-        "ref": "f:home-organization-t10",
+        "ref": "f:k4-before-after-videos-uses-phone-frame",
         "h": "Social post",
-        "d": "Keep both scenes in the same spot so the change is obvious at a glance."
+        "d": "Keep both scenes positioned consistently so the change is obvious at a glance."
       }
     ],
     "input": [
@@ -233,10 +233,10 @@
         "bad_label": "Robot vacuum clipped at the lower edge"
       },
       {
-    "good": "n:gen2:tpl-bf-c4",
-    "bad": "n:guide:b1-before-after-videos-bad-blur",
-        "good_label": "Watch face and case sharp on a black stand",
-        "bad_label": "Blur hides the smartwatch screen"
+        "good": "n:guide:k4-before-after-videos-m5-round-watch-good",
+        "bad": "n:guide:k4-before-after-videos-m5-round-watch-bad",
+        "good_label": "Round watch face and case stay sharp on a dark stand",
+        "bad_label": "Blur softens the watch dial and case"
       }
     ],
     "outputs": [

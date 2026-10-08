@@ -176,7 +176,7 @@
         "label": "Product action examples",
         "items": [
           {
-            "ref": "n:gen2:plat-tiktok-g1",
+            "ref": "n:guide:k4-plat-tiktok-24-example-bottle",
             "title": "Small bottle picked off a bathroom shelf",
             "kind": "photo",
             "product": "small bottle"
@@ -188,7 +188,7 @@
             "product": "desk fan"
           },
           {
-            "ref": "n:gen2:plat-tiktok-g3",
+            "ref": "n:guide:k4-plat-tiktok-25-example-shoe",
             "title": "Sneaker turned to show the sole on a plain floor",
             "kind": "photo",
             "product": "sneaker"
@@ -216,15 +216,15 @@
   "visual": {
     "overview": "For TikTok In-Feed video ads, 9:16 vertical is the recommended shape; square 1:1 and horizontal 16:9 are also listed. Keep the product visible early and leave room for the app interface. [TikTok's current In-Feed ad specifications](https://ads.tiktok.com/resources/help/article/tiktok-auction-in-feed-ads?lang=en-GB) describe the placements and file requirements.",
     "strip": [
-      "f:social-proof-animation-v",
+      "f:k4-plat-tiktok-13-visual-strip-0",
       "f:how-to-tutorial-v",
-      "f:retargeting-urgency-v",
-      "f:black-friday-countdown-v",
-      "f:carousel-storytelling-v",
+      "f:k4-plat-tiktok-14-visual-strip-2",
+      "f:k4-plat-tiktok-15-visual-strip-3",
+      "f:k4-plat-tiktok-16-visual-strip-4",
       "f:url-to-ad-a-v"
     ],
     "steps": {
-      "source": "n:gen2:tpl-angle-c1",
+      "source": "n:guide:k4-plat-tiktok-12-visual-steps-source",
       "result": "f:unboxing-experience-v",
       "mode": "video",
       "length": 15,
@@ -272,7 +272,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-howto-g1",
+          "ref": "f:k4-plat-tiktok-09-visual-picker-cards-1-image",
           "label": "Kettle filled at the sink",
           "chips": [
             "routine"
@@ -326,7 +326,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-carousel-video-ad-c1",
+          "ref": "f:k4-plat-tiktok-10-visual-picker-cards-7-image",
           "label": "Skincare steps on a vanity",
           "chips": [
             "routine"
@@ -340,26 +340,26 @@
     "uses": [
       {
         "frame": "phone",
-        "ref": "n:gen2:tpl-spark-ads-style-video-c1",
+        "ref": "f:k4-plat-tiktok-17-visual-uses-0-image",
         "h": "Use 9:16 for full-screen In-Feed",
         "d": "Keep the product in the middle of the frame; TikTok's caption, buttons, and profile icon sit along the bottom and right edges."
       },
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-spark-ads-style-video-c2",
+        "ref": "f:k4-plat-tiktok-18-visual-uses-1-image",
         "h": "Use 1:1 for square feed placements",
         "d": "Re-frame the product for a square layout instead of cropping the 9:16 video."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:ind-shoes-g3",
+        "good": "n:guide:k4-plat-tiktok-06-visual-input-0-good",
         "bad": "n:guide:tiktok-bottle-soft-focus",
         "good_label": "Sneaker outsole tread stays sharp",
         "bad_label": "Outsole details blur together"
       },
       {
-        "good": "n:gen2:tpl-angle-g1",
+        "good": "n:guide:k4-plat-tiktok-07-visual-input-1-good",
         "bad": "n:guide:tiktok-speaker-crop",
         "good_label": "Portable speaker stays fully in frame",
         "bad_label": "Portable speaker is cut off by a tight crop"
@@ -373,14 +373,14 @@
         "label": "6-second vertical product hook"
       },
       {
-        "ref": "n:gen2:tpl-spark-ads-style-video-c4",
+        "ref": "f:k4-plat-tiktok-08-visual-outputs-1-image",
         "frame": "9:16",
         "length": 10,
         "label": "10-second vertical product demo"
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-retargeting-video-ad-c1",
+      "ref": "f:k4-plat-tiktok-05-visual-after-image",
       "zones": [
         "Caption",
         "Sound",
@@ -425,12 +425,12 @@
       },
       {
         "frame": "1:1",
-        "ref": "n:guide:tiktok-headphones-square",
+        "ref": "n:guide:k4-plat-tiktok-11-visual-sizes-1-image",
         "label": "1:1 · square feed placements"
       },
       {
         "frame": "16:9",
-        "ref": "f:unboxing-experience-t08",
+        "ref": "f:k4-plat-tiktok-28-visual-sizes-2",
         "label": "16:9 · horizontal placements"
       }
     ]

@@ -536,14 +536,14 @@
     "plat-tiktok": {
       "hero": {
         "kind": "image",
-        "image": "n:tiktok-hand-vertical"
+        "image": "n:k4-plat-tiktok-hero-overear"
       },
       "gallery": [
-        "n:phonecase-hand",
+        "n:k4-plat-tiktok-phonecase-hand-safe",
         "n:hotsauce-drip",
         "n:lipstick-swatch"
       ],
-      "og": "n:phonecase-hand",
+      "og": "n:k4-plat-tiktok-hero-overear",
       "card": "g:ugc-still-ad/example-03"
     },
     "plat-instagram": {
@@ -579,7 +579,7 @@
       "gallery": [
         "n:sunglasses-worn",
         "n:hotsauce-peppers",
-        "n:phonecase-desk"
+        "n:k4-plat-youtube-shorts-phonecase-safe"
       ],
       "og": "n:drink-vertical",
       "card": "f:food-video"

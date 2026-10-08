@@ -178,19 +178,19 @@
         "label": "Short and clear",
         "items": [
           {
-            "ref": "n:gen2:plat-youtube-shorts-g1",
+            "ref": "n:guide:k4-plat-youtube-shorts-29-example-daypack",
             "title": "Daypack lifted by its top handle",
             "kind": "photo",
             "product": "daypack"
           },
           {
-            "ref": "n:gen2:plat-youtube-shorts-g2",
+            "ref": "n:guide:k4-plat-youtube-shorts-06-examples-groups-0-items-1-image",
             "title": "Garlic press crushing a clove, close up",
             "kind": "photo",
             "product": "garlic press"
           },
           {
-            "ref": "n:gen2:plat-youtube-shorts-g3",
+            "ref": "n:guide:k4-plat-youtube-shorts-07-examples-groups-0-items-2-image",
             "title": "String lights switched on over a balcony at dusk",
             "kind": "photo",
             "product": "string lights"
@@ -218,19 +218,19 @@
   "visual": {
     "overview": "YouTube Shorts ads work best when one product action reads quickly on a phone. Keep the object near the center and leave room around the frame edges for app controls.",
     "strip": [
-      "n:guide:plat-youtube-shorts-m2-source",
-      "n:guide:plat-youtube-shorts-m2-result-vertical",
-      "n:gen2:ind-shoes-74",
-      "n:gen2:tpl-story-c3",
-      "n:gen2:ind-electronics-5",
-      "n:gen2:plat-tiktok-c4"
+      "n:guide:k4-plat-youtube-shorts-18-visual-strip-0",
+      "n:guide:k4-plat-youtube-shorts-19-visual-strip-1",
+      "n:guide:k4-plat-youtube-shorts-21-visual-strip-2",
+      "n:guide:k4-plat-youtube-shorts-22-visual-strip-3",
+      "n:guide:k4-plat-youtube-shorts-23-visual-strip-4",
+      "n:guide:k4-plat-youtube-shorts-24-visual-strip-5"
     ],
     "steps": {
       "source": "n:guide:plat-youtube-shorts-m2-source",
-      "result": "n:guide:plat-youtube-shorts-m2-result-vertical",
+      "result": "f:k4-plat-youtube-shorts-17-visual-steps-result",
       "mode": "video",
       "length": 15,
-      "prompt": "Press this white garment steamer across a blue shirt in a centered vertical frame.",
+      "prompt": "Press this white garment steamer across a blue shirt in a vertical product video.",
       "options": [
         [
           "Size",
@@ -265,7 +265,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-story-c1",
+          "ref": "f:k4-plat-youtube-shorts-11-visual-picker-cards-0-image",
           "label": "Sunscreen in beach light",
           "prompt": "Stand the tube beside a striped towel and keep the product centered.",
           "chips": [
@@ -283,7 +283,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-beauty-c2",
+          "ref": "f:k4-plat-youtube-shorts-12-visual-picker-cards-2-image",
           "label": "Lip balm on a vanity",
           "prompt": "Set the lip balm beside a small mirror in warm morning light.",
           "chips": [
@@ -292,7 +292,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-beauty-c3",
+          "ref": "f:k4-plat-youtube-shorts-13-visual-picker-cards-3-image",
           "label": "Face roller by a cream jar",
           "prompt": "Show the roller resting beside a cream jar on a tidy shelf.",
           "chips": [
@@ -301,7 +301,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-beauty-c4",
+          "ref": "f:k4-plat-youtube-shorts-14-visual-picker-cards-4-image",
           "label": "Sheet mask beside a towel",
           "prompt": "Lay the pouch next to a folded towel on a bathroom counter.",
           "chips": [
@@ -310,7 +310,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-compare-g1",
+          "ref": "n:k4-plat-youtube-shorts-phonecases-compare-safe",
           "label": "Two phone cases side by side",
           "prompt": "Show two phone cases beside each other with their colors and camera cutouts visible.",
           "chips": [
@@ -319,7 +319,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-angle-g3",
+          "ref": "f:k4-plat-youtube-shorts-15-visual-picker-cards-6-image",
           "label": "Speaker controls in close view",
           "prompt": "Move across the speaker's top controls and keep the buttons in focus.",
           "chips": [
@@ -348,7 +348,7 @@
       },
       {
         "frame": "post",
-        "ref": "n:gen2:spokesperson-videos-c3",
+        "ref": "f:k4-plat-youtube-shorts-32-visual-uses-1",
         "h": "Keep a product demo on screen",
         "d": "A protein shaker in a gym gives a short use scene without a long explanation."
       }
@@ -361,15 +361,15 @@
         "bad_label": "The shoe mesh blurs together at this size"
       },
       {
-        "good": "n:guide:plat-youtube-shorts-example-trail-tall",
-        "bad": "n:guide:plat-youtube-shorts-m5-cropped",
-        "good_label": "The shoes stay centered in the vertical frame",
-        "bad_label": "The front of the shoe is cut off"
+        "good": "n:guide:k4-plat-youtube-shorts-09-visual-input-1-good",
+        "bad": "n:guide:k4-plat-youtube-shorts-m5-cropped-bad",
+        "good_label": "Trail shoes stay centered in the square frame",
+        "bad_label": "A tight crop cuts off parts of the shoes"
       }
     ],
     "outputs": [
       {
-        "ref": "n:gen2:plat-tiktok-c2",
+        "ref": "f:k4-plat-youtube-shorts-10-visual-outputs-0-image",
         "frame": "9:16",
         "label": "6-second vertical demo: hair clips tried on in a mirror",
         "length": 6
@@ -382,7 +382,7 @@
       }
     ],
     "after": {
-      "ref": "f:url-to-ad-a-v",
+      "ref": "f:k4-plat-youtube-shorts-08-visual-after-image",
       "zones": [
         "Music",
         "Product link"
@@ -395,7 +395,7 @@
     "sizes": [
       {
         "frame": "9:16",
-        "ref": "n:guide:plat-youtube-shorts-size-portrait-ebike",
+        "ref": "f:k4-plat-youtube-shorts-16-visual-sizes-0-image",
         "label": "9:16 · YouTube Shorts"
       },
       {

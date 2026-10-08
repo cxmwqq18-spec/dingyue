@@ -269,6 +269,14 @@
       "outfit": {
         "ref": "n:gen2:tpl-outfit-c2",
         "alt": "Full-length denim outfit in a hallway, head to toe."
+      },
+      "product-feature-callout-video": {
+        "ref": "f:k4-plat-tiktok-01-cards-0-image",
+        "alt": "Hand operates a compact espresso maker"
+      },
+      "home": {
+        "ref": "f:k4-plat-tiktok-02-cards-1-image",
+        "alt": "Hand placing utensils into a gray drawer organizer"
       }
     }
   },
@@ -509,6 +517,34 @@
       "light": {
         "ref": "n:guide:k5-change-background-template-light",
         "alt": "Small white candle glowing on a pale table"
+      }
+    }
+  },
+  "plat-instagram": {
+    "images": {
+      "look": {
+        "ref": "n:guide:k4-plat-instagram-75-template-look",
+        "alt": "Model in a light trouser suit carrying a small brown handbag in a bright courtyard."
+      },
+      "launch": {
+        "ref": "f:k4-plat-instagram-76-template-launch",
+        "alt": "A warm portable table lamp glowing beside a leafy plant in a dim living room."
+      }
+    }
+  },
+  "plat-youtube-shorts": {
+    "images": {
+      "howto": {
+        "ref": "f:k4-plat-youtube-shorts-01-cards-1-image",
+        "alt": "Close view of a handheld garment steamer and its glowing button"
+      },
+      "compare": {
+        "ref": "f:k4-plat-youtube-shorts-02-cards-2-image",
+        "alt": "Coffee poured into a black insulated mug and a cream one held side by side"
+      },
+      "demo": {
+        "ref": "f:k4-plat-youtube-shorts-30-template-demo",
+        "alt": "Hand placing a small glass cup under a compact generic espresso maker on a kitchen counter."
       }
     }
   }
