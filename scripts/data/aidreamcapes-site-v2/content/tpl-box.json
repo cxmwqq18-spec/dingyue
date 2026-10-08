@@ -180,29 +180,29 @@
     ]
   },
   "examples": {
-    "h2": "More bundle set examples",
+    "h2": "More bundle ad scenes",
     "lead": "Show every item that ships in the set, and keep props clearly apart from what the buyer receives.",
     "groups": [
       {
-        "label": "Everything in the set",
+        "label": "Creator routines and reviews",
         "items": [
           {
-            "ref": "n:gen2:tpl-box-g1",
-            "title": "Camping breakfast kit laid out from above",
+            "ref": "f:q8-tpl-box-example-01",
+            "title": "Skincare Routine: Starter Kit",
             "kind": "photo",
-            "product": "camping breakfast kit"
+            "product": "skincare starter kit"
           },
           {
-            "ref": "n:gen2:tpl-box-g2",
-            "title": "Pet grooming kit with brush, towel and shampoo",
+            "ref": "f:q8-tpl-box-example-02",
+            "title": "Pet Parent UGC: Grooming Kit",
             "kind": "photo",
             "product": "pet grooming kit"
           },
           {
-            "ref": "n:gen2:tpl-box-g3",
-            "title": "Tea gift set with tin, infuser and cup",
+            "ref": "f:q8-tpl-box-example-03",
+            "title": "Snack Reaction: Variety Box",
             "kind": "photo",
-            "product": "tea gift set"
+            "product": "snack variety box"
           }
         ]
       }
@@ -214,17 +214,17 @@
       "n:guide:c1-tpl-box-m2-source",
       "n:guide:c1-tpl-box-m2-result-square",
       "n:guide:c1-tpl-story-gift-kit-square",
-      "n:guide:c1-reuse-tpl-box-case-coffee",
-      "n:gen2:occ-holidays-c3",
+      "f:q8-tpl-box-strip-04",
+      "f:q8-tpl-box-strip-05",
       "n:guide:ind-electronics-m3-headphones"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-box-m2-source",
-      "sourceTitle": "Full set photo",
+      "sourceTitle": "Your product",
       "sourceHint": "Include every item and package that ships with the bundle.",
       "result": "n:guide:c1-tpl-box-m2-result-square",
       "mode": "photo",
-      "prompt": "Arrange this skincare kit—cleanser, serum, and cream—on a vanity, keeping every item visible.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the full set from a plain box on a bright table, ending with every item visible. Natural window light, candid UGC look. Top-down handheld close-up with one slow push-in. Sound: tissue rustle, no music.",
       "options": [
         [
           "Template",
@@ -241,102 +241,102 @@
       ]
     },
     "picker": {
-      "title": "Choose a what's-in-the-box photo setup",
-      "lead": "Show every included item in a clear, countable arrangement.",
+      "title": "Choose a bundle ad scene",
+      "lead": "Preview how a creator can reveal, compare, or use the full set.",
       "chips": [
         {
-          "id": "beauty",
-          "label": "Skincare and beauty sets"
+          "id": "unbox",
+          "label": "Unboxing"
         },
         {
-          "id": "pantry",
-          "label": "Coffee and pantry kits"
+          "id": "review",
+          "label": "Review"
         },
         {
-          "id": "packaging",
-          "label": "Product packaging"
+          "id": "bite",
+          "label": "First Bite"
         },
         {
-          "id": "gift",
-          "label": "Gift-box arrangements"
+          "id": "demo",
+          "label": "Product Demo"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:c1-reuse-tpl-box-case-bath",
-          "label": "Hooded towel and bath set",
+          "ref": "f:q8-tpl-box-pick-01",
+          "label": "Creator Unboxing: Baby Bath Set",
           "chips": [
-            "gift"
+            "unbox"
           ],
-          "prompt": "Arrange the towel, washcloth, sponge, and plain pump bottle together as one bath set.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the baby bath set from a plain mailer on a bright nursery dresser. Warm window light, candid UGC look. Top-down handheld shot with one slow push-in. Sound: tissue rustle, no music. End with every item visible in the open box.",
+          "kind": "video"
         },
         {
-          "ref": "g:bundle-sets/example-04",
-          "label": "Complete skincare bundle",
+          "ref": "f:q8-tpl-box-pick-02",
+          "label": "GRWM: Skincare Starter Kit",
           "chips": [
-            "beauty"
+            "review",
+            "demo"
           ],
-          "prompt": "Arrange the complete skincare bundle so every item can be counted.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A woman in her late twenties holds the skincare kit beside a bright bathroom mirror and says to camera, “Here is everything I set out for a simple morning routine.” Natural window light, candid UGC look. Chest-up front-facing handheld shot with slight sway. Sound: her voice and a cap click, no music. End with the kit beside her face.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:c1-tpl-box-card-pantry-set",
-          "label": "Tea tin, honey, and cup",
+          "ref": "f:q8-tpl-box-pick-03",
+          "label": "Pet Parent Review: Grooming Set",
           "chips": [
-            "pantry"
+            "review"
           ],
-          "prompt": "Arrange the tea tin, honey jar, and ceramic cup on a kitchen counter.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult pet owner holds a plain grooming kit toward the camera in a bright living room and says, “Let’s look at what comes in this set.” Soft daylight, natural UGC look. Eye-level chest-up handheld framing with one small push-in. Sound: clear voice and a dog collar jingle, no music. End with the kit centered.",
+          "kind": "video"
         },
         {
-          "ref": "g:bundle-sets/example-06",
-          "label": "Gift-ready skincare bundle",
+          "ref": "f:q8-tpl-box-pick-04",
+          "label": "First Bite: Snack Variety Box",
           "chips": [
-            "gift",
-            "beauty"
+            "bite"
           ],
-          "prompt": "Arrange the gift-ready skincare bundle with every piece in view.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult opens a plain snack variety box at a sunny work table, takes one bite from a single snack and smiles. Bright natural light, candid UGC look. Handheld close-up with one gentle tilt from box to reaction. Sound: wrapper tear and a crisp bite, no music. End on the open box and snack in hand.",
+          "kind": "video"
         },
         {
-          "ref": "g:packaging-mockup/example-07",
-          "label": "Close view of package material",
+          "ref": "f:q8-tpl-box-pick-05-r2",
+          "label": "Tech Unboxing: Headphone Set",
           "chips": [
-            "packaging"
+            "unbox"
           ],
-          "prompt": "Show the package material in close view before opening the box.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the plain over-ear headset from a fitted carton, keeping the headphones, carry pouch, charging cable and audio cable visible together. Soft window light, tactile UGC look. Top-down handheld close-up with one slow push-in. Sound: cardboard and fabric rustle, no music. End with all four included pieces displayed beside the headset.",
+          "kind": "video"
         },
         {
-          "ref": "f:unboxing-experience-v",
-          "label": "Headphones lifted from a gray package",
+          "ref": "f:q8-tpl-box-pick-06-r2",
+          "label": "Street Interview: Protein Bar Variety Pack",
           "chips": [
-            "packaging"
+            "bite"
           ],
-          "prompt": "Open the gray headphone package and lift out the headphones and charging case.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny park entrance, an adult interviewer holds a microphone as an adult creator presents a plain protein-bar variety box with several wrapped flavors and one opened bar. The creator takes a bite and says to camera, “I like having a few flavors ready after a workout.” Natural daylight, candid street UGC look. Eye-level chest-up handheld shot with a slight approach. Sound: voice, wrapper rustle and light outdoor ambience; no music. End with the box and bitten bar in frame.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:white-background-canvas-tote",
-          "label": "Canvas tote gift set",
+          "ref": "f:q8-tpl-box-pick-07",
+          "label": "Unboxing: Phone Case Kit",
           "chips": [
-            "gift"
+            "unbox"
           ],
-          "prompt": "Arrange the unbranded canvas tote with its included everyday items clearly visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands open a plain phone case box, lift the case and turn its single generic camera opening toward camera. Bright desk daylight, clean unboxing UGC look. Overhead handheld close-up with one slow push-in. Sound: cardboard fold and a light silicone tap, no music. End with the case held over the open box.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:b1-unboxing-videos-source",
-          "label": "Candle jar and matching lid",
+          "ref": "f:q8-tpl-box-pick-08-r2",
+          "label": "Problem to Fix: Pet Hair Kit",
           "chips": [
-            "pantry"
+            "demo"
           ],
-          "prompt": "Arrange the plain candle jar and its lid together as a simple gift set.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands roll a plain lint roller over a pet-haired dark sweater, revealing one clear clean strip. Keep the complete set visible beside it: the reusable roller and a blank carton with two spare refill rolls. Bright home daylight, satisfying UGC look. Overhead close-up with one slow lateral track. Sound: roller pass and fabric brush; no music. End on the clean/unclean boundary and all kit pieces.",
+          "kind": "video"
         }
       ],
-      "button": "Make a what's-in-the-box photo"
+      "button": "Start with your product"
     },
     "uses": [
       {
@@ -370,12 +370,12 @@
       {
         "ref": "n:guide:b1-unboxing-card",
         "frame": "1:1",
-        "label": "Square headphones-and-box contents photo"
+        "label": "Headphones Unboxed"
       },
       {
         "ref": "n:gen2:video-hub-g2",
         "frame": "1:1",
-        "label": "Square lunch-container-and-lid photo"
+        "label": "Lunch Set Closure"
       }
     ],
     "after": {

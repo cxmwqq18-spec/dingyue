@@ -309,90 +309,90 @@
     ],
     "tpl-box": [
       {
-        "ref": "g:bundle-sets/example-07",
-        "product": "skincare collection",
-        "title": "Skincare bottles arranged as a collection on a shelf"
+        "ref": "f:q8-tpl-box-case-01",
+        "product": "skincare set",
+        "title": "Skincare Routine: Skincare Set"
       },
       {
-        "ref": "n:white-mug",
-        "product": "matte ceramic travel mug",
-        "title": "Matte travel mug on a clean studio surface"
+        "ref": "f:q8-tpl-box-case-02",
+        "product": "pet grooming kit",
+        "title": "Pet Parent Review: Grooming Kit"
       },
       {
-        "ref": "n:gen2:tpl-box-c3",
-        "product": "desk set",
-        "title": "Notebook, pen and organizer sold as one desk set"
+        "ref": "f:q8-tpl-box-case-03",
+        "product": "baby bath kit",
+        "title": "Unboxing: Baby Care Set"
       },
       {
-        "ref": "n:guide:black-friday-m2-source-use",
-        "product": "leather duffel",
-        "title": "Leather duffel with visible handles and stitching"
+        "ref": "f:q8-tpl-box-case-04",
+        "product": "snack variety box",
+        "title": "First Bite: Snack Variety Box"
       }
     ],
     "tpl-pack": [
       {
-        "ref": "n:guide:b1-unboxing-card",
-        "product": "headphones",
-        "title": "Headphones lifted from a plain kraft box"
+        "ref": "f:q8-tpl-pack-case-01",
+        "product": "vitamin gummies",
+        "title": "Morning Routine: Vitamin Gummies"
       },
       {
-        "ref": "g:bundle-sets/example-07",
-        "product": "skincare collection",
-        "title": "Complete skincare collection arranged on a shelf"
+        "ref": "f:q8-tpl-pack-case-02",
+        "product": "skincare travel kit",
+        "title": "ASMR Unboxing: Skincare Travel Kit"
       },
       {
-        "ref": "g:ecommerce-main-image/example-05",
-        "product": "travel mug bundle",
-        "title": "Travel mug shown with its matching lid"
+        "ref": "f:q8-tpl-pack-case-03",
+        "product": "pet treat pouch",
+        "title": "Pet Parent Review: Treat Pouch"
       },
       {
-        "ref": "f:unboxing-experience",
-        "product": "gray headphone package",
-        "title": "Hands opening a box to reveal headphones and a case"
+        "ref": "f:q8-tpl-pack-case-04",
+        "product": "protein bar pack",
+        "title": "First Bite: Protein Bar Pack"
       }
     ],
     "tpl-light": [
       {
-        "ref": "n:guide:tpl-light-round4-table-lamp",
-        "product": "brass reading lamp",
-        "title": "Brass reading lamp casting a warm pool of light"
+        "ref": "f:q8-tpl-light-case-01",
+        "product": "vitamin c serum",
+        "title": "Texture Macro: Vitamin C Serum"
       },
       {
-        "ref": "n:gen2:tpl-light-c2",
-        "product": "chrome espresso cup",
-        "title": "Chrome espresso cup with controlled reflections"
+        "ref": "f:q8-tpl-light-case-02",
+        "product": "gold hoop earrings",
+        "title": "Jewelry Detail: Gold Hoop Earrings"
       },
       {
-        "ref": "n:gen2:tpl-light-c3",
-        "product": "nail polish bottle",
-        "title": "Glossy nail polish bottle on black acrylic"
+        "ref": "f:q8-tpl-light-case-03",
+        "product": "fitness watch band",
+        "title": "Product Demo: Fitness Watch Band"
       },
       {
-        "ref": "n:guide:tpl-light-round4-case-pendant-lamp",
-        "product": "pendant lamp",
-        "title": "Opal-glass pendant with a soft warm glow"
+        "ref": "f:q8-tpl-light-case-04",
+        "product": "grout cleaning brush",
+        "title": "Problem to Fix: Grout Cleaning Brush"
       }
     ],
     "tpl-tryon": [
       {
-        "ref": "g:sale-campaign-key-visual/example-05",
-        "product": "winter jacket",
-        "title": "Winter jacket featured in a snowy city scene"
+        "ref": "f:q8-tpl-tryon-case-01",
+        "product": "denim jacket",
+        "title": "Fit Check: Denim Jacket"
       },
       {
-        "ref": "g:sale-campaign-key-visual/example-06",
-        "product": "gift-style jacket",
-        "title": "Winter jacket shown in a gift-inspired product scene"
+        "ref": "f:q8-tpl-tryon-case-02",
+        "product": "running jacket",
+        "title": "Fit Check: Running Jacket"
       },
       {
-        "ref": "n:gen2:tpl-tryon-c3",
-        "product": "hoodie",
-        "title": "Hoodie fit shown on a model from the side"
+        "ref": "f:q8-tpl-tryon-case-03",
+        "product": "office blazer",
+        "title": "Creator Review: Office Blazer"
       },
       {
-        "ref": "g:on-model-generation/example-06",
-        "product": "canvas backpack",
-        "title": "Canvas backpack shown during an outdoor walk"
+        "ref": "f:q8-tpl-tryon-case-04",
+        "product": "knit dress",
+        "title": "Try-On Transition: Knit Dress"
       }
     ],
     "tpl-jewel": [

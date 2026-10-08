@@ -184,29 +184,29 @@
     ]
   },
   "examples": {
-    "h2": "More packaging mockups",
+    "h2": "More packaging ad scenes",
     "lead": "Explore different package types and settings before you prepare artwork for print.",
     "groups": [
       {
-        "label": "Packaging in place",
+        "label": "Unboxing and product use",
         "items": [
           {
-            "ref": "n:gen2:unboxing-videos-c2",
-            "title": "Candle inside a kraft mailer",
+            "ref": "f:q8-tpl-pack-example-01",
+            "title": "Kitchen Review: Vitamin Gummies",
             "kind": "photo",
-            "product": "candle"
+            "product": "vitamin gummies"
           },
           {
-            "ref": "n:guide:occ-holidays-c3-m3-gift-set",
-            "title": "White candle jar nestled in a gift box",
+            "ref": "f:q8-tpl-pack-example-02",
+            "title": "Unboxing: Skincare Travel Kit",
             "kind": "photo",
-            "product": "white candle jar"
+            "product": "skincare travel kit"
           },
           {
-            "ref": "n:guide:c4-occ-holidays-browser-giftset",
-            "title": "Blank cocoa pouch and gift box with holiday details",
+            "ref": "f:q8-tpl-pack-example-03",
+            "title": "Protein Snack Reaction: Bar Pack",
             "kind": "photo",
-            "product": "cocoa pouch and gift box"
+            "product": "protein bar pack"
           }
         ]
       }
@@ -218,7 +218,7 @@
       "n:gen2:tpl-pack-g1",
       "n:gen2:tpl-pack-g2",
       "n:guide:b1-spokesperson-videos-source",
-      "n:gen2:occ-product-launch-c4",
+      "f:q8-tpl-pack-strip-04",
       "n:guide:c4-occ-holidays-post-gift",
       "n:guide:c5-occ-holidays-strip-tea-tin"
     ],
@@ -226,104 +226,111 @@
       "source": "n:guide:tpl-pack-c3-m2-source",
       "result": "n:gen2:tpl-pack-g2",
       "mode": "photo",
-      "prompt": "Place this kraft coffee pouch on a grocery shelf beside plain pantry staples, with the blank front panel facing forward."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult opens a plain package and presents the product beside the carton. Soft daylight, realistic UGC look. Handheld medium close-up with one gentle push-in. Sound: paper rustle, no music. End with the product held still.",
+      "sourceTitle": "Your product"
     },
     "picker": {
-      "title": "Choose a setting for your packaging preview",
-      "lead": "Choose a product context that helps shoppers picture where the package belongs.",
+      "title": "Choose a packaging ad scene",
+      "lead": "Show the package in a real unboxing, routine, or product-use moment.",
       "chips": [
         {
-          "id": "counter",
-          "label": "Countertop"
+          "id": "unbox",
+          "label": "Unboxing"
         },
         {
-          "id": "launch",
-          "label": "New arrival"
+          "id": "review",
+          "label": "Review"
         },
         {
-          "id": "shelf",
-          "label": "Shelf display"
+          "id": "demo",
+          "label": "Product Demo"
         },
         {
-          "id": "catalog",
-          "label": "Catalog view"
+          "id": "reveal",
+          "label": "Product Reveal"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-pack-g3",
-          "label": "Carton pouch and bottle",
+          "ref": "f:q8-tpl-pack-pick-01",
+          "label": "ASMR Unboxing: Vitamin Gummies",
           "chips": [
-            "counter"
+            "unbox",
+            "reveal"
           ],
-          "prompt": "Line up a plain carton, pouch, and bottle on a bright counter.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands open a plain supplement pouch carton and lift the unbranded bottle into the light. Bright kitchen daylight, tactile UGC look. Top-down handheld close-up with one slow push-in. Sound: seal peel and carton fold, no music. End with pouch and bottle together in hand.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:h1-photo-hub-candle-source",
-          "label": "Candle jar with a lid",
+          "ref": "f:q8-tpl-pack-pick-02",
+          "label": "Unboxing: Skincare Travel Kit",
           "chips": [
-            "counter"
+            "unbox",
+            "reveal"
           ],
-          "prompt": "Show this plain ceramic candle jar with its matching lid on a neutral surface.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult opens a small skincare travel kit at a bathroom counter and lifts one tube from the tissue. Soft natural window light, casual UGC look. Overhead handheld shot with one gentle tilt toward the open kit. Sound: tissue rustle and cap tap, no music. End with all travel items visible.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:h1-photo-hub-candle-result",
-          "label": "Candle jar in a carton",
+          "ref": "f:q8-tpl-pack-pick-03",
+          "label": "First Bite: Protein Bar Pack",
           "chips": [
-            "launch"
+            "unbox",
+            "demo",
+            "reveal"
           ],
-          "prompt": "Show this candle jar revealed in an open kraft carton with pale tissue.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult opens a plain multipack carton, takes out one protein bar and bites it beside a gym bag. Bright gym window light, candid UGC look. Handheld close-up with one tilt from package to reaction. Sound: wrapper tear and one crisp bite, no music. End with the open pack and bar in frame.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:c4-tpl-pack-coffee-pouch-unbox",
-          "label": "Coffee pouch with beans",
+          "ref": "f:q8-tpl-pack-pick-04",
+          "label": "Gift Reveal: Gold Hoop Set",
           "chips": [
-            "launch"
+            "reveal"
           ],
-          "prompt": "Set this blank kraft coffee pouch beside a small scoop of coffee beans on a pale counter.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult opens a small plain jewelry box and lifts a pair of simple gold hoops toward a friend. Warm window light, intimate UGC look. Handheld close-up with one slow push-in. Sound: box hinge and a soft reaction, no music. End with the earrings held above the open box.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-pack-c3-m3-shelf-boxes",
-          "label": "Coffee pouch on a plain shelf",
+          "ref": "f:q8-tpl-pack-pick-05",
+          "label": "Pet Parent Review: Treat Pouch",
           "chips": [
-            "shelf"
+            "review"
           ],
-          "prompt": "Place this blank coffee pouch on a grocery shelf beside plain kraft cartons and jars.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult pet owner holds a plain treat pouch at chest height, looks into camera and says, “Here’s what I keep by the leash for our walk.” Soft daylight, natural UGC look. Eye-level chest-up handheld shot with slight sway. Sound: voice and a light leash jingle, no music. End with the pouch beside the owner’s face.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-pack-c3-m3-shelf-bags",
-          "label": "Coffee pouch with pantry refill bags",
+          "ref": "f:q8-tpl-pack-pick-06",
+          "label": "Unboxing: Phone Case Set",
           "chips": [
-            "shelf"
+            "unbox"
           ],
-          "prompt": "Place this blank coffee pouch on a pantry shelf beside simple unbranded refill bags.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lay out two plain phone cases, show the single generic camera opening, and return one case to its package. Bright desk light, clean UGC look. Overhead close-up with one slow slide across the set. Sound: soft silicone taps, no music. End with both cases aligned beside the box.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-pack-c3-m3-catalog-lineup",
-          "label": "Coffee pouch in a catalog",
+          "ref": "f:q8-tpl-pack-pick-07",
+          "label": "Gym Bag Haul: Training Bands",
           "chips": [
-            "catalog"
+            "demo",
+            "reveal"
           ],
-          "prompt": "Show this blank coffee pouch centered with plain packaging pieces arranged for a catalog.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult pulls a set of plain resistance bands from a gym pouch and stretches one gently beside a packed gym bag. Bright locker-room daylight, energetic UGC look. Handheld medium close-up with one short push-in. Sound: fabric rustle and band tension, no music. End with the set arranged in the creator’s hand.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-pack-c3-m3-catalog-arrangement",
-          "label": "Coffee pouch with carton and tissue",
+          "ref": "f:q8-tpl-pack-pick-08",
+          "label": "GRWM: Baby Care Essentials",
           "chips": [
-            "catalog"
+            "review",
+            "demo"
           ],
-          "prompt": "Arrange this blank coffee pouch beside a plain carton and folded tissue in a catalog-style square photo.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult parent holds a plain baby-care pouch toward camera beside a nursery bag and says, “I’m packing the small things we reach for on an outing.” Soft daylight, calm UGC look. Chest-up front-facing handheld shot with a slight sway. Sound: voice and zipper movement, no music. End with the pouch beside the open bag.",
+          "kind": "video"
         }
       ],
-      "button": "Preview packaging in a scene"
+      "button": "Start with your product"
     },
     "uses": [
       {
@@ -348,21 +355,21 @@
       },
       {
         "good": "n:granola-m5-clean",
-        "bad": "n:guide:b1-image-to-video-bad-blur",
+        "bad": "f:q8-tpl-pack-input-bad-02-blur",
         "good_label": "Granola jar and berries stay clear",
-        "bad_label": "Granola jar and package edge blur"
+        "bad_label": "Granola jar and pouch are out of focus"
       }
     ],
     "outputs": [
       {
         "ref": "n:guide:c3-r3-tpl-pack-lineup",
         "frame": "1:1",
-        "label": "Coffee pouch and package lineup preview"
+        "label": "Pouch Package Lineup"
       },
       {
         "ref": "n:guide:c3-r3-tpl-pack-gift",
         "frame": "1:1",
-        "label": "Gift set package view"
+        "label": "Gift Set Reveal"
       }
     ],
     "after": {

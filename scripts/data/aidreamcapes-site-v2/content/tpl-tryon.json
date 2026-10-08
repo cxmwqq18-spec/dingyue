@@ -184,35 +184,35 @@
     ]
   },
   "examples": {
-    "h2": "More try-on examples",
+    "h2": "More try-on ad scenes",
     "lead": "Front, back and seated views help shoppers judge drape and fit. Put sizing details in your listing text.",
     "groups": [
       {
-        "label": "Fit from every side",
+        "label": "Model fit and movement",
         "items": [
           {
-            "ref": "n:gen2:tpl-tryon-g1",
-            "title": "Bomber jacket worn by a model, front view",
+            "ref": "f:q8-tpl-tryon-example-01",
+            "title": "Fit Check: Bomber Front",
             "kind": "photo",
             "product": "bomber jacket"
           },
           {
-            "ref": "n:gen2:tpl-tryon-g2",
-            "title": "This bomber jacket from the back",
+            "ref": "f:q8-tpl-tryon-example-02",
+            "title": "Lookbook Walk: Bomber Back",
             "kind": "photo",
             "product": "bomber jacket"
           },
           {
-            "ref": "n:gen2:tpl-tryon-g3",
-            "title": "Ribbed knit top on a seated model",
+            "ref": "f:q8-tpl-tryon-example-03",
+            "title": "Try-On Review: Knit Top",
             "kind": "photo",
-            "product": "ribbed knit top"
+            "product": "knit top"
           },
           {
-            "ref": "n:gen2:tpl-tryon-g4",
-            "title": "Satin midi skirt on a model mid-step",
+            "ref": "f:q8-tpl-tryon-example-04",
+            "title": "Lookbook Walk: Satin Skirt",
             "kind": "photo",
-            "product": "satin midi skirt"
+            "product": "satin skirt"
           }
         ]
       }
@@ -224,15 +224,15 @@
       "n:guide:tpl-tryon-c3-strip-bomber-front",
       "n:guide:tpl-tryon-c3-strip-cardigan-side",
       "n:guide:ind-shoes-m2-result",
-      "n:guide:c3-r3-tpl-tryon-streetwear",
+      "f:q8-tpl-tryon-strip-04",
       "n:guide:tpl-tryon-c3-strip-overshirt",
-      "g:virtual-try-on/example-07"
+      "f:q8-tpl-tryon-strip-06"
     ],
     "steps": {
       "source": "n:guide:tpl-tryon-c3-m2-source",
       "result": "n:guide:tpl-tryon-c3-m2-result",
       "mode": "photo",
-      "prompt": "Show this olive bomber jacket worn over a plain white shirt in a bright studio, front three-quarter view.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult model wears the garment and turns once in soft daylight to show its full silhouette. Natural fashion UGC look. Full-body eye-level handheld shot with one gentle push-in. Sound: fabric movement, no music. End facing camera.",
       "options": [
         [
           "Template",
@@ -246,104 +246,106 @@
           "Use",
           "Product page or social"
         ]
-      ]
+      ],
+      "sourceTitle": "Your product"
     },
     "picker": {
-      "title": "Choose an on-model clothing scene",
-      "lead": "Pick the garment type and styling context that fits the collection.",
+      "title": "Choose a try-on ad scene",
+      "lead": "Preview a fit check, outfit transition, or lookbook moment on a model.",
       "chips": [
         {
-          "id": "outerwear",
-          "label": "Outerwear"
+          "id": "tryon",
+          "label": "Try-On Transition"
         },
         {
-          "id": "knitwear",
-          "label": "Knitwear"
+          "id": "fit",
+          "label": "Fit Check"
         },
         {
-          "id": "dresses",
-          "label": "Dresses and skirts"
+          "id": "grwm",
+          "label": "GRWM"
         },
         {
-          "id": "sets",
-          "label": "Coordinated sets"
+          "id": "walk",
+          "label": "Lookbook Walk"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:tpl-tryon-c3-m3-camel-coat",
-          "label": "Camel coat on a sidewalk",
+          "ref": "f:q8-tpl-tryon-pick-01",
+          "label": "Try-On Transition: Weekend Denim",
           "chips": [
-            "outerwear"
+            "tryon"
           ],
-          "prompt": "Show this camel wool coat on a city sidewalk in soft daylight.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult steps into a plain denim jacket in front of a full-length mirror, finishing with one turn to show the fit. Bright bedroom daylight, candid fashion UGC look. Full-body handheld shot with one smooth push-in. Sound: fabric movement, no music. End on the complete outfit facing the mirror.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:c3-r3-tpl-tryon-trench",
-          "label": "Trench coat under an arch",
+          "ref": "f:q8-tpl-tryon-pick-02",
+          "label": "Fit Check: Running Jacket",
           "chips": [
-            "outerwear"
+            "fit"
           ],
-          "prompt": "Style this trench coat beneath a stone archway in warm light.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult wears a plain running jacket, raises both arms once to show sleeve movement, then faces camera. Outdoor overcast light, authentic fit-check look. Full-body eye-level handheld shot with a short step closer. Sound: fabric rustle and light outdoor ambience, no music. End on the jacket silhouette.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:tpl-tryon-c3-m3-knitwear-model",
-          "label": "Cream cardigan on a bench",
+          "ref": "f:q8-tpl-tryon-pick-03",
+          "label": "Creator Fit Check: Office Blazer",
           "chips": [
-            "knitwear"
+            "fit"
           ],
-          "prompt": "Show this cream cardigan with its button front and knit texture visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator wears a plain blazer, holds its lapel, looks into camera and says, “Here’s how the shoulder and sleeve sit when I move.” Bright office window light, natural UGC look. Chest-up handheld shot with slight sway. Sound: voice and fabric brush, no music. End facing camera with the blazer in view.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:c3-r3-tpl-tryon-knitdress",
-          "label": "Knit dress in warm natural light",
+          "ref": "f:q8-tpl-tryon-pick-04",
+          "label": "Try-On Transition: Knit Dress",
           "chips": [
-            "knitwear"
+            "tryon",
+            "grwm"
           ],
-          "prompt": "Show this plain cream knit dress in warm natural light, with the full silhouette visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult in a plain knit dress changes from a robe to the finished look with one clean hand-cover transition. Warm natural window light, relaxed UGC style. Full-body static eye-level framing with one gentle push-in after the reveal. Sound: soft fabric movement, no music. End with the dress silhouette centered.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:c3-r3-tpl-tryon-evening",
-          "label": "Evening dress on stairs",
+          "ref": "f:q8-tpl-tryon-pick-05",
+          "label": "Lookbook Walk: Evening Dress",
           "chips": [
-            "dresses"
+            "walk"
           ],
-          "prompt": "Show this evening dress on a stone staircase with the full hem visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult walks three measured steps in a plain evening dress through a bright stone corridor and turns once to show the hem. Soft daylight, polished lookbook UGC style. Full-body tracking shot with one smooth backward move. Sound: footsteps and fabric swish, no music. End in a still three-quarter pose.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:ind-fashion-clothing-c3",
-          "label": "Pleated skirt on a sidewalk",
+          "ref": "f:q8-tpl-tryon-pick-06",
+          "label": "Fit Check: Pleated Skirt",
           "chips": [
-            "dresses"
+            "fit"
           ],
-          "prompt": "Show this pleated skirt on a sunny sidewalk with the full length visible.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult wears a plain pleated skirt and turns once beside a full-length mirror so the hem moves naturally. Soft daylight, honest fit-check look. Full-body handheld shot with one small arc. Sound: fabric swish and quiet room tone, no music. End with the skirt fully visible.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:c3-r3-tpl-tryon-linen",
-          "label": "Linen two-piece in a studio",
+          "ref": "f:q8-tpl-tryon-pick-07",
+          "label": "GRWM: Linen Set for Work",
           "chips": [
-            "sets"
+            "grwm"
           ],
-          "prompt": "Show this linen two-piece set in a sunlit studio.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult holds a plain linen jacket over a matching set, looks into camera and says, “This is the set I’m styling for a warm workday.” Bright studio daylight, casual GRWM look. Chest-up eye-level handheld shot with slight sway. Sound: voice and fabric movement, no music. End with the matching set held beside the outfit.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:c3-r3-tpl-tryon-suit",
-          "label": "Wide-leg suit beneath an arch",
+          "ref": "f:q8-tpl-tryon-pick-08",
+          "label": "Lookbook Walk: Wide-Leg Suit",
           "chips": [
-            "sets"
+            "walk"
           ],
-          "prompt": "Style this wide-leg suit beneath a stone archway in warm light.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult walks toward camera in a plain wide-leg suit, pauses and turns slightly to show the drape. Soft courtyard daylight, clean fashion UGC look. Full-body handheld tracking with one smooth backward move. Sound: footsteps and fabric swish, no music. End in a full-length front view.",
+          "kind": "video"
         }
       ],
-      "button": "Make an on-model clothing photo"
+      "button": "Start with your product"
     },
     "uses": [
       {
@@ -377,12 +379,12 @@
       {
         "ref": "n:guide:tpl-tryon-c3-m6-front-model",
         "frame": "1:1",
-        "label": "Square olive bomber front view"
+        "label": "Bomber Front Fit"
       },
       {
         "ref": "n:guide:tpl-tryon-c3-m6-back-model",
         "frame": "1:1",
-        "label": "Square olive bomber back view"
+        "label": "Bomber Back Fit"
       }
     ],
     "after": {

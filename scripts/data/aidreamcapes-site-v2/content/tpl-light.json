@@ -180,29 +180,29 @@
     ]
   },
   "examples": {
-    "h2": "More product lighting examples",
+    "h2": "More lighting ad scenes",
     "lead": "Reflective materials benefit from controlled highlights and a clear product silhouette.",
     "groups": [
       {
-        "label": "Product photo examples",
+        "label": "Material details and routines",
         "items": [
           {
-            "ref": "g:background-remove-replace/example-02",
-            "title": "Soft window light reveals a ceramic vase",
+            "ref": "f:q8-tpl-light-example-01",
+            "title": "Texture Macro: Nail Color",
             "kind": "photo",
-            "product": "ceramic vase"
+            "product": "nail color"
           },
           {
-            "ref": "g:background-remove-replace/example-04",
-            "title": "A dark background outlines the ceramic vase",
+            "ref": "f:q8-tpl-light-example-02",
+            "title": "Jewelry Try-On: Gold Hoop Earrings",
             "kind": "photo",
-            "product": "ceramic vase"
+            "product": "gold hoop earrings"
           },
           {
-            "ref": "g:background-remove-replace/example-05",
-            "title": "Outdoor light softens the vase surface",
+            "ref": "f:q8-tpl-light-example-03",
+            "title": "Skincare Routine: Serum in Daylight",
             "kind": "photo",
-            "product": "ceramic vase"
+            "product": "serum"
           }
         ]
       }
@@ -222,7 +222,7 @@
       "source": "n:guide:tpl-light-m2-source",
       "result": "n:gen2:tpl-light-g1",
       "mode": "photo",
-      "prompt": "Relight this amber glass bottle with warm side light and a soft grounded shadow, keeping its dark cap and cylindrical shape visible.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult turns the product once beside a bright window so its material catches a soft highlight. Natural light, clean UGC look. Close handheld shot with one small arc. Sound: quiet room tone, no music. End on the highlight.",
       "options": [
         [
           "Template",
@@ -236,104 +236,106 @@
           "Light",
           "Described in your words"
         ]
-      ]
+      ],
+      "sourceTitle": "Your product"
     },
     "picker": {
-      "title": "Choose a product lighting look",
-      "lead": "Pick the surface and highlight style that suit your item.",
+      "title": "Choose a lighting ad scene",
+      "lead": "Show the finish in natural light while a creator uses the product.",
       "chips": [
         {
-          "id": "glass",
-          "label": "Glass highlights"
+          "id": "texture",
+          "label": "Texture Macro"
         },
         {
-          "id": "metal",
-          "label": "Metal reflections"
+          "id": "grwm",
+          "label": "GRWM"
         },
         {
-          "id": "ceramic",
-          "label": "Ceramic surfaces"
+          "id": "review",
+          "label": "Review"
         },
         {
-          "id": "gloss",
-          "label": "Glossy finishes"
+          "id": "demo",
+          "label": "Product Demo"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-light-c4",
-          "label": "Crystal tumbler with soft highlights",
+          "ref": "f:q8-tpl-light-pick-01",
+          "label": "Texture Macro: Vitamin C Serum",
           "chips": [
-            "glass"
+            "texture"
           ],
-          "prompt": "Use soft, controlled highlights to show the crystal tumbler edges and clear glass.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand dispenses one drop of serum onto the back of a hand beside a bright bathroom mirror. Soft directional daylight, realistic beauty UGC look. Macro handheld shot with one slow push-in. Sound: pump click, no music. End with the serum bead catching a clean highlight.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:white-background-g2",
-          "label": "Clear glass spray bottle",
+          "ref": "f:q8-tpl-light-pick-02",
+          "label": "Texture Macro: Gold Hoop Earrings",
           "chips": [
-            "glass"
+            "texture"
           ],
-          "prompt": "Use soft highlights to show the clear glass bottle.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand lifts a plain gold hoop beside an ear and rotates it once so the polished edge catches the window light. Minimal jewelry UGC look, warm side light. Tight handheld macro with one small arc. Sound: a light metal chime, no music. End on the hoop held still beside the ear.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:white-background-reading-glasses",
-          "label": "Tortoiseshell glasses on white",
+          "ref": "f:q8-tpl-light-pick-03",
+          "label": "GRWM: Makeup Stick Before Work",
           "chips": [
-            "metal"
+            "grwm"
           ],
-          "prompt": "Keep the tortoiseshell frame edges clear and use a soft highlight on the lenses.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A woman in her late twenties holds a plain makeup stick beside a vanity mirror and says, “Here’s the finish I check in daylight before heading out.” Soft window light, honest UGC look. Chest-up front-facing handheld shot with slight sway. Sound: her voice and a cap click, no music. End with the product beside her cheek.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-detail-c3",
-          "label": "Brushed metal watch edge",
+          "ref": "f:q8-tpl-light-pick-04-rework",
+          "label": "GRWM: Glass Serum Routine",
           "chips": [
-            "metal"
+            "grwm"
           ],
-          "prompt": "Frame the metal watch case edge against a dark surface.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. A woman in her late twenties holds a round glass serum bottle beside her face at a bright bathroom mirror, applies one drop to her cheek and says, “This is my last step before I head out.” Morning window light passes through the serum and catches a clean highlight on the curved glass. Natural skincare creator look. Chest-up front-facing handheld shot with slight sway. Sound: her voice, a dropper tap and room tone; no music. End with the bottle beside her face.",
+          "kind": "video"
         },
         {
-          "ref": "g:background-remove-replace/example-07",
-          "label": "Blue-fleck mug in soft light",
+          "ref": "f:q8-tpl-light-pick-05-r2",
+          "label": "Review: Stainless Steel Bottle",
           "chips": [
-            "ceramic"
+            "review"
           ],
-          "prompt": "Use soft side light to show the blue-fleck ceramic mug glaze and its grounded shadow.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman holds a plain brushed-stainless-steel bottle beside her face in a bright gym lounge and says, “Here’s a close look at the finish I carry every day.” A crisp window reflection runs down the curved metal. Candid creator-review look. Chest-up eye-level handheld shot with one small push-in. Sound: voice, a cap click and quiet room tone; no music. End with the reflective bottle facing camera.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-detail-c4",
-          "label": "Ceramic mug glaze on the rim",
+          "ref": "f:q8-tpl-light-pick-06",
+          "label": "Car Selfie Review: Electrolyte Drink",
           "chips": [
-            "ceramic"
+            "review"
           ],
-          "prompt": "Bring out the glaze detail along the mug rim.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult holds a plain electrolyte drink bottle in a parked car, looks into camera and says, “Let’s take a look at the bottle and serving details.” Soft daylight, casual car-selfie UGC look. Chest-up front-facing handheld framing with slight natural sway. Sound: voice and quiet street ambience, no music. End with the bottle beside the face.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-light-g2",
-          "label": "Amber glass bottle in cool light",
+          "ref": "f:q8-tpl-light-pick-07-r2",
+          "label": "Texture Macro: Nail Polish",
           "chips": [
-            "gloss"
+            "texture",
+            "demo"
           ],
-          "prompt": "Keep the amber glass bottle silhouette clear against the cool blue-gray background.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand applies one smooth stroke of deep berry polish to a nail, ending as the wet glossy coat catches a clean window highlight. Keep the plain clear-glass bottle fully visible beside the hand; its curved edges reflect soft daylight. Realistic beauty macro look. Tight handheld macro with one slow push-in. Sound: brush sweep and cap tap; no music. End on the glossy nail and bottle.",
+          "kind": "video"
         },
         {
-          "ref": "n:gen2:plat-youtube-shorts-g3",
-          "label": "Balcony string lights at dusk",
+          "ref": "f:q8-tpl-light-pick-08-r2",
+          "label": "Product Demo: Chrome Eyelash Curler",
           "chips": [
-            "gloss"
+            "demo"
           ],
-          "prompt": "Keep the warm points of light distinct against the dim balcony at dusk.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman opens a plain chrome eyelash curler once beside her eye, showing the curved clamp and hinge, then angles it so a bright window reflection travels along the metal. Bright vanity daylight, natural beauty creator look. Tight chest-up handheld framing with one small push-in. Sound: hinge click and quiet room tone; no music. End with the curler held beside her cheek.",
+          "kind": "video"
         }
       ],
-      "button": "Make a relit product photo"
+      "button": "Start with your product"
     },
     "uses": [
       {
@@ -351,14 +353,14 @@
     ],
     "input": [
       {
-        "good": "g:ecommerce-main-image/example-02",
-        "bad": "n:guide:tpl-light-m5-blur",
+        "good": "f:q8-tpl-light-input-good-01",
+        "bad": "f:q8-tpl-light-input-bad-01-blur",
         "good_label": "Soft light keeps the rim clear",
         "bad_label": "The mug rim loses definition"
       },
       {
-        "good": "g:ecommerce-main-image/example-05",
-        "bad": "n:guide:tpl-light-m5-crop",
+        "good": "f:q8-tpl-light-input-good-02",
+        "bad": "f:q8-tpl-light-input-bad-02-crop",
         "good_label": "Mug and lid show the light",
         "bad_label": "Mug edge is cut off"
       }
@@ -367,12 +369,12 @@
       {
         "ref": "n:guide:tpl-light-m6-output-01-square",
         "frame": "1:1",
-        "label": "Square ceramic mug with controlled highlights"
+        "label": "Serum Surface Highlight"
       },
       {
         "ref": "n:guide:tpl-light-m6-output-02-square",
         "frame": "1:1",
-        "label": "Square pendant lamp with a controlled highlight"
+        "label": "Glass Pendant Glow"
       }
     ],
     "after": {
