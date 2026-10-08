@@ -1,7 +1,7 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection
+  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, Crumbs, CtaBand, StartNote, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, PairGrid, PageHero, Plans, Reading, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, normalizeStepLabel
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
@@ -25,7 +25,7 @@ function homeExampleFlows(examples: unknown): V2Flow[] {
   const flows: V2Flow[] = [];
   if (value.image && value.output) {
     flows.push({ t: "Smartwatch", d: "Product photo, then a vertical video ad, then three different openings to test.", steps: [
-      { label: "Product photo", image: value.image }, { label: "Video ad", image: value.output },
+      { label: "Your product", image: value.image }, { label: "Video ad", image: value.output },
       ...list<V2Image>(value.versions).map((image, index) => ({ label: `Version ${"ABC"[index]}`, image, tall: true }))] });
   }
   if (value.bottle && value.bottleAd) {
@@ -223,7 +223,7 @@ function Flows({ flows, r, filterChips }: { flows: V2Flow[]; r: V2Resolvers; fil
             {flow.steps.map((step, index) => (
               <Fragment key={`${step.label}-${index}`}>
                 {index > 0 ? <div aria-hidden="true" className="fsep">›</div> : null}
-                <div className="fcell" style={{ "--a": flowAspect(step) } as CSSProperties}><figure><Img className={step.tall ? "v916" : undefined} image={step.image} r={r} /></figure><small>{step.label}</small></div>
+                <div className="fcell" style={{ "--a": flowAspect(step) } as CSSProperties}><figure><Img className={step.tall ? "v916" : undefined} image={step.image} r={r} /></figure><small>{normalizeStepLabel(step.label)}</small></div>
               </Fragment>
             ))}
           </div>

@@ -10,6 +10,9 @@ export const SITE_V2_SOURCE_REVISION = "aidreamcapes-site-v2";
 const BASE = "https://www.aivideosugc.com";
 const ASSET_ROOT = "/assets/sites/site_aidreamcapes/site-v2";
 const DATA_DIR = path.join(process.cwd(), "scripts", "data", "aidreamcapes-site-v2");
+function normalizeStepLabel(label) {
+  return typeof label === "string" && ["Product photo", "Your photo", "Photo"].includes(label.trim()) ? "Your product" : label;
+}
 // Keep in sync with src/lib/aidreamcapes-create-intent.ts.
 const VIDEO_SIZES = ["9:16", "1:1", "16:9", "4:3", "3:4"];
 const DEFAULT_PHOTO_PROMPT = "Create a product photo from my uploaded photo.";
@@ -295,7 +298,7 @@ function galleryFor(model, pageId) {
   return refs.length ? { images: refs.map((ref) => mediaImage(model, ref, "gallery")) } : undefined;
 }
 
-// "Your photo" next to the result, for pages that show before and after examples.
+// "Your product" next to the result, for pages that show before and after examples.
 function pairsFor(model, pageId) {
   const list = model.media.plan.pages[pageId]?.pairs ?? [];
   return list.length ? list.map((item) => ({ before: mediaImage(model, item.before, "inset"), after: mediaImage(model, item.after, "gallery") })) : undefined;
@@ -752,14 +755,14 @@ function visualFor(model, page, source, maker, group, buttonHref, content) {
     strip: (Array.isArray(source.strip) ? source.strip : []).map((ref) => visualImage(model, ref)),
     ...(steps.source && steps.result ? { steps: {
       source: { ...visualImage(model, steps.source, "photo"), ...(steps.sourceAlt ? { alt: String(steps.sourceAlt) } : {}) },
-      ...(steps.sourceTitle ? { sourceTitle: String(steps.sourceTitle) } : {}),
+      ...(steps.sourceTitle ? { sourceTitle: normalizeStepLabel(String(steps.sourceTitle)) } : {}),
       ...(steps.sourceHint ? { sourceHint: String(steps.sourceHint) } : {}),
       result: visualImage(model, steps.result, stepMode === "video" ? "video" : "photo"),
       options,
       credits: `${stepCredits} credits`,
       ...(steps.prompt ? { prompt: String(steps.prompt) } : {}),
       mode: stepMode,
-      items: Array.isArray(content.steps) ? content.steps.map((item) => ({ t: item.t ?? "", d: item.d ?? "" })) : []
+      items: Array.isArray(content.steps) ? content.steps.map((item) => ({ t: normalizeStepLabel(item.t ?? ""), d: item.d ?? "" })) : []
     } } : {}),
     picker: {
       title: picker.title ?? source.titles?.m3?.h2 ?? "",
@@ -1118,20 +1121,20 @@ function specLinks(model, ids) {
 // photo tools: a gallery of the tools' own pictures ("g:" files) or the newly generated pictures
 // ("n:" references, a plain product photo first and then scenes made from it).
 const EXAMPLE_FLOWS = {
-  ebike: [null, [["Product photo", "n:guide:plat-youtube-shorts-size-portrait-ebike"], ["Video ad", "f:video-hub-h1-bike"]]],
-  tote: ["lifestyle-scene", [["Product photo", "source-input"], ["Sunny cafe", "example-01"], ["City bike", "example-03"]]],
-  necklace: ["jewelry-positioning", [["Product photo", "source-input"], ["Worn on a dark top", "example-01"], ["Pendant detail", "example-05"]]],
-  jacket: ["sale-campaign-key-visual", [["Product photo", "source-input"], ["Worn outdoors", "example-02"], ["Snowy city", "example-05"]]],
-  lipstick: [null, [["Product photo", "n:lipstick-pack"], ["On a vanity", "n:lipstick-vanity"], ["Shade swatch", "n:lipstick-swatch"]]],
-  hoodie: [null, [["Product photo", "n:hoodie-pack"], ["Worn outdoors", "n:hoodie-street"], ["Flat lay", "n:hoodie-flatlay"]]],
-  handbag: [null, [["Product photo", "n:handbag-pack"], ["Cafe table", "n:handbag-cafe"], ["Carried outdoors", "n:handbag-carry"]]],
-  boots: [null, [["Product photo", "n:boots-pack"], ["On cobblestones", "n:boots-street"], ["By the door", "n:boots-doorway"]]],
-  sunglasses: [null, [["Product photo", "n:sunglasses-pack"], ["Cafe table", "n:sunglasses-cafe"], ["Worn outdoors", "n:sunglasses-worn"]]],
-  coffee: [null, [["Product photo", "n:coffee-pack"], ["Kitchen counter", "n:coffee-counter"], ["Breakfast table", "n:coffee-breakfast"]]],
-  candle: [null, [["Product photo", "n:candle-pack"], ["Living room", "n:candle-table"], ["Bath edge", "n:candle-bath"]]],
-  phonecase: [null, [["Product photo", "n:phonecase-pack"], ["On a desk", "n:phonecase-desk"], ["In a hand", "n:phonecase-hand"]]],
-  yogamat: [null, [["Product photo", "n:yogamat-pack"], ["Bright room", "n:yogamat-room"], ["In use", "n:yogamat-pose"]]],
-  hotsauce: [null, [["Product photo", "n:hotsauce-pack"], ["Over tacos", "n:hotsauce-tacos"], ["With fresh chilies", "n:hotsauce-peppers"]]]
+  ebike: [null, [["Your product", "n:guide:plat-youtube-shorts-size-portrait-ebike"], ["Video ad", "f:video-hub-h1-bike"]]],
+  tote: ["lifestyle-scene", [["Your product", "source-input"], ["Sunny cafe", "example-01"], ["City bike", "example-03"]]],
+  necklace: ["jewelry-positioning", [["Your product", "source-input"], ["Worn on a dark top", "example-01"], ["Pendant detail", "example-05"]]],
+  jacket: ["sale-campaign-key-visual", [["Your product", "source-input"], ["Worn outdoors", "example-02"], ["Snowy city", "example-05"]]],
+  lipstick: [null, [["Your product", "n:lipstick-pack"], ["On a vanity", "n:lipstick-vanity"], ["Shade swatch", "n:lipstick-swatch"]]],
+  hoodie: [null, [["Your product", "n:hoodie-pack"], ["Worn outdoors", "n:hoodie-street"], ["Flat lay", "n:hoodie-flatlay"]]],
+  handbag: [null, [["Your product", "n:handbag-pack"], ["Cafe table", "n:handbag-cafe"], ["Carried outdoors", "n:handbag-carry"]]],
+  boots: [null, [["Your product", "n:boots-pack"], ["On cobblestones", "n:boots-street"], ["By the door", "n:boots-doorway"]]],
+  sunglasses: [null, [["Your product", "n:sunglasses-pack"], ["Cafe table", "n:sunglasses-cafe"], ["Worn outdoors", "n:sunglasses-worn"]]],
+  coffee: [null, [["Your product", "n:coffee-pack"], ["Kitchen counter", "n:coffee-counter"], ["Breakfast table", "n:coffee-breakfast"]]],
+  candle: [null, [["Your product", "n:candle-pack"], ["Living room", "n:candle-table"], ["Bath edge", "n:candle-bath"]]],
+  phonecase: [null, [["Your product", "n:phonecase-pack"], ["On a desk", "n:phonecase-desk"], ["In a hand", "n:phonecase-hand"]]],
+  yogamat: [null, [["Your product", "n:yogamat-pack"], ["Bright room", "n:yogamat-room"], ["In use", "n:yogamat-pose"]]],
+  hotsauce: [null, [["Your product", "n:hotsauce-pack"], ["Over tacos", "n:hotsauce-tacos"], ["With fresh chilies", "n:hotsauce-peppers"]]]
 };
 
 function flowCta(model, id) {
@@ -1148,7 +1151,7 @@ function exampleFlow(model, item) {
   const flow = EXAMPLE_FLOWS[item.id];
   assert.ok(flow, `unknown example flow ${item.id}`);
   return { t: item.t, d: item.d, ...flowCta(model, item.id), steps: flow[1].map(([label, file], index) => ({
-    label: item.imageLabels?.[index] || label,
+    label: normalizeStepLabel(item.imageLabels?.[index] || label),
     image: mediaImage(model, item.imageRefs?.[index] || (flow[0] ? `g:${flow[0]}/${file}` : file), "gallery")
   })) };
 }

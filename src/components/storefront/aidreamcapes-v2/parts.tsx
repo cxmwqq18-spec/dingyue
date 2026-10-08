@@ -2,6 +2,10 @@ import type { ReactNode } from "react";
 import type { V2Article, V2Card, V2Crumb, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2Item, V2Maker, V2Plan, V2Resolvers, V2SpecRow, V2Tool, V2Video, V2GlossaryEntry } from "./types";
 import type { V2Company } from "./company";
 
+export function normalizeStepLabel(label: string): string {
+  return ["Product photo", "Your photo", "Photo"].includes(label.trim()) ? "Your product" : label;
+}
+
 // Each candidate in a stored srcset goes through the same asset resolver as the main file.
 function resolveSrcSet(srcSet: string, r: V2Resolvers): string {
   return srcSet
@@ -129,7 +133,7 @@ export function Steps({ items }: { items: V2Item[] }) {
       {items.map((item, index) => (
         <div className="step" key={item.t}>
           <span className="n">{index + 1}</span>
-          <h3>{item.t}</h3>
+          <h3>{normalizeStepLabel(item.t)}</h3>
           <p>{item.d}</p>
         </div>
       ))}

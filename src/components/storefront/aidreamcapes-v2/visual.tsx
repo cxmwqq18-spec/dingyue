@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Img, RichText, Section } from "./parts";
+import { Img, normalizeStepLabel, RichText, Section } from "./parts";
 import { AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type {
   V2Resolvers,
@@ -72,10 +72,10 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video" }: { visu
           <div className="v-step-art v-step-source">
             <div className="drop v-step-drop">
               <VisualImage image={step.source} r={r} className="v-step-thumb" />
-              <div><b>{step.sourceTitle ?? "Drop your product photo here"}</b><span>{step.sourceHint ?? "JPG, PNG or WebP · any clear photo works"}</span></div>
+              <div><b>{step.sourceTitle ? normalizeStepLabel(step.sourceTitle) : "Drop your product photo here"}</b><span>{step.sourceHint ?? "JPG, PNG or WebP · any clear photo works"}</span></div>
             </div>
           </div>
-          <div className="v-step-copy"><span className="v-step-number">Step 01</span><h3>{step.items[0]?.t}</h3><p>{step.items[0]?.d}</p></div>
+          <div className="v-step-copy"><span className="v-step-number">Step 01</span><h3>{normalizeStepLabel(step.items[0]?.t ?? "")}</h3><p>{step.items[0]?.d}</p></div>
         </article>
         <article className="v-step-card">
           <div className="v-step-art v-step-options">
@@ -86,14 +86,14 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video" }: { visu
               <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>
             </div>
           </div>
-          <div className="v-step-copy"><span className="v-step-number">Step 02</span><h3>{step.items[1]?.t}</h3><p>{step.items[1]?.d}</p></div>
+          <div className="v-step-copy"><span className="v-step-number">Step 02</span><h3>{normalizeStepLabel(step.items[1]?.t ?? "")}</h3><p>{step.items[1]?.d}</p></div>
         </article>
         <article className="v-step-card">
           <div className="v-step-art v-step-result">
             <VisualImage image={step.result} r={r} className={step.result.w < step.result.h ? "v-step-result-portrait" : undefined} />
             <span aria-hidden="true" className="btn btn-ghost v-download">Download</span>
           </div>
-          <div className="v-step-copy"><span className="v-step-number">Step 03</span><h3>{step.items[2]?.t}</h3><p>{step.items[2]?.d}</p></div>
+          <div className="v-step-copy"><span className="v-step-number">Step 03</span><h3>{normalizeStepLabel(step.items[2]?.t ?? "")}</h3><p>{step.items[2]?.d}</p></div>
         </article>
       </div>
     </Section>
