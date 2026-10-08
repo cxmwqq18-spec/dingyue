@@ -42,14 +42,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/on-model-generation-v1/on-model-generation/example-07",
-      "rule": "one-page",
-      "pages": [
-        "tpl-detail",
-        "tpl-retargeting-video-ad"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/clips/carousel-storytelling",
       "rule": "one-page",
       "pages": [
@@ -71,22 +63,6 @@
       "pages": [
         "ind-shoes",
         "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/native-spark-ads",
-      "rule": "one-page",
-      "pages": [
-        "home",
-        "tpl-spark-ads-style-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/retargeting-urgency",
-      "rule": "one-page",
-      "pages": [
-        "occ-sale-discount",
-        "tpl-retargeting-video-ad"
       ]
     },
     {
@@ -146,36 +122,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2before-after-videos-c3",
-      "rule": "one-page",
-      "pages": [
-        "occ-sale-discount",
-        "tpl-retargeting-video-ad"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2examples-g4",
       "rule": "one-page",
       "pages": [
         "ind-health-wellness",
-        "tpl-angle",
-        "tpl-spark-ads-style-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2examples-g7",
-      "rule": "one-page",
-      "pages": [
-        "tpl-detail",
-        "tpl-retargeting-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2examples-g8",
-      "rule": "one-page",
-      "pages": [
-        "tpl-light",
-        "tpl-retargeting-video-ad"
+        "tpl-angle"
       ]
     },
     {
@@ -184,14 +135,6 @@
       "pages": [
         "ind-fashion-clothing",
         "tpl-angle"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2occ-black-friday-g1",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-retargeting-video-ad"
       ]
     },
     {
@@ -215,8 +158,7 @@
       "rule": "one-page",
       "pages": [
         "occ-product-launch",
-        "tpl-angle",
-        "tpl-spark-ads-style-video"
+        "tpl-angle"
       ]
     },
     {
@@ -350,14 +292,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-before-after-videos-result",
-      "rule": "one-page",
-      "pages": [
-        "before-after-videos",
-        "tpl-retargeting-video-ad"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-before-after-videos-source",
       "rule": "one-page",
       "pages": [
@@ -391,14 +325,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-black-friday-giftbox-crop",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-spark-ads-style-video"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c3-r3-plat-shopify-m5-0",
       "rule": "one-page",
       "pages": [
@@ -420,22 +346,6 @@
       "pages": [
         "ind-fashion-clothing",
         "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-ind-home-living-m5-soft-focus",
-      "rule": "one-page",
-      "pages": [
-        "ind-home-living",
-        "tpl-retargeting-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-ind-jewelry-accessories-m2-result",
-      "rule": "one-page",
-      "pages": [
-        "tpl-size",
-        "tpl-spark-ads-style-video"
       ]
     },
     {
@@ -493,14 +403,6 @@
       "pages": [
         "occ-product-launch",
         "tpl-light"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-desk-organizer",
-      "rule": "one-page",
-      "pages": [
-        "tpl-detail",
-        "tpl-spark-ads-style-video"
       ]
     },
     {
