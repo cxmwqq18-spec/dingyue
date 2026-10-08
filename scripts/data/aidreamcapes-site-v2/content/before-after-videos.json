@@ -13,23 +13,23 @@
   ],
   "steps": [
     {
-      "t": "Upload the product photo",
-      "d": "The item that makes the change, clear and in focus."
+      "t": "Upload your product",
+      "d": "Keep the item that causes the change clear and fully in frame."
     },
     {
-      "t": "Describe the before and the after",
-      "d": "One short sentence each, like \"tangled cords\" and then \"three cords neatly in the slots\"."
+      "t": "Describe the before and after",
+      "d": "Write one short sentence for each visible state."
     },
     {
       "t": "Download and add labels",
-      "d": "Type \"Before\" and \"After\" in your editor if you want them on screen."
+      "d": "Add Before and After labels in your editor if you want them on screen."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "9:16 · TikTok & Reels"
+        "9:16 \u00b7 TikTok & Reels"
       ],
       [
         "Length",
@@ -45,52 +45,23 @@
     },
     {
       "q": "How do I describe the before and the after?",
-      "a": "Use one sentence with two parts joined by “then.” For example: “cluttered entryway with shoes everywhere, then shoes lined up on our bamboo rack.”"
+      "a": "Use one sentence with two parts joined by \u201cthen.\u201d For example: \u201ccluttered entryway with shoes everywhere, then shoes lined up on our bamboo rack.\u201d"
     },
     {
       "q": "Can I show skincare or health results?",
       "a": "Show a change to the product or the space around it, such as lint lifted from a cushion. Do not imply a health, skin or body result."
     },
     {
-      "q": "Can I add “Before” and “After” labels?",
+      "q": "Can I add \u201cBefore\u201d and \u201cAfter\u201d labels?",
       "a": "Yes, add them after you download, in CapCut or TikTok. Typed labels stay crisp and correctly spelled, which AI-generated lettering can't always manage."
     }
   ],
   "overview": [
     {
-      "h2": "Make the product’s role in the change easy to see",
+      "h2": "Make the product\u2019s role in the change easy to see",
       "p": "Keep one space or object in view across both scenes so the difference reads quickly. Show the starting condition first, then the product in use and the finished state without adding a claim the product cannot support."
     }
   ],
-  "examples": {
-    "h2": "More before-and-after ideas",
-    "lead": "Try a half-polished pan, a brushed grout line or a sweater shelf sorted into bins.",
-    "groups": [
-      {
-        "label": "Clear, visible changes",
-        "items": [
-          {
-            "ref": "n:gen2:before-after-videos-g1",
-            "title": "Steel pan, half scorched and half polished",
-            "kind": "scene",
-            "product": "stainless steel pan"
-          },
-          {
-            "ref": "n:gen2:before-after-videos-g2",
-            "title": "Grout line half cleaned with a small brush",
-            "kind": "scene",
-            "product": "grout brush"
-          },
-          {
-            "ref": "n:gen2:before-after-videos-g3",
-            "title": "Sweater shelf half sorted into fabric bins",
-            "kind": "scene",
-            "product": "fabric storage bins"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
     "strip": [
       "n:guide:b1-before-after-videos-source",
@@ -98,114 +69,108 @@
       "n:guide:k4-before-after-videos-strip-drawer",
       "n:guide:k4-before-after-videos-strip-linen",
       "n:guide:k4-before-after-videos-strip-fridge",
-      "n:gen2:home-g4"
+      "n:guide:k4-before-after-videos-m5-round-watch-bad"
     ],
     "steps": {
       "source": "n:guide:b1-before-after-videos-source",
-      "sourceAlt": "Compact matte-black cable organizer with three empty front slots on a pale oak desk.",
+      "sourceAlt": "Your product: a compact cable organizer with three empty slots on a clear desk.",
       "result": "n:guide:b1-before-after-videos-result",
       "mode": "video",
       "length": 15,
-      "prompt": "Start with this empty cable organizer, feed three loose cords through its slots, and end on a clear desk."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright desk, an adult hand feeds three loose cords through the organizer slots, leaving the tabletop clear. End with the cords arranged in place. Soft daylight, practical home-demo style. Overhead medium framing with one slow push-in. Sound: cord slide, organizer tap and quiet room tone; no music."
     },
     "picker": {
-      "title": "Choose one visible change",
-      "lead": "Show one visible change, from a lint roller crossing a cushion to a cable organizer clearing a desk.",
+      "title": "Browse before-and-after formats",
+      "lead": "Show a visible product-led change through creator demos, cleaning routines and practical fixes.",
       "chips": [
         {
-          "id": "storage",
-          "label": "Storage"
+          "id": "creator",
+          "label": "Creator Reviews"
         },
         {
-          "id": "kitchen",
-          "label": "Kitchen"
+          "id": "refresh",
+          "label": "Product Refresh"
         },
         {
-          "id": "home",
-          "label": "Home"
+          "id": "quickfix",
+          "label": "Quick Fixes"
         },
         {
-          "id": "entryway",
-          "label": "Entryway"
+          "id": "split",
+          "label": "Before & After"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-home-c1",
-          "label": "Velvet hangers along a closet rail",
+          "ref": "n:guide:q3-before-after-videos-board-01-pet-hair-review",
+          "label": "Creator Review: Pet Roller Clears Fur",
           "chips": [
-            "storage",
-            "home"
+            "creator"
           ],
-          "prompt": "Show the crowded rail first, then space the hangers evenly along it.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult rolls once across the sofa and says, \"The clean path is easy to see beside the fur.\" End with the cleared strip and remaining fur together in frame. Soft daylight, natural UGC style. Chest-up and sofa framing with one slow pan. Sound: spoken line, roller pass and dog ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-home-c2",
-          "label": "Pantry jars lined up",
+          "ref": "n:guide:q3-before-after-videos-board-02-shoe-brush-review",
+          "label": "Creator Review: Shoe Brush Lifts Scuffs",
           "chips": [
-            "kitchen",
-            "storage"
+            "creator"
           ],
-          "prompt": "Clear one shelf, then line up the matching pantry jars.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a home entryway, an adult brushes the scuffed shoe once and says, \"Here is the scuffed side beside the cleaned one.\" End with both shoes side by side. Soft daylight, practical creator style. Low medium framing with one gentle push-in. Sound: spoken line, brush strokes and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-home-c3",
-          "label": "Under-sink bins arranged",
+          "ref": "n:guide:q3-before-after-videos-board-03-silver-necklace-refresh",
+          "label": "Jewelry Refresh: Necklace Polished",
           "chips": [
-            "kitchen",
-            "storage"
+            "refresh"
           ],
-          "prompt": "Move the loose bottles aside, then slide clear storage bins into the cabinet.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a vanity, adult hands wipe the necklace once with a soft cloth, revealing the brighter section beside the dull one. End with the two sections visible on the tray. Soft warm light, delicate macro style. Top-down close framing with one slow tilt. Sound: cloth brush, chain movement and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-home-c4",
-          "label": "Shoe rack filled neatly",
+          "ref": "n:guide:q3-before-after-videos-board-04-phone-case-install",
+          "label": "Phone Case Fit: Before & After",
           "chips": [
-            "entryway",
-            "storage"
+            "quickfix"
           ],
-          "prompt": "Start with shoes on the floor, then place them on the slim entryway rack.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean desk, an adult aligns the plain case and presses it onto the generic phone once. End with the cased phone beside the bare one. Soft daylight, simple tech-demo style. Top-down medium angle with one slow push-in. Sound: case snap, fingertip taps and quiet desk ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:home-g6",
-          "label": "Air purifier by the bed",
+          "ref": "n:guide:q3-before-after-videos-board-05-snack-bin-reset",
+          "label": "Problem Fix: Protein Bars Sorted",
           "chips": [
-            "home"
+            "split"
           ],
-          "prompt": "Show the room before, then place the purifier beside the bed and switch it on.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a pantry counter, adult hands move the scattered wrapped bars into one clear bin. End with the bars lined up inside and the counter clear. Warm kitchen light, tidy everyday style. Slight overhead framing with one slow pan. Sound: wrapper crinkles, bin slide and kitchen room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:home-g8",
-          "label": "Board game box opened",
+          "ref": "n:guide:q3-before-after-videos-board-06-grout-cleaning-demo",
+          "label": "Grout Brush Demo: Clears Tile Seam",
           "chips": [
-            "home"
+            "refresh"
           ],
-          "prompt": "Clear the table, then set out the board game and its pieces.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult brushes once along a tile seam, leaving one visibly lighter section beside the darker grout. End on the contrast between the two sections. Soft daylight, practical cleaning style. Close low angle with one short tracking move. Sound: brush scrub, water drop and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:ind-home-living-g1",
-          "label": "Storage boxes on a shelf",
+          "ref": "n:guide:q3-before-after-videos-board-07-pet-bed-roller",
+          "label": "Pet Bed Fix: Roller Clears Fur",
           "chips": [
-            "storage",
-            "home"
+            "split"
           ],
-          "prompt": "Move the loose items away, then line up the fabric boxes on the shelf.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a resting dog, an adult rolls once across the pet cushion and exposes a clean path through the fur. End with both the cleared and furry areas in view. Soft daylight, warm home style. Low close framing with one slow pan. Sound: roller pass, fabric friction and dog breathing; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:video-hub-g4",
-          "label": "Coats and bags by the door",
+          "ref": "n:guide:q3-before-after-videos-board-08-suitcase-zipper-fix",
+          "label": "Suitcase Fix: Zipper Closes Smoothly",
           "chips": [
-            "entryway",
-            "home"
+            "quickfix"
           ],
-          "prompt": "Show the busy entryway, then arrange coats and bags by the hooks.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright hotel room, an adult draws the suitcase zipper along the track until the lid closes. End with the closed case and zipper pull in view. Soft window light, practical travel style. Medium close angle with one gentle tracking move. Sound: zipper glide, fabric settle and quiet room ambience; no music.",
           "kind": "video"
         }
       ],
@@ -213,57 +178,46 @@
     },
     "uses": [
       {
-        "frame": "listing",
-        "ref": "f:home-organization",
-        "h": "Product page",
-        "d": "One clip shows a result that would take a paragraph to explain."
+        "frame": "phone",
+        "ref": "n:guide:q3-before-after-videos-case-04-phone-case-single-camera",
+        "h": "Show a practical product change",
+        "d": "Place a before-and-after clip beside the item that creates the visible change."
       },
       {
-        "frame": "phone",
-        "ref": "f:k4-before-after-videos-uses-phone-frame",
-        "h": "Social post",
-        "d": "Keep both scenes positioned consistently so the change is obvious at a glance."
+        "frame": "post",
+        "ref": "n:guide:k4-before-after-videos-m5-round-watch-good",
+        "h": "Explain a result on a product page",
+        "d": "Show the product clearly before its result appears."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:tpl-bf-c1",
-        "bad": "n:guide:b1-before-after-videos-bad-crop",
-        "good_label": "Robot vacuum fully in frame on a wood floor",
-        "bad_label": "Robot vacuum clipped at the lower edge"
+        "good": "n:guide:q3-before-after-videos-input-watch-good-alt",
+        "bad": "n:guide:q3-before-after-videos-input-watch-bad-crop",
+        "good_label": "Your watch, fully in frame",
+        "bad_label": "Your watch, cropped at the edge"
       },
       {
-        "good": "n:guide:k4-before-after-videos-m5-round-watch-good",
-        "bad": "n:guide:k4-before-after-videos-m5-round-watch-bad",
-        "good_label": "Round watch face and case stay sharp on a dark stand",
-        "bad_label": "Blur softens the watch dial and case"
+        "good": "n:guide:q3-before-after-videos-input-watch-good-alt-2",
+        "bad": "n:guide:q3-before-after-videos-input-watch-bad-blur-2",
+        "good_label": "Your watch, fully in frame",
+        "bad_label": "Your watch, softened by blur"
       }
     ],
     "outputs": [
       {
-        "ref": "n:gen2:home-g2",
+        "ref": "n:guide:q3-before-after-videos-output-watch-compare",
         "frame": "1:1",
-        "label": "Backpack set in a cafe",
-        "length": 15
+        "label": "Before and After: Watch Dial",
+        "length": 10
       },
       {
-        "ref": "n:gen2:home-g7",
+        "ref": "n:guide:q3-before-after-videos-output-watch-wipe",
         "frame": "1:1",
-        "label": "Leash clipped by the door",
-        "length": 15
+        "label": "Watch Demo: Dial Wipe",
+        "length": 10
       }
     ],
-    "after": {
-      "ref": "n:gen2:home-g3",
-      "zones": [
-        "Before",
-        "After"
-      ],
-      "items": [
-        "Show only a change your product really makes.",
-        "No health, skin or body results."
-      ]
-    },
     "titles": {
       "m2": {
         "h2": "How to make a before and after video in 3 steps"
@@ -276,7 +230,7 @@
         "h2": "Where before and after videos help you sell"
       },
       "m5": {
-        "h2": "What photo to upload for a before and after video"
+        "h2": "What to prepare for a before-and-after scene"
       },
       "m6": {
         "h2": "Before and after video length, size and credits"
@@ -285,10 +239,10 @@
         "h2": "Before you post the comparison"
       },
       "gallery": {
-        "h2": "AI before and after video examples"
+        "h2": "Before-and-after scenes"
       },
       "examples": {
-        "h2": "More before-and-after ideas"
+        "h2": "More ways to show a change"
       }
     }
   }

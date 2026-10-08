@@ -13,16 +13,16 @@
   ],
   "steps": [
     {
-      "t": "Upload a product photo",
-      "d": "The product on its own, with its whole shape visible. You describe the box in step 2."
+      "t": "Upload your product",
+      "d": "Show the full item clearly. Describe the packaging and reveal in the next step."
     },
     {
-      "t": "Describe the box and the reveal",
-      "d": "Box, wrapping and what comes out first, like \"kraft box, cream tissue, candle\"."
+      "t": "Describe the box and reveal",
+      "d": "Name the wrapping and what comes out first, such as a kraft box, cream tissue and a candle."
     },
     {
-      "t": "Download, or change the packaging",
-      "d": "If the box doesn't look like yours, describe it again and make another."
+      "t": "Download or change the packaging",
+      "d": "Describe only packaging you use, then review the result before sharing."
     }
   ],
   "maker": {
@@ -62,169 +62,115 @@
       "p": "An unboxing clip follows a simple reveal: open the outer package, move aside one layer of wrapping, and show the item. Describe the materials and order you use so the preview stays close to the package customers receive."
     }
   ],
-  "examples": {
-    "h2": "More unboxing scenes",
-    "lead": "Different boxes, different reveals. Pick the one closest to how your product really ships.",
-    "groups": [
-      {
-        "label": "Box and reveal ideas",
-        "items": [
-          {
-            "ref": "n:guide:k1-unboxing-example-diffuser",
-            "title": "Rigid mailer opened to a ceramic reed diffuser",
-            "kind": "scene",
-            "product": "ceramic reed diffuser"
-          },
-          {
-            "ref": "n:guide:k1-unboxing-example-skincare-minis",
-            "title": "Ribbon gift box opened to three skincare minis",
-            "kind": "scene",
-            "product": "skincare minis"
-          },
-          {
-            "ref": "n:guide:k1-unboxing-example-tea-set",
-            "title": "Subscription box with three items laid out",
-            "kind": "scene",
-            "product": "subscription box"
-          }
-        ]
-      },
-      {
-        "label": "Small-box reveals",
-        "items": [
-          {
-            "ref": "n:guide:k1-unboxing-example-ring-box",
-            "title": "Jewelry box opened to a ring on velvet",
-            "kind": "scene",
-            "product": "jewelry box"
-          },
-          {
-            "ref": "n:guide:k1-unboxing-example-headphones",
-            "title": "Headphones lifted from a fitted foam insert",
-            "kind": "scene",
-            "product": "headphones"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
     "strip": [
-      "n:guide:k1-unboxing-strip-dripper-box",
-      "n:guide:k1-unboxing-strip-compact-mirror",
-      "n:guide:k1-unboxing-strip-coffee-counter",
-      "n:guide:k1-unboxing-strip-coffee-shelf",
+      "n:guide:k1-unboxing-example-headphones",
       "n:guide:k1-unboxing-strip-skincare-gift",
+      "n:guide:k1-unboxing-strip-compact-mirror",
+      "n:guide:k1-unboxing-example-ring-box",
+      "n:guide:k1-unboxing-example-skincare-minis",
       "n:guide:k1-unboxing-strip-candle-brunch"
     ],
     "steps": {
       "source": "n:guide:k1-unboxing-step-source-candle",
-      "sourceAlt": "Plain white ceramic candle jar standing by itself on a neutral surface.",
+      "sourceAlt": "Your product: a plain candle jar shown upright with its full shape visible.",
       "result": "n:guide:k1-unboxing-step-result-candle",
       "mode": "video",
       "length": 10,
-      "prompt": "Open a kraft box, fold back cream tissue paper and lift out this plain white candle jar."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright home counter, adult hands open the plain kraft box, fold back tissue and lift the candle jar once. End with the jar centered beside the open box. Soft window light, calm unboxing style. Overhead medium framing with one slow push-in. Sound: lid lift, paper rustle and glass set-down; no music."
     },
     "picker": {
-      "title": "Choose a package and reveal",
-      "lead": "See a kraft box open, cream tissue fold back and a candle lift into view.",
+      "title": "Browse unboxing formats",
+      "lead": "See creator first looks, ASMR reveals and package openings across beauty, accessories and tech.",
       "chips": [
         {
-          "id": "gift",
-          "label": "Gift sets"
+          "id": "creator",
+          "label": "Creator First Looks"
         },
         {
-          "id": "kitchen",
-          "label": "Kitchen"
+          "id": "asmr",
+          "label": "ASMR Unboxings"
         },
         {
-          "id": "care",
-          "label": "Care"
+          "id": "soft",
+          "label": "Gentle Product Reveals"
         },
         {
-          "id": "small",
-          "label": "Small items"
+          "id": "package",
+          "label": "Package Reveals"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:k1-unboxing-picker-camping-kit",
-          "label": "Camping breakfast kit",
+          "ref": "n:guide:q3-unboxing-videos-board-01-serum-unbox-review",
+          "label": "Creator Unbox: Serum Bottle Revealed",
           "chips": [
-            "gift",
-            "kitchen"
+            "creator"
           ],
-          "prompt": "Lift the lid, then arrange the mug, coffee pouch and spork on the blanket.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a softly lit vanity, an adult lifts the serum from tissue and says, \"The bottle and dropper are both here.\" End with the bottle centered above the open box. Warm window light, natural creator style. Chest-up framing with one slow push-in. Sound: spoken line, tissue rustle and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-unboxing-picker-pet-kit",
-          "label": "Pet grooming kit revealed",
+          "ref": "n:guide:q3-unboxing-videos-board-02-gold-hoop-asmr",
+          "label": "ASMR Unbox: Gold Hoops Lifted",
           "chips": [
-            "gift",
-            "care"
+            "asmr"
           ],
-          "prompt": "Open the small kit box and set the brush and towel beside the shampoo bottle.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands open a velvet jewelry box and lift one hoop into view, then pause above the matching pair. End with both hoops visible in the box. Warm vanity light, elegant close-up style. Top-down macro framing with one slow tilt. Sound: box hinge, soft velvet brush and a tiny metal chime; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-unboxing-picker-tea-set",
-          "label": "Tea gift set opened",
+          "ref": "n:guide:q3-unboxing-videos-board-03-pet-brush-review",
+          "label": "Creator Review: Pet Brush Unboxed",
           "chips": [
-            "gift",
-            "kitchen"
+            "creator"
           ],
-          "prompt": "Open the tea tin set and place the infuser and cup beside it.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult lifts the pet brush from an open box, looks to camera and says, \"Here is the brush head and handle shape.\" End with the brush held upright beside the box. Soft daylight, friendly UGC style. Chest-up framing with one gentle pan. Sound: spoken line, paper rustle and a dog collar jingle; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-unboxing-picker-scarf",
-          "label": "Scarf pulled from mailer",
+          "ref": "n:guide:q3-unboxing-videos-board-04-resistance-band-unbox",
+          "label": "Fitness Unbox: Bands Lifted Out",
           "chips": [
-            "gift",
-            "small"
+            "asmr"
           ],
-          "prompt": "Open the mailer and lift the folded scarf out onto the bed.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift a plain resistance band from a mailer and lay it beside the open box. End with the band and its packaging arranged clearly on a mat. Soft daylight, clean fitness style. Overhead medium framing with one slow push-in. Sound: paper crinkle, band flex and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-unboxing-picker-headphones",
-          "label": "Headphones lifted from a box",
+          "ref": "n:guide:q3-unboxing-videos-board-05-baby-wrap-reveal",
+          "label": "Swaddle Unbox: Baby Wrap Opened",
           "chips": [
-            "gift",
-            "small"
+            "soft"
           ],
-          "prompt": "Lift the headphones from the open box, then turn them to show both ear cups.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands unfold the neutral swaddle once over the open box, keeping the full fabric in frame; no child appears. End with the wrap spread neatly over tissue. Soft nursery daylight, calm gentle style. Overhead framing with one slow pull-back. Sound: fabric rustle, tissue movement and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-unboxing-picker-speaker",
-          "label": "Speaker beside open box",
+          "ref": "n:guide:q3-unboxing-videos-board-06-protein-box-reveal",
+          "label": "Snack Box Reveal: Protein Bars Lifted",
           "chips": [
-            "small",
-            "care"
+            "soft"
           ],
-          "prompt": "Open the carton and place the speaker and cable beside the box.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a home kitchen, an adult creator lifts one plain protein bar from the open box and says, \"Here is the bar texture, with more inside the box.\" End with the bar beside the open set. Warm window light, casual UGC style. Chest-up framing with one gentle push-in. Sound: spoken line, wrapper rustle and kitchen ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-unboxing-picker-packages",
-          "label": "Three package types together",
+          "ref": "n:guide:q3-unboxing-videos-board-07-tote-unboxing",
+          "label": "Bag Unbox: Leather Tote Revealed",
           "chips": [
-            "small",
-            "kitchen"
+            "package"
           ],
-          "prompt": "Set the carton, pouch and bottle in a row, then turn each one toward the camera.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult lifts the leather tote from tissue and raises its handles into view. End with the bag resting upright beside the open box. Soft daylight, premium natural style. Medium framing with one slow tilt down. Sound: tissue rustle, handle creak and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-unboxing-picker-mugs",
-          "label": "Handmade mugs unboxed",
+          "ref": "n:guide:q3-unboxing-videos-board-08-power-bank-unbox",
+          "label": "Tech Unbox: Power Bank Revealed",
           "chips": [
-            "gift",
-            "kitchen"
+            "package"
           ],
-          "prompt": "Lift one handmade mug from the box and show its blank glaze in the light.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift the power bank from its insert and place the cable beside it. End with both items centered in the open box. Soft desk daylight, clean tech-demo style. Close overhead framing with one slow push-in. Sound: tray lift, cable tap and quiet desk ambience; no music.",
           "kind": "video"
         }
       ],
@@ -234,55 +180,44 @@
       {
         "frame": "post",
         "ref": "n:guide:k1-unboxing-use-launch-mug",
-        "h": "Launch post",
-        "d": "Show the box and the product together before launch day."
+        "h": "Show what arrives in the box",
+        "d": "Pair the product with its packaging so shoppers can picture the delivery."
       },
       {
         "frame": "browser",
         "ref": "n:guide:k1-unboxing-use-product-page-boxes",
-        "h": "Product page",
-        "d": "Shoppers see what arrives at their door, box and all."
+        "h": "Add a reveal to a product page",
+        "d": "Show the packaging and item together during the reveal."
       }
     ],
     "input": [
       {
         "good": "n:guide:k1-unboxing-input-candle-shelf",
         "bad": "n:guide:k1-unboxing-input-candle-bad-crop",
-        "good_label": "Full candle jar in even light",
-        "bad_label": "Top of candle jar cut by frame"
+        "good_label": "Your candle, fully in frame",
+        "bad_label": "Your candle, cropped at the top"
       },
       {
-        "good": "n:guide:k1-unboxing-input-coffee-kit",
-        "bad": "n:guide:k1-unboxing-input-coffee-bad-dark",
-        "good_label": "Kit parts visible with clear spacing",
-        "bad_label": "Low light hides items in the set"
+        "good": "n:guide:q3-unboxing-videos-input-candle-good-alt",
+        "bad": "n:guide:q3-unboxing-videos-input-candle-bad-dark",
+        "good_label": "Your candle, fully in frame",
+        "bad_label": "Your candle, obscured by low light"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:k1-unboxing-output-wallet",
+        "ref": "n:guide:q3-unboxing-videos-output-candle-reveal",
         "frame": "1:1",
-        "label": "Wallet lifted from a gift box",
+        "label": "ASMR Unbox: Candle Revealed",
         "length": 10
       },
       {
-        "ref": "n:guide:k1-unboxing-output-tablet-stand",
+        "ref": "n:guide:q3-unboxing-videos-output-candle-lift",
         "frame": "1:1",
-        "label": "Tablet stand beside a desk",
+        "label": "Gift Reveal: Candle Lifted",
         "length": 10
       }
     ],
-    "after": {
-      "ref": "n:guide:k1-unboxing-after-fireplace-gift",
-      "zones": [
-        "Product name",
-        "Caption"
-      ],
-      "items": [
-        "Describe only packaging you actually ship.",
-        "Add your logo or a printed note in your editor."
-      ]
-    },
     "titles": {
       "m2": {
         "h2": "How to make an unboxing video in 3 steps"
@@ -295,7 +230,7 @@
         "h2": "Where unboxing videos help you sell"
       },
       "m5": {
-        "h2": "What photo to upload for an unboxing video"
+        "h2": "What to prepare for an unboxing scene"
       },
       "m6": {
         "h2": "Unboxing video length, size and credits"
@@ -304,10 +239,10 @@
         "h2": "Add your logo after download"
       },
       "gallery": {
-        "h2": "AI unboxing video examples"
+        "h2": "Unboxing scenes"
       },
       "examples": {
-        "h2": "More unboxing scenes"
+        "h2": "More ways to show a reveal"
       }
     }
   }

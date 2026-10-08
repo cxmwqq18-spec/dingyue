@@ -31,23 +31,23 @@
   ],
   "steps": [
     {
-      "t": "Upload a photo of the product",
-      "d": "Show the part that moves, like the lid, latch, zipper or button, fully in frame. A phone photo works."
+      "t": "Upload your product",
+      "d": "Show the feature you want to demonstrate, such as a lid, latch, zipper or button, fully in frame. A clear phone image works."
     },
     {
       "t": "Describe one action",
-      "d": "One action per clip. Pick 16:9 for your product page or 9:16 for TikTok and Reels."
+      "d": "Choose one clear action and where you plan to use the result."
     },
     {
-      "t": "Download, then show the next feature",
-      "d": "Watch it next to the real product, then describe the next feature as its own clip."
+      "t": "Download and show another feature",
+      "d": "Review the result with the real item, then describe the next feature as its own video."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "16:9 · Product pages"
+        "16:9 \u00b7 Product pages"
       ],
       [
         "Length",
@@ -93,161 +93,115 @@
       "Actions that require a real person to explain results aloud"
     ]
   },
-  "examples": {
-    "h2": "More product demo video ideas",
-    "lead": "Demos work best when one action has a clear start and finish. Here are a few to try with your product.",
-    "groups": [
-      {
-        "label": "One action, start to finish",
-        "items": [
-          {
-            "ref": "n:gen2:product-videos-g1",
-            "title": "Folding chair opened beside a patio table",
-            "kind": "scene",
-            "product": "folding camp chair"
-          },
-          {
-            "ref": "n:guide:k1-product-videos-example-lamp",
-            "title": "Desk lamp switched on in a dark room",
-            "kind": "scene",
-            "product": "desk lamp"
-          },
-          {
-            "ref": "n:guide:k1-product-videos-example-cutlery",
-            "title": "Cutlery tray filled one slot at a time",
-            "kind": "scene",
-            "product": "cutlery drawer organizer"
-          }
-        ]
-      },
-      {
-        "label": "Kitchen and desk demos",
-        "items": [
-          {
-            "ref": "n:gen2:product-videos-g4",
-            "title": "Collapsible bottle expanded to full size",
-            "kind": "scene",
-            "product": "collapsible water bottle"
-          },
-          {
-            "ref": "n:guide:k1-product-videos-example-frother",
-            "title": "Milk frother foaming milk in a glass cup",
-            "kind": "scene",
-            "product": "milk frother"
-          }
-        ]
-      }
-    ]
-  },
   "visual": {
     "strip": [
-      "f:k1-product-videos-strip-shipping",
       "n:guide:k1-product-videos-strip-lunchbox-latch",
       "f:k1-product-videos-strip-running-shoes",
-      "n:guide:k1-product-videos-strip-bike-pump",
-      "n:guide:k1-product-videos-strip-trail-shoe",
-      "f:k1-product-videos-strip-mug-demo"
+      "n:guide:k1-product-videos-picker-charger",
+      "n:guide:k1-product-videos-input-tea",
+      "n:guide:k1-product-videos-example-frother",
+      "n:guide:k1-product-videos-use-bottle-desk"
     ],
     "steps": {
       "source": "n:gen2:plat-amazon-g2",
-      "sourceAlt": "Ceramic mug held in one hand to show its size.",
+      "sourceAlt": "Your product: a ceramic mug held in one hand with its handle visible.",
       "result": "n:guide:k1-product-videos-step-mug-lift",
       "mode": "video",
       "length": 10,
-      "prompt": "Lift the mug off the counter, take a slow sip, then set it back down with the handle facing the camera."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult hand lifts the mug, takes one sip and sets it down with the handle facing camera. End on the mug centered on the counter. Soft window light, calm everyday style. Medium close shot with one slow push-in. Sound: a light sip, ceramic set-down and quiet room tone; no music."
     },
     "picker": {
-      "title": "Choose one action to show",
-      "lead": "A focused clip can explain a lid, hinge, switch, zipper, pump, or pour.",
+      "title": "Browse product ad formats",
+      "lead": "See creator demos, try-ons, product use and taste reactions across everyday product categories.",
       "chips": [
         {
-          "id": "kitchen",
-          "label": "Kitchen"
+          "id": "creator",
+          "label": "Creator Reviews"
         },
         {
-          "id": "home",
-          "label": "Home"
+          "id": "hands",
+          "label": "Hands-On Demos"
         },
         {
-          "id": "travel",
-          "label": "Travel"
+          "id": "routine",
+          "label": "Routines & Try-On"
         },
         {
-          "id": "outdoor",
-          "label": "Outdoor"
+          "id": "taste",
+          "label": "Taste Reactions"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:video-hub-g2",
-          "label": "Lunch box latch closes",
+          "ref": "n:guide:q3-product-videos-board-01-vitamin-c-review",
+          "label": "Car Selfie Review: Vitamin C Serum",
           "chips": [
-            "kitchen"
+            "creator"
           ],
-          "prompt": "Lower the lunch box lid onto its rim, then let the front latch click into its locked position.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a parked car, an adult creator holds the serum beside her face and says, \"Here is the dropper and bottle finish up close.\" She turns the front toward the lens and holds it steady. Soft window light, natural UGC feel. Chest-up selfie framing with one gentle handheld drift. Sound: spoken line, seatbelt rustle and quiet street ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-product-videos-picker-folding-bike",
-          "label": "Folding bike opened",
+          "ref": "n:guide:q3-product-videos-board-02-protein-bar-review",
+          "label": "First Bite Review: Protein Bar",
           "chips": [
-            "outdoor"
+            "taste"
           ],
-          "prompt": "Unfold the product beside a table, then show it settled fully into a ready position.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a home kitchen, an adult creator shows the bitten bar to camera and says, \"You can see the oat texture in this bite.\" He turns the cut edge toward the lens and holds it still. Warm window light, casual UGC look. Chest-up framing with one slow push-in. Sound: spoken line, a crisp bite and quiet kitchen ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-product-videos-picker-lamp",
-          "label": "Warm lamp on a desk",
+          "ref": "n:guide:q3-product-videos-board-03-lip-balm-routine",
+          "label": "GRWM: Tinted Lip Balm Applied",
           "chips": [
-            "home"
+            "routine"
           ],
-          "prompt": "Turn the desk lamp dial and let its light spread across the work surface.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bathroom mirror, an adult applies one smooth swipe of tinted balm, then holds the tube beside her face. End with the cap and tube visible in the mirror. Soft morning light, clean natural beauty style. Close mirror framing with one gentle tilt upward. Sound: cap click, sleeve rustle and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-product-videos-picker-drawer",
-          "label": "Drawer trays filled",
+          "ref": "n:guide:q3-product-videos-board-04-pet-brush-demo",
+          "label": "Pet Brush Demo: Fur Removed",
           "chips": [
-            "home"
+            "hands"
           ],
-          "prompt": "Slide the organizer into a drawer and place everyday items in separate sections.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult brushes once along a golden retriever\u2019s back and lifts the brush to show loose fur caught in it. End with the brush head facing camera. Soft daylight, warm home style. Medium side angle with one slow pan along the stroke. Sound: brush pass, collar jingle and room ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-product-videos-picker-charger",
-          "label": "Charger packed in pouch",
+          "ref": "n:guide:q3-product-videos-board-05-collagen-review",
+          "label": "Creator Review: Collagen Powder Mixed",
           "chips": [
-            "travel"
+            "creator"
           ],
-          "prompt": "Move the zipper across the travel pouch to reveal the divided pockets inside.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, an adult creator stirs the powder into water and says, \"The powder dissolves smoothly in this glass.\" End with the clear glass beside the tub. Soft window light, straightforward UGC style. Waist-up angle with one gentle push-in. Sound: spoken line, spoon swirling and glass tap; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-product-videos-picker-bottle-cap",
-          "label": "Bottle cap opens",
+          "ref": "n:guide:q3-product-videos-board-06-running-shoe-try-on",
+          "label": "Try-On: Running Shoes Trail Test",
           "chips": [
-            "kitchen"
+            "routine"
           ],
-          "prompt": "Press the flip-top cap once and show it pop open.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a leafy trail, an adult tightens the laces once and steps forward onto the path. End with the shoe planted on the trail, side profile visible. Natural morning light, active outdoor style. Low shoe-level angle with one slow tracking move. Sound: lace pull, gravel footstep and birds; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-product-videos-picker-laptop-sleeve",
-          "label": "Laptop sleeve opened",
+          "ref": "n:guide:q3-product-videos-board-07-power-bank-demo",
+          "label": "Hand Demo: Power Bank Charges Phone",
           "chips": [
-            "travel"
+            "hands"
           ],
-          "prompt": "Open the padded sleeve and reveal the laptop space inside.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a cafe table, an adult connects the power bank cable to a generic phone and sets both down together. End with the connector seated and both devices in frame. Soft window light, everyday tech-demo style. Over-shoulder close framing with one small push-in. Sound: cable click, cup set-down and cafe room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:k1-product-videos-picker-umbrella",
-          "label": "Compact umbrella opened",
+          "ref": "n:guide:q3-product-videos-board-08-citrus-taste-review",
+          "label": "First Sip Review: Citrus Drink",
           "chips": [
-            "outdoor"
+            "taste"
           ],
-          "prompt": "Open the compact umbrella and show its canopy settle into place.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult takes one sip of the citrus drink and says, \"It tastes bright with a little fizz.\" He sets the glass beside the plain bottle. Clear daylight, candid UGC style. Chest-up framing with one gentle handheld sway. Sound: spoken line, sip and faint glass bubbles; no music.",
           "kind": "video"
         }
       ],
@@ -257,57 +211,45 @@
       {
         "frame": "split",
         "ref": "n:guide:k1-product-videos-use-bottle-white",
-        "ref_b": "n:guide:k1-product-videos-use-bottle-desk",
-        "h": "Test a clean shot against an in-use shot",
-        "d": "Run the bottle on white in one ad and on a desk in the other. Keep the one that gets more clicks."
+        "ref_b": "n:guide:k1-product-videos-gallery-feature-action-t06",
+        "h": "Show the item, then its feature",
+        "d": "Pair a clear product view with a short clip that demonstrates one useful action."
       },
       {
-        "frame": "phone",
-        "ref": "n:gen2:tpl-product-feature-callout-video-g2",
-        "h": "Put the clip next to the feature it shows",
-        "d": "Place the blending clip right next to the line that explains how it blends on your product page."
+        "frame": "post",
+        "ref": "n:guide:k1-product-videos-example-lamp",
+        "h": "Add a product clip to a listing",
+        "d": "Show shoppers the item clearly before they watch it in use."
       }
     ],
     "input": [
       {
         "good": "n:guide:k1-product-videos-input-lunchbox",
-        "bad": "n:guide:product-lunchbox-cut",
-        "good_label": "Whole lid and latch in frame",
-        "bad_label": "Lid and latch cut off at the edge"
+        "bad": "n:guide:q3-product-videos-input-lunchbox-bad-dark",
+        "good_label": "Your lunchbox, fully in frame",
+        "bad_label": "Your lunchbox, obscured by low light"
       },
       {
-        "good": "n:guide:k1-product-videos-input-tea",
-        "bad": "n:guide:k1-product-videos-input-tea-bad-dark",
-        "good_label": "Pouch front, evenly lit",
-        "bad_label": "Low light hides the pouch front"
+        "good": "n:guide:q3-product-videos-input-lunchbox-good-alt",
+        "bad": "n:guide:q3-product-videos-input-lunchbox-bad-crop",
+        "good_label": "Your lunchbox, fully in frame",
+        "bad_label": "Your lunchbox, cropped at the edge"
       }
     ],
     "outputs": [
       {
-        "ref": "n:gen2:tpl-product-feature-callout-video-g1",
-        "frame": "16:9",
-        "label": "Wallet clasp opens",
+        "ref": "n:guide:q3-product-videos-output-lunchbox-lid",
+        "frame": "1:1",
+        "label": "Hand Demo: Lunchbox Lid Lifted",
         "length": 10
       },
       {
-        "ref": "n:gen2:tpl-product-feature-callout-video-g3",
-        "frame": "16:9",
-        "label": "Laptop stand rises",
+        "ref": "n:guide:q3-product-videos-output-lunchbox-packed",
+        "frame": "1:1",
+        "label": "Snack Prep: Lunchbox Packed",
         "length": 10
       }
     ],
-    "after": {
-      "ref": "n:guide:k1-product-videos-after-speaker",
-      "zones": [
-        "Your feature",
-        "Your product name"
-      ],
-      "items": [
-        "Type the product name and price in your editor. AI-made letters can come out misspelled.",
-        "Check the motion against the real product: the lid, the color, the size in a hand.",
-        "The download has no watermark and can be used in your ads and on your store."
-      ]
-    },
     "titles": {
       "m2": {
         "h2": "How to make a product demo video in 3 steps"
@@ -320,7 +262,7 @@
         "h2": "Where product demo videos help you sell"
       },
       "m5": {
-        "h2": "What photo to upload for a product demo video"
+        "h2": "What to include when showing a product demo"
       },
       "m6": {
         "h2": "Demo video size, length and credits"
@@ -329,7 +271,7 @@
         "h2": "Add text in CapCut or Canva after download"
       },
       "examples": {
-        "h2": "More product demo video ideas"
+        "h2": "More product demo ideas"
       },
       "templates": {
         "h2": "Product demo video templates"
@@ -338,7 +280,7 @@
         "h2": "Product demo video FAQ"
       },
       "gallery": {
-        "h2": "AI product demo video examples"
+        "h2": "Product demo scenes"
       }
     }
   }

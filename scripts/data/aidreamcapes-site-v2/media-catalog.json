@@ -28729,6 +28729,566 @@
           640,
           1280
         ]
+      },
+      "q3-product-videos-template-howto-steamer": {
+        "file": "q3-product-videos-template-howto-steamer",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult steams a plain cream shirt on a garment rail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-template-drink-taste": {
+        "file": "q3-product-videos-template-drink-taste",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator tastes a clear citrus drink in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-template-launch-serum": {
+        "file": "q3-product-videos-template-launch-serum",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator holds a plain amber serum bottle toward the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-template-creator-serum": {
+        "file": "q3-unboxing-videos-template-creator-serum",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator holds a plain serum bottle beside its open box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-template-film-powerbank": {
+        "file": "q3-unboxing-videos-template-film-powerbank",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands lift a plain black power bank from a dark box insert.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-board-01-vitamin-c-review": {
+        "file": "q3-product-videos-board-01-vitamin-c-review",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator holds an unmarked serum bottle toward the camera in a parked car.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-board-02-protein-bar-review": {
+        "file": "q3-product-videos-board-02-protein-bar-review",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator presents a bitten protein bar and plain wrapper in a kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-board-03-lip-balm-routine": {
+        "file": "q3-product-videos-board-03-lip-balm-routine",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult applies plain lip balm at a bathroom mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-board-04-pet-brush-demo": {
+        "file": "q3-product-videos-board-04-pet-brush-demo",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult brushes a golden retriever with a plain pet brush.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-board-05-collagen-review": {
+        "file": "q3-product-videos-board-05-collagen-review",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator holds a plain supplement tub and a mixed drink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-board-06-running-shoe-try-on": {
+        "file": "q3-product-videos-board-06-running-shoe-try-on",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult wears plain charcoal running shoes on a trail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-board-07-power-bank-demo": {
+        "file": "q3-product-videos-board-07-power-bank-demo",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult connects an unbranded power bank to a phone at a cafe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-board-08-citrus-taste-review": {
+        "file": "q3-product-videos-board-08-citrus-taste-review",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult tastes a clear citrus drink beside a plain bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-board-01-serum-unbox-review": {
+        "file": "q3-unboxing-videos-board-01-serum-unbox-review",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator holds a plain serum bottle beside an open tissue-lined box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-board-02-gold-hoop-asmr": {
+        "file": "q3-unboxing-videos-board-02-gold-hoop-asmr",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands lift plain gold-tone hoop earrings from a velvet box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-board-03-pet-brush-review": {
+        "file": "q3-unboxing-videos-board-03-pet-brush-review",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator shows a plain pet brush beside an open box and a dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-board-04-resistance-band-unbox": {
+        "file": "q3-unboxing-videos-board-04-resistance-band-unbox",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands lift plain resistance bands from a shipping box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-board-05-baby-wrap-reveal": {
+        "file": "q3-unboxing-videos-board-05-baby-wrap-reveal",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands unfold a neutral baby swaddle from a box; no child is present.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-board-06-protein-box-reveal": {
+        "file": "q3-unboxing-videos-board-06-protein-box-reveal",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator holds a plain protein bar over an open snack box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-board-07-tote-unboxing": {
+        "file": "q3-unboxing-videos-board-07-tote-unboxing",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult lifts a plain leather tote from an open shipping box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-board-08-power-bank-unbox": {
+        "file": "q3-unboxing-videos-board-08-power-bank-unbox",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands lift a plain power bank and cable from a box insert.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-board-01-pet-hair-review": {
+        "file": "q3-before-after-videos-board-01-pet-hair-review",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator holds a pet-hair roller beside a fur-covered sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-board-02-shoe-brush-review": {
+        "file": "q3-before-after-videos-board-02-shoe-brush-review",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator holds a plain shoe brush beside scuffed and clean shoes.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-board-03-silver-necklace-refresh": {
+        "file": "q3-before-after-videos-board-04-phone-case-install",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands polish a silver-tone necklace with a soft cloth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-board-04-phone-case-install": {
+        "file": "q3-before-after-videos-board-03-silver-necklace-refresh",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult fits a plain case onto a generic smartphone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-board-05-snack-bin-reset": {
+        "file": "q3-before-after-videos-board-05-snack-bin-reset",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands sort plain wrapped protein bars into a pantry bin.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-board-06-grout-cleaning-demo": {
+        "file": "q3-before-after-videos-board-06-grout-cleaning-demo",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult hand brushes a dark tile seam beside a cleaned section.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-board-07-pet-bed-roller": {
+        "file": "q3-before-after-videos-board-07-pet-bed-roller",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult rolls fur from a pet cushion beside a resting dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-board-08-suitcase-zipper-fix": {
+        "file": "q3-before-after-videos-board-08-suitcase-zipper-fix",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult closes an unbranded suitcase zipper in a hotel room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-case-01-power-bank": {
+        "file": "q3-unboxing-videos-case-01-power-bank",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands lift a plain power bank and cable from an open shipping box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-case-02-leather-tote": {
+        "file": "q3-unboxing-videos-case-02-leather-tote",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult lifts a plain leather tote from an open box with tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-case-03-protein-bars": {
+        "file": "q3-unboxing-videos-case-03-protein-bars",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator shows a protein bar above an open box of bars.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-gallery-baby-wrap": {
+        "file": "q3-unboxing-videos-gallery-baby-wrap",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands reveal a folded neutral swaddle inside a box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-hero-serum": {
+        "file": "q3-product-videos-hero-serum",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator presents an unmarked amber serum bottle in soft bathroom light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-hero-serum-box": {
+        "file": "q3-unboxing-videos-hero-serum-box",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands reveal an unmarked serum bottle from a tissue-lined box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-hero-pet-hair": {
+        "file": "q3-before-after-videos-hero-pet-hair",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator presents a pet-hair roller beside a partly cleared sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-case-handheld-vacuum": {
+        "file": "q3-product-videos-case-handheld-vacuum",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult uses a plain handheld vacuum to lift crumbs from a sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-case-02-shoe-brush": {
+        "file": "q3-before-after-videos-case-02-shoe-brush",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator presents a shoe brush beside a scuffed and a clean shoe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-case-03-silver-necklace": {
+        "file": "q3-before-after-videos-case-03-silver-necklace",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands polish a silver-tone necklace and show its brighter section.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-case-04-phone-case": {
+        "file": "q3-before-after-videos-case-04-phone-case",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator presents a generic phone and plain case side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-case-04-phone-case-single-camera": {
+        "file": "q3-before-after-videos-case-04-phone-case-single-camera",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator holds a sage-green phone case with one circular camera opening beside a generic phone showing its dark front screen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-output-lunchbox-lid": {
+        "file": "q3-product-videos-output-lunchbox-lid",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift the lid of the same pale sage divided lunchbox on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-output-lunchbox-packed": {
+        "file": "q3-product-videos-output-lunchbox-packed",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands place fruit into the same pale sage divided lunchbox.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-output-candle-reveal": {
+        "file": "q3-unboxing-videos-output-candle-reveal",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift the same white glass candle jar from a tissue-lined box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-output-candle-lift": {
+        "file": "q3-unboxing-videos-output-candle-lift",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold the same white candle jar above an open kraft box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-output-watch-compare": {
+        "file": "q3-before-after-videos-output-watch-compare",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same round cream-dial watch before and after its face is gently wiped.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-output-watch-wipe": {
+        "file": "q3-before-after-videos-output-watch-wipe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult hand wipes the same round cream-dial watch with a soft cloth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-input-lunchbox-good-alt": {
+        "file": "q3-product-videos-input-lunchbox-good-alt",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain pale sage divided lunchbox fully visible on a light kitchen counter, with its complete lid and latch in frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-input-lunchbox-bad-dark": {
+        "file": "q3-product-videos-input-lunchbox-bad-dark",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same pale sage divided lunchbox is visible in a deliberately dim kitchen photo.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-input-candle-good-alt": {
+        "file": "q3-unboxing-videos-input-candle-good-alt",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain white glass candle jar fully visible on a softly lit neutral shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-unboxing-videos-input-candle-bad-dark": {
+        "file": "q3-unboxing-videos-input-candle-bad-dark",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same plain white glass candle jar is obscured by low light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-input-watch-good-alt": {
+        "file": "q3-before-after-videos-input-watch-good-alt",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same round cream-dial watch with a black strap, fully visible on a neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-input-watch-bad-crop": {
+        "file": "q3-before-after-videos-input-watch-bad-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same round cream-dial watch with a black strap, cropped at the edge of the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-product-videos-input-lunchbox-bad-crop": {
+        "file": "q3-product-videos-input-lunchbox-bad-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same pale sage divided lunchbox is cropped at both sides of the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-input-watch-good-alt-2": {
+        "file": "q3-before-after-videos-input-watch-good-alt-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same round cream-dial watch with a black strap, fully visible in soft light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q3-before-after-videos-input-watch-bad-blur-2": {
+        "file": "q3-before-after-videos-input-watch-bad-blur-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same round cream-dial watch with a black strap, softened by blur.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

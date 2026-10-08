@@ -276,20 +276,20 @@
   "unboxing-videos": {
     "images": {
       "creator": {
-        "ref": "n:guide:k1-unboxing-template-creator-bottle",
-        "alt": "Plain clear bottle with a sage lid beside a rolled teal exercise mat near a window."
+        "ref": "n:guide:q3-unboxing-videos-template-creator-serum",
+        "alt": "An adult creator holds a plain serum bottle beside its open box."
       },
       "unbox": {
         "ref": "n:guide:k1-unboxing-template-unbox-bottle",
         "alt": "Hands lift a plain bottle from an open gift box with tissue."
       },
       "demo": {
-        "ref": "n:guide:k1-unboxing-template-demo-espresso",
-        "alt": "Hand places a small glass cup beneath a compact black espresso machine."
+        "ref": "n:guide:k1-unboxing-case-watch",
+        "alt": "A plain round watch rests inside an open presentation box."
       },
       "film": {
-        "ref": "n:guide:k1-unboxing-template-film-speaker",
-        "alt": "Plain rectangular black speaker on a console beside a large window."
+        "ref": "n:guide:q3-unboxing-videos-template-film-powerbank",
+        "alt": "Adult hands lift a plain black power bank from a dark box insert."
       }
     }
   },
@@ -654,16 +654,36 @@
         "alt": "Hands demonstrate a compact unbranded coffee maker in a bright kitchen."
       },
       "howto": {
-        "ref": "n:guide:k1-product-videos-template-howto-steamer",
-        "alt": "Plain handheld garment steamer beside a neutral linen shirt on a rail."
+        "ref": "n:guide:q3-product-videos-template-howto-steamer",
+        "alt": "An adult steams a plain cream shirt on a garment rail."
       },
       "drink": {
-        "ref": "n:guide:k1-product-videos-template-citrus-drink",
-        "alt": "Plain glass bottle of golden citrus drink beside iced citrus water on a sunny counter."
+        "ref": "n:guide:q3-product-videos-template-drink-taste",
+        "alt": "An adult creator tastes a clear citrus drink in a bright kitchen."
       },
       "launch": {
-        "ref": "n:guide:k1-product-videos-template-table-lamp",
-        "alt": "Plain white portable table lamp glows on a desk beside a closed laptop."
+        "ref": "n:guide:q3-product-videos-template-launch-serum",
+        "alt": "An adult creator holds a plain amber serum bottle toward the camera."
+      }
+    }
+  },
+  "before-after-videos": {
+    "images": {
+      "ba": {
+        "ref": "f:k4-before-after-videos-uses-phone-frame",
+        "alt": "Hands place utensils into a gray drawer organizer, viewed from above."
+      },
+      "howto": {
+        "ref": "n:gen2:before-after-videos-g2",
+        "alt": "A small brush cleans one half of a bathroom grout line."
+      },
+      "home": {
+        "ref": "n:gen2:before-after-videos-g3",
+        "alt": "A closet shelf shows sweaters arranged into fabric bins."
+      },
+      "compare": {
+        "ref": "n:gen2:before-after-videos-g1",
+        "alt": "A steel pan is shown half scorched and half polished."
       }
     }
   },
