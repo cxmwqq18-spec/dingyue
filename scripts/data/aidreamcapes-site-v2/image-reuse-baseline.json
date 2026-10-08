@@ -68,7 +68,6 @@
       "rule": "one-page",
       "pages": [
         "guide-testing-ad-versions",
-        "guides",
         "tpl-size"
       ]
     },
@@ -912,7 +911,6 @@
       "rule": "one-page",
       "pages": [
         "guide-product-photo-tips",
-        "guides",
         "tpl-size"
       ]
     },
@@ -995,7 +993,6 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen/handbag-cafe",
       "rule": "one-page",
       "pages": [
-        "blog",
         "blog-ai-product-photography-guide",
         "lifestyle-photos"
       ]
@@ -1045,7 +1042,6 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen/hoodie-street",
       "rule": "one-page",
       "pages": [
-        "blog",
         "blog-model-photos-without-a-photoshoot",
         "home",
         "model-photos"
@@ -1183,7 +1179,6 @@
       "pages": [
         "change-background",
         "guide-white-background-amazon",
-        "guides",
         "white-background"
       ]
     },
@@ -5572,7 +5567,6 @@
       "image": "/assets/sites/site_aidreamcapes/size-reference-v1/size-reference/example-02",
       "rule": "one-page",
       "pages": [
-        "blog",
         "blog-ai-video-review-checklist",
         "tpl-light"
       ]
@@ -5590,7 +5584,6 @@
       "rule": "one-page",
       "pages": [
         "guide-ad-sizes-by-platform",
-        "guides",
         "tpl-sale"
       ]
     },
@@ -5620,22 +5613,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/ugc-ad-v4/ugc-ad-video-hook",
-      "rule": "one-page",
-      "pages": [
-        "guide-first-tiktok-video-ad",
-        "guides"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/ugc-ad-v4/ugc-ad-video-review",
-      "rule": "one-page",
-      "pages": [
-        "blog",
-        "blog-ai-ugc-video-ads-guide"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/ugc-ad-v4/ugc-ad-video-try-on",
       "rule": "one-page",
       "pages": [
@@ -5647,7 +5624,6 @@
       "image": "/assets/sites/site_aidreamcapes/ugc-ad-v4/ugc-ad-video-unboxing",
       "rule": "one-page",
       "pages": [
-        "blog",
         "blog-unboxing-videos-for-launches",
         "video-ads"
       ]

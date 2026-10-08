@@ -1719,6 +1719,10 @@ function linkCardsForReuse(layout, data) {
   } else if (layout === "index" || layout === "examples") {
     addCards(data.cards);
     addExampleGroups(data.examples);
+    // Guides and blog list their articles with each article's own card image.
+    for (const article of data.articles ?? []) {
+      if (article?.href && article?.image?.src) cards.push(article);
+    }
   }
   return cards;
 }
