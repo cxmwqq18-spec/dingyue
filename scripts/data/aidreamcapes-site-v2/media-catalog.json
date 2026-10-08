@@ -3792,6 +3792,105 @@
         640,
         1280
       ]
+    },
+    "q1-home-strip-serum": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult woman presses a drop of serum into her cheek beside the plain amber bottle at a bright vanity.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q1-home-strip-trailshoe": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult runner tightens the laces on a plain trail shoe before stepping onto a wooded path, with the shoe and hands clear in frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q1-home-size-electrolyte": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult creator in a parked car looks directly into the lens, speaks while holding a plain electrolyte sachet beside their face.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q1-home-size-headphones": {
+      "w": 1536,
+      "h": 864,
+      "alt": "An adult commuter looks into the camera and speaks while holding plain over-ear headphones beside their face in a bright train station.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q1-video-strip-protein": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult athlete scoops plain protein powder into a shaker after a workout, with gym bag and towel nearby.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q1-video-strip-car": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult woman in a parked car holds a plain electrolyte sachet near her face and speaks to the lens.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q1-video-strip-steamer-v2": {
+      "w": 864,
+      "h": 1536,
+      "alt": "A shirt is visibly wrinkled on one half and smooth on the other as an adult hand moves a plain handheld garment steamer across the boundary, showing a clear problem-to-solution result.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q1-video-strip-headphones": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult woman in a bright home office holds plain wireless headphones beside her face and speaks directly to lens.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q1-video-strip-street": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult interviewer with a small microphone listens as an adult runner tastes a plain protein bar.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q1-video-strip-bag": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult woman wears a plain crossbody bag on a city walk and turns slightly to show its strap and fit.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q1-home-strip-creator-review": {
+      "w": 864,
+      "h": 1536,
+      "alt": "An adult woman in a bright bathroom holds a plain amber serum bottle beside her cheek and speaks directly to the camera.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -26546,6 +26645,986 @@
         "w": 1024,
         "h": 1024,
         "alt": "An adult wears glossy black sunglasses on a sunny city walk and adjusts one temple.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-card-ba": {
+        "file": "q1-video-card-ba",
+        "w": 864,
+        "h": 1536,
+        "alt": "A dark sofa split into a visibly fuzzy side and a clean side as an adult hand pulls a reusable lint remover across the fabric.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-card-compare": {
+        "file": "q1-video-card-compare",
+        "w": 864,
+        "h": 1536,
+        "alt": "Two adult hands hold plain silicone phone cases side by side at equal distance from the lens.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-card-demo": {
+        "file": "q1-video-card-demo",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult man in his thirties sits in a parked car and holds a plain serum bottle near his cheek.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-card-flashshoe": {
+        "file": "q1-video-card-flashshoe",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult runner steps into a plain performance shoe and turns one foot toward camera on a track, clear side profile and laces visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-card-grwm": {
+        "file": "q1-video-card-grwm",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman gets ready at a bright vanity and holds a plain tinted lip balm toward the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-card-headphones": {
+        "file": "q1-video-card-headphones",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult male creator in a tidy home office holds plain over-ear headphones and speaks to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-card-proteinbar": {
+        "file": "q1-video-card-proteinbar",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult interviewer asks an adult commuter for a first-bite reaction while the commuter holds a plain protein bar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-card-stain": {
+        "file": "q1-video-card-stain",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult hand sprays a plain fabric-safe cleaner on a visible coffee stain on a white shirt and lifts the stain with one cloth pass.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-ex-bike": {
+        "file": "q1-video-ex-bike",
+        "w": 864,
+        "h": 1536,
+        "alt": "A commuter folds a compact bicycle beside a train platform and carries it through an open train doorway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-ex-earbuds": {
+        "file": "q1-video-ex-earbuds",
+        "w": 864,
+        "h": 1536,
+        "alt": "Two adult hands peel back tissue and lift a plain wireless earbud case from a small kraft box, ending with the case centered.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-ex-fragrance": {
+        "file": "q1-video-ex-fragrance",
+        "w": 864,
+        "h": 1536,
+        "alt": "A fragrance bottle catches warm reflected light on a dark stone surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-ex-gym-protein": {
+        "file": "q1-video-ex-gym-protein",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult athlete finishes a set in a bright gym and lifts a plain shaker filled with protein drink for a post-workout sip.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-ex-lunchbox": {
+        "file": "q1-video-ex-lunchbox",
+        "w": 864,
+        "h": 1536,
+        "alt": "Close view of an adult opening a commuter backpack to reveal a lunchbox leak, then wiping the inner lining clean with a cloth; show the leak remover spray nearby.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-ex-protein-bar": {
+        "file": "q1-video-ex-protein-bar",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult interviewer holds a small microphone toward an adult runner who holds a plain protein bar and reacts after a first bite.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-ex-serum": {
+        "file": "q1-video-ex-serum",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman in a parked car holds a plain amber serum bottle beside her face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-ex-trailshoe": {
+        "file": "q1-video-ex-trailshoe",
+        "w": 864,
+        "h": 1536,
+        "alt": "A runner in plain trail shoes steps through a shallow wet patch on a wooded path, with water droplets and the shoe tread visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-hero-grwm": {
+        "file": "q1-video-hero-grwm",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman at a bathroom vanity holds a plain tinted lip balm near her face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-hero-unbox": {
+        "file": "q1-video-hero-unbox",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands open a clean box and lift plain charcoal headphones toward the lens.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-input-bad-shoe": {
+        "file": "q1-video-input-bad-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain gray running shoe photographed on a neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-output-cases": {
+        "file": "q1-video-output-cases",
+        "w": 1536,
+        "h": 864,
+        "alt": "Two adult hands compare plain silicone phone cases side by side on a clean desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-output-selfie": {
+        "file": "q1-video-output-selfie",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult male athlete sits in a parked car, holding a clear bottle and speaking directly to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-output-serum": {
+        "file": "q1-video-output-serum",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult woman with natural skin holds a plain face serum bottle beside her cheek and speaks to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-picker-car": {
+        "file": "q1-video-picker-car",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult man in a parked car holds a clear bottle with a pale electrolyte drink and speaks to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-picker-headphones": {
+        "file": "q1-video-picker-headphones",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman wearing a plain sweater holds over-ear headphones and speaks directly to lens.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-picker-jewel": {
+        "file": "q1-video-picker-jewel",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands lift a pair of plain gold hoop earrings from a small jewelry box lined with cream tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-picker-phone": {
+        "file": "q1-video-picker-phone",
+        "w": 864,
+        "h": 1536,
+        "alt": "A hand fits a plain sage silicone phone case onto a generic blank-screen smartphone, ending with the case aligned.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-picker-serum": {
+        "file": "q1-video-picker-serum",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult creator holds a serum bottle beside a simple product page on a tablet.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-picker-workout": {
+        "file": "q1-video-picker-workout",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult hand scoops protein powder from a plain pouch into a clear shaker at a gym bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-steps-result": {
+        "file": "q1-video-steps-result",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman holds a plain serum bottle in a bright bathroom and speaks to the lens.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-steps-source": {
+        "file": "q1-video-steps-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A single amber serum bottle with dropper cap, front facing and blank label area.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-use-necklace": {
+        "file": "q1-video-use-necklace",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman in a simple top holds a plain gold necklace at chest level and speaks to the lens.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-use-selfie": {
+        "file": "q1-video-use-selfie",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult woman in a parked car holds a plain face serum bottle and speaks directly to camera in daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-hero-creator-v2": {
+        "file": "q1-video-hero-creator-v2",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult male creator in a bright kitchen looks straight into the lens mid-sentence and holds a flat single-serve electrolyte powder sachet beside his face. The sachet is rectangular and soft, not a tube or bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-picker-closet-v2": {
+        "file": "q1-video-picker-closet-v2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Clear split scene: one side of a closet shelf is cluttered with loose clothes, the other side is neatly sorted in plain clear organizer bins as an adult hand slides one bin into place.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-flow-lipstick-grwm": {
+        "file": "q1-home-flow-lipstick-grwm",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult woman applies coral lipstick at a bright vanity and checks the color in a small mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-flow-lipstick-swatch": {
+        "file": "q1-home-flow-lipstick-swatch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A clean fingertip blends one coral lipstick swatch on the back of a hand beside the plain lipstick tube.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-flow-hoodie-style": {
+        "file": "q1-home-flow-hoodie-style",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult wears a gray hoodie with a crossbody bag on a city sidewalk, captured mid-turn with the full outfit visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-steps-source": {
+        "file": "q1-home-steps-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain amber serum bottle fully in frame on a clean white background, front label area blank and softly lit.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-steps-result": {
+        "file": "q1-home-steps-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult woman in a parked car holds a plain amber serum bottle beside her face and speaks directly to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-picker-runner": {
+        "file": "q1-home-picker-runner",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult runner steps onto a city curb in a plain trail shoe, with the tread and side profile clearly visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-picker-earrings": {
+        "file": "q1-home-picker-earrings",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a pair of plain gold hoop earrings from a small jewelry box lined with cream tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-picker-earbuds": {
+        "file": "q1-home-picker-earbuds",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close side view of an adult placing one plain wireless earbud into their ear, with the case held in the other hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-picker-mask": {
+        "file": "q1-home-picker-mask",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A clean spatula lifts a smooth ribbon of pale green clay mask from an open plain jar, the textured cream held above the rim.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-picker-lipbalm": {
+        "file": "q1-home-picker-lipbalm",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult woman applies a plain tinted balm at a bathroom mirror, then turns the tube toward the lens.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-picker-hot-sauce": {
+        "file": "q1-home-picker-hot-sauce",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A hand squeezes a thin ribbon of sauce from a plain bottle onto a fresh taco, with the bottle and food both clearly visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-picker-pet-hair": {
+        "file": "q1-home-picker-pet-hair",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult hand pulls a reusable lint remover across a fuzzy sofa cushion, revealing a clean strip beside the remaining pet hair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-use-speaker-review": {
+        "file": "q1-home-use-speaker-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult creator looks directly into the camera while speaking and holds a small plain black speaker at chest height.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-use-electrolyte-review": {
+        "file": "q1-home-use-electrolyte-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult runner looks directly into the camera, holds a plain electrolyte sachet and gives a brief first-sip reaction after drinking from a bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-use-ab-review": {
+        "file": "q1-home-use-ab-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult creator looks into the lens while holding a plain serum bottle beside their face in clean morning window light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-output-bite": {
+        "file": "q1-home-output-bite",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult runner looks into the camera, holds a plain protein bar and gives a clear first-bite reaction with the wrapper visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-output-steamer": {
+        "file": "q1-home-output-steamer",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult uses a plain handheld steamer on a wrinkled shirt hanging on a person, with a visibly smooth section beside the remaining creases.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-after-pet": {
+        "file": "q1-home-after-pet",
+        "w": 1536,
+        "h": 864,
+        "alt": "A sofa cushion shows a clear half-and-half result as an adult hand removes pet hair with a reusable lint tool.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-template-creator": {
+        "file": "q1-home-template-creator",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult creator looks into the lens while speaking and holds a plain reusable water bottle at chest height.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-template-white": {
+        "file": "q1-home-template-white",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A running shoe shown in a clear full side profile on pure white with soft even studio light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-template-ba": {
+        "file": "q1-home-template-ba",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A neatly split closet shelf shows scattered clothes before and sorted clothes after, with an adult hand sliding a plain organizer bin into place.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-template-size": {
+        "file": "q1-home-template-size",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult model wears a relaxed linen shirt and turns slightly to show the fit from shoulder to hem in bright daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-template-unbox": {
+        "file": "q1-home-template-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift plain charcoal headphones from a fitted kraft box lined with tissue on a clean desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-template-color": {
+        "file": "q1-home-template-color",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three running shoes in distinct neutral colorways shown side by side on a bright white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-example-lipstick": {
+        "file": "q1-home-example-lipstick",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain coral lipstick tube centered upright on pure white with a soft shadow and clear full silhouette.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-example-tote": {
+        "file": "q1-home-example-tote",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult wears a plain leather crossbody bag while reaching for a cafe table, the strap and bag shape clearly visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-example-scarf": {
+        "file": "q1-home-example-scarf",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult model wears a silk scarf on a breezy park walk, with the scarf pattern and drape visible as they turn.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-example-serum": {
+        "file": "q1-home-example-serum",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain amber serum bottle catches soft reflected light on a wet dark stone surface, with the whole bottle centered.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-example-watch": {
+        "file": "q1-home-example-watch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A running watch fastened on a wrist before a workout.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-example-review": {
+        "file": "q1-home-example-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult woman looks directly into the camera while speaking and holds a plain face serum bottle beside her cheek.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-example-harness": {
+        "file": "q1-home-example-harness",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult dog owner looks into the camera while speaking and holds a plain harness beside a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-example-earbuds": {
+        "file": "q1-home-example-earbuds",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult commuter speaks directly to the camera while holding a plain earbud case beside their face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-size-earrings": {
+        "file": "q1-home-size-earrings",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A pair of plain gold hoop earrings arranged on pure white with soft even light and every curve clearly visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-example-lipbalm": {
+        "file": "q1-photo-example-lipbalm",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain coral lip balm tube centered upright on pure white with a soft shadow and complete silhouette.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-example-tumbler": {
+        "file": "q1-photo-example-tumbler",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult hiker raises a plain steel tumbler for a drink on a mountain trail, with the whole tumbler visible in hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-example-snack": {
+        "file": "q1-photo-example-snack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult runner looks into the camera while holding a plain protein bar and reacting to a first bite at a cafe counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-example-sunglasses": {
+        "file": "q1-photo-example-sunglasses",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult model wears plain dark sunglasses outdoors in bright natural light, turning slightly so the frame shape is clear.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-strip-granola": {
+        "file": "q1-photo-strip-granola",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult hand pours granola from a blank resealable pouch into a bowl beside berries on a bright breakfast table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-strip-tumbler": {
+        "file": "q1-photo-strip-tumbler",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult runner catches their breath and drinks from a plain electrolyte bottle on a green trail, bottle label area blank.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-strip-snackbox": {
+        "file": "q1-photo-strip-snackbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a plain snack box and lift a protein bar from inside, clean paper filler visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-strip-knit": {
+        "file": "q1-photo-strip-knit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A hand gently traces the thick knit texture of a wool garment, showing the fibers and stitch pattern in close detail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-strip-phonecase": {
+        "file": "q1-photo-strip-phonecase",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain single-camera smartphone case centered on a clean white studio background, full edges visible with soft even light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-steps-source": {
+        "file": "q1-photo-steps-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain coral lip balm tube fully in frame on pure white, cap beside it, blank label area and soft even light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-steps-result": {
+        "file": "q1-photo-steps-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult woman applies a plain tinted lip balm at a bright vanity mirror, the tube held clearly in one hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-picker-earbuds": {
+        "file": "q1-photo-picker-earbuds",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain wireless earbuds and their case arranged on a light neutral surface, front-facing with all edges visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-picker-coat": {
+        "file": "q1-photo-picker-coat",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult wears a plain warm coat on a city walk and turns slightly to show the fit and front fastening.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-use-recipe": {
+        "file": "q1-photo-use-recipe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult hand lifts a freshly cooked egg from a cast-iron pan with a spatula, steam rising in a bright home kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-output-duffel": {
+        "file": "q1-photo-output-duffel",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult lifts a plain duffel bag by its handles from a bench before a weekend trip, showing the full bag and carry handles.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-after-lip": {
+        "file": "q1-photo-after-lip",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A hand shows two clean lipstick swatches on skin beside the plain lipstick tube in bright soft daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-hero-white": {
+        "file": "q1-photo-hero-white",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain amber face serum bottle centered on pure white with a soft studio shadow and full silhouette.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-template-head": {
+        "file": "q1-photo-template-head",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult model wears a plain knit beanie outdoors in cool daylight, close framing shows the crown, cuff and fit.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-template-angle": {
+        "file": "q1-photo-template-angle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult hand connects a plain charging cable to a compact speaker, showing the port and connector clearly.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-template-pack": {
+        "file": "q1-photo-template-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a plain tea tin from a kraft gift box lined with pale tissue on a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-case-pillow": {
+        "file": "q1-photo-case-pillow",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult hand pulls a reusable lint remover over a sofa cushion, revealing a clean section beside remaining pet hair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-picker-white-lipbalm": {
+        "file": "q1-photo-picker-white-lipbalm",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain coral lip balm tube shown full-length on pure white with a soft shadow and blank label area.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-input-good-socks": {
+        "file": "q1-video-input-good-socks",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A complete pair of cream wool socks with crisp, visible knit texture on a light surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-flow-proteinbar-source": {
+        "file": "q1-home-flow-proteinbar-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A sealed navy-and-cream protein snack bar package centered on a light surface with a blank label panel.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-flow-proteinbar-gym-bag": {
+        "file": "q1-home-flow-proteinbar-gym-bag",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult athlete places a wrapped protein bar in a gym bag with a towel and water bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-flow-proteinbar-street-taste": {
+        "file": "q1-home-flow-proteinbar-street-taste",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult runner tastes a wrapped protein bar during a casual park interview.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-use-review": {
+        "file": "q1-photo-use-review",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult woman in a bright bathroom looks into the camera mid-sentence while holding a plain amber serum bottle beside her cheek.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-picker-earbuds-v2": {
+        "file": "q1-home-picker-earbuds-v2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult woman fits a matte sage-green, stemless bean-shaped earbud while holding its matching low pill-shaped case.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-photo-picker-earbuds-v2": {
+        "file": "q1-photo-picker-earbuds-v2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of matte sage-green stemless bean-shaped earbuds beside a low pill-shaped charging case on pure white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-home-use-speaker-review-v2": {
+        "file": "q1-home-use-speaker-review-v2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "An adult creator speaks to camera while holding a compact charcoal fabric cylinder speaker with a sage wrist lanyard.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q1-video-picker-phone-v2": {
+        "file": "q1-video-picker-phone-v2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands fit a muted sage-green phone case with one circular camera opening onto a generic smartphone.",
         "variants": [
           640,
           1280

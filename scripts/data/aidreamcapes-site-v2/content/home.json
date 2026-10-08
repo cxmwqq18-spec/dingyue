@@ -19,47 +19,62 @@
   "platforms_title": "The right size for every platform",
   "steps": [
     {
-      "t": "Upload one product photo",
-      "d": "A phone photo works if the whole product is in frame and the label is readable."
+      "t": "Your product",
+      "d": "Start with a clear item image where the whole product stays in frame."
     },
     {
-      "t": "Describe the scene and pick a size",
-      "d": "Write where the product should be, or start from a template. The credit cost shows before you click."
+      "t": "Choose a scene and size",
+      "d": "Pick an ad format and the placement that fits your next campaign."
     },
     {
-      "t": "Download, then make another version",
-      "d": "Keep the one that looks right. Change one thing, like the surface, the light or the size, and compare."
+      "t": "Download your result",
+      "d": "Save the version that looks right, then make another variation if needed."
     }
   ],
   "example_flows": [
     {
       "id": "lipstick",
-      "t": "Lipstick: one studio shot becomes a vanity scene and a shade swatch",
-      "d": "One lipstick photo became a vanity scene and a close-up beside a matching shade swatch.",
+      "t": "GRWM: Coral Lipstick Before Work",
+      "d": "Start with the lipstick, show it being applied, and finish with a clear swatch on skin.",
       "imageRefs": [
         "n:guide:k5-home-lipstick-pack",
-        "n:guide:k5-home-lipstick-vanity",
-        "n:guide:k5-home-lipstick-swatch"
+        "n:guide:q1-home-flow-lipstick-grwm",
+        "n:guide:q1-home-flow-lipstick-swatch"
+      ],
+      "imageLabels": [
+        "Your product",
+        "GRWM application",
+        "Coral swatch on skin"
       ]
     },
     {
       "id": "hoodie",
-      "t": "Hoodie: a flat product photo becomes street style and a flat lay",
-      "d": "One gray hoodie photo became a street scene and a flat lay with a beanie and scarf.",
+      "t": "Outfit Transition: Hoodie Styled for a City Walk",
+      "d": "Show the hoodie worn as part of a complete city outfit.",
       "imageRefs": [
         "n:guide:k5-home-hoodie-pack",
         "n:guide:k5-home-flow-hoodie-result",
-        "n:guide:k5-home-hoodie-flatlay"
+        "n:guide:q1-home-flow-hoodie-style"
+      ],
+      "imageLabels": [
+        "Your product",
+        "Street try-on",
+        "Three-way styling"
       ]
     },
     {
       "id": "coffee",
-      "t": "Coffee beans: a plain bag in a kitchen and at a breakfast table",
-      "d": "One coffee bag photo became a kitchen-counter scene and a breakfast-table setting.",
+      "t": "Protein Bar Ad: Gym Prep to First Bite",
+      "d": "Pack a protein snack before training, then show a candid first-bite reaction outdoors.",
       "imageRefs": [
-        "n:guide:k5-home-flow-coffee-pack",
-        "n:guide:k5-home-coffee-counter",
-        "n:guide:k5-home-coffee-breakfast"
+        "n:guide:q1-home-flow-proteinbar-source",
+        "n:guide:q1-home-flow-proteinbar-gym-bag",
+        "n:guide:q1-home-flow-proteinbar-street-taste"
+      ],
+      "imageLabels": [
+        "Your product",
+        "Gym bag snack prep",
+        "Street interview first bite"
       ]
     }
   ],
@@ -173,64 +188,84 @@
     }
   ],
   "examples": {
-    "h2": "Examples by product type",
-    "lead": "One product photo can become listing images, lifestyle scenes and short video ideas. Here are examples across common store categories.",
+    "h2": "Ad scenes across product categories",
+    "lead": "Each scene uses a real ad format for a product shoppers already recognize.",
     "groups": [
       {
-        "label": "Photos",
+        "label": "Product Hero",
         "items": [
           {
-            "ref": "n:gen2:home-g1",
-            "title": "Ceramic vase cut out on pure white",
+            "ref": "n:guide:q1-home-example-lipstick",
+            "title": "Lipstick Hero: Coral Tube on White",
             "kind": "photo",
-            "product": "ceramic vase"
-          },
-          {
-            "ref": "n:guide:k5-home-example-home-g2",
-            "title": "Leather backpack resting on a cafe chair",
-            "kind": "photo",
-            "product": "leather backpack"
-          },
-          {
-            "ref": "n:guide:k5-home-example-home-g3",
-            "title": "Silk scarf worn on a breezy park walk",
-            "kind": "photo",
-            "product": "silk scarf"
-          },
-          {
-            "ref": "n:guide:k5-home-example-home-g4",
-            "title": "Skincare bottle on wet stone with room for text",
-            "kind": "photo",
-            "product": "skincare bottle"
+            "product": "coral lipstick"
           }
         ]
       },
       {
-        "label": "Video scenes",
+        "label": "Lifestyle Use",
         "items": [
           {
-            "ref": "n:gen2:home-g5",
-            "title": "Smartwatch strapped on before a run",
+            "ref": "n:guide:q1-home-example-tote",
+            "title": "Bag Routine: Crossbody Worn at Cafe",
+            "kind": "scene",
+            "product": "leather crossbody bag"
+          }
+        ]
+      },
+      {
+        "label": "On-Model Try-On",
+        "items": [
+          {
+            "ref": "n:guide:q1-home-example-scarf",
+            "title": "Street Try-On: Silk Scarf in Motion",
+            "kind": "scene",
+            "product": "silk scarf"
+          }
+        ]
+      },
+      {
+        "label": "Cinematic Hero",
+        "items": [
+          {
+            "ref": "n:guide:q1-home-example-serum",
+            "title": "Cinematic Hero: Serum Bottle on Wet Stone",
+            "kind": "photo",
+            "product": "face serum"
+          }
+        ]
+      },
+      {
+        "label": "Run Prep",
+        "items": [
+          {
+            "ref": "n:guide:q1-home-example-watch",
+            "title": "Run Prep: Watch Fastened Before Workout",
             "kind": "scene",
             "product": "smartwatch"
+          }
+        ]
+      },
+      {
+        "label": "Creator Review",
+        "items": [
+          {
+            "ref": "n:guide:q1-home-example-review",
+            "title": "Creator Review: Face Serum Held to Camera",
+            "kind": "scene",
+            "product": "face serum"
           },
           {
-            "ref": "n:guide:k5-home-example-home-g6",
-            "title": "Air purifier switched on in a bright bedroom",
+            "ref": "n:guide:q1-home-example-harness",
+            "title": "Pet Parent Review: Harness Held Beside Dog",
             "kind": "scene",
-            "product": "air purifier"
+            "product": "dog walking harness"
           },
           {
-            "ref": "n:guide:k5-home-example-home-g7",
-            "title": "Dog leash clipped on at the front door",
+            "ref": "n:guide:q1-home-example-earbuds",
+            "title": "Tech Review: Wireless Earbuds Held to Camera",
             "kind": "scene",
-            "product": "dog leash"
-          },
-          {
-            "ref": "n:guide:k5-home-example-home-g8",
-            "title": "Board game opened on a family table",
-            "kind": "scene",
-            "product": "board game"
+            "product": "wireless earbuds"
           }
         ]
       }
@@ -271,15 +306,15 @@
       "f:carousel-storytelling-v",
       "f:tiktok-reels-shorts-v",
       "n:gen2:photo-hub-c1",
-      "n:guide:k5-home-strip-3",
-      "n:guide:k5-home-strip-4",
-      "n:guide:k5-home-strip-5"
+      "f:q1-home-strip-serum",
+      "f:q1-home-strip-trailshoe",
+      "f:q1-home-strip-creator-review"
     ],
     "steps": {
-      "source": "n:gen2:lifestyle-photos-g4",
-      "result": "n:guide:k5-home-steps-result",
+      "source": "n:guide:q1-home-steps-source",
+      "result": "n:guide:q1-home-steps-result",
       "mode": "photo",
-      "prompt": "Move the mug from the snowy porch to a picnic blanket in bright summer sun. Keep the enamel chips and the handle exactly as they are.",
+      "prompt": "Use the uploaded product image and keep the serum bottle shape, color and label area exactly. An adult holds a plain amber serum bottle beside their face in a parked car, looking toward the camera with a natural conversational expression. Soft daylight, realistic creator-style still, chest-up framing, bottle and face clear, no text.",
       "options": [
         [
           "Template",
@@ -314,75 +349,75 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:ind-shoes-g5",
-          "label": "Sneakers on a city curb",
+          "ref": "n:guide:q1-home-picker-runner",
+          "label": "POV Hook: Trail Shoe Hits Path",
           "chips": [
             "outdoor"
           ],
-          "prompt": "Show a person stepping up onto a city curb in white running shoes, with the shoe side profile visible.",
+          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult runner steps onto a city curb in a plain trail shoe, with the tread and side profile visible. Freeze the moment just before the next stride in late-afternoon light, candid sports-ad style, low close angle, full shoe in frame, no text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-home-picker-cards-1-image",
-          "label": "Ceramic mug gift set",
+          "ref": "n:guide:q1-home-picker-earrings",
+          "label": "ASMR Unboxing: Gold Hoop Earrings",
           "chips": [
             "kitchen"
           ],
-          "prompt": "Show a hand lifting one ceramic mug from an open gift box lined with paper filling.",
+          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. Adult hands lift plain gold hoop earrings from a small jewelry box lined with cream tissue. Hold the reveal above the open box in soft window light, overhead close framing, realistic jewelry campaign, no text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-home-picker-cards-2-image",
-          "label": "Wireless earbuds on a desk",
+          "ref": "n:guide:q1-home-picker-earbuds-v2",
+          "label": "Earbud Demo: Wireless Earbud Fit",
           "chips": [
             "desk"
           ],
-          "prompt": "Place two loose wireless earbuds beside a slim laptop on a tidy oak desk; no charging case, text, logo or brand marks.",
+          "prompt": "Use the uploaded product image and preserve its shape, color, and label area. An adult fits a small matte sage-green, stemless bean-shaped wireless earbud into one ear while holding its matching low, flat pill-shaped case in the other hand. Keep the earbud and case clearly visible in a bright everyday setting, tight side view, natural tech-ad style, no text, no logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-home-picker-cards-3-image",
-          "label": "Open clay mask on towels",
+          "ref": "n:guide:q1-home-picker-mask",
+          "label": "Mask Macro: Clay Lifted by Spatula",
           "chips": [
             "bathroom"
           ],
-          "prompt": "Show an open pale green clay mask jar on folded white towels, with its lid beside the jar.",
+          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. A clean spatula lifts a smooth ribbon of pale green clay mask from a plain open jar, with the texture suspended above the rim. Soft window light, realistic skincare macro, overhead close composition, no text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-home-picker-cards-4-image",
-          "label": "Face roller beside cream",
+          "ref": "n:guide:q1-home-picker-lipbalm",
+          "label": "GRWM: Tinted Lip Balm Before Work",
           "chips": [
             "bathroom"
           ],
-          "prompt": "Place a small skincare product on a bright bathroom shelf beside folded towels, with its front label facing forward.",
+          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult applies tinted balm in a mirror before leaving home, with the balm held beside the face and the color visible on the lips. Natural morning light, close candid beauty-campaign framing, no text.",
           "kind": "photo"
         },
         {
           "ref": "n:gen2:tpl-size-g2",
-          "label": "Canvas tote with laptop",
+          "label": "Bag Demo: Laptop Into Canvas Tote",
           "chips": [
             "outdoor"
           ],
-          "prompt": "Show the canvas tote open with a laptop inside, held at the top by a person in a bright room.",
+          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult slides a laptop into a plain canvas tote and lifts the bag by its handles, showing the full tote and open capacity. Bright natural light, practical lifestyle-ad composition at waist height, no text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-home-picker-cards-6-image",
-          "label": "Hot sauce over tacos",
+          "ref": "n:guide:q1-home-picker-hot-sauce",
+          "label": "Taco Recipe: Hot Sauce Drizzle",
           "chips": [
             "kitchen"
           ],
-          "prompt": "Pour hot sauce from the bottle over a plate of tacos on a wooden table.",
+          "prompt": "Use the uploaded product image and keep its bottle shape, color, and label area exactly. An adult hand squeezes a thin ribbon of plain hot sauce from a blank-label bottle onto a fresh taco on a clean plate. Keep the taco and bottle clearly visible. Bright kitchen light, close food-ad composition, no text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-home-picker-cards-7-image",
-          "label": "Lamp and mug on a desk",
+          "ref": "n:guide:q1-home-picker-pet-hair",
+          "label": "Pet Problem: Brush Hair From Sofa",
           "chips": [
             "desk"
           ],
-          "prompt": "Show a small lamp beside an open book on a desk near a cushioned chair.",
+          "prompt": "Use the uploaded product image and keep its shape, color and label area exactly. An adult uses a plain pet-hair remover across a sofa cushion while a calm dog sits nearby. Show the cleaned path and collected fur clearly, bright home light, close practical-ad composition, no text.",
           "kind": "photo"
         }
       ],
@@ -392,58 +427,58 @@
       {
         "frame": "browser",
         "ref": "n:gen2:plat-amazon-c1",
-        "h": "Product page",
-        "d": "Lead with the clean photo, then add one scene so shoppers see the size and where it goes."
+        "h": "Speaker Hero: Clean Front View on White",
+        "d": "Use a clean full view when shoppers need to inspect the product shape."
       },
       {
         "frame": "post",
-        "ref": "f:k5-home-uses-1-image",
-        "h": "Social post",
-        "d": "A product in a real setting gets noticed faster than a cut-out. Type the offer in your editor after download."
+        "ref": "n:guide:q1-home-use-speaker-review-v2",
+        "h": "Creator Review: Speaker Held to Camera",
+        "d": "Use this format when a personal recommendation fits the placement."
       },
       {
-        "frame": "phone",
-        "ref": "f:social-proof-animation-v",
-        "h": "TikTok or Reels",
-        "d": "A 9:16 clip that shows the product moving: opening, pouring, switching on."
+        "frame": "post",
+        "ref": "n:guide:q1-home-use-electrolyte-review",
+        "h": "Street Interview: Electrolyte Drink First Sip",
+        "d": "Use this format when a personal recommendation fits the placement."
       },
       {
         "frame": "split",
         "ref": "n:gen2:plat-facebook-g3",
-        "ref_b": "f:k5-home-uses-3-imageb",
-        "h": "Ad test",
-        "d": "Make two versions from one photo and keep the one that gets more clicks."
+        "ref_b": "n:guide:q1-home-use-ab-review",
+        "h": "A/B Hook: Serum Held to Camera",
+        "d": "Compare two opening moments for one product and one audience."
       }
     ],
     "input": [
       {
         "good": "n:gen2:white-background-c1",
         "bad": "n:guide:home-bottle-cropped",
-        "good_label": "Bottle fully inside frame",
-        "bad_label": "Bottle cap clipped by top edge"
+        "good_label": "Clear, complete bottle on plain surface",
+        "bad_label": "Bottle cap cropped out of frame"
       },
       {
         "good": "n:gen2:plat-amazon-g4",
         "bad": "n:guide:home-daypack-blurred",
-        "good_label": "Backpack edges stay sharp",
-        "bad_label": "Backpack details blurred"
+        "good_label": "Sharp, complete backpack on light background",
+        "bad_label": "Backpack details blurred and unclear"
       }
     ],
     "outputs": [
       {
-        "ref": "f:k5-home-outputs-0-image",
+        "ref": "n:guide:q1-home-output-bite",
         "frame": "1:1",
-        "label": "Feed photo"
+        "label": "Street Interview: Protein Bar First Bite"
       },
       {
-        "ref": "n:guide:home-steamer-frame",
+        "ref": "n:guide:q1-home-output-steamer",
         "frame": "9:16",
-        "label": "Garment steamer demo",
+        "label": "Problem to Fix: Creases Smoothed From Shirt",
         "length": 10
       }
     ],
     "after": {
-      "ref": "f:k5-home-after-image",
+      "ref": "n:guide:q1-home-after-pet",
       "zones": [
         "Your price",
         "Your headline"
@@ -457,18 +492,18 @@
     "sizes": [
       {
         "frame": "9:16",
-        "ref": "f:k5-home-sizes-0-image",
-        "label": "TikTok, Reels and YouTube Shorts"
+        "ref": "f:q1-home-size-electrolyte",
+        "label": "Car Selfie Review: Electrolyte Drink"
       },
       {
         "frame": "1:1",
-        "ref": "n:gen2:plat-amazon-g1",
-        "label": "Instagram and Facebook feeds, Amazon and Shopify listings"
+        "ref": "n:guide:q1-home-size-earrings",
+        "label": "Earrings Hero: Gold Hoops on White"
       },
       {
         "frame": "16:9",
-        "ref": "f:k5-home-sizes-2-image",
-        "label": "YouTube, website banners and product-page video"
+        "ref": "f:q1-home-size-headphones",
+        "label": "Tech Review: Headphones for the Commute"
       }
     ],
     "titles": {

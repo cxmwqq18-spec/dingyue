@@ -31,16 +31,16 @@
   ],
   "steps": [
     {
-      "t": "Upload a product photo",
-      "d": "A clear image with the whole item in frame gives you a useful starting point."
+      "t": "Your product",
+      "d": "Start with a clear item image where the whole product stays in frame."
     },
     {
-      "t": "Choose a photo direction",
-      "d": "Pick a white background, lifestyle, on-model, new-background, or social ad tool."
+      "t": "Choose a visual direction",
+      "d": "Pick a clean product hero, everyday use, or a model try-on."
     },
     {
-      "t": "Download your photo",
-      "d": "Save the square image, then add any exact wording in your editor."
+      "t": "Download your result",
+      "d": "Save the square image and add any exact wording in your editor."
     }
   ],
   "uses": [
@@ -218,38 +218,48 @@
     ]
   },
   "examples": {
-    "h2": "More product photo examples",
-    "lead": "Square results across the main photo types: clean listing images, lifestyle scenes and feed-ready shots.",
+    "h2": "Product ad formats for common placements",
+    "lead": "Browse recognizable product scenes, from clean hero shots to try-ons and reviews.",
     "groups": [
       {
-        "label": "Listing and lifestyle",
+        "label": "Product Hero",
         "items": [
           {
-            "ref": "n:gen2:h1-photo-hub-lamp",
-            "title": "Matte ceramic table lamp cut out on pure white",
+            "ref": "n:guide:q1-photo-example-lipbalm",
+            "title": "Lip Balm Hero: Coral Tube on White",
             "kind": "photo",
-            "product": "ceramic table lamp"
-          },
-          {
-            "ref": "n:gen2:photo-hub-g2",
-            "title": "Steel travel tumbler on a lakeside rock at sunrise",
-            "kind": "photo",
-            "product": "steel travel tumbler"
-          },
-          {
-            "ref": "n:gen2:photo-hub-g3",
-            "title": "Snack box on a cafe table beside a latte",
-            "kind": "photo",
-            "product": "boxed snacks"
+            "product": "tinted lip balm"
           }
         ]
       },
       {
-        "label": "Feed-ready",
+        "label": "Trail Sip",
         "items": [
           {
-            "ref": "n:gen2:photo-hub-g4",
-            "title": "Sunglasses on a deck with open space for a headline",
+            "ref": "n:guide:q1-photo-example-tumbler",
+            "title": "Trail Test: Runner Drinks From Tumbler",
+            "kind": "photo",
+            "product": "steel travel tumbler"
+          }
+        ]
+      },
+      {
+        "label": "Street Interview",
+        "items": [
+          {
+            "ref": "n:guide:q1-photo-example-snack",
+            "title": "Taste Test: Protein Bar First Bite",
+            "kind": "photo",
+            "product": "protein bar"
+          }
+        ]
+      },
+      {
+        "label": "On-Model Try-On",
+        "items": [
+          {
+            "ref": "n:guide:q1-photo-example-sunglasses",
+            "title": "On-Model Try-On: Sunglasses Outdoors",
             "kind": "photo",
             "product": "sunglasses"
           }
@@ -259,22 +269,22 @@
   },
   "visual": {
     "strip": [
-      "n:guide:k6-photo-hub-strip-granola",
-      "n:guide:k6-photo-hub-strip-tumbler",
-      "n:guide:k6-photo-hub-strip-snackbox",
+      "n:guide:q1-photo-strip-granola",
+      "n:guide:q1-photo-strip-tumbler",
+      "n:guide:q1-photo-strip-snackbox",
       "n:gen2:tpl-detail-g2",
-      "n:gen2:examples-g8",
-      "n:guide:k6-photo-hub-strip-planter"
+      "n:guide:q1-photo-strip-knit",
+      "n:guide:q1-photo-strip-phonecase"
     ],
     "steps": {
-      "source": "n:gen2:h1-photo-hub-candle-source",
-      "sourceAlt": "Plain white ceramic candle jar with its matching lid on a neutral surface.",
-      "result": "n:gen2:h1-photo-hub-candle-result",
+      "source": "n:guide:q1-photo-steps-source",
+      "sourceAlt": "Plain coral lip balm tube fully in frame on pure white, cap beside it, blank label area and soft even light.",
+      "result": "n:guide:q1-photo-steps-result",
       "mode": "photo",
-      "prompt": "Hands open a kraft carton to reveal this candle jar among pale tissue.",
+      "prompt": "Use the uploaded product image and preserve its shape, color, and label area. An adult woman applies tinted lip balm at a bright vanity mirror, with the tube visible beside her face and the coral color clear on her lips. Soft morning light, clean beauty-campaign still, close chest-up framing, no text.",
       "options": [
         [
-          "Photo",
+          "Your product",
           "Your product"
         ],
         [
@@ -298,8 +308,8 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:h1-photo-hub-lamp",
-          "label": "Make a white background photo",
+          "ref": "n:guide:q1-photo-picker-white-lipbalm",
+          "label": "White Background: Lip Balm on White",
           "chips": [
             "listing"
           ],
@@ -309,7 +319,7 @@
         },
         {
           "ref": "g:lifestyle-scene/example-08",
-          "label": "Create a lifestyle photo",
+          "label": "Lifestyle Use: Canvas Tote at Market",
           "chips": [
             "styled"
           ],
@@ -319,7 +329,7 @@
         },
         {
           "ref": "g:fashion-editorial/example-08",
-          "label": "Show the product on a model",
+          "label": "On-Model Try-On: Linen Outfit",
           "chips": [
             "styled"
           ],
@@ -328,8 +338,8 @@
           "tool": "model-photos"
         },
         {
-          "ref": "n:guide:k6-photo-hub-picker-background-mug",
-          "label": "Change the photo background",
+          "ref": "n:guide:q1-photo-picker-earbuds-v2",
+          "label": "Earbud Hero: Pair on White",
           "chips": [
             "listing"
           ],
@@ -338,12 +348,12 @@
           "tool": "change-background"
         },
         {
-          "ref": "g:sale-campaign-key-visual/example-07",
-          "label": "Make a social ad still",
+          "ref": "n:guide:q1-photo-picker-coat",
+          "label": "Winter Try-On: Coat in Motion",
           "chips": [
             "styled"
           ],
-          "prompt": "",
+          "prompt": "Use the uploaded product image and preserve its shape, color and label area. An adult wears a plain warm coat on a city walk and turns slightly to show the fit and front fastening. Soft winter daylight, clean seasonal retail campaign, full coat visible in a natural street setting, no text.",
           "kind": "photo",
           "tool": "social-ad-photos"
         }
@@ -352,47 +362,47 @@
     },
     "uses": [
       {
-        "frame": "browser",
-        "ref": "n:gen2:plat-amazon-g3",
-        "h": "Product listings",
-        "d": "Use a clear product view where shoppers can see the item and its shape."
+        "frame": "post",
+        "ref": "n:guide:q1-photo-use-review",
+        "h": "Creator Review: Face Serum Held to Camera",
+        "d": "Show the product beside the speaker’s face while they share one clear feature."
       },
       {
         "frame": "post",
-        "ref": "n:gen2:plat-facebook-c4",
-        "h": "Social posts",
-        "d": "Pair a product image with your headline and offer added in your editor."
+        "ref": "n:guide:q1-photo-use-recipe",
+        "h": "Recipe Demo: Eggs Lifted From Cast-Iron Pan",
+        "d": "Show the ingredient and the cooking action together in a clear frame."
       }
     ],
     "input": [
       {
         "good": "n:guide:plat-facebook-size-square-backpack",
         "bad": "n:guide:k6-photo-hub-input-daypack-blur",
-        "good_label": "Black commuter backpack shown clearly in full",
-        "bad_label": "Backpack details softened by blur"
+        "good_label": "Sharp, complete backpack on light background",
+        "bad_label": "Backpack blurred and hard to inspect"
       },
       {
         "good": "n:guide:k6-photo-hub-input-shoe-good",
         "bad": "n:guide:k6-photo-hub-input-shoe-blur",
-        "good_label": "Running sneaker heel and stitching in focus",
-        "bad_label": "Running shoe softened by blur"
+        "good_label": "Clear running shoe, full shape visible",
+        "bad_label": "Running shoe details lost in blur"
       }
     ],
     "outputs": [
       {
         "ref": "n:guide:k6-photo-hub-output-ring",
         "frame": "1:1",
-        "label": "Square listing photo"
+        "label": "Ring Macro: Prong and Polished Band"
       },
       {
-        "ref": "n:guide:k6-photo-hub-output-duffel",
+        "ref": "n:guide:q1-photo-output-duffel",
         "frame": "1:1",
-        "label": "Square lifestyle photo"
+        "label": "Duffel Demo: Bag Lifted for Weekend Trip"
       },
       {
         "ref": "n:guide:k6-photo-hub-output-outfit",
         "frame": "1:1",
-        "label": "Square social ad still"
+        "label": "Street Try-On: Navy Set in Motion"
       }
     ],
     "titles": {
@@ -420,7 +430,7 @@
       }
     },
     "after": {
-      "ref": "n:gen2:plat-shopify-g1",
+      "ref": "n:guide:q1-photo-after-lip",
       "zones": [
         "Your price",
         "Your headline"

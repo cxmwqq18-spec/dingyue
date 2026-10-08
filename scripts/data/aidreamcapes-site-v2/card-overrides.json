@@ -2,8 +2,48 @@
   "video-hub": {
     "images": {
       "creator": {
-        "ref": "n:guide:k6-video-hub-card-creator",
-        "alt": "Adult carrying an unbranded reusable bottle outdoors in daylight, face outside the crop."
+        "ref": "n:guide:q1-video-hero-creator-v2",
+        "alt": "An adult male creator in a bright kitchen looks straight into the lens mid-sentence and holds a flat single-serve electrolyte powder sachet beside his face. The sachet is rectangular and soft, not a tube or bottle."
+      },
+      "unbox": {
+        "ref": "n:guide:q1-video-hero-unbox",
+        "alt": "Adult hands open a clean box and lift plain charcoal headphones toward the lens."
+      },
+      "beauty": {
+        "ref": "n:guide:q1-video-hero-grwm",
+        "alt": "An adult woman at a bathroom vanity holds a plain tinted lip balm near her face."
+      },
+      "ba": {
+        "ref": "n:guide:q1-video-card-ba",
+        "alt": "A dark sofa split into a visibly fuzzy side and a clean side as an adult hand pulls a reusable lint remover across the fabric."
+      },
+      "demo": {
+        "ref": "n:guide:q1-video-card-demo",
+        "alt": "An adult man in his thirties sits in a parked car and holds a plain serum bottle near his cheek."
+      },
+      "howto": {
+        "ref": "n:guide:q1-video-card-grwm",
+        "alt": "An adult woman gets ready at a bright vanity and holds a plain tinted lip balm toward the camera."
+      },
+      "drink": {
+        "ref": "n:guide:q1-video-card-proteinbar",
+        "alt": "An adult interviewer asks an adult commuter for a first-bite reaction while the commuter holds a plain protein bar."
+      },
+      "home": {
+        "ref": "n:guide:q1-video-card-stain",
+        "alt": "An adult hand sprays a plain fabric-safe cleaner on a visible coffee stain on a white shirt and lifts the stain with one cloth pass."
+      },
+      "launch": {
+        "ref": "n:guide:q1-video-card-headphones",
+        "alt": "An adult male creator in a tidy home office holds plain over-ear headphones and speaks to camera."
+      },
+      "compare": {
+        "ref": "n:guide:q1-video-card-compare",
+        "alt": "Two adult hands hold two unbranded silicone phone cases side by side at equal distance from the lens."
+      },
+      "bf": {
+        "ref": "n:guide:q1-video-card-flashshoe",
+        "alt": "An adult runner steps into a plain performance shoe and turns one foot toward camera on a track, clear side profile and laces visible."
       }
     },
     "tools": {
@@ -16,8 +56,8 @@
   "photo-hub": {
     "images": {
       "white": {
-        "ref": "g:ecommerce-main-image/hero-output",
-        "alt": "Clean ecommerce main image of a matte ceramic travel mug on a neutral studio background."
+        "ref": "n:guide:q1-photo-hero-white",
+        "alt": "A plain amber face serum bottle centered on pure white with a soft studio shadow and full silhouette."
       },
       "life": {
         "ref": "n:guide:k6-photo-hub-card-lifestyle",
@@ -26,6 +66,18 @@
       "size": {
         "ref": "n:guide:k6-photo-hub-card-size-reference",
         "alt": "Unbranded commuter backpack beside a familiar carry-on bag and a hand for a clear scale comparison."
+      },
+      "head": {
+        "ref": "n:guide:q1-photo-template-head",
+        "alt": "An adult model wears a plain knit beanie outdoors in cool daylight, close framing shows the crown, cuff and fit."
+      },
+      "angle": {
+        "ref": "n:guide:q1-photo-template-angle",
+        "alt": "An adult hand connects a plain charging cable to a compact speaker, showing the port and connector clearly."
+      },
+      "pack": {
+        "ref": "n:guide:q1-photo-template-pack",
+        "alt": "Adult hands lift a plain tea tin from a kraft gift box lined with pale tissue on a bright kitchen counter."
       }
     }
   },
@@ -172,20 +224,32 @@
   "home": {
     "images": {
       "creator": {
-        "ref": "g:ugc-still-ad/example-05",
-        "alt": "Hand holds the pale green lid of a clear water bottle beside a plant."
+        "ref": "n:guide:q1-home-template-creator",
+        "alt": "An adult creator looks into the lens while speaking and holds a plain reusable water bottle at chest height."
       },
       "size": {
-        "ref": "n:guide:k5-home-card-size",
-        "alt": "Folded linen shirt beside a measuring tape"
+        "ref": "n:guide:q1-home-template-size",
+        "alt": "An adult model wears a relaxed linen shirt and turns slightly to show the fit from shoulder to hem in bright daylight."
       },
       "model": {
         "ref": "n:guide:k5-home-card-model",
         "alt": "Model wearing a simple linen shirt outdoors"
       },
       "color": {
-        "ref": "n:guide:k5-home-card-color",
-        "alt": "Three simple ceramic mugs in distinct glaze colors"
+        "ref": "n:guide:q1-home-template-color",
+        "alt": "Three unbranded running shoes in distinct neutral colorways shown side by side on a bright white background."
+      },
+      "white": {
+        "ref": "n:guide:q1-home-template-white",
+        "alt": "A single unbranded running shoe shown in a clear full side profile on pure white with soft even studio light."
+      },
+      "ba": {
+        "ref": "n:guide:q1-home-template-ba",
+        "alt": "A neatly split closet shelf shows scattered clothes before and sorted clothes after, with an adult hand sliding a plain organizer bin into place."
+      },
+      "unbox": {
+        "ref": "n:guide:q1-home-template-unbox",
+        "alt": "Adult hands lift plain charcoal headphones from a fitted kraft box lined with tissue on a clean desk."
       }
     }
   },

@@ -5,17 +5,18 @@
       {
         "ref": "n:gen2:photo-hub-c1",
         "product": "leather crossbody bag",
-        "title": "Crossbody bag cut out on pure white for a listing"
+        "title": "Crossbody Hero: Bag on White"
       },
       {
-        "ref": "n:gen2:photo-hub-c2",
-        "product": "linen throw pillow",
-        "title": "Linen pillow styled on a sofa in morning light"
+        "ref": "n:guide:q1-photo-case-pillow",
+        "product": "reusable pet hair remover",
+        "title": "Problem to Fix: Pet Hair Cleared From Sofa",
+        "kind": "action"
       },
       {
         "ref": "n:gen2:photo-hub-c3",
         "product": "knit beanie",
-        "title": "Knit beanie worn outdoors for a winter post"
+        "title": "On-Model Try-On: Knit Beanie Outdoors"
       }
     ],
     "image-to-video": [

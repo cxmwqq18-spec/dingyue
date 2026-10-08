@@ -45,16 +45,16 @@
   ],
   "steps": [
     {
-      "t": "Add a product photo or link",
-      "d": "Start with a clear product picture or a public product page that shows the item."
+      "t": "Your product",
+      "d": "Start with a clear item image or a public product page that shows what you sell."
     },
     {
-      "t": "Set the scene and frame",
-      "d": "Choose a product action, then pick a frame and length for the placement."
+      "t": "Choose a scene and format",
+      "d": "Pick an action, then set the frame and length for where you will use it."
     },
     {
-      "t": "Review and download the clip",
-      "d": "Save the version that fits the product and placement you selected."
+      "t": "Review and download your result",
+      "d": "Save the version that fits the product and placement."
     }
   ],
   "faq": [
@@ -220,69 +220,74 @@
     ]
   },
   "examples": {
-    "h2": "Example scenes by video type",
-    "lead": "Opening setups for the product videos sellers make most often. Pick the one closest to your product and start from your own photo.",
+    "h2": "Product ad formats from common categories",
+    "lead": "Choose a proven product-video format, then shape it around the item you sell.",
     "groups": [
       {
-        "label": "Everyday product moments",
+        "label": "Product Demo",
         "items": [
           {
-            "ref": "n:gen2:video-hub-g1",
-            "title": "Water bottle lifted out of a gym bag",
+            "ref": "n:guide:q1-video-ex-gym-protein",
+            "title": "Gym Routine: Protein Shaker After Workout",
             "kind": "scene",
-            "product": "insulated water bottle"
+            "product": "protein shaker"
           },
           {
-            "ref": "n:gen2:video-hub-g2",
-            "title": "Bento lunch box snapped shut on the counter",
+            "ref": "n:guide:q1-video-ex-trailshoe",
+            "title": "Run Test: Trail Shoe on Wet Path",
             "kind": "scene",
-            "product": "bento lunch box"
+            "product": "trail running shoe"
           }
         ]
       },
       {
-        "label": "Reveals and room changes",
+        "label": "Problem/Solution",
         "items": [
           {
-            "ref": "f:video-hub-h1-bike",
-            "title": "A hand checks the hinge on a folding electric bicycle",
+            "ref": "n:guide:q1-video-ex-lunchbox",
+            "title": "Problem to Fix: Lunchbox Leak in Commuter Bag",
             "kind": "scene",
-            "product": "folding electric bicycle"
+            "product": "insulated lunchbox"
           },
           {
-            "ref": "n:gen2:video-hub-g4",
-            "title": "Coat hooks and a bench sorting out a small entryway",
+            "ref": "n:guide:q1-video-ex-bike",
+            "title": "Problem to Fix: Folding Bike Fits the Train",
             "kind": "scene",
-            "product": "entryway bench and hooks"
-          },
-          {
-            "ref": "n:gen2:video-hub-g5",
-            "title": "Lit candle on a side table in warm evening light",
-            "kind": "scene",
-            "product": "glass candle"
+            "product": "folding commuter bicycle"
           }
         ]
       },
       {
-        "label": "Photo to motion",
+        "label": "Creator Review",
         "items": [
           {
-            "ref": "n:gen2:video-hub-g6",
-            "title": "Pendant lamp glowing above a dining table at dusk",
+            "ref": "n:guide:q1-video-ex-serum",
+            "title": "Car Selfie Review: Vitamin C Serum",
             "kind": "scene",
-            "product": "pendant lamp"
+            "product": "vitamin C serum"
           },
           {
-            "ref": "n:gen2:video-hub-g7",
-            "title": "Perfume bottle on a mirrored tray in rippling light",
+            "ref": "n:guide:q1-video-ex-protein-bar",
+            "title": "Street Interview: Protein Bar First Bite",
             "kind": "scene",
-            "product": "perfume bottle"
+            "product": "protein bar"
+          }
+        ]
+      },
+      {
+        "label": "Product Reveal",
+        "items": [
+          {
+            "ref": "n:guide:q1-video-ex-earbuds",
+            "title": "ASMR Unboxing: Wireless Earbuds",
+            "kind": "scene",
+            "product": "wireless earbuds"
           },
           {
-            "ref": "n:gen2:video-hub-g8",
-            "title": "Sneaker turning slowly on a plain turntable",
+            "ref": "n:guide:q1-video-ex-fragrance",
+            "title": "Cinematic Hero: Fragrance in Moving Light",
             "kind": "scene",
-            "product": "sneaker"
+            "product": "fragrance bottle"
           }
         ]
       }
@@ -357,20 +362,20 @@
   },
   "visual": {
     "strip": [
-      "f:k6-video-hub-frame-bike",
-      "f:video-hub-h1-carry",
-      "f:video-hub-h1-steamer",
-      "f:video-hub-h1-headset-in-hand",
-      "f:k6-video-hub-frame-bottle-pour",
-      "f:video-hub-h1-product-page"
+      "f:q1-video-strip-protein",
+      "f:q1-video-strip-car",
+      "f:q1-video-strip-steamer-v2",
+      "f:q1-video-strip-headphones",
+      "f:q1-video-strip-street",
+      "f:q1-video-strip-bag"
     ],
     "steps": {
-      "source": "n:guide:k6-video-hub-step-source",
-      "sourceAlt": "Cream ceramic mug with blue flecks, fully visible on a wooden kitchen counter.",
-      "result": "n:guide:k6-video-hub-step-result",
+      "source": "n:guide:q1-video-steps-source",
+      "sourceAlt": "A single unbranded amber serum bottle with dropper cap, front facing and label area blank.",
+      "result": "n:guide:q1-video-steps-result",
       "mode": "video",
       "length": 10,
-      "prompt": "Add a curl of steam above the speckled mug in morning light.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman in a bright bathroom holds a plain serum bottle and speaks to the lens. The adult creator looks directly into camera and says: \"I wanted to show you this before I head out.\" They hold the product steady beside their face, ending with the item centered and the speaker facing the lens. Soft natural light, realistic phone-video look. Chest-up handheld framing with a slight push-in. Sound: the spoken line and quiet room or street ambience; no music.",
       "options": [
         [
           "Frame",
@@ -397,72 +402,72 @@
       ],
       "cards": [
         {
-          "ref": "n:guide:k6-video-hub-picker-protein",
-          "label": "Add motion to a photo",
+          "ref": "n:guide:q1-video-picker-workout",
+          "label": "Workout Demo: Protein Scooped Into Shaker",
           "chips": [
             "product-moment"
           ],
-          "prompt": "",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand scoops protein powder from a plain pouch into a clear shaker at a gym bench. The action ends with the product clearly visible and still in frame. Natural available light, realistic phone-video look. Close handheld framing with one slow push-in. Sound: soft product handling and room ambience; no music.",
           "kind": "video",
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:k6-video-hub-picker-travel-mug",
-          "label": "Make a creator-style ad",
+          "ref": "n:guide:q1-video-picker-car",
+          "label": "Car Review: Electrolyte Held to Lens",
           "chips": [
             "creator-ad"
           ],
-          "prompt": "",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult man in a parked car holds a clear bottle with a pale electrolyte drink and speaks to camera. The adult creator looks directly into camera and says: \"I wanted to show you this before I head out.\" They hold the product steady beside their face, ending with the item centered and the speaker facing the lens. Soft natural light, realistic phone-video look. Chest-up handheld framing with a slight push-in. Sound: the spoken line and quiet room or street ambience; no music.",
           "kind": "video",
           "tool": "video-ads"
         },
         {
-          "ref": "n:guide:k6-video-hub-picker-product-box",
-          "label": "Show a product in use",
+          "ref": "n:guide:q1-video-picker-phone-v2",
+          "label": "Phone Case Demo: Two Cases Compared",
           "chips": [
             "product-moment"
           ],
-          "prompt": "",
+          "prompt": "Use the uploaded photo as the product and preserve its shape, color, and label area. Adult hands fit a plain muted sage-green silicone case with exactly one small circular camera opening onto a generic smartphone with one camera. The action ends with the single camera opening aligned and the product clearly visible. Natural available light, realistic phone-video look. Close handheld framing with one slow push-in. Sound: soft product handling and room ambience; no music. Avoid square camera islands and multi-lens clusters.",
           "kind": "video",
           "tool": "product-videos"
         },
         {
-          "ref": "n:guide:k6-video-hub-picker-blanket",
-          "label": "Reveal a boxed product",
+          "ref": "n:guide:q1-video-picker-jewel",
+          "label": "ASMR Unboxing: Gold Hoop Earrings",
           "chips": [
             "product-moment"
           ],
-          "prompt": "",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift a pair of plain gold hoop earrings from a small jewelry box lined with cream tissue. The action ends with the product clearly visible and still in frame. Natural available light, realistic phone-video look. Close handheld framing with one slow push-in. Sound: soft product handling and room ambience; no music.",
           "kind": "video",
           "tool": "unboxing-videos"
         },
         {
-          "ref": "f:before-after-showcases",
-          "label": "Organize a wardrobe",
+          "ref": "n:guide:q1-video-picker-closet-v2",
+          "label": "Before/After: Closet Organizer Clears Shelf",
           "chips": [
             "product-moment"
           ],
-          "prompt": "",
+          "prompt": "Use the uploaded photo as the product and keep its shape and label area exactly. Clear split scene: one side of a closet shelf is cluttered with loose clothes, the other side is neatly sorted in plain clear organizer bins as an adult hand slides one bin into place. End with the result and product centered and still in frame. Natural phone-video realism, one slow handheld push-in. Sound: soft fabric or product handling and room ambience; no music.",
           "kind": "video",
           "tool": "before-after-videos"
         },
         {
-          "ref": "n:guide:k6-video-hub-picker-presenter",
-          "label": "Add a presenter to the scene",
+          "ref": "n:guide:q1-video-picker-headphones",
+          "label": "Tech Review: Headphones Held to Camera",
           "chips": [
             "creator-ad"
           ],
-          "prompt": "",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman wearing a plain sweater holds over-ear headphones and speaks directly to lens. The adult creator looks directly into camera and says: \"I wanted to show you this before I head out.\" They hold the product steady beside their face, ending with the item centered and the speaker facing the lens. Soft natural light, realistic phone-video look. Chest-up handheld framing with a slight push-in. Sound: the spoken line and quiet room or street ambience; no music.",
           "kind": "video",
           "tool": "spokesperson-videos"
         },
         {
-          "ref": "n:guide:k6-video-hub-picker-product-page",
-          "label": "Start from a product page",
+          "ref": "n:guide:q1-video-picker-serum",
+          "label": "Creator Review: Serum From Product Page",
           "chips": [
             "creator-ad"
           ],
-          "prompt": "",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds a plain serum bottle while showing a generic unbranded product page on a tablet beside them. The adult creator looks directly into camera and says: \"I wanted to show you this before I head out.\" They hold the product steady beside their face, ending with the item centered and the speaker facing the lens. Soft natural light, realistic phone-video look. Chest-up handheld framing with a slight push-in. Sound: the spoken line and quiet room or street ambience; no music.",
           "kind": "video",
           "tool": "url-to-video"
         }
@@ -472,51 +477,51 @@
     "uses": [
       {
         "frame": "phone",
-        "ref": "f:k6-video-hub-use-rounded-fragrance",
-        "h": "Vertical social posts",
-        "d": "Use a 9:16 clip when the video will fill a vertical feed."
+        "ref": "n:guide:q1-video-use-selfie",
+        "h": "Car Selfie Review: Face Serum in Daylight",
+        "d": "Use this format when a personal product review fits the placement."
       },
       {
         "frame": "browser",
-        "ref": "n:guide:k6-video-hub-use-necklace",
-        "h": "Product detail pages",
-        "d": "Show one movement or feature beside the product photos."
+        "ref": "n:guide:q1-video-use-necklace",
+        "h": "Creator Review: Necklace Held to Camera",
+        "d": "Use this format when a personal product review fits the placement."
       }
     ],
     "input": [
       {
         "good": "n:guide:k6-video-hub-input-runner",
-        "bad": "n:guide:k6-video-hub-input-runner",
-        "good_label": "Running shoe fully visible in even light",
-        "bad_label": "Darkened running shoe",
+        "bad": "n:guide:q1-video-input-bad-shoe",
+        "good_label": "Clear running shoe, full shape in focus",
+        "bad_label": "Running shoe too dark to inspect",
         "darkened": true,
-        "bad_alt": "Running shoe darkened for a visual comparison."
+        "bad_alt": "A plain gray running shoe photographed on a neutral surface."
       },
       {
-        "good": "n:gen2:h1-video-hub-socks-source",
+        "good": "n:guide:q1-video-input-good-socks",
         "bad": "n:gen2:h1-video-hub-socks-blurred",
-        "good_label": "Cream wool socks with the knit in focus",
-        "bad_label": "Blurred wool socks",
+        "good_label": "Clear wool socks with visible knit",
+        "bad_label": "Sock knit blurred and hard to see",
         "bad_alt": "Cream wool socks with the knit softened by blur."
       }
     ],
     "outputs": [
       {
-        "ref": "f:k6-video-hub-frame-headphone-unbox",
+        "ref": "n:guide:q1-video-output-selfie",
         "frame": "9:16",
-        "label": "Headphone unboxing",
+        "label": "Car Selfie Review: Electrolyte Drink",
         "length": 6
       },
       {
-        "ref": "f:k6-video-hub-frame-square-demo",
+        "ref": "n:guide:q1-video-output-serum",
         "frame": "1:1",
-        "label": "Square product demonstration",
+        "label": "Creator Review: Serum Held to Camera",
         "length": 10
       },
       {
-        "ref": "f:k6-video-hub-frame-wide-compare",
+        "ref": "n:guide:q1-video-output-cases",
         "frame": "16:9",
-        "label": "Wide product comparison",
+        "label": "Product Comparison: Phone Cases Side by Side",
         "length": 15
       }
     ],
