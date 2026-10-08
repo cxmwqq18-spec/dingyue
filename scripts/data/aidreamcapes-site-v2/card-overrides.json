@@ -445,10 +445,6 @@
         "ref": "f:how-to-video",
         "alt": "Portable garment steamer next to a folded blue shirt on a wooden table"
       },
-      "film": {
-        "ref": "f:cinematic-video",
-        "alt": "Dark compact speaker lit by soft window light"
-      },
       "outfit": {
         "ref": "f:fashion-try-on-reel",
         "alt": "A model puts on a beige overshirt, turns, and examines its fabric."
@@ -742,6 +738,9 @@
     }
   },
   "tpl-compare": {
+    "swap": {
+      "howto": "ba"
+    },
     "images": {
       "ba": {
         "ref": "n:guide:q3-before-after-videos-hero-pet-hair",
