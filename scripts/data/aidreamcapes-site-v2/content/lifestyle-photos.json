@@ -98,13 +98,13 @@
         "label": "One product, two seasons",
         "items": [
           {
-            "ref": "n:gen2:lifestyle-photos-g4",
+            "ref": "n:guide:k5-lifestyle-example-g4",
             "title": "Enamel mug on a snowy cabin porch",
             "kind": "photo",
             "product": "enamel camping mug"
           },
           {
-            "ref": "n:gen2:lifestyle-photos-g5",
+            "ref": "n:guide:k5-lifestyle-example-g5",
             "title": "Enamel mug on a summer picnic blanket",
             "kind": "photo",
             "product": "enamel camping mug"
@@ -141,16 +141,16 @@
   },
   "visual": {
     "strip": [
-      "n:handbag-cafe",
-      "n:gen2:tpl-retargeting-video-ad-c4",
-      "n:gen2:ind-home-living-g3",
-      "n:gen2:ind-food-drinks-g1",
-      "n:gen2:tpl-carousel-video-ad-c2",
-      "n:gen2:tpl-retargeting-video-ad-c3"
+      "n:guide:k5-lifestyle-photos-strip-0",
+      "n:guide:k5-lifestyle-photos-strip-1",
+      "n:guide:k5-lifestyle-photos-strip-2",
+      "n:guide:k5-lifestyle-photos-strip-3",
+      "n:guide:k5-lifestyle-photos-strip-4",
+      "n:guide:k5-lifestyle-photos-strip-5"
     ],
     "steps": {
-      "source": "n:handbag-pack",
-      "result": "n:handbag-cafe",
+      "source": "n:guide:k5-lifestyle-photos-steps-source",
+      "result": "n:guide:k5-lifestyle-photos-steps-result",
       "mode": "photo",
       "prompt": "Put this tan leather handbag on a marble café table next to a cappuccino, keeping the handle and gold clasp exactly as they are.",
       "options": [
@@ -191,7 +191,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:ind-home-living-g2",
+          "ref": "n:guide:k5-lifestyle-photos-picker-cards-0-image",
           "label": "Planter beside a sofa",
           "chips": [
             "home"
@@ -200,7 +200,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:plat-instagram-c2",
+          "ref": "n:guide:k5-lifestyle-photos-picker-cards-1-image",
           "label": "Pillowcase on an unmade bed",
           "chips": [
             "home"
@@ -209,7 +209,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-food-drinks-g2",
+          "ref": "n:guide:k5-lifestyle-photos-picker-cards-2-image",
           "label": "Snack bag with fresh fruit",
           "chips": [
             "kitchen"
@@ -218,7 +218,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-food-drinks-g3",
+          "ref": "n:guide:k5-lifestyle-photos-picker-cards-3-image",
           "label": "Sauce jar beside dinner",
           "chips": [
             "kitchen"
@@ -227,7 +227,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-shoes-c4",
+          "ref": "n:guide:k5-lifestyle-photos-picker-cards-4-image",
           "label": "Suede loafers by the door",
           "chips": [
             "style"
@@ -236,7 +236,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-jewelry-accessories-c3",
+          "ref": "n:guide:k5-lifestyle-photos-picker-cards-5-image",
           "label": "Silk scarf on a handbag",
           "chips": [
             "style"
@@ -245,7 +245,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-shoes-15",
+          "ref": "n:guide:k5-lifestyle-photos-picker-cards-6-image",
           "label": "Hiking boot above a lake",
           "chips": [
             "outdoors"
@@ -254,7 +254,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:plat-shopify-g2",
+          "ref": "n:guide:k5-lifestyle-photos-picker-cards-7-image",
           "label": "Market tote with produce",
           "chips": [
             "outdoors"
@@ -268,39 +268,39 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:gen2:plat-shopify-c1",
+        "ref": "n:guide:k5-lifestyle-photos-uses-0-image",
         "h": "Product page, second image",
         "d": "After the white-background shot, a scene shows the size and where the product belongs."
       },
       {
         "frame": "post",
-        "ref": "n:gen2:plat-instagram-c3",
+        "ref": "n:guide:k5-lifestyle-photos-uses-1-image",
         "h": "Instagram and Facebook posts",
         "d": "A product in a real setting gets noticed faster than a cut-out. Put the caption and link in the post."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:ind-home-living-g1",
+        "good": "n:guide:k5-lifestyle-photos-input-0-good",
         "bad": "n:guide:lifestyle-photos-storage-box-cropped",
         "good_label": "Whole storage set, shelf in view",
         "bad_label": "Storage set cut off at the frame edge"
       },
       {
-        "good": "n:gen2:ind-food-drinks-c4",
-        "bad": "n:guide:lifestyle-photos-tea-blurred",
+        "good": "n:guide:k5-lifestyle-photos-input-1-good",
+        "bad": "n:guide:k5-lifestyle-photos-input-1-bad",
         "good_label": "Tea pouch and label stay sharp",
         "bad_label": "Pouch details lost in soft focus"
       }
     ],
     "outputs": [
       {
-        "ref": "n:gen2:tpl-carousel-video-ad-c1",
+        "ref": "n:guide:k5-lifestyle-photos-outputs-0-image",
         "frame": "1:1",
         "label": "Skincare on a morning counter"
       },
       {
-        "ref": "n:gen2:tpl-launch-c4",
+        "ref": "n:guide:k5-lifestyle-photos-outputs-1-image",
         "frame": "1:1",
         "label": "Candle styled on a shelf"
       }

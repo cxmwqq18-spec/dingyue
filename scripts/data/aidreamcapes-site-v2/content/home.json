@@ -35,17 +35,32 @@
     {
       "id": "lipstick",
       "t": "Lipstick: one studio shot becomes a vanity scene and a shade swatch",
-      "d": "One lipstick photo became a vanity scene and a close-up beside a matching shade swatch."
+      "d": "One lipstick photo became a vanity scene and a close-up beside a matching shade swatch.",
+      "imageRefs": [
+        "n:guide:k5-home-lipstick-pack",
+        "n:guide:k5-home-lipstick-vanity",
+        "n:guide:k5-home-lipstick-swatch"
+      ]
     },
     {
       "id": "hoodie",
       "t": "Hoodie: a flat product photo becomes street style and a flat lay",
-      "d": "One gray hoodie photo became a street scene and a flat lay with a beanie and scarf."
+      "d": "One gray hoodie photo became a street scene and a flat lay with a beanie and scarf.",
+      "imageRefs": [
+        "n:guide:k5-home-hoodie-pack",
+        "n:guide:k5-home-flow-hoodie-result",
+        "n:guide:k5-home-hoodie-flatlay"
+      ]
     },
     {
       "id": "coffee",
       "t": "Coffee beans: a plain bag in a kitchen and at a breakfast table",
-      "d": "One coffee bag photo became a kitchen-counter scene and a breakfast-table setting."
+      "d": "One coffee bag photo became a kitchen-counter scene and a breakfast-table setting.",
+      "imageRefs": [
+        "n:guide:k5-home-flow-coffee-pack",
+        "n:guide:k5-home-coffee-counter",
+        "n:guide:k5-home-coffee-breakfast"
+      ]
     }
   ],
   "ugc": {
@@ -171,19 +186,19 @@
             "product": "ceramic vase"
           },
           {
-            "ref": "n:gen2:home-g2",
+            "ref": "n:guide:k5-home-example-home-g2",
             "title": "Leather backpack resting on a cafe chair",
             "kind": "photo",
             "product": "leather backpack"
           },
           {
-            "ref": "n:gen2:home-g3",
+            "ref": "n:guide:k5-home-example-home-g3",
             "title": "Silk scarf worn on a breezy park walk",
             "kind": "photo",
             "product": "silk scarf"
           },
           {
-            "ref": "n:gen2:home-g4",
+            "ref": "n:guide:k5-home-example-home-g4",
             "title": "Skincare bottle on wet stone with room for text",
             "kind": "photo",
             "product": "skincare bottle"
@@ -200,19 +215,19 @@
             "product": "smartwatch"
           },
           {
-            "ref": "n:gen2:home-g6",
+            "ref": "n:guide:k5-home-example-home-g6",
             "title": "Air purifier switched on in a bright bedroom",
             "kind": "scene",
             "product": "air purifier"
           },
           {
-            "ref": "n:gen2:home-g7",
+            "ref": "n:guide:k5-home-example-home-g7",
             "title": "Dog leash clipped on at the front door",
             "kind": "scene",
             "product": "dog leash"
           },
           {
-            "ref": "n:gen2:home-g8",
+            "ref": "n:guide:k5-home-example-home-g8",
             "title": "Board game opened on a family table",
             "kind": "scene",
             "product": "board game"
@@ -256,13 +271,13 @@
       "f:carousel-storytelling-v",
       "f:tiktok-reels-shorts-v",
       "n:gen2:photo-hub-c1",
-      "n:gen2:image-to-video-c2",
-      "n:gen2:product-videos-c3",
-      "n:gen2:lifestyle-photos-c1"
+      "n:guide:k5-home-strip-3",
+      "n:guide:k5-home-strip-4",
+      "n:guide:k5-home-strip-5"
     ],
     "steps": {
       "source": "n:gen2:lifestyle-photos-g4",
-      "result": "n:gen2:lifestyle-photos-g5",
+      "result": "n:guide:k5-home-steps-result",
       "mode": "photo",
       "prompt": "Move the mug from the snowy porch to a picnic blanket in bright summer sun. Keep the enamel chips and the handle exactly as they are.",
       "options": [
@@ -308,7 +323,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:unboxing-videos-c1",
+          "ref": "n:guide:k5-home-picker-cards-1-image",
           "label": "Ceramic mug gift set",
           "chips": [
             "kitchen"
@@ -317,16 +332,16 @@
           "kind": "photo"
         },
         {
-          "ref": "n:tiktok-hand-vertical",
-          "label": "Open earbuds at a desk",
+          "ref": "n:guide:k5-home-picker-cards-2-image",
+          "label": "Wireless earbuds on a desk",
           "chips": [
             "desk"
           ],
-          "prompt": "Open the charging case on a tidy desk beside a laptop, keeping both earbuds visible and the background simple.",
+          "prompt": "Place two loose wireless earbuds beside a slim laptop on a tidy oak desk; no charging case, text, logo or brand marks.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-beauty-skincare-c2",
+          "ref": "n:guide:k5-home-picker-cards-3-image",
           "label": "Open clay mask on towels",
           "chips": [
             "bathroom"
@@ -335,7 +350,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-beauty-c3",
+          "ref": "n:guide:k5-home-picker-cards-4-image",
           "label": "Face roller beside cream",
           "chips": [
             "bathroom"
@@ -353,7 +368,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-food-drinks-c3",
+          "ref": "n:guide:k5-home-picker-cards-6-image",
           "label": "Hot sauce over tacos",
           "chips": [
             "kitchen"
@@ -362,7 +377,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-home-living-19",
+          "ref": "n:guide:k5-home-picker-cards-7-image",
           "label": "Lamp and mug on a desk",
           "chips": [
             "desk"
@@ -382,7 +397,7 @@
       },
       {
         "frame": "post",
-        "ref": "n:gen2:social-ad-photos-c2",
+        "ref": "f:k5-home-uses-1-image",
         "h": "Social post",
         "d": "A product in a real setting gets noticed faster than a cut-out. Type the offer in your editor after download."
       },
@@ -395,9 +410,9 @@
       {
         "frame": "split",
         "ref": "n:gen2:plat-facebook-g3",
-        "ref_b": "n:gen2:plat-facebook-g4",
+        "ref_b": "f:k5-home-uses-3-imageb",
         "h": "Ad test",
-        "d": "Make two versions from the same photo and keep the one that gets more clicks."
+        "d": "Make two versions from one photo and keep the one that gets more clicks."
       }
     ],
     "input": [
@@ -416,7 +431,7 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:social-ad-photos-c1",
+        "ref": "f:k5-home-outputs-0-image",
         "frame": "1:1",
         "label": "Feed photo"
       },
@@ -428,7 +443,7 @@
       }
     ],
     "after": {
-      "ref": "n:gen2:lifestyle-photos-c2",
+      "ref": "f:k5-home-after-image",
       "zones": [
         "Your price",
         "Your headline"
@@ -442,7 +457,7 @@
     "sizes": [
       {
         "frame": "9:16",
-        "ref": "n:guide:mug-breakfast-916",
+        "ref": "f:k5-home-sizes-0-image",
         "label": "TikTok, Reels and YouTube Shorts"
       },
       {
@@ -452,7 +467,7 @@
       },
       {
         "frame": "16:9",
-        "ref": "n:guide:mug-steam-169",
+        "ref": "f:k5-home-sizes-2-image",
         "label": "YouTube, website banners and product-page video"
       }
     ],

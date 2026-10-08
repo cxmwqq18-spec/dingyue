@@ -75,25 +75,25 @@
         "label": "Worn and in context",
         "items": [
           {
-            "ref": "n:gen2:model-photos-g1",
+            "ref": "n:guide:k5-model-example-g1",
             "title": "Oversized hoodie worn in a bright studio",
             "kind": "photo",
             "product": "oversized hoodie"
           },
           {
-            "ref": "n:gen2:model-photos-g2",
+            "ref": "n:guide:k5-model-example-g2",
             "title": "Tortoiseshell sunglasses worn on a sunny street",
             "kind": "photo",
             "product": "tortoiseshell sunglasses"
           },
           {
-            "ref": "n:gen2:model-photos-g3",
+            "ref": "n:guide:k5-model-example-g3",
             "title": "Ankle boots worn mid-step on a sidewalk",
             "kind": "photo",
             "product": "leather ankle boots"
           },
           {
-            "ref": "n:gen2:model-photos-g4",
+            "ref": "n:guide:k5-model-example-g4",
             "title": "Small stud earrings worn, shown close up",
             "kind": "photo",
             "product": "stud earrings"
@@ -124,16 +124,16 @@
   },
   "visual": {
     "strip": [
-      "n:hoodie-street",
-      "n:gen2:tpl-tryon-c1",
-      "n:gen2:tpl-tryon-c4",
-      "n:gen2:tpl-look-c2",
-      "n:gen2:tpl-jewel-70",
-      "n:gen2:tpl-jewel-71"
+      "n:guide:k5-model-photos-strip-0",
+      "n:guide:k5-model-photos-strip-1",
+      "n:guide:k5-model-photos-strip-2",
+      "n:guide:k5-model-photos-strip-3",
+      "n:guide:k5-model-photos-strip-4",
+      "n:guide:k5-model-photos-strip-5"
     ],
     "steps": {
-      "source": "n:hoodie-pack",
-      "result": "n:hoodie-street",
+      "source": "n:guide:k5-model-photos-steps-source",
+      "result": "n:guide:k5-model-photos-steps-result",
       "mode": "photo",
       "prompt": "Show this gray hoodie on an adult walking down a tree-lined street, face turned away, with the pocket and drawstrings visible.",
       "options": [
@@ -174,7 +174,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-tryon-c2",
+          "ref": "n:guide:k5-model-photos-picker-cards-0-image",
           "label": "Floral dress by a window",
           "chips": [
             "clothing"
@@ -183,7 +183,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-outfit-g2",
+          "ref": "n:guide:k5-model-photos-picker-cards-1-image",
           "label": "Athletic set in a studio",
           "chips": [
             "clothing"
@@ -192,7 +192,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-outfit-c4",
+          "ref": "n:guide:k5-model-photos-picker-cards-2-image",
           "label": "Puffer jacket on a snowy street",
           "chips": [
             "outerwear"
@@ -201,7 +201,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-outfit-g1",
+          "ref": "n:guide:k5-model-photos-picker-cards-3-image",
           "label": "Long coat in motion",
           "chips": [
             "outerwear"
@@ -219,7 +219,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-jewel-g3",
+          "ref": "n:guide:k5-model-photos-picker-cards-5-image",
           "label": "Gold anklet on the shore",
           "chips": [
             "jewelry"
@@ -228,7 +228,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-look-c3",
+          "ref": "n:guide:k5-model-photos-picker-cards-6-image",
           "label": "Streetwear against concrete",
           "chips": [
             "lookbook"
@@ -237,7 +237,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-look-c4",
+          "ref": "n:guide:k5-model-photos-picker-cards-7-image",
           "label": "Evening dress on stone steps",
           "chips": [
             "lookbook"
@@ -251,45 +251,45 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:gen2:tpl-outfit-c3",
+        "ref": "n:guide:k5-model-photos-uses-0-image",
         "h": "Product page",
         "d": "Add a worn view next to the flat photo so shoppers see the length and how it hangs."
       },
       {
         "frame": "post",
-        "ref": "n:gen2:ind-jewelry-accessories-c2",
+        "ref": "n:guide:k5-model-photos-uses-1-image",
         "h": "Instagram post",
         "d": "Show the watch on a wrist, then put the band size and material in the caption."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:ind-fashion-clothing-c4",
-        "bad": "n:guide:model-photos-jeans-cropped",
+        "good": "n:guide:k5-model-photos-input-0-good",
+        "bad": "n:guide:k5-model-photos-input-0-bad",
         "good_label": "Jeans waistband and cuffs visible",
         "bad_label": "Waistband and hems cropped from frame"
       },
       {
-        "good": "n:gen2:ind-jewelry-accessories-16",
-        "bad": "n:guide:model-photos-hoops-blurred",
+        "good": "n:guide:k5-model-photos-input-1-good",
+        "bad": "n:guide:k5-model-photos-input-1-bad",
         "good_label": "Hoop edges and pair stay sharp",
         "bad_label": "Small earring details softened by blur"
       }
     ],
     "outputs": [
       {
-        "ref": "n:gen2:tpl-look-c1",
+        "ref": "n:guide:k5-model-photos-outputs-0-image",
         "frame": "1:1",
         "label": "Styled clothing preview"
       },
       {
-        "ref": "n:gen2:tpl-tryon-g3",
+        "ref": "n:guide:k5-model-photos-outputs-1-image",
         "frame": "1:1",
         "label": "Accessory worn in context"
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-outfit-g3",
+      "ref": "n:guide:k5-model-photos-after-image",
       "zones": [],
       "items": [
         "Put the size chart and measurements in the listing.",

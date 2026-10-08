@@ -12,16 +12,16 @@
     "lifestyle-photos": {
       "hero": {
         "kind": "pair",
-        "before": "g:lifestyle-scene/source-input",
-        "after": "g:lifestyle-scene/hero-output"
+        "before": "n:guide:k5-lifestyle-gallery-source",
+        "after": "n:guide:k5-lifestyle-gallery-hero"
       },
       "gallery": [
-        "g:lifestyle-scene/example-01",
-        "g:lifestyle-scene/example-02",
-        "g:lifestyle-scene/example-03",
-        "g:lifestyle-scene/example-04",
-        "g:lifestyle-scene/example-05",
-        "g:lifestyle-scene/example-06"
+        "n:guide:k5-lifestyle-gallery-01",
+        "n:guide:k5-lifestyle-gallery-02",
+        "n:guide:k5-lifestyle-gallery-03",
+        "n:guide:k5-lifestyle-gallery-04",
+        "n:guide:k5-lifestyle-gallery-05",
+        "n:guide:k5-lifestyle-gallery-06"
       ],
       "og": "g:lifestyle-scene/og",
       "pairs": []
@@ -29,16 +29,16 @@
     "model-photos": {
       "hero": {
         "kind": "pair",
-        "before": "g:on-model-generation/source-input",
-        "after": "g:on-model-generation/hero-output"
+        "before": "n:guide:k5-model-gallery-source",
+        "after": "n:guide:k5-model-gallery-hero"
       },
       "gallery": [
-        "g:on-model-generation/example-01",
-        "g:on-model-generation/example-02",
-        "g:on-model-generation/example-03",
-        "g:on-model-generation/example-04",
-        "g:on-model-generation/example-05",
-        "g:on-model-generation/example-06"
+        "n:guide:k5-model-gallery-01",
+        "n:guide:k5-model-gallery-02",
+        "n:guide:k5-model-gallery-03",
+        "n:guide:k5-model-gallery-04",
+        "n:guide:k5-model-gallery-05",
+        "n:guide:k5-model-gallery-06"
       ],
       "og": "g:on-model-generation/og",
       "pairs": []
@@ -46,34 +46,34 @@
     "change-background": {
       "hero": {
         "kind": "pair",
-        "before": "g:background-remove-replace/source-input",
-        "after": "g:background-remove-replace/hero-output"
+        "before": "n:guide:k5-background-gallery-source",
+        "after": "n:guide:k5-background-gallery-hero"
       },
       "gallery": [
-        "g:background-remove-replace/example-01",
-        "g:background-remove-replace/example-02",
-        "g:background-remove-replace/example-03",
-        "g:background-remove-replace/example-04",
-        "g:background-remove-replace/example-05",
-        "g:background-remove-replace/example-06"
+        "n:guide:k5-background-gallery-01",
+        "n:guide:k5-background-gallery-02",
+        "n:guide:k5-background-gallery-03",
+        "n:guide:k5-background-gallery-04",
+        "n:guide:k5-background-gallery-05",
+        "n:guide:k5-background-gallery-06"
       ],
       "og": "g:background-remove-replace/og",
       "pairs": [
         {
-          "before": "n:phonecase-pack",
-          "after": "n:phonecase-desk"
+          "before": "n:guide:k5-background-phonecase-source",
+          "after": "n:guide:k5-background-phonecase-result"
         },
         {
           "before": "n:yogamat-pack",
-          "after": "n:yogamat-room"
+          "after": "n:guide:k5-background-gallery-pair-yogamat"
         },
         {
           "before": "n:boots-pack",
-          "after": "n:boots-doorway"
+          "after": "n:guide:k5-background-gallery-pair-boots"
         },
         {
           "before": "n:protein-pack",
-          "after": "n:protein-gym"
+          "after": "n:guide:k5-background-gallery-pair-protein"
         }
       ]
     },

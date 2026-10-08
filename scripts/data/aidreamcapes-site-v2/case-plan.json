@@ -20,19 +20,22 @@
     ],
     "image-to-video": [
       {
-        "ref": "social-proof-animation-v",
+        "ref": "f:k5-image-to-video-case-1",
         "product": "green insulated bottle",
-        "title": "Green bottle lid twisted open in close-up"
+        "title": "Green bottle lid twisted open in close-up",
+        "kind": "scene"
       },
       {
-        "ref": "n:gen2:image-to-video-c2",
+        "ref": "f:k5-image-to-video-case-2",
         "product": "pour-over coffee dripper",
-        "title": "Pour-over dripper on a sunlit kitchen counter"
+        "title": "Pour-over dripper on a sunlit kitchen counter",
+        "kind": "scene"
       },
       {
-        "ref": "n:gen2:image-to-video-c3",
+        "ref": "f:k5-image-to-video-case-3",
         "product": "red lipstick",
-        "title": "Red lipstick standing on a marble vanity"
+        "title": "Red lipstick standing on a marble vanity",
+        "kind": "scene"
       }
     ],
     "video-ads": [
@@ -149,51 +152,51 @@
     ],
     "lifestyle-photos": [
       {
-        "ref": "n:gen2:lifestyle-photos-c1",
+        "ref": "n:guide:k5-lifestyle-case-1",
         "product": "soy candle",
         "title": "Soy candle glowing on a bedside table at dusk"
       },
       {
-        "ref": "n:gen2:lifestyle-photos-c2",
+        "ref": "n:guide:k5-lifestyle-case-2",
         "product": "bamboo cutting board",
         "title": "Bamboo board with sliced fruit on a kitchen counter"
       },
       {
-        "ref": "n:gen2:lifestyle-photos-c3",
+        "ref": "n:guide:k5-lifestyle-case-3",
         "product": "canvas weekender bag",
         "title": "Canvas weekender bag ready on a car's back seat"
       }
     ],
     "model-photos": [
       {
-        "ref": "n:gen2:model-photos-c1",
+        "ref": "n:guide:k5-model-case-1",
         "product": "camel wool coat",
         "title": "Camel wool coat worn on a city sidewalk"
       },
       {
-        "ref": "n:gen2:model-photos-c2",
+        "ref": "n:guide:k5-model-case-2",
         "product": "leather messenger bag",
         "title": "Leather messenger bag carried across the body"
       },
       {
-        "ref": "n:gen2:model-photos-c3",
+        "ref": "n:guide:k5-model-case-3",
         "product": "layered gold necklaces",
         "title": "Layered gold necklaces on a model's neckline"
       }
     ],
     "change-background": [
       {
-        "ref": "n:gen2:change-background-c1",
+        "ref": "n:guide:k5-background-case-1",
         "product": "blue ceramic vase",
         "title": "Blue vase moved onto a sunny windowsill"
       },
       {
-        "ref": "n:gen2:change-background-c2",
+        "ref": "n:guide:k5-background-case-2",
         "product": "face cream jar",
         "title": "Face cream jar placed on wet stone by a pool"
       },
       {
-        "ref": "n:gen2:change-background-c3",
+        "ref": "n:guide:k5-background-case-3",
         "product": "leather wallet",
         "title": "Leather wallet set on a marble cafe table"
       }

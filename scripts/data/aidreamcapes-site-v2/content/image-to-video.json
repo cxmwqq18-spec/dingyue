@@ -104,16 +104,16 @@
   "visual": {
     "strip": [
       "n:guide:b1-image-to-video-source",
-      "n:guide:b1-image-to-video-result",
-      "n:gen2:tpl-howto-g1",
-      "n:gen2:video-hub-g7",
-      "n:gen2:tpl-film-g2",
-      "n:gen2:plat-instagram-g2"
+      "n:guide:k5-image-to-video-strip-1",
+      "n:guide:k5-image-to-video-strip-2",
+      "n:guide:k5-image-to-video-strip-3",
+      "n:guide:k5-image-to-video-strip-4",
+      "n:guide:k5-image-to-video-strip-5"
     ],
     "steps": {
       "source": "n:guide:b1-image-to-video-source",
       "sourceAlt": "Cream ceramic mug with blue flecks on a wooden kitchen counter.",
-      "result": "n:guide:b1-image-to-video-result",
+      "result": "f:k5-image-to-video-steps-result",
       "mode": "video",
       "length": 6,
       "prompt": "Push in slowly on this speckled mug while a thin ribbon of steam rises. Keep the shape, handle and glaze as they are."
@@ -170,12 +170,12 @@
           "kind": "video"
         },
         {
-      "ref": "n:gen2:tpl-drink-g1",
-      "label": "Can opened beside ice",
+          "ref": "n:gen2:tpl-drink-g1",
+          "label": "Can opened beside ice",
           "chips": [
             "kitchen"
           ],
-      "prompt": "Open the sparkling water can beside an ice-filled glass, then tilt it toward the light.",
+          "prompt": "Open the sparkling water can beside an ice-filled glass, then tilt it toward the light.",
           "kind": "video"
         },
         {
@@ -208,7 +208,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-beauty-c3",
+          "ref": "f:k5-image-to-video-picker-cards-7-image",
           "label": "Roller glides along cheek",
           "chips": [
             "beauty",
@@ -229,7 +229,7 @@
       },
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-light-g2",
+        "ref": "f:k5-image-to-video-uses-1-image",
         "h": "Feed post",
         "d": "A slow light sweep turns a still product shot into a post that moves."
       }
@@ -242,7 +242,7 @@
         "bad_label": "Honey jar cut off at the left edge"
       },
       {
-        "good": "n:gen2:plat-instagram-g1",
+        "good": "n:guide:k5-image-to-video-input-1-good",
         "bad": "n:guide:b1-image-to-video-bad-blur",
         "good_label": "Speckled cup sharp in a square frame",
         "bad_label": "Soft focus hides the cup handle"
@@ -256,9 +256,9 @@
         "length": 6
       },
       {
-      "ref": "n:gen2:tpl-beauty-g2",
+        "ref": "n:gen2:tpl-beauty-g2",
         "frame": "9:16",
-      "label": "Balm lifted from a jar",
+        "label": "Balm lifted from a jar",
         "length": 6
       }
     ],

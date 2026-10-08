@@ -2002,6 +2002,132 @@
       "variants": [
         640
       ]
+    },
+    "k5-home-uses-1-image": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Compact rectangular Bluetooth speaker on a desk",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-home-outputs-0-image": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Iced coffee can on a picnic blanket in bright summer light, empty sky at the top.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-home-after-image": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Bamboo cutting board with sliced fruit on a kitchen counter.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-home-uses-3-imageb": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Insulated bottle on a sunny desk.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-image-to-video-picker-cards-7-image": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Jade face roller resting beside a jar of cream on a bathroom shelf.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-image-to-video-steps-result": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Speckled ceramic mug with a curl of steam in morning light.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-image-to-video-uses-1-image": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Amber glass bottle in cool, even light.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-image-to-video-template-ba": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Before-and-after still frame of a tidy living room after a plain ceramic planter is moved into place.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-image-to-video-template-compare": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Two plain ceramic mugs side by side on a wooden table under balanced window light.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-image-to-video-case-1": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Green insulated bottle lid being twisted open in a close-up still frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-image-to-video-case-2": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Pour-over coffee dripper in a sunlit kitchen video scene",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-image-to-video-case-3": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Red lipstick on a marble vanity in a vertical video scene",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-home-sizes-0-image": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Vertical 9:16 video still of a cream travel mug on a bright kitchen counter",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k5-home-sizes-2-image": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Widescreen 16:9 video still of a cream travel mug on a kitchen counter",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -14824,6 +14950,1526 @@
         "alt": "Olive hiking backpack turned to show its back panel and shoulder straps on white.",
         "variants": [
           640
+        ]
+      },
+      "k5-home-strip-3": {
+        "file": "k5-home-strip-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ceramic pour-over coffee dripper on a sunlit kitchen counter with a little steam.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-strip-4": {
+        "file": "k5-home-strip-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte gooseneck electric kettle pouring a slow stream into a mug.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-strip-5": {
+        "file": "k5-home-strip-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Soy candle glowing on a bedside table at dusk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-picker-cards-1-image": {
+        "file": "k5-home-picker-cards-1-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lifting a ceramic mug set out of a gift box with paper filling.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-picker-cards-2-image": {
+        "file": "k5-home-picker-cards-2-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two rounded black stemless earbuds on a pale oak desk beside a laptop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-picker-cards-3-image": {
+        "file": "k5-home-picker-cards-3-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pale green clay mask sits open on folded white towels with its lid beside the jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-picker-cards-4-image": {
+        "file": "k5-home-picker-cards-4-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Jade face roller resting beside a jar of cream on a bathroom shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-picker-cards-6-image": {
+        "file": "k5-home-picker-cards-6-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hot sauce dashed over street tacos.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-picker-cards-7-image": {
+        "file": "k5-home-picker-cards-7-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Lit oak lamp stands beside an open book and small mug on a desk near a cushioned chair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-steps-result": {
+        "file": "k5-home-steps-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Enamel camping mug on a summer picnic blanket.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-example-home-g2": {
+        "file": "k5-home-example-home-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Leather backpack resting on a cafe chair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-example-home-g3": {
+        "file": "k5-home-example-home-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Silk scarf worn on a breezy park walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-example-home-g4": {
+        "file": "k5-home-example-home-g4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Skincare bottle on wet stone with room for text.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-example-home-g6": {
+        "file": "k5-home-example-home-g6",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact rectangular air purifier with visible intake vents switched on in a bright bedroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-example-home-g7": {
+        "file": "k5-home-example-home-g7",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dog leash clipped on at the front door.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-example-home-g8": {
+        "file": "k5-home-example-home-g8",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Board game opened on a family table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-flow-hoodie-result": {
+        "file": "k5-home-flow-hoodie-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Person in a gray hoodie and jeans walking along a tree-lined autumn street, face turned away.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-flow-coffee-pack": {
+        "file": "k5-home-flow-coffee-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank kraft coffee bag with scattered beans on a pale studio surface",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-card-size": {
+        "file": "k5-home-card-size",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Folded linen shirt beside a measuring tape",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-card-model": {
+        "file": "k5-home-card-model",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Model wearing a simple linen shirt outdoors",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-card-color": {
+        "file": "k5-home-card-color",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three simple ceramic mugs in distinct glaze colors",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-lipstick-pack": {
+        "file": "k5-home-lipstick-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral lipstick in a matte black tube on a light studio surface",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-lipstick-vanity": {
+        "file": "k5-home-lipstick-vanity",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral lipstick on a softly lit vanity",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-lipstick-swatch": {
+        "file": "k5-home-lipstick-swatch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral lipstick beside a matching color swatch",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-hoodie-pack": {
+        "file": "k5-home-hoodie-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Heather-gray pullover hoodie folded on a light studio surface",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-hoodie-flatlay": {
+        "file": "k5-home-hoodie-flatlay",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Folded gray hoodie with a knit beanie and scarf",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-coffee-counter": {
+        "file": "k5-home-coffee-counter",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank kraft coffee bag on a bright kitchen counter",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-home-coffee-breakfast": {
+        "file": "k5-home-coffee-breakfast",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank kraft coffee bag on a simple breakfast table",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-image-to-video-strip-2": {
+        "file": "k5-image-to-video-strip-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Electric kettle being filled at a kitchen tap.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-image-to-video-strip-3": {
+        "file": "k5-image-to-video-strip-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Rounded amber fragrance bottle on a mirrored tray with a soft band of light across the glass.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-image-to-video-strip-4": {
+        "file": "k5-image-to-video-strip-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Headphones resting on a matte pedestal in side light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-image-to-video-strip-5": {
+        "file": "k5-image-to-video-strip-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Speckled cup being filled from a carafe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-image-to-video-input-1-good": {
+        "file": "k5-image-to-video-input-1-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Speckled ceramic cup in a clean square frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-image-to-video-strip-1": {
+        "file": "k5-image-to-video-strip-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Speckled ceramic mug with a curl of steam in morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-strip-0": {
+        "file": "k5-lifestyle-photos-strip-0",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tan leather handbag on a marble cafe table beside a latte and a pair of sunglasses",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-strip-1": {
+        "file": "k5-lifestyle-photos-strip-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand coffee grinder ready on a morning counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-strip-4": {
+        "file": "k5-lifestyle-photos-strip-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Camping lantern lit beside a tent at dusk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-strip-5": {
+        "file": "k5-lifestyle-photos-strip-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Knit throw blanket draped on an empty armchair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-steps-result": {
+        "file": "k5-lifestyle-photos-steps-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tan leather handbag on a marble cafe table beside a latte and a pair of sunglasses",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-picker-cards-1-image": {
+        "file": "k5-lifestyle-photos-picker-cards-1-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Silk pillowcase on an unmade bed in soft light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-picker-cards-4-image": {
+        "file": "k5-lifestyle-photos-picker-cards-4-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Suede loafers on a herringbone wood floor.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-picker-cards-5-image": {
+        "file": "k5-lifestyle-photos-picker-cards-5-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Silk scarf knotted on a handbag handle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-picker-cards-6-image": {
+        "file": "k5-lifestyle-photos-picker-cards-6-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tan leather hiking boot with dark laces stands on moss above a lake and distant hills.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-picker-cards-7-image": {
+        "file": "k5-lifestyle-photos-picker-cards-7-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Linen tote packed at a farmers market stall.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-uses-0-image": {
+        "file": "k5-lifestyle-photos-uses-0-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ceramic planter with a fern on a styled shelf, wide banner framing.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-uses-1-image": {
+        "file": "k5-lifestyle-photos-uses-1-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matcha whisk, bowl and tin arranged on a linen tablecloth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-outputs-0-image": {
+        "file": "k5-lifestyle-photos-outputs-0-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Skincare steps laid out left to right from cleanser to cream,.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-outputs-1-image": {
+        "file": "k5-lifestyle-photos-outputs-1-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "New candle placed on a styled shelf with dried flowers.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-steps-source": {
+        "file": "k5-lifestyle-photos-steps-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tan leather top-handle handbag with a gold clasp on a light studio background",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-input-1-good": {
+        "file": "k5-lifestyle-photos-input-1-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Loose-leaf tea pouch beside a steaming cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-strip-3": {
+        "file": "k5-lifestyle-photos-strip-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Iced tea can opened on a sunny balcony.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-picker-cards-2-image": {
+        "file": "k5-lifestyle-photos-picker-cards-2-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Snack bag packed in a lunch bag with fresh fruit.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-picker-cards-3-image": {
+        "file": "k5-lifestyle-photos-picker-cards-3-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pasta sauce jar beside a finished plate of pasta.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-input-0-good": {
+        "file": "k5-lifestyle-photos-input-0-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Fabric storage boxes on a tidy shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-picker-cards-0-image": {
+        "file": "k5-lifestyle-photos-picker-cards-0-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ceramic planter beside a linen sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-strip-2": {
+        "file": "k5-lifestyle-photos-strip-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Round side table beside an armchair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-gallery-source": {
+        "file": "k5-lifestyle-gallery-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Linen tote bag alone on a pale studio surface, whole bag and handles visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-gallery-hero": {
+        "file": "k5-lifestyle-gallery-hero",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Linen tote bag styled in a bright weekend market scene with the full bag visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-gallery-01": {
+        "file": "k5-lifestyle-gallery-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Linen tote bag beside a coffee cup at a sunny cafe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-gallery-02": {
+        "file": "k5-lifestyle-gallery-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Linen tote bag on a park bench with soft morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-gallery-03": {
+        "file": "k5-lifestyle-gallery-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Linen tote bag carried beside a city bike.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-gallery-04": {
+        "file": "k5-lifestyle-gallery-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Linen tote bag on a beach picnic blanket.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-gallery-05": {
+        "file": "k5-lifestyle-gallery-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Linen tote bag hanging in a bright home entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-gallery-06": {
+        "file": "k5-lifestyle-gallery-06",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand holding a linen tote bag on a neighborhood street.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-template-bg": {
+        "file": "k5-lifestyle-template-bg",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather boots on a simple entryway mat beside a wooden door, full pair visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-template-ugc": {
+        "file": "k5-lifestyle-template-ugc",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sea-blue protective phone case with one oval camera opening, held loosely in one hand; no phone visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-case-1": {
+        "file": "k5-lifestyle-case-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Soy candle glowing on a bedside table at dusk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-case-2": {
+        "file": "k5-lifestyle-case-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Bamboo cutting board with sliced fruit on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-example-g4": {
+        "file": "k5-lifestyle-example-g4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Enamel camping mug on a snowy cabin porch rail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-example-g5": {
+        "file": "k5-lifestyle-example-g5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Enamel camping mug on a summer picnic blanket in bright sun.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-template-life": {
+        "file": "k5-lifestyle-photos-template-life",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White ceramic candle on a bedside table at dusk",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-template-pack": {
+        "file": "k5-lifestyle-photos-template-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain kraft coffee bag with coffee beans",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-case-3": {
+        "file": "k5-lifestyle-case-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Canvas weekender bag on a car seat",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-strip-0": {
+        "file": "k5-model-photos-strip-0",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Person in a gray hoodie and jeans walking along a tree-lined city street in autumn, face turned away",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-strip-1": {
+        "file": "k5-model-photos-strip-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Model wearing a denim jacket in a plain studio, full upper body.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-strip-2": {
+        "file": "k5-model-photos-strip-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Model wearing tailored trousers, full length, neutral studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-strip-3": {
+        "file": "k5-model-photos-strip-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Minimal linen two-piece set on a model in a sunlit studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-strip-4": {
+        "file": "k5-model-photos-strip-4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold ring on a hand holding a coffee cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-strip-5": {
+        "file": "k5-model-photos-strip-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Silver bracelet stacked on a wrist in daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-steps-result": {
+        "file": "k5-model-photos-steps-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Person in a gray hoodie and jeans walking along a tree-lined city street in autumn, face turned away",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-picker-cards-0-image": {
+        "file": "k5-model-photos-picker-cards-0-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Model wearing a floral summer dress by a bright window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-picker-cards-1-image": {
+        "file": "k5-model-photos-picker-cards-1-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matching athletic set worn in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-picker-cards-2-image": {
+        "file": "k5-model-photos-picker-cards-2-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Puffer jacket outfit on a snowy street, full body.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-picker-cards-3-image": {
+        "file": "k5-model-photos-picker-cards-3-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Long coat hem swinging as the wearer walks past a neutral wall.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-picker-cards-6-image": {
+        "file": "k5-model-photos-picker-cards-6-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Streetwear look against a concrete wall, editorial framing.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-picker-cards-7-image": {
+        "file": "k5-model-photos-picker-cards-7-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Evening dress lookbook shot on a stone staircase.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-uses-0-image": {
+        "file": "k5-model-photos-uses-0-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Linen suit shown head to toe on a sunny terrace.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-uses-1-image": {
+        "file": "k5-model-photos-uses-1-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Minimal leather strap watch with a plain round dial on a wrist outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-outputs-0-image": {
+        "file": "k5-model-photos-outputs-0-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Editorial lookbook frame of an autumn outfit on a cobblestone street.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-after-image": {
+        "file": "k5-model-photos-after-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Slip dress outfit on a rooftop at sunset.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-steps-source": {
+        "file": "k5-model-photos-steps-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Heather-gray pullover hoodie with drawstrings and a front pocket on a light studio background",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-input-0-good": {
+        "file": "k5-model-photos-input-0-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Denim jeans laid flat with rolled cuffs.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-input-1-good": {
+        "file": "k5-model-photos-input-1-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two polished gold hoops rest on veined marble with a leafy sprig nearby.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-picker-cards-5-image": {
+        "file": "k5-model-photos-picker-cards-5-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Thin gold anklet worn on an ankle on sand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-outputs-1-image": {
+        "file": "k5-model-photos-outputs-1-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seated model wearing a ribbed knit top.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-gallery-source": {
+        "file": "k5-model-gallery-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Canvas backpack alone on a pale studio surface, full outline and straps visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-gallery-hero": {
+        "file": "k5-model-gallery-hero",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing a canvas backpack on a city walk, candid pose and full pack visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-gallery-01": {
+        "file": "k5-model-gallery-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Front view of a canvas backpack worn by an adult in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-gallery-02": {
+        "file": "k5-model-gallery-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Side view of a canvas backpack showing both shoulder straps.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-gallery-03": {
+        "file": "k5-model-gallery-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Back view showing the full shape of a canvas backpack.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-gallery-04": {
+        "file": "k5-model-gallery-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close view of the front pocket on a canvas backpack.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-gallery-05": {
+        "file": "k5-model-gallery-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult using a canvas backpack at a desk in soft daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-gallery-06": {
+        "file": "k5-model-gallery-06",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult walking outdoors with a canvas backpack.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-template-card": {
+        "file": "k5-model-template-card",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Canvas backpack worn by an adult in a clean square product image, candid and not facing the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-template-look": {
+        "file": "k5-model-template-look",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tan leather shoulder bag carried across the body by an adult in a neutral outfit, candid pose.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-case-1": {
+        "file": "k5-model-case-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Camel wool coat worn on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-example-g1": {
+        "file": "k5-model-example-g1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Oversized hoodie worn by an adult in a bright studio, garment fully visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-example-g2": {
+        "file": "k5-model-example-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tortoiseshell sunglasses worn by an adult on a sunny city street.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-example-g3": {
+        "file": "k5-model-example-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Leather ankle boots worn mid-step on a quiet sidewalk, full boots visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-example-g4": {
+        "file": "k5-model-example-g4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small stud earrings worn by an adult, shown in a close detail crop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-template-tryon": {
+        "file": "k5-model-photos-template-tryon",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing simple dark sunglasses outdoors",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-case-2": {
+        "file": "k5-model-case-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Messenger bag worn across a simple outfit",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-case-3": {
+        "file": "k5-model-case-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Layered gold necklaces against a dark top",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-strip-2": {
+        "file": "k5-change-background-strip-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matcha whisk, bowl and tin arranged on a linen tablecloth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-strip-5": {
+        "file": "k5-change-background-strip-5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Silk pillowcase on an unmade bed in soft light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-picker-cards-1-image": {
+        "file": "k5-change-background-picker-cards-1-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Mechanical keyboard with blank keycaps on a tidy desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-picker-cards-2-image": {
+        "file": "k5-change-background-picker-cards-2-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Suede loafers on a herringbone wood floor.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-picker-cards-3-image": {
+        "file": "k5-change-background-picker-cards-3-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Slim shoe rack neatly filled in a small entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-picker-cards-5-image": {
+        "file": "k5-change-background-picker-cards-5-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Wall shelf styled with plants and plain-spined books.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-uses-0-image": {
+        "file": "k5-change-background-uses-0-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ceramic planter with a fern on a styled shelf, wide banner framing.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-uses-1-image": {
+        "file": "k5-change-background-uses-1-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact rectangular Bluetooth speaker on a desk",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-outputs-0-image": {
+        "file": "k5-change-background-outputs-0-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Chrome espresso cup with controlled, clean reflections on a gradient.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-outputs-1-image": {
+        "file": "k5-change-background-outputs-1-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Leather notebook flat lay with a pen on a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-after-image": {
+        "file": "k5-change-background-after-image",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Fabric storage boxes on a tidy shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-strip-1": {
+        "file": "k5-change-background-strip-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand cream tube by a bathroom sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-steps-result": {
+        "file": "k5-change-background-steps-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand cream tube by a bathroom sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-input-0-good": {
+        "file": "k5-change-background-input-0-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Daypack opened to show its inner pocket.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-gallery-source": {
+        "file": "k5-background-gallery-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue ceramic vase alone on a pale studio background, full shape visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-gallery-hero": {
+        "file": "k5-background-gallery-hero",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue ceramic vase isolated against a clean warm studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-gallery-01": {
+        "file": "k5-background-gallery-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue ceramic vase on a simple tabletop with the original room softly visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-gallery-02": {
+        "file": "k5-background-gallery-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue ceramic vase isolated on a plain light background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-gallery-03": {
+        "file": "k5-background-gallery-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue ceramic vase in a warm living room setting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-gallery-04": {
+        "file": "k5-background-gallery-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue ceramic vase against a dark editorial background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-gallery-05": {
+        "file": "k5-background-gallery-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue ceramic vase outdoors on a stone surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-gallery-06": {
+        "file": "k5-background-gallery-06",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clean edge detail around a blue ceramic vase.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-template-card": {
+        "file": "k5-background-template-card",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue ceramic vase against a clean warm studio background, framed as a square product image.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-case-color": {
+        "file": "k5-background-case-color",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sea-blue protective case with one small oval camera opening on a soft blue color block.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-case-stone": {
+        "file": "k5-background-case-stone",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sea-blue protective case with one small oval camera opening on a textured gray stone slab.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-case-autumn": {
+        "file": "k5-background-case-autumn",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sea-blue protective case with one small oval camera opening among dry autumn leaves.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-phonecase-source": {
+        "file": "k5-background-phonecase-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sea-blue protective case with one oval camera opening on a seamless pale surface; no phone visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-phonecase-result": {
+        "file": "k5-background-phonecase-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain sea-blue protective case with one oval camera opening on a clean pale bathroom counter; no phone visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-template-life": {
+        "file": "k5-change-background-template-life",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Green potted plant on a sunny windowsill",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-change-background-template-light": {
+        "file": "k5-change-background-template-light",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small white candle glowing on a pale table",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-case-1": {
+        "file": "k5-background-case-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue ceramic vase on a sunny windowsill",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-case-2": {
+        "file": "k5-background-case-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain face cream jar on wet stone",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-case-3": {
+        "file": "k5-background-case-3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather wallet on a cafe table",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-gallery-pair-yogamat": {
+        "file": "k5-background-gallery-pair-yogamat",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Teal yoga mat in a bright uncluttered room",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-gallery-pair-boots": {
+        "file": "k5-background-gallery-pair-boots",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather boots beside a simple doorway",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-background-gallery-pair-protein": {
+        "file": "k5-background-gallery-pair-protein",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain protein powder tub in a quiet home gym",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-lifestyle-photos-input-1-bad": {
+        "file": "k5-lifestyle-photos-input-1-bad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Softly blurred square view of a tea pouch on a counter",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-input-0-bad": {
+        "file": "k5-model-photos-input-0-bad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue jeans tightly cropped at the top and bottom edges",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k5-model-photos-input-1-bad": {
+        "file": "k5-model-photos-input-1-bad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Soft-focus close-up of gold hoop earrings",
+        "variants": [
+          640,
+          1280
         ]
       }
     }

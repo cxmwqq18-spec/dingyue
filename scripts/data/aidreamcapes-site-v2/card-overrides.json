@@ -150,6 +150,18 @@
       "creator": {
         "ref": "g:ugc-still-ad/example-05",
         "alt": "Hand holds the pale green lid of a clear water bottle beside a plant."
+      },
+      "size": {
+        "ref": "n:guide:k5-home-card-size",
+        "alt": "Folded linen shirt beside a measuring tape"
+      },
+      "model": {
+        "ref": "n:guide:k5-home-card-model",
+        "alt": "Model wearing a simple linen shirt outdoors"
+      },
+      "color": {
+        "ref": "n:guide:k5-home-card-color",
+        "alt": "Three simple ceramic mugs in distinct glaze colors"
       }
     }
   },
@@ -273,6 +285,18 @@
       "jewel": {
         "ref": "n:gen2:tpl-jewel-g2",
         "alt": "Silver cufflinks worn with a white shirt cuff, framed around the accessory."
+      },
+      "model": {
+        "ref": "n:guide:k5-model-template-card",
+        "alt": "Canvas backpack worn by an adult in a clean square product image, candid and not facing the camera."
+      },
+      "look": {
+        "ref": "n:guide:k5-model-template-look",
+        "alt": "Tan leather shoulder bag carried across the body by an adult in a neutral outfit, candid pose."
+      },
+      "tryon": {
+        "ref": "n:guide:k5-model-photos-template-tryon",
+        "alt": "Adult wearing simple dark sunglasses outdoors"
       }
     }
   },
@@ -437,6 +461,54 @@
       "home": {
         "ref": "f:k2-url-card-drawer-trays",
         "alt": "Gray organizer trays fitted neatly inside an open wooden kitchen drawer."
+      }
+    }
+  },
+  "image-to-video": {
+    "images": {
+      "ba": {
+        "ref": "f:k5-image-to-video-template-ba",
+        "alt": "Before-and-after still frame of a tidy living room after a plain ceramic planter is moved into place."
+      },
+      "compare": {
+        "ref": "f:k5-image-to-video-template-compare",
+        "alt": "Two plain ceramic mugs side by side on a wooden table under balanced window light."
+      }
+    }
+  },
+  "lifestyle-photos": {
+    "images": {
+      "bg": {
+        "ref": "n:guide:k5-lifestyle-template-bg",
+        "alt": "Brown leather boots on a simple entryway mat beside a wooden door, full pair visible."
+      },
+      "ugc": {
+        "ref": "n:guide:k5-lifestyle-template-ugc",
+        "alt": "Plain sea-blue protective phone case with one oval camera opening, held loosely in one hand; no phone visible."
+      },
+      "life": {
+        "ref": "n:guide:k5-lifestyle-photos-template-life",
+        "alt": "White ceramic candle on a bedside table at dusk"
+      },
+      "pack": {
+        "ref": "n:guide:k5-lifestyle-photos-template-pack",
+        "alt": "Plain kraft coffee bag with coffee beans"
+      }
+    }
+  },
+  "change-background": {
+    "images": {
+      "bg": {
+        "ref": "n:guide:k5-background-template-card",
+        "alt": "Blue ceramic vase against a clean warm studio background, framed as a square product image."
+      },
+      "life": {
+        "ref": "n:guide:k5-change-background-template-life",
+        "alt": "Green potted plant on a sunny windowsill"
+      },
+      "light": {
+        "ref": "n:guide:k5-change-background-template-light",
+        "alt": "Small white candle glowing on a pale table"
       }
     }
   }

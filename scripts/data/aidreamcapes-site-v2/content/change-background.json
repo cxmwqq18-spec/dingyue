@@ -120,22 +120,22 @@
         "label": "Three backdrop variations",
         "items": [
           {
-            "ref": "n:gen2:change-background-g1",
+            "ref": "n:guide:k5-background-case-color",
             "title": "Phone case on a soft blue color block",
             "kind": "photo",
-            "product": "phone case"
+            "product": "plain phone case"
           },
           {
-            "ref": "n:gen2:change-background-g2",
-            "title": "Same phone case on a textured stone slab",
+            "ref": "n:guide:k5-background-case-stone",
+            "title": "Plain phone case on a textured stone slab",
             "kind": "photo",
-            "product": "phone case"
+            "product": "plain phone case"
           },
           {
-            "ref": "n:gen2:change-background-g3",
-            "title": "Same phone case among autumn leaves",
+            "ref": "n:guide:k5-background-case-autumn",
+            "title": "Plain phone case among autumn leaves",
             "kind": "photo",
-            "product": "phone case"
+            "product": "plain phone case"
           }
         ]
       },
@@ -155,15 +155,15 @@
   "visual": {
     "strip": [
       "n:gen2:plat-instagram-g4",
-      "n:gen2:plat-instagram-g5",
-      "n:gen2:plat-instagram-c3",
+      "n:guide:k5-change-background-strip-1",
+      "n:guide:k5-change-background-strip-2",
       "n:gen2:plat-shopify-c3",
       "n:gen2:ind-home-living-g3",
-      "n:gen2:plat-instagram-c2"
+      "n:guide:k5-change-background-strip-5"
     ],
     "steps": {
       "source": "n:gen2:plat-instagram-g4",
-      "result": "n:gen2:plat-instagram-g5",
+      "result": "n:guide:k5-change-background-steps-result",
       "mode": "photo",
       "prompt": "Move the tube onto a white bathroom sink counter with soft window light. Keep the label straight and readable."
     },
@@ -199,7 +199,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-electronics-c4",
+          "ref": "n:guide:k5-change-background-picker-cards-1-image",
           "label": "Keyboard on a worktable",
           "chips": [
             "desk"
@@ -208,7 +208,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-shoes-c4",
+          "ref": "n:guide:k5-change-background-picker-cards-2-image",
           "label": "Suede loafers by the door",
           "chips": [
             "entryway"
@@ -217,7 +217,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-home-c4",
+          "ref": "n:guide:k5-change-background-picker-cards-3-image",
           "label": "Shoe rack by the door",
           "chips": [
             "entryway"
@@ -235,7 +235,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-home-living-c4",
+          "ref": "n:guide:k5-change-background-picker-cards-5-image",
           "label": "Plants on a wall shelf",
           "chips": [
             "living-room"
@@ -267,20 +267,20 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:gen2:plat-shopify-c1",
+        "ref": "n:guide:k5-change-background-uses-0-image",
         "h": "Match a collection page",
         "d": "Products shot in different rooms look like one set when they share a surface or color."
       },
       {
         "frame": "post",
-        "ref": "n:gen2:social-ad-photos-c2",
+        "ref": "n:guide:k5-change-background-uses-1-image",
         "h": "Refresh a seasonal post",
         "d": "Move the speaker to a pool deck in summer or a cabin in winter, then type the offer in your editor."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:plat-amazon-g5",
+        "good": "n:guide:k5-change-background-input-0-good",
         "bad": "n:guide:background-daypack-cropped",
         "good_label": "Open bag, full handle visible",
         "bad_label": "Top handle clipped by frame"
@@ -294,18 +294,18 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:tpl-light-c2",
+        "ref": "n:guide:k5-change-background-outputs-0-image",
         "frame": "1:1",
         "label": "Polished product view"
       },
       {
-        "ref": "n:gen2:plat-shopify-c4",
+        "ref": "n:guide:k5-change-background-outputs-1-image",
         "frame": "1:1",
         "label": "Desk setting"
       }
     ],
     "after": {
-      "ref": "n:gen2:ind-home-living-g1",
+      "ref": "n:guide:k5-change-background-after-image",
       "zones": [
         "Your price",
         "Your headline"
