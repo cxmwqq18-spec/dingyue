@@ -862,7 +862,7 @@
       {
         "ref": "n:guide:q15-fashion-case1-knit-cardigan",
         "product": "knit cardigan",
-        "title": "Fit check: knit cardigan worn and buttoned"
+        "title": "Knit cardigan: buttoned fit check"
       },
       {
         "ref": "n:gen2:ind-fashion-clothing-c3",
@@ -872,7 +872,7 @@
       {
         "ref": "n:guide:q15-fashion-case3-denim-jeans",
         "product": "denim jeans",
-        "title": "Fit check: denim jeans waist and cuff"
+        "title": "Denim jeans: waist and cuff fit check"
       }
     ],
     "ind-shoes": [
@@ -894,7 +894,7 @@
       {
         "ref": "n:guide:q15-shoes-case3-suede-loafers",
         "product": "suede loafers",
-        "title": "Fit check: suede loafers worn outdoors"
+        "title": "Suede loafers: outdoor fit check"
       }
     ],
     "ind-jewelry-accessories": [
