@@ -1745,7 +1745,7 @@ export function analyzeSiteV2ImageReuse(build, source = loadSiteV2Source()) {
 }
 
 function imageReuseViolationKey(violation) {
-  return JSON.stringify([violation.image, violation.rule, violation.pageType ?? "", violation.pages]);
+  return JSON.stringify([violation.image, violation.rule, violation.pageType ?? ""]);
 }
 
 export function validateSiteV2(build = buildSiteV2()) {
@@ -2086,6 +2086,8 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (baselineViolations.has(key)) errors.push(`image reuse baseline contains a duplicate entry (${entry.image})`);
     else baselineViolations.set(key, normalized);
   }
+  // A baseline entry covers the same image and rule on the same pages or fewer of them, so taking
+  // an image off a page never fails; only an image on a new page or a new image is an error.
   let baselineRemaining = 0;
   for (const [key, entry] of baselineViolations) {
     const current = currentViolations.get(key);
@@ -2094,9 +2096,11 @@ export function validateSiteV2(build = buildSiteV2()) {
     else baselineRemaining += 1;
   }
   for (const [key, violation] of currentViolations) {
-    if (baselineViolations.has(key)) continue;
+    const entry = baselineViolations.get(key);
+    const added = entry ? violation.pages.filter((page) => !entry.pages.includes(page)) : violation.pages;
+    if (!added.length) continue;
     const summary = `${violation.rule}${violation.pageType ? ` (${violation.pageType})` : ""}: ${violation.image} on ${violation.pages.join(", ")}`;
-    errors.push(`new image reuse violation outside baseline (${summary})`);
+    errors.push(entry ? `image reuse violation spread to new pages outside baseline (${summary}; new: ${added.join(", ")})` : `new image reuse violation outside baseline (${summary})`);
   }
   console.info(`Aidreamcapes image reuse baseline: ${baselineRemaining} violations remain.`);
   // Editorial metadata must never enter the public LivePage payload, even when a
