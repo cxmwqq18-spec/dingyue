@@ -187,22 +187,22 @@
         "label": "Product photo examples",
         "items": [
           {
-            "ref": "n:guide:white-background-fix-m6-coaster-set",
-            "title": "Slate-blue felt coasters on white",
+            "ref": "n:guide:q7-color-ex-0",
+            "title": "Running Shoe Color Choices",
             "kind": "photo",
-            "product": "felt coasters"
+            "product": "knit running shoes"
           },
           {
-            "ref": "n:guide:tpl-color-round4-soap-set-editorial",
-            "title": "Three glazes in a consistent product shot",
+            "ref": "n:guide:q7-color-ex-1",
+            "title": "Skincare Shades in Hand",
             "kind": "photo",
-            "product": "ceramic soap dispensers"
+            "product": "skincare bottles"
           },
           {
-            "ref": "n:guide:tpl-color-reuse-warm",
-            "title": "Terracotta, sage, and cream soap dispensers",
+            "ref": "n:guide:q7-color-ex-2",
+            "title": "Collar Shade Options",
             "kind": "photo",
-            "product": "ceramic soap dispensers"
+            "product": "pet collars"
           }
         ]
       }
@@ -219,10 +219,10 @@
       "n:guide:tpl-color-round4-06"
     ],
     "steps": {
-      "source": "n:guide:white-background-soap-dispenser",
-      "result": "n:guide:tpl-color-m2-result",
+      "source": "n:guide:q7-color-steps-source",
+      "result": "n:guide:q7-color-steps-result",
       "mode": "photo",
-      "prompt": "Show this single soap dispenser with a warm terracotta glaze while keeping the pump, silhouette, angle, and soft white-background shadow unchanged.",
+      "prompt": "Use the uploaded product photo as the identity reference; preserve the sage ceramic soap dispenser, pump, silhouette, glaze, and exact color. Show the full dispenser upright on a clean white surface with a soft natural shadow. Even studio daylight, centered product-photo composition. No text, logos, or watermark.",
       "options": [
         [
           "Template",
@@ -239,98 +239,105 @@
       ]
     },
     "picker": {
-      "title": "Choose a color direction",
-      "lead": "Pick a palette that fits the product and keeps its shape easy to compare.",
+      "title": "Choose a product color ad format",
+      "lead": "Keep each item easy to recognize while showing color choices in a useful shopping scene.",
       "chips": [
         {
           "id": "warm",
-          "label": "Warm tones"
+          "label": "Warm Tones"
         },
         {
           "id": "cool",
-          "label": "Cool tones"
+          "label": "Cool Tones"
         },
         {
           "id": "soft",
-          "label": "Soft neutrals"
+          "label": "Soft Neutrals"
         },
         {
           "id": "bold",
-          "label": "Bold accents"
+          "label": "Bold Accents"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-color-g1",
-          "label": "Terracotta and sage glaze options",
-          "chips": [
-            "warm"
-          ],
-          "prompt": "Keep the terracotta, sage, and cream finishes distinct on this set of jars.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:tpl-color-after-square",
-          "label": "Soap dispenser glaze options",
+          "ref": "n:guide:q7-color-picker-cards-0",
+          "label": "Skincare Shade Lineup",
           "chips": [
             "warm",
-            "bold"
-          ],
-          "prompt": "Keep the matching dispenser shapes clear while comparing the terracotta, sage, and cream finishes.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:tpl-color-g2",
-          "label": "Running shoe colorways",
-          "chips": [
-            "cool"
-          ],
-          "prompt": "Show this shoe in three cool colorways side by side.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:change-background-c1",
-          "label": "Blue ceramic vase",
-          "chips": [
-            "cool"
-          ],
-          "prompt": "Keep the blue glaze visible against a calm neutral setting.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:ind-fashion-clothing-c2",
-          "label": "Cream cardigan",
-          "chips": [
             "soft"
           ],
-          "prompt": "Show the cream knit as a soft neutral product color.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the plain skincare bottles and their distinct muted colors. Adult hands hold three bottles side by side with every bottle fully visible. Bright bathroom daylight, close chest-level composition, clean comparison-ad style. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-color-g3",
-          "label": "Muted rain jacket color options",
+          "ref": "n:guide:q7-color-picker-cards-1",
+          "label": "Phone Case Color Lineup",
           "chips": [
-            "soft"
-          ],
-          "prompt": "Keep the jacket shape and muted navy, green, and cream tones consistent.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:tpl-color-c4",
-          "label": "Yoga blocks in bright colors",
-          "chips": [
+            "cool",
             "bold"
           ],
-          "prompt": "Stack this yoga block shape in its bright color options.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the plain phone cases, single round camera openings, shapes, and colors. An adult creator holds a neat lineup of cases beside a phone, with each color and opening visible. Soft window light, chest-up close composition. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-kettle",
-          "label": "Sea-glass green kettle",
+          "ref": "n:guide:q7-color-picker-cards-2",
+          "label": "Knit Shoe Color Try-On",
           "chips": [
-            "cool"
+            "cool",
+            "soft"
           ],
-          "prompt": "Keep the kettle shape consistent while showing the green finish clearly.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact neutral knit running shoe and color. An adult wears the shoe outdoors with its full side profile visible against a shaded path. Natural morning light, low three-quarter composition, clear color try-on. No text, logos, or watermark.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q7-color-picker-cards-3-r2",
+          "label": "Cream Cardigan Try-On",
+          "chips": [
+            "soft",
+            "warm"
+          ],
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the cream cardigan, knit texture, buttons, and exact shade. An adult wears it and holds one sleeve toward a mirror so the knit color is easy to judge. Soft bedroom daylight, waist-up composition. No text, logos, or watermark.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q7-color-picker-cards-4",
+          "label": "Face Mist Color Review",
+          "chips": [
+            "warm",
+            "soft"
+          ],
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain face-mist bottle, pump, silhouette, and color. An adult creator holds the full bottle beside their face with the pump visible. Bright vanity daylight, chest-up composition, natural skin texture. No text, logos, or watermark.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q7-color-picker-cards-5",
+          "label": "Pet Collar Color Pair",
+          "chips": [
+            "cool",
+            "bold"
+          ],
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the plain pet collars, buckle shapes, widths, and colors. An adult pet owner holds two collars side by side beside a dog, with both buckles visible. Soft natural home light, chest-up close composition. No text, logos, or watermark.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q7-color-picker-cards-6",
+          "label": "Muted Rose Lip Balm",
+          "chips": [
+            "warm",
+            "soft"
+          ],
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact muted rose lip balm, tube shape, cap, and color. A hand holds the full closed tube beside the lips, with the product centered and clearly visible. Warm window light, natural close beauty composition. No text, logos, or watermark.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q7-color-picker-cards-7",
+          "label": "Resistance Band Colors",
+          "chips": [
+            "cool",
+            "bold"
+          ],
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the resistance bands and their distinct colors. Adult hands fan out three bands side by side on a gym mat, with each color easy to compare. Bright gym daylight, clean overhead composition. No text, logos, or watermark.",
           "kind": "photo"
         }
       ],
@@ -339,45 +346,45 @@
     "uses": [
       {
         "frame": "post",
-        "ref": "n:guide:tpl-color-m4-use-square",
-        "h": "Show four tumbler colors in a product post",
-        "d": "Keep the tumbler shape and studio light consistent so shoppers can compare the available colors."
+        "ref": "n:guide:q7-color-uses-0",
+        "h": "Compare skincare shade options in a feed",
+        "d": "Three plain bottles held together keep the color differences easy to judge at a glance."
       },
       {
         "frame": "post",
-        "ref": "n:guide:white-background-serving-bowl",
-        "h": "Show a soft neutral bowl color",
-        "d": "Keep the stoneware shape and finish clear so shoppers can compare the neutral shade."
+        "ref": "n:guide:q7-color-uses-1",
+        "h": "Compare protein drink flavors by color",
+        "d": "An adult athlete holds two plain pouches side by side so shoppers can distinguish the flavor options."
       }
     ],
     "input": [
       {
-        "good": "n:guide:tpl-color-round4-07",
-        "bad": "n:guide:tpl-color-m5-blur",
-        "good_label": "Muted teal dispenser stays clear",
-        "bad_label": "Muted teal dispenser loses focus"
+        "good": "n:guide:q7-color-input-0-good",
+        "bad": "n:guide:q7-color-input-0-bad-r2",
+        "good_label": "Muted teal serum bottle stays in focus",
+        "bad_label": "Muted teal serum bottle cap is cropped at the top"
       },
       {
-        "good": "n:guide:tpl-color-round4-08",
-        "bad": "n:guide:tpl-color-m5-crop",
-        "good_label": "Soft ochre dispenser stays in frame",
-        "bad_label": "Soft ochre dispenser is tightly cropped"
+        "good": "n:guide:q7-color-input-1-good",
+        "bad": "n:guide:q7-color-input-1-bad-r2",
+        "good_label": "Plum knit color is easy to judge",
+        "bad_label": "Muted plum knit top is cropped at the lower edge"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:tpl-color-m6-output-01-square-r2",
+        "ref": "n:guide:q7-color-outputs-0",
         "frame": "1:1",
-        "label": "Square color options for ceramic dispensers"
+        "label": "Muted teal serum bottle on a clean surface"
       },
       {
-        "ref": "n:guide:tpl-color-round4-09",
+        "ref": "n:guide:q7-color-outputs-1",
         "frame": "1:1",
-        "label": "Square pale blue-gray soap dispenser"
+        "label": "Muted plum knit top worn by an adult model"
       }
     ],
     "after": {
-      "ref": "n:guide:tpl-color-round4-10",
+      "ref": "n:guide:q7-color-after-r2",
       "zones": [
         "Color name",
         "Material"

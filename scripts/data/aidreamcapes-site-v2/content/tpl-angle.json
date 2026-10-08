@@ -188,22 +188,22 @@
         "label": "Product angle examples",
         "items": [
           {
-            "ref": "g:packshot-multi-angle/example-02",
-            "title": "Wireless speaker rear connection area",
+            "ref": "n:guide:q7-angle-ex-0",
+            "title": "Sage Case in Creator’s Hand",
             "kind": "photo",
-            "product": "wireless speaker"
+            "product": "sage phone case"
           },
           {
-            "ref": "n:gen2:spokesperson-videos-g2",
-            "title": "Phone case held at a desk",
+            "ref": "n:guide:q7-angle-ex-1",
+            "title": "Muted Teal Serum Demo",
             "kind": "photo",
-            "product": "phone case"
+            "product": "serum bottle"
           },
           {
-            "ref": "n:gen2:tpl-angle-g4",
-            "title": "Portable speaker base with rubber feet",
+            "ref": "n:guide:q7-angle-ex-2-r2",
+            "title": "Headphones Out of Box",
             "kind": "photo",
-            "product": "portable speaker"
+            "product": "over-ear headphones"
           }
         ]
       }
@@ -213,17 +213,17 @@
     "overview": "Show the front, back, top, and useful details from separate photos of the real item. Use a steady backdrop so a product gallery reads as one set.",
     "strip": [
       "n:guide:tpl-angle-round4-speaker-controls",
-      "n:gen2:video-hub-g2",
-      "n:gen2:white-background-c3",
-      "n:gen2:h1-video-hub-socks-source",
-      "n:gen2:spokesperson-videos-g4",
-      "n:guide:b1-unboxing-videos-source"
+      "n:guide:q7-angle-strip-1",
+      "n:guide:q7-angle-strip-2",
+      "n:guide:q7-angle-strip-3",
+      "n:guide:q7-angle-strip-4",
+      "n:guide:q7-angle-strip-5"
     ],
     "steps": {
       "source": "n:guide:tpl-angle-round4-speaker-controls",
       "result": "n:guide:tpl-angle-m2-back",
       "mode": "photo",
-      "prompt": "Photograph this compact rectangular portable speaker from the rear three-quarter angle, with its USB-C and audio ports visible, centered on a light-gray seamless background in a square frame.",
+      "prompt": "Use the uploaded product photo as the identity reference; preserve the compact black woven speaker, its strap, rear ports, shape, and color. Show the full speaker from a rear three-quarter angle on a pale seamless surface, with the ports sharp and centered. Soft studio daylight, clean product-photo composition. No text, logos, or watermark.",
       "options": [
         [
           "Template",
@@ -240,97 +240,99 @@
       ]
     },
     "picker": {
-      "title": "Choose a useful product angle",
-      "lead": "Pick the surface or detail that answers a buyer question.",
+      "title": "Choose a multi-angle ad format",
+      "lead": "Use a clear product view, detail, or creator moment to answer a shopper’s question.",
       "chips": [
         {
-          "id": "front",
-          "label": "Front view"
+          "id": "hands",
+          "label": "Hands-On Views"
         },
         {
-          "id": "back",
-          "label": "Back view"
+          "id": "worn",
+          "label": "Worn by a Creator"
         },
         {
           "id": "texture",
-          "label": "Material detail"
+          "label": "Texture Details"
         },
         {
-          "id": "hardware",
-          "label": "Controls and hardware"
+          "id": "feature",
+          "label": "Product Features"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:ind-electronics-m3-headphones",
-          "label": "Headphones lifted from the box",
+          "ref": "n:guide:q7-angle-picker-cards-0-r4",
+          "label": "Headphones Box Reveal",
           "chips": [
-            "front"
+            "hands"
           ],
-          "prompt": "Keep both ear cups visible from the front.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain over-ear headphones, shape, and color. Freeze the moment two hands lift both ear cups above an open kraft box on a clean desk. Soft window light, close overhead composition, natural product-ad realism. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:b1-spokesperson-output-bag",
-          "label": "Crossbody bag carried in front",
+          "ref": "n:guide:q7-angle-picker-cards-2",
+          "label": "Daypack Pocket Opening",
           "chips": [
-            "front"
+            "hands"
           ],
-          "prompt": "Keep the bag centered so its shape and clasp are easy to see.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact charcoal daypack, pocket layout, straps, and color. Freeze the moment an adult hand opens the main pocket to reveal its padded tablet sleeve. Bright entryway daylight, close rear three-quarter composition, natural product-ad realism. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:background-daypack-cropped",
-          "label": "Open daypack and straps",
+          "ref": "n:guide:q7-angle-picker-cards-1",
+          "label": "Crossbody Bag Review",
           "chips": [
-            "back"
+            "worn"
           ],
-          "prompt": "Show the opening and shoulder straps from behind.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact canvas crossbody bag, clasp, seams, and color. An adult creator holds the bag beside their face with the clasp turned toward the lens. Soft window light, chest-up framing, natural skin texture. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:plat-youtube-shorts-g1",
-          "label": "Daypack lifted by its top handle",
+          "ref": "n:guide:q7-angle-picker-cards-4-r2",
+          "label": "Necklace Clasp Review",
           "chips": [
-            "back"
+            "worn",
+            "feature"
           ],
-          "prompt": "Turn the pack to show the back panel and handle.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact silver necklace, links, clasp, and finish. An adult creator holds the chain beside their face with the clasp clearly visible near the lens. Soft vanity daylight, chest-up close framing, natural creator-review style. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:ind-jewelry-accessories-m3-necklace-clasp",
-          "label": "Chain clasp and links",
+          "ref": "n:guide:q7-angle-picker-cards-4-r3",
+          "label": "Knit Sneaker Cleaning",
           "chips": [
             "texture"
           ],
-          "prompt": "Move close enough to show the clasp and chain links.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact neutral knit sneaker, sole, and color. Freeze the moment a hand wipes one scuffed area, with the cleaned knit beside the untouched section and the whole shoe visible. Bright outdoor shade, low close composition. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:h1-photo-hub-lamp",
-          "label": "Lamp shade weave detail",
+          "ref": "n:guide:q7-angle-picker-cards-5-r4",
+          "label": "Earbud Cable Organizer",
           "chips": [
-            "texture"
+            "feature"
           ],
-          "prompt": "Show the linen weave and shade edge clearly.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact wired earbuds and plain dark cable organizer. Freeze the moment the organizer closes around the coiled cable, with the loose and secured sections visible together. Soft desk light, overhead close composition, natural product-demo style. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:examples-g6",
-          "label": "Cork block edge detail",
+          "ref": "n:guide:q7-angle-picker-cards-6-r2",
+          "label": "Knit Sneaker Seam",
           "chips": [
-            "hardware"
+            "texture",
+            "feature"
           ],
-          "prompt": "Keep the textured edge and square corner in frame.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact neutral knit sneaker and stitching. A hand gently stretches the seam so the knit weave and stitching fill a crisp macro frame. Soft side daylight, tactile close composition, shallow depth of field. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-fashion-clothing-g3",
-          "label": "Field jacket seam detail",
+          "ref": "n:guide:q7-angle-picker-cards-7-r2",
+          "label": "Protein Bar Broken Open",
           "chips": [
-            "hardware"
+            "hands"
           ],
-          "prompt": "Show the seam and button stitching clearly.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain protein bar and unprinted wrapper. Freeze the moment two hands hold the broken halves close to the lens, with the crisp center visible. Warm natural light, appetizing close tabletop composition. No text, logos, or watermark.",
           "kind": "photo"
         }
       ],
@@ -339,41 +341,41 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:gen2:spokesperson-videos-1",
-        "h": "Show a speaker in a living room",
-        "d": "A person holding the speaker at home helps shoppers judge its handheld size."
+        "ref": "n:guide:q7-angle-picker-cards-3",
+        "h": "Show a daypack back panel in a listing",
+        "d": "A hand lifts the pack by its top handle so shoppers can inspect the straps and back padding."
       },
       {
         "frame": "browser",
-        "ref": "n:guide:b1-spokesperson-strip",
-        "h": "Show a compact appliance in a home setting",
-        "d": "Place the compact espresso maker on a kitchen counter so shoppers can picture its size and finish."
+        "ref": "n:guide:q7-angle-uses-1-r3",
+        "h": "Review a compact USB-C charger",
+        "d": "An adult creator holds the charger near their face with its port turned toward the camera."
       }
     ],
     "input": [
       {
-        "good": "g:ecommerce-main-image/example-01",
-        "bad": "n:guide:tpl-angle-m5-blur",
-        "good_label": "Travel mug rim stays sharp",
-        "bad_label": "Travel mug rim loses detail"
+        "good": "n:guide:q7-angle-input-0-good",
+        "bad": "n:guide:q7-angle-input-0-bad-r5",
+        "good_label": "Speaker rear ports stay crisp in hand",
+        "bad_label": "Speaker rear port panel is cropped at the edge"
       },
       {
-        "good": "n:gen2:examples-g4",
-        "bad": "n:guide:tpl-angle-m5-crop",
-        "good_label": "Cork block edges stay visible",
-        "bad_label": "Cork block is cut at the edge"
+        "good": "n:guide:q7-angle-input-1-good-r2",
+        "bad": "n:guide:q7-angle-input-1-bad-r3",
+        "good_label": "Lip balm cap and color stay in frame",
+        "bad_label": "Muted rose lip balm cap is cropped at the top"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:b1-before-after-videos-source",
+        "ref": "n:guide:q7-angle-outputs-0-r3",
         "frame": "1:1",
-        "label": "Cable organizer on a clear desk"
+        "label": "Light-gray woven speaker rear ports on a pale surface"
       },
       {
-        "ref": "n:guide:tpl-angle-m6-output-square-r2",
+        "ref": "n:guide:q7-angle-outputs-1",
         "frame": "1:1",
-        "label": "Square speaker views from the front and rear"
+        "label": "Muted rose lip balm held beside a creator"
       }
     ],
     "after": {

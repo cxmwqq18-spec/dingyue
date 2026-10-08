@@ -217,90 +217,90 @@
     ],
     "tpl-angle": [
       {
-        "ref": "n:guide:plat-youtube-shorts-size-square-ebike",
-        "product": "folding electric bicycle",
-        "title": "Black folding bicycle shown in a clean side view"
+        "ref": "n:guide:q7-angle-case-0",
+        "product": "reflective pet leash",
+        "title": "Reflective Leash Hardware Check"
       },
       {
-        "ref": "n:gen2:examples-g5",
-        "product": "cork yoga block",
-        "title": "Cork yoga block shown in a balanced standing pose"
+        "ref": "n:guide:q7-angle-case-1",
+        "product": "knit running shoe",
+        "title": "Neutral Knit Shoe Fit Check"
       },
       {
-        "ref": "n:gen2:product-videos-g1",
-        "product": "folding camp chair",
-        "title": "Folding camp chair beside a patio table"
+        "ref": "n:guide:q7-angle-case-2",
+        "product": "protein bar",
+        "title": "Protein Bar First Bite"
       },
       {
-        "ref": "n:gen2:tpl-angle-c4",
-        "product": "office chair",
-        "title": "Office chair photographed in a three-quarter studio view"
+        "ref": "n:guide:q7-angle-case-3",
+        "product": "over-ear headphones",
+        "title": "Headphones Ear Cushion Demo"
       }
     ],
     "tpl-detail": [
       {
-        "ref": "n:guide:b1-unboxing-output",
+        "ref": "n:guide:q7-detail-case-0",
         "product": "leather wallet",
-        "title": "Brown leather wallet with its stitching and seams visible"
+        "title": "Wallet Stitching Close-Up"
       },
       {
-        "ref": "n:gen2:examples-g7",
-        "product": "wool throw",
-        "title": "Wool blanket draped over an armchair in winter light"
+        "ref": "n:guide:q7-detail-case-1",
+        "product": "pet hair remover",
+        "title": "Pet Roller Sofa Pass"
       },
       {
-        "ref": "n:guide:white-background-desk-organizer",
-        "product": "walnut desk organizer",
-        "title": "Walnut desk organizer with its grain and slots visible"
+        "ref": "n:guide:q7-detail-case-2",
+        "product": "gold hoop earrings",
+        "title": "Gold Hoops from Box"
       },
       {
-        "ref": "g:ecommerce-main-image/example-03",
-        "product": "ceramic travel mug",
-        "title": "Three-quarter travel mug view showing its handle and glaze"
+        "ref": "n:guide:q7-detail-case-3",
+        "product": "skincare serum",
+        "title": "Serum Pump Close-Up"
       }
     ],
     "tpl-size": [
       {
-        "ref": "g:ecommerce-main-image/example-06",
-        "product": "ceramic travel mug",
-        "title": "Travel mug shown in hand to suggest its size"
+        "ref": "n:guide:q7-size-case-0",
+        "product": "protein shaker",
+        "title": "Protein Shaker Hand Scale"
       },
       {
-        "ref": "n:guide:b1-spokesperson-output-coffee",
-        "product": "speckled ceramic mug",
-        "title": "Presenter holding a mug with both hands"
+        "ref": "n:guide:q7-size-case-1",
+        "product": "phone stand",
+        "title": "Phone Stand Hand Scale"
       },
       {
-        "ref": "n:gen2:url-to-video-g4",
-        "product": "ceramic teapot set",
-        "title": "Teapot and cups arranged together on a wooden tray"
+        "ref": "n:guide:q7-size-case-2",
+        "product": "compact over-ear headphones",
+        "title": "Headphones Travel Case"
       },
       {
-        "ref": "n:gen2:tpl-size-c4",
-        "product": "ceramic planter",
-        "title": "Planter shown on a bookshelf next to paperbacks"
+        "ref": "n:guide:q7-size-case-3",
+        "product": "pet carrier",
+        "title": "Pet Carrier Body Fit"
       }
     ],
     "tpl-color": [
       {
-        "ref": "n:gen2:tpl-color-c2",
+        "ref": "n:guide:q7-color-case-0",
         "product": "knit beanies",
-        "title": "Three knit beanies arranged by shade"
+        "title": "Beanie Shade Try-On"
       },
       {
-        "ref": "n:gen2:tpl-color-c3",
+        "ref": "n:guide:q7-color-case-1",
         "product": "phone cases",
-        "title": "Phone cases displayed in a fan of colors"
+        "title": "Phone Case Color Lineup"
       },
       {
-        "ref": "n:gen2:tpl-color-c1",
-        "product": "insulated tumblers",
-        "title": "Insulated tumblers lined up for a shade comparison"
+        "ref": "n:guide:q7-color-case-2",
+        "product": "sports shakers",
+        "title": "Sports Shaker Color Pair"
       },
       {
-        "ref": "n:guide:white-background-fix-m1-planter",
-        "product": "terracotta planter",
-        "title": "Terracotta planter finish shown against white"
+        "ref": "n:guide:q7-color-case-3",
+        "product": "pet collars",
+        "title": "Pet Collar Color Pair"
       }
     ],
     "tpl-box": [

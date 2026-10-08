@@ -187,16 +187,16 @@
         "label": "Product photo examples",
         "items": [
           {
-            "ref": "n:gen2:change-background-c3",
-            "title": "Brown leather wallet on a marble cafe table",
+            "ref": "n:guide:q7-detail-ex-0",
+            "title": "Wallet Card Slots in Use",
             "kind": "photo",
             "product": "leather wallet"
           },
           {
-            "ref": "g:macro-details/example-07",
-            "title": "Wallet interior opened for detail",
+            "ref": "n:guide:q7-detail-ex-1",
+            "title": "Olive-Green Collar Buckle Close-Up",
             "kind": "photo",
-            "product": "leather wallet"
+            "product": "pet collar"
           }
         ]
       }
@@ -205,18 +205,18 @@
   "visual": {
     "overview": "Close product photos help shoppers see the material, stitching, fasteners, and finish. Start from a sharp source photo and name one detail at a time.",
     "strip": [
-      "g:macro-details/example-01",
-      "g:macro-details/example-02",
-      "g:macro-details/example-03",
-      "g:macro-details/example-04",
-      "n:gen2:tpl-detail-c1",
+      "n:guide:q7-detail-strip-0",
+      "n:guide:q7-detail-strip-1",
+      "n:guide:q7-detail-strip-2",
+      "n:guide:q7-detail-strip-3",
+      "n:guide:q7-detail-strip-4",
       "n:guide:tpl-detail-round4-wallet-zipper"
     ],
     "steps": {
       "source": "n:guide:tpl-detail-reuse-wallet",
       "result": "n:guide:tpl-detail-m2-result",
       "mode": "photo",
-      "prompt": "Create a square macro close-up of this brown leather bifold wallet from the source, focusing tightly on its edge stitching and leather grain against a clean light-neutral background. Preserve the wallet’s leather color and stitching pattern.",
+      "prompt": "Use the uploaded product photo as the identity reference; preserve the exact brown leather bifold wallet, its leather shade, edge shape, and stitching. Show a crisp close-up of the stitched edge and natural grain against a pale neutral background. Warm side light, macro product-photo composition. No text, logos, or watermark.",
       "options": [
         [
           "Template",
@@ -233,97 +233,101 @@
       ]
     },
     "picker": {
-      "title": "Choose a product detail",
-      "lead": "Pick one material or feature to bring into close view.",
+      "title": "Choose a product detail ad format",
+      "lead": "Bring a material, fastener, or everyday feature into a clear close view.",
       "chips": [
         {
-          "id": "leather",
-          "label": "Leather details"
-        },
-        {
-          "id": "fabric",
-          "label": "Fabric texture"
+          "id": "material",
+          "label": "Materials and Texture"
         },
         {
           "id": "hardware",
-          "label": "Metal hardware"
+          "label": "Fasteners and Hardware"
         },
         {
-          "id": "ceramic",
-          "label": "Ceramic finish"
+          "id": "accessory",
+          "label": "Jewelry and Accessories"
+        },
+        {
+          "id": "feature",
+          "label": "Everyday Features"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:white-background-g1",
-          "label": "Leather wallet edge",
+          "ref": "n:guide:q7-detail-picker-cards-0",
+          "label": "Wallet Grain Macro",
           "chips": [
-            "leather"
+            "material"
           ],
-          "prompt": "Frame the leather wallet edge and keep its seam visible.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact brown leather wallet, grain, and stitching. A fingertip rests along the stitched edge while the leather grain fills a crisp macro frame. Warm side light, tactile close composition, shallow depth of field. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "g:commercial-lighting/example-07",
-          "label": "Reflective surface finish",
+          "ref": "n:guide:q7-detail-picker-cards-1",
+          "label": "Pet Collar Buckle Demo",
           "chips": [
-            "leather"
+            "hardware",
+            "accessory"
           ],
-          "prompt": "Frame the reflective finish and its edge clearly against a neutral background.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact olive-green pet collar, buckle, width, weave, and color. A hand holds the complete buckle close to the lens with the release clearly visible. Soft daylight, tight macro composition, clean product-demo style. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:tpl-detail-round4-wallet-macro",
-          "label": "Leather cardholder stitching",
+          "ref": "n:guide:q7-detail-picker-cards-2",
+          "label": "Gold Hoop Unboxing",
           "chips": [
-            "fabric"
+            "accessory"
           ],
-          "prompt": "Frame the cardholder edge and keep its leather grain and stitching clear.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the plain gold hoop earrings and their shape and finish. Hands lift both hoops above an open kraft jewelry case with the pair centered. Warm window light, close overhead composition, refined natural styling. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "g:on-model-generation/example-07",
-          "label": "Backpack handle stitching",
+          "ref": "n:guide:q7-detail-picker-cards-3",
+          "label": "Headphones Box Reveal",
           "chips": [
-            "fabric"
+            "feature"
           ],
-          "prompt": "Move close to the backpack handle and keep its stitching visible.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact charcoal over-ear headphones, cushion shape, and color. Adult hands lift the headphones from an open padded box with both ear cups visible. Soft studio daylight, close overhead composition. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-detail-g3",
-          "label": "Brass bag clasp",
+          "ref": "n:guide:q7-detail-picker-cards-4",
+          "label": "Knit Sneaker Cleaning",
           "chips": [
-            "hardware"
+            "material",
+            "feature"
           ],
-          "prompt": "Move close to the brass clasp while keeping its leather attachment visible.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact neutral knit sneaker, sole, and color. Freeze the moment a cloth wipes one scuffed side panel, showing the cleaned knit beside the untouched area with the full shoe in frame. Bright soft daylight, low close composition. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-detail-g4",
-          "label": "Denim zipper teeth",
+          "ref": "n:guide:q7-detail-picker-cards-5",
+          "label": "Pet Hair Roller Demo",
           "chips": [
-            "hardware"
+            "material",
+            "feature"
           ],
-          "prompt": "Show the zipper teeth and pull against the denim jacket.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain reusable pet-hair roller and handle. An adult hand presses the roller against a sofa cushion, with a clean strip beside loose fur. Soft living-room daylight, tight side composition, clear before-and-after detail. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "g:background-remove-replace/hero-output",
-          "label": "Ceramic vase in a warm studio",
+          "ref": "n:guide:q7-detail-picker-cards-6",
+          "label": "Denim Jacket Seam",
           "chips": [
-            "ceramic"
+            "material"
           ],
-          "prompt": "Frame the ceramic vase body and surface finish against the clean warm background.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact blue denim jacket, seam, stitching, and color. An adult creator holds the jacket beside their face and points to its reinforced seam. Soft window light, chest-up framing, natural fabric texture. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "g:ecommerce-main-image/example-04",
-          "label": "Matte ceramic mug rim close-up",
+          "ref": "n:guide:q7-detail-picker-cards-7",
+          "label": "Serum Pump Review",
           "chips": [
-            "ceramic"
+            "hardware",
+            "feature"
           ],
-          "prompt": "Bring the mug rim and matte ceramic finish into focus.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain serum bottle, pump, silhouette, and color. An adult creator holds the full bottle beside their face with the pump turned toward the lens. Bright bathroom daylight, chest-up framing, natural skin texture. No text, logos, or watermark.",
           "kind": "photo"
         }
       ],
@@ -332,41 +336,41 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "g:macro-details/hero-output",
-        "h": "Add a detail after the main image",
-        "d": "Place the close-up beside the full wallet view so shoppers can compare the finish and construction."
+        "ref": "n:guide:q7-detail-uses-0",
+        "h": "Show a wallet in a crossbody bag",
+        "d": "A close carry view shows how a slim wallet fits into an everyday bag pocket."
       },
       {
         "frame": "browser",
-        "ref": "g:on-model-generation/example-04",
-        "h": "Show a pocket or closure on a store page",
-        "d": "Use a separate image for a zipper, pocket, clasp, or other feature that affects the purchase."
+        "ref": "n:guide:q7-detail-uses-1",
+        "h": "Review a pet grooming brush",
+        "d": "An adult pet owner turns the bristle side toward the camera so shoppers can see the brush head and grip."
       }
     ],
     "input": [
       {
-        "good": "g:macro-details/example-05",
-        "bad": "n:guide:tpl-detail-m5-blur",
-        "good_label": "Jacket weave stays sharp",
-        "bad_label": "The fabric detail loses focus"
+        "good": "n:guide:q7-detail-input-0-good",
+        "bad": "n:guide:q7-detail-input-0-bad-r2",
+        "good_label": "Wallet seam stays sharp",
+        "bad_label": "Brown leather wallet edge is cropped at the right"
       },
       {
-        "good": "g:background-remove-replace/example-06",
-        "bad": "n:guide:tpl-detail-m5-crop",
-        "good_label": "Vase edge stays visible",
-        "bad_label": "The vase is cut off at the side"
+        "good": "n:guide:q7-detail-input-1-good",
+        "bad": "n:guide:q7-detail-input-1-bad-r2",
+        "good_label": "Pet collar buckle stays fully visible",
+        "bad_label": "Pet collar buckle is slightly clipped"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:tpl-detail-m6-output-01-square",
+        "ref": "n:guide:q7-detail-outputs-0",
         "frame": "1:1",
-        "label": "Square wallet zipper detail"
+        "label": "Brown leather wallet stitching close-up"
       },
       {
-        "ref": "n:guide:tpl-detail-m6-output-02-square",
+        "ref": "n:guide:q7-detail-outputs-1-r2",
         "frame": "1:1",
-        "label": "Square leather corner detail"
+        "label": "Olive-green pet collar buckle in focus"
       }
     ],
     "after": {

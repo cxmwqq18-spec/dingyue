@@ -96,7 +96,7 @@
     "tpl-angle": {
       "hero": {
         "kind": "image",
-        "image": "g:packshot-multi-angle/example-02"
+        "image": "n:guide:q7-angle-hero-image"
       },
       "gallery": [],
       "og": "g:packshot-multi-angle/og"
@@ -105,7 +105,7 @@
       "hero": {
         "kind": "pair",
         "before": "g:macro-details/source-input",
-        "after": "g:macro-details/hero-output"
+        "after": "n:guide:q7-detail-hero-after"
       },
       "gallery": [],
       "og": "g:macro-details/og"
@@ -114,7 +114,7 @@
       "hero": {
         "kind": "pair",
         "before": "g:size-reference/source-input",
-        "after": "g:size-reference/hero-output"
+        "after": "n:guide:q7-size-hero-after"
       },
       "gallery": [
         "g:size-reference/example-01",
@@ -129,8 +129,8 @@
     "tpl-color": {
       "hero": {
         "kind": "pair",
-        "before": "g:colorway-variations/source-input",
-        "after": "g:colorway-variations/hero-output"
+        "before": "n:guide:q7-color-hero-before",
+        "after": "n:guide:q7-color-hero-after"
       },
       "gallery": [],
       "og": "g:colorway-variations/og"

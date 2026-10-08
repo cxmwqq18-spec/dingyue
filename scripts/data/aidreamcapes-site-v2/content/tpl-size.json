@@ -183,26 +183,26 @@
         "label": "Scale at a glance",
         "items": [
           {
-            "ref": "g:size-reference/example-06",
-            "title": "Folded backpack beside its full-size version",
+            "ref": "n:guide:q7-size-ex-0",
+            "title": "Backpack with Pouch on Commute",
             "kind": "photo",
             "product": "travel backpack"
           },
           {
-            "ref": "n:guide:c3-r3-tpl-size-tote-laptop",
-            "title": "Tote bag shown with a laptop inside",
+            "ref": "n:guide:q7-size-ex-1",
+            "title": "Laptop in Canvas Tote",
             "kind": "photo",
             "product": "canvas tote bag"
           },
           {
-            "ref": "n:guide:c3-r3-tpl-size-tote-travel",
-            "title": "This tote beside a carry-on suitcase",
+            "ref": "n:guide:q7-size-ex-2",
+            "title": "Tote on Carry-On",
             "kind": "photo",
             "product": "canvas tote bag"
           },
           {
-            "ref": "n:gen2:tpl-size-g4",
-            "title": "Earbuds case held between two fingers",
+            "ref": "n:guide:q7-size-ex-3",
+            "title": "Stemless Earbuds in Hand",
             "kind": "photo",
             "product": "earbuds case"
           }
@@ -213,18 +213,18 @@
   "visual": {
     "overview": "A size guide image works best when the complete product appears beside a familiar object or in a clear everyday setting.",
     "strip": [
-      "n:gen2:home-g5",
-      "n:guide:c4-amazon-mug-rim-detail",
-      "n:guide:ind-jewelry-accessories-m2-result",
-      "n:guide:plat-shopify-c3-m2-source",
-      "n:guide:plat-amazon-c3-m2-result",
-      "n:gen2:occ-black-friday-g2"
+      "n:guide:q7-size-strip-0",
+      "n:guide:q7-size-strip-1",
+      "n:guide:q7-size-strip-2",
+      "n:guide:q7-size-strip-3",
+      "n:guide:q7-size-strip-4",
+      "n:guide:q7-size-strip-5"
     ],
     "steps": {
       "source": "n:guide:tpl-size-c3-m2-source",
-      "result": "n:guide:tpl-size-c3-m2-result",
+      "result": "n:guide:q7-size-steps-result",
       "mode": "photo",
-      "prompt": "Set this natural canvas tote upright beside a closed notebook on a light wooden bench.",
+      "prompt": "Use the uploaded product photo as the identity reference; preserve the natural canvas tote, exact handle width, seams, and fabric color. Show the full tote beside a closed notebook on a light wooden bench, with its shape easy to judge. Soft window daylight, clean product-photo composition. No text, logos, or watermark.",
       "options": [
         [
           "Template",
@@ -241,97 +241,97 @@
       ]
     },
     "picker": {
-      "title": "Choose a product scale scene",
-      "lead": "Show the item beside something familiar so its size feels easier to picture.",
+      "title": "Choose a product scale ad format",
+      "lead": "Use a hand, a fit check, or an everyday carry view to make size easier to judge.",
       "chips": [
         {
           "id": "hand",
-          "label": "In a person’s hand"
+          "label": "In a Person’s Hand"
         },
         {
-          "id": "shelf",
-          "label": "On a shelf"
+          "id": "wear",
+          "label": "Worn for Fit"
         },
         {
           "id": "carry",
-          "label": "Packed to carry"
+          "label": "Packed to Carry"
         },
         {
-          "id": "home",
-          "label": "At home"
+          "id": "daily",
+          "label": "In Daily Use"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:plat-amazon-g2",
-          "label": "Ceramic mug held in one hand",
+          "ref": "n:guide:q7-size-picker-cards-0",
+          "label": "Vitamin C Serum in Hand",
           "chips": [
             "hand"
           ],
-          "prompt": "Hold this ceramic mug in one hand to show its size.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain vitamin C serum bottle, shape, cap, and color. A hand holds the full bottle beside an open palm so its scale is clear. Bright bathroom daylight, close chest-level composition, natural product-ad look. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:video-hub-g2",
-          "label": "Bento box on a counter",
+          "ref": "n:guide:q7-size-picker-cards-1",
+          "label": "Protein Sachet in Hand",
           "chips": [
             "hand"
           ],
-          "prompt": "Show this closed bento lunch box on a kitchen counter.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact single-serve protein sachet, shape, seal, and color. A hand holds the full packet beside an open palm, with every edge visible. Soft gym daylight, chest-level close composition, natural product-ad look. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:lifestyle-photos-g2",
-          "label": "Terracotta planter on a sunlit shelf",
+          "ref": "n:guide:q7-size-picker-cards-2",
+          "label": "Backpack Fit Check",
           "chips": [
-            "shelf"
+            "wear"
           ],
-          "prompt": "Place this terracotta planter on a bright plant shelf with the full pot in view.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact charcoal backpack, panel layout, straps, zippers, and color. An adult commuter wears it with both shoulder straps visible and adjusts one strap. Open-shade daylight, three-quarter medium framing. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c3-r3-tpl-size-shelf",
-          "label": "Floating shelf on a wall",
+          "ref": "n:guide:q7-size-picker-cards-3",
+          "label": "Knit Shoe Fit Check",
           "chips": [
-            "shelf"
+            "wear"
           ],
-          "prompt": "Place this floating shelf on a pale wall above a small plant.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact neutral knit running shoe, sole, and color. An adult runner wears the shoe with the full side profile and ankle fit visible on a shaded path. Natural morning light, low three-quarter composition. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "g:ecommerce-main-image/example-04",
-          "label": "Travel mug rim detail",
-          "chips": [
-            "carry"
-          ],
-          "prompt": "Show the complete rim and handle of this ceramic travel mug in clear light.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:tpl-size-g3",
-          "label": "Canvas tote by luggage",
+          "ref": "n:guide:q7-size-picker-cards-4",
+          "label": "Earbuds Case for Scale",
           "chips": [
             "carry"
           ],
-          "prompt": "Show this canvas tote beside a carry-on suitcase, with the full bag in view.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact compact dark earbuds case and its shape and color. A hand holds the closed case beside an open palm, with two small stemless earbuds visible nearby. Soft desk light, tight overhead composition. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c3-r3-tpl-size-storage",
-          "label": "Storage boxes on a home shelf",
+          "ref": "n:guide:q7-size-picker-cards-5",
+          "label": "Canvas Tote on Carry-On",
           "chips": [
-            "home"
+            "carry"
           ],
-          "prompt": "Show these fabric storage boxes on a tidy home shelf.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact natural canvas tote, handle width, seams, and color. An adult traveler slides the tote over a carry-on handle, with both bags fully visible. Bright terminal daylight, medium travel-ad composition. No text, logos, or watermark.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-fix-m1-house-slippers",
-          "label": "Oatmeal house slippers on white",
+          "ref": "n:guide:q7-size-picker-cards-6",
+          "label": "Pet Grooming Brush in Hand",
           "chips": [
-            "home"
+            "daily"
           ],
-          "prompt": "Show both oatmeal felt house slippers fully in frame on white.",
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact pet grooming brush, handle, bristle layout, and color. An adult creator holds the brush beside their face with the bristles turned toward camera. Soft home daylight, chest-up composition, natural review style. No text, logos, or watermark.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:q7-size-picker-cards-7",
+          "label": "Protein Shaker in Hand",
+          "chips": [
+            "daily"
+          ],
+          "prompt": "Use the uploaded product photo as the identity reference; preserve the exact plain protein shaker, lid, cup shape, and color. An adult creator holds it upright beside their face with the lid clearly visible. Bright gym window light, chest-up composition, natural review style. No text, logos, or watermark.",
           "kind": "photo"
         }
       ],
@@ -340,45 +340,45 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:gen2:tpl-size-g1",
-        "h": "Show a pendant at wearable scale",
-        "d": "A small pendant on an open palm gives shoppers a familiar size cue beside exact dimensions."
+        "ref": "n:guide:q7-size-uses-0",
+        "h": "Show the size of a compact earbuds case",
+        "d": "An adult creator holds the closed case beside a palm to give shoppers a familiar scale cue."
       },
       {
         "frame": "browser",
-        "ref": "g:jewelry-positioning/example-07",
-        "h": "Show a necklace at the neckline",
-        "d": "A side view keeps the necklace visible while shoppers compare its length and position."
+        "ref": "n:guide:q7-size-uses-1",
+        "h": "Show necklace length at the neckline",
+        "d": "A wearer faces the camera so shoppers can compare the pendant position with the neckline."
       }
     ],
     "input": [
       {
-        "good": "n:guide:c3-r3-tpl-size-m5-0",
-        "bad": "n:guide:tpl-size-c3-bad-crop",
-        "good_label": "Tote, handles, and contents fit the frame",
-        "bad_label": "Tote handles and contents are clipped"
+        "good": "n:guide:q7-size-input-0-good",
+        "bad": "n:guide:q7-size-input-0-bad-r2",
+        "good_label": "Tote handles and contents fit the frame",
+        "bad_label": "Tote lower edge is cropped off"
       },
       {
-        "good": "n:guide:c3-r3-tpl-size-m5-1",
-        "bad": "n:guide:tpl-size-c3-bad-blur",
-        "good_label": "Backpack shape and straps stay sharp",
-        "bad_label": "Backpack seams and straps soften into blur"
+        "good": "n:guide:q7-size-input-1-good",
+        "bad": "n:guide:q7-size-input-1-bad-r2",
+        "good_label": "Backpack body and straps stay in focus",
+        "bad_label": "Backpack is slightly out of focus"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:white-background-canvas-tote",
+        "ref": "n:guide:q7-size-outputs-0",
         "frame": "1:1",
-        "label": "Square canvas tote size photo"
+        "label": "Natural canvas tote worn over one shoulder"
       },
       {
-        "ref": "n:guide:plat-youtube-shorts-size-square-ebike",
+        "ref": "n:guide:q7-size-outputs-1",
         "frame": "1:1",
-        "label": "Square folding e-bike photo"
+        "label": "Charcoal daypack worn with both straps visible"
       }
     ],
     "after": {
-      "ref": "n:guide:tpl-size-c3-m7-tote-reference",
+      "ref": "n:guide:q7-size-after",
       "zones": [
         "Product dimensions",
         "Unit"
