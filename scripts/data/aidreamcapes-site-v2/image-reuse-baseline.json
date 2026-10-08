@@ -10,27 +10,10 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/ecommerce-main-image-v1/ecommerce-main-image/example-06",
-      "rule": "one-page",
-      "pages": [
-        "tpl-bf",
-        "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/fashion-editorial-v1/fashion-editorial/example-08",
-      "rule": "one-page",
-      "pages": [
-        "photo-hub",
-        "tpl-launch"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/jewelry-positioning-v1/jewelry-positioning/example-07",
       "rule": "one-page",
       "pages": [
         "examples",
-        "tpl-compare",
         "tpl-size"
       ]
     },
@@ -64,14 +47,6 @@
       "pages": [
         "tpl-detail",
         "tpl-retargeting-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/black-friday-countdown-v",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-bf"
       ]
     },
     {
@@ -123,14 +98,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/clips/unboxing-experience",
-      "rule": "one-page",
-      "pages": [
-        "tpl-bf",
-        "tpl-launch"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/frames/cinematic-video-t06",
       "rule": "one-page",
       "pages": [
@@ -144,14 +111,6 @@
       "pages": [
         "tpl-drink",
         "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/candle-pack",
-      "rule": "one-page",
-      "pages": [
-        "tpl-bf",
-        "tpl-limited-drop-alert-video"
       ]
     },
     {
@@ -191,16 +150,7 @@
       "rule": "one-page",
       "pages": [
         "change-background",
-        "tpl-bf",
         "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/sunglasses-pack",
-      "rule": "one-page",
-      "pages": [
-        "examples",
-        "tpl-bf"
       ]
     },
     {
@@ -217,14 +167,6 @@
       "pages": [
         "occ-sale-discount",
         "tpl-retargeting-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2change-background-c1",
-      "rule": "one-page",
-      "pages": [
-        "tpl-color",
-        "tpl-launch"
       ]
     },
     {
@@ -250,30 +192,6 @@
       "pages": [
         "tpl-light",
         "tpl-retargeting-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2h1-photo-hub-candle-source",
-      "rule": "one-page",
-      "pages": [
-        "tpl-launch",
-        "tpl-light"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2h1-photo-hub-lamp",
-      "rule": "one-page",
-      "pages": [
-        "tpl-angle",
-        "tpl-launch"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2home-g5",
-      "rule": "one-page",
-      "pages": [
-        "tpl-launch",
-        "tpl-size"
       ]
     },
     {
@@ -305,7 +223,6 @@
       "rule": "one-page",
       "pages": [
         "occ-black-friday",
-        "tpl-bf",
         "tpl-retargeting-video-ad"
       ]
     },
@@ -318,27 +235,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2product-videos-g1",
-      "rule": "one-page",
-      "pages": [
-        "tpl-angle",
-        "tpl-compare"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2product-videos-g5",
       "rule": "one-page",
       "pages": [
         "occ-black-friday",
         "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2spokesperson-videos-g3",
-      "rule": "one-page",
-      "pages": [
-        "tpl-bf",
-        "tpl-spark-ads-style-video"
       ]
     },
     {
@@ -380,22 +281,6 @@
       "pages": [
         "ind-beauty-skincare",
         "tpl-beauty"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-bf-g1",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-bf"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-bf-g3",
-      "rule": "one-page",
-      "pages": [
-        "occ-black-friday",
-        "tpl-bf"
       ]
     },
     {
@@ -447,14 +332,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-drink-c2",
-      "rule": "one-page",
-      "pages": [
-        "ind-food-drinks",
-        "tpl-bf"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-light-g1",
       "rule": "one-page",
       "pages": [
@@ -500,30 +377,6 @@
       "pages": [
         "ind-electronics",
         "tpl-spark-ads-style-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2unboxing-videos-c2",
-      "rule": "one-page",
-      "pages": [
-        "tpl-bf",
-        "tpl-carousel-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2url-to-video-g4",
-      "rule": "one-page",
-      "pages": [
-        "tpl-bf",
-        "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2video-ads-g3",
-      "rule": "one-page",
-      "pages": [
-        "ind-food-drinks",
-        "tpl-bf"
       ]
     },
     {
@@ -578,14 +431,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-spokesperson-strip",
-      "rule": "one-page",
-      "pages": [
-        "tpl-angle",
-        "tpl-compare"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-spokesperson-videos-source",
       "rule": "one-page",
       "pages": [
@@ -607,14 +452,6 @@
       "pages": [
         "tpl-box",
         "tpl-detail"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-unboxing-videos-result",
-      "rule": "one-page",
-      "pages": [
-        "tpl-bf",
-        "tpl-launch"
       ]
     },
     {
@@ -687,7 +524,6 @@
       "rule": "one-page",
       "pages": [
         "ind-shoes",
-        "tpl-bf",
         "tpl-limited-drop-alert-video",
         "tpl-tryon"
       ]
@@ -697,7 +533,6 @@
       "rule": "one-page",
       "pages": [
         "plat-youtube-shorts",
-        "tpl-bf",
         "tpl-limited-drop-alert-video"
       ]
     },
@@ -722,7 +557,6 @@
       "rule": "one-page",
       "pages": [
         "occ-product-launch",
-        "tpl-launch",
         "tpl-light"
       ]
     },
@@ -735,14 +569,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-fix-m1-planter",
-      "rule": "one-page",
-      "pages": [
-        "tpl-color",
-        "tpl-launch"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-fix-m6-coaster-set",
       "rule": "one-page",
       "pages": [
@@ -751,28 +577,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-kettle",
-      "rule": "one-page",
-      "pages": [
-        "tpl-color",
-        "tpl-launch"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-leather-sandals",
       "rule": "one-page",
       "pages": [
         "occ-product-launch",
-        "tpl-bf",
         "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-serving-bowl",
-      "rule": "one-page",
-      "pages": [
-        "tpl-color",
-        "tpl-compare"
       ]
     },
     {
