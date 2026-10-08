@@ -33997,6 +33997,786 @@
           640,
           1280
         ]
+      },
+      "q14-spark-after-r2": {
+        "file": "q14-spark-after-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator with a sage-green insulated bottle on an outdoor table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-case-cat-bed": {
+        "file": "q14-spark-case-cat-bed",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult introducing a soft cat bed while a cat rests beside it.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-case-handbag": {
+        "file": "q14-spark-case-handbag",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator speaking to camera while holding a small neutral handbag.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-case-ring-unbox": {
+        "file": "q14-spark-case-ring-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands opening a small jewelry box to reveal a plain gold ring.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-case-yoga-block": {
+        "file": "q14-spark-case-yoga-block",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult using a cork yoga block during a standing stretch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-example-hike-r2": {
+        "file": "q14-spark-example-hike-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand placing a sage-green insulated bottle into a backpack side pocket.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-example-phone-stand-r2": {
+        "file": "q14-spark-example-phone-stand-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator showing a folding phone stand beside a generic phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-hero-r2": {
+        "file": "q14-spark-hero-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator speaking to camera while holding a sage-green insulated bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-input-blur": {
+        "file": "q14-spark-input-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage-green insulated bottle with its hinged lid softened by blur.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-input-crop": {
+        "file": "q14-spark-input-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage-green insulated bottle with the hinged lid clipped by the top edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-og": {
+        "file": "q14-spark-og",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage-green insulated bottle on a bright work desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-output-hike-r2": {
+        "file": "q14-spark-output-hike-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hiker drinking from a sage-green insulated bottle at a trail rest stop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-output-talk-r2": {
+        "file": "q14-spark-output-talk-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator speaking to camera with a sage-green insulated bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-picker-backpack": {
+        "file": "q14-spark-picker-backpack",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult commuter taking a notebook from a backpack front pocket.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-picker-hairclaw": {
+        "file": "q14-spark-picker-hairclaw",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator fitting a plain hair claw in a bathroom mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-picker-headphones": {
+        "file": "q14-spark-picker-headphones",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand lifting dark navy over-ear headphones from a tote bag.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-picker-lint-roller": {
+        "file": "q14-spark-picker-lint-roller",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand using a lint roller to remove pet hair from a sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-picker-phonecase-r2": {
+        "file": "q14-spark-picker-phonecase-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand fitting a sage phone case with one circular camera opening.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-picker-snack": {
+        "file": "q14-spark-picker-snack",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator speaking to camera while holding a plain snack pouch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-picker-street-interview-r2": {
+        "file": "q14-spark-picker-street-interview-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator speaking to camera after tasting a plain protein bar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-step-hiker-r2": {
+        "file": "q14-spark-step-hiker-r2",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hiker taking a drink from a sage-green insulated bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-strip-espresso-r2": {
+        "file": "q14-spark-strip-espresso-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand operating a compact espresso machine as coffee pours into a cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-strip-jacket": {
+        "file": "q14-spark-strip-jacket",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult checking an olive jacket fit in a full-length mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-strip-organizer": {
+        "file": "q14-spark-strip-organizer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand arranging a desk drawer with a simple organizer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-strip-phonecase-r2": {
+        "file": "q14-spark-strip-phonecase-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand fitting a sage phone case with a single round camera opening.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-strip-steamer": {
+        "file": "q14-spark-strip-steamer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand steaming wrinkles from a shirt with a compact fabric steamer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-strip-tripod-r2": {
+        "file": "q14-spark-strip-tripod-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult adjusting a generic phone on a compact desk tripod.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-uses-post-r2": {
+        "file": "q14-spark-uses-post-r2",
+        "w": 1024,
+        "h": 1024,
+        "variants": [
+          640,
+          1280
+        ],
+        "alt": "Adult creator holding a sage-green insulated bottle on an outdoor table."
+      },
+      "q14-spark-input-good-1": {
+        "file": "q14-spark-input-good-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Full sage-green insulated bottle with hinged loop lid on a pale background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-spark-input-good-2": {
+        "file": "q14-spark-input-good-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Complete sage-green insulated bottle with hinged loop lid in clear focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-hero-focus": {
+        "file": "q14-retarget-hero-focus",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing dark navy over-ear headphones at a shared work desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-og": {
+        "file": "q14-retarget-og",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult holding dark navy over-ear headphones beside a laptop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-input-good-1": {
+        "file": "q14-retarget-input-good-1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Complete dark navy over-ear headphones with headband and cups in focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-input-good-2": {
+        "file": "q14-retarget-input-good-2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Full dark navy over-ear headphones on a pale background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-case-boot": {
+        "file": "q14-retarget-case-boot",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hiker testing plain brown trail boots on a rocky path.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-case-mug-talk": {
+        "file": "q14-retarget-case-mug-talk",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult speaking to camera while holding a plain speckled ceramic travel mug.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-case-drawer": {
+        "file": "q14-retarget-case-drawer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand placing a neutral organizer into a cluttered desk drawer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-case-protein-unbox-r2": {
+        "file": "q14-retarget-case-protein-unbox-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands opening a protein bar multipack with one oat-and-cocoa bar visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-strip-unbox": {
+        "file": "q14-retarget-strip-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lifting dark navy over-ear headphones from a plain package.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-strip-commute": {
+        "file": "q14-retarget-strip-commute",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult commuter wearing dark navy over-ear headphones at a train station.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-strip-talk": {
+        "file": "q14-retarget-strip-talk",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator speaking to camera while holding a dark navy headphone ear cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-strip-duffel": {
+        "file": "q14-retarget-strip-duffel",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult traveler carrying a plain brown leather duffel through an airport.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-strip-fit": {
+        "file": "q14-retarget-strip-fit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult commuter adjusting dark navy over-ear headphones beside a train window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-strip-board": {
+        "file": "q14-retarget-strip-board",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand wiping food-safe oil across a wooden cutting board.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-step": {
+        "file": "q14-retarget-step",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult commuter wearing dark navy over-ear headphones on a station platform.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-picker-cable": {
+        "file": "q14-retarget-picker-cable",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand routing a charging cable into a small neutral desk organizer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-picker-boot": {
+        "file": "q14-retarget-picker-boot",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult wearing plain brown trail boots on a rocky uphill path.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-picker-ring": {
+        "file": "q14-retarget-picker-ring",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hands opening a small unbranded jewelry box to reveal a gold ring.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-picker-street": {
+        "file": "q14-retarget-picker-street",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult speaking to an interviewer after tasting a plain protein bar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-picker-serum-talk": {
+        "file": "q14-retarget-picker-serum-talk",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator speaking to camera while holding a plain serum dropper bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-picker-serum-texture": {
+        "file": "q14-retarget-picker-serum-texture",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult applying a drop of plain serum to the back of one hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-picker-case": {
+        "file": "q14-retarget-picker-case",
+        "w": 864,
+        "h": 1536,
+        "alt": "Hand fitting a sage phone case with one circular camera opening.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-picker-pet": {
+        "file": "q14-retarget-picker-pet",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult offering a plain pet treat to a dog during a neighborhood walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-output-commute": {
+        "file": "q14-retarget-output-commute",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing dark navy over-ear headphones on a morning commute.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-output-features": {
+        "file": "q14-retarget-output-features",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator showing an ear cushion on dark navy over-ear headphones.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-after-detail": {
+        "file": "q14-retarget-after-detail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand inspecting the cushion seam on dark navy over-ear headphones.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-use-phone": {
+        "file": "q14-retarget-use-phone",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult wearing dark navy over-ear headphones on a train commute.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-use-browser": {
+        "file": "q14-retarget-use-browser",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand holding dark navy over-ear headphones beside a laptop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-example-boot": {
+        "file": "q14-retarget-example-boot",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hiker stepping in plain brown trail boots on uneven ground.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-example-mouse": {
+        "file": "q14-retarget-example-mouse",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand demonstrating a generic wireless mouse beside a laptop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-example-serum": {
+        "file": "q14-retarget-example-serum",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator explaining a plain serum dropper bottle to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-input-blur": {
+        "file": "q14-retarget-input-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark navy over-ear headphones softened out of focus on a pale background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-retarget-input-crop": {
+        "file": "q14-retarget-input-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark navy over-ear headphones cropped at the top and lower ear cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industries-strip-hiker": {
+        "file": "q14-industries-strip-hiker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hiker drinking from a plain insulated bottle at a trail overlook.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industries-strip-protein-unbox": {
+        "file": "q14-industries-strip-protein-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands opening a plain multipack of protein bars on a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industries-strip-headphones-unbox": {
+        "file": "q14-industries-strip-headphones-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lifting dark navy over-ear headphones from a simple box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industries-strip-speaker": {
+        "file": "q14-industries-strip-speaker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult showing a compact speaker at a shared desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industries-strip-counter-clean": {
+        "file": "q14-industries-strip-counter-clean",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult using a white handheld scrubber to clean a marked kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industries-strip-drawer": {
+        "file": "q14-industries-strip-drawer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands fitting a bamboo cutlery organizer into a kitchen drawer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industries-step-lunchbag": {
+        "file": "q14-industries-step-lunchbag",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult packing lunch in a soft sage insulated bag and lifting it by the handle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industry-beauty-texture": {
+        "file": "q14-industry-beauty-texture",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult applying a drop of serum to the back of a hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industry-fashion-outfit": {
+        "file": "q14-industry-fashion-outfit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult pulling on a plain olive jacket in front of a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industry-shoes-fit": {
+        "file": "q14-industry-shoes-fit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing plain brown trail boots on a rocky path.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industry-jewelry-unbox": {
+        "file": "q14-industry-jewelry-unbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands opening a plain box to reveal a gold ring.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industry-electronics-headphones": {
+        "file": "q14-industry-electronics-headphones",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult commuter wearing dark navy over-ear headphones.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industry-health-yoga": {
+        "file": "q14-industry-health-yoga",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult stretching on a plain mat with a cork yoga block.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industry-food-first-sip": {
+        "file": "q14-industry-food-first-sip",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult taking a first sip from a plain citrus water bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q14-industry-home-clean": {
+        "file": "q14-industry-home-clean",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand using a small scrubber to clean a marked kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

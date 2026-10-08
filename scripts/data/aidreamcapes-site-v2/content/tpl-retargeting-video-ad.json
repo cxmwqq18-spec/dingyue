@@ -12,8 +12,8 @@
     "retargeting creative"
   ],
   "intro": [
-    "The sample shows dark blue headphones being inspected and placed into a commuter bag. It suggests a return to something the shopper considered without claiming that a particular person has visited your site.",
-    "Use the clip with your own audience rules, offer, product page, and frequency settings. AIVideosUGC makes the visual asset; it does not know who viewed a product, whether someone abandoned a cart, or which offer is active."
+    "The sample shows an adult commuter using dark navy over-ear headphones during a train-station routine. It is an AI-generated scene, not a claim about an individual shopper or their past activity.",
+    "Pair a useful product reminder with an audience, offer, and frequency you configure in your ad platform. The scene itself does not identify visitors or cart activity."
   ],
   "tip": "Describe a quiet second-look action and leave the audience, price, and reminder wording to the ad platform and your editor.",
   "steps": [
@@ -77,12 +77,12 @@
   ],
   "overview": [
     {
-      "h2": "Remind the shopper with a useful second look",
-      "d": "A retargeting asset can bring one product detail back into view: a sole, clasp, wheel, texture, or packed-away form. The visual should stand on its own; your platform decides which audience receives it."
+      "h2": "Show a useful second look",
+      "d": "A short product reminder can show how an item fits a routine, explain one detail, or make a practical comparison easy to see."
     },
     {
-      "h2": "Keep audience logic outside the video",
-      "d": "AIVideosUGC does not know who viewed a product, abandoned a cart, or qualifies for an offer. Add the accurate message and use your ad platform to choose audiences, exclusions, frequency, and timing."
+      "h2": "Set the offer in your platform",
+      "d": "Add the current price, offer, audience, and frequency in your advertising platform before launch."
     }
   ],
   "input_guide": {
@@ -124,23 +124,23 @@
     ]
   },
   "scene_recipes": {
-    "h2": "Second-look scenes to describe",
+    "h2": "Useful second-look ad formats",
     "items": [
       {
-        "t": "Boot on a bench",
-        "d": "A brown boot is inspected at a bench, laced once, and placed beside a coat near the door."
+        "t": "Problem-Solution: Desk Cable Organizer",
+        "d": "Keep the uploaded cable organizer’s silhouette, finish, and blank label area unchanged as the scene moves. At a shared desk, an adult hand routes a loose charging cable into the organizer, ending with the cable neatly beside a laptop. Soft daylight, realistic product-demo look. Overhead close framing with a short push-in. Sound: cable slide and a gentle desk tap; no music."
       },
       {
-        "t": "Mouse beside a laptop",
-        "d": "A wireless mouse lifts from a desk, turns to show its wheel, and settles beside a laptop."
+        "t": "POV Discovery: Trail Boot Grip",
+        "d": "Anchor the shot to the uploaded boot photo, preserving its color, shape, and label area. On a rocky trail, an adult hiker takes two steady uphill steps in plain brown boots, with the tread visibly meeting the ground. Cool morning light, natural outdoor phone-video look. Low tracking framing that follows the feet and settles on the boot. Sound: gravel crunch and quiet birds; no music."
       },
       {
-        "t": "Headphones into a bag",
-        "d": "Show the ear cups close up, fold the headphones, and place them into a commuter bag."
+        "t": "Talking-Head Review: Serum Dropper",
+        "d": "Use the serum in the upload as the product reference and preserve its dropper shape, color, and label space. An adult creator at a bright vanity holds the plain serum bottle beside her face and says, “Here is a closer look at the dropper.” She turns it once toward the lens and holds it steady. Natural skin texture, calm phone-video look. Chest-up three-quarter framing with a slow camera move toward the pipette. Sound: her voice and room tone; no music."
       },
       {
-        "t": "Phone stand return",
-        "d": "A phone stand is opened beside a desk screen, adjusted once, and folded into a drawer."
+        "t": "Day in Life: Pet Treat on a Walk",
+        "d": "Retain the uploaded treat pouch’s shape, color, and label area throughout the walk. On a sunny neighborhood path, an adult owner walks a dog, pauses for a simple sit cue, and offers one plain treat from a pouch. Natural afternoon light, candid lifestyle phone-video look. Medium follow framing with a gentle handheld settle. Sound: footsteps, collar jingle and quiet park ambience; no music."
       }
     ]
   },
@@ -175,51 +175,52 @@
     ]
   },
   "examples": {
-    "h2": "More return-visit scenes",
-    "lead": "Calm reminders that show the product in everyday use.",
+    "h2": "More product reminder scenes",
+    "lead": "Show a useful product detail or everyday use moment.",
     "groups": [
       {
-        "label": "Back in view",
+        "label": "Second-Look Formats",
         "items": [
           {
-            "ref": "n:gen2:tpl-retargeting-video-ad-g1",
-            "title": "Brown boots laced on a bench by a coat",
+            "ref": "n:guide:q14-retarget-example-boot",
+            "title": "Fit Check: Trail Boot on Uneven Ground",
             "kind": "scene",
-            "product": "brown boots"
+            "product": "plain brown trail boot"
           },
           {
-            "ref": "n:gen2:tpl-retargeting-video-ad-g2",
-            "title": "Wireless mouse back beside a laptop",
+            "ref": "n:guide:q14-retarget-example-mouse",
+            "title": "Hands-on Demo: Wireless Mouse Side Buttons",
             "kind": "scene",
             "product": "wireless mouse"
           },
           {
-            "ref": "n:gen2:tpl-retargeting-video-ad-g3",
-            "title": "Perfume left on a dresser by its gift bag",
+            "ref": "n:guide:q14-retarget-example-serum",
+            "title": "Talking-Head Review: Serum Dropper Details",
             "kind": "scene",
-            "product": "perfume bottle"
+            "product": "serum dropper bottle"
           }
         ]
       }
     ]
   },
   "visual": {
-    "overview": "A retargeting video ad gives returning shoppers a useful second look at a product. Show a detail, a routine, or a practical use moment before adding the current offer.",
+    "overview": "A useful retargeting video gives the product another clear moment in a feed or product page. Show how it fits a routine or make one product detail easy to see.",
     "strip": [
-      "n:guide:c1-tpl-retargeting-video-ad-m2-source",
-      "n:guide:c1-tpl-retargeting-video-ad-m2-result-square",
-      "n:guide:c1-tpl-retargeting-video-ad-reuse-strip5-square",
-      "n:gen2:occ-black-friday-g1",
-      "n:guide:c1-tpl-retargeting-video-ad-headphones-square",
-      "n:gen2:before-after-videos-c3"
+      "n:guide:q14-retarget-strip-unbox",
+      "n:guide:q14-retarget-strip-commute",
+      "n:guide:q14-retarget-strip-talk",
+      "n:guide:q14-retarget-strip-duffel",
+      "n:guide:q14-retarget-strip-fit",
+      "n:guide:q14-retarget-strip-board"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-retargeting-video-ad-m2-source",
-      "sourceTitle": "Product photo",
-      "sourceHint": "Keep the full headphones and ear cups visible.",
-      "result": "n:guide:c1-tpl-retargeting-video-ad-m2-result-square",
+      "sourceAlt": "Dark navy over-ear headphones with padded ear cups on a pale background.",
+      "sourceTitle": "Your starting product",
+      "sourceHint": "Keep the complete headband and both ear cups in clear focus.",
+      "result": "n:guide:q14-retarget-step",
       "mode": "video",
-      "prompt": "Fold these dark blue headphones and place them into a commuter bag after showing one ear cup.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult commuter wearing the over-ear headphones walks along a bright station platform and turns toward an arriving train, both ear cups visible. Soft daylight, candid phone-video look. Medium side-follow framing with one smooth handheld move. Sound: footsteps and low station ambience; no music.",
       "options": [
         [
           "Size",
@@ -236,99 +237,99 @@
       ]
     },
     "picker": {
-      "title": "Choose a useful second look for a retargeting video ad",
-      "lead": "Give returning shoppers one more clear product moment.",
+      "title": "Choose a second-look ad format",
+      "lead": "Give a product another useful moment in a social feed or product page.",
       "chips": [
         {
-          "id": "home",
-          "label": "Refresh a home scene"
+          "id": "demo",
+          "label": "Hands-on Demos"
         },
         {
-          "id": "texture",
-          "label": "Show texture"
+          "id": "hooks",
+          "label": "Discovery Hooks"
         },
         {
-          "id": "routine",
-          "label": "Return to a routine"
+          "id": "reviews",
+          "label": "Creator Reviews"
         },
         {
-          "id": "detail",
-          "label": "Revisit a detail"
+          "id": "routines",
+          "label": "Routine Formats"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:c1-tpl-retargeting-video-ad-blanket-action",
-          "label": "Hands smooth a wool throw",
+          "ref": "n:guide:q14-retarget-picker-cable",
+          "label": "Problem-Solution: Cable Tangle Cleared",
           "chips": [
-            "texture"
+            "demo"
           ],
-          "prompt": "Smooth the sage-green wool throw across the armchair seat.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:ind-home-living-m5-soft-focus",
-          "label": "Throw pillow beside a floor lamp",
-          "chips": [
-            "home"
-          ],
-          "prompt": "Bring the throw pillow into focus beside the floor lamp.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:guide:b1-before-after-videos-result",
-          "label": "Desk cables returned to order",
-          "chips": [
-            "routine"
-          ],
-          "prompt": "Tidy the desk cables into a cable box after use.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:tpl-retargeting-video-ad-c4",
-          "label": "Hand grinder ready on a counter",
-          "chips": [
-            "routine"
-          ],
-          "prompt": "Set the hand grinder beside a cup and beans before the morning routine.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a shared work desk, an adult hand routes one loose charging cable into the small organizer, ending with the cable beside a laptop. Soft daylight, clean product-demo look. Overhead close framing with a short push-in. Sound: cable slide and a soft desk tap; no music.",
           "kind": "video"
         },
         {
-          "ref": "g:on-model-generation/example-07",
-          "label": "Backpack handle shown close up",
+          "ref": "n:guide:q14-retarget-picker-boot",
+          "label": "POV Discovery: Trail Boot Grip",
           "chips": [
-            "detail"
+            "hooks",
+            "routines"
           ],
-          "prompt": "Turn the backpack to show its handle and stitching.",
-          "kind": "photo"
-        },
-        {
-          "ref": "n:gen2:tpl-retargeting-video-ad-c2",
-          "label": "Serum bottle back on a shelf",
-          "chips": [
-            "home",
-            "texture"
-          ],
-          "prompt": "Return the serum bottle to its tidy bathroom shelf and hold on the translucent surface catching light.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a rocky trail, an adult hiker takes two steady uphill steps in the plain brown boots, with the tread visibly touching gravel. Cool morning light, candid outdoor phone-video look. Low tracking angle that settles on the boot. Sound: gravel crunch and quiet birds; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:examples-g7",
-          "label": "Wool throw on an armchair",
+          "ref": "n:guide:q14-retarget-picker-ring",
+          "label": "ASMR Unboxing: Gold Ring Reveal",
           "chips": [
-            "home"
+            "hooks"
           ],
-          "prompt": "Set the wool throw over an armchair beside a snowy window.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a pale dressing table, adult hands open a small unbranded jewelry box to reveal a plain gold ring and hold it still in the center. Soft window light, tactile phone-video look. Top-down close framing with a slow push-in. Sound: box hinge and tissue rustle; no music.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:c1-tpl-retargeting-video-ad-throw-square",
-          "label": "Sage wool throw on an armchair",
+          "ref": "n:guide:q14-retarget-picker-street",
+          "label": "Street Interview: Protein Bar First Bite",
           "chips": [
-            "texture",
-            "detail"
+            "reviews"
           ],
-          "prompt": "Set the sage wool throw over the lounge chair and keep its woven texture visible.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright market walkway, an adult interviewer holds a plain microphone toward an adult woman holding the protein bar. She takes one bite and says, “It has a crisp texture.” Natural daylight, candid phone-video look. Chest-up two-person framing with a gentle handheld drift. Sound: her voice, a crisp bite and outdoor ambience; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q14-retarget-picker-serum-talk",
+          "label": "Talking-Head Review: Serum Dropper",
+          "chips": [
+            "reviews"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator at a bright vanity holds the serum bottle beside her face and says, “Here is a closer look at the dropper.” She turns it once and holds it toward the lens. Natural skin texture, calm phone-video look. Chest-up eye-level framing with a gentle push-in. Sound: her voice and room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q14-retarget-picker-serum-texture",
+          "label": "Before/After: Serum Texture on Skin",
+          "chips": [
+            "demo"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult applies one drop of clear serum to the back of her hand beside the untreated other hand, showing a same-light texture comparison without a result claim. Natural skin texture, no retouching. Overhead close framing with a slow push-in. Sound: dropper tap and quiet room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q14-retarget-picker-case",
+          "label": "Hands-on Demo: Single-Hole Phone Case",
+          "chips": [
+            "demo"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. At a clean desk, an adult hand fits the plain case with one small circular camera opening onto a generic phone and holds the seated case edge-on. Soft daylight, natural product-demo look. Top-down close framing with a short tilt. Sound: one quiet snap and room tone; no music.",
+          "kind": "video"
+        },
+        {
+          "ref": "n:guide:q14-retarget-picker-pet",
+          "label": "Day-in-Life Routine: Pet Walk Treat",
+          "chips": [
+            "demo",
+            "routines"
+          ],
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sunny neighborhood path, an adult owner walks a dog, pauses for a sit cue and offers one plain treat from a pouch. Natural afternoon light, candid lifestyle phone-video look. Medium follow framing with one smooth handheld move. Sound: footsteps, collar jingle and park ambience; no music.",
           "kind": "video"
         }
       ],
@@ -337,45 +338,45 @@
     "uses": [
       {
         "frame": "phone",
-        "ref": "n:guide:c1-tpl-retargeting-video-ad-use-phone-video-916",
-        "h": "Bring the headphone reminder back to a social feed",
-        "d": "Use a vertical clip to show dark blue headphones folded beside a commuter bag."
+        "ref": "n:guide:q14-retarget-use-phone",
+        "h": "Bring a headphone routine into a social feed",
+        "d": "Show dark navy over-ear headphones worn during a city commute."
       },
       {
         "frame": "browser",
-        "ref": "n:guide:c1-tpl-retargeting-video-ad-m3-headphones-detail-square",
-        "h": "Pair a retargeting clip with its product page",
-        "d": "Keep the offer and product page consistent so shoppers can return to the item they viewed."
+        "ref": "n:guide:q14-retarget-use-browser",
+        "h": "Pair a headphone detail with its product page",
+        "d": "Keep the product details and current offer consistent on the linked page."
       }
     ],
     "input": [
       {
-        "good": "n:guide:c1-tpl-retargeting-video-ad-after-headphones-square",
-        "bad": "n:guide:c1-reuse-retarget-m5-1-blur",
-        "good_label": "Product shape and details stay sharp",
-        "bad_label": "Soft focus hides small product details"
+        "good": "n:guide:q14-retarget-input-good-1",
+        "bad": "n:guide:q14-retarget-input-blur",
+        "good_label": "Headband and both ear cups stay sharp",
+        "bad_label": "Soft focus hides headphone details"
       },
       {
-        "good": "f:retargeting-urgency",
-        "bad": "n:guide:c1-reuse-retarget-m5-2-crop",
-        "good_label": "Whole product fits inside the frame",
-        "bad_label": "Tight framing cuts off a product edge"
+        "good": "n:guide:q14-retarget-input-good-2",
+        "bad": "n:guide:q14-retarget-input-crop",
+        "good_label": "Full headphones fit inside the frame",
+        "bad_label": "Crop cuts off the headband and ear cup"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:c1-tpl-retargeting-video-ad-output-1",
+        "ref": "n:guide:q14-retarget-output-commute",
         "frame": "1:1",
-        "label": "1:1 retargeting feed video"
+        "label": "Day-in-Life Routine: Headphones at the Station"
       },
       {
-        "ref": "n:guide:c1-tpl-retargeting-video-ad-output-2",
+        "ref": "n:guide:q14-retarget-output-features",
         "frame": "1:1",
-        "label": "1:1 product reminder video"
+        "label": "Creator Review: Headphone Ear Cushion"
       }
     ],
     "after": {
-      "ref": "n:guide:c1-tpl-retargeting-video-ad-m3-headphones-texture-square",
+      "ref": "n:guide:q14-retarget-after-detail",
       "zones": [
         "Current price",
         "Offer",
@@ -383,7 +384,7 @@
       ],
       "items": [
         "Add the current price and offer as editable text after download.",
-        "Link the clip to the product page shoppers visited."
+        "Link the video to the relevant product page."
       ]
     },
     "titles": {

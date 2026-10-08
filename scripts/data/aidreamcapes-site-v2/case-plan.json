@@ -789,46 +789,46 @@
     ],
     "tpl-spark-ads-style-video": [
       {
-        "ref": "n:gen2:spokesperson-videos-g4",
+        "ref": "n:guide:q14-spark-case-handbag",
         "product": "small handbag",
-        "title": "Creator holding a small handbag at chest height"
+        "title": "Talking-Head Hook: Handbag Details to Camera"
       },
       {
-        "ref": "n:gen2:examples-g4",
+        "ref": "n:guide:q14-spark-case-yoga-block",
         "product": "cork yoga block",
-        "title": "Cork yoga block ready on a plain table"
+        "title": "One Clean Rep: Yoga Block Stretch"
       },
       {
-        "ref": "n:guide:ind-jewelry-accessories-m2-result",
-        "product": "gold band",
-        "title": "Polished gold band centered on a plain display card"
+        "ref": "n:guide:q14-spark-case-ring-unbox",
+        "product": "gold ring",
+        "title": "ASMR Unboxing: Gold Ring Reveal"
       },
       {
-        "ref": "n:gen2:plat-facebook-g2",
+        "ref": "n:guide:q14-spark-case-cat-bed",
         "product": "cat bed",
-        "title": "Cat relaxing in a sunny corner"
+        "title": "Pet Product Demo: Cat Bed Introduction"
       }
     ],
     "tpl-retargeting-video-ad": [
       {
-        "ref": "n:gen2:social-ad-photos-g4",
-        "product": "canvas sneakers",
-        "title": "Canvas sneakers waiting on a city curb"
+        "ref": "n:guide:q14-retarget-case-boot",
+        "product": "plain brown trail boots",
+        "title": "Fit Check: Trail Boots on Rocky Ground"
       },
       {
-        "ref": "n:guide:c1-tpl-retargeting-video-ad-mug-square",
-        "product": "speckled ceramic mug",
-        "title": "Speckled ceramic travel mug steaming in warm morning light"
+        "ref": "n:guide:q14-retarget-case-mug-talk",
+        "product": "speckled ceramic travel mug",
+        "title": "Talking-Head Demo: Travel Mug Rim"
       },
       {
-        "ref": "n:gen2:examples-g8",
-        "product": "wool throw",
-        "title": "Wool throw back on a garden bench in spring"
+        "ref": "n:guide:q14-retarget-case-drawer",
+        "product": "desk drawer organizer",
+        "title": "Before/After: Desk Drawer Organizer"
       },
       {
-        "ref": "g:lifestyle-scene/example-05",
-        "product": "herbal tea tin",
-        "title": "Herbal tea tin beside an evening cup"
+        "ref": "n:guide:q14-retarget-case-protein-unbox-r2",
+        "product": "protein bar multipack",
+        "title": "ASMR Unboxing: Protein Bar Multipack"
       }
     ],
     "ind-beauty-skincare": [

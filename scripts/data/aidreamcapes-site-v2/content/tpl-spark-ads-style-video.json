@@ -12,8 +12,8 @@
     "TikTok product footage"
   ],
   "intro": [
-    "The sample is an AI-generated product-use scene: a green insulated bottle is filled at an office desk and lifted for a quick look. It is not customer footage or an endorsement.",
-    "Use this style for a bottle, snack, desk item, or beauty product when one everyday action helps explain it. Handle post authorization, audience, and targeting in TikTok Ads Manager."
+    "The sample follows an adult creator showing the hinged lid on a sage-green insulated bottle. The scene is AI-generated and is not customer footage or an endorsement.",
+    "Use one clear product action in a creator-style post. Add captions, sound, authorization, audience, and campaign settings in TikTok Ads Manager."
   ],
   "tip": "Describe one everyday action in a familiar setting, then complete TikTok authorization and campaign setup before publishing.",
   "steps": [
@@ -81,12 +81,12 @@
   ],
   "overview": [
     {
-      "h2": "Make natural footage without inventing a creator",
-      "d": "This style is about ordinary product use: a hand fills, opens, packs, lifts, or sets down the item. It can sit beside creator posts as product footage while staying honest about the source of the clip."
+      "h2": "Show one useful product detail",
+      "d": "A creator review can make a lid, opening, texture, or everyday use easy to see in a short social post."
     },
     {
-      "h2": "Keep the TikTok setup in your hands",
-      "d": "AIVideosUGC supplies the visual asset. You still choose the account, sound, caption, disclosure, authorization, audience, and campaign settings in TikTok."
+      "h2": "Finish the post in TikTok",
+      "d": "Choose the caption, sound, authorization, audience, and campaign settings in TikTok Ads Manager."
     }
   ],
   "input_guide": {
@@ -128,23 +128,23 @@
     ]
   },
   "scene_recipes": {
-    "h2": "Natural product moments to describe",
+    "h2": "Ad formats for creator-led product videos",
     "items": [
       {
-        "t": "Bottle at a desk",
-        "d": "A hand fills an insulated bottle beside a laptop, takes it outside, and sets it near a notebook."
+        "t": "Talking-Head Review: Bottle Lid",
+        "d": "Preserve the uploaded sage bottle’s exact silhouette, color, hinged lid, and open label area throughout this scene. Beside a bright window, an adult creator holds the insulated bottle beside her face and says, “Here is a close look at the hinged lid.” She opens it once and holds the bottle still. Natural skin texture, casual phone-video look. Medium close framing at eye level, with a slow push toward the hinged lid. Sound: her voice, a soft lid click and room tone; no music."
       },
       {
-        "t": "Snack between tasks",
-        "d": "A pouch opens on a kitchen counter, one snack is placed beside a notebook, and the pouch closes."
+        "t": "Street Interview: Protein Bar",
+        "d": "Use the uploaded protein-bar photo as the product reference; keep the bar, wrapper, color and blank label area unchanged. On a lively market walkway, an adult woman holds the protein bar, takes one bite and says, “It has a crisp texture.” Natural daylight, candid phone-video look. Chest-up eye-level framing with a slight handheld drift. Sound: her voice, a crisp bite and soft street ambience; no music."
       },
       {
-        "t": "Phone stand in a bag",
-        "d": "A compact stand folds on a desk, slips into a work bag, and returns beside a phone."
+        "t": "Three Reasons: Folding Phone Stand",
+        "d": "Keep the folding stand from the upload consistent in shape, finish, and scale from start to finish. At a clear desk, an adult creator holds a folding phone stand beside a generic phone and says, “It folds flat, holds steady, and fits in my bag.” She demonstrates each visible point with one gesture and ends with the stand open beside the phone. Soft daylight, natural creator-video look. Chest-up framing with a slow push-in. Sound: her voice and one light hinge click; no music."
       },
       {
-        "t": "Beauty item by a mirror",
-        "d": "A hand lifts a small cream jar at a vanity and sets it beside a comb without a spoken pitch."
+        "t": "GRWM Routine: Hair Claw",
+        "d": "Use the uploaded hair claw as a fixed product reference; retain its form and color in every frame. At a softly lit bathroom mirror, an adult woman holds a plain hair claw beside her face and says, “Here is how the clip closes around this section.” She clips it into place and looks toward the camera, ending with the claw visible. Casual GRWM phone-video look. Chest-up mirror framing with a gentle handheld sway. Sound: her voice and quiet room tone; no music."
       }
     ]
   },
@@ -204,21 +204,21 @@
     ]
   },
   "visual": {
-    "overview": "A Spark Ads-style video starts with a natural product moment that can sit inside a creator's post. Keep one everyday action in focus, then finish the caption and sound in TikTok.",
+    "overview": "Show a product in an ad format shoppers recognize: a creator review, first bite, hands-on demo, or everyday routine.",
     "strip": [
-      "n:guide:home-steamer-frame",
-      "n:guide:black-friday-giftbox-crop",
-      "u:try-on",
-      "n:guide:c1-tpl-spark-phonecase-hands-vertical",
-      "n:gen2:tpl-spark-ads-style-video-c1",
-      "n:guide:white-background-desk-organizer"
+      "n:guide:q14-spark-strip-steamer",
+      "n:guide:q14-spark-strip-espresso-r2",
+      "n:guide:q14-spark-strip-jacket",
+      "n:guide:q14-spark-strip-phonecase-r2",
+      "n:guide:q14-spark-strip-tripod-r2",
+      "n:guide:q14-spark-strip-organizer"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-spark-ads-style-video-m2-source",
-      "sourceAlt": "Sage-green insulated bottle photographed alone on a pale background.",
-      "sourceTitle": "Product photo",
-      "sourceHint": "Show the full bottle and its lid in natural light.",
-      "result": "n:guide:c1-tpl-spark-ads-style-video-m2-result-video-916",
+      "sourceAlt": "Sage-green insulated bottle with a hinged loop lid on a pale background.",
+      "sourceTitle": "Your starting product",
+      "sourceHint": "Keep the whole bottle and hinged lid sharp in natural light.",
+      "result": "n:guide:q14-spark-step-hiker-r2",
       "options": [
         [
           "Size",
@@ -234,101 +234,101 @@
         ]
       ],
       "length": 15,
-      "prompt": "Fill this sage-green bottle at a desk, close the lid, then lift it as you head out.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a shaded trail overlook, an adult hiker pauses, drinks from the bottle and lowers it while looking along the path. Natural late-morning light, candid outdoor creator-video look. Chest-up eye-level framing with a gentle handheld settle. Sound: a quiet sip, birds and light breeze; no music.",
       "mode": "video"
     },
     "picker": {
-      "title": "Pick a natural Spark Ads-style scene",
-      "lead": "Choose a product moment that fits easily into a creator post.",
+      "title": "Choose a creator ad format",
+      "lead": "Pick a format that shows what the product does in a natural social post.",
       "chips": [
         {
-          "id": "creator",
-          "label": "Creator-style demo"
+          "id": "reviews",
+          "label": "Creator Reviews"
         },
         {
-          "id": "desk",
-          "label": "At a desk"
+          "id": "hands",
+          "label": "Product Demos"
         },
         {
-          "id": "outside",
-          "label": "Active routines"
+          "id": "routines",
+          "label": "Routine Formats"
         },
         {
-          "id": "quick",
-          "label": "One quick action"
+          "id": "problem",
+          "label": "Problem-Solution"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:spokesperson-videos-g3",
-          "label": "Creator snack demo",
+          "ref": "n:guide:q14-spark-picker-snack",
+          "label": "Talking-Head Review: Snack Pouch",
           "chips": [
-            "creator"
+            "reviews"
           ],
-          "prompt": "Show a creator lifting the snack pouch and reacting to it.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult creator holds the snack pouch beside her face and says, “The pouch opens wide; here is the snack size.” She turns it once to show the opening and holds it still. Soft window light, natural phone-video look. Chest-up eye-level framing with a gentle push-in. Sound: her voice and light kitchen ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:c1-tpl-spark-hair-claw-mirror-vertical",
-          "label": "Hair-claw mirror try-on",
+          "ref": "n:guide:q14-spark-picker-hairclaw",
+          "label": "GRWM: Hair Claw Fit Check",
           "chips": [
-            "creator"
+            "routines"
           ],
-          "prompt": "Show a creator clipping the plain hair claw into place in a bathroom mirror.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bathroom mirror, an adult woman holds the plain hair claw beside her face and says, “Here is how the clip closes around this section.” She clips it into place and looks toward the lens. Soft morning vanity light, casual GRWM phone-video look. Chest-up mirror framing with gentle handheld sway. Sound: her voice and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:video-hub-h1-headset-in-hand",
-          "label": "Headphones lifted from a bag",
+          "ref": "n:guide:q14-spark-picker-headphones",
+          "label": "Hands-on Demo: Headphones from Tote",
           "chips": [
-            "desk"
+            "hands"
           ],
-          "prompt": "Lift the dark blue over-ear headphones from the open commuter bag.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunlit commuter desk, an adult hand lifts the dark navy over-ear headphones from an open canvas tote, turns the padded ear cups toward the lens and holds them still. Natural lifestyle phone-video look. Close over-shoulder framing with one slow push-in. Sound: fabric rustle and a soft hinge click; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:guide:c1-fix-spark-phonecase-desk",
-          "label": "Hands turn a phone case",
+          "ref": "n:guide:q14-spark-picker-phonecase-r2",
+          "label": "Hands-on Demo: Single-Hole Case",
           "chips": [
-            "desk"
+            "hands"
           ],
-          "prompt": "Turn the sage phone case over on a clear desk, keeping the hands and case in frame.",
-          "kind": "photo"
+          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. On a clean work desk, an adult hand fits the plain case with one small circular camera opening onto a generic phone, ending with the case seated and held edge-on. Soft daylight, natural product-demo look. Top-down close-up with a short tilt. Sound: one quiet snap and room tone; no music.",
+          "kind": "video"
         },
         {
-          "ref": "f:video-hub-h1-carry",
-          "label": "Tablet packed into a commuter bag",
+          "ref": "n:guide:q14-spark-picker-street-interview-r2",
+          "label": "Street Interview: Protein Bar First Bite",
           "chips": [
-            "outside"
+            "reviews"
           ],
-          "prompt": "Arrange the tablet and accessories in the black commuter bag before heading out.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a lively city sidewalk, an adult creator holds a plain protein bar, takes one bite and says, “It has a crisp texture.” Natural daylight, candid phone-video look. Chest-up eye-level framing with a slight handheld drift. Sound: her voice, a crisp bite and soft street ambience; no music.",
           "kind": "video"
         },
         {
           "ref": "n:gen2:tpl-spark-ads-style-video-c4",
-          "label": "Dog brush on a couch",
+          "label": "Problem-Solution: Loose Fur Brushed Away",
           "chips": [
-            "outside"
+            "problem"
           ],
-          "prompt": "Brush the relaxed dog once while keeping the plain pet brush in view.",
+          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. In a bright living room, an adult hand draws the plain pet brush once through a calm golden dog’s shoulder fur, ending with the brush held beside the coat. Warm window light, natural home-video look. Low close framing at the dog’s level with a gentle push-in. Sound: soft brush strokes and room ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:plat-youtube-shorts-g3",
-          "label": "Balcony lights at dusk",
+          "ref": "n:guide:q14-spark-picker-lint-roller",
+          "label": "Problem-Solution: Pet Hair off a Sofa",
           "chips": [
-            "quick"
+            "problem"
           ],
-          "prompt": "Switch on the balcony lights at dusk.",
+          "prompt": "Use the uploaded photo as the product and keep its shape and color exactly. In a bright living room, an adult uses the reusable lint roller across a pet-hair-covered sofa cushion, revealing a clean strip beside the remaining fur. Natural window light, honest home-demo look. Medium close framing with a slow sideward track. Sound: roller movement and soft room ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-carousel-video-ad-g2",
-          "label": "Backpack packed",
+          "ref": "n:guide:q14-spark-picker-backpack",
+          "label": "Day-in-Life Routine: Commuter Backpack",
           "chips": [
-            "quick"
+            "routines"
           ],
-          "prompt": "Pack the commuter backpack beside a coat.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult commuter walks through a bright station wearing the backpack, pauses at a bench and takes a notebook from its front pocket. Natural daylight, candid phone-video look. Medium follow shot with one smooth handheld move. Sound: footsteps, fabric rustle and low station ambience; no music.",
           "kind": "video"
         }
       ],
@@ -338,46 +338,46 @@
       {
         "frame": "phone",
         "h": "Share the bottle demo as a creator video",
-        "d": "Keep the sage-green bottle centered in the vertical social frame.",
+        "d": "Keep the sage-green bottle centered in a vertical social post.",
         "ref": "n:guide:c1-tpl-spark-ads-style-video-m4-bottle-video-916"
       },
       {
         "frame": "post",
-        "h": "Use the square bottle video in a Spark Ads post",
-        "d": "Add the caption and selected sound in TikTok before promoting the post.",
-        "ref": "n:guide:c1-tpl-spark-ads-style-video-use-post-video-square"
+        "h": "Use the bottle review in a Spark Ads post",
+        "d": "Add a caption and choose a sound in TikTok before promoting the creator post.",
+        "ref": "n:guide:q14-spark-uses-post-r2"
       }
     ],
     "input": [
       {
-        "good": "n:guide:c1-tpl-spark-ads-style-video-reuse-strip4-square",
-        "bad": "n:guide:c1-reuse-spark-m5-1-blur",
-        "good_label": "Product shape and details stay sharp",
-        "bad_label": "Soft focus hides small product details"
+        "good": "n:guide:q14-spark-input-good-1",
+        "bad": "n:guide:q14-spark-input-blur",
+        "good_label": "Whole bottle and hinged lid stay sharp",
+        "bad_label": "Soft focus hides the lid and body details"
       },
       {
-        "good": "n:gen2:ind-health-wellness-c3",
-        "bad": "n:guide:tpl-spark-ads-style-video-input-2-crop",
-        "good_label": "Whole product fits inside the frame",
-        "bad_label": "Tight framing cuts off a product edge"
+        "good": "n:guide:q14-spark-input-good-2",
+        "bad": "n:guide:q14-spark-input-crop",
+        "good_label": "Full bottle and hinged lid fit the frame",
+        "bad_label": "Top crop cuts off the hinged lid"
       }
     ],
     "outputs": [
       {
-        "label": "9:16 creator-style product video",
+        "label": "Talking-Head Review: Bottle Lid Detail",
         "frame": "9:16",
         "length": 15,
-        "ref": "n:gen2:spokesperson-videos-g1"
+        "ref": "n:guide:q14-spark-output-talk-r2"
       },
       {
-        "label": "9:16 vertical product demo",
-        "frame": "9:16",
+        "label": "Day-in-Life Routine: Bottle after a Hike",
+        "frame": "1:1",
         "length": 15,
-        "ref": "n:guide:c1-tpl-spark-ads-style-video-reuse-strip3-vertical"
+        "ref": "n:guide:q14-spark-output-hike-r2"
       }
     ],
     "after": {
-      "ref": "g:story-ad-vertical/example-01",
+      "ref": "n:guide:q14-spark-after-r2",
       "zones": [
         "Caption",
         "Sound",

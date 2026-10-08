@@ -31,19 +31,21 @@
   ],
   "visual": {
     "strip": [
-      "n:gen2:photo-hub-g2",
-      "n:guide:k6-industries-strip-tea",
-      "n:guide:tiktok-headphones-square",
-      "n:guide:k6-industries-strip-speaker",
-      "n:guide:k6-industries-strip-cozy-lamp",
-      "n:guide:k6-industries-strip-shelf"
+      "n:guide:q14-industries-strip-hiker",
+      "n:guide:q14-industries-strip-protein-unbox",
+      "n:guide:q14-industries-strip-headphones-unbox",
+      "n:guide:q14-industries-strip-speaker",
+      "n:guide:q14-industries-strip-counter-clean",
+      "n:guide:q14-industries-strip-drawer"
     ],
     "steps": {
       "source": "n:guide:b1-video-ads-source",
-      "sourceAlt": "Sage-green insulated lunch bag on a bright kitchen counter.",
-      "result": "n:guide:b1-video-ads-result",
-      "mode": "photo",
-      "prompt": "A hand lifts this sage lunch bag beside a packed lunch on a bright kitchen counter.",
+      "sourceAlt": "Soft sage insulated lunch bag standing on a bright kitchen counter.",
+      "sourceTitle": "Your starting product",
+      "sourceHint": "Keep the full bag, handle, and zipper visible.",
+      "result": "n:guide:q14-industries-step-lunchbag",
+      "mode": "video",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen an adult places a packed lunch container inside the insulated bag, closes the zipper and lifts it by the handle to leave. Preserve the soft sage bag shape and color. Morning window light, candid lifestyle phone-video look. Medium follow framing with one smooth handheld move. Sound: fabric rustle, zipper and quiet home ambience; no music.",
       "options": [
         [
           "Category",
@@ -51,26 +53,30 @@
         ],
         [
           "Output",
-          "Lifestyle photo"
+          "Vertical social video"
+        ],
+        [
+          "Format",
+          "9:16"
         ]
       ]
     },
     "picker": [
       {
         "id": "beauty-accessories",
-        "label": "Beauty & accessories"
+        "label": "Beauty & Accessories"
       },
       {
         "id": "fashion-shoes",
-        "label": "Fashion & shoes"
+        "label": "Fashion & Shoes"
       },
       {
         "id": "home-tech",
-        "label": "Home & electronics"
+        "label": "Home & Electronics"
       },
       {
         "id": "food-wellness",
-        "label": "Food & wellness"
+        "label": "Food & Wellness"
       }
     ],
     "uses": [],
@@ -81,13 +87,16 @@
         "h2": "How to find ideas for your product category in 3 steps"
       },
       "m3": {
-        "h2": "Browse ideas by industry",
-        "lead": "Filter the category links to find examples for the products you sell."
+        "h2": "Choose an ad format, then open a product category",
+        "lead": "Start with a format that makes your product easy to understand, then open a category for tailored examples."
       }
     },
     "directoryFilters": {
       "items": {
         "/industries/beauty-skincare": [
+          "beauty-accessories"
+        ],
+        "/industries/jewelry-accessories": [
           "beauty-accessories"
         ],
         "/industries/fashion-clothing": [
@@ -96,10 +105,10 @@
         "/industries/shoes": [
           "fashion-shoes"
         ],
-        "/industries/jewelry-accessories": [
-          "beauty-accessories"
-        ],
         "/industries/electronics": [
+          "home-tech"
+        ],
+        "/industries/home-living": [
           "home-tech"
         ],
         "/industries/health-wellness": [
@@ -107,22 +116,20 @@
         ],
         "/industries/food-drinks": [
           "food-wellness"
-        ],
-        "/industries/home-living": [
-          "home-tech"
         ]
       },
       "itemImages": {
-        "/industries/beauty-skincare": "n:guide:k6-industries-card-skincare",
-        "/industries/fashion-clothing": "n:guide:k6-industries-card-fashion",
-        "/industries/shoes": "n:guide:k6-industries-card-shoes",
-        "/industries/jewelry-accessories": "n:guide:k6-industries-card-ring",
-        "/industries/electronics": "n:guide:k6-industries-card-headphones",
-        "/industries/food-drinks": "n:guide:k6-industries-card-drink",
-        "/industries/home-living": "n:guide:k6-industries-card-lamp",
-        "/industries/health-wellness": "n:guide:k6-industries-card-yoga"
+        "/industries/beauty-skincare": "n:guide:q14-industry-beauty-texture",
+        "/industries/fashion-clothing": "n:guide:q14-industry-fashion-outfit",
+        "/industries/shoes": "n:guide:q14-industry-shoes-fit",
+        "/industries/jewelry-accessories": "n:guide:q14-industry-jewelry-unbox",
+        "/industries/electronics": "n:guide:q14-industry-electronics-headphones",
+        "/industries/health-wellness": "n:guide:q14-industry-health-yoga",
+        "/industries/food-drinks": "n:guide:q14-industry-food-first-sip",
+        "/industries/home-living": "n:guide:q14-industry-home-clean"
       }
-    }
+    },
+    "overview": "Choose an ad format first, then open a category for examples matched to the products you sell."
   },
   "steps": [
     {

@@ -828,17 +828,17 @@
     },
     "tpl-spark-ads-style-video": {
       "hero": {
-        "kind": "video",
-        "clip": "native-spark-ads"
+        "kind": "image",
+        "image": "n:guide:q14-spark-hero-r2"
       },
-      "og": "f:native-spark-ads"
+      "og": "n:guide:q14-spark-og"
     },
     "tpl-retargeting-video-ad": {
       "hero": {
-        "kind": "video",
-        "clip": "retargeting-urgency"
+        "kind": "image",
+        "image": "n:guide:q14-retarget-hero-focus"
       },
-      "og": "f:retargeting-urgency"
+      "og": "n:guide:q14-retarget-og"
     }
   },
   "cards": {
