@@ -18,36 +18,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/fashion-editorial-v1/fashion-editorial/example-01",
-      "rule": "one-page",
-      "pages": [
-        "tpl-look",
-        "tpl-tryon"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/fashion-editorial-v1/fashion-editorial/example-06",
-      "rule": "one-page",
-      "pages": [
-        "tpl-carousel-video-ad",
-        "tpl-look"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/fashion-editorial-v1/fashion-editorial/example-08",
       "rule": "one-page",
       "pages": [
         "photo-hub",
-        "tpl-launch",
-        "tpl-look"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/jewelry-positioning-v1/jewelry-positioning/example-01",
-      "rule": "one-page",
-      "pages": [
-        "tpl-detail",
-        "tpl-jewel"
+        "tpl-launch"
       ]
     },
     {
@@ -81,22 +56,6 @@
       "pages": [
         "tpl-detail",
         "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/on-model-generation-v1/on-model-generation/example-05",
-      "rule": "one-page",
-      "pages": [
-        "tpl-compare",
-        "tpl-look"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/on-model-generation-v1/on-model-generation/example-06",
-      "rule": "one-page",
-      "pages": [
-        "tpl-limited-drop-alert-video",
-        "tpl-look"
       ]
     },
     {
@@ -326,14 +285,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2ind-fashion-clothing-c3",
-      "rule": "one-page",
-      "pages": [
-        "ind-fashion-clothing",
-        "tpl-look"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2ind-fashion-clothing-g3",
       "rule": "one-page",
       "pages": [
@@ -342,27 +293,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2ind-health-wellness-c3",
-      "rule": "one-page",
-      "pages": [
-        "ind-health-wellness",
-        "tpl-spark-ads-style-video"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2lifestyle-photos-g2",
       "rule": "one-page",
       "pages": [
         "lifestyle-photos",
         "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2model-photos-c2",
-      "rule": "one-page",
-      "pages": [
-        "tpl-carousel-video-ad",
-        "tpl-look"
       ]
     },
     {
@@ -472,14 +407,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-color-c4",
-      "rule": "one-page",
-      "pages": [
-        "ind-health-wellness",
-        "tpl-color"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-color-g1",
       "rule": "one-page",
       "pages": [
@@ -528,58 +455,10 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-jewel-g1",
-      "rule": "one-page",
-      "pages": [
-        "model-photos",
-        "tpl-jewel"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-jewel-g2",
-      "rule": "one-page",
-      "pages": [
-        "model-photos",
-        "tpl-jewel"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-jewel-g3",
-      "rule": "one-page",
-      "pages": [
-        "ind-jewelry-accessories",
-        "tpl-jewel"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-jewel-g4",
-      "rule": "one-page",
-      "pages": [
-        "ind-jewelry-accessories",
-        "tpl-jewel"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-launch-g1",
-      "rule": "one-page",
-      "pages": [
-        "ind-electronics",
-        "tpl-launch"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-light-g1",
       "rule": "one-page",
       "pages": [
         "ind-beauty-skincare",
-        "tpl-light"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-light-g3",
-      "rule": "one-page",
-      "pages": [
-        "ind-jewelry-accessories",
         "tpl-light"
       ]
     },
@@ -620,14 +499,6 @@
       "rule": "one-page",
       "pages": [
         "ind-electronics",
-        "tpl-spark-ads-style-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-spark-ads-style-video-g2",
-      "rule": "one-page",
-      "pages": [
-        "ind-health-wellness",
         "tpl-spark-ads-style-video"
       ]
     },
@@ -766,7 +637,6 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-ind-electronics-m3-headphones",
       "rule": "one-page",
       "pages": [
-        "ind-electronics",
         "tpl-angle",
         "tpl-box"
       ]
@@ -776,7 +646,6 @@
       "rule": "one-page",
       "pages": [
         "ind-fashion-clothing",
-        "tpl-look",
         "tpl-product-feature-callout-video"
       ]
     },
@@ -792,8 +661,6 @@
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-ind-jewelry-accessories-m2-result",
       "rule": "one-page",
       "pages": [
-        "ind-jewelry-accessories",
-        "tpl-jewel",
         "tpl-size",
         "tpl-spark-ads-style-video"
       ]
@@ -803,7 +670,6 @@
       "rule": "one-page",
       "pages": [
         "ind-jewelry-accessories",
-        "tpl-jewel",
         "tpl-product-feature-callout-video"
       ]
     },
@@ -814,14 +680,6 @@
         "ind-jewelry-accessories",
         "tpl-angle",
         "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-ind-jewelry-accessories-m7-steel-watch",
-      "rule": "one-page",
-      "pages": [
-        "ind-jewelry-accessories",
-        "tpl-jewel"
       ]
     },
     {
