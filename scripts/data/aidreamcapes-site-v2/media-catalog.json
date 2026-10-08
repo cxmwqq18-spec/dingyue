@@ -2954,6 +2954,15 @@
       ],
       "clipPoster": true
     },
+    "video-hub-h1-runner-move": {
+      "w": 540,
+      "h": 960,
+      "alt": "A runner in black leggings passes a waterfront path in white shoes with coral accents.",
+      "variants": [
+        540
+      ],
+      "clipPoster": true
+    },
     "examples-h1-bottle-frame": {
       "w": 540,
       "h": 960,
