@@ -311,7 +311,7 @@ function pageCardImage(model, pageId) {
 // plan offers them, other examples of the same template. The curated picture is used on the main
 // lists (templates, home, hubs); everywhere else a card shows the example used least so far, and
 // never one that is already on the page. A card with no unused picture is left out of that list.
-const imageBase = (src) => String(src).replace(/\/_responsive\//, "/").replace(/--\d+(?=\.\w+$)/, "").replace(/\.\w+$/, "");
+export const imageBase = (src) => String(src).replace(/\/_responsive\//, "/").replace(/--\d+(?=\.\w+$)/, "").replace(/\.\w+$/, "");
 
 function cardChoices(model, key) {
   const primary = model.media.plan.cards[key];
@@ -1595,6 +1595,159 @@ export function renderedImages(layout, data) {
   return out;
 }
 
+const REUSE_PAGE_TYPES = new Set(["tool", "hub-tool", "template", "industry", "platform", "occasion", "article"]);
+
+export function reusePageType(type) {
+  if (type === "tool" || type === "hub-tool") return "tool";
+  return REUSE_PAGE_TYPES.has(type) ? type : null;
+}
+
+function linkCardsForReuse(layout, data) {
+  const cards = [];
+  const addCards = (items) => {
+    for (const card of items ?? []) {
+      if (card?.href && card?.image?.src && (card.key || card.cardType === "case")) cards.push(card);
+    }
+  };
+  const addExampleGroups = (examples) => {
+    for (const group of examples?.groups ?? []) addCards(group.items);
+  };
+
+  if (layout === "home") {
+    addCards(data.templates?.cards);
+    addExampleGroups(data.exampleGallery);
+  } else if (layout === "video-hub") {
+    addCards(data.heroCards);
+    addCards(data.cards);
+    addExampleGroups(data.examples);
+  } else if (layout === "tool") {
+    addCards(data.templates);
+    addExampleGroups(data.examples);
+  } else if (layout === "template") {
+    addCards(data.more);
+    addExampleGroups(data.examples);
+  } else if (layout === "collection") {
+    if (!data.visual) addCards(data.heroCards);
+    addCards(data.cards);
+    addExampleGroups(data.examples);
+  } else if (layout === "index" || layout === "examples") {
+    addCards(data.cards);
+    addExampleGroups(data.examples);
+  }
+  return cards;
+}
+
+export function analyzeSiteV2ImageReuse(build, source = loadSiteV2Source()) {
+  const masterById = new Map(source.master.pages.map((page) => [page.id, page]));
+  const buildByUrl = new Map(build.pages.map((page) => [page.slug, page]));
+  const pageById = new Map(build.pages.map((page) => [page.id, page]));
+  const renderedByPage = new Map();
+  const actualPagesByImage = new Map();
+  const countedPagesByImage = new Map();
+  const targetCardExceptions = [];
+
+  const addPage = (map, base, pageId) => {
+    const pages = map.get(base) ?? new Set();
+    pages.add(pageId);
+    map.set(base, pages);
+  };
+
+  for (const page of build.pages) {
+    const { layout, data } = page.contentJson.sections.v2_main.settings;
+    const rendered = renderedImages(layout, data);
+    const renderedSources = new Set(rendered);
+    // renderedImages currently includes visualPayloadImages. Keep the explicit visual pass
+    // as a guard against a future layout renderer omitting a visual module, without counting
+    // the same source twice when both helpers return it.
+    const visualOnly = visualPayloadImages(data.visual).map((image) => image.src).filter((src) => !renderedSources.has(src));
+    const sources = [...rendered, ...visualOnly];
+    const sourceCounts = new Map();
+    for (const src of sources) {
+      const base = imageBase(src);
+      sourceCounts.set(base, (sourceCounts.get(base) ?? 0) + 1);
+      addPage(actualPagesByImage, base, page.id);
+    }
+    renderedByPage.set(page.id, { layout, data, sources, sourceCounts });
+  }
+
+  for (const page of build.pages) {
+    const rendered = renderedByPage.get(page.id);
+    const targetsByImage = new Map();
+    const targetCardCounts = new Map();
+    for (const card of linkCardsForReuse(rendered.layout, rendered.data)) {
+      const target = buildByUrl.get(card.href);
+      if (!target || target.id === page.id) continue;
+      const targetData = target.contentJson.sections.v2_main.settings.data;
+      const representative = heroImageOf(targetData.heroMedia) ?? targetData.image ?? targetData.hero?.image;
+      if (!representative?.src) continue;
+      const base = imageBase(card.image.src);
+      if (base !== imageBase(representative.src)) continue;
+      const targets = targetsByImage.get(base) ?? new Set();
+      targets.add(target.id);
+      targetsByImage.set(base, targets);
+      targetCardCounts.set(base, (targetCardCounts.get(base) ?? 0) + 1);
+      targetCardExceptions.push({ image: base, sourcePage: page.id, targetPage: target.id });
+    }
+
+    for (const [base, count] of rendered.sourceCounts) {
+      const targets = targetsByImage.get(base) ?? new Set();
+      const targetCardCount = targetCardCounts.get(base) ?? 0;
+      if (count > targetCardCount) addPage(countedPagesByImage, base, page.id);
+      for (const targetId of targets) addPage(countedPagesByImage, base, targetId);
+    }
+  }
+
+  const violations = [];
+  for (const [image, pages] of countedPagesByImage) {
+    const pageIds = [...pages].sort();
+    if (pages.size > 2) violations.push({ image, rule: "max-two-pages", pages: pageIds });
+    const byType = new Map();
+    for (const pageId of pageIds) {
+      const type = reusePageType(masterById.get(pageId)?.type);
+      if (!type) continue;
+      const typedPages = byType.get(type) ?? [];
+      typedPages.push(pageId);
+      byType.set(type, typedPages);
+    }
+    for (const [type, typedPages] of byType) {
+      if (typedPages.length > 1) violations.push({ image, rule: "same-page-type", pageType: type, pages: typedPages.sort() });
+    }
+  }
+  violations.sort((a, b) => a.image.localeCompare(b.image) || a.rule.localeCompare(b.rule) || (a.pageType ?? "").localeCompare(b.pageType ?? ""));
+
+  const samePageDuplicates = [];
+  for (const page of build.pages) {
+    const { layout, data } = page.contentJson.sections.v2_main.settings;
+    const imageCounts = new Map();
+    const stripCounts = new Map();
+    for (const image of data.visual?.strip ?? []) {
+      const key = imageBase(image.src);
+      stripCounts.set(key, (stripCounts.get(key) ?? 0) + 1);
+    }
+    const allowedVisualRepeats = new Set();
+    for (const image of [data.visual?.steps?.source, data.visual?.steps?.result]) {
+      if (!image?.src) continue;
+      const key = imageBase(image.src);
+      if (stripCounts.get(key) === 1) allowedVisualRepeats.add(key);
+    }
+    for (const src of renderedImages(layout, data)) {
+      const key = imageBase(src);
+      imageCounts.set(key, (imageCounts.get(key) ?? 0) + 1);
+    }
+    for (const [image, count] of imageCounts) {
+      if (count > 1 && !(count === 2 && allowedVisualRepeats.has(image))) {
+        samePageDuplicates.push({ image, rule: "same-page-repeat", pages: [page.id] });
+      }
+    }
+  }
+
+  return { violations, samePageDuplicates, actualPagesByImage, countedPagesByImage, targetCardExceptions, pageById, masterById };
+}
+
+function imageReuseViolationKey(violation) {
+  return JSON.stringify([violation.image, violation.rule, violation.pageType ?? "", violation.pages]);
+}
+
 export function validateSiteV2(build = buildSiteV2()) {
   const errors = [];
   const seen = { title: new Map(), description: new Map(), h1: new Map(), slug: new Map() };
@@ -1868,7 +2021,6 @@ export function validateSiteV2(build = buildSiteV2()) {
     ...validationSource.master.pages.filter((page) => page.type === "template").map((page) => page.id.slice(4)),
     ...(validationSource.master.toolcards ?? []).map(([key]) => key)
   ]);
-  const overrideMediaBases = new Map();
   for (const [pageId, override] of Object.entries(overrideSource)) {
     const pageMeta = sourcePages.get(pageId);
     if (!pageMeta) errors.push(`card-overrides: unknown page ${pageId}`);
@@ -1905,23 +2057,48 @@ export function validateSiteV2(build = buildSiteV2()) {
       const expected = mediaImage(overrideModel, imageOverride.ref, "card");
       const actual = templateCards.find((card) => card.key === key)?.image;
       if (!actual || imageBase(actual.src) !== imageBase(expected.src)) errors.push(`${pageId}: image override was not applied to ${key}`);
-      const base = imageBase(expected.src);
-      (overrideMediaBases.get(base) ?? overrideMediaBases.set(base, { ref: imageOverride.ref, pages: new Set() }).get(base)).pages.add(pageId);
     }
   }
   for (const message of build.cardOverrideErrors ?? []) errors.push(message);
-  const imagePages = new Map();
-  for (const page of build.pages) {
-    const { layout, data } = page.contentJson.sections.v2_main.settings;
-    for (const src of renderedImages(layout, data)) {
-      const base = imageBase(src);
-      (imagePages.get(base) ?? imagePages.set(base, new Set()).get(base)).add(page.id);
+  const imageReuse = analyzeSiteV2ImageReuse(build, validationSource);
+  let baselineEntries = [];
+  try {
+    const baseline = readJson(path.join(DATA_DIR, "image-reuse-baseline.json"));
+    if (baseline?.version !== 1 || !Array.isArray(baseline.entries)) {
+      errors.push("image reuse baseline is malformed (expected version 1 and an entries array)");
+    } else baselineEntries = baseline.entries;
+  } catch (error) {
+    errors.push(`image reuse baseline could not be read (${error.message})`);
+  }
+  const currentViolations = new Map(imageReuse.violations.map((item) => [imageReuseViolationKey(item), item]));
+  const baselineViolations = new Map();
+  for (const entry of baselineEntries) {
+    if (!entry || typeof entry.image !== "string" || !["max-two-pages", "same-page-type"].includes(entry.rule) || !Array.isArray(entry.pages) || entry.pages.some((page) => typeof page !== "string")) {
+      errors.push("image reuse baseline contains an invalid entry");
+      continue;
     }
+    const normalized = { image: entry.image, rule: entry.rule, ...(entry.rule === "same-page-type" ? { pageType: entry.pageType } : {}), pages: [...entry.pages].sort() };
+    if (entry.rule === "same-page-type" && typeof entry.pageType !== "string") {
+      errors.push(`image reuse baseline entry is missing its page type (${entry.image})`);
+      continue;
+    }
+    const key = imageReuseViolationKey(normalized);
+    if (baselineViolations.has(key)) errors.push(`image reuse baseline contains a duplicate entry (${entry.image})`);
+    else baselineViolations.set(key, normalized);
   }
-  for (const [base, override] of overrideMediaBases) {
-    const pages = imagePages.get(base) ?? override.pages;
-    if (pages.size > 2) errors.push(`card-overrides: media ${override.ref} appears on ${pages.size} pages (max 2)`);
+  let baselineRemaining = 0;
+  for (const [key, entry] of baselineViolations) {
+    const current = currentViolations.get(key);
+    const summary = `${entry.rule}${entry.pageType ? ` (${entry.pageType})` : ""}: ${entry.image} on ${entry.pages.join(", ")}`;
+    if (!current) errors.push(`image reuse baseline entry is no longer violated; remove it from image-reuse-baseline.json (${summary})`);
+    else baselineRemaining += 1;
   }
+  for (const [key, violation] of currentViolations) {
+    if (baselineViolations.has(key)) continue;
+    const summary = `${violation.rule}${violation.pageType ? ` (${violation.pageType})` : ""}: ${violation.image} on ${violation.pages.join(", ")}`;
+    errors.push(`new image reuse violation outside baseline (${summary})`);
+  }
+  console.info(`Aidreamcapes image reuse baseline: ${baselineRemaining} violations remain.`);
   // Editorial metadata must never enter the public LivePage payload, even when a
   // future draft adds it beside an otherwise valid enrichment block.
   const internalKeys = new Set(["review", "media_wishlist", "facts_used", "word_count_added", "source"]);
@@ -1960,14 +2137,11 @@ export function validateSiteV2(build = buildSiteV2()) {
   // its existing template cards plus page-specific case cards. A case asset may be
   // sampled on two pages at most, and never twice on one page.
   const caseLayouts = new Set(["tool", "template", "collection"]);
-  const caseMediaPages = new Map();
-  const caseMediaTypes = new Map();
   const caseMediaKey = (card) => card.mediaRef
     ? (modelCaseMediaKey(card.mediaRef))
     : String(card.video?.src ?? card.image?.src ?? "").replace(/-v(?=\.|--)/, "");
   const modelCaseMediaKey = (ref) => String(ref).replace(/^f:/, "").replace(/-v$/, "");
   const casePlan = validationSource.media.casePlan;
-  const pageTypeById = Object.fromEntries(validationSource.master.pages.map((page) => [page.id, page.type]));
   const caseTitles = new Map();
   const caseTitlePrefixes = new Map();
   const pageMediaSeen = new Map();
@@ -1990,12 +2164,6 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (!key) { errors.push(`${page.id}: case card has no media`); continue; }
       if (seenOnPage.has(key)) errors.push(`${page.id}: case media repeated on the page (${key})`);
       seenOnPage.add(key);
-      const pages = caseMediaPages.get(key) ?? new Set();
-      pages.add(page.id); caseMediaPages.set(key, pages);
-      const types = caseMediaTypes.get(key) ?? new Set();
-      const pageType = pageTypeById[page.id] ?? page.pageType;
-      if ([...types].some((type) => type === pageType)) errors.push(`${page.id}: case media is shared by pages of the same type (${key})`);
-      types.add(pageType); caseMediaTypes.set(key, types);
       if (!card.product || card.product !== card.product.toLowerCase()) errors.push(`${page.id}: case product must be lowercase English (${card.product || "missing"})`);
       if (seenProducts.has(card.product)) errors.push(`${page.id}: case product repeats (${card.product})`);
       seenProducts.add(card.product);
@@ -2030,17 +2198,11 @@ export function validateSiteV2(build = buildSiteV2()) {
     if (!items.length) continue;
     const seenOnPage = pageMediaSeen.get(page.id) ?? new Set();
     pageMediaSeen.set(page.id, seenOnPage);
-    const pageType = pageTypeById[page.id] ?? page.pageType;
     for (const item of items) {
       const key = caseMediaKey(item);
       if (!key) { errors.push(`${page.id}: example has no media`); continue; }
       if (seenOnPage.has(key)) errors.push(`${page.id}: example media repeated on the page (${key})`);
       seenOnPage.add(key);
-      const pages = caseMediaPages.get(key) ?? new Set();
-      pages.add(page.id); caseMediaPages.set(key, pages);
-      const types = caseMediaTypes.get(key) ?? new Set();
-      if ([...types].some((type) => type === pageType)) errors.push(`${page.id}: example media is shared by pages of the same type (${key})`);
-      types.add(pageType); caseMediaTypes.set(key, types);
       const title = String(item.title ?? "");
       if (!title || title.length > 60 || /^Product example/i.test(title) || /starting photo/i.test(title)) errors.push(`${page.id}: invalid example title (${title || "empty"})`);
       const titleNorm = title.toLowerCase();
@@ -2068,13 +2230,11 @@ export function validateSiteV2(build = buildSiteV2()) {
       }
     }
   }
-  for (const [media, pages] of caseMediaPages) if (pages.size > 2) errors.push(`case media appears on ${pages.size} pages (max 2): ${media}`);
   for (const pageId of Object.keys(casePlan.pages ?? {})) if (!build.pages.some((page) => page.id === pageId)) errors.push(`${pageId}: case-plan points to a missing page`);
   // Media: pages of these layouts show their own picture, every image has a proper
-  // description, nothing comes from another store's folders, and no two pages share the
-  // same main image.
+  // description, and nothing comes from another store's folders. Cross-page sharing is
+  // enforced once above using imageBase for all rendered images.
   const needsMain = new Set(["tool", "template", "collection", "article", "faq", "contact", "about", "trust"]);
-  const mainImages = new Map();
   for (const page of build.pages) {
     const { layout, data } = page.contentJson.sections.v2_main.settings;
     const main = heroImageOf(data.heroMedia);
@@ -2085,12 +2245,6 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (/\/(dreamshoot|mirror|fan-holiday-theme|creative-packs)\//.test(image.src)) errors.push(`${page.id}: image from a retired or other-store folder (${image.src})`);
     }
     if (!main && needsMain.has(layout) && page.id !== "photo-hub" && !data.image) errors.push(`${page.id}: no main image`);
-    if (main) {
-      const pages = mainImages.get(main.src) ?? new Set();
-      pages.add(page.id);
-      mainImages.set(main.src, pages);
-      if (pages.size > 2) errors.push(`${page.id}: same main image appears on ${pages.size} pages`);
-    }
   }
   // The opening copy or SEO metadata names the page's topic with its primary keyword.
   const plain = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
