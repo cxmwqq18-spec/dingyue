@@ -590,5 +590,41 @@
         "alt": "Plain white portable table lamp glows on a desk beside a closed laptop."
       }
     }
+  },
+  "tpl-story": {
+    "images": {
+      "ugc": {
+        "ref": "n:q10-story-more-ugc",
+        "alt": "Adult creator speaks to camera while holding an amber serum bottle."
+      }
+    }
+  },
+  "tpl-howto": {
+    "images": {
+      "product-feature-callout-video": {
+        "ref": "n:q10-howto-more-feature",
+        "alt": "Adult uses a white electric toothbrush in a bright bathroom."
+      },
+      "ba": {
+        "ref": "n:q10-howto-more-before-after",
+        "alt": "Adult steams one side of a hanging blue shirt to show the smooth result."
+      }
+    }
+  },
+  "tpl-film": {
+    "images": {
+      "carousel-video-ad": {
+        "ref": "n:q10-film-more-carousel",
+        "alt": "Adult carries a plain canvas tote along a sunny city street."
+      },
+      "spark-ads-style-video": {
+        "ref": "n:q10-film-more-creator",
+        "alt": "Adult speaks to camera while wearing plain cream over-ear headphones."
+      },
+      "retargeting-video-ad": {
+        "ref": "n:q10-film-more-retargeting",
+        "alt": "Adult shows a plain running shoe while speaking to camera."
+      }
+    }
   }
 }

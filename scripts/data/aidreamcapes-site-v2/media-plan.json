@@ -352,9 +352,9 @@
     "tpl-film": {
       "hero": {
         "kind": "image",
-        "image": "f:cinematic-video"
+        "image": "n:q10-film-hero"
       },
-      "og": "f:cinematic-video",
+      "og": "n:q10-film-hero",
       "gallery": [
         "f:cinematic-video-t06",
         "f:cinematic-video-t11",

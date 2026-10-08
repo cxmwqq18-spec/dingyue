@@ -187,22 +187,22 @@
         "label": "Space for the offer",
         "items": [
           {
-            "ref": "n:gen2:tpl-sale-g1",
-            "title": "Hard-shell suitcase with open space on the right",
+            "ref": "n:q10-sale-example-01",
+            "title": "Pack With Me: Suitcase through the airport",
             "kind": "photo",
             "product": "hard-shell suitcase"
           },
           {
-            "ref": "n:gen2:tpl-sale-g2",
-            "title": "Summer sandals on sand with room for an offer",
+            "ref": "n:q10-sale-example-02",
+            "title": "Try-On: Summer sandals for a market walk",
             "kind": "photo",
             "product": "summer sandals"
           },
           {
-            "ref": "g:feed-ad-still/example-07",
-            "title": "Square running shoe feed crop",
+            "ref": "n:q10-sale-example-03",
+            "title": "Try-On: Running shoes before a jog",
             "kind": "photo",
-            "product": "running shoe"
+            "product": "running shoes"
           }
         ]
       }
@@ -211,16 +211,16 @@
   "visual": {
     "overview": "Create sale product photos with room for the current offer, using a clear source and a scene that fits the item.",
     "strip": [
-      "n:gen2:change-background-c1",
-      "n:gen2:examples-g8",
-      "n:guide:c3-r3-occ-sale-bedding",
-      "n:gen2:occ-sale-discount-g2",
-      "n:gen2:lifestyle-photos-g6",
-      "g:sale-campaign-key-visual/example-07"
+      "n:q10-sale-strip-1",
+      "n:q10-sale-strip-2",
+      "n:q10-sale-strip-3",
+      "n:q10-sale-strip-4",
+      "n:q10-sale-strip-5",
+      "n:q10-sale-strip-6"
     ],
     "steps": {
       "source": "n:guide:tpl-sale-c3-m2-source",
-      "result": "n:guide:tpl-sale-c3-m2-result",
+      "result": "n:q10-sale-steps-result",
       "mode": "photo",
       "prompt": "Place this blue hard-shell suitcase beside a pale wall and a small leafy plant, with all wheels visible.",
       "options": [
@@ -243,93 +243,95 @@
       "lead": "Select a product category and set the mood for the offer image.",
       "chips": [
         {
-          "id": "travel",
-          "label": "Travel goods"
+          "id": "offer",
+          "label": "Offers & Packing"
         },
         {
-          "id": "home",
-          "label": "Linen and home goods"
+          "id": "style",
+          "label": "Try-On & Style"
         },
         {
-          "id": "beauty",
-          "label": "Beauty and wellness"
+          "id": "hands",
+          "label": "Hands-On Demos"
         },
         {
-          "id": "clothing",
-          "label": "Apparel and accessories"
+          "id": "creator",
+          "label": "Creator Reactions"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:plat-youtube-shorts-g1",
-          "label": "Daypack lifted by its top handle",
+          "ref": "n:q10-sale-picker-1",
+          "label": "Sales Promo: Daypack on the go",
           "chips": [
-            "travel"
+            "offer"
           ],
-          "prompt": "Show this daypack lifted by its top handle against a clean background.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At an apartment doorway, an adult lifts the daypack from a hook, swings it onto one shoulder and turns toward the door, ending with the bag centered. Natural phone-video ad look, bright morning light. Chest-level handheld shot with a short follow move. Sound: strap rustle, door latch; no music.",
           "kind": "photo"
         },
         {
-          "ref": "g:size-reference/example-03",
-          "label": "Backpack beside a carry-on",
+          "ref": "n:q10-sale-picker-2",
+          "label": "Pack With Me: Backpack set",
           "chips": [
-            "travel"
+            "offer"
           ],
-          "prompt": "Show this backpack beside a closed carry-on suitcase, with both items fully in view.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On an open suitcase at a bright hotel room, adult hands pack the backpack and a plain packing cube together, ending with both items visible beside the closed case. Natural travel-ad phone-video look. Overhead handheld shot with a slow push-in. Sound: zipper, fabric movement; no music.",
           "kind": "photo"
         },
         {
-          "ref": "g:lifestyle-scene/example-08",
-          "label": "Linen tote in sunlight",
+          "ref": "n:q10-sale-picker-3",
+          "label": "Try-On Deal: Canvas tote market run",
           "chips": [
-            "home"
+            "style"
           ],
-          "prompt": "Show this linen tote in a calm, sunlit lifestyle scene with its full outline visible.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Outside a neighborhood market, an adult slips the linen tote over one shoulder, places a paper-wrapped loaf inside and walks toward the entrance, ending with the tote in view. Natural lifestyle-ad phone-video look, soft midday light. Waist-up handheld follow shot with a gentle pan. Sound: footsteps, paper rustle, street ambience; no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:plat-shopify-c3-m2-source-angle",
-          "label": "Ceramic bowls from a lower angle",
+          "ref": "n:q10-sale-picker-4",
+          "label": "Pet Grooming: Brush a dog",
           "chips": [
-            "home"
+            "hands"
           ],
-          "prompt": "Show these four coordinated ceramic bowls from a lower three-quarter angle.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny home, an adult gently brushes a calm dog with an unbranded grooming kit and sets the brush beside the dog, ending with the tool and coat in view. Natural pet-product phone-video look. Floor-level handheld medium close-up with a slow push-in. Sound: brush through fur, collar jingle, room ambience; no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c4-tpl-sale-beauty-tube",
-          "label": "Skincare tube on pale stone",
+          "ref": "n:q10-sale-picker-5",
+          "label": "Creator Review: Serum swatch",
           "chips": [
-            "beauty"
+            "hands",
+            "creator"
           ],
-          "prompt": "Show this plain skincare tube on a pale stone vanity with its full shape visible.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean vanity, an adult dispenses one drop of serum onto the back of a hand and turns the hand toward the lens, ending with the bottle beside it. Natural skincare-ad phone-video look, soft window light. Tight handheld close-up with a slow push-in. Sound: cap twist, pump click; no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:protein-pack",
-          "label": "Protein tub on a gym bench",
+          "ref": "n:q10-sale-picker-6",
+          "label": "Taste Test: Protein shake after training",
           "chips": [
-            "beauty"
+            "creator"
           ],
-          "prompt": "Place this unbranded protein tub on a clean gym bench with its plain front facing forward.",
+          "prompt": "Use the uploaded photo as the protein drink and preserve its container and color. After a workout, an adult takes one sip, reacts naturally to the taste, and holds the drink toward camera. Creator-style taste-test ad, medium close-up, natural gym light; no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "g:fashion-editorial/example-08",
-          "label": "Editorial apparel for a seasonal offer",
+          "ref": "n:q10-sale-picker-7",
+          "label": "Outfit Transition: Jacket snap-change",
           "chips": [
-            "clothing"
+            "style"
           ],
-          "prompt": "Create a polished fashion-editorial sale scene with the outfit fully visible and open room around it.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an adult steps into the jacket and turns once to show its fit, ending facing the lens with open space beside them for an offer added later. Natural fashion-ad phone-video look, soft daylight. Full-body tripod framing with one quick snap pan. Sound: jacket rustle, footsteps; no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:b1-spokesperson-output-bag",
-          "label": "Crossbody bag for a sale post",
+          "ref": "n:q10-sale-picker-8",
+          "label": "Try-On Deal: Crossbody bag fit check",
           "chips": [
-            "clothing"
+            "style",
+            "creator"
           ],
-          "prompt": "Show a person holding this plain tan canvas crossbody bag at chest height in a bright, simple setting.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a simple sunlit hallway, an adult wears the canvas crossbody bag, adjusts the strap and turns to show front and side fit, ending with the bag centered. Natural creator-video look. Waist-up handheld mirror framing with a small side step. Sound: strap slide, room tone; no music.",
           "kind": "photo"
         }
       ],
@@ -338,23 +340,23 @@
     "uses": [
       {
         "frame": "post",
-        "ref": "n:guide:b1-unboxing-output",
-        "h": "Present a small gift item in a feed post",
-        "d": "A leather wallet lifted from a plain gift box gives the sale post a clear product focus."
+        "ref": "n:q10-sale-uses-1",
+        "h": "Show a leather wallet in a sale post",
+        "d": "Keep the brown wallet and gift box visible, then add the current offer as editable text."
       },
       {
         "frame": "browser",
-        "ref": "n:guide:b1-unboxing-videos-result",
-        "h": "Connect a packaged item to its product page",
-        "d": "A plain candle jar revealed from a carton links the promotion to a specific product listing."
+        "ref": "n:q10-sale-uses-2",
+        "h": "Connect a skincare set to its product page",
+        "d": "Match the promotion image to the set shown in the product listing."
       }
     ],
     "input": [
       {
-        "good": "n:guide:c3-r3-tpl-sale-m5-0",
-        "bad": "n:guide:tpl-sale-c3-bad-crop",
-        "good_label": "Both planter silhouettes stay in view",
-        "bad_label": "Small planter edge is cut off on the left"
+        "good": "n:q10-sale-input-1-good",
+        "bad": "n:q10-sale-input-1-bad",
+        "good_label": "Complete sunscreen tube stays in view",
+        "bad_label": "Sunscreen tube is cropped at the top edge"
       },
       {
         "good": "n:guide:tpl-sale-c3-m5-board-clean",
@@ -365,18 +367,18 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:white-background-fix-m1-planter",
+        "ref": "n:q10-sale-outputs-1",
         "frame": "1:1",
-        "label": "Square white-background planter sale photo"
+        "label": "White-background sunscreen bottle with full silhouette"
       },
       {
-        "ref": "n:guide:c3-r3-occ-sale-skincare-set",
+        "ref": "n:q10-sale-outputs-2-r2",
         "frame": "1:1",
-        "label": "Square skincare-set sale photo"
+        "label": "White sunscreen tube in a poolside scene"
       }
     ],
     "after": {
-      "ref": "n:guide:c4-occ-sale-m7-ugc-photo",
+      "ref": "n:q10-sale-after",
       "zones": [
         "Offer",
         "End date"

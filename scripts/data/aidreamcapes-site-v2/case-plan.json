@@ -484,90 +484,90 @@
     ],
     "tpl-story": [
       {
-        "ref": "n:guide:b1-spokesperson-output-bag",
-        "product": "canvas bag",
-        "title": "Tan canvas bag held up in a bright room"
+        "ref": "n:q10-story-case-01",
+        "product": "sunscreen",
+        "title": "Sunscreen Beach Routine"
       },
       {
-        "ref": "n:gen2:social-ad-photos-g5",
-        "product": "canvas sneakers",
-        "title": "Canvas sneakers on a gym floor with open space"
+        "ref": "n:q10-story-case-02",
+        "product": "phone case",
+        "title": "Phone Case Snap-On"
       },
       {
-        "ref": "g:sale-campaign-key-visual/example-07",
-        "product": "winter jacket",
-        "title": "Seasonal jacket framed for a Story offer"
+        "ref": "n:q10-story-case-03",
+        "product": "gold hoop earrings",
+        "title": "Earring Gift Reveal"
       },
       {
-        "ref": "n:guide:white-background-fix-m1-house-slippers",
-        "product": "felt house slippers",
-        "title": "Felt slippers on a clean surface"
+        "ref": "n:q10-story-case-04",
+        "product": "skincare set",
+        "title": "Unwrap Skincare Set"
       }
     ],
     "tpl-sale": [
       {
-        "ref": "n:gen2:tpl-sale-c1",
-        "product": "winter coat",
-        "title": "Winter coat key visual with space for the offer"
+        "ref": "n:q10-sale-case-01",
+        "product": "daypack",
+        "title": "Daypack Sales Offer"
       },
       {
-        "ref": "g:feed-ad-still/example-05",
-        "product": "running shoe",
-        "title": "Running shoe sale scene with a clear tread detail"
+        "ref": "n:q10-sale-case-02",
+        "product": "pet grooming kit",
+        "title": "Dog Grooming Demo"
       },
       {
-        "ref": "n:guide:c3-r3-occ-sale-serum",
-        "product": "serum and cream",
-        "title": "Serum and cream texture swatches arranged on glass"
+        "ref": "n:q10-sale-case-03",
+        "product": "serum",
+        "title": "Serum First Impression"
       },
       {
-        "ref": "g:lifestyle-scene/example-05",
-        "product": "linen tote",
-        "title": "Linen tote hanging in a bright home entryway"
+        "ref": "n:q10-sale-case-04",
+        "product": "protein shake",
+        "title": "Protein Shake Taste Test"
       }
     ],
     "tpl-howto": [
       {
-        "ref": "how-to-tutorial",
-        "product": "steam iron",
-        "title": "Steam iron filled, then run down a shirt"
+        "ref": "n:q10-howto-case-01",
+        "product": "resistance bands",
+        "title": "Resistance Band Row"
       },
       {
-        "ref": "n:gen2:tpl-howto-c2",
-        "product": "pour-over coffee set",
-        "title": "Pour-over set: filter placed before the first pour"
+        "ref": "n:q10-howto-case-02",
+        "product": "electric toothbrush",
+        "title": "Electric Toothbrush Demo"
       },
       {
-        "ref": "n:gen2:tpl-howto-c3",
-        "product": "bike light",
-        "title": "Bike light clipped onto the handlebars"
+        "ref": "n:q10-howto-case-03",
+        "product": "cleanser",
+        "title": "Cleanser Pump Review"
       },
       {
-        "ref": "n:gen2:url-to-video-g4",
-        "product": "ceramic teapot",
-        "title": "Teapot and cups arranged for a simple tea-pouring scene"
+        "ref": "n:q10-howto-case-04",
+        "product": "field jacket",
+        "title": "Field Jacket Fit Check"
       }
     ],
     "tpl-film": [
       {
-        "ref": "g:ecommerce-main-image/hero-output",
-        "product": "matte ceramic travel mug",
-        "title": "Matte ceramic travel mug on a neutral studio surface"
+        "ref": "n:q10-film-case-01",
+        "product": "perfume",
+        "title": "Dark Water Perfume Reveal"
       },
       {
-        "ref": "n:guide:plat-youtube-shorts-size-square-ebike",
-        "product": "folding electric bicycle",
-        "title": "Unbranded folding electric bicycle in a clean studio scene"
+        "ref": "n:q10-film-case-02",
+        "product": "headphones",
+        "title": "Headphone Pairing Demo"
       },
       {
-        "ref": "n:gen2:examples-g6",
-        "product": "cork yoga block",
-        "title": "Close-up of cork grain and edge in soft cinematic light"
+        "ref": "n:q10-film-case-03",
+        "product": "protein shake",
+        "title": "After-Workout Protein Sip"
       },
       {
-        "ref": "n:gen2:tpl-film-c4",
-        "product": "leather boots",
-        "title": "Leather boots on a misty forest trail"
+        "ref": "n:q10-film-case-04",
+        "product": "lip balm",
+        "title": "Tinted Balm GRWM"
       }
     ],
     "tpl-beauty": [

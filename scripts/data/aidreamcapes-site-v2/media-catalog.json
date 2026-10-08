@@ -3524,6 +3524,1041 @@
         640,
         1280
       ]
+    },
+    "q10-story-strip-1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult applies a vitamin serum",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-strip-2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult checks a plain phone case with one small circular rear camera.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-strip-3": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult fastens gold hoops",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-strip-4": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Protein bar after a run",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-strip-5": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Neutral sneakers at the gym",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-strip-6": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Remove pet hair from a sofa",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-steps-result": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult drizzles sauce over a finished taco plate.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-picker-1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult holds a sunscreen tube beside a beach towel before heading out",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-picker-2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult fits a plain phone case onto a generic single-camera phone.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-picker-3": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult unwraps plain gold hoop earrings from a gift box",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-picker-4": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult opens a skincare gift set and lifts tissue paper",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-picker-5": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult holds a vitamin C serum beside their face in a first-impression review",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-picker-7": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult takes the first bite of a protein bar after a run",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-picker-8": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult rolls a lint remover over pet hair on a sofa",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-uses-1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Hand finishes a lunch plate",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-uses-2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Sauce sampled at lunch",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-outputs-1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Sauce served with lunch",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-outputs-1-r2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "A hot sauce bottle beside a bowl of rice and roasted vegetables.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-outputs-2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Sauce added to a meal",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-outputs-2-r2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "A hot sauce bottle beside a plate of pasta.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-after": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Bottle beside a plated meal",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-after-r2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "A hot sauce bottle beside tacos on a wooden dining table.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-strip-1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult applies a face mist",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-strip-2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Athletic jacket fit check",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-strip-3": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Leggings stretch test",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-strip-4": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Cleanser pump routine",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-strip-5": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Gold earrings from a box",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-strip-6": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult models a jacket and checks its fit in a mirror.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-steps-result": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult pulls a hard-shell suitcase through an airport terminal.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-picker-1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult wears a daypack and adjusts its shoulder strap outdoors",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-picker-2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult packs a backpack and travel organizer as a coordinated set",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-picker-3": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult carries a canvas tote through an outdoor market",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-picker-4": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult brushes a dog with a plain grooming kit",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-picker-5": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult creator holds serum and applies one drop to their hand",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-picker-6": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult mixes a protein shake after a workout",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-picker-7": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult models a jacket and checks its fit in a mirror",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-picker-8": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult wears and adjusts a plain crossbody bag",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-uses-1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Wallet lifted from box",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-uses-2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Skincare set tissue reveal",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-input-1-good": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Plain sunscreen tube with its full silhouette on a white background.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-outputs-1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Sunscreen bottle with full silhouette",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-outputs-2-r2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "A white sunscreen tube standing on a folded beach towel.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-after": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "An adult holds a white skincare jar and touches the cream.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-strip-1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult aims a garment steamer at a blue shirt.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-strip-2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult smooths one shirt panel with a garment steamer.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-strip-3": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult adjusts a backpack strap before a walk.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-strip-4": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Garlic press crushes a clove",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-strip-5": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult wipes a cooking pan to remove a stain.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-strip-6": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult removes pet hair from bedding with a lint tool.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-picker-1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Anchor resistance bands",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-picker-2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Brush with an electric toothbrush",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-picker-3": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult creator presents a cleanser bottle to camera, presses the pump once, mouth visibly mid-sentence",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-picker-5": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult hand presses a garment steamer control, indicator glows",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-picker-6": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult creator wears a field jacket, holds the cuff beside their face and speaks directly to camera, mouth visibly mid-sentence",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-picker-7": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult hand brushes one grout seam clean",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-picker-8": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult hand squeezes a garlic press once",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-input-1-good": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Complete garment steamer shown clearly on a plain light background.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-input-2-good": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Steamer smooths a shirt",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-input-2-bad": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Steamer edge cut off",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-outputs-1": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Steamer starts a smooth pass",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-strip-3": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult holds a plain portable speaker in a dark room.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-strip-4": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Mix a protein shake",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-strip-5": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "An adult holds a white portable air purifier on a desk.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-strip-6": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult tests a running shoe",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-steps-result": {
+      "w": 1536,
+      "h": 864,
+      "alt": "A plain speaker grille catches a cool cinematic highlight.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-picker-2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult creator in a parked car holds a vitamin C serum beside their face and speaks directly to camera, mouth visibly mid-sentence",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-picker-3": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult wears over-ear headphones and taps pairing on a generic phone",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-picker-4": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult takes a sip of a protein shake after training",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-picker-5": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult hands open a leather wallet to show stitching and card slots",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-picker-6": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult hand fastens a gold hoop earring clasp",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-picker-8": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult creator applies tinted lip balm at a mirror, then holds it beside their face and speaks directly to camera, mouth visibly mid-sentence",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-uses-1": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Analog watch on wrist",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-uses-2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult carries a canvas tote",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-after": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Rounded fragrance bottle reflected on dark water in cinematic light.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-case-01": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult applies sunscreen before a beach outing.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-case-02": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult snaps a plain phone case onto a generic single-camera phone.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-case-03": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult unwraps plain gold hoop earrings from a gift box.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-case-04": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult opens a skincare set and lifts the tissue paper.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-case-01": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult wears a daypack and adjusts its shoulder straps outdoors.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-case-02": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult brushes a dog with a plain grooming kit.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-case-03": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult creator swatches serum on one hand.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-case-04": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult tastes a protein shake after a workout.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-case-01": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult anchors resistance bands and performs a controlled row.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-case-02": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult brushes teeth with an electric toothbrush.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-case-03": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult creator holds a cleanser and speaks to camera.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-case-04": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult creator wears a field jacket and checks its fit.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-case-01": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Opaque fragrance bottle reflected on dark water in cinematic light.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-case-02": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult pairs plain over-ear headphones with a generic phone.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-case-03": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult tastes a protein shake after training.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-case-04": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult applies tinted lip balm, then speaks to camera.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-example-01": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult opens a skincare gift set and lifts the tissue paper.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-example-02": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult packs a travel sunscreen kit into a carry-on bag.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-example-03": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult drinks from a plain sports bottle after a workout.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-example-01": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult pulls a hard-shell suitcase through an airport terminal.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-example-02": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult tries on plain summer sandals before a market walk.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-example-03": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult laces neutral running shoes before a jog.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-example-01": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult pours hot water over a tea bag and serves the finished herbal tea.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-example-02": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult runs a fabric shaver over a pilled sweater and shows the cleaned panel.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-example-03": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult replaces a pitcher filter and pours water into a glass.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-picker-4": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult prepares and serves herbal tea with a gooseneck kettle.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-sale-input-1-bad": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Sunscreen tube is cut off by the top edge in an incomplete product upload.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-picker-6": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult adjusts a running cap on a trail while looking toward camera.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-more-ugc": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult creator speaks to camera while holding an amber serum bottle.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-after": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Adult steams a creased blue shirt on a hanger.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-more-feature": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult uses a white electric toothbrush in a bright bathroom.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-more-before-after": {
+      "w": 1280,
+      "h": 720,
+      "alt": "Adult steams one side of a hanging blue shirt to show the smooth result.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-hero": {
+      "w": 1280,
+      "h": 720,
+      "alt": "Perfume bottle reflected in dark water beneath a bronze highlight.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-example-01": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Camera lens on a dark plinth under a narrow strip of window light.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-example-03": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult applies tinted lip balm in front of a bright bathroom mirror.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-more-carousel": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult carries a plain canvas tote along a sunny city street.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-more-creator": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult speaks to camera while wearing plain cream over-ear headphones.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-film-more-retargeting": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Adult shows a plain running shoe while speaking to camera.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-input-1-good": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Full hot sauce bottle, cap, and blank label in sharp focus on a pale background.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-howto-input-1-good-r2": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Complete white handheld garment steamer with water tank and steam head shown sharply on a light background.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "q10-story-input-1-bad": {
+      "w": 1280,
+      "h": 1280,
+      "alt": "Same hot sauce bottle blurred out of focus, leaving its cap and label difficult to inspect.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "clips": {

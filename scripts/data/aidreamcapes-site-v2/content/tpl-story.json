@@ -178,22 +178,22 @@
         "label": "Centered, with space to spare",
         "items": [
           {
-            "ref": "n:gen2:tpl-story-g1",
-            "title": "Gift set centered with clear space above and below",
+            "ref": "n:q10-story-example-01",
+            "title": "ASMR Unboxing: Skincare gift reveal",
             "kind": "photo",
-            "product": "gift set"
+            "product": "skincare set"
           },
           {
-            "ref": "n:gen2:tpl-story-g2",
-            "title": "Travel-size kit centered in a toiletry bag",
+            "ref": "n:q10-story-example-02",
+            "title": "Pack With Me: Travel sunscreen kit",
             "kind": "photo",
-            "product": "travel-size kit"
+            "product": "travel skincare kit"
           },
           {
-            "ref": "n:gen2:tpl-story-g3",
-            "title": "Bright yellow backdrop with a centered water bottle",
+            "ref": "n:q10-story-example-03",
+            "title": "Product Demo: Sports bottle after workout",
             "kind": "photo",
-            "product": "water bottle"
+            "product": "sports bottle"
           }
         ]
       }
@@ -202,19 +202,19 @@
   "visual": {
     "overview": "A Story ad pairs one clear product photo with a setting that leaves room for a short message. Place the price, date, and link on the Story canvas after you download the image.",
     "strip": [
-      "n:gen2:tpl-box-c4",
-      "g:ecommerce-main-image/example-06",
-      "n:gen2:lifestyle-photos-g2",
-      "n:gen2:ind-health-wellness-21",
-      "n:gen2:h1-video-hub-socks-source",
-      "n:guide:c1-tpl-compare-reuse-strip2-square"
+      "n:q10-story-strip-1",
+      "n:q10-story-strip-2",
+      "n:q10-story-strip-3",
+      "n:q10-story-strip-4",
+      "n:q10-story-strip-5",
+      "n:q10-story-strip-6"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-story-m2-source",
       "sourceAlt": "Single hot sauce bottle photographed upright on a pale seamless background.",
       "sourceTitle": "Square product photo",
       "sourceHint": "Center the full product with open space around it.",
-      "result": "n:guide:c1-tpl-story-m2-result-square",
+      "result": "n:q10-story-steps-result",
       "options": [
         [
           "Template",
@@ -237,93 +237,93 @@
       "lead": "Pick a setting that leaves enough open space for your message.",
       "chips": [
         {
-          "id": "space",
-          "label": "Leave headline space"
+          "id": "demo",
+          "label": "Product Demos"
         },
         {
-          "id": "gift",
-          "label": "Show a gift idea"
+          "id": "unbox",
+          "label": "Unboxing Formats"
         },
         {
-          "id": "everyday",
-          "label": "Use an everyday scene"
+          "id": "creator",
+          "label": "Creator Ads"
         },
         {
-          "id": "offer",
-          "label": "Make room for an offer"
+          "id": "response",
+          "label": "Reactions & Fixes"
         }
       ],
       "cards": [
         {
-          "ref": "g:story-ad-vertical/hero-output",
-          "label": "Sunscreen with room for a headline",
+          "ref": "n:q10-story-picker-1",
+          "label": "Product Demo: Sunscreen before beach",
           "chips": [
-            "space"
+            "demo"
           ],
-          "prompt": "Leave clear space beside the sunscreen for a short headline.",
+          "prompt": "Use the uploaded photo as the sunscreen product and preserve its tube shape, color, and label area. In bright beach light, an adult applies sunscreen to one forearm and holds the tube beside a beach bag, leaving clear space for a Story headline and offer. Square ad-photo composition, natural skin texture, no text or logos.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:lifestyle-photos-g6",
-          "label": "Linen table setting",
+          "ref": "n:q10-story-picker-2",
+          "label": "Product Demo: Phone case snap-on",
           "chips": [
-            "space"
+            "demo"
           ],
-          "prompt": "Arrange the linen napkins with quiet space for an offer.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an adult fits a plain phone case onto a generic mid-range phone with exactly one small circular rear camera lens, no camera island or extra lenses, then presses each corner. End with the phone back centered. Natural creator-video look, soft daylight. Chest-up handheld close-up with a short push-in. Sound: case snap, light room tone; no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:occ-black-friday-c4",
-          "label": "Cashmere gift boxes",
+          "ref": "n:q10-story-picker-3",
+          "label": "ASMR Unboxing: Gold hoop earrings",
           "chips": [
-            "gift"
+            "unbox"
           ],
-          "prompt": "Stack the cashmere gift boxes in soft shadow.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a softly lit vanity, adult hands lift plain gold hoop earrings from a small gift box and hold them toward the lens, ending with both hoops centered. Warm side light, natural phone-video look. Top-down handheld close-up with a slow push-in. Sound: tissue rustle, box tap; no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:h1-photo-hub-candle-result",
-          "label": "Candle jar in an open carton",
+          "ref": "n:q10-story-picker-4",
+          "label": "ASMR Unboxing: Skincare set reveal",
           "chips": [
-            "gift"
+            "unbox"
           ],
-          "prompt": "Open a plain carton to reveal the white ceramic candle jar and its matching lid.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands peel tissue from a plain gift box and lift out two unbranded skincare containers, ending with the set held still in the center. Soft morning window light, natural product-ad look. Top-down handheld close-up with a gentle push-in. Sound: tissue peel, box flap, jar set down; no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:b1-spokesperson-output-coffee",
-          "label": "Presenter with a ceramic coffee mug",
+          "ref": "n:q10-story-picker-5",
+          "label": "Creator Review: Vitamin C serum",
           "chips": [
-            "everyday"
+            "creator"
           ],
-          "prompt": "Hold the speckled ceramic mug in a relaxed morning setting.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator sits beside a bright bathroom window, holds the serum bottle beside their face and says to camera, “I use two drops before moisturizer.” They show one drop on the back of a hand and end with the bottle beside their face. Casual selfie-video look, natural skin texture. Chest-up eye-level framing with slight handheld sway. Sound: voice, cap click, room tone; no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:url-to-video-g5",
-          "label": "Cap before a run",
+          "ref": "n:q10-story-picker-6",
+          "label": "Fit Check: Running cap adjustment",
           "chips": [
-            "everyday"
+            "creator"
           ],
-          "prompt": "Pull on the running cap before a morning jog.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a quiet park trail, an adult puts on the running cap, adjusts its brim and looks into the camera, saying, “I keep this one by the door.” End with the cap clearly framed. Casual phone-video look, soft morning light. Chest-up front-facing handheld shot with a small tilt. Sound: voice, fabric rustle, birds; no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-story-reuse-strip5-square",
-          "label": "Hot sauce bottle with fresh chilies",
+          "ref": "n:q10-story-picker-7",
+          "label": "Taste Test: Protein bar first bite",
           "chips": [
-            "offer"
+            "response"
           ],
-          "prompt": "Show the bottle beside chilies and leave clear space for an offer.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunny trail rest stop, an adult opens a plain protein bar wrapper, takes one bite and turns the bar toward the lens, ending with a quick surprised smile. Natural phone-video ad look, clear morning light. Chest-up handheld close-up with a small push-in. Sound: wrapper crinkle, bite, outdoor ambience; no music.",
           "kind": "photo"
         },
         {
-          "ref": "g:story-ad-vertical/example-06",
-          "label": "Sunscreen with Story space",
+          "ref": "n:q10-story-picker-8",
+          "label": "Problem to Fix: Sofa hair removal",
           "chips": [
-            "offer"
+            "response"
           ],
-          "prompt": "Leave open room beside the sunscreen for an offer and price.",
+          "prompt": "Use the uploaded photo as the lint roller and preserve its shape and color. On a light sofa, an adult rolls once across a pet-hair-covered cushion, ending with a clean strip beside the remaining fur. Clear before-and-after cleaning ad, close square framing, natural daylight; no music.",
           "kind": "photo"
         }
       ],
@@ -332,21 +332,21 @@
     "uses": [
       {
         "frame": "post",
-        "h": "Place a square product photo on a Story canvas",
-        "d": "Keep the hot sauce bottle visible on the 9:16 canvas, then add the date, price, and link as editable text.",
-        "ref": "n:guide:c1-tpl-story-m4-use-photo-square-1"
+        "h": "Place a sauce photo on a Story canvas",
+        "d": "Keep the bottle and plated meal clear, then add the exact date, price, and link as editable text.",
+        "ref": "n:q10-story-uses-1"
       },
       {
         "frame": "post",
-        "h": "Adapt the product photo for a feed post",
-        "d": "Keep the hot sauce bottle centered in the square feed image so its label and silhouette remain visible.",
-        "ref": "n:guide:c1-tpl-story-m4-use-photo-square-2"
+        "h": "Use a sauce photo in a feed post",
+        "d": "Keep the bottle and meal centered in the square image so shoppers can see the serving idea.",
+        "ref": "n:q10-story-uses-2"
       }
     ],
     "input": [
       {
-        "good": "n:hotsauce-drip",
-        "bad": "n:guide:c1-reuse-story-m5-1-blur",
+        "good": "n:q10-story-input-1-good",
+        "bad": "n:q10-story-input-1-bad",
         "good_label": "Product shape and details stay sharp",
         "bad_label": "Soft focus hides small product details"
       },
@@ -359,18 +359,18 @@
     ],
     "outputs": [
       {
-        "label": "Square hot sauce product photo for a Story ad",
+        "label": "Square sauce product photo for a Story ad",
         "frame": "1:1",
-        "ref": "n:guide:c1-tpl-story-m6-output-1-square"
+        "ref": "n:q10-story-outputs-1-r2"
       },
       {
-        "label": "Square hot sauce photo ready for a 9:16 canvas",
+        "label": "Square sauce photo ready for a 9:16 canvas",
         "frame": "1:1",
-        "ref": "n:guide:c1-tpl-story-m6-output-2-square"
+        "ref": "n:q10-story-outputs-2-r2"
       }
     ],
     "after": {
-      "ref": "n:guide:c1-tpl-story-m7-bottle-scene",
+      "ref": "n:q10-story-after-r2",
       "zones": [
         "Headline",
         "Date",

@@ -183,20 +183,20 @@
         "label": "Step by step",
         "items": [
           {
-            "ref": "n:gen2:tpl-howto-g1",
-            "title": "Electric kettle filled at the kitchen tap",
+            "ref": "n:q10-howto-example-01",
+            "title": "Recipe Demo: Kettle steeps herbal tea",
             "kind": "scene",
             "product": "electric kettle"
           },
           {
-            "ref": "n:gen2:tpl-howto-g2",
-            "title": "Fabric shaver gliding over a pilled sweater",
+            "ref": "n:q10-howto-example-02",
+            "title": "Before/After: Fabric shaver clears a sweater",
             "kind": "scene",
             "product": "fabric shaver"
           },
           {
-            "ref": "n:gen2:tpl-howto-g3",
-            "title": "Filter cartridge clicked into a water pitcher",
+            "ref": "n:q10-howto-example-03",
+            "title": "Product Demo: Replace a pitcher filter",
             "kind": "scene",
             "product": "water filter pitcher"
           }
@@ -207,12 +207,12 @@
   "visual": {
     "overview": "A how-to video is easiest to follow when it shows one task from setup to result. Keep the tool and the part being worked on visible throughout the clip.",
     "strip": [
-      "n:guide:c1-tpl-howto-m2-source",
-      "n:guide:c1-tpl-howto-m2-result",
-      "n:gen2:plat-youtube-shorts-g1",
-      "n:gen2:plat-youtube-shorts-g2",
-      "n:gen2:before-after-videos-g1",
-      "n:gen2:ind-home-living-c3"
+      "n:q10-howto-strip-1",
+      "n:q10-howto-strip-2",
+      "n:q10-howto-strip-3",
+      "n:q10-howto-strip-4",
+      "n:q10-howto-strip-5",
+      "n:q10-howto-strip-6"
     ],
     "steps": {
       "source": "n:guide:c1-tpl-howto-m2-source",
@@ -241,93 +241,93 @@
       "lead": "Pick a short action that viewers can follow from start to finish.",
       "chips": [
         {
-          "id": "prepare",
-          "label": "Prepare the tool or surface"
+          "id": "howto",
+          "label": "How-To Demos"
         },
         {
-          "id": "action",
-          "label": "Show one clear action"
+          "id": "creator",
+          "label": "Creator Reviews"
         },
         {
-          "id": "detail",
-          "label": "Show a useful detail"
+          "id": "use",
+          "label": "Use and Prep"
         },
         {
-          "id": "result",
-          "label": "Show the visible result"
+          "id": "beforeafter",
+          "label": "Before & After"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:ind-health-wellness-c4",
-          "label": "Resistance bands ready on a door",
+          "ref": "n:q10-howto-picker-1",
+          "label": "Home Workout Demo: Resistance band row",
           "chips": [
-            "prepare"
+            "howto"
           ],
-          "prompt": "Loop the resistance bands over the door handle before exercising.",
+          "prompt": "Use the uploaded photo as the resistance bands and keep their shape and color. In a bright home workout corner, an adult anchors the band to a closed door, steps back, and completes one controlled row, ending with the band taut. Product-in-use fitness ad, side medium framing; shoe shift and band tension, no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:plat-youtube-shorts-c2",
-          "label": "Toothbrush beside the sink",
+          "ref": "n:q10-howto-picker-2",
+          "label": "Product Demo: Electric toothbrush routine",
           "chips": [
-            "prepare"
+            "howto"
           ],
-          "prompt": "Set the electric toothbrush beside the sink before brushing.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a clean bathroom, an adult lifts the electric toothbrush and brushes one front tooth section, ending with the brush lowered beside the sink. Natural morning-routine phone-video look, soft daylight. Mirror-level close framing with a slow push-in. Sound: toothbrush hum, faucet drip; no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-product-feature-callout-video-reuse-strip2-wide",
-          "label": "Hand presses a cleanser pump",
+          "ref": "n:q10-howto-picker-3",
+          "label": "Creator Review: Cleanser pump dose",
           "chips": [
-            "action"
+            "creator"
           ],
-          "prompt": "Press the pump once over a sink to show the product action.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult creator holds the cleanser beside their face, presses the pump once and says to camera, “Watch one pump dispense a dose.” They end with the bottle label area facing the lens. Casual creator-video look, natural skin texture. Chest-up front-facing handheld frame with slight sway. Sound: voice, pump click, room tone; no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-howto-picker-kettle-action-square",
-          "label": "Kettle pours water into a mug",
+          "ref": "n:q10-howto-picker-4",
+          "label": "Recipe Demo: Herbal tea steep",
           "chips": [
-            "action"
+            "use"
           ],
-          "prompt": "Pour from the gooseneck kettle into the mug on a clear counter.",
+          "prompt": "Use the uploaded photo as the gooseneck kettle and keep its shape, finish, and control details. In a bright kitchen, an adult pours hot water over a tea bag in a clear mug, lets the tea steep, then lifts the mug to serve, showing the finished drink. Recipe-demo pacing, overhead-to-side close framing; water pour and cup tap, no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c1-tpl-howto-picker-steamer-detail-square",
-          "label": "Steamer button and handle seam",
+          "ref": "n:q10-howto-picker-5",
+          "label": "Before/After: Steamer smooths a shirt",
           "chips": [
-            "detail"
+            "beforeafter"
           ],
-          "prompt": "Move in close on the steamer button and handle seam.",
+          "prompt": "Use the uploaded photo as the garment steamer and preserve its shape and controls. An adult steams one wrinkled panel of a blue shirt in a smooth pass; end with the treated half visibly smooth beside the untouched wrinkles. Clear before-and-after product demo, close vertical framing; steam hiss and fabric rustle, no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-fashion-clothing-g3",
-          "label": "Field jacket fabric close up",
+          "ref": "n:q10-howto-picker-6",
+          "label": "Creator Review: Field jacket fit check",
           "chips": [
-            "detail"
+            "creator"
           ],
-          "prompt": "Move closer to the field jacket fabric to show its weave.",
+          "prompt": "Use the uploaded photo as the field jacket and preserve its fabric and fit. An adult creator wears it, holds the cuff beside their face, looks directly into camera and says, “Watch how this cuff sits over my wrist.” Keep the face, moving mouth, and jacket visible in a chest-up handheld frame; natural room tone, no music.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:before-after-videos-g2",
-          "label": "Grout after one brush pass",
+          "ref": "n:q10-howto-picker-7",
+          "label": "Before/After: Grout brush cleans seam",
           "chips": [
-            "result"
+            "beforeafter"
           ],
-          "prompt": "Show the cleaned grout beside the brush and tile.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a tiled bathroom, an adult moves the grout brush once across a dirty seam, ending with the cleaned strip beside the untouched grout. Natural home-cleaning ad look, clear side light. Low close-up tracking the brush in one smooth move. Sound: brush bristles on tile, water drip; no music.",
           "kind": "photo"
         },
         {
-          "ref": "g:ecommerce-main-image/example-02",
-          "label": "Ceramic mug ready on a counter",
+          "ref": "n:q10-howto-picker-8",
+          "label": "Cooking Demo: Press garlic",
           "chips": [
-            "result"
+            "use"
           ],
-          "prompt": "Finish with the mug resting on a clean counter after pouring.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright kitchen counter, an adult places a peeled garlic clove in the press and squeezes once, ending with minced garlic on a board and the tool open. Natural food-prep phone-video look. Overhead handheld close-up with a short push-in. Sound: hinge squeeze, garlic on board; no music.",
           "kind": "photo"
         }
       ],
@@ -349,23 +349,23 @@
     ],
     "input": [
       {
-        "good": "n:guide:plat-youtube-shorts-m2-source",
+        "good": "n:q10-howto-input-1-good-r2",
         "bad": "n:guide:c1-reuse-howto-m5-1-blur",
-        "good_label": "Product shape and details stay sharp",
+        "good_label": "Complete garment steamer shown clearly",
         "bad_label": "Soft focus hides small product details"
       },
       {
-        "good": "n:guide:plat-youtube-shorts-m2-result-vertical",
-        "bad": "n:guide:c1-reuse-howto-m5-2-crop",
-        "good_label": "Whole product fits inside the frame",
-        "bad_label": "Tight framing cuts off a product edge"
+        "good": "n:q10-howto-input-2-good",
+        "bad": "n:q10-howto-input-2-bad",
+        "good_label": "Whole steamer and shirt fit in frame",
+        "bad_label": "The steamer edge is cut off"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:c1-tpl-howto-output-1",
+        "ref": "n:q10-howto-outputs-1",
         "frame": "9:16",
-        "label": "9:16 how-to demonstration"
+        "label": "Before/after: Steamer smooths a shirt wrinkle"
       },
       {
         "ref": "n:guide:c1-tpl-howto-output-2",
@@ -374,7 +374,7 @@
       }
     ],
     "after": {
-      "ref": "f:video-hub-h1-steamer",
+      "ref": "n:q10-howto-after",
       "zones": [
         "Step label",
         "Product name"
