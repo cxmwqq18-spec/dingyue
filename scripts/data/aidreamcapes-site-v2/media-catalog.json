@@ -20000,7 +20000,7 @@
         "file": "gen2guide-k8-spokesperson-gen2-photo-hub-c1",
         "w": 1024,
         "h": 1024,
-        "alt": "Leather crossbody bag, front view, on a pure white background",
+        "alt": "Structured medium-brown leather crossbody bag with a rounded flap and centered gold buckle, front view on white.",
         "variants": [
           640,
           1280
@@ -20251,16 +20251,6 @@
         "w": 1024,
         "h": 1024,
         "alt": "Ceramic mug at breakfast, shot from across the table",
-        "variants": [
-          640,
-          1280
-        ]
-      },
-      "k8-spokesperson-gen2-white-background-c1": {
-        "file": "gen2guide-k8-spokesperson-gen2-white-background-c1",
-        "w": 1024,
-        "h": 1024,
-        "alt": "Brushed steel water bottle on a pure white background, soft contact shadow",
         "variants": [
           640,
           1280
@@ -23421,10 +23411,10 @@
         ]
       },
       "q4-spokesperson-output-02": {
-        "file": "gen2guide-q4-spokesperson-output-02-r1",
+        "file": "gen2guide-q4-spokesperson-output-02-r2",
         "w": 1024,
         "h": 1024,
-        "alt": "adult South Asian woman in her late thirties in a simple content studio setting speaks to camera while holding a plain plain canvas shoulder bag.",
+        "alt": "Adult South Asian woman presents a structured brown leather crossbody bag with a centered gold buckle in a bright home setting.",
         "variants": [
           640
         ]
@@ -23475,19 +23465,19 @@
         ]
       },
       "q4-spokesperson-input-bad-blur": {
-        "file": "gen2guide-q4-spokesperson-input-bad-blur-r1",
+        "file": "gen2guide-q4-spokesperson-input-bad-blur-r2",
         "w": 1024,
         "h": 1024,
-        "alt": "A forest-green bottle blurred so its cap and full shape are difficult to inspect.",
+        "alt": "Matte forest-green bottle with a black screw cap, blurred so its shape and details are difficult to inspect.",
         "variants": [
           640
         ]
       },
       "q4-spokesperson-input-bad-crop": {
-        "file": "gen2guide-q4-spokesperson-input-bad-crop-r1",
+        "file": "gen2guide-q4-spokesperson-input-bad-crop-r2",
         "w": 1024,
         "h": 1024,
-        "alt": "A black leather bag cut off by the right edge in dim uneven light.",
+        "alt": "Brown leather crossbody bag with a centered gold buckle, cropped at the right edge in dim light.",
         "variants": [
           640
         ]
@@ -23551,6 +23541,15 @@
         "w": 1024,
         "h": 1024,
         "alt": "A complete matte forest-green bottle with a simple black cap, centered on a pale surface.",
+        "variants": [
+          640
+        ]
+      },
+      "q4-spokesperson-input-good-bottle": {
+        "file": "gen2guide-q4-spokesperson-input-good-bottle-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Complete matte forest-green bottle with a black cap, centered on a pale surface in clear light.",
         "variants": [
           640
         ]

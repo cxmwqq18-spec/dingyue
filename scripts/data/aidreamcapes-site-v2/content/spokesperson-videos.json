@@ -198,16 +198,16 @@
     ],
     "input": [
       {
-        "good": "n:guide:k8-spokesperson-gen2-white-background-c1",
+        "good": "n:guide:q4-spokesperson-input-good-bottle",
         "bad": "n:guide:q4-spokesperson-input-bad-blur",
-        "good_label": "Full bottle shape in clear light",
-        "bad_label": "Bottle shape is blurred"
+        "good_label": "Full forest-green bottle in clear light",
+        "bad_label": "Forest-green bottle details are blurred"
       },
       {
         "good": "n:guide:k8-spokesperson-gen2-photo-hub-c1",
         "bad": "n:guide:q4-spokesperson-input-bad-crop",
-        "good_label": "Bag silhouette clear against white",
-        "bad_label": "Bag edge is cut off and too dark"
+        "good_label": "Brown leather bag and gold buckle fully visible",
+        "bad_label": "Bag edge is cut off in dim light"
       }
     ],
     "outputs": [
