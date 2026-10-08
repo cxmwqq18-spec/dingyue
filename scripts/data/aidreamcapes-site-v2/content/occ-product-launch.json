@@ -173,16 +173,16 @@
         "label": "Launch week",
         "items": [
           {
-            "ref": "n:gen2:occ-product-launch-g1",
-            "title": "New bottle half lit, showing only its outline",
+            "ref": "n:guide:q20-occ-product-launch-example-01",
+            "title": "Lip tint lifted from a launch box",
             "kind": "photo",
-            "product": "new bottle"
+            "product": "lip tint"
           },
           {
-            "ref": "n:gen2:occ-product-launch-g2",
-            "title": "New product box preview on a plain backdrop",
+            "ref": "n:guide:q20-occ-launch-example-02-r2",
+            "title": "Product in Hand: Amber serum",
             "kind": "photo",
-            "product": "product box"
+            "product": "amber skincare serum"
           },
           {
             "ref": "n:gen2:occ-product-launch-g3",
@@ -213,18 +213,18 @@
   "visual": {
     "overview": "Plan a product launch from a clear sample photo, with separate scenes for packaging, first use, and the store listing.",
     "strip": [
-      "n:gen2:examples-g3",
+      "n:guide:q20-occ-launch-strip-01",
       "n:gen2:spokesperson-videos-g4",
       "n:guide:plat-shopify-c3-size-square-product",
-      "n:guide:c4-shopify-m3-shelf-square",
-      "n:guide:c4-occ-launch-appliance",
-      "n:gen2:tpl-launch-g3"
+      "n:guide:q20-occ-launch-strip-03",
+      "n:guide:q20-occ-launch-strip-04",
+      "n:guide:q20-occ-launch-strip-05"
     ],
     "steps": {
       "source": "n:guide:occ-product-launch-c3-m2-source",
-      "result": "n:guide:occ-product-launch-c3-m2-result",
+      "result": "n:guide:q20-occ-product-launch-steps-result-r2",
       "mode": "photo",
-      "prompt": "Show this matte blue water bottle upright on a pale stone ledge beside one folded towel.",
+      "prompt": "Use the uploaded photo as the only product reference. Preserve its matte turquoise bottle, cap, proportions and finish. In a bright launch-day kitchen, an adult lifts the bottle for one sip and holds it beside their face. Natural phone-shot UGC in soft window light. Chest-up framing with one gentle push-in; end with the bottle clear beside the face. Sound: a quiet sip and room tone; no music or added text.",
       "options": [
         [
           "Template",
@@ -245,93 +245,93 @@
       "lead": "Choose the scene that fits the product stage you want to show.",
       "chips": [
         {
-          "id": "package",
-          "label": "Packaging preview"
+          "id": "review",
+          "label": "Creator Review"
         },
         {
-          "id": "reveal",
-          "label": "Product reveal"
+          "id": "unbox",
+          "label": "ASMR Unboxing"
         },
         {
-          "id": "use",
-          "label": "First use"
+          "id": "routine",
+          "label": "GRWM Routine"
         },
         {
-          "id": "listing",
-          "label": "Store listing"
+          "id": "demo",
+          "label": "Product Demo"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-pack-c4",
-          "label": "Printed boxes by a door",
+          "ref": "n:guide:q20-occ-product-launch-card-01",
+          "label": "Creator Review: Serum dropper shown",
           "chips": [
-            "package"
+            "review"
           ],
-          "prompt": "Stack these printed boxes beside a bright entry door.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult creator holds the serum beside her cheek and points once to its dropper. An adult creator looks into the camera and says, “Notice how the dropper gives a neat, controlled dose.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: clear speech and a soft dropper click; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-pack-c2",
-          "label": "Cereal box in a pantry",
+          "ref": "n:guide:q20-occ-product-launch-card-02",
+          "label": "ASMR Unboxing: Gold hoops revealed",
           "chips": [
-            "package"
+            "unbox"
           ],
-          "prompt": "Place this patterned cereal box on a clear pantry shelf.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright dressing table, adult hands lift simple gold hoops from tissue and turn them once in soft window light. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: tissue rustle and a small box click; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:spokesperson-videos-c4",
-          "label": "Open planner at a desk",
+          "ref": "n:guide:q20-occ-product-launch-card-03",
+          "label": "GRWM: Lip tint before work",
           "chips": [
-            "reveal"
+            "routine"
           ],
-          "prompt": "Show this hardcover planner open to blank pages at a tidy home desk.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a morning vanity, an adult creator applies the tint once, then holds it beside her face. An adult creator looks into the camera and says, “This is the quick color step before I head out.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: cap click, clear speech and room tone; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:plat-youtube-shorts-c2",
-          "label": "Electric toothbrush on a bathroom counter",
+          "ref": "n:guide:q20-occ-product-launch-card-04",
+          "label": "Problem Fix: Cable organizer demo",
           "chips": [
-            "reveal"
+            "demo"
           ],
-          "prompt": "Place this electric toothbrush on a clear bathroom counter.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright work desk, an adult hand pulls three loose charging cables into a silicone organizer in one motion. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: cable taps and a silicone snap; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:b1-spokesperson-videos-result",
-          "label": "Green bottle held for first use",
+          "ref": "n:guide:q20-occ-product-launch-card-05",
+          "label": "Creator Review: Protein bar opened",
           "chips": [
-            "use"
+            "review"
           ],
-          "prompt": "Show this plain green bottle held at chest height during a calm first-use moment.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult creator holds the bar toward camera, opens it once and shows the texture. An adult creator looks into the camera and says, “Here is the texture when I break it open.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: wrapper crinkle and clear speech; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:occ-product-launch-c3-m3-first-use",
-          "label": "Matte blue bottle at first use",
+          "ref": "n:guide:q20-occ-product-launch-card-06",
+          "label": "GRWM: Running jacket pre-run fit",
           "chips": [
-            "use"
+            "routine"
           ],
-          "prompt": "Show this matte blue water bottle during a calm outdoor first-use moment, with its shape and cap unchanged.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright entryway, an adult runner zips the jacket once and faces the phone camera. An adult creator looks into the camera and says, “Here is the fit before the morning run.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: zipper slide and clear speech; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:occ-product-launch-phonecase-g7",
-          "label": "Sage silicone phone case",
+          "ref": "n:guide:q20-occ-product-launch-card-07",
+          "label": "Problem-Solving: Pet brush lifts loose hair",
           "chips": [
-            "listing"
+            "demo"
           ],
-          "prompt": "Show this unbranded sage silicone phone case on a light desk, with no phone visible and only a simple generic oval camera opening.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a calm dog, an adult owner makes one slow brush stroke and lifts it to show loose fur. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: brush through fur and quiet room tone; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:tpl-pack-c3-m3-catalog-lineup",
-          "label": "Coffee pouch with blank package pieces",
+          "ref": "n:guide:q20-occ-product-launch-card-08",
+          "label": "ASMR Unboxing: Resistance bands revealed",
           "chips": [
-            "listing"
+            "unbox"
           ],
-          "prompt": "Center this plain kraft coffee pouch beside blank packaging pieces for a catalog image.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright workout corner, adult hands open a plain pouch and lay three bands in a fan on a yoga mat. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: pouch rustle and elastic movement; no music or added text.",
           "kind": "photo"
         }
       ],
@@ -340,9 +340,9 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:guide:tpl-pack-c3-m4-retail-shelf",
-        "h": "Preview a product in its retail setting",
-        "d": "A shelf view can help a launch team discuss how a package reads beside related goods."
+        "ref": "n:guide:q20-occ-launch-uses-01",
+        "h": "Show the snack pouch at the shelf",
+        "d": "An adult hand picks up a plain kraft snack pouch from a grocery shelf, keeping the package easy to recognize beside nearby goods."
       },
       {
         "frame": "browser",
@@ -367,14 +367,14 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:c3-r3-occ-product-drink",
+        "ref": "n:guide:q20-occ-product-launch-output-01",
         "frame": "1:1",
-        "label": "Square new-drink product photo"
+        "label": "Canvas tote packed for a commute"
       },
       {
-        "ref": "n:guide:c4-amazon-phone-case",
+        "ref": "n:guide:q20-occ-product-launch-output-02",
         "frame": "1:1",
-        "label": "Square leather-folio product photo"
+        "label": "Compact coffee grinder in use"
       }
     ],
     "after": {

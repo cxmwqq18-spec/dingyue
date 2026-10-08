@@ -611,14 +611,14 @@
     "occ-product-launch": {
       "hero": {
         "kind": "image",
-        "image": "g:bundle-sets/example-03"
+        "image": "n:guide:q20-occ-launch-media-hero"
       },
       "gallery": [
         "f:promo-video",
         "n:lipstick-ad",
-        "n:sunglasses-flatlay"
+        "n:guide:q20-occ-launch-media-gallery-03"
       ],
-      "og": "g:bundle-sets/example-03"
+      "og": "n:guide:q20-occ-launch-media-hero"
     },
     "occ-sale-discount": {
       "hero": {
@@ -626,9 +626,9 @@
         "image": "g:sale-campaign-key-visual/example-05"
       },
       "gallery": [
-        "g:sale-campaign-key-visual/example-06",
-        "n:sunglasses-cafe",
-        "n:candle-flame"
+        "n:guide:q20-occ-sale-gallery-01",
+        "n:guide:q20-occ-sale-gallery-02",
+        "n:guide:q20-occ-sale-gallery-03"
       ],
       "og": "g:sale-campaign-key-visual/example-05"
     },
@@ -638,7 +638,7 @@
         "image": "g:sale-campaign-key-visual/example-02"
       },
       "gallery": [
-        "n:phonecase-desk",
+        "n:guide:q20-occ-black-friday-gallery-01",
         "n:handbag-carry"
       ],
       "og": "g:sale-campaign-key-visual/example-02"
@@ -646,14 +646,14 @@
     "occ-holidays": {
       "hero": {
         "kind": "image",
-        "image": "g:sale-campaign-key-visual/example-06"
+        "image": "n:guide:q20-occ-holiday-media-hero"
       },
       "gallery": [
-        "n:candle-table",
-        "g:bundle-sets/example-06",
-        "n:coffee-breakfast"
+        "n:guide:q20-occ-holiday-gallery-01",
+        "n:guide:q20-occ-holiday-gallery-02",
+        "n:guide:q20-occ-holiday-gallery-03"
       ],
-      "og": "g:sale-campaign-key-visual/example-06"
+      "og": "n:guide:q20-occ-holiday-media-hero"
     },
     "guide-product-photo-tips": {
       "hero": {

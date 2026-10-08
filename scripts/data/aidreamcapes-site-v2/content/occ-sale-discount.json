@@ -169,16 +169,16 @@
         "label": "Room for the offer",
         "items": [
           {
-            "ref": "n:gen2:occ-sale-discount-g1",
-            "title": "Wool socks on the left, open space on the right",
+            "ref": "n:guide:q20-occ-sale-example-02",
+            "title": "Protein bar first bite shown to camera",
             "kind": "photo",
-            "product": "wool socks"
+            "product": "protein bar"
           },
           {
-            "ref": "n:guide:c3-r3-tpl-sale-m5-0",
-            "title": "Two plain planters of different sizes on a pale counter",
+            "ref": "n:guide:q20-occ-sale-example-03-r2",
+            "title": "Fabric shaver clears sweater pilling",
             "kind": "photo",
-            "product": "pair of ceramic planters"
+            "product": "fabric shaver"
           }
         ]
       },
@@ -186,16 +186,16 @@
         "label": "More offer layouts",
         "items": [
           {
-            "ref": "n:gen2:occ-sale-discount-g3",
-            "title": "Denim jacket with open space on the left",
+            "ref": "n:guide:q20-occ-sale-example-04",
+            "title": "Running jacket fit checked at a mirror",
             "kind": "photo",
-            "product": "denim jacket"
+            "product": "running jacket"
           },
           {
-            "ref": "n:gen2:occ-sale-discount-g4",
-            "title": "Stacked ceramic bowls with space above for an offer",
+            "ref": "n:guide:q20-occ-sale-example-05",
+            "title": "Gold necklace revealed from tissue",
             "kind": "photo",
-            "product": "ceramic bowls"
+            "product": "gold necklace"
           }
         ]
       }
@@ -220,18 +220,18 @@
   "visual": {
     "overview": "Build sale ad creatives around a recognizable product, then add the current price, code, and end date in an editable layer.",
     "strip": [
-      "n:gen2:plat-shopify-g3",
+      "n:guide:q20-occ-sale-reuse-strip-01-r2",
       "f:retargeting-urgency",
-      "n:gen2:plat-shopify-c3",
-      "n:gen2:examples-g7",
-      "n:guide:c4-tpl-pack-coffee-pouch-unbox",
-      "n:gen2:tpl-sale-g3"
+      "n:guide:q20-occ-sale-reuse-strip-03",
+      "n:guide:q20-occ-sale-reuse-strip-04",
+      "n:guide:q20-occ-sale-strip-05",
+      "n:guide:q20-occ-sale-strip-06"
     ],
     "steps": {
       "source": "n:guide:occ-sale-discount-c3-m2-source",
-      "result": "n:guide:occ-sale-discount-c3-m2-result",
+      "result": "n:guide:q20-occ-sale-discount-steps-result-r2",
       "mode": "photo",
-      "prompt": "Arrange these pastel skincare bottles and jars together on a simple sale-photo surface, keeping the full products clear.",
+      "prompt": "Use the uploaded photo as the product reference and preserve its three pastel containers: a blush bottle, a sage bottle and a cream jar with a pale pink lid. At a bright vanity, an adult opens the cream jar and applies a small amount to the back of one hand while the other two containers remain visible. Natural beauty UGC with soft side light. Close framing; end with the open jar and cream texture in focus. Sound: lid click and fingertip glide; no music or added text.",
       "options": [
         [
           "Template",
@@ -252,93 +252,93 @@
       "lead": "Pick a category and leave space for the offer details you will add later.",
       "chips": [
         {
-          "id": "clothing",
-          "label": "Clothing"
+          "id": "review",
+          "label": "Creator Review"
         },
         {
-          "id": "skincare",
-          "label": "Skincare"
+          "id": "unbox",
+          "label": "ASMR Unboxing"
         },
         {
-          "id": "home",
-          "label": "Home goods"
+          "id": "routine",
+          "label": "GRWM Routine"
         },
         {
-          "id": "kitchen",
-          "label": "Kitchen"
+          "id": "demo",
+          "label": "Product Demo"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:tpl-tryon-c3-m3-knitwear-model",
-          "label": "Cream cardigan on a bench",
+          "ref": "n:guide:q20-occ-sale-discount-card-01-r2",
+          "label": "Creator Review: Running tights fit check",
           "chips": [
-            "clothing"
+            "review"
           ],
-          "prompt": "Fold this cream cardigan neatly on a wooden bench beside a leafy plant.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright fitting area, an adult creator shows the waistband and turns a quarter turn toward camera. An adult creator looks into the camera and says, “Here is the waistband and full length in daylight.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: clear speech and fabric movement; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c3-r3-tpl-outfit-walk",
-          "label": "Beige jacket on a park walk",
+          "ref": "n:guide:q20-occ-sale-discount-card-02",
+          "label": "Creator Review: Dog treat seal check",
           "chips": [
-            "clothing"
+            "review"
           ],
-          "prompt": "Show this beige zip jacket being worn on a quiet park walk.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At home beside a calm dog, an adult owner holds a plain pouch and presses its seal once. An adult creator looks into the camera and says, “The pouch closes with one quick press.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: clear speech and one pouch click; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c3-r3-occ-sale-skincare-set",
-          "label": "Skincare set on a vanity",
+          "ref": "n:guide:q20-occ-sale-discount-card-03",
+          "label": "ASMR Unboxing: Gold necklace from box",
           "chips": [
-            "skincare"
+            "unbox"
           ],
-          "prompt": "Line up these three plain skincare bottles and jars on a clean vanity surface.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright dressing table, adult hands lift a simple necklace from a small gift box into window light. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: lid click and tissue rustle; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c3-r3-occ-sale-serum",
-          "label": "Serum and cream texture swatches",
+          "ref": "n:guide:q20-occ-sale-discount-card-04",
+          "label": "ASMR Unboxing: Wireless charger revealed",
           "chips": [
-            "skincare"
+            "unbox"
           ],
-          "prompt": "Arrange these serum and cream textures as clean swatches on glass.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean desk, adult hands lift a compact matte charger from a plain box and place it by a generic phone. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: cardboard rustle and a placement tap; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:white-background-fix-m6-coaster-set",
-          "label": "Slate coasters with offer space",
+          "ref": "n:guide:q20-occ-sale-discount-card-05-r2",
+          "label": "GRWM: Eyeliner before an evening out",
           "chips": [
-            "home"
+            "routine"
           ],
-          "prompt": "Arrange three slate-blue felt coasters on white with open space above for sale details.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult creator applies one eyeliner stroke, then holds the pencil by her cheek. An adult creator looks into the camera and says, “This is the last detail before I head out.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: cap click and clear speech; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:plat-facebook-g2",
-          "label": "Cat resting in a pet bed",
+          "ref": "n:guide:q20-occ-sale-discount-card-06-r2",
+          "label": "GRWM: Trail shoes for a walk",
           "chips": [
-            "home"
+            "routine"
           ],
-          "prompt": "Show this cat resting in its round pet bed in a sunny corner.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright entry bench, an adult runner ties the shoes and stands to show the full pair. An adult creator looks into the camera and says, “Ready for the walk.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: lace pull, footsteps and clear speech; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:plat-youtube-shorts-c3",
-          "label": "Camping stove at a campsite",
+          "ref": "n:guide:q20-occ-sale-discount-card-07",
+          "label": "Product Demo: Pet roller clears hair",
           "chips": [
-            "kitchen"
+            "demo"
           ],
-          "prompt": "Show this camping stove boiling water at a campsite.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a dark coat, an adult rolls the reusable tool once over pet hair to leave a clean strip. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: roller pass and fabric rustle; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:c4-shopify-m3-planter-square",
-          "label": "Planter with offer space",
+          "ref": "n:guide:q20-occ-sale-discount-card-08",
+          "label": "Product Demo: Balm smooths onto hand",
           "chips": [
-            "kitchen"
+            "demo"
           ],
-          "prompt": "Place this small ceramic planter on a clear kitchen surface with room for sale details.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean vanity, an adult dispenses a small amount of balm and smooths it across the back of a hand. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: cap click and fingertip glide; no music or added text.",
           "kind": "photo"
         }
       ],
@@ -353,9 +353,9 @@
       },
       {
         "frame": "browser",
-        "ref": "f:pas-formula-ads",
-        "h": "Create a calm moment for a wellness offer",
-        "d": "A person taking a quiet pause at a sunlit desk gives a wellness promotion a relaxed, everyday setting."
+        "ref": "n:guide:q20-occ-sale-uses-02",
+        "h": "Show herbal tea during a quiet break",
+        "d": "An adult creator presents a plain herbal tea pouch beside a warm mug at a sunlit desk."
       }
     ],
     "input": [
@@ -374,18 +374,18 @@
     ],
     "outputs": [
       {
-        "ref": "n:guide:c4-occ-sale-m6-skincare",
+        "ref": "n:guide:q20-occ-sale-output-01",
         "frame": "1:1",
-        "label": "Square moisturizer offer photo"
+        "label": "Hand-applied oil finish on a wood board"
       },
       {
-        "ref": "n:guide:c4-shopify-strip-bedding-square",
+        "ref": "n:guide:q20-occ-sale-output-02-r2",
         "frame": "1:1",
-        "label": "Square bedding offer photo"
+        "label": "Gray merino sweater in natural daylight"
       }
     ],
     "after": {
-      "ref": "n:guide:c4-occ-sale-m7-ugc-photo",
+      "ref": "n:guide:q20-occ-sale-after",
       "zones": [
         "Offer",
         "End date"

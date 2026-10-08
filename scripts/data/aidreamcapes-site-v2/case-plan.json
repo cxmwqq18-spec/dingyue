@@ -1156,9 +1156,9 @@
         "title": "Leather sandals introduced as a new product colorway"
       },
       {
-        "ref": "n:gen2:occ-product-launch-c3",
-        "product": "debut fragrance",
-        "title": "Debut fragrance unwrapped from tissue paper"
+        "ref": "n:guide:q20-occ-product-launch-case-03",
+        "product": "gold hoop earrings",
+        "title": "Gold hoops revealed from tissue"
       },
       {
         "ref": "g:packaging-mockup/example-04",
@@ -1168,24 +1168,24 @@
     ],
     "occ-sale-discount": [
       {
-        "ref": "n:guide:b1-unboxing-videos-source",
-        "product": "white candle jar",
-        "title": "Plain candle jar styled for a seasonal offer"
+        "ref": "n:guide:q20-occ-sale-case-01-r2",
+        "product": "canvas commuter tote",
+        "title": "Canvas tote held with a laptop for commuting"
       },
       {
-        "ref": "g:story-ad-vertical/example-06",
+        "ref": "n:guide:q20-occ-sale-case-02",
         "product": "sunscreen bottle",
-        "title": "Sunscreen bottle staged for a Story discount offer"
+        "title": "Creator presents an unbranded sunscreen bottle"
       },
       {
-        "ref": "g:lifestyle-scene/example-04",
-        "product": "linen tote",
-        "title": "Linen tote on a beach picnic blanket for a sale"
+        "ref": "n:guide:q20-occ-sale-case-03",
+        "product": "crossbody bag",
+        "title": "Adult models a plain crossbody bag on a city walk"
       },
       {
-        "ref": "f:product-video",
-        "product": "espresso machine",
-        "title": "Compact espresso machine on a kitchen counter"
+        "ref": "n:guide:q20-occ-sale-case-04",
+        "product": "protein shake",
+        "title": "Protein shake mixed beside a gym bag"
       }
     ],
     "occ-black-friday": [
@@ -1195,41 +1195,41 @@
         "title": "Folding e-bike checked over before the big deal"
       },
       {
-        "ref": "n:gen2:occ-black-friday-c2",
-        "product": "gaming headset",
-        "title": "Gaming headset under dramatic dark lighting"
+        "ref": "n:guide:q20-occ-black-friday-case-02",
+        "product": "over-ear headphones",
+        "title": "Creator turns a headphone ear cup toward camera"
       },
       {
-        "ref": "n:gen2:occ-black-friday-c3",
-        "product": "air fryer",
-        "title": "Air fryer on a sleek counter in moody light"
+        "ref": "n:guide:q20-occ-black-friday-case-03",
+        "product": "pet-hair cleaning tool",
+        "title": "One pass removes loose hair from upholstery"
       },
       {
-        "ref": "n:gen2:occ-black-friday-c4",
-        "product": "cashmere scarf",
-        "title": "Cashmere scarf gift boxes stacked in shadow"
+        "ref": "n:guide:q20-occ-black-friday-case-04",
+        "product": "wool scarf",
+        "title": "Adult wraps a plain scarf for a winter outing"
       }
     ],
     "occ-holidays": [
       {
-        "ref": "n:gen2:occ-holidays-11",
-        "product": "scented candle",
-        "title": "Scented candle on a holiday table with pine"
+        "ref": "n:guide:q20-occ-holidays-case-01",
+        "product": "lipstick",
+        "title": "Lipstick revealed from a holiday gift box"
       },
       {
-        "ref": "g:packaging-mockup/example-03",
-        "product": "holiday gift packaging",
-        "title": "Stacked packages staged for holiday gift giving"
+        "ref": "n:guide:q20-occ-holidays-case-02",
+        "product": "gold bracelet",
+        "title": "Gold bracelet revealed from tissue in a gift box"
       },
       {
-        "ref": "n:gen2:occ-holidays-c3",
-        "product": "hot cocoa set",
-        "title": "Hot cocoa set on a snowy windowsill"
+        "ref": "n:guide:q20-occ-holidays-case-03",
+        "product": "protein cocoa drink",
+        "title": "Adult stirs and tastes a warm cocoa drink"
       },
       {
-        "ref": "n:gen2:occ-holidays-c4",
-        "product": "knit stockings",
-        "title": "Knit stockings hung on the mantel"
+        "ref": "n:guide:q20-occ-holidays-case-04",
+        "product": "dog sweater",
+        "title": "Plain warm sweater gently fitted on a calm dog"
       }
     ],
     "url-to-video": [

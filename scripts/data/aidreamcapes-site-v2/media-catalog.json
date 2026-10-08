@@ -27629,6 +27629,1106 @@
           640,
           1280
         ]
+      },
+      "q20-occ-bf-after": {
+        "file": "q20-occ-bf-after",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears matte graphite over-ear headphones at a gaming desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-bf-example-02": {
+        "file": "q20-occ-bf-example-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands open a plain bath gift set and lift a skincare bottle from tissue.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-bf-example-03": {
+        "file": "q20-occ-bf-example-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult uses a reusable pet hair roller on a sofa beside a dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-bf-output-01-r2": {
+        "file": "q20-occ-bf-output-01-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gaming monitor displayed on a desk in an evening setup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-bf-output-02": {
+        "file": "q20-occ-bf-output-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee pours from a compact espresso machine into a cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-bf-override-creator": {
+        "file": "q20-occ-bf-override-creator",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator speaks to camera while holding a blank-label hot sauce bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-bf-override-sale": {
+        "file": "q20-occ-bf-override-sale",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator presents a plain bath and skincare gift set at a vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-bf-steps-result": {
+        "file": "q20-occ-bf-steps-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands pack a charcoal travel duffel with a shirt and toiletry pouch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-bf-strip-01": {
+        "file": "q20-occ-bf-strip-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult removes pet hair from a light sofa with a reusable cleaning tool.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-bf-strip-02": {
+        "file": "q20-occ-bf-strip-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Runner holds neutral trail shoes and speaks toward a phone camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-bf-strip-04": {
+        "file": "q20-occ-bf-strip-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult tries on a denim jacket in front of a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-bf-strip-05": {
+        "file": "q20-occ-bf-strip-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult walks along a city sidewalk in gray trail shoes.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-bf-uses-01": {
+        "file": "q20-occ-bf-uses-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Traveler carries a charcoal duffel through an airport terminal.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-black-friday-card-01": {
+        "file": "q20-occ-black-friday-card-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult holds a plain vitamin gummy bottle beside a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-black-friday-card-02": {
+        "file": "q20-occ-black-friday-card-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult demonstrates the hinge on a compact phone tripod.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-black-friday-card-03": {
+        "file": "q20-occ-black-friday-card-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Graphite over-ear headphones lifted from a box by hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-black-friday-card-04": {
+        "file": "q20-occ-black-friday-card-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Neutral running shoes lifted from tissue in a shoe box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-black-friday-card-05-r2": {
+        "file": "q20-occ-black-friday-card-05-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult checks the fit of a party dress in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-black-friday-card-06": {
+        "file": "q20-occ-black-friday-card-06",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult applies setting powder with a brush at a vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-black-friday-card-07": {
+        "file": "q20-occ-black-friday-card-07",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Serum texture smoothed onto the back of a hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-black-friday-card-08": {
+        "file": "q20-occ-black-friday-card-08",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult cleans a dog paw with a plain paw washer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-black-friday-case-02": {
+        "file": "q20-occ-black-friday-case-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult turns a graphite headphone ear cup toward the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-black-friday-case-03": {
+        "file": "q20-occ-black-friday-case-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pet hair roller clears loose fur from upholstery in one pass.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-black-friday-case-04": {
+        "file": "q20-occ-black-friday-case-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wraps a plain wool scarf around their neck for a winter outing.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-black-friday-gallery-01": {
+        "file": "q20-occ-black-friday-gallery-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift graphite headphones from a plain open box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-after": {
+        "file": "q20-occ-holiday-after",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain kraft coffee pouch lifted from an open gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-example-01": {
+        "file": "q20-occ-holiday-example-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Skincare gift set opened from cream tissue with an amber serum bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-example-03": {
+        "file": "q20-occ-holiday-example-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Navy quilted winter jacket lifted from a gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-gallery-01": {
+        "file": "q20-occ-holiday-gallery-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult applies hand cream from a plain tube.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-gallery-02": {
+        "file": "q20-occ-holiday-gallery-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift one cream jar from a plain skincare gift set.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-gallery-03": {
+        "file": "q20-occ-holiday-gallery-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee poured into a ceramic mug beside a plain coffee pouch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-media-hero": {
+        "file": "q20-occ-holiday-media-hero",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult adjusts a neutral winter coat beside an open gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-output-01": {
+        "file": "q20-occ-holiday-output-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult lights a white pillar candle beside folded linen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-output-02": {
+        "file": "q20-occ-holiday-output-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cocoa poured into a ceramic mug with a blue mountain print.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-override-ugc": {
+        "file": "q20-occ-holiday-override-ugc",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator speaks to camera while holding a forest-green wool scarf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-steps-result-r2": {
+        "file": "q20-occ-holiday-steps-result-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult holds matte graphite over-ear headphones above an open gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-steps-source": {
+        "file": "q20-occ-holiday-steps-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte graphite over-ear headphones on a pale studio surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-strip-01": {
+        "file": "q20-occ-holiday-strip-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult passes a plain tea tin in an open gift box across a table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-strip-02": {
+        "file": "q20-occ-holiday-strip-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Honey drizzled onto toast beside a glass jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-strip-03": {
+        "file": "q20-occ-holiday-strip-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult serves winter fruit from a cream bowl onto a small plate.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-strip-04": {
+        "file": "q20-occ-holiday-strip-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands lift three handmade soap bars from a gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-strip-05": {
+        "file": "q20-occ-holiday-strip-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears and adjusts a forest-green wool scarf in an entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-strip-06": {
+        "file": "q20-occ-holiday-strip-06",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult spreads cranberry preserves onto toast beside a glass jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-uses-01": {
+        "file": "q20-occ-holiday-uses-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult shows cream wool mittens just opened from a gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holiday-uses-02": {
+        "file": "q20-occ-holiday-uses-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator presents a cocoa pouch and matching mug to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-bf-card": {
+        "file": "q20-occ-holidays-bf-card",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator opens a plain skincare gift set and speaks to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-card-01": {
+        "file": "q20-occ-holidays-card-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a gold hoop earring box beside their face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-card-02": {
+        "file": "q20-occ-holidays-card-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator opens a skincare gift set and shows its three pieces.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-card-03": {
+        "file": "q20-occ-holidays-card-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands unfold a soft baby blanket beside a gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-card-04": {
+        "file": "q20-occ-holidays-card-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold bracelet lifted from tissue and laid across an open palm.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-card-05": {
+        "file": "q20-occ-holidays-card-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears a winter jacket and adjusts its collar in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-card-06": {
+        "file": "q20-occ-holidays-card-06",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult applies lip tint at a softly lit vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-card-07": {
+        "file": "q20-occ-holidays-card-07",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult takes a bite of a holiday protein cookie and shows the center.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-card-08-r2": {
+        "file": "q20-occ-holidays-card-08-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult shows a cranberry snack mix bar after a bite.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-case-01": {
+        "file": "q20-occ-holidays-case-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Lipstick revealed from a plain holiday gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-case-02": {
+        "file": "q20-occ-holidays-case-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold bracelet revealed from tissue in a gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-case-03": {
+        "file": "q20-occ-holidays-case-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult stirs and tastes a warm cocoa drink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-holidays-case-04": {
+        "file": "q20-occ-holidays-case-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult gently fits a plain warm sweater on a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-launch-example-02-r2": {
+        "file": "q20-occ-launch-example-02-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman holds an amber serum bottle beside her face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-launch-media-gallery-03": {
+        "file": "q20-occ-launch-media-gallery-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears simple black sunglasses outdoors in daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-launch-media-hero": {
+        "file": "q20-occ-launch-media-hero",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a skincare set from an open gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-launch-override-pack": {
+        "file": "q20-occ-launch-override-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand places a plain kraft tea pouch on a grocery shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-launch-strip-01": {
+        "file": "q20-occ-launch-strip-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult packs a matte blue water bottle into a commuter backpack.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-launch-strip-03": {
+        "file": "q20-occ-launch-strip-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult gathers charging cables in a silicone organizer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-launch-strip-04": {
+        "file": "q20-occ-launch-strip-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand presses the control of a compact air purifier.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-launch-strip-05": {
+        "file": "q20-occ-launch-strip-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears a neutral backpack on a city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-launch-uses-01": {
+        "file": "q20-occ-launch-uses-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand picks up a plain kraft snack pouch from a grocery shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-card-01": {
+        "file": "q20-occ-product-launch-card-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a serum bottle beside their cheek and points to its dropper.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-card-02": {
+        "file": "q20-occ-product-launch-card-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold hoop earrings lifted from tissue at a dressing table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-card-03": {
+        "file": "q20-occ-product-launch-card-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult applies lip tint at a morning vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-card-04": {
+        "file": "q20-occ-product-launch-card-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand gathers loose charging cables into a silicone organizer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-card-05": {
+        "file": "q20-occ-product-launch-card-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult opens a protein bar and shows its texture to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-card-06": {
+        "file": "q20-occ-product-launch-card-06",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears a running jacket and zips it in a bright entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-card-07": {
+        "file": "q20-occ-product-launch-card-07",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult brushes a calm dog with a pet brush.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-card-08": {
+        "file": "q20-occ-product-launch-card-08",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three resistance bands arranged on a workout mat by hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-case-03": {
+        "file": "q20-occ-product-launch-case-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold hoops revealed from tissue in a jewelry box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-example-01": {
+        "file": "q20-occ-product-launch-example-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Lip tint revealed from a plain launch box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-output-01": {
+        "file": "q20-occ-product-launch-output-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Commuter carries a natural canvas tote with a laptop inside.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-output-02": {
+        "file": "q20-occ-product-launch-output-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand uses a compact burr coffee grinder with coffee beans.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-product-launch-steps-result-r2": {
+        "file": "q20-occ-product-launch-steps-result-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult holds a matte turquoise bottle beside their face after a sip.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-after": {
+        "file": "q20-occ-sale-after",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Canvas commuter tote with a laptop on a desk beside open space for offer details.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-bf-card": {
+        "file": "q20-occ-sale-bf-card",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator holds a plain running shoe toward the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-case-01-r2": {
+        "file": "q20-occ-sale-case-01-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult commuter holds a canvas tote with a laptop inside.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-case-02": {
+        "file": "q20-occ-sale-case-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator presents a plain sunscreen bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-case-03": {
+        "file": "q20-occ-sale-case-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears a simple crossbody bag on a city walk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-case-04": {
+        "file": "q20-occ-sale-case-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult mixes a protein shake beside a gym bag.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-discount-card-01-r2": {
+        "file": "q20-occ-sale-discount-card-01-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult checks the fit of running tights in a bright fitting area.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-discount-card-02": {
+        "file": "q20-occ-sale-discount-card-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult holds a plain dog treat pouch beside a calm dog.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-discount-card-03": {
+        "file": "q20-occ-sale-discount-card-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold necklace lifted from a small gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-discount-card-04": {
+        "file": "q20-occ-sale-discount-card-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact wireless charger lifted from a box beside a phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-discount-card-05-r2": {
+        "file": "q20-occ-sale-discount-card-05-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult applies eyeliner at a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-discount-card-06-r2": {
+        "file": "q20-occ-sale-discount-card-06-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult ties neutral trail shoes at an entry bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-discount-card-07": {
+        "file": "q20-occ-sale-discount-card-07",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult uses a reusable roller to lift pet hair from a dark coat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-discount-card-08": {
+        "file": "q20-occ-sale-discount-card-08",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult smooths balm onto the back of a hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-discount-steps-result-r2": {
+        "file": "q20-occ-sale-discount-steps-result-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult applies cream from a jar while two pastel skincare bottles remain visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-example-02": {
+        "file": "q20-occ-sale-example-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult takes a first bite of a protein bar and shows its texture.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-example-03-r2": {
+        "file": "q20-occ-sale-example-03-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand uses a fabric shaver to remove pills from a gray sweater.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-example-04": {
+        "file": "q20-occ-sale-example-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult checks the fit of a running jacket in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-example-05": {
+        "file": "q20-occ-sale-example-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold necklace lifted from tissue in a small box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-gallery-01": {
+        "file": "q20-occ-sale-gallery-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult lifts a quilted jacket from a gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-gallery-02": {
+        "file": "q20-occ-sale-gallery-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears black sunglasses at a sunny cafe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-gallery-03": {
+        "file": "q20-occ-sale-gallery-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand lights a plain candle in a ceramic holder at dinner.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-output-01": {
+        "file": "q20-occ-sale-output-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand applies oil to a wooden cutting board.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-output-02-r2": {
+        "file": "q20-occ-sale-output-02-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wears a gray merino sweater in natural daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-reuse-strip-01-r2": {
+        "file": "q20-occ-sale-reuse-strip-01-r2",
+        "w": 1254,
+        "h": 1254,
+        "alt": "Adult shows dark running tights in a bright bedroom.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-reuse-strip-03": {
+        "file": "q20-occ-sale-reuse-strip-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands position a wireless charging pad beside a phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-reuse-strip-04": {
+        "file": "q20-occ-sale-reuse-strip-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator presents a skincare gift set to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-strip-05": {
+        "file": "q20-occ-sale-strip-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coffee pours into a cream mug beside a plain coffee pouch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-strip-06": {
+        "file": "q20-occ-sale-strip-06",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift stainless kitchen utensils from a gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q20-occ-sale-uses-02": {
+        "file": "q20-occ-sale-uses-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator presents a plain herbal tea pouch beside a cream mug at a sunlit desk.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

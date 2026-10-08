@@ -175,16 +175,16 @@
             "product": "leather duffel"
           },
           {
-            "ref": "n:gen2:occ-black-friday-g2",
-            "title": "Gift set arranged piece by piece on a dark table",
+            "ref": "n:guide:q20-occ-bf-example-02",
+            "title": "Bath gift set opened by hand",
             "kind": "photo",
-            "product": "gift set"
+            "product": "bath gift set"
           },
           {
-            "ref": "n:gen2:occ-black-friday-g3",
-            "title": "Same duffel in brighter light for Cyber Monday",
+            "ref": "n:guide:q20-occ-bf-example-03",
+            "title": "Pet hair roller clears a sofa",
             "kind": "photo",
-            "product": "leather duffel"
+            "product": "pet hair roller"
           }
         ]
       }
@@ -209,18 +209,18 @@
   "visual": {
     "overview": "Make your Black Friday product photos and clips before prices are locked. Leave clear space beside the product, then drop in the discount, code, and end date once they are set.",
     "strip": [
-      "n:guide:k8-blackfriday-gen2-tpl-bf-c1",
+      "n:guide:q20-occ-bf-strip-01",
       "n:guide:k8-blackfriday-gen2-plat-amazon-g1",
-      "n:guide:k8-blackfriday-gen2-occ-product-launch-c2",
+      "n:guide:q20-occ-bf-strip-02",
       "n:guide:k8-blackfriday-gen2-product-videos-g2",
-      "n:guide:k8-blackfriday-gen2-occ-sale-discount-g3",
-      "n:guide:k8-blackfriday-gen2-tpl-sale-c2"
+      "n:guide:q20-occ-bf-strip-04",
+      "n:guide:q20-occ-bf-strip-05"
     ],
     "steps": {
       "source": "n:guide:black-friday-m2-source",
-      "result": "n:guide:black-friday-m2-result",
+      "result": "n:guide:q20-occ-bf-steps-result",
       "mode": "photo",
-      "prompt": "Put this leather duffel on a light wood surface in bright natural light, with empty space above it for the sale price.",
+      "prompt": "Use the uploaded photo as the product and preserve the charcoal duffel, its shape and details. In a bright hotel room, an adult places a folded shirt and toiletry pouch into the bag, then pulls the zipper closed. Natural travel-day UGC with soft window light. Overhead close framing with one slow tilt; end on the zipped bag. Sound: fabric movement and zipper; no music or added text.",
       "options": [
         [
           "Template",
@@ -237,93 +237,93 @@
       "lead": "Pick the product or bundle you plan to discount; each scene leaves room for the price.",
       "chips": [
         {
-          "id": "featured",
-          "label": "Featured products"
+          "id": "review",
+          "label": "Creator Review"
         },
         {
-          "id": "gift",
-          "label": "Gift bundles"
+          "id": "unbox",
+          "label": "ASMR Unboxing"
         },
         {
-          "id": "home-tech",
-          "label": "Home and tech"
+          "id": "routine",
+          "label": "GRWM Routine"
         },
         {
-          "id": "apparel",
-          "label": "Apparel"
+          "id": "demo",
+          "label": "Product Demo"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:k8-blackfriday-gen2-occ-holidays-c2",
-          "label": "Wrapped gift by a fireplace",
+          "ref": "n:guide:q20-occ-black-friday-card-01",
+          "label": "Creator Review: Vitamin gummies held",
           "chips": [
-            "gift"
+            "review"
           ],
-          "prompt": "Place the wrapped gift box beside the fireplace with its ribbon visible.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright kitchen, an adult creator holds a plain supplement bottle, turns it once, and speaks to camera. An adult creator looks into the camera and says, “Here is the serving size on the front.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: clear speech and room tone; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k8-blackfriday-gen2-tpl-box-g3",
-          "label": "Tea set ready to gift",
+          "ref": "n:guide:q20-occ-black-friday-card-02",
+          "label": "Creator Review: Phone tripod hinge demo",
           "chips": [
-            "gift"
+            "review"
           ],
-          "prompt": "Arrange the tea tin, infuser, and cup together on a clean table.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean desk, an adult creator holds a compact tripod to camera and extends one leg. An adult creator looks into the camera and says, “Here is how the hinge opens.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: clear speech and one hinge click; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k8-blackfriday-gen2-ind-electronics-c3",
-          "label": "Compact rectangular speaker on a shelf",
+          "ref": "n:guide:q20-occ-black-friday-card-03",
+          "label": "ASMR Unboxing: Headphones from box",
           "chips": [
-            "home-tech"
+            "unbox"
           ],
-          "prompt": "Show the compact graphite speaker on a shelf with its narrow front grille visible.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift graphite headphones from a plain box and turn the ear cushions toward the lens. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: box rustle and hinge movement; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-launch-g2",
-          "label": "New toaster on a counter",
+          "ref": "n:guide:q20-occ-black-friday-card-04",
+          "label": "ASMR Unboxing: Running shoes from tissue",
           "chips": [
-            "home-tech"
+            "unbox"
           ],
-          "prompt": "Place the toaster on a counter with room beside it for the sale price.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Adult hands lift neutral running shoes from plain tissue and bring both side by side. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: tissue rustle and box creak; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:occ-sale-discount-g1",
-          "label": "Wool socks with offer space",
+          "ref": "n:guide:q20-occ-black-friday-card-05-r2",
+          "label": "GRWM: Party dress fit check",
           "chips": [
-            "apparel"
+            "routine"
           ],
-          "prompt": "Arrange the wool socks to one side and leave room for offer details.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright fitting room, an adult wears the dress and makes one smooth half-turn in a mirror. An adult creator looks into the camera and says, “Here is the fit from the front and side.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: fabric movement and clear speech; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k8-blackfriday-gen2-occ-sale-discount-c3",
-          "label": "Dresses ready for a sale",
+          "ref": "n:guide:q20-occ-black-friday-card-06",
+          "label": "GRWM: Setting powder in daylight",
           "chips": [
-            "apparel"
+            "routine"
           ],
-          "prompt": "Show the dresses together on hangers with space beside them for a deal.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a sunlit vanity, an adult creator makes one light brush pass and holds the compact beside her face. An adult creator looks into the camera and says, “This is the finish in natural light.”. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: brush sweep and clear speech; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k8-blackfriday-gen2-occ-sale-discount-c2",
-          "label": "Skincare bundle on a tray",
+          "ref": "n:guide:q20-occ-black-friday-card-07",
+          "label": "Product Demo: Serum texture on skin",
           "chips": [
-            "featured"
+            "demo"
           ],
-          "prompt": "Arrange the bundle neatly on a tray with each item visible.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In soft daylight, an adult hand places one serum drop on the other hand and smooths it once. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: pump click and fingertip glide; no music or added text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k8-blackfriday-gen2-occ-sale-discount-c4",
-          "label": "Knife set with offer space",
+          "ref": "n:guide:q20-occ-black-friday-card-08",
+          "label": "Problem-Solving: Paw cleaner in use",
           "chips": [
-            "featured"
+            "demo"
           ],
-          "prompt": "Place the knife set on a board with clear space beside it.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright entry, an adult gently places a calm dog’s paw into a silicone cup and rotates it once. Natural creator-shot UGC with realistic skin and soft daylight. Close framing with one gentle push-in; end with the product clear and steady in frame. Sound: soft silicone movement and room tone; no music or added text.",
           "kind": "photo"
         }
       ],
@@ -338,7 +338,7 @@
       },
       {
         "frame": "browser",
-        "ref": "n:guide:black-friday-m2-source-use",
+        "ref": "n:guide:q20-occ-bf-uses-01",
         "h": "Keep the ad and listing aligned",
         "d": "Shoppers who click a Black Friday ad should land on the product they just saw."
       }
@@ -359,18 +359,18 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:occ-sale-discount-g2",
+        "ref": "n:guide:q20-occ-bf-output-01-r2",
         "frame": "1:1",
-        "label": "Square featured-product photo"
+        "label": "Gaming monitor at a home desk"
       },
       {
-        "ref": "n:gen2:tpl-sale-g1",
+        "ref": "n:guide:q20-occ-bf-output-02",
         "frame": "1:1",
-        "label": "Square sale campaign photo"
+        "label": "Espresso poured from a compact machine"
       }
     ],
     "after": {
-      "ref": "n:gen2:occ-sale-discount-g4",
+      "ref": "n:guide:q20-occ-bf-after",
       "zones": [
         "Discount",
         "End date"

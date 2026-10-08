@@ -315,12 +315,12 @@
     },
     "images": {
       "sale": {
-        "ref": "n:gen2:tpl-bf-c3",
-        "alt": "Black gift boxes with ribbons stacked beside a laptop under dark lighting."
+        "ref": "n:guide:q20-occ-bf-override-sale",
+        "alt": "Adult creator opens a plain bath gift bundle and lifts a skincare bottle to camera."
       },
       "creator": {
-        "ref": "n:gen2:tpl-limited-drop-alert-video-c2",
-        "alt": "Small-batch hot sauce bottles lined up on a counter."
+        "ref": "n:guide:q20-occ-bf-override-creator",
+        "alt": "Adult creator holds a plain hot-sauce bottle and explains it to camera."
       },
       "demo": {
         "ref": "n:gen2:product-videos-g5",
@@ -334,12 +334,12 @@
     },
     "images": {
       "bf": {
-        "ref": "f:black-friday-countdown",
-        "alt": "Hands unfold a black folding electric bicycle and inspect its hinge."
+        "ref": "n:guide:q20-occ-holidays-bf-card",
+        "alt": "Adult creator opens a plain skincare gift set and speaks to camera."
       },
       "ugc": {
-        "ref": "g:ugc-still-ad/hero-output",
-        "alt": "Person naturally holding a reusable water bottle in a home setting."
+        "ref": "n:guide:q20-occ-holiday-override-ugc",
+        "alt": "Adult creator holds a forest-green wool scarf while speaking to camera."
       }
     }
   },
@@ -414,8 +414,8 @@
   "occ-product-launch": {
     "images": {
       "pack": {
-        "ref": "g:packaging-mockup/hero-output",
-        "alt": "Tea packaging arranged on a realistic kitchen shelf."
+        "ref": "n:guide:q20-occ-launch-override-pack",
+        "alt": "Adult hand places a plain tea pouch upright on a grocery shelf."
       },
       "look": {
         "ref": "g:fashion-editorial/hero-output",
@@ -430,8 +430,8 @@
         "alt": "Hands tie coral trail shoes, show the sole, and step along a mountain path."
       },
       "bf": {
-        "ref": "f:black-friday-countdown",
-        "alt": "Hands unfold a black folding electric bicycle and inspect its hinge."
+        "ref": "n:guide:q20-occ-sale-bf-card",
+        "alt": "Adult creator holds a plain running shoe to camera and speaks in a bright studio."
       }
     }
   },
