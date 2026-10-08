@@ -2244,6 +2244,9 @@ export function validateSiteV2(build = buildSiteV2()) {
     else {
       matchedCurrentKeys.add(imageReuseViolationKey(current));
       baselineRemaining += 1;
+      // The key has no pages, so a baseline image that spreads to another page still matches it.
+      const added = current.pages.filter((page) => !entry.pages.includes(page));
+      if (added.length) errors.push(`image reuse spread to pages outside baseline (${summary}; now also on ${added.join(", ")})`);
     }
   }
   for (const [key, violation] of currentViolations) {

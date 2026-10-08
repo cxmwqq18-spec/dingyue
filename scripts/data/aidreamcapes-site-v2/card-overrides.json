@@ -223,8 +223,7 @@
   },
   "occ-black-friday": {
     "swap": {
-      "story": "sale",
-      "outfit": "demo"
+      "story": "sale"
     },
     "images": {
       "sale": {
@@ -246,10 +245,6 @@
       "story": "unbox"
     },
     "images": {
-      "unbox": {
-        "ref": "f:unboxing-experience",
-        "alt": "Hands open a gray headphone package and remove the headphones and charging case."
-      },
       "bf": {
         "ref": "f:black-friday-countdown",
         "alt": "Hands unfold a black folding electric bicycle and inspect its hinge."
@@ -265,14 +260,6 @@
       "creator": {
         "ref": "n:gen2:video-ads-g1",
         "alt": "Hand picking up a compact speaker from a desk beside a laptop."
-      }
-    }
-  },
-  "tpl-limited-drop-alert-video": {
-    "images": {
-      "creator": {
-        "ref": "f:ugc-ad-video",
-        "alt": "Creator holding a white smartwatch toward the camera in a bright living room"
       }
     }
   },
@@ -338,10 +325,6 @@
   },
   "occ-product-launch": {
     "images": {
-      "unbox": {
-        "ref": "f:unboxing-experience",
-        "alt": "Hands open a gray headphone package and remove the headphones and charging case."
-      },
       "pack": {
         "ref": "g:packaging-mockup/hero-output",
         "alt": "Tea packaging arranged on a realistic kitchen shelf."
