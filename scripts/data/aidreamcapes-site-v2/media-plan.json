@@ -269,8 +269,8 @@
     },
     "video-ads": {
       "hero": {
-        "kind": "video",
-        "clip": "k3-video-ads-hero"
+        "kind": "image",
+        "image": "n:guide:q2-video-ads-hero"
       },
       "gallery": [
         "f:k3-video-gallery-try-on",
@@ -327,16 +327,16 @@
     "image-to-video": {
       "hero": {
         "kind": "image",
-        "image": "u:demo"
+        "image": "n:guide:q2-image-to-video-hero"
       },
-      "og": "f:ugc-ad-video"
+      "og": "n:guide:q2-image-to-video-hero"
     },
     "url-to-video": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:k2-url-hero-link-to-video"
+        "image": "n:guide:q2-url-to-video-hero"
       },
-      "og": "n:guide:k2-url-hero-link-to-video"
+      "og": "n:guide:q2-url-to-video-hero"
     },
     "tpl-howto": {
       "hero": {

@@ -13,7 +13,7 @@
   ],
   "steps": [
     {
-      "t": "Upload a product photo",
+      "t": "Upload your product",
       "d": "Well lit, with the whole product in frame."
     },
     {
@@ -59,34 +59,34 @@
     }
   ],
   "examples": {
-    "h2": "More UGC ad scenes",
-    "lead": "Everyday moments that open with the product already in view, the way short creator-style ads usually start.",
+    "h2": "Product ad formats",
+    "lead": "See how creators can demonstrate products with a try-on, an unboxing, a routine or a clear before-and-after.",
     "groups": [
       {
-        "label": "Product-first openings",
+        "label": "Creator-led product scenes",
         "items": [
           {
             "ref": "n:guide:k3-video-example-speaker",
-            "title": "Compact speaker picked up from a laptop desk",
+            "title": "Creator holds a compact speaker at a desk",
             "kind": "scene",
             "product": "compact speaker"
           },
           {
-            "ref": "n:guide:k3-video-example-tote",
-            "title": "Tote bag packed item by item on a hallway bench",
+            "ref": "n:guide:q2-video-ads-example-02",
+            "title": "Adult tries on a crossbody bag",
             "kind": "scene",
-            "product": "canvas tote bag"
+            "product": "crossbody bag"
           },
           {
-            "ref": "n:guide:k3-video-example-snack-pouch",
-            "title": "Snack pouch set beside a lunch container",
+            "ref": "n:guide:q2-video-ads-example-03",
+            "title": "Runner wears wireless earbuds",
             "kind": "scene",
-            "product": "snack pouch"
+            "product": "wireless earbuds"
           }
         ]
       },
       {
-        "label": "Out and about",
+        "label": "Product demonstrations",
         "items": [
           {
             "ref": "n:guide:k3-video-example-lip-balm",
@@ -95,10 +95,10 @@
             "product": "lip balm"
           },
           {
-            "ref": "n:guide:k3-video-example-travel-mug",
-            "title": "Travel mug beside a car cup holder on a morning stop",
+            "ref": "n:guide:q2-video-ads-example-05",
+            "title": "Runner drinks from a hydration bottle",
             "kind": "scene",
-            "product": "travel mug"
+            "product": "hydration bottle"
           }
         ]
       }
@@ -106,120 +106,113 @@
   },
   "visual": {
     "strip": [
-      "n:guide:k3-video-strip-lunchbag-source",
-      "n:guide:k3-video-strip-gift-set",
-      "n:guide:k3-video-strip-travel-kit",
-      "n:guide:k3-video-strip-yellow-bottle",
-      "n:guide:k3-video-strip-desk-plant",
-      "n:guide:k3-video-strip-ceramic-cup"
+      "n:guide:q2-video-ads-strip-00",
+      "n:guide:q2-video-ads-strip-01",
+      "n:guide:q2-video-ads-strip-02",
+      "n:guide:q2-video-ads-strip-03",
+      "n:guide:q2-video-ads-strip-04",
+      "n:guide:q2-video-ads-strip-05"
     ],
     "steps": {
       "source": "n:guide:k3-video-use-bottle-kitchen",
-      "sourceAlt": "Green glass bottle beside a water glass at a bright kitchen sink.",
+      "sourceAlt": "Your product: green glass bottle beside a water glass at a bright kitchen sink.",
       "result": "f:k3-video-step-green-bottle-result",
       "mode": "video",
       "length": 15,
-      "prompt": "A hand lifts this green glass bottle from a bright kitchen counter and fills a clear glass with water."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult creator holds an unbranded serum beside her face and speaks to camera, then applies one drop and stops with the bottle visible. Natural skin texture, bright window light, casual creator-ad look. Chest-up front-facing handheld shot with slight sway. Sound: spoken line, dropper click and quiet room tone; no music."
     },
     "picker": {
-      "title": "Choose a casual product moment",
-      "lead": "A scene can show a snack pouch on a trip or a lamp by the tent.",
+      "title": "Choose a product ad format",
+      "lead": "Choose a scene that shows a product in use, on camera or in a creator-led ad.",
       "chips": [
         {
-          "id": "home",
-          "label": "At home"
+          "id": "reviews",
+          "label": "Creator Reviews"
         },
         {
-          "id": "travel",
-          "label": "On the go"
+          "id": "grwm",
+          "label": "GRWM & Street Interviews"
         },
         {
-          "id": "beauty",
-          "label": "Beauty & care"
+          "id": "try-on",
+          "label": "Try-On & Pet Demo"
         },
         {
-          "id": "daily",
-          "label": "Daily life"
+          "id": "demo",
+          "label": "Product Demo & Routine"
         }
       ],
       "cards": [
         {
-          "ref": "f:k3-video-picker-phone-tripod",
-          "label": "Phone tripod set on desk",
+          "ref": "n:guide:q2-video-ads-card-01",
+          "label": "Car Selfie Review: Vitamin C Serum",
           "chips": [
-            "home",
-            "daily"
+            "reviews"
           ],
-          "prompt": "Set the phone tripod on a desk and place the product in soft window light.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman sits in a parked car in daylight, holds the serum beside her face and says: “One pump, then a light pass over the cheek.” She applies one pump and ends looking into the lens with the bottle visible. Natural skin texture, casual creator-ad look. Chest-up front-facing handheld framing with slight sway. Sound: her voice, one pump click and light street ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k3-video-picker-snack-pouch",
-          "label": "Snack pouch on road trip",
+          "ref": "n:guide:q2-video-ads-card-02",
+          "label": "GRWM: Tinted Lip Balm Before Work",
           "chips": [
-            "travel",
-            "daily"
+            "grwm"
           ],
-          "prompt": "Open the snack pouch on a car dashboard and place it beside the seat.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult woman applies one pass of tinted lip balm and says: “A quick tint before I head out.” She lowers the balm and pauses facing the lens. Soft morning window light, natural skin texture, casual GRWM ad look. Chest-up mirror framing with one gentle push-in. Sound: her voice and cap click; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k3-video-picker-lip-oil",
-          "label": "Lip oil from gym bag",
+          "ref": "n:guide:q2-video-ads-card-03",
+          "label": "Street Interview: Protein Bar First Bite",
           "chips": [
-            "beauty",
-            "daily"
+            "grwm"
           ],
-          "prompt": "Take the lip oil from a gym bag pocket and turn its blank front toward the camera.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunny public park, an adult interviewer holds a plain microphone as an adult participant takes one protein-bar bite and says: “Let’s see how this tastes.” The participant lowers the bar and pauses toward camera. Clearly staged AI-actor interview, candid natural light. Waist-up handheld two-shot with a slight push-in. Sound: spoken line, wrapper crinkle and park ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k3-video-picker-pet-brush",
-          "label": "Pet brush in use",
+          "ref": "n:guide:q2-video-ads-card-04",
+          "label": "Creator Review: Wireless Earbud Case",
           "chips": [
-            "daily"
+            "reviews"
           ],
-          "prompt": "Brush a relaxed dog once, keeping the brush visible in the foreground.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a tidy desk, an adult creator holds simple wireless earbuds beside their face and says: “Here’s the case and how it sits in my hand.” They open the case once and end with it still beside their face. Soft window light, natural creator-review look. Chest-up eye-level handheld framing with one gentle push-in. Sound: spoken line, case click and room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k3-video-picker-cleanser",
-          "label": "Cleanser and cream lined up",
+          "ref": "n:guide:q2-video-ads-card-05",
+          "label": "Try-On: Crossbody Bag for Errands",
           "chips": [
-            "beauty",
-            "home"
+            "try-on"
           ],
-          "prompt": "Move from cleanser to cream across the counter in a slow horizontal pan.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a full-length apartment mirror, an adult woman puts on the crossbody bag, adjusts the strap once and turns to show its fit, ending in a relaxed side profile. Natural daylight, casual fashion-ad look. Full-body mirror framing with one smooth pan from shoulder to hip. Sound: strap slide and footsteps; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k3-video-picker-lantern",
-          "label": "Lantern lit beside tent",
+          "ref": "n:guide:q2-video-ads-card-06",
+          "label": "Pet Demo: Hair Remover Clears Sofa",
           "chips": [
-            "travel",
-            "home"
+            "try-on"
           ],
-          "prompt": "Switch on the camping lantern beside the tent as the light fades.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. Beside a sofa with a calm adult dog nearby, an adult hand pulls the pet-hair remover across one cushion patch, revealing a clean stripe and stopping with the tool in view. Soft window light, relatable home-ad look. Tight three-quarter close-up with one lateral slide. Sound: brush over fabric and soft dog pant; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k3-video-picker-serum",
-          "label": "Serum back on bathroom shelf",
+          "ref": "n:guide:q2-video-ads-card-07",
+          "label": "Day in Life: Lunch Bag Packing",
           "chips": [
-            "beauty",
-            "daily"
+            "demo"
           ],
-          "prompt": "Place the serum bottle back on the shelf and turn its front toward the light.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a kitchen counter, an adult hand places a sealed snack pouch and lunch container into an open lunch bag, ending with the bag neatly packed and hand still on its handle. Bright morning light, practical routine-ad look. Top-down close-up with one slow push-in. Sound: pouch rustle and fabric movement; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k3-video-picker-coffee-grinder",
-          "label": "Coffee grinder on morning counter",
+          "ref": "n:guide:q2-video-ads-card-08",
+          "label": "Three Reasons: Running Belt Details",
           "chips": [
-            "home",
-            "daily"
+            "demo"
           ],
-          "prompt": "Turn the hand grinder once, then set it beside a cup on the counter.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult runner stands at a park trailhead, holds the running belt at chest height and says to camera: “Look at the zipper, the stretch and the pocket depth.” They point once to the pocket and end with the belt centered. Natural morning light, direct creator-demo look. Chest-up eye-level handheld framing with slight sway. Sound: spoken line, zipper pull and birds; no music.",
           "kind": "video"
         }
       ],
@@ -230,45 +223,45 @@
         "frame": "phone",
         "ref": "n:gen2:examples-g1",
         "h": "TikTok and Reels",
-        "d": "A casual clip fits the feed better than a polished studio shot."
+        "d": "Creator-led vertical ads fit naturally in short-form social feeds."
       },
       {
         "frame": "post",
-        "ref": "n:guide:k3-video-case-citrus-photo",
+        "ref": "n:guide:q2-video-ads-uses-01",
         "h": "Ad testing",
-        "d": "Create two short clips with one product and compare the clicks."
+        "d": "Creator-led ads give you a clear place to test hooks while keeping the product in view."
       }
     ],
     "input": [
       {
         "good": "n:guide:k3-video-input-shoe-good",
         "bad": "n:guide:k3-video-input-shoe-bad-dark",
-        "good_label": "Technical running shoe fully in frame on a red backdrop",
-        "bad_label": "Dim light hides the shoe details"
+        "good_label": "Your product, fully in frame with soft highlights",
+        "bad_label": "Your product is cropped at the left edge"
       },
       {
         "good": "n:guide:k3-video-input-socks-good",
         "bad": "n:guide:b1-video-ads-bad-blur",
-        "good_label": "Wool socks clear against a quiet background",
-        "bad_label": "Soft focus blurs the wool knit"
+        "good_label": "Your product details are sharp in a square frame",
+        "bad_label": "Your product details are out of focus"
       }
     ],
     "outputs": [
       {
         "ref": "f:k3-video-output-massage-gun",
         "frame": "9:16",
-        "label": "Mini massage gun after a run",
+        "label": "Runner uses massage gun on calf",
         "length": 15
       },
       {
-        "ref": "f:k3-video-output-portable-lamp",
+        "ref": "n:guide:q2-video-ads-output-01",
         "frame": "16:9",
-        "label": "Portable lamp beside a book",
+        "label": "Creator explains a wireless earbud case",
         "length": 15
       }
     ],
     "after": {
-      "ref": "f:k3-video-after-toaster",
+      "ref": "n:guide:q2-video-ads-after",
       "zones": [
         "Caption",
         "Offer"
@@ -284,14 +277,14 @@
         "h2": "How to make an AI UGC video ad in 3 steps"
       },
       "m3": {
-        "h2": "UGC video ad ideas for everyday moments",
-        "lead": "See one product in a desk scene, lunch break or quick errand."
+        "h2": "Creator formats for product ads",
+        "lead": "Choose a creator review, try-on, unboxing or product demonstration for your next ad."
       },
       "m4": {
-        "h2": "Where AI UGC video ads work"
+        "h2": "Where creator-style product videos support your ads"
       },
       "m5": {
-        "h2": "What product photo works for a video ad"
+        "h2": "What product image works best"
       },
       "m6": {
         "h2": "Video ad length, size and credits"
@@ -300,10 +293,10 @@
         "h2": "Before you run the ad"
       },
       "gallery": {
-        "h2": "AI UGC video ad examples"
+        "h2": "Product ad formats in motion"
       },
       "examples": {
-        "h2": "More UGC-style ad scenes"
+        "h2": "More creator-led product scenes"
       }
     }
   }

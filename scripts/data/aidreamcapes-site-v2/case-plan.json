@@ -20,21 +20,21 @@
     ],
     "image-to-video": [
       {
-        "ref": "f:k5-image-to-video-case-1",
-        "product": "green insulated bottle",
-        "title": "Green bottle lid twisted open in close-up",
+        "ref": "n:guide:q2-image-to-video-case-01",
+        "product": "protein powder",
+        "title": "Creator shakes a protein drink",
         "kind": "scene"
       },
       {
-        "ref": "f:k5-image-to-video-case-2",
-        "product": "pour-over coffee dripper",
-        "title": "Pour-over dripper on a sunlit kitchen counter",
+        "ref": "n:guide:q2-image-to-video-case-02",
+        "product": "pet-hair remover",
+        "title": "Pet Hair Demo: Cushion Cleanup",
         "kind": "scene"
       },
       {
-        "ref": "f:k5-image-to-video-case-3",
-        "product": "red lipstick",
-        "title": "Red lipstick standing on a marble vanity",
+        "ref": "n:guide:q2-image-to-video-case-03",
+        "product": "tinted lip balm",
+        "title": "GRWM applies tinted lip balm before leaving",
         "kind": "scene"
       }
     ],
@@ -45,9 +45,10 @@
         "title": "Hands pour sparkling citrus drink over ice"
       },
       {
-        "ref": "n:guide:k3-video-case-phonecase",
+        "ref": "n:guide:q2-video-ads-case-02",
         "product": "sage silicone phone case",
-        "title": "Plain sage silicone phone case beside coffee on a cafe table"
+        "title": "Hand installs a plain phone case",
+        "kind": "scene"
       },
       {
         "ref": "n:guide:k3-video-case-lunchbag",
@@ -1232,21 +1233,22 @@
     ],
     "url-to-video": [
       {
-        "ref": "f:k2-url-case-mug-laptop",
-        "product": "beige mug",
-        "title": "Mug picked up beside an open laptop",
+        "ref": "n:guide:q2-url-to-video-case-01",
+        "product": "protein powder",
+        "title": "Fitness Creator Mixes Protein Powder",
         "kind": "scene"
       },
       {
-        "ref": "f:k2-url-case-desk-organizer",
-        "product": "desk organizer",
-        "title": "Desk organizer shown on a tidy workspace",
+        "ref": "n:guide:q2-url-to-video-case-02",
+        "product": "phone stand",
+        "title": "Hand demonstrates a folding phone stand",
         "kind": "scene"
       },
       {
-        "ref": "n:gen2:url-to-video-c3",
-        "product": "reusable straws",
-        "title": "Reusable straw set beside an iced drink"
+        "ref": "n:guide:q2-url-to-video-case-03",
+        "product": "hydration drink",
+        "title": "Runner drinks electrolyte mix outdoors",
+        "kind": "scene"
       }
     ]
   }

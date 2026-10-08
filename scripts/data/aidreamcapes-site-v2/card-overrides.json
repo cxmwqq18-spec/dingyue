@@ -502,12 +502,12 @@
   "image-to-video": {
     "images": {
       "ba": {
-        "ref": "f:k5-image-to-video-template-ba",
-        "alt": "Before-and-after still frame of a tidy living room after a plain ceramic planter is moved into place."
+        "ref": "n:guide:q2-image-to-video-template-ba",
+        "alt": "Adult hand clears loose pet hair from a sofa to reveal a clean stripe."
       },
       "compare": {
-        "ref": "f:k5-image-to-video-template-compare",
-        "alt": "Two plain ceramic mugs side by side on a wooden table under balanced window light."
+        "ref": "n:guide:q2-image-to-video-template-compare",
+        "alt": "Adult hands compare a folded phone stand with one holding a generic single-camera phone."
       }
     }
   },

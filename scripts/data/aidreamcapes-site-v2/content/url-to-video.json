@@ -18,7 +18,7 @@
       "d": "A public product page for an item you sell."
     },
     {
-      "t": "Check the photo and name it found",
+      "t": "Check the product and name it found",
       "d": "If the page has several colors or sizes, make sure it picked the right one."
     },
     {
@@ -68,46 +68,46 @@
     }
   ],
   "examples": {
-    "h2": "More product-page-to-video scenes",
-    "lead": "Start from a product page you already have. These scenes show where a listed product can go next.",
+    "h2": "Product ad formats",
+    "lead": "See how creators can demonstrate products with a try-on, an unboxing, a routine or a clear before-and-after.",
     "groups": [
       {
-        "label": "From listing to scene",
+        "label": "Creator-led product scenes",
         "items": [
           {
-            "ref": "n:guide:k2-url-example-olive-oil",
-            "title": "Olive oil bottle placed on a kitchen counter",
+            "ref": "n:guide:q2-url-to-video-example-01",
+            "title": "Runner mixes a hydration drink",
             "kind": "scene",
-            "product": "olive oil bottle"
+            "product": "electrolyte drink mix"
           },
           {
-            "ref": "n:guide:k2-url-example-pillow",
-            "title": "Throw pillow set on a reading chair by a lamp",
+            "ref": "n:guide:q2-url-to-video-example-02",
+            "title": "Problem to Solution: Sofa Fur Stripe",
             "kind": "scene",
-            "product": "throw pillow"
+            "product": "pet hair remover"
           },
           {
-            "ref": "n:guide:k2-url-example-yoga-mat-bag",
-            "title": "Yoga mat bag hung by the front door",
+            "ref": "n:guide:q2-url-to-video-example-03",
+            "title": "Creator wears a crossbody bag",
             "kind": "scene",
-            "product": "yoga mat bag"
+            "product": "crossbody bag"
           }
         ]
       },
       {
-        "label": "More listed products",
+        "label": "More creator-led scenes",
         "items": [
           {
-            "ref": "n:guide:k2-url-example-teapot",
-            "title": "Ceramic teapot set on a tray with two cups",
+            "ref": "n:guide:q2-url-to-video-example-04",
+            "title": "Fitness creator mixes a protein drink",
             "kind": "scene",
-            "product": "ceramic teapot"
+            "product": "protein powder"
           },
           {
-            "ref": "n:gen2:url-to-video-g5",
-            "title": "Running cap pulled on before a morning jog",
+            "ref": "n:guide:q2-url-to-video-example-05",
+            "title": "Runner adjusts a running belt at a trailhead",
             "kind": "scene",
-            "product": "running cap"
+            "product": "running belt"
           }
         ]
       }
@@ -116,120 +116,114 @@
   "visual": {
     "strip": [
       "n:guide:k2-url-strip-lunchbox-closed",
-      "n:guide:k2-url-strip-lunchbox-open",
-      "n:guide:k2-url-strip-sunglasses",
-      "n:guide:k2-url-strip-running-shoe",
-      "n:guide:k2-url-strip-ceramic-jars",
-      "n:guide:k2-url-strip-water-bottle"
+      "n:guide:q2-url-to-video-strip-01",
+      "n:guide:q2-url-to-video-strip-02",
+      "n:guide:q2-url-to-video-strip-03",
+      "n:guide:q2-url-to-video-strip-04",
+      "n:guide:q2-url-to-video-strip-05"
     ],
     "steps": {
       "source": "n:guide:k2-url-step-lunchbox-source",
-      "sourceAlt": "Closed sage-green insulated lunch container on a pale counter, viewed from the front.",
-      "result": "n:guide:k2-url-step-lunchbox-result",
+      "sourceAlt": "Your product: closed sage-green lunch container on a pale counter, viewed from the front.",
+      "result": "n:guide:q2-url-to-video-steps-result",
       "mode": "video",
       "length": 15,
-      "prompt": "Open this sage-green lunch container to show the compartments, then set the lid beside it.",
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand opens a divided lunch container on a bright counter and stops with the compartments visible. Soft morning daylight, practical food-ad look. Overhead close-up with one slow push-in. Sound: lid click and soft room tone; no music.",
       "sourceTitle": "Paste your product page link",
       "sourceHint": "Like yourstore.com/products/lunch-container"
     },
     "picker": {
-      "title": "Pick a scene for the listed product",
-      "lead": "Start with an item from a public product page, then show one everyday action.",
+      "title": "Choose a product ad format",
+      "lead": "Choose a scene that shows a product in use, on camera or in a creator-led ad.",
       "chips": [
         {
-          "id": "home",
-          "label": "Home"
+          "id": "reviews",
+          "label": "Creator Reviews"
         },
         {
-          "id": "food",
-          "label": "Food & drink"
+          "id": "grwm",
+          "label": "GRWM & Try-On"
         },
         {
-          "id": "travel",
-          "label": "Travel"
+          "id": "unboxing",
+          "label": "Unboxing & Before/After"
         },
         {
-          "id": "personal",
-          "label": "Everyday"
+          "id": "demo",
+          "label": "Hand Demo & Daily Routine"
         }
       ],
       "cards": [
         {
-          "ref": "f:k2-url-picker-picnic-basket",
-          "label": "Picnic basket set out",
+          "ref": "n:guide:q2-url-to-video-card-01",
+          "label": "Car Selfie Review: Face Sunscreen",
           "chips": [
-            "travel",
-            "home",
-            "food"
+            "reviews"
           ],
-          "prompt": "Open the picnic basket and set two pieces beside it on a blanket.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman sits in a parked car in daylight, holds the sunscreen beside her face and says: “Watch how this spreads in one pass.” She smooths one dab over her cheek and ends facing camera with the tube visible. Natural skin texture, casual creator-ad look. Chest-up front-facing handheld shot with slight sway. Sound: her voice, cap click and soft street ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k2-url-picker-tote-commute",
-          "label": "Tote packed for commute",
+          "ref": "n:guide:q2-url-to-video-card-02",
+          "label": "GRWM: Tinted Lip Balm Before Work",
           "chips": [
-            "travel"
+            "grwm"
           ],
-          "prompt": "Set the tote on a bench, then place its everyday contents beside it.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult woman applies one smooth pass of tinted lip balm and says to camera: “A quick tint before I head out.” She lowers the balm and holds still. Soft morning window light, natural skin, casual GRWM ad look. Chest-up mirror framing with one gentle push-in. Sound: her voice and a small cap click; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k2-url-picker-sneaker-doorstep",
-          "label": "Sneaker turned by doorstep",
+          "ref": "n:guide:q2-url-to-video-card-03",
+          "label": "ASMR Unboxing: Gold Hoop Earrings",
           "chips": [
-            "home",
-            "travel"
+            "unboxing"
           ],
-          "prompt": "Lift one sneaker and turn it slowly to show the full side profile.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a clean dressing table, adult hands open a small jewelry box and lift the gold hoop earrings, ending with the pair centered and still. Warm diffused light, tactile unboxing-ad look. Top-down close-up with one slow push-in. Sound: box hinge and tissue rustle; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k2-url-picker-throw-chair",
-          "label": "Throw blanket smoothed on chair",
+          "ref": "n:guide:q2-url-to-video-card-04",
+          "label": "Problem to Fix: Pet Hair Removal",
           "chips": [
-            "home"
+            "unboxing"
           ],
-          "prompt": "Drape the throw over the chair and smooth one corner by hand.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a sofa cushion in a bright living room, an adult hand draws the pet-hair remover once across loose fur, leaving a clear clean stripe and stopping with the tool visible. Soft daylight, realistic home-ad look. Tight side close-up with a steady lateral slide. Sound: brush over fabric and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k2-url-picker-hot-sauce",
-          "label": "Hot sauce bottle on counter",
+          "ref": "n:guide:q2-url-to-video-card-05",
+          "label": "Try-On: Crossbody Bag for Errands",
           "chips": [
-            "food"
+            "grwm"
           ],
-          "prompt": "Set the sauce bottle beside a small bowl, then turn its blank label toward the camera.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a sunlit apartment mirror, an adult woman puts on the crossbody bag, adjusts its strap once and turns to a relaxed side profile, ending still with the bag centered. Natural daylight, casual fashion try-on look. Waist-up mirror framing with one slow tilt from shoulder to bag. Sound: strap slide and room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k2-url-picker-vase",
-          "label": "Ceramic vase lifted from tissue",
+          "ref": "n:guide:q2-url-to-video-card-06",
+          "label": "Creator Review: Protein Powder Mix",
           "chips": [
-            "home",
-            "personal"
+            "reviews"
           ],
-          "prompt": "Lift the vase from tissue paper and place it on the shelf.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult fitness creator stands at a bright kitchen counter, holds the protein pouch beside their face and says: “Here’s how I mix one scoop with water.” They stir the drink once and end holding the glass and pouch toward camera. Natural daylight, straightforward creator-review look. Chest-up eye-level handheld shot with a gentle push-in. Sound: spoken line, spoon swirl and glass tap; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k2-url-picker-water-bottle-desk",
-          "label": "Water bottle turned on a desk",
+          "ref": "n:guide:q2-url-to-video-card-07",
+          "label": "Product Demo: Foldable Phone Stand",
           "chips": [
-            "travel",
-            "personal"
+            "demo"
           ],
-          "prompt": "Pick up the bottle from the desk, turn it once, and set it back down.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a tidy work desk, an adult hand unfolds the phone stand and sets a generic phone with one small camera opening onto it, ending with the screen facing away and the stand stable. Soft window light, practical product-demo look. Three-quarter close-up with one short push-in. Sound: hinge click and desk tap; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k2-url-picker-charging-pad",
-          "label": "Charging pad revealed",
+          "ref": "n:guide:q2-url-to-video-card-08",
+          "label": "Day in Life: Packs Hydration Chews",
           "chips": [
-            "personal",
-            "home"
+            "demo"
           ],
-          "prompt": "Slide the cloth aside to reveal the charging pad, then place a phone on it.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a park trailhead, an adult runner places the hydration-chew pouch into a running belt and closes the pocket, ending with the belt held at waist height. Natural morning light, candid fitness-routine ad look. Waist-level close-up with one gentle tilt from pouch to belt. Sound: fabric zip and birds; no music.",
           "kind": "video"
         }
       ],
@@ -238,47 +232,47 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "f:k2-url-use-open-bento",
+        "ref": "n:guide:q2-url-to-video-uses-00",
         "h": "Product page",
-        "d": "A clip next to your listing photos shows what photos can't, like how the lid comes off."
+        "d": "A product page video can show how a useful item opens, fits or works in a daily routine."
       },
       {
         "frame": "listing",
-        "ref": "f:k2-url-use-snack-pouch",
+        "ref": "n:guide:q2-url-to-video-uses-01",
         "h": "Ads for your best sellers",
-        "d": "Turn your top products into short ads straight from their links."
+        "d": "Turn a product link into a short creator-led ad for a best seller."
       }
     ],
     "input": [
       {
         "good": "n:guide:k2-url-input-headphones",
         "bad": "n:guide:b1-url-to-video-bad-crop",
-        "good_label": "Headphones shown front-on and fully in frame",
-        "bad_label": "Left ear cup clipped by the edge"
+        "good_label": "Your product, fully in frame with soft highlights",
+        "bad_label": "Your product is cropped at the left edge"
       },
       {
         "good": "n:guide:k2-url-input-backpack",
         "bad": "n:guide:b1-url-to-video-bad-blur",
-        "good_label": "Backpack straps and seams in focus",
-        "bad_label": "Blur softens the backpack straps and seams"
+        "good_label": "Your product details are sharp in a square frame",
+        "bad_label": "Your product details are out of focus"
       }
     ],
     "outputs": [
       {
         "ref": "f:k2-url-output-bottle-gymbag",
         "frame": "9:16",
-        "label": "Bottle lifted from gym bag",
+        "label": "Hand lifts bottle from gym bag",
         "length": 15
       },
       {
-        "ref": "f:k2-url-output-mouse-laptop",
+        "ref": "n:guide:q2-url-to-video-output-01",
         "frame": "16:9",
-        "label": "Mouse shown beside a laptop",
+        "label": "Foldable phone stand demonstration",
         "length": 15
       }
     ],
     "after": {
-      "ref": "f:k2-url-after-serum-bathroom",
+      "ref": "n:guide:q2-url-to-video-after",
       "zones": [
         "Product name",
         "Caption"
@@ -293,14 +287,14 @@
         "h2": "How to turn a product link into a video in 3 steps"
       },
       "m3": {
-        "h2": "URL to video ideas for everyday products",
-        "lead": "Start with an item from a public product page, then show one everyday action."
+        "h2": "Product link ideas for creator-led ads",
+        "lead": "Choose a creator review, try-on, unboxing or product demonstration for your next ad."
       },
       "m4": {
-        "h2": "Where product link videos help you sell"
+        "h2": "Where creator-style product videos support your ads"
       },
       "m5": {
-        "h2": "Which product page photo works best"
+        "h2": "What product image works best"
       },
       "m6": {
         "h2": "URL to video length, size and credits"
@@ -309,10 +303,10 @@
         "h2": "Before you post: check the color and size"
       },
       "gallery": {
-        "h2": "URL to video examples"
+        "h2": "Product ad formats in motion"
       },
       "examples": {
-        "h2": "More product link video scenes"
+        "h2": "Product scenes from your catalog"
       }
     }
   }

@@ -13,12 +13,12 @@
   ],
   "steps": [
     {
-      "t": "Upload one product photo",
+      "t": "Upload your product",
       "d": "Sharp, with a little space around the product and nothing crossing it."
     },
     {
       "t": "Describe one movement",
-      "d": "One motion per clip, like \"slow push-in\" or \"steam rising\". Pick 6, 10 or 15 seconds."
+      "d": "One motion per idea, like \"slow push-in\" or \"steam rising\". Pick 6, 10 or 15 seconds."
     },
     {
       "t": "Download, or try another motion",
@@ -37,10 +37,10 @@
       ],
       [
         "Start from",
-        "Your product photo"
+        "Your product"
       ]
     ],
-    "cta": "Animate my photo"
+    "cta": "Animate my product"
   },
   "faq": [
     {
@@ -67,35 +67,35 @@
     }
   ],
   "examples": {
-    "h2": "Photo-to-video example scenes",
-    "lead": "Ideas for bringing one product photo to life: a slow push-in, rising steam, light moving across a surface.",
+    "h2": "Product ad formats",
+    "lead": "See how creators can demonstrate products with a try-on, an unboxing, a routine or a clear before-and-after.",
     "groups": [
       {
-        "label": "Subtle motion ideas",
+        "label": "Product motion ideas",
         "items": [
           {
             "ref": "n:gen2:image-to-video-g1",
-            "title": "Watch dial with a highlight sliding across the glass",
+            "title": "Watch detail with a light sweep",
             "kind": "scene",
             "product": "wristwatch"
           },
           {
-            "ref": "n:gen2:image-to-video-g2",
-            "title": "Steam rising from a ceramic mug in morning light",
+            "ref": "n:guide:q2-image-to-video-example-01",
+            "title": "Hand applies peptide balm to skin",
             "kind": "scene",
-            "product": "ceramic mug"
+            "product": "peptide balm"
           },
           {
-            "ref": "n:gen2:image-to-video-g3",
-            "title": "Folded linen shirt by an open window",
+            "ref": "n:guide:q2-image-to-video-example-02",
+            "title": "Runner tries on a trail sneaker",
             "kind": "scene",
-            "product": "linen shirt"
+            "product": "trail sneaker"
           },
           {
-            "ref": "n:gen2:image-to-video-g4",
-            "title": "Hand soap bottle framed square for a feed",
+            "ref": "n:guide:q2-image-to-video-example-03",
+            "title": "Pet hair remover clears a sofa",
             "kind": "scene",
-            "product": "hand soap bottle"
+            "product": "pet hair remover"
           }
         ]
       }
@@ -104,117 +104,112 @@
   "visual": {
     "strip": [
       "n:guide:b1-image-to-video-source",
-      "n:guide:k5-image-to-video-strip-1",
-      "n:guide:k5-image-to-video-strip-2",
+      "n:guide:q2-image-to-video-strip-01",
+      "n:guide:q2-image-to-video-strip-02",
       "n:guide:k5-image-to-video-strip-3",
       "n:guide:k5-image-to-video-strip-4",
-      "n:guide:k5-image-to-video-strip-5"
+      "n:guide:q2-image-to-video-strip-05"
     ],
     "steps": {
       "source": "n:guide:b1-image-to-video-source",
-      "sourceAlt": "Cream ceramic mug with blue flecks on a wooden kitchen counter.",
-      "result": "f:k5-image-to-video-steps-result",
+      "sourceAlt": "Your product: cream ceramic mug with blue flecks on a wooden counter.",
+      "result": "n:guide:q2-image-to-video-steps-result",
       "mode": "video",
       "length": 6,
-      "prompt": "Push in slowly on this speckled mug while a thin ribbon of steam rises. Keep the shape, handle and glaze as they are."
+      "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult hand applies one drop of the serum to the back of a hand at a bright vanity, then stops with the bottle in frame. Soft window light, natural skincare-ad look. Tight overhead close-up with one gentle push-in. Sound: dropper click and soft room tone; no music."
     },
     "picker": {
-      "title": "Choose one motion for the photo",
-      "lead": "Each idea uses one short action, from pouring water to switching on a light.",
+      "title": "Choose a product ad format",
+      "lead": "Choose a scene that shows a product in use, on camera or in a creator-led ad.",
       "chips": [
         {
-          "id": "kitchen",
-          "label": "Kitchen"
+          "id": "reviews",
+          "label": "Creator Reviews"
         },
         {
-          "id": "home",
-          "label": "Home"
+          "id": "grwm",
+          "label": "GRWM & Try-On"
         },
         {
-          "id": "beauty",
-          "label": "Beauty"
+          "id": "unboxing",
+          "label": "Unboxing & Texture"
         },
         {
-          "id": "outdoor",
-          "label": "Outdoor"
+          "id": "before-after",
+          "label": "Problem & Solution"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:tpl-howto-c2",
-          "label": "Coffee filter filled",
+          "ref": "n:guide:q2-image-to-video-card-01",
+          "label": "Car Selfie Review: Vitamin C Serum",
           "chips": [
-            "kitchen"
+            "reviews"
           ],
-          "prompt": "Lower a paper filter into the dripper, then pour hot water in one slow circle.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. An adult woman sits in a parked car in soft daylight, holds the serum beside her face and says to camera: “One pump, then a light pass over the cheek.” She smooths one pump onto her cheek and ends with the bottle beside her face. Natural skin texture, casual creator-ad look. Chest-up front-facing handheld close-up with slight sway. Sound: her voice, one pump click and light street ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-howto-c3",
-          "label": "Bike light switched on",
+          "ref": "n:guide:q2-image-to-video-card-02",
+          "label": "GRWM: Tinted Lip Balm Before Work",
           "chips": [
-            "outdoor",
-            "home"
+            "grwm"
           ],
-          "prompt": "Clip the small light onto the handlebar, then press its switch once.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright vanity, an adult woman applies one pass of tinted lip balm and says to camera: “Tinted balm, then I’m ready to go.” She lowers the balm and holds still facing the lens. Soft morning window light, natural skin texture, casual GRWM ad look. Chest-up mirror framing with one gentle push-in. Sound: her voice, cap click and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-howto-c4",
-          "label": "Planter reservoir filled",
+          "ref": "n:guide:q2-image-to-video-card-03",
+          "label": "ASMR Unboxing: Gold Hoop Earrings",
           "chips": [
-            "home",
-            "outdoor"
+            "unboxing"
           ],
-          "prompt": "Add water through the planter opening, then pause as it settles into the reservoir.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. On a neutral tabletop, adult hands open a small jewelry box and lift the gold hoop earrings into the center, ending with the pair held still. Warm window light, tactile luxury-ASMR look. Top-down macro close-up with one slow push-in as the earrings rise. Sound: box hinge and tissue rustle; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-drink-g1",
-          "label": "Can opened beside ice",
+          "ref": "n:guide:q2-image-to-video-card-04",
+          "label": "Problem to Fix: Pet Hair Removal",
           "chips": [
-            "kitchen"
+            "before-after"
           ],
-          "prompt": "Open the sparkling water can beside an ice-filled glass, then tilt it toward the light.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright living room, an adult hand draws the pet-hair remover once across a sofa cushion, revealing a clean stripe, then stops with the tool in frame. Soft side daylight, candid home-ad look. Tight three-quarter close-up with one steady lateral slide. Sound: fabric brush and quiet room tone; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-drink-c3",
-          "label": "Bottle catches cool light",
+          "ref": "n:guide:q2-image-to-video-card-05",
+          "label": "Try-On: Trail Sneaker Fit Check",
           "chips": [
-            "kitchen",
-            "home"
+            "grwm"
           ],
-          "prompt": "Move slowly past the chilled bottle as fine droplets catch the window light.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At an apartment doorway, an adult runner laces the trail sneaker and turns one foot to show its side profile, ending planted and still. Clear morning window light, natural try-on ad look. Low ankle-height close-up with one short tilt from laces to sole. Sound: lace pull and one footstep; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-beauty-c1",
-          "label": "Cream pump dispenses once",
+          "ref": "n:guide:q2-image-to-video-card-06",
+          "label": "Texture Macro: Peptide Balm Swatch",
           "chips": [
-            "beauty"
+            "unboxing"
           ],
-          "prompt": "Press the cream pump once and show a small amount on the back of a hand.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a bright bathroom, an adult hand spreads a small balm swatch across the back of the other hand, ending with the smooth texture beside the open jar. Diffused vanity light, tactile beauty-ad look. Extreme close-up from a slight overhead angle with a slow push-in. Sound: fingertip glide and soft jar touch; no music.",
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-beauty-c2",
-          "label": "Balm lifted from jar",
+          "ref": "n:guide:q2-image-to-video-card-07",
+          "label": "Street Interview: Protein Bar First Bite",
           "chips": [
-            "beauty",
-            "home"
+            "reviews"
           ],
-          "prompt": "Lift one small scoop of balm from the jar with a clean spatula.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. In a public park, an adult interviewer holds a plain microphone while an adult participant tastes one protein bar bite and says to the camera: “Let’s see how this tastes.” The participant lowers the bar and pauses with it visible. Natural afternoon light, clearly staged AI-actor street-interview ad. Waist-up eye-level handheld two-shot with a slight push-in. Sound: her voice, wrapper crinkle and park ambience; no music.",
           "kind": "video"
         },
         {
-          "ref": "f:k5-image-to-video-picker-cards-7-image",
-          "label": "Roller glides along cheek",
+          "ref": "n:guide:q2-image-to-video-card-08",
+          "label": "Problem to Fix: Tangled Phone Cables",
           "chips": [
-            "beauty",
-            "home"
+            "before-after"
           ],
-          "prompt": "Glide the jade roller once along the cheek in a calm, even motion.",
+          "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a tidy desk, an adult hand routes a tangled charging cable through the phone-accessory organizer, ending with the cable neatly held in its slot. Soft daylight, practical creator-ad look. Three-quarter desk close-up with one slow push-in following the cable. Sound: cable taps and quiet room tone; no music.",
           "kind": "video"
         }
       ],
@@ -223,82 +218,82 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:gen2:tpl-detail-c4",
+        "ref": "n:guide:q2-image-to-video-uses-00",
         "h": "Product page",
-        "d": "A 6-second clip next to your photos shows how the glaze catches the light."
+        "d": "A short product scene beside your listing can show texture, fit or a useful detail."
       },
       {
         "frame": "post",
         "ref": "f:k5-image-to-video-uses-1-image",
         "h": "Feed post",
-        "d": "A slow light sweep turns a still product shot into a post that moves."
+        "d": "Show a product detail in motion to give a feed post a clear visual hook."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:tpl-light-g4",
-        "bad": "n:guide:b1-image-to-video-bad-crop",
-        "good_label": "Honey jar fully in frame with soft highlights",
-        "bad_label": "Honey jar cut off at the left edge"
+        "good": "n:guide:q2-image-to-video-input-00-good",
+        "bad": "n:guide:q2-image-to-video-input-00-bad",
+        "good_label": "Your product, fully in frame with soft highlights",
+        "bad_label": "Your product is cropped at the left edge"
       },
       {
-        "good": "n:guide:k5-image-to-video-input-1-good",
-        "bad": "n:guide:b1-image-to-video-bad-blur",
-        "good_label": "Speckled cup sharp in a square frame",
-        "bad_label": "Soft focus hides the cup handle"
+        "good": "n:guide:q2-image-to-video-input-01-good",
+        "bad": "n:guide:q2-image-to-video-input-01-bad",
+        "good_label": "Your product details are sharp in a square frame",
+        "bad_label": "Your product details are out of focus"
       }
     ],
     "outputs": [
       {
-        "ref": "n:gen2:video-hub-g5",
+        "ref": "n:guide:q2-image-to-video-output-00",
         "frame": "16:9",
-        "label": "Candle in warm evening light",
+        "label": "Gold jewelry light sweep",
         "length": 6
       },
       {
         "ref": "n:gen2:tpl-beauty-g2",
         "frame": "9:16",
-        "label": "Balm lifted from a jar",
+        "label": "Cleansing balm texture close-up",
         "length": 6
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-film-g1",
+      "ref": "n:guide:q2-image-to-video-after",
       "zones": [
         "Product name",
         "Caption"
       ],
       "items": [
         "Add captions and prices in CapCut or Canva. AI-made letters can come out wrong.",
-        "Watch the clip once next to your product: labels, color and shape.",
+        "Review the result next to your product: labels, color and shape.",
         "Check it where it will run: feed, product page or story."
       ]
     },
     "titles": {
       "m2": {
-        "h2": "How to turn a product photo into a video in 3 steps"
+        "h2": "How to turn a product product into a video in 3 steps"
       },
       "m3": {
-        "h2": "Image to video ideas: one motion per clip",
-        "lead": "Each idea uses one short action, from pouring water to switching on a light."
+        "h2": "Product ad formats to animate",
+        "lead": "Choose a creator review, try-on, unboxing or product demonstration for your next ad."
       },
       "m4": {
-        "h2": "Where image to video clips help you sell"
+        "h2": "Where creator-style product videos support your ads"
       },
       "m5": {
-        "h2": "What photo works best for image to video"
+        "h2": "What product image works best"
       },
       "m6": {
         "h2": "Image to video length, size and credits"
       },
       "m7": {
-        "h2": "Add captions after download"
+        "h2": "Add your hook after download"
       },
       "gallery": {
-        "h2": "AI image to video examples"
+        "h2": "Product ad formats in motion"
       },
       "examples": {
-        "h2": "More product motion ideas"
+        "h2": "Product motion ideas"
       }
     }
   }

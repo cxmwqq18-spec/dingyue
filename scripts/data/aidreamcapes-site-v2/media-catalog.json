@@ -23553,6 +23553,776 @@
         "variants": [
           640
         ]
+      },
+      "q2-image-to-video-card-01": {
+        "file": "q2-image-to-video-card-01",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator holds vitamin C serum beside her face while speaking in a parked car.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-card-02": {
+        "file": "q2-image-to-video-card-02",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman applies tinted lip balm at a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-card-03": {
+        "file": "q2-image-to-video-card-03",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands lift gold hoop earrings from a small jewelry box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-card-04": {
+        "file": "q2-image-to-video-card-04",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hand removes loose pet hair from a sofa cushion.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-card-05": {
+        "file": "q2-image-to-video-card-05",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult runner checks the fit of a trail sneaker at a doorway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-card-06": {
+        "file": "q2-image-to-video-card-06",
+        "w": 864,
+        "h": 1536,
+        "alt": "Close view of balm smoothed across the back of a hand beside an open jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-card-07": {
+        "file": "q2-image-to-video-card-07",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult participant speaks during a staged park interview while holding a protein bar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-card-08": {
+        "file": "q2-image-to-video-card-08",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hand routes a charging cable through a compact desk organizer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-hero": {
+        "file": "q2-image-to-video-hero",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds vitamin C serum beside her face while speaking in a parked car.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-strip-01": {
+        "file": "q2-image-to-video-strip-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands fasten plain gold hoop earrings beside a mirror in warm light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-strip-02": {
+        "file": "q2-image-to-video-strip-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands place a generic phone on a compact folding stand at a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-strip-05": {
+        "file": "q2-image-to-video-strip-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult fitness creator drinks a freshly mixed protein shake at a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-steps-result": {
+        "file": "q2-image-to-video-steps-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman applies serum at a bright vanity with the bottle beside her face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-uses-00": {
+        "file": "q2-image-to-video-uses-00",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand smooths a balm swatch across the back of another hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-input-00-good": {
+        "file": "q2-image-to-video-input-00-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain amber skincare bottle fully visible and sharply focused on a pale vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-input-00-bad": {
+        "file": "q2-image-to-video-input-00-bad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain amber serum bottle clipped by the left edge of a pale vanity frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-input-01-good": {
+        "file": "q2-image-to-video-input-01-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Single gray trail sneaker fully visible in sharp focus against a neutral backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-input-01-bad": {
+        "file": "q2-image-to-video-input-01-bad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gray trail sneaker in soft focus and dim light with details obscured.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-output-00": {
+        "file": "q2-image-to-video-output-00",
+        "w": 1024,
+        "h": 576,
+        "alt": "Gold hoop earrings and a ring catch a warm light sweep on dark velvet.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-after": {
+        "file": "q2-image-to-video-after",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult beauty creator explains a serum while holding it beside her face.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-example-01": {
+        "file": "q2-image-to-video-example-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult fitness creator adds hydration mix to a glass of water.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-example-02": {
+        "file": "q2-image-to-video-example-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands stretch a plain linen shirt to show its drape.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-example-03": {
+        "file": "q2-image-to-video-example-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand presses a cleanser pump into an open palm at a bright sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-case-01": {
+        "file": "q2-image-to-video-case-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult fitness creator shakes a plain supplement shaker after mixing a drink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-case-02": {
+        "file": "q2-image-to-video-case-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand clears pet hair from a sofa cushion with a remover tool.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-case-03": {
+        "file": "q2-image-to-video-case-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman applies tinted lip balm while looking toward a vanity mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-template-ba": {
+        "file": "q2-image-to-video-template-ba",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand clears loose pet hair from a sofa to reveal a clean stripe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-image-to-video-template-compare": {
+        "file": "q2-image-to-video-template-compare",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands compare a folded phone stand with one holding a generic single-camera phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-card-01": {
+        "file": "q2-url-to-video-card-01",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator holds face sunscreen beside her face while speaking in a parked car.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-card-02": {
+        "file": "q2-url-to-video-card-02",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman applies tinted lip balm at a vanity before leaving.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-card-03": {
+        "file": "q2-url-to-video-card-03",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands reveal gold hoop earrings in a jewelry box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-card-04": {
+        "file": "q2-url-to-video-card-04",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hand clears pet hair from a sofa cushion with a remover tool.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-card-05": {
+        "file": "q2-url-to-video-card-05",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman checks the fit of a crossbody bag in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-card-06": {
+        "file": "q2-url-to-video-card-06",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult fitness creator mixes protein powder at a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-card-07": {
+        "file": "q2-url-to-video-card-07",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hands set a generic phone onto a compact folding stand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-card-08": {
+        "file": "q2-url-to-video-card-08",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult runner packs hydration chews into a running belt.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-hero": {
+        "file": "q2-url-to-video-hero",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds sunscreen beside her face while speaking in a parked car.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-strip-01": {
+        "file": "q2-url-to-video-strip-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a sage lunch container and lift its divided lid.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-strip-02": {
+        "file": "q2-url-to-video-strip-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman tries plain tortoiseshell sunglasses in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-strip-03": {
+        "file": "q2-url-to-video-strip-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult runner tightens the laces on a gray trail sneaker at a trailhead.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-strip-04": {
+        "file": "q2-url-to-video-strip-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman applies skincare cream from an unmarked jar at a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-strip-05": {
+        "file": "q2-url-to-video-strip-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult runner takes a drink from a plain hydration bottle outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-steps-result": {
+        "file": "q2-url-to-video-steps-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a sage divided lunch container on a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-uses-00": {
+        "file": "q2-url-to-video-uses-00",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand points out the compartments of an open insulated lunch container.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-uses-01": {
+        "file": "q2-url-to-video-uses-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult opens a plain snack pouch and takes one bite at a kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-output-01": {
+        "file": "q2-url-to-video-output-01",
+        "w": 1024,
+        "h": 576,
+        "alt": "Adult hand demonstrates a compact folding phone stand on a tidy desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-after": {
+        "file": "q2-url-to-video-after",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult skincare creator holds sunscreen and explains it toward camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-example-01": {
+        "file": "q2-url-to-video-example-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult pours hydration mix into a clear glass of water.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-example-02": {
+        "file": "q2-url-to-video-example-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand clears pet hair from a sofa cushion, leaving a visible clean stripe.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-example-03": {
+        "file": "q2-url-to-video-example-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman puts on a commuter backpack and adjusts its shoulder strap.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-example-04": {
+        "file": "q2-url-to-video-example-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult fitness creator stirs protein powder into a clear glass.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-case-01": {
+        "file": "q2-url-to-video-case-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult shakes a plain supplement shaker after adding protein powder.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-case-02": {
+        "file": "q2-url-to-video-case-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands unfold a compact phone stand and set a generic single-camera phone on it.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-case-03": {
+        "file": "q2-url-to-video-case-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult runner drinks from a plain hydration bottle on a park trail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-url-to-video-example-05": {
+        "file": "q2-url-to-video-example-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult runner adjusts a plain running belt at a sunny trailhead.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-card-01": {
+        "file": "q2-video-ads-card-01",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator holds vitamin C serum beside her face while speaking in a parked car.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-card-02": {
+        "file": "q2-video-ads-card-02",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman applies tinted lip balm at a bright vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-card-03": {
+        "file": "q2-video-ads-card-03",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult participant speaks during a staged park interview while holding a protein bar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-card-04": {
+        "file": "q2-video-ads-card-04",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator holds a compact wireless earbud case beside their face while speaking.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-card-05": {
+        "file": "q2-video-ads-card-05",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman checks the fit of a crossbody bag in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-card-06": {
+        "file": "q2-video-ads-card-06",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult hand removes pet hair from a sofa cushion with a cleaning tool.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-card-07": {
+        "file": "q2-video-ads-card-07",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult woman packs a sealed snack pouch and lunch container into an insulated lunch bag.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-card-08": {
+        "file": "q2-video-ads-card-08",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult runner holds a waist belt and explains its pocket to camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-hero": {
+        "file": "q2-video-ads-hero",
+        "w": 864,
+        "h": 1536,
+        "alt": "Adult creator holds vitamin C serum beside her face while speaking in a parked car.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-strip-00": {
+        "file": "q2-video-ads-strip-00",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands pack a snack pouch and container into an insulated lunch bag.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-strip-01": {
+        "file": "q2-video-ads-strip-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands open a small jewelry box and lift plain hoop earrings.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-strip-02": {
+        "file": "q2-video-ads-strip-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman applies serum at a bright bathroom mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-strip-03": {
+        "file": "q2-video-ads-strip-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult runner drinks from a plain hydration bottle after a run.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-strip-04": {
+        "file": "q2-video-ads-strip-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman fits a small rounded wireless earbud without a stem.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-strip-05": {
+        "file": "q2-video-ads-strip-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman takes a bite of a plain protein snack bar at a park bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-output-01": {
+        "file": "q2-video-ads-output-01",
+        "w": 1024,
+        "h": 576,
+        "alt": "Adult tech creator speaks to camera while holding a compact black earbud case.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-after": {
+        "file": "q2-video-ads-after",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult runner holds a plain waist belt and explains the zip pocket at a trailhead.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-example-02": {
+        "file": "q2-video-ads-example-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman tries on a crossbody bag and adjusts the strap in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-example-03": {
+        "file": "q2-video-ads-example-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult participant speaks during a staged park interview while holding a protein bar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-example-05": {
+        "file": "q2-video-ads-example-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds serum beside her face while speaking in a parked car.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-case-02": {
+        "file": "q2-video-ads-case-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands install a plain sage silicone phone case with a single circular camera opening.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q2-video-ads-uses-01": {
+        "file": "q2-video-ads-uses-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult runner holds a plain running belt and speaks to camera at a trailhead.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
