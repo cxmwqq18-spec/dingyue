@@ -72,42 +72,42 @@
     "lead": "See product scenes that leave clear space for a headline or offer added in your ad editor.",
     "groups": [
       {
-        "label": "Room for your text",
+        "label": "Creator-style ad formats",
         "items": [
           {
-            "ref": "n:guide:k3-social-example-lipstick",
-            "title": "Lipstick on pink with open space on the left",
+            "ref": "n:guide:q6-social-example-1",
+            "title": "Texture Demo: Coral lipstick swatch",
             "kind": "photo",
-            "product": "red lipstick"
+            "product": "coral lipstick"
           },
           {
-            "ref": "n:guide:k3-social-example-hot-sauce",
-            "title": "Hot sauce with chilies and room at the top",
+            "ref": "n:guide:q6-social-example-2",
+            "title": "Recipe Demo: Hot sauce on tacos",
             "kind": "photo",
-            "product": "hot sauce bottle"
+            "product": "hot sauce"
           },
           {
-            "ref": "n:guide:k3-social-example-coffee-bag",
-            "title": "Coffee bag on a counter with room on the right",
+            "ref": "n:guide:q6-social-example-3",
+            "title": "ASMR Unboxing: Open a fresh coffee bag",
             "kind": "photo",
-            "product": "coffee bag"
+            "product": "coffee"
           }
         ]
       },
       {
-        "label": "Carousel pair",
+        "label": "Try-On carousel frames",
         "items": [
           {
-            "ref": "n:guide:k3-social-example-trainer-city",
-            "title": "Brown suede trainer on a city curb",
+            "ref": "n:guide:q6-social-example-4",
+            "title": "Try-On: Brown trainers on a city walk",
             "kind": "photo",
-            "product": "brown suede trainer"
+            "product": "brown leather trainers"
           },
           {
-            "ref": "n:guide:k3-social-example-trainer-source",
-            "title": "Brown suede trainer on a neutral studio surface",
+            "ref": "n:guide:q6-social-example-5",
+          "title": "Product Demo: Brown trainers in motion",
             "kind": "photo",
-            "product": "brown suede trainer"
+            "product": "brown leather trainers"
           }
         ]
       }
@@ -135,18 +135,18 @@
   },
   "visual": {
     "strip": [
-      "n:guide:k3-social-strip-water-bottle",
+      "n:guide:q6-social-strip-1",
       "n:guide:k3-social-strip-speaker",
-      "n:guide:k3-social-strip-trail-shoe",
-      "n:guide:k3-social-strip-camping-lantern",
-      "n:guide:k3-social-strip-bowls",
-      "n:guide:k3-social-strip-planter"
+      "n:guide:q6-social-strip-3",
+      "n:guide:q6-social-strip-4-r2",
+      "n:guide:q6-social-strip-5",
+      "n:guide:q6-social-strip-6"
     ],
     "steps": {
       "source": "n:guide:k3-social-step-lipstick-source",
-      "result": "n:guide:k3-social-step-lipstick-result",
+      "result": "n:guide:q6-social-steps-result",
       "mode": "photo",
-      "prompt": "Put this coral lipstick on a soft pink backdrop, with open space on the left for a headline.",
+      "prompt": "Show a clean coral lipstick swatch on natural skin beside the tube, with open space on the left for a headline.",
       "options": [
         [
           "Photo",
@@ -163,97 +163,107 @@
       ]
     },
     "picker": {
-      "title": "Social ad photo ideas by product",
-      "lead": "Browse square campaign scenes for beauty, kitchen, fashion and home products.",
+      "title": "Choose a format for a square social ad",
+    "lead": "Browse product scenes for social ads, from creator reviews and try-ons to unboxing and recipe formats.",
       "chips": [
         {
-          "id": "beauty",
-          "label": "Beauty"
+          "id": "routine",
+          "label": "GRWM & Routine"
         },
         {
-          "id": "kitchen",
-          "label": "Kitchen"
+          "id": "tryon",
+          "label": "Try-On"
         },
         {
-          "id": "fashion",
-          "label": "Fashion"
+          "id": "demo",
+          "label": "Product Demo"
         },
         {
-          "id": "home",
-          "label": "Home"
+          "id": "creator",
+          "label": "Creator Scene"
         }
       ],
       "cards": [
         {
-          "ref": "n:guide:k3-social-picker-skincare-podiums",
-          "label": "Skincare on pastel podiums",
+          "ref": "n:guide:q6-social-picker-1",
+          "label": "GRWM: Serum drops on the cheek",
           "chips": [
-            "beauty"
+            "routine",
+            "demo",
+            "creator"
           ],
-          "prompt": "Arrange the skincare bottles on soft pastel podiums with clear space for a short headline.",
+          "prompt": "Use the uploaded serum as the exact product. An adult presses a drop onto her palm and pats it onto her cheek in a relaxed morning routine.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k3-social-picker-skincare-minis",
-          "label": "Skincare minis in a bundle",
+          "ref": "n:guide:q6-social-picker-2-r2",
+          "label": "ASMR Unboxing: Vitamin sachets",
           "chips": [
-            "beauty"
+            "demo",
+            "creator"
           ],
-          "prompt": "Show the minis together on a simple tray and leave open space beside the bundle.",
+          "prompt": "Use the uploaded sachets as the exact products. Hands open a mailer and reveal the unbranded vitamin sachets with a tactile unboxing feel.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k3-social-picker-kitchen-set",
-          "label": "Kitchen gift set on counter",
+          "ref": "n:guide:q6-social-picker-3",
+          "label": "First-Bite Reaction: Protein snack",
           "chips": [
-            "kitchen"
+            "demo",
+            "creator"
           ],
-          "prompt": "Place the gift set on a calm kitchen surface with one clear area for an offer.",
+          "prompt": "Use the uploaded snack bar as the exact product. An adult takes a first bite and reacts naturally; no health claims.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k3-social-picker-toaster",
-          "label": "Toaster on a kitchen counter",
+          "ref": "n:guide:q6-social-picker-4",
+          "label": "Try-On: Sandals by the shore",
           "chips": [
-            "kitchen"
+            "tryon",
+            "creator"
           ],
-          "prompt": "Show the toaster on a clean counter with its product shape clear and open room beside it for a short headline.",
+          "prompt": "Use the uploaded sandals as the exact product. An adult fastens the straps and walks along a sunny shoreline, with the fit visible.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k3-social-picker-sandals",
-          "label": "Summer sandals on sand",
+          "ref": "n:guide:q6-social-picker-5",
+          "label": "Try-On: Floral dress mirror check",
           "chips": [
-            "fashion"
+            "tryon",
+            "creator"
           ],
-          "prompt": "Arrange the sandals on sand with their straps visible and open sky above for a headline.",
+          "prompt": "Use the uploaded dress as the exact product. An adult tries it on in a mirror and turns once to show its drape.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k3-social-picker-floral-dress",
-          "label": "Floral dress by a window",
+          "ref": "n:guide:q6-social-picker-6",
+        "label": "Pet Brush Demo: Clear Sofa",
           "chips": [
-            "fashion"
+            "demo",
+            "creator"
           ],
-          "prompt": "Show the dress on a hanger beside a bright window with space for a short offer.",
+          "prompt": "Use the uploaded pet brush as the exact product. An adult lifts fur from a sofa cushion and reveals a clean strip.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k3-social-picker-blankets",
-          "label": "Folded wool blankets on chair",
+          "ref": "n:guide:q6-social-picker-7-r3",
+          "label": "Hand Demo: Attach a phone grip",
           "chips": [
-            "home"
+            "demo",
+            "creator"
           ],
-          "prompt": "Stack the blankets on a simple chair and leave an uncluttered area beside them.",
+          "prompt": "Use the uploaded phone grip as the exact product. An adult attaches it to a plain generic phone and shows a secure one-handed hold.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k3-social-picker-candle",
-          "label": "Candle on a styled shelf",
+          "ref": "n:guide:q6-social-picker-8",
+          "label": "Try-On: Workout leggings in a mirror",
           "chips": [
-            "home"
+            "tryon",
+            "routine",
+            "creator"
           ],
-          "prompt": "Place the candle on a styled shelf with uncluttered room for a short offer added later.",
+          "prompt": "Use the uploaded leggings as the exact product. An adult tries them on and demonstrates a controlled squat in a mirror.",
           "kind": "photo"
         }
       ],
@@ -262,46 +272,46 @@
     "uses": [
       {
         "frame": "split",
-        "ref": "n:guide:k3-social-use-hot-sauce-source",
-        "ref_b": "n:guide:k3-social-use-hot-sauce-alt",
-        "h": "Ad test",
-        "d": "Hold the offer steady, test two scenes, and compare which gets more clicks."
+        "ref": "n:guide:q6-social-uses-a",
+        "ref_b": "n:guide:q6-social-uses-b",
+        "h": "A/B Test: Hot sauce recipe or first bite",
+        "d": "Keep the sauce and audience steady while comparing a recipe scene with a taste reaction."
       },
       {
         "frame": "post",
-        "ref": "n:guide:k3-social-use-lunchbox",
-        "h": "Feed preview",
-        "d": "Check the square on a phone screen before you launch. Small products need a tighter crop."
+        "ref": "n:guide:q6-social-uses-feed",
+        "h": "Day in the Life: Pack a protein snack",
+        "d": "Preview a square feed scene of an adult packing a snack before training."
       }
     ],
     "input": [
       {
         "good": "n:guide:k3-social-input-bottle-good",
-        "bad": "n:guide:k3-social-input-bottle-blurred",
+        "bad": "n:guide:q6-social-bad-bottle-r2",
         "good_label": "Bottle outline and cap in focus",
         "bad_label": "Bottle details softened by blur"
       },
       {
         "good": "n:guide:k3-social-input-tea-good",
-        "bad": "n:guide:k3-social-input-tea-cropped",
+        "bad": "n:guide:q6-social-bad-tea-r2",
         "good_label": "Tea pouch and cup fully visible",
         "bad_label": "Pouch and cup cropped at frame edges"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:k3-social-output-trail-shoe",
+        "ref": "n:guide:q6-social-output-bottle-r1",
         "frame": "1:1",
-        "label": "Product reveal for a feed ad"
+        "label": "First Sip: Turquoise insulated bottle"
       },
       {
-        "ref": "n:guide:k3-social-output-suitcase",
+        "ref": "n:guide:q6-social-output-tea-r1",
         "frame": "1:1",
-        "label": "Square campaign image"
+        "label": "First Sip: Tea pouch and glass cup"
       }
     ],
     "after": {
-      "ref": "n:guide:k3-social-after-eyeglasses",
+      "ref": "n:guide:q6-social-after",
       "zones": [
         "Your headline",
         "Your price"
@@ -317,7 +327,7 @@
         "h2": "How to make a square social ad photo in 3 steps"
       },
       "m3": {
-        "h2": "Social ad photo ideas by product",
+        "h2": "Social ad photo ideas by format",
         "lead": "Choose an item and leave clear space for your headline."
       },
       "m4": {

@@ -187,36 +187,36 @@
     ],
     "change-background": [
       {
-        "ref": "n:guide:k5-background-case-1",
-        "product": "blue ceramic vase",
-        "title": "Blue vase moved onto a sunny windowsill"
+        "ref": "n:guide:q6-cbg-case-1",
+        "product": "facial serum",
+        "title": "GRWM: Serum dropper before work"
       },
       {
-        "ref": "n:guide:k5-background-case-2",
-        "product": "face cream jar",
-        "title": "Face cream jar placed on wet stone by a pool"
+        "ref": "n:guide:q6-cbg-case-2",
+        "product": "white leather walking shoes",
+        "title": "Try-On: White leather shoes"
       },
       {
-        "ref": "n:guide:k5-background-case-3",
-        "product": "leather wallet",
-        "title": "Leather wallet set on a marble cafe table"
+        "ref": "n:guide:q6-cbg-case-3",
+        "product": "brown leather wallet",
+        "title": "Hand Demo: Open a leather wallet"
       }
     ],
     "social-ad-photos": [
       {
-        "ref": "n:guide:k3-social-template-case-iced-coffee",
-        "product": "iced coffee can",
-        "title": "Iced coffee can on a picnic blanket, room for a headline"
+        "ref": "n:guide:q6-social-case-1",
+        "product": "cold brew coffee",
+        "title": "First-Sip Reaction: Open a cold brew can"
       },
       {
-        "ref": "n:guide:k3-social-template-case-speaker",
-        "product": "wireless speaker",
-        "title": "Wireless speaker on a pool deck for a summer feed ad"
+        "ref": "n:guide:q6-social-case-2",
+        "product": "pet hair remover",
+        "title": "Problem to Fix: Pet hair off the sofa"
       },
       {
-        "ref": "n:guide:k3-social-template-case-hand-cream",
-        "product": "hand cream tube",
-        "title": "Hand cream with lavender sprigs in a square feed ad"
+        "ref": "n:guide:q6-social-case-3",
+        "product": "hand cream",
+        "title": "GRWM: Apply hand cream before work"
       }
     ],
     "tpl-angle": [

@@ -542,16 +542,16 @@
   "change-background": {
     "images": {
       "bg": {
-        "ref": "n:guide:k5-background-template-card",
-        "alt": "Blue ceramic vase against a clean warm studio background, framed as a square product image."
+        "ref": "n:guide:q6-cbg-template-bg",
+        "alt": "An adult applies an amber facial serum in a softly lit mirror scene."
       },
       "life": {
-        "ref": "n:guide:k5-change-background-template-life",
-        "alt": "Green potted plant on a sunny windowsill"
+        "ref": "n:guide:k5-lifestyle-gallery-hero",
+        "alt": "The lifestyle photo tool’s own hero image for a product in a room setting."
       },
       "light": {
-        "ref": "n:guide:k5-change-background-template-light",
-        "alt": "Small white candle glowing on a pale table"
+        "ref": "g:commercial-lighting/hero-output",
+        "alt": "The commercial lighting template’s own hero image."
       }
     }
   },

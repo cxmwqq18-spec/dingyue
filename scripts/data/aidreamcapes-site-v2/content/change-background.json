@@ -117,36 +117,36 @@
     "lead": "One product shown on different backdrops, from a plain color block to a seasonal scene.",
     "groups": [
       {
-        "label": "Three backdrop variations",
+        "label": "Creator-style ad scenes",
         "items": [
           {
-            "ref": "n:guide:k5-background-case-color",
-            "title": "Phone case on a soft blue color block",
+            "ref": "n:guide:q6-cbg-example-1",
+            "title": "Hand Demo: Fit a generic phone case",
             "kind": "photo",
-            "product": "plain phone case"
+            "product": "generic phone case"
           },
           {
-            "ref": "n:guide:k5-background-case-stone",
-            "title": "Plain phone case on a textured stone slab",
+            "ref": "n:guide:q6-cbg-example-2",
+            "title": "Routine: Mix a post-workout protein drink",
             "kind": "photo",
-            "product": "plain phone case"
+            "product": "protein powder"
           },
           {
-            "ref": "n:guide:k5-background-case-autumn",
-            "title": "Plain phone case among autumn leaves",
+            "ref": "n:guide:q6-cbg-example-3",
+            "title": "Try-On: Walk in white leather shoes",
             "kind": "photo",
-            "product": "plain phone case"
+            "product": "walking shoes"
           }
         ]
       },
       {
-        "label": "New settings",
+        "label": "Product-use formats",
         "items": [
           {
-            "ref": "n:gen2:change-background-g4",
-            "title": "Rolled yoga mat on a beach at sunrise",
+            "ref": "n:guide:q6-cbg-example-4",
+            "title": "GRWM: Apply serum before work",
             "kind": "photo",
-            "product": "yoga mat"
+            "product": "facial serum"
           }
         ]
       }
@@ -154,111 +154,116 @@
   },
   "visual": {
     "strip": [
-      "n:gen2:plat-instagram-g4",
-      "n:guide:k5-change-background-strip-1",
-      "n:guide:k5-change-background-strip-2",
-      "n:gen2:plat-shopify-c3",
-      "n:gen2:ind-home-living-g3",
-      "n:guide:k5-change-background-strip-5"
+      "n:guide:q6-social-strip-skincare-routine",
+      "n:guide:q6-cbg-strip-2",
+      "n:guide:q6-cbg-strip-4",
+      "n:guide:q6-cbg-strip-5",
+      "n:guide:q6-cbg-strip-6",
+      "n:guide:q6-cbg-strip-3-r2"
     ],
     "steps": {
       "source": "n:gen2:plat-instagram-g4",
-      "result": "n:guide:k5-change-background-steps-result",
+      "result": "n:guide:q6-cbg-steps-result-r2",
       "mode": "photo",
-      "prompt": "Move the tube onto a white bathroom sink counter with soft window light. Keep the label straight and readable."
+      "prompt": "Show cream smoothed onto the back of a hand beside a bathroom sink, with the tube visible in soft morning light."
     },
     "picker": {
-      "title": "Pick a new setting",
-      "lead": "Choose a background that suits the product and where shoppers will see it.",
+      "title": "Choose a product ad format",
+    "lead": "Choose a product scene to see formats such as skincare routines, try-ons and hands-on demos.",
       "chips": [
         {
-          "id": "desk",
-          "label": "Desk"
+          "id": "routine",
+          "label": "GRWM & Routine"
         },
         {
-          "id": "entryway",
-          "label": "Entryway"
+          "id": "tryon",
+          "label": "Try-On"
         },
         {
-          "id": "living-room",
-          "label": "Living room"
+          "id": "problem-fix",
+          "label": "Problem to Fix"
         },
         {
-          "id": "kitchen",
-          "label": "Kitchen"
+          "id": "demo",
+          "label": "Product Demo"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:ind-electronics-g2",
-          "label": "Tablet stand on a desk",
+          "ref": "n:guide:q6-cbg-picker-1",
+          "label": "GRWM: Serum before work",
           "chips": [
-            "desk"
+            "routine",
+            "demo"
           ],
-          "prompt": "Move the product to a clean pale desk with a laptop edge in the distance, keeping its useful details clear.",
+          "prompt": "Use the uploaded serum as the exact product. An adult creator dispenses one drop into her palm and pats it onto her cheek in a natural morning routine. Keep the unbranded bottle visible and make no skin or medical claims.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-change-background-picker-cards-1-image",
-          "label": "Keyboard on a worktable",
+          "ref": "n:guide:q6-cbg-picker-2-r2",
+          "label": "Before & After: Phone case swap",
           "chips": [
-            "desk"
+            "problem-fix",
+            "demo"
           ],
-          "prompt": "Use a simple desk surface and a quiet background, leaving the product fully visible.",
+          "prompt": "Use the uploaded case as the exact product. Show a clear before-and-after as an adult replaces a worn generic phone case with the new single-camera-opening case. No recognizable phone design or text.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-change-background-picker-cards-2-image",
-          "label": "Suede loafers by the door",
+          "ref": "n:guide:q6-cbg-picker-3",
+          "label": "Try-On: Suede loafers on foot",
           "chips": [
-            "entryway"
+            "tryon"
           ],
-          "prompt": "Move the loafers to a calm entryway bench with a warm wall, leaving room around their shape and stitching.",
+          "prompt": "Use the uploaded loafers as the exact product. An adult slips them on and takes a confident step, with the fit, stitching and sole visible.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-change-background-picker-cards-3-image",
-          "label": "Shoe rack by the door",
+          "ref": "n:guide:q6-cbg-picker-4",
+        "label": "Pet Brush Demo: Clear Sofa",
           "chips": [
-            "entryway"
+            "problem-fix",
+            "demo"
           ],
-          "prompt": "Set the product near a simple entryway bench and warm wall, with clear space around its edges.",
+          "prompt": "Use the uploaded pet brush as the exact product. An adult lifts fur from a sofa and reveals a clean strip beside it, with the tool visible in hand.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-home-living-g2",
-          "label": "Planter beside the sofa",
+          "ref": "n:guide:q6-cbg-picker-5",
+          "label": "Routine: Creatine shake at the gym",
           "chips": [
-            "living-room"
+            "routine",
+            "demo"
           ],
-          "prompt": "Swap a cluttered surface for a linen-covered console with soft window shadows, leaving the product rim clear.",
+          "prompt": "Use the uploaded supplement container as the exact product. An adult measures one scoop into a shaker before training; make no health claims and keep label lettering blank.",
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k5-change-background-picker-cards-5-image",
-          "label": "Plants on a wall shelf",
+          "ref": "n:guide:q6-cbg-picker-6",
+          "label": "Try-On: Gold hoops before work",
           "chips": [
-            "living-room"
+            "tryon",
+            "demo"
           ],
-          "prompt": "Place the product against a calm wall and light shelf, with enough open space around its full shape.",
+          "prompt": "Use the uploaded earrings as the exact product. An adult fastens one hoop and turns to a mirror to show the scale and finish.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-food-drinks-g2",
-          "label": "Snack bag with fruit",
+          "ref": "n:guide:q6-cbg-picker-7",
+          "label": "First-Bite Reaction: Protein snack",
           "chips": [
-            "kitchen"
+            "demo"
           ],
-          "prompt": "Use a simple kitchen shelf with muted colors and the front label facing forward; keep other items soft in the background.",
+          "prompt": "Use the uploaded snack bar as the exact product. An adult takes a first bite outdoors and gives a natural, pleased reaction.",
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-food-drinks-g3",
-          "label": "Sauce jar by dinner",
+          "ref": "n:guide:q6-cbg-picker-8",
+          "label": "Workout Routine: Resistance band shoulder exercise",
           "chips": [
-            "kitchen"
+            "demo"
           ],
-          "prompt": "Place the product on a calm kitchen surface near a finished meal, keeping the label facing forward.",
+          "prompt": "Use the uploaded resistance band as the exact product. An adult shows a simple shoulder exercise with the band clearly visible and controlled form.",
           "kind": "photo"
         }
       ],
@@ -267,45 +272,45 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:guide:k5-change-background-uses-0-image",
-        "h": "Match a collection page",
-        "d": "Products shot in different rooms look like one set when they share a surface or color."
+        "ref": "n:guide:q6-cbg-uses-1",
+        "h": "GRWM: Gold earrings before work",
+        "d": "Show the scale and finish while an adult fastens a pair of hoops in a mirror."
       },
       {
         "frame": "post",
-        "ref": "n:guide:k5-change-background-uses-1-image",
-        "h": "Refresh a seasonal post",
-        "d": "Move the speaker to a pool deck in summer or a cabin in winter, then type the offer in your editor."
+        "ref": "n:guide:q6-cbg-uses-2",
+        "h": "Day in the Life: Dog harness fit",
+        "d": "An adult checks the fit on a calm dog before heading to the park."
       }
     ],
     "input": [
       {
         "good": "n:guide:k5-change-background-input-0-good",
-        "bad": "n:guide:background-daypack-cropped",
+        "bad": "n:guide:q6-cbg-bad-daypack-r2",
         "good_label": "Open bag, full handle visible",
         "bad_label": "Top handle clipped by frame"
       },
       {
         "good": "n:gen2:plat-instagram-g1",
-        "bad": "n:guide:background-mug-blurred",
+        "bad": "n:guide:q6-cbg-bad-mug-r2",
         "good_label": "Whole speckled mug, handle in frame",
         "bad_label": "Too close: only the rim, nothing to set on a new background"
       }
     ],
     "outputs": [
       {
-        "ref": "n:guide:k5-change-background-outputs-0-image",
+        "ref": "n:guide:q6-cbg-output-backpack-r1",
         "frame": "1:1",
-        "label": "Polished product view"
+        "label": "Day in the Life: Wear an olive daypack"
       },
       {
-        "ref": "n:guide:k5-change-background-outputs-1-image",
+        "ref": "n:guide:q6-cbg-output-mug-r1",
         "frame": "1:1",
-        "label": "Desk setting"
+        "label": "First Sip: Speckled ceramic mug"
       }
     ],
     "after": {
-      "ref": "n:guide:k5-change-background-after-image",
+      "ref": "n:guide:q6-cbg-after",
       "zones": [
         "Your price",
         "Your headline"
@@ -320,8 +325,8 @@
         "h2": "How to change a product photo background in 3 steps"
       },
       "m3": {
-        "h2": "Background ideas by room",
-        "lead": "Pick the room your shopper would put it in."
+        "h2": "Product ad scenes by format",
+        "lead": "Pick an ad format that shows how shoppers can use your product."
       },
       "m4": {
         "h2": "Where new-background photos help"

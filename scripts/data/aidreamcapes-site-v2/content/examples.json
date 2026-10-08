@@ -4,7 +4,7 @@
   "description": "Browse AI product photo and video examples: a folding e-bike video ad, plus lipstick, hoodie, handbag and boots shown in new scenes. See how it works.",
   "h1": "AI Product Photo and Video Examples, Start to Finish",
   "eyebrow": "From photo to ad",
-  "lead": "Follow product examples from a starting photo to a finished image or video. Filter the examples by product category or output format.",
+  "lead": "Follow product examples from a starting photo to a finished image or video. Filter the scenes by creative format.",
   "card": "Fifteen products, from lipstick to a folding e-bike, shown in finished photos and video.",
   "secondary_keywords": [
     "AI product video ad examples",
@@ -16,107 +16,126 @@
   "cases": [
     {
       "id": "ebike",
-      "t": "Folding e-bike: a product photo and hinge clip",
-      "d": "A gray folding e-bike appears in a clean studio view, then a vertical clip shows hands unfolding the frame and inspecting its hinge. The sequence gives shoppers a clear product view and shows how the folding mechanism works.",
+      "t": "Creator Review: Folding e-bike hinge check",
+      "d": "An adult creator holds the handlebar, looks into the camera and explains the folding hinge in a concise product review.",
       "imageLabels": [
-        "Product photo",
-        "Video ad · 9:16"
+        "Uploaded e-bike photo",
+        "Creator Review: Folding e-bike"
+      ],
+      "imageRefs": [
+        "n:guide:plat-youtube-shorts-size-portrait-ebike",
+        "n:guide:q6-examples-ebike-review"
       ]
     },
     {
       "id": "lipstick",
-      "t": "Lipstick: one studio shot becomes a vanity scene and a shade swatch",
-      "d": "The starting photo was a single coral lipstick on a plain studio background. From it we made a scene on a marble vanity beside a mirror and a fresh flower, and a close-up next to a swatch of the same shade, so shoppers can judge the color before they buy.",
+      "t": "GRWM: Tinted lip balm before work",
+      "d": "An adult creator applies a coral tinted lip balm, then faces the camera holding the product to describe its shade as part of a getting-ready routine.",
       "imageRefs": [
         "n:gen2:h1-examples-lipstick-source",
-        "n:gen2:h1-examples-lipstick-vanity",
-        "n:gen2:h1-examples-lipstick-swatch"
+        "n:guide:q6-examples-lipstick-application",
+        "n:guide:q6-examples-lipstick-review"
+      ],
+      "imageLabels": [
+        "Uploaded lip product",
+        "GRWM: Lip balm application",
+        "Creator Review: Coral lip balm"
       ]
     },
     {
       "id": "hoodie",
-      "t": "Hoodie: a product detail becomes a studio fit and a flat lay",
-      "d": "We started with close views of a plain gray hoodie that show its fabric, hood, drawstrings and pocket. From those details we made a studio fit view and a flat lay on a wooden bench with a beanie and scarf, so shoppers can compare the shape and styling.",
+      "t": "Try-On: Gray hoodie fit and drape",
+      "d": "Start with the fabric detail, then show an adult trying on the hoodie and turning once so shoppers can see its fit and drape.",
       "imageRefs": [
         "n:hoodie-detail",
         "n:gen2:tpl-tryon-c3",
-        "n:gen2:h1-examples-hoodie-flatlay"
+        "n:guide:q6-examples-hoodie-tryon"
       ],
       "imageLabels": [
-        "Fabric and pocket detail",
-        "Worn in studio",
-        "Flat lay"
+        "Fabric detail",
+        "Try-On: Hoodie fit",
+        "Try-On: Hoodie drape"
       ]
     },
     {
-      "id": "bottle",
-      "t": "Water bottle: a lifestyle photo becomes a social feed ad image",
-      "d": "The starting point was a lifestyle shot of a sage green water bottle on a marble table, with a woman relaxing on a sofa behind it. We asked for a feed ad version: the same bottle closer and larger in the frame, beaded with water, next to fresh limes and a folded towel in warm afternoon sun. The result is a square image sized for Facebook and Instagram feeds, with the headline and price left to add afterward in Ads Manager."
-    },
-    {
       "id": "handbag",
-      "t": "Leather handbag: a studio shot placed in a cafe and on the street",
-      "d": "The starting photo showed a tan leather handbag with a gold clasp on a plain background. From it we made a cafe table scene with a latte and sunglasses, and an image of the bag carried on a sunny street, with the shape, color and clasp kept the same in each.",
+      "t": "Day in the Life: Pack a leather handbag",
+      "d": "An adult opens a leather handbag, puts in daily essentials and carries it out from a cafe.",
       "imageRefs": [
         null,
-        "n:gen2:h1-examples-handbag-cafe",
+        "n:guide:q6-examples-handbag-day",
         null
+      ],
+      "imageLabels": [
+        "Uploaded bag photo",
+        "Day in the Life: Pack essentials",
+        "Day in the Life: Carry the bag"
       ]
     },
     {
       "id": "boots",
-      "t": "Chelsea boots: shown on cobblestones and by the front door",
-      "d": "We began with a close photo of brown leather Chelsea boots. From it we made a walking shot on cobblestones in evening light and a quiet scene by a wooden front door under a coat and umbrella, ready for a seasonal campaign.",
+      "t": "Try-On: Chelsea boots on a city walk",
+      "d": "Show leather and stitching, then an adult wearing the boots on a city walk with the fit clear.",
       "imageRefs": [
         "n:guide:ind-shoes-m6-boot-detail",
         null,
-        "n:gen2:h1-examples-boots-doorway"
+        "n:guide:q6-examples-boots-walk"
       ],
       "imageLabels": [
-        "Leather and stitching detail",
-        "On cobblestones",
-        "By the door"
+        "Leather detail",
+        "Try-On: First steps",
+        "Try-On: City walk"
       ]
     },
     {
       "id": "tote",
-      "t": "Linen tote bag: a product photo placed in everyday scenes",
-      "d": "From one photo of a linen tote bag we made a scene beside a coffee cup at a sunny cafe and another with the bag carried next to a city bike. The bag stays the same in each image while the setting changes to suit different shoppers."
+      "t": "Day in the Life: Pack and carry a tote",
+      "d": "An adult packs everyday essentials into a linen tote, then carries it toward a city bike.",
+      "imageRefs": [
+        null,
+        "n:guide:q6-examples-tote-pack",
+        null
+      ],
+      "imageLabels": [
+        "Uploaded tote photo",
+        "Day in the Life: Pack essentials",
+        "Day in the Life: Carry the tote"
+      ]
     },
     {
       "id": "sunglasses",
-      "t": "Sunglasses: a packshot becomes a sunny deck scene and a worn look",
-      "d": "The starting photo was a pair of dark wayfarer sunglasses on a plain background. From it we made a sunlit deck scene and a street portrait with dark tortoiseshell sunglasses, showing the product in a still life and while worn.",
+      "t": "Try-On: Black sunglasses fit check",
+      "d": "An adult takes black sunglasses from a case, tries them on in a mirror, and checks the fit outdoors.",
       "imageRefs": [
         null,
-        "n:gen2:photo-hub-g4",
-        "n:gen2:model-photos-g2"
+        "n:guide:q6-examples-sunglasses-mirror-black-r1",
+        "n:guide:q6-examples-sunglasses-outdoor-black-r1"
       ],
       "imageLabels": [
-        "Product photo",
-        "On a sunny deck",
-        "Worn on the street"
+        "Uploaded black sunglasses",
+        "Try-On: Black frames in a mirror",
+        "Try-On: Black frames on a city walk"
       ]
     },
     {
       "id": "coffee",
-      "t": "Coffee bag: a counter display becomes a cafe scene",
-      "d": "We started with a photo of a kraft coffee bag with a blank label and a scatter of beans. From it we made a first-batch display on a counter and a single bag staged at a cafe counter, so the packaging can fit wholesale and cafe settings.",
+      "t": "ASMR Unboxing: Open a coffee bag",
+      "d": "Hands open a blank-label coffee bag and reveal its beans, then an adult takes a first sip from a clear glass while the coffee package stays visible.",
       "imageRefs": [
         null,
-        "n:gen2:occ-product-launch-c4",
-        "n:gen2:social-ad-photos-g3"
+        "n:guide:q6-examples-coffee-open-r2",
+        "n:guide:q6-examples-coffee-sip-r2"
       ],
       "imageLabels": [
-        "Product photo",
-        "Counter display",
-        "At a cafe counter"
+        "Uploaded coffee bag",
+        "ASMR Unboxing: Open the bag",
+        "First-Sip Reaction: Fresh coffee"
       ]
     },
     {
       "id": "necklace",
-      "t": "Silver necklace: shown worn, then up close",
-      "d": "We began with a photo of a simple silver necklace and a portrait. The Jewelry On Model template showed the necklace worn on a dark top, then a close view of the pendant at the neckline, so shoppers can judge the length and the size.",
+      "t": "Try-On: Silver necklace scale check",
+      "d": "An adult wears the silver pendant to show its scale, followed by a close view of its shape and finish.",
       "imageRefs": [
         null,
         "g:jewelry-positioning/example-07",
@@ -125,69 +144,84 @@
     },
     {
       "id": "candle",
-      "t": "Scented candle: a studio shot becomes living room and spa scenes",
-      "d": "We began with a white ceramic candle jar and its lid on a plain background. From it we made a living room coffee table scene with books and a knit throw, and a spa-style scene on the edge of a bathtub beside a folded towel.",
+      "t": "Problem to Fix: Pet hair off the sofa",
+      "d": "A reusable pet brush gathers fur from an upholstered sofa; the adult shows the clean strip and collected fur.",
       "imageRefs": [
-        null,
-        "n:gen2:h1-examples-candle-living",
-        "n:gen2:h1-examples-candle-bath"
+        "n:guide:q6-examples-petbrush-source",
+        "n:guide:q6-examples-petbrush-problem",
+        "n:guide:q6-examples-petbrush-result"
+      ],
+      "imageLabels": [
+        "Source product photo",
+        "Problem to Fix: Lift pet hair",
+        "Before & After: Clean sofa"
       ]
     },
     {
       "id": "phonecase",
-      "t": "Phone case: a product photo becomes stone and autumn scenes",
-      "d": "We began with a phone case on a soft blue color block. From it we placed this phone case on a textured stone slab and among fallen autumn leaves. The shape and camera opening stay easy to inspect while the background changes.",
+      "t": "Hand Demo: Fit a generic phone case",
+      "d": "Use a generic case with one small oval camera opening; show it fitting a plain phone and the protective edge in an adult hand.",
       "imageRefs": [
-        "n:gen2:h1-examples-phonecase-source",
-        "n:guide:k6-examples-phonecase-stone",
-        "n:gen2:h1-examples-phonecase-autumn"
+        "n:guide:q6-examples-phonecase-source",
+        "n:guide:q6-examples-phonecase-fit",
+        "n:guide:q6-examples-phonecase-drop"
       ],
       "imageLabels": [
-        "Product photo",
-        "On textured stone",
-        "Among autumn leaves"
+        "Source product photo",
+        "Hand Demo: Fit the case",
+        "Hand Demo: Check the edge"
       ]
     },
     {
       "id": "jacket",
-      "t": "Blue jacket: a product photo becomes an outdoor fit and fabric view",
-      "d": "We began with a plain blue jacket. From that photo we made a view of the jacket worn outdoors and a close view of its fabric, so shoppers can compare the fit and material before choosing a style.",
+      "t": "Try-On: Blue jacket fit and fabric",
+      "d": "Show the uploaded jacket, an adult wearing it outdoors and a close fabric view for fit and material.",
       "imageRefs": [
         "g:virtual-try-on/source-input",
         "g:virtual-try-on/example-05",
         "g:virtual-try-on/example-07"
       ],
       "imageLabels": [
-        "Product photo",
-        "Worn outdoors",
-        "Fabric detail"
+        "Uploaded jacket photo",
+        "Try-On: Jacket outdoors",
+        "Texture Demo: Jacket fabric"
       ]
     },
     {
       "id": "yogamat",
-      "t": "Yoga mat: a rolled mat becomes a bright room and a stretch pose",
-      "d": "The starting photo was a teal yoga mat rolled up with its strap. From it we made an unrolled mat in a bright living room and an image of someone stretching on the mat, so shoppers can see the size and the texture in use.",
+      "t": "Routine: Unroll a yoga mat and stretch",
+      "d": "An adult unrolls a teal fitness mat, then stretches on it in a bright workout space.",
       "imageRefs": [
         "n:yogamat-rolled",
-        "n:gen2:ind-health-wellness-6",
+        "n:guide:q6-examples-yogamat-use",
         null
+      ],
+      "imageLabels": [
+        "Uploaded yoga mat",
+        "Routine: Unroll the mat",
+        "Routine: Stretch"
       ]
     },
     {
       "id": "hotsauce",
-      "t": "Hot sauce: from a plain bottle photo to a taco night ad",
-      "d": "The starting photo showed a glass bottle of red hot sauce with a blank cream label. From it we made a pouring shot over tacos and a rustic table scene with fresh chili peppers, with the bottle shape and color kept the same in both.",
+      "t": "Recipe Demo: Hot sauce taco first bite",
+      "d": "Pour hot sauce over a taco, then show an adult tasting it and reacting naturally.",
       "imageRefs": [
         null,
         null,
-        "n:gen2:social-ad-photos-g2"
+        "n:guide:q6-examples-hotsauce-reaction"
+      ],
+      "imageLabels": [
+        "Uploaded sauce bottle",
+        "Recipe Demo: Sauce on tacos",
+        "First-Bite Reaction"
       ]
     }
   ],
   "faq": [
     {
       "q": "Can I use these examples to plan a video for my product?",
-      "a": "Yes. Upload a sharp shot of your product, choose the 9:16 vertical format and a length of 6, 10, 15 or 30 seconds, then describe the opening scene. For a different opening, run it again with a new description."
+      "a": "Yes. Upload a sharp product photo, choose the format and length available in the workspace, then describe one clear opening scene. Try another version when you want a different opening."
     },
     {
       "q": "Why don't the examples include prices or headlines?",
@@ -385,25 +419,33 @@
   },
   "visual": {
     "strip": [
-      "n:planter-pack",
-      "n:gen2:plat-amazon-c3",
-      "n:gen2:plat-amazon-c4",
-      "n:gen2:plat-facebook-c2",
-      "n:gen2:ind-jewelry-accessories-g3",
-      "n:gen2:examples-g7"
+      "n:guide:q6-examples-strip-1",
+      "n:guide:q6-examples-strip-2",
+      "n:guide:q6-examples-strip-3",
+      "n:guide:q6-examples-strip-4",
+      "n:guide:q6-examples-strip-5",
+      "n:guide:q6-examples-strip-6"
     ],
     "picker": [
       {
-        "id": "personal-style",
-        "label": "Personal style"
+        "id": "creator-review",
+        "label": "Creator Review"
       },
       {
-        "id": "food-drinks",
-        "label": "Food & drink"
+        "id": "tryon",
+        "label": "Try-On"
       },
       {
-        "id": "everyday",
-        "label": "Everyday products"
+        "id": "routine",
+        "label": "GRWM & Routine"
+      },
+      {
+        "id": "demo",
+        "label": "Hand Demo & Unboxing"
+      },
+      {
+        "id": "food-demo",
+        "label": "Recipe & First Bite"
       },
       {
         "id": "video",
@@ -416,56 +458,56 @@
     "titles": {
       "m3": {
         "h2": "Browse product examples",
-        "lead": "Filter the complete set by product category or video format."
+        "lead": "Browse formats from creator reviews and try-ons to recipe demos and before-and-after scenes."
       }
     },
     "directoryFilters": {
       "cases": {
         "ebike": [
+          "creator-review",
           "video"
         ],
         "lipstick": [
-          "personal-style"
-        ],
-        "hoodie": [
-          "personal-style"
-        ],
-        "bottle": [
-          "food-drinks",
+          "creator-review",
+          "routine",
           "video"
         ],
+        "hoodie": [
+          "tryon"
+        ],
         "handbag": [
-          "personal-style"
+          "routine"
         ],
         "boots": [
-          "personal-style"
+          "tryon"
         ],
         "tote": [
-          "personal-style"
+          "routine"
         ],
         "sunglasses": [
-          "personal-style"
+          "tryon"
         ],
         "coffee": [
-          "food-drinks"
+          "demo",
+          "food-demo"
         ],
         "necklace": [
-          "personal-style"
+          "tryon"
         ],
         "candle": [
-          "everyday"
+          "problem-fix"
         ],
         "phonecase": [
-          "everyday"
+          "demo"
         ],
         "jacket": [
-          "personal-style"
+          "tryon"
         ],
         "yogamat": [
-          "everyday"
+          "routine"
         ],
         "hotsauce": [
-          "food-drinks"
+          "food-demo"
         ]
       }
     }

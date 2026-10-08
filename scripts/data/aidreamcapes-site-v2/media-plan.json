@@ -46,34 +46,34 @@
     "change-background": {
       "hero": {
         "kind": "pair",
-        "before": "n:guide:k5-background-gallery-source",
-        "after": "n:guide:k5-background-gallery-hero"
+        "before": "n:guide:q6-cbg-hero-source",
+        "after": "n:guide:q6-cbg-hero-result"
       },
       "gallery": [
-        "n:guide:k5-background-gallery-01",
-        "n:guide:k5-background-gallery-02",
-        "n:guide:k5-background-gallery-03",
-        "n:guide:k5-background-gallery-04",
-        "n:guide:k5-background-gallery-05",
-        "n:guide:k5-background-gallery-06"
+        "n:guide:q6-cbg-gallery-01",
+        "n:guide:q6-cbg-gallery-02",
+        "n:guide:q6-cbg-gallery-03",
+        "n:guide:q6-cbg-gallery-04-r2",
+        "n:guide:q6-cbg-gallery-05",
+        "n:guide:q6-cbg-gallery-06"
       ],
       "og": "g:background-remove-replace/og",
       "pairs": [
         {
           "before": "n:guide:k5-background-phonecase-source",
-          "after": "n:guide:k5-background-phonecase-result"
+          "after": "n:guide:q6-cbg-pair-phonecase-after"
         },
         {
           "before": "n:yogamat-pack",
-          "after": "n:guide:k5-background-gallery-pair-yogamat"
+          "after": "n:guide:q6-cbg-pair-yogamat-after"
         },
         {
           "before": "n:boots-pack",
-          "after": "n:guide:k5-background-gallery-pair-boots"
+          "after": "n:guide:q6-cbg-pair-boots-after"
         },
         {
           "before": "n:protein-pack",
-          "after": "n:guide:k5-background-gallery-pair-protein"
+          "after": "n:guide:q6-cbg-pair-protein-after"
         }
       ]
     },
@@ -81,15 +81,15 @@
       "hero": {
         "kind": "pair",
         "before": "n:guide:k3-social-hero-trainer-source",
-        "after": "n:guide:k3-social-hero-trainer-output"
+        "after": "n:guide:q6-social-hero-result"
       },
       "gallery": [
-        "n:guide:k3-social-gallery-closeup",
-        "n:guide:k3-social-gallery-gym-bag",
-        "n:guide:k3-social-gallery-city-curb",
-        "n:guide:k3-social-gallery-pine-trail",
-        "n:guide:k3-social-gallery-pair",
-        "n:guide:k3-social-gallery-tread"
+        "n:guide:q6-social-gallery-01",
+        "n:guide:q6-social-gallery-02",
+        "n:guide:q6-social-gallery-03",
+        "n:guide:q6-social-gallery-04",
+        "n:guide:q6-social-gallery-05",
+        "n:guide:q6-social-gallery-06"
       ],
       "og": "n:guide:k3-social-og",
       "pairs": []
