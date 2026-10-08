@@ -471,23 +471,23 @@
         "image": "g:jewelry-positioning/example-03"
       },
       "gallery": [
-        "n:sunglasses-flatlay",
+        "n:guide:q16-jewelry-sunglasses-cafe",
         "g:jewelry-positioning/example-05",
-        "n:handbag-cafe"
+        "n:guide:q16-jewelry-tote-cafe"
       ],
       "og": "g:jewelry-positioning/example-03"
     },
     "ind-electronics": {
       "hero": {
         "kind": "image",
-        "image": "n:phonecase-hand"
+        "image": "n:guide:q16-electronics-speaker-product-hero"
       },
       "gallery": [
-        "n:phonecase-back",
+        "n:guide:q16-electronics-picker-case-fit",
         "g:packshot-multi-angle/example-04",
         "f:cinematic-video"
       ],
-      "og": "n:phonecase-hand"
+      "og": "n:guide:q16-electronics-speaker-product-hero"
     },
     "ind-health-wellness": {
       "hero": {
@@ -495,9 +495,9 @@
         "image": "n:yogamat-pose"
       },
       "gallery": [
-        "n:protein-kitchen",
-        "n:yogamat-rolled",
-        "n:protein-scoop"
+        "n:guide:q16-wellness-tea-pour",
+        "n:guide:q16-wellness-mat-bag-leave",
+        "n:guide:q16-wellness-face-mist"
       ],
       "og": "n:yogamat-pose"
     },

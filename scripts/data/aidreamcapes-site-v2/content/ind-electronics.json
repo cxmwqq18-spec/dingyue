@@ -4,7 +4,7 @@
   "description": "Make AI product videos for electronics: unboxing clips, desk and travel scenes, and sleek hero shots of your gadget from one product photo. Try your first one.",
   "h1": "AI Product Videos for Electronics, From Unboxing to Everyday Use",
   "eyebrow": "Consumer electronics",
-  "lead": "AI product videos for electronics start with one clear product photo; upload more views when a scene needs another side or small detail.",
+  "lead": "Turn one clear product photo into electronics video ads that show a useful feature, a quick setup, or a product in daily use.",
   "card": "What's in the box, scale in a hand and gadgets in everyday use.",
   "secondary_keywords": [
     "AI unboxing video for gadgets",
@@ -88,23 +88,23 @@
     ]
   },
   "scene_recipes": {
-    "h2": "Electronics scenes you can describe",
+    "h2": "Electronics video ideas for product ads",
     "items": [
       {
-        "t": "Desk setup",
-        "d": "A compact mechanical keyboard and wireless mouse on a tidy oak desk, monitor glow in the background, camera angled to show the keycaps and cable-free surface."
+        "t": "Cable desk reset",
+        "d": "Use the uploaded photo as the cable organizer and keep its shape, color and slots exactly. On a home-office desk, an adult hand guides loose cables into the organizer, ending with the cables separated and the desk surface clear. Soft daylight, practical creator-ad look. Overhead close-up with one short follow move. Sound: cable movement and a light plastic tap; no music."
       },
       {
-        "t": "Unbox the speaker",
-        "d": "A wireless speaker lifted from its box onto a linen table, charging cable and quick-start card placed beside it, no readable invented text."
+        "t": "Speaker box reveal",
+        "d": "Use the uploaded photo as the speaker and keep its round shape, color and woven grille exactly. Hands lift the speaker from a plain box and hold it above the open packaging, ending with the front grille facing the camera. Warm window light, natural unboxing style. Top-down close-up with one slow push-in. Sound: cardboard flap and paper rustle; no music."
       },
       {
-        "t": "Travel pouch",
-        "d": "A small power bank and cable sliding into a carry-on organizer beside a passport, close enough to show the ports and thickness."
+        "t": "Charger travel pack",
+        "d": "Use the uploaded photo as the travel charger and keep its shape, color and prongs exactly. A hand places the charger and cable into an open travel pouch on a hotel desk, ending with both items visible inside. Bright practical light, clean travel-ad look. Overhead close-up with one gentle tilt. Sound: pouch zip and cable movement; no music."
       },
       {
-        "t": "Workout wrist",
-        "d": "A generic fitness tracker on a wrist beside a gym towel, display kept as a soft glow while the band shape remains clear."
+        "t": "Fitness band in use",
+        "d": "Use the uploaded photo as the fitness band and keep its slim shape, strap and display exactly. An adult finishes a gentle stretch and raises the wrist toward the camera, ending with the band face clear. Natural gym light, candid creator-video look. Wrist-level close-up with one short push-in. Sound: fabric movement and soft room tone; no music."
       }
     ]
   },
@@ -182,19 +182,19 @@
         "items": [
           {
             "ref": "n:gen2:ind-electronics-g1",
-            "title": "Wireless speaker unboxed with its cable",
+            "title": "Product showcase: Wireless speaker and cable",
             "kind": "photo",
             "product": "wireless speaker"
           },
           {
             "ref": "n:guide:k7-ind-electronics-examples-0-items-1-ref-n-gen2-ind-electronics-g2",
-            "title": "A clean desktop angle for a tablet stand",
+            "title": "Stand setup: Tablet and foldable hinge",
             "kind": "photo",
             "product": "tablet stand"
           },
           {
             "ref": "n:gen2:ind-electronics-g3",
-            "title": "Charger and cable packed in a travel pouch",
+            "title": "Pack-and-go: Charger kit in a pouch",
             "kind": "photo",
             "product": "charger and cable"
           }
@@ -210,8 +210,8 @@
       "d": "Include the woven grille, top controls, and full side profile in the source image."
     },
     {
-      "t": "Describe one useful movement",
-      "d": "Show this speaker on a table as soft window light travels across its grille."
+      "t": "Describe one useful action",
+      "d": "Show an adult hand pressing one top button, ending with the speaker in clear view."
     },
     {
       "t": "Add the product details",
@@ -221,19 +221,19 @@
   "visual": {
     "overview": "Electronics shoppers need to see the shape, ports, controls, and scale of a device. Start from a clean product shot, then describe one movement that makes a feature easy to understand.",
     "strip": [
-      "n:guide:ind-electronics-m2-source",
+      "n:guide:q16-electronics-speaker-source",
       "f:cinematic-video",
       "n:gen2:tpl-angle-c1",
       "n:guide:k7-ind-electronics-strip-3-n-gen2-tpl-film-g2",
-      "n:guide:k7-ind-electronics-strip-4-n-gen2-tpl-spark-ads-style-video-c1",
-      "n:guide:k7-ind-electronics-strip-5-n-gen2-before-after-videos-c4"
+      "n:guide:q16-electronics-tripod-demo",
+      "n:guide:q16-electronics-cable-solution"
     ],
     "steps": {
-      "source": "n:guide:ind-electronics-m2-source",
-      "result": "f:cinematic-video",
+      "source": "n:guide:q16-electronics-speaker-source",
+      "result": "n:guide:q16-electronics-speaker-step-result",
       "mode": "video",
       "length": 10,
-      "prompt": "Set this compact speaker on a low dark table beside a window, keeping its woven grille visible.",
+      "prompt": "Use the uploaded photo as the speaker and keep its round shape, black color, woven grille and controls exactly. At a quiet cafe table, an adult hand presses one top button, ending with the speaker still beside a ceramic cup. Soft window light, natural product-ad look. Table-height close-up with a short push-in. Sound: button click and cafe room tone; no music.",
       "options": [
         [
           "Size",
@@ -246,49 +246,49 @@
       ]
     },
     "picker": {
-      "title": "Choose an electronics scene for the first shot",
-      "lead": "Choose a device moment that makes one feature easy to see.",
+      "title": "Choose an electronics ad format",
+      "lead": "Pick a clear device moment that shows a feature or answers a shopper question.",
       "chips": [
         {
           "id": "unbox",
-          "label": "Unboxing"
+          "label": "Unbox & React"
         },
         {
           "id": "desk",
-          "label": "Desk and travel use"
+          "label": "Hands-on Demo"
         },
         {
           "id": "detail",
-          "label": "Product detail"
+          "label": "Feature Proof"
         },
         {
           "id": "travel",
-          "label": "Phone case styles"
+          "label": "Everyday Carry"
         }
       ],
       "cards": [
         {
           "ref": "n:gen2:unboxing-videos-g5",
-          "label": "Headphones lifted from foam",
-          "prompt": "Lift the headphones from the fitted insert and keep both earcups visible.",
+          "label": "ASMR unboxing: Headphones leave foam",
+          "prompt": "Use the uploaded photo as the headphones and keep their shape, color, earcups and headband exactly. Hands lift the over-ear headphones from a fitted foam insert on a clean table, ending with both earcups facing the camera. Soft studio light, natural unboxing look. Top-down close-up with one gentle push-in. Sound: foam release and light cardboard rustle; no music.",
           "chips": [
             "unbox"
           ],
           "kind": "video"
         },
         {
-          "ref": "n:guide:ind-electronics-m3-headphones",
-          "label": "Headphones out of the box",
-          "prompt": "Raise the gray headphones from the open box and show their padded earcups.",
+          "ref": "n:guide:q16-electronics-picker-headphones-talk",
+          "label": "Talking-head review: Over-ear headphones",
+          "prompt": "Use the uploaded photo as the headphones and keep their shape, color and earcups exactly. An adult woman holds them beside her face in a bright home office and says, \"Here is a closer look at the ear cushions and folding band.\" She tilts them once toward the lens, ending with the earcups centered. Natural window light, candid creator style. Chest-up front camera with slight handheld sway. Sound: her voice and quiet room tone; no music.",
           "chips": [
             "unbox"
           ],
           "kind": "video"
         },
         {
-          "ref": "f:k7-ind-electronics-picker-cards-2-ref-n-gen2-tpl-size-c3",
-          "label": "Phone stand holding a device",
-          "prompt": "Place the dark-screen phone on the aluminum stand beside a notebook.",
+          "ref": "n:guide:q16-electronics-picker-stand-talk",
+          "label": "Talking-head demo: Foldable stand",
+          "prompt": "Use the uploaded photo as the foldable stand and keep its shape, color and hinge exactly. An adult man holds it at chest height in a bright workspace and says, \"Here is how the hinge folds flat for a travel bag.\" He turns the stand slightly toward the lens, ending with the hinge visible. Natural daylight, relaxed creator style. Chest-up front camera with slight handheld sway. Sound: his voice and quiet room tone; no music.",
           "chips": [
             "desk"
           ],
@@ -296,8 +296,8 @@
         },
         {
           "ref": "n:gen2:tpl-spark-ads-style-video-g1",
-          "label": "Phone stand in a commuter bag",
-          "prompt": "Fold the phone stand and slide it into an open commuter bag.",
+          "label": "Pack-and-go: Stand in a commuter bag",
+          "prompt": "Use the uploaded photo as the stand and keep its shape, color and hinge exactly. A hand folds the stand and slides it into an open commuter bag, ending with the bag and folded stand in view. Bright natural light, practical travel-ad style. Overhead close-up with a short follow move. Sound: fabric rustle and a soft hinge click; no music.",
           "chips": [
             "desk"
           ],
@@ -305,8 +305,8 @@
         },
         {
           "ref": "n:gen2:tpl-angle-g1",
-          "label": "Portable speaker front view",
-          "prompt": "Turn this compact speaker slightly so its woven front grille catches the light.",
+          "label": "Cinematic hero: Speaker grille",
+          "prompt": "Use the uploaded photo as the speaker and keep its round shape, black color and woven grille exactly. Turn the compact speaker slightly on a dark surface so a narrow light catches the grille, ending with its front centered. Low-key studio lighting, premium product-ad look. Slow close-up slider move. Sound: quiet room tone; no music.",
           "chips": [
             "detail"
           ],
@@ -314,26 +314,26 @@
         },
         {
           "ref": "n:gen2:tpl-angle-g3",
-          "label": "Speaker control buttons close up",
-          "prompt": "Move across the top buttons of the speaker without hiding its edge.",
+          "label": "Macro detail: Speaker controls",
+          "prompt": "Use the uploaded photo as the speaker and keep its round shape, black color and top controls exactly. Hold a tight view of the buttons and woven grille with one control centered in focus. Soft edge light, precise product-detail look. Table-height macro with a short push-in. Sound: one soft button click and quiet room tone; no music.",
           "chips": [
             "detail"
           ],
           "kind": "video"
         },
         {
-          "ref": "f:k7-ind-electronics-picker-cards-6-ref-n-gen2-tpl-color-c3",
-          "label": "Phone cases in five colors",
-          "prompt": "Fan the five plain phone cases across a clean tabletop.",
+          "ref": "n:guide:q16-electronics-picker-cases-fan",
+          "label": "Lineup reveal: Plain phone cases",
+          "prompt": "Use the uploaded photo as the cases and keep each shape, color and single round camera opening exactly. A hand fans three plain cases across a clean tabletop, ending with all three backs visible. Bright window light, casual product-demo look. Overhead close-up with one small tilt. Sound: soft case taps on the table; no music.",
           "chips": [
             "travel"
           ],
           "kind": "video"
         },
         {
-          "ref": "f:k7-ind-electronics-picker-cards-7-ref-n-gen2-change-background-g1",
-          "label": "Phone case on a blue block",
-          "prompt": "Show the blue case back with its single small round camera opening.",
+          "ref": "n:guide:q16-electronics-picker-case-fit",
+          "label": "Hand demo: Case fit",
+          "prompt": "Use the uploaded photo as the blue case and keep its color, slim shape and single round opening exactly. Hands fit the plain case onto a simple device, ending with the full back and one opening visible. Soft daylight, clear hands-on demo style. Close three-quarter angle with one short push-in. Sound: light case clicks; no music.",
           "chips": [
             "travel"
           ],
@@ -345,15 +345,15 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:gen2:tpl-launch-c3",
-        "h": "Show a charging pad on a product page",
-        "d": "The isolated pad keeps its circular surface and outline easy to see."
+        "ref": "n:guide:q16-electronics-charging-pad-demo",
+        "h": "Hand demo: Phone meets the charging pad",
+        "d": "A hand sets a plain graphite phone onto the charcoal pad to show the connection point and cable placement."
       },
       {
         "frame": "post",
         "ref": "n:guide:ind-electronics-m4-headphones",
-        "h": "Show over-ear headphones in a feed post",
-        "d": "Over-ear headphones on a desk by the window show how they look in a real workspace."
+        "h": "Product showcase: Over-ear headphones at a desk",
+        "d": "A clean desk view keeps the padded earcups and adjustable band easy to inspect."
       }
     ],
     "input": [
@@ -372,15 +372,15 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:tpl-launch-g1",
-        "frame": "16:9",
-        "label": "Speaker revealed on a table",
+        "ref": "n:guide:q16-electronics-speaker-button",
+        "frame": "1:1",
+        "label": "Hand presses the speaker button",
         "length": 6
       },
       {
-        "ref": "n:guide:k7-ind-electronics-outputs-1-ref-n-gen2-change-background-g3",
+        "ref": "n:guide:q16-electronics-speaker-cinematic",
         "frame": "1:1",
-        "label": "Phone case among autumn leaves",
+        "label": "Compact speaker under warm light",
         "length": 10
       }
     ],
@@ -400,7 +400,7 @@
         "h2": "Make an electronics product video in three steps"
       },
       "m3": {
-        "h2": "Choose an electronics scene for the first shot"
+        "h2": "Choose an electronics video format for the first shot"
       },
       "m4": {
         "h2": "Use electronics videos on listings and social feeds"
@@ -416,7 +416,7 @@
       },
       "examples": {
         "h2": "More electronics examples",
-        "lead": "Speaker, device, and travel-accessory views for product listings and social ads."
+        "lead": "Hands-on device views, clean product details, and travel-ready accessories for electronics listings and ads."
       },
       "faq": {
         "h2": "Questions about electronics product videos"

@@ -4,7 +4,7 @@
   "description": "Create AI lifestyle photos for wellness brands: supplements on a kitchen counter, yoga gear in a sunny studio, and creator-style shots. Upload a product photo.",
   "h1": "AI Lifestyle Photos for Wellness Brands That Fit Real Routines",
   "eyebrow": "Health & wellness",
-  "lead": "AI lifestyle photos for wellness brands place your supplement, tea, mat, or massage tool into the everyday moments where people actually use it, from a busy kitchen counter to a gym bag.",
+  "lead": "Place supplements, tea, movement gear, and everyday wellness products into the routines where people use them, from the workout room to a quiet evening.",
   "card": "Supplements, tea and gear shown in the routines where people use them.",
   "secondary_keywords": [
     "supplement lifestyle photos",
@@ -88,23 +88,23 @@
     ]
   },
   "scene_recipes": {
-    "h2": "Wellness scenes you can describe",
+    "h2": "Wellness photo ideas for daily routines",
     "items": [
       {
-        "t": "Kitchen start",
-        "d": "A protein pouch beside a shaker and a glass of water on a quiet kitchen counter, front label facing the camera, natural morning light."
+        "t": "Morning shake",
+        "d": "In a bright kitchen, hands pour one scoop from a plain protein pouch into a shaker beside a glass of water; keep the package shape clear, use natural morning light, and leave out any health-result claims."
       },
       {
-        "t": "Studio setup",
-        "d": "A teal yoga mat and cork block laid on a sunlit wood floor with a folded towel at the edge, no posed transformation or medical cue."
+        "t": "Stretch with a cork block",
+        "d": "An adult uses one natural cork yoga block under a hand during a seated stretch on a teal mat; keep the square edges and grain visible in soft studio daylight, with no body-transformation or medical cues."
       },
       {
-        "t": "Gym-bag pause",
-        "d": "A recovery tool resting beside a gym bag and clean towel on a locker-room bench, close enough to show the buttons and handle."
+        "t": "Foam roller after a run",
+        "d": "An adult sits on a mat after a run and uses a plain foam roller beneath one calf; show the roller shape and texture clearly in calm gym light, without suggesting treatment or pain relief."
       },
       {
-        "t": "Tea wind-down",
-        "d": "A tea tin, warm mug, and book on a bedside table at dusk, with the tin lid and label clearly visible."
+        "t": "Tea at bedtime",
+        "d": "Hands pour herbal tea from a plain tin into a ceramic mug beside an open book on a bedside table; use warm evening light and keep the tin front visible without adding text or benefit claims."
       }
     ]
   },
@@ -182,13 +182,13 @@
         "items": [
           {
             "ref": "n:gen2:ind-health-wellness-g1",
-            "title": "Protein pouch on a gym bench after a workout",
+            "title": "Active setup: Yoga mat and roller before class",
             "kind": "photo",
-            "product": "protein powder pouch"
+            "product": "yoga mat and foam roller"
           },
           {
             "ref": "n:guide:k7-ind-health-wellness-examples-0-items-1-ref-n-gen2-social-ad-photos-c3",
-            "title": "Lavender accents around a hand cream bottle",
+            "title": "Product detail: Hand cream among lavender",
             "kind": "photo",
             "product": "hand cream"
           }
@@ -215,18 +215,18 @@
   "visual": {
     "overview": "Wellness shoppers often want to see the product, its texture, and the routine around it. Keep product images grounded in use, and leave health outcomes out of the scene.",
     "strip": [
-      "n:guide:k7-ind-health-wellness-strip-0-n-yogamat-pack",
-      "n:guide:k7-ind-health-wellness-strip-1-n-yogamat-room",
-      "n:guide:k7-ind-health-wellness-strip-2-n-gen2-tpl-pack-c1",
-      "n:guide:k7-ind-health-wellness-strip-3-n-gen2-tpl-beauty-c4",
-      "n:gen2:url-to-video-g3",
-      "n:guide:k7-ind-health-wellness-strip-5-n-gen2-tpl-ugc-case-83"
+      "n:guide:q16-wellness-mat-unroll",
+      "n:guide:q16-wellness-first-stretch",
+      "n:guide:q16-wellness-tea-pour",
+      "n:guide:q16-wellness-sheet-mask",
+      "n:guide:q16-wellness-mat-bag-leave",
+      "n:guide:q16-wellness-tea-sip-breakfast"
     ],
     "steps": {
-      "source": "n:guide:k7-ind-health-wellness-steps-source-n-yogamat-pack",
-      "result": "n:guide:k7-ind-health-wellness-steps-result-n-yogamat-room",
+      "source": "n:guide:q16-wellness-mat-source",
+      "result": "n:guide:q16-wellness-mat-stretch",
       "mode": "photo",
-      "prompt": "Set this teal yoga mat partly unrolled on a wooden floor beside a bright window.",
+      "prompt": "An adult sits on this teal yoga mat beside a bright window, preparing for a gentle stretch. Show the full mat, strap and surface texture on a clean wooden floor in soft daylight, with a calm home-workout feel and no text or health claims.",
       "options": [
         [
           "Template",
@@ -239,40 +239,40 @@
       ]
     },
     "picker": {
-      "title": "Choose a wellness scene for daily use",
-      "lead": "Pick the moment in the day when someone reaches for the product.",
+      "title": "Choose a wellness ad scene",
+      "lead": "Pick a routine and product moment for a product page or social post.",
       "chips": [
         {
           "id": "movement",
-          "label": "Workout routines"
+          "label": "Hands-on Demo"
         },
         {
           "id": "routine",
-          "label": "Daily routine"
+          "label": "Daily Routine"
         },
         {
           "id": "selfcare",
-          "label": "Self-care"
+          "label": "Texture & Reveal"
         },
         {
           "id": "quiet",
-          "label": "Quiet moments"
+          "label": "Night Routine"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:k7-ind-health-wellness-picker-cards-0-cork-block",
-          "label": "Cork yoga block detail",
-          "prompt": "Show the grain and square edge of the cork yoga block against a plain surface.",
+          "label": "Macro detail: Cork grain in focus",
+          "prompt": "Show the natural cork grain and full square edge of the yoga block against a clean neutral surface.",
           "chips": [
             "movement"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k7-ind-health-wellness-picker-cards-1-ref-n-gen2-tpl-ugc-c4",
-          "label": "Face mist after a workout",
-          "prompt": "Place the face mist bottle on a gym bench beside a folded towel.",
+          "ref": "n:guide:q16-wellness-face-mist",
+          "label": "First-use reaction: Face mist after class",
+          "prompt": "Show an adult holding a plain face mist beside her face after a workout, with a fine spray visible in soft gym light.",
           "chips": [
             "movement"
           ],
@@ -280,53 +280,53 @@
         },
         {
           "ref": "n:guide:k7-ind-health-wellness-picker-cards-2-ref-n-gen2-ind-beauty-skincare-c2",
-          "label": "Clay mask beside towels",
-          "prompt": "Set the open clay mask jar on folded white towels in soft bathroom light.",
+          "label": "Texture macro: Clay mask and towels",
+          "prompt": "Show the open clay mask jar and its creamy texture beside folded towels in soft bathroom light.",
           "chips": [
             "routine"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k7-ind-health-wellness-picker-cards-3-ref-n-gen2-image-to-video-g2",
-          "label": "Steaming mug in morning light",
-          "prompt": "Let a gentle curl of steam rise above the ceramic mug near a bright window.",
+          "ref": "n:guide:q16-wellness-tea-pour-closeup",
+          "label": "Morning ritual: Tea before work",
+          "prompt": "Hands pour hot water into a ceramic mug beside a tea tin on a bright kitchen counter.",
           "chips": [
             "routine"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k7-ind-health-wellness-picker-cards-4-ref-n-gen2-unboxing-videos-g3",
-          "label": "Tea and honey from a box",
-          "prompt": "Set the tea tin, honey, and biscuits beside their open delivery box.",
+          "ref": "n:guide:q16-wellness-tea-unbox",
+          "label": "ASMR unboxing: Tea kit reveal",
+          "prompt": "Show hands lifting a plain tea tin from tissue in a simple gift box on a kitchen table.",
           "chips": [
             "selfcare"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:guide:k7-ind-health-wellness-picker-cards-5-ref-n-gen2-tpl-beauty-c2",
-          "label": "Lip balm on a vanity",
-          "prompt": "Place the closed balm tube beside a small mirror and a folded towel.",
+          "ref": "n:guide:q16-wellness-lip-balm",
+          "label": "GRWM: Lip balm before heading out",
+          "prompt": "Show an adult applying a plain lip balm before leaving home; keep the tube clear beside a bright mirror in soft morning light.",
           "chips": [
             "selfcare"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-health-wellness-g2",
-          "label": "Herbal tea beside an evening cup",
-          "prompt": "Set the herbal tea tin beside a warm cup in soft evening light.",
+          "ref": "n:guide:q16-wellness-tea-sip-evening",
+          "label": "Wind-down: Herbal tea at dusk",
+          "prompt": "Show an adult holding a warm mug of herbal tea beside a softly lit evening window.",
           "chips": [
             "quiet"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-health-wellness-g3",
-          "label": "Sleep mask on a nightstand",
-          "prompt": "Place the sleep mask beside a bedside lamp in a quiet bedroom.",
+          "ref": "n:guide:q16-wellness-sleep-mask",
+          "label": "Night routine: Sleep mask at bedtime",
+          "prompt": "Show an adult lowering a soft sleep mask over her eyes in a calm bedroom with warm bedside light.",
           "chips": [
             "quiet"
           ],
@@ -338,15 +338,15 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:guide:k7-ind-health-wellness-uses-0-ref-n-gen2-image-to-video-g4",
-        "h": "Add a hand soap photo to the listing",
-        "d": "A hand soap bottle on a marble shelf with towels gives the photo a familiar bathroom setting."
+        "ref": "n:guide:q16-wellness-hand-soap",
+        "h": "Hand demo: Soap pressed into a palm",
+        "d": "A clear pump and fresh lather show the product in a familiar hand-washing routine."
       },
       {
         "frame": "post",
         "ref": "n:guide:k7-ind-health-wellness-uses-1-ref-n-gen2-tpl-ugc-case-81",
-        "h": "Style a reusable bottle on a work desk",
-        "d": "A bottle on a desk shows where it fits into a daily work routine."
+        "h": "Product setup: Bottle beside a work desk",
+        "d": "A plain reusable bottle beside a laptop shows where it fits into a daily work routine."
       }
     ],
     "input": [
@@ -365,25 +365,25 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:tpl-box-g3",
+        "ref": "n:guide:q16-wellness-cork-block-output1",
         "frame": "1:1",
-        "label": "Tea tin and infuser gift set"
+        "label": "Cork block supports a seated stretch"
       },
       {
-        "ref": "n:guide:k7-ind-health-wellness-outputs-1-ref-n-gen2-ind-beauty-skincare-g1",
+        "ref": "n:guide:q16-wellness-cork-block-output2",
         "frame": "1:1",
-        "label": "Serum and cream texture study"
+        "label": "Cork block under a side stretch"
       }
     ],
     "after": {
-      "ref": "n:guide:k7-ind-health-wellness-after-ref-n-gen2-tpl-story-c3",
+      "ref": "n:gen2:ind-health-wellness-g3",
       "zones": [
-        "Material",
-        "Care"
+        "Fabric",
+        "Fit"
       ],
       "items": [
-        "Add care instructions in text so buyers can find them without zooming in.",
-        "Keep health-related statements in your listing description, away from the image."
+        "Check the mask fabric, color, strap and stitching against the real product.",
+        "Add care instructions in text so customers can read them without zooming in."
       ]
     },
     "titles": {
@@ -407,7 +407,7 @@
       },
       "examples": {
         "h2": "More health and wellness examples",
-        "lead": "Products shown around an evening cup, a gym routine, and a quiet bedtime."
+        "lead": "Wellness gear, daily hydration, and simple self-care routines for product listings and social posts."
       },
       "faq": {
         "h2": "Questions about wellness product photos"

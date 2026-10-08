@@ -31247,6 +31247,486 @@
           640,
           1280
         ]
+      },
+      "q16-jewelry-picker-pendant-hook": {
+        "file": "q16-jewelry-picker-pendant-hook",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman lifts a gold drop pendant at the collarbone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-necklace-clasp": {
+        "file": "q16-jewelry-necklace-clasp",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands fasten a fine gold necklace clasp on linen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-ring-tryon": {
+        "file": "q16-jewelry-ring-tryon",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult hands slide a silver solitaire ring onto a finger.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-sunglasses-tryon": {
+        "file": "q16-jewelry-sunglasses-tryon",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman tries on plain dark sunglasses outdoors.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-sunglasses-beach": {
+        "file": "q16-jewelry-sunglasses-beach",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman adjusts plain black sunglasses by the beach.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-sunglasses-cafe": {
+        "file": "q16-jewelry-sunglasses-cafe",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman adjusts tortoiseshell sunglasses beside a cafe window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-belt-fastening": {
+        "file": "q16-jewelry-belt-fastening",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands fasten a plain leather belt at the waist.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-ring-dish": {
+        "file": "q16-jewelry-ring-dish",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Silver solitaire ring rests in an ivory velvet dish.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-ring-hand-cafe": {
+        "file": "q16-jewelry-ring-hand-cafe",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Silver solitaire ring worn beside a ceramic cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-ring-open-box": {
+        "file": "q16-jewelry-ring-open-box",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Silver solitaire ring displayed in an open ivory box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-ring-macro": {
+        "file": "q16-jewelry-ring-macro",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Close view of a silver solitaire ring and its setting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-scarf-tote": {
+        "file": "q16-jewelry-scarf-tote",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands tie a patterned silk scarf around a plain tote handle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-earrings-tryon": {
+        "file": "q16-jewelry-earrings-tryon",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman adjusts a plain gold hoop earring at a vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-jewelry-tote-cafe": {
+        "file": "q16-jewelry-tote-cafe",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman lifts a plain taupe tote from a cafe chair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-picker-headphones-talk": {
+        "file": "q16-electronics-picker-headphones-talk",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Woman holds plain over-ear headphones toward the camera in a bright home office.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-picker-cases-fan": {
+        "file": "q16-electronics-picker-cases-fan",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Hand fans three plain single-opening phone cases across a bright tabletop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-picker-stand-talk": {
+        "file": "q16-electronics-picker-stand-talk",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Man presents a plain foldable device stand to the camera in a bright workspace.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-picker-case-fit": {
+        "file": "q16-electronics-picker-case-fit",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Hands fit a plain blue single-opening case onto a simple phone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-picker-stand-demo": {
+        "file": "q16-electronics-picker-stand-demo",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Hands adjust a folding tablet stand beside a bright window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-tripod-demo": {
+        "file": "q16-electronics-tripod-demo",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult hand adjusts a compact phone tripod on a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-cable-solution": {
+        "file": "q16-electronics-cable-solution",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hand guides loose desk cables into a plain organizer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-speaker-source": {
+        "file": "q16-electronics-speaker-source",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Compact round black portable speaker with a woven grille and loop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-speaker-button": {
+        "file": "q16-electronics-speaker-button",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hand presses a control on a compact round black speaker.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-speaker-cinematic": {
+        "file": "q16-electronics-speaker-cinematic",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Compact round black speaker under a warm cinematic light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-speaker-step-result": {
+        "file": "q16-electronics-speaker-step-result",
+        "w": 1280,
+        "h": 720,
+        "alt": "Hand presses a button on a compact black speaker beside a cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-charging-pad-demo": {
+        "file": "q16-electronics-charging-pad-demo",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hand sets a plain graphite phone onto a charcoal wireless charging pad.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-electronics-speaker-product-hero": {
+        "file": "q16-electronics-speaker-product-hero",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Compact round black speaker with woven grille and loop on a plain surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-yoga-gear-setup": {
+        "file": "q16-wellness-yoga-gear-setup",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult prepares a blue yoga mat and foam roller in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-first-stretch": {
+        "file": "q16-wellness-first-stretch",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult stretches on a teal yoga mat beside a window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-tea-pour": {
+        "file": "q16-wellness-tea-pour",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands pour tea from a kettle into a ceramic mug beside a tea tin.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-sheet-mask": {
+        "file": "q16-wellness-sheet-mask",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman applies a plain sheet mask in a bathroom mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-mat-bag-leave": {
+        "file": "q16-wellness-mat-bag-leave",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult carries a rolled yoga mat bag toward the doorway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-tea-sip-breakfast": {
+        "file": "q16-wellness-tea-sip-breakfast",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman takes a sip of tea at a breakfast table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-face-mist": {
+        "file": "q16-wellness-face-mist",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman sprays a plain face mist beside her face after a workout.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-tea-pour-closeup": {
+        "file": "q16-wellness-tea-pour-closeup",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands pour hot water into a ceramic mug beside a tea tin.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-tea-unbox": {
+        "file": "q16-wellness-tea-unbox",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands lift a plain tea tin from a gift box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-lip-balm": {
+        "file": "q16-wellness-lip-balm",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman applies a plain lip balm in a mirror.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-tea-sip-evening": {
+        "file": "q16-wellness-tea-sip-evening",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman sips herbal tea beside a softly lit window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-sleep-mask": {
+        "file": "q16-wellness-sleep-mask",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman lowers a soft sleep mask over her eyes.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-hand-soap": {
+        "file": "q16-wellness-hand-soap",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Hands press a plain soap dispenser over an open palm.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-bottle-at-desk": {
+        "file": "q16-wellness-bottle-at-desk",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult woman drinks from a plain sage-green bottle at a desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-mat-source": {
+        "file": "q16-wellness-mat-source",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Teal yoga mat partly unrolled on a clean studio floor.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-mat-stretch": {
+        "file": "q16-wellness-mat-stretch",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult stretches on a teal yoga mat in a bright room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-cork-block-output1": {
+        "file": "q16-wellness-cork-block-output1",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult uses one natural cork yoga block during a seated stretch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-cork-block-output2": {
+        "file": "q16-wellness-cork-block-output2",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Natural cork yoga block supports an adult stretch on a teal mat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-cork-block-demo": {
+        "file": "q16-wellness-cork-block-demo",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult supports a seated side stretch with one natural cork yoga block.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-bottle-after-workout": {
+        "file": "q16-wellness-bottle-after-workout",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult takes a sip from a plain sage-green reusable bottle after stretching.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "q16-wellness-mat-unroll": {
+        "file": "q16-wellness-mat-unroll",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Adult unrolls a teal yoga mat on a clean floor in a bright room.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

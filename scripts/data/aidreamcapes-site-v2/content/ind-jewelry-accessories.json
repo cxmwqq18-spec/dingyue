@@ -4,7 +4,7 @@
   "description": "Create AI photos for jewelry and accessories: macro shots of stones and clasps, pieces worn on a hand or neckline, and size shots. Upload a piece to begin.",
   "h1": "AI Photos for Jewelry and Accessories, Up Close and Worn",
   "eyebrow": "Jewelry & accessories",
-  "lead": "Rings, earrings, watches, and bags are judged on detail and scale, so AI photos for jewelry and accessories should show the setting up close and then the piece on a hand, ear, or shoulder.",
+  "lead": "Show how jewelry fits, fastens, and catches the light. Use try-on, gift-reveal, and close-detail photos for product pages and social ads.",
   "card": "Close-up detail, plus rings, earrings and watches shown worn.",
   "secondary_keywords": [
     "AI jewelry model photos",
@@ -88,23 +88,23 @@
     ]
   },
   "scene_recipes": {
-    "h2": "Jewelry and accessory scenes you can describe",
+    "h2": "Jewelry photo ideas for product pages and ads",
     "items": [
       {
-        "t": "Neckline crop",
-        "d": "A silver pendant resting on a black crew-neck top, cropped at the collarbone with the chain and pendant centered in warm window light."
+        "t": "Pendant try-on",
+        "d": "An adult wearing a fine chain lifts its pendant toward soft window light; frame the neckline closely, keep the stone sharp, and leave the background plain."
       },
       {
-        "t": "Earring detail",
-        "d": "Gold hoops on an ear with hair tucked behind it, close enough to show the hinge and polished edge, with a quiet neutral background."
+        "t": "Hoop earring fit",
+        "d": "An adult woman adjusts a plain gold hoop at a vanity mirror; show the full hoop against natural skin with soft morning light and no text."
       },
       {
-        "t": "Ring beside a coin",
-        "d": "A gold ring beside a common coin on matte ivory card, camera overhead, prongs and band visible without decorative lettering."
+        "t": "Ring scale detail",
+        "d": "Show a silver solitaire ring on an adult hand beside a plain coin on an ivory surface; keep the round setting and full band in focus."
       },
       {
-        "t": "Watch at a café",
-        "d": "A watch on a wrist resting beside a coffee cup, cropped at the forearm so the face, strap grain, and buckle are easy to inspect."
+        "t": "Watch at a cafe",
+        "d": "Show a plain wristwatch worn beside a ceramic coffee cup at a bright cafe table; use soft window light and a close crop that keeps the dial legible."
       }
     ]
   },
@@ -182,19 +182,19 @@
         "items": [
           {
             "ref": "n:gen2:ind-jewelry-accessories-g2",
-            "title": "Fine chain necklace worn at the collarbone",
+            "title": "Worn look: Fine chain at the collarbone",
             "kind": "photo",
             "product": "chain necklace"
           },
           {
             "ref": "n:guide:k7-ind-jewelry-accessories-examples-0-items-1-ref-n-gen2-ind-jewelry-accessories-g3",
-            "title": "A close look at earrings in natural light",
+            "title": "Try-on close-up: Drop earrings in daylight",
             "kind": "photo",
             "product": "drop earrings"
           },
           {
             "ref": "n:gen2:ind-jewelry-accessories-g4",
-            "title": "Polished belt buckle under soft light",
+            "title": "Macro detail: Polished belt buckle",
             "kind": "photo",
             "product": "belt buckle"
           }
@@ -206,12 +206,12 @@
   "cta_lead": "Upload a clear jewelry photo and choose the detail or scale view to review.",
   "steps": [
     {
-      "t": "Use one ring in the photo",
-      "d": "Place a single gold band on a plain background with the full circle visible."
+      "t": "Use one silver ring in the photo",
+      "d": "Show the full band and round stone against a plain, light surface."
     },
     {
-      "t": "Show it beside a familiar object",
-      "d": "Set this ring on an ivory card with a small coin nearby to suggest scale."
+      "t": "Style it on a hand",
+      "d": "Place this ring on an adult hand beside a ceramic cup on a pale cafe table, with the stone clearly visible."
     },
     {
       "t": "Add exact specifications",
@@ -221,18 +221,18 @@
   "visual": {
     "overview": "Jewelry and accessories need close, well-lit views that make scale and finish easy to judge. Keep the piece centered, then use one worn or styled scene to add context.",
     "strip": [
-      "n:guide:ind-jewelry-accessories-m2-source",
-      "n:guide:ind-jewelry-accessories-m2-result",
+      "n:guide:q16-jewelry-necklace-clasp",
+      "n:guide:q16-jewelry-ring-tryon",
       "n:guide:k7-ind-jewelry-accessories-strip-2-n-gen2-tpl-jewel-28",
-      "n:gen2:plat-instagram-c4",
+      "n:guide:q16-jewelry-sunglasses-tryon",
       "n:guide:k7-ind-jewelry-accessories-strip-4-n-gen2-tpl-jewel-72",
-      "n:gen2:white-background-g4"
+      "n:guide:q16-jewelry-belt-fastening"
     ],
     "steps": {
-      "source": "n:guide:ind-jewelry-accessories-m2-source",
-      "result": "n:guide:ind-jewelry-accessories-m2-result",
+      "source": "n:guide:q16-jewelry-ring-dish",
+      "result": "n:guide:q16-jewelry-ring-hand-cafe",
       "mode": "photo",
-      "prompt": "Set this gold band on an ivory display card with a small coin nearby for scale.",
+      "prompt": "An adult hand wears this silver solitaire ring beside a ceramic cup on a pale cafe table. Keep the round stone and full band clear in soft window light, with a close square crop and no text.",
       "options": [
         [
           "Template",
@@ -245,31 +245,31 @@
       ]
     },
     "picker": {
-      "title": "Choose a jewelry scene that shows scale",
-      "lead": "Choose the view that answers a question about scale or finish.",
+      "title": "Choose a jewelry ad format",
+      "lead": "Pick a close view or try-on moment that helps shoppers judge scale and finish.",
       "chips": [
         {
           "id": "worn",
-          "label": "Worn accessories"
+          "label": "Try-on & Styling"
         },
         {
           "id": "close",
-          "label": "Close details"
+          "label": "Macro Details"
         },
         {
           "id": "gift",
-          "label": "Watch details"
+          "label": "Cinematic Hero"
         },
         {
           "id": "daily",
-          "label": "Accessory presentation"
+          "label": "Unboxing & Gifts"
         }
       ],
       "cards": [
         {
-          "ref": "n:gen2:plat-instagram-g3",
-          "label": "Necklace displayed in open space",
-          "prompt": "Lay the necklace flat with its pendant centered and open space around it.",
+          "ref": "n:guide:q16-jewelry-picker-pendant-hook",
+          "label": "POV hook: Pendant catches window light",
+          "prompt": "An adult hand holds a fine chain pendant near a bright window; keep the stone centered against a neutral neckline.",
           "chips": [
             "daily"
           ],
@@ -277,8 +277,8 @@
         },
         {
           "ref": "n:gen2:tpl-jewel-g3",
-          "label": "Gold anklet on a bare ankle",
-          "prompt": "Frame the anklet against warm sand with the clasp visible.",
+          "label": "Try-on fit check: Gold anklet",
+          "prompt": "Show a gold anklet worn above the ankle with the clasp and full curve visible in warm daylight.",
           "chips": [
             "worn"
           ],
@@ -286,8 +286,8 @@
         },
         {
           "ref": "n:gen2:tpl-jewel-g4",
-          "label": "Ear cuff worn high",
-          "prompt": "Crop close to the ear cuff and show the full curve along the ear.",
+          "label": "GRWM: Ear cuff before the mirror",
+          "prompt": "Show an adult wearing the ear cuff in profile at a bright vanity, with the full curve visible.",
           "chips": [
             "worn"
           ],
@@ -295,8 +295,8 @@
         },
         {
           "ref": "n:guide:k7-ind-jewelry-accessories-picker-cards-3-ref-n-gen2-image-to-video-g1",
-          "label": "Watch dial under a highlight",
-          "prompt": "Let a narrow highlight pass over the watch glass without hiding its hands.",
+          "label": "Cinematic hero: Watch dial",
+          "prompt": "Frame the watch dial on a dark surface under a narrow soft highlight; keep the hands and markers visible.",
           "chips": [
             "gift"
           ],
@@ -304,8 +304,8 @@
         },
         {
           "ref": "n:gen2:tpl-detail-c3",
-          "label": "Brushed metal watch edge",
-          "prompt": "Move in close on the brushed metal edge of the watch case.",
+          "label": "Macro detail: Brushed watch edge",
+          "prompt": "Show the brushed edge and bezel of the watch in a tight, sharply focused product crop.",
           "chips": [
             "gift"
           ],
@@ -313,8 +313,8 @@
         },
         {
           "ref": "n:guide:k7-ind-jewelry-accessories-picker-cards-5-ref-n-gen2-unboxing-videos-c3",
-          "label": "Opening a matte watch box",
-          "prompt": "Lift the watch box lid on a walnut desk and keep the watch visible.",
+          "label": "ASMR unboxing: Matte watch box opens",
+          "prompt": "Show hands lifting the lid of a plain matte watch box on a walnut desk, with the watch visible inside.",
           "chips": [
             "daily"
           ],
@@ -322,8 +322,8 @@
         },
         {
           "ref": "n:guide:ind-jewelry-accessories-m3-necklace-clasp",
-          "label": "Necklace clasp and chain links",
-          "prompt": "Keep the spring ring and fine chain links large and sharply visible.",
+          "label": "Macro detail: Necklace clasp and chain",
+          "prompt": "Show the spring-ring clasp and fine chain links sharply against neutral linen.",
           "chips": [
             "close"
           ],
@@ -331,8 +331,8 @@
         },
         {
           "ref": "n:guide:ind-jewelry-accessories-m3-gem-prongs",
-          "label": "Gemstone and prongs in macro detail",
-          "prompt": "Show the stone facets and simple gold prongs sharply in neutral light.",
+          "label": "Macro detail: Solitaire setting in focus",
+          "prompt": "Show the round stone and prongs of a silver ring in soft neutral light, filling the frame.",
           "chips": [
             "close"
           ],
@@ -345,14 +345,14 @@
       {
         "frame": "listing",
         "ref": "n:guide:k7-ind-jewelry-accessories-uses-0-ref-n-gen2-tpl-jewel-70",
-        "h": "Show a gold ring in a product listing",
-        "d": "The hand beside a coffee cup gives the ring a familiar sense of scale."
+        "h": "Day-in-life: Gold ring at a coffee break",
+        "d": "A hand wearing the gold ring beside a ceramic cup gives shoppers a familiar scale cue."
       },
       {
         "frame": "post",
         "ref": "n:guide:k7-ind-jewelry-accessories-uses-1-ref-n-gen2-tpl-jewel-71",
-        "h": "Show a silver bracelet in a styled post",
-        "d": "The bracelet's linked shape stays clear against the wrist."
+        "h": "Worn look: Silver bracelet in daylight",
+        "d": "A silver bracelet worn on the wrist keeps its linked shape clear in natural light."
       }
     ],
     "input": [
@@ -371,14 +371,14 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:model-photos-g4",
+        "ref": "n:guide:q16-jewelry-ring-open-box",
         "frame": "1:1",
-        "label": "Gold studs worn in daylight"
+        "label": "Solitaire ring revealed in an ivory box"
       },
       {
-        "ref": "n:gen2:tpl-light-g3",
+        "ref": "n:guide:q16-jewelry-ring-macro",
         "frame": "1:1",
-        "label": "Steel watch with a clean highlight"
+        "label": "Silver solitaire ring setting in soft light"
       }
     ],
     "after": {
@@ -397,7 +397,7 @@
         "h2": "Create a jewelry product photo in three steps"
       },
       "m3": {
-        "h2": "Choose a jewelry scene that shows scale"
+        "h2": "Choose a jewelry ad format that shows detail"
       },
       "m4": {
         "h2": "Use jewelry photos on listings and social posts"
@@ -413,7 +413,7 @@
       },
       "examples": {
         "h2": "More jewelry and accessory examples",
-        "lead": "Close settings, worn details, and finishes shown in natural light."
+        "lead": "Try-on scenes, gift reveals, and close product details for jewelry listings and social ads."
       },
       "faq": {
         "h2": "Questions about jewelry and accessory photos"

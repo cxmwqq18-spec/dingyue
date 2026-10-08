@@ -124,16 +124,16 @@
     },
     "images": {
       "howto": {
-        "ref": "f:k7-ind-health-wellness-card-overrides-images-howto-ref-n-gen2-change-background-g4",
-        "alt": "Rolled teal yoga mat on a beach at sunrise."
+        "ref": "n:guide:q16-wellness-yoga-gear-setup",
+        "alt": "Adult prepares a blue yoga mat and foam roller in a bright studio."
       },
       "ugc": {
-        "ref": "n:gen2:tpl-spark-ads-style-video-g2",
-        "alt": "Water bottle clipped to a backpack on a hiking trail."
+        "ref": "n:guide:q16-wellness-bottle-at-desk",
+        "alt": "Adult drinks from a plain sage-green bottle at a desk."
       },
       "carousel-video-ad": {
-        "ref": "n:gen2:tpl-color-c4",
-        "alt": "Three cork-and-foam yoga blocks in three colors stacked side by side."
+        "ref": "n:guide:q16-wellness-cork-block-demo",
+        "alt": "Adult supports a seated side stretch with a natural cork yoga block."
       }
     }
   },

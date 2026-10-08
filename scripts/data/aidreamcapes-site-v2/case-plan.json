@@ -899,68 +899,68 @@
     ],
     "ind-jewelry-accessories": [
       {
-        "ref": "n:gen2:ind-jewelry-accessories-16",
+        "ref": "n:guide:q16-jewelry-earrings-tryon",
         "product": "gold hoop earrings",
-        "title": "Gold hoop earrings on a marble tray"
+        "title": "Try-on: Gold hoops before the mirror"
       },
       {
         "ref": "n:gen2:ind-jewelry-accessories-c2",
         "product": "leather watch",
-        "title": "Leather-strap watch on a wrist outdoors"
+        "title": "Day-in-life: Leather watch on a morning walk"
       },
       {
-        "ref": "n:gen2:ind-jewelry-accessories-c3",
+        "ref": "n:guide:q16-jewelry-scarf-tote",
         "product": "silk scarf",
-        "title": "Silk scarf knotted on a handbag handle"
+        "title": "Styling demo: Silk scarf tied to a tote"
       },
       {
-        "ref": "n:gen2:ind-jewelry-accessories-c4",
-        "product": "sunglasses",
-        "title": "Sunglasses folded on a beach towel"
+        "ref": "n:guide:q16-jewelry-sunglasses-beach",
+        "product": "plain sunglasses",
+        "title": "Try-on: Plain sunglasses by the beach"
       }
     ],
     "ind-electronics": [
       {
         "ref": "trending-audio-sync",
         "product": "transparent synth",
-        "title": "Synth pad lighting up on a studio desk"
+        "title": "Hand demo: Synth pad lights up"
       },
       {
         "ref": "n:gen2:ind-electronics-5",
         "product": "travel charger",
-        "title": "Travel charger plugged in at an airport gate"
+        "title": "Travel demo: Charger at the gate"
       },
       {
         "ref": "n:gen2:ind-electronics-c3",
         "product": "smart speaker",
-        "title": "Smart speaker on a kitchen shelf"
+        "title": "Cinematic hero: Smart speaker on a shelf"
       },
       {
         "ref": "n:guide:k7-ind-electronics-case-plan-3-ref-n-gen2-ind-electronics-c4",
         "product": "mechanical keyboard",
-        "title": "A compact keyboard in a focused work setup"
+        "title": "Product showcase: Compact keyboard setup"
       }
     ],
     "ind-health-wellness": [
       {
         "ref": "n:guide:k7-ind-health-wellness-case-plan-0-ref-n-gen2-ind-health-wellness-6",
         "product": "yoga mat",
-        "title": "Set up a yoga mat in a bright home workout space"
+        "title": "Product showcase: Yoga mat in a bright studio"
       },
       {
         "ref": "n:gen2:ind-health-wellness-21",
         "product": "foam roller",
-        "title": "Foam roller beside running shoes after a run"
+        "title": "Gear detail: Foam roller beside running shoes"
       },
       {
-        "ref": "n:gen2:ind-health-wellness-c3",
-        "product": "vitamin bottle",
-        "title": "Vitamin bottle by a glass of water at breakfast"
+        "ref": "n:guide:q16-wellness-bottle-after-workout",
+        "product": "sage-green reusable bottle",
+        "title": "Day-in-life: Bottle after a workout"
       },
       {
         "ref": "n:gen2:ind-health-wellness-c4",
         "product": "resistance bands",
-        "title": "Resistance bands looped on a door handle"
+        "title": "Product setup: Resistance bands on a door"
       }
     ],
     "ind-food-drinks": [
