@@ -122,6 +122,10 @@
       "color": {
         "ref": "n:gen2:tpl-color-g2",
         "alt": "The same running shoe in three colorways side by side."
+      },
+      "feed": {
+        "ref": "n:lipstick-ad",
+        "alt": "Hand holding a coral lipstick and its cap against a soft pink backdrop with open space on the left"
       }
     }
   },
@@ -624,6 +628,22 @@
       "retargeting-video-ad": {
         "ref": "n:q10-film-more-retargeting",
         "alt": "Adult shows a plain running shoe while speaking to camera."
+      }
+    }
+  },
+  "tpl-compare": {
+    "images": {
+      "ba": {
+        "ref": "f:before-after-showcases-t10",
+        "alt": "Person fitting a wooden shelf organizer into a wardrobe"
+      }
+    }
+  },
+  "plat-facebook": {
+    "images": {
+      "feed": {
+        "ref": "n:hotsauce-tacos",
+        "alt": "Red hot sauce being poured from a glass bottle onto tacos on a rustic table"
       }
     }
   }
