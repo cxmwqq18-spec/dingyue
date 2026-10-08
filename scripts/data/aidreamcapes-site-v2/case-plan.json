@@ -459,7 +459,7 @@
     ],
     "tpl-ugc": [
       {
-        "ref": "n:gen2:tpl-ugc-case-81",
+        "ref": "n:guide:k6-tpl-ugc-case-water-bottle",
         "product": "reusable water bottle",
         "title": "Water bottle snapped on a cluttered work desk"
       },
@@ -469,12 +469,12 @@
         "title": "Earbuds case held up in a casual phone shot"
       },
       {
-        "ref": "n:gen2:tpl-ugc-case-83",
+        "ref": "n:guide:k6-tpl-ugc-case-breakfast-mug",
         "product": "ceramic mug",
         "title": "Ceramic mug at breakfast, shot across the table"
       },
       {
-        "ref": "n:gen2:tpl-ugc-c4",
+        "ref": "n:guide:k6-tpl-ugc-case-face-mist",
         "product": "face mist",
         "title": "Face mist on a gym bench after a workout"
       }

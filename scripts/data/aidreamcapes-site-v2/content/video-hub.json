@@ -357,17 +357,17 @@
   },
   "visual": {
     "strip": [
-      "f:video-hub-h1-bike",
+      "f:k6-video-hub-frame-bike",
       "f:video-hub-h1-carry",
       "f:video-hub-h1-steamer",
       "f:video-hub-h1-headset-in-hand",
-      "f:examples-h1-bottle-frame",
+      "f:k6-video-hub-frame-bottle-pour",
       "f:video-hub-h1-product-page"
     ],
     "steps": {
-      "source": "n:guide:b1-image-to-video-source",
+      "source": "n:guide:k6-video-hub-step-source",
       "sourceAlt": "Cream ceramic mug with blue flecks, fully visible on a wooden kitchen counter.",
-      "result": "n:guide:b1-image-to-video-result",
+      "result": "n:guide:k6-video-hub-step-result",
       "mode": "video",
       "length": 10,
       "prompt": "Add a curl of steam above the speckled mug in morning light.",
@@ -397,7 +397,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:ind-health-wellness-g1",
+          "ref": "n:guide:k6-video-hub-picker-protein",
           "label": "Add motion to a photo",
           "chips": [
             "product-moment"
@@ -407,7 +407,7 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:gen2:video-ads-g5",
+          "ref": "n:guide:k6-video-hub-picker-travel-mug",
           "label": "Make a creator-style ad",
           "chips": [
             "creator-ad"
@@ -417,7 +417,7 @@
           "tool": "video-ads"
         },
         {
-          "ref": "n:gen2:occ-product-launch-g2",
+          "ref": "n:guide:k6-video-hub-picker-product-box",
           "label": "Show a product in use",
           "chips": [
             "product-moment"
@@ -427,7 +427,7 @@
           "tool": "product-videos"
         },
         {
-          "ref": "n:gen2:plat-amazon-c2",
+          "ref": "n:guide:k6-video-hub-picker-blanket",
           "label": "Reveal a boxed product",
           "chips": [
             "product-moment"
@@ -447,7 +447,7 @@
           "tool": "before-after-videos"
         },
         {
-          "ref": "n:gen2:spokesperson-videos-c1",
+          "ref": "n:guide:k6-video-hub-picker-presenter",
           "label": "Add a presenter to the scene",
           "chips": [
             "creator-ad"
@@ -456,8 +456,8 @@
           "kind": "video",
           "tool": "spokesperson-videos"
         },
-      {
-        "ref": "g:ecommerce-main-image/example-05",
+        {
+          "ref": "n:guide:k6-video-hub-picker-product-page",
           "label": "Start from a product page",
           "chips": [
             "creator-ad"
@@ -472,21 +472,21 @@
     "uses": [
       {
         "frame": "phone",
-        "ref": "n:gen2:video-hub-g7",
+        "ref": "f:k6-video-hub-use-rounded-fragrance",
         "h": "Vertical social posts",
         "d": "Use a 9:16 clip when the video will fill a vertical feed."
       },
       {
         "frame": "browser",
-        "ref": "n:gen2:ind-jewelry-accessories-g2",
+        "ref": "n:guide:k6-video-hub-use-necklace",
         "h": "Product detail pages",
         "d": "Show one movement or feature beside the product photos."
       }
     ],
     "input": [
       {
-        "good": "g:feed-ad-still/example-07",
-        "bad": "g:feed-ad-still/example-07",
+        "good": "n:guide:k6-video-hub-input-runner",
+        "bad": "n:guide:k6-video-hub-input-runner",
         "good_label": "Running shoe fully visible in even light",
         "bad_label": "Darkened running shoe",
         "darkened": true,
@@ -502,19 +502,19 @@
     ],
     "outputs": [
       {
-        "ref": "f:unboxing-experience-v-m8",
+        "ref": "f:k6-video-hub-frame-headphone-unbox",
         "frame": "9:16",
         "label": "Headphone unboxing",
         "length": 6
       },
       {
-        "ref": "n:gen2:product-videos-g4",
+        "ref": "f:k6-video-hub-frame-square-demo",
         "frame": "1:1",
         "label": "Square product demonstration",
         "length": 10
       },
       {
-        "ref": "n:gen2:tpl-compare-c1",
+        "ref": "f:k6-video-hub-frame-wide-compare",
         "frame": "16:9",
         "label": "Wide product comparison",
         "length": 15
@@ -542,7 +542,7 @@
       }
     },
     "after": {
-      "ref": "n:gen2:video-hub-g8",
+      "ref": "n:guide:k6-video-hub-after-trail-shoe",
       "zones": [
         "Caption",
         "Offer"

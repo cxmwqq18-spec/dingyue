@@ -1795,6 +1795,60 @@
         640,
         1280
       ]
+    },
+    "k6-video-hub-frame-bottle-pour": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Vertical action frame of a hand pouring water from a sage bottle into a clear glass on a bright kitchen counter.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k6-video-hub-frame-headphone-unbox": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Vertical video still of hands lifting plain dark over-ear headphones from an open gray box on a wood table; no earbuds or charging case.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k6-video-hub-frame-square-demo": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Square video still showing an unbranded collapsible silicone water bottle being opened beside a desk, full bottle visible.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k6-video-hub-frame-wide-compare": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Wide comparison video still of two unbranded steel water bottles in different sizes side by side on a gym bench, both complete.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k6-video-hub-use-rounded-fragrance": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Round clear glass fragrance flask with a fully curved orb-like body and pale amber liquid in a vertical video frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k6-video-hub-frame-bike": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Vertical action frame of a hand checking the hinge on a compact gray folding electric bicycle in a bright workshop.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -13444,6 +13498,726 @@
         "w": 1024,
         "h": 1024,
         "alt": "Square photo of three ceramic soap dispensers in muted terracotta, sage, and cream finishes.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-card-jewel": {
+        "file": "gen2guide-k6-tpl-ugc-card-jewel",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain gold bracelet on an adult wrist beside a neutral knit sleeve, close view.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-card-look": {
+        "file": "gen2guide-k6-tpl-ugc-card-look",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close view of blue cotton fabric with visible plain stitching and soft folds.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-card-feed": {
+        "file": "gen2guide-k6-tpl-ugc-card-feed",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Charcoal trail running shoe with visible mesh and laces on a pale stone surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-picker-phone-case": {
+        "file": "gen2guide-k6-tpl-ugc-picker-phone-case",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte sage phone case with a single oval camera opening on a cafe table beside a coffee cup; no recognizable phone model.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-picker-weekender": {
+        "file": "gen2guide-k6-tpl-ugc-picker-weekender",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Canvas weekender bag resting on the back seat of a parked car in warm afternoon light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-picker-diffuser": {
+        "file": "gen2guide-k6-tpl-ugc-picker-diffuser",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain reed diffuser in a kraft carton on a tidy bedside table, reeds and glass vessel clearly visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-picker-watchbox": {
+        "file": "gen2guide-k6-tpl-ugc-picker-watchbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands opening a simple round analog wristwatch with a plain leather strap in a matte kraft box; no smartwatch or dive-watch features.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-picker-steaming-mug": {
+        "file": "gen2guide-k6-tpl-ugc-picker-steaming-mug",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Speckled ceramic mug beside a bright window with a thin curl of steam in soft morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-picker-water-bottle": {
+        "file": "gen2guide-k6-tpl-ugc-picker-water-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded sage-green water bottle beside a runner’s hand and folded towel at a quiet trail rest stop, no face visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-picker-lunchbag": {
+        "file": "gen2guide-k6-tpl-ugc-picker-lunchbag",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain insulated lunch bag open on a kitchen island with fruit and a wrapped sandwich, no lettering.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-picker-organizer": {
+        "file": "gen2guide-k6-tpl-ugc-picker-organizer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Wooden desk organizer with pens and a small tray beside a blank notebook on a tidy work surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-output-handbag": {
+        "file": "gen2guide-k6-tpl-ugc-output-handbag",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain tan leather handbag hanging from a cafe chair beside a cup, full bag visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-after-hoodie": {
+        "file": "gen2guide-k6-tpl-ugc-after-hoodie",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain gray cotton hoodie folded neatly on a park bench in soft daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-output-camping-mug": {
+        "file": "gen2guide-k6-tpl-ugc-output-camping-mug",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain enamel camping mug on a summer picnic blanket with a few leaves in the background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-use-trail-shoe": {
+        "file": "gen2guide-k6-tpl-ugc-use-trail-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark charcoal trail running shoes on weathered outdoor steps, complete pair visible, not canvas low-top sneakers.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-use-smoothie": {
+        "file": "gen2guide-k6-tpl-ugc-use-smoothie",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear smoothie bottle with berries and a folded linen napkin on a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-input-bottle": {
+        "file": "gen2guide-k6-tpl-ugc-input-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain reusable water bottle centered against a vivid yellow studio backdrop, full outline visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-case-water-bottle": {
+        "file": "gen2guide-k6-tpl-ugc-case-water-bottle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded reusable water bottle on a casually cluttered work desk beside a notebook and keys.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-case-breakfast-mug": {
+        "file": "gen2guide-k6-tpl-ugc-case-breakfast-mug",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain ceramic mug on a breakfast table with fruit and folded linen, photographed from across the table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-case-face-mist": {
+        "file": "gen2guide-k6-tpl-ugc-case-face-mist",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain face-mist bottle with a blank label on a gym bench beside a towel after a workout.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-example-coffee-cup": {
+        "file": "gen2guide-k6-tpl-ugc-example-coffee-cup",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands holding a plain ceramic travel cup beside a train window, morning light, no face visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-strip-01": {
+        "file": "gen2guide-k6-tpl-ugc-strip-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Reusable bottle and folded towel on a sunlit kitchen counter after a daily workout.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-strip-02": {
+        "file": "gen2guide-k6-tpl-ugc-strip-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands placing a plain reusable bottle into an open dark gym bag on a wooden bench, no face visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-strip-03": {
+        "file": "gen2guide-k6-tpl-ugc-strip-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Reusable bottle beside a closed laptop and blank notepad on a tidy desk in daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-strip-04": {
+        "file": "gen2guide-k6-tpl-ugc-strip-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A hand carries a plain reusable bottle along a leafy walking trail, cropped below the shoulders.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-strip-05": {
+        "file": "gen2guide-k6-tpl-ugc-strip-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close square view of a reusable bottle lid and hand, cap shape crisp and fully visible, no markings.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-strip-06": {
+        "file": "gen2guide-k6-tpl-ugc-strip-06",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Reusable bottle beside a glass of water on a bright windowsill, natural reflections and soft morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-tpl-ugc-step-result": {
+        "file": "gen2guide-k6-tpl-ugc-step-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sage-lidded reusable water bottle with a light curl of condensation in a calm after-workout home setting.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-picker-background-mug": {
+        "file": "gen2guide-k6-photo-hub-picker-background-mug",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte ceramic travel mug on a neutral studio background, square product view with its handle fully visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-card-lifestyle": {
+        "file": "gen2guide-k6-photo-hub-card-lifestyle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close view of a plain canvas tote bag weave and stitched handle in natural light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-strip-planter": {
+        "file": "gen2guide-k6-photo-hub-strip-planter",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Leafy green houseplant in a round cream ceramic planter with a matching saucer on pale studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-output-outfit": {
+        "file": "gen2guide-k6-photo-hub-output-outfit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing a plain navy jacket and trousers on a park walk, full outfit visible, face turned away.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-strip-granola": {
+        "file": "gen2guide-k6-photo-hub-strip-granola",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear granola jar beside bowls of berries with a glass bottle behind it on a bright breakfast table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-output-ring": {
+        "file": "gen2guide-k6-photo-hub-output-ring",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Macro square view of a simple gold ring setting with the prongs and polished band clearly visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-input-shoe-good": {
+        "file": "gen2guide-k6-photo-hub-input-shoe-good",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Charcoal running shoe heel and stitching in sharp focus on a clean neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-output-duffel": {
+        "file": "gen2guide-k6-photo-hub-output-duffel",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather duffel resting on a pale wood bench in brighter natural window light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-strip-tumbler": {
+        "file": "gen2guide-k6-photo-hub-strip-tumbler",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain steel travel tumbler on a lakeside rock at sunrise, soft water reflections behind it.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-strip-snackbox": {
+        "file": "gen2guide-k6-photo-hub-strip-snackbox",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded kraft snack box on a cafe table beside a latte, all packaging blank.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-input-daypack-blur": {
+        "file": "gen2guide-k6-photo-hub-input-daypack-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black commuter backpack in a deliberately soft focus so its full outline is clear while straps and pocket details stay blurred.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-input-shoe-blur": {
+        "file": "gen2guide-k6-photo-hub-input-shoe-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Charcoal running shoe on a pale surface in intentional soft focus, shoe silhouette still recognizable.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-photo-hub-card-size-reference": {
+        "file": "gen2guide-k6-photo-hub-card-size-reference",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded commuter backpack beside a familiar carry-on bag and a hand for a clear scale comparison.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-templates-card-creator": {
+        "file": "gen2guide-k6-templates-card-creator",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult presenter holding plain charcoal over-ear headphones in a bright living room, mouth closed and not facing the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-templates-step-source": {
+        "file": "gen2guide-k6-templates-step-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain dark brown leather duffel bag with simple stitching on a dark studio background, no logo.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-templates-step-result": {
+        "file": "gen2guide-k6-templates-step-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark brown leather duffel on a pale wood bench beside a bright window, matching the plain bag shown in its source photo.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-templates-strip-planter": {
+        "file": "gen2guide-k6-templates-strip-planter",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Small unbranded ceramic planter on a bookshelf beside plain blank-spine books in a bright room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-templates-strip-beanies": {
+        "file": "gen2guide-k6-templates-strip-beanies",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three plain knit beanies in muted cream, blue, and rust on simple wooden stools.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-templates-strip-deskset": {
+        "file": "gen2guide-k6-templates-strip-deskset",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Notebook, pen, and wooden organizer tray arranged together on a tidy desk in soft daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-examples-phonecase-stone": {
+        "file": "gen2guide-k6-examples-phonecase-stone",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte sage phone case resting on a textured stone slab, a single oval camera opening and no recognizable phone model.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-industries-card-skincare": {
+        "file": "gen2guide-k6-industries-card-skincare",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber dropper serum bottle and cream jar with blank labels on a stone bathroom shelf in soft morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-industries-card-yoga": {
+        "file": "gen2guide-k6-industries-card-yoga",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult doing a gentle seated stretch on a teal yoga mat in a bright room, face turned away.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-industries-card-fashion": {
+        "file": "gen2guide-k6-industries-card-fashion",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing a plain olive field jacket on a city sidewalk, jacket fully visible and face outside the crop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-industries-card-shoes": {
+        "file": "gen2guide-k6-industries-card-shoes",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of brown leather trail shoes with sturdy soles and visible laces on a neutral surface, no canvas low-top styling.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-industries-card-headphones": {
+        "file": "gen2guide-k6-industries-card-headphones",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Generic charcoal over-ear headphones on a wood desk, no logos or charging case.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-industries-card-drink": {
+        "file": "gen2guide-k6-industries-card-drink",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Single clear bottle of golden citrus drink upright on a white background, blank label.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-industries-card-lamp": {
+        "file": "gen2guide-k6-industries-card-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white portable table lamp with shade, stem, and base fully visible on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-industries-card-ring": {
+        "file": "gen2guide-k6-industries-card-ring",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Single polished gold band ring centered on a plain white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-industries-strip-tea": {
+        "file": "gen2guide-k6-industries-strip-tea",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain herbal tea tin beside a warm evening cup on a wood table, tin completely unprinted.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-industries-strip-shelf": {
+        "file": "gen2guide-k6-industries-strip-shelf",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Simple metal floating shelf bracket mounted on a pale wall with the bracket shape clearly visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-industries-strip-speaker": {
+        "file": "gen2guide-k6-industries-strip-speaker",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact black rectangular hard-shell speaker with a small front grille on a clean white surface, not cylindrical or fabric covered.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-industries-strip-cozy-lamp": {
+        "file": "gen2guide-k6-industries-strip-cozy-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brass table lamp glowing beside an open blank-page book in a cozy living room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-video-hub-picker-product-page": {
+        "file": "gen2guide-k6-video-hub-picker-product-page",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte sage travel mug with a separate matching lid displayed on a clean pale tabletop, no lettering.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-video-hub-input-runner": {
+        "file": "gen2guide-k6-video-hub-input-runner",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded charcoal road-running shoe on a pale studio surface, complete side profile and laces visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-video-hub-picker-protein": {
+        "file": "gen2guide-k6-video-hub-picker-protein",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded protein powder pouch with a completely blank label on a gym bench after a workout.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-video-hub-use-necklace": {
+        "file": "gen2guide-k6-video-hub-use-necklace",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Fine gold chain necklace resting naturally against a neutral knit neckline, close product detail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-video-hub-picker-product-box": {
+        "file": "gen2guide-k6-video-hub-picker-product-box",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain kraft product box on a light backdrop with the lid slightly open and unprinted paper inside.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-video-hub-picker-blanket": {
+        "file": "gen2guide-k6-video-hub-picker-blanket",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Folded cream wool throw with its woven texture visible on a pale shelf, no labels.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-video-hub-picker-presenter": {
+        "file": "gen2guide-k6-video-hub-picker-presenter",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult presenter holding plain charcoal over-ear headphones at chest height in a bright bathroom, mouth closed and gaze turned slightly aside.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-video-hub-picker-travel-mug": {
+        "file": "gen2guide-k6-video-hub-picker-travel-mug",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A hand lifts an unbranded ceramic travel mug from a car cup holder in soft morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-video-hub-after-trail-shoe": {
+        "file": "gen2guide-k6-video-hub-after-trail-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Charcoal performance running shoe turning on a plain studio turntable, visible mesh and sole, no brand marks.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-video-hub-card-creator": {
+        "file": "gen2guide-k6-video-hub-card-creator",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult carrying an unbranded reusable bottle outdoors in daylight, face outside the crop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-video-hub-step-source": {
+        "file": "gen2guide-k6-video-hub-step-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Speckled ceramic mug with a rounded handle on a wooden kitchen counter in soft morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k6-video-hub-step-result": {
+        "file": "gen2guide-k6-video-hub-step-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Speckled ceramic mug with a thin curl of steam on a wooden kitchen counter in soft morning light.",
         "variants": [
           640,
           1280

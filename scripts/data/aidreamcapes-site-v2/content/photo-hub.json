@@ -259,12 +259,12 @@
   },
   "visual": {
     "strip": [
-      "n:gen2:ind-food-drinks-20",
-      "n:gen2:photo-hub-g2",
-      "n:gen2:photo-hub-g3",
+      "n:guide:k6-photo-hub-strip-granola",
+      "n:guide:k6-photo-hub-strip-tumbler",
+      "n:guide:k6-photo-hub-strip-snackbox",
       "n:gen2:tpl-detail-g2",
       "n:gen2:examples-g8",
-      "n:planter-pack"
+      "n:guide:k6-photo-hub-strip-planter"
     ],
     "steps": {
       "source": "n:gen2:h1-photo-hub-candle-source",
@@ -328,7 +328,7 @@
           "tool": "model-photos"
         },
         {
-          "ref": "g:ecommerce-main-image/example-07",
+          "ref": "n:guide:k6-photo-hub-picker-background-mug",
           "label": "Change the photo background",
           "chips": [
             "listing"
@@ -367,30 +367,30 @@
     "input": [
       {
         "good": "n:guide:plat-facebook-size-square-backpack",
-        "bad": "n:guide:home-daypack-blurred",
+        "bad": "n:guide:k6-photo-hub-input-daypack-blur",
         "good_label": "Black commuter backpack shown clearly in full",
         "bad_label": "Backpack details softened by blur"
       },
       {
-        "good": "n:gen2:ind-shoes-g2",
-        "bad": "n:guide:ind-shoes-m5-soft-focus",
+        "good": "n:guide:k6-photo-hub-input-shoe-good",
+        "bad": "n:guide:k6-photo-hub-input-shoe-blur",
         "good_label": "Running sneaker heel and stitching in focus",
         "bad_label": "Running shoe softened by blur"
       }
     ],
     "outputs": [
       {
-        "ref": "n:gen2:ind-jewelry-accessories-g1",
+        "ref": "n:guide:k6-photo-hub-output-ring",
         "frame": "1:1",
         "label": "Square listing photo"
       },
       {
-        "ref": "n:gen2:occ-black-friday-g3",
+        "ref": "n:guide:k6-photo-hub-output-duffel",
         "frame": "1:1",
         "label": "Square lifestyle photo"
       },
       {
-        "ref": "n:gen2:ind-fashion-clothing-g4",
+        "ref": "n:guide:k6-photo-hub-output-outfit",
         "frame": "1:1",
         "label": "Square social ad still"
       }

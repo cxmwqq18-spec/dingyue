@@ -13,7 +13,7 @@
     "social media ad templates"
   ],
   "intro": [
-    "Each template is a ready-made style for a product photo or short video, shown with an example so you know what to expect. Choose one that fits your product and where you'll post it, like a close-up detail shot for Amazon or a drink pour for TikTok. Upload a photo of your own product, add a line about the setting if you like, and you'll get a result in the same style. Photos are square by default. Videos come in 9:16, 1:1, or 16:9 and last 6, 10, 15, or 30 seconds.",
+    "Each template is a ready-made style for a product photo or short video, shown with an example so you know what to expect. Choose one that fits your product and where you'll post it, like a close-up detail shot for Amazon or a drink pour for TikTok. Upload a photo of your own product, add a line about the setting if you like, and you'll get a result with a similar look. Photos are square by default. Videos come in 9:16, 1:1, or 16:9 and last 6, 10, or 15 seconds.",
     "Add a photo of your product to make a new image or video in a similar style. Photos are square by default; videos can be 9:16, 1:1, or 16:9 and last 6, 10, or 15 seconds."
   ],
   "faq": [
@@ -34,15 +34,15 @@
     "strip": [
       "n:gen2:tpl-angle-c3",
       "n:gen2:tpl-angle-c4",
-      "n:gen2:tpl-size-c4",
-      "n:gen2:tpl-color-c2",
-      "n:gen2:tpl-box-c3",
+      "n:guide:k6-templates-strip-planter",
+      "n:guide:k6-templates-strip-beanies",
+      "n:guide:k6-templates-strip-deskset",
       "n:gen2:tpl-detail-c1"
     ],
     "steps": {
-      "source": "n:guide:black-friday-m2-source",
+      "source": "n:guide:k6-templates-step-source",
       "sourceAlt": "Brown leather duffel bag on a dark studio background.",
-      "result": "n:guide:black-friday-m2-result",
+      "result": "n:guide:k6-templates-step-result",
       "mode": "photo",
       "prompt": "A brown leather duffel rests on a pale wood bench beside a bright window.",
       "options": [

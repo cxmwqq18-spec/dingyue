@@ -18,7 +18,10 @@
       "id": "ebike",
       "t": "Folding e-bike: a product photo and hinge clip",
       "d": "A gray folding e-bike appears in a clean studio view, then a vertical clip shows hands unfolding the frame and inspecting its hinge. The sequence gives shoppers a clear product view and shows how the folding mechanism works.",
-      "imageLabels": ["Product photo", "Video ad · 9:16"]
+      "imageLabels": [
+        "Product photo",
+        "Video ad · 9:16"
+      ]
     },
     {
       "id": "lipstick",
@@ -136,7 +139,7 @@
       "d": "We began with a phone case on a soft blue color block. From it we placed this phone case on a textured stone slab and among fallen autumn leaves. The shape and camera opening stay easy to inspect while the background changes.",
       "imageRefs": [
         "n:gen2:h1-examples-phonecase-source",
-        "n:gen2:change-background-g2",
+        "n:guide:k6-examples-phonecase-stone",
         "n:gen2:h1-examples-phonecase-autumn"
       ],
       "imageLabels": [
@@ -202,7 +205,7 @@
   "overview": [
     {
       "h2": "How to read a product example",
-      "p": "Each card shows an example product photo, scene direction, and generated result. Look first at the product's outline, color, closure, label area, and other buying details; then look at the new setting or camera movement. The useful question is whether the result gives shoppers a new reason to understand the same item."
+      "p": "Each card shows an example product photo, scene direction, and generated result. Look first at the product's outline, color, closure, label area, and other buying details; then look at the new setting or camera movement. The useful question is whether the result gives shoppers a new reason to understand that product."
     },
     {
       "h2": "Use the gallery as a starting point",

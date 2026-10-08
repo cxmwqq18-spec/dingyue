@@ -191,7 +191,7 @@
         "label": "Everyday scenes",
         "items": [
           {
-            "ref": "n:gen2:tpl-ugc-g1",
+            "ref": "n:guide:k6-tpl-ugc-example-coffee-cup",
             "title": "Travel coffee cup held on a morning train",
             "kind": "photo",
             "product": "travel coffee cup"
@@ -215,16 +215,16 @@
   "visual": {
     "overview": "A creator-style photo places a product in an everyday routine, with the product still easy to recognize. Use a clear source image, then describe the setting and one natural action.",
     "strip": [
-      "g:ugc-still-ad/example-01",
-      "g:ugc-still-ad/example-02",
-      "g:ugc-still-ad/example-03",
-      "g:ugc-still-ad/example-04",
-      "g:ugc-still-ad/example-05",
-      "g:ugc-still-ad/example-06"
+      "n:guide:k6-tpl-ugc-strip-01",
+      "n:guide:k6-tpl-ugc-strip-02",
+      "n:guide:k6-tpl-ugc-strip-03",
+      "n:guide:k6-tpl-ugc-strip-04",
+      "n:guide:k6-tpl-ugc-strip-05",
+      "n:guide:k6-tpl-ugc-strip-06"
     ],
     "steps": {
       "source": "n:guide:tpl-ugc-m2-source",
-      "result": "g:ugc-still-ad/hero-output",
+      "result": "n:guide:k6-tpl-ugc-step-result",
       "mode": "photo",
       "prompt": "Show this bottle in a relaxed after-workout moment at home, with the sage lid facing the camera.",
       "options": [
@@ -261,7 +261,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:video-ads-c2",
+          "ref": "n:guide:k6-tpl-ugc-picker-phone-case",
           "label": "Phone case in a cafe",
           "chips": [
             "commute"
@@ -270,7 +270,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:lifestyle-photos-c3",
+          "ref": "n:guide:k6-tpl-ugc-picker-weekender",
           "label": "Weekender in a car",
           "chips": [
             "commute"
@@ -279,7 +279,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:unboxing-videos-g1",
+          "ref": "n:guide:k6-tpl-ugc-picker-diffuser",
           "label": "Diffuser unpacked at home",
           "chips": [
             "unboxing"
@@ -288,7 +288,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:unboxing-videos-c3",
+          "ref": "n:guide:k6-tpl-ugc-picker-watchbox",
           "label": "Watch box opened on a desk",
           "chips": [
             "unboxing"
@@ -297,7 +297,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:image-to-video-g2",
+          "ref": "n:guide:k6-tpl-ugc-picker-steaming-mug",
           "label": "Steaming mug by a window",
           "chips": [
             "morning"
@@ -306,7 +306,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:occ-product-launch-g3",
+          "ref": "n:guide:k6-tpl-ugc-picker-water-bottle",
           "label": "Bottle on a morning run",
           "chips": [
             "morning"
@@ -315,7 +315,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:video-ads-c3",
+          "ref": "n:guide:k6-tpl-ugc-picker-lunchbag",
           "label": "Lunch bag packed in the kitchen",
           "chips": [
             "workday"
@@ -324,7 +324,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:url-to-video-c2",
+          "ref": "n:guide:k6-tpl-ugc-picker-organizer",
           "label": "Desk organizer at work",
           "chips": [
             "workday"
@@ -338,20 +338,20 @@
     "uses": [
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-story-c2",
+        "ref": "n:guide:k6-tpl-ugc-use-trail-shoe",
         "h": "Add context to a feed post",
         "d": "A kitchen counter or a gym bag shows followers when they would reach for the product."
       },
       {
         "frame": "listing",
-        "ref": "n:gen2:tpl-story-c4",
+        "ref": "n:guide:k6-tpl-ugc-use-smoothie",
         "h": "Give a product page another view",
         "d": "Place it after your white-background photo so shoppers can judge the size next to everyday things."
       }
     ],
     "input": [
       {
-        "good": "n:gen2:tpl-story-g3",
+        "good": "n:guide:k6-tpl-ugc-input-bottle",
         "bad": "n:guide:tpl-ugc-soft-focus",
         "good_label": "Full bottle and cap stay clear",
         "bad_label": "Bottle details blur into the backdrop"
@@ -365,18 +365,18 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:lifestyle-photos-g1",
+        "ref": "n:guide:k6-tpl-ugc-output-handbag",
         "frame": "1:1",
         "label": "Casual square product photo"
       },
       {
-        "ref": "n:gen2:lifestyle-photos-g5",
+        "ref": "n:guide:k6-tpl-ugc-output-camping-mug",
         "frame": "1:1",
         "label": "Outdoor lifestyle photo"
       }
     ],
     "after": {
-      "ref": "n:gen2:lifestyle-photos-g3",
+      "ref": "n:guide:k6-tpl-ugc-after-hoodie",
       "zones": [
         "Caption",
         "Offer"
