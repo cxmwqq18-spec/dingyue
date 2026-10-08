@@ -183,7 +183,7 @@
         "items": [
           {
             "ref": "n:guide:q14-retarget-example-boot",
-            "title": "Fit Check: Trail Boot on Uneven Ground",
+            "title": "Trail Boot on Uneven Ground: Fit Check",
             "kind": "scene",
             "product": "plain brown trail boot"
           },
@@ -195,7 +195,7 @@
           },
           {
             "ref": "n:guide:q14-retarget-example-serum",
-            "title": "Talking-Head Review: Serum Dropper Details",
+            "title": "Serum Dropper Details: Talking-Head Review",
             "kind": "scene",
             "product": "serum dropper bottle"
           }
