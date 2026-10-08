@@ -42,6 +42,10 @@
       "retargeting-video-ad": {
         "ref": "n:gen2:tpl-limited-drop-alert-video-g2",
         "alt": "Jacket folded into a shipping box."
+      },
+      "life": {
+        "ref": "n:guide:k7-ind-fashion-clothing-card-life-linen-outfit",
+        "alt": "Adult wearing a linen overshirt and navy trousers on a city walk."
       }
     }
   },
@@ -60,8 +64,8 @@
     },
     "images": {
       "howto": {
-        "ref": "n:gen2:change-background-g4",
-        "alt": "Rolled yoga mat on a beach at sunrise."
+        "ref": "f:k7-ind-health-wellness-card-overrides-images-howto-ref-n-gen2-change-background-g4",
+        "alt": "Rolled teal yoga mat on a beach at sunrise."
       },
       "ugc": {
         "ref": "n:gen2:tpl-spark-ads-style-video-g2",
@@ -78,6 +82,14 @@
       "bg": {
         "ref": "n:gen2:video-hub-g6",
         "alt": "Pendant lamp glowing above a dining table at dusk."
+      },
+      "compare": {
+        "ref": "f:k7-ind-home-living-card-compare",
+        "alt": "Two plain ceramic mugs side by side on a neutral kitchen counter."
+      },
+      "ba": {
+        "ref": "f:k7-ind-home-living-card-before-after",
+        "alt": "Hands measuring a home storage shelf with folded sweaters and jeans."
       }
     }
   },

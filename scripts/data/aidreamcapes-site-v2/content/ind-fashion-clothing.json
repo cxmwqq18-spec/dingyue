@@ -232,15 +232,15 @@
   "visual": {
     "overview": "Fashion photos help shoppers judge fabric, fit, and how a piece works in an outfit. Use a clean garment image first, then choose a setting that keeps the clothing in view.",
     "strip": [
-      "n:hoodie-pack",
+      "n:guide:k7-ind-fashion-clothing-strip-0-n-hoodie-pack",
       "n:guide:ind-fashion-clothing-m2-result",
-      "n:gen2:tpl-tryon-c1",
-      "n:gen2:tpl-tryon-c2",
-      "n:gen2:tpl-look-c1",
-      "n:gen2:image-to-video-g3"
+      "n:guide:k7-ind-fashion-clothing-strip-2-n-gen2-tpl-tryon-c1",
+      "n:guide:k7-ind-fashion-clothing-strip-3-n-gen2-tpl-tryon-c2",
+      "n:guide:k7-ind-fashion-clothing-strip-4-n-gen2-tpl-look-c1",
+      "n:guide:k7-ind-fashion-clothing-strip-5-n-gen2-image-to-video-g3"
     ],
     "steps": {
-      "source": "n:hoodie-pack",
+      "source": "n:guide:k7-ind-fashion-clothing-steps-source-n-hoodie-pack",
       "result": "n:guide:ind-fashion-clothing-m2-result",
       "mode": "photo",
       "prompt": "Show this heather-gray hoodie worn in a bright studio, with its drawstrings and front pocket clearly visible.",
@@ -278,7 +278,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:model-photos-c1",
+          "ref": "n:guide:k7-ind-fashion-clothing-picker-cards-0-ref-n-gen2-model-photos-c1",
           "label": "Camel coat on a sidewalk",
           "prompt": "Show the coat from shoulder to hem on a quiet city sidewalk.",
           "chips": [
@@ -287,7 +287,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-tryon-c4",
+          "ref": "n:guide:k7-ind-fashion-clothing-picker-cards-1-ref-n-gen2-tpl-tryon-c4",
           "label": "Trousers in a studio",
           "prompt": "Frame the trousers from waist to ankle against a plain studio wall.",
           "chips": [
@@ -314,7 +314,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-look-c3",
+          "ref": "n:guide:k7-ind-fashion-clothing-picker-cards-4-ref-n-gen2-tpl-look-c3",
           "label": "Streetwear by a concrete wall",
           "prompt": "Style the outfit against a simple concrete wall with room around the silhouette.",
           "chips": [
@@ -323,7 +323,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-look-c4",
+          "ref": "n:guide:k7-ind-fashion-clothing-picker-cards-5-ref-n-gen2-tpl-look-c4",
           "label": "Evening dress on stone steps",
           "prompt": "Keep the full evening dress visible as the model stands on stone steps.",
           "chips": [
@@ -341,7 +341,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:occ-sale-discount-c3",
+          "ref": "n:guide:k7-ind-fashion-clothing-picker-cards-7-ref-n-gen2-occ-sale-discount-c3",
           "label": "Dresses beside a bright window",
           "prompt": "Hang the floral dresses near the window and keep each hem visible.",
           "chips": [
@@ -361,7 +361,7 @@
       },
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-outfit-c3",
+        "ref": "n:guide:k7-ind-fashion-clothing-uses-1-ref-n-gen2-tpl-outfit-c3",
         "h": "Show a lighter outfit in a feed post",
         "d": "A linen suit on a sunny terrace feels distinct from a plain catalog image."
       }
@@ -393,7 +393,7 @@
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-look-c2",
+      "ref": "n:guide:k7-ind-fashion-clothing-after-ref-n-gen2-tpl-look-c2",
       "zones": [
         "Size",
         "Fabric"

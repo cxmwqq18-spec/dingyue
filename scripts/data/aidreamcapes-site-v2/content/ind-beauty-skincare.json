@@ -223,16 +223,16 @@
   "visual": {
     "overview": "Beauty shoppers look at the package, shade, texture, and place in a routine. Use clear product photos for the listing, then add a vanity, shelf, or travel scene for context.",
     "strip": [
-      "n:gen2:tpl-beauty-c1",
-      "n:gen2:tpl-beauty-c2",
-      "n:gen2:tpl-beauty-c3",
-      "n:skincare-vertical",
-      "n:gen2:tpl-beauty-g2",
-      "n:gen2:tpl-light-g2"
+      "n:guide:k7-ind-beauty-skincare-strip-0-n-gen2-tpl-beauty-c1",
+      "n:guide:k7-ind-beauty-skincare-strip-1-n-gen2-tpl-beauty-c2",
+      "n:guide:k7-ind-beauty-skincare-strip-2-n-gen2-tpl-beauty-c3",
+      "n:guide:k7-ind-beauty-skincare-strip-3-n-skincare-vertical",
+      "n:guide:k7-ind-beauty-skincare-strip-4-n-gen2-tpl-beauty-g2",
+      "n:guide:k7-ind-beauty-skincare-strip-5-n-gen2-tpl-light-g2"
     ],
     "steps": {
-      "source": "n:lipstick-pack",
-      "result": "n:lipstick-vanity",
+      "source": "n:guide:k7-ind-beauty-skincare-steps-source-n-lipstick-pack",
+      "result": "n:guide:k7-ind-beauty-skincare-steps-result-n-lipstick-vanity",
       "mode": "photo",
       "prompt": "Place the coral lipstick upright on a white marble vanity beside a pink flower and round mirror, with the tube and cap visible.",
       "options": [
@@ -269,7 +269,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:image-to-video-c3",
+          "ref": "n:guide:k7-ind-beauty-skincare-picker-cards-0-ref-n-gen2-image-to-video-c3",
           "label": "Uncapped coral lipstick",
           "chips": [
             "routine"
@@ -287,7 +287,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-compare-c3",
+          "ref": "n:guide:k7-ind-beauty-skincare-picker-cards-2-ref-n-gen2-tpl-compare-c3",
           "label": "Matte and glossy lipstick",
           "chips": [
             "texture"
@@ -305,7 +305,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-story-c1",
+          "ref": "n:guide:k7-ind-beauty-skincare-picker-cards-4-ref-n-gen2-tpl-story-c1",
           "label": "Sunscreen in beach light",
           "chips": [
             "travel"
@@ -323,7 +323,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-retargeting-video-ad-c2",
+          "ref": "n:guide:k7-ind-beauty-skincare-picker-cards-6-ref-n-gen2-tpl-retargeting-video-ad-c2",
           "label": "Serum on a bathroom shelf",
           "chips": [
             "shelf"
@@ -332,7 +332,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:home-g4",
+          "ref": "n:guide:k7-ind-beauty-skincare-picker-cards-7-ref-n-gen2-home-g4",
           "label": "Skincare bottle on wet stone",
           "chips": [
             "shelf"
@@ -346,13 +346,13 @@
     "uses": [
       {
         "frame": "browser",
-        "ref": "n:gen2:plat-instagram-g5",
+        "ref": "n:guide:k7-ind-beauty-skincare-uses-0-ref-n-gen2-plat-instagram-g5",
         "h": "Add a routine photo to a product page",
         "d": "Show the serum or cream where it is used, next to the plain pack shot on your listing."
       },
       {
         "frame": "post",
-        "ref": "n:lipstick-ad",
+        "ref": "n:guide:k7-ind-beauty-skincare-uses-1-ref-n-lipstick-ad",
         "h": "Show a shade in a social post",
         "d": "A close view of the bullet shows the shade; type the shade name over it in your editor."
       }
@@ -373,18 +373,18 @@
     ],
     "outputs": [
       {
-        "ref": "n:gen2:tpl-sale-c3",
+        "ref": "n:guide:k7-ind-beauty-skincare-outputs-0-ref-n-gen2-tpl-sale-c3",
         "frame": "1:1",
         "label": "Square skincare set photo"
       },
       {
-        "ref": "n:gen2:tpl-light-c3",
+        "ref": "n:guide:k7-ind-beauty-skincare-outputs-1-ref-n-gen2-tpl-light-c3",
         "frame": "1:1",
         "label": "Square single-product photo"
       }
     ],
     "after": {
-      "ref": "n:lipstick-swatch",
+      "ref": "n:guide:k7-ind-beauty-skincare-after-ref-n-lipstick-swatch",
       "zones": [
         "Shade",
         "Ingredients"
@@ -396,7 +396,7 @@
     },
     "titles": {
       "m2": {
-        "h2": "Show the same lipstick shade in a new setting"
+        "h2": "Show a lipstick color beside its shade swatch"
       },
       "m3": {
         "h2": "Choose a scene for your beauty product"

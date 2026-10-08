@@ -187,8 +187,8 @@
             "product": "chain necklace"
           },
           {
-            "ref": "n:gen2:ind-jewelry-accessories-g3",
-            "title": "Drop earrings worn in soft window light",
+            "ref": "n:guide:k7-ind-jewelry-accessories-examples-0-items-1-ref-n-gen2-ind-jewelry-accessories-g3",
+            "title": "A close look at earrings in natural light",
             "kind": "photo",
             "product": "drop earrings"
           },
@@ -223,9 +223,9 @@
     "strip": [
       "n:guide:ind-jewelry-accessories-m2-source",
       "n:guide:ind-jewelry-accessories-m2-result",
-      "n:gen2:tpl-jewel-28",
+      "n:guide:k7-ind-jewelry-accessories-strip-2-n-gen2-tpl-jewel-28",
       "n:gen2:plat-instagram-c4",
-      "n:gen2:tpl-jewel-72",
+      "n:guide:k7-ind-jewelry-accessories-strip-4-n-gen2-tpl-jewel-72",
       "n:gen2:white-background-g4"
     ],
     "steps": {
@@ -294,7 +294,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:image-to-video-g1",
+          "ref": "n:guide:k7-ind-jewelry-accessories-picker-cards-3-ref-n-gen2-image-to-video-g1",
           "label": "Watch dial under a highlight",
           "prompt": "Let a narrow highlight pass over the watch glass without hiding its hands.",
           "chips": [
@@ -312,7 +312,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:unboxing-videos-c3",
+          "ref": "n:guide:k7-ind-jewelry-accessories-picker-cards-5-ref-n-gen2-unboxing-videos-c3",
           "label": "Opening a matte watch box",
           "prompt": "Lift the watch box lid on a walnut desk and keep the watch visible.",
           "chips": [
@@ -344,13 +344,13 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:gen2:tpl-jewel-70",
+        "ref": "n:guide:k7-ind-jewelry-accessories-uses-0-ref-n-gen2-tpl-jewel-70",
         "h": "Show a gold ring in a product listing",
         "d": "The hand beside a coffee cup gives the ring a familiar sense of scale."
       },
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-jewel-71",
+        "ref": "n:guide:k7-ind-jewelry-accessories-uses-1-ref-n-gen2-tpl-jewel-71",
         "h": "Show a silver bracelet in a styled post",
         "d": "The bracelet's linked shape stays clear against the wrist."
       }

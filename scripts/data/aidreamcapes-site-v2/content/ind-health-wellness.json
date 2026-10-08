@@ -187,8 +187,8 @@
             "product": "protein powder pouch"
           },
           {
-            "ref": "n:gen2:social-ad-photos-c3",
-            "title": "Hand cream beside lavender",
+            "ref": "n:guide:k7-ind-health-wellness-examples-0-items-1-ref-n-gen2-social-ad-photos-c3",
+            "title": "Lavender accents around a hand cream bottle",
             "kind": "photo",
             "product": "hand cream"
           }
@@ -215,16 +215,16 @@
   "visual": {
     "overview": "Wellness shoppers often want to see the product, its texture, and the routine around it. Keep product images grounded in use, and leave health outcomes out of the scene.",
     "strip": [
-      "n:yogamat-pack",
-      "n:yogamat-room",
-      "n:gen2:tpl-pack-c1",
-      "n:gen2:tpl-beauty-c4",
+      "n:guide:k7-ind-health-wellness-strip-0-n-yogamat-pack",
+      "n:guide:k7-ind-health-wellness-strip-1-n-yogamat-room",
+      "n:guide:k7-ind-health-wellness-strip-2-n-gen2-tpl-pack-c1",
+      "n:guide:k7-ind-health-wellness-strip-3-n-gen2-tpl-beauty-c4",
       "n:gen2:url-to-video-g3",
-      "n:gen2:tpl-ugc-case-83"
+      "n:guide:k7-ind-health-wellness-strip-5-n-gen2-tpl-ugc-case-83"
     ],
     "steps": {
-      "source": "n:yogamat-pack",
-      "result": "n:yogamat-room",
+      "source": "n:guide:k7-ind-health-wellness-steps-source-n-yogamat-pack",
+      "result": "n:guide:k7-ind-health-wellness-steps-result-n-yogamat-room",
       "mode": "photo",
       "prompt": "Set this teal yoga mat partly unrolled on a wooden floor beside a bright window.",
       "options": [
@@ -261,7 +261,7 @@
       ],
       "cards": [
         {
-          "ref": "n:gen2:examples-g6",
+          "ref": "n:guide:k7-ind-health-wellness-picker-cards-0-cork-block",
           "label": "Cork yoga block detail",
           "prompt": "Show the grain and square edge of the cork yoga block against a plain surface.",
           "chips": [
@@ -270,7 +270,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-ugc-c4",
+          "ref": "n:guide:k7-ind-health-wellness-picker-cards-1-ref-n-gen2-tpl-ugc-c4",
           "label": "Face mist after a workout",
           "prompt": "Place the face mist bottle on a gym bench beside a folded towel.",
           "chips": [
@@ -279,7 +279,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:ind-beauty-skincare-c2",
+          "ref": "n:guide:k7-ind-health-wellness-picker-cards-2-ref-n-gen2-ind-beauty-skincare-c2",
           "label": "Clay mask beside towels",
           "prompt": "Set the open clay mask jar on folded white towels in soft bathroom light.",
           "chips": [
@@ -288,7 +288,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:image-to-video-g2",
+          "ref": "n:guide:k7-ind-health-wellness-picker-cards-3-ref-n-gen2-image-to-video-g2",
           "label": "Steaming mug in morning light",
           "prompt": "Let a gentle curl of steam rise above the ceramic mug near a bright window.",
           "chips": [
@@ -297,7 +297,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:unboxing-videos-g3",
+          "ref": "n:guide:k7-ind-health-wellness-picker-cards-4-ref-n-gen2-unboxing-videos-g3",
           "label": "Tea and honey from a box",
           "prompt": "Set the tea tin, honey, and biscuits beside their open delivery box.",
           "chips": [
@@ -306,7 +306,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-beauty-c2",
+          "ref": "n:guide:k7-ind-health-wellness-picker-cards-5-ref-n-gen2-tpl-beauty-c2",
           "label": "Lip balm on a vanity",
           "prompt": "Place the closed balm tube beside a small mirror and a folded towel.",
           "chips": [
@@ -338,13 +338,13 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:gen2:image-to-video-g4",
+        "ref": "n:guide:k7-ind-health-wellness-uses-0-ref-n-gen2-image-to-video-g4",
         "h": "Add a hand soap photo to the listing",
         "d": "A hand soap bottle on a marble shelf with towels gives the photo a familiar bathroom setting."
       },
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-ugc-case-81",
+        "ref": "n:guide:k7-ind-health-wellness-uses-1-ref-n-gen2-tpl-ugc-case-81",
         "h": "Style a reusable bottle on a work desk",
         "d": "A bottle on a desk shows where it fits into a daily work routine."
       }
@@ -357,7 +357,7 @@
         "bad_label": "The cork grain disappears in soft focus"
       },
       {
-        "good": "n:gen2:examples-g5",
+        "good": "n:guide:k7-ind-health-wellness-input-1-good-block",
         "bad": "n:guide:ind-health-wellness-m5-cropped",
         "good_label": "The block and mat fit inside the image",
         "bad_label": "One end of the yoga block is cut off by the frame"
@@ -370,13 +370,13 @@
         "label": "Tea tin and infuser gift set"
       },
       {
-        "ref": "n:gen2:ind-beauty-skincare-g1",
+        "ref": "n:guide:k7-ind-health-wellness-outputs-1-ref-n-gen2-ind-beauty-skincare-g1",
         "frame": "1:1",
         "label": "Serum and cream texture study"
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-story-c3",
+      "ref": "n:guide:k7-ind-health-wellness-after-ref-n-gen2-tpl-story-c3",
       "zones": [
         "Material",
         "Care"

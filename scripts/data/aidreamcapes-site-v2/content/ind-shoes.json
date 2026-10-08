@@ -210,8 +210,8 @@
             "product": "white casual shoes"
           },
           {
-            "ref": "n:gen2:ind-shoes-g5",
-            "title": "Shoes stepping up onto a city curb",
+            "ref": "n:guide:k7-ind-shoes-examples-1-items-1-ref-n-gen2-ind-shoes-g5",
+            "title": "A street step that highlights the shoe profile",
             "kind": "photo",
             "product": "sneakers"
           }
@@ -238,15 +238,15 @@
   "visual": {
     "overview": "Shoe shoppers look for the toe shape, heel, sole, and fit on foot. A clean product shot gives the pair a baseline; separate angles show details that one side view cannot.",
     "strip": [
-      "n:boots-pack",
+      "n:guide:k7-ind-shoes-strip-0-n-boots-pack",
       "n:guide:ind-shoes-m2-result",
-      "f:tiktok-reels-shorts-v",
-      "n:boots-street",
-      "n:boots-doorway",
-      "n:gen2:tpl-film-c4"
+      "f:k7-ind-shoes-strip-2-f-tiktok-reels-shorts-v",
+      "n:guide:k7-ind-shoes-strip-3-n-boots-street",
+      "n:guide:k7-ind-shoes-strip-4-n-boots-doorway",
+      "n:guide:k7-ind-shoes-strip-5-n-gen2-tpl-film-c4"
     ],
     "steps": {
-      "source": "n:boots-pack",
+      "source": "n:guide:k7-ind-shoes-steps-source-n-boots-pack",
       "result": "n:guide:ind-shoes-m2-result",
       "mode": "photo",
       "prompt": "Show these brown Chelsea boots worn on a cobblestone path, cropped below the knees.",
@@ -293,7 +293,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-retargeting-video-ad-g1",
+          "ref": "n:guide:k7-ind-shoes-picker-cards-1-ref-n-gen2-tpl-retargeting-video-ad-g1",
           "label": "Brown boots beside a coat",
           "prompt": "Set the laced boots on a bench next to a folded coat.",
           "chips": [
@@ -302,7 +302,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:video-hub-g3",
+          "ref": "n:guide:k7-ind-shoes-picker-cards-2-ref-n-gen2-video-hub-g3",
           "label": "Sneakers in an open shoebox",
           "prompt": "Lift the lid and show the pair resting in tissue paper.",
           "chips": [
@@ -320,7 +320,7 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:tpl-home-c4",
+          "ref": "n:guide:k7-ind-shoes-picker-cards-4-ref-n-gen2-tpl-home-c4",
           "label": "Shoe rack in a small entryway",
           "prompt": "Show the slim rack holding several pairs beside the front door.",
           "chips": [
@@ -329,16 +329,16 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:occ-product-launch-c2",
-          "label": "White sneaker on a plinth",
-          "prompt": "Center the sneaker on a pale round stand under focused light.",
+          "ref": "n:guide:k7-ind-shoes-picker-cards-5-ref-n-gen2-occ-product-launch-c2",
+          "label": "Plain taupe low-top shoe",
+          "prompt": "Show the shoe from a three-quarter side angle on a pale stone plinth.",
           "chips": [
             "detail"
           ],
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:plat-facebook-c3",
+          "ref": "n:guide:k7-ind-shoes-picker-cards-6-ref-n-gen2-plat-facebook-c3",
           "label": "Yellow rain boots beside a puddle",
           "prompt": "Arrange the rain boots beside a shallow puddle on a wet path.",
           "chips": [
@@ -347,9 +347,9 @@
           "kind": "photo"
         },
         {
-          "ref": "n:gen2:before-after-videos-c2",
-          "label": "Scuffed sneaker after cleaning",
-          "prompt": "Show the white sneaker before and after a careful cleaning.",
+          "ref": "n:guide:k7-ind-shoes-picker-cards-7-ref-n-gen2-before-after-videos-c2",
+          "label": "Leather boot before and after cleaning",
+          "prompt": "Show one brown leather ankle boot before and after cleaning, with scuffs on the left and a polished finish on the right.",
           "chips": [
             "arrival"
           ],
@@ -361,7 +361,7 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:gen2:tpl-retargeting-video-ad-c1",
+        "ref": "n:guide:k7-ind-shoes-uses-0-ref-n-gen2-tpl-retargeting-video-ad-c1",
         "h": "Add a clean pair to a product page",
         "d": "A pair by the front door suggests where shoppers might wear it."
       },
@@ -393,13 +393,13 @@
         "label": "Gray knit running shoe on a white background"
       },
       {
-        "ref": "n:guide:ind-shoes-m6-boot-detail",
+        "ref": "n:guide:k7-ind-shoes-outputs-1-ref-n-guide-ind-shoes-m6-boot-detail",
         "frame": "1:1",
         "label": "Brown leather Chelsea boot close-up"
       }
     ],
     "after": {
-      "ref": "n:gen2:tpl-limited-drop-alert-video-c1",
+      "ref": "n:guide:k7-ind-shoes-after-ref-n-gen2-tpl-limited-drop-alert-video-c1",
       "zones": [
         "Size",
         "Material"

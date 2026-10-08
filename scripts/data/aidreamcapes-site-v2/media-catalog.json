@@ -2722,6 +2722,240 @@
         640,
         1280
       ]
+    },
+    "k7-ind-home-living-strip-01-lamp-switch": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hand turning on a white table lamp beside an open book.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-home-living-step-result-lamp-glow": {
+      "w": 1536,
+      "h": 864,
+      "alt": "White table lamp glowing beside an open book in a quiet reading nook.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-home-living-picker-02-planter-water": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hand pouring water into the reservoir of a self-watering planter.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-home-living-picker-04-candle-bedside": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Small soy candle glowing on a bedside table at dusk.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-home-living-picker-07-cushion-clean": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Cushion with pet hair on one side and a clean lint-rolled finish on the other.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-home-living-uses-00-linen-pillow": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Linen pillow on a pale sofa, showing its natural fabric texture.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-home-living-uses-01-pantry-jars": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Matching pantry jars lined up neatly on a kitchen shelf.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-home-living-card-before-after": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hands measuring a home storage shelf with folded sweaters and jeans.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-home-living-card-compare": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Two plain ceramic mugs side by side on a neutral kitchen counter.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-home-living-case-drawer-divider": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Kitchen drawer dividers neatly organizing utensils.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-home-living-output-candle": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Lit glass candle on a wooden side table in warm evening light.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-health-wellness-card-overrides-images-howto-ref-n-gen2-change-background-g4": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Rolled teal yoga mat on a beach at sunrise.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-shoes-strip-2-f-tiktok-reels-shorts-v": {
+      "w": 864,
+      "h": 1536,
+      "alt": "Hands tying the laces on a light gray running shoe.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-electronics-picker-cards-2-ref-n-gen2-tpl-size-c3": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Aluminum phone stand holding a smartphone with a dark screen on a desk.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-electronics-picker-cards-6-ref-n-gen2-tpl-color-c3": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Five phone cases in five colors fanned out on a plain surface.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-electronics-after-ref-f-cinematic-video-t06": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Rectangular dark fabric speaker on a wooden shelf in a living room.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-electronics-picker-cards-7-ref-n-gen2-change-background-g1": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Blue phone case with one small round camera opening on a blue block.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-food-drinks-strip-1-f-food-video-t06": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Golden sparkling drink poured from a glass bottle into a glass with ice and an orange slice",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-food-drinks-steps-result-f-food-video-t06": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Golden sparkling drink poured from a glass bottle into a glass with ice and an orange slice",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-food-drinks-picker-cards-4-ref-n-gen2-tpl-box-c2": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Coffee starter kit: bag of beans, hand grinder and mug together.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-food-drinks-uses-1-ref-n-gen2-url-to-video-g1": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Glass olive oil bottle on a kitchen counter next to a cutting board with fresh herbs.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-food-drinks-outputs-0-ref-f-product-video-t09": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Espresso shot in a glass cup beside a jar of coffee beans",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-food-drinks-outputs-1-ref-f-food-video-t13": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Glass bottle of golden citrus drink and a glass with fruit on a kitchen counter",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-food-drinks-picker-cards-5-ref-n-gen2-image-to-video-c2": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Coffee dripper on a sunny counter",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-food-drinks-picker-2-coffee-pouch": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Plain coffee pouch displayed on a grocery shelf.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "k7-ind-beauty-skincare-case-serum-dropper": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hand holding an amber serum dropper above fingertips at a bathroom sink.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -3719,6 +3953,24 @@
       "uploadDate": "2026-10-06T00:00:00Z",
       "name": "Example clip: Hands fill a citrus sparkling drink bottle, pour it into an ice-filled glass, and lift the glass.",
       "description": "An example clip showing hands fill a citrus sparkling drink bottle, pour it into an ice-filled glass, and lift the glass. AIVideosUGC does not add voiceover, music, or captions."
+    },
+    "k7-ind-home-living-case-drawer-divider": {
+      "src": "/assets/sites/site_aidreamcapes/site-v2/clips/home-organization.mp4",
+      "w": 1280,
+      "h": 720,
+      "duration": 15,
+      "uploadDate": "2026-10-06T00:00:00Z",
+      "name": "Example clip: Hands remove utensils, place gray dividers in a kitchen drawer, and organize it.",
+      "description": "An example clip showing hands remove utensils, place gray dividers in a kitchen drawer, and organize it. AIVideosUGC does not add voiceover, music, or captions."
+    },
+    "k7-ind-beauty-skincare-case-serum-dropper": {
+      "src": "/assets/sites/site_aidreamcapes/site-v2/clips/beauty-routine.mp4",
+      "w": 1280,
+      "h": 720,
+      "duration": 15,
+      "uploadDate": "2026-10-06T00:00:00Z",
+      "name": "Example clip: A hand lifts an amber skincare dropper and applies serum to a face in a bathroom.",
+      "description": "An example clip showing a hand lifts an amber skincare dropper and applies serum to a face in a bathroom. AIVideosUGC does not add voiceover, music, or captions."
     }
   },
   "loop": {
@@ -4229,6 +4481,26 @@
       "alt": "Hand lifts a plain beige ceramic mug from a counter for a short product demo.",
       "variants": [
         540,
+        640,
+        1280
+      ],
+      "clipPoster": true
+    },
+    "k7-ind-home-living-case-drawer-divider": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Kitchen drawer dividers neatly organizing utensils.",
+      "variants": [
+        640,
+        1280
+      ],
+      "clipPoster": true
+    },
+    "k7-ind-beauty-skincare-case-serum-dropper": {
+      "w": 1536,
+      "h": 864,
+      "alt": "Hand holding an amber serum dropper above fingertips at a bathroom sink.",
+      "variants": [
         640,
         1280
       ],
@@ -19795,6 +20067,1046 @@
         "w": 1024,
         "h": 1024,
         "alt": "Charcoal technical shoe in low, moody light against a red background; its details are hard to see.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-strip-00-room-lamp": {
+        "file": "k7-ind-home-living-strip-00-room-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White table lamp on a warm wooden side table beside an open book.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-step-source-lamp": {
+        "file": "k7-ind-home-living-step-source-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white table lamp with a tapered shade on a pale tabletop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-strip-02-closet-rail": {
+        "file": "k7-ind-home-living-strip-02-closet-rail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Closet rail with neutral garments on matching hangers after tidying.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-strip-03-folded-blankets": {
+        "file": "k7-ind-home-living-strip-03-folded-blankets",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Folded neutral blankets stacked neatly on an oak bench.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-strip-04-storage-bins": {
+        "file": "k7-ind-home-living-strip-04-storage-bins",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear storage bins arranged beneath a kitchen sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-strip-05-entry-shoe-rack": {
+        "file": "k7-ind-home-living-strip-05-entry-shoe-rack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Slim wooden shoe rack neatly filled in a small entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-input-01-good-planter": {
+        "file": "k7-ind-home-living-input-01-good-planter",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ceramic planter with a fern on a styled shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-input-01-bad-planter-v2": {
+        "file": "k7-ind-home-living-input-01-bad-planter-v2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Fern and ceramic planter cropped by the left edge of the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-case-desk-lamp": {
+        "file": "k7-ind-home-living-case-desk-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Oak table lamp glowing beside an open book in a reading nook.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-case-linen-bed": {
+        "file": "k7-ind-home-living-case-linen-bed",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Neatly made bed with soft linen and a folded oatmeal throw.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-case-wall-shelf": {
+        "file": "k7-ind-home-living-case-wall-shelf",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Floating oak shelf with books and a small plant on a pale wall.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-example-storage-boxes": {
+        "file": "k7-ind-home-living-example-storage-boxes",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Fabric storage boxes arranged on a tidy shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-example-planter-sofa": {
+        "file": "k7-ind-home-living-example-planter-sofa",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ceramic planter beside a pale linen sofa.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-home-living-example-side-table": {
+        "file": "k7-ind-home-living-example-side-table",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Round wood side table beside an armchair.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-strip-1-n-yogamat-room": {
+        "file": "k7-ind-health-wellness-strip-1-n-yogamat-room",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Teal yoga mat partly unrolled on a wooden floor in a bright living room with a large plant",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-strip-2-n-gen2-tpl-pack-c1": {
+        "file": "k7-ind-health-wellness-strip-2-n-gen2-tpl-pack-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tea tin with an abstract color-block design on a cafe shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-strip-3-n-gen2-tpl-beauty-c4": {
+        "file": "k7-ind-health-wellness-strip-3-n-gen2-tpl-beauty-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sheet mask pouch with opened on a bathroom counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-strip-5-n-gen2-tpl-ugc-case-83": {
+        "file": "k7-ind-health-wellness-strip-5-n-gen2-tpl-ugc-case-83",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ceramic mug at breakfast, shot from across the table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-steps-result-n-yogamat-room": {
+        "file": "k7-ind-health-wellness-steps-result-n-yogamat-room",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Teal yoga mat partly unrolled on a wooden floor in a bright living room with a large plant",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-picker-cards-1-ref-n-gen2-tpl-ugc-c4": {
+        "file": "k7-ind-health-wellness-picker-cards-1-ref-n-gen2-tpl-ugc-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Face mist bottle on a gym bench after a workout, phone-camera look.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-picker-cards-2-ref-n-gen2-ind-beauty-skincare-c2": {
+        "file": "k7-ind-health-wellness-picker-cards-2-ref-n-gen2-ind-beauty-skincare-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pale green clay mask sits open on folded white towels with its lid beside the jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-picker-cards-3-ref-n-gen2-image-to-video-g2": {
+        "file": "k7-ind-health-wellness-picker-cards-3-ref-n-gen2-image-to-video-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Ceramic mug with gentle steam rising in soft morning light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-picker-cards-4-ref-n-gen2-unboxing-videos-g3": {
+        "file": "k7-ind-health-wellness-picker-cards-4-ref-n-gen2-unboxing-videos-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Subscription box open on a kitchen table with a tea tin, a honey jar and biscuits laid out beside it.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-picker-cards-5-ref-n-gen2-tpl-beauty-c2": {
+        "file": "k7-ind-health-wellness-picker-cards-5-ref-n-gen2-tpl-beauty-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Lip balm tube on a vanity next to a round mirror, morning routine.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-uses-1-ref-n-gen2-tpl-ugc-case-81": {
+        "file": "k7-ind-health-wellness-uses-1-ref-n-gen2-tpl-ugc-case-81",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Reusable water bottle snapped on a cluttered work desk, phone-camera look.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-after-ref-n-gen2-tpl-story-c3": {
+        "file": "k7-ind-health-wellness-after-ref-n-gen2-tpl-story-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tall pillar candle with blank wall space above.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-strip-0-n-yogamat-pack": {
+        "file": "k7-ind-health-wellness-strip-0-n-yogamat-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Rolled blue yoga mat and black carrying bag on a wooden floor.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-steps-source-n-yogamat-pack": {
+        "file": "k7-ind-health-wellness-steps-source-n-yogamat-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Purple yoga mat rolled beside a black carrying bag.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-uses-0-ref-n-gen2-image-to-video-g4": {
+        "file": "k7-ind-health-wellness-uses-0-ref-n-gen2-image-to-video-g4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear hand soap dispenser on a bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-outputs-1-ref-n-gen2-ind-beauty-skincare-g1": {
+        "file": "k7-ind-health-wellness-outputs-1-ref-n-gen2-ind-beauty-skincare-g1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Serum and cream texture study",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-case-plan-0-ref-n-gen2-ind-health-wellness-6": {
+        "file": "k7-ind-health-wellness-case-plan-0-ref-n-gen2-ind-health-wellness-6",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Yoga mat unrolled in a sunny living room",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-examples-0-items-1-ref-n-gen2-social-ad-photos-c3": {
+        "file": "k7-ind-health-wellness-examples-0-items-1-ref-n-gen2-social-ad-photos-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand cream beside lavender",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-strip-0-n-gen2-tpl-beauty-c1": {
+        "file": "k7-ind-beauty-skincare-strip-0-n-gen2-tpl-beauty-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hydrating toner patted onto a cotton pad at a sunny vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-strip-1-n-gen2-tpl-beauty-c2": {
+        "file": "k7-ind-beauty-skincare-strip-1-n-gen2-tpl-beauty-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Lip balm tube on a vanity next to a round mirror, morning routine.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-strip-2-n-gen2-tpl-beauty-c3": {
+        "file": "k7-ind-beauty-skincare-strip-2-n-gen2-tpl-beauty-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Jade face roller resting beside a jar of cream on a bathroom shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-strip-3-n-skincare-vertical": {
+        "file": "k7-ind-beauty-skincare-strip-3-n-skincare-vertical",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber dropper serum bottle and a cream jar on a stone bathroom shelf in soft morning light",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-strip-4-n-gen2-tpl-beauty-g2": {
+        "file": "k7-ind-beauty-skincare-strip-4-n-gen2-tpl-beauty-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cleansing balm scooped from its jar with a small spatula.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-steps-result-n-lipstick-vanity": {
+        "file": "k7-ind-beauty-skincare-steps-result-n-lipstick-vanity",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral lipstick and its cap on a white marble vanity beside a pink flower in a glass vase and a round brass mirror",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-picker-cards-0-ref-n-gen2-image-to-video-c3": {
+        "file": "k7-ind-beauty-skincare-picker-cards-0-ref-n-gen2-image-to-video-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Red lipstick standing uncapped on a white marble vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-picker-cards-2-ref-n-gen2-tpl-compare-c3": {
+        "file": "k7-ind-beauty-skincare-picker-cards-2-ref-n-gen2-tpl-compare-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Matte and glossy lipstick swatches and bullets side by side.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-picker-cards-4-ref-n-gen2-tpl-story-c1": {
+        "file": "k7-ind-beauty-skincare-picker-cards-4-ref-n-gen2-tpl-story-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sunscreen bottle in beach light with empty space at the top.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-picker-cards-6-ref-n-gen2-tpl-retargeting-video-ad-c2": {
+        "file": "k7-ind-beauty-skincare-picker-cards-6-ref-n-gen2-tpl-retargeting-video-ad-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Serum bottle back on a tidy bathroom shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-uses-1-ref-n-lipstick-ad": {
+        "file": "k7-ind-beauty-skincare-uses-1-ref-n-lipstick-ad",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand holding a coral lipstick and its cap against a soft pink backdrop with open space on the left",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-outputs-0-ref-n-gen2-tpl-sale-c3": {
+        "file": "k7-ind-beauty-skincare-outputs-0-ref-n-gen2-tpl-sale-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Skincare bottles on pastel podiums, empty headline area.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-outputs-1-ref-n-gen2-tpl-light-c3": {
+        "file": "k7-ind-beauty-skincare-outputs-1-ref-n-gen2-tpl-light-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Glossy nail polish bottle on black acrylic with a sharp reflection.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-after-ref-n-lipstick-swatch": {
+        "file": "k7-ind-beauty-skincare-after-ref-n-lipstick-swatch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close-up of coral lipstick beside a swatch of its shade on the back of a hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-steps-source-n-lipstick-pack": {
+        "file": "k7-ind-beauty-skincare-steps-source-n-lipstick-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Coral lipstick and its cap on a marble vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-picker-cards-7-ref-n-gen2-home-g4": {
+        "file": "k7-ind-beauty-skincare-picker-cards-7-ref-n-gen2-home-g4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Skincare bottle on wet stone",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-case-plan-1-ref-n-gen2-ind-beauty-skincare-c2": {
+        "file": "k7-ind-beauty-skincare-case-plan-1-ref-n-gen2-ind-beauty-skincare-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clay mask jar open on a folded towel",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-uses-0-ref-n-gen2-plat-instagram-g5": {
+        "file": "k7-ind-beauty-skincare-uses-0-ref-n-gen2-plat-instagram-g5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand applying serum beside a glass bottle at a bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-beauty-skincare-strip-5-n-gen2-tpl-light-g2": {
+        "file": "k7-ind-beauty-skincare-strip-5-n-gen2-tpl-light-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber skincare bottle on a pale stone bathroom shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-strip-3-n-boots-street": {
+        "file": "k7-ind-shoes-strip-3-n-boots-street",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather Chelsea boots on a person in dark jeans walking over cobblestones in warm evening light",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-strip-4-n-boots-doorway": {
+        "file": "k7-ind-shoes-strip-4-n-boots-doorway",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of brown leather Chelsea boots on a wooden floor by a doorway next to a folded coat and an umbrella",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-strip-5-n-gen2-tpl-film-c4": {
+        "file": "k7-ind-shoes-strip-5-n-gen2-tpl-film-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Leather boots on a misty forest trail, cinematic depth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-picker-cards-1-ref-n-gen2-tpl-retargeting-video-ad-g1": {
+        "file": "k7-ind-shoes-picker-cards-1-ref-n-gen2-tpl-retargeting-video-ad-g1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown boots laced on a bench beside a coat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-picker-cards-2-ref-n-gen2-video-hub-g3": {
+        "file": "k7-ind-shoes-picker-cards-2-ref-n-gen2-video-hub-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Shoebox lid lifted to show a new pair of sneakers wrapped in tissue paper.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-picker-cards-4-ref-n-gen2-tpl-home-c4": {
+        "file": "k7-ind-shoes-picker-cards-4-ref-n-gen2-tpl-home-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Slim shoe rack neatly filled in a small entryway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-picker-cards-5-ref-n-gen2-occ-product-launch-c2": {
+        "file": "k7-ind-shoes-picker-cards-5-ref-n-gen2-occ-product-launch-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain taupe low-top shoe on a pale stone plinth.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-picker-cards-6-ref-n-gen2-plat-facebook-c3": {
+        "file": "k7-ind-shoes-picker-cards-6-ref-n-gen2-plat-facebook-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Kids' yellow rain boots beside a puddle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-picker-cards-7-ref-n-gen2-before-after-videos-c2": {
+        "file": "k7-ind-shoes-picker-cards-7-ref-n-gen2-before-after-videos-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather ankle boot before and after cleaning, with scuffs on one and a polished finish on the other.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-uses-0-ref-n-gen2-tpl-retargeting-video-ad-c1": {
+        "file": "k7-ind-shoes-uses-0-ref-n-gen2-tpl-retargeting-video-ad-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clean white sneakers waiting by a front door.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-after-ref-n-gen2-tpl-limited-drop-alert-video-c1": {
+        "file": "k7-ind-shoes-after-ref-n-gen2-tpl-limited-drop-alert-video-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "One pair of limited-run sneakers on a concrete plinth under a spotlight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-strip-0-n-boots-pack": {
+        "file": "k7-ind-shoes-strip-0-n-boots-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of brown leather lace-up boots on a wooded trail.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-steps-source-n-boots-pack": {
+        "file": "k7-ind-shoes-steps-source-n-boots-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather lace-up boots beside a light wall.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-case-plan-3-ref-n-gen2-ind-shoes-c4": {
+        "file": "k7-ind-shoes-case-plan-3-ref-n-gen2-ind-shoes-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Suede loafers on a herringbone floor",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-examples-1-items-1-ref-n-gen2-ind-shoes-g5": {
+        "file": "k7-ind-shoes-examples-1-items-1-ref-n-gen2-ind-shoes-g5",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Shoes stepping up onto a city curb",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-shoes-outputs-1-ref-n-guide-ind-shoes-m6-boot-detail": {
+        "file": "k7-ind-shoes-outputs-1-ref-n-guide-ind-shoes-m6-boot-detail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather Chelsea boot close-up",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-electronics-strip-3-n-gen2-tpl-film-g2": {
+        "file": "k7-ind-electronics-strip-3-n-gen2-tpl-film-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Headphones resting on a matte pedestal in side light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-electronics-strip-4-n-gen2-tpl-spark-ads-style-video-c1": {
+        "file": "k7-ind-electronics-strip-4-n-gen2-tpl-spark-ads-style-video-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Phone tripod set up on a bedroom desk, natural light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-electronics-strip-5-n-gen2-before-after-videos-c4": {
+        "file": "k7-ind-electronics-strip-5-n-gen2-before-after-videos-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tangled desk cables on one side and cables arranged neatly in a small organizer on the other.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-electronics-outputs-1-ref-n-gen2-change-background-g3": {
+        "file": "k7-ind-electronics-outputs-1-ref-n-gen2-change-background-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Light green phone case with one round camera opening among autumn leaves.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-electronics-case-plan-3-ref-n-gen2-ind-electronics-c4": {
+        "file": "k7-ind-electronics-case-plan-3-ref-n-gen2-ind-electronics-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Mechanical keyboard on a tidy desk",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-electronics-examples-0-items-1-ref-n-gen2-ind-electronics-g2": {
+        "file": "k7-ind-electronics-examples-0-items-1-ref-n-gen2-ind-electronics-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tablet stand holding a tablet on a desk",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-food-drinks-strip-2-n-gen2-tpl-pack-c2": {
+        "file": "k7-ind-food-drinks-strip-2-n-gen2-tpl-pack-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cereal box with abstract pattern artwork on a pantry shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-food-drinks-strip-3-n-gen2-tpl-drink-c3": {
+        "file": "k7-ind-food-drinks-strip-3-n-gen2-tpl-drink-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Kombucha bottle sweating on a picnic table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-food-drinks-strip-4-n-gen2-tpl-pack-c1": {
+        "file": "k7-ind-food-drinks-strip-4-n-gen2-tpl-pack-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tea tin with an abstract color-block design on a cafe shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-food-drinks-strip-5-n-gen2-tpl-pack-c3": {
+        "file": "k7-ind-food-drinks-strip-5-n-gen2-tpl-pack-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hot sauce bottle with a blank graphic label on a farmers market shelf.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-food-drinks-case-plan-2-ref-n-gen2-ind-food-drinks-c3": {
+        "file": "k7-ind-food-drinks-case-plan-2-ref-n-gen2-ind-food-drinks-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hot sauce dashed over street tacos",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-food-drinks-examples-0-items-1-ref-n-gen2-ind-food-drinks-g2": {
+        "file": "k7-ind-food-drinks-examples-0-items-1-ref-n-gen2-ind-food-drinks-g2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Snack bag packed in a lunch bag with fruit",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-food-drinks-examples-0-items-2-ref-n-gen2-ind-food-drinks-g3": {
+        "file": "k7-ind-food-drinks-examples-0-items-2-ref-n-gen2-ind-food-drinks-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pasta sauce jar beside a finished plate",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-strip-2-n-gen2-tpl-tryon-c1": {
+        "file": "k7-ind-fashion-clothing-strip-2-n-gen2-tpl-tryon-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Model wearing a denim jacket in a plain studio, full upper body.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-strip-3-n-gen2-tpl-tryon-c2": {
+        "file": "k7-ind-fashion-clothing-strip-3-n-gen2-tpl-tryon-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Model wearing a floral summer dress by a bright window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-strip-4-n-gen2-tpl-look-c1": {
+        "file": "k7-ind-fashion-clothing-strip-4-n-gen2-tpl-look-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Editorial lookbook frame of an autumn outfit on a cobblestone street.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-strip-5-n-gen2-image-to-video-g3": {
+        "file": "k7-ind-fashion-clothing-strip-5-n-gen2-image-to-video-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Folded linen shirt on a bed beside an open window with a light breeze.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-picker-cards-0-ref-n-gen2-model-photos-c1": {
+        "file": "k7-ind-fashion-clothing-picker-cards-0-ref-n-gen2-model-photos-c1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing a camel wool coat on a city sidewalk, full body.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-picker-cards-1-ref-n-gen2-tpl-tryon-c4": {
+        "file": "k7-ind-fashion-clothing-picker-cards-1-ref-n-gen2-tpl-tryon-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Model wearing tailored trousers, full length, neutral studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-picker-cards-4-ref-n-gen2-tpl-look-c3": {
+        "file": "k7-ind-fashion-clothing-picker-cards-4-ref-n-gen2-tpl-look-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Streetwear look against a concrete wall, editorial framing.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-picker-cards-5-ref-n-gen2-tpl-look-c4": {
+        "file": "k7-ind-fashion-clothing-picker-cards-5-ref-n-gen2-tpl-look-c4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Evening dress lookbook shot on a stone staircase.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-picker-cards-7-ref-n-gen2-occ-sale-discount-c3": {
+        "file": "k7-ind-fashion-clothing-picker-cards-7-ref-n-gen2-occ-sale-discount-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pastel floral dresses hang on wooden hangers before a bright window beside a leafy plant.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-uses-1-ref-n-gen2-tpl-outfit-c3": {
+        "file": "k7-ind-fashion-clothing-uses-1-ref-n-gen2-tpl-outfit-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Linen suit shown head to toe on a sunny terrace.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-after-ref-n-gen2-tpl-look-c2": {
+        "file": "k7-ind-fashion-clothing-after-ref-n-gen2-tpl-look-c2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Minimal linen two-piece set on a model in a sunlit studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-strip-0-n-hoodie-pack": {
+        "file": "k7-ind-fashion-clothing-strip-0-n-hoodie-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Folded neutral hoodies stacked on a white bed.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-steps-source-n-hoodie-pack": {
+        "file": "k7-ind-fashion-clothing-steps-source-n-hoodie-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blue hooded sweatshirt and matching pants arranged on a white bed.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-jewelry-accessories-strip-2-n-gen2-tpl-jewel-28": {
+        "file": "k7-ind-jewelry-accessories-strip-2-n-gen2-tpl-jewel-28",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Silver pendant necklace worn on a linen neckline.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-jewelry-accessories-strip-4-n-gen2-tpl-jewel-72": {
+        "file": "k7-ind-jewelry-accessories-strip-4-n-gen2-tpl-jewel-72",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pearl earrings on a model shown in profile.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-jewelry-accessories-picker-cards-3-ref-n-gen2-image-to-video-g1": {
+        "file": "k7-ind-jewelry-accessories-picker-cards-3-ref-n-gen2-image-to-video-g1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close-up of a wristwatch dial with a narrow highlight across the glass on a dark background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-jewelry-accessories-picker-cards-5-ref-n-gen2-unboxing-videos-c3": {
+        "file": "k7-ind-jewelry-accessories-picker-cards-5-ref-n-gen2-unboxing-videos-c3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands opening a matte black watch box on a walnut desk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-jewelry-accessories-uses-0-ref-n-gen2-tpl-jewel-70": {
+        "file": "k7-ind-jewelry-accessories-uses-0-ref-n-gen2-tpl-jewel-70",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold ring on a hand holding a coffee cup.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-jewelry-accessories-uses-1-ref-n-gen2-tpl-jewel-71": {
+        "file": "k7-ind-jewelry-accessories-uses-1-ref-n-gen2-tpl-jewel-71",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Silver bracelet stacked on a wrist in daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-jewelry-accessories-examples-0-items-1-ref-n-gen2-ind-jewelry-accessories-g3": {
+        "file": "k7-ind-jewelry-accessories-examples-0-items-1-ref-n-gen2-ind-jewelry-accessories-g3",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Drop earrings worn in soft window light",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-picker-cards-0-cork-block": {
+        "file": "k7-ind-health-wellness-picker-cards-0-cork-block",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Natural cork yoga block with crisp grain and clean rectangular edges.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-health-wellness-input-1-good-block": {
+        "file": "k7-ind-health-wellness-input-1-good-block",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cork yoga block resting fully in view on a teal yoga mat.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-electronics-input-0-good-speaker-ports": {
+        "file": "k7-ind-electronics-input-0-good-speaker-ports",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact black portable speaker turned to show its rear ports and controls.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "k7-ind-fashion-clothing-card-life-linen-outfit": {
+        "file": "k7-ind-fashion-clothing-card-life-linen-outfit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult wearing a linen overshirt and navy trousers on a city walk.",
         "variants": [
           640,
           1280

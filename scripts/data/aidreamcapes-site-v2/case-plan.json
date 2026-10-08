@@ -836,14 +836,14 @@
     ],
     "ind-beauty-skincare": [
       {
-        "ref": "beauty-routine",
+        "ref": "k7-ind-beauty-skincare-case-serum-dropper",
         "product": "face serum",
         "title": "Amber serum dropped onto fingertips"
       },
       {
-        "ref": "n:gen2:ind-beauty-skincare-c2",
+        "ref": "n:guide:k7-ind-beauty-skincare-case-plan-1-ref-n-gen2-ind-beauty-skincare-c2",
         "product": "clay mask",
-        "title": "Clay mask jar open on a folded towel"
+        "title": "A calming clay mask reset in a bright bathroom"
       },
       {
         "ref": "n:gen2:ind-beauty-skincare-c3",
@@ -895,9 +895,9 @@
         "title": "White court sneaker in a clean side profile"
       },
       {
-        "ref": "n:gen2:ind-shoes-c4",
+        "ref": "n:guide:k7-ind-shoes-case-plan-3-ref-n-gen2-ind-shoes-c4",
         "product": "suede loafers",
-        "title": "Suede loafers on a herringbone floor"
+        "title": "Suede loafers with a textured floor for scale"
       }
     ],
     "ind-jewelry-accessories": [
@@ -939,16 +939,16 @@
         "title": "Smart speaker on a kitchen shelf"
       },
       {
-        "ref": "n:gen2:ind-electronics-c4",
+        "ref": "n:guide:k7-ind-electronics-case-plan-3-ref-n-gen2-ind-electronics-c4",
         "product": "mechanical keyboard",
-        "title": "Mechanical keyboard on a tidy desk"
+        "title": "A compact keyboard in a focused work setup"
       }
     ],
     "ind-health-wellness": [
       {
-        "ref": "n:gen2:ind-health-wellness-6",
+        "ref": "n:guide:k7-ind-health-wellness-case-plan-0-ref-n-gen2-ind-health-wellness-6",
         "product": "yoga mat",
-        "title": "Yoga mat unrolled in a sunny living room"
+        "title": "Set up a yoga mat in a bright home workout space"
       },
       {
         "ref": "n:gen2:ind-health-wellness-21",
@@ -978,9 +978,9 @@
         "title": "Berry granola jar on a breakfast table"
       },
       {
-        "ref": "n:gen2:ind-food-drinks-c3",
+        "ref": "n:guide:k7-ind-food-drinks-case-plan-2-ref-n-gen2-ind-food-drinks-c3",
         "product": "hot sauce",
-        "title": "Hot sauce dashed over street tacos"
+        "title": "A spicy finishing touch for a taco plate"
       },
       {
         "ref": "n:gen2:ind-food-drinks-c4",
@@ -990,22 +990,22 @@
     ],
     "ind-home-living": [
       {
-        "ref": "home-organization",
+        "ref": "k7-ind-home-living-case-drawer-divider",
         "product": "drawer dividers",
         "title": "Drawer dividers bringing order to a kitchen drawer"
       },
       {
-        "ref": "n:gen2:ind-home-living-19",
+        "ref": "n:guide:k7-ind-home-living-case-desk-lamp",
         "product": "oak desk lamp",
         "title": "Oak desk lamp lit in a reading nook"
       },
       {
-        "ref": "n:gen2:ind-home-living-c3",
+        "ref": "n:guide:k7-ind-home-living-case-linen-bed",
         "product": "linen bedding",
         "title": "Linen bedding on a freshly made bed"
       },
       {
-        "ref": "n:gen2:ind-home-living-c4",
+        "ref": "n:guide:k7-ind-home-living-case-wall-shelf",
         "product": "wall shelf",
         "title": "Wall shelf styled with plants and books"
       }

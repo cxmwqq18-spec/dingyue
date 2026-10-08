@@ -187,14 +187,14 @@
             "product": "iced tea can"
           },
           {
-            "ref": "n:gen2:ind-food-drinks-g2",
-            "title": "Snack bag packed in a lunch bag with fruit",
+            "ref": "n:guide:k7-ind-food-drinks-examples-0-items-1-ref-n-gen2-ind-food-drinks-g2",
+            "title": "A ready-to-go snack beside fresh fruit",
             "kind": "photo",
             "product": "snack bag"
           },
           {
-            "ref": "n:gen2:ind-food-drinks-g3",
-            "title": "Pasta sauce jar beside a finished plate",
+            "ref": "n:guide:k7-ind-food-drinks-examples-0-items-2-ref-n-gen2-ind-food-drinks-g3",
+            "title": "Pasta sauce set out for a weeknight dinner",
             "kind": "photo",
             "product": "pasta sauce jar"
           }
@@ -222,15 +222,15 @@
     "overview": "Food and drink imagery should show the package clearly before it shows the serving idea. A single pour, opening, or plating moment gives shoppers useful context without obscuring the product.",
     "strip": [
       "n:guide:ind-food-drinks-m2-source",
-      "f:food-video-t06",
-      "n:gen2:tpl-pack-c2",
-      "n:gen2:tpl-drink-c3",
-      "n:gen2:tpl-pack-c1",
-      "n:gen2:tpl-pack-c3"
+      "f:k7-ind-food-drinks-strip-1-f-food-video-t06",
+      "n:guide:k7-ind-food-drinks-strip-2-n-gen2-tpl-pack-c2",
+      "n:guide:k7-ind-food-drinks-strip-3-n-gen2-tpl-drink-c3",
+      "n:guide:k7-ind-food-drinks-strip-4-n-gen2-tpl-pack-c1",
+      "n:guide:k7-ind-food-drinks-strip-5-n-gen2-tpl-pack-c3"
     ],
     "steps": {
       "source": "n:guide:ind-food-drinks-m2-source",
-      "result": "f:food-video-t06",
+      "result": "f:k7-ind-food-drinks-steps-result-f-food-video-t06",
       "mode": "video",
       "length": 10,
       "prompt": "Pour this golden citrus drink over ice and finish with the bottle beside an orange slice.",
@@ -286,7 +286,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-pack-g2",
+          "ref": "f:k7-ind-food-drinks-picker-2-coffee-pouch",
           "label": "Coffee pouch on a grocery shelf",
           "prompt": "Place the coffee pouch on a grocery shelf with its front panel easy to see.",
           "chips": [
@@ -304,7 +304,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-box-c2",
+          "ref": "f:k7-ind-food-drinks-picker-cards-4-ref-n-gen2-tpl-box-c2",
           "label": "Coffee starter kit on a table",
           "prompt": "Arrange the coffee bag, hand grinder, and mug as one simple starter set.",
           "chips": [
@@ -313,7 +313,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:image-to-video-c2",
+          "ref": "f:k7-ind-food-drinks-picker-cards-5-ref-n-gen2-image-to-video-c2",
           "label": "Coffee dripper on a sunny counter",
           "prompt": "Let a little steam rise beside the ceramic dripper in morning light.",
           "chips": [
@@ -351,7 +351,7 @@
       },
       {
         "frame": "post",
-        "ref": "n:gen2:url-to-video-g1",
+        "ref": "f:k7-ind-food-drinks-uses-1-ref-n-gen2-url-to-video-g1",
         "h": "Show the bottle with fresh ingredients",
         "d": "Fresh herbs and olive oil make the cooking use clear in one frame."
       }
@@ -372,13 +372,13 @@
     ],
     "outputs": [
       {
-        "ref": "f:product-video-t09",
+        "ref": "f:k7-ind-food-drinks-outputs-0-ref-f-product-video-t09",
         "frame": "16:9",
         "label": "Espresso poured beside coffee beans",
         "length": 6
       },
       {
-        "ref": "f:food-video-t13",
+        "ref": "f:k7-ind-food-drinks-outputs-1-ref-f-food-video-t13",
         "frame": "16:9",
         "label": "Citrus drink bottle beside a glass",
         "length": 10

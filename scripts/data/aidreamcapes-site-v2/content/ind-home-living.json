@@ -181,19 +181,19 @@
         "label": "In the room",
         "items": [
           {
-            "ref": "n:gen2:ind-home-living-g1",
+            "ref": "n:guide:k7-ind-home-living-example-storage-boxes",
             "title": "Fabric storage boxes on a tidy shelf",
             "kind": "photo",
             "product": "fabric storage boxes"
           },
           {
-            "ref": "n:gen2:ind-home-living-g2",
+            "ref": "n:guide:k7-ind-home-living-example-planter-sofa",
             "title": "Ceramic planter beside a linen sofa",
             "kind": "photo",
             "product": "ceramic planter"
           },
           {
-            "ref": "n:gen2:ind-home-living-g3",
+            "ref": "n:guide:k7-ind-home-living-example-side-table",
             "title": "Round side table beside an armchair",
             "kind": "photo",
             "product": "round side table"
@@ -227,16 +227,16 @@
   "visual": {
     "overview": "Home shoppers judge scale, materials, and how a piece fits the room. Start from a full product photo, then show one useful action such as switching on, opening, or placing the item.",
     "strip": [
-      "n:guide:ind-home-living-m2-source",
-      "f:promo-launch-sale",
-      "n:gen2:tpl-home-c1",
-      "n:gen2:tpl-sale-c4",
-      "n:gen2:tpl-home-c3",
-      "n:gen2:tpl-home-c4"
+      "n:guide:k7-ind-home-living-strip-00-room-lamp",
+      "f:k7-ind-home-living-strip-01-lamp-switch",
+      "n:guide:k7-ind-home-living-strip-02-closet-rail",
+      "n:guide:k7-ind-home-living-strip-03-folded-blankets",
+      "n:guide:k7-ind-home-living-strip-04-storage-bins",
+      "n:guide:k7-ind-home-living-strip-05-entry-shoe-rack"
     ],
     "steps": {
-      "source": "n:guide:ind-home-living-m2-source",
-      "result": "f:promo-launch-sale",
+      "source": "n:guide:k7-ind-home-living-step-source-lamp",
+      "result": "f:k7-ind-home-living-step-result-lamp-glow",
       "mode": "video",
       "length": 10,
       "prompt": "Switch on this white table lamp beside a book, keeping its shade, stem, and base visible.",
@@ -292,7 +292,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:tpl-howto-c4",
+          "ref": "f:k7-ind-home-living-picker-02-planter-water",
           "label": "Watering a self-watering planter",
           "prompt": "Pour water into the planter reservoir before setting it by a window.",
           "chips": [
@@ -310,7 +310,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:lifestyle-photos-c1",
+          "ref": "f:k7-ind-home-living-picker-04-candle-bedside",
           "label": "Candle on a bedside table",
           "prompt": "Set the candle on a bedside table as evening light fades.",
           "chips": [
@@ -337,7 +337,7 @@
           "kind": "video"
         },
         {
-          "ref": "n:gen2:before-after-videos-c1",
+          "ref": "f:k7-ind-home-living-picker-07-cushion-clean",
           "label": "Sofa cushion cleaned with a roller",
           "prompt": "Show the lint roller moving across the sofa cushion in one clear pass.",
           "chips": [
@@ -351,13 +351,13 @@
     "uses": [
       {
         "frame": "listing",
-        "ref": "n:gen2:photo-hub-c2",
+        "ref": "f:k7-ind-home-living-uses-00-linen-pillow",
         "h": "Show a soft furnishing in its room",
         "d": "A linen pillow on a sofa gives shoppers a sense of color and texture."
       },
       {
         "frame": "post",
-        "ref": "n:gen2:tpl-home-c2",
+        "ref": "f:k7-ind-home-living-uses-01-pantry-jars",
         "h": "Show matching jars in a kitchen post",
         "d": "A neat pantry shelf shows the glass jars together in a home setting."
       }
@@ -370,15 +370,15 @@
         "bad_label": "The pillow and chair soften into blur"
       },
       {
-        "good": "n:gen2:plat-shopify-c1",
-        "bad": "n:guide:ind-home-living-m5-cropped",
+        "good": "n:guide:k7-ind-home-living-input-01-good-planter",
+        "bad": "n:guide:k7-ind-home-living-input-01-bad-planter-v2",
         "good_label": "The planter shape and leaves stay crisp",
         "bad_label": "The planter is cut off at the frame edge"
       }
     ],
     "outputs": [
       {
-        "ref": "n:gen2:video-hub-g5",
+        "ref": "f:k7-ind-home-living-output-candle",
         "frame": "16:9",
         "label": "Candle in warm evening light",
         "length": 6
