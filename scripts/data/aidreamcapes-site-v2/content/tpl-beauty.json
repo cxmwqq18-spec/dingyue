@@ -19,16 +19,16 @@
   "tip": "Use a photo where the bottle shape, cap, and color are easy to see, and describe the action, such as \"lifts the dropper and adds two drops to her fingertips.\"",
   "steps": [
     {
-      "t": "Upload your bottle or jar",
-      "d": "A sharp shot of the bottle by itself helps the video hold on to its color, cap, and shape."
+      "t": "Upload one product photo",
+      "d": "Show the full bottle or jar with its cap, pump, and package color easy to see."
     },
     {
-      "t": "Describe the routine moment",
-      "d": "Set the person, the light, and the gesture, like \"woman in a robe, morning light, applies serum.\" Choose 6, 10, 15, or 30 seconds."
+      "t": "Describe one routine moment",
+      "d": "Name the counter, light, and a single action such as lifting a dropper or pressing a pump."
     },
     {
-      "t": "Finish in TikTok or CapCut",
-      "d": "Add a track, your product name, and any on-screen words yourself before the clip goes live."
+      "t": "Add product wording after download",
+      "d": "Download the clip, then type the shade name or usage line as editable text."
     }
   ],
   "ideas": [
@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 \u00b7 TikTok & Reels"
+        "9:16 · TikTok & Reels"
       ],
       [
         "Length",
@@ -60,16 +60,16 @@
   },
   "faq": [
     {
-      "q": "Can the video show before-and-after skin results?",
-      "a": "No. This template shows how a product is used, not what it does to skin. Keep any words you add the same way: describe the product and the routine, and leave out promises about results."
+      "q": "What makes a good skincare video source photo?",
+      "a": "Use a clear image with the full package visible and little glare on the bottle or cap."
     },
     {
-      "q": "Does this work for makeup too?",
-      "a": "Yes. Lipsticks, compacts, palettes, and brushes all work. Describe one moment, like \"swipes lipstick in a hand mirror,\" and keep each clip to a single product."
+      "q": "Can the clip show a routine without a person’s face?",
+      "a": "Yes. A hand can lift a dropper, press a pump, or place the product on a shelf."
     },
     {
-      "q": "What product photo works best for a beauty video ad?",
-      "a": "Use a sharp, front-facing photo with the full package visible and little glare. Keep claims out of the prompt; add only verified product wording later in your editor."
+      "q": "Can I add a shade or ingredient name?",
+      "a": "Add your own product claims as editable text in your video editor after download."
     }
   ],
   "overview": [
@@ -172,32 +172,227 @@
     ]
   },
   "examples": {
-    "h2": "More beauty routine scenes",
-    "lead": "Texture and application moments that show how a product is used, step by step.",
+    "h2": "More skincare routine photos",
+    "lead": "A travel kit and an open mask jar show two ways to present daily skincare.",
     "groups": [
       {
-        "label": "Routine moments",
+        "label": "Product photo examples",
         "items": [
           {
-            "ref": "n:gen2:tpl-beauty-g1",
-            "title": "Cream pumped onto the back of a hand",
-            "kind": "scene",
-            "product": "pump cream"
+            "ref": "n:guide:tpl-beauty-reuse-travel-set",
+            "title": "Skincare set packed into a travel pouch",
+            "kind": "photo",
+            "product": "skincare set"
           },
           {
-            "ref": "n:gen2:tpl-beauty-g2",
-            "title": "Cleansing balm scooped with a small spatula",
-            "kind": "scene",
-            "product": "cleansing balm"
-          },
-          {
-            "ref": "n:gen2:tpl-beauty-g3",
-            "title": "Hair oil worked through the ends of long hair",
-            "kind": "scene",
-            "product": "hair oil"
+            "ref": "n:gen2:ind-beauty-skincare-c2",
+            "title": "Open clay-mask jar beside folded towels",
+            "kind": "photo",
+            "product": "clay mask"
           }
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A skincare video can show a bottle in one clear routine moment. Keep the package visible, then add product wording in your editor after download.",
+    "strip": [
+      "f:beauty-routine",
+      "n:guide:tpl-beauty-round4-m1-cleanser-tube",
+      "g:story-ad-vertical/example-06",
+      "n:guide:tpl-beauty-round4-cream-jar",
+      "n:guide:tpl-beauty-round4-m1-cream-jar",
+      "n:guide:tpl-beauty-round4-open-travel-kit"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-beauty-m2-source",
+      "result": "n:guide:tpl-beauty-m2-result",
+      "mode": "video",
+      "length": 10,
+      "prompt": "Show this amber serum bottle on a bathroom counter as a hand lifts the dropper above it in a bright morning routine.",
+      "options": [
+        [
+          "Size",
+          "9:16 · TikTok & Reels"
+        ],
+        [
+          "Length",
+          "10 seconds"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a skincare routine scene",
+      "lead": "Pick a setting that keeps the package easy to see.",
+      "chips": [
+        {
+          "id": "routine",
+          "label": "Daily routine"
+        },
+        {
+          "id": "texture",
+          "label": "Cream and texture"
+        },
+        {
+          "id": "travel",
+          "label": "Travel kit"
+        },
+        {
+          "id": "shelf",
+          "label": "Bathroom shelf"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:tpl-beauty-round4-sunscreen-tube",
+          "label": "Plain sunscreen tube on stone",
+          "chips": [
+            "routine"
+          ],
+          "prompt": "Set the plain sunscreen tube upright on pale stone and keep its full shape visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-beauty-reuse-vanity-set",
+          "label": "Skincare set arranged on a vanity",
+          "chips": [
+            "routine"
+          ],
+          "prompt": "Arrange the plain tube, amber dropper, and cream jar beside the mirror on a bright vanity.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-beauty-reuse-texture",
+          "label": "Serum and cream swatches on glass",
+          "chips": [
+            "texture"
+          ],
+          "prompt": "Show a neat serum swatch and a small cream swatch on a clear glass surface.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-beauty-g1",
+          "label": "Cream texture on the hand",
+          "chips": [
+            "texture"
+          ],
+          "prompt": "Show a small cream swatch on the back of a hand.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-beauty-reuse-travel-kit",
+          "label": "Skincare set in open pouch",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Arrange the skincare tube, amber serum, and cream jar inside the open pouch.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:plat-youtube-shorts-c2",
+          "label": "Electric toothbrush on bathroom counter",
+          "chips": [
+            "travel"
+          ],
+          "prompt": "Keep the electric toothbrush visible on a clean bathroom counter in a vertical frame.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-beauty-round4-serum-pump",
+          "label": "Amber serum pump",
+          "chips": [
+            "shelf"
+          ],
+          "prompt": "Show the plain amber serum pump with its full silhouette visible on a light stone counter.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:commercial-lighting/example-05",
+          "label": "Cool light with a blue-gray backdrop",
+          "chips": [
+            "shelf"
+          ],
+          "prompt": "Use the cool blue-gray light as a backdrop for the serum bottle, keeping its shape clear.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a skincare video"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:guide:tpl-beauty-round4-texture-swatch",
+        "h": "Show serum and cream textures in a square post",
+        "d": "Use a clean swatch image to show the serum and cream textures beside the product details."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:gen2:tpl-beauty-g2",
+        "h": "Pair cleansing balm with a product page",
+        "d": "Show the balm texture beside its clear package photo and the exact product details."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:tpl-beauty-reuse-cream-tube",
+        "bad": "n:guide:tpl-beauty-m5-blur",
+        "good_label": "Hand cream tube stays in sharp focus",
+        "bad_label": "Hand cream tube loses focus"
+      },
+      {
+        "good": "g:bundle-sets/example-07",
+        "bad": "n:guide:tpl-beauty-m5-crop",
+        "good_label": "Skincare set stays complete",
+        "bad_label": "Skincare items are cut off"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "f:tpl-beauty-r4-opening",
+        "frame": "9:16",
+        "length": 10,
+        "label": "10-second routine opening frame"
+      },
+      {
+        "ref": "f:tpl-beauty-r4-drop",
+        "frame": "9:16",
+        "length": 10,
+        "label": "10-second dropper close-up frame"
+      }
+    ],
+    "after": {
+      "ref": "f:tpl-beauty-r4-after",
+      "zones": [
+        "Product name",
+        "Usage line"
+      ],
+      "items": [
+        "Add the product name and routine note as editable text in your video editor.",
+        "Choose licensed music or a voice track there before publishing."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make skincare video ads from one product photo"
+      },
+      "m3": {
+        "h2": "Choose a beauty routine scene for skincare"
+      },
+      "m4": {
+        "h2": "Use beauty videos in feeds and product pages"
+      },
+      "m5": {
+        "h2": "Start with a clear skincare package photo"
+      },
+      "m6": {
+        "h2": "Vertical skincare video sample frames"
+      },
+      "m7": {
+        "h2": "Add product wording after download"
+      },
+      "faq": {
+        "h2": "Questions about skincare video ads"
+      }
+    }
   }
 }

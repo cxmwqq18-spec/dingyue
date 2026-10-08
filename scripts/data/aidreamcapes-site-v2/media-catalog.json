@@ -1669,6 +1669,132 @@
       "variants": [
         640
       ]
+    },
+    "tpl-home-r4-strip-01": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "Hands organize gray drawer dividers and utensils in a vertical home organization video frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-home-r4-strip-02": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "Hands organize gray drawer dividers and utensils in a vertical home organization video frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-home-r4-m2": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "Hands organize gray drawer dividers and utensils in a vertical home organization video frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-home-r4-m6-before": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "Hands organize gray drawer dividers and utensils in a vertical home organization video frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-home-r4-m6-after": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "Hands organize gray drawer dividers and utensils in a vertical home organization video frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-home-r4-m4": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "Hands organize gray drawer dividers and utensils in a vertical home organization video frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-drink-r4-m2": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "Clear citrus drink bottle on a bright counter in a vertical video frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-drink-r4-m6": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "Citrus drink pours from a clear bottle into a glass in a vertical video frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-bf-r4-m4": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "Hands inspect the hinge of a black folding bicycle in a vertical sale video frame.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-beauty-r4-opening": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "A real vertical frame from the local beauty routine clip showing an amber serum bottle and hand.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-beauty-r4-drop": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "A real vertical frame from the local beauty routine clip showing a serum dropper over its bottle.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-beauty-r4-after": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "A real vertical frame from the local beauty routine clip showing a skincare application.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-drink-r4-strip": {
+      "w": 1280,
+      "h": 720,
+      "alt": "A real landscape frame from the local beverage clip showing citrus drink poured over ice.",
+      "variants": [
+        640,
+        1280
+      ]
+    },
+    "tpl-drink-r4-after": {
+      "w": 1080,
+      "h": 1920,
+      "alt": "A real vertical frame from the local beverage clip showing a citrus drink pour into a glass.",
+      "variants": [
+        640,
+        1280
+      ]
     }
   },
   "gen": {
@@ -11979,6 +12105,1345 @@
         "w": 1024,
         "h": 1024,
         "alt": "Plain sage-green silicone phone case shown from the back with exactly one vertical oval camera opening and no branding.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-m2-source": {
+        "file": "gen2guide-tpl-beauty-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber glass serum bottle with a black dropper on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-m2-result": {
+        "file": "gen2guide-tpl-beauty-m2-result",
+        "w": 864,
+        "h": 1536,
+        "alt": "Amber serum bottle on a bathroom counter as a hand lifts the dropper.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-m6-opening": {
+        "file": "gen2guide-tpl-beauty-m6-opening",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Amber serum bottle on a bathroom counter as a hand reaches toward its cap.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-m6-drop": {
+        "file": "gen2guide-tpl-beauty-m6-drop",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Hand holds a dropper above an open palm beside an amber serum bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-bf-m2-source": {
+        "file": "gen2guide-tpl-bf-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black folding electric bicycle in a clean studio product photo.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-bf-m6-vertical": {
+        "file": "gen2guide-tpl-bf-m6-vertical",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Black folding electric bicycle fully open in a bright garage, vertical composition.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-bf-m6-square": {
+        "file": "gen2guide-tpl-bf-m6-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black folding electric bicycle under warm garage lights in a square composition.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-m2-result": {
+        "file": "gen2guide-tpl-color-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Single soap dispenser with warm terracotta glaze against pure white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-drink-m2-source": {
+        "file": "gen2guide-tpl-drink-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear glass bottle of golden citrus sparkling drink on pure white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-drink-m2-result": {
+        "file": "gen2guide-tpl-drink-m2-result",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Golden citrus drink bottle and iced tumbler on a bright kitchen counter, vertical frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-drink-m6-pour": {
+        "file": "gen2guide-tpl-drink-m6-pour",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Golden citrus drink pours from a clear bottle into an ice-filled tumbler.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-drink-m6-glass": {
+        "file": "gen2guide-tpl-drink-m6-glass",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Iced citrus drink glass in foreground with its clear golden bottle behind.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-m2-source": {
+        "file": "gen2guide-tpl-jewel-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Delicate silver necklace laid on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-home-m2-result": {
+        "file": "gen2guide-tpl-home-m2-result",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Gray drawer organizers inside a wooden kitchen drawer, vertical video sample frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-home-m6-before": {
+        "file": "gen2guide-tpl-home-m6-before",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Gray organizer trays beside mixed utensils in a kitchen drawer, vertical frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-home-m6-after": {
+        "file": "gen2guide-tpl-home-m6-after",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Gray organizer trays with utensils arranged in a wooden kitchen drawer.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-light-m2-source": {
+        "file": "gen2guide-tpl-light-m2-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Amber glass bottle with a dark cap on a pure white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-angle-m5-blur": {
+        "file": "gen2guide-tpl-angle-m5-blur-r4",
+        "w": 640,
+        "h": 360,
+        "alt": "The same matte ceramic travel mug softened by heavy blur so its rim and handle lose definition.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-angle-m5-crop": {
+        "file": "gen2guide-tpl-angle-m5-crop-r4",
+        "w": 640,
+        "h": 640,
+        "alt": "The same cork yoga block cropped tightly through its left edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-m5-blur": {
+        "file": "gen2guide-tpl-beauty-m5-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand cream tube softly blurred against a pastel background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-m5-crop": {
+        "file": "gen2guide-tpl-beauty-m5-crop",
+        "w": 1024,
+        "h": 576,
+        "alt": "Skincare bottles and jars with part of the set cut off at the left edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-bf-m5-blur": {
+        "file": "gen2guide-tpl-bf-m5-blur",
+        "w": 1024,
+        "h": 576,
+        "alt": "Ceramic travel mug with its rim and glaze softly out of focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-bf-m5-crop": {
+        "file": "gen2guide-tpl-bf-m5-crop",
+        "w": 1024,
+        "h": 1821,
+        "alt": "Travel mug clipped along the left edge in a hand-held scale view.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-m5-blur": {
+        "file": "gen2guide-tpl-color-m5-blur-r4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same muted teal soap dispenser softened out of focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-m5-crop": {
+        "file": "gen2guide-tpl-color-m5-crop-r4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same soft ochre soap dispenser tightly cropped at the frame edges.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-reuse-warm": {
+        "file": "gen2guide-tpl-color-reuse-warm",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three identical ceramic soap dispensers in terracotta, sage green, and cream.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-detail-reuse-wallet": {
+        "file": "gen2guide-tpl-detail-reuse-wallet",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Brown leather bifold wallet with visible edge stitching on a white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-detail-m5-blur": {
+        "file": "gen2guide-tpl-detail-m5-blur",
+        "w": 1024,
+        "h": 576,
+        "alt": "Blue jacket fabric with its weave softened out of focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-detail-m5-crop": {
+        "file": "gen2guide-tpl-detail-m5-crop",
+        "w": 1024,
+        "h": 576,
+        "alt": "Ribbed ceramic vase cut off by the left edge in a bright room.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-drink-m5-blur": {
+        "file": "gen2guide-tpl-drink-m5-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Steel water bottle softly blurred against a pure white background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-drink-m5-crop": {
+        "file": "gen2guide-tpl-drink-m5-crop-r4",
+        "w": 768,
+        "h": 1152,
+        "alt": "Blank cream iced coffee can enlarged until its rim and base are cut off by the frame.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-m5-blur": {
+        "file": "gen2guide-tpl-head-m5-blur",
+        "w": 1280,
+        "h": 720,
+        "alt": "Professional headshot with facial features softened by visible blur.",
+        "variants": [
+          640
+        ]
+      },
+      "tpl-head-m5-crop": {
+        "file": "gen2guide-tpl-head-m5-crop",
+        "w": 1280,
+        "h": 720,
+        "alt": "The same approved portrait framed too tightly across the face and shoulders.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-home-m5-blur": {
+        "file": "gen2guide-tpl-home-m5-blur",
+        "w": 1024,
+        "h": 1821,
+        "alt": "Clear refrigerator storage bins softly out of focus.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-home-m5-crop": {
+        "file": "gen2guide-tpl-home-m5-crop-r4",
+        "w": 1280,
+        "h": 720,
+        "alt": "The same pantry shelf enlarged until jars at both edges are clipped.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-m5-blur": {
+        "file": "gen2guide-tpl-jewel-m5-blur",
+        "w": 1280,
+        "h": 1280,
+        "alt": "Single gold teardrop pendant softened out of focus on a pale neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-m5-crop": {
+        "file": "gen2guide-tpl-jewel-m5-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same silver ear cuff enlarged until the model and ear are cropped at the frame edges.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-light-m5-blur": {
+        "file": "gen2guide-tpl-light-m5-blur",
+        "w": 1280,
+        "h": 720,
+        "alt": "Ceramic travel mug softly out of focus on a clean studio surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-light-m5-crop": {
+        "file": "gen2guide-tpl-light-m5-crop",
+        "w": 1024,
+        "h": 576,
+        "alt": "Travel mug cropped tightly with its left edge cut off.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-m5-blur": {
+        "file": "gen2guide-tpl-look-m5-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Model in a trench coat softened out of focus beneath a stone archway.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-m5-crop": {
+        "file": "gen2guide-tpl-look-m5-crop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Wide-leg suit cropped tightly with part of the outfit cut off at the edge.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-angle-m2-back": {
+        "file": "gen2guide-tpl-angle-m2-back-r4",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Rear view of the same compact rectangular black portable speaker showing its charging and audio ports.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-detail-m2-result": {
+        "file": "gen2guide-tpl-detail-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Close macro view of brown leather wallet stitching and grain.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-m4-team-row": {
+        "file": "gen2guide-tpl-head-m4-team-row",
+        "w": 1024,
+        "h": 576,
+        "alt": "Four distinct professionals in head-and-shoulders portraits against neutral office backgrounds.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-m2-result": {
+        "file": "gen2guide-tpl-look-m2-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Model wearing a light beige tailored blazer and trousers in a neutral studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-case-plan-01": {
+        "file": "gen2guide-tpl-head-case-plan-01",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Founder portrait with silver curls against a warm gray plaster background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-case-plan-02": {
+        "file": "gen2guide-tpl-head-case-plan-02",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Designer portrait with short black hair against an olive plaster wall.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-case-plan-03": {
+        "file": "gen2guide-tpl-head-case-plan-03",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Consultant portrait beside a pale blue-gray office window.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-case-plan-04": {
+        "file": "gen2guide-tpl-head-case-plan-04",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Operations lead portrait in a softly lit wood workshop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-m3-office": {
+        "file": "gen2guide-tpl-head-m3-office",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Support lead with short curls in a quiet blue-gray office.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-m2-square": {
+        "file": "gen2guide-tpl-jewel-m2-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Silver teardrop pendant worn at the collarbone above an ivory linen neckline.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-m1-hoop": {
+        "file": "gen2guide-tpl-jewel-m1-hoop",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Single small gold hoop earring worn on an ear against a neutral background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-reuse-necklace": {
+        "file": "gen2guide-tpl-jewel-reuse-necklace",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Silver chain necklace with a small round pendant arranged on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-m5-reuse-blur": {
+        "file": "gen2guide-tpl-jewel-m5-reuse-blur",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Silver chain necklace and round pendant heavily softened by blur on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-reuse-travel-set": {
+        "file": "gen2guide-tpl-beauty-reuse-travel-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Skincare tube, amber dropper bottle, and cream jar arranged in an open travel pouch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-home-m3-pantry": {
+        "file": "gen2guide-tpl-home-m3-pantry",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Neatly arranged pantry shelves with clear jars and plain storage bins.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-home-m3-pantry-alt": {
+        "file": "gen2guide-tpl-home-m3-pantry-alt",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Organized pantry cabinet with glass jars and plain storage bins arranged on two shelves.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-home-m3-closet": {
+        "file": "gen2guide-tpl-home-m3-closet",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Organized wardrobe with grouped clothes, folded sweaters, bins, and aligned shoes.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-angle-reuse-speaker-reveal": {
+        "file": "gen2guide-tpl-angle-reuse-speaker-reveal",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Black woven portable speaker with a wrist strap revealed beneath a white linen cloth on a pale wood table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-reuse-slip-dress": {
+        "file": "gen2guide-tpl-look-reuse-slip-dress",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Adult model wearing a navy satin slip dress on a rooftop at golden hour, looking away from the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-bf-reuse-headset": {
+        "file": "gen2guide-tpl-bf-reuse-headset",
+        "w": 1536,
+        "h": 1024,
+        "alt": "Matte-black over-ear headset with a slim boom microphone on a dark desk beside a keyboard under cool blue accent light.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-reuse-jacket-hanger": {
+        "file": "gen2guide-tpl-look-reuse-jacket-hanger",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Medium-wash denim jacket hangs on a plain wooden hanger against an off-white wall.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-reuse-athletic-set": {
+        "file": "gen2guide-tpl-look-reuse-athletic-set",
+        "w": 1536,
+        "h": 1024,
+        "alt": "Adult model in a muted-sage matching athletic top and leggings in a bright studio, looking away from the camera.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-reuse-cream-tube": {
+        "file": "gen2guide-tpl-beauty-reuse-cream-tube",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White hand-cream tube with a pale-green cap standing on a blush and cream studio block.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-reuse-vanity-set": {
+        "file": "gen2guide-tpl-beauty-reuse-vanity-set",
+        "w": 1024,
+        "h": 1024,
+        "alt": "White tube, amber dropper bottle, and cream jar arranged on a bright bathroom vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-reuse-texture": {
+        "file": "gen2guide-tpl-beauty-reuse-texture",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear serum and white cream swatches on glass beside a plain dropper bottle.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-reuse-travel-kit": {
+        "file": "gen2guide-tpl-beauty-reuse-travel-kit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open canvas pouch with a skincare tube, amber dropper bottle, and cream jar arranged on pale stone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-drink-reuse-iced-can": {
+        "file": "gen2guide-tpl-drink-reuse-iced-can",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Blank cream iced coffee can centered on a red-and-cream picnic blanket in summer daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-round4-01": {
+        "file": "gen2guide-tpl-head-round4-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square headshot of an adult Black woman with short natural curls against a warm taupe studio backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-round4-02": {
+        "file": "gen2guide-tpl-head-round4-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square headshot of an adult South Asian man with salt-and-pepper hair against a pale blue-gray office wall.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-round4-03": {
+        "file": "gen2guide-tpl-head-round4-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square headshot of an adult East Asian woman with shoulder-length dark hair against an olive plaster backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-round4-04": {
+        "file": "gen2guide-tpl-head-round4-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square headshot of an adult white woman with a silver-blond bob against a charcoal studio background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-round4-05": {
+        "file": "gen2guide-tpl-head-round4-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square headshot of an adult Latino man with wavy dark hair in a brick-and-wood workspace.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-round4-06": {
+        "file": "gen2guide-tpl-head-round4-06",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square headshot of an adult Black man with a trimmed beard against a dusty blue wall.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-round4-07": {
+        "file": "gen2guide-tpl-head-round4-07",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square headshot of an adult Middle Eastern woman with dark curls against a pale blush studio backdrop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-round4-08": {
+        "file": "gen2guide-tpl-head-round4-08",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square headshot of an adult white man with wavy brown hair against an olive office wall.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-round4-09": {
+        "file": "gen2guide-tpl-head-round4-09",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square headshot of an adult South Asian woman with a dark bob against a pale gray-blue office background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-round4-01": {
+        "file": "gen2guide-tpl-color-round4-01",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded ceramic soap dispenser in warm terracotta glaze with a brushed metal pump on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-round4-02": {
+        "file": "gen2guide-tpl-color-round4-02",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded ceramic soap dispenser in deep cobalt blue glaze with a brushed metal pump on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-round4-03": {
+        "file": "gen2guide-tpl-color-round4-03",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded ceramic soap dispenser in deep forest green glaze with a brushed metal pump on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-round4-04": {
+        "file": "gen2guide-tpl-color-round4-04",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded ceramic soap dispenser in warm charcoal gray glaze with a brushed metal pump on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-round4-05": {
+        "file": "gen2guide-tpl-color-round4-05",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded ceramic soap dispenser in matte cream glaze with a brushed metal pump on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-round4-06": {
+        "file": "gen2guide-tpl-color-round4-06",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded ceramic soap dispenser in muted dusty rose glaze with a brushed metal pump on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-round4-07": {
+        "file": "gen2guide-tpl-color-round4-07",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded ceramic soap dispenser in muted teal glaze with a brushed metal pump on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-round4-08": {
+        "file": "gen2guide-tpl-color-round4-08",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded ceramic soap dispenser in soft ochre glaze with a brushed metal pump on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-round4-09": {
+        "file": "gen2guide-tpl-color-round4-09",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded ceramic soap dispenser in pale blue-gray glaze with a brushed metal pump on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-round4-10": {
+        "file": "gen2guide-tpl-color-round4-10",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded ceramic soap dispenser in muted plum glaze with a brushed metal pump on white.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-angle-m6-output-square": {
+        "file": "gen2guide-tpl-angle-m6-output-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square close view of both sides of an unbranded woven portable speaker with its controls and USB-C port visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-detail-m6-output-01-square": {
+        "file": "gen2guide-tpl-detail-m6-output-01-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square macro view of a brown leather wallet zipper and stitching.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-detail-m6-output-02-square": {
+        "file": "gen2guide-tpl-detail-m6-output-02-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square macro view of a brown leather wallet corner and edge finish.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-detail-after-square": {
+        "file": "gen2guide-tpl-detail-after-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square product photo of the same brown leather wallet, folded closed.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-m4-use-square": {
+        "file": "gen2guide-tpl-color-m4-use-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of insulated tumblers in several muted color options.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-m6-output-01-square": {
+        "file": "gen2guide-tpl-color-m6-output-01-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of soap dispensers in several muted color options.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-after-square": {
+        "file": "gen2guide-tpl-color-after-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of soap dispenser color options for a product listing.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-light-m6-output-01-square": {
+        "file": "gen2guide-tpl-light-m6-output-01-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of a matte cream ceramic travel mug with controlled highlights.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-light-m6-output-02-square": {
+        "file": "gen2guide-tpl-light-m6-output-02-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of a pendant lamp glowing above a dining table.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-m4-use-square": {
+        "file": "gen2guide-tpl-jewel-m4-use-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of a delicate necklace on a model at the neckline.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-m6-output-01-square": {
+        "file": "gen2guide-tpl-jewel-m6-output-01-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of a simple silver ring on a hand.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-m6-output-02-square": {
+        "file": "gen2guide-tpl-jewel-m6-output-02-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of a silver pendant necklace on a model.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-after-square": {
+        "file": "gen2guide-tpl-jewel-after-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of a simple gold necklace displayed against a neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-m4-use-square": {
+        "file": "gen2guide-tpl-look-m4-use-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of an adult model wearing a neutral jacket in a bright studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-m6-output-01-square": {
+        "file": "gen2guide-tpl-look-m6-output-01-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of an adult model wearing a light linen apron in a kitchen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-m6-output-02-square": {
+        "file": "gen2guide-tpl-look-m6-output-02-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of an adult model wearing a muted sage athletic set.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-after-square": {
+        "file": "gen2guide-tpl-look-after-square",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of an adult model in a light outfit, full upper body visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-angle-round4-speaker-controls": {
+        "file": "gen2guide-tpl-angle-round4-speaker-controls",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded black woven portable speaker showing its simple buttons, USB-C port and wrist strap on a pale tabletop.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-detail-round4-wallet-macro": {
+        "file": "gen2guide-tpl-detail-round4-wallet-macro",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square macro photo of unbranded brown leather wallet grain and edge stitching on a pale neutral background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-detail-round4-wallet-zipper": {
+        "file": "gen2guide-tpl-detail-round4-wallet-zipper",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square macro photo of an unbranded brown leather wallet zipper and brass pull on a pale neutral background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-round4-cream-jar": {
+        "file": "gen2guide-tpl-beauty-round4-cream-jar",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded open white cream jar on a light stone bathroom counter in soft daylight.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-round4-serum-pump": {
+        "file": "gen2guide-tpl-beauty-round4-serum-pump",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded amber skincare serum pump bottle on a light stone bathroom counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-head-round4-10": {
+        "file": "gen2guide-tpl-head-round4-10",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square professional headshot of an adult East Asian man in a charcoal sweater against a quiet office background.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-drink-round4-citrus-tea": {
+        "file": "gen2guide-tpl-drink-round4-citrus-tea",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded clear glass bottle of citrus iced tea beside a glass with ice and lemon.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-round4-hoop-earrings": {
+        "file": "gen2guide-tpl-jewel-round4-hoop-earrings",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of unbranded brushed-gold hoop earrings on pale linen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-round4-streetwear": {
+        "file": "gen2guide-tpl-look-round4-streetwear",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman in a plain beige coat and dark trousers on a quiet city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-home-round4-drawer-organizer": {
+        "file": "gen2guide-tpl-home-round4-drawer-organizer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Neatly organized kitchen drawer with wooden dividers, cutlery, and utensils.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-light-round4-table-lamp": {
+        "file": "gen2guide-tpl-light-round4-table-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Compact unbranded brushed-brass reading lamp casting warm light on a neutral surface.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-drink-round4-cold-brew": {
+        "file": "gen2guide-tpl-drink-round4-cold-brew",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Glass bottle of dark cold brew beside an iced glass on a bright kitchen counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-round4-sunscreen-tube": {
+        "file": "gen2guide-tpl-beauty-round4-sunscreen-tube",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded matte sunscreen tube on a bright stone bathroom counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-round4-open-travel-kit": {
+        "file": "gen2guide-tpl-beauty-round4-open-travel-kit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open neutral toiletry pouch with a plain tube, amber serum bottle, and cream jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-round4-texture-swatch": {
+        "file": "gen2guide-tpl-beauty-round4-texture-swatch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Clear serum and ivory cream swatches beside an amber dropper and cream jar.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-round4-soap-set-editorial": {
+        "file": "gen2guide-tpl-color-round4-soap-set-editorial",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three matching ceramic soap dispensers in terracotta, sage, and warm cream glazes.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-round4-necklace-source": {
+        "file": "gen2guide-tpl-jewel-round4-necklace-source",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Delicate silver pendant necklace worn at the collarbone over a linen blouse.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-round4-m1-cleanser-tube": {
+        "file": "gen2guide-tpl-beauty-round4-m1-cleanser-tube",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Unbranded matte ivory skincare tube with a sage cap on pale stone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-beauty-round4-m1-cream-jar": {
+        "file": "gen2guide-tpl-beauty-round4-m1-cream-jar",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Open white face-cream jar with ivory cream and a spatula on pale stone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-home-round4-case-desk-organizer": {
+        "file": "gen2guide-tpl-home-round4-case-desk-organizer",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Walnut desk organizer with pens, a notepad, and paper clips.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-light-round4-case-pendant-lamp": {
+        "file": "gen2guide-tpl-light-round4-case-pendant-lamp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Opal-glass pendant lamp with a simple brass fitting and a soft warm glow.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-round4-case-studio-outfit": {
+        "file": "gen2guide-tpl-look-round4-case-studio-outfit",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wearing a plain gray tailored suit in a neutral studio.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-round4-stud-earrings": {
+        "file": "gen2guide-tpl-jewel-round4-stud-earrings",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of simple silver stud earrings on a pale ceramic dish.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-drink-round4-case-citrus-soda": {
+        "file": "gen2guide-tpl-drink-round4-case-citrus-soda",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Blank-label citrus soda bottle beside a glass with ice and lemon.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-round4-case-gold-ring": {
+        "file": "gen2guide-tpl-jewel-round4-case-gold-ring",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain polished gold band on an ivory stone dish.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-round4-case-cufflinks": {
+        "file": "gen2guide-tpl-jewel-round4-case-cufflinks",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pair of brushed-silver cufflinks beside a white shirt cuff.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-jewel-round4-case-necklace-clasp": {
+        "file": "gen2guide-tpl-jewel-round4-case-necklace-clasp",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Gold necklace clasp and chain links on cream linen.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-look-after-square-r2": {
+        "file": "gen2guide-tpl-look-after-square-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square crop of an adult model wearing a light beige outfit, with the full upper body visible.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-angle-m6-output-square-r2": {
+        "file": "gen2guide-tpl-angle-m6-output-square-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square front and rear views of the same unbranded black woven portable speaker with a wrist lanyard and visible controls and USB-C port.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "tpl-color-m6-output-01-square-r2": {
+        "file": "gen2guide-tpl-color-m6-output-01-square-r2",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Square photo of three ceramic soap dispensers in muted terracotta, sage, and cream finishes.",
         "variants": [
           640,
           1280

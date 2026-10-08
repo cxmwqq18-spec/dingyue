@@ -18,16 +18,16 @@
   "tip": "Photograph your product against a plain wall with no direct sun on it, so harsh glare from the original doesn't carry into the new image.",
   "steps": [
     {
-      "t": "Upload a plain snapshot",
-      "d": "A phone photo on a table works, as long as the whole bottle or jar is in frame and in focus."
+      "t": "Upload a clear product photo",
+      "d": "Show the whole item in focus and keep strong glare away from its main surface."
     },
     {
-      "t": "Describe the light you want",
-      "d": "Try \"soft morning light from the left, long shadows, marble surface\" or \"bright even studio light, minimal shadow.\""
+      "t": "Describe the light direction",
+      "d": "Name a light source, direction, and surface, such as soft light from the left."
     },
     {
-      "t": "Compare a second mood",
-      "d": "Download the first version, then try warmer or cooler light and keep the one closest to your brand's look."
+      "t": "Choose a version for your store",
+      "d": "Download the photo, then add any product name or finish note in your editor."
     }
   ],
   "ideas": [
@@ -63,20 +63,16 @@
   },
   "faq": [
     {
-      "q": "Can I get a plain white background instead of a styled scene?",
-      "a": "Yes. Describe \"bright white background, soft even light\" for a clean catalog look, or name a surface and time of day for a lifestyle feel."
+      "q": "Which products work well with relighting?",
+      "a": "Glass, metal, ceramic, and glossy items can show useful changes in highlight and shadow."
     },
     {
-      "q": "Does it work on clear glass and shiny metal?",
-      "a": "Those are the surfaces it helps with most. Upload a photo where the outline of the bottle or case is sharp, so edges and reflections stay crisp."
+      "q": "Can I describe a warmer or cooler look?",
+      "a": "Name the light color and direction, then keep the product shape and material visible."
     },
     {
-      "q": "Can I use this for skincare and fragrance listings?",
-      "a": "Yes. Let the photo show the bottle, the texture, and the finish, and leave claims about results, like smoother skin or all-day scent, out of the image and the listing text."
-    },
-    {
-      "q": "What lighting prompt should I start with?",
-      "a": "Describe one light source and a simple surface, such as “soft window light on a pale table.” A sharp source photo helps glass and metal edges stay readable."
+      "q": "Do I need a studio setup?",
+      "a": "No. Start with a clear phone photo and describe the lighting look you want to try."
     }
   ],
   "overview": [
@@ -184,43 +180,234 @@
     ]
   },
   "examples": {
-    "h2": "More lighting examples",
-    "lead": "The same bottle under warm and cool light, plus shiny surfaces lit without harsh glare.",
+    "h2": "More product lighting examples",
+    "lead": "Reflective materials benefit from controlled highlights and a clear product silhouette.",
     "groups": [
       {
-        "label": "Warm and cool",
+        "label": "Product photo examples",
         "items": [
           {
-            "ref": "n:gen2:tpl-light-g1",
-            "title": "Amber glass bottle in warm side light",
+            "ref": "g:background-remove-replace/example-02",
+            "title": "Soft window light reveals a ceramic vase",
             "kind": "photo",
-            "product": "amber glass bottle"
+            "product": "ceramic vase"
           },
           {
-            "ref": "n:gen2:tpl-light-g2",
-            "title": "Same amber bottle in cool, even light",
+            "ref": "g:background-remove-replace/example-04",
+            "title": "A dark background outlines the ceramic vase",
             "kind": "photo",
-            "product": "amber glass bottle"
-          }
-        ]
-      },
-      {
-        "label": "Shiny surfaces",
-        "items": [
-          {
-            "ref": "n:gen2:tpl-light-g3",
-            "title": "Steel watch with a controlled highlight",
-            "kind": "photo",
-            "product": "steel watch"
+            "product": "ceramic vase"
           },
           {
-            "ref": "n:gen2:tpl-light-g4",
-            "title": "Glass honey jar with soft, even highlights",
+            "ref": "g:background-remove-replace/example-05",
+            "title": "Outdoor light softens the vase surface",
             "kind": "photo",
-            "product": "glass honey jar"
+            "product": "ceramic vase"
           }
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "Product lighting changes how glass, metal, and ceramic surfaces read in a photo. Start with the whole product in focus, then describe one light source and direction.",
+    "strip": [
+      "n:gen2:h1-photo-hub-candle-result",
+      "n:gen2:tpl-light-g4",
+      "n:gen2:h1-photo-hub-candle-source",
+      "n:guide:white-background-desk-lamp",
+      "n:gen2:white-background-c1",
+      "n:gen2:tpl-detail-c2"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-light-m2-source",
+      "result": "n:gen2:tpl-light-g1",
+      "mode": "photo",
+      "prompt": "Relight this amber glass bottle with warm side light and a soft grounded shadow, keeping its dark cap and cylindrical shape visible.",
+      "options": [
+        [
+          "Template",
+          "Studio Lighting"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Light",
+          "Described in your words"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a product lighting look",
+      "lead": "Pick the surface and highlight style that suit your item.",
+      "chips": [
+        {
+          "id": "glass",
+          "label": "Glass highlights"
+        },
+        {
+          "id": "metal",
+          "label": "Metal reflections"
+        },
+        {
+          "id": "ceramic",
+          "label": "Ceramic surfaces"
+        },
+        {
+          "id": "gloss",
+          "label": "Glossy finishes"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-light-c4",
+          "label": "Crystal tumbler with soft highlights",
+          "chips": [
+            "glass"
+          ],
+          "prompt": "Use soft, controlled highlights to show the crystal tumbler edges and clear glass.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:white-background-g2",
+          "label": "Clear glass spray bottle",
+          "chips": [
+            "glass"
+          ],
+          "prompt": "Use soft highlights to show the clear glass bottle.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:white-background-reading-glasses",
+          "label": "Tortoiseshell glasses on white",
+          "chips": [
+            "metal"
+          ],
+          "prompt": "Keep the tortoiseshell frame edges clear and use a soft highlight on the lenses.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-detail-c3",
+          "label": "Brushed metal watch edge",
+          "chips": [
+            "metal"
+          ],
+          "prompt": "Frame the metal watch case edge against a dark surface.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:background-remove-replace/example-07",
+          "label": "Blue-fleck mug in soft light",
+          "chips": [
+            "ceramic"
+          ],
+          "prompt": "Use soft side light to show the blue-fleck ceramic mug glaze and its grounded shadow.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-detail-c4",
+          "label": "Ceramic mug glaze on the rim",
+          "chips": [
+            "ceramic"
+          ],
+          "prompt": "Bring out the glaze detail along the mug rim.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-light-g2",
+          "label": "Amber glass bottle in cool light",
+          "chips": [
+            "gloss"
+          ],
+          "prompt": "Keep the amber glass bottle silhouette clear against the cool blue-gray background.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:plat-youtube-shorts-g3",
+          "label": "Balcony string lights at dusk",
+          "chips": [
+            "gloss"
+          ],
+          "prompt": "Keep the warm points of light distinct against the dim balcony at dusk.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a relit product photo"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:gen2:tpl-light-g3",
+        "h": "Use a clean relight on a product page",
+        "d": "Add a bright product view beside your main image when shoppers need to see the surface finish."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:gen2:tpl-angle-g2",
+        "h": "Show consistent light across a collection",
+        "d": "Use a similar highlight direction across related products so the collection page feels connected."
+      }
+    ],
+    "input": [
+      {
+        "good": "g:ecommerce-main-image/example-02",
+        "bad": "n:guide:tpl-light-m5-blur",
+        "good_label": "Soft light keeps the rim clear",
+        "bad_label": "The mug rim loses definition"
+      },
+      {
+        "good": "g:ecommerce-main-image/example-05",
+        "bad": "n:guide:tpl-light-m5-crop",
+        "good_label": "Mug and lid show the light",
+        "bad_label": "Mug edge is cut off"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:tpl-light-m6-output-01-square",
+        "frame": "1:1",
+        "label": "Square ceramic mug with controlled highlights"
+      },
+      {
+        "ref": "n:guide:tpl-light-m6-output-02-square",
+        "frame": "1:1",
+        "label": "Square pendant lamp with a controlled highlight"
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:tpl-angle-c3",
+      "zones": [
+        "Product name",
+        "Material"
+      ],
+      "items": [
+        "Download two lighting versions and choose the one that shows the material clearly.",
+        "Type any product label or finish name as editable text in your editor."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Relight a product photo without a studio"
+      },
+      "m3": {
+        "h2": "Choose product lighting for glass and metal"
+      },
+      "m4": {
+        "h2": "Use relit product photos on store pages"
+      },
+      "m5": {
+        "h2": "Start with a clear product photo in focus"
+      },
+      "m6": {
+        "h2": "Square product lighting photo examples"
+      },
+      "m7": {
+        "h2": "Add the product name and material after download"
+      },
+      "faq": {
+        "h2": "Questions about product photo lighting"
+      }
+    }
   }
 }

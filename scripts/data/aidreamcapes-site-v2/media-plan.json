@@ -99,12 +99,7 @@
         "kind": "image",
         "image": "g:packshot-multi-angle/example-02"
       },
-      "gallery": [
-        "g:packshot-multi-angle/example-04",
-        "g:packshot-multi-angle/example-06",
-        "g:packshot-multi-angle/example-07",
-        "g:packshot-multi-angle/example-08"
-      ],
+      "gallery": [],
       "og": "g:packshot-multi-angle/og"
     },
     "tpl-detail": {
@@ -113,14 +108,7 @@
         "before": "g:macro-details/source-input",
         "after": "g:macro-details/hero-output"
       },
-      "gallery": [
-        "g:macro-details/example-01",
-        "g:macro-details/example-02",
-        "g:macro-details/example-03",
-        "g:macro-details/example-04",
-        "g:macro-details/example-05",
-        "g:macro-details/example-06"
-      ],
+      "gallery": [],
       "og": "g:macro-details/og"
     },
     "tpl-size": {
@@ -145,14 +133,7 @@
         "before": "g:colorway-variations/source-input",
         "after": "g:colorway-variations/hero-output"
       },
-      "gallery": [
-        "g:colorway-variations/example-01",
-        "g:colorway-variations/example-02",
-        "g:colorway-variations/example-03",
-        "g:colorway-variations/example-04",
-        "g:colorway-variations/example-05",
-        "g:colorway-variations/example-06"
-      ],
+      "gallery": [],
       "og": "g:colorway-variations/og"
     },
     "tpl-box": {
@@ -193,14 +174,7 @@
         "before": "g:commercial-lighting/source-input",
         "after": "g:commercial-lighting/hero-output"
       },
-      "gallery": [
-        "g:commercial-lighting/example-01",
-        "g:commercial-lighting/example-02",
-        "g:commercial-lighting/example-03",
-        "g:commercial-lighting/example-04",
-        "g:commercial-lighting/example-05",
-        "g:commercial-lighting/example-06"
-      ],
+      "gallery": [],
       "og": "g:commercial-lighting/og"
     },
     "tpl-tryon": {
@@ -225,14 +199,7 @@
         "before": "g:jewelry-positioning/source-input",
         "after": "g:jewelry-positioning/hero-output"
       },
-      "gallery": [
-        "g:jewelry-positioning/example-01",
-        "g:jewelry-positioning/example-02",
-        "g:jewelry-positioning/example-03",
-        "g:jewelry-positioning/example-04",
-        "g:jewelry-positioning/example-05",
-        "g:jewelry-positioning/example-06"
-      ],
+      "gallery": [],
       "og": "g:jewelry-positioning/og"
     },
     "tpl-look": {
@@ -241,14 +208,7 @@
         "before": "g:fashion-editorial/source-input",
         "after": "g:fashion-editorial/hero-output"
       },
-      "gallery": [
-        "g:fashion-editorial/example-01",
-        "g:fashion-editorial/example-02",
-        "g:fashion-editorial/example-03",
-        "g:fashion-editorial/example-04",
-        "g:fashion-editorial/example-05",
-        "g:fashion-editorial/example-07"
-      ],
+      "gallery": [],
       "og": "g:fashion-editorial/og"
     },
     "tpl-head": {
@@ -257,13 +217,7 @@
         "before": "g:professional-headshot/source-input",
         "after": "g:professional-headshot/hero-output"
       },
-      "gallery": [
-        "g:professional-headshot/example-01",
-        "g:professional-headshot/example-02",
-        "g:professional-headshot/example-03",
-        "g:professional-headshot/example-04",
-        "g:professional-headshot/example-05"
-      ],
+      "gallery": [],
       "og": "g:professional-headshot/og"
     },
     "tpl-ugc": {
@@ -413,11 +367,7 @@
         "image": "f:beauty-routine"
       },
       "og": "f:beauty-routine",
-      "gallery": [
-        "f:beauty-routine-t05",
-        "f:beauty-routine-t10",
-        "f:beauty-routine-t14"
-      ]
+      "gallery": []
     },
     "tpl-drink": {
       "hero": {
@@ -425,10 +375,7 @@
         "clip": "food-video"
       },
       "og": "f:food-video",
-      "gallery": [
-        "f:food-video-t06",
-        "f:food-video-t13"
-      ]
+      "gallery": []
     },
     "tpl-home": {
       "hero": {
@@ -436,11 +383,7 @@
         "image": "f:home-organization"
       },
       "og": "f:home-organization",
-      "gallery": [
-        "f:home-organization-t07",
-        "f:home-organization-t10",
-        "f:home-organization-t15"
-      ]
+      "gallery": []
     },
     "tpl-outfit": {
       "hero": {
@@ -480,11 +423,7 @@
         "image": "f:black-friday-countdown"
       },
       "og": "f:black-friday-countdown",
-      "gallery": [
-        "f:black-friday-countdown-t02",
-        "f:black-friday-countdown-t09",
-        "f:black-friday-countdown-t11"
-      ]
+      "gallery": []
     },
     "home": {
       "hero": {

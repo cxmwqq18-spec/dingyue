@@ -18,16 +18,16 @@
   "tip": "Ask each person for a front-facing photo in daylight with nothing covering their face, and paste the same setting description for every headshot.",
   "steps": [
     {
-      "t": "Collect a photo from each person",
-      "d": "Everyone sends a recent, well-lit photo of their own face and shoulders, without sunglasses or hats."
+      "t": "Collect a clear photo from each person",
+      "d": "Ask each teammate for a recent portrait with their face and shoulders visible."
     },
     {
-      "t": "Pick one setting for all",
-      "d": "Describe the backdrop and outfit style once, such as \"bright office, soft daylight, dark blazer,\" and reuse it."
+      "t": "Choose one backdrop style",
+      "d": "Describe the light, clothing, and setting once so the portraits feel like a set."
     },
     {
-      "t": "Line them up on your page",
-      "d": "Download each headshot and place them side by side on your About or Team page to see how they sit together."
+      "t": "Arrange the portraits on your page",
+      "d": "Download each headshot, then add names and roles beside the photos."
     }
   ],
   "ideas": [
@@ -64,20 +64,16 @@
   },
   "faq": [
     {
-      "q": "Can I make headshots of my team from photos I already have?",
-      "a": "Each headshot should come from that person's own photo, shared by them and used with their agreement. Requests involving celebrities or public figures may be declined."
+      "q": "What should each teammate upload?",
+      "a": "Use a recent photo of that person’s face and shoulders with even light and no hat or sunglasses."
     },
     {
-      "q": "Will the headshot still look like me?",
-      "a": "It starts from your photo, so a clear, recent, front-facing shot gives the closest likeness. If something looks off, try again with a better-lit photo."
+      "q": "How can a team page feel consistent?",
+      "a": "Reuse the same backdrop and outfit description while letting each person keep their own portrait."
     },
     {
-      "q": "Are our team photos kept private?",
-      "a": "Yes. The photos your team uploads and the headshots you get back are kept in your account, not posted anywhere public."
-    },
-    {
-      "q": "How many people can I put in one team headshot set?",
-      "a": "This template makes one portrait per run. Create a separate run for each team member; the credit cost appears before each job."
+      "q": "Can I add names in the headshot?",
+      "a": "Add names and job titles as editable text beside each image on your page."
     }
   ],
   "overview": [
@@ -184,34 +180,207 @@
       "People who have not agreed to the intended publication"
     ]
   },
-  "examples": {
-    "h2": "More headshot examples",
-    "lead": "A matching set for a team page: same backdrop, same light, different people. Add names and roles in your page text.",
-    "groups": [
-      {
-        "label": "A matching team set",
-        "items": [
-          {
-            "ref": "n:gen2:tpl-head-g1",
-            "title": "Support lead headshot in a bright office",
-            "kind": "photo",
-            "product": "headshot"
-          },
-          {
-            "ref": "n:gen2:tpl-head-g2",
-            "title": "Producer headshot in the same bright office",
-            "kind": "photo",
-            "product": "headshot"
-          },
-          {
-            "ref": "n:gen2:tpl-head-g3",
-            "title": "Operations manager headshot by a window",
-            "kind": "photo",
-            "product": "headshot"
-          }
+  "cta_lead": "Upload one clear photo of the person. See the cost before you start.",
+  "visual": {
+    "overview": "A team headshot set feels connected when each person has a clear, recent portrait and consistent backdrop and light. Ask each teammate to provide their own photo.",
+    "strip": [
+      "n:guide:tpl-head-round4-02",
+      "n:guide:tpl-head-round4-03",
+      "n:guide:tpl-head-round4-04",
+      "n:guide:tpl-head-round4-05",
+      "n:guide:tpl-head-round4-06",
+      "n:guide:tpl-head-round4-07"
+    ],
+    "steps": {
+      "source": "g:professional-headshot/source-input",
+      "result": "n:guide:tpl-head-round4-01",
+      "mode": "photo",
+      "prompt": "Create a polished square team headshot of this adult against a soft light-gray office background, with a relaxed expression and shoulders in frame.",
+      "options": [
+        [
+          "Template",
+          "Team Headshots"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Upload",
+          "Each person’s own photo"
         ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a team portrait setting",
+      "lead": "Pick a backdrop that feels consistent across the team page.",
+      "chips": [
+        {
+          "id": "studio",
+          "label": "Studio backdrop"
+        },
+        {
+          "id": "office",
+          "label": "Office setting"
+        },
+        {
+          "id": "window",
+          "label": "Window light"
+        },
+        {
+          "id": "portrait",
+          "label": "Simple portrait"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-head-c1",
+          "label": "Founder portrait on gray",
+          "chips": [
+            "studio"
+          ],
+          "prompt": "Use a plain gray studio background for this head-and-shoulders portrait.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-head-case-79",
+          "label": "Headshot at a studio desk",
+          "chips": [
+            "studio"
+          ],
+          "prompt": "Keep the face and shoulders clear against the bright studio desk.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-head-g1",
+          "label": "Founder studio headshot",
+          "chips": [
+            "office"
+          ],
+          "prompt": "Keep the founder’s face and shoulders centered against the neutral background.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-head-case-80",
+          "label": "Team portrait in an office",
+          "chips": [
+            "office"
+          ],
+          "prompt": "Keep the soft office background behind the headshot.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-head-case-78",
+          "label": "Portrait in warm window light",
+          "chips": [
+            "window"
+          ],
+          "prompt": "Use warm window light behind the head and shoulders.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-head-g3",
+          "label": "Manager beside an office window",
+          "chips": [
+            "window"
+          ],
+          "prompt": "Place the portrait beside a bright office window.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-head-g2",
+          "label": "Producer headshot in profile",
+          "chips": [
+            "portrait"
+          ],
+          "prompt": "Keep this professional headshot simple and uncluttered.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:professional-headshot/example-04",
+          "label": "Portrait in an outdoor neutral setting",
+          "chips": [
+            "portrait"
+          ],
+          "prompt": "Use a clear head-and-shoulders portrait against a soft outdoor background.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a team headshot"
+    },
+    "uses": [
+      {
+        "frame": "browser",
+        "ref": "n:guide:tpl-head-m4-team-row",
+        "h": "Build a consistent team page",
+        "d": "Keep a consistent head-and-shoulders crop, neutral background, and soft light for each teammate."
+      },
+      {
+        "frame": "browser",
+        "ref": "g:professional-headshot/example-05",
+        "h": "Show a portrait on a professional profile",
+        "d": "Use a clear three-quarter portrait beside the team introduction when a wide crop fits the page."
       }
-    ]
-  },
-  "cta_lead": "Upload one clear photo of the person. See the cost before you start."
+    ],
+    "input": [
+      {
+        "good": "g:professional-headshot/example-01",
+        "bad": "n:guide:tpl-head-m5-blur",
+        "good_label": "Head and shoulders stay sharp",
+        "bad_label": "Headshot loses focus around the face"
+      },
+      {
+        "good": "g:professional-headshot/example-02",
+        "bad": "n:guide:tpl-head-m5-crop",
+        "good_label": "Face and shoulders fit the frame",
+        "bad_label": "The crop cuts across the face"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:tpl-head-round4-08",
+        "frame": "1:1",
+        "label": "Square team headshot against a warm studio backdrop"
+      },
+      {
+        "ref": "n:guide:tpl-head-round4-09",
+        "frame": "1:1",
+        "label": "Square team portrait in a softly lit office"
+      }
+    ],
+    "after": {
+      "ref": "g:professional-headshot/example-06",
+      "zones": [
+        "Name",
+        "Role"
+      ],
+      "items": [
+        "Add each teammate’s name and role as text beside the downloaded portrait.",
+        "Use consistent framing and light across the team page."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Create square team headshots from each person’s photo"
+      },
+      "m3": {
+        "h2": "Choose a consistent team headshot setting"
+      },
+      "m4": {
+        "h2": "Use team headshots on an about page"
+      },
+      "m5": {
+        "h2": "Start with a clear face and shoulders photo"
+      },
+      "m6": {
+        "h2": "Square team headshot example"
+      },
+      "m7": {
+        "h2": "Add names and roles after download"
+      },
+      "faq": {
+        "h2": "Questions about team headshots"
+      }
+    }
+  }
 }

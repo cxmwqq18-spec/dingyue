@@ -217,46 +217,46 @@
     ],
     "tpl-angle": [
       {
-        "ref": "n:gen2:tpl-angle-c1",
-        "product": "over-ear headphones",
-        "title": "Headphones head-on against a light gray sweep"
+        "ref": "n:guide:plat-youtube-shorts-size-square-ebike",
+        "product": "folding electric bicycle",
+        "title": "Black folding bicycle shown in a clean side view"
       },
       {
-        "ref": "n:gen2:tpl-angle-c2",
-        "product": "hiking backpack",
-        "title": "Backpack turned to show the straps and back panel"
+        "ref": "n:gen2:examples-g5",
+        "product": "cork yoga block",
+        "title": "Cork yoga block shown in a balanced standing pose"
       },
       {
-        "ref": "n:gen2:tpl-angle-c3",
-        "product": "coffee grinder",
-        "title": "Coffee grinder photographed from directly above"
+        "ref": "n:gen2:product-videos-g1",
+        "product": "folding camp chair",
+        "title": "Folding camp chair beside a patio table"
       },
       {
         "ref": "n:gen2:tpl-angle-c4",
         "product": "office chair",
-        "title": "Office chair in a three-quarter studio view"
+        "title": "Office chair photographed in a three-quarter studio view"
       }
     ],
     "tpl-detail": [
       {
-        "ref": "n:gen2:tpl-detail-c1",
-        "product": "leather card holder",
-        "title": "Stitching close-up on a leather card holder"
+        "ref": "n:guide:b1-unboxing-output",
+        "product": "leather wallet",
+        "title": "Brown leather wallet with its stitching and seams visible"
       },
       {
-        "ref": "n:gen2:tpl-detail-c2",
-        "product": "merino sweater",
-        "title": "Knit texture of a merino sweater, up close"
+        "ref": "n:gen2:examples-g7",
+        "product": "wool throw",
+        "title": "Wool blanket draped over an armchair in winter light"
       },
       {
-        "ref": "n:gen2:tpl-detail-c3",
-        "product": "steel watch",
-        "title": "Brushed metal finish on a watch case edge"
+        "ref": "n:guide:white-background-desk-organizer",
+        "product": "walnut desk organizer",
+        "title": "Walnut desk organizer with its grain and slots visible"
       },
       {
-        "ref": "n:gen2:tpl-detail-c4",
-        "product": "handmade ceramic mug",
-        "title": "Glaze drips on a handmade ceramic mug rim"
+        "ref": "g:ecommerce-main-image/example-03",
+        "product": "ceramic travel mug",
+        "title": "Three-quarter travel mug view showing its handle and glaze"
       }
     ],
     "tpl-size": [
@@ -283,24 +283,24 @@
     ],
     "tpl-color": [
       {
-        "ref": "n:gen2:tpl-color-c1",
-        "product": "tumbler",
-        "title": "Four tumbler colors lined up in the same light"
-      },
-      {
         "ref": "n:gen2:tpl-color-c2",
-        "product": "beanie",
-        "title": "Beanie in three shades on matching stools"
+        "product": "knit beanies",
+        "title": "Three knit beanies arranged by shade"
       },
       {
         "ref": "n:gen2:tpl-color-c3",
-        "product": "phone case",
-        "title": "Phone cases in five colors fanned out"
+        "product": "phone cases",
+        "title": "Phone cases displayed in a fan of colors"
       },
       {
-        "ref": "n:gen2:tpl-color-c4",
-        "product": "yoga block",
-        "title": "Yoga blocks in three colors stacked side by side"
+        "ref": "n:gen2:tpl-color-c1",
+        "product": "insulated tumblers",
+        "title": "Insulated tumblers lined up for a shade comparison"
+      },
+      {
+        "ref": "n:guide:white-background-fix-m1-planter",
+        "product": "terracotta planter",
+        "title": "Terracotta planter finish shown against white"
       }
     ],
     "tpl-box": [
@@ -349,9 +349,9 @@
     ],
     "tpl-light": [
       {
-        "ref": "n:gen2:tpl-light-c1",
-        "product": "perfume bottle",
-        "title": "Perfume bottle lit with a soft rim light"
+        "ref": "n:guide:tpl-light-round4-table-lamp",
+        "product": "brass reading lamp",
+        "title": "Brass reading lamp casting a warm pool of light"
       },
       {
         "ref": "n:gen2:tpl-light-c2",
@@ -364,9 +364,9 @@
         "title": "Glossy nail polish bottle on black acrylic"
       },
       {
-        "ref": "n:gen2:tpl-light-c4",
-        "product": "crystal glass",
-        "title": "Crystal glass against a clean gradient backdrop"
+        "ref": "n:guide:tpl-light-round4-case-pendant-lamp",
+        "product": "pendant lamp",
+        "title": "Opal-glass pendant with a soft warm glow"
       }
     ],
     "tpl-tryon": [
@@ -393,68 +393,68 @@
     ],
     "tpl-jewel": [
       {
-        "ref": "n:gen2:tpl-jewel-28",
-        "product": "silver pendant",
-        "title": "Silver pendant resting on a linen neckline"
+        "ref": "n:guide:tpl-jewel-round4-case-gold-ring",
+        "product": "polished gold band",
+        "title": "Polished gold band on an ivory stone dish"
       },
       {
-        "ref": "n:gen2:tpl-jewel-70",
-        "product": "gold ring",
-        "title": "Gold ring on a hand holding a coffee cup"
+        "ref": "n:guide:tpl-jewel-round4-case-cufflinks",
+        "product": "silver cufflinks",
+        "title": "Brushed-silver cufflinks beside a white shirt cuff"
       },
       {
-        "ref": "n:gen2:tpl-jewel-71",
-        "product": "silver bracelet",
-        "title": "Silver bracelet stacked on a wrist in daylight"
+        "ref": "n:guide:tpl-jewel-round4-stud-earrings",
+        "product": "silver stud earrings",
+        "title": "Pair of silver studs on a pale ceramic dish"
       },
       {
-        "ref": "n:gen2:tpl-jewel-72",
-        "product": "pearl earrings",
-        "title": "Pearl earrings shown on a model in profile"
+        "ref": "n:guide:tpl-jewel-round4-case-necklace-clasp",
+        "product": "necklace clasp",
+        "title": "Gold necklace clasp with fine chain links"
       }
     ],
     "tpl-look": [
       {
-        "ref": "n:gen2:tpl-look-c1",
-        "product": "autumn outfit",
-        "title": "Autumn lookbook frame on a cobblestone street"
+        "ref": "n:guide:tpl-look-round4-case-studio-outfit",
+        "product": "tailored suit",
+        "title": "Gray tailored outfit in a neutral studio"
       },
       {
-        "ref": "n:gen2:tpl-look-c2",
-        "product": "linen two-piece set",
-        "title": "Minimal linen set in a sunlit studio"
+        "ref": "g:on-model-generation/hero-output",
+        "product": "city daypack outfit",
+        "title": "Layered city outfit with a practical daypack"
       },
       {
-        "ref": "n:gen2:tpl-look-c3",
-        "product": "streetwear look",
-        "title": "Streetwear look against a concrete wall"
+        "ref": "g:fashion-editorial/example-07",
+        "product": "fashion portrait",
+        "title": "Close fashion portrait with an editorial crop"
       },
       {
-        "ref": "n:gen2:tpl-look-c4",
-        "product": "evening dress",
-        "title": "Evening dress lookbook shot on a staircase"
+        "ref": "g:on-model-generation/example-05",
+        "product": "desk-side bag styling",
+        "title": "Compact backpack beside a prepared work desk"
       }
     ],
     "tpl-head": [
       {
-        "ref": "n:gen2:tpl-head-c1",
-        "product": "founder headshot",
-        "title": "Founder headshot on a soft gray backdrop"
+        "ref": "n:guide:tpl-head-round4-10",
+        "product": "professional headshot",
+        "title": "Square professional portrait in a quiet office"
       },
       {
-        "ref": "n:gen2:tpl-head-case-78",
+        "ref": "n:guide:tpl-head-case-plan-02",
+        "product": "designer portrait",
+        "title": "Designer portrait against an olive studio wall"
+      },
+      {
+        "ref": "n:guide:tpl-head-case-plan-03",
         "product": "consultant headshot",
-        "title": "Consultant headshot in warm window light"
+        "title": "Consultant headshot beside a blue-gray window"
       },
       {
-        "ref": "n:gen2:tpl-head-case-79",
-        "product": "designer headshot",
-        "title": "Designer headshot at a bright studio desk"
-      },
-      {
-        "ref": "n:gen2:tpl-head-case-80",
-        "product": "team headshot",
-        "title": "Team headshot with a soft office background"
+        "ref": "n:guide:tpl-head-case-plan-04",
+        "product": "operations headshot",
+        "title": "Operations portrait in a warm wood workshop"
       }
     ],
     "tpl-ugc": [
@@ -596,9 +596,9 @@
         "title": "Citrus soda poured over ice"
       },
       {
-        "ref": "n:gen2:tpl-drink-c2",
-        "product": "cold brew",
-        "title": "Cold brew poured from a glass bottle"
+        "ref": "n:guide:tpl-drink-round4-case-citrus-soda",
+        "product": "lemon soda",
+        "title": "Blank-label lemon soda beside a glass with ice"
       },
       {
         "ref": "n:gen2:tpl-drink-c3",
@@ -613,24 +613,24 @@
     ],
     "tpl-home": [
       {
-        "ref": "n:gen2:tpl-home-c1",
-        "product": "velvet hangers",
-        "title": "Closet rail reset with matching velvet hangers"
+        "ref": "n:gen2:video-hub-g4",
+        "product": "entryway organizer",
+        "title": "Entryway organized with a slim bench and coat hooks"
       },
       {
-        "ref": "n:gen2:tpl-home-c2",
-        "product": "pantry jars",
-        "title": "Pantry jars lined up after a shelf clear-out"
+        "ref": "g:lifestyle-scene/example-05",
+        "product": "linen tote",
+        "title": "Fabric tote hanging in a sunlit entryway"
       },
       {
-        "ref": "n:gen2:tpl-home-c3",
-        "product": "under-sink bins",
-        "title": "Under-sink bins sliding into place"
+        "ref": "n:gen2:ind-home-living-c3",
+        "product": "linen bedding",
+        "title": "Freshly made bed with linen layers"
       },
       {
-        "ref": "n:gen2:tpl-home-c4",
-        "product": "shoe rack",
-        "title": "Shoe rack filling a once-crowded entryway"
+        "ref": "n:guide:tpl-home-round4-case-desk-organizer",
+        "product": "wood desk organizer",
+        "title": "Walnut desk organizer with pens and notes"
       }
     ],
     "tpl-outfit": [
@@ -716,9 +716,9 @@
         "title": "Gift boxes stacked beside a laptop at night"
       },
       {
-        "ref": "n:gen2:tpl-bf-c4",
-        "product": "smartwatch",
-        "title": "Smartwatch on a black stand with a red glow"
+        "ref": "n:protein-pack",
+        "product": "protein powder",
+        "title": "Plain protein tub staged for a seasonal offer"
       }
     ],
     "tpl-limited-drop-alert-video": [

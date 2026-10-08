@@ -20,15 +20,15 @@
   "steps": [
     {
       "t": "Upload the bottle or can",
-      "d": "A straight-on photo lets the video carry the shape and liquid color into the pour."
+      "d": "Show the full package so its shape, cap, and drink color are easy to see."
     },
     {
-      "t": "Set the counter scene",
-      "d": "Describe the glass, garnish, and surface, like \"tall glass, crushed ice, lime wedge, marble counter.\" Pick 6, 10, 15, or 30 seconds."
+      "t": "Describe one serving action",
+      "d": "Name the glass, garnish, and surface, then choose one pour or serving moment."
     },
     {
-      "t": "Type flavor names afterward",
-      "d": "Add flavor names, prices, and sound in Canva or CapCut, since letters in AI video can come out garbled."
+      "t": "Add flavor wording after download",
+      "d": "Download the clip, then type the flavor name and price as editable text."
     }
   ],
   "ideas": [
@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 \u00b7 TikTok & Reels"
+        "9:16 · TikTok & Reels"
       ],
       [
         "Length",
@@ -60,16 +60,16 @@
   },
   "faq": [
     {
-      "q": "What kinds of drinks work with this?",
-      "a": "Anything you pour: juice, soda, sparkling water, iced tea, cold brew, and mixers. Clear glass bottles and bright liquids tend to look the most striking."
+      "q": "What source photo works for a drink clip?",
+      "a": "Use a straight-on bottle or can photo with the full package and liquid color visible."
     },
     {
-      "q": "Will my label come out clearly?",
-      "a": "Small print may not be perfect. Keep the label facing the camera in your photo, and if the brand name needs to be crisp, add it as text in your editing app."
+      "q": "Can the video show a pour?",
+      "a": "Describe one pour into a glass and keep the package in view during the action."
     },
     {
-      "q": "How do I keep the drink color believable?",
-      "a": "Photograph the can or bottle in even light and name the real color in the prompt. Review the pour against the product; AI can drift on liquid color and label details."
+      "q": "Where can I add flavor names?",
+      "a": "Type flavor names, prices, and serving notes in your editor after download."
     }
   ],
   "overview": [
@@ -172,32 +172,227 @@
     ]
   },
   "examples": {
-    "h2": "More food and drink scenes",
-    "lead": "Pours, drizzles and fizz: close moments that show texture.",
+    "h2": "More drink product examples",
+    "lead": "A sparkling-water can and a tea pouch show two different package styles.",
     "groups": [
       {
-        "label": "Texture up close",
+        "label": "Product photo examples",
         "items": [
           {
             "ref": "n:gen2:tpl-drink-g1",
-            "title": "Sparkling water can opened beside an iced glass",
-            "kind": "scene",
-            "product": "sparkling water can"
+            "title": "Sparkling water can opened beside a glass of ice",
+            "kind": "photo",
+            "product": "sparkling water"
           },
           {
-            "ref": "n:gen2:tpl-drink-g2",
-            "title": "Honey drizzled over a stack of pancakes",
-            "kind": "scene",
-            "product": "honey jar"
-          },
-          {
-            "ref": "n:gen2:tpl-drink-g3",
-            "title": "Berry smoothie poured into a tall glass",
-            "kind": "scene",
-            "product": "berry smoothie"
+            "ref": "n:guide:product-tea-dark",
+            "title": "Tea pouch and cup in soft evening light",
+            "kind": "photo",
+            "product": "tea pouch"
           }
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A drink video can make the bottle, pour, and serving moment easy to follow. Keep the bottle visible in a vertical frame and add flavor wording after download.",
+    "strip": [
+      "n:guide:tpl-drink-round4-cold-brew",
+      "f:tpl-drink-r4-strip",
+      "n:white-mug",
+      "n:gen2:plat-youtube-shorts-c3",
+      "n:gen2:ind-health-wellness-c3",
+      "n:gen2:examples-g3"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-drink-m2-source",
+      "result": "f:tpl-drink-r4-m2",
+      "mode": "video",
+      "length": 6,
+      "prompt": "Show the clear golden citrus bottle standing beside an ice-filled tumbler on a bright kitchen counter, keeping both in frame.",
+      "options": [
+        [
+          "Size",
+          "9:16 · TikTok & Reels"
+        ],
+        [
+          "Length",
+          "6 seconds"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a drink video moment",
+      "lead": "Pick one action that keeps the drink and package easy to follow.",
+      "chips": [
+        {
+          "id": "pour",
+          "label": "Fresh pour"
+        },
+        {
+          "id": "chilled",
+          "label": "Serve chilled"
+        },
+        {
+          "id": "table",
+          "label": "At the table"
+        },
+        {
+          "id": "package",
+          "label": "Package close-up"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-drink-g3",
+          "label": "Berry smoothie poured into a glass",
+          "chips": [
+            "pour"
+          ],
+          "prompt": "Pour the berry smoothie into a tall glass.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-drink-m6-pour",
+          "label": "Golden citrus pour into ice",
+          "chips": [
+            "pour"
+          ],
+          "prompt": "Pour the golden citrus drink from a glass bottle into a glass filled with ice.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:url-to-video-c3",
+          "label": "Reusable straw beside an iced drink",
+          "chips": [
+            "chilled"
+          ],
+          "prompt": "Set the reusable steel straw beside a glass of iced drink in bright summer light.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-drink-round4-citrus-tea",
+          "label": "Citrus tea with ice",
+          "chips": [
+            "chilled"
+          ],
+          "prompt": "Show the clear citrus-tea bottle beside ice and lemon in bright daylight.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:b1-spokesperson-videos-result",
+          "label": "Forest-green bottle held at chest height",
+          "chips": [
+            "table"
+          ],
+          "prompt": "Keep the forest-green bottle centered while the presenter holds it at chest height.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-drink-g2",
+          "label": "Honey over pancakes",
+          "chips": [
+            "table"
+          ],
+          "prompt": "Drizzle honey from the jar over the pancakes.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:coffee-beans",
+          "label": "Coffee bag on a wooden counter",
+          "chips": [
+            "package"
+          ],
+          "prompt": "Show the kraft coffee bag and loose beans on a wooden counter.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:plat-instagram-size-wide",
+          "label": "Speckled cup on a sunlit table",
+          "chips": [
+            "package"
+          ],
+          "prompt": "Set the speckled ceramic cup beside the small plant and linen napkin.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a drink video"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "n:gen2:plat-tiktok-c3",
+        "h": "Show a drink selection in a social post",
+        "d": "Frame the stocked mini fridge clearly, then add flavor names as editable text in your editor."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:b1-spokesperson-output-coffee",
+        "h": "Pair a drink video with its listing",
+        "d": "Show the coffee being served beside a clear product photo so shoppers recognize the drink."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:b1-spokesperson-videos-source",
+        "bad": "n:guide:tpl-drink-m5-blur",
+        "good_label": "Water bottle stays sharp",
+        "bad_label": "Water bottle details lose focus"
+      },
+      {
+        "good": "n:guide:tpl-drink-reuse-iced-can",
+        "bad": "n:guide:tpl-drink-m5-crop",
+        "good_label": "Iced coffee can stays fully in frame",
+        "bad_label": "Iced coffee can is clipped at the side"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:spokesperson-videos-g1",
+        "frame": "9:16",
+        "length": 6,
+        "label": "Six-second water bottle frame"
+      },
+      {
+        "ref": "f:tpl-drink-r4-m6",
+        "frame": "9:16",
+        "length": 6,
+        "label": "Vertical citrus drink pour frame"
+      }
+    ],
+    "after": {
+      "ref": "f:tpl-drink-r4-after",
+      "zones": [
+        "Flavor name",
+        "Serving note"
+      ],
+      "items": [
+        "Type the flavor and serving note as editable text in your video editor.",
+        "Add licensed music or a voice track there before publishing."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make vertical food and drink videos from a bottle photo"
+      },
+      "m3": {
+        "h2": "Choose a fresh drink video moment"
+      },
+      "m4": {
+        "h2": "Use drink videos in feeds and product pages"
+      },
+      "m5": {
+        "h2": "Start with a clear bottle or can photo"
+      },
+      "m6": {
+        "h2": "Vertical drink video sample frames"
+      },
+      "m7": {
+        "h2": "Add flavor names after download"
+      },
+      "faq": {
+        "h2": "Questions about food and drink videos"
+      }
+    }
   }
 }

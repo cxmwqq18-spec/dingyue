@@ -18,16 +18,16 @@
   "tip": "Upload each outfit as a full flat lay, top and bottom together, and choose one location for the whole collection so the images feel like one story.",
   "steps": [
     {
-      "t": "Lay out the full outfit",
-      "d": "Photograph every piece of the look together, including shoes if they're part of what you sell."
+      "t": "Lay out the complete outfit",
+      "d": "Include every garment you want to show and keep the full look inside the frame."
     },
     {
-      "t": "Set the scene",
-      "d": "Describe the place, light, and attitude, such as \"stone archway by the sea, late afternoon sun, relaxed stance.\""
+      "t": "Choose a setting and mood",
+      "d": "Name the location, light, and stance so each outfit belongs to the collection."
     },
     {
-      "t": "Build the collection",
-      "d": "Download each look, then repeat with the next outfit in the same location so the set holds together."
+      "t": "Build the collection after download",
+      "d": "Download each photo, then add the collection name and garment details as text."
     }
   ],
   "ideas": [
@@ -63,20 +63,16 @@
   },
   "faq": [
     {
-      "q": "Can I make a whole lookbook at once?",
-      "a": "Each run makes one photo, so you build a lookbook look by look. Keeping the setting the same in every description helps the photos feel like one shoot."
+      "q": "What should be in a lookbook source photo?",
+      "a": "Include the garments that make up the outfit and keep their shapes visible in the photo."
     },
     {
-      "q": "Will the clothes in the photo match my real pieces?",
-      "a": "The cut, color, and fabric follow your upload, but small details like buttons and stitching can change. Look over each image next to the real garment before you publish it."
+      "q": "How can a collection look connected?",
+      "a": "Reuse a location, light style, and crop across the outfits while showing each look clearly."
     },
     {
-      "q": "What size are the lookbook photos?",
-      "a": "Square by default, which suits Instagram feed posts and carousels. Ask for some space around the outfit in your description if you plan to crop later."
-    },
-    {
-      "q": "What photo format works for an AI lookbook?",
-      "a": "Lookbook photos are square by default, and the photo tool does not offer another ratio. Place a square image on a 9:16 canvas in your design tool for a Story layout."
+      "q": "Can the setting change between outfits?",
+      "a": "Yes. Choose a location that suits each collection and keep the framing consistent within it."
     }
   ],
   "overview": [
@@ -180,32 +176,234 @@
     ]
   },
   "examples": {
-    "h2": "More lookbook frames",
-    "lead": "Several looks shot in one location with the same light, so a collection reads as a set.",
+    "h2": "More lookbook photo settings",
+    "lead": "A similar crop can connect outfits photographed in different locations.",
     "groups": [
       {
-        "label": "One location, three looks",
+        "label": "Product photo examples",
         "items": [
           {
-            "ref": "n:gen2:tpl-look-g1",
-            "title": "Trench coat look under a stone archway",
+            "ref": "n:guide:tpl-look-round4-streetwear",
+            "title": "Neutral coat styled for a city walk",
             "kind": "photo",
-            "product": "trench coat"
+            "product": "beige coat outfit"
           },
           {
-            "ref": "n:gen2:tpl-look-g2",
-            "title": "Knit dress look under the same archway",
+            "ref": "n:guide:ind-fashion-clothing-m2-result",
+            "title": "Gray pullover hoodie cropped chin to hips",
             "kind": "photo",
-            "product": "knit dress"
+            "product": "pullover hoodie"
           },
           {
-            "ref": "n:gen2:tpl-look-g3",
-            "title": "Wide-leg suit look under the same archway",
+            "ref": "n:guide:tpl-look-reuse-jacket-hanger",
+            "title": "Denim jacket on a plain hanger",
             "kind": "photo",
-            "product": "wide-leg suit"
+            "product": "denim jacket"
           }
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A lookbook photo can show a complete outfit in a setting that fits the collection. Start with a clear view of each garment, then keep the location and mood consistent.",
+    "strip": [
+      "g:fashion-editorial/example-01",
+      "g:fashion-editorial/example-02",
+      "g:fashion-editorial/example-03",
+      "g:fashion-editorial/example-04",
+      "g:fashion-editorial/example-05",
+      "g:fashion-editorial/example-06"
+    ],
+    "steps": {
+      "source": "g:fashion-editorial/source-input",
+      "result": "n:guide:tpl-look-m2-result",
+      "mode": "photo",
+      "prompt": "Photograph this light-beige tailored women’s outfit from the source on an adult woman model, head to toe, in a neutral studio, with the full silhouette visible in a square frame.",
+      "options": [
+        [
+          "Template",
+          "Lookbook"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Setting",
+          "A location you describe"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a lookbook setting",
+      "lead": "Pick a setting that supports the collection and outfit.",
+      "chips": [
+        {
+          "id": "street",
+          "label": "Street style"
+        },
+        {
+          "id": "studio",
+          "label": "Studio look"
+        },
+        {
+          "id": "workwear",
+          "label": "Workwear"
+        },
+        {
+          "id": "evening",
+          "label": "Evening look"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:ind-fashion-clothing-c3",
+          "label": "Pleated skirt on sidewalk",
+          "chips": [
+            "street"
+          ],
+          "prompt": "Show the skirt in a relaxed sidewalk look.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:model-photos-c2",
+          "label": "Messenger bag with a smart-casual look",
+          "chips": [
+            "street"
+          ],
+          "prompt": "Show the adult with the leather messenger bag in a polished office-lobby outfit.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:photo-hub-c3",
+          "label": "Knit beanie in a cool-weather look",
+          "chips": [
+            "studio"
+          ],
+          "prompt": "Show the knit beanie as part of a relaxed outdoor outfit.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:fashion-editorial/hero-output",
+          "label": "Beige tailored suit in a studio",
+          "chips": [
+            "studio"
+          ],
+          "prompt": "Show the complete beige suit on a model in a neutral studio.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:fashion-editorial/example-08",
+          "label": "Magazine-ready fashion crop",
+          "chips": [
+            "workwear"
+          ],
+          "prompt": "Keep the full outfit and its styling clear in a clean editorial crop.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-look-c1",
+          "label": "Autumn workwear on a city street",
+          "chips": [
+            "workwear"
+          ],
+          "prompt": "Show the complete autumn outfit on a city street, with the garments and footwear clearly visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-look-reuse-slip-dress",
+          "label": "Navy slip dress at sunset",
+          "chips": [
+            "evening"
+          ],
+          "prompt": "Show the full navy satin slip dress against the warm rooftop light.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-look-g2",
+          "label": "Knit dress under a stone archway",
+          "chips": [
+            "evening"
+          ],
+          "prompt": "Show the knit dress under a stone archway in warm light.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a lookbook photo"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:guide:tpl-look-m4-use-square",
+        "h": "Show a practical bag in a workday look",
+        "d": "Use a natural office scene to show how the backpack fits into an everyday outfit."
+      },
+      {
+        "frame": "browser",
+        "ref": "g:on-model-generation/example-06",
+        "h": "Build a collection page around outdoor looks",
+        "d": "Use a consistent outdoor setting and crop so shoppers can compare the garments and carry items."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-look-g1",
+        "bad": "n:guide:tpl-look-m5-blur",
+        "good_label": "Trench coat stays sharp",
+        "bad_label": "The coat edges blur into the setting"
+      },
+      {
+        "good": "n:gen2:tpl-look-g3",
+        "bad": "n:guide:tpl-look-m5-crop",
+        "good_label": "Wide-leg suit fits in frame",
+        "bad_label": "Outfit is clipped at the side"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:tpl-look-m6-output-01-square",
+        "frame": "1:1",
+        "label": "Square light linen outfit photo"
+      },
+      {
+        "ref": "n:guide:tpl-look-m6-output-02-square",
+        "frame": "1:1",
+        "label": "Square muted sage outfit photo"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:tpl-look-after-square-r2",
+      "zones": [
+        "Garment preparation",
+        "Final outfit"
+      ],
+      "items": [
+        "Steam the garment, then show how it sits in the finished look.",
+        "Use one location and crop for each outfit in the set."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make lookbook photos for a new collection"
+      },
+      "m3": {
+        "h2": "Choose a setting for your lookbook outfit"
+      },
+      "m4": {
+        "h2": "Use lookbook photos on posts and collection pages"
+      },
+      "m5": {
+        "h2": "Start with a clear photo of the full outfit"
+      },
+      "m6": {
+        "h2": "Square lookbook photo examples"
+      },
+      "m7": {
+        "h2": "Add collection details after download"
+      },
+      "faq": {
+        "h2": "Questions about lookbook photos"
+      }
+    }
   }
 }

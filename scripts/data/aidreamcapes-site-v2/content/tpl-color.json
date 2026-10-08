@@ -12,22 +12,22 @@
     "sneaker color options photos"
   ],
   "intro": [
-    "The example lines up four low-top canvas sneakers in cream, navy, black, and olive on a linen runner. The light, the wooden table, and the low angle stay the same, so the only thing that changes is the color.",
+    "The example lines up ceramic soap dispensers in terracotta, sage, charcoal, and cream on a pale surface. The light, the camera angle, and the spacing stay consistent so shoppers can compare each glaze.",
     "That consistency matters when a buyer taps between swatches on a Shopify product page or an Amazon variation. If each shade was shot on a different day in a different room, the colors are hard to compare. Make one photo per color with the same description, and the photos read as one set."
   ],
   "tip": "Upload a photo of the actual product in each color rather than one pair to be recolored, because real dyes and fabric textures differ more than you'd expect.",
   "steps": [
     {
-      "t": "Shoot every colorway",
-      "d": "Take one photo per color from the same angle and in the same daylight, so the starting points already match."
+      "t": "Photograph one color clearly",
+      "d": "Keep the whole product in frame and use a consistent camera angle for each color."
     },
     {
-      "t": "Write one description and keep it",
-      "d": "Describe the setting once, for example \"linen runner on a light oak table,\" and paste the same words for each color."
+      "t": "Choose the finish and setting",
+      "d": "Name the color and background while keeping the product shape and light consistent."
     },
     {
-      "t": "Attach each photo to its swatch",
-      "d": "Download each result and assign it to the matching variant in Shopify or Amazon, so the right image shows when a shopper picks a color."
+      "t": "Link each image to its option",
+      "d": "Download each variation, then assign it to the matching color choice in your listing."
     }
   ],
   "ideas": [
@@ -63,20 +63,16 @@
   },
   "faq": [
     {
-      "q": "Can I make every color from a single photo?",
-      "a": "Upload each colorway separately. Recoloring one photo can miss how a fabric or dye really looks, and buyers expect the shade they see to be the shade they receive."
+      "q": "How do I keep color options consistent?",
+      "a": "Use the same view, light, and background for each source photo so shoppers can compare the finish."
     },
     {
-      "q": "How many colors can I make?",
-      "a": "As many as you sell. Each color is a separate run with its own credit cost shown before it starts, so a sneaker in six shades means six runs."
+      "q": "Can the tool create a different product color?",
+      "a": "Describe the color change while keeping the silhouette, hardware, and material visible."
     },
     {
-      "q": "How do I stop the background from changing between colors?",
-      "a": "Keep your description word for word the same and upload photos taken from the same angle. If one result drifts, run that color again."
-    },
-    {
-      "q": "What should I do if one color result looks different?",
-      "a": "If one result drifts from the set, rerun that color and compare it with the physical item."
+      "q": "Where should each variation image go?",
+      "a": "Attach the downloaded image to the matching product option so the chosen finish is shown."
     }
   ],
   "overview": [
@@ -184,32 +180,235 @@
     ]
   },
   "examples": {
-    "h2": "More colorway sets",
-    "lead": "Same angle, same light, only the color changes, so shoppers compare shades instead of photos.",
+    "h2": "More product color variation examples",
+    "lead": "Color groups help shoppers compare finish options across product types.",
     "groups": [
       {
-        "label": "Side-by-side shades",
+        "label": "Product photo examples",
         "items": [
           {
-            "ref": "n:gen2:tpl-color-g1",
-            "title": "Ceramic storage jars in sage, cream and terracotta",
+            "ref": "n:guide:white-background-fix-m6-coaster-set",
+            "title": "Slate-blue felt coasters on white",
             "kind": "photo",
-            "product": "ceramic storage jars"
+            "product": "felt coasters"
           },
           {
-            "ref": "n:gen2:tpl-color-g2",
-            "title": "Running shoe in three colorways, side by side",
+            "ref": "n:guide:tpl-color-round4-soap-set-editorial",
+            "title": "Three glazes in a consistent product shot",
             "kind": "photo",
-            "product": "running shoe"
+            "product": "ceramic soap dispensers"
           },
           {
-            "ref": "n:gen2:tpl-color-g3",
-            "title": "Rain jacket in three colors on matching hangers",
+            "ref": "n:guide:tpl-color-reuse-warm",
+            "title": "Terracotta, sage, and cream soap dispensers",
             "kind": "photo",
-            "product": "rain jacket"
+            "product": "ceramic soap dispensers"
           }
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "Color variation photos work best when the product shape, camera angle, and light stay consistent. Start from a clean photo and keep each color tied to the correct listing option.",
+    "strip": [
+      "n:guide:tpl-color-round4-01",
+      "n:guide:tpl-color-round4-02",
+      "n:guide:tpl-color-round4-03",
+      "n:guide:tpl-color-round4-04",
+      "n:guide:tpl-color-round4-05",
+      "n:guide:tpl-color-round4-06"
+    ],
+    "steps": {
+      "source": "n:guide:white-background-soap-dispenser",
+      "result": "n:guide:tpl-color-m2-result",
+      "mode": "photo",
+      "prompt": "Show this single soap dispenser with a warm terracotta glaze while keeping the pump, silhouette, angle, and soft white-background shadow unchanged.",
+      "options": [
+        [
+          "Template",
+          "Color Variants"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Output",
+          "One photo per color"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a color direction",
+      "lead": "Pick a palette that fits the product and keeps its shape easy to compare.",
+      "chips": [
+        {
+          "id": "warm",
+          "label": "Warm tones"
+        },
+        {
+          "id": "cool",
+          "label": "Cool tones"
+        },
+        {
+          "id": "soft",
+          "label": "Soft neutrals"
+        },
+        {
+          "id": "bold",
+          "label": "Bold accents"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-color-g1",
+          "label": "Terracotta and sage glaze options",
+          "chips": [
+            "warm"
+          ],
+          "prompt": "Keep the terracotta, sage, and cream finishes distinct on this set of jars.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-color-after-square",
+          "label": "Soap dispenser glaze options",
+          "chips": [
+            "warm",
+            "bold"
+          ],
+          "prompt": "Keep the matching dispenser shapes clear while comparing the terracotta, sage, and cream finishes.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-color-g2",
+          "label": "Running shoe colorways",
+          "chips": [
+            "cool"
+          ],
+          "prompt": "Show this shoe in three cool colorways side by side.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:change-background-c1",
+          "label": "Blue ceramic vase",
+          "chips": [
+            "cool"
+          ],
+          "prompt": "Keep the blue glaze visible against a calm neutral setting.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-fashion-clothing-c2",
+          "label": "Cream cardigan",
+          "chips": [
+            "soft"
+          ],
+          "prompt": "Show the cream knit as a soft neutral product color.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-color-g3",
+          "label": "Muted rain jacket color options",
+          "chips": [
+            "soft"
+          ],
+          "prompt": "Keep the jacket shape and muted navy, green, and cream tones consistent.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-color-c4",
+          "label": "Yoga blocks in bright colors",
+          "chips": [
+            "bold"
+          ],
+          "prompt": "Stack this yoga block shape in its bright color options.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:white-background-kettle",
+          "label": "Sea-glass green kettle",
+          "chips": [
+            "cool"
+          ],
+          "prompt": "Keep the kettle shape consistent while showing the green finish clearly.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a color variation"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:guide:tpl-color-m4-use-square",
+        "h": "Show four tumbler colors in a product post",
+        "d": "Keep the tumbler shape and studio light consistent so shoppers can compare the available colors."
+      },
+      {
+        "frame": "post",
+        "ref": "n:guide:white-background-serving-bowl",
+        "h": "Show a soft neutral bowl color",
+        "d": "Keep the stoneware shape and finish clear so shoppers can compare the neutral shade."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:tpl-color-round4-07",
+        "bad": "n:guide:tpl-color-m5-blur",
+        "good_label": "Muted teal dispenser stays clear",
+        "bad_label": "Muted teal dispenser loses focus"
+      },
+      {
+        "good": "n:guide:tpl-color-round4-08",
+        "bad": "n:guide:tpl-color-m5-crop",
+        "good_label": "Soft ochre dispenser stays in frame",
+        "bad_label": "Soft ochre dispenser is tightly cropped"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:tpl-color-m6-output-01-square-r2",
+        "frame": "1:1",
+        "label": "Square color options for ceramic dispensers"
+      },
+      {
+        "ref": "n:guide:tpl-color-round4-09",
+        "frame": "1:1",
+        "label": "Square pale blue-gray soap dispenser"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:tpl-color-round4-10",
+      "zones": [
+        "Color name",
+        "Material"
+      ],
+      "items": [
+        "Link each downloaded image to the matching color option in your product listing.",
+        "Type the color and material names from your product information so shoppers can compare the finishes."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make coordinated product color variations"
+      },
+      "m3": {
+        "h2": "Choose a palette for product color variants"
+      },
+      "m4": {
+        "h2": "Use color variation photos on listings and feeds"
+      },
+      "m5": {
+        "h2": "Start with a clear product color photo"
+      },
+      "m6": {
+        "h2": "Square product color variant examples"
+      },
+      "m7": {
+        "h2": "Add color and material names after download"
+      },
+      "faq": {
+        "h2": "Questions about product color variations"
+      }
+    }
   }
 }

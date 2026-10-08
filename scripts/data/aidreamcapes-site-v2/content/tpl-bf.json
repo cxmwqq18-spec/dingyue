@@ -19,16 +19,16 @@
   "tip": "Leave space for your offer by describing an open area beside the product, like \"e-bike on the right, empty plaza and sky on the left.\"",
   "steps": [
     {
-      "t": "Upload your sale item",
-      "d": "Pick the product you're discounting and use a sharp photo with the whole item in view."
+      "t": "Upload the featured sale item",
+      "d": "Show the full product clearly so its shape and main details carry into the clip."
     },
     {
-      "t": "Describe a bold scene",
-      "d": "Golden hour downtown, neon streets, or a dark studio with one spotlight. Go vertical for Stories or square for feeds."
+      "t": "Describe a simple sale scene",
+      "d": "Choose the setting, light, and where you want open space for the offer."
     },
     {
-      "t": "Put the offer on top",
-      "d": "Layer the discount, sale dates, and a countdown on top using Canva or Ads Manager."
+      "t": "Add the deal after download",
+      "d": "Download the video, then type the discount, code, and end date in your editor."
     }
   ],
   "ideas": [
@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 \u00b7 Stories & Reels"
+        "9:16 · Stories & Reels"
       ],
       [
         "Length",
@@ -57,23 +57,23 @@
       ],
       [
         "Also try",
-        "1:1 \u00b7 Feed"
+        "1:1 · Feed"
       ]
     ],
     "cta": "Make my Black Friday clip"
   },
   "faq": [
     {
-      "q": "Can the video show my discount and a countdown?",
-      "a": "Add them yourself after downloading. Prices, dates, and timers made by AI can be wrong, so type them in your editor, where you can also update them if the deal changes."
+      "q": "Which product photo should I upload?",
+      "a": "Choose a sharp photo of the item you plan to feature and keep the whole product inside the frame."
     },
     {
-      "q": "How far ahead should I make Black Friday videos?",
-      "a": "A few weeks ahead is a good idea. Get the clips done while things are calm, then add the final numbers once you've settled on them."
+      "q": "When should I add the discount?",
+      "a": "Add the final price, code, and sale dates as text after those details are set."
     },
     {
-      "q": "Can I show the same product in different scenes?",
-      "a": "Yes. Each video is a separate run, so you can make a city version, a studio version, and a snowy one, with the credit cost shown up front each time."
+      "q": "Can I use the same video on a store page?",
+      "a": "Use the same featured product in the video and the destination page so the offer feels connected."
     }
   ],
   "overview": [
@@ -176,32 +176,238 @@
     ]
   },
   "examples": {
-    "h2": "More deal-day scenes",
-    "lead": "Dark, high-contrast setups with open space for your deal badge.",
+    "h2": "More Black Friday product scenes",
+    "lead": "Product and gift-set images can leave room for a seasonal offer.",
     "groups": [
       {
-        "label": "Deal-day lighting",
+        "label": "Product photo examples",
         "items": [
           {
-            "ref": "n:gen2:tpl-bf-g1",
-            "title": "Gaming monitor on a dark desk with open space",
-            "kind": "scene",
-            "product": "gaming monitor"
+            "ref": "n:guide:pv-mug-lift",
+            "title": "White ceramic mug lifted from a counter",
+            "kind": "photo",
+            "product": "ceramic mug"
           },
           {
-            "ref": "n:gen2:tpl-bf-g2",
-            "title": "Stand mixer under a single spotlight",
-            "kind": "scene",
-            "product": "stand mixer"
+            "ref": "n:candle-pack",
+            "title": "White ceramic candle jar with its lid",
+            "kind": "photo",
+            "product": "ceramic candle"
           },
           {
-            "ref": "n:gen2:tpl-bf-g3",
-            "title": "Espresso machine with a red rim light",
-            "kind": "scene",
-            "product": "espresso machine"
+            "ref": "n:guide:plat-youtube-shorts-example-trail-square",
+            "title": "Coral trail shoes on a stone plinth",
+            "kind": "photo",
+            "product": "trail shoes"
           }
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "Build a Black Friday product video around one clear item and leave open space for the offer. Add the price and end date as text after download.",
+    "strip": [
+      "n:gen2:unboxing-videos-c2",
+      "n:guide:tpl-bf-reuse-headset",
+      "n:gen2:occ-black-friday-c4",
+      "n:sunglasses-pack",
+      "n:guide:plat-youtube-shorts-m2-source",
+      "n:gen2:spokesperson-videos-g3"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-bf-m2-source",
+      "result": "f:black-friday-countdown-v",
+      "mode": "video",
+      "length": 15,
+      "prompt": "Show this black folding bicycle fully open in a bright garage, with its folding hinge visible, in a vertical 9:16 frame.",
+      "options": [
+        [
+          "Size",
+          "9:16 · Stories & Reels"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ],
+        [
+          "Also try",
+          "1:1 · Feed"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a Black Friday product",
+      "lead": "Pick the product group that fits your offer.",
+      "chips": [
+        {
+          "id": "featured",
+          "label": "Featured products"
+        },
+        {
+          "id": "gifts",
+          "label": "Gift bundles"
+        },
+        {
+          "id": "home",
+          "label": "Home and tech"
+        },
+        {
+          "id": "apparel",
+          "label": "Apparel"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:tpl-bf-m6-square",
+          "label": "Folding electric bike with offer space",
+          "chips": [
+            "featured"
+          ],
+          "prompt": "Show the black folding electric bicycle clearly under warm garage light, leaving open space beside it for the offer.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:ind-shoes-m2-result",
+          "label": "Brown boots for a fall offer",
+          "chips": [
+            "featured"
+          ],
+          "prompt": "Show the full pair of brown boots clearly against a quiet outdoor setting.",
+          "kind": "photo"
+        },
+        {
+          "ref": "f:unboxing-experience",
+          "label": "Product box opened on a table",
+          "chips": [
+            "gifts"
+          ],
+          "prompt": "Show hands opening a plain product box on a wooden table, with clear space for the seasonal offer.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:url-to-video-g4",
+          "label": "Ceramic teapot set ready to gift",
+          "chips": [
+            "gifts"
+          ],
+          "prompt": "Arrange the ceramic teapot and two cups together on a wooden tray.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-drink-c2",
+          "label": "Cold brew poured over ice",
+          "chips": [
+            "home"
+          ],
+          "prompt": "Show cold brew pouring into a tumbler with ice, leaving clear space for the sale price.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:video-ads-g3",
+          "label": "Snack pouch beside a lunch box",
+          "chips": [
+            "gifts",
+            "home"
+          ],
+          "prompt": "Show the plain snack pouch and lunch container together on a bright desk.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:occ-black-friday-g1",
+          "label": "Leather duffel on a dark backdrop",
+          "chips": [
+            "apparel"
+          ],
+          "prompt": "Show the unbranded leather duffel clearly with open space beside it for sale details.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:white-background-leather-sandals",
+          "label": "Leather sandals for an apparel offer",
+          "chips": [
+            "apparel"
+          ],
+          "prompt": "Show both cognac sandals fully in frame, with the straps clearly visible.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a Black Friday video"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "f:tpl-bf-r4-m4",
+        "h": "Preview a folding bicycle before sale day",
+        "d": "Show the generic folding bicycle hinge clearly, then add the sale offer when the dates are confirmed."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:gen2:tpl-bf-g3",
+        "h": "Carry the sale offer to a product page",
+        "d": "Keep the featured espresso machine visible when shoppers open the product page from the offer."
+      }
+    ],
+    "input": [
+      {
+        "good": "g:ecommerce-main-image/hero-output",
+        "bad": "n:guide:tpl-bf-m5-blur",
+        "good_label": "Mug rim stays sharp",
+        "bad_label": "The mug rim blurs into the surface"
+      },
+      {
+        "good": "g:ecommerce-main-image/example-06",
+        "bad": "n:guide:tpl-bf-m5-crop",
+        "good_label": "Travel mug fits in frame",
+        "bad_label": "The mug is clipped at the side"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "f:black-friday-countdown",
+        "frame": "16:9",
+        "length": 15,
+        "label": "15-second folding e-bike offer frame"
+      },
+      {
+        "ref": "n:guide:b1-unboxing-videos-result",
+        "frame": "1:1",
+        "length": 15,
+        "label": "15-second candle gift reveal"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:product-lunchbox-cut",
+      "zones": [
+        "Discount",
+        "End date"
+      ],
+      "items": [
+        "Type the offer, code, and end date as editable text in your video editor.",
+        "Keep offer wording consistent across the clip and the store page."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make Black Friday video ads from one product photo"
+      },
+      "m3": {
+        "h2": "Choose a product for your Black Friday offer"
+      },
+      "m4": {
+        "h2": "Use one Black Friday video from teaser to sale"
+      },
+      "m5": {
+        "h2": "Start with a clear sale product photo"
+      },
+      "m6": {
+        "h2": "Black Friday sale video output examples"
+      },
+      "m7": {
+        "h2": "Add the discount and end date after download"
+      },
+      "faq": {
+        "h2": "Questions about Black Friday video ads"
+      }
+    }
   }
 }

@@ -18,16 +18,16 @@
   "tip": "Set the piece on a plain surface with the clasp and pendant visible, and add the chain length to your description so it sits at a believable height.",
   "steps": [
     {
-      "t": "Shoot the piece on its own",
-      "d": "Photograph it on white or light gray card, in focus, with nothing else in the frame."
+      "t": "Photograph the piece on its own",
+      "d": "Use a plain light surface and keep the full jewelry piece in focus."
     },
     {
-      "t": "Say where it's worn",
-      "d": "Describe placement and mood, such as \"18-inch chain at the collarbone, white lace top, morning light.\""
+      "t": "Describe where it is worn",
+      "d": "Name the placement, clothing, and light while keeping the jewelry design visible."
     },
     {
-      "t": "Save it and make the next one",
-      "d": "Download the photo for your product page or feed, then run it again for the matching earrings or ring."
+      "t": "Add details beside the photo",
+      "d": "Download the image, then add the piece name and material as text."
     }
   ],
   "ideas": [
@@ -63,20 +63,16 @@
   },
   "faq": [
     {
-      "q": "Will tiny details like stones and links stay accurate?",
-      "a": "Fine details can shift slightly, especially on very small pieces. Compare the pendant, stone shape, and chain style with your real item before you post."
+      "q": "What jewelry photo should I start with?",
+      "a": "Use one clear photo of the piece by itself so its shape, finish, and stones are easy to see."
     },
     {
-      "q": "Can I show earrings and rings, not just necklaces?",
-      "a": "Yes. Upload the piece and say where it's worn: on the ear, on a finger, or on the wrist for bracelets."
+      "q": "Can I show how a necklace sits?",
+      "a": "Describe the chain length and neckline, then keep the pendant centered in the scene."
     },
     {
-      "q": "Do these photos work on Instagram?",
-      "a": "Yes. They're square by default, so they post cleanly to the Instagram feed and carousels, and the same image can serve as the lifestyle shot on your Shopify page."
-    },
-    {
-      "q": "What source photo works for jewelry model photos?",
-      "a": "Use a sharp, close photo with the entire piece visible, especially clasps, stones, and links. Diffused daylight reduces color casts on metal and gems."
+      "q": "Which jewelry works for an on-model photo?",
+      "a": "Necklaces, earrings, rings, bracelets, and small accessories can all be shown in their worn position."
     }
   ],
   "overview": [
@@ -183,39 +179,215 @@
       "Listings that rely on a precise scale or regulated metal claim"
     ]
   },
-  "examples": {
-    "h2": "More jewelry placement examples",
-    "lead": "Each piece shown where it is worn, so shoppers see size and position at a glance.",
-    "groups": [
-      {
-        "label": "Where it's worn",
-        "items": [
-          {
-            "ref": "n:gen2:tpl-jewel-g1",
-            "title": "Enamel brooch pinned to a wool coat lapel",
-            "kind": "photo",
-            "product": "enamel brooch"
-          },
-          {
-            "ref": "n:gen2:tpl-jewel-g2",
-            "title": "Silver cufflinks on a white shirt cuff",
-            "kind": "photo",
-            "product": "silver cufflinks"
-          },
-          {
-            "ref": "n:gen2:tpl-jewel-g3",
-            "title": "Thin gold anklet worn on a sandy ankle",
-            "kind": "photo",
-            "product": "gold anklet"
-          },
-          {
-            "ref": "n:gen2:tpl-jewel-g4",
-            "title": "Ear cuff worn high on the ear",
-            "kind": "photo",
-            "product": "ear cuff"
-          }
+  "visual": {
+    "overview": "Show how a jewelry piece sits on the ear, hand, or neckline while keeping the design recognizable. Start with a clear photo of the piece by itself.",
+    "strip": [
+      "g:jewelry-positioning/example-01",
+      "n:guide:tpl-jewel-m1-hoop",
+      "n:guide:ind-jewelry-accessories-m7-steel-watch",
+      "n:guide:ind-jewelry-accessories-m2-result",
+      "n:guide:tpl-jewel-round4-hoop-earrings",
+      "n:gen2:tpl-jewel-g3"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-jewel-m2-source",
+      "result": "n:guide:tpl-jewel-m2-square",
+      "mode": "photo",
+      "prompt": "Create a square on-model photo of this delicate silver necklace worn at the collarbone over a simple linen neckline, with the pendant centered and the chain visible.",
+      "options": [
+        [
+          "Template",
+          "Jewelry On Model"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Upload",
+          "One clear photo of the piece"
         ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a jewelry photo style",
+      "lead": "Pick an on-model or close-up view that keeps the jewelry easy to see.",
+      "chips": [
+        {
+          "id": "neckline",
+          "label": "On-model styling"
+        },
+        {
+          "id": "metal",
+          "label": "Metal details"
+        },
+        {
+          "id": "fabric",
+          "label": "Texture and materials"
+        },
+        {
+          "id": "close",
+          "label": "Close product crop"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-jewel-g1",
+          "label": "Brooch on wool lapel",
+          "chips": [
+            "neckline",
+            "fabric"
+          ],
+          "prompt": "Pin the enamel brooch on a wool coat lapel.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-jewel-28",
+          "label": "Silver pendant necklace at the collarbone",
+          "chips": [
+            "neckline",
+            "metal"
+          ],
+          "prompt": "Keep the silver pendant centered against the linen neckline and the chain visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:jewelry-positioning/example-06",
+          "label": "Necklace worn in a three-quarter view",
+          "chips": [
+            "neckline",
+            "fabric",
+            "close"
+          ],
+          "prompt": "Keep the chain and pendant centered against a simple neckline with open space for product details.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:jewelry-positioning/example-03",
+          "label": "Bracelet worn on the wrist",
+          "chips": [
+            "neckline",
+            "close"
+          ],
+          "prompt": "Show the bracelet on the wrist with its links and fit in clear view.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-jewel-round4-necklace-source",
+          "label": "Silver pendant at the neckline",
+          "chips": [
+            "metal",
+            "close"
+          ],
+          "prompt": "Center the delicate pendant over the linen neckline and keep its shape clear.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-jewel-71",
+          "label": "Silver bracelet stacked on a wrist",
+          "chips": [
+            "metal",
+            "close"
+          ],
+          "prompt": "Show the silver bracelet stacked neatly on the wrist.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-jewel-g2",
+          "label": "Silver cufflinks on shirt",
+          "chips": [
+            "neckline",
+            "metal"
+          ],
+          "prompt": "Keep both cufflinks visible against the white shirt cuff.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:ind-jewelry-accessories-m3-gem-prongs",
+          "label": "Gold prongs holding a clear gemstone",
+          "chips": [
+            "metal",
+            "close"
+          ],
+          "prompt": "Frame the gemstone and its simple gold prongs sharply in a square close-up.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a jewelry model photo"
+    },
+    "uses": [
+      {
+        "frame": "post",
+        "ref": "n:guide:tpl-jewel-m4-use-square",
+        "h": "Show a necklace worn at the neckline",
+        "d": "Keep the necklace and pendant visible against a simple outfit so shoppers can judge its scale."
+      },
+      {
+        "frame": "listing",
+        "ref": "n:gen2:tpl-jewel-72",
+        "h": "Add a worn view to a product page",
+        "d": "Place the on-model photo beside the clear product shot so shoppers can see how it sits."
       }
-    ]
+    ],
+    "input": [
+      {
+        "good": "n:guide:tpl-jewel-reuse-necklace",
+        "bad": "n:guide:tpl-jewel-m5-reuse-blur",
+        "good_label": "Single pendant stays clear",
+        "bad_label": "The single pendant loses focus"
+      },
+      {
+        "good": "n:gen2:tpl-jewel-g4",
+        "bad": "n:guide:tpl-jewel-m5-crop",
+        "good_label": "Ear cuff stays in frame",
+        "bad_label": "The face is clipped while the ear cuff remains visible"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:tpl-jewel-m6-output-01-square",
+        "frame": "1:1",
+        "label": "Square silver ring photo"
+      },
+      {
+        "ref": "n:guide:tpl-jewel-m6-output-02-square",
+        "frame": "1:1",
+        "label": "Square silver pendant photo"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:tpl-jewel-after-square",
+      "zones": [
+        "Piece name",
+        "Material"
+      ],
+      "items": [
+        "Add the jewelry name and material as editable text beside the photo.",
+        "Keep matching pieces together in one gallery or collection."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make jewelry model photos from a clear piece photo"
+      },
+      "m3": {
+        "h2": "Choose a jewelry placement shoppers can see"
+      },
+      "m4": {
+        "h2": "Use jewelry photos on listings and social feeds"
+      },
+      "m5": {
+        "h2": "Start with a clear photo of the jewelry piece"
+      },
+      "m6": {
+        "h2": "Square jewelry model photo examples"
+      },
+      "m7": {
+        "h2": "Add jewelry details after download"
+      },
+      "faq": {
+        "h2": "Questions about jewelry model photos"
+      }
+    }
   }
 }

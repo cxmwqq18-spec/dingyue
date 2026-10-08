@@ -172,8 +172,8 @@
   "tpl-color": {
     "images": {
       "box": {
-        "ref": "n:gen2:tpl-box-c1",
-        "alt": "Skincare trio arranged with an open gift box."
+        "ref": "n:guide:b1-unboxing-card",
+        "alt": "Matte-black headphones lifted from an open kraft box."
       }
     }
   },
@@ -305,6 +305,78 @@
       "outfit": {
         "ref": "g:fashion-editorial/example-08",
         "alt": "Plain sand-colored suit shown full length in a light studio."
+      }
+    }
+  },
+  "tpl-beauty": {
+    "images": {
+      "drink": {
+        "ref": "f:food-video-t06",
+        "alt": "Golden sparkling drink poured from a glass bottle into a glass with ice and an orange slice"
+      },
+      "limited-drop-alert-video": {
+        "ref": "g:sale-campaign-key-visual/example-07",
+        "alt": "Square seasonal campaign crop with open space for an offer."
+      },
+      "product-feature-callout-video": {
+        "ref": "n:gen2:tpl-beauty-g3",
+        "alt": "Hair oil worked through the ends of long hair."
+      }
+    }
+  },
+  "tpl-bf": {
+    "images": {
+      "limited-drop-alert-video": {
+        "ref": "n:gen2:occ-black-friday-c3",
+        "alt": "Air fryer on a sleek counter in moody evening light."
+      },
+      "product-feature-callout-video": {
+        "ref": "n:guide:black-friday-m2-source-use",
+        "alt": "Leather duffel filling more of the frame on a dark backdrop."
+      },
+      "carousel-video-ad": {
+        "ref": "n:gen2:tpl-bf-g1",
+        "alt": "Unbranded gaming monitor and stand on a dark desk with open space for an offer."
+      }
+    }
+  },
+  "tpl-drink": {
+    "images": {
+      "limited-drop-alert-video": {
+        "ref": "n:gen2:examples-g2",
+        "alt": "Green glass bottle filled at a kitchen tap in a vertical frame."
+      },
+      "carousel-video-ad": {
+        "ref": "f:product-video",
+        "alt": "Compact espresso machine shown on a kitchen counter."
+      },
+      "spark-ads-style-video": {
+        "ref": "n:gen2:ind-food-drinks-g3",
+        "alt": "Pasta sauce jar beside a finished plate of pasta."
+      }
+    }
+  },
+  "tpl-home": {
+    "images": {
+      "retargeting-video-ad": {
+        "ref": "f:before-after-showcases",
+        "alt": "Wardrobe shelves arranged with neatly folded clothes."
+      }
+    }
+  },
+  "tpl-light": {
+    "images": {
+      "color": {
+        "ref": "n:gen2:examples-g8",
+        "alt": "Wool throw styled on a garden bench in spring."
+      }
+    }
+  },
+  "tpl-head": {
+    "images": {
+      "box": {
+        "ref": "n:guide:tpl-head-m3-office",
+        "alt": "Support lead in a square head-and-shoulders portrait beside a quiet office window."
       }
     }
   }

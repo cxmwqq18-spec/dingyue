@@ -18,16 +18,16 @@
   "tip": "Upload a photo taken in soft daylight with the detail in sharp focus, because the close-up can only be as crisp as the texture in your original shot.",
   "steps": [
     {
-      "t": "Pick the detail first",
-      "d": "Decide which part tells buyers the most, such as a seam, clasp, buckle, or engraving, and make sure it's in focus in your photo."
+      "t": "Choose one detail to show",
+      "d": "Pick a seam, clasp, material, or finish that helps explain how the product is made."
     },
     {
-      "t": "Name it in your description",
-      "d": "Write something like \"close-up of the corner stitching, wooden desk\" so the frame centers on that spot."
+      "t": "Frame that feature clearly",
+      "d": "Move close enough to show the detail while keeping its edge and surrounding material in view."
     },
     {
-      "t": "Place it after the main image",
-      "d": "Download the square photo and add it right after the full product view in your Amazon or Shopify gallery."
+      "t": "Place the photo in your gallery",
+      "d": "Download the square close-up, then add it after the full product view in your listing."
     }
   ],
   "ideas": [
@@ -63,16 +63,16 @@
   },
   "faq": [
     {
-      "q": "Can AI add detail my photo doesn't show?",
-      "a": "It works from what's in your upload. If the stitching is blurry or cut off in your photo, the close-up may come out soft or show details your product doesn't have, so start with a sharp shot."
+      "q": "Which product details work well in close-up?",
+      "a": "Show a material, stitch, clasp, zipper, rim, or finish that shoppers cannot see in the main product image."
     },
     {
-      "q": "Which products suit close-up details?",
-      "a": "Anything where quality shows in small parts: leather goods, watches, rings, knitwear, wooden boxes, ceramic mugs. Plain items with no texture or hardware gain less from it."
+      "q": "How close should the source photo be?",
+      "a": "Keep the named feature in focus and leave enough surrounding product to show where it sits."
     },
     {
-      "q": "How close should a product detail photo be?",
-      "a": "Start with a sharp crop that still shows the detail in context. If stitching, texture, or a label is blurry in the source, upload a closer, better-lit photo and generate again."
+      "q": "Where should a detail photo go?",
+      "a": "Place it after a clear main image so shoppers can first understand the whole product."
     }
   ],
   "overview": [
@@ -180,38 +180,228 @@
     ]
   },
   "examples": {
-    "h2": "More close-up details",
-    "lead": "Macro shots of the parts shoppers zoom in on: laces, tread, clasps and zippers.",
+    "h2": "More product detail photos",
+    "lead": "A close view can show a material edge, surface finish, or small piece of hardware.",
     "groups": [
       {
-        "label": "Up close",
+        "label": "Product photo examples",
         "items": [
           {
-            "ref": "n:gen2:tpl-detail-g1",
-            "title": "Canvas sneaker eyelets and laces, up close",
+            "ref": "n:gen2:change-background-c3",
+            "title": "Brown leather wallet on a marble cafe table",
             "kind": "photo",
-            "product": "canvas sneaker"
+            "product": "leather wallet"
           },
           {
-            "ref": "n:gen2:tpl-detail-g2",
-            "title": "Rubber sole tread pattern in macro",
+            "ref": "g:macro-details/example-07",
+            "title": "Wallet interior opened for detail",
             "kind": "photo",
-            "product": "rubber sole"
-          },
-          {
-            "ref": "n:gen2:tpl-detail-g3",
-            "title": "Brass bag clasp, close up",
-            "kind": "photo",
-            "product": "brass bag clasp"
-          },
-          {
-            "ref": "n:gen2:tpl-detail-g4",
-            "title": "Metal zipper teeth on a denim jacket",
-            "kind": "photo",
-            "product": "denim jacket zipper"
+            "product": "leather wallet"
           }
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "Close product photos help shoppers see the material, stitching, fasteners, and finish. Start from a sharp source photo and name one detail at a time.",
+    "strip": [
+      "g:macro-details/example-01",
+      "g:macro-details/example-02",
+      "g:macro-details/example-03",
+      "g:macro-details/example-04",
+      "n:gen2:tpl-detail-c1",
+      "n:guide:tpl-detail-round4-wallet-zipper"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-detail-reuse-wallet",
+      "result": "n:guide:tpl-detail-m2-result",
+      "mode": "photo",
+      "prompt": "Create a square macro close-up of this brown leather bifold wallet from the source, focusing tightly on its edge stitching and leather grain against a clean light-neutral background. Preserve the wallet’s leather color and stitching pattern.",
+      "options": [
+        [
+          "Template",
+          "Close-Up Details"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Focus",
+          "The detail you name"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a product detail",
+      "lead": "Pick one material or feature to bring into close view.",
+      "chips": [
+        {
+          "id": "leather",
+          "label": "Leather details"
+        },
+        {
+          "id": "fabric",
+          "label": "Fabric texture"
+        },
+        {
+          "id": "hardware",
+          "label": "Metal hardware"
+        },
+        {
+          "id": "ceramic",
+          "label": "Ceramic finish"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:white-background-g1",
+          "label": "Leather wallet edge",
+          "chips": [
+            "leather"
+          ],
+          "prompt": "Frame the leather wallet edge and keep its seam visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:commercial-lighting/example-07",
+          "label": "Reflective surface finish",
+          "chips": [
+            "leather"
+          ],
+          "prompt": "Frame the reflective finish and its edge clearly against a neutral background.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-detail-round4-wallet-macro",
+          "label": "Leather cardholder stitching",
+          "chips": [
+            "fabric"
+          ],
+          "prompt": "Frame the cardholder edge and keep its leather grain and stitching clear.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:on-model-generation/example-07",
+          "label": "Backpack handle stitching",
+          "chips": [
+            "fabric"
+          ],
+          "prompt": "Move close to the backpack handle and keep its stitching visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-detail-g3",
+          "label": "Brass bag clasp",
+          "chips": [
+            "hardware"
+          ],
+          "prompt": "Move close to the brass clasp while keeping its leather attachment visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:tpl-detail-g4",
+          "label": "Denim zipper teeth",
+          "chips": [
+            "hardware"
+          ],
+          "prompt": "Show the zipper teeth and pull against the denim jacket.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:background-remove-replace/hero-output",
+          "label": "Ceramic vase in a warm studio",
+          "chips": [
+            "ceramic"
+          ],
+          "prompt": "Frame the ceramic vase body and surface finish against the clean warm background.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:ecommerce-main-image/example-04",
+          "label": "Matte ceramic mug rim close-up",
+          "chips": [
+            "ceramic"
+          ],
+          "prompt": "Bring the mug rim and matte ceramic finish into focus.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a detail photo"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "g:macro-details/hero-output",
+        "h": "Add a detail after the main image",
+        "d": "Place the close-up beside the full wallet view so shoppers can compare the finish and construction."
+      },
+      {
+        "frame": "browser",
+        "ref": "g:on-model-generation/example-04",
+        "h": "Show a pocket or closure on a store page",
+        "d": "Use a separate image for a zipper, pocket, clasp, or other feature that affects the purchase."
+      }
+    ],
+    "input": [
+      {
+        "good": "g:macro-details/example-05",
+        "bad": "n:guide:tpl-detail-m5-blur",
+        "good_label": "Jacket weave stays sharp",
+        "bad_label": "The fabric detail loses focus"
+      },
+      {
+        "good": "g:background-remove-replace/example-06",
+        "bad": "n:guide:tpl-detail-m5-crop",
+        "good_label": "Vase edge stays visible",
+        "bad_label": "The vase is cut off at the side"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:tpl-detail-m6-output-01-square",
+        "frame": "1:1",
+        "label": "Square wallet zipper detail"
+      },
+      {
+        "ref": "n:guide:tpl-detail-m6-output-02-square",
+        "frame": "1:1",
+        "label": "Square leather corner detail"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:tpl-detail-after-square",
+      "zones": [
+        "Gallery order",
+        "Product details"
+      ],
+      "items": [
+        "Place the close-up after the full product photo in your store gallery.",
+        "Type material names and dimensions as text in the product listing."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make close-up product detail photos"
+      },
+      "m3": {
+        "h2": "Choose a texture or hardware detail"
+      },
+      "m4": {
+        "h2": "Use detail photos on listings and product pages"
+      },
+      "m5": {
+        "h2": "Start with a sharp close-up source photo"
+      },
+      "m6": {
+        "h2": "Square product detail photo examples"
+      },
+      "m7": {
+        "h2": "Add material notes after download"
+      },
+      "faq": {
+        "h2": "Questions about close-up product photos"
+      }
+    }
   }
 }

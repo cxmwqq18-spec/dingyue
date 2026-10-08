@@ -19,16 +19,16 @@
   "tip": "Upload the organizer empty and on its own, then describe the space it goes into, such as \"deep kitchen drawer full of mixed utensils.\"",
   "steps": [
     {
-      "t": "Upload your organizer",
-      "d": "An empty tray, bin, or rack on a plain background gives the video the exact shape to fill."
+      "t": "Upload the organizer by itself",
+      "d": "Show the empty tray, bin, or rack on a plain surface so its shape is clear."
     },
     {
-      "t": "Describe the before",
-      "d": "Say what the messy space looks like and where it is, like \"cluttered bathroom drawer with makeup and hair ties.\""
+      "t": "Describe the space before the reset",
+      "d": "Name the drawer, shelf, or closet and a few items that belong there."
     },
     {
-      "t": "Mark before and after",
-      "d": "Once the clip is downloaded, put \"before\" and \"after\" labels, a song, and your product name on it in CapCut."
+      "t": "Add before and after labels",
+      "d": "Download the clip, then place the labels and product name in your editor."
     }
   ],
   "ideas": [
@@ -49,7 +49,7 @@
     "options": [
       [
         "Size",
-        "9:16 \u00b7 TikTok & Reels"
+        "9:16 · TikTok & Reels"
       ],
       [
         "Length",
@@ -60,20 +60,16 @@
   },
   "faq": [
     {
-      "q": "Do I need a photo of a messy room?",
-      "a": "No. Upload a picture of the organizer and describe the mess in words. The video builds both the before and the after around your product."
+      "q": "Do I need to photograph the messy space?",
+      "a": "No. Upload the organizer and describe the drawer, shelf, or closet where it will be used."
     },
     {
-      "q": "Can the video show the real size of my organizer?",
-      "a": "Include the size when you describe the scene, like \"fits a standard kitchen drawer,\" and check the result. If the tray looks bigger or smaller than it really is, make another version so buyers aren't misled."
+      "q": "What kind of organizer can I show?",
+      "a": "Use a tray, bin, divider, rack, or another product with a clear place in the home."
     },
     {
-      "q": "Should I pick 10, 15 or 30 seconds?",
-      "a": "Ten seconds keeps the switch snappy for TikTok. Fifteen gives viewers time to take in the finished drawer, and 30 seconds lets a bigger space, like a whole closet, change in full."
-    },
-    {
-      "q": "Should I make a vertical or square home-product video?",
-      "a": "Use 9:16 for Stories, Reels, and TikTok, 1:1 for feed placements, or 16:9 for a wide product page. Keep the organizer\u2019s real dimensions in your listing."
+      "q": "How can I explain the change?",
+      "a": "Add before-and-after labels in your editor and describe the storage space in the caption."
     }
   ],
   "overview": [
@@ -176,32 +172,234 @@
     ]
   },
   "examples": {
-    "h2": "More home organization scenes",
-    "lead": "Tidy end states that show where each item goes.",
+    "h2": "More home product photos",
+    "lead": "Planters and folded linens show how everyday home products look in different spaces.",
     "groups": [
       {
-        "label": "Sorted spaces",
+        "label": "Product photo examples",
         "items": [
           {
-            "ref": "n:gen2:tpl-home-g1",
-            "title": "Bathroom drawer sorted into divided trays",
-            "kind": "scene",
-            "product": "drawer trays"
+            "ref": "n:gen2:ind-home-living-g2",
+            "title": "Planter warms a linen-sofa corner",
+            "kind": "photo",
+            "product": "ceramic planter"
           },
           {
-            "ref": "n:gen2:tpl-home-g2",
-            "title": "Linen closet stacked into woven baskets",
-            "kind": "scene",
-            "product": "woven baskets"
+            "ref": "n:gen2:lifestyle-photos-g2",
+            "title": "Plant pot on a sunny shelf",
+            "kind": "photo",
+            "product": "plant pot"
           },
           {
-            "ref": "n:gen2:tpl-home-g3",
-            "title": "Fridge shelves reset with clear bins",
-            "kind": "scene",
-            "product": "clear fridge bins"
+            "ref": "n:gen2:lifestyle-photos-g6",
+            "title": "Folded linen napkins on a dining table",
+            "kind": "photo",
+            "product": "linen napkins"
           }
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "A home organizer video can show a clear before-and-after change in one space. Start with the product by itself, then describe where it belongs and what it sorts.",
+    "strip": [
+      "f:tpl-home-r4-strip-01",
+      "f:tpl-home-r4-strip-02",
+      "n:gen2:tpl-home-c1",
+      "n:planter-shelf",
+      "n:planter-corner",
+      "n:gen2:ind-home-living-g3"
+    ],
+    "steps": {
+      "source": "n:gen2:tpl-home-g1",
+      "result": "f:tpl-home-r4-m2",
+      "mode": "video",
+      "length": 15,
+      "prompt": "Place this set of gray drawer dividers inside a kitchen drawer and show utensils moving from a loose pile into separate sections in a vertical 9:16 clip.",
+      "options": [
+        [
+          "Size",
+          "9:16 · TikTok & Reels"
+        ],
+        [
+          "Length",
+          "15 seconds"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a home organization scene",
+      "lead": "Pick the storage space that matches the organizer.",
+      "chips": [
+        {
+          "id": "drawers",
+          "label": "Drawer reset"
+        },
+        {
+          "id": "pantry",
+          "label": "Pantry shelf"
+        },
+        {
+          "id": "closet",
+          "label": "Closet storage"
+        },
+        {
+          "id": "entryway",
+          "label": "Entryway reset"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:tpl-home-g2",
+          "label": "Linen closet stacked into woven baskets",
+          "chips": [
+            "drawers",
+            "closet"
+          ],
+          "prompt": "Keep the stacked baskets and clear shelf spacing visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:b1-before-after-videos-result",
+          "label": "Desk cables routed into one organizer",
+          "chips": [
+            "drawers"
+          ],
+          "prompt": "Route the desk cables through the compact black organizer and keep the clear desk visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-home-m3-pantry",
+          "label": "Organized pantry jars and bins",
+          "chips": [
+            "pantry"
+          ],
+          "prompt": "Arrange clear storage jars and plain bins neatly on pantry shelves.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-home-m3-pantry-alt",
+          "label": "Pantry jars and storage bins",
+          "chips": [
+            "pantry"
+          ],
+          "prompt": "Arrange clear pantry jars and plain storage bins neatly on two shelves.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-home-round4-drawer-organizer",
+          "label": "Drawer organizer with wooden dividers",
+          "chips": [
+            "drawers"
+          ],
+          "prompt": "Show the separated utensil sections clearly from above.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:tpl-home-m3-closet",
+          "label": "Organized wardrobe with clothes and shoes",
+          "chips": [
+            "closet"
+          ],
+          "prompt": "Group hanging clothes, folded sweaters, bins, and shoes in a tidy wardrobe.",
+          "kind": "photo"
+        },
+        {
+          "ref": "g:lifestyle-scene/example-08",
+          "label": "Canvas tote at a market",
+          "chips": [
+            "entryway"
+          ],
+          "prompt": "Show the natural canvas tote in a bright market scene with the bag fully visible.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:plat-facebook-size-portrait-backpack",
+          "label": "Commuter backpack shown full length",
+          "chips": [
+            "entryway"
+          ],
+          "prompt": "Show the complete commuter backpack upright against a clean light background.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a home organizer video"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "f:tpl-home-r4-m4",
+        "h": "Show a kitchen drawer reset on a phone",
+        "d": "Show dividers and utensils moving into separate sections so shoppers can see the drawer reset."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:gen2:spokesperson-videos-c4",
+        "h": "Show a home work area in a short video",
+        "d": "Keep the open planner and desk visible so viewers can see how the workspace is arranged."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:gen2:tpl-home-g3",
+        "bad": "n:guide:tpl-home-m5-blur",
+        "good_label": "Fridge bins stay in focus",
+        "bad_label": "Fridge bins lose focus"
+      },
+      {
+        "good": "n:gen2:tpl-home-c2",
+        "bad": "n:guide:tpl-home-m5-crop",
+        "good_label": "Pantry jars stay fully in frame",
+        "bad_label": "The jars are clipped at the frame edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "f:tpl-home-r4-m6-before",
+        "frame": "9:16",
+        "length": 10,
+        "label": "10-second drawer reset frame"
+      },
+      {
+        "ref": "f:tpl-home-r4-m6-after",
+        "frame": "9:16",
+        "length": 15,
+        "label": "15-second organized drawer frame"
+      }
+    ],
+    "after": {
+      "ref": "n:gen2:before-after-videos-g3",
+      "zones": [
+        "Before",
+        "After"
+      ],
+      "items": [
+        "Add before-and-after labels and the organizer name in your video editor.",
+        "Type the size and storage capacity as text from your product information."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make home organization videos from one organizer photo"
+      },
+      "m3": {
+        "h2": "Choose a drawer, pantry, or closet reset"
+      },
+      "m4": {
+        "h2": "Use home organization videos on feeds and listings"
+      },
+      "m5": {
+        "h2": "Start with a clear organizer photo"
+      },
+      "m6": {
+        "h2": "Vertical home organization video frames"
+      },
+      "m7": {
+        "h2": "Add before and after labels after download"
+      },
+      "faq": {
+        "h2": "Questions about home organization videos"
+      }
+    }
   }
 }

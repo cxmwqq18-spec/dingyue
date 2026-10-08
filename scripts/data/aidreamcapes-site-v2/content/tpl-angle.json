@@ -19,16 +19,16 @@
   "tip": "Shoot each side straight on in daylight, and upload the back and base as separate photos so ports and labels come from your real product instead of a guess.",
   "steps": [
     {
-      "t": "Start with the front",
-      "d": "Upload a sharp photo of the front with the product filling most of the frame and nothing else in the shot."
+      "t": "Upload one clear side",
+      "d": "Keep the whole item in frame and face the camera toward the surface you want to show."
     },
     {
-      "t": "Describe the backdrop once",
-      "d": "Write a short line such as \"soft gray seamless backdrop, gentle shadow\" and reuse those exact words for every side."
+      "t": "Name the view and backdrop",
+      "d": "Describe one side, such as the rear ports, then reuse the backdrop wording for the next photo."
     },
     {
-      "t": "Repeat for each view",
-      "d": "Download the result, then upload the back, top, or base and run it again until the set is complete."
+      "t": "Add each angle to the gallery",
+      "d": "Download the view, then place it after the main image in your store gallery."
     }
   ],
   "ideas": [
@@ -64,20 +64,16 @@
   },
   "faq": [
     {
-      "q": "Which views belong in a product photo set?",
-      "a": "Start with a clear front view, then add separately photographed sides and close-ups of details such as ports or controls. Choose views that answer different buyer questions instead of repeating the same angle."
+      "q": "Should I photograph each side separately?",
+      "a": "Yes. Give the back, base, and close details their own sharp source photos when shoppers need to see them."
     },
     {
-      "q": "Will the AI guess what the back of my product looks like?",
-      "a": "It has to if you don't show it. Upload a real photo of every side you want in the set, so details like ports, screws, and labels match the item you ship."
+      "q": "Can one photo reveal a hidden port?",
+      "a": "Use a real photo of that side so the port and its placement come from your item."
     },
     {
-      "q": "How do I keep every angle looking like one set?",
-      "a": "Use the same backdrop and lighting words each time you run it. Small differences can still appear between runs, so pick the results that sit well together."
-    },
-    {
-      "q": "How many product angles should I upload?",
-      "a": "Start with one sharp source photo for the requested view. Do not rely on AI to invent a hidden back or sole; upload a separate reference when that detail matters."
+      "q": "Where do multi-angle photos belong?",
+      "a": "Add the front first, then use side views to show controls, connectors, closures, or other product details."
     }
   ],
   "overview": [
@@ -185,38 +181,234 @@
     ]
   },
   "examples": {
-    "h2": "More multi-angle sets",
-    "lead": "Front, back, top and underside views show the details a single photo can hide.",
+    "h2": "More multi-angle product photos",
+    "lead": "Separate views make small product features easier to see.",
     "groups": [
       {
-        "label": "One speaker, four views",
+        "label": "Product angle examples",
         "items": [
           {
-            "ref": "n:gen2:tpl-angle-g1",
-            "title": "Portable speaker front view on light gray",
+            "ref": "g:packshot-multi-angle/example-02",
+            "title": "Wireless speaker rear connection area",
             "kind": "photo",
-            "product": "portable speaker"
+            "product": "wireless speaker"
           },
           {
-            "ref": "n:gen2:tpl-angle-g2",
-            "title": "Same speaker turned to show the back ports",
+            "ref": "n:gen2:spokesperson-videos-g2",
+            "title": "Phone case held at a desk",
             "kind": "photo",
-            "product": "portable speaker"
-          },
-          {
-            "ref": "n:gen2:tpl-angle-g3",
-            "title": "Top-down view of the speaker's buttons",
-            "kind": "photo",
-            "product": "portable speaker"
+            "product": "phone case"
           },
           {
             "ref": "n:gen2:tpl-angle-g4",
-            "title": "Speaker underside with its rubber feet",
+            "title": "Portable speaker base with rubber feet",
             "kind": "photo",
             "product": "portable speaker"
           }
         ]
       }
     ]
+  },
+  "visual": {
+    "overview": "Show the front, back, top, and useful details from separate photos of the real item. Use a steady backdrop so a product gallery reads as one set.",
+    "strip": [
+      "n:guide:tpl-angle-round4-speaker-controls",
+      "n:gen2:video-hub-g2",
+      "n:gen2:white-background-c3",
+      "n:gen2:h1-video-hub-socks-source",
+      "n:gen2:spokesperson-videos-g4",
+      "n:guide:b1-unboxing-videos-source"
+    ],
+    "steps": {
+      "source": "n:guide:tpl-angle-round4-speaker-controls",
+      "result": "n:guide:tpl-angle-m2-back",
+      "mode": "photo",
+      "prompt": "Photograph this compact rectangular portable speaker from the rear three-quarter angle, with its USB-C and audio ports visible, centered on a light-gray seamless background in a square frame.",
+      "options": [
+        [
+          "Template",
+          "Every Angle"
+        ],
+        [
+          "Size",
+          "Square 1:1"
+        ],
+        [
+          "Views",
+          "One per run"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a useful product angle",
+      "lead": "Pick the surface or detail that answers a buyer question.",
+      "chips": [
+        {
+          "id": "front",
+          "label": "Front view"
+        },
+        {
+          "id": "back",
+          "label": "Back view"
+        },
+        {
+          "id": "texture",
+          "label": "Material detail"
+        },
+        {
+          "id": "hardware",
+          "label": "Controls and hardware"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:ind-electronics-m3-headphones",
+          "label": "Headphones lifted from the box",
+          "chips": [
+            "front"
+          ],
+          "prompt": "Keep both ear cups visible from the front.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:b1-spokesperson-output-bag",
+          "label": "Crossbody bag carried in front",
+          "chips": [
+            "front"
+          ],
+          "prompt": "Keep the bag centered so its shape and clasp are easy to see.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:background-daypack-cropped",
+          "label": "Open daypack and straps",
+          "chips": [
+            "back"
+          ],
+          "prompt": "Show the opening and shoulder straps from behind.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:plat-youtube-shorts-g1",
+          "label": "Daypack lifted by its top handle",
+          "chips": [
+            "back"
+          ],
+          "prompt": "Turn the pack to show the back panel and handle.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:guide:ind-jewelry-accessories-m3-necklace-clasp",
+          "label": "Chain clasp and links",
+          "chips": [
+            "texture"
+          ],
+          "prompt": "Move close enough to show the clasp and chain links.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:h1-photo-hub-lamp",
+          "label": "Lamp shade weave detail",
+          "chips": [
+            "texture"
+          ],
+          "prompt": "Show the linen weave and shade edge clearly.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:examples-g6",
+          "label": "Cork block edge detail",
+          "chips": [
+            "hardware"
+          ],
+          "prompt": "Keep the textured edge and square corner in frame.",
+          "kind": "photo"
+        },
+        {
+          "ref": "n:gen2:ind-fashion-clothing-g3",
+          "label": "Field jacket seam detail",
+          "chips": [
+            "hardware"
+          ],
+          "prompt": "Show the seam and button stitching clearly.",
+          "kind": "photo"
+        }
+      ],
+      "button": "Make a product angle photo"
+    },
+    "uses": [
+      {
+        "frame": "listing",
+        "ref": "n:gen2:spokesperson-videos-1",
+        "h": "Show a speaker in a living room",
+        "d": "A person holding the speaker at home helps shoppers judge its handheld size."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:guide:b1-spokesperson-strip",
+        "h": "Show a compact appliance in a home setting",
+        "d": "Place the compact espresso maker on a kitchen counter so shoppers can picture its size and finish."
+      }
+    ],
+    "input": [
+      {
+        "good": "g:ecommerce-main-image/example-01",
+        "bad": "n:guide:tpl-angle-m5-blur",
+        "good_label": "Travel mug rim stays sharp",
+        "bad_label": "Travel mug rim loses detail"
+      },
+      {
+        "good": "n:gen2:examples-g4",
+        "bad": "n:guide:tpl-angle-m5-crop",
+        "good_label": "Cork block edges stay visible",
+        "bad_label": "Cork block is cut at the edge"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:b1-before-after-videos-source",
+        "frame": "1:1",
+        "label": "Cable organizer on a clear desk"
+      },
+      {
+        "ref": "n:guide:tpl-angle-m6-output-square-r2",
+        "frame": "1:1",
+        "label": "Square speaker views from the front and rear"
+      }
+    ],
+    "after": {
+      "ref": "n:guide:tpl-angle-reuse-speaker-reveal",
+      "zones": [
+        "Gallery order",
+        "Product details"
+      ],
+      "items": [
+        "Place the clearest front image first, then add the back and detail views.",
+        "Type dimensions and compatibility notes in your listing so they stay editable."
+      ]
+    },
+    "titles": {
+      "m2": {
+        "h2": "Make multi-angle product photos from real views"
+      },
+      "m3": {
+        "h2": "Choose the product angle shoppers need"
+      },
+      "m4": {
+        "h2": "Use product angles on listings and stores"
+      },
+      "m5": {
+        "h2": "Start with a sharp product angle photo"
+      },
+      "m6": {
+        "h2": "Square product angle photo examples"
+      },
+      "m7": {
+        "h2": "Add measurements and labels after download"
+      },
+      "faq": {
+        "h2": "Questions about multi-angle product photos"
+      }
+    }
   }
 }
