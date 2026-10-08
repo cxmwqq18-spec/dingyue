@@ -6,7 +6,7 @@ import {
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties } from "react";
 import { list, text, type V2Article, type V2Card, type V2Data, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2Tool } from "./types";
-import { VisualAfter, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
+import { VisualAfter, VisualDirectoryFilter, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual } from "./types";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
@@ -211,11 +211,14 @@ function MoreExamples({ r }: { r: V2Resolvers }) {
   return <p className="meta-line" style={{ marginTop: 18 }}><a href={r.href("/inspiration")}>See start-to-finish product examples →</a></p>;
 }
 
-function Flows({ flows, r }: { flows: V2Flow[]; r: V2Resolvers }) {
+function Flows({ flows, r, filterChips }: { flows: V2Flow[]; r: V2Resolvers; filterChips?: { id: string; label: string }[] }) {
+  const indexesFor = (flow: V2Flow) => (filterChips ?? []).map((chip, index) => ({ chip, index: index + 1 }))
+    .filter(({ chip }) => flow.filterTags?.includes(chip.id))
+    .map(({ index }) => index);
   return (
-    <div className="ex">
+    <div className={`ex${filterChips?.length ? " v-filter-grid" : ""}`}>
       {flows.map((flow) => (
-        <div className="exrow" key={flow.t}>
+        <div className={`exrow${filterChips?.length ? " v-filter-card" : ""}`} data-filter-indexes={filterChips?.length ? indexesFor(flow).join(" ") : undefined} key={flow.t}>
           <div className="meta"><h3>{flow.t}</h3><p>{flow.d}</p>{flow.cta ? <a className="flow-cta" href={r.href(flow.cta.href)}>{flow.cta.label} →</a> : null}</div>
           <div className="flow">
             {flow.steps.map((step, index) => (
@@ -232,6 +235,25 @@ function Flows({ flows, r }: { flows: V2Flow[]; r: V2Resolvers }) {
 }
 
 function VideoHubPage({ data, r }: Props) {
+  const visual = data.visual as V2Visual | undefined;
+  const maker = data.maker as V2Maker | undefined;
+  const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
+  if (visual) return <>
+    <Crumbs items={data.breadcrumbs} r={r} />
+    <PageHero eyebrow={data.eyebrow} lead={data.lead} right={<Collage cards={list<V2Card>(data.heroCards).filter((card) => !visual.picker.cards.some((pick) => pick.image.src === card.image.src))} r={r} />} title={data.h1}>
+      <Maker note={text(data.startNote)} maker={maker ?? { options: [], cta: "Make my video", href: text(data.appHref) }} r={r} />
+    </PageHero>
+    <VisualStrip includeOverview visual={visual} r={r} />
+    <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} visual={visual} r={r} />
+    <VisualPicker eyebrow="Choose a tool" pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} />
+    <VisualUses visual={visual} r={r} />
+    <VisualInput visual={visual} r={r} />
+    <VisualOutputs visual={visual} r={r} />
+    <VisualAfter visual={visual} r={r} />
+    <Faq items={data.faq} title="Questions about AI video" r={r} />
+    <Reading items={list<V2Article>(data.reading)} r={r} />
+    <CtaBand href={text(data.appHref)} lead={text(data.ctaLead) || "Upload a product photo and see the cost before you start."} r={r} title="Make your first video today" />
+  </>;
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
@@ -268,14 +290,24 @@ function ToolPage({ data, r }: Props) {
   const pairs = list<{ before: V2Image; after: V2Image }>(data.pairs);
   const maker = data.maker as V2Maker;
   const visual = data.visual as V2Visual | undefined;
+  const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const video = data.group === "video";
+  const photoHub = data.id === "photo-hub";
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} label={maker.cta} r={r} />} right={heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.urlInput ? "/app/create?tool=url-to-video" : maker.href} label={maker.cta} r={r} />} right={photoHub && visual ? <Collage cards={hero.cards ?? []} r={r} /> : heroMedia ? <HeroMedia media={heroMedia} r={r} /> : hero.single ? <Single image={hero.single} r={r} /> : <Collage cards={hero.cards ?? []} r={r} />} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
       </PageHero>
-      {visual ? <>
+      {visual && photoHub ? <>
+        <VisualStrip includeOverview visual={visual} r={r} />
+        <VisualSteps buttonLabel={maker.cta} visual={visual} r={r} />
+        <VisualPicker eyebrow="Choose a tool" pageId={data.id} relatedGroups={relatedGroups} visual={visual} r={r} />
+        <VisualUses visual={visual} r={r} />
+        <VisualInput visual={visual} r={r} />
+        <VisualOutputs visual={visual} r={r} />
+        <VisualAfter visual={visual} r={r} />
+      </> : visual ? <>
         <VisualStrip visual={visual} r={r} />
         {gallery?.images.length ? <Section eyebrow="Examples" title={visual.titles?.gallery?.h2 ?? `What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null}
         {pairs.length ? <Section eyebrow="Before and after" title={visual.titles?.beforeAfter?.h2 ?? "Your photo, then the result"}><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null}
@@ -460,9 +492,10 @@ function CollectionPage({ data, r }: Props) {
 function IndexPage({ data, r }: Props) {
   const cards = list<V2Card>(data.cards);
   const filters = data.filters as { types: [string, string][]; industries: [string, string][]; platforms: [string, string][] } | undefined;
-  const items = list<{ label: string; href: string; text: string; image: V2Image }>(data.items);
+  const items = list<{ label: string; href: string; text: string; image: V2Image; filterTags?: string[] }>(data.items);
   const articles = list<{ title: string; summary: string; minutes: number; href: string; image: V2Image }>(data.articles);
   const cta = data.cta as { title: string; lead: string; href: string } | undefined;
+  const visual = data.visual as V2Visual | undefined;
   const filterRow = (label: string, key: string, options: [string, string][]) => (
     <div className="frow">
       <span className="fl">{label}</span>
@@ -474,6 +507,26 @@ function IndexPage({ data, r }: Props) {
     <>
       <Crumbs items={data.breadcrumbs} r={r} />
       <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
+      {visual ? <>
+        <VisualStrip includeOverview visual={visual} r={r} />
+        <VisualSteps buttonLabel={visual.steps?.mode === "photo" ? "Make my product photo" : "Make my video"} visual={visual} r={r} />
+        {cards.length ? <VisualDirectoryFilter eyebrow="Browse templates" pageId={data.id} visual={visual}>
+          <TemplateGrid cards={cards} filterChips={visual.picker.chips} r={r} />
+        </VisualDirectoryFilter> : null}
+        {items.length ? <VisualDirectoryFilter eyebrow={data.id === "platforms" ? "Browse platforms" : "Browse industries"} pageId={data.id} visual={visual}>
+          <div className="cardlist v-filter-grid">
+            {items.map((item) => {
+              const indexes = visual.picker.chips.map((chip, index) => ({ chip, index: index + 1 })).filter(({ chip }) => (item.filterTags ?? []).includes(chip.id)).map(({ index }) => index);
+              return <article className="cardlist-card v-filter-card" data-filter-indexes={indexes.join(" ")} key={item.href}>
+                <Img image={item.image} r={r} />
+                <div><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></div>
+              </article>;
+            })}
+          </div>
+        </VisualDirectoryFilter> : null}
+        <Faq items={data.faq} title="Questions" r={r} />
+        {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
+      </> : <>
       <section style={{ paddingBottom: 30 }}><div className="wrap"><Intro paras={list<string>(data.intro)} r={r} /></div></section>
       {cards.length && filters ? (
         <section style={{ paddingBottom: 88 }}>
@@ -518,6 +571,7 @@ function IndexPage({ data, r }: Props) {
       ) : null}
       <Faq items={data.faq} title="Questions" r={r} />
       {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
+      </>}
     </>
   );
 }
@@ -678,6 +732,20 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
     );
   }
   if (layout === "examples") {
+    const visual = data.visual as V2Visual | undefined;
+    if (visual) return <>
+      {hero}
+      <VisualStrip includeOverview visual={visual} r={r} />
+      <VisualDirectoryFilter eyebrow="Browse examples" pageId={data.id} visual={visual}>
+        <Flows filterChips={visual.picker.chips} flows={list<V2Flow>(data.flows)} r={r} />
+        <div className="v-directory-related">
+          <h3>Results by template</h3>
+          <ul>{list<{ label: string; href: string }>(data.relatedTemplates).map((item) => <li key={item.href}><a href={r.href(item.href)}>{item.label}</a></li>)}</ul>
+        </div>
+      </VisualDirectoryFilter>
+      <Faq items={data.faq} title="Questions" r={r} />
+      {(data.cta as { href?: string } | undefined)?.href ? <CtaBand note={text(data.startNote)} href={text((data.cta as { href: string }).href)} lead={text((data.cta as { lead: string }).lead)} r={r} title={text((data.cta as { title: string }).title)} /> : null}
+    </>;
     return (
       <>
         {hero}

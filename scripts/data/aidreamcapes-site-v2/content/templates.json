@@ -4,7 +4,7 @@
   "description": "Browse product ad templates for photos and short videos. Pick a style, add your product photo, and receive a new image or clip in the same look. Start today.",
   "h1": "Product Ad Templates You Can Use With One Photo",
   "eyebrow": "Template library",
-  "lead": "Product ad templates let you pick a look you like, add a shot of your own product, and get a new photo or short video in that same style.",
+  "lead": "Browse product ad templates by format, industry, or platform. Open any card to see the example and start from one product photo.",
   "card": "Ready-made looks for videos and photos. Pick one and add your product.",
   "secondary_keywords": [
     "product photo templates",
@@ -13,7 +13,8 @@
     "social media ad templates"
   ],
   "intro": [
-    "Each template is a ready-made style for a product photo or short video, shown with an example so you know what to expect. Choose one that fits your product and where you'll post it, like a close-up detail shot for Amazon or a drink pour for TikTok. Upload a photo of your own product, add a line about the setting if you like, and you'll get a result in the same style. Photos are square by default. Videos come in 9:16, 1:1, or 16:9 and last 6, 10, 15, or 30 seconds."
+    "Each template is a ready-made style for a product photo or short video, shown with an example so you know what to expect. Choose one that fits your product and where you'll post it, like a close-up detail shot for Amazon or a drink pour for TikTok. Upload a photo of your own product, add a line about the setting if you like, and you'll get a result in the same style. Photos are square by default. Videos come in 9:16, 1:1, or 16:9 and last 6, 10, 15, or 30 seconds.",
+    "Add a photo of your product to make a new image or video in a similar style. Photos are square by default; videos can be 9:16, 1:1, or 16:9 and last 6, 10, or 15 seconds."
   ],
   "faq": [
     {
@@ -27,6 +28,159 @@
     {
       "q": "How do I choose a template for my product?",
       "a": "Choose by the buyer moment you need: white background for a listing, lifestyle for context, demo for use, or a creator-style ad with an AI-generated person."
+    }
+  ],
+  "visual": {
+    "strip": [
+      "n:gen2:tpl-angle-c3",
+      "n:gen2:tpl-angle-c4",
+      "n:gen2:tpl-size-c4",
+      "n:gen2:tpl-color-c2",
+      "n:gen2:tpl-box-c3",
+      "n:gen2:tpl-detail-c1"
+    ],
+    "steps": {
+      "source": "n:guide:black-friday-m2-source",
+      "sourceAlt": "Brown leather duffel bag on a dark studio background.",
+      "result": "n:guide:black-friday-m2-result",
+      "mode": "photo",
+      "prompt": "A brown leather duffel rests on a pale wood bench beside a bright window.",
+      "options": [
+        [
+          "Template",
+          "Studio Lighting"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    },
+    "picker": [
+      {
+        "id": "photo",
+        "label": "Photo"
+      },
+      {
+        "id": "video",
+        "label": "Video"
+      },
+      {
+        "id": "beauty-wellness",
+        "label": "Beauty & wellness"
+      },
+      {
+        "id": "fashion-shoes",
+        "label": "Fashion & shoes"
+      },
+      {
+        "id": "electronics",
+        "label": "Electronics"
+      },
+      {
+        "id": "food-drinks",
+        "label": "Food & drink"
+      },
+      {
+        "id": "home-living",
+        "label": "Home"
+      },
+      {
+        "id": "accessories",
+        "label": "Accessories"
+      },
+      {
+        "id": "social-platforms",
+        "label": "Social platforms"
+      },
+      {
+        "id": "amazon",
+        "label": "Amazon"
+      },
+      {
+        "id": "shopify",
+        "label": "Shopify"
+      }
+    ],
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "titles": {
+      "m2": {
+        "h2": "How to choose a product ad template in 3 steps"
+      },
+      "m3": {
+        "h2": "Browse product ad templates",
+        "lead": "Filter the complete template list by format, industry, or platform."
+      }
+    },
+    "directoryFilters": {
+      "templateGroups": {
+        "beauty-wellness": {
+          "industries": [
+            "beauty-skincare",
+            "health-wellness"
+          ]
+        },
+        "fashion-shoes": {
+          "industries": [
+            "fashion-clothing",
+            "shoes"
+          ]
+        },
+        "electronics": {
+          "industries": [
+            "electronics"
+          ]
+        },
+        "food-drinks": {
+          "industries": [
+            "food-drinks"
+          ]
+        },
+        "home-living": {
+          "industries": [
+            "home-living"
+          ]
+        },
+        "accessories": {
+          "industries": [
+            "jewelry-accessories"
+          ]
+        },
+        "social-platforms": {
+          "platforms": [
+            "tiktok",
+            "instagram",
+            "facebook",
+            "youtube-shorts"
+          ]
+        },
+        "amazon": {
+          "platforms": [
+            "amazon"
+          ]
+        },
+        "shopify": {
+          "platforms": [
+            "shopify"
+          ]
+        }
+      }
+    }
+  },
+  "steps": [
+    {
+      "t": "Choose a product template",
+      "d": "Pick a style that matches the photo or clip you want to make."
+    },
+    {
+      "t": "Preview its scene and format",
+      "d": "Compare the example with the placement where you plan to publish the result."
+    },
+    {
+      "t": "Start from your product photo",
+      "d": "Open the linked tool and add a clear image of the item you sell."
     }
   ]
 }

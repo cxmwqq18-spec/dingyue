@@ -4,7 +4,7 @@
   "description": "Browse AI product content by industry, from skincare and sneakers to snacks and home decor. See which photos and videos suit what you sell, then make yours.",
   "h1": "AI Product Content by Industry, Matched to What You Sell",
   "eyebrow": "Browse by industry",
-  "lead": "AI product content looks different in every industry. Pick your category to see which photos and short videos matter most for it, plus practical ideas you can make from a single product photo.",
+  "lead": "Browse product photo and short video ideas by the category you sell in. Open an industry page for practical examples and tool links.",
   "card": "Photo and video ideas matched to what you sell.",
   "secondary_keywords": [
     "AI product photos by category",
@@ -27,6 +27,114 @@
     {
       "q": "Can I use a phone photo to get started?",
       "a": "Yes. Use a sharp, evenly lit phone photo with the whole product in frame; professional equipment is not required. Upload only a photo you own or have permission to use."
+    }
+  ],
+  "visual": {
+    "strip": [
+      "n:gen2:photo-hub-g2",
+      "n:gen2:ind-health-wellness-g2",
+      "n:guide:tiktok-headphones-square",
+      "n:guide:ind-electronics-m2-source",
+      "n:guide:ind-home-living-m3-lit-lamp",
+      "n:gen2:ind-home-living-g4"
+    ],
+    "steps": {
+      "source": "n:guide:b1-video-ads-source",
+      "sourceAlt": "Sage-green insulated lunch bag on a bright kitchen counter.",
+      "result": "n:guide:b1-video-ads-result",
+      "mode": "photo",
+      "prompt": "A hand lifts this sage lunch bag beside a packed lunch on a bright kitchen counter.",
+      "options": [
+        [
+          "Category",
+          "Food & drink"
+        ],
+        [
+          "Output",
+          "Lifestyle photo"
+        ]
+      ]
+    },
+    "picker": [
+      {
+        "id": "beauty-accessories",
+        "label": "Beauty & accessories"
+      },
+      {
+        "id": "fashion-shoes",
+        "label": "Fashion & shoes"
+      },
+      {
+        "id": "home-tech",
+        "label": "Home & electronics"
+      },
+      {
+        "id": "food-wellness",
+        "label": "Food & wellness"
+      }
+    ],
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "titles": {
+      "m2": {
+        "h2": "How to find ideas for your product category in 3 steps"
+      },
+      "m3": {
+        "h2": "Browse ideas by industry",
+        "lead": "Filter the category links to find examples for the products you sell."
+      }
+    },
+    "directoryFilters": {
+      "items": {
+        "/industries/beauty-skincare": [
+          "beauty-accessories"
+        ],
+        "/industries/fashion-clothing": [
+          "fashion-shoes"
+        ],
+        "/industries/shoes": [
+          "fashion-shoes"
+        ],
+        "/industries/jewelry-accessories": [
+          "beauty-accessories"
+        ],
+        "/industries/electronics": [
+          "home-tech"
+        ],
+        "/industries/health-wellness": [
+          "food-wellness"
+        ],
+        "/industries/food-drinks": [
+          "food-wellness"
+        ],
+        "/industries/home-living": [
+          "home-tech"
+        ]
+      },
+      "itemImages": {
+        "/industries/beauty-skincare": "n:skincare-vertical",
+        "/industries/fashion-clothing": "n:gen2:ind-fashion-clothing-g1",
+        "/industries/shoes": "n:gen2:ind-shoes-g4",
+        "/industries/jewelry-accessories": "n:guide:ind-jewelry-accessories-m2-source",
+        "/industries/electronics": "n:guide:ind-electronics-m4-headphones",
+        "/industries/food-drinks": "n:guide:ind-food-drinks-m2-source",
+        "/industries/home-living": "n:guide:ind-home-living-m2-source"
+      }
+    }
+  },
+  "steps": [
+    {
+      "t": "Pick your closest product category",
+      "d": "Start with the category that best matches the item you sell."
+    },
+    {
+      "t": "Review what shoppers look for",
+      "d": "Each page highlights product details and scenes relevant to that category."
+    },
+    {
+      "t": "Open a matching example",
+      "d": "Follow a link to a photo or video tool for your next asset."
     }
   ]
 }

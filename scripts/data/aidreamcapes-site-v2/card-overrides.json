@@ -1,4 +1,38 @@
 {
+  "video-hub": {
+    "images": {
+      "creator": {
+        "ref": "g:ugc-still-ad/example-04",
+        "alt": "Person carrying a reusable bottle outdoors in natural daylight."
+      }
+    },
+    "tools": {
+      "url-to-video": {
+        "ref": "g:ecommerce-main-image/example-01",
+        "alt": "Matte ceramic travel mug shown in a clean online listing photo."
+      }
+    }
+  },
+  "photo-hub": {
+    "images": {
+      "white": {
+        "ref": "g:ecommerce-main-image/hero-output",
+        "alt": "Clean ecommerce main image of a matte ceramic travel mug on a neutral studio background."
+      },
+      "life": {
+        "ref": "g:lifestyle-scene/example-07",
+        "alt": "Close view of a canvas tote bag weave and stitched handle in natural light."
+      }
+    }
+  },
+  "templates": {
+    "images": {
+      "creator": {
+        "ref": "n:guide:b1-spokesperson-card",
+        "alt": "Presenter holding plain black over-ear headphones at chest height in a bright living room."
+      }
+    }
+  },
   "ind-fashion-clothing": {
     "images": {
       "retargeting-video-ad": {

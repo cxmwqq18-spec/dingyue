@@ -2899,6 +2899,69 @@
         540
       ],
       "clipPoster": true
+    },
+    "video-hub-h1-bike": {
+      "w": 540,
+      "h": 960,
+      "alt": "Hand checks the hinge on a gray folding electric bicycle.",
+      "variants": [
+        540
+      ],
+      "clipPoster": true
+    },
+    "video-hub-h1-carry": {
+      "w": 540,
+      "h": 960,
+      "alt": "A person arranges a tablet and accessories in a black commuter bag.",
+      "variants": [
+        540
+      ],
+      "clipPoster": true
+    },
+    "video-hub-h1-steamer": {
+      "w": 540,
+      "h": 960,
+      "alt": "A hand fills a white garment steamer before use.",
+      "variants": [
+        540
+      ],
+      "clipPoster": true
+    },
+    "video-hub-h1-headphones": {
+      "w": 540,
+      "h": 960,
+      "alt": "Dark over-ear headphones appear on a laptop product page.",
+      "variants": [
+        540
+      ],
+      "clipPoster": true
+    },
+    "video-hub-h1-sneaker": {
+      "w": 540,
+      "h": 960,
+      "alt": "White running shoes with coral accents are adjusted before a run.",
+      "variants": [
+        540
+      ],
+      "clipPoster": true
+    },
+    "video-hub-h1-product-page": {
+      "w": 540,
+      "h": 960,
+      "alt": "A white travel mug sits beside a plant and books while a product page is open.",
+      "variants": [
+        540
+      ],
+      "clipPoster": true
+    },
+    "examples-h1-bottle-frame": {
+      "w": 540,
+      "h": 960,
+      "alt": "Hands lift a sage-green bottle and pour water from it.",
+      "variants": [
+        540
+      ],
+      "clipPoster": true
     }
   },
   "gen2": {
@@ -7321,6 +7384,96 @@
         1280
       ],
       "source": "gallery-brief-c2.json"
+    },
+    "gen2:h1-photo-hub-candle-source": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "White ceramic candle jar with a matching lid on a neutral surface.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-photo-hub-candle-result": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "White ceramic candle jar revealed inside an open kraft carton with pale tissue.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-video-hub-socks-source": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Folded cream merino wool socks with visible ribbed knit texture.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-video-hub-socks-blurred": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "The same cream wool socks softened by heavy blur.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-examples-candle-living": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Plain white ceramic candle jar with its matching lid on a living room coffee table beside a book and knit throw.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-examples-candle-bath": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "White ceramic candle jar and matching lid on a bathtub edge beside a folded linen towel.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-examples-boots-doorway": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Pair of brown leather Chelsea boots beside a wooden front door under a coat and umbrella.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-examples-handbag-cafe": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Tan leather handbag with a small gold clasp on a cafe table beside a ceramic latte.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-examples-hoodie-flatlay": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Plain heather-gray pullover hoodie arranged on a wooden bench with a knit beanie and scarf.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-examples-lipstick-source": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Single coral lipstick in a matte black tube standing on a warm off-white studio surface.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-examples-lipstick-vanity": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Coral lipstick in a matte black tube beside a round vanity mirror and white flower.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-examples-lipstick-swatch": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Coral lipstick beside a matching color swatch on a pale cream card.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-examples-phonecase-source": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Pale blue phone case on a simple acrylic display block, with its camera opening in focus.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-examples-phonecase-autumn": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "The same pale blue phone case among dry autumn leaves on a stone surface.",
+      "source": "gen.sh"
+    },
+    "gen2:h1-photo-hub-lamp": {
+      "w": 1024,
+      "h": 1024,
+      "alt": "Matte ivory ceramic table lamp with a linen shade on a pure white background.",
+      "source": "gen.sh"
     }
   },
   "guide": {

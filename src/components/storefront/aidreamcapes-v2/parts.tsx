@@ -247,10 +247,10 @@ export function Faq({ items, title = "Questions", r }: { items: V2Faq[]; title?:
   );
 }
 
-export function TemplateCard({ card, r }: { card: V2Card; r: V2Resolvers }) {
-  if (card.cardType === "case") return <CaseCard card={card} r={r} />;
+export function TemplateCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2Resolvers; filterIndexes?: number[] }) {
+  if (card.cardType === "case") return <CaseCard card={card} r={r} filterIndexes={filterIndexes} />;
   return (
-    <article className="tc" data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
+    <article className={`tc${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
         <span className={card.kind === "video" ? "kind v" : "kind"}>{card.kind === "video" ? "Video" : "Photo"}</span>
         <Img image={card.image} r={r} />
@@ -266,10 +266,10 @@ export function TemplateCard({ card, r }: { card: V2Card; r: V2Resolvers }) {
 }
 
 /** A page-specific example. Case cards keep the result, format and next action together. */
-export function CaseCard({ card, r }: { card: V2Card; r: V2Resolvers }) {
+export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2Resolvers; filterIndexes?: number[] }) {
   const video = card.video;
   return (
-    <article className="tc case-card" data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
+    <article className={`tc case-card${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
         <span className={card.kind === "video" ? "kind v" : "kind"}>{card.label ?? (card.kind === "video" ? "Example clip" : "Example photo")}</span>
         {video ? (
@@ -287,9 +287,12 @@ export function CaseCard({ card, r }: { card: V2Card; r: V2Resolvers }) {
   );
 }
 
-export function TemplateGrid({ cards, r, id }: { cards: V2Card[]; r: V2Resolvers; id?: string }) {
+export function TemplateGrid({ cards, r, id, filterChips }: { cards: V2Card[]; r: V2Resolvers; id?: string; filterChips?: { id: string; label: string }[] }) {
   if (!cards.length) return null;
-  return <div className="tgrid" id={id}>{cards.map((card) => <TemplateCard card={card} key={card.key} r={r} />)}</div>;
+  const indexesFor = (card: V2Card) => (filterChips ?? []).map((chip, index) => ({ chip, index: index + 1 }))
+    .filter(({ chip }) => card.filterTags ? card.filterTags.includes(chip.id) : chip.id === card.kind || card.industries.includes(chip.id) || card.platforms.includes(chip.id))
+    .map(({ index }) => index);
+  return <div className={`tgrid${filterChips?.length ? " v-filter-grid" : ""}`} id={id}>{cards.map((card) => <TemplateCard card={card} filterIndexes={indexesFor(card)} key={card.key} r={r} />)}</div>;
 }
 
 function ExampleCard({ item, r }: { item: V2Example; r: V2Resolvers }) {

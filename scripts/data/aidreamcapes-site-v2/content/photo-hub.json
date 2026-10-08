@@ -4,7 +4,7 @@
   "description": "Make square listing, lifestyle, on-model, and detail images with an AI product photo generator. Start from a product photo; review results before publishing.",
   "h1": "AI Product Photo Generator for Listing, Lifestyle, and Detail Photos",
   "eyebrow": "AI photo tools",
-  "lead": "Use the AI product photo generator to make square listing, lifestyle, on-model, or detail photos from a product photo. Compare each result with your source before publishing.",
+  "lead": "Use an AI product photo generator to make listing, lifestyle, on-model, or detail photos from one product image. Choose the photo tool that fits where you need to show the item.",
   "secondary_keywords": [
     "AI product image generator",
     "AI photos for Shopify products",
@@ -12,8 +12,8 @@
     "AI product photo templates"
   ],
   "intro": [
-    "This is where every AIVideosUGC photo tool starts. Upload one photo of your product, then either pick a template or write a short description of the shot you want. You get back a new product image, square by default, that you can download and use right away. Your original photo and every result stay private in your account.",
-    "It's built for small store owners who need more than one picture per product but don't have time to book a shoot. From a single phone photo you can make a clean white background shot, place the item on a kitchen counter or a beach towel, show it on a model, or set up a close-up of the stitching. A good order is the main listing photo first, then scenes that help shoppers picture the product in their own home."
+    "Start with one clear product photo and choose the kind of image you need: a white-background listing photo, a lifestyle scene, an on-model view, a new background, or a social ad still. Each tool opens its own templates and options.",
+    "Photos are square by default. Download each result and add exact prices, captions, or offers in your editor."
   ],
   "benefits": [
     {
@@ -32,15 +32,15 @@
   "steps": [
     {
       "t": "Upload a product photo",
-      "d": "A well-lit shot with the whole product in frame gives the cleanest result. Your phone camera is enough."
+      "d": "A clear image with the whole item in frame gives you a useful starting point."
     },
     {
-      "t": "Pick a template or describe it",
-      "d": "Choose a look such as white background or lifestyle scene, or write a line like \u201cceramic mug on a wooden table by a window.\u201d"
+      "t": "Choose a photo direction",
+      "d": "Pick a white background, lifestyle, on-model, new-background, or social ad tool."
     },
     {
-      "t": "Download, or change the look",
-      "d": "Save the square image to your computer, or change the template or wording and make a new one."
+      "t": "Download your photo",
+      "d": "Save the square image, then add any exact wording in your editor."
     }
   ],
   "uses": [
@@ -65,7 +65,7 @@
     "options": [
       [
         "Size",
-        "Square \u00b7 1:1"
+        "Square · 1:1"
       ],
       [
         "Start with",
@@ -225,10 +225,10 @@
         "label": "Listing and lifestyle",
         "items": [
           {
-            "ref": "n:gen2:photo-hub-g1",
-            "title": "Glass perfume bottle cut out on pure white",
+            "ref": "n:gen2:h1-photo-hub-lamp",
+            "title": "Matte ceramic table lamp cut out on pure white",
             "kind": "photo",
-            "product": "glass perfume bottle"
+            "product": "ceramic table lamp"
           },
           {
             "ref": "n:gen2:photo-hub-g2",
@@ -256,5 +256,179 @@
         ]
       }
     ]
+  },
+  "visual": {
+    "strip": [
+      "n:gen2:ind-food-drinks-20",
+      "n:gen2:photo-hub-g2",
+      "n:gen2:photo-hub-g3",
+      "n:gen2:tpl-detail-g2",
+      "n:gen2:examples-g8",
+      "n:planter-pack"
+    ],
+    "steps": {
+      "source": "n:gen2:h1-photo-hub-candle-source",
+      "sourceAlt": "Plain white ceramic candle jar with its matching lid on a neutral surface.",
+      "result": "n:gen2:h1-photo-hub-candle-result",
+      "mode": "photo",
+      "prompt": "Hands open a kraft carton to reveal this candle jar among pale tissue.",
+      "options": [
+        [
+          "Photo",
+          "Your product"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a photo tool",
+      "lead": "Open the process that matches the product image you need.",
+      "chips": [
+        {
+          "id": "listing",
+          "label": "Listing and background"
+        },
+        {
+          "id": "styled",
+          "label": "Lifestyle and campaigns"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:h1-photo-hub-lamp",
+          "label": "Make a white background photo",
+          "chips": [
+            "listing"
+          ],
+          "prompt": "",
+          "kind": "photo",
+          "tool": "white-background"
+        },
+        {
+          "ref": "g:lifestyle-scene/example-08",
+          "label": "Create a lifestyle photo",
+          "chips": [
+            "styled"
+          ],
+          "prompt": "",
+          "kind": "photo",
+          "tool": "lifestyle-photos"
+        },
+        {
+          "ref": "g:fashion-editorial/example-08",
+          "label": "Show the product on a model",
+          "chips": [
+            "styled"
+          ],
+          "prompt": "",
+          "kind": "photo",
+          "tool": "model-photos"
+        },
+        {
+          "ref": "g:ecommerce-main-image/example-07",
+          "label": "Change the photo background",
+          "chips": [
+            "listing"
+          ],
+          "prompt": "",
+          "kind": "photo",
+          "tool": "change-background"
+        },
+        {
+          "ref": "g:sale-campaign-key-visual/example-07",
+          "label": "Make a social ad still",
+          "chips": [
+            "styled"
+          ],
+          "prompt": "",
+          "kind": "photo",
+          "tool": "social-ad-photos"
+        }
+      ],
+      "button": "Open the photo creator"
+    },
+    "uses": [
+      {
+        "frame": "browser",
+        "ref": "n:gen2:plat-amazon-g3",
+        "h": "Product listings",
+        "d": "Use a clear product view where shoppers can see the item and its shape."
+      },
+      {
+        "frame": "post",
+        "ref": "n:gen2:plat-facebook-c4",
+        "h": "Social posts",
+        "d": "Pair a product image with your headline and offer added in your editor."
+      }
+    ],
+    "input": [
+      {
+        "good": "n:guide:plat-facebook-size-square-backpack",
+        "bad": "n:guide:home-daypack-blurred",
+        "good_label": "Black commuter backpack shown clearly in full",
+        "bad_label": "Backpack details softened by blur"
+      },
+      {
+        "good": "n:gen2:ind-shoes-g2",
+        "bad": "n:guide:ind-shoes-m5-soft-focus",
+        "good_label": "Running sneaker heel and stitching in focus",
+        "bad_label": "Running shoe softened by blur"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:gen2:ind-jewelry-accessories-g1",
+        "frame": "1:1",
+        "label": "Square listing photo"
+      },
+      {
+        "ref": "n:gen2:occ-black-friday-g3",
+        "frame": "1:1",
+        "label": "Square lifestyle photo"
+      },
+      {
+        "ref": "n:gen2:ind-fashion-clothing-g4",
+        "frame": "1:1",
+        "label": "Square social ad still"
+      }
+    ],
+    "titles": {
+      "m2": {
+        "h2": "How to make a product photo in 3 steps"
+      },
+      "m3": {
+        "h2": "Choose a product photo tool",
+        "lead": "Select the type of photo you need for your listing or campaign."
+      },
+      "m4": {
+        "h2": "Where to use product photos"
+      },
+      "m5": {
+        "h2": "Start with a clear product photo"
+      },
+      "m6": {
+        "h2": "Square product photos for each placement"
+      },
+      "m7": {
+        "h2": "Add your final details after download"
+      },
+      "examples": {
+        "h2": "Product photo examples"
+      }
+    },
+    "after": {
+      "ref": "n:gen2:plat-shopify-g1",
+      "zones": [
+        "Your price",
+        "Your headline"
+      ],
+      "items": [
+        "Add exact prices and offers in your editor.",
+        "Compare labels, color, and small details with the source photo."
+      ]
+    }
   }
 }

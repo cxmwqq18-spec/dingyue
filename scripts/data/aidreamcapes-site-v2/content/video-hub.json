@@ -4,7 +4,20 @@
   "description": "Our AI video generator for ecommerce turns one product photo into a 6, 10, 15, or 30 second clip for TikTok, Reels, or your store. Pick a video type to start.",
   "h1": "AI Video Generator for Ecommerce: Choose a Video Type",
   "eyebrow": "AI video tools",
-  "lead": "The AI video generator for ecommerce offers ads, demos, unboxing, before-and-after clips, and motion from still photos. Add a product photo or describe the scene, then choose the video size.",
+  "lead": "Use an AI video generator for ecommerce to turn a photo or product page into a short product clip. Choose a video type, set the frame and length, then describe the scene.",
+  "maker": {
+    "options": [
+      [
+        "Frame",
+        "9:16 · 1:1 · 16:9"
+      ],
+      [
+        "Length",
+        "6, 10, or 15 seconds"
+      ]
+    ],
+    "cta": "Make my video"
+  },
   "card": "Short video ads, demos and unboxings made from one product photo.",
   "secondary_keywords": [
     "ecommerce video maker",
@@ -13,8 +26,8 @@
     "vertical product videos for TikTok"
   ],
   "intro": [
-    "AIVideosUGC makes short videos for people who sell online. Add a product photo, choose one video direction, and write one sentence about the scene. Choose 6, 10, 15, or 30 seconds and one of five frames: 9:16, 1:1, 16:9, 4:3, or 3:4.",
-    "Creator-style ads bring a casual product moment, demos show one action, unboxing clips reveal packaging, before-and-after clips show a visible change, and image-to-video adds motion to a still. Each run makes one clip, so you can test another opening by changing the scene sentence."
+    "Choose a video direction for the product moment you want to show: a creator-style ad, a product demonstration, an unboxing, a visible change, or motion added to a still photo. Start from a product photo or a product page link, then describe one clear action.",
+    "Choose a 9:16, 1:1, or 16:9 frame and a length of 6, 10, or 15 seconds. Each run makes one clip, and the credit cost appears before you start."
   ],
   "benefits": [
     {
@@ -32,16 +45,16 @@
   ],
   "steps": [
     {
-      "t": "Add your product photo",
-      "d": "Upload a sharp picture of what you sell, or skip this step and describe it in words."
+      "t": "Add a product photo or link",
+      "d": "Start with a clear product picture or a public product page that shows the item."
     },
     {
-      "t": "Choose a video type and size",
-      "d": "Pick creator-style, demo, unboxing, before-and-after, or photo-to-video. Set the length and format, then write one sentence about the scene."
+      "t": "Set the scene and frame",
+      "d": "Choose a product action, then pick a frame and length for the placement."
     },
     {
-      "t": "Save it or make another",
-      "d": "Save the clip to your device. For a different opening or setting, edit your sentence and make another version."
+      "t": "Review and download the clip",
+      "d": "Save the version that fits the product and placement you selected."
     }
   ],
   "faq": [
@@ -68,16 +81,12 @@
   ],
   "overview": [
     {
-      "h2": "Choose the job before you write the prompt",
-      "p": "Start with the result you need: a casual product moment, a feature demonstration, a package reveal, a visible transformation, or movement added to a photo you already like. Each direction answers a different shopper question, so naming the job first keeps the scene focused."
+      "h2": "Choose the video type for your product",
+      "p": "A demonstration can show one useful action. An unboxing can reveal what comes in the package. A creator-style ad can frame a quick product moment, while image-to-video adds movement to a still photo."
     },
     {
-      "h2": "One product can support several tests",
-      "p": "Use the same approved product photo with different openings, settings, or actions when you want to compare creative angles. Every run is a separate clip, and the AIVideosUGC editor shows the credit cost before you start."
-    },
-    {
-      "h2": "Plan the file around its destination",
-      "p": "Use 9:16 when the video will fill a vertical feed, 1:1 for a square placement, and 16:9 for a wide store area; 4:3 and 3:4 are also available when the placement calls for them. The finished file is yours to review, edit, and use in commercial ads, product pages, or social posts. Keep the source photo and scene sentence beside each version so your team can repeat a useful angle without guessing what changed later for testing."
+      "h2": "Set the format before you start",
+      "p": "Use 9:16 for a vertical feed, 1:1 for a square placement, or 16:9 for a wide video area. Pick 6, 10, or 15 seconds to match the space where you plan to use the clip."
     }
   ],
   "input_guide": {
@@ -106,23 +115,19 @@
     ]
   },
   "results": {
-    "h2": "What each run gives you",
+    "h2": "Video lengths and frames",
     "items": [
       {
-        "t": "A short product clip",
-        "d": "Choose 6, 10, 15, or 30 seconds. The result is one downloadable clip per run."
+        "t": "6 seconds",
+        "d": "A quick clip for one short product moment."
       },
       {
-        "t": "Five usable shapes",
-        "d": "Generate 9:16, 1:1, 16:9, 4:3, or 3:4 to match the frame a placement needs."
+        "t": "10 seconds",
+        "d": "Room for a simple action or reveal."
       },
       {
-        "t": "A visible price before launch",
-        "d": "The credit charge is shown before generation. If the job fails, the reserved credits return to your balance."
-      },
-      {
-        "t": "A file for commercial editing",
-        "d": "Downloads do not carry a watermark. Add verified offer details, captions, and music in the editing or publishing tool you already use."
+        "t": "15 seconds",
+        "d": "More time to show a product in use."
       }
     ]
   },
@@ -167,7 +172,7 @@
         "d": "Add captions, music, or a voiceover in TikTok, CapCut, Ads Manager, or your usual editor after download, since the generated clip doesn't include them."
       },
       {
-        "t": "Check the product frame by frame",
+        "t": "Review the clip from first to last frame",
         "d": "Look for changes to labels, colors, edges, or small parts before publishing and keep the version that represents the item honestly."
       },
       {
@@ -239,10 +244,10 @@
         "label": "Reveals and room changes",
         "items": [
           {
-            "ref": "n:gen2:video-hub-g3",
-            "title": "Shoebox lid lifted on new sneakers in tissue",
+            "ref": "f:video-hub-h1-bike",
+            "title": "A hand checks the hinge on a folding electric bicycle",
             "kind": "scene",
-            "product": "sneakers"
+            "product": "folding electric bicycle"
           },
           {
             "ref": "n:gen2:video-hub-g4",
@@ -349,5 +354,203 @@
         "d": "Choose [Unboxing Videos](page:unboxing-videos) when the first look inside the package is the main event."
       }
     ]
+  },
+  "visual": {
+    "strip": [
+      "f:video-hub-h1-bike",
+      "f:video-hub-h1-carry",
+      "f:video-hub-h1-steamer",
+      "f:unboxing-experience-v",
+      "f:examples-h1-bottle-frame",
+      "f:video-hub-h1-product-page"
+    ],
+    "steps": {
+      "source": "n:guide:b1-image-to-video-source",
+      "sourceAlt": "Cream ceramic mug with blue flecks, fully visible on a wooden kitchen counter.",
+      "result": "n:guide:b1-image-to-video-result",
+      "mode": "video",
+      "length": 10,
+      "prompt": "Add a curl of steam above the speckled mug in morning light.",
+      "options": [
+        [
+          "Frame",
+          "9:16"
+        ],
+        [
+          "Length",
+          "10 seconds"
+        ]
+      ]
+    },
+    "picker": {
+      "title": "Choose a video type",
+      "lead": "Open the tool that matches the product moment you want to show.",
+      "chips": [
+        {
+          "id": "product-moment",
+          "label": "Show product moments"
+        },
+        {
+          "id": "creator-ad",
+          "label": "Create an ad"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:gen2:ind-health-wellness-g1",
+          "label": "Add motion to a photo",
+          "chips": [
+            "product-moment"
+          ],
+          "prompt": "",
+          "kind": "video",
+          "tool": "image-to-video"
+        },
+        {
+          "ref": "n:gen2:video-ads-g5",
+          "label": "Make a creator-style ad",
+          "chips": [
+            "creator-ad"
+          ],
+          "prompt": "",
+          "kind": "video",
+          "tool": "video-ads"
+        },
+        {
+          "ref": "n:gen2:occ-product-launch-g2",
+          "label": "Show a product in use",
+          "chips": [
+            "product-moment"
+          ],
+          "prompt": "",
+          "kind": "video",
+          "tool": "product-videos"
+        },
+        {
+          "ref": "n:gen2:plat-amazon-c2",
+          "label": "Reveal a boxed product",
+          "chips": [
+            "product-moment"
+          ],
+          "prompt": "",
+          "kind": "video",
+          "tool": "unboxing-videos"
+        },
+        {
+          "ref": "f:before-after-showcases",
+          "label": "Organize a wardrobe",
+          "chips": [
+            "product-moment"
+          ],
+          "prompt": "",
+          "kind": "video",
+          "tool": "before-after-videos"
+        },
+        {
+          "ref": "n:gen2:spokesperson-videos-c1",
+          "label": "Add a presenter to the scene",
+          "chips": [
+            "creator-ad"
+          ],
+          "prompt": "",
+          "kind": "video",
+          "tool": "spokesperson-videos"
+        },
+      {
+        "ref": "g:ecommerce-main-image/example-05",
+          "label": "Start from a product page",
+          "chips": [
+            "creator-ad"
+          ],
+          "prompt": "",
+          "kind": "video",
+          "tool": "url-to-video"
+        }
+      ],
+      "button": "Open the video creator"
+    },
+    "uses": [
+      {
+        "frame": "phone",
+        "ref": "n:gen2:video-hub-g7",
+        "h": "Vertical social posts",
+        "d": "Use a 9:16 clip when the video will fill a vertical feed."
+      },
+      {
+        "frame": "browser",
+        "ref": "n:gen2:ind-jewelry-accessories-g2",
+        "h": "Product detail pages",
+        "d": "Show one movement or feature beside the product photos."
+      }
+    ],
+    "input": [
+      {
+        "good": "g:feed-ad-still/example-07",
+        "bad": "g:feed-ad-still/example-07",
+        "good_label": "Running shoe fully visible in even light",
+        "bad_label": "Darkened running shoe",
+        "darkened": true,
+        "bad_alt": "Running shoe darkened for a visual comparison."
+      },
+      {
+        "good": "n:gen2:h1-video-hub-socks-source",
+        "bad": "n:gen2:h1-video-hub-socks-blurred",
+        "good_label": "Cream wool socks with the knit in focus",
+        "bad_label": "Blurred wool socks",
+        "bad_alt": "Cream wool socks with the knit softened by blur."
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "f:unboxing-experience-v-m8",
+        "frame": "9:16",
+        "label": "Headphone unboxing",
+        "length": 6
+      },
+      {
+        "ref": "n:gen2:product-videos-g4",
+        "frame": "1:1",
+        "label": "Square product demonstration",
+        "length": 10
+      },
+      {
+        "ref": "n:gen2:tpl-compare-c1",
+        "frame": "16:9",
+        "label": "Wide product comparison",
+        "length": 15
+      }
+    ],
+    "titles": {
+      "m2": {
+        "h2": "How to make a product video in 3 steps"
+      },
+      "m3": {
+        "h2": "Choose an AI video tool",
+        "lead": "Select the kind of product clip you want to make."
+      },
+      "m4": {
+        "h2": "Where to use product videos"
+      },
+      "m5": {
+        "h2": "Start with a clear product photo"
+      },
+      "m6": {
+        "h2": "Choose 6, 10, or 15 seconds"
+      },
+      "m7": {
+        "h2": "Finish the clip after download"
+      }
+    },
+    "after": {
+      "ref": "n:gen2:video-hub-g8",
+      "zones": [
+        "Caption",
+        "Offer"
+      ],
+      "items": [
+        "Add exact prices and offer dates in your editor.",
+        "Add current availability and offer conditions before scheduling."
+      ]
+    }
   }
 }

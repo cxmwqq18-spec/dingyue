@@ -3,15 +3,6 @@
   "entries": [
     {
       "image": "/assets/sites/site_aidreamcapes/bundle-sets-v1/bundle-sets/example-01",
-      "rule": "max-two-pages",
-      "pages": [
-        "platforms",
-        "tpl-box",
-        "tpl-head"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/bundle-sets-v1/bundle-sets/example-01",
       "rule": "same-page-type",
       "pageType": "template",
       "pages": [
@@ -102,24 +93,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/feed-ad-still-v1/feed-ad-still/source-input",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "home",
-        "social-ad-photos"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/jewelry-positioning-v1/jewelry-positioning/example-01",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "tpl-detail",
-        "tpl-jewel"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/jewelry-positioning-v1/jewelry-positioning/example-01",
       "rule": "same-page-type",
       "pageType": "template",
@@ -139,47 +112,11 @@
     },
     {
       "image": "/assets/sites/site_aidreamcapes/jewelry-positioning-v1/jewelry-positioning/example-03",
-      "rule": "max-two-pages",
-      "pages": [
-        "industries",
-        "tpl-jewel",
-        "tpl-ugc"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/jewelry-positioning-v1/jewelry-positioning/example-03",
       "rule": "same-page-type",
       "pageType": "template",
       "pages": [
         "tpl-jewel",
         "tpl-ugc"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/lifestyle-scene-v1/lifestyle-scene/hero-output",
-      "rule": "same-page-type",
-      "pageType": "tool",
-      "pages": [
-        "lifestyle-photos",
-        "photo-hub"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/macro-details-v1/macro-details/source-input",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "tpl-detail",
-        "white-background"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/packshot-multi-angle-v1/packshot-multi-angle/example-04",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "tpl-angle",
-        "white-background"
       ]
     },
     {
@@ -220,15 +157,6 @@
     },
     {
       "image": "/assets/sites/site_aidreamcapes/sale-campaign-key-visual-v1/sale-campaign-key-visual/example-02",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "tpl-look",
-        "tpl-sale"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/sale-campaign-key-visual-v1/sale-campaign-key-visual/example-02",
       "rule": "same-page-type",
       "pageType": "template",
       "pages": [
@@ -243,15 +171,6 @@
       "pages": [
         "tpl-sale",
         "tpl-story"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/sale-campaign-key-visual-v1/sale-campaign-key-visual/example-05",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "occ-sale-discount",
-        "tpl-sale"
       ]
     },
     {
@@ -813,42 +732,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/boots-pack",
-      "rule": "max-two-pages",
-      "pages": [
-        "change-background",
-        "examples",
-        "ind-shoes"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/boots-street",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "ind-shoes",
-        "industries"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/candle-bath",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "plat-shopify",
-        "platforms"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/candle-table",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "lifestyle-photos",
-        "occ-holidays"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen/coffee-breakfast",
       "rule": "max-two-pages",
       "pages": [
@@ -880,24 +763,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/handbag-carry",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "industries",
-        "model-photos"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/hoodie-flatlay",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "home",
-        "social-ad-photos"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen/hoodie-pack",
       "rule": "max-two-pages",
       "pages": [
@@ -916,15 +781,6 @@
         "examples",
         "home",
         "model-photos"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/hotsauce-peppers",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "social-ad-photos",
-        "tpl-box"
       ]
     },
     {
@@ -958,77 +814,12 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/lipstick-swatch",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "home",
-        "ind-beauty-skincare"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/lipstick-vanity",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "home",
-        "ind-beauty-skincare",
-        "industries"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/phonecase-desk",
-      "rule": "max-two-pages",
-      "pages": [
-        "change-background",
-        "examples",
-        "plat-amazon"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/phonecase-hand",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "industries",
-        "lifestyle-photos",
-        "spokesperson-videos"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen/phonecase-hand",
       "rule": "same-page-type",
       "pageType": "tool",
       "pages": [
         "lifestyle-photos",
         "spokesperson-videos"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/planter-window",
-      "rule": "max-two-pages",
-      "pages": [
-        "change-background",
-        "industries",
-        "plat-shopify"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/sunglasses-cafe",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "occ-sale-discount",
-        "tpl-angle"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/url-to-video-concept",
-      "rule": "max-two-pages",
-      "pages": [
-        "home",
-        "url-to-video",
-        "video-hub"
       ]
     },
     {
@@ -1052,66 +843,12 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/white-mug",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "photo-hub",
-        "white-background"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/white-mug",
-      "rule": "same-page-type",
-      "pageType": "tool",
-      "pages": [
-        "photo-hub",
-        "white-background"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/white-shoe",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "ind-shoes",
-        "white-background"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/white-sneaker",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "plat-amazon",
-        "platforms"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/white-wallet",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "social-ad-photos",
-        "white-background"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen/white-wallet",
       "rule": "same-page-type",
       "pageType": "tool",
       "pages": [
         "social-ad-photos",
         "white-background"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen/yogamat-pack",
-      "rule": "max-two-pages",
-      "pages": [
-        "change-background",
-        "examples",
-        "ind-health-wellness"
       ]
     },
     {
@@ -1604,15 +1341,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2photo-hub-g4",
-      "rule": "same-page-type",
-      "pageType": "tool",
-      "pages": [
-        "photo-hub",
-        "url-to-video"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-amazon-c1",
       "rule": "max-two-pages",
       "pages": [
@@ -1803,16 +1531,6 @@
       "pages": [
         "plat-tiktok",
         "plat-youtube-shorts"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2product-videos-c2",
-      "rule": "max-two-pages",
-      "pages": [
-        "ind-home-living",
-        "product-videos",
-        "templates",
-        "video-hub"
       ]
     },
     {
@@ -2926,24 +2644,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2video-hub-g1",
-      "rule": "max-two-pages",
-      "pages": [
-        "plat-youtube-shorts",
-        "url-to-video",
-        "video-hub"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2video-hub-g5",
-      "rule": "max-two-pages",
-      "pages": [
-        "image-to-video",
-        "ind-home-living",
-        "video-hub"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2white-background-c1",
       "rule": "max-two-pages",
       "pages": [
@@ -2977,15 +2677,6 @@
       "pages": [
         "url-to-video",
         "white-background"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/presenter",
-      "rule": "max-two-pages",
-      "pages": [
-        "home",
-        "spokesperson-videos",
-        "video-hub"
       ]
     },
     {
@@ -3134,15 +2825,6 @@
     },
     {
       "image": "/assets/sites/site_aidreamcapes/story-ad-vertical-v1/story-ad-vertical/example-02",
-      "rule": "max-two-pages",
-      "pages": [
-        "examples",
-        "tpl-box",
-        "tpl-story"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/story-ad-vertical-v1/story-ad-vertical/example-02",
       "rule": "same-page-type",
       "pageType": "template",
       "pages": [
@@ -3220,15 +2902,6 @@
       "pageType": "template",
       "pages": [
         "tpl-story",
-        "tpl-ugc"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/ugc-still-ad-v1/ugc-still-ad/example-03",
-      "rule": "max-two-pages",
-      "pages": [
-        "occ-holidays",
-        "platforms",
         "tpl-ugc"
       ]
     },

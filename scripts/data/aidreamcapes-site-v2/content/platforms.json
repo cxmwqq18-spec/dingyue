@@ -4,7 +4,7 @@
   "description": "Browse AI ads and product photos by platform, from TikTok and Instagram to Amazon and Shopify. See the sizes and ideas that fit, then make your first one.",
   "h1": "AI Ads and Product Photos by Platform, Sized for Where You Sell",
   "eyebrow": "Choose your channel",
-  "lead": "AI ads and product photos need a different frame on each platform: TikTok, a Facebook feed and an Amazon listing each show your product differently. Pick the one you sell on to see what fits it.",
+  "lead": "Choose a selling platform to find product photo guidance, video formats, and practical ideas for where you publish.",
   "card": "Sizes and ideas for TikTok, Instagram, Facebook, YouTube Shorts, Amazon and Shopify.",
   "secondary_keywords": [
     "social media ad sizes for products",
@@ -12,7 +12,7 @@
     "product photos for Amazon and Shopify",
     "ecommerce ads by channel"
   ],
-  "intro": "Every place you sell has its own screen shape and its own habits. Vertical feeds like TikTok, Instagram Reels and YouTube Shorts want full-screen 9:16 clips, Facebook and Instagram feeds suit a square, and Amazon and Shopify run on clean product photos. The pages below cover six channels: the video sizes and lengths we can make for each, square photos for listings, practical tips, and ideas you can try with one product photo. When a clip or image is ready, you download it and upload it wherever you sell.",
+  "intro": "Each platform uses product photos and short videos in different places. Browse the full list for channel-specific sizes, examples, and tips, then download the file and upload it where you sell.",
   "faq": [
     {
       "q": "Can one vertical video work on TikTok, Reels and Shorts?",
@@ -29,6 +29,96 @@
     {
       "q": "Can I reuse one product creative on every platform?",
       "a": "Choose a ratio for each separate generation; one run makes one video. Add captions, sound, and on-screen text in the platform editor."
+    }
+  ],
+  "visual": {
+    "strip": [
+      "n:gen2:plat-tiktok-g1",
+      "n:gen2:plat-tiktok-g2",
+      "n:gen2:ind-jewelry-accessories-g4",
+      "n:gen2:ind-fashion-clothing-g2",
+      "n:gen2:tpl-size-g3",
+      "n:gen2:tpl-bf-g2"
+    ],
+    "steps": {
+      "source": "n:guide:b1-url-to-video-source",
+      "sourceAlt": "Sage-green lunch container with a smooth lid on a pale kitchen counter.",
+      "result": "n:guide:b1-url-to-video-result",
+      "mode": "photo",
+      "prompt": "This sage-green lunch container sits open with its lid beside it on a pale kitchen counter.",
+      "options": [
+        [
+          "Platform",
+          "Shopify"
+        ],
+        [
+          "Size",
+          "Square"
+        ]
+      ]
+    },
+    "picker": [
+      {
+        "id": "social",
+        "label": "Social feeds"
+      },
+      {
+        "id": "product-pages",
+        "label": "Product pages"
+      }
+    ],
+    "uses": [],
+    "input": [],
+    "outputs": [],
+    "titles": {
+      "m2": {
+        "h2": "How to choose content for a selling platform in 3 steps"
+      },
+      "m3": {
+        "h2": "Browse content by platform",
+        "lead": "Filter the full list to find the format and photo guidance for each channel."
+      }
+    },
+    "directoryFilters": {
+      "items": {
+        "/platforms/tiktok-ads": [
+          "social"
+        ],
+        "/platforms/instagram-ads": [
+          "social"
+        ],
+        "/platforms/facebook-ads": [
+          "social"
+        ],
+        "/platforms/youtube-shorts-ads": [
+          "social"
+        ],
+        "/platforms/amazon-product-photos": [
+          "product-pages"
+        ],
+        "/platforms/shopify-product-photos": [
+          "product-pages"
+        ]
+      },
+      "itemImages": {
+        "/platforms/tiktok-ads": "n:gen2:plat-tiktok-g3",
+        "/platforms/instagram-ads": "n:gen2:plat-shopify-c2",
+        "/platforms/shopify-product-photos": "g:ecommerce-main-image/example-02"
+      }
+    }
+  },
+  "steps": [
+    {
+      "t": "Select where you will publish",
+      "d": "Choose the sales channel or social feed where shoppers will see the product."
+    },
+    {
+      "t": "Select a format for that channel",
+      "d": "Match the image or video shape to the placement where shoppers will see your product."
+    },
+    {
+      "t": "Prepare a product image",
+      "d": "Open a related tool and add a clear source photo before downloading your creative."
     }
   ]
 }

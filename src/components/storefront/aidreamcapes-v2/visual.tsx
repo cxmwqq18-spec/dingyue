@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Img, RichText, Section } from "./parts";
 import { AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type {
@@ -8,6 +9,22 @@ import type {
   V2VisualOutput,
   V2VisualUse
 } from "./types";
+import { TemplateGrid } from "./parts";
+
+const DIRECTORY_FILTER_SELECTORS = Array.from({ length: 16 }, (_, index) => {
+  const value = index + 1;
+  return `.adc2 .v-filter[data-filter-index="${value}"]:checked~.v-filter-grid .v-filter-card:not([data-filter-indexes~="${value}"])`;
+});
+const DIRECTORY_FILTER_FOCUS_SELECTORS = Array.from({ length: 16 }, (_, index) => {
+  const value = index + 1;
+  return `.adc2 .v-filter[data-filter-index="${value}"]:focus-visible~.v-picker-chips label[data-filter-index="${value}"]`;
+});
+const DIRECTORY_FILTER_CSS = `${DIRECTORY_FILTER_SELECTORS.join(",")}{display:none}
+.adc2 .v-filter[data-chip="all"]:focus-visible~.v-picker-chips label[data-filter-chip="all"],${DIRECTORY_FILTER_FOCUS_SELECTORS.join(",")} {outline:3px solid #6e62f2;outline-offset:3px;border-radius:999px}
+.adc2 .v-directory-related{margin-top:32px;padding-top:24px;border-top:1px solid rgba(22,34,54,.12)}
+.adc2 .v-directory-related ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 24px;list-style:none;margin:12px 0 0;padding:0}
+.adc2 .v-directory-related a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:720px){.adc2 .v-directory-related ul{grid-template-columns:repeat(2,minmax(0,1fr))}}`;
 
 function VisualImage({ image, r, className }: { image: V2VisualImage; r: V2Resolvers; className?: string }) {
   return <Img image={{ src: image.src, alt: image.alt, width: image.w, height: image.h }} r={r} className={className} />;
@@ -48,6 +65,7 @@ export function VisualOverview({ visual, r }: { visual: V2Visual; r: V2Resolvers
 
 export function VisualSteps({ visual, r, buttonLabel = "Make my video" }: { visual: V2Visual; r: V2Resolvers; buttonLabel?: string }) {
   const step = visual.steps;
+  if (!step) return null;
   return (
     <Section eyebrow="How it works" title={visual.titles?.m2?.h2 ?? "Three steps"}>
       <div className="v-steps">
@@ -83,16 +101,50 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video" }: { visu
   );
 }
 
-export function VisualPicker({ visual, r, pageId }: { visual: V2Visual; r: V2Resolvers; pageId: string }) {
+export function VisualDirectoryFilter({ visual, pageId, children, eyebrow = "Browse all", title, lead }: {
+  visual: V2Visual; pageId: string; children: ReactNode; eyebrow?: string; title?: string; lead?: string;
+}) {
+  const picker = visual.picker;
+  const pickerId = `visual-directory-${pageId.replace(/[^a-z0-9-]/gi, "-").toLowerCase()}`;
+  return (
+    <>
+      <style dangerouslySetInnerHTML={{ __html: DIRECTORY_FILTER_CSS }} />
+      <Section eyebrow={eyebrow} lead={lead ?? visual.titles?.m3?.lead ?? picker.lead} title={title ?? visual.titles?.m3?.h2 ?? picker.title}>
+        <div className="v-picker" id={pickerId}>
+          <input aria-label="All" className="v-filter" data-chip="all" defaultChecked id={`${pickerId}-all`} name={`${pickerId}-filter`} type="radio" />
+          {picker.chips.map((chip, index) => <input aria-label={chip.label} className="v-filter" data-chip={chip.id} data-filter-index={index + 1} id={`${pickerId}-${chip.id}`} key={chip.id} name={`${pickerId}-filter`} type="radio" />)}
+          <div className="v-picker-chips" role="group" aria-label="Filter directory cards">
+            <label data-filter-chip="all" htmlFor={`${pickerId}-all`}>All</label>
+            {picker.chips.map((chip, index) => <label data-filter-chip={chip.id} data-filter-index={index + 1} htmlFor={`${pickerId}-${chip.id}`} key={chip.id}>{chip.label}</label>)}
+          </div>
+          {children}
+        </div>
+      </Section>
+    </>
+  );
+}
+
+export function VisualPicker({ visual, r, pageId, eyebrow = "Choose a scene", relatedGroups = [] }: {
+  visual: V2Visual;
+  r: V2Resolvers;
+  pageId: string;
+  eyebrow?: string;
+  relatedGroups?: { title: string; links: { label: string; href: string }[] }[];
+}) {
   const picker = visual.picker;
   const pickerId = `visual-picker-${pageId.replace(/[^a-z0-9-]/gi, "-").toLowerCase()}`;
   if (!picker.cards.length) return null;
+  const isHub = pageId === "video-hub" || pageId === "photo-hub";
+  const photoGridStyle = pageId === "photo-hub" ? `#${pickerId} .v-picker-grid{grid-template-columns:repeat(5,minmax(0,1fr))}@media(max-width:1000px){#${pickerId} .v-picker-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:480px){#${pickerId} .v-picker-chips{flex-wrap:wrap;overflow-x:visible}}` : "";
+  const pickerFocusCss = isHub ? `#${pickerId} .v-filter[data-chip="all"]:focus-visible~.v-picker-chips label[data-filter-chip="all"],${Array.from({ length: 3 }, (_, index) => `#${pickerId} .v-filter[data-filter-index="${index + 1}"]:focus-visible~.v-picker-chips label[data-filter-index="${index + 1}"]`).join(",")}{outline:3px solid #6e62f2;outline-offset:3px;border-radius:999px}` : "";
+  const relatedCss = relatedGroups.length ? `#${pickerId} .v-related-groups{margin-top:30px;padding-top:22px;border-top:1px solid rgba(22,34,54,.12)}#${pickerId} .v-related-group+.v-related-group{margin-top:22px}#${pickerId} .v-related-group ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 22px;list-style:none;margin:10px 0 0;padding:0}#${pickerId} .v-related-group a{color:inherit;text-decoration:underline;text-underline-offset:3px}@media(max-width:720px){#${pickerId} .v-related-group ul{grid-template-columns:repeat(2,minmax(0,1fr))}}` : "";
   return (
-    <Section eyebrow="Choose a scene" lead={visual.titles?.m3?.lead ?? picker.lead} title={visual.titles?.m3?.h2 ?? picker.title}>
+    <Section eyebrow={eyebrow} lead={visual.titles?.m3?.lead ?? picker.lead} title={visual.titles?.m3?.h2 ?? picker.title}>
+      {photoGridStyle || pickerFocusCss || relatedCss ? <style dangerouslySetInnerHTML={{ __html: `${photoGridStyle}\n${pickerFocusCss}\n${relatedCss}` }} /> : null}
       <div className="v-picker" id={pickerId}>
-        <input aria-label="All scenes" className="v-filter" data-chip="all" defaultChecked id={`${pickerId}-all`} name={`${pickerId}-filter`} type="radio" />
+        <input aria-label={isHub ? "All tools" : "All scenes"} className="v-filter" data-chip="all" defaultChecked id={`${pickerId}-all`} name={`${pickerId}-filter`} type="radio" />
         {picker.chips.map((chip, index) => <input aria-label={chip.label} className="v-filter" data-chip={chip.id} data-filter-index={index + 1} id={`${pickerId}-${chip.id}`} key={chip.id} name={`${pickerId}-filter`} type="radio" />)}
-        <div className="v-picker-chips" role="group" aria-label="Filter scenes">
+        <div className="v-picker-chips" role="group" aria-label={isHub ? "Filter tools" : "Filter scenes"}>
           <label data-filter-chip="all" htmlFor={`${pickerId}-all`}>All</label>
           {picker.chips.map((chip, index) => <label data-filter-chip={chip.id} data-filter-index={index + 1} htmlFor={`${pickerId}-${chip.id}`} key={chip.id}>{chip.label}</label>)}
         </div>
@@ -104,6 +156,12 @@ export function VisualPicker({ visual, r, pageId }: { visual: V2Visual; r: V2Res
             </a>
           ))}
         </div>
+        {relatedGroups.length ? <div className="v-related-groups">
+          {relatedGroups.map((group) => <div className="v-related-group" key={group.title}>
+            <h3>{group.title}</h3>
+            <ul>{group.links.map((link) => <li key={link.href}><a href={r.href(link.href)}>{link.label}</a></li>)}</ul>
+          </div>)}
+        </div> : null}
         <div className="v-picker-action"><a className="btn btn-grad" href={r.href(picker.href)}>{picker.button} →</a></div>
       </div>
     </Section>
@@ -131,11 +189,15 @@ export function VisualUses({ visual, r }: { visual: V2Visual; r: V2Resolvers }) 
 }
 
 function InputPair({ item, r }: { item: V2VisualInput; r: V2Resolvers }) {
-  return <div className="v-input-pair"><figure><div className="v-input-mark is-good">✓</div><VisualImage image={item.good} r={r} /><figcaption>{item.good_label}</figcaption></figure><figure><div className="v-input-mark is-bad">✕</div><VisualImage image={item.bad} r={r} /><figcaption>{item.bad_label}</figcaption></figure></div>;
+  return <div className="v-input-pair"><figure><div className="v-input-mark is-good">✓</div><VisualImage image={item.good} r={r} /><figcaption>{item.good_label}</figcaption></figure><figure><div className="v-input-mark is-bad">✕</div><VisualImage className={item.darkened ? "v-input-darkened" : undefined} image={item.bad} r={r} /><figcaption>{item.bad_label}</figcaption></figure></div>;
 }
 
 export function VisualInput({ visual, r }: { visual: V2Visual; r: V2Resolvers }) {
-  return <Section eyebrow="Start with a clear photo" title={visual.titles?.m5?.h2 ?? "Choose a photo that shows the product well"}><div className="v-input-grid">{visual.input.map((item, index) => <InputPair item={item} key={`${item.good.src}-${index}`} r={r} />)}</div></Section>;
+  const darkened = visual.input.some((item) => item.darkened);
+  return <Section eyebrow="Start with a clear photo" title={visual.titles?.m5?.h2 ?? "Choose a photo that shows the product well"}>
+    {darkened ? <style dangerouslySetInnerHTML={{ __html: ".adc2 img.v-input-darkened{filter:brightness(.28)}" }} /> : null}
+    <div className="v-input-grid">{visual.input.map((item, index) => <InputPair item={item} key={`${item.good.src}-${index}`} r={r} />)}</div>
+  </Section>;
 }
 
 function OutputCard({ item, r }: { item: V2VisualOutput; r: V2Resolvers }) {
