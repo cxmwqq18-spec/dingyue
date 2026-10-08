@@ -245,13 +245,13 @@
         "items": [
           {
             "ref": "n:guide:q1-video-ex-lunchbox",
-            "title": "Problem to Fix: Lunchbox Leak in Commuter Bag",
+            "title": "Leakproof lunchbox in a commuter bag",
             "kind": "scene",
             "product": "insulated lunchbox"
           },
           {
             "ref": "n:guide:q1-video-ex-bike",
-            "title": "Problem to Fix: Folding Bike Fits the Train",
+            "title": "Folding bike carried onto the train",
             "kind": "scene",
             "product": "folding commuter bicycle"
           }
@@ -279,7 +279,7 @@
         "items": [
           {
             "ref": "n:guide:q1-video-ex-earbuds",
-            "title": "ASMR Unboxing: Wireless Earbuds",
+            "title": "Wireless earbuds unboxed up close",
             "kind": "scene",
             "product": "wireless earbuds"
           },

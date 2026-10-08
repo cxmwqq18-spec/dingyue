@@ -179,7 +179,7 @@
         "items": [
           {
             "ref": "n:q10-story-example-01",
-            "title": "ASMR Unboxing: Skincare gift reveal",
+            "title": "Skincare gift set revealed from tissue",
             "kind": "photo",
             "product": "skincare set"
           },
@@ -191,7 +191,7 @@
           },
           {
             "ref": "n:q10-story-example-03",
-            "title": "Product Demo: Sports bottle after workout",
+            "title": "Sports bottle refilled after a workout",
             "kind": "photo",
             "product": "sports bottle"
           }
