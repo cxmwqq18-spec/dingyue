@@ -578,12 +578,13 @@ function IndexPage({ data, r }: Props) {
 
 type V2ActorCard = { id: string; name: string; style: string; scene: string; age: string; category: string; image: V2Image; href: string };
 const actorDirectoryCss = `
-.adc2 .actor-directory-shell{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 245px;gap:36px;align-items:start}
+.adc2 .actor-directory-shell{position:relative}
+.adc2 .actor-layout{display:grid;grid-template-columns:minmax(0,1fr) 245px;gap:36px;align-items:start}
 .adc2 .actor-directory-shell>.actor-state{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.adc2 .actor-main{min-width:0}
+.adc2 .actor-main{min-width:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px;align-items:start}
 .adc2 .actor-scene-group{padding:0 0 40px;scroll-margin-top:28px}
 .adc2 .actor-scene-group h2{font-size:clamp(22px,2.5vw,30px);margin:0 0 16px}
-.adc2 .actor-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.adc2 .actor-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .adc2 .actor-card{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--card);display:flex;flex-direction:column}
 .adc2 .actor-card-image{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;background:#15151a}
 .adc2 .actor-card-copy{display:flex;flex:1;flex-direction:column;align-items:flex-start;padding:14px;gap:8px}
@@ -600,9 +601,8 @@ ${Array.from({ length: 12 }, (_, i) => `.adc2 .actor-directory-shell #actor-filt
 .adc2 .actor-directory-shell #actor-filter-all:checked~.actor-layout .actor-filters label[for="actor-filter-all"]{border-color:var(--pink);color:var(--ink);background:rgba(236,72,153,.1)}
 .adc2 .actor-directory-shell>.actor-state:focus-visible~.actor-layout .actor-filters label[for]{outline:2px solid var(--pink);outline-offset:2px}
 .adc2 .actor-support-copy{padding-top:4px}
-@media(max-width:1150px){.adc2 .actor-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:900px){.adc2 .actor-directory-shell{grid-template-columns:minmax(0,1fr);gap:20px}.adc2 .actor-filters{position:static;grid-row:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}.adc2 .actor-filters h2{grid-column:1/-1}}
-@media(max-width:640px){.adc2 .actor-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.adc2 .actor-card-copy{padding:11px}.adc2 .actor-card h3{font-size:17px}.adc2 .actor-card .btn{font-size:12px}.adc2 .actor-filters{grid-template-columns:repeat(2,minmax(0,1fr));padding:13px}.adc2 .actor-filter-chip{font-size:12px;padding:8px 9px}}
+@media(max-width:900px){.adc2 .actor-layout{grid-template-columns:minmax(0,1fr);gap:20px}.adc2 .actor-filters{position:static;grid-row:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}.adc2 .actor-filters h2{grid-column:1/-1}}
+@media(max-width:640px){.adc2 .actor-main{grid-template-columns:minmax(0,1fr)}.adc2 .actor-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.adc2 .actor-card-copy{padding:11px}.adc2 .actor-card h3{font-size:17px}.adc2 .actor-card .btn{font-size:12px}.adc2 .actor-filters{grid-template-columns:repeat(2,minmax(0,1fr));padding:13px}.adc2 .actor-filter-chip{font-size:12px;padding:8px 9px}}
 `;
 
 function ActorDirectoryPage({ data, r }: Props) {
