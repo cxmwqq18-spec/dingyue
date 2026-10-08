@@ -2,43 +2,11 @@
   "version": 1,
   "entries": [
     {
-      "image": "/assets/sites/site_aidreamcapes/ecommerce-main-image-v1/ecommerce-main-image/example-04",
-      "rule": "one-page",
-      "pages": [
-        "tpl-detail",
-        "tpl-size"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/jewelry-positioning-v1/jewelry-positioning/example-07",
-      "rule": "one-page",
-      "pages": [
-        "examples",
-        "tpl-size"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/lifestyle-scene-v1/lifestyle-scene/example-08",
       "rule": "one-page",
       "pages": [
         "photo-hub",
         "tpl-carousel-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/macro-details-v1/macro-details/example-07",
-      "rule": "one-page",
-      "pages": [
-        "about",
-        "tpl-detail"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/on-model-generation-v1/on-model-generation/example-04",
-      "rule": "one-page",
-      "pages": [
-        "tpl-detail",
-        "tpl-product-feature-callout-video"
       ]
     },
     {
@@ -122,43 +90,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2examples-g4",
-      "rule": "one-page",
-      "pages": [
-        "ind-health-wellness",
-        "tpl-angle"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2ind-fashion-clothing-g3",
-      "rule": "one-page",
-      "pages": [
-        "ind-fashion-clothing",
-        "tpl-angle"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2plat-amazon-g2",
-      "rule": "one-page",
-      "pages": [
-        "product-videos",
-        "tpl-size"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2product-videos-g5",
       "rule": "one-page",
       "pages": [
         "occ-black-friday",
         "tpl-product-feature-callout-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2spokesperson-videos-g4",
-      "rule": "one-page",
-      "pages": [
-        "occ-product-launch",
-        "tpl-angle"
       ]
     },
     {
@@ -170,59 +106,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-angle-c4",
-      "rule": "one-page",
-      "pages": [
-        "templates",
-        "tpl-angle"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-angle-g4",
-      "rule": "one-page",
-      "pages": [
-        "ind-electronics",
-        "tpl-angle"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-beauty-g3",
       "rule": "one-page",
       "pages": [
         "ind-beauty-skincare",
         "tpl-beauty"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-color-c1",
-      "rule": "one-page",
-      "pages": [
-        "plat-facebook",
-        "tpl-color"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-color-g1",
-      "rule": "one-page",
-      "pages": [
-        "plat-instagram",
-        "tpl-color"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-color-g2",
-      "rule": "one-page",
-      "pages": [
-        "ind-shoes",
-        "tpl-color"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-detail-c1",
-      "rule": "one-page",
-      "pages": [
-        "templates",
-        "tpl-detail"
       ]
     },
     {
@@ -242,28 +130,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-size-g1",
-      "rule": "one-page",
-      "pages": [
-        "ind-jewelry-accessories",
-        "tpl-size"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2tpl-spark-ads-style-video-g1",
       "rule": "one-page",
       "pages": [
         "ind-electronics",
         "tpl-spark-ads-style-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2video-hub-g2",
-      "rule": "one-page",
-      "pages": [
-        "tpl-angle",
-        "tpl-box",
-        "tpl-size"
       ]
     },
     {
@@ -279,16 +150,7 @@
       "rule": "one-page",
       "pages": [
         "plat-amazon",
-        "tpl-angle",
         "tpl-carousel-video-ad"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/gen2/gen2white-background-g1",
-      "rule": "one-page",
-      "pages": [
-        "tpl-carousel-video-ad",
-        "tpl-detail"
       ]
     },
     {
@@ -296,7 +158,6 @@
       "rule": "one-page",
       "pages": [
         "before-after-videos",
-        "tpl-angle",
         "tpl-product-feature-callout-video"
       ]
     },
@@ -317,27 +178,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-b1-unboxing-output",
-      "rule": "one-page",
-      "pages": [
-        "tpl-box",
-        "tpl-detail"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-c3-r3-plat-shopify-m5-0",
       "rule": "one-page",
       "pages": [
         "plat-shopify",
         "tpl-pack"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-ind-electronics-m3-headphones",
-      "rule": "one-page",
-      "pages": [
-        "tpl-angle",
-        "tpl-box"
       ]
     },
     {
@@ -361,7 +206,6 @@
       "rule": "one-page",
       "pages": [
         "ind-jewelry-accessories",
-        "tpl-angle",
         "tpl-product-feature-callout-video"
       ]
     },
@@ -382,14 +226,6 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-plat-youtube-shorts-size-square-ebike",
-      "rule": "one-page",
-      "pages": [
-        "tpl-angle",
-        "tpl-size"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-tpl-pack-c3-m4-unboxing",
       "rule": "one-page",
       "pages": [
@@ -406,27 +242,11 @@
       ]
     },
     {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-fix-m6-coaster-set",
-      "rule": "one-page",
-      "pages": [
-        "tpl-box",
-        "tpl-color"
-      ]
-    },
-    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-leather-sandals",
       "rule": "one-page",
       "pages": [
         "occ-product-launch",
         "tpl-limited-drop-alert-video"
-      ]
-    },
-    {
-      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-soap-dispenser",
-      "rule": "one-page",
-      "pages": [
-        "tpl-color",
-        "tpl-product-feature-callout-video"
       ]
     },
     {
